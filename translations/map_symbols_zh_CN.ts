@@ -1035,7 +1035,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <translation>岩石或人工的沟渠，最小深度应为1米。
 最小长度：1mm（实际长度15米）。
 较短的沟渠可能被放大到最小图形尺寸。
-不可穿越的沟渠应使用符号不可通行的陡崖（201）来表示。
+不可通过的沟渠应使用符号不可通行的陡崖（201）来表示。
 坍塌和容易通过的沟渠可以用 冲沟 (107)来表示。</translation>
     </message>
     <message>
@@ -2746,7 +2746,7 @@ Spot heights must only be used where they do not conflict with other symbols.</s
     <message>
         <source>The place where the orienteering starts. The centre of the triangle shows the precise position where the orienteering course starts. The start must be on a clearly identifiable point on the map. The triangle points in the direction of the first control.</source>
         <comment>Description of symbol 701</comment>
-        <translation>定向赛程的起点。三角形的中心位于赛程的确切起点。起点须为图上一个能够清晰辨认的点。三角形指向第一个控制点。</translation>
+        <translation>定向赛程的起点。三角形的中心位于赛程的确切起点。起点须为图上一个能够清晰辨认的点。三角形指向第一个检查点。</translation>
     </message>
     <message>
         <source>Map issue point</source>
@@ -3181,6 +3181,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>单点</translation>
     </message>
     <message>
+        <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
+        <comment>Description of symbol 113.1</comment>
+        <translation>太复杂而无法显示细节的土坑或小丘区域。自由放置的点的密度会在根据地面上的细节而变化。</translation>
+    </message>
+    <message>
         <source>Very broken ground</source>
         <comment>Name of symbol 114</comment>
         <translation>非常坑洼地面</translation>
@@ -3314,9 +3319,19 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
         <translation>单点符号</translation>
     </message>
     <message>
+        <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208.1</comment>
+        <translation>覆盖有很多块无法单独标记的石头的区域，由任意指向的实心三角形显示，三角形三边的比例为 8:6:5 。应该最少使用两个三角形。通过性由三角形的密度指示。为了能够显示石块尺寸显著不同的石块地之间的区别，允许将三角形放大 20% 。</translation>
+    </message>
+    <message>
         <source>Boulder field, single triangle, enlarged</source>
         <comment>Name of symbol 208.2</comment>
         <translation>大的单点符号</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208.2</comment>
+        <translation>为了能够显示石块尺寸显著不同的石块地之间的区别，允许将三角形放大 20% 。</translation>
     </message>
     <message>
         <source>Dense boulder field</source>
@@ -3492,6 +3507,31 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.</source>
         <comment>Description of symbol 406</comment>
         <translation>植被茂密（能见度低）的区域，使行进速度降低到正常速度的 60-80%左右。</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 406.1</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 407</comment>
+        <translation>密集但视野良好的灌木层，（黑莓树、帚石楠、矮树，以及包括伐倒的树枝），降低跑步速度约为正常速度的 60 ~ 80% 。这个符号可以不与符号 406 或 408 组合。</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 408.1</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 3</source>
+        <comment>Name of symbol 410.1</comment>
+        <translation>在一个方向上可奔跑的树林，3</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 410.1</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
@@ -3783,9 +3823,19 @@ For impassable features, the line shall be broken at the crossing point. For pas
         <translation>突出的人造特征物-⚪</translation>
     </message>
     <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 530</comment>
+        <translation>特别的人工特征以这些符号显示。每种情况必须在图例中给出符号的定义。</translation>
+    </message>
+    <message>
         <source>Prominent man-made feature – x</source>
         <comment>Name of symbol 531</comment>
         <translation>特殊人造地物 – x</translation>
+    </message>
+    <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 531</comment>
+        <translation>特别的人工特征以这些符号显示。每种情况必须在图例中给出符号的定义。</translation>
     </message>
     <message>
         <source>Magnetic north line</source>
@@ -3830,7 +3880,7 @@ For impassable features, the line shall be broken at the crossing point. For pas
     <message>
         <source>The place where the orienteering starts. The centre of the triangle shows the precise position where the orienteering course starts. The start must be on a clearly identifiable point on the map. The triangle points in the direction of the first control.</source>
         <comment>Description of symbol 701</comment>
-        <translation>定向赛程的起点。三角形的中心位于赛程的确切起点。起点须为图上一个能够清晰辨认的点。三角形指向第一个控制点。</translation>
+        <translation>定向赛程的起点。三角形的中心位于赛程的确切起点。起点须为图上一个能够清晰辨认的点。三角形指向第一个检查点。</translation>
     </message>
     <message>
         <source>Map issue point</source>
@@ -4205,6 +4255,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>小土墙</translation>
     </message>
     <message>
+        <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
+        <comment>Description of symbol 108</comment>
+        <translation>小的或部分损坏的土墙应该以虚线显示，最小高度为0.5m。</translation>
+    </message>
+    <message>
         <source>Erosion gully</source>
         <comment>Name of symbol 109</comment>
         <translation>冲沟</translation>
@@ -4220,9 +4275,29 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>小冲沟</translation>
     </message>
     <message>
+        <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
+        <comment>Description of symbol 110</comment>
+        <translation>小的被侵蚀的溪谷或沟渠，最小深度0.5m。</translation>
+    </message>
+    <message>
         <source>Small knoll</source>
         <comment>Name of symbol 112</comment>
         <translation>小土丘</translation>
+    </message>
+    <message>
+        <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
+        <comment>Description of symbol 112</comment>
+        <translation>小的明显的土丘或岩丘，无法与等高线成比例绘制（土丘直径小于大约 5m ）。小丘的高度突出周围地面应该最小为 1m 。符号不能接触等高线。</translation>
+    </message>
+    <message>
+        <source>Elongated knoll</source>
+        <comment>Name of symbol 113</comment>
+        <translation>长土丘</translation>
+    </message>
+    <message>
+        <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
+        <comment>Description of symbol 113</comment>
+        <translation>小的明显的长土丘，无法与等高线成比例绘制（长度小于 12m ，宽度小于 4m ）。小丘的高度突出周围地面应该最小为 1m 。大于此尺寸的小丘应该用等高线绘制。符号不能以自由形式绘制或者使两个小丘符号重叠。符号不能接触等高线。</translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -4230,9 +4305,49 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>小凹地</translation>
     </message>
     <message>
+        <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
+        <comment>Description of symbol 115</comment>
+        <translation>小的窄的自然凹地或坑洼（直径至少为 2m ），不能用等高线成比例绘制，要另外用半圆表示。深度低于周围地面应该最小为 1m 。位置在符号的重心处，符号指向北。符号116用于人工土坑。</translation>
+    </message>
+    <message>
         <source>Pit</source>
         <comment>Name of symbol 116</comment>
         <translation>土坑或洞</translation>
+    </message>
+    <message>
+        <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
+        <comment>Description of symbol 116</comment>
+        <translation>某一侧明显陡直的土坑或洞，不能用符号106成比例地绘制（直径至少 2m）。最小深度低于周围地面应该为 1m 。位置在符号的重心处，符号指向北。</translation>
+    </message>
+    <message>
+        <source>Broken ground, small</source>
+        <comment>Name of symbol 117.1</comment>
+        <translation>崎岖的地面，小的</translation>
+    </message>
+    <message>
+        <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
+        <comment>Description of symbol 117.1</comment>
+        <translation>太复杂而无法显示细节的土坑或小丘区域。自由放置的点的密度会在根据地面上的细节而变化。</translation>
+    </message>
+    <message>
+        <source>Broken ground, big</source>
+        <comment>Name of symbol 117.2</comment>
+        <translation>崎岖的地面，大的</translation>
+    </message>
+    <message>
+        <source>The size of the dots may vary.</source>
+        <comment>Description of symbol 117.2</comment>
+        <translation>点的尺寸会变化。</translation>
+    </message>
+    <message>
+        <source>Special land form feature</source>
+        <comment>Name of symbol 118</comment>
+        <translation>特殊地形特征</translation>
+    </message>
+    <message>
+        <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
+        <comment>Description of symbol 118</comment>
+        <translation>这个符号可以用于特别小的地形特征。符号的定义必须在地图图例中给出。</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -4290,9 +4405,24 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>可翻越的石崖</translation>
     </message>
     <message>
+        <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203</comment>
+        <translation>小且竖直岩面（最小高度 1m ）可以不使用短线显示。如果岩面下降的方向从等高线上看不明显或识别度不高，应该在下降方向上绘制短线。对于没有显示短线的可翻越岩面，线的末端可以圆滑，来提高识别度。</translation>
+    </message>
+    <message>
         <source>Passable rock face, minimum size</source>
         <comment>Name of symbol 203.0.1</comment>
         <translation>可翻越的石崖-最小尺寸</translation>
+    </message>
+    <message>
+        <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.0.1</comment>
+        <translation>小且竖直岩面（最小高度 1m ）可以不使用短线显示。如果岩面下降的方向从等高线上看不明显或识别度不高，应该在下降方向上绘制短线。对于没有显示短线的可翻越岩面，线的末端可以圆滑，来提高识别度。</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags</source>
+        <comment>Name of symbol 203.1</comment>
+        <translation>可翻越的石崖，无短线</translation>
     </message>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -4300,9 +4430,34 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
     </message>
     <message>
+        <source>Passable rock face, no tags, minimum size</source>
+        <comment>Name of symbol 203.1.1</comment>
+        <translation>可翻越的石崖，无短线，最小尺寸</translation>
+    </message>
+    <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
         <comment>Description of symbol 203.1.1</comment>
         <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded</source>
+        <comment>Name of symbol 203.2</comment>
+        <translation>可翻越石崖，无短线，圆滑</translation>
+    </message>
+    <message>
+        <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.2</comment>
+        <translation>对于无短线显示的可翻越石崖，线的末端应该圆滑来提高辨识性。</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded, minimum size</source>
+        <comment>Name of symbol 203.2.1</comment>
+        <translation>可翻越石崖，无短线，圆滑，最小尺寸</translation>
+    </message>
+    <message>
+        <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.2.1</comment>
+        <translation>对于无短线显示的可翻越石崖，线的末端应该圆滑来提高辨识性。</translation>
     </message>
     <message>
         <source>Rocky pit</source>
@@ -4360,14 +4515,39 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>石块地</translation>
     </message>
     <message>
+        <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208</comment>
+        <translation>覆盖有很多块无法单独标记的石头的区域，由任意指向的实心三角形显示，三角形三边的比例为 8:6:5 。应该最少使用两个三角形。通过性由三角形的密度指示。为了能够显示石块尺寸显著不同的石块地之间的区别，允许将三角形放大 20% 。</translation>
+    </message>
+    <message>
+        <source>Boulder field, large</source>
+        <comment>Name of symbol 208.1</comment>
+        <translation>石块地，大的</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208.1</comment>
+        <translation>为了能够显示石块尺寸显著不同的石块地之间的区别，允许将三角形放大 20% 。</translation>
+    </message>
+    <message>
         <source>Boulder cluster</source>
         <comment>Name of symbol 209</comment>
         <translation>石群</translation>
     </message>
     <message>
+        <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
+        <comment>Description of symbol 209</comment>
+        <translation>小的清晰的一组石块特别密集地聚在一起，使它们不能各自标记。符号是指向北的等边三角形。为了能够显示尺寸明显不同的石群之间的差别，允许将此符号放大 25% （ 1mm ）。</translation>
+    </message>
+    <message>
         <source>Boulder cluster, large</source>
         <comment>Name of symbol 209.1</comment>
         <translation>大的石群</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
+        <comment>Description of symbol 209.1</comment>
+        <translation>为了能够显示尺寸明显不同的石群之间的差别，允许将此符号放大 25% （ 1mm ）。</translation>
     </message>
     <message>
         <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
@@ -4435,6 +4615,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>水坑</translation>
     </message>
     <message>
+        <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
+        <comment>Description of symbol 303</comment>
+        <translation>太小而不能成比例显示的注水的土坑或有水的区域。位置在符号的中心处，指向北。</translation>
+    </message>
+    <message>
         <source>Crossable watercourse</source>
         <comment>Name of symbol 305</comment>
         <translation>可涉水道</translation>
@@ -4468,6 +4653,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Narrow marsh</source>
         <comment>Name of symbol 308</comment>
         <translation>小水沟</translation>
+    </message>
+    <message>
+        <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
+        <comment>Description of symbol 308</comment>
+        <translation>太窄（小于大约 5m 宽）而无法用符号 310 显示的有水的湿地或溪流。</translation>
     </message>
     <message>
         <source>Uncrossable marsh</source>
@@ -4505,14 +4695,34 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>不明显沼泽</translation>
     </message>
     <message>
+        <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
+        <comment>Description of symbol 311</comment>
+        <translation>明显的或季节性的沼泽或从沼泽逐渐变成硬地的区域，是可通过的。边沿通常清晰，并且植被与周围环境相似。这个符号应该与植被符号结合，来显示可跑性和开阔程度。</translation>
+    </message>
+    <message>
         <source>Indistinct marsh, minimum size</source>
         <comment>Name of symbol 311.1</comment>
         <translation>不明显沼泽-最小尺寸</translation>
     </message>
     <message>
+        <source>Well</source>
+        <comment>Name of symbol 312</comment>
+        <translation>井</translation>
+    </message>
+    <message>
+        <source>Wells and captive springs, which are clearly visible on the ground.</source>
+        <comment>Description of symbol 312</comment>
+        <translation>在地面上清晰可见的井和不流动的泉。</translation>
+    </message>
+    <message>
         <source>Spring</source>
         <comment>Name of symbol 313</comment>
         <translation>泉</translation>
+    </message>
+    <message>
+        <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
+        <comment>Description of symbol 313</comment>
+        <translation>具有明显出口的溪流的源头。符号指向开放的下游。</translation>
     </message>
     <message>
         <source>Special water feature</source>
@@ -4565,6 +4775,86 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>凌乱开阔土地上零星树木，白色（或绿色）点应出现在其中。可以通过在黄色屏幕中使用大白点的规则图案来概括此类区域。地图比例尺中小于16毫米的区域显示为粗糙的开阔土地（403）。可以添加单个树（418、419、420）。</translation>
     </message>
     <message>
+        <source>Undergrowth: slow running</source>
+        <comment>Name of symbol 407</comment>
+        <translation>灌木丛：可缓慢通过</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 407</comment>
+        <translation>密集但视野良好的灌木层，（黑莓树、帚石楠、矮树，以及包括伐倒的树枝），降低跑步速度约为正常速度的 60 ~ 80% 。这个符号可以不与符号 406 或 408 组合。</translation>
+    </message>
+    <message>
+        <source>Forest: difficult to run</source>
+        <comment>Name of symbol 408</comment>
+        <translation>森林：奔跑困难</translation>
+    </message>
+    <message>
+        <source>An area with dense trees or thicket (low visibility) which reduce running to ca. 20-60% of normal speed.</source>
+        <comment>Description of symbol 408</comment>
+        <translation>密集的树或灌木区域（视野不好），降低奔跑速度约为正常速度的 20 ~ 60% 。</translation>
+    </message>
+    <message>
+        <source>Undergrowth: difficult to run</source>
+        <comment>Name of symbol 409</comment>
+        <translation>灌木丛：难以奔跑</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 409</comment>
+        <translation>密集但视野良好的灌木丛，（黑莓树、帚石楠、矮树，以及包括伐倒的树枝），降低跑步速度约为正常速度的 20 ~ 60% 。这个符号可以不与符号 406 或 408 组合。</translation>
+    </message>
+    <message>
+        <source>Vegetation: very difficult to run, impassable</source>
+        <comment>Name of symbol 410</comment>
+        <translation>植被：难以奔跑，不可通过</translation>
+    </message>
+    <message>
+        <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.</source>
+        <comment>Description of symbol 410</comment>
+        <translation>植被密集（树或灌木）几乎不能通过的区域。奔跑速度降低到正常速度的大约 0 - 20% 。</translation>
+    </message>
+    <message>
+        <source>Vegetation: very difficult to run, impassable, line</source>
+        <comment>Name of symbol 410.1</comment>
+        <translation>植被：非常难以奔跑，不可通过，线条</translation>
+    </message>
+    <message>
+        <source>Line of minimum width for symbol 410.</source>
+        <comment>Description of symbol 410.1</comment>
+        <translation>符号410线条的最小宽度。</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 1</source>
+        <comment>Name of symbol 411.0</comment>
+        <translation>在一个方向上可奔跑的树林，1</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.0</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 2</source>
+        <comment>Name of symbol 411.1</comment>
+        <translation>在一个方向上可奔跑的树林，2</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.1</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 3</source>
+        <comment>Name of symbol 411.2</comment>
+        <translation>在一个方向上可奔跑的树林，3</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.2</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
+    </message>
+    <message>
         <source>Orchard</source>
         <comment>Name of symbol 412</comment>
         <translation>果园(空旷地)</translation>
@@ -4592,14 +4882,29 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>明显耕地边界</translation>
     </message>
     <message>
+        <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
+        <comment>Description of symbol 414</comment>
+        <translation>耕种地的边界，当不以其它符号（围栏、墙、小路等）显示时，则用黑色线条显示。不同类型耕种地的永久边界，以这个符号显示。</translation>
+    </message>
+    <message>
         <source>Cultivated land</source>
         <comment>Name of symbol 415</comment>
         <translation>耕地</translation>
     </message>
     <message>
+        <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
+        <comment>Description of symbol 415</comment>
+        <translation>耕种地，由于种庄稼而季节性地超出边界，可以用覆盖的黑点显示。</translation>
+    </message>
+    <message>
         <source>Distinct vegetation boundary</source>
         <comment>Name of symbol 416</comment>
         <translation>明显植被边界</translation>
+    </message>
+    <message>
+        <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
+        <comment>Description of symbol 416</comment>
+        <translation>清晰的树林边沿或树林内非常清晰的植被边界。</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
@@ -4642,6 +4947,16 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>有两条车道的道路。符号的宽度应按比例绘制，但不得小于最小宽度。如果围墙或围墙非常靠近高速公路边缘，以致于实际上无法显示为单独的符号，则可以用符号519、521、522或524代替外边界线。黑线之间的空间必须填充为棕色（50％）。正在施工的道路可能会以虚线显示。</translation>
     </message>
     <message>
+        <source>Motorway, under construction</source>
+        <comment>Name of symbol 501.5</comment>
+        <translation>机动车道，正在施工</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 501.5</comment>
+        <translation>正在施工的道路可以用虚线来表示。</translation>
+    </message>
+    <message>
         <source>Major road, minimum width</source>
         <comment>Name of symbol 502</comment>
         <translation>主要道路-最小宽度</translation>
@@ -4650,6 +4965,16 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <source>Road wider than 5m. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 502</comment>
         <translation>道路宽于5m。符号的宽度应按比例绘制，但不得小于最小宽度。如果围墙或围墙非常靠近高速公路边缘，以致于实际上无法显示为单独的符号，则可以用符号519、521、522或524代替外边界线。黑线之间的空间必须填充为棕色（50％）。正在施工的道路可能会以虚线显示。</translation>
+    </message>
+    <message>
+        <source>Major road, minimum width, under construction</source>
+        <comment>Name of symbol 502.1</comment>
+        <translation>主干道，最小宽度，正在施工</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 502.1</comment>
+        <translation>正在施工的道路可以用虚线来表示。</translation>
     </message>
     <message>
         <source>Minor road</source>
@@ -4662,9 +4987,24 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>道路3-5 m宽。黑线之间的空间必须填充为棕色（50％）。正在施工的道路可能会以虚线显示。</translation>
     </message>
     <message>
+        <source>Minor road, under construction</source>
+        <comment>Name of symbol 503.1</comment>
+        <translation>次要道路，正在施工</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 503.1</comment>
+        <translation>正在施工的道路可以用虚线来表示。</translation>
+    </message>
+    <message>
         <source>Road</source>
         <comment>Name of symbol 504</comment>
         <translation>公路(＜5m)</translation>
+    </message>
+    <message>
+        <source>A maintained road suitable for motor vehicles in all weather. Width less than 3 m.</source>
+        <comment>Description of symbol 504</comment>
+        <translation>保养良好的道路，在各种天气情况下都适于机动车行驶。宽度小于 3 m 。</translation>
     </message>
     <message>
         <source>Vehicle track</source>
@@ -4672,9 +5012,29 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>车径</translation>
     </message>
     <message>
+        <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. Width less than 3 m.</source>
+        <comment>Description of symbol 505</comment>
+        <translation>土路或保养不好的道路，只适用于机动车缓慢行驶。宽度小于 3 m 。</translation>
+    </message>
+    <message>
         <source>Footpath</source>
         <comment>Name of symbol 506</comment>
         <translation>人行径</translation>
+    </message>
+    <message>
+        <source>A large path, or old vehicle track, which is distinct on the ground.</source>
+        <comment>Description of symbol 506</comment>
+        <translation>大的路径，或老的机动车道，在地面上非常明显。</translation>
+    </message>
+    <message>
+        <source>Small path</source>
+        <comment>Name of symbol 507</comment>
+        <translation>小路</translation>
+    </message>
+    <message>
+        <source>A small path or (temporary) forest extraction track which can be followed at competition speed.</source>
+        <comment>Description of symbol 507</comment>
+        <translation>小路，或树林中（临时）开辟的路径，能够以竞赛速度沿路奔跑。</translation>
     </message>
     <message>
         <source>Less distinct small path</source>
@@ -4682,14 +5042,31 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>不明显小路</translation>
     </message>
     <message>
+        <source>A less distinct small path or forestry extraction track.</source>
+        <comment>Description of symbol 508</comment>
+        <translation>较不明显的小路或林中开辟的路径。</translation>
+    </message>
+    <message>
         <source>Narrow ride</source>
         <comment>Name of symbol 509</comment>
         <translation>窄林道或可通过地表的线迹</translation>
     </message>
     <message>
+        <source>A distinct ride, less than ca. 5 m wide. A ride is a linear break in the forest (usually plantation) which does not have a distinct path along it. Where there is a path along a ride, symbols 507 or 508 should be used in place of symbol 509.</source>
+        <comment>Description of symbol 509</comment>
+        <translation>明显的骑马路，宽度小于大约5 m 。骑马路是树林中的线形空隙，沿着它没有明显的道路。当沿着骑马路有条小路时，应该使用符号 507 或 508 代替符号 509。</translation>
+    </message>
+    <message>
         <source>Footbridge</source>
         <comment>Name of symbol 512</comment>
         <translation>小人行桥</translation>
+    </message>
+    <message>
+        <source>A footbridge with no path leading to it.
+Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm over both sides of the stream!</source>
+        <comment>Description of symbol 512</comment>
+        <translation>步行桥，没有小路引向它。
+注意：如果溪流的宽度大于 0.25 mm ，调整这个符号使它在溪流两侧都延长 0.5 mm ！</translation>
     </message>
     <message>
         <source>Railway</source>
@@ -4747,14 +5124,39 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>石墙</translation>
     </message>
     <message>
+        <source>A stone wall or stone-faced bank.</source>
+        <comment>Description of symbol 519</comment>
+        <translation>石墙或表面石砌的岸。</translation>
+    </message>
+    <message>
+        <source>Ruined stone wall</source>
+        <comment>Name of symbol 520</comment>
+        <translation>毁坏的石墙</translation>
+    </message>
+    <message>
+        <source>A ruined stone wall may be shown by a dashed line.</source>
+        <comment>Description of symbol 520</comment>
+        <translation>毁坏的石墙可以用虚线显示。</translation>
+    </message>
+    <message>
         <source>Fence</source>
         <comment>Name of symbol 522</comment>
         <translation>围栏</translation>
     </message>
     <message>
+        <source>A wooden or wire fence less than ca. 1.5 m high.</source>
+        <comment>Description of symbol 522</comment>
+        <translation>木制围栏或绳制围栏，小于大约1.5 m 高。</translation>
+    </message>
+    <message>
         <source>Ruined fence</source>
         <comment>Name of symbol 523</comment>
         <translation>残破围栏</translation>
+    </message>
+    <message>
+        <source>A ruined fence may be shown with a dashed line.</source>
+        <comment>Description of symbol 523</comment>
+        <translation>毁坏的围栏可以用虚线显示。</translation>
     </message>
     <message>
         <source>High fence</source>
@@ -4807,6 +5209,26 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>房屋和花园等建筑区。必须显示居民点内的道路，建筑物和其他重要特征。如果无法显示所有建筑物，则可以使用其他符号（黑线网屏）。</translation>
     </message>
     <message>
+        <source>Permanently out of bounds</source>
+        <comment>Name of symbol 528</comment>
+        <translation>永久出界</translation>
+    </message>
+    <message>
+        <source>Areas which are permanently forbidden to the runner are shown as out of bounds. The screen is superimposed on the normal map detail. A bounding line may be drawn if there is no natural boundary (see 709).</source>
+        <comment>Description of symbol 528</comment>
+        <translation>永久性禁止选手进入的区域，显示为出界。覆盖在一般地图的细节上。如果没有自然边界，可以绘制出边界线（请见 709 ）。</translation>
+    </message>
+    <message>
+        <source>Permanently out of bounds, bounding line</source>
+        <comment>Name of symbol 528.1</comment>
+        <translation>永久出界，边界线</translation>
+    </message>
+    <message>
+        <source>A bounding line may be drawn if there is no natural boundary (see 709).</source>
+        <comment>Description of symbol 528.1</comment>
+        <translation>如果没有自然边界，可以绘制出边界线（请见 709 ）。</translation>
+    </message>
+    <message>
         <source>Paved area</source>
         <comment>Name of symbol 529</comment>
         <translation>铺装区域</translation>
@@ -4832,9 +5254,29 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>废墟</translation>
     </message>
     <message>
+        <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530</comment>
+        <translation>废墟的地面图以比例显示，减小到相对显示的最小尺寸。非常小的废墟可以用实线绘制。</translation>
+    </message>
+    <message>
+        <source>Ruin, no dashes</source>
+        <comment>Name of symbol 530.1</comment>
+        <translation>废墟，无虚线</translation>
+    </message>
+    <message>
+        <source>Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530.1</comment>
+        <translation>非常小的废墟可以用实线绘制。</translation>
+    </message>
+    <message>
         <source>Ruin, minimum size</source>
         <comment>Name of symbol 530.2</comment>
         <translation>废墟最小尺寸</translation>
+    </message>
+    <message>
+        <source>Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530.2</comment>
+        <translation>非常小的废墟可以用实线绘制。</translation>
     </message>
     <message>
         <source>Firing range</source>
@@ -4857,9 +5299,29 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>以石头或神龛为标志的明显坟墓，位置在符号的重心处，重心向北。在空间允许的情况下，使用坟墓符号来显示墓地。</translation>
     </message>
     <message>
+        <source>Crossable pipeline</source>
+        <comment>Name of symbol 533</comment>
+        <translation>可穿过的管道</translation>
+    </message>
+    <message>
+        <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
+        <comment>Description of symbol 533</comment>
+        <translation>管道（输气、水、油等），在地面之上，可以从上面或下面穿过。</translation>
+    </message>
+    <message>
+        <source>Uncrossable pipeline</source>
+        <comment>Name of symbol 534</comment>
+        <translation>不可穿越管道</translation>
+    </message>
+    <message>
         <source>High tower</source>
         <comment>Name of symbol 535</comment>
         <translation>高塔</translation>
+    </message>
+    <message>
+        <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
+        <comment>Description of symbol 535</comment>
+        <translation>高塔或大型电缆塔，高于周围森林的高度而矗立，位置在符号的重心处。</translation>
     </message>
     <message>
         <source>Small tower</source>
@@ -4867,9 +5329,19 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>小塔</translation>
     </message>
     <message>
+        <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
+        <comment>Description of symbol 536</comment>
+        <translation>明显的射击平台或座位、小塔。位置在符号的重心处。</translation>
+    </message>
+    <message>
         <source>Cairn</source>
         <comment>Name of symbol 537</comment>
         <translation>石标</translation>
+    </message>
+    <message>
+        <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
+        <comment>Description of symbol 537</comment>
+        <translation>石标，记号石块或边界石块（或是一些国家的三角点），高度大于 0.5 m 。</translation>
     </message>
     <message>
         <source>Fodder rack</source>
@@ -4877,9 +5349,39 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>饲料架</translation>
     </message>
     <message>
+        <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
+        <comment>Description of symbol 538</comment>
+        <translation>饲料架独立树立或建在树上。位置在符号的重心处。因为是可以接近的地方，所以这些应该省略。</translation>
+    </message>
+    <message>
+        <source>Special man-made feature</source>
+        <comment>Name of symbol 539</comment>
+        <translation>特别的人工特征</translation>
+    </message>
+    <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 539</comment>
+        <translation>特别的人工特征以这些符号显示。每种情况必须在图例中给出符号的定义。</translation>
+    </message>
+    <message>
+        <source>Special man-made feature</source>
+        <comment>Name of symbol 540</comment>
+        <translation>特别的人工特征</translation>
+    </message>
+    <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 540</comment>
+        <translation>特别的人工特征以这些符号显示。每种情况必须在图例中给出符号的定义。</translation>
+    </message>
+    <message>
         <source>Magnetic north line</source>
         <comment>Name of symbol 601</comment>
         <translation>磁北线</translation>
+    </message>
+    <message>
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
+        <comment>Description of symbol 601</comment>
+        <translation>磁北线是地图上指向磁北极的线。它们在地图上的间隔应该为 33.33 mm ，在比例尺为 1:15 000 时代表地面上的 500 m 。对于其他比例的地图，磁北线应该以整数米的间隔放置（例如， 50 m 、 100 m 、 250 m 、 500 m ），并且地图上的间隔应该在 20 mm 到 40 mm 之间。在可能使小的地形模糊时，如巨石、土丘、悬崖、溪流交汇点、小路尽头等，磁北线可以断开。在水的特征非常少的区域，可以使用蓝色线。</translation>
     </message>
     <message>
         <source>North lines pattern</source>
@@ -4892,6 +5394,11 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>磁北线</translation>
     </message>
     <message>
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
+        <comment>Description of symbol 601.2</comment>
+        <translation>磁北线是地图上指向磁北极的线。它们在地图上的间隔应该为 33.33 mm ，在比例尺为 1:15 000 时代表地面上的 500 m 。对于其他比例的地图，磁北线应该以整数米的间隔放置（例如， 50 m 、 100 m 、 250 m 、 500 m ），并且地图上的间隔应该在 20 mm 到 40 mm 之间。在可能使小的地形模糊时，如巨石、土丘、悬崖、溪流交汇点、小路尽头等，磁北线可以断开。在水的特征非常少的区域，可以使用蓝色线。</translation>
+    </message>
+    <message>
         <source>North lines pattern, blue</source>
         <comment>Name of symbol 601.3</comment>
         <translation>磁北线，蓝色</translation>
@@ -4902,14 +5409,29 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>套版线</translation>
     </message>
     <message>
+        <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
+        <comment>Description of symbol 602</comment>
+        <translation>必须在地图框内必须将至少三个套版线放置在非对称的位置。此外，应该能够进行颜色检查。</translation>
+    </message>
+    <message>
         <source>Spot height, dot</source>
         <comment>Name of symbol 603.0</comment>
         <translation>高程点</translation>
     </message>
     <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.0</comment>
+        <translation>高程用于粗略估计高差。高度数值四舍五入到米。图像指向北。给出水平不使用点。</translation>
+    </message>
+    <message>
         <source>Spot height, text</source>
         <comment>Name of symbol 603.1</comment>
         <translation>高程注记</translation>
+    </message>
+    <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.1</comment>
+        <translation>高程用于粗略估计高差。高度数值四舍五入到米。图像指向北。给出水平不使用点。</translation>
     </message>
     <message>
         <source>Start</source>
@@ -7611,7 +8133,7 @@ The centre of the triangle shows the precise position of the start point.</sourc
     <message>
         <source>The control points are shown with circles (footprint 24 m). The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 703</comment>
-        <translation>控制点用圆圈表示（足迹 24m）。圆的中心显示了特征的精确位置。为了显示重要的细节，应省略圆的部分。</translation>
+        <translation>检查点用圆圈表示（足迹 24m）。圆的中心显示了特征的精确位置。为了显示重要的细节，应省略圆圈部分。</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -7984,6 +8506,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>小土丘</translation>
     </message>
     <message>
+        <source>Elongated knoll</source>
+        <comment>Name of symbol 113</comment>
+        <translation>长土丘</translation>
+    </message>
+    <message>
         <source>Small depression</source>
         <comment>Name of symbol 115</comment>
         <translation>小凹地</translation>
@@ -7992,6 +8519,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Pit</source>
         <comment>Name of symbol 116</comment>
         <translation>土坑或洞</translation>
+    </message>
+    <message>
+        <source>Broken ground, small</source>
+        <comment>Name of symbol 117.1</comment>
+        <translation>崎岖的地面，小的</translation>
     </message>
     <message>
         <source>Broken ground</source>
@@ -8039,14 +8571,34 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>可翻越的石崖-最小尺寸</translation>
     </message>
     <message>
+        <source>Passable rock face, no tags</source>
+        <comment>Name of symbol 203.1</comment>
+        <translation>可翻越的石崖，无短线</translation>
+    </message>
+    <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
         <comment>Description of symbol 203.1</comment>
         <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
     </message>
     <message>
+        <source>Passable rock face, no tags, minimum size</source>
+        <comment>Name of symbol 203.1.1</comment>
+        <translation>可翻越的石崖，无短线，最小尺寸</translation>
+    </message>
+    <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
         <comment>Description of symbol 203.1.1</comment>
         <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded</source>
+        <comment>Name of symbol 203.2</comment>
+        <translation>可翻越石崖，无短线，圆滑</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded, minimum size</source>
+        <comment>Name of symbol 203.2.1</comment>
+        <translation>可翻越石崖，无短线，圆滑，最小尺寸</translation>
     </message>
     <message>
         <source>Rocky pit</source>
@@ -8072,6 +8624,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Boulder field</source>
         <comment>Name of symbol 208</comment>
         <translation>石块地</translation>
+    </message>
+    <message>
+        <source>Boulder field, large</source>
+        <comment>Name of symbol 208.1</comment>
+        <translation>石块地，大的</translation>
     </message>
     <message>
         <source>Stony ground</source>
@@ -8159,6 +8716,26 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>稀树凌乱空旷地(乔木)</translation>
     </message>
     <message>
+        <source>Undergrowth: slow running</source>
+        <comment>Name of symbol 407</comment>
+        <translation>灌木丛：可缓慢通过</translation>
+    </message>
+    <message>
+        <source>Forest: difficult to run</source>
+        <comment>Name of symbol 408</comment>
+        <translation>森林：奔跑困难</translation>
+    </message>
+    <message>
+        <source>Undergrowth: difficult to run</source>
+        <comment>Name of symbol 409</comment>
+        <translation>灌木丛：难以奔跑</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 409</comment>
+        <translation>密集但视野良好的灌木丛，（黑莓树、帚石楠、矮树，以及包括伐倒的树枝），降低跑步速度约为正常速度的 20 ~ 60% 。这个符号可以不与符号 406 或 408 组合。</translation>
+    </message>
+    <message>
         <source>Orchard</source>
         <comment>Name of symbol 412</comment>
         <translation>果园(空旷地)</translation>
@@ -8167,6 +8744,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Distinct cultivation boundary</source>
         <comment>Name of symbol 414</comment>
         <translation>明显耕地边界</translation>
+    </message>
+    <message>
+        <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
+        <comment>Description of symbol 415</comment>
+        <translation>耕种地，由于种庄稼而季节性地超出边界，可以用覆盖的黑点显示。</translation>
     </message>
     <message>
         <source>Distinct vegetation boundary</source>
@@ -8264,6 +8846,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>支柱</translation>
     </message>
     <message>
+        <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
+        <comment>Description of symbol 533</comment>
+        <translation>管道（输气、水、油等），在地面之上，可以从上面或下面穿过。</translation>
+    </message>
+    <message>
         <source>High tower</source>
         <comment>Name of symbol 535</comment>
         <translation>高塔</translation>
@@ -8307,6 +8894,16 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Spot height, dot</source>
         <comment>Name of symbol 603.0.1</comment>
         <translation>高程点</translation>
+    </message>
+    <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.0.1</comment>
+        <translation>高程用于粗略估计高差。高度数值四舍五入到米。图像指向北。给出水平不使用点。</translation>
+    </message>
+    <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.0.2</comment>
+        <translation>高程用于粗略估计高差。高度数值四舍五入到米。图像指向北。给出水平不使用点。</translation>
     </message>
     <message>
         <source>Start</source>
@@ -9289,12 +9886,12 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Uncrossable pipeline</source>
         <comment>Name of symbol 534</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可穿越管道</translation>
     </message>
     <message>
         <source>A pipeline which cannot be crossed. If an uncrossable pipeline is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 534</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可穿越管道。如果禁止穿越不可穿越管道，那么应该以符号707（不可穿越边界）来标记。</translation>
     </message>
     <message>
         <source>High tower</source>
@@ -9304,7 +9901,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
         <comment>Description of symbol 535</comment>
-        <translation type="unfinished"></translation>
+        <translation>高塔或大型电缆塔，高于周围森林的高度而矗立，位置在符号的重心处。</translation>
     </message>
     <message>
         <source>Small tower</source>
@@ -9314,7 +9911,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
         <comment>Description of symbol 536</comment>
-        <translation type="unfinished"></translation>
+        <translation>明显的射击平台或座位、小塔。位置在符号的重心处。</translation>
     </message>
     <message>
         <source>Fodder rack</source>
@@ -9324,27 +9921,27 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
         <comment>Description of symbol 538</comment>
-        <translation type="unfinished"></translation>
+        <translation>饲料架独立树立或建在树上。位置在符号的重心处。因为是可以接近的地方，所以这些应该省略。</translation>
     </message>
     <message>
         <source>Special man-made feature</source>
         <comment>Name of symbol 539</comment>
-        <translation type="unfinished"></translation>
+        <translation>特别的人工特征</translation>
     </message>
     <message>
         <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
         <comment>Description of symbol 539</comment>
-        <translation type="unfinished"></translation>
+        <translation>特别的人工特征以这些符号显示。每种情况必须在图例中给出符号的定义。</translation>
     </message>
     <message>
         <source>Special man-made feature</source>
         <comment>Name of symbol 540</comment>
-        <translation type="unfinished"></translation>
+        <translation>特殊的人工特征</translation>
     </message>
     <message>
         <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
         <comment>Description of symbol 540</comment>
-        <translation type="unfinished"></translation>
+        <translation>特别的人工特征以这些符号显示。每种情况必须在图例中给出符号的定义。</translation>
     </message>
     <message>
         <source>Magnetic north line, blue</source>
@@ -9354,7 +9951,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. At the scale of 1:5000, 1:7500 and 1:10000 the spacing of north lines on the map should be 30 mm, while at the scale of 1:15000 and 1:20000 the spacing on the map should be 20 mm. North lines may be broken where they obscure small features such as boulders, cliffs, stream junctions, and path ends.</source>
         <comment>Description of symbol 601.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>磁北线是地图上指向磁北极的线。在比例尺为1:5000、1:7500和1:10000的地图上，地图上磁北线的间隔应该为30mm，而在比例尺为1:15000和1:20000的地图上，地图上的间隔应该为20mm。当遮挡边界、悬崖、溪流交汇点和路径末端时，磁北线可以断开。</translation>
     </message>
     <message>
         <source>North lines pattern, blue</source>
@@ -9369,7 +9966,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
         <comment>Description of symbol 602</comment>
-        <translation type="unfinished"></translation>
+        <translation>必须在地图框内必须将至少三个套版线放置在非对称的位置。此外，应该能够进行颜色检查。</translation>
     </message>
     <message>
         <source>Spot height, dot</source>
@@ -9379,7 +9976,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
         <comment>Description of symbol 603.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>高程用于粗略估计高差。高度数值四舍五入到米。图像指向北。给出水平不使用点。</translation>
     </message>
     <message>
         <source>Spot height, text</source>
@@ -9389,7 +9986,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
         <comment>Description of symbol 603.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>高程用于粗略估计高差。高度数值四舍五入到米。图像指向北。给出水平不使用点。</translation>
     </message>
     <message>
         <source>Start</source>
@@ -9414,12 +10011,12 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Control point with focus point (in MTBO maps)</source>
         <comment>Name of symbol 840</comment>
-        <translation type="unfinished"></translation>
+        <translation>带有焦点的检查点（在MTBO地图中）</translation>
     </message>
     <message>
         <source>The focus point (i.e. the point in the centre of a control circle) can be used when it is necessary to clarify the exact position of a control for instance in a dense track network. The focus point shall be used in case of necessity when the exact position of a control is not clear. A focus point helps to specify the exact track where a control is situated.</source>
         <comment>Description of symbol 840</comment>
-        <translation type="unfinished"></translation>
+        <translation>当有必要使检查点的准确位置清晰时，例如在密集的赛道网络中，可以使用焦点（也就是检查点圆中心的点）。在控制点的准确位置不清晰的情况下，应有必要使用焦点。焦点帮助指定检查点所在的准确赛道。</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -9447,12 +10044,9 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <translation>必经路线</translation>
     </message>
     <message>
-        <source>A marked route is shown on the map with a dashed line. If the symbol is used instead
-of symbol 704 before or after a control, it represents an obligatory route for the
-competitors. The symbol can also be used in areas where off-track riding is forbidden
-to represent allowed routes that are marked in the terrain.</source>
+        <source>A marked route is shown on the map with a dashed line. If the symbol is used instead of symbol 704 before or after a control, it represents an obligatory route for the competitors. The symbol can also be used in areas where off-track riding is forbidden to represent allowed routes that are marked in the terrain.</source>
         <comment>Description of symbol 705</comment>
-        <translation type="unfinished"></translation>
+        <translation>标记的路径以虚线显示在地图上。如果在检查点前后使用符号704之外的符号，那么它表示选手强制通过的路径。符号也可以用在禁止离开路径骑行的区域，表示地形上标记的允许路径。</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -9472,7 +10066,7 @@ to represent allowed routes that are marked in the terrain.</source>
     <message>
         <source>A boundary which it is not permitted to cross.</source>
         <comment>Description of symbol 707</comment>
-        <translation>不允许跨越的边界。</translation>
+        <translation>不允许通过的边界。</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -9492,12 +10086,12 @@ to represent allowed routes that are marked in the terrain.</source>
     <message>
         <source>An out-of-bounds area is shown with vertical stripes. A bounding line may be drawn. The areas which may be dangerous to competitors shall be presented by this symbol.</source>
         <comment>Description of symbol 709</comment>
-        <translation type="unfinished"></translation>
+        <translation>出界区域以竖带显示。可以画出边界线。可能对选手危险的区域应该由。这个符号表示。</translation>
     </message>
     <message>
         <source>Out-of-bounds area, bounding line</source>
         <comment>Name of symbol 709.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>出界区域，边界线</translation>
     </message>
     <message>
         <source>Forbidden route</source>
@@ -9505,13 +10099,9 @@ to represent allowed routes that are marked in the terrain.</source>
         <translation>禁止路线</translation>
     </message>
     <message>
-        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The
-zigzag line should be as continuous as possible. If there is a crossing point over the
-forbidden route, it shall be presented like a gate by two perpendicular lines over the
-forbidden route. Also a longer crossing section shall be presented clearly on the map
-by using the perpendicular lines at the end of the zigzag lines.</source>
+        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
         <comment>Description of symbol 711.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>出界并禁止穿越的路径以锯齿线显示。锯齿线应该尽可能连续。如果禁止的路径上有穿越点，那么应该在禁止路径上由两条垂直线像门一样表示。同样，较长的穿越区域应该通过在锯齿线末端的使用垂直线清晰地显示在地图上。</translation>
     </message>
     <message>
         <source>First aid post</source>
@@ -9536,22 +10126,22 @@ by using the perpendicular lines at the end of the zigzag lines.</source>
     <message>
         <source>Dangerous object across tracks or paths, stairs</source>
         <comment>Name of symbol 843</comment>
-        <translation type="unfinished"></translation>
+        <translation>穿越路径、小路或梯子上的危险物体</translation>
     </message>
     <message>
         <source>These barriers must be highly visible on the map and should be overprinted in purple. The symbol should be used for all obstacles that are difficult to cross. For uncrossable barrier, symbol 844 shall be used. This symbol can be used for stairs. There is no particular stair symbol.</source>
         <comment>Description of symbol 843</comment>
-        <translation type="unfinished"></translation>
+        <translation>这些障碍物必须在地图上高度可见，并以紫色覆盖印刷。符号应该用于所有难于穿越的障碍。位于不可穿越的障碍，应该使用符号844。这个符号可以用于梯子。没有特别的梯子符号。</translation>
     </message>
     <message>
         <source>Uncrossable barrier / forbidden to cross</source>
         <comment>Name of symbol 844</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可穿越的障碍/禁止穿越</translation>
     </message>
     <message>
         <source>This symbol can be used for all spots that are forbidden or impossible to pass, e.g. uncrossable barriers; fences or walls that are forbidden or impossible to cross; short sections of roads, tracks or paths that are forbidden to use (for longer sections, symbol 711 shall be used). In spots where two tracks or paths almost meet, but the situation is not obvious on the map, this symbol can be used to indicate that crossing is forbidden.</source>
         <comment>Description of symbol 844</comment>
-        <translation type="unfinished"></translation>
+        <translation>此符号用于禁止或不能通过的所有点，例如不可通过的障碍，禁止或不能通过的篱笆或墙，禁止使用的道路、路径或小路的较短部分（对于较长的部分，应该使用符号711）。在两条路径或小路几乎碰到的点，然而在地图上并不清晰的情况下，这个符号可以用于指示禁止通过。</translation>
     </message>
     <message>
         <source>Simple Orienteering Course</source>
@@ -9595,7 +10185,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
         <comment>Description of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>小的或部分损坏的土墙应该以虚线显示，最小高度为0.5m。</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
@@ -9605,7 +10195,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
         <comment>Description of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>小的被侵蚀的溪谷或沟渠，最小深度0.5m。</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -9615,17 +10205,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
         <comment>Description of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>小的明显的土丘或岩丘，无法与等高线成比例绘制（土丘直径小于大约 5m ）。小丘的高度突出周围地面应该最小为 1m 。符号不能接触等高线。</translation>
     </message>
     <message>
         <source>Elongated knoll</source>
         <comment>Name of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>长土丘</translation>
     </message>
     <message>
         <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
         <comment>Description of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>小的明显的长土丘，无法与等高线成比例绘制（长度小于 12m ，宽度小于 4m ）。小丘的高度突出周围地面应该最小为 1m 。大于此尺寸的小丘应该用等高线绘制。符号不能以自由形式绘制或者使两个小丘符号重叠。符号不能接触等高线。</translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -9635,47 +10225,47 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
         <comment>Description of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>小的窄的自然凹地或坑洼（直径至少为 2m ），不能用等高线成比例绘制，要另外用半圆表示。深度低于周围地面应该最小为 1m 。位置在符号的重心处，符号指向北。符号116用于人工土坑。</translation>
     </message>
     <message>
         <source>Pit</source>
         <comment>Name of symbol 116</comment>
-        <translation>土坑或洞</translation>
+        <translation>土坑</translation>
     </message>
     <message>
         <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
         <comment>Description of symbol 116</comment>
-        <translation type="unfinished"></translation>
+        <translation>某一侧明显陡直的土坑或洞，不能用符号106成比例地绘制（直径至少 2m）。最小深度低于周围地面应该为 1m 。位置在符号的重心处，符号指向北。</translation>
     </message>
     <message>
         <source>Broken ground, small</source>
         <comment>Name of symbol 117.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>崎岖的地面，小的</translation>
     </message>
     <message>
         <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
         <comment>Description of symbol 117.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>太复杂而无法显示细节的土坑或小丘区域。自由放置的点的密度会在根据地面上的细节而变化。</translation>
     </message>
     <message>
         <source>Broken ground, big</source>
         <comment>Name of symbol 117.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>崎岖的地面，大的</translation>
     </message>
     <message>
         <source>The size of the dots may vary.</source>
         <comment>Description of symbol 117.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>点的尺寸会变化。</translation>
     </message>
     <message>
         <source>Special land form feature</source>
         <comment>Name of symbol 118</comment>
-        <translation type="unfinished"></translation>
+        <translation>特殊地形特征</translation>
     </message>
     <message>
         <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
         <comment>Description of symbol 118</comment>
-        <translation type="unfinished"></translation>
+        <translation>这个符号可以用于特别小的地形特征。符号的定义必须在地图图例中给出。</translation>
     </message>
     <message>
         <source>Passable rock face</source>
@@ -9685,7 +10275,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
         <comment>Description of symbol 203</comment>
-        <translation type="unfinished"></translation>
+        <translation>小且竖直岩面（最小高度 1m ）可以不使用短线显示。如果岩面下降的方向从等高线上看不明显或识别度不高，应该在下降方向上绘制短线。对于没有显示短线的可翻越岩面，线的末端可以圆滑，来提高识别度。</translation>
     </message>
     <message>
         <source>Passable rock face, minimum size</source>
@@ -9695,12 +10285,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
         <comment>Description of symbol 203.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>小且竖直岩面（最小高度 1m ）可以不使用短线显示。如果岩面下降的方向从等高线上看不明显或识别度不高，应该在下降方向上绘制短线。对于没有显示短线的可翻越岩面，线的末端可以圆滑，来提高识别度。</translation>
     </message>
     <message>
         <source>Passable rock face, no tags</source>
         <comment>Name of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>可翻越的石崖，无短线</translation>
     </message>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -9710,32 +10300,32 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Passable rock face, no tags, minimum size</source>
         <comment>Name of symbol 203.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>可翻越的石崖，无短线，最小尺寸</translation>
     </message>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
         <comment>Description of symbol 203.1.1</comment>
-        <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
+        <translation>如果从等高线上可以明显看到岩石表面的下降方向，或辨识性很好，那么应该使用无短线最小尺寸的可翻越石崖。</translation>
     </message>
     <message>
         <source>Passable rock face, no tags, rounded</source>
         <comment>Name of symbol 203.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>可翻越石崖，无短线，圆滑</translation>
     </message>
     <message>
         <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
         <comment>Description of symbol 203.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>对于无短线显示的可翻越石崖，线的末端应该圆滑来提高辨识性。</translation>
     </message>
     <message>
         <source>Passable rock face, no tags, rounded, minimum size</source>
         <comment>Name of symbol 203.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>可翻越石崖，无短线，圆滑，最小尺寸</translation>
     </message>
     <message>
         <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
         <comment>Description of symbol 203.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>对于无短线显示的可翻越石崖，线的末端应该圆滑来提高辨识性。</translation>
     </message>
     <message>
         <source>Rocky pit</source>
@@ -9765,7 +10355,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
         <comment>Description of symbol 207</comment>
-        <translation>大而明顯的岩石。更巨大的岩石應使用符號 202.</translation>
+        <translation>大而明显的演示。更巨大的岩石应使用符号 202 。</translation>
     </message>
     <message>
         <source>Boulder field</source>
@@ -9775,17 +10365,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
         <comment>Description of symbol 208</comment>
-        <translation type="unfinished"></translation>
+        <translation>覆盖有很多块无法单独标记的石头的区域，由任意指向的实心三角形显示，三角形三边的比例为 8:6:5 。应该最少使用两个三角形。通过性由三角形的密度指示。为了能够显示石块尺寸显著不同的石块地之间的区别，允许将三角形放大 20% 。</translation>
     </message>
     <message>
         <source>Boulder field, large</source>
         <comment>Name of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>石块地，大的</translation>
     </message>
     <message>
         <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
         <comment>Description of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>为了能够显示石块尺寸显著不同的石块地之间的区别，允许将三角形放大 20% 。</translation>
     </message>
     <message>
         <source>Boulder cluster</source>
@@ -9795,7 +10385,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
         <comment>Description of symbol 209</comment>
-        <translation type="unfinished"></translation>
+        <translation>小的清晰的一组石块特别密集地聚在一起，使它们不能各自标记。符号是指向北的等边三角形。为了能够显示尺寸明显不同的石群之间的差别，允许将此符号放大 25% （ 1mm ）。</translation>
     </message>
     <message>
         <source>Boulder cluster, large</source>
@@ -9805,7 +10395,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
         <comment>Description of symbol 209.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>为了能够显示尺寸明显不同的石群之间的差别，允许将此符号放大 25% （ 1mm ）。</translation>
     </message>
     <message>
         <source>Waterhole</source>
@@ -9815,7 +10405,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
         <comment>Description of symbol 303</comment>
-        <translation type="unfinished"></translation>
+        <translation>太小而不能成比例显示的注水的土坑或有水的区域。位置在符号的中心处，指向北。</translation>
     </message>
     <message>
         <source>Narrow marsh</source>
@@ -9825,7 +10415,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
         <comment>Description of symbol 308</comment>
-        <translation type="unfinished"></translation>
+        <translation>太窄（小于大约 5m 宽）而无法用符号 310 显示的有水的湿地或溪流。</translation>
     </message>
     <message>
         <source>Indistinct marsh</source>
@@ -9835,7 +10425,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
         <comment>Description of symbol 311</comment>
-        <translation type="unfinished"></translation>
+        <translation>明显的或季节性的沼泽或从沼泽逐渐变成硬地的区域，是可通过的。边沿通常清晰，并且植被与周围环境相似。这个符号应该与植被符号结合，来显示可跑性和开阔程度。</translation>
     </message>
     <message>
         <source>Indistinct marsh, minimum size</source>
@@ -9845,12 +10435,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Well</source>
         <comment>Name of symbol 312</comment>
-        <translation type="unfinished"></translation>
+        <translation>井</translation>
     </message>
     <message>
         <source>Wells and captive springs, which are clearly visible on the ground.</source>
         <comment>Description of symbol 312</comment>
-        <translation type="unfinished"></translation>
+        <translation>在地面上清晰可见的井和不流动的泉。</translation>
     </message>
     <message>
         <source>Spring</source>
@@ -9860,87 +10450,87 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
         <comment>Description of symbol 313</comment>
-        <translation type="unfinished"></translation>
+        <translation>具有明显出口的溪流的源头。符号指向开放的下游。</translation>
     </message>
     <message>
         <source>Undergrowth: slow running</source>
         <comment>Name of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation>灌木丛：可缓慢通过</translation>
     </message>
     <message>
         <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
         <comment>Description of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation>密集但视野良好的灌木层，（黑莓树、帚石楠、矮树，以及包括伐倒的树枝），降低跑步速度约为正常速度的 60 ~ 80% 。这个符号可以不与符号 406 或 408 组合。</translation>
     </message>
     <message>
         <source>Forest: difficult to run</source>
         <comment>Name of symbol 408</comment>
-        <translation type="unfinished"></translation>
+        <translation>森林：奔跑困难</translation>
     </message>
     <message>
         <source>An area with dense trees or thicket (low visibility) which reduce running to ca. 20-60% of normal speed.</source>
         <comment>Description of symbol 408</comment>
-        <translation type="unfinished"></translation>
+        <translation>密集的树或灌木区域（视野不好），降低奔跑速度约为正常速度的 20 ~ 60% 。</translation>
     </message>
     <message>
         <source>Undergrowth: difficult to run</source>
         <comment>Name of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>灌木丛：难以奔跑</translation>
     </message>
     <message>
         <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
         <comment>Description of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>密集但视野良好的灌木丛，（黑莓树、帚石楠、矮树，以及包括伐倒的树枝），降低跑步速度约为正常速度的 20 ~ 60% 。这个符号可以不与符号 406 或 408 组合。</translation>
     </message>
     <message>
         <source>Vegetation: very difficult to run, impassable</source>
         <comment>Name of symbol 410</comment>
-        <translation type="unfinished"></translation>
+        <translation>植被：难以奔跑，不可通过</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.</source>
         <comment>Description of symbol 410</comment>
-        <translation type="unfinished"></translation>
+        <translation>植被密集（树或灌木）几乎不能通过的区域。奔跑速度降低到正常速度的大约 0 - 20% 。</translation>
     </message>
     <message>
         <source>Vegetation: very difficult to run, impassable, line</source>
         <comment>Name of symbol 410.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>植被：非常难以奔跑，不可通过，线条</translation>
     </message>
     <message>
         <source>Line of minimum width for symbol 410.</source>
         <comment>Description of symbol 410.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>符号410线条的最小宽度。</translation>
     </message>
     <message>
         <source>Forest runnable in one direction, 1</source>
         <comment>Name of symbol 411.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>在一个方向上可奔跑的树林，1</translation>
     </message>
     <message>
         <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
         <comment>Description of symbol 411.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
     </message>
     <message>
         <source>Forest runnable in one direction, 2</source>
         <comment>Name of symbol 411.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>在一个方向上可奔跑的树林，2</translation>
     </message>
     <message>
         <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
         <comment>Description of symbol 411.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
     </message>
     <message>
         <source>Forest runnable in one direction, 3</source>
         <comment>Name of symbol 411.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>在一个方向上可奔跑的树林，3</translation>
     </message>
     <message>
         <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
         <comment>Description of symbol 411.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
     </message>
     <message>
         <source>Distinct cultivation boundary</source>
@@ -9950,7 +10540,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
         <comment>Description of symbol 414</comment>
-        <translation type="unfinished"></translation>
+        <translation>耕种地的边界，当不以其它符号（围栏、墙、小路等）显示时，则用黑色线条显示。不同类型耕种地的永久边界，以这个符号显示。</translation>
     </message>
     <message>
         <source>Cultivated land</source>
@@ -9960,7 +10550,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
         <comment>Description of symbol 415</comment>
-        <translation type="unfinished"></translation>
+        <translation>耕种地，由于种庄稼而季节性地超出边界，可以用覆盖的黑点显示。</translation>
     </message>
     <message>
         <source>Distinct vegetation boundary</source>
@@ -9970,37 +10560,37 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
         <comment>Description of symbol 416</comment>
-        <translation type="unfinished"></translation>
+        <translation>清晰的树林边沿或树林内非常清晰的植被边界。</translation>
     </message>
     <message>
         <source>Motorway, under construction</source>
         <comment>Name of symbol 501.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>机动车道，正在施工</translation>
     </message>
     <message>
         <source>A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 501.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>正在施工的道路可以用虚线来表示。</translation>
     </message>
     <message>
         <source>Major road, minimum width, under construction</source>
         <comment>Name of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>主干道，最小宽度，正在施工</translation>
     </message>
     <message>
         <source>A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>正在施工的道路可以用虚线来表示。</translation>
     </message>
     <message>
         <source>Minor road, under construction</source>
         <comment>Name of symbol 503.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>次要道路，正在施工</translation>
     </message>
     <message>
         <source>A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 503.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>正在施工的道路可以用虚线来表示。</translation>
     </message>
     <message>
         <source>Road</source>
@@ -10010,7 +10600,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A maintained road suitable for motor vehicles in all weather. Width less than 3 m.</source>
         <comment>Description of symbol 504</comment>
-        <translation type="unfinished"></translation>
+        <translation>保养良好的道路，在各种天气情况下都适于机动车行驶。宽度小于 3 m 。</translation>
     </message>
     <message>
         <source>Vehicle track</source>
@@ -10020,7 +10610,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. Width less than 3 m.</source>
         <comment>Description of symbol 505</comment>
-        <translation type="unfinished"></translation>
+        <translation>土路或保养不好的道路，只适用于机动车缓慢行驶。宽度小于 3 m 。</translation>
     </message>
     <message>
         <source>Footpath</source>
@@ -10030,17 +10620,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A large path, or old vehicle track, which is distinct on the ground.</source>
         <comment>Description of symbol 506</comment>
-        <translation type="unfinished"></translation>
+        <translation>大的路径，或老的机动车道，在地面上非常明显。</translation>
     </message>
     <message>
         <source>Small path</source>
         <comment>Name of symbol 507</comment>
-        <translation type="unfinished"></translation>
+        <translation>小路</translation>
     </message>
     <message>
         <source>A small path or (temporary) forest extraction track which can be followed at competition speed.</source>
         <comment>Description of symbol 507</comment>
-        <translation type="unfinished"></translation>
+        <translation>小路，或树林中（临时）开辟的路径，能够以竞赛速度沿路奔跑。</translation>
     </message>
     <message>
         <source>Less distinct small path</source>
@@ -10050,7 +10640,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A less distinct small path or forestry extraction track.</source>
         <comment>Description of symbol 508</comment>
-        <translation type="unfinished"></translation>
+        <translation>较不明显的小路或林中开辟的路径。</translation>
     </message>
     <message>
         <source>Narrow ride</source>
@@ -10060,7 +10650,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A distinct ride, less than ca. 5 m wide. A ride is a linear break in the forest (usually plantation) which does not have a distinct path along it. Where there is a path along a ride, symbols 507 or 508 should be used in place of symbol 509.</source>
         <comment>Description of symbol 509</comment>
-        <translation type="unfinished"></translation>
+        <translation>明显的骑马路，宽度小于大约5 m 。骑马路是树林中的线形空隙，沿着它没有明显的道路。当沿着骑马路有条小路时，应该使用符号 507 或 508 代替符号 509。</translation>
     </message>
     <message>
         <source>Footbridge</source>
@@ -10071,7 +10661,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>A footbridge with no path leading to it.
 Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm over both sides of the stream!</source>
         <comment>Description of symbol 512</comment>
-        <translation type="unfinished"></translation>
+        <translation>步行桥，没有小路引向它。
+注意：如果溪流的宽度大于 0.25 mm ，调整这个符号使它在溪流两侧都延长 0.5 mm ！</translation>
     </message>
     <message>
         <source>Stone wall</source>
@@ -10081,17 +10672,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>A stone wall or stone-faced bank.</source>
         <comment>Description of symbol 519</comment>
-        <translation type="unfinished"></translation>
+        <translation>石墙或表面石砌的岸。</translation>
     </message>
     <message>
         <source>Ruined stone wall</source>
         <comment>Name of symbol 520</comment>
-        <translation type="unfinished"></translation>
+        <translation>毁坏的石墙</translation>
     </message>
     <message>
         <source>A ruined stone wall may be shown by a dashed line.</source>
         <comment>Description of symbol 520</comment>
-        <translation type="unfinished"></translation>
+        <translation>毁坏的石墙可以用虚线显示。</translation>
     </message>
     <message>
         <source>Fence</source>
@@ -10101,7 +10692,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>A wooden or wire fence less than ca. 1.5 m high.</source>
         <comment>Description of symbol 522</comment>
-        <translation type="unfinished"></translation>
+        <translation>木制围栏或绳制围栏，小于大约1.5 m 高。</translation>
     </message>
     <message>
         <source>Ruined fence</source>
@@ -10111,7 +10702,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>A ruined fence may be shown with a dashed line.</source>
         <comment>Description of symbol 523</comment>
-        <translation type="unfinished"></translation>
+        <translation>毁坏的围栏可以用虚线显示。</translation>
     </message>
     <message>
         <source>Settlement</source>
@@ -10126,22 +10717,22 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Permanently out of bounds</source>
         <comment>Name of symbol 528</comment>
-        <translation type="unfinished"></translation>
+        <translation>永久出界</translation>
     </message>
     <message>
         <source>Areas which are permanently forbidden to the runner are shown as out of bounds. The screen is superimposed on the normal map detail. A bounding line may be drawn if there is no natural boundary (see 709).</source>
         <comment>Description of symbol 528</comment>
-        <translation type="unfinished"></translation>
+        <translation>永久性禁止选手进入的区域，显示为出界。覆盖在一般地图的细节上。如果没有自然边界，可以绘制出边界线（请见 709 ）。</translation>
     </message>
     <message>
         <source>Permanently out of bounds, bounding line</source>
         <comment>Name of symbol 528.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>永久出界，边界线</translation>
     </message>
     <message>
         <source>A bounding line may be drawn if there is no natural boundary (see 709).</source>
         <comment>Description of symbol 528.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>如果没有自然边界，可以绘制出边界线（请见 709 ）。</translation>
     </message>
     <message>
         <source>Ruin</source>
@@ -10151,17 +10742,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
         <comment>Description of symbol 530</comment>
-        <translation type="unfinished"></translation>
+        <translation>废墟的地面图以比例显示，减小到相对显示的最小尺寸。非常小的废墟可以用实线绘制。</translation>
     </message>
     <message>
         <source>Ruin, no dashes</source>
         <comment>Name of symbol 530.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>废墟，无虚线</translation>
     </message>
     <message>
         <source>Very small ruins may be drawn with a solid line.</source>
         <comment>Description of symbol 530.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>非常小的废墟可以用实线绘制。</translation>
     </message>
     <message>
         <source>Ruin, minimum size</source>
@@ -10171,17 +10762,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Very small ruins may be drawn with a solid line.</source>
         <comment>Description of symbol 530.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>非常小的废墟可以用实线绘制。</translation>
     </message>
     <message>
         <source>Crossable pipeline</source>
         <comment>Name of symbol 533</comment>
-        <translation type="unfinished"></translation>
+        <translation>可穿过的管道</translation>
     </message>
     <message>
         <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
         <comment>Description of symbol 533</comment>
-        <translation type="unfinished"></translation>
+        <translation>管道（输气、水、油等），在地面之上，可以从上面或下面穿过。</translation>
     </message>
     <message>
         <source>Cairn</source>
@@ -10191,7 +10782,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
         <comment>Description of symbol 537</comment>
-        <translation type="unfinished"></translation>
+        <translation>石标，记号石块或边界石块（或是一些国家的三角点），高度大于 0.5 m 。</translation>
     </message>
     <message>
         <source>Magnetic north line</source>
@@ -10201,7 +10792,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601</comment>
-        <translation type="unfinished"></translation>
+        <translation>磁北线是地图上指向磁北极的线。它们在地图上的间隔应该为 33.33 mm ，在比例尺为 1:15 000 时代表地面上的 500 m 。对于其他比例的地图，磁北线应该以整数米的间隔放置（例如， 50 m 、 100 m 、 250 m 、 500 m ），并且地图上的间隔应该在 20 mm 到 40 mm 之间。在可能使小的地形模糊时，如巨石、土丘、悬崖、溪流交汇点、小路尽头等，磁北线可以断开。在水的特征非常少的区域，可以使用蓝色线。</translation>
     </message>
     <message>
         <source>North lines pattern</source>
@@ -10532,9 +11123,24 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>可翻越的石崖</translation>
     </message>
     <message>
+        <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203</comment>
+        <translation>小且竖直岩面（最小高度 1m ）可以不使用短线显示。如果岩面下降的方向从等高线上看不明显或识别度不高，应该在下降方向上绘制短线。对于没有显示短线的可翻越岩面，线的末端可以圆滑，来提高识别度。</translation>
+    </message>
+    <message>
         <source>Passable rock face, minimum size</source>
         <comment>Name of symbol 203.0.1</comment>
         <translation>可翻越的石崖-最小尺寸</translation>
+    </message>
+    <message>
+        <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.0.1</comment>
+        <translation>小且竖直岩面（最小高度 1m ）可以不使用短线显示。如果岩面下降的方向从等高线上看不明显或识别度不高，应该在下降方向上绘制短线。对于没有显示短线的可翻越岩面，线的末端可以圆滑，来提高识别度。</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags</source>
+        <comment>Name of symbol 203.1</comment>
+        <translation>可翻越的石崖，无短线</translation>
     </message>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -10542,9 +11148,34 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
     </message>
     <message>
+        <source>Passable rock face, no tags, minimum size</source>
+        <comment>Name of symbol 203.1.1</comment>
+        <translation>可翻越的石崖，无短线，最小尺寸</translation>
+    </message>
+    <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
         <comment>Description of symbol 203.1.1</comment>
         <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded</source>
+        <comment>Name of symbol 203.2</comment>
+        <translation>可翻越石崖，无短线，圆滑</translation>
+    </message>
+    <message>
+        <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.2</comment>
+        <translation>对于无短线显示的可翻越石崖，线的末端应该圆滑来提高辨识性。</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded, minimum size</source>
+        <comment>Name of symbol 203.2.1</comment>
+        <translation>可翻越石崖，无短线，圆滑，最小尺寸</translation>
+    </message>
+    <message>
+        <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.2.1</comment>
+        <translation>对于无短线显示的可翻越石崖，线的末端应该圆滑来提高辨识性。</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -10582,14 +11213,39 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>石块地</translation>
     </message>
     <message>
+        <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208</comment>
+        <translation>覆盖有很多块无法单独标记的石头的区域，由任意指向的实心三角形显示，三角形三边的比例为 8:6:5 。应该最少使用两个三角形。通过性由三角形的密度指示。为了能够显示石块尺寸显著不同的石块地之间的区别，允许将三角形放大 20% 。</translation>
+    </message>
+    <message>
+        <source>Boulder field, large</source>
+        <comment>Name of symbol 208.1</comment>
+        <translation>石块地，大的</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208.1</comment>
+        <translation>为了能够显示石块尺寸显著不同的石块地之间的区别，允许将三角形放大 20% 。</translation>
+    </message>
+    <message>
         <source>Boulder cluster</source>
         <comment>Name of symbol 209</comment>
         <translation>石群</translation>
     </message>
     <message>
+        <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
+        <comment>Description of symbol 209</comment>
+        <translation>小的清晰的一组石块特别密集地聚在一起，使它们不能各自标记。符号是指向北的等边三角形。为了能够显示尺寸明显不同的石群之间的差别，允许将此符号放大 25% （ 1mm ）。</translation>
+    </message>
+    <message>
         <source>Boulder cluster, large</source>
         <comment>Name of symbol 209.1</comment>
         <translation>大的石群</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
+        <comment>Description of symbol 209.1</comment>
+        <translation>为了能够显示尺寸明显不同的石群之间的差别，允许将此符号放大 25% （ 1mm ）。</translation>
     </message>
     <message>
         <source>A black bank line indicates that the feature cannot be crossed.</source>
@@ -10615,6 +11271,11 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
         <comment>Description of symbol 306</comment>
         <translation>宽度小于2 m的可穿越河流（包括主排水沟）。为了更好的可读性，应在沼泽中画为一条沟渠作为可越过的河流（305）。</translation>
+    </message>
+    <message>
+        <source>Marsh (in ski orienteering map)</source>
+        <comment>Name of symbol 310.0.1</comment>
+        <translation>沼泽（在滑雪定向越野地图中）</translation>
     </message>
     <message>
         <source>Open land</source>
@@ -10684,9 +11345,19 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>明显耕地边界</translation>
     </message>
     <message>
+        <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
+        <comment>Description of symbol 414</comment>
+        <translation>耕种地的边界，当不以其它符号（围栏、墙、小路等）显示时，则用黑色线条显示。不同类型耕种地的永久边界，以这个符号显示。</translation>
+    </message>
+    <message>
         <source>Distinct vegetation boundary</source>
         <comment>Name of symbol 416</comment>
         <translation>明显植被边界</translation>
+    </message>
+    <message>
+        <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
+        <comment>Description of symbol 416</comment>
+        <translation>清晰的树林边沿或树林内非常清晰的植被边界。</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
@@ -10734,9 +11405,19 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>公路(＜5m)</translation>
     </message>
     <message>
+        <source>A maintained road suitable for motor vehicles in all weather. Width less than 3 m.</source>
+        <comment>Description of symbol 504</comment>
+        <translation>保养良好的道路，在各种天气情况下都适于机动车行驶。宽度小于 3 m 。</translation>
+    </message>
+    <message>
         <source>Narrow ride</source>
         <comment>Name of symbol 509</comment>
         <translation>窄林道或可通过地表的线迹</translation>
+    </message>
+    <message>
+        <source>A distinct ride, less than ca. 5 m wide. A ride is a linear break in the forest (usually plantation) which does not have a distinct path along it. Where there is a path along a ride, symbols 507 or 508 should be used in place of symbol 509.</source>
+        <comment>Description of symbol 509</comment>
+        <translation>明显的骑马路，宽度小于大约5 m 。骑马路是树林中的线形空隙，沿着它没有明显的道路。当沿着骑马路有条小路时，应该使用符号 507 或 508 代替符号 509。</translation>
     </message>
     <message>
         <source>Railway</source>
@@ -10794,9 +11475,19 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>石墙</translation>
     </message>
     <message>
+        <source>A stone wall or stone-faced bank.</source>
+        <comment>Description of symbol 519</comment>
+        <translation>石墙或表面石砌的岸。</translation>
+    </message>
+    <message>
         <source>Fence</source>
         <comment>Name of symbol 522</comment>
         <translation>围栏</translation>
+    </message>
+    <message>
+        <source>A wooden or wire fence less than ca. 1.5 m high.</source>
+        <comment>Description of symbol 522</comment>
+        <translation>木制围栏或绳制围栏，小于大约1.5 m 高。</translation>
     </message>
     <message>
         <source>High fence</source>
@@ -10849,6 +11540,26 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>房屋和花园等建筑区。必须显示居民点内的道路，建筑物和其他重要特征。如果无法显示所有建筑物，则可以使用其他符号（黑线网屏）。</translation>
     </message>
     <message>
+        <source>Permanently out of bounds</source>
+        <comment>Name of symbol 528</comment>
+        <translation>永久出界</translation>
+    </message>
+    <message>
+        <source>Areas which are permanently forbidden to the runner are shown as out of bounds. The screen is superimposed on the normal map detail. A bounding line may be drawn if there is no natural boundary (see 709).</source>
+        <comment>Description of symbol 528</comment>
+        <translation>永久性禁止选手进入的区域，显示为出界。覆盖在一般地图的细节上。如果没有自然边界，可以绘制出边界线（请见 709 ）。</translation>
+    </message>
+    <message>
+        <source>Permanently out of bounds, bounding line</source>
+        <comment>Name of symbol 528.1</comment>
+        <translation>永久出界，边界线</translation>
+    </message>
+    <message>
+        <source>A bounding line may be drawn if there is no natural boundary (see 709).</source>
+        <comment>Description of symbol 528.1</comment>
+        <translation>如果没有自然边界，可以绘制出边界线（请见 709 ）。</translation>
+    </message>
+    <message>
         <source>Paved area</source>
         <comment>Name of symbol 529</comment>
         <translation>铺装区域</translation>
@@ -10879,9 +11590,19 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>射击场显示为特殊符号，表示需要小心。关联的建筑物分别标记。</translation>
     </message>
     <message>
+        <source>Uncrossable pipeline</source>
+        <comment>Name of symbol 534</comment>
+        <translation>不可穿越管道</translation>
+    </message>
+    <message>
         <source>High tower</source>
         <comment>Name of symbol 535</comment>
         <translation>高塔</translation>
+    </message>
+    <message>
+        <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
+        <comment>Description of symbol 535</comment>
+        <translation>高塔或大型电缆塔，高于周围森林的高度而矗立，位置在符号的重心处。</translation>
     </message>
     <message>
         <source>Small tower</source>
@@ -10889,9 +11610,39 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>小塔</translation>
     </message>
     <message>
+        <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
+        <comment>Description of symbol 536</comment>
+        <translation>明显的射击平台或座位、小塔。位置在符号的重心处。</translation>
+    </message>
+    <message>
+        <source>Special man-made feature</source>
+        <comment>Name of symbol 539</comment>
+        <translation>特别的人工特征</translation>
+    </message>
+    <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 539</comment>
+        <translation>特别的人工特征以这些符号显示。每种情况必须在图例中给出符号的定义。</translation>
+    </message>
+    <message>
+        <source>Special man-made feature</source>
+        <comment>Name of symbol 540</comment>
+        <translation>特别的人工特征</translation>
+    </message>
+    <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 540</comment>
+        <translation>特别的人工特征以这些符号显示。每种情况必须在图例中给出符号的定义。</translation>
+    </message>
+    <message>
         <source>Magnetic north line</source>
         <comment>Name of symbol 601</comment>
         <translation>磁北线</translation>
+    </message>
+    <message>
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
+        <comment>Description of symbol 601</comment>
+        <translation>磁北线是地图上指向磁北极的线。它们在地图上的间隔应该为 33.33 mm ，在比例尺为 1:15 000 时代表地面上的 500 m 。对于其他比例的地图，磁北线应该以整数米的间隔放置（例如， 50 m 、 100 m 、 250 m 、 500 m ），并且地图上的间隔应该在 20 mm 到 40 mm 之间。在可能使小的地形模糊时，如巨石、土丘、悬崖、溪流交汇点、小路尽头等，磁北线可以断开。在水的特征非常少的区域，可以使用蓝色线。</translation>
     </message>
     <message>
         <source>North lines pattern</source>
@@ -10904,6 +11655,11 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>磁北线</translation>
     </message>
     <message>
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
+        <comment>Description of symbol 601.2</comment>
+        <translation>磁北线是地图上指向磁北极的线。它们在地图上的间隔应该为 33.33 mm ，在比例尺为 1:15 000 时代表地面上的 500 m 。对于其他比例的地图，磁北线应该以整数米的间隔放置（例如， 50 m 、 100 m 、 250 m 、 500 m ），并且地图上的间隔应该在 20 mm 到 40 mm 之间。在可能使小的地形模糊时，如巨石、土丘、悬崖、溪流交汇点、小路尽头等，磁北线可以断开。在水的特征非常少的区域，可以使用蓝色线。</translation>
+    </message>
+    <message>
         <source>North lines pattern, blue</source>
         <comment>Name of symbol 601.3</comment>
         <translation>磁北线，蓝色</translation>
@@ -10914,14 +11670,169 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>套版线</translation>
     </message>
     <message>
+        <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
+        <comment>Description of symbol 602</comment>
+        <translation>必须在地图框内必须将至少三个套版线放置在非对称的位置。此外，应该能够进行颜色检查。</translation>
+    </message>
+    <message>
         <source>Spot height, dot</source>
         <comment>Name of symbol 603.0</comment>
         <translation>高程点</translation>
     </message>
     <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.0</comment>
+        <translation>高程用于粗略估计高差。高度数值四舍五入到米。图像指向北。给出水平不使用点。</translation>
+    </message>
+    <message>
         <source>Spot height, text</source>
         <comment>Name of symbol 603.1</comment>
         <translation>高程注记</translation>
+    </message>
+    <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.1</comment>
+        <translation>高程用于粗略估计高差。高度数值四舍五入到米。图像指向北。给出水平不使用点。</translation>
+    </message>
+    <message>
+        <source>Very fast, wide ski tracks in ski centres, made with a ski trail groomer or a track leveller.</source>
+        <comment>Description of symbol 801</comment>
+        <translation>滑雪中心的非常快、宽的雪道，由滑雪道修正设备或道路平整设备修建。</translation>
+    </message>
+    <message>
+        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
+slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
+technique for slowing and stopping.
+
+In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
+        <comment>Description of symbol 804</comment>
+        <translation>不平的，慢速路径，雪少或有一些树枝。这个符号不用于陡
+坡上，如果道路的宽度允许使用人字台阶来上山，或铲雪
+技术来减速或停止。
+
+为了使交叉点清晰，慢速路径的起点以短线绘制出。</translation>
+    </message>
+    <message>
+        <source>Road covered with snow</source>
+        <comment>Name of symbol 805</comment>
+        <translation>覆盖雪的道路</translation>
+    </message>
+    <message>
+        <source>Snowploughed, skiable roads are drawn with a normal road symbol but wider.</source>
+        <comment>Description of symbol 805</comment>
+        <translation>铲过雪的可滑行的道路，用通常的道路符号绘制，但更宽。</translation>
+    </message>
+    <message>
+        <source>Sanded or snowless road, line symbol</source>
+        <comment>Name of symbol 806</comment>
+        <translation>砂质的或无雪的道路，线条符号</translation>
+    </message>
+    <message>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
+marks across the road symbol show that the road is not skiable. Snowless roads and
+heavily sanded roads should normally be marked as forbidden routes.</source>
+        <comment>Description of symbol 806</comment>
+        <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型
+标记，穿过道路符号，显示道路不可滑行。无雪的道路，和
+砂质含量大的道路，通常标记为禁止的路线。</translation>
+    </message>
+    <message>
+        <source>Sanded or snowless road, single symbol</source>
+        <comment>Name of symbol 806.1</comment>
+        <translation>砂质的或无雪的道路，单一符号</translation>
+    </message>
+    <message>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
+marks across the road symbol show that the road is not skiable. Snowless roads and
+heavily sanded roads should normally be marked as forbidden routes.</source>
+        <comment>Description of symbol 806.1</comment>
+        <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型
+标记，穿过道路符号，显示道路不可滑行。无雪的道路，和
+砂质含量大的道路，通常标记为禁止的路线。</translation>
+    </message>
+    <message>
+        <source>Unploughed road</source>
+        <comment>Name of symbol 807</comment>
+        <translation>未铲雪的道路</translation>
+    </message>
+    <message>
+        <source>A road which is not opened for traffic, no skiable track.</source>
+        <comment>Description of symbol 807</comment>
+        <translation>交通未开放，没有可滑行的路径。</translation>
+    </message>
+    <message>
+        <source>Prepared area</source>
+        <comment>Name of symbol 808</comment>
+        <translation>准备好的区域</translation>
+    </message>
+    <message>
+        <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
+The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
+        <comment>Description of symbol 808</comment>
+        <translation>回转赛坡（高山滑雪坡）及其他区域，宽的，可滑行的，并且坚硬。
+准备好的区域的边界用窄的绿色线（ 0.13 mm ）显示，从而可以清晰地识别每个边沿。</translation>
+    </message>
+    <message>
+        <source>Prepared area, fill pattern</source>
+        <comment>Name of symbol 808.0.1</comment>
+        <translation>准备好的区域，填充图样</translation>
+    </message>
+    <message>
+        <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
+The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
+        <comment>Description of symbol 808.0.1</comment>
+        <translation>回转赛坡（高山滑雪坡）及其他区域，宽的，可滑行的，并且坚硬。
+准备好的区域的边界用窄的绿色线（ 0.13 mm ）显示，从而可以清晰地识别每个边沿。</translation>
+    </message>
+    <message>
+        <source>Prepared area, boundary</source>
+        <comment>Name of symbol 801.0.2</comment>
+        <translation>准备好的区域，边界</translation>
+    </message>
+    <message>
+        <source>The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
+        <comment>Description of symbol 801.0.2</comment>
+        <translation>准备好的区域的边界用窄的绿色线（ 0.13 mm ）显示，从而可以清晰地识别每个边沿。</translation>
+    </message>
+    <message>
+        <source>Public snow mobile route</source>
+        <comment>Name of symbol 813</comment>
+        <translation>公共的雪地摩托路线</translation>
+    </message>
+    <message>
+        <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possibility of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
+        <comment>Description of symbol 813</comment>
+        <translation>用于雪地摩托的公共的标记的路线，可以在滑雪定向越野竞赛中使用。这些路线经常不平坦，并且宽度和质量在变化。组织者必须在竞赛说明中将这样的路径的质量向选手发出通知（例如使用图片），并通过临时关闭路径，派人值守路径，或通过其他方式向任何雪地摩托驾驶员发出通知，在路上可能会遇到滑雪定向选手，从而确保选手的安全。如果不能保证选手的安全，路径必须标记为禁止通过，并且必须保证提供安全通道。</translation>
+    </message>
+    <message>
+        <source>Forbidden route, forbidden to cross</source>
+        <comment>Name of symbol 814</comment>
+        <translation>禁止路径，禁止穿过</translation>
+    </message>
+    <message>
+        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
+        <comment>Description of symbol 814</comment>
+        <translation>出界并禁止穿越的路径以锯齿线显示。锯齿线应该尽可能连续。如果禁止的路径上有穿越点，那么应该在禁止路径上由两条垂直线像门一样表示。同样，较长的穿越区域应该通过在锯齿线末端的使用垂直线清晰地显示在地图上。</translation>
+    </message>
+    <message>
+        <source>Forbidden route, crossable, line symbol</source>
+        <comment>Name of symbol 809</comment>
+        <translation>禁止的路线，可穿过，线条符号</translation>
+    </message>
+    <message>
+        <source>Forbidden route, crossable, single symbol</source>
+        <comment>Name of symbol 809.0.1</comment>
+        <translation>禁止的路线，可穿过，单一符号</translation>
+    </message>
+    <message>
+        <source>Equipment deposit</source>
+        <comment>Name of symbol 812</comment>
+        <translation>设备放置位置</translation>
+    </message>
+    <message>
+        <source>A deposit for spare equipment in the terrain.</source>
+        <comment>Description of symbol 812</comment>
+        <translation>地形上备用设备的放置位置。</translation>
     </message>
     <message>
         <source>Start</source>
@@ -10942,6 +11853,11 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 702</comment>
         <translation>检查点以圆圈显示。圆的中心显示了特征的精确位置。圆圈部分应省略以保留重要的细节。</translation>
+    </message>
+    <message>
+        <source>Control point and focus point</source>
+        <comment>Name of symbol 810</comment>
+        <translation>检查点和焦点</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -11111,9 +12027,19 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>小土墙</translation>
     </message>
     <message>
+        <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
+        <comment>Description of symbol 108</comment>
+        <translation>小的或部分损坏的土墙应该以虚线显示，最小高度为0.5m。</translation>
+    </message>
+    <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 110</comment>
         <translation>小冲沟</translation>
+    </message>
+    <message>
+        <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
+        <comment>Description of symbol 110</comment>
+        <translation>小的被侵蚀的溪谷或沟渠，最小深度0.5m。</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -11121,14 +12047,69 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>小土丘</translation>
     </message>
     <message>
+        <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
+        <comment>Description of symbol 112</comment>
+        <translation>小的明显的土丘或岩丘，无法与等高线成比例绘制（土丘直径小于大约 5m ）。小丘的高度突出周围地面应该最小为 1m 。符号不能接触等高线。</translation>
+    </message>
+    <message>
+        <source>Elongated knoll</source>
+        <comment>Name of symbol 113</comment>
+        <translation>长土丘</translation>
+    </message>
+    <message>
+        <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
+        <comment>Description of symbol 113</comment>
+        <translation>小的明显的长土丘，无法与等高线成比例绘制（长度小于 12m ，宽度小于 4m ）。小丘的高度突出周围地面应该最小为 1m 。大于此尺寸的小丘应该用等高线绘制。符号不能以自由形式绘制或者使两个小丘符号重叠。符号不能接触等高线。</translation>
+    </message>
+    <message>
         <source>Small depression</source>
         <comment>Name of symbol 115</comment>
         <translation>小凹地</translation>
     </message>
     <message>
+        <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
+        <comment>Description of symbol 115</comment>
+        <translation>小的窄的自然凹地或坑洼（直径至少为 2m ），不能用等高线成比例绘制，要另外用半圆表示。深度低于周围地面应该最小为 1m 。位置在符号的重心处，符号指向北。符号116用于人工土坑。</translation>
+    </message>
+    <message>
         <source>Pit</source>
         <comment>Name of symbol 116</comment>
         <translation>土坑或洞</translation>
+    </message>
+    <message>
+        <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
+        <comment>Description of symbol 116</comment>
+        <translation>某一侧明显陡直的土坑或洞，不能用符号106成比例地绘制（直径至少 2m）。最小深度低于周围地面应该为 1m 。位置在符号的重心处，符号指向北。</translation>
+    </message>
+    <message>
+        <source>Broken ground, small</source>
+        <comment>Name of symbol 117.1</comment>
+        <translation>崎岖的地面，小的</translation>
+    </message>
+    <message>
+        <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
+        <comment>Description of symbol 117.1</comment>
+        <translation>太复杂而无法显示细节的土坑或小丘区域。自由放置的点的密度会在根据地面上的细节而变化。</translation>
+    </message>
+    <message>
+        <source>Broken ground, big</source>
+        <comment>Name of symbol 117.2</comment>
+        <translation>崎岖的地面，大的</translation>
+    </message>
+    <message>
+        <source>The size of the dots may vary.</source>
+        <comment>Description of symbol 117.2</comment>
+        <translation>点的尺寸会变化。</translation>
+    </message>
+    <message>
+        <source>Special land form feature</source>
+        <comment>Name of symbol 118</comment>
+        <translation>特殊地形特征</translation>
+    </message>
+    <message>
+        <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
+        <comment>Description of symbol 118</comment>
+        <translation>这个符号可以用于特别小的地形特征。符号的定义必须在地图图例中给出。</translation>
     </message>
     <message>
         <source>Rocky pit</source>
@@ -11196,6 +12177,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>水坑</translation>
     </message>
     <message>
+        <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
+        <comment>Description of symbol 303</comment>
+        <translation>太小而不能成比例显示的注水的土坑或有水的区域。位置在符号的中心处，指向北。</translation>
+    </message>
+    <message>
         <source>Minor water channel</source>
         <comment>Name of symbol 307</comment>
         <translation>小水道</translation>
@@ -11206,9 +12192,24 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>天然或人造的次要水道，可能仅间歇性地有水。</translation>
     </message>
     <message>
+        <source>Forest: difficult to run</source>
+        <comment>Name of symbol 408</comment>
+        <translation>森林：奔跑困难</translation>
+    </message>
+    <message>
+        <source>An area with dense trees or thicket (low visibility) which reduce running to ca. 20-60% of normal speed.</source>
+        <comment>Description of symbol 408</comment>
+        <translation>密集的树或灌木区域（视野不好），降低奔跑速度约为正常速度的 20 ~ 60% 。</translation>
+    </message>
+    <message>
         <source>Narrow marsh</source>
         <comment>Name of symbol 308</comment>
         <translation>小水沟</translation>
+    </message>
+    <message>
+        <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
+        <comment>Description of symbol 308</comment>
+        <translation>太窄（小于大约 5m 宽）而无法用符号 310 显示的有水的湿地或溪流。</translation>
     </message>
     <message>
         <source>Uncrossable marsh</source>
@@ -11246,14 +12247,34 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>不明显沼泽</translation>
     </message>
     <message>
+        <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
+        <comment>Description of symbol 311</comment>
+        <translation>明显的或季节性的沼泽或从沼泽逐渐变成硬地的区域，是可通过的。边沿通常清晰，并且植被与周围环境相似。这个符号应该与植被符号结合，来显示可跑性和开阔程度。</translation>
+    </message>
+    <message>
         <source>Indistinct marsh, minimum size</source>
         <comment>Name of symbol 311.1</comment>
         <translation>不明显沼泽-最小尺寸</translation>
     </message>
     <message>
+        <source>Well</source>
+        <comment>Name of symbol 312</comment>
+        <translation>井</translation>
+    </message>
+    <message>
+        <source>Wells and captive springs, which are clearly visible on the ground.</source>
+        <comment>Description of symbol 312</comment>
+        <translation>在地面上清晰可见的井和不流动的泉。</translation>
+    </message>
+    <message>
         <source>Spring</source>
         <comment>Name of symbol 313</comment>
         <translation>泉</translation>
+    </message>
+    <message>
+        <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
+        <comment>Description of symbol 313</comment>
+        <translation>具有明显出口的溪流的源头。符号指向开放的下游。</translation>
     </message>
     <message>
         <source>Special water feature</source>
@@ -11266,9 +12287,84 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>一种特殊的小水体。必须在地图图例中给出符号的定义。</translation>
     </message>
     <message>
+        <source>Undergrowth: slow running</source>
+        <comment>Name of symbol 407</comment>
+        <translation>灌木丛：可缓慢通过</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 407</comment>
+        <translation>密集但视野良好的灌木层，（黑莓树、帚石楠、矮树，以及包括伐倒的树枝），降低跑步速度约为正常速度的 60 ~ 80% 。这个符号可以不与符号 406 或 408 组合。</translation>
+    </message>
+    <message>
+        <source>Undergrowth: difficult to run</source>
+        <comment>Name of symbol 409</comment>
+        <translation>灌木丛：难以奔跑</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 409</comment>
+        <translation>密集但视野良好的灌木丛，（黑莓树、帚石楠、矮树，以及包括伐倒的树枝），降低跑步速度约为正常速度的 20 ~ 60% 。这个符号可以不与符号 406 或 408 组合。</translation>
+    </message>
+    <message>
+        <source>Vegetation: very difficult to run, impassable</source>
+        <comment>Name of symbol 410</comment>
+        <translation>植被：难以奔跑，不可通过</translation>
+    </message>
+    <message>
+        <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.</source>
+        <comment>Description of symbol 410</comment>
+        <translation>植被密集（树或灌木）几乎不能通过的区域。奔跑速度降低到正常速度的大约 0 - 20% 。</translation>
+    </message>
+    <message>
+        <source>Vegetation: very difficult to run, impassable, line</source>
+        <comment>Name of symbol 410.1</comment>
+        <translation>植被：非常难以奔跑，不可通过，线条</translation>
+    </message>
+    <message>
+        <source>Line of minimum width for symbol 410.</source>
+        <comment>Description of symbol 410.1</comment>
+        <translation>符号410线条的最小宽度。</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 1</source>
+        <comment>Name of symbol 411.0</comment>
+        <translation>在一个方向上可奔跑的树林，1</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.0</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 2</source>
+        <comment>Name of symbol 411.1</comment>
+        <translation>在一个方向上可奔跑的树林，2</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.1</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 3</source>
+        <comment>Name of symbol 411.2</comment>
+        <translation>在一个方向上可奔跑的树林，3</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.2</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
+    </message>
+    <message>
         <source>Cultivated land</source>
         <comment>Name of symbol 415</comment>
         <translation>耕地</translation>
+    </message>
+    <message>
+        <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
+        <comment>Description of symbol 415</comment>
+        <translation>耕种地，由于种庄稼而季节性地超出边界，可以用覆盖的黑点显示。</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
@@ -11291,9 +12387,44 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>符号418、419和420可用于特殊的小植被特征。必须在地图图例中分别给出符号的定义。</translation>
     </message>
     <message>
+        <source>Motorway, under construction</source>
+        <comment>Name of symbol 501.5</comment>
+        <translation>机动车道，正在施工</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 501.5</comment>
+        <translation>正在施工的道路可以用虚线来表示。</translation>
+    </message>
+    <message>
+        <source>Major road, minimum width, under construction</source>
+        <comment>Name of symbol 502.1</comment>
+        <translation>主干道，最小宽度，正在施工</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 502.1</comment>
+        <translation>正在施工的道路可以用虚线来表示。</translation>
+    </message>
+    <message>
+        <source>Minor road, under construction</source>
+        <comment>Name of symbol 503.1</comment>
+        <translation>次要道路，正在施工</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 503.1</comment>
+        <translation>正在施工的道路可以用虚线来表示。</translation>
+    </message>
+    <message>
         <source>Vehicle track</source>
         <comment>Name of symbol 505</comment>
         <translation>车径</translation>
+    </message>
+    <message>
+        <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. Width less than 3 m.</source>
+        <comment>Description of symbol 505</comment>
+        <translation>土路或保养不好的道路，只适用于机动车缓慢行驶。宽度小于 3 m 。</translation>
     </message>
     <message>
         <source>Footpath</source>
@@ -11301,9 +12432,29 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>人行径</translation>
     </message>
     <message>
+        <source>A large path, or old vehicle track, which is distinct on the ground.</source>
+        <comment>Description of symbol 506</comment>
+        <translation>大的路径，或老的机动车道，在地面上非常明显。</translation>
+    </message>
+    <message>
+        <source>Small path</source>
+        <comment>Name of symbol 507</comment>
+        <translation>小路</translation>
+    </message>
+    <message>
+        <source>A small path or (temporary) forest extraction track which can be followed at competition speed.</source>
+        <comment>Description of symbol 507</comment>
+        <translation>小路，或树林中（临时）开辟的路径，能够以竞赛速度沿路奔跑。</translation>
+    </message>
+    <message>
         <source>Less distinct small path</source>
         <comment>Name of symbol 508</comment>
         <translation>不明显小路</translation>
+    </message>
+    <message>
+        <source>A less distinct small path or forestry extraction track.</source>
+        <comment>Description of symbol 508</comment>
+        <translation>较不明显的小路或林中开辟的路径。</translation>
     </message>
     <message>
         <source>Footbridge</source>
@@ -11311,9 +12462,31 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>小人行桥</translation>
     </message>
     <message>
+        <source>A footbridge with no path leading to it.
+Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm over both sides of the stream!</source>
+        <comment>Description of symbol 512</comment>
+        <translation>步行桥，没有小路引向它。
+注意：如果溪流的宽度大于 0.25 mm ，调整这个符号使它在溪流两侧都延长 0.5 mm ！</translation>
+    </message>
+    <message>
+        <source>Ruined stone wall</source>
+        <comment>Name of symbol 520</comment>
+        <translation>毁坏的石墙</translation>
+    </message>
+    <message>
+        <source>A ruined stone wall may be shown by a dashed line.</source>
+        <comment>Description of symbol 520</comment>
+        <translation>毁坏的石墙可以用虚线显示。</translation>
+    </message>
+    <message>
         <source>Ruined fence</source>
         <comment>Name of symbol 523</comment>
         <translation>残破围栏</translation>
+    </message>
+    <message>
+        <source>A ruined fence may be shown with a dashed line.</source>
+        <comment>Description of symbol 523</comment>
+        <translation>毁坏的围栏可以用虚线显示。</translation>
     </message>
     <message>
         <source>Ruin</source>
@@ -11321,9 +12494,29 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>废墟</translation>
     </message>
     <message>
+        <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530</comment>
+        <translation>废墟的地面图以比例显示，减小到相对显示的最小尺寸。非常小的废墟可以用实线绘制。</translation>
+    </message>
+    <message>
+        <source>Ruin, no dashes</source>
+        <comment>Name of symbol 530.1</comment>
+        <translation>废墟，无虚线</translation>
+    </message>
+    <message>
+        <source>Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530.1</comment>
+        <translation>非常小的废墟可以用实线绘制。</translation>
+    </message>
+    <message>
         <source>Ruin, minimum size</source>
         <comment>Name of symbol 530.2</comment>
         <translation>废墟最小尺寸</translation>
+    </message>
+    <message>
+        <source>Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530.2</comment>
+        <translation>非常小的废墟可以用实线绘制。</translation>
     </message>
     <message>
         <source>Grave</source>
@@ -11336,14 +12529,34 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>以石头或神龛为标志的明显坟墓，位置在符号的重心处，重心向北。在空间允许的情况下，使用坟墓符号来显示墓地。</translation>
     </message>
     <message>
+        <source>Crossable pipeline</source>
+        <comment>Name of symbol 533</comment>
+        <translation>可穿过的管道</translation>
+    </message>
+    <message>
+        <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
+        <comment>Description of symbol 533</comment>
+        <translation>管道（输气、水、油等），在地面之上，可以从上面或下面穿过。</translation>
+    </message>
+    <message>
         <source>Cairn</source>
         <comment>Name of symbol 537</comment>
         <translation>石标</translation>
     </message>
     <message>
+        <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
+        <comment>Description of symbol 537</comment>
+        <translation>石标，记号石块或边界石块（或是一些国家的三角点），高度大于 0.5 m 。</translation>
+    </message>
+    <message>
         <source>Fodder rack</source>
         <comment>Name of symbol 538</comment>
         <translation>饲料架</translation>
+    </message>
+    <message>
+        <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
+        <comment>Description of symbol 538</comment>
+        <translation>饲料架独立树立或建在树上。位置在符号的重心处。因为是可以接近的地方，所以这些应该省略。</translation>
     </message>
 </context>
 <context>
@@ -11361,7 +12574,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green for SkiO</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>绿色用于 SkiO （滑雪定向越野）</translation>
     </message>
     <message>
         <source>Black 100%</source>
@@ -12067,42 +13280,42 @@ Footprint of individual triangle: 12 m x 6 m.</source>
     <message>
         <source>Body of water that shall not be crossed, with bank line</source>
         <comment>Name of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>不应该穿过的水体，带有水岸线</translation>
     </message>
     <message>
         <source>When a body of water is not covered with ice or shall not be crossed, the colour of the area shall be 100% blue. A black bank line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>当水体没有被冰覆盖，或不应该穿过时，区域的颜色应该为 100% 蓝色。黑色水岸线指示了不应穿过的特征。</translation>
     </message>
     <message>
         <source>Body of water that shall not be crossed</source>
         <comment>Name of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>不应该穿过的水体</translation>
     </message>
     <message>
         <source>When a body of water is not covered with ice or shall not be crossed, the colour of the area shall be 100% blue. A black bank line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>当水体没有被冰覆盖，或不应该穿过时，区域的颜色应该为 100% 蓝色。黑色水岸线指示了不应穿过的特征。</translation>
     </message>
     <message>
         <source>Body of water that shall not be crossed, bank line</source>
         <comment>Name of symbol 301.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>不应该穿过的水体，水岸线</translation>
     </message>
     <message>
         <source>A black bank line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>黑色水岸线指示了不应穿过的特征。</translation>
     </message>
     <message>
         <source>Crossable body of water, with bank line</source>
         <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>可穿过的水体，带有水岸线</translation>
     </message>
     <message>
         <source>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
         <comment>Description of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>当允许穿过水体时，颜色应该为 50% 蓝色。在滑雪定向越野地图中，可穿过水体的水岸线像ISOM的浅水体（ 302 ）一样表示。</translation>
     </message>
     <message>
         <source>Crossable body of water</source>
@@ -12112,17 +13325,17 @@ Footprint of individual triangle: 12 m x 6 m.</source>
     <message>
         <source>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
         <comment>Description of symbol 302.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>当允许穿过水体时，颜色应该为 50% 蓝色。在滑雪定向越野地图中，可穿过水体的水岸线像ISOM的浅水体（ 302 ）一样表示。</translation>
     </message>
     <message>
         <source>Crossable body of water, bank line</source>
         <comment>Name of symbol 302.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>可穿过的水体，水岸线</translation>
     </message>
     <message>
         <source>The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
         <comment>Description of symbol 302.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>在滑雪定向越野地图中，可穿过水体的水岸线像ISOM的浅水体（ 302 ）一样表示。</translation>
     </message>
     <message>
         <source>Crossable watercourse</source>
@@ -12149,12 +13362,12 @@ Minimum length (isolated): 1 mm (footprint 15 m).</source>
     <message>
         <source>Marsh (in ski orienteering map)</source>
         <comment>Name of symbol 310.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>沼泽（在滑雪定向越野地图中）</translation>
     </message>
     <message>
         <source>The marshes shall be shown with the same symbol as Indistinct marsh (310) in the orienteering map specification, so that the track symbols drawn can be read more clearly.</source>
         <comment>Description of symbol 310.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>应该用与定向地图规范中不清晰的沼泽（ 310 ）相同的符号来显示沼泽，从而能够更清晰地识别绘制的路径符号。</translation>
     </message>
     <message>
         <source>Open land</source>
@@ -12284,7 +13497,7 @@ Minimum width: 0.4 mm (footprint 6 m).</source>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running speed.</source>
         <comment>Description of symbol 406.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>植被密集（低可见性）的区域，降低了奔跑速度。</translation>
     </message>
     <message>
         <source>Orchard</source>
@@ -12967,7 +14180,7 @@ North lines shall be broken to improve the legibility of the map, for instance w
     <message>
         <source>Magnetic north line, blue</source>
         <comment>Name of symbol 601.3</comment>
-        <translation>磁北线</translation>
+        <translation>磁北线，蓝色</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
@@ -12996,7 +14209,7 @@ North lines shall be broken to improve the legibility of the map, for instance w
     <message>
         <source>The place where the orienteering starts. The centre of the triangle shows the precise position where the orienteering course starts. The start must be on a clearly identifiable point on the map. The triangle points in the direction of the first control.</source>
         <comment>Description of symbol 701</comment>
-        <translation>定向赛程的起点。三角形的中心位于赛程的确切起点。起点须为图上一个能够清晰辨认的点。三角形指向第一个控制点。</translation>
+        <translation>定向赛程的起点。三角形的中心位于赛程的确切起点。起点须为图上一个能够清晰辨认的点。三角形指向第一个检查点。</translation>
     </message>
     <message>
         <source>Map issue point</source>
@@ -13011,12 +14224,12 @@ North lines shall be broken to improve the legibility of the map, for instance w
     <message>
         <source>Control point and focus point</source>
         <comment>Name of symbol 703</comment>
-        <translation type="unfinished"></translation>
+        <translation>检查点和焦点</translation>
     </message>
     <message>
         <source>The focus point (i.e. the point in the centre of a control circle) shall be used to clarify the exact position of a control.</source>
         <comment>Description of symbol 703</comment>
-        <translation type="unfinished"></translation>
+        <translation>焦点（即位于检查点圆中心的点）应该用于使检查点的精确位置清晰。</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -13105,17 +14318,17 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
     <message>
         <source>Equipment deposit</source>
         <comment>Name of symbol 715</comment>
-        <translation type="unfinished"></translation>
+        <translation>设备放置位置</translation>
     </message>
     <message>
         <source>A deposit for spare equipment in the terrain.</source>
         <comment>Description of symbol 715</comment>
-        <translation type="unfinished"></translation>
+        <translation>地形上备用设备的放置位置。</translation>
     </message>
     <message>
         <source>Simple SkiO Course</source>
         <comment>Name of symbol 799</comment>
-        <translation type="unfinished"></translation>
+        <translation>简单 SkiO 路径</translation>
     </message>
     <message>
         <source>This symbol provides a simple and quick way to make training courses.
@@ -13129,39 +14342,41 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Very wide track &gt; 3.0 m</source>
         <comment>Name of symbol 801</comment>
-        <translation type="unfinished"></translation>
+        <translation>非常宽的路径 &gt; 3.0 m</translation>
     </message>
     <message>
         <source>Very fast, wide ski tracks in ski centres, made with a ski trail groomer or a track leveller.</source>
         <comment>Description of symbol 801</comment>
-        <translation type="unfinished"></translation>
+        <translation>滑雪中心的非常快、宽的雪道，由滑雪道修正设备或道路平整设备修建。</translation>
     </message>
     <message>
         <source>Wide track 1.5 - 3.0 m</source>
         <comment>Name of symbol 802</comment>
-        <translation type="unfinished"></translation>
+        <translation>宽的路径 1.5 - 3.0 m</translation>
     </message>
     <message>
         <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks
 rougher and softer than the wide skateable tracks in the area.</source>
         <comment>Description of symbol 802</comment>
-        <translation type="unfinished"></translation>
+        <translation>快速可滑行的路径，由雪地摩托造成，宽度通常为 1.5 - 3.0 m 。可滑行的路径
+比区域中宽的可滑行路径更不平，更软。</translation>
     </message>
     <message>
         <source>Track 1.0 - 1.5 m</source>
         <comment>Name of symbol 803</comment>
-        <translation type="unfinished"></translation>
+        <translation>路径 1.0 - 1.5 m</translation>
     </message>
     <message>
         <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may
 be made wider to reduce widening during competition.</source>
         <comment>Description of symbol 803</comment>
-        <translation type="unfinished"></translation>
+        <translation>雪地摩托造成的良好路径，通常 1.0 - 1.5 m 宽。在陡坡上，路径会
+造得更宽，完成时减少宽度。</translation>
     </message>
     <message>
         <source>Track, slow 0.8 - 1.0 m</source>
         <comment>Name of symbol 804</comment>
-        <translation type="unfinished"></translation>
+        <translation>路径，慢速 0.8 - 1.0 m</translation>
     </message>
     <message>
         <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
@@ -13170,88 +14385,98 @@ technique for slowing and stopping.
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
-        <translation type="unfinished"></translation>
+        <translation>不平的，慢速路径，雪少或有一些树枝。这个符号不用于陡
+坡上，如果道路的宽度允许使用人字台阶来上山，或铲雪
+技术来减速或停止。
+
+为了使交叉点清晰，慢速路径的起点以短线绘制出。</translation>
     </message>
     <message>
         <source>Road covered with snow</source>
         <comment>Name of symbol 805</comment>
-        <translation type="unfinished"></translation>
+        <translation>覆盖雪的道路</translation>
     </message>
     <message>
         <source>Snowploughed, skiable roads are drawn with a normal road symbol but wider.</source>
         <comment>Description of symbol 805</comment>
-        <translation type="unfinished"></translation>
+        <translation>铲过雪的可滑行的道路，用通常的道路符号绘制，但更宽。</translation>
     </message>
     <message>
         <source>Sanded or snowless road, line symbol</source>
         <comment>Name of symbol 806</comment>
-        <translation type="unfinished"></translation>
+        <translation>砂质的或无雪的道路，线条符号</translation>
     </message>
     <message>
         <source>A road on the map which is sanded or snowless during the competition. A chain of V-
 marks across the road symbol show that the road is not skiable. Snowless roads and
 heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806</comment>
-        <translation type="unfinished"></translation>
+        <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型
+标记，穿过道路符号，显示道路不可滑行。无雪的道路，和
+砂质含量大的道路，通常标记为禁止的路线。</translation>
     </message>
     <message>
         <source>Sanded or snowless road, single symbol</source>
         <comment>Name of symbol 806.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>砂质的或无雪的道路，单一符号</translation>
     </message>
     <message>
         <source>A road on the map which is sanded or snowless during the competition. A chain of V-
 marks across the road symbol show that the road is not skiable. Snowless roads and
 heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型
+标记，穿过道路符号，显示道路不可滑行。无雪的道路，和
+砂质含量大的道路，通常标记为禁止的路线。</translation>
     </message>
     <message>
         <source>Unploughed road</source>
         <comment>Name of symbol 807</comment>
-        <translation type="unfinished"></translation>
+        <translation>未铲雪的道路</translation>
     </message>
     <message>
         <source>A road which is not opened for traffic, no skiable track.</source>
         <comment>Description of symbol 807</comment>
-        <translation type="unfinished"></translation>
+        <translation>交通未开放，没有可滑行的路径。</translation>
     </message>
     <message>
         <source>Prepared area</source>
         <comment>Name of symbol 808</comment>
-        <translation type="unfinished"></translation>
+        <translation>准备好的区域</translation>
     </message>
     <message>
         <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
 The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
         <comment>Description of symbol 808</comment>
-        <translation type="unfinished"></translation>
+        <translation>回转赛坡（高山滑雪坡）及其他区域，宽的，可滑行的，并且坚硬。
+准备好的区域的边界用窄的绿色线（ 0.13 mm ）显示，从而可以清晰地识别每个边沿。</translation>
     </message>
     <message>
         <source>Prepared area, fill pattern</source>
         <comment>Name of symbol 808.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>准备好的区域，填充图样</translation>
     </message>
     <message>
         <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
 The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
         <comment>Description of symbol 808.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>回转赛坡（高山滑雪坡）及其他区域，宽的，可滑行的，并且坚硬。
+准备好的区域的边界用窄的绿色线（ 0.13 mm ）显示，从而可以清晰地识别每个边沿。</translation>
     </message>
     <message>
         <source>Prepared area, boundary</source>
         <comment>Name of symbol 808.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>准备好的区域，边界</translation>
     </message>
     <message>
         <source>The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
         <comment>Description of symbol 808.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>准备好的区域的边界用窄的绿色线（ 0.13 mm ）显示，从而可以清晰地识别每个边沿。</translation>
     </message>
     <message>
         <source>Forbidden route, crossable, line symbol</source>
         <comment>Name of symbol 809</comment>
-        <translation type="unfinished"></translation>
+        <translation>禁止的路线，可穿过，线条符号</translation>
     </message>
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
@@ -13259,12 +14484,15 @@ At least two symbols must be used to mark a forbidden route.
 The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
 that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809</comment>
-        <translation type="unfinished"></translation>
+        <translation>由禁止路线符号来标记的线性特征，可以穿过但不能沿路奔跑。
+必须使用至少两个符号来标记禁止的路线。
+在滑雪定向越野地图上，禁止路线的符号（ 711 ）以大的尺寸绘制，从而
+在路径网络中更清晰可见。</translation>
     </message>
     <message>
         <source>Forbidden route, crossable, single symbol</source>
         <comment>Name of symbol 809.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>禁止的路线，可穿过，单一符号</translation>
     </message>
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
@@ -13272,28 +14500,32 @@ At least two symbols must be used to mark a forbidden route.
 The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
 that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>由禁止路线符号来标记的线性特征，可以穿过但不能沿路奔跑。
+必须使用至少两个符号来标记禁止的路线。
+在滑雪定向越野地图上，禁止路线的符号（ 711 ）以大的尺寸绘制，从而
+在路径网络中更清晰可见。</translation>
     </message>
     <message>
         <source>Public snow mobile route</source>
         <comment>Name of symbol 813</comment>
-        <translation type="unfinished"></translation>
+        <translation>公共的雪地摩托路线</translation>
     </message>
     <message>
         <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possibility of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
         <comment>Description of symbol 813</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于雪地摩托的公共的标记的路线，可以在滑雪定向越野竞赛中使用。这些路线经常不平坦，并且宽度和质量在变化。组织者必须在竞赛说明中将这样的路径的质量向选手发出通知（例如使用图片），并通过临时关闭路径，派人值守路径，或通过其他方式向任何雪地摩托驾驶员发出通知，在路上可能会遇到滑雪定向选手，从而确保选手的安全。如果不能保证选手的安全，路径必须标记为禁止通过，并且必须保证提供安全通道。</translation>
     </message>
     <message>
         <source>Forbidden route, forbidden to cross</source>
         <comment>Name of symbol 814</comment>
-        <translation type="unfinished"></translation>
+        <translation>禁止路径，禁止穿过</translation>
     </message>
     <message>
         <source>Linear features marked with the forbidden route symbol can not be followed, and can not be crossed except at specially marked crossing points. Do not enter road regardless of whether the road is badly plowed, ice-covered, no traffic etc.
 A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
         <comment>Description of symbol 814</comment>
-        <translation type="unfinished"></translation>
+        <translation>用禁止路径符号标记的线性特征，不能沿路奔跑，并且除非在特别标记的穿过点，在任何地方都不能穿过。不要进入道路，无论道路是否铲雪做得不好，被冰覆盖，或没有交通等。
+出界并禁止穿过的路径，由锯齿线显示。锯齿线应该尽可能连续。如果禁止的路径上有穿过点，那么应该在禁止线上用两条垂直的竖线像门一样表示。同样，应该通过在锯齿线的末端使用垂直线，在地图上清晰地表示较长的穿过部分。</translation>
     </message>
     <message>
         <source>OpenOrienteering Logo</source>
@@ -13775,77 +15007,87 @@ Map symbol: ISOM 703</source>
     <message>
         <source>|D| Re-entrant</source>
         <comment>Name of symbol 1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 重新进入</translation>
     </message>
     <message>
         <source>A contour indentation; a valley; the opposite of a spur.</source>
         <comment>Description of symbol 1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>等高线缺口；山谷；与支脉相反。</translation>
     </message>
     <message>
         <source>|D| Earth bank</source>
         <comment>Name of symbol 1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 土堤</translation>
     </message>
     <message>
         <source>An abrupt change in ground level which can clearly be distinguished from its surroundings.
 
 Map symbol: ISOM 106</source>
         <comment>Description of symbol 1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>地面上的突然改变，可以清晰地从周围环境中识别出来。
+
+地图符号： ISOM 106</translation>
     </message>
     <message>
         <source>|D| Quarry</source>
         <comment>Name of symbol 1.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 采石场</translation>
     </message>
     <message>
         <source>Gravel, sand or stone working in flat or inclined ground.
 
 Map symbol: ISOM 106</source>
         <comment>Description of symbol 1.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>在平地或倾斜地面上铺设的砾石、砂子或石头。
+
+地图符号： ISOM 106</translation>
     </message>
     <message>
         <source>|D| Earth wall</source>
         <comment>Name of symbol 1.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 土墙</translation>
     </message>
     <message>
-        <source>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.s
+        <source>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.
 
 Map symbols: ISOM 107, 108</source>
         <comment>Description of symbol 1.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>从周围地形中突出的土质窄墙；部分表面可以是石砌的，通常为人造的。通常与符号 8.11 一起使用，来指示损坏的土墙。
+
+地图符号： ISOM 107 、 108</translation>
     </message>
     <message>
         <source>|D| Erosion gully</source>
         <comment>Name of symbol 1.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 侵蚀的河沟</translation>
     </message>
     <message>
         <source>An erosion gully or trench, normally dry.
 
 Map symbol: ISOM 109</source>
         <comment>Description of symbol 1.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>侵蚀的河沟或土沟，通常是干燥的。
+
+地图符号： ISOM 109</translation>
     </message>
     <message>
         <source>|D| Small erosion gully</source>
         <comment>Name of symbol 1.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 小的侵蚀河沟</translation>
     </message>
     <message>
         <source>A small erosion gully or trench, normally dry.
 
 Map symbol: ISOM 110</source>
         <comment>Description of symbol 1.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>小的侵蚀河沟或土沟，通常是干燥的。
+
+地图符号： ISOM 110</translation>
     </message>
     <message>
         <source>|D| Hill</source>
         <comment>Name of symbol 1.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 小山</translation>
     </message>
     <message>
         <source>A high point. Shown on the map with contour lines.
@@ -13859,53 +15101,59 @@ Map symbols: ISOM 101, 111</source>
     <message>
         <source>|D| Knol</source>
         <comment>Name of symbol 1.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 小丘</translation>
     </message>
     <message>
         <source>A small obvious mound. Used with symbol 8.6 to indicate a rocky knoll.
 
 Map symbols: ISOM 112, 113</source>
         <comment>Description of symbol 1.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>小的明显的土丘与符号 8.6 一起使用，来指示岩丘。
+
+地图符号： ISOM 112 、 113</translation>
     </message>
     <message>
         <source>|D| Saddle</source>
         <comment>Name of symbol 1.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 鞍部</translation>
     </message>
     <message>
         <source>The low point between two higher points.</source>
         <comment>Description of symbol 1.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>两个高点之间的低点。</translation>
     </message>
     <message>
         <source>|D| Depression</source>
         <comment>Name of symbol 1.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 凹陷</translation>
     </message>
     <message>
         <source>A depression or hollow from which the ground rises on all sides. Shown on the map with contour lines.
 
 Map symbol: ISOM 114</source>
         <comment>Description of symbol 1.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>凹陷或下沉，地面从周围升起来。用等高线显示在地图上。
+
+地图符号： ISOM 114</translation>
     </message>
     <message>
         <source>|D| Small depression</source>
         <comment>Name of symbol 1.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 小的凹陷</translation>
     </message>
     <message>
         <source>A small, shallow, natural depression or hollow from which the ground rises on all sides.
 
 Map symbol: ISOM 115</source>
         <comment>Description of symbol 1.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>小的、窄的自然凹陷或下沉，地面从周围升起来。
+
+地图符号： ISOM 115</translation>
     </message>
     <message>
         <source>|D| Pit</source>
         <comment>Name of symbol 1.14</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 坑</translation>
     </message>
     <message>
         <source>A pit or hole with distinct steep-sides. Usually man made. Used with symbol 8.6 to indicate a rocky pit.
@@ -13919,415 +15167,473 @@ Map symbols: ISOM 116, 204</source>
     <message>
         <source>|D| Broken ground </source>
         <comment>Name of symbol 1.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 不连续的地面 </translation>
     </message>
     <message>
         <source>Clearly disturbed ground with features too small or too numerous to be mapped individually; including animal earths.
 
 Map symbol: ISOM 107</source>
         <comment>Description of symbol 1.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>明显被扰动的地面，特征太小或太多而无法单独绘图；包括兽穴。
+
+地图符号： ISOM 107</translation>
     </message>
     <message>
         <source>|D| Ant hill (termite mound)</source>
         <comment>Name of symbol 1.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 蚁丘（白蚁丘）</translation>
     </message>
     <message>
         <source>The mound made by ants or termites.</source>
         <comment>Description of symbol 1.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>蚂蚁或白蚁建造的土丘。</translation>
     </message>
     <message>
         <source>|D| Cliff, Rock face</source>
         <comment>Name of symbol 2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 悬崖，岩面</translation>
     </message>
     <message>
         <source>A cliff or rock face. May be passable or impassable.
 
 Map symbols: ISOM 201, 203</source>
         <comment>Description of symbol 2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>悬崖或岩面可通过或不可通过。
+
+地图符号： ISOM 201 、 203</translation>
     </message>
     <message>
         <source>|D| Rock pillar</source>
         <comment>Name of symbol 2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 岩柱</translation>
     </message>
     <message>
         <source>A high, natural rock projection.
 
 Map symbol: ISOM 202</source>
         <comment>Description of symbol 2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>高的、自然的岩石凸起。
+
+地图符号： ISOM 202</translation>
     </message>
     <message>
         <source>|D| Cave</source>
         <comment>Name of symbol 2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 山洞</translation>
     </message>
     <message>
         <source>A hole in a rock face or hill side, often leading to underground workings.
 
 Map symbol: ISOM 205</source>
         <comment>Description of symbol 2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>岩面或山边的洞，经常引向地下空间。
+
+地图符号： ISOM 205</translation>
     </message>
     <message>
         <source>|D| Boulder</source>
         <comment>Name of symbol 2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 巨石</translation>
     </message>
     <message>
         <source>A prominent free-standing block of rock or stone.
 
 Map symbols: ISOM 206, 207</source>
         <comment>Description of symbol 2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>突出的、独立的岩石或石头。
+
+地图符号： ISOM 206 、 207</translation>
     </message>
     <message>
         <source>|D| Boulder field</source>
         <comment>Name of symbol 2.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 巨石区</translation>
     </message>
     <message>
         <source>An area covered by so many boulders that they cannot be individually mapped.
 
 Map symbol: ISOM 208</source>
         <comment>Description of symbol 2.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>由很多不能单独绘图的巨石覆盖的区域。
+
+地图符号： ISOM 208</translation>
     </message>
     <message>
         <source>|D| Boulder cluster</source>
         <comment>Name of symbol 2.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 巨石群</translation>
     </message>
     <message>
         <source>A small distinct group of boulders so closely clustered together that they cannot be individually mapped.
 
 Map symbol: ISOM 209</source>
         <comment>Description of symbol 2.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>小的明显一组巨石，密集地聚集在一起，不能各自绘制在地图上。
+
+地图符号： ISOM 209</translation>
     </message>
     <message>
         <source>|D| Stony ground</source>
         <comment>Name of symbol 2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 多石平地</translation>
     </message>
     <message>
         <source>An area covered with many small stones or rocks.
 
 Map symbol: ISOM 210</source>
         <comment>Description of symbol 2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>覆盖有很多小石头或岩石的区域。
+
+地图符号： ISOM 210</translation>
     </message>
     <message>
         <source>|D| Bare rock</source>
         <comment>Name of symbol 2.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 裸岩</translation>
     </message>
     <message>
         <source>A runnable area of rock with no earth or vegetation cover.
 
 Map symbol: ISOM 212</source>
         <comment>Description of symbol 2.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>可奔跑的岩石区域，没有土壤或植被覆盖。
+
+地图符号： ISOM 212</translation>
     </message>
     <message>
         <source>|D| Narrow passage</source>
         <comment>Name of symbol 2.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 狭窄通道</translation>
     </message>
     <message>
         <source>A gap between two cliffs or rock faces that face each other.</source>
         <comment>Description of symbol 2.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>两个彼此相对的悬崖或岩面之间的间隙。</translation>
     </message>
     <message>
         <source>|D| Lake</source>
         <comment>Name of symbol 3.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 湖</translation>
     </message>
     <message>
         <source>A high point. Shown on the map with contour lines.
 
 Map symbol: ISOM 301</source>
         <comment>Description of symbol 3.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>高点。用等高线显示在地图上。
+
+地图符号： ISOM 301</translation>
     </message>
     <message>
         <source>|D| Pond</source>
         <comment>Name of symbol 3.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 池塘</translation>
     </message>
     <message>
         <source>A small area of water.
 
 Map symbol: ISOM 302</source>
         <comment>Description of symbol 3.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>一小块水域。
+
+地图符号： ISOM 302</translation>
     </message>
     <message>
         <source>|D| Waterhole</source>
         <comment>Name of symbol 3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 水坑</translation>
     </message>
     <message>
         <source>A waterholed pit or depression.
 
 Map symbol: ISOM 303</source>
         <comment>Description of symbol 3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>有水的坑或凹陷。
+
+地图符号： ISOM 303</translation>
     </message>
     <message>
         <source>|D| River, Stream, Watercourse</source>
         <comment>Name of symbol 3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 河流、溪流、水道</translation>
     </message>
     <message>
         <source>A natural or artificial watercourse with either moving or standing water.
 
 Map symbols: ISOM 304, 305, 306</source>
         <comment>Description of symbol 3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>自然或人工水道，里面的水是流动的或静止的。
+
+地图符号： ISOM 304 、 305 、 306</translation>
     </message>
     <message>
         <source>|D| Minor water channel, Ditch</source>
         <comment>Name of symbol 3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 次要水渠，沟</translation>
     </message>
     <message>
         <source>A natural or man made minor water channel which may contain water only intermittently.
 
 Map symbol: ISOM 307</source>
         <comment>Description of symbol 3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>自然或人工的次要水渠，里面间断地有水。
+
+地图符号： ISOM 307</translation>
     </message>
     <message>
         <source>|D| Narrow marsh</source>
         <comment>Name of symbol 3.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 窄的沼泽</translation>
     </message>
     <message>
         <source>A narrow marsh or trickle of water, too narrow to be shown on the map with the marsh symbol.
 
 Map symbol: ISOM 308</source>
         <comment>Description of symbol 3.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>窄的沼泽或小股水流，很窄而无法用沼泽符号在地图上显示出来。
+
+地图符号： ISOM 303</translation>
     </message>
     <message>
         <source>|D| Marsh</source>
         <comment>Name of symbol 3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 沼泽</translation>
     </message>
     <message>
         <source>A permanently wet area with marsh vegetation.
 
 Map symbols: ISOM 309, 310, 311</source>
         <comment>Description of symbol 3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>永久的湿地，具有沼泽植被。
+
+地图符号： ISOM 309 、 310 、 311</translation>
     </message>
     <message>
         <source>|D| Firm ground in marsh</source>
         <comment>Name of symbol 3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 沼泽中的坚实地面</translation>
     </message>
     <message>
         <source>A non-marshy area within a marsh, or between two marshes.
 
 Map symbols: ISOM 309, 310, 311</source>
         <comment>Description of symbol 3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>沼泽中或两片沼泽之间的非沼泽区域。
+
+地图符号： ISOM 309 、 310 、 311</translation>
     </message>
     <message>
         <source>|D| Well</source>
         <comment>Name of symbol 3.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 井</translation>
     </message>
     <message>
         <source>A shaft containing water or a captive spring, clearly visible on the ground. Often with some form of man-made surround.
 
 Map symbol: ISOM 312</source>
         <comment>Description of symbol 3.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>含水或汇聚泉水的竖直通道，在地面上清晰可见。通常具有某些形式的人工包围结构。
+
+地图符号： ISOM 312</translation>
     </message>
     <message>
         <source>|D| Spring</source>
         <comment>Name of symbol 3.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>D| 泉</translation>
     </message>
     <message>
         <source>The source of a watercourse with a distinct outflow.
 
 Map symbol: ISOM 313</source>
         <comment>Description of symbol 3.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>具有明显出口的水流的源头。
+
+地图符号： ISOM 313</translation>
     </message>
     <message>
         <source>|D| Water tank, Water trough</source>
         <comment>Name of symbol 3.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 水罐、水槽</translation>
     </message>
     <message>
         <source>A man made water container.</source>
         <comment>Description of symbol 3.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>人工制造的水容器。</translation>
     </message>
     <message>
         <source>|D| Open land</source>
         <comment>Name of symbol 4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 开阔地</translation>
     </message>
     <message>
         <source>An area with no trees. Grassland, a meadow or a field. Also heath or moorland.
 
 Map symbols: ISOM 401, 403</source>
         <comment>Description of symbol 4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>没有树的区域。草地、牧场或田地。同样包括荒地或高沼地。
+
+地图符号： ISOM 401 、 403</translation>
     </message>
     <message>
         <source>|D| Semi-open land</source>
         <comment>Name of symbol 4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 半开阔地</translation>
     </message>
     <message>
         <source>An area of open land with scattered trees or bushes.
 
 Map symbols: ISOM 402, 404</source>
         <comment>Description of symbol 4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>具有稀疏的树或灌木的开阔地。
+
+地图符号： ISOM 402 、 404</translation>
     </message>
     <message>
         <source>|D| Forest corner</source>
         <comment>Name of symbol 4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 森林角落</translation>
     </message>
     <message>
         <source>The corner or tip of a forested area projecting into open land.</source>
         <comment>Description of symbol 4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>突出到开阔地上的树林区域的角落或末端。</translation>
     </message>
     <message>
         <source>|D| Clearing</source>
         <comment>Name of symbol 4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 空地</translation>
     </message>
     <message>
         <source>A small area of land free from trees within the forest.
 
 Map symbols: ISOM 401, 403</source>
         <comment>Description of symbol 4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>树林中没有树的小块地。
+
+地图符号： ISOM 401 、 403</translation>
     </message>
     <message>
         <source>|D| Thicket</source>
         <comment>Name of symbol 4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 灌木丛</translation>
     </message>
     <message>
         <source>A small area of forest where the tree cover or undergrowth is so dense that it is difficult to pass.
 
 Map symbols: ISOM 408, 410</source>
         <comment>Description of symbol 4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>树林中的一小块区域，树木覆盖或灌木太密集而难于通过。
+
+地图符号： ISOM 408 、 410</translation>
     </message>
     <message>
         <source>|D| Linear thicket</source>
         <comment>Name of symbol 4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 带状灌木</translation>
     </message>
     <message>
         <source>A man-made line of trees or bushes that is difficult to cross.
 
 Map symbol: ISOM 410</source>
         <comment>Description of symbol 4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>人工的带状树木或灌木，难于通过。
+
+地图符号： ISOM 410</translation>
     </message>
     <message>
         <source>|D| Vegetation boundary</source>
         <comment>Name of symbol 4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 植被边界</translation>
     </message>
     <message>
         <source>A distinct boundary between different types of trees or vegetation.
 
 Map symbol: ISOM 416</source>
         <comment>Description of symbol 4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>不同类型树木或植被之间的明显边界。
+
+地图符号： ISOM 416</translation>
     </message>
     <message>
         <source>|D| Copse</source>
         <comment>Name of symbol 4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 矮林</translation>
     </message>
     <message>
         <source>A small area of trees in open ground.
 
 Map symbols: ISOM 405, 406</source>
         <comment>Description of symbol 4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>开阔地面上有树的小块区域。
+
+地图符号： ISOM 405 、 406</translation>
     </message>
     <message>
         <source>|D| Distinctive tree</source>
         <comment>Name of symbol 4.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 独特的树</translation>
     </message>
     <message>
         <source>An unusual or distinctive tree in either open land or forest; frequently information is also given as to its type.</source>
         <comment>Description of symbol 4.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>开阔地或树林中，特殊的或独特的树；通常还会给出更多信息，如种类。</translation>
     </message>
     <message>
         <source>|D| Tree stump, Root stock</source>
         <comment>Name of symbol 4.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 树桩，根块</translation>
     </message>
     <message>
         <source>The stump of a tree. The upturned root of a fallen tree, with or without the trunk.</source>
         <comment>Description of symbol 4.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>树木的树桩。倒下树木的向上的根，有或没有树干。</translation>
     </message>
     <message>
         <source>|D| Road</source>
         <comment>Name of symbol 5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 道路</translation>
     </message>
     <message>
         <source>A metalled/asphalt surfaced or dirt road, suitable for vehicles in normal weather conditions.
 
 Map symbols: ISOM 501, 502, 503, 504</source>
         <comment>Description of symbol 5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>碎石/沥青表面的路或土路，适于汽车在正常天气条件下行驶。
+
+地图符号： ISOM 501 、 502 、 503 、 504</translation>
     </message>
     <message>
         <source>|D| Track / Path</source>
         <comment>Name of symbol 5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 道路/小路</translation>
     </message>
     <message>
         <source>A visible route made by people or animals. Tracks may be driven by rugged vehicles.
 
 Map symbols: ISOM 505, 506, 507, 508</source>
         <comment>Description of symbol 5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>人或动物形成的可见的路线。道路可以由坚固的车辆行驶出来。
+
+地图符号： ISOM 505 、 506 、 507</translation>
     </message>
     <message>
         <source>|D| Ride</source>
         <comment>Name of symbol 5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 骑马路</translation>
     </message>
     <message>
         <source>A clearly visible linear break in the forest which does not have a distinct path along it.
 
 Map symbol: ISOM 509</source>
         <comment>Description of symbol 5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>树林中清晰可见的线形空隙，沿途没有明显的路径。
+
+地图符号： ISOM 509</translation>
     </message>
     <message>
         <source>|D| Bridge</source>
         <comment>Name of symbol 5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 桥</translation>
     </message>
     <message>
         <source>A crossing point over a watercourse, or other linear feature.
@@ -14341,387 +15647,417 @@ Map symbols: ISOM 512, 513</source>
     <message>
         <source>|D| Power line</source>
         <comment>Name of symbol 5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 电源线</translation>
     </message>
     <message>
         <source>A power or telephone line, cableway or ski lift.
 
 Map symbols: ISOM 516, 517</source>
         <comment>Description of symbol 5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>电源或电话线，电缆或滑雪缆车线。
+
+地图符号： ISOM 516 、 517</translation>
     </message>
     <message>
         <source>|D| Power line pylon</source>
         <comment>Name of symbol 5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 电线塔</translation>
     </message>
     <message>
         <source>A support for power or telephone line, cableway or ski lift.
 
 Map symbols: ISOM 516, 517</source>
         <comment>Description of symbol 5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>电源或电话、，电缆或滑雪缆车线的支撑塔。
+
+地图符号： ISOM 516 、 517</translation>
     </message>
     <message>
         <source>|D| Tunnel</source>
         <comment>Name of symbol 5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 涵道</translation>
     </message>
     <message>
         <source>A way under roads, railways, etc.
 
 Map symbol: ISOM 518</source>
         <comment>Description of symbol 5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>道路、铁路等下面的通道
+
+地图符号： ISOM 518</translation>
     </message>
     <message>
         <source>|D| Stone wall</source>
         <comment>Name of symbol 5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 石墙</translation>
     </message>
     <message>
         <source>A stone boundary wall or stone faced bank. Used with symbol 8.11 to indicate a ruined stone wall.
 
 Map symbols: ISOM 519, 520, 521</source>
         <comment>Description of symbol 5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>石制的边界墙或表面石砌的堤岸。使用符号 8.11 来指示毁坏的石墙。
+
+地图符号： ISOM 519 、 520 、 521</translation>
     </message>
     <message>
         <source>|D| Fence</source>
         <comment>Name of symbol 5.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 围栏</translation>
     </message>
     <message>
         <source>A wire or wooden boundary. Used with symbol 8.11 to indicate a ruined fence.
 
 Map symbols: ISOM 522, 523, 524</source>
         <comment>Description of symbol 5.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>绳制或木制边界。使用符号 8.11 来指示毁坏的围栏。
+
+地图符号： ISOM 522 、 523 、 524</translation>
     </message>
     <message>
         <source>|D| Crossing point</source>
         <comment>Name of symbol 5.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 穿过点</translation>
     </message>
     <message>
         <source>A way through or over a wall, fence, or pipeline, including a gate or stile.
 
 Map symbol: ISOM 525</source>
         <comment>Description of symbol 5.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>穿过墙、围栏或管道的通道，包括门或台阶。
+
+地图符号： ISOM 525</translation>
     </message>
     <message>
         <source>|D| Building</source>
         <comment>Name of symbol 5.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 建筑</translation>
     </message>
     <message>
         <source>A standing brick, wood or stone structure.
 
 Map symbol: ISOM 526</source>
         <comment>Description of symbol 5.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>竖立的砖制、木制或石制结构。
+
+地图符号： ISOM 526</translation>
     </message>
     <message>
         <source>|D| Paved area</source>
         <comment>Name of symbol 5.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 铺砌区</translation>
     </message>
     <message>
         <source>An area of hard standing used for parking or other purposes.
 
 Map symbol: ISOM 529</source>
         <comment>Description of symbol 5.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于停车或其他目的的硬地面区域。
+
+地图符号： ISOM 529</translation>
     </message>
     <message>
         <source>|D| Ruin</source>
         <comment>Name of symbol 5.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 废墟</translation>
     </message>
     <message>
         <source>The remains of a building that has fallen down.
 
 Map symbol: ISOM 530</source>
         <comment>Description of symbol 5.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>倒掉的建筑的剩余部分
+
+地图符号： ISOM 530</translation>
     </message>
     <message>
         <source>|D| Pipeline</source>
         <comment>Name of symbol 5.14</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 管道</translation>
     </message>
     <message>
         <source>A pipeline (gas, water, oil, etc.) above ground level.
 
 Map symbols: ISOM 533, 534</source>
         <comment>Description of symbol 5.14</comment>
-        <translation type="unfinished"></translation>
+        <translation>地面之上的管道（输气、水、油等）。
+
+地图符号： ISOM 533 、 534</translation>
     </message>
     <message>
         <source>|D| Tower</source>
         <comment>Name of symbol 5.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 塔</translation>
     </message>
     <message>
         <source>A tall metal, wooden or brick structure, usually built for forest observation.
 
 Map symbols: ISOM 535, 536</source>
         <comment>Description of symbol 5.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>高的金属、木制或砖石结构，通常建造用于树林观察。
+
+地图符号： ISOM 535 、 536</translation>
     </message>
     <message>
         <source>|D| Shooting platform</source>
         <comment>Name of symbol 5.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 射击平台</translation>
     </message>
     <message>
         <source>A structure attached to a tree where a marksman or observer can sit.
 
 Map symbol: ISOM 536</source>
         <comment>Description of symbol 5.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>搭建在树上的结构，射手或观察员可以坐在上面。
+
+地图符号： ISOM 536</translation>
     </message>
     <message>
         <source>|D| Boundary stone, Cairn</source>
         <comment>Name of symbol 5.17</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 界石、石标</translation>
     </message>
     <message>
         <source>A man made stone or pile of stones. A cairn, memorial stone, boundary stone or trigonometric point.
 
 Map symbol: ISOM 537</source>
         <comment>Description of symbol 5.17</comment>
-        <translation type="unfinished"></translation>
+        <translation>人工的石头或石堆。石标、记号石块、界石或三角点。
+
+地图符号： ISOM 537</translation>
     </message>
     <message>
         <source>|D| Fodder rack</source>
         <comment>Name of symbol 5.18</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 喂食架</translation>
     </message>
     <message>
         <source>A construction for holding feed for animals.
 
 Map symbol: ISOM 538</source>
         <comment>Description of symbol 5.18</comment>
-        <translation type="unfinished"></translation>
+        <translation>为动物放置食物的架子。
+
+地图符号： ISOM 538</translation>
     </message>
     <message>
         <source>|D| Charcoal burning ground</source>
         <comment>Name of symbol 5.19</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 烧炭的地方</translation>
     </message>
     <message>
         <source>The clear remains of an area where charcoal was burned. A small level man made area on a slope. (A platform).</source>
         <comment>Description of symbol 5.19</comment>
-        <translation type="unfinished"></translation>
+        <translation>有碳燃烧过的地方，明显有余烬斜坡上一小块人工平地。（平台）。</translation>
     </message>
     <message>
         <source>|D| Monument or Statue</source>
         <comment>Name of symbol 5.20</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 纪念碑或塑像</translation>
     </message>
     <message>
         <source>A monument, memorial or statue.</source>
         <comment>Description of symbol 5.20</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 纪念碑、纪念物或塑像。</translation>
     </message>
     <message>
         <source>|D| Building pass through</source>
         <comment>Name of symbol 5.23</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 建筑内的通路</translation>
     </message>
     <message>
         <source>An arcade, indoor passage or route through a building.</source>
         <comment>Description of symbol 5.23</comment>
-        <translation type="unfinished"></translation>
+        <translation>拱廊、室内通道或穿过建筑的路线。</translation>
     </message>
     <message>
         <source>|D| Stairway</source>
         <comment>Name of symbol 5.24</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 步梯</translation>
     </message>
     <message>
         <source>A stairway of at least two steps.</source>
         <comment>Description of symbol 5.24</comment>
-        <translation type="unfinished"></translation>
+        <translation>至少两级的步梯。</translation>
     </message>
     <message>
         <source>|D| Special item</source>
         <comment>Name of symbol 6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 特殊物品</translation>
     </message>
     <message>
         <source>If used, an explanation of its meaning must be supplied to competitors in the pre-race information.</source>
         <comment>Description of symbol 6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>如果使用的话，必须在赛前信息中向选手提供对其意义的解释。</translation>
     </message>
     <message>
         <source>|D| Special item</source>
         <comment>Name of symbol 6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 特殊物品</translation>
     </message>
     <message>
         <source>If used, an explanation of its meaning must be supplied to competitors in the pre-race information.</source>
         <comment>Description of symbol 6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>如果使用的话，必须在赛前信息中向选手提供对其意义的解释。</translation>
     </message>
     <message>
         <source>|D| Country Specific features (template)</source>
         <comment>Name of symbol 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| 国家特定的特征（样板）</translation>
     </message>
     <message>
         <source>It is not generally recommended to introduce local symbols. If local symbols are used then at events likely to attract an international entry information about them should be supplied to competitors in the pre-race details.
 
 The default line shows a box of 5 mm by 5mm and can be removed from the final symbols.</source>
         <comment>Description of symbol 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>通常不建议引入本地符号。如果使用了本地符号，那么在像吸引国际参赛的活动中，本地符号的信息应该在赛前具体提供给选手。
+
+默认的线显示了 5mm X 5mm 的方块，可以从最终符号中去掉。</translation>
     </message>
     <message>
         <source>|E| Low</source>
         <comment>Name of symbol 8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| 低的</translation>
     </message>
     <message>
         <source>Where the control feature is particularly low or flat at but this is not indicated on the map; e.g. Hill, low.</source>
         <comment>Description of symbol 8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>检查点的特征特别低或平坦，但在地图上没有指示出来；例如：小山，低的。</translation>
     </message>
     <message>
         <source>|E| Shallow</source>
         <comment>Name of symbol 8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| 浅的</translation>
     </message>
     <message>
         <source>Where the control feature is particularly shallow but this is not indicated on the map; e.g. Re-entrant, shallow.</source>
         <comment>Description of symbol 8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>检查点的特征特别浅，但在地图上没有指示出来；例如：重新进入，浅的。</translation>
     </message>
     <message>
         <source>|E| Deep</source>
         <comment>Name of symbol 8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| 深的</translation>
     </message>
     <message>
         <source>Where the control feature is particularly deep but this is not indicated on the map; e.g. Pit, deep.</source>
         <comment>Description of symbol 8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>检查点的特征特别深，但在地图上没有指示出来；例如：土坑，深的。</translation>
     </message>
     <message>
         <source>|E| Overgrown</source>
         <comment>Name of symbol 8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| 长满植物的</translation>
     </message>
     <message>
         <source>Where the feature is partially covered in undergrowth or bushes that are not indicated on the map; e.g. Ruin, overgrown.</source>
         <comment>Description of symbol 8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>被灌木或矮树特别覆盖的特征，在地图上没有指示出来，例如：废墟，长满植物的。</translation>
     </message>
     <message>
         <source>|E| Open</source>
         <comment>Name of symbol 8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| 开阔的</translation>
     </message>
     <message>
         <source>Where the feature is in an area where the tree cover is less than the surroundings but this is not indicated on the map; e.g. Marsh, open.</source>
         <comment>Description of symbol 8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>特征位于树木覆盖比周围环境少的区域，但在地图上没有指示出来，例如：沼泽，开阔的。</translation>
     </message>
     <message>
         <source>|E| Rocky, Stony </source>
         <comment>Name of symbol 8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| 多岩的、多石的 </translation>
     </message>
     <message>
         <source>Where the feature is in an area of rocky or stony ground not indicated on the map; e.g. Pit, rocky.</source>
         <comment>Description of symbol 8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>特征在多岩的或多石的地上，地图上没有指示出来，例如：土坑，多岩的。</translation>
     </message>
     <message>
         <source>|E| Marshy</source>
         <comment>Name of symbol 8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| 沼泽的</translation>
     </message>
     <message>
         <source>Where the feature is in an area of marshy ground not indicated on the map; e.g. Re-entrant, marshy.</source>
         <comment>Description of symbol 8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>特征在沼泽的地上，地图上没有指示出来，例如：重新进入，沼泽的。</translation>
     </message>
     <message>
         <source>|E| Sandy</source>
         <comment>Name of symbol 8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| 砂质的</translation>
     </message>
     <message>
         <source>Where the feature is in an area of sandy ground not indicated on the map; e.g. Spur, sandy.</source>
         <comment>Description of symbol 8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>特征在砂质的地上，地图上没有指示出来，例如：支脉，砂质的。</translation>
     </message>
     <message>
         <source>|E| Needle leaved</source>
         <comment>Name of symbol 8.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| 针叶的</translation>
     </message>
     <message>
         <source>Where the tree or trees associated with the control feature have needle shaped leaves; e.g. Distinctive tree, needle leaved.</source>
         <comment>Description of symbol 8.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>与检查点特征相联系的树或树木具有针型的叶；例如：独特的树，针叶的。</translation>
     </message>
     <message>
         <source>|E| Broad leaved</source>
         <comment>Name of symbol 8.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| 阔叶的</translation>
     </message>
     <message>
         <source>Where the tree or trees associated with the control feature are broad-leaved; e.g. Copse, broad leaved.</source>
         <comment>Description of symbol 8.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>与检查点特征相联系的树或树木是阔叶的；例如：矮树林，阔叶的。</translation>
     </message>
     <message>
         <source>|E| Ruined</source>
         <comment>Name of symbol 8.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| 毁坏的</translation>
     </message>
     <message>
         <source>Where the feature has fallen to ground level; e.g. Fence, ruined.</source>
         <comment>Description of symbol 8.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>倒落到地面的特征；例如：围栏，毁坏的。</translation>
     </message>
     <message>
         <source>|F| Height or Depth</source>
         <comment>Name of symbol 9.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| 高度或深度</translation>
     </message>
     <message>
         <source>Height or Depth of the feature in metres; e.g. 2.6</source>
         <comment>Description of symbol 9.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>以米制表示的特征的高度或深度；例如： 2.6</translation>
     </message>
     <message>
         <source>|F| Size</source>
         <comment>Name of symbol 9.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| 尺寸</translation>
     </message>
     <message>
         <source>Horizontal dimensions of the feature in metres; e.g. 8 x 4</source>
         <comment>Description of symbol 9.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>以米制表示的特征的水平尺寸；例如： 8 X 4</translation>
     </message>
     <message>
         <source>|F| Slash for height on slope</source>
         <comment>Name of symbol 9.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| 用于斜坡上高度的斜杠</translation>
     </message>
     <message>
         <source>Use with text symbol 9.4</source>
         <comment>Description of symbol 9.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>使用文字符号 9.4</translation>
     </message>
     <message>
         <source>|F| Heights of two features, or on slope</source>
         <comment>Name of symbol 9.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| 两个特征的高度，或斜坡上的高度</translation>
     </message>
     <message>
         <source>Use this text symbol to give two numbers in different lines.
@@ -14737,288 +16073,315 @@ Use the slash symbol 9.3 for separating the numbers; e.g.
 2.0
 3.0</source>
         <comment>Description of symbol 9.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>使用这个文字符号给出不在同一条线上的两个数值。
+
+9.3 斜坡上的高度：以米制表示的斜坡上的特征高度。
+使用斜杠符号 9.3 来分隔数字；例如：
+
+0.5/
+    / 3.0
+
+9.4 两个特征的高度：有检查点的两个特征之间的高度。将一个数字写在另一个的上面，例如：
+
+2.0
+3.0</translation>
     </message>
     <message>
         <source>|F| Crossing</source>
         <comment>Name of symbol 10.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| 交叉</translation>
     </message>
     <message>
         <source>The point at which two linear features cross. The two features which either cross or meet must be shown in columns |D| and |E|.</source>
         <comment>Description of symbol 10.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>两条线性特征相交叉的点。相交叉或相遇的两个特征必须显示在 |D| 列和 |E| 列。</translation>
     </message>
     <message>
         <source>|F| Junction</source>
         <comment>Name of symbol 10.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| 交叉点</translation>
     </message>
     <message>
         <source>The point at which two linear features meet. The two features which either cross or meet must be shown in columns |D| and |E|.</source>
         <comment>Description of symbol 10.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>两条线性特征相遇的点。相交叉或相遇的两个特征必须显示在 |D| 列和 |E| 列。</translation>
     </message>
     <message>
         <source>|G| North Side</source>
         <comment>Name of symbol 11.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 北侧</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于在地面之上伸出的特征；例如：巨石，东北侧；废墟，西侧。</translation>
     </message>
     <message>
         <source>|G| North east Side</source>
         <comment>Name of symbol 11.1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东北侧</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于在地面之上伸出的特征；例如：巨石，东北侧；废墟，西侧。</translation>
     </message>
     <message>
         <source>|G| East Side</source>
         <comment>Name of symbol 11.1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东侧</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于在地面之上伸出的特征；例如：巨石，东北侧；废墟，西侧。</translation>
     </message>
     <message>
         <source>|G| South east Side</source>
         <comment>Name of symbol 11.1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东南侧</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于在地面之上伸出的特征；例如：巨石，东北侧；废墟，西侧。</translation>
     </message>
     <message>
         <source>|G| South Side</source>
         <comment>Name of symbol 11.1.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 南侧</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于在地面之上伸出的特征；例如：巨石，东北侧；废墟，西侧。</translation>
     </message>
     <message>
         <source>|G| South west Side</source>
         <comment>Name of symbol 11.1.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西南侧</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于在地面之上伸出的特征；例如：巨石，东北侧；废墟，西侧。</translation>
     </message>
     <message>
         <source>|G| West Side</source>
         <comment>Name of symbol 11.1.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西侧</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于在地面之上伸出的特征；例如：巨石，东北侧；废墟，西侧。</translation>
     </message>
     <message>
         <source>|G| North west Side</source>
         <comment>Name of symbol 11.1.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西北侧</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于在地面之上伸出的特征；例如：巨石，东北侧；废墟，西侧。</translation>
     </message>
     <message>
         <source>|G| North Edge</source>
         <comment>Name of symbol 11.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 北侧边沿</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征从周围地面向下沿伸，并且检查点位于地的边沿；例如：凹陷，东南边沿。
+b) 特征从特定区域的上面沿伸出来，并且检查点位于区域的边界；例如：沼泽，西北边沿。</translation>
     </message>
     <message>
         <source>|G| North east Edge</source>
         <comment>Name of symbol 11.2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东北边沿</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征从周围地面向下沿伸，并且检查点位于地的边沿；例如：凹陷，东南边沿。
+b) 特征从特定区域的上面沿伸出来，并且检查点位于区域的边界；例如：沼泽，西北边沿。</translation>
     </message>
     <message>
         <source>|G| East Edge</source>
         <comment>Name of symbol 11.2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东侧边沿</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征从周围地面向下沿伸，并且检查点位于地的边沿；例如：凹陷，东南边沿。
+b) 特征从特定区域的上面沿伸出来，并且检查点位于区域的边界；例如：沼泽，西北边沿。</translation>
     </message>
     <message>
         <source>|G| South east Edge</source>
         <comment>Name of symbol 11.2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东南边沿</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征从周围地面向下沿伸，并且检查点位于地的边沿；例如：凹陷，东南边沿。
+b) 特征从特定区域的上面沿伸出来，并且检查点位于区域的边界；例如：沼泽，西北边沿。</translation>
     </message>
     <message>
         <source>|G| South Edge</source>
         <comment>Name of symbol 11.2.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 南侧边沿</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征从周围地面向下沿伸，并且检查点位于地的边沿；例如：凹陷，东南边沿。
+b) 特征从特定区域的上面沿伸出来，并且检查点位于区域的边界；例如：沼泽，西北边沿。</translation>
     </message>
     <message>
         <source>|G| South west Edge</source>
         <comment>Name of symbol 11.2.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西南边沿</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征从周围地面向下沿伸，并且检查点位于地的边沿；例如：凹陷，东南边沿。
+b) 特征从特定区域的上面沿伸出来，并且检查点位于区域的边界；例如：沼泽，西北边沿。</translation>
     </message>
     <message>
         <source>|G| West Edge</source>
         <comment>Name of symbol 11.2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西侧边沿</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征从周围地面向下沿伸，并且检查点位于地的边沿；例如：凹陷，东南边沿。
+b) 特征从特定区域的上面沿伸出来，并且检查点位于区域的边界；例如：沼泽，西北边沿。</translation>
     </message>
     <message>
         <source>|G| North west Edge</source>
         <comment>Name of symbol 11.2.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西北边沿</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征从周围地面向下沿伸，并且检查点位于地的边沿；例如：凹陷，东南边沿。
+b) 特征从特定区域的上面沿伸出来，并且检查点位于区域的边界；例如：沼泽，西北边沿。</translation>
     </message>
     <message>
         <source>|G| North Part</source>
         <comment>Name of symbol 11.3.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 北侧部分</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于特征从特定区域上沿伸出来，并且检查点不位于中心或任何边沿；例如：沼泽，西侧部分；凹陷，东南侧部分。</translation>
     </message>
     <message>
         <source>|G| North east Part</source>
         <comment>Name of symbol 11.3.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东北侧部分</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于特征从特定区域上沿伸出来，并且检查点不位于中心或任何边沿；例如：沼泽，西侧部分；凹陷，东南侧部分。</translation>
     </message>
     <message>
         <source>|G| East Part</source>
         <comment>Name of symbol 11.3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东侧部分</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于特征从特定区域上沿伸出来，并且检查点不位于中心或任何边沿；例如：沼泽，西侧部分；凹陷，东南侧部分。</translation>
     </message>
     <message>
         <source>|G| South east Part</source>
         <comment>Name of symbol 11.3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东南侧部分</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于特征从特定区域上沿伸出来，并且检查点不位于中心或任何边沿；例如：沼泽，西侧部分；凹陷，东南侧部分。</translation>
     </message>
     <message>
         <source>|G| South Part</source>
         <comment>Name of symbol 11.3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 南侧部分</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于特征从特定区域上沿伸出来，并且检查点不位于中心或任何边沿；例如：沼泽，西侧部分；凹陷，东南侧部分。</translation>
     </message>
     <message>
         <source>|G| South west part</source>
         <comment>Name of symbol 11.3.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西南侧部分</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于特征从特定区域上沿伸出来，并且检查点不位于中心或任何边沿；例如：沼泽，西侧部分；凹陷，东南侧部分。</translation>
     </message>
     <message>
         <source>|G| West Part</source>
         <comment>Name of symbol 11.3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西侧部分</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于特征从特定区域上沿伸出来，并且检查点不位于中心或任何边沿；例如：沼泽，西侧部分；凹陷，东南侧部分。</translation>
     </message>
     <message>
         <source>|G| North west Part</source>
         <comment>Name of symbol 11.3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西北侧部分</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于特征从特定区域上沿伸出来，并且检查点不位于中心或任何边沿；例如：沼泽，西侧部分；凹陷，东南侧部分。</translation>
     </message>
     <message>
         <source>|G| North Corner (inside)</source>
         <comment>Name of symbol 11.4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 北侧角落（内）</translation>
     </message>
     <message>
         <source>Used where:
@@ -15026,12 +16389,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征的边沿转向 45-135 度角；例如，开阔地，东侧角落（内）。
+b) 线性特征转过一个角度；例如，围栏，南侧角落（内）。
+符号的方向指示了角落指向的方向。</translation>
     </message>
     <message>
         <source>|G| North east Corner (inside)</source>
         <comment>Name of symbol 11.4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东北侧角落（内）</translation>
     </message>
     <message>
         <source>Used where:
@@ -15039,12 +16405,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征的边沿转向 45-135 度角；例如，开阔地，东侧角落（内）。
+b) 线性特征转过一个角度；例如，围栏，南侧角落（内）。
+符号的方向指示了角落指向的方向。</translation>
     </message>
     <message>
         <source>|G| East Corner (inside)</source>
         <comment>Name of symbol 11.4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东侧角落（内）</translation>
     </message>
     <message>
         <source>Used where:
@@ -15052,12 +16421,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征的边沿转向 45-135 度角；例如，开阔地，东侧角落（内）。
+b) 线性特征转过一个角度；例如，围栏，南侧角落（内）。
+符号的方向指示了角落指向的方向。</translation>
     </message>
     <message>
         <source>|G| South east Corner (inside)</source>
         <comment>Name of symbol 11.4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东南侧角落（内）</translation>
     </message>
     <message>
         <source>Used where:
@@ -15065,12 +16437,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征的边沿转向 45-135 度角；例如，开阔地，东侧角落（内）。
+b) 线性特征转过一个角度；例如，围栏，南侧角落（内）。
+符号的方向指示了角落指向的方向。</translation>
     </message>
     <message>
         <source>|G| South Corner (inside)</source>
         <comment>Name of symbol 11.4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 南侧角落（内）</translation>
     </message>
     <message>
         <source>Used where:
@@ -15078,12 +16453,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征的边沿转向 45-135 度角；例如，开阔地，东侧角落（内）。
+b) 线性特征转过一个角度；例如，围栏，南侧角落（内）。
+符号的方向指示了角落指向的方向。</translation>
     </message>
     <message>
         <source>|G| South west Corner (inside)</source>
         <comment>Name of symbol 11.4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西南侧角落（内）</translation>
     </message>
     <message>
         <source>Used where:
@@ -15091,12 +16469,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征的边沿转向 45-135 度角；例如，开阔地，东侧角落（内）。
+b) 线性特征转过一个角度；例如，围栏，南侧角落（内）。
+符号的方向指示了角落指向的方向。</translation>
     </message>
     <message>
         <source>|G| West Corner (inside)</source>
         <comment>Name of symbol 11.4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西侧角落（内）</translation>
     </message>
     <message>
         <source>Used where:
@@ -15104,12 +16485,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征的边沿转向 45-135 度角；例如，开阔地，东侧角落（内）。
+b) 线性特征转过一个角度；例如，围栏，南侧角落（内）。
+符号的方向指示了角落指向的方向。</translation>
     </message>
     <message>
         <source>|G| North west Corner (inside)</source>
         <comment>Name of symbol 11.4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西北侧角落（内）</translation>
     </message>
     <message>
         <source>Used where:
@@ -15117,12 +16501,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征的边沿转向 45-135 度角；例如，开阔地，东侧角落（内）。
+b) 线性特征转过一个角度；例如，围栏，南侧角落（内）。
+符号的方向指示了角落指向的方向。</translation>
     </message>
     <message>
         <source>|G| North Corner (outside)</source>
         <comment>Name of symbol 11.5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 北侧角落（外）</translation>
     </message>
     <message>
         <source>Used where:
@@ -15130,12 +16517,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征边沿转向 45-135 度角；例如，废墟，西侧角落（外）。
+b) 线性特征转过度角；例如，石墙，西南侧角落（外）。
+符号的方向指示了角落指向的方向。</translation>
     </message>
     <message>
         <source>|G| North east Corner (outside)</source>
         <comment>Name of symbol 11.5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东北侧角落（外）</translation>
     </message>
     <message>
         <source>Used where:
@@ -15143,12 +16533,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征边沿转向 45-135 度角；例如，废墟，西侧角落（外）。
+b) 线性特征转过度角；例如，石墙，西南侧角落（外）。
+符号的方向指示了角落指向的方向。</translation>
     </message>
     <message>
         <source>|G| East Corner (outside)</source>
         <comment>Name of symbol 11.5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东侧角落（外）</translation>
     </message>
     <message>
         <source>Used where:
@@ -15156,12 +16549,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征边沿转向 45-135 度角；例如，废墟，西侧角落（外）。
+b) 线性特征转过度角；例如，石墙，西南侧角落（外）。
+符号的方向指示了角落指向的方向。</translation>
     </message>
     <message>
         <source>|G| South east Corner (outside)</source>
         <comment>Name of symbol 11.5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东南侧角落（外）</translation>
     </message>
     <message>
         <source>Used where:
@@ -15169,12 +16565,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征边沿转向 45-135 度角；例如，废墟，西侧角落（外）。
+b) 线性特征转过度角；例如，石墙，西南侧角落（外）。
+符号的方向指示了角落指向的方向。</translation>
     </message>
     <message>
         <source>|G| South Corner (outside)</source>
         <comment>Name of symbol 11.5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 南侧角落（外）</translation>
     </message>
     <message>
         <source>Used where:
@@ -15182,12 +16581,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征边沿转向 45-135 度角；例如，废墟，西侧角落（外）。
+b) 线性特征转过度角；例如，石墙，西南侧角落（外）。
+符号的方向指示了角落指向的方向。</translation>
     </message>
     <message>
         <source>|G| South west Corner (outside)</source>
         <comment>Name of symbol 11.5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西南侧角落（外）</translation>
     </message>
     <message>
         <source>Used where:
@@ -15195,12 +16597,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征边沿转向 45-135 度角；例如，废墟，西侧角落（外）。
+b) 线性特征转过度角；例如，石墙，西南侧角落（外）。
+符号的方向指示了角落指向的方向。</translation>
     </message>
     <message>
         <source>|G| West Corner (outside)</source>
         <comment>Name of symbol 11.5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西侧角落（外）</translation>
     </message>
     <message>
         <source>Used where:
@@ -15208,12 +16613,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征边沿转向 45-135 度角；例如，废墟，西侧角落（外）。
+b) 线性特征转过度角；例如，石墙，西南侧角落（外）。
+符号的方向指示了角落指向的方向。</translation>
     </message>
     <message>
         <source>|G| North west Corner (outside)</source>
         <comment>Name of symbol 11.5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西北侧角落（外）</translation>
     </message>
     <message>
         <source>Used where:
@@ -15221,442 +16629,445 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>用在：
+a) 特征边沿转向 45-135 度角；例如，废墟，西侧角落（外）。
+b) 线性特征转过度角；例如，石墙，西南侧角落（外）。
+符号的方向指示了角落指向的方向。</translation>
     </message>
     <message>
         <source>|G| North Tip</source>
         <comment>Name of symbol 11.6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 北端</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于特征的边沿转过小于 45 度的角度；例如：沼泽，西南端。</translation>
     </message>
     <message>
         <source>|G| North east Tip</source>
         <comment>Name of symbol 11.6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东北端</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于特征的边沿转过小于 45 度的角度；例如：沼泽，西南端。</translation>
     </message>
     <message>
         <source>|G| East Tip</source>
         <comment>Name of symbol 11.6.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东端</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于特征的边沿转过小于 45 度的角度；例如：沼泽，西南端。</translation>
     </message>
     <message>
         <source>|G| South east Tip</source>
         <comment>Name of symbol 11.6.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东南端</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于特征的边沿转过小于 45 度的角度；例如：沼泽，西南端。</translation>
     </message>
     <message>
         <source>|G| South Tip</source>
         <comment>Name of symbol 11.6.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 南端</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于特征的边沿转过小于 45 度的角度；例如：沼泽，西南端。</translation>
     </message>
     <message>
         <source>|G| South west Tip</source>
         <comment>Name of symbol 11.6.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西南端</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于特征的边沿转过小于 45 度的角度；例如：沼泽，西南端。</translation>
     </message>
     <message>
         <source>|G| West Tip</source>
         <comment>Name of symbol 11.6.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西端</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于特征的边沿转过小于 45 度的角度；例如：沼泽，西南端。</translation>
     </message>
     <message>
         <source>|G| North west Tip</source>
         <comment>Name of symbol 11.6.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西北端</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于特征的边沿转过小于 45 度的角度；例如：沼泽，西南端。</translation>
     </message>
     <message>
         <source>|G| Bend</source>
         <comment>Name of symbol 11.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 弯曲</translation>
     </message>
     <message>
         <source>Used where a linear feature makes a smooth change of direction; e.g. Path bend; River bend.</source>
         <comment>Description of symbol 11.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于线性特征平滑地改变方向；例如：路径弯曲；河流弯曲。</translation>
     </message>
     <message>
         <source>|G| North End</source>
         <comment>Name of symbol 11.8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 北侧末端</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>线性特征开始或结束的点；例如：骑马路，西北末端；石墙，南侧末端。</translation>
     </message>
     <message>
         <source>|G| North east End</source>
         <comment>Name of symbol 11.8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东北末端</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>线性特征开始或结束的点；例如：骑马路，西北末端；石墙，南侧末端。</translation>
     </message>
     <message>
         <source>|G| East End</source>
         <comment>Name of symbol 11.8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东侧末端</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>线性特征开始或结束的点；例如：骑马路，西北末端；石墙，南侧末端。</translation>
     </message>
     <message>
         <source>|G| South east End</source>
         <comment>Name of symbol 11.8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东南末端</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>线性特征开始或结束的点；例如：骑马路，西北末端；石墙，南侧末端。</translation>
     </message>
     <message>
         <source>|G| South End</source>
         <comment>Name of symbol 11.8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 南侧末端</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>线性特征开始或结束的点；例如：骑马路，西北末端；石墙，南侧末端。</translation>
     </message>
     <message>
         <source>|G| South west End</source>
         <comment>Name of symbol 11.8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西南末端</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>线性特征开始或结束的点；例如：骑马路，西北末端；石墙，南侧末端。</translation>
     </message>
     <message>
         <source>|G| West End</source>
         <comment>Name of symbol 11.8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西侧末端</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>线性特征开始或结束的点；例如：骑马路，西北末端；石墙，南侧末端。</translation>
     </message>
     <message>
         <source>|G| North west End</source>
         <comment>Name of symbol 11.8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西北末端</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>线性特征开始或结束的点；例如：骑马路，西北末端；石墙，南侧末端。</translation>
     </message>
     <message>
         <source>|G| Upper Part</source>
         <comment>Name of symbol 11.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 上部</translation>
     </message>
     <message>
         <source>Where the feature extends over two or more contours and the control is located near the top; e.g. Erosion Gully, upper part.</source>
         <comment>Description of symbol 11.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>在两条或更多等高线上延申的特征，并且检查点位于顶部附近；例如：侵蚀的土沟，上部。</translation>
     </message>
     <message>
         <source>|G| Lower Part</source>
         <comment>Name of symbol 11.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 下部</translation>
     </message>
     <message>
         <source>Where the feature extends over two or more contours and the control is located near the bottom; e.g. Re-entrant, lower part.</source>
         <comment>Description of symbol 11.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>在两条或更多等高线上延申的特征，并且检查点位于底部附近；例如：重新进入，下部。</translation>
     </message>
     <message>
         <source>|G| Top</source>
         <comment>Name of symbol 11.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 顶部</translation>
     </message>
     <message>
         <source>Where the control is located at the highest point of the feature and this is not the usual location; e.g. Cliff, top.</source>
         <comment>Description of symbol 11.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>检查点位于特征的最高点，并且这并不是通常的位置；例如：悬崖，顶部。</translation>
     </message>
     <message>
         <source>|G| Beneath</source>
         <comment>Name of symbol 11.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 下面</translation>
     </message>
     <message>
         <source>Where the control is located underneath the feature; e.g. Pipeline, beneath.</source>
         <comment>Description of symbol 11.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>检查点位于特征的下面；例如：管道，下面。</translation>
     </message>
     <message>
         <source>|G| Foot (no direction)</source>
         <comment>Name of symbol 11.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 底部（无方向）</translation>
     </message>
     <message>
         <source>Where the control is located at the lower junction of the slope of the feature and the surface of the surrounding area; e.g. Earth bank, foot.</source>
         <comment>Description of symbol 11.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>检查点位于特征的斜坡与周围区域表面的下部交叉点；例如：土堤，底部。</translation>
     </message>
     <message>
         <source>|G| North Foot</source>
         <comment>Name of symbol 11.14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 北侧底部</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>如上所述，但特征足够大，使检查点放置在其周围一个以上的位置；例如：小山，东北侧底部。</translation>
     </message>
     <message>
         <source>|G| North east Foot</source>
         <comment>Name of symbol 11.14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东北侧底部</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>如上所述，但特征足够大，使检查点放置在其周围一个以上的位置；例如：小山，东北侧底部。</translation>
     </message>
     <message>
         <source>|G| East Foot</source>
         <comment>Name of symbol 11.14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东侧底部</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>如上所述，但特征足够大，使检查点放置在其周围一个以上的位置；例如：小山，东北侧底部。</translation>
     </message>
     <message>
         <source>|G| South east Foot</source>
         <comment>Name of symbol 11.14.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 东南侧底部</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>如上所述，但特征足够大，使检查点放置在其周围一个以上的位置；例如：小山，东北侧底部。</translation>
     </message>
     <message>
         <source>|G| South Foot</source>
         <comment>Name of symbol 11.14.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 南侧底部</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>如上所述，但特征足够大，使检查点放置在其周围一个以上的位置；例如：小山，东北侧底部。</translation>
     </message>
     <message>
         <source>|G| South west Foot</source>
         <comment>Name of symbol 11.14.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西南侧底部</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>如上所述，但特征足够大，使检查点放置在其周围一个以上的位置；例如：小山，东北侧底部。</translation>
     </message>
     <message>
         <source>|G| West Foot</source>
         <comment>Name of symbol 11.14.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西侧底部</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>如上所述，但特征足够大，使检查点放置在其周围一个以上的位置；例如：小山，东北侧底部。</translation>
     </message>
     <message>
         <source>|G| North west Foot</source>
         <comment>Name of symbol 11.14.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 西北侧底部</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>如上所述，但特征足够大，使检查点放置在其周围一个以上的位置；例如：小山，东北侧底部。</translation>
     </message>
     <message>
         <source>|G| Between</source>
         <comment>Name of symbol 11.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 之间</translation>
     </message>
     <message>
         <source>Where the control is located between two features; e.g. Between thickets; Between boulder and knoll. The two features which the control is between must be shown separately in columns |D| and |E|.</source>
         <comment>Description of symbol 11.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>检查点位于两个特征之间；例如：灌木丛之间；巨石与小土丘之间。检查点在其间的两个特征点必须分别显示在 |D| 列和 |E| 列。</translation>
     </message>
     <message>
         <source>|G| First aid post</source>
         <comment>Name of symbol 12.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 紧急求助标志</translation>
     </message>
     <message>
         <source>Control site where First aid is available.</source>
         <comment>Description of symbol 12.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>可以获得紧急帮助的检查站。</translation>
     </message>
     <message>
         <source>|G| Refreshment point</source>
         <comment>Name of symbol 12.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 补给点</translation>
     </message>
     <message>
         <source>Control site where Refreshments are available.</source>
         <comment>Description of symbol 12.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>可以获得补给的检查站。</translation>
     </message>
     <message>
         <source>|G| Radio or TV control</source>
         <comment>Name of symbol 12.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 电台或电视检查点</translation>
     </message>
     <message>
         <source>Location of a Radio or TV control.</source>
         <comment>Description of symbol 12.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 电台或电视检查点的位置。</translation>
     </message>
     <message>
         <source>|G| Control check</source>
         <comment>Name of symbol 12.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| 人工检查点</translation>
     </message>
     <message>
         <source>Manned control site where the control card is checked.</source>
         <comment>Description of symbol 12.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>人工检查站，检查卡在此进行检查。</translation>
     </message>
     <message>
         <source>Taped Route, away from control</source>
         <comment>Name of symbol 13.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>隔离带围绕的路径，远离检查点</translation>
     </message>
     <message>
         <source>A marked route is to be followed away from a particular control. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>标记的路径，沿路奔跑而远离特定的检查点。再次强调地图上所显示的内容。</translation>
     </message>
     <message>
         <source>Taped Route, between controls</source>
         <comment>Name of symbol 13.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>隔离带围绕的路径，在检查点之间</translation>
     </message>
     <message>
         <source>A marked route is to be followed between controls. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>标记的路径，检查点之间沿路奔跑。再次强调地图上所显示的内容。</translation>
     </message>
     <message>
         <source>Mandatory crossing point</source>
         <comment>Name of symbol 13.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>强制穿过点</translation>
     </message>
     <message>
         <source>Mandatory crossing points (or points) between two controls. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>两个检查点之间的强制穿过点（或点）。再次强调地图上所显示的内容。</translation>
     </message>
     <message>
         <source>Mandatory passage through out of bounds area</source>
         <comment>Name of symbol 13.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>通过出界区域的强制通道</translation>
     </message>
     <message>
         <source>Mandatory route between two controls. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>两个检查点之间的强制路径。再次强调地图上所显示的内容。</translation>
     </message>
     <message>
         <source>Taped Route from Control to Map Exchange</source>
         <comment>Name of symbol 13.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>隔离带围绕的路径，从检查点到地图交换点</translation>
     </message>
     <message>
         <source>At a map exchange, or if a marked route is to be followed from a control to a map exchange, this instruction follows the last control description of the first part of the course.</source>
         <comment>Description of symbol 13.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>在地图交换点，或者如果沿着标记的路径从检查点到地图交换点，这个说明符合第一部分路线的最后一个检查点的描述。</translation>
     </message>
     <message>
         <source>Taped Route from last control to Finish</source>
         <comment>Name of symbol 14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>隔离带围绕的路径，从最后一个检查点到终点</translation>
     </message>
     <message>
         <source>Mandatory route from the last control to the Finish. Re-emphasises what is shown on the map. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>从最后一个检查点到终点的强制路径。再次强调地图上所显示的内容。给出从最后一个检查点到终点的距离。</translation>
     </message>
     <message>
         <source>Taped Route from finish funnel to Finish</source>
         <comment>Name of symbol 14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>隔离带围绕的路径，从终点通道到终点</translation>
     </message>
     <message>
         <source>The competitor has to navigate from the last control to finish funnel, and then follow tapes. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>选手必须从最后一个检查点导向终点通道，然后沿着隔离带奔跑。给出从最后一个检查点到终点的距离。</translation>
     </message>
     <message>
         <source>Navigation from last control to Finish (no Taped Route)</source>
         <comment>Name of symbol 14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>从最后一个检查点导向终点（没有隔离带）</translation>
     </message>
     <message>
         <source>The competitor has to navigate from the last control to finish. No tapes. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>选手必须从最后一个检查点导航至终点。没有终点线。给出从最后一个检查点到终点的距离。</translation>
     </message>
     <message>
         <source>Length of special route</source>
         <comment>Name of symbol 13.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>特定路径的长度</translation>
     </message>
     <message>
         <source>This is used with the special instruction (13.x) to give the distance from the last control to the end of the route (control, map exchange, or finish).</source>

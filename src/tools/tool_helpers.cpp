@@ -31,7 +31,7 @@
 #include <QtMath>
 #include <QCoreApplication>
 #include <QFontMetrics>
-#include <QLatin1Char>
+#include <QLatin1String>
 #include <QLineF>
 #include <QLocale>
 #include <QPainter>
@@ -39,6 +39,7 @@
 #include <QPen>
 #include <QPoint>
 #include <QPointF>
+#include <QRect>
 #include <QRectF>
 #include <QSettings>
 #include <QString>
@@ -659,7 +660,7 @@ AzimuthInfoHelper::AzimuthInfoHelper(const QWidget* widget, QColor color)
 	line_1_offset = line_0_offset + metrics.lineSpacing();
 	
 	// Approximation of the length needed to draw "359.9°" or "1,200 m".
-	auto display_radius = text_offset + metrics.width(QLatin1Char('5')) * 7;
+	auto display_radius = text_offset + metrics.boundingRect(QLatin1String("5555555")).width();
 	display_rect = QRectF(-display_radius, -display_radius, 2*display_radius, 2*display_radius);
 	
 	active = QSettings().value(show_azimuth_key).toBool();

@@ -192,7 +192,7 @@ void RotateTool::updateStatusText()
 			display_rotation -= 360;
 		else if (display_rotation > -0.05 && display_rotation < 0.0)
 			display_rotation = +0.0;
-		text = trUtf8("<b>Rotation:</b> %1° ").arg(QLocale().toString(display_rotation, 'f', 1));
+		text = tr("<b>Rotation:</b> %1° ").arg(QLocale().toString(display_rotation, 'f', 1));
 		if (!angle_helper->isActive())
 			text += QLatin1String("| ");
 	}

@@ -61,6 +61,7 @@ class GPSTemporaryMarkers;
 class GPSTrackRecorder;
 class GeoreferencingDialog;
 class MainWindow;
+class MapCoordF;
 class MapEditorActivity;
 class MapEditorTool;
 class MapFindFeature;
@@ -91,6 +92,13 @@ public:
 	{
 		MapEditor = 0,
 		SymbolEditor = 1
+	};
+	
+	/** Locations where to place popup windows. */
+	enum PopupLocation
+	{
+		PopupLocationTop = 0x04,
+		PopupLocationBottom = 0x08,
 	};
 	
 	/**
@@ -181,7 +189,10 @@ public:
 	
 	/**
 	 * Sets the current editor activity.
-	 * new_activity may be nullptr to disable the current editor activity.
+	 * 
+	 * Before setting the new activity, this function deletes the previous
+	 * activity. Parameter new_activity may be nullptr to just terminate the
+	 * current editor activity.
 	 */
 	void setEditorActivity(MapEditorActivity* new_activity);
 	
@@ -205,7 +216,7 @@ public:
 	 * 
 	 * Make sure that the child widget has a reasonable size hint.
 	 */
-	void showPopupWidget(QWidget* child_widget, const QString& title);
+	void showPopupWidget(QWidget* child_widget, const QString& title, PopupLocation location = PopupLocationBottom);
 	
 	/**
 	 * Deletes the given popup widget, which was previously shown with
@@ -278,6 +289,10 @@ public slots:
 	void pan();
 	/** Moves view to GPS position. */
 	void moveToGpsPos();
+	/** Activates or stops follow-position mode. */
+	void followPositionClicked(bool enable);
+	/** Follow-position mode update handler. */
+	void followPositionUpdate(OpenOrienteering::MapCoordF position);
 	/** Zooms in in the current map widget. */
 	void zoomIn();
 	/** Zooms out in the current map widget. */
@@ -691,6 +706,7 @@ private:
 	
 	QAction* pan_act;
 	QAction* move_to_gps_pos_act;
+	QAction* follow_position_act;
 	QAction* zoom_in_act;
 	QAction* zoom_out_act;
 	QAction* show_all_act;
@@ -808,8 +824,8 @@ private:
 	QToolBar* toolbar_mapparts = nullptr;
 	
 	// For mobile UI
-	ActionGridBar* bottom_action_bar;
-	ActionGridBar* top_action_bar;
+	ActionGridBar* bottom_action_bar = nullptr;
+	ActionGridBar* top_action_bar = nullptr;
 	QToolButton* show_top_bar_button;
 	QAction* mobile_symbol_selector_action;
 	QMenu* mobile_symbol_button_menu;

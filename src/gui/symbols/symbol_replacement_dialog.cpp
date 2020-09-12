@@ -416,7 +416,7 @@ void SymbolReplacementDialog::updateMappingTable()
 		auto original_item = new QTableWidgetItem(original_string);
 		original_item->setFlags(Qt::ItemIsEnabled); // make item non-editable
 		QVariantList original_item_data =
-			QVariantList() << qVariantFromValue<const Map*>(&object_map) << qVariantFromValue<const Symbol*>(original_symbol);
+			QVariantList() << QVariant::fromValue<const Map*>(&object_map) << QVariant::fromValue<const Symbol*>(original_symbol);
 		original_item->setData(Qt::UserRole, QVariant(original_item_data));
 		original_item->setData(Qt::DecorationRole, original_icon);
 		mapping_table->setItem(int(row), 0, original_item);
@@ -429,7 +429,7 @@ void SymbolReplacementDialog::updateMappingTable()
 		else
 			replacement_item = new QTableWidgetItem(tr("- None -"));
 		QVariantList replacement_item_data =
-			QVariantList() << qVariantFromValue<const Map*>(&symbol_set) << qVariantFromValue<const Symbol*>(replacement_symbol);
+			QVariantList() << QVariant::fromValue<const Map*>(&symbol_set) << QVariant::fromValue<const Symbol*>(replacement_symbol);
 		replacement_item->setData(Qt::UserRole, QVariant(replacement_item_data));
 		if (replacement_symbol)
 			replacement_item->setData(Qt::DecorationRole, replacement_symbol->getIcon(&symbol_set));

@@ -92,7 +92,7 @@
 <context>
     <name>OpenOrienteering::ActionGridBar</name>
     <message>
-        <location filename="../src/gui/widgets/action_grid_bar.cpp" line="59"/>
+        <location filename="../src/gui/widgets/action_grid_bar.cpp" line="57"/>
         <source>Show remaining items</source>
         <translation>Показать остальные пункты</translation>
     </message>
@@ -1453,7 +1453,7 @@
 <context>
     <name>OpenOrienteering::Exporter</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="649"/>
         <source>Could not write file: %1</source>
         <translation>Невозможно записать файл: %1</translation>
     </message>
@@ -1466,9 +1466,9 @@
         <translation type="vanished">Формат (%1) не поддерживает экспорт</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="315"/>
-        <location filename="../src/fileformats/file_import_export.cpp" line="329"/>
-        <location filename="../src/fileformats/file_import_export.cpp" line="343"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="294"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="308"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="322"/>
         <source>Cannot save file
 %1:
 %2</source>
@@ -1881,70 +1881,70 @@
 <context>
     <name>OpenOrienteering::GeoreferencingDialog</name>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="136"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="137"/>
         <source>Map Georeferencing</source>
         <translation>Геопривязка карты</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="208"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="602"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="209"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="627"/>
         <source>Lookup...</source>
         <translation>Просмотр…</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="167"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="168"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="169"/>
         <source>m</source>
         <translation>м</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="261"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="262"/>
         <source>Declination:</source>
         <translation>Склонение:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="193"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="194"/>
         <source>Projected coordinates</source>
         <translation>Проекционные координаты</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="145"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="146"/>
         <source>Status:</source>
         <translation>Статус:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="194"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="195"/>
         <source>Geographic coordinates</source>
         <translation>Географические координаты</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="189"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="190"/>
         <source>Show reference point in:</source>
         <translation>Показать опорную точку в:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="410"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="411"/>
         <source>valid</source>
         <translation>действительный</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="404"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="405"/>
         <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="442"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="809"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="443"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="834"/>
         <source>Online declination lookup</source>
         <translation>Поиск склонения в Интернете</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="140"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="141"/>
         <source>Map coordinate reference system</source>
         <translation>Система координат карты</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="143"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="144"/>
         <source>- local -</source>
         <translation>- локальные -</translation>
     </message>
@@ -1954,46 +1954,46 @@
         <translation type="vanished">Коэффициент масштабирования сетки:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="148"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="149"/>
         <source>Reference point</source>
         <translation>Опорная точка</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="150"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="151"/>
         <source>&amp;Pick on map</source>
         <translation>&amp;Выбрать на карте</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="152"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="153"/>
         <source>(Datum: WGS84)</source>
         <translation>(Датум: WGS84)</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="155"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="156"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="157"/>
         <source>mm</source>
         <translation>мм</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="160"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="161"/>
         <source>X</source>
         <comment>x coordinate</comment>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="162"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="163"/>
         <source>Y</source>
         <comment>y coordinate</comment>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="171"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="172"/>
         <source>E</source>
         <comment>west / east</comment>
         <translation>E</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="173"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="174"/>
         <source>N</source>
         <comment>north / south</comment>
         <translation>N</translation>
@@ -2003,136 +2003,136 @@
         <translation type="vanished">°</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="182"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="183"/>
         <source>N</source>
         <comment>north</comment>
         <translation>N</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="184"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="185"/>
         <source>E</source>
         <comment>east</comment>
         <translation>E</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="205"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="206"/>
         <source>Map north</source>
         <translation>Север карты</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="215"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="216"/>
         <source>Show scale factors</source>
         <translation>Показать коэффициенты масштабирования</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="216"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="217"/>
         <source>Scale compensation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="221"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="222"/>
         <source>Combined scale factor:</source>
         <extracomment>The combined scale factor is the ratio between a length on the ground and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
         <translation>Комбинированный коэффициент масштабирования:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="227"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="228"/>
         <source>Auxiliary scale factor:</source>
         <extracomment>The auxiliary scale factor is the ratio between a length in the curved earth model and the corresponding length on the ground. It is applied as a factor to ground distances to get curved earth model distances.</extracomment>
         <translation>Вспомогательный коэффициент масштабирования:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="245"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="246"/>
         <location filename="../src/gui/select_crs_dialog.cpp" line="90"/>
         <source>&amp;Coordinate reference system:</source>
         <translation>&amp;Базовая система координат (БСК):</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="251"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="252"/>
         <source>Map coordinates:</source>
         <translation>Координаты карты:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="253"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="254"/>
         <source>Geographic coordinates:</source>
         <translation>Географические координаты:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="256"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="257"/>
         <source>On CRS changes, keep:</source>
         <translation>При изменении БСК сохранить:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="262"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="263"/>
         <source>Grivation:</source>
         <translation>Квазисклонение:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="443"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="444"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
         <translation>Магнитное склонение для опорной точки %1° %2° будет взято из &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Вы хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="524"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="528"/>
         <source>Declination change</source>
         <translation>Изменить склонение</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="524"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="528"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
         <translation>Склонение изменено. Вы хотите также повернуть содержимое карты?</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="549"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="553"/>
         <source>Scale factor change</source>
         <translation>Изменение коэффициента масштабирования</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="549"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="553"/>
         <source>The scale factor has been changed. Do you want to stretch/shrink the map content accordingly, too?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="575"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="600"/>
         <source>Local coordinates:</source>
         <translation>Локальные координаты:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="602"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="627"/>
         <source>Loading...</source>
         <translation>Загрузка…</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="607"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="632"/>
         <source>%1</source>
         <comment>scale factor value</comment>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="609"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="617"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="634"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="642"/>
         <source>locked</source>
         <translation>выключен</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="780"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="805"/>
         <source>Could not parse data.</source>
         <translation>Невозможно прочитать данные.</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="805"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="830"/>
         <source>Declination value not found.</source>
         <translation>Значение склонения не найдено.</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="810"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="835"/>
         <source>The online declination lookup failed:
 %1</source>
         <translation>Ошибка поиска склонения в Интернете:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="615"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="640"/>
         <source>%1 °</source>
         <comment>degree value</comment>
         <translation>%1 °</translation>
@@ -2141,7 +2141,7 @@
 <context>
     <name>OpenOrienteering::GeoreferencingTool</name>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="838"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="863"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
         <translation>&lt;b&gt;Щелчок&lt;/b&gt;: Задать опорную точку. &lt;b&gt;Правый щелчок&lt;/b&gt;: Отмена.</translation>
     </message>
@@ -2403,7 +2403,7 @@
         <translation type="vanished">Точечный объект с неопределённым или неверным символом в %1:%2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="94"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="95"/>
         <source>OpenOrienteering Mapper</source>
         <translation>OpenOrienteering Mapper</translation>
     </message>
@@ -2453,7 +2453,7 @@
         <translation>Ошибка при загрузке истории изменений в %1:%2: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="75"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="76"/>
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
         <translation>Нет такой опции: %1</translation>
@@ -2469,8 +2469,8 @@
     <name>OpenOrienteering::Importer</name>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="776"/>
-        <location filename="../src/fileformats/file_import_export.cpp" line="110"/>
-        <location filename="../src/fileformats/file_import_export.cpp" line="129"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="111"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="130"/>
         <source>Cannot open file
 %1:
 %2</source>
@@ -2479,12 +2479,12 @@
 %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="178"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="173"/>
         <source>Found an object without symbol.</source>
         <translation>Найден объект без символа.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/fileformats/file_import_export.cpp" line="206"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="201"/>
         <source>Dropped %n irregular object(s).</source>
         <translation>
             <numerusform>Отброшен %n нерегулярный объект.</numerusform>
@@ -2493,41 +2493,40 @@
         </translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="213"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="208"/>
         <source>Error during symbol post-processing.</source>
         <translation>Ошибка во время постобработки символа.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="263"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="226"/>
         <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
         <translation>Подложка &quot;%1&quot; была загружена из каталога карты, а не из места её расположения относительно файла карты, где она находилась раньше.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="254"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="750"/>
+        <location filename="../src/gui/map/map_widget.cpp" line="319"/>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
         <translation>Не удалось загрузить подложку &quot;%1&quot; по следующей причине: %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="160"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="155"/>
         <source>Georeferencing mismatch:</source>
         <translation>Несоответствие геопривязки:</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="271"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="250"/>
         <source>Warnings when loading template &apos;%1&apos;:
 %2</source>
         <translation>При загрузке подложки &quot;%1&quot; выданы следующие предупреждения:
 %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="279"/>
-        <location filename="../src/fileformats/file_import_export.cpp" line="281"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="258"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="260"/>
         <source>At least one template file could not be found.</source>
         <translation>Один или более файлов подложкек не найдены.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="282"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="261"/>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
         <translation>Щёлкните на красное название подложки в меню Подложки -&gt; Окно настройки подложек, чтобы определить новое имя файла подложки.</translation>
     </message>
@@ -2536,17 +2535,17 @@
         <translation type="vanished">Этот файл использует устаревший формат. Поддержка этого формата должна быть удалена из этой программы в ближайшее время. Для того, чтобы открыть файл в будущем, сохраните его снова.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="547"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="548"/>
         <source>Unsupported obsolete file format version. Please use program version v%1 or older to load and update the file.</source>
         <translation>Неподдерживаемая устаревшая версия формата файла. Для загрузки и правки файла используйте версию программы v%1 или старше.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="559"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="560"/>
         <source>Invalid file format version.</source>
         <translation>Некорректная версия формата файла.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="561"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="562"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
         <translation>Неподдерживаемая старая версия формата файла. Пожалуйста используйте предыдущие версии программы для загрузки и правки файла.</translation>
     </message>
@@ -2583,12 +2582,12 @@
         <translation type="vanished">Не удалось прочитать файл: %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="553"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="554"/>
         <source>Unsupported file format.</source>
         <translation>Неподдерживаемый формат файла.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="563"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="564"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
         <translation>Неподдерживаемая новая версия формата файла. Некоторые параметры карты не могут быть загружены или сохранены в данной версии программы.</translation>
     </message>
@@ -2834,7 +2833,7 @@
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1774"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="620"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1501"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1499"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="325"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="815"/>
         <source>Start symbol</source>
@@ -2849,7 +2848,7 @@
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1782"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1508"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1506"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="325"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="815"/>
         <source>End symbol</source>
@@ -2858,7 +2857,7 @@
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1786"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="614"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1494"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1492"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="300"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="325"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="815"/>
@@ -2926,7 +2925,9 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="770"/>
         <location filename="../src/gui/main_window.cpp" line="858"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="649"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="657"/>
+        <location filename="../src/templates/paint_on_template_feature.cpp" line="316"/>
+        <location filename="../src/templates/paint_on_template_feature.cpp" line="347"/>
         <source>Cannot open file:
 %1
 
@@ -2938,7 +2939,7 @@
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="859"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="650"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="658"/>
         <source>Invalid file type.</source>
         <translation>Некорректный тип файла.</translation>
     </message>
@@ -2989,7 +2990,7 @@
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="375"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="136"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="171"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -3135,7 +3136,7 @@ Do you want to scale the symbols to the selected scale?</source>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="844"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="737"/>
+        <location filename="../src/gui/map/map_widget.cpp" line="307"/>
         <source>Opening %1</source>
         <translation>Открытие %1</translation>
     </message>
@@ -3144,7 +3145,7 @@ Do you want to scale the symbols to the selected scale?</source>
         <location filename="../src/gui/main_window.cpp" line="857"/>
         <location filename="../src/gui/main_window.cpp" line="885"/>
         <location filename="../src/gui/main_window.cpp" line="1259"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="749"/>
+        <location filename="../src/gui/map/map_widget.cpp" line="318"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
@@ -3253,7 +3254,6 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="203"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="253"/>
-        <location filename="../src/templates/template_tool_paint.cpp" line="529"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
@@ -3314,11 +3314,10 @@ for reading.</source>
 %2</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_tool_paint.cpp" line="572"/>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation>Невозможно сохранить файл
+        <translation type="vanished">Невозможно сохранить файл
 %1:
 %2</translation>
     </message>
@@ -3327,7 +3326,7 @@ for reading.</source>
         <translation type="vanished">Нечего импортировать.</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="480"/>
+        <location filename="../src/core/map.cpp" line="477"/>
         <source>default part</source>
         <translation>Слой по умолчанию</translation>
     </message>
@@ -3338,12 +3337,12 @@ for reading.</source>
         <translation>Новый цвет</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4183"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4142"/>
         <source>Import...</source>
         <translation>Импорт…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4184"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4143"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
         <translation>Замена символа была отменена.
@@ -3369,182 +3368,185 @@ Import the data anyway?</source>
 <context>
     <name>OpenOrienteering::MapEditorController</name>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="938"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="957"/>
+        <location filename="../src/templates/paint_on_template_tool.cpp" line="208"/>
         <source>Undo</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="938"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="957"/>
         <source>Undo the last step</source>
         <translation>Отменить последнее действие</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="939"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="958"/>
+        <location filename="../src/templates/paint_on_template_tool.cpp" line="214"/>
         <source>Redo</source>
         <translation>Вернуть</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="939"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="958"/>
         <source>Redo the last step</source>
         <translation>Вернуть последнее действие</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="940"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="959"/>
         <source>Cu&amp;t</source>
         <translation>Вы&amp;резать</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="942"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="961"/>
         <source>C&amp;opy</source>
         <translation>К&amp;опировать</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="944"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="963"/>
         <source>&amp;Paste</source>
         <translation>&amp;Вставить</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="960"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="979"/>
         <source>Zoom in</source>
         <translation>Приблизить</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="961"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="980"/>
         <source>Zoom out</source>
         <translation>Отдалить</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="963"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="982"/>
         <source>Toggle fullscreen mode</source>
         <translation>Переключить в полноэкранный режим</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="964"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="983"/>
         <source>Set custom zoom factor...</source>
         <translation>Задать коэффициент увеличения…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="971"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="990"/>
         <source>Symbol window</source>
         <translation>Окно символов</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="971"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="990"/>
         <source>Show/Hide the symbol window</source>
         <translation>Показать/Скрыть окно символов</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="972"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="991"/>
         <source>Color window</source>
         <translation>Окно настройки цветов</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="972"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="991"/>
         <source>Show/Hide the color window</source>
         <translation>Показать/Скрыть окно настройки цветов</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="974"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="993"/>
         <source>Replace the symbols with those from another map file</source>
         <translation>Заменить символы на аналогичные из другого файла карты</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="978"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="997"/>
         <source>Scale all symbols...</source>
         <translation>Масштабировать все символы…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="978"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="997"/>
         <source>Scale the whole symbol set</source>
         <translation>Масштабировать весь набор символов</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="980"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="999"/>
         <source>Change map scale...</source>
         <translation>Изменить масштаб карты…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="980"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="999"/>
         <source>Change the map scale and adjust map objects and symbol sizes</source>
         <translation>Изменить масштаб карты и настроить объекты карты и размеры символов</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="982"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1001"/>
         <source>Map notes...</source>
         <translation>Описание карты…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="984"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1003"/>
         <source>Template setup window</source>
         <translation>Окно настройки подложек</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="984"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1003"/>
         <source>Show/Hide the template window</source>
         <translation>Показать/Скрыть окно настройки подложек</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="987"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1006"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="641"/>
         <source>Open template...</source>
         <translation>Открыть подложку…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="962"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="981"/>
         <source>Show whole map</source>
         <translation>Показать всю карту</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="992"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1011"/>
         <source>Edit objects</source>
         <translation>Редактировать объекты</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="994"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1013"/>
         <source>Set point objects</source>
         <translation>Поставить точку</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="995"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1014"/>
         <source>Draw paths</source>
         <translation>Рисовать контур</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="996"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1015"/>
         <source>Draw circles and ellipses</source>
         <translation>Рисовать окружность или эллипс</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1000"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1019"/>
         <source>Write text</source>
         <translation>Написать текст</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1001"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1020"/>
         <source>Duplicate</source>
         <translation>Дублировать</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1002"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1021"/>
         <source>Switch symbol</source>
         <translation>Заменить символ выделенного объекта(-ов)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1003"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1022"/>
         <source>Fill / Create border</source>
         <translation>Залить / Создать контур выделенного объекта(-ов)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1004"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1023"/>
         <source>Switch dash direction</source>
         <translation>Поменять направление штрихов</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1005"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1024"/>
         <source>Connect paths</source>
         <translation>Соединить контуры</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1007"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1026"/>
         <source>Cut object</source>
         <translation>Разделить объект</translation>
     </message>
@@ -3553,260 +3555,259 @@ Import the data anyway?</source>
         <translation type="vanished">Повернуть объект(-ы)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1021"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1040"/>
         <source>Measure lengths and areas</source>
         <translation>Измерение длин и площадей</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1024"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1043"/>
         <source>Cut away from area</source>
         <translation>Вырезать из области</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1026"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1045"/>
         <source>Merge area holes</source>
         <translation>Слияние отверстий площади</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1039"/>
         <source>Paint on template settings</source>
-        <translation>Параметры рисования на подложке</translation>
+        <translation type="vanished">Параметры рисования на подложке</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1044"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1054"/>
         <source>Enable touch cursor</source>
         <translation>Включить сенсорный курсор</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1045"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1055"/>
         <source>Enable GPS display</source>
         <translation>Включить отображение GPS</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1047"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1057"/>
         <source>Enable GPS distance rings</source>
         <translation>Показывать кольцо расстояний GPS</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1049"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1059"/>
         <source>Set point object at GPS position</source>
         <translation>Поставить точечный объект в позиции GPS</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1051"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1061"/>
         <source>Set temporary marker at GPS position</source>
         <translation>Поставить вспомогательный маркер в позиции GPS</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1053"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1063"/>
         <source>Create temporary path at GPS position</source>
         <translation>Создать вспомогательную линию в позиции GPS</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1055"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1065"/>
         <source>Clear temporary GPS markers</source>
         <translation>Очистить вспомогательные маркеры GPS</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1058"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1068"/>
         <source>Enable compass display</source>
         <translation>Включить отображение компаса</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1059"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1069"/>
         <source>Align map with north</source>
         <translation>Ориентировать карту на север</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1061"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3747"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1071"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3732"/>
         <source>Add new part...</source>
         <translation>Добавить новый слой…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1062"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3807"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1072"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3792"/>
         <source>Rename current part...</source>
         <translation>Переименовать текущий слой…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1063"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3768"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1073"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3753"/>
         <source>Remove current part</source>
         <translation>Удалить текущий слой</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1064"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1074"/>
         <source>Merge all parts</source>
         <translation>Объединить все слои</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1066"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4057"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1076"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4016"/>
         <source>Import...</source>
         <translation>Импорт…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1121"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1131"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="113"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="275"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="299"/>
         <source>&amp;Edit</source>
         <translation>&amp;Правка</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1142"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1152"/>
         <source>&amp;View</source>
         <translation>&amp;Вид</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1166"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1176"/>
         <source>Toolbars</source>
         <translation>Панели инструментов</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1173"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1183"/>
         <source>&amp;Tools</source>
         <translation>&amp;Инструменты</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1226"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1236"/>
         <source>Sy&amp;mbols</source>
         <translation>Си&amp;мволы</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1208"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1218"/>
         <source>M&amp;ap</source>
         <translation>К&amp;арта</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1238"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1248"/>
         <source>&amp;Templates</source>
         <translation>&amp;Подложки</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1295"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1305"/>
         <source>Drawing</source>
         <translation>Рисование</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1033"/>
+        <location filename="../src/templates/paint_on_template_feature.cpp" line="129"/>
         <source>Paint on template</source>
         <translation>Рисовать на подложке</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="574"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="582"/>
         <source>Editing in progress</source>
         <translation>Редактирование в процессе</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="575"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="583"/>
         <source>The map is currently being edited. Please finish the edit operation before saving.</source>
         <translation>Карта в настоящее время редактируется. Пожалуйста, закончите операцию редактирования перед сохранением.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="585"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="593"/>
         <source>Map saved</source>
         <translation>Карта сохранена</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="955"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="974"/>
         <source>Show grid</source>
         <translation>Показать сетку</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="956"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1269"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="975"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1279"/>
         <source>Configure grid...</source>
         <translation>Параметры сетки…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="966"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="985"/>
         <source>Hatch areas</source>
         <translation>Штриховать области</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="967"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="986"/>
         <source>Baseline view</source>
         <translation>Показ базовых линий</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="968"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="131"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="987"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="166"/>
         <source>Hide all templates</source>
         <translation>Скрыть все подложки</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="974"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="993"/>
         <source>Replace symbol set...</source>
         <translation>Заменить набор символов…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="979"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="998"/>
         <source>Georeferencing...</source>
         <translation>Геопривязка…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="981"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1000"/>
         <source>Rotate map...</source>
         <translation>Поворот карты…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="981"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1000"/>
         <source>Rotate the whole map</source>
         <translation>Повернуть всю карту</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="988"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1007"/>
         <source>Reopen template...</source>
         <translation>Повторно открыть подложку…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="990"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1009"/>
         <source>Tag editor</source>
         <translation>Редактор тегов</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="990"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1009"/>
         <source>Show/Hide the tag editor window</source>
         <translation>Показать/Скрыть окно редактора тегов</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="997"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1016"/>
         <source>Draw rectangles</source>
         <translation>Рисовать прямоугольник</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="998"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1017"/>
         <source>Draw free-handedly</source>
         <translation>Рисовать произвольную линию</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="999"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1018"/>
         <source>Fill bounded areas</source>
         <translation>Заполнить ограниченные области</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="946"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="965"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1008"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1027"/>
         <source>Cut free form hole</source>
         <translation>Вырезать отверстие произвольной формы</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1009"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1028"/>
         <source>Cut round hole</source>
         <translation>Вырезать круглое отверстие</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1010"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1029"/>
         <source>Cut rectangular hole</source>
         <translation>Вырезать прямоугольное отверстие</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1019"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1038"/>
         <source>Rotate pattern</source>
         <translation>Повернуть узор</translation>
     </message>
@@ -3815,67 +3816,67 @@ Import the data anyway?</source>
         <translation type="vanished">Масштабировать объект(ы)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1022"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1041"/>
         <source>Unify areas</source>
         <translation>Соединить площади</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1023"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1042"/>
         <source>Intersect areas</source>
         <translation>Пересечение площадей</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1025"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1044"/>
         <source>Area XOr</source>
         <translation>Взаимоисключение площадей</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1029"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1048"/>
         <source>Cutout</source>
         <translation>Вырезать</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1030"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1049"/>
         <source>Cut away</source>
         <translation>Обрезать</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1031"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1050"/>
         <source>Distribute points along path</source>
         <translation>Расположить точки вдоль линии</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1068"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1078"/>
         <source>Map coordinates</source>
         <translation>Координаты карты</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1070"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1080"/>
         <source>Projected coordinates</source>
         <translation>Координаты проекции</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1072"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1082"/>
         <source>Latitude/Longitude (Dec)</source>
         <translation>Широта/Долгота (десят)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1074"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1084"/>
         <source>Latitude/Longitude (DMS)</source>
         <translation>Широта/Долгота (° ′ ″)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1156"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1166"/>
         <source>Display coordinates as...</source>
         <translation>Отображать координаты как…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1011"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1030"/>
         <source>Cut hole</source>
         <translation>Вырезать отверстие</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="599"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="607"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
@@ -3884,7 +3885,8 @@ because saving as %2 (.%3) is not supported.</source>
 потому что сохранение в %2 (.%3) не поддерживается.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="611"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="619"/>
+        <location filename="../src/templates/paint_on_template_feature.cpp" line="327"/>
         <source>Cannot save file
 %1:
 %2</source>
@@ -3893,200 +3895,201 @@ because saving as %2 (.%3) is not supported.</source>
 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="620"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="668"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4138"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="628"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="682"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4097"/>
+        <location filename="../src/templates/paint_on_template_feature.cpp" line="82"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="621"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="629"/>
         <source>The map export generated warnings.</source>
         <translation>Экспорт карты вызвал предупреждения.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="668"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4138"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="683"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4097"/>
         <source>The map import generated warnings.</source>
         <translation>Импорт карты вызвал предупреждения.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="874"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="893"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="875"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="894"/>
         <source>Ctrl+Shift+A</source>
         <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="876"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="895"/>
         <source>Ctrl+I</source>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="878"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="897"/>
         <source>G</source>
         <translation>G</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="891"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="910"/>
         <source>E</source>
         <translation>E</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="892"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="911"/>
         <source>L</source>
         <translation>L</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="893"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="912"/>
         <source>S</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="894"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="913"/>
         <source>P</source>
         <translation>P</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="895"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="914"/>
         <source>O</source>
         <translation>O</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="896"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="915"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="897"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="916"/>
         <source>F</source>
         <translation>F</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="898"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="917"/>
         <source>T</source>
         <translation>T</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="900"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="919"/>
         <source>D</source>
         <translation>D</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="901"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="920"/>
         <source>Ctrl+G</source>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="902"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="921"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="903"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="922"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="904"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="923"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="905"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="924"/>
         <source>R</source>
         <translation>R</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="906"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="925"/>
         <source>Z</source>
         <translation>Z</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="907"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="926"/>
         <source>K</source>
         <translation>K</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="908"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="927"/>
         <source>H</source>
         <translation>H</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="909"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="928"/>
         <source>M</source>
         <translation>M</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="910"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="929"/>
         <source>U</source>
         <translation>U</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="911"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="930"/>
         <source>N</source>
         <translation>N</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="912"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="931"/>
         <source>Ctrl+M</source>
         <translation>Ctrl+M</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="947"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="966"/>
         <source>Select all</source>
         <translation>Выбрать всё</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="948"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="967"/>
         <source>Select nothing</source>
         <translation>Ничего не выбрать</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="949"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="968"/>
         <source>Invert selection</source>
         <translation>Обратить выделение</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="958"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="977"/>
         <source>Move to my location</source>
         <translation>Переместить в моё местоположение</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="973"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="992"/>
         <source>Symbol set ID...</source>
         <translation>ID набора символов…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="973"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="992"/>
         <source>Edit the symbol set ID</source>
         <translation>Редактировать ID набора символов</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="975"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="994"/>
         <source>Load CRT file...</source>
         <translation>Загрузить CRT файл…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="975"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="994"/>
         <source>Assign new symbols by cross-reference table</source>
         <translation>Присвоить новые символы с помощью CRT таблицы</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4210"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4169"/>
         <source>Nothing to import.</source>
         <translation>Нечего импортировать.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4222"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4181"/>
         <source>Question</source>
         <translation>Вопрос</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4223"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4182"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
@@ -4103,86 +4106,86 @@ Rescale the imported data?</source>
         <translation type="vanished">Показать/Скрыть окно выбора тегов</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1086"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1096"/>
         <source>Copy position</source>
         <translation>Скопировать позицию</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1086"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1096"/>
         <source>Copy position to clipboard.</source>
         <translation>Скопировать позицию в буфер обмена.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1262"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1272"/>
         <source>View</source>
         <translation>Вид</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1281"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1286"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1425"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3680"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1291"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1296"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1434"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3665"/>
         <source>Map parts</source>
         <translation>Слои карты</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1313"/>
+        <location filename="../src/templates/paint_on_template_feature.cpp" line="138"/>
         <source>Select template...</source>
         <translation>Выбрать подложку…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1319"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1328"/>
         <source>Editing</source>
         <translation>Редактирование</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1344"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1353"/>
         <source>Advanced editing</source>
         <translation>Расширенное редактирование</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1378"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1387"/>
         <source>Select symbol</source>
         <translation>Выбрать символ</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1418"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1427"/>
         <source>Hide top bar</source>
         <translation>Скрыть верхнюю панель</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1421"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1430"/>
         <source>Show top bar</source>
         <translation>Показать верхнюю панель</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="605"/>
         <location filename="../src/gui/map/map_editor.cpp" line="613"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="648"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="661"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1757"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1777"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1833"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1853"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1866"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3269"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3275"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3281"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3287"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3296"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4102"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4133"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4210"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="621"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="656"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="669"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1767"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1787"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1843"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1863"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1876"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3277"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3283"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3289"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3295"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3304"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4061"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4092"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4169"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1757"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1767"/>
         <source>Print / Export is not available in this program version!</source>
         <translation>Печать / Экспорт недоступны в данной версии программы!</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1777"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1787"/>
         <source>No undo steps available.</source>
         <translation>Нет действий для отмены.</translation>
     </message>
@@ -4192,8 +4195,8 @@ Rescale the imported data?</source>
         <translation type="vanished">Вырезан(о) %1 объект(а)(ов)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1833"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1866"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1843"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1876"/>
         <source>An internal error occurred, sorry!</source>
         <translation>Извините, произошла внутренняя ошибка!</translation>
     </message>
@@ -4202,7 +4205,7 @@ Rescale the imported data?</source>
         <translation type="vanished">Скопирован(о) %1 объект(а)(ов)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1853"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1863"/>
         <source>There are no objects in clipboard which could be pasted!</source>
         <translation>Нет объектов в буфере обмена для вставки!</translation>
     </message>
@@ -4211,67 +4214,67 @@ Rescale the imported data?</source>
         <translation type="vanished">Вставлен(ы) %1 объект(а)(ов)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1951"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1961"/>
         <source>Set custom zoom factor</source>
         <translation>Задать коэффициент увеличения</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1951"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1961"/>
         <source>Zoom factor:</source>
         <translation>Коэффициент увеличения:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2025"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2035"/>
         <source>Symbols</source>
         <translation>Символы</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2039"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2049"/>
         <source>Colors</source>
         <translation>Цвета</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2060"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2070"/>
         <source>Symbol set ID</source>
         <translation>ID набора символов</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2061"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2071"/>
         <source>Edit the symbol set ID:</source>
         <translation>Редактировать ID набора символов:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2088"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2098"/>
         <source>Scale all symbols</source>
         <translation>Масштабировать все символы</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2088"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2098"/>
         <source>Scale to percentage:</source>
         <translation>Масштаб в процентах:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2112"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2123"/>
         <source>Map notes</source>
         <translation>Описание карты</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2117"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2128"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2118"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2129"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2158"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2168"/>
         <source>Templates</source>
         <translation>Подложки</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2220"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2228"/>
         <source>Tag Editor</source>
         <translation>Редактор тегов</translation>
     </message>
@@ -4280,7 +4283,7 @@ Rescale the imported data?</source>
         <translation type="vanished">Селектор тега</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2284"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2292"/>
         <source>No
 symbol
 selected</source>
@@ -4290,7 +4293,7 @@ selected</source>
 выбранны</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2286"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2294"/>
         <source>Multiple
 symbols
 selected</source>
@@ -4300,41 +4303,41 @@ selected</source>
 символов</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2386"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2394"/>
         <source>Place point objects on the map.</source>
         <translation>Расположить точечный объект на карте.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2386"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2394"/>
         <source>Select a point symbol to be able to use this tool.</source>
         <translation>Выберите точечный символ для активации этого инструмента.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2388"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2396"/>
         <source>Draw polygonal and curved lines.</source>
         <translation>Рисовать ломанные и кривые линии.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2388"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2390"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2392"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2394"/>
         <location filename="../src/gui/map/map_editor.cpp" line="2396"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2398"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2400"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2402"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2404"/>
         <source>Select a line, area or combined symbol to be able to use this tool.</source>
         <translation>Выберите линейный, площадной или комбинированный символ для активации этого инструмента.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2390"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2398"/>
         <source>Draw circles and ellipses.</source>
         <translation>Рисовать окружности и эллипсы.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2394"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2402"/>
         <source>Draw paths free-handedly.</source>
         <translation>Рисовать произвольную линию.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2396"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2404"/>
         <source>Fill bounded areas.</source>
         <translation>Заполнить ограниченные области.</translation>
     </message>
@@ -4343,130 +4346,130 @@ selected</source>
         <translation type="vanished">Удалить выбранные объекты.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2499"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2507"/>
         <source>Set the direction of area fill patterns or point objects.</source>
         <translation>Задать направление заполняющей штриховки или точечных объектов.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2499"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2507"/>
         <source>Select an area object with rotatable fill pattern or a rotatable point object to activate this tool.</source>
         <translation>Выберите площадной объект с ориентируемой штриховкой или вращаемый точечный объект для активации данного инструмента.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2529"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2537"/>
         <source>Resulting symbol: %1 %2.</source>
         <translation>Результирующий символ: %1 %2.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2530"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2538"/>
         <source>Select at least two area or path objects activate this tool.</source>
         <translation>Выберите хотя бы два площадных или линейных объекта для активации данного инструмента.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2532"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2540"/>
         <source>Unify overlapping objects.</source>
         <translation>Объединить перекрывающиеся объекты.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2534"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2542"/>
         <source>Remove all parts which are not overlaps with the first selected object.</source>
         <translation>Удалить все части, которые не перекрываются с первым выделенным объектом.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2536"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2544"/>
         <source>Remove overlapped parts of the first selected object.</source>
         <translation>Удалить перекрывающиеся с первым выделенным объектом части.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2538"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2546"/>
         <source>Remove all parts which overlap the first selected object.</source>
         <translation>Удалить все части, которые перекрывают первый выделенный объект.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2542"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2550"/>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
         <translation>Объединить отверстия между собой или объединить отверстия с границей объекта для вырезания данной части.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2542"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2550"/>
         <source>Select one area object with holes to activate this tool.</source>
         <translation>Выберите один площадной объект с отверстиями для активации данного инструмента.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2547"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2555"/>
         <source>Create a cutout of some objects or the whole map.</source>
         <translation>Вырезать фрагмент из объектов или всей карты.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2547"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2549"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2555"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2557"/>
         <source>Select a closed path object as cutout shape to activate this tool.</source>
         <translation>Выберите замкнутый контур в качестве секущей фигуры для активации данного инструмента.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2549"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2557"/>
         <source>Cut away some objects or everything in a limited area.</source>
         <translation>Обрезать объекты или всё в ограниченной области.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2568"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2576"/>
         <source>Places evenly spaced point objects along an existing path object</source>
         <translation>Разместить равномерно точечные объекты вдоль существующего линейного объекта</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2568"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2576"/>
         <source>Select at least one path object and a single point symbol to activate this tool.</source>
         <translation>Выберите хотя бы один линейный объект и один точечный символ для активации данного инструмента.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3296"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3304"/>
         <source>Merging holes failed.</source>
         <translation>Слияние отверстий не удалось.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3572"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3557"/>
         <source>Clear temporary markers</source>
         <translation>Очистить вспомогательные маркеры</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3572"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3557"/>
         <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
         <translation>Вы хотите удалить все вспомогательные GPS маркеры? Данное действие нельзя отменить.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3687"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3672"/>
         <source>Merge this part with</source>
         <translation>Объединить текущий слой с</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3694"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3679"/>
         <source>Move selected objects to</source>
         <translation>Переместить выбранные объекты на</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3748"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3808"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3733"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3793"/>
         <source>Enter the name of the map part:</source>
         <translation>Введите имя слоя карты:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3824"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3809"/>
         <source>Switched to map part &apos;%1&apos;.</source>
         <translation>Перешёл на слой &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3852"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3884"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3837"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3869"/>
         <source>Merge map parts</source>
         <translation>Объединение слоёв карты</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3853"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3838"/>
         <source>Do you want to move all objects from map part &quot;%1&quot; to &quot;%2&quot;, and to remove &quot;%1&quot;?</source>
         <translation>Вы хотите перенести все объекты с слоя &quot;%1&quot; на &quot;%2&quot;, и удалить &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3885"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3870"/>
         <source>Do you want to move all objects to map part &quot;%1&quot;, and to remove all other map parts?</source>
         <translation>Вы хотите перенести все объекты на слой &quot;%1&quot;, и удалить все другие слои?</translation>
     </message>
@@ -4479,87 +4482,87 @@ selected</source>
         <translation type="vanished">Невозможно импортировать выбранный файл карты, потому что он не может быть загружен.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2392"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2400"/>
         <source>Draw rectangles.</source>
         <translation>Рисовать прямоугольники.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="921"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="940"/>
         <source>Print...</source>
         <translation>Печать…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="923"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="942"/>
         <source>&amp;Image</source>
         <translation>&amp;Изображение</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="925"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="944"/>
         <source>&amp;PDF</source>
         <translation>&amp;PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="953"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="972"/>
         <source>Clear undo / redo history</source>
         <translation>Очистить историю изменений</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="953"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="972"/>
         <source>Clear the undo / redo history to reduce map file size.</source>
         <translation>Очистить историю изменений для уменьшения размера файла карты.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="957"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="976"/>
         <source>Pan</source>
         <translation>Двигать</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="969"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="988"/>
         <source>Overprinting simulation</source>
         <translation>Имитировать наложение цветов</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="993"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1012"/>
         <source>Edit lines</source>
         <translation>Редактировать линии</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1027"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1046"/>
         <source>Convert to curves</source>
         <translation>Преобразовать в кривую</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1028"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1047"/>
         <source>Simplify path</source>
         <translation>Упростить контур</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1110"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1120"/>
         <source>&amp;Export as...</source>
         <translation>&amp;Экспортировать как…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1468"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1477"/>
         <source>1x zoom</source>
         <translation>1x приблизить</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1472"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1481"/>
         <source>2x zoom</source>
         <translation>2x приблизить</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1716"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1726"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2398"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2406"/>
         <source>Write text on the map.</source>
         <translation>Добавить текст на карту.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2398"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2406"/>
         <source>Select a text symbol to be able to use this tool.</source>
         <translation>Выберите текстовый символ для разрешения данного действия.</translation>
     </message>
@@ -4568,26 +4571,26 @@ selected</source>
         <translation type="vanished">Дублировать выбранный(ые) объект(ы).</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2488"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2490"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2492"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2494"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2496"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2498"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2500"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2502"/>
         <source>Select at least one object to activate this tool.</source>
         <translation>Выберите хотя бы один объект для активации данного инструмента.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2503"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2511"/>
         <source>Switch the direction of symbols on line objects.</source>
         <translation>Поменять направление символов на линейных объектах.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2503"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2505"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2511"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2513"/>
         <source>Select at least one line object to activate this tool.</source>
         <translation>Выберите хотя бы один линейный объект для активации данного инструмента.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2505"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2513"/>
         <source>Connect endpoints of paths which are close together.</source>
         <translation>Соединить концевые точки контуров, которые замыкают друг друга.</translation>
     </message>
@@ -4596,17 +4599,17 @@ selected</source>
         <translation type="vanished">Разрезать выделенные объекты на меньшие части.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2509"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2517"/>
         <source>Select at least one line or area object to activate this tool.</source>
         <translation>Выберите хотя бы один линейный или площадной объект для активации данного инструмента.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2518"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2526"/>
         <source>Cut a hole into the selected area object.</source>
         <translation>Вырезать отверстие в выбранном площадном объекте.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2518"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2526"/>
         <source>Select a single area object to activate this tool.</source>
         <translation>Выберите один площадной объект для активации данного инструмента.</translation>
     </message>
@@ -4619,18 +4622,18 @@ selected</source>
         <translation type="vanished">Масштабировать выбранные объекты.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2511"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2519"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
         <translation>Переключить линии, состоящие из прямых отрезков, в гладкие кривые Безье.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2511"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2513"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2519"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2521"/>
         <source>Select a path object to activate this tool.</source>
         <translation>Выберите линейный объект для активации данного инструмента.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2513"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2521"/>
         <source>Reduce the number of points in path objects while trying to retain their shape.</source>
         <translation>Уменьшить количество точек в линейных объектах, пытаясь сохранить их форму.</translation>
     </message>
@@ -4639,8 +4642,8 @@ selected</source>
         <translation type="vanished">Переключить символ выбранных объектов на выбранный символ.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2563"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2565"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2571"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2573"/>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
         <translation>Выберите хотя бы один объект и другой подходящий символ для активации данного инструмента.</translation>
     </message>
@@ -4653,7 +4656,7 @@ selected</source>
         <translation type="vanished">%1 объект(а)(ов) продублирован(о)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2894"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2902"/>
         <source>Object selection</source>
         <translation>Выбор объектов</translation>
     </message>
@@ -4662,32 +4665,32 @@ selected</source>
         <translation type="vanished">Объекты не были выбраны, так как нет объектов указанного символа(ов).</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3255"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3263"/>
         <source>Measure</source>
         <translation>Измерение</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3269"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3277"/>
         <source>Unification failed.</source>
         <translation>Объединение не удалось.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3275"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3283"/>
         <source>Intersection failed.</source>
         <translation>Пересечение не удалось.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3281"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3289"/>
         <source>Difference failed.</source>
         <translation>Исключение не удалось.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3287"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3295"/>
         <source>XOr failed.</source>
         <translation>Взаимоисключение не удалось.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3769"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3754"/>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects?</source>
         <translation>Вы хотите удалить слой карты &quot;%1&quot; и все его объекты?</translation>
     </message>
@@ -4704,33 +4707,33 @@ selected</source>
         <translation type="vanished">Импорт %1, GPX, OSM или DXF файла</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4060"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4019"/>
         <source>Importable files</source>
         <translation>Импортируемые файлы</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1721"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4060"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1731"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4019"/>
         <source>All files</source>
         <translation>Все файлы</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4102"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4061"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation>Невозможно импортировать выбранный файл, так как его формат не поддерживается.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1018"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1037"/>
         <source>Rotate objects</source>
         <translation>Повернуть объекты</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1020"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1039"/>
         <source>Scale objects</source>
         <translation>Масштабировать объекты</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1791"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1801"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
         <translation>
@@ -4740,7 +4743,7 @@ selected</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1843"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1853"/>
         <source>Copied %n object(s)</source>
         <translation>
             <numerusform>Скопирован %n объект</numerusform>
@@ -4749,7 +4752,7 @@ selected</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1883"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1893"/>
         <source>Pasted %n object(s)</source>
         <translation>
             <numerusform>Вставлен %n объект</numerusform>
@@ -4758,42 +4761,42 @@ selected</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2488"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2496"/>
         <source>Deletes the selected objects.</source>
         <translation>Удалить выбранные объекты.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2490"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2498"/>
         <source>Duplicate the selected objects.</source>
         <translation>Дублировать выбранные объекты.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2492"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2500"/>
         <source>Rotate the selected objects.</source>
         <translation>Повернуть выбранные объекты.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2494"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2502"/>
         <source>Scale the selected objects.</source>
         <translation>Масштабировать выбранные объекты.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2509"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2517"/>
         <source>Cut the selected objects into smaller parts.</source>
         <translation>Разрезать выделенные объекты на меньшие части.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2563"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2571"/>
         <source>Switches the symbol of the selected objects to the selected symbol.</source>
         <translation>Переключить символ выбранных объектов на выбранный символ.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2565"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2573"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
         <translation>Заполнить выбранные контуры или создать границу выбранных областей.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="2684"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2692"/>
         <source>Duplicated %n object(s)</source>
         <translation>
             <numerusform>Продублирован %n объект</numerusform>
@@ -4802,7 +4805,7 @@ selected</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2894"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2902"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
         <translation>Объекты не были выбраны, так как нет объектов с указанными символами.</translation>
     </message>
@@ -4853,22 +4856,22 @@ selected</source>
         <translation>Найти &amp;следующий</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_find_feature.cpp" line="92"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="99"/>
         <source>Find objects</source>
         <translation>Найти объекты</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_find_feature.cpp" line="99"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="106"/>
         <source>&amp;Find next</source>
         <translation>&amp;Найти следующий</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_find_feature.cpp" line="102"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="109"/>
         <source>Find &amp;all</source>
         <translation>Найти &amp;все</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_find_feature.cpp" line="105"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="112"/>
         <source>Query editor</source>
         <translation>Редактор запросов</translation>
     </message>
@@ -4950,30 +4953,30 @@ selected</source>
 <context>
     <name>OpenOrienteering::MapWidget</name>
     <message>
-        <location filename="../src/gui/map/map_widget.cpp" line="590"/>
+        <location filename="../src/gui/map/map_widget.cpp" line="649"/>
         <source>%1x</source>
         <comment>Zoom factor</comment>
         <translation>%1x</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_widget.cpp" line="612"/>
+        <location filename="../src/gui/map/map_widget.cpp" line="671"/>
         <source>mm</source>
         <comment>millimeters</comment>
         <translation>мм</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_widget.cpp" line="628"/>
+        <location filename="../src/gui/map/map_widget.cpp" line="687"/>
         <source>m</source>
         <comment>meters</comment>
         <translation>м</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_widget.cpp" line="665"/>
+        <location filename="../src/gui/map/map_widget.cpp" line="724"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_widget.cpp" line="847"/>
+        <location filename="../src/gui/map/map_widget.cpp" line="906"/>
         <source>Empty map!
 
 Start by defining some colors:
@@ -4987,7 +4990,7 @@ define the colors there.</source>
 для открытия диалога и определения цветов.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_widget.cpp" line="849"/>
+        <location filename="../src/gui/map/map_widget.cpp" line="908"/>
         <source>No symbols!
 
 Now define some symbols:
@@ -5002,7 +5005,7 @@ to create one.</source>
 для его создания.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_widget.cpp" line="851"/>
+        <location filename="../src/gui/map/map_widget.cpp" line="910"/>
         <source>Ready to draw!
 
 Start drawing or load a base map.
@@ -5015,7 +5018,7 @@ Templates -&gt; Open template...</source>
 Подложки -&gt; Открыть подложку…</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_widget.cpp" line="851"/>
+        <location filename="../src/gui/map/map_widget.cpp" line="910"/>
         <source>Hint: Hold the middle mouse button to drag the map,
 zoom using the mouse wheel, if available.</source>
         <translation>Совет: Нажмите среднюю клавишу мыши для перемещения карты,
@@ -5408,55 +5411,61 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::ObjectQuery</name>
     <message>
-        <location filename="../src/core/objects/object_query.cpp" line="295"/>
+        <location filename="../src/core/objects/object_query.cpp" line="360"/>
         <source>is</source>
         <extracomment>Very short label</extracomment>
         <translation>есть</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object_query.cpp" line="298"/>
+        <location filename="../src/core/objects/object_query.cpp" line="363"/>
         <source>is not</source>
         <extracomment>Very short label</extracomment>
         <translation>не есть</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object_query.cpp" line="301"/>
+        <location filename="../src/core/objects/object_query.cpp" line="366"/>
         <source>contains</source>
         <extracomment>Very short label</extracomment>
         <translation>содержит</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object_query.cpp" line="304"/>
+        <location filename="../src/core/objects/object_query.cpp" line="369"/>
         <source>Search</source>
         <extracomment>Very short label</extracomment>
         <translation>Поиск</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object_query.cpp" line="307"/>
+        <location filename="../src/core/objects/object_query.cpp" line="372"/>
         <source>Text</source>
         <extracomment>Very short label</extracomment>
         <translation>Текст</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object_query.cpp" line="311"/>
+        <location filename="../src/core/objects/object_query.cpp" line="376"/>
         <source>and</source>
         <extracomment>Very short label</extracomment>
         <translation>и</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object_query.cpp" line="314"/>
+        <location filename="../src/core/objects/object_query.cpp" line="379"/>
         <source>or</source>
         <extracomment>Very short label</extracomment>
         <translation>или</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object_query.cpp" line="318"/>
+        <location filename="../src/core/objects/object_query.cpp" line="382"/>
+        <source>not</source>
+        <extracomment>Very short label</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/core/objects/object_query.cpp" line="386"/>
         <source>Symbol</source>
         <extracomment>Very short label</extracomment>
         <translation>Символ</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object_query.cpp" line="322"/>
+        <location filename="../src/core/objects/object_query.cpp" line="390"/>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
         <translation>некорректный</translation>
@@ -5476,116 +5485,120 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::OcdFileExport</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="621"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
         <translation>Кодировка &apos;%1&apos; не доступна. Проверьте настройки.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="650"/>
         <source>OCD files of version %1 are not supported!</source>
         <translation>OCD файлы версии %1 не поддерживаются!</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="661"/>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="672"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="734"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="745"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
         <translation>Координаты поправлены так, чтобы вписываться в зону рисования OCAD 8 (-2 м … 2 м).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="682"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="755"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
         <translation>Некоторые координаты выходят за границы зоны рисования OCAD 8. Они могут быть недоступны в OCAD.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="716"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="789"/>
         <source>The georeferencing cannot be saved in OCD version 8.</source>
         <translation>Геопривязка не может быть сохранена в OCD версии 8.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="766"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="839"/>
         <source>The map contains more than 24 spot colors which is not supported by OCD version 8.</source>
         <translation>Карта содержит более 24 плашечных цветов, что не поддерживается в OCD версии 8.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="772"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="845"/>
         <source>The map contains more than 256 colors which is not supported by OCD version 8.</source>
         <translation>Карта содержит более 256 цветов, что не поддерживается в OCD версии 8.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="816"/>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="828"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="889"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="901"/>
         <source>Invalid spot color.</source>
         <translation>Некорректный плашечный цвет.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1351"/>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1387"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1427"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1467"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
         <translation>Для площадного символа &quot;%1&quot; пропущен заполняющий узор.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1377"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation>Для площадного символа &quot;%1&quot; выявлено &quot;смещение рядов&quot; точечного рисунка. Это может быть как верным, так и нет.</translation>
+        <translation type="vanished">Для площадного символа &quot;%1&quot; выявлено &quot;смещение рядов&quot; точечного рисунка. Это может быть как верным, так и нет.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1510"/>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2153"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1598"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2241"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation>Для линейного символа &quot;%1&quot; невозможно отразить комбинацию окончания / соединения.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1532"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1620"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
         <translation>Для линейного символа &quot;%1&quot; не воспроизведена группировка штрихов.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1544"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1632"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
         <translation>Для линейного символа &quot;%1&quot; количество штрихов в группе было уменьшено в 2 раза.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1639"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1727"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
         <translation>Для линейного символа &quot;%1&quot; невозможно верно экспортировать границы.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1830"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1918"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
         <translation>В текстовом символе %1: установлен пользовательский межсимвольный интервал, эта реализация еще не соответствует поведению OCAD</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1846"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1934"/>
         <source>In text symbol %1: ignoring underlining</source>
         <translation>В текстовом символе %1: проигнорировано подчёркивание</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1849"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1937"/>
         <source>In text symbol %1: ignoring kerning</source>
         <translation>В текстовом символе %1: проигнорирован кернинг</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2071"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2159"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
         <translation>В объединённом символе %1: неподдерживаемый подсимвол в индексе %2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2277"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2365"/>
         <source>Unable to export fill pattern shift for an area object</source>
         <translation>Невозможно экспортировать смещение заполняющего узора для площадного объекта</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2476"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2570"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
         <translation>Невозможно сохранить корректное положение отсутствующей подложки: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2492"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2555"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
         <translation>Невозможно экспортировать подложку: тип файла &quot;%1&quot; пока не поддерживается</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2742"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2614"/>
+        <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2944"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
         <translation>Текст усечен на &apos;|&apos;): %1</translation>
     </message>
@@ -5598,12 +5611,12 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::OcdFileImport</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="252"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="250"/>
         <source>In line symbol %1 &apos;%2&apos;: %3</source>
         <translation>В линейном символе %1 &apos;%2&apos;: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="258"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="256"/>
         <source>In text symbol %1 &apos;%2&apos;: %3</source>
         <translation>В текстовом символе %1 &apos;%2&apos;: %3</translation>
     </message>
@@ -5617,23 +5630,22 @@ zoom using the mouse wheel, if available.</source>
         <translation type="vanished">Информация о комбинированном цвете была проигнорирована.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="809"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="807"/>
         <source>Unable to import symbol %1.%2 &quot;%3&quot;: %4</source>
         <translation>Невозможно импортировать символ %1.%2 &quot;%3&quot;: %4</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="813"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="811"/>
         <source>Unsupported type &quot;%1&quot;.</source>
         <translation>Неподдерживаемый тип &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="911"/>
         <source>Unable to import template: &quot;%1&quot; is not a supported template type.</source>
-        <translation>Невозможно импортировать подложку: &quot;%1&quot; не поддерживаемый тип подложки.</translation>
+        <translation type="vanished">Невозможно импортировать подложку: &quot;%1&quot; не поддерживаемый тип подложки.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1229"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1256"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1227"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1254"/>
         <source>Unsupported line style &apos;%1&apos;.</source>
         <translation>Неподдерживаемый стиль линии &apos;%1&apos;.</translation>
     </message>
@@ -5642,34 +5654,34 @@ zoom using the mouse wheel, if available.</source>
         <translation type="vanished">Различные длины заострений в начале (%1 мм) и конце (%2 мм) линии не поддерживаются. Используется %3 мм.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1302"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1300"/>
         <source>The dash pattern cannot be imported correctly.</source>
         <translation>Штриховой узор невозможно импортировать корректно.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1317"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1349"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1315"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1347"/>
         <source>The dash pattern&apos;s end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
         <translation>Длина конечного штриха в узоре (%1 мм) не может быть корректно импортирована. Используется %2 мм.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1324"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1364"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1322"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1362"/>
         <source>The dash pattern&apos;s end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
         <translation>Расстояние до конечного штриха в узоре (%1 мм) не может быть корректно импортирована. Используется %2 мм.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1403"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1401"/>
         <source>Unsupported framing line style &apos;%1&apos;.</source>
         <translation>Неподдерживаемый стиль обрамляющей линии &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1474"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1472"/>
         <source>Skipped secondary point symbol.</source>
         <translation>Пропущен вторичный символ точки.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1519"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1517"/>
         <source>Suppressing dash symbol at line ends.</source>
         <translation>Подавление символов на концах отрезка.</translation>
     </message>
@@ -5678,108 +5690,108 @@ zoom using the mouse wheel, if available.</source>
         <translation type="vanished">Этот символ не может быть сохранён как правильный символ OCD.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2295"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2294"/>
         <source>Justified alignment is not supported.</source>
         <translation>Выравнивание по ширине не поддерживается.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2310"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2309"/>
         <source>Vertical alignment &apos;%1&apos; is not supported.</source>
         <translation>Вертикальное выравнивание &apos;%1&apos; не поддерживается.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2282"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2281"/>
         <source>Ignoring custom weight (%1).</source>
         <translation>Игнорирование нестандартной ширины (%1).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2319"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2318"/>
         <source>Custom character spacing may be incorrect.</source>
         <translation>Нестандартное межсимвольное расстояние может быть неправильным.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2324"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2323"/>
         <source>Ignoring custom word spacing (%1 %).</source>
         <translation>Игнорирование нестандартной ширины слова (%1 %).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2348"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2347"/>
         <source>Ignoring custom indents (%1/%2).</source>
         <translation>Игнорирование нестандартных отступов (%1/%2).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2370"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2369"/>
         <source>Ignoring text framing (mode %1).</source>
         <translation>Игнорирование обрамления текста (режим %1).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1703"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1702"/>
         <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
         <translation>Линейные текстовый символы пока не поддерживаются. Символ помечен как скрытый.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="113"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="111"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
         <translation>Кодировка &apos;%1&apos; не доступна. Проверьте настройки.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="246"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="244"/>
         <source>In area symbol %1 &apos;%2&apos;: %3</source>
         <translation>В площадном знаке %1 &apos;%2&apos;: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="520"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="518"/>
         <source>Color &quot;%1&quot; is imported as special color &quot;Registration black&quot;.</source>
         <translation>Цвет &quot;%1&quot; импортирован как специальный цвет &quot;Регистрационный чёрный&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1532"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1530"/>
         <source> - main line</source>
         <translation> - основная линия</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1539"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1537"/>
         <source> - double line</source>
         <translation> - двойная линия</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1546"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1544"/>
         <source> - framing</source>
         <translation> - обрамление</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1584"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1582"/>
         <source>The border of this symbol could not be loaded.</source>
         <translation>Границу этого символа нельзя загрузить.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1900"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1899"/>
         <source>Unable to load object</source>
         <translation>Невозможно загрузить объект</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1910"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1909"/>
         <source>Unable to import rectangle object</source>
         <translation>Невозможно импортировать прямоугольник</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1951"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1950"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation>Текстовый символ не импортирован, не удалось выяснить путь (npts=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2257"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2256"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation>Попытка импортировать текстовый объект с неизвестным форматом координат</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2384"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2388"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2383"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2387"/>
         <source>Invalid data.</source>
         <translation>Некорректные данные.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2415"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2414"/>
         <source>Support for OCD version %1 files is experimental.</source>
         <translation>Поддержка OCD файлов версии %1 является экспериментальной.</translation>
     </message>
@@ -5788,12 +5800,12 @@ zoom using the mouse wheel, if available.</source>
         <translation type="vanished">Импорт не тестировался для формата файла: OCD %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2421"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2420"/>
         <source>OCD files of version %1 are not supported!</source>
         <translation>OCD файлы версии %1 не поддерживаются!</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="236"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="234"/>
         <source>Color id not found: %1, ignoring this color</source>
         <translation>Идентификатор цвета не найден: %1, цвет игнорируется</translation>
     </message>
@@ -5846,50 +5858,50 @@ zoom using the mouse wheel, if available.</source>
         <translation type="vanished">Неизвестное расширение файла %1, поддерживаются только файлы GPX, KML и SHP.</translation>
     </message>
     <message>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="1866"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="1869"/>
         <source>Couldn&apos;t find a driver for file extension %1</source>
         <translation>Не удалось найти драйвер для расширения файла %1</translation>
     </message>
     <message>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="1878"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="1881"/>
         <source>Failed to create dataset: %1</source>
         <translation>Не удалось создать набор данных: %1</translation>
     </message>
     <message>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="1923"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="1926"/>
         <source>Failed to create layer: %2</source>
         <translation>Не удалось создать слой: %2</translation>
     </message>
     <message>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="2061"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="2064"/>
         <source>The map is not georeferenced. Local georeferencing only.</source>
         <translation>Карта не имеет геопривязки. Только локальная геопривязка.</translation>
     </message>
     <message>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="2074"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="2077"/>
         <source>Failed to properly export the georeferencing info. Local georeferencing only.</source>
         <translation>Не удалось правильно экспортировать информацию о настройке системы координат. Только локальная геопривязка.</translation>
     </message>
     <message>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="2084"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="2087"/>
         <source>The %1 driver requires valid georefencing info.</source>
         <translation>Для драйвера %1 требуется информация о геопривязке.</translation>
     </message>
     <message>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="2159"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="2208"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="2248"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="2294"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="2162"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="2211"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="2251"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="2297"/>
         <source>Failed to create feature in layer: %1</source>
         <translation>Не удалось создать элемент в слое: %1</translation>
     </message>
     <message>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="2304"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="2307"/>
         <source>Failed to create layer %1: %2</source>
         <translation>Не удалось создать слой %1: %2</translation>
     </message>
     <message>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="2311"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="2314"/>
         <source>Failed to create name field: %1</source>
         <translation>Не удалось создать поле имени: %1</translation>
     </message>
@@ -5931,11 +5943,11 @@ zoom using the mouse wheel, if available.</source>
         <translation>Невозможно загрузить слой %1.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gdal/ogr_file_format.cpp" line="860"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="865"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="870"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="875"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="880"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="862"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="867"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="872"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="877"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="882"/>
         <source>Unable to load %n objects, reason: %1</source>
         <translation>
             <numerusform>Невозможно загрузить %n объект по следующей причине: %1</numerusform>
@@ -5944,77 +5956,88 @@ zoom using the mouse wheel, if available.</source>
         </translation>
     </message>
     <message>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="861"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="863"/>
         <source>Empty geometry.</source>
         <translation>Пустая геометрия.</translation>
     </message>
     <message>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="866"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="868"/>
         <source>Can&apos;t determine the coordinate transformation: %1</source>
         <translation>Невозможно определить преобразование координат: %1</translation>
     </message>
     <message>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="871"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="873"/>
         <source>Failed to transform the coordinates.</source>
         <translation>Не удалось преобразовать координаты.</translation>
     </message>
     <message>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="876"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="878"/>
         <source>Unknown or unsupported geometry type.</source>
         <translation>Неизвестный или неподдерживаемый тип геометрии.</translation>
     </message>
     <message>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="881"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="883"/>
         <source>Not enough coordinates.</source>
         <translation>Недостаточно координат.</translation>
     </message>
     <message>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="926"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="928"/>
         <source>Cannot use this spatial reference:
 %1</source>
         <translation>Нельзя использовать эту пространственную ссылку:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="988"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="991"/>
         <source>The geospatial data has no suitable spatial reference.</source>
         <translation>Геопространственные данные не имеют подходящей пространственной привязки.</translation>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::PaintOnTemplateSelectDialog</name>
+    <name>OpenOrienteering::PaintOnTemplateFeature</name>
     <message>
-        <location filename="../src/templates/template_tool_paint.cpp" line="460"/>
-        <source>Select template to draw onto</source>
-        <translation>Выбор подложки для рисования на ней</translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_tool_paint.cpp" line="487"/>
-        <source>Cancel</source>
-        <translation>Отмена</translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_tool_paint.cpp" line="488"/>
-        <source>Draw</source>
-        <translation>Рисовать</translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_tool_paint.cpp" line="558"/>
+        <location filename="../src/templates/paint_on_template_feature.cpp" line="294"/>
         <source>Template file exists: &apos;%1&apos;</source>
         <translation>Файл подложки существует: &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
+    <name>OpenOrienteering::PaintOnTemplateSelectDialog</name>
+    <message>
+        <location filename="../src/templates/paint_on_template_feature.cpp" line="195"/>
+        <source>Select template to draw onto</source>
+        <translation>Выбор подложки для рисования на ней</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="vanished">Отмена</translation>
+    </message>
+    <message>
+        <source>Draw</source>
+        <translation type="vanished">Рисовать</translation>
+    </message>
+</context>
+<context>
     <name>OpenOrienteering::PaintOnTemplateTool</name>
     <message>
-        <location filename="../src/templates/template_tool_paint.cpp" line="161"/>
+        <location filename="../src/templates/paint_on_template_tool.cpp" line="149"/>
         <source>&lt;b&gt;Click and drag&lt;/b&gt;: Paint. &lt;b&gt;Right click and drag&lt;/b&gt;: Erase. </source>
         <translation>&lt;b&gt;Щелчок и перетаскивание&lt;/b&gt;: Рисовать. &lt;b&gt;Правый щелчок и перетаскивание&lt;/b&gt;: Стереть. </translation>
     </message>
     <message>
-        <location filename="../src/templates/template_tool_paint.cpp" line="164"/>
+        <location filename="../src/templates/paint_on_template_tool.cpp" line="152"/>
         <source>Color selection</source>
         <translation>Выбор цвета</translation>
+    </message>
+    <message>
+        <location filename="../src/templates/paint_on_template_tool.cpp" line="199"/>
+        <source>Erase</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/templates/paint_on_template_tool.cpp" line="220"/>
+        <source>Filled area</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6228,30 +6251,30 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::PrintTool</name>
     <message>
-        <location filename="../src/gui/print_tool.cpp" line="59"/>
-        <location filename="../src/gui/print_tool.cpp" line="371"/>
+        <location filename="../src/gui/print_tool.cpp" line="60"/>
+        <location filename="../src/gui/print_tool.cpp" line="372"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area&apos;s borders. </source>
         <translation>&lt;b&gt;Перетаскивание&lt;/b&gt;: Сместить карту, область печати или границы области. </translation>
     </message>
     <message>
-        <location filename="../src/gui/print_tool.cpp" line="343"/>
+        <location filename="../src/gui/print_tool.cpp" line="344"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
         <translation>&lt;b&gt;Перетаскивание&lt;/b&gt;: Сместить область печати. </translation>
     </message>
     <message>
-        <location filename="../src/gui/print_tool.cpp" line="347"/>
+        <location filename="../src/gui/print_tool.cpp" line="348"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
         <translation>&lt;b&gt;Перетаскивание&lt;/b&gt;: Сместить карту. </translation>
     </message>
     <message>
-        <location filename="../src/gui/print_tool.cpp" line="352"/>
-        <location filename="../src/gui/print_tool.cpp" line="357"/>
+        <location filename="../src/gui/print_tool.cpp" line="353"/>
+        <location filename="../src/gui/print_tool.cpp" line="358"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s border. </source>
         <translation>&lt;b&gt;Перетаскивание&lt;/b&gt;: Сместить границы области печати. </translation>
     </message>
     <message>
-        <location filename="../src/gui/print_tool.cpp" line="362"/>
-        <location filename="../src/gui/print_tool.cpp" line="367"/>
+        <location filename="../src/gui/print_tool.cpp" line="363"/>
+        <location filename="../src/gui/print_tool.cpp" line="368"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s borders. </source>
         <translation>&lt;b&gt;Перетаскивание&lt;/b&gt;: Сместить границы области печати. </translation>
     </message>
@@ -6656,12 +6679,12 @@ separations</source>
 <context>
     <name>OpenOrienteering::RotateMapDialog</name>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="46"/>
+        <location filename="../src/gui/map/rotate_map_dialog.cpp" line="47"/>
         <source>Rotate map</source>
         <translation>Поворот карты</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="53"/>
+        <location filename="../src/gui/map/rotate_map_dialog.cpp" line="54"/>
         <source>Angle (counter-clockwise):</source>
         <translation>Угол (против часовой стрелки):</translation>
     </message>
@@ -6670,12 +6693,12 @@ separations</source>
         <translation type="vanished">°</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="50"/>
+        <location filename="../src/gui/map/rotate_map_dialog.cpp" line="51"/>
         <source>Rotation parameters</source>
         <translation>Параметры поворота</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="55"/>
+        <location filename="../src/gui/map/rotate_map_dialog.cpp" line="56"/>
         <source>Rotate around:</source>
         <translation>Повернуть вокруг:</translation>
     </message>
@@ -6709,52 +6732,52 @@ separations</source>
         <translation type="vanished">Y:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="58"/>
+        <location filename="../src/gui/map/rotate_map_dialog.cpp" line="59"/>
         <source>Map coordinate system origin</source>
         <extracomment>Rotation center point</extracomment>
         <translation>Начало системы координат карты</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="63"/>
+        <location filename="../src/gui/map/rotate_map_dialog.cpp" line="64"/>
         <source>Georeferencing reference point</source>
         <extracomment>Rotation center point</extracomment>
         <translation>Географическая опорная точка</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="69"/>
+        <location filename="../src/gui/map/rotate_map_dialog.cpp" line="70"/>
         <source>Other point,</source>
         <extracomment>Rotation center point</extracomment>
         <translation>Другая точка,</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="74"/>
+        <location filename="../src/gui/map/rotate_map_dialog.cpp" line="75"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
         <translation>X:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="78"/>
+        <location filename="../src/gui/map/rotate_map_dialog.cpp" line="79"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
         <translation>Y:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="82"/>
+        <location filename="../src/gui/map/rotate_map_dialog.cpp" line="83"/>
         <source>Options</source>
         <translation>Опции</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="84"/>
+        <location filename="../src/gui/map/rotate_map_dialog.cpp" line="85"/>
         <source>Adjust georeferencing reference point</source>
         <translation>Отрегулировать опорную точку геопривязки</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="91"/>
+        <location filename="../src/gui/map/rotate_map_dialog.cpp" line="92"/>
         <source>Adjust georeferencing declination</source>
         <translation>Отрегулировать склонение геопривязки</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="98"/>
+        <location filename="../src/gui/map/rotate_map_dialog.cpp" line="99"/>
         <source>Rotate non-georeferenced templates</source>
         <translation>Вращать подложки без геопривязки</translation>
     </message>
@@ -6999,19 +7022,16 @@ separations</source>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="114"/>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="146"/>
         <source>Default</source>
-        <extracomment>Position source</extracomment>
         <translation>По умолчанию</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
         <source>NMEA (Qt)</source>
-        <extracomment>Position source</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"/>
         <source>NMEA (OpenOrienteering)</source>
-        <extracomment>Position source</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7021,19 +7041,16 @@ separations</source>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="123"/>
         <source>Windows</source>
-        <extracomment>Position source; product name, do not translate literally.</extracomment>
         <translation>Windows</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="126"/>
         <source>GeoClue</source>
-        <extracomment>Position source; product name, do not translate literally.</extracomment>
         <translation>GeoClue</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="129"/>
         <source>Core Location</source>
-        <extracomment>Position source; product name, do not translate literally.</extracomment>
         <translation>Core Location</translation>
     </message>
 </context>
@@ -7075,62 +7092,62 @@ separations</source>
 <context>
     <name>OpenOrienteering::StretchMapDialog</name>
     <message>
-        <location filename="../src/gui/map/map_dialog_stretch.cpp" line="43"/>
+        <location filename="../src/gui/map/stretch_map_dialog.cpp" line="47"/>
         <source>Change scale factor</source>
         <translation>Изменить коэффициент масштабирования</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_stretch.cpp" line="47"/>
+        <location filename="../src/gui/map/stretch_map_dialog.cpp" line="51"/>
         <source>Scaling parameters</source>
         <translation>Параметры масштабирования</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_stretch.cpp" line="49"/>
+        <location filename="../src/gui/map/stretch_map_dialog.cpp" line="53"/>
         <source>Scaling center:</source>
         <translation>Центр масштабирования:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_stretch.cpp" line="52"/>
+        <location filename="../src/gui/map/stretch_map_dialog.cpp" line="56"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
         <translation>Начало системы координат карты</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_stretch.cpp" line="58"/>
+        <location filename="../src/gui/map/stretch_map_dialog.cpp" line="62"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
         <translation>Географическая опорная точка</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_stretch.cpp" line="66"/>
+        <location filename="../src/gui/map/stretch_map_dialog.cpp" line="70"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
         <translation>Другая точка,</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_stretch.cpp" line="71"/>
+        <location filename="../src/gui/map/stretch_map_dialog.cpp" line="75"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
         <translation>X:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_stretch.cpp" line="75"/>
+        <location filename="../src/gui/map/stretch_map_dialog.cpp" line="79"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
         <translation>Y:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_stretch.cpp" line="78"/>
+        <location filename="../src/gui/map/stretch_map_dialog.cpp" line="82"/>
         <source>Options</source>
         <translation>Опции</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_stretch.cpp" line="80"/>
+        <location filename="../src/gui/map/stretch_map_dialog.cpp" line="84"/>
         <source>Adjust georeferencing reference point</source>
         <translation>Отрегулировать опорную точку геопривязки</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_stretch.cpp" line="87"/>
+        <location filename="../src/gui/map/stretch_map_dialog.cpp" line="91"/>
         <source>Scale non-georeferenced templates</source>
         <translation>Масштабировать подложки без геопривязки</translation>
     </message>
@@ -7194,7 +7211,7 @@ separations</source>
         <translation>Предупреждение</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1383"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1392"/>
         <source>Description</source>
         <translation>Описание</translation>
     </message>
@@ -7327,13 +7344,13 @@ separations</source>
         <translation>Удалить все объекты с этим символом из выбора</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1396"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1405"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1117"/>
         <source>Hide objects with this symbol</source>
         <translation>Скрыть объекты с этим символом</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1407"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1416"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1118"/>
         <source>Protect objects with this symbol</source>
         <translation>Защитить объекты с этим символом</translation>
@@ -7420,7 +7437,7 @@ separations</source>
         <translation>Карта содержит объекты с символом &quot;%1&quot;. Его удаление приведёт к удалению этих объекты и очистке истории отмены! Вы действительно хотите это сделать?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="950"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="969"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1122"/>
         <source>Select all objects with selected symbols</source>
         <translation>Выбрать все объекты с выбранными символами</translation>
@@ -7674,12 +7691,12 @@ Do you want to save your changes?</source>
         <translation>центр масс на начало</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="234"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="228"/>
         <source>Select background color</source>
         <translation>Выбрать цвет фона</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="420"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="414"/>
         <source>The quick brown fox
 takes the routechoice
 to jump over the lazy dog
@@ -7691,7 +7708,7 @@ to jump over the lazy dog
 1234567890</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="495"/>
+        <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="489"/>
         <source>- unnamed -</source>
         <translation>- безымянный -</translation>
     </message>
@@ -7755,7 +7772,7 @@ to jump over the lazy dog
         <translation type="vanished">Справка</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_find_feature.cpp" line="231"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="240"/>
         <source>%n object(s) selected</source>
         <translation>
             <numerusform>%n объект выбран</numerusform>
@@ -7764,8 +7781,8 @@ to jump over the lazy dog
         </translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_find_feature.cpp" line="177"/>
-        <location filename="../src/gui/map/map_find_feature.cpp" line="223"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="184"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="231"/>
         <source>Invalid query</source>
         <translation>Неверный запрос</translation>
     </message>
@@ -7801,33 +7818,33 @@ to jump over the lazy dog
 <context>
     <name>OpenOrienteering::Template</name>
     <message>
-        <location filename="../src/templates/template.cpp" line="481"/>
+        <location filename="../src/templates/template.cpp" line="482"/>
         <source>Find the moved template file</source>
         <translation>Найти перемещённый файл подложки</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="483"/>
+        <location filename="../src/templates/template.cpp" line="484"/>
         <source>All files (*.*)</source>
         <translation>Все файлы (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="498"/>
+        <location filename="../src/templates/template.cpp" line="531"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="595"/>
-        <location filename="../src/templates/template.cpp" line="623"/>
+        <location filename="../src/templates/template.cpp" line="622"/>
+        <location filename="../src/templates/template.cpp" line="650"/>
         <source>No such file.</source>
         <translation>Нет такого файла.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="637"/>
+        <location filename="../src/templates/template.cpp" line="665"/>
         <source>Is the format of the file correct for this template type?</source>
         <translation>Является ли формат файла подходящим для данного типа подложки?</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="644"/>
+        <location filename="../src/templates/template.cpp" line="672"/>
         <source>Not enough free memory.</source>
         <translation>Недостаточно свободной памяти.</translation>
     </message>
@@ -7835,17 +7852,17 @@ to jump over the lazy dog
 <context>
     <name>OpenOrienteering::TemplateAdjustActivity</name>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="69"/>
+        <location filename="../src/templates/template_adjust.cpp" line="68"/>
         <source>Template adjustment</source>
         <translation>Совмещение подложки</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="147"/>
+        <location filename="../src/templates/template_adjust.cpp" line="145"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_adjust.cpp" line="147"/>
+        <location filename="../src/templates/template_adjust.cpp" line="145"/>
         <source>Failed to calculate adjustment!</source>
         <translation>Ошибка вычисления совмещения!</translation>
     </message>
@@ -7951,13 +7968,13 @@ to jump over the lazy dog
     <name>OpenOrienteering::TemplateImage</name>
     <message>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="124"/>
-        <location filename="../src/templates/template_image.cpp" line="180"/>
+        <location filename="../src/templates/template_image.cpp" line="181"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
         <translation>Не хватает свободной памяти (размер изображения:%1x%2 точек)</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_template.cpp" line="100"/>
-        <location filename="../src/templates/template_image.cpp" line="204"/>
+        <location filename="../src/templates/template_image.cpp" line="205"/>
         <source>Georeferencing not found</source>
         <translation>Геопривязка не найдена</translation>
     </message>
@@ -7974,14 +7991,14 @@ If you do not intend to draw on this template however, that is no problem.</sour
 Однако если вы не намерены рисовать на этой подложке, то проблем нет.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="259"/>
-        <location filename="../src/templates/template_image.cpp" line="381"/>
+        <location filename="../src/templates/template_image.cpp" line="262"/>
+        <location filename="../src/templates/template_image.cpp" line="384"/>
         <source>Select the coordinate reference system of the georeferenced image.</source>
         <translation>Выберите систему координат изображения с геопривязкой.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="264"/>
-        <location filename="../src/templates/template_image.cpp" line="386"/>
+        <location filename="../src/templates/template_image.cpp" line="267"/>
+        <location filename="../src/templates/template_image.cpp" line="389"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
         <translation>Выбор базовой системы координат по координатам из world файла</translation>
     </message>
@@ -8058,55 +8075,55 @@ If you do not intend to draw on this template however, that is no problem.</sour
 <context>
     <name>OpenOrienteering::TemplateListWidget</name>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
+        <location filename="../src/templates/template_table_model.cpp" line="171"/>
         <source>Opacity</source>
         <translation>Непрозрачность</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
+        <location filename="../src/templates/template_table_model.cpp" line="175"/>
         <source>Group</source>
         <translation>Группа</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
+        <location filename="../src/templates/template_table_model.cpp" line="179"/>
         <source>Filename</source>
         <translation>Имя файла</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="177"/>
+        <location filename="../src/templates/template_table_model.cpp" line="165"/>
         <source>Show</source>
         <translation>Показать</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="221"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="245"/>
         <source>Open...</source>
         <translation>Открыть…</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="224"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="248"/>
         <source>Duplicate</source>
         <translation>Дублировать</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="226"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="515"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="250"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="684"/>
         <source>Sketch</source>
         <translation>Эскиз</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="228"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="519"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="252"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="688"/>
         <source>GPS</source>
         <translation>GPS</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="232"/>
-        <location filename="../src/templates/template_tool_paint.cpp" line="465"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="256"/>
+        <location filename="../src/templates/paint_on_template_feature.cpp" line="225"/>
         <source>Add template...</source>
         <translation>Добавить подложку…</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="236"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="260"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -8115,12 +8132,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <translation type="vanished">Закрыть</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="242"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="266"/>
         <source>Move Up</source>
         <translation>Переместить вверх</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="244"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="268"/>
         <source>Move Down</source>
         <translation>Переместить вниз</translation>
     </message>
@@ -8129,53 +8146,52 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <translation type="vanished">С геопривязкой: %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="251"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="275"/>
         <source>Move by hand</source>
         <translation>Переместить вручную</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="256"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="280"/>
         <source>Adjust...</source>
         <translation>Совместить…</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="261"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="285"/>
         <source>Georeferenced</source>
         <translation>С геопривязкой</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="263"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="287"/>
         <source>Positioning...</source>
         <translation>Позиционирование…</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="266"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="290"/>
         <source>Import and remove</source>
         <translation>Импортировать и удалить</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="305"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="329"/>
         <source>Help</source>
         <translation>Справка</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="411"/>
         <source>Open image, GPS track or DXF file</source>
-        <translation>Открыть изображение, GPS трек или DXF файл</translation>
+        <translation type="vanished">Открыть изображение, GPS трек или DXF файл</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="645"/>
         <source>Template files</source>
         <translation>Файлы подложек</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="645"/>
         <source>All files</source>
         <translation>Все файлы</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="464"/>
-        <location filename="../src/templates/template.cpp" line="494"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="673"/>
+        <location filename="../src/templates/template.cpp" line="520"/>
         <source>Cannot open template
 %1:
 %2</source>
@@ -8184,89 +8200,87 @@ If you do not intend to draw on this template however, that is no problem.</sour
 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="465"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="787"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1015"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1056"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1107"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="674"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="887"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="892"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="933"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="983"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="431"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="661"/>
         <source>File format not recognized.</source>
         <translation>Формат файла не распознан.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="269"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="293"/>
         <source>Vectorize lines</source>
         <translation>Векторизовать линии</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="444"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="667"/>
         <source>Failed to load template. Does the file exist and is it valid?</source>
         <translation>Ошибка загрузки подложки. Файл существует и он корректный?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="787"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
-        <translation>Пожалуйста введите корректное целое число для задания группы или оставьте поле пустым для удаления подложки из группы!</translation>
+        <translation type="vanished">Пожалуйста введите корректное целое число для задания группы или оставьте поле пустым для удаления подложки из группы!</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1056"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="887"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="933"/>
         <source>Cannot load map file, aborting.</source>
         <translation>Не удаётся загрузить файл карты, прерывание.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="897"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="897"/>
         <source>The map import generated warnings.</source>
         <translation>Импорт карты вызвал предупреждения.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1031"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="908"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
         <translation>Масштабировать относительно номинального масштаба карты (%1 %)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1033"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="910"/>
         <source>Scale by current template scaling (%1 %)</source>
         <translation>Использовать текущий масштаб подложки (%1 %)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1036"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="913"/>
         <source>Don&apos;t scale</source>
         <translation>Не масштабировать</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1038"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1068"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="915"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="945"/>
         <source>Template import</source>
         <translation>Импорт подложки</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1039"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="916"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
         <translation>Как следует масштабировать символы с импортируемой подложки?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1069"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="946"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
         <translation>Подложка будет невидимой при имитации наложения цветов. Перейти к нормальному виду?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1107"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="983"/>
         <source>Cannot change the georeferencing state.</source>
         <translation>Геопривязка не может быть изменена.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1235"/>
+        <location filename="../src/templates/template_table_model.cpp" line="257"/>
         <source>- Map -</source>
         <translation>- Карта -</translation>
     </message>
@@ -8274,7 +8288,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
 <context>
     <name>OpenOrienteering::TemplateMap</name>
     <message>
-        <location filename="../src/templates/template_map.cpp" line="118"/>
+        <location filename="../src/templates/template_map.cpp" line="121"/>
         <source>Cannot load map file, aborting.</source>
         <translation>Не удаётся загрузить файл карты, прерывание.</translation>
     </message>
@@ -8290,7 +8304,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
 <context>
     <name>OpenOrienteering::TemplatePlaceholder</name>
     <message>
-        <location filename="../src/templates/template_placeholder.cpp" line="156"/>
+        <location filename="../src/templates/template_placeholder.cpp" line="178"/>
         <source>Unknown file format</source>
         <translation>Неизвестный формат файла</translation>
     </message>
@@ -8298,37 +8312,37 @@ If you do not intend to draw on this template however, that is no problem.</sour
 <context>
     <name>OpenOrienteering::TemplatePositionDockWidget</name>
     <message>
-        <location filename="../src/templates/template_position_dock_widget.cpp" line="39"/>
+        <location filename="../src/templates/template_position_dock_widget.cpp" line="40"/>
         <source>Positioning</source>
         <translation>Позиционирование</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_position_dock_widget.cpp" line="43"/>
+        <location filename="../src/templates/template_position_dock_widget.cpp" line="46"/>
         <source>X:</source>
         <translation>X:</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_position_dock_widget.cpp" line="46"/>
+        <location filename="../src/templates/template_position_dock_widget.cpp" line="49"/>
         <source>Y:</source>
         <translation>Y:</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_position_dock_widget.cpp" line="49"/>
+        <location filename="../src/templates/template_position_dock_widget.cpp" line="52"/>
         <source>X-Scale:</source>
         <translation>Масштаб по X:</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_position_dock_widget.cpp" line="52"/>
+        <location filename="../src/templates/template_position_dock_widget.cpp" line="55"/>
         <source>Y-Scale:</source>
         <translation>Масштаб по Y:</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_position_dock_widget.cpp" line="55"/>
+        <location filename="../src/templates/template_position_dock_widget.cpp" line="58"/>
         <source>Rotation:</source>
         <translation>Поворот:</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_position_dock_widget.cpp" line="58"/>
+        <location filename="../src/templates/template_position_dock_widget.cpp" line="61"/>
         <source>Shear:</source>
         <translation>Скос:</translation>
     </message>
@@ -8526,38 +8540,38 @@ The maximum supported version is %2.</source>
 <context>
     <name>OpenOrienteering::TextObjectAlignmentDockWidget</name>
     <message>
-        <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="62"/>
+        <location filename="../src/tools/text_object_editor_helper.cpp" line="133"/>
         <source>Alignment</source>
         <translation>Выравнивание</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="45"/>
+        <location filename="../src/tools/text_object_editor_helper.cpp" line="536"/>
         <source>Left</source>
         <translation>По левому краю</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="46"/>
-        <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="52"/>
+        <location filename="../src/tools/text_object_editor_helper.cpp" line="538"/>
+        <location filename="../src/tools/text_object_editor_helper.cpp" line="555"/>
         <source>Center</source>
         <translation>По центру</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="47"/>
+        <location filename="../src/tools/text_object_editor_helper.cpp" line="540"/>
         <source>Right</source>
         <translation>По правому краю</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="51"/>
+        <location filename="../src/tools/text_object_editor_helper.cpp" line="553"/>
         <source>Top</source>
         <translation>По верхнему краю</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="53"/>
+        <location filename="../src/tools/text_object_editor_helper.cpp" line="557"/>
         <source>Baseline</source>
         <translation>По базовой линии</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="54"/>
+        <location filename="../src/tools/text_object_editor_helper.cpp" line="559"/>
         <source>Bottom</source>
         <translation>По нижнему краю</translation>
     </message>
@@ -8852,7 +8866,7 @@ The maximum supported version is %2.</source>
 <context>
     <name>OpenOrienteering::XMLFileExporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="244"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="245"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
         <translation>Предыдущие версии Mapper не поддерживают многослойные карты. Для сохранения карты в совместимом формате Вы должны сначала объединить все слои карты.</translation>
     </message>
@@ -8860,27 +8874,27 @@ The maximum supported version is %2.</source>
 <context>
     <name>OpenOrienteering::XMLFileImporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="529"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="530"/>
         <source>Unsupported element: %1 (line %2 column %3)</source>
         <translation>Неподдерживаемый элемент: %1 (строка %2 столбец %3)</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="573"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="574"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
         <translation>Некоторые координаты были вне границ печати. Содержания карты было скорректировано.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="663"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="666"/>
         <source>unknown</source>
         <translation>неизвестен</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="664"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="667"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
         <translation>Части этого файла не могут быть прочитаны с помощью данной версии Mapper. Минимальная требуемая версия: %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="645"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="648"/>
         <source>Error at line %1 column %2: %3</source>
         <translation>Ошибка в строке %1 столбце %2: %3</translation>
     </message>
@@ -8889,24 +8903,24 @@ The maximum supported version is %2.</source>
         <translation type="vanished">Описание карты не может быть прочитано.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="681"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="684"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="968"/>
         <source>Some invalid characters had to be removed.</source>
         <translation>Некоторые недопустимые символы должны были быть удалены.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="699"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="702"/>
         <source>Unknown error</source>
         <translation>Неизвестная ошибка</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="700"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="703"/>
         <source>Unsupported or invalid georeferencing specification &apos;%1&apos;: %2</source>
         <translation>Неподдерживаемая или некорректная спецификация геопривязки &apos;%1&apos;: %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="730"/>
-        <source>Inconsistent declination/grivation detected. Declination adjusted from %1° to %2°.</source>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="731"/>
+        <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

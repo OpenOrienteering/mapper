@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright (c) 2005-2020 Libor Pecháček.
  *
  * This file is part of CoVe 
  *
@@ -97,7 +97,6 @@ public:
 	std::vector<bool> getSelectedColors();
 
 public slots:
-	void aboutDialog();
 	void setInitialColors(bool on);
 	void colorButtonToggled(bool on);
 

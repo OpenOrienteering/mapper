@@ -78,7 +78,9 @@ class ColorsEditingDelegate : public QItemDelegate
 			QVariant v = model->data(model->index(index.row(), 0, index),
 									 Qt::BackgroundRole);
 			QColor c = v.value<QBrush>().color();
-			clr = QColorDialog::getRgba(c.rgb());
+			auto chosen_color = QColorDialog::getColor(c);
+			if (chosen_color.isValid())
+				clr = chosen_color.rgba();
 			setModelData(nullptr, model, index);
 			event->accept();
 			return true;
@@ -150,7 +152,7 @@ QVariant ColorsListModel::data(const QModelIndex& index, int role) const
 							.arg(qBlue(colors[index.row()])));
 	}
 	else if (index.column() == 2 && role == Qt::DisplayRole &&
-			 index.row() < comments.size())
+			 index.row() < int(comments.size()))
 	{
 		return QVariant(comments[index.row()]);
 	}

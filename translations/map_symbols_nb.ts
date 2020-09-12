@@ -2546,7 +2546,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Brown 50%</source>
         <comment>Color 5</comment>
-        <translation>Brun  50%</translation>
+        <translation>Brun 50%</translation>
     </message>
     <message>
         <source>Opaque Blue</source>
@@ -5487,7 +5487,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Brown 50%</source>
         <comment>Color 4</comment>
-        <translation>Brun  50%</translation>
+        <translation>Brun 50%</translation>
     </message>
     <message>
         <source>Black below light browns</source>
@@ -6463,10 +6463,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A marked route is shown on the map with a dashed line. If the symbol is used instead
-of symbol 704 before or after a control, it represents an obligatory route for the
-competitors. The symbol can also be used in areas where off-track riding is forbidden
-to represent allowed routes that are marked in the terrain.</source>
+        <source>A marked route is shown on the map with a dashed line. If the symbol is used instead of symbol 704 before or after a control, it represents an obligatory route for the competitors. The symbol can also be used in areas where off-track riding is forbidden to represent allowed routes that are marked in the terrain.</source>
         <comment>Description of symbol 705</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -6521,11 +6518,7 @@ to represent allowed routes that are marked in the terrain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The
-zigzag line should be as continuous as possible. If there is a crossing point over the
-forbidden route, it shall be presented like a gate by two perpendicular lines over the
-forbidden route. Also a longer crossing section shall be presented clearly on the map
-by using the perpendicular lines at the end of the zigzag lines.</source>
+        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
         <comment>Description of symbol 711.1</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -7268,7 +7261,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Brown 50%</source>
         <comment>Color 4</comment>
-        <translation>Brun  50%</translation>
+        <translation>Brun 50%</translation>
     </message>
     <message>
         <source>Brown</source>
@@ -9646,7 +9639,7 @@ Map symbol: ISOM 106</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.s
+        <source>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.
 
 Map symbols: ISOM 107, 108</source>
         <comment>Description of symbol 1.6</comment>

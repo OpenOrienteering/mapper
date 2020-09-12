@@ -144,8 +144,11 @@ public:
 	 */
 	enum ScribbleOption
 	{
-		NoScribbleOptions = 0,
-		FilledAreas	= 1<<0,  ///< Fill area defined by the scribble line
+		NoScribbleOptions   = 0x00,
+		FilledAreas         = 0x01,  ///< Fill the area defined by the scribble line.
+		ComposeBackground   = 0x02,  ///< Draw lines or fill areas only in transparent areas.
+		PatternFill         = 0x04,  ///< Fill areas with a dot pattern.
+		ScribbleOptionsMask = 0x07,  ///< All bits used by ScribbleOption.
 	};
 	Q_DECLARE_FLAGS(ScribbleOptions, ScribbleOption)
 	
@@ -235,12 +238,22 @@ public:
 	void switchTemplateFile(const QString& new_path, bool load_file);
 	
 	/**
-	 * Shows the dialog to find a moved template.
+	 * Interactively changes the template file.
 	 * 
-	 * If the user selects a new file, tries to switch to the selected template
-	 * file using switchTemplateFile() and by trying to load the new file.
-	 * Returns true if this succeeds; if not, reverts the switch and returns
-	 * false. Also returns false if the dialog is aborted.
+	 * This functions shows a file dialog for selecting a new template file.
+	 * Upon selection, it tries to load the template file. When loading fails,
+	 * the original path and state is restored.
+	 * 
+	 * When this function is called on a TemplatePlaceholder object, an object
+	 * of an actual template implementation class is created in order to load
+	 * the data file. After successful loading, this new object replaces the
+	 * original object in the map's list of active templates, destroying the
+	 * original object. Thus the current object may be no longer in the map's
+	 * active list, and it will be destroyed when control returns to the event
+	 * loop.
+	 * 
+	 * Returns true if a file is selected and the loading succeeds,
+	 * false otherwise.
 	 */
 	bool execSwitchTemplateFileDialog(QWidget* dialog_parent);
 	
@@ -514,6 +527,18 @@ public:
 	/// Changes the path and filename only. Does not do any reloading etc.
 	void setTemplatePath(const QString& value);
 	
+	/**
+	 * Returns an updated relative path.
+	 * 
+	 * If the template is in a valid state and map_dir is given, this function
+	 * returns the corresponding relative path to the template file.
+	 * 
+	 * Otherwise it returns the original relative path if it is not empty, or
+	 * just the template file name.
+	 */
+	QString getTemplateRelativePath(const QDir* map_dir) const;
+	
+	/// Returns the relative path which was set when template was configured from XML.
 	inline const QString& getTemplateRelativePath() const {return template_relative_path;}
 	inline void setTemplateRelativePath(const QString& value) {template_relative_path = value;}
 	

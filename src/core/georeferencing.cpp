@@ -46,6 +46,7 @@
 #  include <proj.h>
 #endif
 
+#include "mapper_config.h" // IWYU pragma: keep
 #include "core/crs_template.h"
 #include "fileformats/file_format.h"
 #include "fileformats/xml_file_format.h"
@@ -92,20 +93,57 @@ namespace
 {
 #ifdef Q_OS_ANDROID
 	/**
+	 * Maintains and returns the cache directory for PROJ resource files.
+	 * 
+	 * PROJ resources may change with different versions of Mapper.
+	 * This function creates the directory if it is missing,
+	 * but also resets it on Mapper version changes.
+	 */
+	QDir ensureProjCacheDirectory()
+	{
+		auto cache = QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
+		auto const proj = QStringLiteral("proj");
+		auto const version_filename = QStringLiteral("proj/org.openorienteering.mapper");
+		if (cache.exists(proj))
+		{
+			QFile version_file(cache.filePath(version_filename));
+			if (!version_file.open(QIODevice::ReadOnly)
+			    || version_file.readAll() != APP_VERSION)
+			{
+				qDebug("PROJ cache version mismatch");
+				auto proj_dir = cache;
+				if (!proj_dir.cd(proj) || !proj_dir.removeRecursively())
+					qDebug("Failed to remove PROJ cache");
+			}
+		}
+		if (!cache.exists(proj))
+		{
+			qDebug("Creating PROJ cache, version '" APP_VERSION "'");
+			if (cache.mkpath(proj))
+			{
+				QFile version_file(cache.filePath(version_filename));
+				if (!version_file.open(QIODevice::WriteOnly)
+				    || version_file.write(APP_VERSION) != qstrlen(APP_VERSION))
+				{
+					qDebug("Failed to write PROJ cache version file");
+				}
+			}
+			else
+			{
+				qDebug("Could not create a PROJ cache");
+			}
+		}
+		
+		cache.cd(proj);
+		return cache;
+	}
+	
+	/**
 	 * Provides a cache directory for RROJ resource files.
 	 */
 	const QDir& projCacheDirectory()
 	{
-		static auto const dir = []() -> QDir {
-			auto cache = QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
-			auto proj = QStringLiteral("proj");
-			if (!cache.exists(proj))
-				cache.mkpath(proj);
-			if (!cache.exists(proj))
-				qDebug("Could not create a cache directory for PROJ resource files");
-			cache.cd(proj);
-			return cache;
-		}();
+		static auto const dir = ensureProjCacheDirectory();
 		return dir;
 	}
 	
@@ -164,6 +202,9 @@ namespace
 			proj_context_use_proj4_init_rules(PJ_DEFAULT_CTX, 1);
 
 #if defined(Q_OS_ANDROID)
+			proj_log_func(nullptr, nullptr, [](void* /*unused*/, int /*unused*/, const char *msg) {
+				qDebug("%s", msg);
+			});
 			// Register file finder function needed by Proj.4
 			proj_context_set_file_finder(nullptr, &projFileHelperAndroid, nullptr);
 			auto proj_data = QFileInfo(projCacheDirectory().path());

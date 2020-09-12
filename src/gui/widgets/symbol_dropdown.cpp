@@ -161,7 +161,7 @@ void SymbolDropDownDelegate::setModelData(QWidget* editor, QAbstractItemModel* m
 	auto widget = static_cast<SymbolDropDown*>(editor);
 	auto symbol = widget->symbol();
 	auto list = index.data(Qt::UserRole).toList();
-	list[1] = qVariantFromValue<const Symbol*>(symbol);
+	list[1] = QVariant::fromValue<const Symbol*>(symbol);
 	model->setData(index, list, Qt::UserRole);
 	
 	if (symbol)

@@ -62,6 +62,7 @@ for I in \
   georeferencing.cpp \
   georeferencing_dialog.cpp \
   georeferencing_t.cpp \
+  icon_engine \
   key_button_bar.cpp \
   line_symbol.cpp \
   main.cpp \
@@ -70,6 +71,7 @@ for I in \
   map_editor.cpp \
   map_find_feature.cpp \
   map_widget.cpp \
+  mapper_proxystyle.cpp \
   /object.cpp \
   object_mover.cpp \
   object_query.cpp \
@@ -81,7 +83,10 @@ for I in \
   print_widget.cpp \
   renderable.cpp \
   renderable_implementation.cpp \
+  rotate_map_dialog.cpp \
   settings_dialog.cpp \
+  stretch_map_dialog.cpp \
+  style_t.cpp \
   /symbol.cpp \
   symbol_replacement.cpp \
   symbol_replacement_dialog.cpp \
@@ -98,6 +103,7 @@ for I in \
   template_table_model.cpp \
   template_tool \
   template_track.cpp \
+  text_object_editor_helper.cpp \
   text_brwoser_dialog \
   toast.cpp \
   track_t.cpp \

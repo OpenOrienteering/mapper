@@ -1554,10 +1554,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</descripti
                 <line_symbol color="2" line_width="600" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="2" id="90" code="705" name="Marked route">
-                <description>A marked route is shown on the map with a dashed line. If the symbol is used instead
-of symbol 704 before or after a control, it represents an obligatory route for the
-competitors. The symbol can also be used in areas where off-track riding is forbidden
-to represent allowed routes that are marked in the terrain.</description>
+                <description>A marked route is shown on the map with a dashed line. If the symbol is used instead of symbol 704 before or after a control, it represents an obligatory route for the competitors. The symbol can also be used in areas where off-track riding is forbidden to represent allowed routes that are marked in the terrain.</description>
                 <line_symbol color="0" line_width="600" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="1" id="91" code="706" name="Finish">
@@ -1626,11 +1623,7 @@ to represent allowed routes that are marked in the terrain.</description>
                 <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="2" id="96" code="711.1" name="Forbidden route">
-                <description>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The
-zigzag line should be as continuous as possible. If there is a crossing point over the
-forbidden route, it shall be presented like a gate by two perpendicular lines over the
-forbidden route. Also a longer crossing section shall be presented clearly on the map
-by using the perpendicular lines at the end of the zigzag lines.</description>
+                <description>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</description>
                 <line_symbol color="0" line_width="600" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="1" id="97" code="712" name="First aid post">

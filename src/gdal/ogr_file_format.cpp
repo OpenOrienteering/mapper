@@ -2202,7 +2202,7 @@ void OgrFileExport::addTextToLayer(OGRLayerH layer, const std::function<bool (co
 		{
 			// There is no label field, or the text is too long.
 			// Put the text directly in the label.
-			text.replace(QRegularExpression(QLatin1String(R"((["\\]))"), QRegularExpression::MultilineOption), QLatin1String("\\\\1"));
+			text.replace(QRegularExpression(QLatin1String("([\"\\\\])"), QRegularExpression::MultilineOption), QLatin1String("\\\\1"));
 			style.replace("{Name}", text.toUtf8());
 		}
 		OGR_F_SetStyleString(po_feature.get(), style);

@@ -31,6 +31,7 @@
 #include <type_traits>
 #include <vector>
 
+#include <Qt>
 #include <QtGlobal>
 #include <QtMath>
 #include <QtNumeric>
@@ -74,6 +75,7 @@
 #include "fileformats/ocd_types_v12.h"  // IWYU pragma: keep
 #include "fileformats/ocd_types_v2018.h"
 #include "templates/template.h"
+#include "templates/template_map.h"
 #include "templates/template_placeholder.h"
 #include "util/encoding.h"
 #include "util/util.h"
@@ -902,6 +904,7 @@ void OcdFileImport::importTemplate(const QString& param_string)
 	double scale_y = 1.0;
 	int dimming = 0;
 	bool visible = false;
+	bool explicit_positioning = false;
 	
 	while (i >= 0)
 	{
@@ -916,11 +919,13 @@ void OcdFileImport::importTemplate(const QString& param_string)
 			// empty item
 			break;
 		case 'x':
+			explicit_positioning = true;
 			value = param_value.toDouble(&ok);
 			if (ok)
 				templ->setTemplateX(qRound64(value*1000*scale_factor));
 			break;
 		case 'y':
+			explicit_positioning = true;
 			value = param_value.toDouble(&ok);
 			if (ok)
 				templ->setTemplateY(-qRound64(value*1000*scale_factor));
@@ -928,16 +933,19 @@ void OcdFileImport::importTemplate(const QString& param_string)
 		case 'a':
 		case 'b':
 			// TODO: use the distinct angles correctly, not just the average
+			explicit_positioning = true;
 			rotation += param_value.toDouble(&ok);
 			if (ok)
 				++num_rotation_params;
 			break;
 		case 'u':
+			explicit_positioning = true;
 			value = param_value.toDouble(&ok);
 			if (ok && qAbs(value) >= 0.0000000001)
 				scale_x = value;
 			break;
 		case 'v':
+			explicit_positioning = true;
 			value = param_value.toDouble(&ok);
 			if (ok && qAbs(value) >= 0.0000000001)
 				scale_y = value;
@@ -954,11 +962,20 @@ void OcdFileImport::importTemplate(const QString& param_string)
 		i = next_i;
 	}
 	
-	if (num_rotation_params)
-		templ->setTemplateRotation(Georeferencing::degToRad(rotation / num_rotation_params));
-	
-	templ->setTemplateScaleX(scale_x * scale_factor);
-	templ->setTemplateScaleY(scale_y * scale_factor);
+	if (explicit_positioning)
+	{
+		if (num_rotation_params)
+			templ->setTemplateRotation(Georeferencing::degToRad(rotation / num_rotation_params));
+		
+		templ->setTemplateScaleX(scale_x * scale_factor);
+		templ->setTemplateScaleY(scale_y * scale_factor);
+	}
+	else if (clean_path.endsWith(QLatin1String(".ocd"), Qt::CaseInsensitive))
+	{
+		// OCD templates must use the map's scale and georeferencing.
+		// The transformation must be determined after loading the template.
+		templ->setProperty(TemplateMap::ocdTransformProperty(), true);
+	}
 	
 	auto const template_pos = std::min(0, map->getFirstFrontTemplate() - 1);
 	map->addTemplate(template_pos, std::unique_ptr<Template>{templ});
@@ -1536,6 +1553,7 @@ Symbol* OcdFileImport::importAreaSymbol(const Ocd::AreaSymbolV8& ocd_symbol)
 	setupBaseSymbol(symbol, ocd_symbol.base);
 	setupAreaSymbolCommon(
 	            symbol,
+	            ocd_symbol.base.flags & Ocd::SymbolRotatable,
 	            ocd_symbol.fill_on,
 	            ocd_symbol.common,
 	            ocd_symbol.data_size,
@@ -1551,6 +1569,7 @@ Symbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol)
 	setupBaseSymbol(symbol, ocd_symbol.base);
 	setupAreaSymbolCommon(
 	            symbol,
+	            ocd_symbol.base.flags & Ocd::SymbolRotatable,
 	            ocd_symbol.common.fill_on_V9,
 	            ocd_symbol.common,
 	            ocd_symbol.data_size,
@@ -1578,7 +1597,7 @@ Symbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol)
 	return combined;
 }
 
-void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fill_on, const Ocd::AreaSymbolCommonV8& ocd_symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements)
+void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool rotatable, bool fill_on, const Ocd::AreaSymbolCommonV8& ocd_symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements)
 {
 	// Basic area symbol fields: minimum_area, color
 	symbol->minimum_area = 0;
@@ -1587,12 +1606,12 @@ void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fi
 	symbol->patterns.reserve(4);
 	
 	// Hatching
-	if (ocd_symbol.hatch_mode != Ocd::HatchNone)
+	if (ocd_symbol.hatch_mode != Ocd::HatchNone && ocd_symbol.hatch_line_width)
 	{
 		AreaSymbol::FillPattern pattern;
 		pattern.type = AreaSymbol::FillPattern::LinePattern;
 		pattern.angle = convertAngle(ocd_symbol.hatch_angle_1);
-		pattern.setRotatable(true);
+		pattern.setRotatable(rotatable);
 		pattern.line_spacing = convertLength(ocd_symbol.hatch_dist);
 		pattern.line_offset = 0;
 		pattern.line_width = convertLength(ocd_symbol.hatch_line_width);
@@ -1611,12 +1630,13 @@ void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fi
 		}
 	}
 	
-	if (ocd_symbol.structure_mode != Ocd::StructureNone)
+	if (ocd_symbol.structure_mode != Ocd::StructureNone && ocd_symbol.structure_height
+	    && ocd_symbol.structure_width && data_size)
 	{
 		AreaSymbol::FillPattern pattern;
 		pattern.type = AreaSymbol::FillPattern::PointPattern;
 		pattern.angle = convertAngle(ocd_symbol.structure_angle);
-		pattern.setRotatable(true);
+		pattern.setRotatable(rotatable);
 		pattern.point_distance = convertLength(ocd_symbol.structure_width);
 		pattern.line_spacing = convertLength(ocd_symbol.structure_height);
 		pattern.line_offset = 0;

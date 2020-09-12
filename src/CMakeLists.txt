@@ -29,12 +29,54 @@ endif()
 
 set(CMAKE_AUTOMOC ON)
 
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
+
+
+# Build configuration
+
 configure_file(mapper_config.h.in "${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h.tmp")
 execute_process(
   COMMAND "${CMAKE_COMMAND}" -E copy_if_different mapper_config.h.tmp mapper_config.h
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
-include_directories("${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")
+add_library(mapper-config INTERFACE)
+target_include_directories(mapper-config  INTERFACE "${CMAKE_CURRENT_BINARY_DIR}")
+
+
+# Scaling icon engine
+
+set(SCALING_ICON_ENGINE_SOURCES
+  gui/scaling_icon_engine.cpp
+  gui/scaling_icon_engine_plugin.cpp
+  gui/scaling_icon_engine_plugin.json
+)
+set(SCALING_ICON_ENGINE_DEFINITIONS
+  PUBLIC
+    SCALING_ICON_ENGINE_PLUGIN
+  PRIVATE
+    QT_NO_CAST_FROM_ASCII
+    QT_NO_CAST_TO_ASCII
+    QT_USE_QSTRINGBUILDER
+    QT_STATICPLUGIN
+)
+set(SCALING_ICON_ENGINE_LINK_LIBRARIES
+  PUBLIC
+    Qt5::Gui
+)
+
+add_library(scaling-icon-engine STATIC  ${SCALING_ICON_ENGINE_SOURCES})
+target_compile_definitions(scaling-icon-engine  ${SCALING_ICON_ENGINE_DEFINITIONS})
+target_link_libraries(scaling-icon-engine  ${SCALING_ICON_ENGINE_LINK_LIBRARIES})
+
+
+# Resources (from project root)
+
+list(APPEND Mapper_RESOURCES "${PROJECT_SOURCE_DIR}/resources.qrc")
+qt5_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
+
+
+# Mapper common: static library of full runtime 
+# (To be used by Mapper executable and by system tests.)
 
 set(Mapper_Common_SRCS
   global.cpp
@@ -111,13 +153,13 @@ set(Mapper_Common_SRCS
   gui/util_gui.cpp
   
   gui/map/new_map_dialog.cpp
-  gui/map/map_dialog_rotate.cpp
   gui/map/map_dialog_scale.cpp
-  gui/map/map_dialog_stretch.cpp
   gui/map/map_editor.cpp
   gui/map/map_editor_activity.cpp
   gui/map/map_find_feature.cpp
   gui/map/map_widget.cpp
+  gui/map/rotate_map_dialog.cpp
+  gui/map/stretch_map_dialog.cpp
   
   gui/symbols/area_symbol_settings.cpp
   gui/symbols/combined_symbol_settings.cpp
@@ -153,7 +195,6 @@ set(Mapper_Common_SRCS
   gui/widgets/tag_select_widget.cpp
   gui/widgets/tags_widget.cpp
   gui/widgets/template_list_widget.cpp
-  gui/widgets/text_alignment_widget.cpp
   gui/widgets/text_browser.cpp
   gui/widgets/toast.cpp
   
@@ -244,16 +285,6 @@ set(Mapper_Common_HEADERS
   util/backports.h
 )
 
-
-# Resources (from project root)
-
-list(APPEND Mapper_RESOURCES "${PROJECT_SOURCE_DIR}/resources.qrc")
-qt5_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
-
-
-# Mapper common: static library of full runtime 
-# (To be used by Mapper executable and by system tests.)
-
 add_library(Mapper_Common STATIC
   ${Mapper_Common_SRCS}
   ${Mapper_Common_HEADERS}   # for IDE
@@ -270,9 +301,11 @@ target_link_libraries(Mapper_Common
 )
 foreach(lib
   cove
+  mapper-config
   mapper-gdal
   mapper-sensors
   printsupport
+  scaling-icon-engine
   Qt5::AndroidExtras
   Qt5::Network
 )

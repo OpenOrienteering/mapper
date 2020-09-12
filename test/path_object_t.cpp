@@ -281,8 +281,8 @@ void PathObjectTest::constructorTest()
 	{
 		PathObject expect_from_first_part(red_area.getSymbol(), red_area.getRawCoordinateVector());
 		expect_from_first_part.deletePart(1);
-		auto actual = line_from_first_part.parts().front();
-		auto expected = expect_from_first_part.parts().front();
+		auto const& actual = line_from_first_part.parts().front();
+		auto const& expected = expect_from_first_part.parts().front();
 		QCOMPARE(actual.size(), expected.size());
 		QCOMPARE(actual.first_index, expected.first_index);
 		QCOMPARE(actual.last_index, expected.last_index);
@@ -310,8 +310,8 @@ void PathObjectTest::constructorTest()
 	{
 		PathObject expect_from_last_part(red_area.getSymbol(), red_area.getRawCoordinateVector());
 		expect_from_last_part.deletePart(0);
-		auto actual = line_from_last_part.parts().front();
-		auto expected = expect_from_last_part.parts().front();
+		auto const& actual = line_from_last_part.parts().front();
+		auto const& expected = expect_from_last_part.parts().front();
 		QCOMPARE(actual.size(), expected.size());
 		QCOMPARE(actual.first_index, expected.first_index);
 		QCOMPARE(actual.last_index, expected.last_index);

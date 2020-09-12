@@ -112,8 +112,8 @@ void MeasureWidget::objectSelectionChanged()
 				auto real_area_text   = locale().toString(real_area, 'f', 0);
 				
 				body.append(table_row.arg(tr("Area:"),
-				                          paper_area_text, trUtf8("mm²", "square millimeters"),
-				                          real_area_text , trUtf8("m²", "square meters")));
+				                          paper_area_text, tr("mm²", "square millimeters"),
+				                          real_area_text , tr("m²", "square meters")));
 				
 				auto minimum_area = 0.0;
 				auto minimum_area_text = QString{ };
@@ -126,7 +126,7 @@ void MeasureWidget::objectSelectionChanged()
 				if (paper_area < minimum_area && paper_area_text != minimum_area_text)
 				{
 					extra_text = QLatin1String("<b>") + tr("This object is too small.") + QLatin1String("</b><br/>")
-					             + tr("The minimimum area is %1 %2.").arg(minimum_area_text, trUtf8("mm²"))
+					             + tr("The minimimum area is %1 %2.").arg(minimum_area_text, tr("mm²"))
 					             + QLatin1String("<br/>");
 				}
 				extra_text.append(tr("Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such."));

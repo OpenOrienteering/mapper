@@ -73,6 +73,7 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QPoint>
+#include <QPointF>
 #include <QPushButton>
 #include <QRect>
 #include <QRectF>
@@ -118,11 +119,11 @@
 #include "gui/print_widget.h"
 #include "gui/text_browser_dialog.h"
 #include "gui/util_gui.h"
-#include "gui/map/map_dialog_rotate.h"
 #include "gui/map/map_dialog_scale.h"
 #include "gui/map/map_editor_activity.h"
 #include "gui/map/map_find_feature.h"
 #include "gui/map/map_widget.h"
+#include "gui/map/rotate_map_dialog.h"
 #include "gui/symbols/symbol_replacement.h"
 #include "gui/widgets/action_grid_bar.h"
 #include "gui/widgets/color_list_widget.h"
@@ -492,46 +493,72 @@ bool MapEditorController::isEditingInProgress() const
 
 void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
 {
-	delete editor_activity;
-	map->clearActivityBoundingBox();
+	if (auto* last_activity = editor_activity)
+	{
+		editor_activity = nullptr;
+		map_widget->setActivity(nullptr);
+		map->clearActivityBoundingBox();
+		delete last_activity;
+	}
 	
 	editor_activity = new_activity;
 	if (editor_activity)
+	{
 		editor_activity->init();
-	
-	map_widget->setActivity(editor_activity);
+		map_widget->setActivity(editor_activity);
+	}
 }
 
 
-void MapEditorController::showPopupWidget(QWidget* child_widget, const QString& title)
+void MapEditorController::showPopupWidget(QWidget* child_widget, const QString& title, PopupLocation location)
 {
-	if (mobile_mode)
-	{
-		// FIXME: This is used for KeyButtonBar only
-		//        and not related to mobile_mode!
-		QSize size = child_widget->sizeHint();
-		QRect map_widget_rect = map_widget->rect();
-		
+	auto const make_mobile_popup = [this, child_widget]() -> QWidget* {
+		// Binding child_widget lifetime directly to map_widget
 		child_widget->setParent(map_widget);
-		child_widget->setGeometry(
-			qMax(0, qRound(map_widget_rect.center().x() - 0.5f * size.width())),
-			qMax(0, map_widget_rect.bottom() - size.height()),
-			qMin(size.width(), map_widget_rect.width()),
-			qMin(size.height(), map_widget_rect.height())
-			);
-		child_widget->show();
-	}
-	else
-	{
+		
+		// Not being part of the layout, widgets must explicitly draw the background.
+		// But for KeyButtonBar, it is enough that the buttons draw their background.
+		if (!qobject_cast<KeyButtonBar*>(child_widget))
+			child_widget->setAutoFillBackground(true);
+		return child_widget;
+	};
+		
+	auto const make_desktop_popup = [this, child_widget, &title]() -> QWidget* {
 		auto* dock_widget = new QDockWidget(title, window);
 		dock_widget->setFeatures(dock_widget->features() & ~QDockWidget::DockWidgetClosable);
 		dock_widget->setWidget(child_widget);
 		
 		// Show dock in floating state
 		dock_widget->setFloating(true);
-		dock_widget->show();
-		dock_widget->setGeometry(window->geometry().left() + 40, window->geometry().top() + 100, dock_widget->width(), dock_widget->height());
-	}
+		
+		// Binding child_widget lifetime to map_widget via deletion of dock_widget
+		connect(map_widget, &QObject::destroyed, dock_widget, [dock_widget]() { delete dock_widget; });
+		
+		return dock_widget;
+	};
+	
+	auto const calculate_geometry = [this, location](const QSize& size_hint) -> QRect {
+		auto const map_widget_rect = map_widget->rect();
+		auto const w = qMin(size_hint.width(), map_widget_rect.width());
+		auto const h = qMin(size_hint.height(), map_widget_rect.height());
+		auto x = map_widget->mapToGlobal(map_widget_rect.center()).x() - w / 2;
+		auto y = map_widget->mapToGlobal(map_widget_rect.topLeft()).y();
+		switch (location)
+		{
+		case PopupLocationTop:
+			if (top_action_bar && top_action_bar->isVisible())
+				y += top_action_bar->height();
+			break;
+		case PopupLocationBottom:
+			y = map_widget->mapToGlobal(map_widget_rect.bottomRight()).y() - h;
+			break;
+		}
+		return {x, y, w, h};
+	};
+	
+	auto* popup = mobile_mode ? make_mobile_popup() : make_desktop_popup();
+	popup->setGeometry(calculate_geometry(popup->sizeHint()));
+	popup->show();
 }
 
 void MapEditorController::deletePopupWidget(QWidget* child_widget)
@@ -702,7 +729,7 @@ void MapEditorController::attach(MainWindow* window)
 		statusbar_zoom_icon->setPixmap(pixmap);
 		
 		auto* statusbar_zoom_label = new QLabel();
-		statusbar_zoom_label->setMinimumWidth(fontmetrics.width(QLatin1String(" 0.333x")));
+		statusbar_zoom_label->setMinimumWidth(fontmetrics.boundingRect(QLatin1String("0.333x")).width());
 		statusbar_zoom_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 		statusbar_zoom_label->setFrameShape(QFrame::NoFrame);
 		
@@ -730,7 +757,7 @@ void MapEditorController::attach(MainWindow* window)
 #else
 		statusbar_cursorpos_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 #endif
-		statusbar_cursorpos_label->setMinimumWidth(fontmetrics.width(QLatin1String("-3,333.33 -333.33 (mm)")));
+		statusbar_cursorpos_label->setMinimumWidth(fontmetrics.boundingRect(QLatin1String("-3,333.33 -333.33 (mm)")).width());
 		statusbar_cursorpos_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 		
 		window->statusBar()->addPermanentWidget(statusbar_zoom_frame);
@@ -950,6 +977,7 @@ void MapEditorController::createActions()
 	pan_act = newToolAction("panmap", tr("Pan"), this, SLOT(pan()), "move.png", QString{}, "view_menu.html");
 	move_to_gps_pos_act = newAction("movegps", tr("Move to my location"), this, SLOT(moveToGpsPos()), "move-to-gps.png", QString{}, "view_menu.html");
 	move_to_gps_pos_act->setEnabled(false);
+	follow_position_act = newCheckAction("follow-position", tr("Keep my location on screen"), this, SLOT(followPositionClicked(bool)), nullptr, QString{}, "view_menu.html");
 	zoom_in_act = newAction("zoomin", tr("Zoom in"), this, SLOT(zoomIn()), "view-zoom-in.png", QString{}, "view_menu.html");
 	zoom_out_act = newAction("zoomout", tr("Zoom out"), this, SLOT(zoomOut()), "view-zoom-out.png", QString{}, "view_menu.html");
 	show_all_act = newAction("showall", tr("Show whole map"), this, SLOT(showWholeMap()), "view-show-all.png", QString{}, "view_menu.html");
@@ -974,7 +1002,7 @@ void MapEditorController::createActions()
 	rotate_map_act = newAction("rotatemap", tr("Rotate map..."), this, SLOT(rotateMapClicked()), "tool-rotate.png", tr("Rotate the whole map"), "map_menu.html");
 	map_notes_act = newAction("mapnotes", tr("Map notes..."), this, SLOT(mapNotesClicked()), nullptr, QString{}, "map_menu.html");
 	
-	template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "templates", tr("Show/Hide the template window"), "templates_menu.html");
+	template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "templates.png", tr("Show/Hide the template window"), "templates_menu.html");
 	//QAction* template_config_window_act = newCheckAction("templateconfigwindow", tr("Template configurations window"), this, SLOT(showTemplateConfigurationsWindow(bool)), "window-new", tr("Show/Hide the template configurations window"));
 	//QAction* template_visibilities_window_act = newCheckAction("templatevisibilitieswindow", tr("Template visibilities window"), this, SLOT(showTemplateVisbilitiesWindow(bool)), "window-new", tr("Show/Hide the template visibilities window"));
 	open_template_act = newAction("opentemplate", tr("Open template..."), this, SLOT(openTemplateClicked()), nullptr, QString{}, "templates_menu.html");
@@ -994,7 +1022,7 @@ void MapEditorController::createActions()
 	duplicate_act = newAction("duplicate", tr("Duplicate"), this, SLOT(duplicateClicked()), "tool-duplicate.png", QString{}, "toolbars.html#duplicate");
 	switch_symbol_act = newAction("switchsymbol", tr("Switch symbol"), this, SLOT(switchSymbolClicked()), "tool-switch-symbol.png", QString{}, "toolbars.html#switch_symbol");
 	fill_border_act = newAction("fillborder", tr("Fill / Create border"), this, SLOT(fillBorderClicked()), "tool-fill-border.png", QString{}, "toolbars.html#fill_create_border");
-	switch_dashes_act = newAction("switchdashes", tr("Switch dash direction"), this, SLOT(switchDashesClicked()), "tool-switch-dashes", QString{}, "toolbars.html#switch_dashes");
+	switch_dashes_act = newAction("switchdashes", tr("Switch dash direction"), this, SLOT(switchDashesClicked()), "tool-switch-dashes.png", QString{}, "toolbars.html#switch_dashes");
 	connect_paths_act = newAction("connectpaths", tr("Connect paths"), this, SLOT(connectPathsClicked()), "tool-connect-paths.png", QString{}, "toolbars.html#connect");
 	
 	cut_tool_act = newToolAction("cutobject", tr("Cut object"), this, SLOT(cutClicked()), "tool-cut.png", QString{}, "toolbars.html#cut_tool");
@@ -1289,14 +1317,10 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_drawing->addAction(draw_text_act);
 	toolbar_drawing->addSeparator();
 	
-	auto* paint_on_template_button = new QToolButton();
-	paint_on_template_button->setCheckable(true);
-	paint_on_template_button->setDefaultAction(paint_feature->paintAction());
-	paint_on_template_button->setPopupMode(QToolButton::MenuButtonPopup);
-	auto* paint_on_template_menu = new QMenu(paint_on_template_button);
-	paint_on_template_menu->addAction(paint_feature->selectAction());
-	paint_on_template_button->setMenu(paint_on_template_menu);
-	toolbar_drawing->addWidget(paint_on_template_button);
+	auto* paint_action = paint_feature->paintAction();
+	toolbar_drawing->addAction(paint_action);
+	if (auto* button = qobject_cast<QToolButton*>(toolbar_drawing->widgetForAction(paint_action)))
+		button->setPopupMode(QToolButton::MenuButtonPopup);
 	
 	// Editing toolbar
 	toolbar_editing = window->addToolBar(tr("Editing"));
@@ -1404,16 +1428,27 @@ void MapEditorController::createMobileGUI()
 	QAction* show_top_bar_action = new QAction(QIcon(QString::fromLatin1(":/images/arrow-thin-downright.png")), tr("Show top bar"), this);
  	connect(show_top_bar_action, &QAction::triggered, this, &MapEditorController::showTopActionBar);
 	
-	Q_ASSERT(mappart_selector_box);
 	QAction* mappart_action = new QAction(QIcon(QString::fromLatin1(":/images/map-parts.png")), tr("Map parts"), this);
-	connect(mappart_action, &QAction::triggered, this, [this, mappart_action]() {
-		auto* mappart_button = top_action_bar->getButtonForAction(mappart_action);
-		if (top_action_bar->buttonDisplay(mappart_button) == ActionGridBar::DisplayOverflow)
-			mappart_button = top_action_bar->getButtonForAction(top_action_bar->getOverflowAction());
-		mappart_selector_box->setGeometry(mappart_button->geometry());
-		mappart_selector_box->showPopup();
+	auto* mappart_group = new QActionGroup(window);
+	auto* mappart_menu = new QMenu(window);
+	mappart_action->setMenu(mappart_menu);
+	
+	// Don't use QMenu::aboutToShow because it causes menu mispositioning near
+	// lower screen border when triggered from QToolButton.
+	connect(mappart_action, &QAction::hovered, this, [this, mappart_menu, mappart_group]() {
+		mappart_menu->clear();
+		Q_ASSERT(mappart_group->actions().isEmpty());
+		for (auto i = 0; i < map->getNumParts(); ++i)
+		{
+			auto* part = map->getPart(i);
+			auto* action = mappart_menu->addAction(part->getName());
+			action->setCheckable(true);
+			action->setActionGroup(mappart_group);
+			if (part == map->getCurrentPart())
+				action->setChecked(true);
+			connect(action, &QAction::triggered, this, [this, i]() { changeMapPart(i); });
+		}
 	});
-	connect(mappart_selector_box, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MapEditorController::changeMapPart);
 	
 	// Create button for showing the top bar again after hiding it
 	const auto button_size_px = qRound(Util::mmToPixelPhysical(Settings::getInstance().getSetting(Settings::ActionGridBar_ButtonSizeMM).toReal()));
@@ -1458,7 +1493,12 @@ void MapEditorController::createMobileGUI()
 	});
 	zoom_out_button->setMenu(mobile_zoom_out_menu);
 
+	auto* move_to_gps_pos_menu = new QMenu(bottom_action_bar);
+	move_to_gps_pos_menu->addAction(follow_position_act);
+	move_to_gps_pos_act->setMenu(move_to_gps_pos_menu);
 	bottom_action_bar->addAction(move_to_gps_pos_act, 1, col++);
+	if (auto* button = bottom_action_bar->getButtonForAction(move_to_gps_pos_act))
+		button->setPopupMode(QToolButton::DelayedPopup);
 	
 	bottom_action_bar->addAction(hatch_areas_view_act, 0, col);
 	bottom_action_bar->addAction(baseline_view_act, 1, col++);	
@@ -1471,12 +1511,11 @@ void MapEditorController::createMobileGUI()
 	
 	bottom_action_bar->addAction(gps_temporary_point_act, 1, col++);
 
-	bottom_action_bar->addAction(paint_feature->paintAction(), 0, col);
-	auto* paint_on_template_button = bottom_action_bar->getButtonForAction(paint_feature->paintAction());
-	auto* mobile_paint_on_template_menu = new QMenu(paint_on_template_button);
-	mobile_paint_on_template_menu->addAction(paint_feature->selectAction());
-	paint_on_template_button->setMenu(mobile_paint_on_template_menu);
-
+	auto* paint_action = paint_feature->paintAction();
+	bottom_action_bar->addAction(paint_action, 0, col);
+	if (auto* button = bottom_action_bar->getButtonForAction(paint_action))
+		button->setPopupMode(QToolButton::DelayedPopup);
+	
 	// Right side
 	bottom_action_bar->addActionAtEnd(mobile_symbol_selector_action, 0, 1, 2, 2);
 	auto* button = bottom_action_bar->getButtonForAction(mobile_symbol_selector_action);
@@ -1555,6 +1594,8 @@ void MapEditorController::createMobileGUI()
 	top_action_bar->addActionAtEnd(boolean_merge_holes_act, 1, col++);
 	
 	top_action_bar->addActionAtEnd(mappart_action, 1, col++);
+	if (auto* mappart_button = top_action_bar->getButtonForAction(mappart_action))
+		mappart_button->setPopupMode(QToolButton::InstantPopup);
 	
 	bottom_action_bar->setToUseOverflowActionFrom(top_action_bar);
 	
@@ -1921,6 +1962,39 @@ void MapEditorController::moveToGpsPos()
 	gps_display->startBlinking(3);
 }
 
+void MapEditorController::followPositionClicked(bool enable)
+{
+	if (enable)
+		connect(gps_display, &GPSDisplay::mapPositionUpdated, this, &MapEditorController::followPositionUpdate);
+	else
+		disconnect(gps_display, &GPSDisplay::mapPositionUpdated, this, &MapEditorController::followPositionUpdate);
+}
+
+void MapEditorController::followPositionUpdate(MapCoordF position)
+{
+	// When the given position is out of the half-width half-height rectangle
+	// in the center of the view, push the position's coordinate to the center
+	// of the view.
+	auto const map_view_rect = main_view->calculateViewedRect(map_widget->viewportToView(map_widget->rect()));
+	auto center = map_view_rect.center();
+	bool update = false;
+	if (position.x() < map_view_rect.left() + map_view_rect.width() / 4
+	    || position.x() > map_view_rect.right() - map_view_rect.width() / 4)
+	{
+		center.setX(position.x());
+		update = true;
+	}
+	if (position.y() < map_view_rect.top() + map_view_rect.height() / 4
+	    || position.y() > map_view_rect.bottom() - map_view_rect.height() / 4)
+	{
+		center.setY(position.y());
+		update = true;
+	}
+	
+	if (update)
+		main_view->setCenter(MapCoord(center));
+}
+
 void MapEditorController::zoomIn()
 {
 	main_view->zoomSteps(1);
@@ -2085,9 +2159,10 @@ void MapEditorController::scaleMapClicked()
 
 void MapEditorController::rotateMapClicked()
 {
-	RotateMapDialog dialog(window, map);
+	RotateMapDialog dialog(*map, window);
 	dialog.setWindowModality(Qt::WindowModal);
-	dialog.exec();
+	if (dialog.exec() == QDialog::Accepted)
+		dialog.rotate(*map);
 }
 
 void MapEditorController::mapNotesClicked()
