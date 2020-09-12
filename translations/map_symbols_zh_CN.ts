@@ -772,8 +772,7 @@ Footprint: 6 m diameter (7.5 m diameter).</source>
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
 
-To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
-of the boulders.</source>
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
         <translation>大于相邻大石（204）的石头，或者小于相邻巨石（205）的巨石。
 
@@ -2213,8 +2212,7 @@ Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
     </message>
     <message>
         <source>A ruined or less distinct wall. Minimum height 0.5 m.
-Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object
-must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
+Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
         <comment>Description of symbol 514</comment>
         <translation>残破或不明显的墙。最小高度为 0.5米。
 最小长度: 两条虚线(3.65mm – 实地尺寸55米)。
@@ -4860,8 +4858,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>果园(空旷地)</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
         <translation>用果树或灌木种植的土地。点阵的方向可以表示
 种植方向。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
@@ -9566,8 +9563,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <translation>果园(空旷地)</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
         <translation>用果树或灌木种植的土地。点阵的方向可以表示
 种植方向。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
@@ -9708,9 +9704,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>赛道：难以骑行</translation>
     </message>
     <message>
-        <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud,
-erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be
-required to dismount. Speed max 25 %.</source>
+        <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud, erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 837</comment>
         <translation>至少1.5 m宽的轨道，有困难的障碍物，例如树根，深沙/泥浆，
 侵蚀或岩石台阶。骑行非常缓慢或无法骑行。熟练/健康的骑手可能是
@@ -9792,8 +9786,7 @@ required to dismount. Speed max 25 %.</source>
         <translation>石墙</translation>
     </message>
     <message>
-        <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to
-cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
+        <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 521</comment>
         <translation>此石墙符号应代表所有可见的墙。如果是禁止翻越的石墙，
 应标有符号707（不可跨越的边界）。</translation>
@@ -11323,8 +11316,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>果园(空旷地)</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
         <translation>用果树或灌木种植的土地。点阵的方向可以表示
 种植方向。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
@@ -11700,9 +11692,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>滑雪中心的非常快、宽的雪道，由滑雪道修正设备或道路平整设备修建。</translation>
     </message>
     <message>
-        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
-slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
-technique for slowing and stopping.
+        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing technique for slowing and stopping.
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
@@ -11728,9 +11718,7 @@ In order to clarify a junction, the beginning of a slow track is drawn with a sh
         <translation>砂质的或无雪的道路，线条符号</translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806</comment>
         <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型
 标记，穿过道路符号，显示道路不可滑行。无雪的道路，和
@@ -11742,9 +11730,7 @@ heavily sanded roads should normally be marked as forbidden routes.</source>
         <translation>砂质的或无雪的道路，单一符号</translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
         <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型
 标记，穿过道路符号，显示道路不可滑行。无雪的道路，和
@@ -13147,8 +13133,7 @@ Footprint: 6 m diameter (7.5 m diameter).</source>
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
 
-To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
-of the boulders.</source>
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
         <translation>大于相邻大石（204）的石头，或者小于相邻巨石（205）的巨石。
 
@@ -14355,8 +14340,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>宽的路径 1.5 - 3.0 m</translation>
     </message>
     <message>
-        <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks
-rougher and softer than the wide skateable tracks in the area.</source>
+        <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks rougher and softer than the wide skateable tracks in the area.</source>
         <comment>Description of symbol 802</comment>
         <translation>快速可滑行的路径，由雪地摩托造成，宽度通常为 1.5 - 3.0 m 。可滑行的路径
 比区域中宽的可滑行路径更不平，更软。</translation>
@@ -14367,8 +14351,7 @@ rougher and softer than the wide skateable tracks in the area.</source>
         <translation>路径 1.0 - 1.5 m</translation>
     </message>
     <message>
-        <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may
-be made wider to reduce widening during competition.</source>
+        <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may be made wider to reduce widening during competition.</source>
         <comment>Description of symbol 803</comment>
         <translation>雪地摩托造成的良好路径，通常 1.0 - 1.5 m 宽。在陡坡上，路径会
 造得更宽，完成时减少宽度。</translation>
@@ -14379,9 +14362,7 @@ be made wider to reduce widening during competition.</source>
         <translation>路径，慢速 0.8 - 1.0 m</translation>
     </message>
     <message>
-        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
-slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
-technique for slowing and stopping.
+        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing technique for slowing and stopping.
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
@@ -14407,9 +14388,7 @@ In order to clarify a junction, the beginning of a slow track is drawn with a sh
         <translation>砂质的或无雪的道路，线条符号</translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806</comment>
         <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型
 标记，穿过道路符号，显示道路不可滑行。无雪的道路，和
@@ -14421,9 +14400,7 @@ heavily sanded roads should normally be marked as forbidden routes.</source>
         <translation>砂质的或无雪的道路，单一符号</translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
         <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型
 标记，穿过道路符号，显示道路不可滑行。无雪的道路，和
@@ -14481,8 +14458,7 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
-The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
+The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809</comment>
         <translation>由禁止路线符号来标记的线性特征，可以穿过但不能沿路奔跑。
 必须使用至少两个符号来标记禁止的路线。
@@ -14497,8 +14473,7 @@ that it is more clearly visible in the track network.</source>
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
-The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
+The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809.1</comment>
         <translation>由禁止路线符号来标记的线性特征，可以穿过但不能沿路奔跑。
 必须使用至少两个符号来标记禁止的路线。

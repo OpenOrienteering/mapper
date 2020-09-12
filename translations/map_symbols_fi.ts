@@ -672,10 +672,13 @@ Footprint: 6 m diameter (7.5 m diameter).</source>
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
 
-To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
-of the boulders.</source>
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kivi, joka on isompi kuin viereiset kivet (204) tai suuri kivi, joka on pienempi kuin muut suuret kivet (205).
+
+Vierekkäisten kivien (204) suuruuseron osoittamiseksi (lähempänä kuin 30 m toisistaan) voidaan symbolia suurentaa kokoon 0.5 mm joillain kivillä.
+
+Vierekkäisten kivien (205) suuruuseron osoittamiseksi (lähempänä kuin 30 m toisistaan) voidaan symbolia pienentää kokoon 0.5 mm joillain kivillä.</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -1881,8 +1884,7 @@ Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
     </message>
     <message>
         <source>A ruined or less distinct wall. Minimum height 0.5 m.
-Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object
-must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
+Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
         <comment>Description of symbol 514</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -2863,8 +2865,7 @@ Small depressions with steep sides are represented with symbol 112 (pit). The sy
         <translation>Pieni kaivettu kuoppa</translation>
     </message>
     <message>
-        <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of
-gravity of the symbol, and the symbol is orientated to north.</source>
+        <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.</source>
         <comment>Description of symbol 112</comment>
         <translation>Pieni kaivettu kuoppa, jota ei voida sen pienen koon vuoksi kuvata pohjapiirroksen mukaisesti. Minimisyvyys 1 m ja minimileveys 1 m. Suurempi kuoppa kuin 5 m x 5 m pitää suurentaa ja kuvata symbolilla 104
 (irtomaarinne). Kuoppa, missä ei ole jyrkkiä reunoja, on kuvattava symbolilla 111 (pieni suppa). Symbolin painopiste osoittaa kohteen sijainnin. Symboli avautuu pohjoiseen. Symboli ei saa koskettaa muita ruskeita symboleita tai mennä niiden kanssa päällekkäin.</translation>
@@ -3310,21 +3311,17 @@ Minimum length (isolated): footprint 15 m.</source>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
-The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow
-running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
+The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
 The symbol is orientated to north.
-Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
-open land).</source>
+Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough open land).</source>
         <comment>Description of symbol 404</comment>
         <translation>Avoimet alueet, joissa on hajanaisesti pensaita tai puita, voidaan yleistää käyttämällä valkoisia pyöreitä pisteitä keltaisessa väripohjassa. Pisteet voivat olla valkoisia (hajanaisia puita) tai vihreitä (hajanaisia pensaita). Vain valkoisten pisteiden yhteyteen voidaan liittää maapohjan hidastavuutta osoittavat symbolit 407 ja 409. Minimileveys 1.5 mm (maastomitta 22.5 m). Minimialue 2.5 mm x 2.5 mm (maastomitta 37.5 m x 37.5 m). Pienemmät alueet pitää joko jättää pois tai suurentaa tai käyttää symbolia 403. Symboli piirretään pohjois-eteläsuunnassa. Väri: keltainen 50 %, pisteet valkoinen tai vihreä 50 % (keltainen 35 %).</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
-The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow
-running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
+The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
 The symbol is orientated to north.
-Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
-open land).</source>
+Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough open land).</source>
         <comment>Description of symbol 404.1</comment>
         <translation>Avoimet alueet, joissa on hajanaisesti pensaita tai puita, voidaan yleistää käyttämällä valkoisia pyöreitä pisteitä keltaisessa väripohjassa. Pisteet voivat olla valkoisia (hajanaisia puita) tai vihreitä (hajanaisia pensaita). Vain valkoisten pisteiden yhteyteen voidaan liittää maapohjan hidastavuutta osoittavat symbolit 407 ja 409. Minimileveys 1.5 mm (maastomitta 22.5 m). Minimialue 2.5 mm x 2.5 mm (maastomitta 37.5 m x 37.5 m). Pienemmät alueet pitää joko jättää pois tai suurentaa tai käyttää symbolia 403. Symboli piirretään pohjois-eteläsuunnassa. Väri: keltainen 50 %, pisteet valkoinen tai vihreä 50 % (keltainen 35 %).</translation>
     </message>
@@ -3431,10 +3428,7 @@ open land).</source>
     <message>
         <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 +
 2*0.14 mm – footprint 8.7 m)
-The outer boundary lines may be replaced with other black line symbols, such as
-symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) if the
-feature is so close to the road edge that it cannot practically be shown as a separate
-symbol.</source>
+The outer boundary lines may be replaced with other black line symbols, such as symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.</source>
         <comment>Description of symbol 502</comment>
         <translation>Leveys piirretään mittakaavassa, mutta ei saa olla pienempi kuin minimileveys (0.3 + 2*0.14 mm, maastomitta 8.7 m). Ulkoreunan musta viiva voidaan tarvittaessa korvata muilla mustilla viivamaisilla symboleilla, kuten symboli 516, 518, 513 tai 515. Mustien viivojen välinen alue täytetään ruskealla (ruskea 50 %). Leveä kahden ajoradan tie voidaan esittää siten, että keskellä on yksi reunaviiva.</translation>
     </message>
@@ -4670,8 +4664,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
         <translation>Puutarha</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
         <translation>Puutarhapuita tai -pensaita kasvava peltomaa. Pysyvästi kielletty alue. Pisteillä voidaan osoittaa istutusten suunta.</translation>
     </message>
@@ -10600,8 +10593,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <translation>Puutarha</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
         <translation>Puutarhapuita tai -pensaita kasvava peltomaa. Pisteet voidaan suunnata niin, että ne osoittavat kasvillisuuden suunnan. Jos kartalla on keltaisia alueita hallitsevan paljon, voidaan käyttää 75 % keltaista.</translation>
     </message>
@@ -10743,9 +10735,7 @@ Suomessa merkki 418 kuvaa suurta yksittäistä puuta.</translation>
         <translation>Tie, vaikeasti ajettava</translation>
     </message>
     <message>
-        <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud,
-erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be
-required to dismount. Speed max 25 %.</source>
+        <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud, erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 837</comment>
         <translation>Vähintään 1,5 m leveä tie, jolla on vaikeita esteitä, kuten juuria, syvää hiekkaa tai mutaa, veden tms. aiheuttamia uria tai kivisiä kynnyksiä. Erittäin hidas tai mahdoton ajaa. Taitavakin pyöräilijä voi joutua taluttamaan pyöräänsä. Ajonopeus enintään 25 %.</translation>
     </message>
@@ -10825,8 +10815,7 @@ required to dismount. Speed max 25 %.</source>
         <translation>Kivimuuri, kiviaita</translation>
     </message>
     <message>
-        <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to
-cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
+        <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 521</comment>
         <translation>Merkillä kuvataan kaikki näkyvät kivimuurit ja -aidat. Mikäli kivimuuri tai -aita on kielletty ylittää, se pitää merkitä ylipääsemättömän esteen merkillä (707).</translation>
     </message>
@@ -12397,8 +12386,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <translation type="unfinished">Puutarha</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
         <translation type="unfinished">Puutarhapuita tai -pensaita kasvava peltomaa. Pysyvästi kielletty alue. Pisteillä voidaan osoittaa istutusten suunta.</translation>
     </message>
@@ -12805,8 +12793,7 @@ Rasti: koju, romukasa, autonromu tms.</translation>
         <translation>Leveä ura 1,5-3,0 m</translation>
     </message>
     <message>
-        <source>A fast, skateable track made by a snow mobile, width usually 2-3 m. Skateable tracks
-rougher and softer than the wide skateable tracks in the area.</source>
+        <source>A fast, skateable track made by a snow mobile, width usually 2-3 m. Skateable tracks rougher and softer than the wide skateable tracks in the area.</source>
         <comment>Description of symbol 802</comment>
         <translation>Moottorikelkalla tehty, useimmiten 2-3 metriä leveä nopea luistelukelpoinen ura. Pehmeämpi ja epätasaisempi kuin alueen erittäin leveät urat (801).</translation>
     </message>
@@ -12816,8 +12803,7 @@ rougher and softer than the wide skateable tracks in the area.</source>
         <translation>Ura 0,8-1,2 m</translation>
     </message>
     <message>
-        <source>A good track made by a snow mobile, usually 1-1.2 m wide. In steep slopes, tracks may
-be made wider to reduce widening during competition.</source>
+        <source>A good track made by a snow mobile, usually 1-1.2 m wide. In steep slopes, tracks may be made wider to reduce widening during competition.</source>
         <comment>Description of symbol 803</comment>
         <translation>Hyvä, moottorikelkalla tehty, useimmiten 1-1,2 metriä leveä ura. Jyrkissä rinteissä ura tehdään niin, ettei se leviä kilpailun aikana.</translation>
     </message>
@@ -12827,9 +12813,7 @@ be made wider to reduce widening during competition.</source>
         <translation>Hidas ura 0,8-1 m</translation>
     </message>
     <message>
-        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
-slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
-technique for slowing and stopping.
+        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing technique for slowing and stopping.
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
@@ -12853,16 +12837,12 @@ Uran alku piirretään yhtenäisellä viivalla selventämään risteystä tai ha
         <translation>Hiekoitettu tai lumeton tie, viivasymboli</translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806</comment>
         <translation>Kilpailun aikana hiekoituksen tai lumettomuuden takia hiihtokelvoton tie.</translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
         <translation>Kilpailun aikana hiekoituksen tai lumettomuuden takia hiihtokelvoton tie.</translation>
     </message>
@@ -14203,10 +14183,13 @@ Footprint: 6 m diameter (7.5 m diameter).</source>
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
 
-To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
-of the boulders.</source>
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kivi, joka on isompi kuin viereiset kivet (204) tai suuri kivi, joka on pienempi kuin muut suuret kivet (205).
+
+Vierekkäisten kivien (204) suuruuseron osoittamiseksi (lähempänä kuin 30 m toisistaan) voidaan symbolia suurentaa kokoon 0.5 mm joillain kivillä.
+
+Vierekkäisten kivien (205) suuruuseron osoittamiseksi (lähempänä kuin 30 m toisistaan) voidaan symbolia pienentää kokoon 0.5 mm joillain kivillä.</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -15252,8 +15235,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks
-rougher and softer than the wide skateable tracks in the area.</source>
+        <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks rougher and softer than the wide skateable tracks in the area.</source>
         <comment>Description of symbol 802</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -15263,8 +15245,7 @@ rougher and softer than the wide skateable tracks in the area.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may
-be made wider to reduce widening during competition.</source>
+        <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may be made wider to reduce widening during competition.</source>
         <comment>Description of symbol 803</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -15274,9 +15255,7 @@ be made wider to reduce widening during competition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
-slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
-technique for slowing and stopping.
+        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing technique for slowing and stopping.
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
@@ -15300,9 +15279,7 @@ Uran alku piirretään yhtenäisellä viivalla selventämään risteystä tai ha
         <translation>Hiekoitettu tai lumeton tie, viivasymboli</translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806</comment>
         <translation>Kilpailun aikana hiekoituksen tai lumettomuuden takia hiihtokelvoton tie.</translation>
     </message>
@@ -15312,9 +15289,7 @@ heavily sanded roads should normally be marked as forbidden routes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
         <translation>Kilpailun aikana hiekoituksen tai lumettomuuden takia hiihtokelvoton tie.</translation>
     </message>
@@ -15368,8 +15343,7 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
-The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
+The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -15381,8 +15355,7 @@ that it is more clearly visible in the track network.</source>
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
-The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
+The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809.1</comment>
         <translation type="unfinished"></translation>
     </message>

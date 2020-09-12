@@ -772,8 +772,7 @@ Lábnyom: 6 m átmérő (7,5 m átmérő).</translation>
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
 
-To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
-of the boulders.</source>
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
         <translation>Egy szikla, amely nagyobb, mint a szomszédos sziklák (204), vagy egy nagy szikla, amely kisebb, mint a szomszédos nagy sziklák (205).
 
@@ -2212,8 +2211,7 @@ Minimális hosszúság (elkülönítve): 1.4 mm (terepi méret: 21 m).</translat
     </message>
     <message>
         <source>A ruined or less distinct wall. Minimum height 0.5 m.
-Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object
-must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
+Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
         <comment>Description of symbol 514</comment>
         <translation>Romos vagy kevésbé feltűnő fal. Minimális magasság: 0.5 m.
 Minimális hosszúság: két vonás (3.65 mm – terepi méret: 55 m). 
@@ -3291,8 +3289,7 @@ A kisebb, meredek oldalú mélyedéseket a 112 (gödör) szimbólummal jelöljü
         <translation>Lyuk, vagy kicsi gödör</translation>
     </message>
     <message>
-        <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of
-gravity of the symbol, and the symbol is orientated to north.</source>
+        <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.</source>
         <comment>Description of symbol 112</comment>
         <translation>Gödrök, vagy lyukak olyan megkülönböztethető meredek oldalakkal, amiket nem lehet ábrázolni a 104-es jellel (földletörés). Minimális mélység: 1 m. Minimum szélesség: 1 m. Az 5 m x 5 m-nél nagyobb gödröt általában el kell túlozni és a 104-es (földletörés) jellel kell ábrázolni. A meredek oldalak nélküli gödröket a 111-es (kis mélyedés) jellel ábrázoljuk. A szimbólum nem érinthet vagy fedhet barna szimbólumokat.
 A hely a szimbólum súlypontja, és a szimbólumot Északnak tájoljuk be.</translation>
@@ -5813,8 +5810,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
         <translation>Gyümölcsös</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
         <translation>Gyümölcsfákkal, cserjékkel beültetett terület. A pontozás szükség esetén elforgatható az ültetés irányába. 
 Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os rasztert alkalmazhatunk.</translation>
@@ -12033,8 +12029,7 @@ Ez az ISOM &quot;302 Tavacska&quot; szimbóluma, de az ISMTBOM &quot;301 Tó&quo
         <translation>Gyümölcsös</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
         <translation>Gyümölcsfákkal, cserjékkel beültetett terület. A pontozás szükség esetén elforgatható az ültetés irányába.
 Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os rasztert alkalmazhatunk.</translation>
@@ -12175,9 +12170,7 @@ Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 7
         <translation>Nyomvonal: nehéz kerékpározni</translation>
     </message>
     <message>
-        <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud,
-erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be
-required to dismount. Speed max 25 %.</source>
+        <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud, erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 837</comment>
         <translation>Legalább 1,5 m széles nyomvonal nehéz akadályokkal, például gyökerekkel, mély homokkal / iszappal,
 erózió vagy sziklás lépések. Nagyon lassú lovaglás vagy lehetetlen vezetni. Képzett / fitt versenyzők lehetnek
@@ -12259,8 +12252,7 @@ leszálláshoz szükséges. Sebesség max. 25%.</translation>
         <translation>Kőfal</translation>
     </message>
     <message>
-        <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to
-cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
+        <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 521</comment>
         <translation>Ezzel a kőfal szimbólummal kell az összes látható falat ábrázolni. Ha egy kőfalon tiltott
 az átkelés, akkor a 707 szimbólummal (nem átléphető határ) kell jelölni.</translation>
@@ -13810,8 +13802,7 @@ Megjegyzés: ha az víz szélesebb 0.25mm-nél akkor mindkét oldalon 0.5 mm-rel
         <translation>Gyümölcsös</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
         <translation>Gyümölcsfákkal, cserjékkel beültetett terület. A pontozás szükség esetén elforgatható az ültetés irányába.
 Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os rasztert alkalmazhatunk.</translation>
@@ -14207,9 +14198,7 @@ Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 7
         <translation>Nagyon gyors, széles sípályák a síközpontokban, sípálya ápolóval vagy pálya szintezővel készültek.</translation>
     </message>
     <message>
-        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
-slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
-technique for slowing and stopping.
+        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing technique for slowing and stopping.
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
@@ -14235,9 +14224,7 @@ A csomópont tisztázása érdekében a lassú pálya kezdetét rövid vonallal 
         <translation>Homokos vagy havas út, vonal szimbólum</translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806</comment>
         <translation>Út a térképen, amely a verseny alatt homokos vagy havas. &quot;V&quot;-lánc
 jelek az út szimbólumán azt mutatják, hogy az út nem síelhető. A hómentes utakat és
@@ -14249,9 +14236,7 @@ az erősen homokos utakat általában tiltott útvonalakként kell megjelölni.<
         <translation>Homokos vagy havas út, egyetlen szimbólum</translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
         <translation>Út a térképen, amely a verseny alatt homokos vagy havas. &quot;V&quot;-lánc
 jelek az út szimbólumán azt mutatják, hogy az út nem síelhető. A hómentes utakat és
@@ -15669,8 +15654,7 @@ Lábnyom: 6 m átmérő (7,5 m átmérő).</translation>
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
 
-To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
-of the boulders.</source>
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
         <translation>Egy szikla, amely nagyobb, mint a szomszédos sziklák (204), vagy egy nagy szikla, amely kisebb, mint a szomszédos nagy sziklák (205).
 
@@ -16877,8 +16861,7 @@ A lila vonalat pontonként a rajttól a célig halad. Ez az egyszerű megközel�
         <translation>Széles pálya 1,5 - 3,0 m</translation>
     </message>
     <message>
-        <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks
-rougher and softer than the wide skateable tracks in the area.</source>
+        <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks rougher and softer than the wide skateable tracks in the area.</source>
         <comment>Description of symbol 802</comment>
         <translation>Gyors, korcsolyázható pálya, amelyet hómobil alkot, szélessége általában 1,5 - 3,0 m. A korcsolyázható pályák
 durvábbak és puhábbak, mint a terület széles korcsolyapályái.</translation>
@@ -16889,8 +16872,7 @@ durvábbak és puhábbak, mint a terület széles korcsolyapályái.</translatio
         <translation>Pálya 1,0 - 1,5 m</translation>
     </message>
     <message>
-        <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may
-be made wider to reduce widening during competition.</source>
+        <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may be made wider to reduce widening during competition.</source>
         <comment>Description of symbol 803</comment>
         <translation>Jó pálya, amelyet hómobil alkot, általában 1,0 - 1,5 m széles. A meredek lejtőkön a pályákat is
 szélesebbé kell tenni a verseny közbeni szélesedés csökkentése érdekében.</translation>
@@ -16901,9 +16883,7 @@ szélesebbé kell tenni a verseny közbeni szélesedés csökkentése érdekébe
         <translation>Pálya, lassú 0,8 - 1,0 m</translation>
     </message>
     <message>
-        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
-slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
-technique for slowing and stopping.
+        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing technique for slowing and stopping.
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
@@ -16929,9 +16909,7 @@ A csomópont tisztázása érdekében a lassú pálya kezdetét rövid vonallal 
         <translation>Homokos vagy havas út, vonal szimbólum</translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806</comment>
         <translation>Út a térképen, amely a verseny alatt homokos vagy havas. &quot;V&quot;-lánc
 jelek az út szimbólumán azt mutatják, hogy az út nem síelhető. A hómentes utakat és
@@ -16943,9 +16921,7 @@ az erősen homokos utakat általában tiltott útvonalakként kell megjelölni.<
         <translation>Homokos vagy havas út, egyetlen szimbólum</translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
         <translation>Út a térképen, amely a verseny alatt homokos vagy hómentes. A &quot;V&quot;-lánc
 jelek az út szimbólumán azt mutatják meg, hogy az út nem síelhető. A hómentes utakat és
@@ -17003,8 +16979,7 @@ Az előkészített területek határait keskeny zöld vonal (0,13 mm) mutatja, �
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
-The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
+The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809</comment>
         <translation>A tiltott útvonal szimbólummal jelölt vonalak átléphetők, de nem követhetők.
 Legalább két szimbólumot kell használni a tiltott útvonal megjelölésére.
@@ -17019,8 +16994,7 @@ hogy a nyomhálózatban jobban látható legyen.</translation>
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
-The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
+The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809.1</comment>
         <translation>A tiltott útvonal szimbólummal jelölt vonalak átléphetők, de nem követhetők.
 Legalább két szimbólumot kell használni a tiltott útvonal megjelölésére.

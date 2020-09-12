@@ -1309,8 +1309,7 @@ Footprint: 6 m diameter (7.5 m diameter).</description>
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
 
-To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
-of the boulders.</description>
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</description>
                 <point_symbol inner_radius="250" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
             </symbol>
             <symbol type="1" id="39" code="205" name="Large boulder">
@@ -3359,8 +3358,7 @@ Minimum length (isolated): 1.4 mm (footprint 21 m).</description>
             </symbol>
             <symbol type="2" id="136" code="514" name="Ruined wall">
                 <description>A ruined or less distinct wall. Minimum height 0.5 m.
-Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object
-must be exaggerated to the minimum length or changed to symbol Wall (513).</description>
+Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Wall (513).</description>
                 <line_symbol color="2" line_width="140" minimum_length="3650" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="350" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <mid_symbol>
                         <symbol type="1" code="" name="Mid symbol">

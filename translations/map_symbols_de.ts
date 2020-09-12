@@ -686,10 +686,13 @@ Footprint: 6 m diameter (7.5 m diameter).</source>
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
 
-To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
-of the boulders.</source>
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ein Stein, der größer als benachbarte Steine (204) oder ein großer Stein, der kleiner als benachbarte große Steine (205) ist.
+
+Damit deutliche Größenunterschiede benachbarter (Abstand kleiner als 30 m) Steine (204) dargestellt werden können, darf das Symbol für einzelne Steine auf 0,5 mm vergrößert werden.
+
+Damit deutliche Größenunterschiede benachbarter (Abstand kleiner als 30 m) großer Steine (205) dargestellt werden können, darf das Symbol für einzelne Steine auf 0,5 mm verkleinert werden.</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -1896,8 +1899,7 @@ Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
     </message>
     <message>
         <source>A ruined or less distinct wall. Minimum height 0.5 m.
-Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object
-must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
+Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
         <comment>Description of symbol 514</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -2879,8 +2881,7 @@ Kleine Senken mit steilen Rändern werden mit Symbol 112 (Grube oder Loch) darge
         <translation>Loch oder kleine Grube</translation>
     </message>
     <message>
-        <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of
-gravity of the symbol, and the symbol is orientated to north.</source>
+        <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.</source>
         <comment>Description of symbol 112</comment>
         <translation>Gruben und Löcher mit steil abfallenden Rändern, welche nicht maßstabsgetreu mit Symbol 104 (Erdböschung) dargestellt werden können. Minimale Tiefe: 1 m. Minimale Ausdehnung: 1 m. Eine Grube größer als 5 m x 5 m sollte normalerweise vergrößert und mit dem Symbol 104 (Erdböschung) dargestellt werden. Gruben ohne steile Ränder werden mit dem Symbol 111 (kleine Senke) dargestellt. Das Symbol darf andere braune Symbole nicht berühren oder überdecken. Die Lage entspricht dem Schwerpunkt des Symbols, welches nach Norden auszurichten ist.</translation>
     </message>
@@ -3668,11 +3669,9 @@ Minimale Fläche: 1 mm x 1 mm (Wirklichkeit 15 m x 15 m). Kleinere Gebiete müss
     </message>
     <message>
         <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
-The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow
-running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
+The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
 The symbol is orientated to north.
-Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
-open land).</source>
+Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough open land).</source>
         <comment>Description of symbol 404</comment>
         <translation>Raues offenes Gebiet mit einzelnen Bäumen oder Büschen kann generalisiert werden mit einem regelmäßigen Muster von großen Punkten in der gelben Fläche.
 Die Punkte können weiß (einzelne Bäume) oder grün (Büsche, Dickicht) sein. Nur die Variante mit weißen Punkten kann zur Darstellung reduzierter Belaufbarkeit mit dem Symbol 407 (Bodenvegetation, leichte Laufbehinderung, gute Sicht) oder 409 (Bodenvegetation, schwere Laufbehinderung, gute Sicht) kombiniert werden.
@@ -3686,11 +3685,9 @@ Minimale Ausdehnung: 1,5 mm (Wirklichkeit 22,5 m). Minimale Fläche: 2,5 mm x 2,
     </message>
     <message>
         <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
-The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow
-running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
+The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
 The symbol is orientated to north.
-Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
-open land).</source>
+Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough open land).</source>
         <comment>Description of symbol 404.1</comment>
         <translation>Raues offenes Gebiet mit einzelnen Bäumen oder Büschen kann generalisiert werden mit einem regelmäßigen Muster von großen Punkten in der gelben Fläche.
 Die Punkte können weiß (einzelne Bäume) oder grün (Büsche, Dickicht) sein. Nur die Variante mit weißen Punkten kann zur Darstellung reduzierter Belaufbarkeit mit dem Symbol 407 (Bodenvegetation, leichte Laufbehinderung, gute Sicht) oder 409 (Bodenvegetation, schwere Laufbehinderung, gute Sicht) kombiniert werden.
@@ -4028,10 +4025,7 @@ Größe in Wirklichkeit: 7.5 m x 7.5 m.</translation>
     <message>
         <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 +
 2*0.14 mm – footprint 8.7 m)
-The outer boundary lines may be replaced with other black line symbols, such as
-symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) if the
-feature is so close to the road edge that it cannot practically be shown as a separate
-symbol.</source>
+The outer boundary lines may be replaced with other black line symbols, such as symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.</source>
         <comment>Description of symbol 502</comment>
         <translation>Die Breite sollte maßstabsgetreu dargestellt werden, jedoch nicht schmaler als die minimale Ausdehnung (0,3 mm + 2 x 0,14 mm - Wirklichkeit 8,7 m).
 Die äußeren Begrenzungslinien können durch andere schwarze Liniensymbole wie 516 (Zaun), 518 (unpassierbarer Zaun), 513 (Mauer), 515 (unpassierbare Mauer) ersetzt werden, wenn diese so nahe am Straßenrand stehen, dass sie praktisch nicht als separate Symbole gezeichnet werden können.</translation>
@@ -5740,8 +5734,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Obstgarten</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
         <translation>Land, das mit Obstbäumen und -büschen bepflanzt ist. Die Punktlinie kann zur Angabe der Pflanzrichtung danach orientiert werden. Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
     </message>
@@ -11598,8 +11591,7 @@ Dies ist Symbol &quot;302 Pond&quot; in ISOM, aber eine Variante von &quot;301 L
         <translation>Obstgarten</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
         <translation>Land, das mit Obstbäumen und -büschen bepflanzt ist. Die Punktlinie kann zur Angabe der Pflanzrichtung nach dieser ausgerichtet werden. Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
     </message>
@@ -11739,9 +11731,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>Weg: schwierig befahrbar</translation>
     </message>
     <message>
-        <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud,
-erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be
-required to dismount. Speed max 25 %.</source>
+        <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud, erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 837</comment>
         <translation>Ein mindestens 1,5 m breiter Weg mit schwierigen Hindernissen wie Wurzeln, tiefer Sand oder Schlamm, Auswaschungen oder steinige Stufen. Sehr langsames Fahren oder Fahren unmöglich. Auch erfahrene/fitte Fahrer müssen möglicherweise absteigen. Geschwindigkeit maximal 25%.</translation>
     </message>
@@ -11821,8 +11811,7 @@ required to dismount. Speed max 25 %.</source>
         <translation>Steinmauer</translation>
     </message>
     <message>
-        <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to
-cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
+        <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 521</comment>
         <translation>Mit diesem Symbol Steinmauer sollen alle sichtbaren Mauern dargestellt werden. Wenn es verboten ist, die Mauer zu überqueren, ist Symbol 707 (uncrossable boundary) zu verwenden.</translation>
     </message>
@@ -13394,8 +13383,7 @@ Die ISSkiOM-Symbolnummer ist 310.1. OpenOrienteering Mapper benutzt diese Nummer
         <translation>Obstgarten</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
         <translation>Land, das mit Obstbäumen und -büschen bepflanzt ist. Die Punktlinie kann zur Angabe der Pflanzrichtung danach orientiert werden. Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
     </message>
@@ -15061,10 +15049,13 @@ Footprint: 6 m diameter (7.5 m diameter).</source>
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
 
-To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
-of the boulders.</source>
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ein Stein, der größer als benachbarte Steine (204) oder ein großer Stein, der kleiner als benachbarte große Steine (205) ist.
+
+Damit deutliche Größenunterschiede benachbarter (Abstand kleiner als 30 m) Steine (204) dargestellt werden können, darf das Symbol für einzelne Steine auf 0,5 mm vergrößert werden.
+
+Damit deutliche Größenunterschiede benachbarter (Abstand kleiner als 30 m) großer Steine (205) dargestellt werden können, darf das Symbol für einzelne Steine auf 0,5 mm verkleinert werden.</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -16109,8 +16100,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks
-rougher and softer than the wide skateable tracks in the area.</source>
+        <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks rougher and softer than the wide skateable tracks in the area.</source>
         <comment>Description of symbol 802</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -16120,8 +16110,7 @@ rougher and softer than the wide skateable tracks in the area.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may
-be made wider to reduce widening during competition.</source>
+        <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may be made wider to reduce widening during competition.</source>
         <comment>Description of symbol 803</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -16131,9 +16120,7 @@ be made wider to reduce widening during competition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
-slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
-technique for slowing and stopping.
+        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing technique for slowing and stopping.
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
@@ -16155,9 +16142,7 @@ In order to clarify a junction, the beginning of a slow track is drawn with a sh
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -16167,9 +16152,7 @@ heavily sanded roads should normally be marked as forbidden routes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -16223,8 +16206,7 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
-The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
+The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -16236,8 +16218,7 @@ that it is more clearly visible in the track network.</source>
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
-The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
+The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809.1</comment>
         <translation type="unfinished"></translation>
     </message>

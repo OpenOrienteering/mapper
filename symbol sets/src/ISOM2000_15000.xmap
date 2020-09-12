@@ -1398,8 +1398,7 @@
                 </area_symbol>
             </symbol>
             <symbol type="4" id="78" code="412" name="Orchard">
-                <description>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</description>
+                <description>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</description>
                 <area_symbol inner_color="18" min_area="500" patterns="1">
                     <pattern type="2" angle="0" rotatable="true" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
                         <symbol type="1" code="" name="Füllmuster 1">

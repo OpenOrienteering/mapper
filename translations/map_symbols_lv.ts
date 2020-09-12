@@ -670,8 +670,7 @@ Footprint: 6 m diameter (7.5 m diameter).</source>
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
 
-To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
-of the boulders.</source>
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -1879,8 +1878,7 @@ Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
     </message>
     <message>
         <source>A ruined or less distinct wall. Minimum height 0.5 m.
-Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object
-must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
+Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
         <comment>Description of symbol 514</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -5442,8 +5440,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -5583,9 +5580,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud,
-erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be
-required to dismount. Speed max 25 %.</source>
+        <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud, erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 837</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -5665,8 +5660,7 @@ required to dismount. Speed max 25 %.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to
-cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
+        <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 521</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -7237,8 +7231,7 @@ Footprint: 6 m diameter (7.5 m diameter).</source>
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
 
-To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
-of the boulders.</source>
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -8284,8 +8277,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks
-rougher and softer than the wide skateable tracks in the area.</source>
+        <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks rougher and softer than the wide skateable tracks in the area.</source>
         <comment>Description of symbol 802</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -8295,8 +8287,7 @@ rougher and softer than the wide skateable tracks in the area.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may
-be made wider to reduce widening during competition.</source>
+        <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may be made wider to reduce widening during competition.</source>
         <comment>Description of symbol 803</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -8306,9 +8297,7 @@ be made wider to reduce widening during competition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
-slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
-technique for slowing and stopping.
+        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing technique for slowing and stopping.
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
@@ -8330,9 +8319,7 @@ In order to clarify a junction, the beginning of a slow track is drawn with a sh
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -8342,9 +8329,7 @@ heavily sanded roads should normally be marked as forbidden routes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -8398,8 +8383,7 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
-The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
+The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -8411,8 +8395,7 @@ that it is more clearly visible in the track network.</source>
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
-The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
+The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809.1</comment>
         <translation type="unfinished"></translation>
     </message>
