@@ -2214,8 +2214,7 @@ Minimális hosszúság (elkülönítve): 1.4 mm (terepi méret: 21 m).</translat
 Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
         <comment>Description of symbol 514</comment>
         <translation>Romos vagy kevésbé feltűnő fal. Minimális magasság: 0.5 m.
-Minimális hosszúság: két vonás (3.65 mm – terepi méret: 55 m).
-Amennyiben a fal ennél rövidebb, a méretét torzítással a minimális méretre kell növelni, vagy helyette a Fal (513) jelét kell használni.</translation>
+Minimális hosszúság: két vonás (3.65 mm – terepi méret: 55 m). Amennyiben a fal ennél rövidebb, a méretét torzítással a minimális méretre kell növelni, vagy helyette a Fal (513) jelét kell használni.</translation>
     </message>
     <message>
         <source>Impassable wall</source>
@@ -3291,8 +3290,7 @@ A kisebb, meredek oldalú mélyedéseket a 112 (gödör) szimbólummal jelöljü
     <message>
         <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.</source>
         <comment>Description of symbol 112</comment>
-        <translation>Gödrök, vagy lyukak olyan megkülönböztethető meredek oldalakkal, amiket nem lehet ábrázolni a 104-es jellel (földletörés). Minimális mélység: 1 m. Minimum szélesség: 1 m. Az 5 m x 5 m-nél nagyobb gödröt általában el kell túlozni és a 104-es (földletörés) jellel kell ábrázolni. A meredek oldalak nélküli gödröket a 111-es (kis mélyedés) jellel ábrázoljuk. A szimbólum nem érinthet vagy fedhet barna szimbólumokat.
-A hely a szimbólum súlypontja, és a szimbólumot Északnak tájoljuk be.</translation>
+        <translation>Gödrök, vagy lyukak olyan megkülönböztethető meredek oldalakkal, amiket nem lehet ábrázolni a 104-es jellel (földletörés). Minimális mélység: 1 m. Minimális szélesség: 1 m. Az 5 m x 5 m-nél nagyobb gödröt általában el kell túlozni és a 104-es (földletörés) jellel kell ábrázolni. A meredek oldalak nélküli gödröket a 111-es (kis mélyedés) jellel ábrázoljuk. A szimbólum nem érinthet vagy fedhet barna szimbólumokat. A hely a szimbólum súlypontja, és a szimbólumot Északnak tájoljuk be.</translation>
     </message>
     <message>
         <source>Broken ground</source>
@@ -5812,8 +5810,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
-        <translation>Gyümölcsfákkal, cserjékkel beültetett terület. A pontozás szükség esetén elforgatható az ültetés irányába.
-Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os rasztert alkalmazhatunk.</translation>
+        <translation>Gyümölcsfákkal, cserjékkel beültetett terület. A pontozás szükség esetén elforgatható az ültetés irányába. Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os rasztert alkalmazhatunk.</translation>
     </message>
     <message>
         <source>Vineyard</source>
@@ -12031,8 +12028,7 @@ Ez az ISOM &quot;302 Tavacska&quot; szimbóluma, de az ISMTBOM &quot;301 Tó&quo
     <message>
         <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
-        <translation>Gyümölcsfákkal, cserjékkel beültetett terület. A pontozás szükség esetén elforgatható az ültetés irányába.
-Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os rasztert alkalmazhatunk.</translation>
+        <translation>Gyümölcsfákkal, cserjékkel beültetett terület. A pontozás szükség esetén elforgatható az ültetés irányába. Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os rasztert alkalmazhatunk.</translation>
     </message>
     <message>
         <source>Vineyard</source>
@@ -12172,9 +12168,7 @@ Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 7
     <message>
         <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud, erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 837</comment>
-        <translation>Legalább 1,5 m széles nyomvonal nehéz akadályokkal, például gyökerekkel, mély homokkal / iszappal,
-erózió vagy sziklás lépések. Nagyon lassú lovaglás vagy lehetetlen vezetni. Képzett / fitt versenyzők lehetnek
-leszálláshoz szükséges. Sebesség max. 25%.</translation>
+        <translation>Legalább 1,5 m széles nyomvonal nehéz akadályokkal, például gyökerekkel, mély homokkal / iszappal, erózió vagy sziklás lépések. Nagyon lassú lovaglás vagy lehetetlen vezetni. Képzett / fitt versenyzők lehetnek leszálláshoz szükséges. Sebesség max. 25%.</translation>
     </message>
     <message>
         <source>Path: difficult to ride</source>
@@ -12254,8 +12248,7 @@ leszálláshoz szükséges. Sebesség max. 25%.</translation>
     <message>
         <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 521</comment>
-        <translation>Ezzel a kőfal szimbólummal kell az összes látható falat ábrázolni. Ha egy kőfalon tiltott
-az átkelés, akkor a 707 szimbólummal (nem átléphető határ) kell jelölni.</translation>
+        <translation>Ezzel a kőfal szimbólummal kell az összes látható falat ábrázolni. Ha egy kőfalon tiltott az átkelés, akkor a 707 szimbólummal (nem átléphető határ) kell jelölni.</translation>
     </message>
     <message>
         <source>High fence</source>
@@ -13804,8 +13797,7 @@ Megjegyzés: ha az víz szélesebb 0.25mm-nél akkor mindkét oldalon 0.5 mm-rel
     <message>
         <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
-        <translation>Gyümölcsfákkal, cserjékkel beültetett terület. A pontozás szükség esetén elforgatható az ültetés irányába.
-Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os rasztert alkalmazhatunk.</translation>
+        <translation>Gyümölcsfákkal, cserjékkel beültetett terület. A pontozás szükség esetén elforgatható az ültetés irányába. Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os rasztert alkalmazhatunk.</translation>
     </message>
     <message>
         <source>Vineyard</source>
@@ -14202,16 +14194,14 @@ Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 7
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
-        <translation>Egy durva, lassú pálya kis hóval vagy bozótfonattal (vékony ágakból szőtt tekercs). Ez a szimbólum nem használható meredek
-lejtőkön, ha a pálya szélessége lehetővé teszi a halszálkás lépések használatát felfelé, vagy hóekézést
-a lassítás és a megállás technikáját.
+        <translation>Egy durva, lassú pálya kis hóval vagy bozótfonattal (vékony ágakból szőtt tekercs). Ez a szimbólum nem használható meredek lejtőkön, ha a pálya szélessége lehetővé teszi a halszálkás lépések használatát felfelé, vagy hóekézést a lassítás és a megállás technikáját.
 
 A csomópont tisztázása érdekében a lassú pálya kezdetét rövid vonallal kell megrajzolni.</translation>
     </message>
     <message>
         <source>Road covered with snow</source>
         <comment>Name of symbol 805</comment>
-        <translation type="unfinished">Hóval borított út</translation>
+        <translation>Hóval borított út</translation>
     </message>
     <message>
         <source>Snowploughed, skiable roads are drawn with a normal road symbol but wider.</source>
@@ -14226,9 +14216,7 @@ A csomópont tisztázása érdekében a lassú pálya kezdetét rövid vonallal 
     <message>
         <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806</comment>
-        <translation>Út a térképen, amely a verseny alatt homokos vagy havas. &quot;V&quot;-lánc
-jelek az út szimbólumán azt mutatják, hogy az út nem síelhető. A hómentes utakat és
-az erősen homokos utakat általában tiltott útvonalakként kell megjelölni.</translation>
+        <translation>Út a térképen, amely a verseny alatt homokos vagy havas. &quot;V&quot;-lánc jelek az út szimbólumán azt mutatják, hogy az út nem síelhető. A hómentes utakat és az erősen homokos utakat általában tiltott útvonalakként kell megjelölni.</translation>
     </message>
     <message>
         <source>Sanded or snowless road, single symbol</source>
@@ -14238,9 +14226,7 @@ az erősen homokos utakat általában tiltott útvonalakként kell megjelölni.<
     <message>
         <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
-        <translation>Út a térképen, amely a verseny alatt homokos vagy havas. &quot;V&quot;-lánc
-jelek az út szimbólumán azt mutatják, hogy az út nem síelhető. A hómentes utakat és
-az erősen homokos utakat általában tiltott útvonalakként kell megjelölni.</translation>
+        <translation>Út a térképen, amely a verseny alatt homokos vagy havas. &quot;V&quot;-lánc jelek az út szimbólumán azt mutatják, hogy az út nem síelhető. A hómentes utakat és az erősen homokos utakat általában tiltott útvonalakként kell megjelölni.</translation>
     </message>
     <message>
         <source>A road which is not opened for traffic, no skiable track.</source>
@@ -15660,8 +15646,7 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
 
 Annak érdekében, hogy meg lehessen különböztetni a szomszédos (egymástól 30 méternél közelebb eső) sziklákat (204) jelentős méretkülönbséggel, megengedett, hogy ezt a szimbólumot (0,5 mm) a 204 szimbólum nagyításaként használjuk néhány szikla esetében.
 
-Annak érdekében, hogy meg lehessen különböztetni a szomszédos (egymástól 30 méternél közelebb lévő) nagy sziklákat (205), amelyek jelentős különbséggel rendelkeznek, megengedett, hogy ezt a szimbólumot (0,5 mm) a 205 szimbólum redukciójaként használjuk
-egyes szikláknál.</translation>
+Annak érdekében, hogy meg lehessen különböztetni a szomszédos (egymástól 30 méternél közelebb lévő) nagy sziklákat (205), amelyek jelentős különbséggel rendelkeznek, megengedett, hogy ezt a szimbólumot (0,5 mm) a 205 szimbólum redukciójaként használjuk egyes szikláknál.</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -16863,8 +16848,7 @@ A lila vonalat pontonként a rajttól a célig halad. Ez az egyszerű megközel�
     <message>
         <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks rougher and softer than the wide skateable tracks in the area.</source>
         <comment>Description of symbol 802</comment>
-        <translation>Gyors, korcsolyázható pálya, amelyet hómobil alkot, szélessége általában 1,5 - 3,0 m. A korcsolyázható pályák
-durvábbak és puhábbak, mint a terület széles korcsolyapályái.</translation>
+        <translation>Gyors, korcsolyázható pálya, amelyet hómobil készített, szélessége általában 1,5 - 3,0 m. A korcsolyázható pályák durvábbak és puhábbak, mint a terület széles korcsolyapályái.</translation>
     </message>
     <message>
         <source>Track 1.0 - 1.5 m</source>
@@ -16874,8 +16858,7 @@ durvábbak és puhábbak, mint a terület széles korcsolyapályái.</translatio
     <message>
         <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may be made wider to reduce widening during competition.</source>
         <comment>Description of symbol 803</comment>
-        <translation>Jó pálya, amelyet hómobil alkot, általában 1,0 - 1,5 m széles. A meredek lejtőkön a pályákat is
-szélesebbé kell tenni a verseny közbeni szélesedés csökkentése érdekében.</translation>
+        <translation>Jó pálya, amelyet hómobil készített, általában 1,0 - 1,5 m széles. A meredek lejtőkön a pályákat is szélesebbé kell tenni a verseny közbeni szélesedés csökkentése érdekében.</translation>
     </message>
     <message>
         <source>Track, slow 0.8 - 1.0 m</source>
@@ -16887,16 +16870,14 @@ szélesebbé kell tenni a verseny közbeni szélesedés csökkentése érdekébe
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
-        <translation>Egy durva, lassú pálya kis hóval vagy bozótfonattal (vékony ágakból szőtt tekercs). Ez a szimbólum nem használható meredek
-lejtőkön, ha a pálya szélessége lehetővé teszi a halszálkás lépések használatát felfelé, vagy hóekézést
-a lassítás és a megállás technikáját.
+        <translation>Egy durva, lassú pálya kis hóval vagy bozótfonattal (vékony ágakból szőtt tekercs). Ez a szimbólum nem használható meredek lejtőkön, ha a pálya szélessége lehetővé teszi a halszálkás lépések használatát felfelé, vagy hóekézést a lassítás és a megállás technikáját.
 
 A csomópont tisztázása érdekében a lassú pálya kezdetét rövid vonallal kell megrajzolni.</translation>
     </message>
     <message>
         <source>Road covered with snow</source>
         <comment>Name of symbol 805</comment>
-        <translation type="unfinished">Hóval borított út</translation>
+        <translation>Hóval borított út</translation>
     </message>
     <message>
         <source>Snowploughed, skiable roads are drawn with a normal road symbol but wider.</source>
@@ -16911,9 +16892,7 @@ A csomópont tisztázása érdekében a lassú pálya kezdetét rövid vonallal 
     <message>
         <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806</comment>
-        <translation>Út a térképen, amely a verseny alatt homokos vagy havas. &quot;V&quot;-lánc
-jelek az út szimbólumán azt mutatják, hogy az út nem síelhető. A hómentes utakat és
-az erősen homokos utakat általában tiltott útvonalakként kell megjelölni.</translation>
+        <translation>Út a térképen, amely a verseny alatt homokos vagy havas. &quot;V&quot;-lánc jelek az út szimbólumán azt mutatják, hogy az út nem síelhető. A hómentes utakat és az erősen homokos utakat általában tiltott útvonalakként kell megjelölni.</translation>
     </message>
     <message>
         <source>Sanded or snowless road, single symbol</source>
@@ -16923,9 +16902,7 @@ az erősen homokos utakat általában tiltott útvonalakként kell megjelölni.<
     <message>
         <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
-        <translation>Út a térképen, amely a verseny alatt homokos vagy hómentes. A &quot;V&quot;-lánc
-jelek az út szimbólumán azt mutatják meg, hogy az út nem síelhető. A hómentes utakat és
-az erősen homokos utakat általában tiltott útvonalakként kell megjelölni.</translation>
+        <translation>Út a térképen, amely a verseny alatt homokos vagy hómentes. A &quot;V&quot;-lánc jelek az út szimbólumán azt mutatják meg, hogy az út nem síelhető. A hómentes utakat és az erősen homokos utakat általában tiltott útvonalakként kell megjelölni.</translation>
     </message>
     <message>
         <source>Unploughed road</source>
@@ -16983,8 +16960,7 @@ The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering
         <comment>Description of symbol 809</comment>
         <translation>A tiltott útvonal szimbólummal jelölt vonalak átléphetők, de nem követhetők.
 Legalább két szimbólumot kell használni a tiltott útvonal megjelölésére.
-A (711)Tiltott útvonal szimbólum a sífutó térképen nagyobb méretben van megrajzolva
-hogy a nyomhálózatban jobban látható legyen.</translation>
+A (711)Tiltott útvonal szimbólum a sífutó térképen nagyobb méretben van megrajzolva, hogy a nyomhálózatban jobban látható legyen.</translation>
     </message>
     <message>
         <source>Forbidden route, crossable, single symbol</source>
@@ -16998,8 +16974,7 @@ The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering
         <comment>Description of symbol 809.1</comment>
         <translation>A tiltott útvonal szimbólummal jelölt vonalak átléphetők, de nem követhetők.
 Legalább két szimbólumot kell használni a tiltott útvonal megjelölésére.
-A (711)Tiltott útvonal szimbólum a sífutó térképen nagyobb méretben van megrajzolva
-hogy a nyomhálózatban jobban látható legyen.</translation>
+A (711)Tiltott útvonal szimbólum a sífutó térképen nagyobb méretben van megrajzolva, hogy a nyomhálózatban jobban látható legyen.</translation>
     </message>
     <message>
         <source>Public snow mobile route</source>
@@ -17014,7 +16989,7 @@ hogy a nyomhálózatban jobban látható legyen.</translation>
     <message>
         <source>Forbidden route, forbidden to cross</source>
         <comment>Name of symbol 814</comment>
-        <translation type="unfinished">Tiltott útvonal, tilos átkelni</translation>
+        <translation>Tiltott útvonal, tilos átkelni</translation>
     </message>
     <message>
         <source>Linear features marked with the forbidden route symbol can not be followed, and can not be crossed except at specially marked crossing points. Do not enter road regardless of whether the road is badly plowed, ice-covered, no traffic etc.
@@ -17277,7 +17252,7 @@ A határoló vonalat, ha az nem természetes határ, a következő módon jelöl
     <message>
         <source>Description of individual control</source>
         <comment>Name of symbol 99.3</comment>
-        <translation type="unfinished">Az egyedi ellenőrző pontok leírása</translation>
+        <translation>Az egyedi ellenőrző pontok leírása</translation>
     </message>
     <message>
         <source>Scheme of columns: |A|B|C|D|E|F|G|H|
@@ -17295,7 +17270,7 @@ H: Other information</source>
 
 V: Ellenőrzőpont sorszám
 B: Ellenőrző kód
-C: Melyik több hasonló tereptárgyak közül
+C: Melyik több hasonló tereptárgy közül
 D: Az ellenőrzőpont tereptárgy jellemzője
 E: A tereptárgy jellemzője (vagy 2. tereptárgy)
 F: Méret(ek) / Kombinációs jel
@@ -17513,7 +17488,7 @@ Térkép szimbólum: ISOM 703</translation>
     <message>
         <source>|D| Earth bank</source>
         <comment>Name of symbol 1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D|Tereplépcső</translation>
     </message>
     <message>
         <source>An abrupt change in ground level which can clearly be distinguished from its surroundings.
@@ -17761,108 +17736,124 @@ Map symbol: ISOM 212</source>
     <message>
         <source>|D| Narrow passage</source>
         <comment>Name of symbol 2.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Keskeny átjáró</translation>
     </message>
     <message>
         <source>A gap between two cliffs or rock faces that face each other.</source>
         <comment>Description of symbol 2.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rés két szikla vagy sziklafelület között, amelyek egymással szemben állnak.</translation>
     </message>
     <message>
         <source>|D| Lake</source>
         <comment>Name of symbol 3.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Tó</translation>
     </message>
     <message>
         <source>A high point. Shown on the map with contour lines.
 
 Map symbol: ISOM 301</source>
         <comment>Description of symbol 3.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magas pont. Kontúrvonalakkal jelenik meg a térképen.
+
+Térkép szimbólum: ISOM 301</translation>
     </message>
     <message>
         <source>|D| Pond</source>
         <comment>Name of symbol 3.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Tavacska</translation>
     </message>
     <message>
         <source>A small area of water.
 
 Map symbol: ISOM 302</source>
         <comment>Description of symbol 3.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kis vízterület.
+
+Térkép szimbólum: ISOM 302</translation>
     </message>
     <message>
         <source>|D| Waterhole</source>
         <comment>Name of symbol 3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Vizesgödör</translation>
     </message>
     <message>
         <source>A waterholed pit or depression.
 
 Map symbol: ISOM 303</source>
         <comment>Description of symbol 3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vizes gödör vagy mélyedés.
+
+Térkép szimbólum: ISOM 303</translation>
     </message>
     <message>
         <source>|D| River, Stream, Watercourse</source>
         <comment>Name of symbol 3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Folyó, Patak, Vízfolyás</translation>
     </message>
     <message>
         <source>A natural or artificial watercourse with either moving or standing water.
 
 Map symbols: ISOM 304, 305, 306</source>
         <comment>Description of symbol 3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Természetes vagy mesterséges vízfolyás mozgó vagy álló vízzel.
+
+Térkép szimbólumok: ISOM 304, 305, 306</translation>
     </message>
     <message>
         <source>|D| Minor water channel, Ditch</source>
         <comment>Name of symbol 3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Kisebb vízcsatorna, Árok</translation>
     </message>
     <message>
         <source>A natural or man made minor water channel which may contain water only intermittently.
 
 Map symbol: ISOM 307</source>
         <comment>Description of symbol 3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Természetes vagy ember által készített kisebb vízcsatorna, amely csak szakaszosan tartalmazhat vizet.
+
+Térkép szimbólum: ISOM 307</translation>
     </message>
     <message>
         <source>|D| Narrow marsh</source>
         <comment>Name of symbol 3.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Keskeny mocsár</translation>
     </message>
     <message>
         <source>A narrow marsh or trickle of water, too narrow to be shown on the map with the marsh symbol.
 
 Map symbol: ISOM 308</source>
         <comment>Description of symbol 3.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Keskeny mocsár vagy szivárgó víz,ami túl keskeny ahhoz, hogy a mocsár szimbólummal a térképen megjelenjen.
+
+Térkép szimbólum: ISOM 308</translation>
     </message>
     <message>
         <source>|D| Marsh</source>
         <comment>Name of symbol 3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Mocsár</translation>
     </message>
     <message>
         <source>A permanently wet area with marsh vegetation.
 
 Map symbols: ISOM 309, 310, 311</source>
         <comment>Description of symbol 3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Állandóan nedves terület, mocsári növényzettel.
+
+Térkép szimbólumok: ISOM 309, 310, 311</translation>
     </message>
     <message>
         <source>|D| Firm ground in marsh</source>
         <comment>Name of symbol 3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Szilárd föld a mocsárban</translation>
     </message>
     <message>
         <source>A non-marshy area within a marsh, or between two marshes.
 
 Map symbols: ISOM 309, 310, 311</source>
         <comment>Description of symbol 3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nem mocsaras terület a mocsárban vagy két mocsár között.
+
+Térkép szimbólumok: ISOM 309, 310, 311</translation>
     </message>
     <message>
         <source>|D| Well</source>
@@ -17879,58 +17870,64 @@ Map symbol: ISOM 312</source>
     <message>
         <source>|D| Spring</source>
         <comment>Name of symbol 3.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D|Forrás</translation>
     </message>
     <message>
         <source>The source of a watercourse with a distinct outflow.
 
 Map symbol: ISOM 313</source>
         <comment>Description of symbol 3.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>A vízfolyás forrása egyértelműen kifolyással.
+
+Térkép szimbólum: ISOM 313</translation>
     </message>
     <message>
         <source>|D| Water tank, Water trough</source>
         <comment>Name of symbol 3.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Víztartály, víztároló</translation>
     </message>
     <message>
         <source>A man made water container.</source>
         <comment>Description of symbol 3.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy ember készítette víztároló.</translation>
     </message>
     <message>
         <source>|D| Open land</source>
         <comment>Name of symbol 4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Nyílt terület</translation>
     </message>
     <message>
         <source>An area with no trees. Grassland, a meadow or a field. Also heath or moorland.
 
 Map symbols: ISOM 401, 403</source>
         <comment>Description of symbol 4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fák nélküli terület. Gyep, rét vagy mező. Pusztaság vagy láp is.
+
+Térkép szimbólumok: ISOM 401, 403</translation>
     </message>
     <message>
         <source>|D| Semi-open land</source>
         <comment>Name of symbol 4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Félig nyílt terület</translation>
     </message>
     <message>
         <source>An area of open land with scattered trees or bushes.
 
 Map symbols: ISOM 402, 404</source>
         <comment>Description of symbol 4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nyílt terület, elszórt fákkal vagy bokrokkal.
+
+Térkép szimbólumok: ISOM 402, 404</translation>
     </message>
     <message>
         <source>|D| Forest corner</source>
         <comment>Name of symbol 4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Erdősarok</translation>
     </message>
     <message>
         <source>The corner or tip of a forested area projecting into open land.</source>
         <comment>Description of symbol 4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az erdős terület sarka vagy csúcsa nyílt területre néz.</translation>
     </message>
     <message>
         <source>|D| Clearing</source>
