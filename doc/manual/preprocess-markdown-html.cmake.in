@@ -84,6 +84,9 @@ foreach(file ${input_files})
 	if(NOT title)
 		message(FATAL_ERROR "${file}:1: No title in frontmatter")
 	endif()
+	# Don't duplicate the implicit 'index' label. Using 'mainpage' has the same
+	# effect: doxygen puts the documentation on the front page (index.html).
+	string(REGEX REPLACE "^index$" "mainpage" pagename_safe "${pagename_safe}")
 	set(output "${title} {#${pagename_safe}}\n===\n\n${output}")
 
 	get_yaml_field(subpages ${frontmatter} "subpages")
