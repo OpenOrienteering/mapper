@@ -1,5 +1,5 @@
 #
-#    Copyright 2017 Kai Pastor
+#    Copyright 2017-2020 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -80,8 +80,10 @@ if(result)
 endif()
 
 # Create an androiddeployqt configuration file via qmake project.
+set(deployment_settings "@CMAKE_CURRENT_BINARY_DIR@/Mapper/Mapper-deployment-settings.json")
 execute_process(
   COMMAND "$<TARGET_FILE:Qt5::qmake>" "${config}"
+    "ANDROID_DEPLOYMENT_SETTINGS_FILE=${deployment_settings}"
   WORKING_DIRECTORY "@CMAKE_CURRENT_BINARY_DIR@/Mapper"
   RESULT_VARIABLE result
 )
@@ -106,6 +108,7 @@ file(INSTALL
 )
 execute_process(
   COMMAND androiddeployqt
+    --input "${deployment_settings}"
     --output "${destdir}"
     --deployment "bundled"
     --gradle
