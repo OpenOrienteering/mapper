@@ -3,13 +3,13 @@ title: The Touch Mode User Interface
 authors:
   - Kai Pastor
   - Thomas Schoeps
-keywords: Android, Touch Mode
-edited: 19 September 2020
+keywords: Touch Mode, Android
+edited: 20 September 2020
 ---
 
 ## Using the Mapper app in "Touch Mode"
 
-The "Touch Mode" is a variation of the user interface which is always active on
+The "Touch Mode" is an alternative user interface which is always active on
 Android devices. It can be activated on PCs, too.
 
 In Touch Mode, the map editor is different from the desktop version. It offers
@@ -39,7 +39,7 @@ Attention: the compass is very sensitive to magnetic materials. Android tries th
 
 #### ![ ](../mapper-images/tool-gps-display.png) Location display toggle
 
-If the currently active map work has valid georeferencing, this control will be enabled and will show a dot at your current position as obtained from GPS or other positioning services. In addition, in case an accuracy estimate (HDOP) is available, this shows a circle around the dot which indicates the positioning accuracy. The chance of your real position being in the circle is approximately 70%.
+If the currently active map work has valid georeferencing, this control will be enabled and will show a dot at your current position as obtained from Global Navigation Satellite Systems (GNSS, e.g. GPS) or other positioning services. In addition, in case an accuracy estimate (HDOP) is available, this shows a circle around the dot which indicates the positioning accuracy. The chance of your real position being in the circle is approximately 70%.
 
 While this is active, your track is automatically recorded into a GPX file in the directory of your map, named "<map> - GPS-<YYYY-MM-DD>.gpx". This file is included as a template in the map. You can simply show it using the template visibility control button to view your track.
 
@@ -53,7 +53,7 @@ This button is active if location display is active. When activated, this will d
 
 #### ![ ](../mapper-images/rotate-map.png) Automatic north alignment toggle
 
-When this toggle is active, the map is automatically rotated to north using the device's internal compass. The update frequency is 1 update per second. This is quite low on purpose to save battery, but you probably still need some replacement batteries when using this mode. While interacting with the map and for another 1.5 seconds after that, the map is not rotated to allow editing without unwanted rotations. If GPS position display is activated at the same time, a line starting from the GPS position and going in the direction of the up direction of your device is displayed which shows your viewing direction (assuming you are holding the device upright).
+When this toggle is active, the map is automatically rotated to north using the device's internal compass. The update frequency is 1 update per second. This is quite low on purpose to save battery, but you probably still need some replacement batteries when using this mode. While interacting with the map and for another 1.5 seconds after that, the map is not rotated to allow editing without unwanted rotations. If GNSS position display is activated at the same time, a line starting from the GNSS position and going in the direction of the up direction of your device is displayed which shows your viewing direction (assuming you are holding the device upright).
 
 
 -----
@@ -91,12 +91,17 @@ Depending on the screen size of your device, some of the symbols available not f
 
 #### ![ ](../mapper-images/view-zoom-out.png) Zoom out / Zoom to fixed
 
-A short press will zoom out by one step. A long press will open a menu where you can jump to a fixed zoom (cf. screenshot).
+A short press will zoom out by one step.
+
+A long press will open a menu where you can jump to a fixed zoom (cf. screenshot).
 
 
 #### ![ ](../mapper-images/move-to-gps.png) Move to location
 
 When positioning services are enabled, this will move the map so that your current location is in the middle of the screen.
+
+A long press will open a menu where you can enable a mode which will automatically
+move the map so that the current location stay in the central region of the screen.
 
 
 #### ![ ](../mapper-images/gps-temporary-point.png) Mark temporary position
@@ -117,9 +122,11 @@ This removes the temporary traces and position markers. (They will also be disca
 
 #### ![ ](../mapper-images/pencil.png) Paint on template
 
-By this tool, mapper supports free-hand drawing onto image templates. There is
-a small selection of colors for drawing. White is used for corrections to
-previous drawings. There is also a dedicated undo/redo feature.
+By this tool, mapper supports free-hand drawing onto raster image templates.
+There is a small selection of colors for drawing as well as an eraser tool.
+By additional buttons, you can choose to created fillex areas instead of lines,
+to use a dot pattern instead of a solid fill, or to draw only in the background
+(transparent regions). There is also a dedicated undo/redo feature.
 
 This tool is an convenient alternative when you want to do only (or mostly)
 drafting in the field, but draw the final version of the map at home on a PC.
@@ -127,16 +134,14 @@ It does not create new map objects but only alters the template you draw on.
 This may help to deal with low processing power or battery runtime on mobile
 devices.
 
-Please note that direct drawing onto base map images is *not* recommended:
-First, the eraser tool would also erase the base map. Second, these images
-usually are in the lossy JPEG format which will introduce visible artifacts
-when saving the file and loading it repeatedly.
+A short press may activate painting on the template which was used before if
+it is still on the screen. Otherwise, or on long press, there is a menu which
+indicates available templates, or offers to create a new template.
 
-
-#### ![ ](../mapper-images/paint-on-template-settings.png) Paint-on-template settings
-
-This button allows to select an image template for scribbling,
-or to add a new one covering the vicinity of your position.
+Please note that direct drawing onto regular base map images is *not* recommended:
+Color and eraser tool would easily destroy important details.
+Templates in JPEG format also shouldn't be used: This is a lossy file format which
+will introduce visible artifacts when saving the file and loading it repeatedly.
 
 
 -----
