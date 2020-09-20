@@ -14,7 +14,7 @@ You can choose the following locations for storing data which you want to edit a
   Files in this area are stored permanently, until you decide to remove them.
   Unfortunately, there is usually only limited capacity available - this memory is expensive when buying the device.
 
- - Path "Android/data/org.openorienteering.mapper/files" on arbitrary storage volumes such as SD cards (since Mapper 0.6.5).
+ - Path "Android/data/org.openorienteering.mapper/files" on arbitrary storage volumes such as built-in memory or SD cards (since Mapper 0.6.5).
   This is the only convenient way to store map data on cheap extra memory cards.
   However, you need to be aware of the fact that these folders are removed by Android when you uninstall the Mapper app.
   So please carefully save your changes to a PC.
