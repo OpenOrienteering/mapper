@@ -91,25 +91,10 @@ if(result)
 	message(FATAL_ERROR "Creating APK configuration failed: ${result}")
 endif()
 
-# Copy the Mapper runtime from the CMake project to the qmake project.
-# androiddeployqt uses this location.
-file(INSTALL
-  DESTINATION "@MAPPER_PRO_DIR@"
-  FILES "$<TARGET_FILE:Mapper>"
-)
-
-
-set(destdir "@MAPPER_PRO_DIR@/android-build")
-# Copy the Mapper runtime from the CMake project to the packaging dir.
-# androiddeployqt checks this location.
-file(INSTALL
-  DESTINATION "${destdir}/libs/@ANDROID_ABI@"
-  FILES "$<TARGET_FILE:Mapper>"
-)
 execute_process(
   COMMAND androiddeployqt
     --input "${deployment_settings}"
-    --output "${destdir}"
+    --output "@MAPPER_PRO_DIR@/android-build"
     --deployment "bundled"
     --gradle
     --verbose
@@ -127,7 +112,7 @@ if(result)
 endif()
 
 configure_file(
-  "${destdir}/build/outputs/apk/${apk}"
+  "@MAPPER_PRO_DIR@/android-build/build/outputs/apk/${apk}"
   "@PROJECT_BINARY_DIR@/@CPACK_PACKAGE_FILE_NAME@.apk"
   COPYONLY
 )
