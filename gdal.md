@@ -1,19 +1,20 @@
 ---
 title: Geospatial data support with GDAL
 keywords: GDAL
-edited: 21 December 2019
+edited: 20 September 2020
 ---
 
 OpenOrienteering Mapper uses the [GDAL library](https://gdal.org)
-for supporting a broad range of geospatial raster and vector data.
+for supporting a broad range of geospatial
+raster data, such as GeoTIFF or JPEG2000 files,
+vector data, such as Shape, OSM, or DXF files,
+and hybrid formats such aus PDF.
 GDAL's vector data support used to be known as OGR,
 so you will sometimes find this name, too.
 
-Geospatial raster data, such as GeoTIFF or JPEG2000 files,
-can be used as [templates](templates.md) starting with Mapper v0.9.2.
-Geospatial vector data, such as Shape, OSM, or DXF files,
-may be used as templates, too.
-But it also possible to open or import vector data as map data.
+Geospatial raster data and vector data can be used as templates.
+But it also possible to open vector data files as maps
+and to import vector data into map files.
 
 In addition, the [File menu](file_menu.md) offers the option to export a map
 in selected geospatial vector data formats.
@@ -22,18 +23,16 @@ given to the filename.
 
 When using GDAL formats as templates, some filename extensions may be supported
 by multiple providers (plain image, GDAL raster data, GDAL vector data).
-In these cases, a secondary provider from GDAL may be selected by prefixing the
-regular extension with "raster." or "vector." as listed below.
 
 Please note that some of the raster formats listed below are not used for
 images but for actual geospatial metrics meant for algorithmic processing.
 
 
-## GDAL formats offered by OpenOrienteering Mapper
+## GDAL drivers offered by OpenOrienteering Mapper
 
 The following list is valid for the official Android, macOS and Windows releases
-as of v0.9.2.
-Linux packages are likely to support additional formats,
+as of v0.9.4.
+Linux packages are likely to support a slightly different set of formats,
 depending on the configuration of the distribution's GDAL package.
 
 ### Raster import drivers
