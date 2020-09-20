@@ -103,7 +103,7 @@ message(STATUS "Conditional manual sections: ${MANUAL_SECTIONS}")
 set(DOXYFILE_HTML_EXTRA )
 if(ANDROID)
 	set(DOXYFILE_HTML_EXTRA "
-FILE_PATTERNS          = android* toolbar*
+FILE_PATTERNS          = android* toolbar* touch-mode*
 USE_MDFILE_AS_MAINPAGE = android-app.md
 ")
 endif()
