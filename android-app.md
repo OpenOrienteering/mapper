@@ -7,6 +7,7 @@ keywords: Android
 edited: 19 September 2020
 redirect_from:
   - /android/
+  - /android-app/
   - '/Android Manual/'
   - /mapper-manual/pages/android-index.html
 ---
