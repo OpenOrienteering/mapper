@@ -8,7 +8,7 @@ OpenOrienteering Mapper uses the [GDAL library](https://gdal.org)
 for supporting a broad range of geospatial
 raster data, such as GeoTIFF or JPEG2000 files,
 vector data, such as Shape, OSM, or DXF files,
-and hybrid formats such aus PDF.
+and hybrid formats such as PDF.
 GDAL's vector data support used to be known as OGR,
 so you will sometimes find this name, too.
 

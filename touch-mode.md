@@ -15,7 +15,7 @@ Android devices. It can be activated on PCs, too.
 In Touch Mode, the map editor is different from the desktop version. It offers
 a fixed set of buttons add the top and at the bottom of the screen. Not all
 Mapper features are offered in Touch Mode, but on the other hands some features
-suchs as live GNSS tracking are available only in this mode.
+such as live GNSS tracking are available only in this mode.
 
 This page focuses on specific features of the touch mode user interface.
 To find out about the other symbols, see the [Toolbars documentation](toolbars.md).
@@ -124,7 +124,7 @@ This removes the temporary traces and position markers. (They will also be disca
 
 By this tool, mapper supports free-hand drawing onto raster image templates.
 There is a small selection of colors for drawing as well as an eraser tool.
-By additional buttons, you can choose to created fillex areas instead of lines,
+By additional buttons, you can choose to created filled areas instead of lines,
 to use a dot pattern instead of a solid fill, or to draw only in the background
 (transparent regions). There is also a dedicated undo/redo feature.
 
@@ -140,7 +140,7 @@ indicates available templates, or offers to create a new template.
 
 Please note that direct drawing onto regular base map images is *not* recommended:
 Color and eraser tool would easily destroy important details.
-Templates in JPEG format also shouldn't be used: This is a lossy file format which
+Templates in JPEG format also should not be used: This is a lossy file format which
 will introduce visible artifacts when saving the file and loading it repeatedly.
 
 
