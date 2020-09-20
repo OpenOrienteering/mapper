@@ -82,7 +82,10 @@ endif()
 # Create an androiddeployqt configuration file via qmake project.
 set(deployment_settings "@CMAKE_CURRENT_BINARY_DIR@/Mapper/Mapper-deployment-settings.json")
 execute_process(
-  COMMAND "$<TARGET_FILE:Qt5::qmake>" "${config}"
+  COMMAND "$<TARGET_FILE:Qt5::qmake>"
+    -spec android-clang
+    "${config}"
+    "ANDROID_ABIS=@ANDROID_ABI@"
     "ANDROID_DEPLOYMENT_SETTINGS_FILE=${deployment_settings}"
   WORKING_DIRECTORY "@CMAKE_CURRENT_BINARY_DIR@/Mapper"
   RESULT_VARIABLE result
