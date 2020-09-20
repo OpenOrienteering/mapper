@@ -63,12 +63,14 @@ while(icons)
 	list(REMOVE_AT icons 0 1)
 endwhile()
 
+$<$<VERSION_LESS:@Qt5Core_VERSION@,5.15.0>:
 # Copy the Mapper runtime from the CMake project to the qmake project.
 # androiddeployqt uses this location.
 file(INSTALL
   DESTINATION "@MAPPER_PRO_DIR@"
   FILES "$<TARGET_FILE:Mapper>"
   )
+>
 
 # Copy the Mapper runtime from the CMake project to the packaging dir.
 # androiddeployqt checks this location.
