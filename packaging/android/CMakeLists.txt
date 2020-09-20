@@ -105,12 +105,8 @@ endif()
 # The directory name must match the Mapper binary.
 configure_file(
   "Mapper.pro.in"
-  "${MAPPER_PRO_DIR}/tmp/Mapper.pro"
+  "${MAPPER_PRO_DIR}/Mapper.pro"
   @ONLY
-)
-file(GENERATE
-  OUTPUT "${MAPPER_PRO_DIR}/Mapper.pro"
-  INPUT  "${MAPPER_PRO_DIR}/tmp/Mapper.pro"
 )
 
 configure_file(
