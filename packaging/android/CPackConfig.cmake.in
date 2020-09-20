@@ -1,5 +1,5 @@
 #
-#    Copyright 2017 Kai Pastor
+#    Copyright 2017-2020 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -80,8 +80,13 @@ if(result)
 endif()
 
 # Create an androiddeployqt configuration file via qmake project.
+set(deployment_settings "@CMAKE_CURRENT_BINARY_DIR@/Mapper/Mapper-deployment-settings.json")
 execute_process(
-  COMMAND "$<TARGET_FILE:Qt5::qmake>" "${config}"
+  COMMAND "$<TARGET_FILE:Qt5::qmake>"
+    -spec android-clang
+    "${config}"
+    "ANDROID_ABIS=@ANDROID_ABI@"
+    "ANDROID_DEPLOYMENT_SETTINGS_FILE=${deployment_settings}"
   WORKING_DIRECTORY "@CMAKE_CURRENT_BINARY_DIR@/Mapper"
   RESULT_VARIABLE result
 )
@@ -89,24 +94,10 @@ if(result)
 	message(FATAL_ERROR "Creating APK configuration failed: ${result}")
 endif()
 
-# Copy the Mapper runtime from the CMake project to the qmake project.
-# androiddeployqt uses this location.
-file(INSTALL
-  DESTINATION "@MAPPER_PRO_DIR@"
-  FILES "$<TARGET_FILE:Mapper>"
-)
-
-
-set(destdir "@MAPPER_PRO_DIR@/android-build")
-# Copy the Mapper runtime from the CMake project to the packaging dir.
-# androiddeployqt checks this location.
-file(INSTALL
-  DESTINATION "${destdir}/libs/@ANDROID_ABI@"
-  FILES "$<TARGET_FILE:Mapper>"
-)
 execute_process(
   COMMAND androiddeployqt
-    --output "${destdir}"
+    --input "${deployment_settings}"
+    --output "@MAPPER_PRO_DIR@/android-build"
     --deployment "bundled"
     --gradle
     --verbose
@@ -124,7 +115,7 @@ if(result)
 endif()
 
 configure_file(
-  "${destdir}/build/outputs/apk/${apk}"
+  "@MAPPER_PRO_DIR@/android-build/build/outputs/apk/${apk}"
   "@PROJECT_BINARY_DIR@/@CPACK_PACKAGE_FILE_NAME@.apk"
   COPYONLY
 )
