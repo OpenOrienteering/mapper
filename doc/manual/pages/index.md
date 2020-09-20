@@ -60,6 +60,9 @@ Adjusting the program to your preferences.
 [Course design](course_design.md){: .subpage}
 Using the course design symbol set.
 
+[The Touch Mode User Interface](touch-mode.md){: .subpage}
+Using the Mapper app in "Touch Mode"
+
 [The Mapper app for Android](android-app.md){: .subpage}
 Working with the Android version of Mapper.
 

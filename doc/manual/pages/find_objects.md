@@ -33,12 +33,15 @@ The following expressions are supported:
 | ---------- | ---------------- |
 | word       | having "word" in any textual property |
 | "some words" | having the phrase "some words" in any textual property |
+| NOT expr   | not matching expr |
 | expr1 AND expr2 | matching both expression expr1 and expr2 |
 | expr1 OR expr2  | matching expression expr1 or expr2 (or both) |
 | key = value | having a tag with the given key and value |
 | key ~= word | having a tag with the given key and a value containing "word" |
 | key != word | having a tag with the given key and a value different from "word", or not having a tag with this key |
+| SYMBOL 123  | having the symbol with code number 123 |
 
+NOT has precedence over AND and OR.
 AND has precedence over OR. You may use parentheses to nest operators in another way.
 
 You may use double quotes to deal with keys and values containing white space or the special words and signs.
