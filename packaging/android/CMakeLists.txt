@@ -49,9 +49,9 @@ set(MAPPER_PRO_DIR "${CMAKE_CURRENT_BINARY_DIR}/Mapper")
 set(ANDROID_PACKAGE_SOURCE_DIR "${MAPPER_PRO_DIR}/${MAPPER_APP_ID}")
 
 
-if(NOT "${Qt5Core_VERSION}" VERSION_LESS 5.13.0)
+if("${Qt5Core_VERSION}" VERSION_GREATER_EQUAL 5.13.0)
 	set(ANDROID_MIN_SDK_VERSION 21)
-elseif("@ANDROID_ABI@" MATCHES "64")
+elseif("${ANDROID_ABI}" MATCHES "64")
 	set(ANDROID_MIN_SDK_VERSION 21)
 else()
 	set(ANDROID_MIN_SDK_VERSION 16)
@@ -105,12 +105,8 @@ endif()
 # The directory name must match the Mapper binary.
 configure_file(
   "Mapper.pro.in"
-  "${MAPPER_PRO_DIR}/tmp/Mapper.pro"
+  "${MAPPER_PRO_DIR}/Mapper.pro"
   @ONLY
-)
-file(GENERATE
-  OUTPUT "${MAPPER_PRO_DIR}/Mapper.pro"
-  INPUT  "${MAPPER_PRO_DIR}/tmp/Mapper.pro"
 )
 
 configure_file(
