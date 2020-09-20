@@ -106,7 +106,7 @@ foreach(file ${input_files})
 
 	get_yaml_field(edited ${frontmatter} "edited")
 	if(edited)
-		set(output "${output}\n\n---\nUpdate on ${edited}")
+		set(output "${output}\n\n---\nUpdated on ${edited}")
 	else()
 		list(APPEND file_remarks "missing field 'edited'")
 	endif()
@@ -150,6 +150,7 @@ foreach(file ${input_files})
 	
 	# Liquid/Kramdown/Markdown markup
 	string(REGEX REPLACE "\r?\n *[-*]  *[^\r\n]*\r?\n{:toc}" "\\\\tableofcontents" output "${output}")
+	string(REGEX REPLACE "(\\[[^]\"]*)\\\"([^]\"]*)\\\"([^[)\"]*\\){: \\.subpage})" "\\1\\\\\"\\2\\\\\"\\3" output "${output}")
 	string(REGEX REPLACE "\\[([^]]*)\\]\\(([^\)]*).md\\){: \\.subpage}" "\\\\subpage \\2 \"\\1\"" output "${output}")
 	string(REGEX REPLACE "(\\[[^]]*\\]\\([^\)]*)\\.md(\\)|#)" "\\1.html\\2" output "${output}")
 	string(REGEX REPLACE "(href=\"[^\"]*)\\.md(\"|#)" "\\1.html\\2" output "${output}")
