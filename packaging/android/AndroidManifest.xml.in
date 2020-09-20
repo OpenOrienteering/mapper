@@ -91,7 +91,7 @@
                  android:exported="false" />
     </application>
 
-    <uses-sdk android:minSdkVersion="@ANDROID_MIN_SDK_VERSION@" android:targetSdkVersion="@ANDROID_TARGET_SDK_VERSION@"/>
+    $<$<VERSION_LESS:@Qt5Core_VERSION@,5.15.0>:<uses-sdk android:minSdkVersion="@ANDROID_MIN_SDK_VERSION@" android:targetSdkVersion="@ANDROID_TARGET_SDK_VERSION@"/$<ANGLE-R>>
     <supports-screens android:largeScreens="true" android:normalScreens="true" android:anyDensity="true" android:smallScreens="true"/>
 
     <!-- The following comment will be replaced upon deployment with default permissions based on the dependencies of the application.
