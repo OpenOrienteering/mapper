@@ -11,7 +11,7 @@
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation>Software para o desenvolvimento de mapas de Orientação</translation>
+        <translation>Software para o desenvolvimento de mapas de orientação</translation>
     </message>
     <message>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
@@ -540,7 +540,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="232"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation>O mapa contém símbolos com esta cor. Apagando irá remover a cor desses objetos! Quer mesmo fazer isso?</translation>
+        <translation>O mapa contém símbolos com esta cor. Apagá-lo irá remover a cor desses objetos! Quer mesmo fazer isso?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="250"/>
@@ -575,7 +575,7 @@
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="87"/>
         <source>&amp;Number of parts:</source>
-        <translation>&amp;Número de objetos:</translation>
+        <translation>Qua&amp;ntidade de objetos:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="95"/>
@@ -855,7 +855,7 @@
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="134"/>
         <source>Number of points per path:</source>
-        <translation>Número de pontos por linha:</translation>
+        <translation>Quantidade de pontos por linha:</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="136"/>
@@ -889,7 +889,7 @@
         <location filename="../src/tools/draw_circle_tool.cpp" line="70"/>
         <source>From center</source>
         <comment>Draw circle starting from center</comment>
-        <translation>Desenhar círculo começando do centro</translation>
+        <translation>Desenhar círculo do centro</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="313"/>
@@ -1090,7 +1090,7 @@
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="341"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Criar um objeto e dar sua direção.</translation>
+        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Criar um objeto e dar a direção dele.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="347"/>
@@ -1339,7 +1339,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="75"/>
         <source>When selecting an object, automatically select its symbol, too</source>
-        <translation>Quando selecionar um objeto, automaticamente seleciona seu símbolo também</translation>
+        <translation>Quando selecionar um objeto, automaticamente seleciona o símbolo dele também</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="78"/>
@@ -1995,7 +1995,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="444"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation>A declinação magnética para o ponto de referência %1° %2° vai agora ser recuperada a partir de &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Quer continuar?</translation>
+        <translation>A declinação magnética ao ponto de referência %1° %2° vai agora ser recuperada a partir de &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Quer continuar?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="528"/>
@@ -2025,7 +2025,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="627"/>
         <source>Loading...</source>
-        <translation>Carregando...</translation>
+        <translation>A carregar...</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="632"/>
@@ -3003,7 +3003,7 @@ Quer alterar a escala dos símbolos para a escala do mapa?</translation>
         <location filename="../src/gui/main_window.cpp" line="844"/>
         <location filename="../src/gui/map/map_widget.cpp" line="307"/>
         <source>Opening %1</source>
-        <translation>Abrindo %1</translation>
+        <translation>A abrir %1</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="769"/>
@@ -3043,7 +3043,7 @@ Quer descartar as alterações?</translation>
 
 Press Yes to save in this format.
 Press No to choose a different format.</source>
-        <translation>Este mapa está sendo salvo como um ficheiro &quot;%1&quot;. Alguma informação pode ser perdida.
+        <translation>Este mapa está a ser gravado como um ficheiro &quot;%1&quot;. Alguma informação pode ser perdida.
 
 Selecione &quot;Sim&quot; para gravar neste formato.
 Selecione &quot;Não&quot; para gravar em formato diferente.</translation>
@@ -3173,7 +3173,7 @@ Importar os dados assim mesmo?</translation>
     <message>
         <location filename="../src/core/map_color.cpp" line="79"/>
         <source>Registration black (all printed colors)</source>
-        <translation>Preto de registro (todas as cores de impressão)</translation>
+        <translation>Preto de registo (todas as cores de impressão)</translation>
     </message>
 </context>
 <context>
@@ -3512,7 +3512,7 @@ Importar os dados assim mesmo?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="584"/>
         <source>The map is currently being edited. Please finish the edit operation before saving.</source>
-        <translation>O mapa está sendo editado. Por favor termine a edição antes de gravar.</translation>
+        <translation>O mapa está a ser editado. Por favor termine a edição antes de gravar.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="594"/>
@@ -4115,7 +4115,7 @@ selecionados</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2446"/>
         <source>Draw circles and ellipses.</source>
-        <translation>Desenhar elipses e círculos. Clicar e arrastar para desenhar círculo. Clicar e soltar, depois clicar adiante marcando o comprimento e arrastar para desenhar largura da elipse.</translation>
+        <translation>Desenhar elipses e círculos. Clicar e arrastar para desenhar círculo. Clicar e soltar, depois clicar adiante a marcar o comprimento e arrastar para desenhar largura da elipse.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2450"/>
@@ -4232,7 +4232,7 @@ selecionados</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="3781"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3841"/>
         <source>Enter the name of the map part:</source>
-        <translation>Colocar o nome do mapa parcial:</translation>
+        <translation>Pôr o nome do mapa parcial:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3857"/>
@@ -4401,7 +4401,7 @@ Alterar a escala dos dados importados?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2569"/>
         <source>Reduce the number of points in path objects while trying to retain their shape.</source>
-        <translation>Reduz o número de pontos em objetos de linha enquanto tenta manter sua forma.</translation>
+        <translation>Reduz a quantidade de pontos em objetos de linha enquanto tenta manter a forma deles.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2619"/>
@@ -4625,12 +4625,12 @@ Alterar a escala dos dados importados?</translation>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1327"/>
         <source>Processing separations of page %1...</source>
-        <translation>Processando separações de página %1...</translation>
+        <translation>A processar separações da página %1...</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1328"/>
         <source>Processing page %1...</source>
-        <translation>Processando página %1...</translation>
+        <translation>A processar a página %1...</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1378"/>
@@ -4724,7 +4724,7 @@ open the color dialog and
 define the colors there.</source>
         <translation>Mapa vasio!
 
-Comece definindo algumas cores:
+Comece a definir algumas cores:
 Selecionar Símbolos -&gt; Janela Cores para
 abrir o diálogo de cores e
 definir lá as cores.</translation>
@@ -4753,7 +4753,7 @@ To load a base map, click
 Templates -&gt; Open template...</source>
         <translation>Pronto para desenhar!
 
-Comece desenhando ou carregando o mapa base.
+Comece a desenhar ou a carregar o mapa base.
 Para carregar o mapa base, clique
 Mapa Base -&gt; Abrir Mapa Base...</translation>
     </message>
@@ -4762,7 +4762,7 @@ Mapa Base -&gt; Abrir Mapa Base...</translation>
         <source>Hint: Hold the middle mouse button to drag the map,
 zoom using the mouse wheel, if available.</source>
         <translation>Dica: Segure o botão central do mouse para arrastar o mapa,
-aproximar e afastar usando a roda do mouse, se disponível.</translation>
+aproximar e afastar a usar a roda do rato, se disponível.</translation>
     </message>
 </context>
 <context>
@@ -4841,7 +4841,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="132"/>
         <source>Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such.</source>
-        <translation>Nota: Comprimento e área são corretos apenas se não há interseções e buracos sendo usados.</translation>
+        <translation>Nota: Comprimento e área são corretos apenas se não há interseções e buracos a ser usados.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="150"/>
@@ -4928,7 +4928,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1629"/>
         <source>Registration black is exported as a regular color.</source>
-        <translation>Preto de registro é exportado como uma cor comum.</translation>
+        <translation>Preto de registo é exportado como uma cor comum.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1737"/>
@@ -4964,12 +4964,12 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2250"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation>Símbolo de linha &quot;%1&quot;, negligenciando o agrupamento de traço.</translation>
+        <translation>Símbolo de linha &quot;%1&quot;, a negligenciar o agrupamento de traço.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2261"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation>Símbolo de linha &quot;%1&quot;, o número de traços num grupo foi reduzido a 2.</translation>
+        <translation>Símbolo de linha &quot;%1&quot;, a quantidade de traços num grupo foi reduzido a 2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2317"/>
@@ -4984,22 +4984,22 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2423"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation>Símbolo de área &quot;%1&quot;, assumindo um modelo de ponto &quot;linhas deslocadas&quot;. Isto pode ser correto, bem como incorreto.</translation>
+        <translation>Símbolo de área &quot;%1&quot;, a assumir um modelo de ponto &quot;linhas deslocadas&quot;. Isto pode ser correto, bem como incorreto.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2462"/>
         <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation>Símbolo de texto &quot;%1&quot;, espaçamento personalizado de caracteres foi definido, a sua aplicação ainda não coincide com o comportamento do OCAD</translation>
+        <translation>Símbolo de texto &quot;%1&quot;, espaçamento personalizado de caracteres foi definido, a implementação dele ainda não coincide com o comportamento do OCAD</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2469"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation>Símbolo de texto &quot;%1&quot;: ignorando sublinhado</translation>
+        <translation>Símbolo de texto &quot;%1&quot;: a ignorar sublinhado</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2471"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation>Símbolo de texto &quot;%1&quot;: ignorando kerning</translation>
+        <translation>Símbolo de texto &quot;%1&quot;: a ignorar kerning</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2895"/>
@@ -5040,7 +5040,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="231"/>
         <source>Color &quot;Registration black&quot; is imported as a special color.</source>
-        <translation>Cor &quot;preto de Registro&quot; é importado como uma cor especial.</translation>
+        <translation>Cor &quot;preto de registo&quot; é importado como uma cor especial.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="295"/>
@@ -5065,12 +5065,12 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="479"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation>Na linha tracejada símbolo%1, o comprimento principal e final são diferentes (%2 e%3). Usando%4.</translation>
+        <translation>Na linha tracejada símbolo%1, o comprimento principal e final são diferentes (%2 e%3). A usar %4.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="489"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation>Na linha tracejada símbolo%1, os espaços D e E são diferentes (%2 e%3). Usando%4.</translation>
+        <translation>Na linha tracejada símbolo%1, os espaços D e E são diferentes (%2 e%3). A usar %4.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="639"/>
@@ -5080,7 +5080,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="777"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation>Durante a importação do símbolo de texto%1: ignorando alinhamento justificado</translation>
+        <translation>Durante a importação do símbolo de texto%1: a ignorar alinhamento justificado</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="783"/>
@@ -5090,22 +5090,22 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="788"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation>Durante a importação do símbolo texto %1: o espaçamento entre caracteres personalizado foi definido, a sua aplicação ainda não coincide com o comportamento do OCAD</translation>
+        <translation>Durante a importação do símbolo texto %1: o espaçamento entre caracteres personalizado foi definido, a implementação dele ainda não coincide com o comportamento do OCAD</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="793"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation>Durante a importação do símbolo de texto %1:  ignorando o espaçamento entre as palavras personalizado (%2%)</translation>
+        <translation>Durante a importação do símbolo de texto %1:  a ignorar o espaçamento entre as palavras personalizado (%2%)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="798"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation>Durante a importação do símbolo de texto %1:  ignorando travessões personalizados (%2/%3)</translation>
+        <translation>Durante a importação do símbolo de texto %1:  a ignorar travessões personalizados (%2/%3)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="819"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation>Durante a importação do símbolo de texto %1:  ignorando enquadramento de texto (modo %2)</translation>
+        <translation>Durante a importação do símbolo de texto %1:  a ignorar enquadramento de texto (modo %2)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="973"/>
@@ -5120,7 +5120,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1027"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation>Não importando símbolo de texto, não consegue descobrir o caminho&apos; (npts=%1):%2</translation>
+        <translation>Não a importar símbolo de texto, não consegue descobrir o caminho&apos; (npts=%1):%2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1219"/>
@@ -5131,12 +5131,12 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1433"/>
         <source>Trying to import a text object with unknown coordinate format</source>
-        <translation>Tentando importar um objeto de texto com formato de coordenadas desconhecido</translation>
+        <translation>A tentar importar um objeto de texto com formato de coordenadas desconhecido</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1544"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation>ID de cor não encontrado:%1, ignorando esta cor</translation>
+        <translation>ID de cor não encontrado:%1, a ignorar esta cor</translation>
     </message>
 </context>
 <context>
@@ -5385,13 +5385,13 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1315"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1347"/>
         <source>The dash pattern&apos;s end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation>O modelo de traço e comprimento (%1 mm) não pode ser importado corretamente. Usando %2 mm.</translation>
+        <translation>O modelo de traço e comprimento (%1 mm) não pode ser importado corretamente. A usar %2 mm.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1322"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1362"/>
         <source>The dash pattern&apos;s end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation>O modelo de traço e espaço (%1 mm) não pode ser importado corretamente. Usando %2 mm.</translation>
+        <translation>O modelo de traço e espaço (%1 mm) não pode ser importado corretamente. A usar %2 mm.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1401"/>
@@ -5406,7 +5406,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1517"/>
         <source>Suppressing dash symbol at line ends.</source>
-        <translation>Suprimindo símbolo de traço nas extremidades da linha.</translation>
+        <translation>A suprimir símbolo de traço nas extremidades da linha.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1530"/>
@@ -5436,7 +5436,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2283"/>
         <source>Ignoring custom weight (%1).</source>
-        <translation>Ignorando largura personalizada (%1).</translation>
+        <translation>A ignorar a largura personalizada (%1).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2320"/>
@@ -5446,22 +5446,22 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2325"/>
         <source>Ignoring custom word spacing (%1 %).</source>
-        <translation>Ignorando espaçamento entre as palavras personalizado (%1 %).</translation>
+        <translation>A ignorar espaçamento entre as palavras personalizado (%1 %).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2349"/>
         <source>Ignoring custom indents (%1/%2).</source>
-        <translation>Ignorando travessões personalizados (%1/%2).</translation>
+        <translation>A ignorar travessões personalizados (%1/%2).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2371"/>
         <source>Ignoring text framing (mode %1).</source>
-        <translation>Ignorando enquadramento de texto (modo%1).</translation>
+        <translation>A ignorar enquadramento de texto (modo%1).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1704"/>
         <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
-        <translation>Símbolos de texto em linha ainda não são suportados. Marcando o símbolo como oculto.</translation>
+        <translation>Símbolos de texto em linha ainda não são suportados. A marcar o símbolo como oculto.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="111"/>
@@ -5496,12 +5496,12 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1952"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation>Não importando símbolo de texto, não consegue descobrir o caminho &apos;(npts=%1):%2</translation>
+        <translation>Não importou símbolo de texto, não consegue descobrir o caminho &apos;(npts=%1):%2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2258"/>
         <source>Trying to import a text object with unknown coordinate format</source>
-        <translation>Tentando importar um objeto de texto com formato de coordenadas desconhecido</translation>
+        <translation>A tentar importar um objeto de texto com formato de coordenadas desconhecido</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2385"/>
@@ -5522,7 +5522,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="234"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation>ID de cor não encontrado:%1, ignorando esta cor</translation>
+        <translation>ID de cor não encontrado:%1, a ignorar esta cor</translation>
     </message>
 </context>
 <context>
@@ -5949,7 +5949,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
         <location filename="../src/gui/print_progress_dialog.cpp" line="58"/>
         <source>Printing</source>
         <comment>PrintWidget</comment>
-        <translation>Imprimindo</translation>
+        <translation>A imprimir</translation>
     </message>
     <message>
         <location filename="../src/gui/print_progress_dialog.cpp" line="59"/>
@@ -6363,7 +6363,7 @@ de cores</translation>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="43"/>
         <source>Drag items from the left list to the desired spot in the right list to reload them.</source>
-        <translation>Arraste os itens da lista da esquerda para o local desejado na lista da direita para recarregá-las.</translation>
+        <translation>Arraste os itens da lista da esquerda ao local desejado na lista da direita para recarregá-las.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="45"/>
@@ -6678,7 +6678,7 @@ de cores</translation>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="114"/>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="146"/>
         <source>Default</source>
-        <translation type="unfinished">Padrão</translation>
+        <translation>Predefinição</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
@@ -7014,12 +7014,12 @@ de cores</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1123"/>
         <source>Add all objects with selected symbols to selection</source>
-        <translation>Adicionar todos os objetos com seus símbolos à seleção</translation>
+        <translation>Adicionar todos os objetos com os símbolos deles à seleção</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1124"/>
         <source>Remove all objects with selected symbols from selection</source>
-        <translation>Remover todos os objetos com seus símbolos da seleção</translation>
+        <translation>Remover todos os objetos com os símbolos deles da seleção</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1125"/>
@@ -7085,7 +7085,7 @@ de cores</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="841"/>
         <source>The map contains objects with the symbol &quot;%1&quot;. Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
-        <translation>O mapa contém objetos com o símbolo &quot;%1&quot;. Apagando-o irá apagar esses objetos e limpar o histórico de desfazer! Realmente quer fazer isso?</translation>
+        <translation>O mapa contém objetos com o símbolo &quot;%1&quot;. Apagar-lo irá apagar esses objetos e limpar o histórico de desfazer! Realmente quer fazer isso?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="970"/>
@@ -7104,7 +7104,7 @@ de cores</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="106"/>
         <source>Configure how the symbols should be replaced, and which.</source>
-        <translation>Configurar o modo como os símbolos devem ser substituídos, e qual.</translation>
+        <translation>Configurar o modo como os símbolos devem ser substituídos e qual.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="109"/>
@@ -7626,7 +7626,7 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="50"/>
         <source>Opening %1</source>
-        <translation>Abrindo %1</translation>
+        <translation>A abrir %1</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="52"/>
@@ -7776,7 +7776,7 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="287"/>
         <source>Positioning...</source>
-        <translation>Posicionando...</translation>
+        <translation>A posicionar...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="645"/>
@@ -7929,7 +7929,7 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="40"/>
         <source>Positioning</source>
-        <translation>Posicionando</translation>
+        <translation>A posicionar</translation>
     </message>
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="46"/>
@@ -8032,7 +8032,7 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     <message>
         <location filename="../src/templates/template_track.cpp" line="289"/>
         <source>Opening track ...</source>
-        <translation>Abrindo trilha do GPS ...</translation>
+        <translation>A abrir trilha do GPS ...</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="290"/>
@@ -8062,7 +8062,7 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     <message>
         <location filename="../src/templates/template_track.cpp" line="296"/>
         <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
-        <translation>Projeta a trilha usando uma projeção ortográfica com centro em coordenada média da trilha. Permite o ajuste da transformação e definir o mapa de georreferenciamento usando a posição da trilha ajustada.</translation>
+        <translation>Projeta a trilha a usar uma projeção ortográfica com centro em coordenada média da trilha. Permite o ajuste da transformação e definir o mapa de georreferenciamento a usar a posição da trilha ajustada.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="481"/>
@@ -8082,7 +8082,7 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     <message>
         <location filename="../src/templates/template_track.cpp" line="504"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
-        <translation>Podem os pontos do GPS ser importados como uma linha passando por todos os pontos?</translation>
+        <translation>Podem os pontos do GPS ser importados como uma linha a passar por todos os pontos?</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="568"/>
@@ -8093,8 +8093,8 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
         <location filename="../src/templates/template_track.cpp" line="569"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
-            <numerusform>%n objeto de linha não pôde ser importado (razão: coordenadas faltando).</numerusform>
-            <numerusform>%n objetos de linha não podem ser importados (razão: coordenadas faltando).</numerusform>
+            <numerusform>%n objeto de linha não pôde ser importado (razão: coordenadas a faltar).</numerusform>
+            <numerusform>%n objetos de linha não podem ser importados (razão: coordenadas a faltar).</numerusform>
         </translation>
     </message>
 </context>
@@ -8348,7 +8348,7 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="147"/>
         <source>Undoing this step will go beyond the point where the file was loaded. Are you sure?</source>
-        <translation>Desfazendo esta etapa irá além do ponto em que o ficheiro foi carregado. Tem certeza?</translation>
+        <translation>Desfazer esta etapa irá além do ponto em que o ficheiro foi carregado. Tem certeza?</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="185"/>
