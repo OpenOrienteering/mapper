@@ -468,9 +468,17 @@ private slots:
 		auto* temp = map.getTemplate(template_index);
 		QCOMPARE(temp->getTemplateState(), Template::Unloaded);
 		view.setTemplateVisibility(temp, TemplateVisibility{1, true});
-		map.loadTemplateFilesAsync(view);
+		
+		QStringList messages;
+		messages.reserve(10);
+		map.loadTemplateFilesAsync(view, [&messages](const QString& msg){
+			messages.push_back(msg);
+		});
 		QSignalSpy(temp, &Template::templateStateChanged).wait();
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
+		QVERIFY(messages.size() >= 2);
+		QVERIFY(!messages.front().isEmpty());
+		QVERIFY(messages.back().isEmpty());
 	}
 	
 	void templateTableModelTest()
