@@ -32,6 +32,7 @@
 #include <QtGlobal>
 #include <QtMath>
 #include <QByteArray>
+#include <QCoreApplication>
 #include <QDebug>
 #include <QIODevice>
 #include <QPaintEngine>
@@ -1974,19 +1975,23 @@ void Map::loadTemplateFiles(const MapView& view)
 	}
 }
 
-void Map::loadTemplateFilesAsync(MapView& view)
+// cppcheck-suppress passedByValue
+void Map::loadTemplateFilesAsync(MapView& view, std::function<void(const QString&)> listener)
 {
+	(void)listener; // fix false-positive warning from misc-unused-parameters
+	
 	for (auto& temp : templates)
 	{
 		if (temp->getTemplateState() == Template::Unloaded
 		    && view.getTemplateVisibility(temp.get()).visible)
 		{
-			QTimer::singleShot(10, temp.get(), [&temp]() {
+			QTimer::singleShot(10, temp.get(), ([this, &view, &temp, log = std::move(listener)]() {
+				log(qApp->translate("OpenOrienteering::MainWindow", "Opening %1")
+				         .arg(temp->getTemplateFilename()));
 				if (temp->getTemplateState() != Template::Loaded)
 					temp->loadTemplateFile();
-			});
-			QTimer::singleShot(11, &view, ([this, &view]() {
-				loadTemplateFilesAsync(view);
+				log(QString{});
+				loadTemplateFilesAsync(view, std::move(log));
 			}));
 			return;
 		}

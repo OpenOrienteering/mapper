@@ -73,6 +73,7 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QPoint>
+#include <QPointer>
 #include <QPointF>
 #include <QPushButton>
 #include <QRect>
@@ -671,7 +672,15 @@ bool MapEditorController::loadFrom(const QString& path, const FileFormat& format
 		return false;
 	}
 	
-	map->loadTemplateFilesAsync(*main_view);
+	map->loadTemplateFilesAsync(*main_view, [controller = QPointer<MapEditorController>(this)](const QString& message) {
+		auto* window = controller ? controller->getWindow() : nullptr;
+		if (!window)
+			return;
+		if (message.isEmpty())
+			window->clearStatusBarMessage();
+		else
+			window->showStatusBarMessageImmediately(message);
+	});
 	setMapAndView(map, main_view);
 	map->setHasUnsavedChanges(false);
 	if (!importer->warnings().empty())
