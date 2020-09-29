@@ -18,24 +18,41 @@
  */
 
 
+#include <cmath>
+#include <iosfwd>
+#include <memory>
+#include <vector>
+
 #include <QtGlobal>
 #include <QtMath>
 #include <QtTest>
+#include <QBuffer>
+#include <QByteArray>
+#include <QCoreApplication>
 #include <QDir>
+#include <QFile>
+#include <QFileDevice>
 #include <QFileInfo>
+#include <QIODevice>
 #include <QLineF>
+#include <QMetaObject>
 #include <QObject>
 #include <QPainter>
 #include <QPicture>
-#include <QSignalSpy>
+#include <QPointF>
+#include <QRectF>
+#include <QSignalSpy>  // IWYU pragma: keep
 #include <QString>
+#include <QStringList>
 #include <QTransform>
 
 #include "test_config.h"
 
 #include "global.h"
 #include "core/georeferencing.h"
+#include "core/latlon.h"
 #include "core/map.h"
+#include "core/map_coord.h"
 #include "core/map_view.h"
 #include "fileformats/xml_file_format_p.h"
 #include "gdal/ogr_template.h"
