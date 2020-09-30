@@ -2225,7 +2225,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</description>
                 <area_symbol inner_color="25" min_area="500" patterns="0"/>
             </symbol>
             <symbol type="4" id="87" code="408.1" name="Vegetation: walk, normal running in one direction">
-                <description>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
+                <description>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</description>
@@ -2234,7 +2234,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</description>
                 </area_symbol>
             </symbol>
             <symbol type="4" id="88" code="408.2" name="Vegetation: walk, slow running in one direction">
-                <description>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
+                <description>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</description>
@@ -2275,7 +2275,7 @@ Minimum area: 9 mm² (144 m²).</description>
                 </combined_symbol>
             </symbol>
             <symbol type="4" id="94" code="412.1" name="Cultivated land (black pattern)">
-                <description>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses. 
+                <description>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is combined with symbol Out-of-bounds area (709) to show cultivated land that shall not be entered.
 Minimum width: 3 mm.
 Minimum area: 9 mm² (144 m²).</description>
@@ -2948,7 +2948,7 @@ The bars indicate the exact location of the pylons. If a section of a power line
                 </line_symbol>
             </symbol>
             <symbol type="2" id="132" code="512.2" name="Underpass or tunnel">
-                <description>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles. 
+                <description>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles.
 Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 &lt;span style=&quot;color: red&quot;&gt;Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</description>
@@ -3415,7 +3415,7 @@ Minimum length: 2.2 mm (footprint 8.8 m).</description>
                 </line_symbol>
             </symbol>
             <symbol type="2" id="154" code="529" name=" Prominent impassable line feature">
-                <description>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track. 
+                <description>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track.
 The definition of the symbol must be given on the map.
 A prominent impassable line feature shall not be crossed.
 Minimum length: 3 mm (footprint 12 m).</description>
