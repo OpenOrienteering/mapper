@@ -1772,7 +1772,7 @@
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="92"/>
-        <location filename="../src/core/georeferencing.cpp" line="860"/>
+        <location filename="../src/core/georeferencing.cpp" line="901"/>
         <source>Local coordinates</source>
         <translation>Koordinat lokal</translation>
     </message>
@@ -1794,33 +1794,33 @@
         <translation>Spesifikasi</translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="509"/>
+        <location filename="../src/core/georeferencing.cpp" line="550"/>
         <source>Map scale specification invalid or missing.</source>
         <translation>Skala spesifikasi peta tidak sah atau kehilangan.</translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="515"/>
+        <location filename="../src/core/georeferencing.cpp" line="556"/>
         <source>Invalid grid scale factor: %1</source>
         <translation>Faktor skala grid tidak valid: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="528"/>
+        <location filename="../src/core/georeferencing.cpp" line="569"/>
         <source>Invalid auxiliary scale factor: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="560"/>
-        <location filename="../src/core/georeferencing.cpp" line="587"/>
+        <location filename="../src/core/georeferencing.cpp" line="601"/>
+        <location filename="../src/core/georeferencing.cpp" line="628"/>
         <source>Unknown CRS specification language: %1</source>
         <translation>Tidak diketahui CRS spesifikasi bahasa: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="590"/>
+        <location filename="../src/core/georeferencing.cpp" line="631"/>
         <source>Unsupported geographic CRS specification: %1</source>
         <translation>Tidak didukung geografis CRS spesifikasi: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="851"/>
+        <location filename="../src/core/georeferencing.cpp" line="892"/>
         <source>Local</source>
         <translation>Lokal</translation>
     </message>
@@ -2863,7 +2863,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="770"/>
         <location filename="../src/gui/main_window.cpp" line="858"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="658"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="659"/>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="328"/>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="359"/>
         <source>Cannot open file:
@@ -2877,7 +2877,7 @@
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="859"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="659"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="660"/>
         <source>Invalid file type.</source>
         <translation type="unfinished">Jenis file yang falid.</translation>
     </message>
@@ -3073,6 +3073,7 @@ Apakah Anda ingin skala simbol untuk skala dipilih?</translation>
         <translation>Anda harus menutup file saat ini sebelum membuka yang lain.</translation>
     </message>
     <message>
+        <location filename="../src/core/map.cpp" line="1989"/>
         <location filename="../src/gui/main_window.cpp" line="844"/>
         <location filename="../src/gui/map/map_widget.cpp" line="307"/>
         <source>Opening %1</source>
@@ -3260,7 +3261,7 @@ untuk membaca.</translation>
         <translation type="vanished">Tidak ada untuk mengimpor.</translation>
     </message>
     <message>
-        <location filename="../src/core/map.cpp" line="477"/>
+        <location filename="../src/core/map.cpp" line="478"/>
         <source>default part</source>
         <translation>bagian standar</translation>
     </message>
@@ -3271,12 +3272,12 @@ untuk membaca.</translation>
         <translation>Warna baru</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4190"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4199"/>
         <source>Import...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4191"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4200"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
         <translation type="unfinished"></translation>
@@ -3301,185 +3302,185 @@ Import the data anyway?</source>
 <context>
     <name>OpenOrienteering::MapEditorController</name>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="958"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="967"/>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="282"/>
         <source>Undo</source>
         <translation>Membatalkan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="958"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="967"/>
         <source>Undo the last step</source>
         <translation>Membatalkan langkah terakhir</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="959"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="968"/>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="288"/>
         <source>Redo</source>
         <translation>Mengulang</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="959"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="968"/>
         <source>Redo the last step</source>
         <translation>Mengulang langkah terakhir</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="960"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="969"/>
         <source>Cu&amp;t</source>
         <translation>Cu&amp;t</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="962"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="971"/>
         <source>C&amp;opy</source>
         <translation>S&amp;alin</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="964"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="973"/>
         <source>&amp;Paste</source>
         <translation>&amp;Salin</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="981"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="990"/>
         <source>Zoom in</source>
         <translation>Memperbesar</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="982"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="991"/>
         <source>Zoom out</source>
         <translation>Perkecil</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="984"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="993"/>
         <source>Toggle fullscreen mode</source>
         <translation>Alihkan ke mode layar penuh</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="985"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="994"/>
         <source>Set custom zoom factor...</source>
         <translation>Mengatur faktor zoom kustom...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="992"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1001"/>
         <source>Symbol window</source>
         <translation>Jendela simbol</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="992"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1001"/>
         <source>Show/Hide the symbol window</source>
         <translation>Tampilkan/Sembunyikan jendela simbol</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="993"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1002"/>
         <source>Color window</source>
         <translation>Jendela warna</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="993"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1002"/>
         <source>Show/Hide the color window</source>
         <translation>Tampilkan/Sembunyikan jendela warna</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="995"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1004"/>
         <source>Replace the symbols with those from another map file</source>
         <translation>Menggantikan simbol-simbol mereka dari file peta lain</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="999"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1008"/>
         <source>Scale all symbols...</source>
         <translation>Skala semua simbol...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="999"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1008"/>
         <source>Scale the whole symbol set</source>
         <translation>Skala simbol seluruh set</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1001"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1010"/>
         <source>Change map scale...</source>
         <translation>Perubahan skala peta...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1001"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1010"/>
         <source>Change the map scale and adjust map objects and symbol sizes</source>
         <translation>Mengubah skala peta dan menyesuaikan objek peta dan ukuran simbol</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1003"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1012"/>
         <source>Map notes...</source>
         <translation>Catatan peta...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1005"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1014"/>
         <source>Template setup window</source>
         <translation>Jendela pengaturan template</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1005"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1014"/>
         <source>Show/Hide the template window</source>
         <translation>Tampilkan/Sembunyikan jendela template</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1008"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1017"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="641"/>
         <source>Open template...</source>
         <translation>Buka template...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="983"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="992"/>
         <source>Show whole map</source>
         <translation>Tampilkan seluruh peta</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1013"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1022"/>
         <source>Edit objects</source>
         <translation>Mengedit objek</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1015"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1024"/>
         <source>Set point objects</source>
         <translation>Titik setel objek</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1016"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1025"/>
         <source>Draw paths</source>
         <translation>Menggambar jalan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1017"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1026"/>
         <source>Draw circles and ellipses</source>
         <translation>Menggambar lingkaran dan elips</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1021"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1030"/>
         <source>Write text</source>
         <translation>Menulis teks</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1022"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1031"/>
         <source>Duplicate</source>
         <translation>Duplikat</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1023"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1032"/>
         <source>Switch symbol</source>
         <translation>Menukar simbol</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1024"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1033"/>
         <source>Fill / Create border</source>
         <translation>Mengisi / membuat perbatasan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1025"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1034"/>
         <source>Switch dash direction</source>
         <translation>Beralih arah garis</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1026"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1035"/>
         <source>Connect paths</source>
         <translation>Menghubungkan jalur</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1028"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1037"/>
         <source>Cut object</source>
         <translation>Memotong objek</translation>
     </message>
@@ -3488,17 +3489,17 @@ Import the data anyway?</source>
         <translation type="vanished">Memutar obyek</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1042"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1051"/>
         <source>Measure lengths and areas</source>
         <translation>Mengukur panjang dan daerah</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1045"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1054"/>
         <source>Cut away from area</source>
         <translation>Memotong dari daerah</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1047"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1056"/>
         <source>Merge area holes</source>
         <translation>Menggabungkan daerah lubang</translation>
     </message>
@@ -3507,113 +3508,113 @@ Import the data anyway?</source>
         <translation type="vanished">Cat pada pengaturan template</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1056"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1065"/>
         <source>Enable touch cursor</source>
         <translation>Mengaktifkan sentuhan kursor</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1057"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1066"/>
         <source>Enable GPS display</source>
         <translation>Mengaktifkan GPS tampilan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1059"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1068"/>
         <source>Enable GPS distance rings</source>
         <translation>Mengaktifkan GPS cincin jarak</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1061"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1070"/>
         <source>Set point object at GPS position</source>
         <translation>Titik setel objek di posisi GPS</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1063"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1072"/>
         <source>Set temporary marker at GPS position</source>
         <translation>Ditetapkan sementara penanda pada posisi GPS</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1065"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1074"/>
         <source>Create temporary path at GPS position</source>
         <translation>Membuat jalan sementara di posisi GPS</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1067"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1076"/>
         <source>Clear temporary GPS markers</source>
         <translation>Jelas sementara GPS spidol</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1070"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1079"/>
         <source>Enable compass display</source>
         <translation>Mengaktifkan tampilan kompas</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1071"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1080"/>
         <source>Align map with north</source>
         <translation>Menyelaraskan utara peta</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1073"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3780"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1082"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3789"/>
         <source>Add new part...</source>
         <translation>Menambahkan bagian baru...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1074"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3840"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1083"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3849"/>
         <source>Rename current part...</source>
         <translation>Mengubah nama bagian saat ini...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1075"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3801"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1084"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3810"/>
         <source>Remove current part</source>
         <translation>Menghapus bagian saat ini</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1076"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1085"/>
         <source>Merge all parts</source>
         <translation>Menggabungkan semua bagian</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1078"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4064"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1087"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4073"/>
         <source>Import...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1133"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1142"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="113"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="299"/>
         <source>&amp;Edit</source>
         <translation>&amp;Merubah</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1154"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1163"/>
         <source>&amp;View</source>
         <translation>&amp;Lihat</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1185"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1194"/>
         <source>&amp;Tools</source>
         <translation>&amp;Alat</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1238"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1247"/>
         <source>Sy&amp;mbols</source>
         <translation>Si&amp;mbols</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1220"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1229"/>
         <source>M&amp;ap</source>
         <translation>M&amp;ap</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1250"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1259"/>
         <source>&amp;Templates</source>
         <translation>&amp;Template</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1307"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1316"/>
         <source>Drawing</source>
         <translation>Menggambar</translation>
     </message>
@@ -3623,119 +3624,119 @@ Import the data anyway?</source>
         <translation>Cat pada template</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="583"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="584"/>
         <source>Editing in progress</source>
         <translation>Mengedit dalam kemajuan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="584"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="585"/>
         <source>The map is currently being edited. Please finish the edit operation before saving.</source>
         <translation>Peta saat ini sedang diedit. Harap menyelesaikan operasi edit sebelum menyimpannya.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="594"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="595"/>
         <source>Map saved</source>
         <translation>Peta disimpan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="975"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="984"/>
         <source>Show grid</source>
         <translation>Tampilkan grid</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="976"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1281"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="985"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1290"/>
         <source>Configure grid...</source>
         <translation>Mengkonfigurasi kotak...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="987"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="996"/>
         <source>Hatch areas</source>
         <translation>Merencanakan area</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="988"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="997"/>
         <source>Baseline view</source>
         <translation>Pandangan dasar</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="989"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="998"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="166"/>
         <source>Hide all templates</source>
         <translation>Menyembunyikan semua template</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="995"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1004"/>
         <source>Replace symbol set...</source>
         <translation>Menggantikan simbol set...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1000"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1009"/>
         <source>Georeferencing...</source>
         <translation>Georeferencing...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1002"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1011"/>
         <source>Rotate map...</source>
         <translation>Memutar peta...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1002"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1011"/>
         <source>Rotate the whole map</source>
         <translation>Memutar peta seluruh</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1009"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1018"/>
         <source>Reopen template...</source>
         <translation>Membuka kembali template...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1011"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1020"/>
         <source>Tag editor</source>
         <translation>Tag editor</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1011"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1020"/>
         <source>Show/Hide the tag editor window</source>
         <translation>Tampilkan/Sembunyikan jendela tag editor</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1018"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1027"/>
         <source>Draw rectangles</source>
         <translation>Gambarlah persegi panjang</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1019"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1028"/>
         <source>Draw free-handedly</source>
         <translation>Menggambar dengan bebas</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1020"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1029"/>
         <source>Fill bounded areas</source>
         <translation>Mengisi batas daerah</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="966"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="975"/>
         <source>Delete</source>
         <translation>Hapus</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1029"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1038"/>
         <source>Cut free form hole</source>
         <translation>Lubang dipotong bentuk bebas</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1030"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1039"/>
         <source>Cut round hole</source>
         <translation>Memotong lubang bundar</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1031"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1040"/>
         <source>Cut rectangular hole</source>
         <translation>Memotong lubang persegi panjang</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1040"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1049"/>
         <source>Rotate pattern</source>
         <translation>Memutar pola</translation>
     </message>
@@ -3744,67 +3745,67 @@ Import the data anyway?</source>
         <translation type="vanished">Obyek skala</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1043"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1052"/>
         <source>Unify areas</source>
         <translation>Menyatukan wilayah</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1044"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1053"/>
         <source>Intersect areas</source>
         <translation>Daerah berpotongan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1046"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1055"/>
         <source>Area XOr</source>
         <translation>XOr daerah</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1050"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1059"/>
         <source>Cutout</source>
         <translation>Potongan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1051"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1060"/>
         <source>Cut away</source>
         <translation>Memotong</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1052"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1061"/>
         <source>Distribute points along path</source>
         <translation>Mendistribusikan poin sepanjang jalan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1080"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1089"/>
         <source>Map coordinates</source>
         <translation>Koordinat peta</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1082"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1091"/>
         <source>Projected coordinates</source>
         <translation>Proyeksi koordinat</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1084"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1093"/>
         <source>Latitude/Longitude (Dec)</source>
         <translation>Lintang/bujur (des)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1086"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1095"/>
         <source>Latitude/Longitude (DMS)</source>
         <translation>Lintang/bujur (DMS)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1168"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1177"/>
         <source>Display coordinates as...</source>
         <translation>Menampilkan koordinat sebagai...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1032"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1041"/>
         <source>Cut hole</source>
         <translation>Memotong lubang</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="608"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="609"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
@@ -3813,7 +3814,7 @@ because saving as %2 (.%3) is not supported.</source>
 karena penyimpan sebagai %2 (.%3) tidak didukung.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="620"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="621"/>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="339"/>
         <source>Cannot save file
 %1:
@@ -3823,219 +3824,219 @@ karena penyimpan sebagai %2 (.%3) tidak didukung.</translation>
 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="629"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="683"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4145"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="630"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="692"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4154"/>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="84"/>
         <source>Warning</source>
         <translation type="unfinished">Peringatan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="630"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="631"/>
         <source>The map export generated warnings.</source>
         <translation type="unfinished">Peta ekspor dihasilkan peringatan.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="684"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4145"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="693"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4154"/>
         <source>The map import generated warnings.</source>
         <translation type="unfinished">Peringatan Impor peta dihasilkan.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="894"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="903"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="895"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="904"/>
         <source>Ctrl+Shift+A</source>
         <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="896"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="905"/>
         <source>Ctrl+I</source>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="898"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="907"/>
         <source>G</source>
         <translation>G</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="911"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="920"/>
         <source>E</source>
         <translation>E</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="912"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="921"/>
         <source>L</source>
         <translation>L</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="913"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="922"/>
         <source>S</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="914"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="923"/>
         <source>P</source>
         <translation>P</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="915"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="924"/>
         <source>O</source>
         <translation>O</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="916"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="925"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="917"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="926"/>
         <source>F</source>
         <translation>F</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="918"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="927"/>
         <source>T</source>
         <translation>T</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="920"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="929"/>
         <source>D</source>
         <translation>D</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="921"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="930"/>
         <source>Ctrl+G</source>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="922"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="931"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="923"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="932"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="924"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="933"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="925"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="934"/>
         <source>R</source>
         <translation>R</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="926"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="935"/>
         <source>Z</source>
         <translation>Z</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="927"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="936"/>
         <source>K</source>
         <translation>K</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="928"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="937"/>
         <source>H</source>
         <translation>H</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="929"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="938"/>
         <source>M</source>
         <translation>M</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="930"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="939"/>
         <source>U</source>
         <translation>U</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="931"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="940"/>
         <source>N</source>
         <translation>N</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="932"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="941"/>
         <source>Ctrl+M</source>
         <translation>Ctrl + M</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="967"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="976"/>
         <source>Select all</source>
         <translation>Pilih semua</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="968"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="977"/>
         <source>Select nothing</source>
         <translation>Apapun pilih</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="969"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="978"/>
         <source>Invert selection</source>
         <translation>Balikkan seleksi</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="978"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="987"/>
         <source>Move to my location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="980"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="989"/>
         <source>Keep my location on screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="994"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1003"/>
         <source>Symbol set ID...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="994"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1003"/>
         <source>Edit the symbol set ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="996"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1005"/>
         <source>Load CRT file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="996"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1005"/>
         <source>Assign new symbols by cross-reference table</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1098"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1107"/>
         <source>Copy position</source>
         <translation>Menyalin posisi</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1098"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1107"/>
         <source>Copy position to clipboard.</source>
         <translation>Salin posisi ke clipboard.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1178"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1187"/>
         <source>Toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1274"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1283"/>
         <source>View</source>
         <translation>Melihat</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1293"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1298"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1431"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3713"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1302"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1307"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1440"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3722"/>
         <source>Map parts</source>
         <translation>Bagian peta</translation>
     </message>
@@ -4044,52 +4045,52 @@ karena penyimpan sebagai %2 (.%3) tidak didukung.</translation>
         <translation type="vanished">Pilih template...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1326"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1335"/>
         <source>Editing</source>
         <translation>Mengedit</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1351"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1360"/>
         <source>Advanced editing</source>
         <translation>Pengeditan lanjutan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1385"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1394"/>
         <source>Select symbol</source>
         <translation>Pilih simbol</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1425"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1434"/>
         <source>Hide top bar</source>
         <translation>Menyembunyikan bar bagian atas</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1428"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1437"/>
         <source>Show top bar</source>
         <translation>Bar bagian atas tampilkan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1486"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1495"/>
         <source>1x zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1490"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1499"/>
         <source>2x zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4217"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4226"/>
         <source>Nothing to import.</source>
         <translation type="unfinished">Tidak ada untuk mengimpor.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4229"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4238"/>
         <source>Question</source>
         <translation type="unfinished">Pertanyaan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4230"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4239"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
@@ -4098,33 +4099,33 @@ Rescale the imported data?</source>
 Rescale data yang diimpor?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="614"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="622"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="657"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="670"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1782"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1802"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1858"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1878"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1891"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3325"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3331"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3337"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3343"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="615"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="623"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="658"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="671"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1791"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1811"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1867"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1887"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1900"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3334"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3340"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3346"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3352"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4109"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4140"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4217"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3361"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4118"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4149"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4226"/>
         <source>Error</source>
         <translation>Kesalahan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1782"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1791"/>
         <source>Print / Export is not available in this program version!</source>
         <translation>Cetak / ekspor tidak tersedia dalam versi program ini!</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1802"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1811"/>
         <source>No undo steps available.</source>
         <translation>Tidak membatalkan langkah tersedia.</translation>
     </message>
@@ -4134,8 +4135,8 @@ Rescale data yang diimpor?</translation>
         <translation type="vanished">Memotong %1 obyek</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1858"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1891"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1867"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1900"/>
         <source>An internal error occurred, sorry!</source>
         <translation>Terjadi kesalahan internal, maaf!</translation>
     </message>
@@ -4144,7 +4145,7 @@ Rescale data yang diimpor?</translation>
         <translation type="vanished">Disalin %1 obyek</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1878"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1887"/>
         <source>There are no objects in clipboard which could be pasted!</source>
         <translation>Tidak ada objek di papan klip yang bisa disisipkan!</translation>
     </message>
@@ -4153,72 +4154,72 @@ Rescale data yang diimpor?</translation>
         <translation type="vanished">Disisipkan %1 obyek</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2009"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2018"/>
         <source>Set custom zoom factor</source>
         <translation>Mengatur faktor zoom kustom</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2009"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2018"/>
         <source>Zoom factor:</source>
         <translation>Faktor zoom:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2083"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2092"/>
         <source>Symbols</source>
         <translation>Simbol</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2097"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2106"/>
         <source>Colors</source>
         <translation>Warna</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2118"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2127"/>
         <source>Symbol set ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2119"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2128"/>
         <source>Edit the symbol set ID:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2146"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2155"/>
         <source>Scale all symbols</source>
         <translation>Skala semua simbol</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2146"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2155"/>
         <source>Scale to percentage:</source>
         <translation>Presentase skala:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2171"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2180"/>
         <source>Map notes</source>
         <translation>Catatan peta</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2176"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2185"/>
         <source>Cancel</source>
         <translation>Batal</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2177"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2186"/>
         <source>OK</source>
         <translation>Oke</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2216"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2225"/>
         <source>Templates</source>
         <translation>Template</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2276"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2285"/>
         <source>Tag Editor</source>
         <translation>Tag Editor</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2340"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2349"/>
         <source>No
 symbol
 selected</source>
@@ -4228,7 +4229,7 @@ simbol
 yang dipilih</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2342"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2351"/>
         <source>Multiple
 symbols
 selected</source>
@@ -4238,41 +4239,41 @@ simbol
 yang dipilih</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2442"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2451"/>
         <source>Place point objects on the map.</source>
         <translation>Tempatkan titik obyek di peta.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2442"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2451"/>
         <source>Select a point symbol to be able to use this tool.</source>
         <translation>Pilih titik simbol untuk dapat menggunakan alat ini.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2444"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2453"/>
         <source>Draw polygonal and curved lines.</source>
         <translation>Menggambar garis poligonal dan melengkung.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2444"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2446"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2448"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2450"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2452"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2453"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2455"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2457"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2459"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2461"/>
         <source>Select a line, area or combined symbol to be able to use this tool.</source>
         <translation>Pilih jalur, daerah, atau gabungan simbol untuk dapat menggunakan alat ini.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2446"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2455"/>
         <source>Draw circles and ellipses.</source>
         <translation>Menggambar lingkaran dan elips.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2450"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2459"/>
         <source>Draw paths free-handedly.</source>
         <translation>Menggambar jalan bebas dengan.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2452"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2461"/>
         <source>Fill bounded areas.</source>
         <translation>Isi batas daerah.</translation>
     </message>
@@ -4281,130 +4282,130 @@ yang dipilih</translation>
         <translation type="vanished">Menghapus obyek yang dipilih.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2555"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2564"/>
         <source>Set the direction of area fill patterns or point objects.</source>
         <translation>Menetapkan arah daerah mengisi pola atau titik objek.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2555"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2564"/>
         <source>Select an area object with rotatable fill pattern or a rotatable point object to activate this tool.</source>
         <translation>Pilih objek daerah dengan mengisi rotatable pola atau titik rotatable objek untuk mengaktifkan alat ini.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2585"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2594"/>
         <source>Resulting symbol: %1 %2.</source>
         <translation>Simbol yang dihasilkan: %1 %2.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2586"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2595"/>
         <source>Select at least two area or path objects activate this tool.</source>
         <translation>Pilih setidaknya dua daerah atau obyek path aktifkan alat ini.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2588"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2597"/>
         <source>Unify overlapping objects.</source>
         <translation>Menyatukan benda-benda yang tumpang tindih.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2590"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2599"/>
         <source>Remove all parts which are not overlaps with the first selected object.</source>
         <translation>Menghapus semua bagian yang tidak tumpang-tindih dengan obyek pertama.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2592"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2601"/>
         <source>Remove overlapped parts of the first selected object.</source>
         <translation>Hapus bagian-bagian yang tumpang tindih dari obyek yang terseleksi pertama.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2594"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2603"/>
         <source>Remove all parts which overlap the first selected object.</source>
         <translation>Menghapus semua bagian yang tumpang tindih pertama objek yang dipilih.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2598"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2607"/>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
         <translation>Menggabungkan lubang daerah bersama-sama, atau menggabungkan lubang dengan batas objek untuk memotong bagian ini.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2598"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2607"/>
         <source>Select one area object with holes to activate this tool.</source>
         <translation>Pilih satu daerah objek dengan lubang untuk mengaktifkan alat ini.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2603"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2612"/>
         <source>Create a cutout of some objects or the whole map.</source>
         <translation>Membuat potongan dari beberapa objek atau seluruh peta.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2603"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2605"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2612"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2614"/>
         <source>Select a closed path object as cutout shape to activate this tool.</source>
         <translation>Pilih sebuah obyek path tertutup sebagai bentuk potongan untuk mengaktifkan alat ini.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2605"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2614"/>
         <source>Cut away some objects or everything in a limited area.</source>
         <translation>Memotong beberapa objek atau segala sesuatu dalam area terbatas.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2624"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2633"/>
         <source>Places evenly spaced point objects along an existing path object</source>
         <translation>Jarak merata tempat benda-benda titik sepanjang jalan objek yang sudah ada</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2624"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2633"/>
         <source>Select at least one path object and a single point symbol to activate this tool.</source>
         <translation>Pilih obyek path setidaknya satu dan simbol titik tunggal untuk mengaktifkan alat ini.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3352"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3361"/>
         <source>Merging holes failed.</source>
         <translation>Penggabungan lubang gagal.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3605"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3614"/>
         <source>Clear temporary markers</source>
         <translation>Tanda-tanda yang jelas sementara</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3605"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3614"/>
         <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
         <translation>Apakah Anda yakin Anda ingin menghapus semua tanda-tanda GPS sementara? Ini tidak dapat dibatalkan.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3720"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3729"/>
         <source>Merge this part with</source>
         <translation>Menggabungkan bagian ini dengan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3727"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3736"/>
         <source>Move selected objects to</source>
         <translation>Memindahkan objek yang dipilih ke</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3781"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3841"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3790"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3850"/>
         <source>Enter the name of the map part:</source>
         <translation>Masukkan nama bagian peta:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3857"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3866"/>
         <source>Switched to map part &apos;%1&apos;.</source>
         <translation>Beralih ke peta bagian &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3885"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3917"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3894"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3926"/>
         <source>Merge map parts</source>
         <translation>Menggabungkan bagian-bagian peta</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3886"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3895"/>
         <source>Do you want to move all objects from map part &quot;%1&quot; to &quot;%2&quot;, and to remove &quot;%1&quot;?</source>
         <translation>Apakah Anda ingin memindahkan semua benda dari peta bagian &quot;%1&quot; ke &quot;%2&quot;, dan menghapus &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3918"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3927"/>
         <source>Do you want to move all objects to map part &quot;%1&quot;, and to remove all other map parts?</source>
         <translation>Apakah Anda ingin memindahkan semua benda peta bagian &quot;%1&quot;, dan menghapus semua bagian peta lain?</translation>
     </message>
@@ -4413,77 +4414,77 @@ yang dipilih</translation>
         <translation type="vanished">Tidak dapat mengimpor file peta dipilih karena itu tidak dapat dimuat.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2448"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2457"/>
         <source>Draw rectangles.</source>
         <translation>Menggambar persegi panjang.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="941"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="950"/>
         <source>Print...</source>
         <translation>Cetak...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="943"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="952"/>
         <source>&amp;Image</source>
         <translation>&amp;Gambar</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="945"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="954"/>
         <source>&amp;PDF</source>
         <translation>&amp;PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="973"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="982"/>
         <source>Clear undo / redo history</source>
         <translation>Clear undo / mengulang sejarah</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="973"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="982"/>
         <source>Clear the undo / redo history to reduce map file size.</source>
         <translation>Jelas undo / mengulang sejarah untuk mengurangi ukuran file peta.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="977"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="986"/>
         <source>Pan</source>
         <translation>Pot</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="990"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="999"/>
         <source>Overprinting simulation</source>
         <translation>Simulasi selama printing</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1014"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1023"/>
         <source>Edit lines</source>
         <translation>Edit baris</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1048"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1057"/>
         <source>Convert to curves</source>
         <translation>Mengkonversi ke kurva</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1049"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1058"/>
         <source>Simplify path</source>
         <translation>Menyederhanakan jalan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1122"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1131"/>
         <source>&amp;Export as...</source>
         <translation>&amp;Ekspor sebagai...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1741"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1750"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2454"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2463"/>
         <source>Write text on the map.</source>
         <translation>Menulis teks pada peta.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2454"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2463"/>
         <source>Select a text symbol to be able to use this tool.</source>
         <translation>Pilih teks simbol untuk dapat menggunakan alat ini.</translation>
     </message>
@@ -4492,26 +4493,26 @@ yang dipilih</translation>
         <translation type="vanished">Duplikat obyek yang dipilih.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2544"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2546"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2548"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2550"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2553"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2555"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2557"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2559"/>
         <source>Select at least one object to activate this tool.</source>
         <translation>Pilih setidaknya satu objek untuk mengaktifkan alat ini.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2559"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2568"/>
         <source>Switch the direction of symbols on line objects.</source>
         <translation>Beralih ke arah simbol pada baris objek.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2559"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2561"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2568"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2570"/>
         <source>Select at least one line object to activate this tool.</source>
         <translation>Pilih setidaknya satu baris objek untuk mengaktifkan alat ini.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2561"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2570"/>
         <source>Connect endpoints of paths which are close together.</source>
         <translation>Hubungkan endpoint jalan yang berdekatan.</translation>
     </message>
@@ -4520,17 +4521,17 @@ yang dipilih</translation>
         <translation type="vanished">Potong obyek yang dipilih ke bagian yang lebih kecil.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2565"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2574"/>
         <source>Select at least one line or area object to activate this tool.</source>
         <translation>Pilih setidaknya satu baris atau daerah objek untuk mengaktifkan alat ini.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2574"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2583"/>
         <source>Cut a hole into the selected area object.</source>
         <translation>Potong lubang objek area dipilih.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2574"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2583"/>
         <source>Select a single area object to activate this tool.</source>
         <translation>Pilih sebuah objek tunggal daerah untuk mengaktifkan alat ini.</translation>
     </message>
@@ -4543,18 +4544,18 @@ yang dipilih</translation>
         <translation type="vanished">Skala obyek yang dipilih.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2567"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2576"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
         <translation>Mengubah jalan menjadi segmen lurus splines bezier yang halus.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2567"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2569"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2576"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2578"/>
         <source>Select a path object to activate this tool.</source>
         <translation>Pilih sebuah obyek path untuk mengaktifkan alat ini.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2569"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2578"/>
         <source>Reduce the number of points in path objects while trying to retain their shape.</source>
         <translation>Mengurangi jumlah poin dalam obyek path sambil berusaha mempertahankan bentuk mereka.</translation>
     </message>
@@ -4563,8 +4564,8 @@ yang dipilih</translation>
         <translation type="vanished">Switch simbol obyek yang dipilih untuk simbol yang dipilih.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2619"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2621"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2628"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2630"/>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
         <translation>Pilih setidaknya satu objek dan pas, berbeda simbol untuk mengaktifkan alat ini.</translation>
     </message>
@@ -4577,7 +4578,7 @@ yang dipilih</translation>
         <translation type="vanished">obyek %1 diduplikasi</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2950"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2959"/>
         <source>Object selection</source>
         <translation>Pilihan objek</translation>
     </message>
@@ -4586,32 +4587,32 @@ yang dipilih</translation>
         <translation type="vanished">Ada benda yang dipilih karena tidak ada benda dengan simbol-simbol dipilih.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3311"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3320"/>
         <source>Measure</source>
         <translation>Ukuran</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3325"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3334"/>
         <source>Unification failed.</source>
         <translation>Penyatuan gagal.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3331"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3340"/>
         <source>Intersection failed.</source>
         <translation>Persimpangan gagal.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3337"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3346"/>
         <source>Difference failed.</source>
         <translation>Perbedaan yang gagal.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3343"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3352"/>
         <source>XOr failed.</source>
         <translation>XOr gagal.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3802"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3811"/>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects?</source>
         <translation>Apakah Anda ingin menghapus peta bagian &quot;%1&quot; dan semua objek?</translation>
     </message>
@@ -4628,33 +4629,33 @@ yang dipilih</translation>
         <translation type="vanished">%1, GPX, OSM atau DXF file impor</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4067"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4076"/>
         <source>Importable files</source>
         <translation>File yang diimpor</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1746"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4067"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1755"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4076"/>
         <source>All files</source>
         <translation>Semua file</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4109"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4118"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation>Tidak dapat mengimpor file yang dipilih karena file format tidak didukung.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1039"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1048"/>
         <source>Rotate objects</source>
         <translation>Memutar objek</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1041"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1050"/>
         <source>Scale objects</source>
         <translation>Skala objek</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1816"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1825"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
         <translation>
@@ -4662,63 +4663,63 @@ yang dipilih</translation>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1868"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1877"/>
         <source>Copied %n object(s)</source>
         <translation>
             <numerusform>Disalin %n obyek</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1908"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1917"/>
         <source>Pasted %n object(s)</source>
         <translation>
             <numerusform>Obyek disisipkan %n</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2544"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2553"/>
         <source>Deletes the selected objects.</source>
         <translation>Menghapus objek yang dipilih.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2546"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2555"/>
         <source>Duplicate the selected objects.</source>
         <translation>Duplikat objek yang dipilih.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2548"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2557"/>
         <source>Rotate the selected objects.</source>
         <translation>Memutar objek yang dipilih.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2550"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2559"/>
         <source>Scale the selected objects.</source>
         <translation>Skala objek yang dipilih.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2565"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2574"/>
         <source>Cut the selected objects into smaller parts.</source>
         <translation>Potong objek yang dipilih ke bagian yang lebih kecil.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2619"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2628"/>
         <source>Switches the symbol of the selected objects to the selected symbol.</source>
         <translation>Switch simbol dari objek yang dipilih untuk simbol yang dipilih.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2621"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2630"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
         <translation>Isi baris yang dipilih atau untuk daerah yang dipilih.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="2740"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2749"/>
         <source>Duplicated %n object(s)</source>
         <translation>
             <numerusform>%n duplikasi obyek</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2950"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2959"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
         <translation>Ada benda yang dipilih karena tidak ada benda dengan simbol-simbol yang dipilih.</translation>
     </message>
@@ -6930,31 +6931,37 @@ warna</translation>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="114"/>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="146"/>
         <source>Default</source>
+        <extracomment>Position source</extracomment>
         <translation type="unfinished">Standar</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
         <source>NMEA (Qt)</source>
+        <extracomment>Position source</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"/>
         <source>NMEA (OpenOrienteering)</source>
+        <extracomment>Position source</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="123"/>
         <source>Windows</source>
+        <extracomment>Position source; product name, do not translate literally.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="126"/>
         <source>GeoClue</source>
+        <extracomment>Position source; product name, do not translate literally.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="129"/>
         <source>Core Location</source>
+        <extracomment>Position source; product name, do not translate literally.</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7115,7 +7122,7 @@ warna</translation>
         <translation type="unfinished">Peringatan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1390"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1399"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7248,13 +7255,13 @@ warna</translation>
         <translation>Hapus semua objek dengan simbol ini dari pilihan</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1403"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1412"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1117"/>
         <source>Hide objects with this symbol</source>
         <translation>Menyembunyikan objek dengan simbol ini</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1414"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1423"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1118"/>
         <source>Protect objects with this symbol</source>
         <translation>Melindungi objek dengan simbol ini</translation>
@@ -7341,7 +7348,7 @@ warna</translation>
         <translation>Peta berisi objek dengan simbol &quot;%1&quot;. Menghapusnya akan menghapus objek tersebut dan menghapus Riwayat undo! Apakah Anda benar-benar ingin melakukan itu?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="970"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="979"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1122"/>
         <source>Select all objects with selected symbols</source>
         <translation>Pilih semua obyek dengan simbol yang dipilih</translation>
@@ -8289,8 +8296,8 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
 <context>
     <name>OpenOrienteering::TemplateTrack</name>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="251"/>
-        <location filename="../src/templates/template_track.cpp" line="257"/>
+        <location filename="../src/templates/template_track.cpp" line="252"/>
+        <location filename="../src/templates/template_track.cpp" line="258"/>
         <source>This template must be loaded with GDAL/OGR.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8299,82 +8306,82 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
         <translation type="vanished">Pilih sistem koordinat referensi koordinat jalur</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="82"/>
+        <location filename="../src/templates/template_track.cpp" line="83"/>
         <source>Track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="95"/>
+        <location filename="../src/templates/template_track.cpp" line="96"/>
         <source>Route</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="108"/>
+        <location filename="../src/templates/template_track.cpp" line="109"/>
         <source>Waypoint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="289"/>
+        <location filename="../src/templates/template_track.cpp" line="290"/>
         <source>Opening track ...</source>
         <translation>Pembukaan jalur ...</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="290"/>
+        <location filename="../src/templates/template_track.cpp" line="291"/>
         <source>Load the track in georeferenced or non-georeferenced mode?</source>
         <translation>Memuat jalur dalam mode georeferensi atau non-georeferensi?</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="292"/>
+        <location filename="../src/templates/template_track.cpp" line="293"/>
         <source>Positions the track according to the map&apos;s georeferencing settings.</source>
         <translation>Pengaturan Posisi jalur menurut peta georeferencing.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="294"/>
+        <location filename="../src/templates/template_track.cpp" line="295"/>
         <source>These are not configured yet, so they will be shown as the next step.</source>
         <translation>Ini tidak dikonfigurasi, sehingga mereka akan ditampilkan sebagai langkah berikutnya.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="295"/>
+        <location filename="../src/templates/template_track.cpp" line="296"/>
         <source>Georeferenced</source>
         <translation>Rujukan geografis</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="296"/>
+        <location filename="../src/templates/template_track.cpp" line="297"/>
         <source>Non-georeferenced</source>
         <translation>Bebas-rujukan geografis</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="296"/>
+        <location filename="../src/templates/template_track.cpp" line="297"/>
         <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
         <translation>Proyek jalur yang menggunakan proyeksi orthographic dengan center di rata-rata koordinat trek. Memungkinkan penyesuaian transformasi dan menetapkan georeferencing peta menggunakan posisi disesuaikan trek.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="481"/>
+        <location filename="../src/templates/template_track.cpp" line="482"/>
         <source>Error</source>
         <translation>Kesalahan</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="481"/>
+        <location filename="../src/templates/template_track.cpp" line="482"/>
         <source>The path is empty, there is nothing to import!</source>
         <translation>Jalan kosong, tidak ada untuk mengimpor!</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="503"/>
+        <location filename="../src/templates/template_track.cpp" line="504"/>
         <source>Question</source>
         <translation>Pertanyaan</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="504"/>
+        <location filename="../src/templates/template_track.cpp" line="505"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
         <translation>Harus waypoints diimpor sebagai garis akan melalui semua poin?</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="568"/>
+        <location filename="../src/templates/template_track.cpp" line="569"/>
         <source>Import problems</source>
         <translation>Masalah impor</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/templates/template_track.cpp" line="569"/>
+        <location filename="../src/templates/template_track.cpp" line="570"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
             <numerusform>%n jalan obyek tidak dapat diimpor (alasan: hilang koordinat).</numerusform>
@@ -8709,13 +8716,13 @@ Didukung versi maksimum adalah %2.</translation>
         <translation type="unfinished">°</translation>
     </message>
     <message>
-        <location filename="../src/tools/tool_helpers.cpp" line="648"/>
+        <location filename="../src/tools/tool_helpers.cpp" line="649"/>
         <source>%1°</source>
         <comment>degree</comment>
         <translation type="unfinished">%1°</translation>
     </message>
     <message>
-        <location filename="../src/tools/tool_helpers.cpp" line="649"/>
+        <location filename="../src/tools/tool_helpers.cpp" line="650"/>
         <source>%1 m</source>
         <comment>meter</comment>
         <translation type="unfinished"></translation>
