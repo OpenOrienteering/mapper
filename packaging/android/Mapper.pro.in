@@ -1,5 +1,5 @@
 #
-#    Copyright 2017-2019 Kai Pastor
+#    Copyright 2017-2020 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -27,9 +27,11 @@ TARGET   = Mapper
 ANDROID_VERSION_CODE = "@Mapper_VERSION_CODE@"
 ANDROID_VERSION_NAME = "@Mapper_VERSION_DISPLAY@"
 
+ANDROID_MIN_SDK_VERSION = "@ANDROID_MIN_SDK_VERSION@"
+ANDROID_TARGET_SDK_VERSION = "@ANDROID_TARGET_SDK_VERSION@"
+
 ANDROID_PACKAGE_SOURCE_DIR = "@ANDROID_PACKAGE_SOURCE_DIR@"
 CMAKE_COMMAND = "@CMAKE_COMMAND@"
-MAPPER_BINARY = "$<TARGET_FILE:Mapper>"
 PROJECT_BINARY_DIR = "@PROJECT_BINARY_DIR@"
 
 # We use resources from some external packages, so lets cleanup the staging dir
@@ -46,6 +48,5 @@ INSTALLS            += everything
 everything.path  = /
 everything.extra = \
   "$$CMAKE_COMMAND" --build "$$PROJECT_BINARY_DIR" -- -j$$QMAKE_HOST.cpu_count && \
-  "$$CMAKE_COMMAND" -E copy "$$MAPPER_BINARY" "$$OUT_PWD/" && \
   "$$CMAKE_COMMAND" -E chdir "$$PROJECT_BINARY_DIR" \
     "$$CMAKE_COMMAND" "-DCMAKE_INSTALL_PREFIX=$$ANDROID_PACKAGE_SOURCE_DIR" -P cmake_install.cmake

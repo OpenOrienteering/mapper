@@ -693,7 +693,6 @@ void MapCoord::BoundsOffset::reset(bool check_for_offset)
 constexpr MapCoord::MapCoord() noexcept
  : xp{ 0 }
  , yp{ 0 }
- , fp{ 0 }
 {
 	// nothing else
 }
@@ -701,7 +700,6 @@ constexpr MapCoord::MapCoord() noexcept
 constexpr MapCoord::MapCoord(int x, int y) noexcept
  : xp{ x*1000 }
  , yp{ y*1000 }
- , fp{ 0 }
 {
 	// nothing else
 }
@@ -725,7 +723,6 @@ constexpr MapCoord::MapCoord(qint32 x, qint32 y, Flag flag) noexcept
 constexpr MapCoord::MapCoord(qreal x, qreal y) noexcept
  : xp{ qRound(x*1000) }
  , yp{ qRound(y*1000) }
- , fp{ 0 }
 {
 	// nothing else
 }

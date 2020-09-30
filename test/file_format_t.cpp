@@ -344,6 +344,62 @@ namespace
 		
 	}
 	
+	void fuzzyMatchSymbol(const Map& map, const QByteArray& format_id, const Symbol* expected)
+	{
+		Symbol const* actual = nullptr;
+		for (auto i = 0; !actual && i < map.getNumSymbols(); ++i)
+		{
+			auto const* symbol = map.getSymbol(i);
+			if (symbol->getType() != expected->getType()
+			    && symbol->getType() != Symbol::Combined)
+			{
+				continue;
+			}
+			
+			if (format_id.startsWith("OCD"))
+			{
+				// In OCD format, export may have incremented second and or first component.
+				if (symbol->getNumberComponent(0) < expected->getNumberComponent(0)
+				    || symbol->getNumberComponent(0) > expected->getNumberComponent(0) + 1)
+				{
+					continue;
+				}
+			}
+			else if (expected->getNumberAsString() != symbol->getNumberAsString())
+			{
+				continue;
+			}
+			
+			if (!expected->getPlainTextName().startsWith(symbol->getPlainTextName()))
+				continue;
+			
+			actual = symbol;
+		}
+		if (format_id == "OCD8" || format_id == "OCD-legacy")
+		{
+			// Don't elaborate testing for these legacy formats.
+			switch (expected->getType())
+			{
+			case Symbol::Combined:
+				// Expected symbol may be entirely dropped. (Its parts live independently.)
+				if (!actual)
+					return;
+				break;
+			case Symbol::Line:
+				// Expected symbol may be entirely turned into combined symbol.
+				if (!actual && format_id == "OCD-legacy")
+					return;
+				break;
+			default:
+				;  // nothing
+			}
+		}
+		if (actual)
+			fuzzyCompareSymbol(*actual, *expected, format_id);
+		else
+			QFAIL(qPrintable(QString::fromLatin1("Missing symbol: %1 %2").arg(expected->getNumberAsString(), expected->getPlainTextName())));
+	}
+	
 	/**
 	 * Compares map features in a way that works for lossy exporters and importers.
 	 * 
@@ -393,63 +449,10 @@ namespace
 		// Text symbols may be duplicated on export.
 		QVERIFY2(2 * actual.getNumSymbols() >= expected.getNumSymbols(), qPrintable(test_label.arg(actual.getNumSymbols()).arg(expected.getNumSymbols())));
 		QVERIFY2(actual.getNumSymbols() <= 2 * expected.getNumSymbols(), qPrintable(test_label.arg(actual.getNumSymbols()).arg(expected.getNumSymbols())));
-		
-		auto const fuzzy_match_symbol = [&map = actual, format_id](const Symbol* expected) {
-			Symbol const* actual = nullptr;
-			for (auto i = 0; !actual && i < map.getNumSymbols(); ++i)
-			{
-				auto const* symbol = map.getSymbol(i);
-				if (symbol->getType() != expected->getType()
-				    && symbol->getType() != Symbol::Combined)
-				{
-					continue;
-				}
-				
-				if (format_id.startsWith("OCD"))
-				{
-					// In OCD format, export may have incremented second and or first component.
-					if (symbol->getNumberComponent(0) < expected->getNumberComponent(0)
-					    || symbol->getNumberComponent(0) > expected->getNumberComponent(0) + 1)
-					{
-						continue;
-					}
-				}
-				else if (expected->getNumberAsString() != symbol->getNumberAsString())
-				{
-					continue;
-				}
-				
-				if (!expected->getPlainTextName().startsWith(symbol->getPlainTextName()))
-					continue;
-				
-				actual = symbol;
-			}
-			if (format_id == "OCD8" || format_id == "OCD-legacy")
-			{
-				// Don't elaborate testing for these legacy formats.
-				switch (expected->getType())
-				{
-				case Symbol::Combined:
-					// Expected symbol may be entirely dropped. (Its parts live independently.)
-					if (!actual)
-						return;
-					break;
-				case Symbol::Line:
-					// Expected symbol may be entirely turned into combined symbol.
-					if (!actual && format_id == "OCD-legacy")
-						return;
-					break;
-				default:
-					;  // nothing
-				}
-			}
-			if (actual)
-				fuzzyCompareSymbol(*actual, *expected, format_id);
-			else
-				QFAIL(qPrintable(QString::fromLatin1("Missing symbol: %1 %2").arg(expected->getNumberAsString(), expected->getPlainTextName())));
-		};
 		for (auto i = 0; i < expected.getNumSymbols(); ++i)
-			fuzzy_match_symbol(expected.getSymbol(i));
+		{
+			fuzzyMatchSymbol(actual, format_id, expected.getSymbol(i));
+		}
 		
 		// Objects
 		QVERIFY2(actual.getNumObjects() >= expected.getNumObjects(), qPrintable(test_label.arg(actual.getNumObjects()).arg(expected.getNumObjects())));

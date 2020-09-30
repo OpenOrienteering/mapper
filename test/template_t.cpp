@@ -18,24 +18,41 @@
  */
 
 
+#include <cmath>
+#include <iosfwd>
+#include <memory>
+#include <vector>
+
 #include <QtGlobal>
 #include <QtMath>
 #include <QtTest>
+#include <QBuffer>
+#include <QByteArray>
+#include <QCoreApplication>
 #include <QDir>
+#include <QFile>
+#include <QFileDevice>
 #include <QFileInfo>
+#include <QIODevice>
 #include <QLineF>
+#include <QMetaObject>
 #include <QObject>
 #include <QPainter>
 #include <QPicture>
-#include <QSignalSpy>
+#include <QPointF>
+#include <QRectF>
+#include <QSignalSpy>  // IWYU pragma: keep
 #include <QString>
+#include <QStringList>
 #include <QTransform>
 
 #include "test_config.h"
 
 #include "global.h"
 #include "core/georeferencing.h"
+#include "core/latlon.h"
 #include "core/map.h"
+#include "core/map_coord.h"
 #include "core/map_view.h"
 #include "fileformats/xml_file_format_p.h"
 #include "gdal/ogr_template.h"
@@ -468,9 +485,17 @@ private slots:
 		auto* temp = map.getTemplate(template_index);
 		QCOMPARE(temp->getTemplateState(), Template::Unloaded);
 		view.setTemplateVisibility(temp, TemplateVisibility{1, true});
-		map.loadTemplateFilesAsync(view);
+		
+		QStringList messages;
+		messages.reserve(10);
+		map.loadTemplateFilesAsync(view, [&messages](const QString& msg){
+			messages.push_back(msg);
+		});
 		QSignalSpy(temp, &Template::templateStateChanged).wait();
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
+		QVERIFY(messages.size() >= 2);
+		QVERIFY(!messages.front().isEmpty());
+		QVERIFY(messages.back().isEmpty());
 	}
 	
 	void templateTableModelTest()

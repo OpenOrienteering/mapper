@@ -73,6 +73,7 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QPoint>
+#include <QPointer>
 #include <QPointF>
 #include <QPushButton>
 #include <QRect>
@@ -671,7 +672,15 @@ bool MapEditorController::loadFrom(const QString& path, const FileFormat& format
 		return false;
 	}
 	
-	map->loadTemplateFilesAsync(*main_view);
+	map->loadTemplateFilesAsync(*main_view, [controller = QPointer<MapEditorController>(this)](const QString& message) {
+		auto* window = controller ? controller->getWindow() : nullptr;
+		if (!window)
+			return;
+		if (message.isEmpty())
+			window->clearStatusBarMessage();
+		else
+			window->showStatusBarMessageImmediately(message);
+	});
 	setMapAndView(map, main_view);
 	map->setHasUnsavedChanges(false);
 	if (!importer->warnings().empty())
@@ -729,7 +738,7 @@ void MapEditorController::attach(MainWindow* window)
 		statusbar_zoom_icon->setPixmap(pixmap);
 		
 		auto* statusbar_zoom_label = new QLabel();
-		statusbar_zoom_label->setMinimumWidth(fontmetrics.width(QLatin1String(" 0.333x")));
+		statusbar_zoom_label->setMinimumWidth(fontmetrics.boundingRect(QLatin1String("0.333x")).width());
 		statusbar_zoom_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 		statusbar_zoom_label->setFrameShape(QFrame::NoFrame);
 		
@@ -757,7 +766,7 @@ void MapEditorController::attach(MainWindow* window)
 #else
 		statusbar_cursorpos_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 #endif
-		statusbar_cursorpos_label->setMinimumWidth(fontmetrics.width(QLatin1String("-3,333.33 -333.33 (mm)")));
+		statusbar_cursorpos_label->setMinimumWidth(fontmetrics.boundingRect(QLatin1String("-3,333.33 -333.33 (mm)")).width());
 		statusbar_cursorpos_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 		
 		window->statusBar()->addPermanentWidget(statusbar_zoom_frame);

@@ -55,7 +55,7 @@ class ColorDialog: public QDialog
 Q_OBJECT
 public:
 	/** Constructs a new dialog for the given map and color. */
-	ColorDialog(const Map& map, const MapColor& source_color, QWidget* parent = nullptr, Qt::WindowFlags f = 0);
+	ColorDialog(const Map& map, const MapColor& source_color, QWidget* parent = nullptr, Qt::WindowFlags f = {});
 	
 	~ColorDialog() override;
 	

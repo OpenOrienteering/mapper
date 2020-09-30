@@ -57,7 +57,7 @@ public:
 	 * @param actual_path    The path which is currently selected.
 	 * @param parent         The parent window.
 	 */
-	AutosaveDialog(const QString& original_path, const QString& autosave_path, const QString& actual_path, MainWindow* parent = nullptr, Qt::WindowFlags f = 0);
+	AutosaveDialog(const QString& original_path, const QString& autosave_path, const QString& actual_path, MainWindow* parent = nullptr, Qt::WindowFlags f = {});
 	
 	/**
 	 * Destructor.
