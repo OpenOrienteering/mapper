@@ -29,7 +29,7 @@
 
 214    natural = bare_rock
 213    natural = beach AND surface = sand
-203.9  natural = cave_entrance
+203.1  natural = cave_entrance
 201    natural = cliff
 213    natural = dune
 203    natural = hole AND rock != no
@@ -146,7 +146,7 @@
 108    barrier = ditch
 518    barrier = fence
 410.1  barrier = hedge
-410    barrier = hedge AND area = yes
+410    barrier = hedge AND (area = yes OR is_area = yes)
 515    barrier = wall
 
 521    tourism = alpine_hut

@@ -33,8 +33,6 @@
 #include <QPoint>
 #include <QPointF>
 #include <QStringRef>
-#include <QTimer>
-#include <QTransform>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -44,7 +42,6 @@
 #include "core/map.h"
 #include "core/map_coord.h"
 #include "core/track.h"
-#include "core/objects/object.h"
 #include "fileformats/file_format.h"
 #include "gdal/gdal_manager.h"
 #include "gdal/ogr_file_format_p.h"
@@ -52,11 +49,6 @@
 #include "templates/template.h"
 #include "templates/template_positioning_dialog.h"
 #include "templates/template_track.h"
-
-
-#ifdef __clang_analyzer__
-#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT
-#endif
 
 
 namespace OpenOrienteering {
@@ -132,10 +124,6 @@ OgrTemplate::OgrTemplate(const QString& path, Map* map)
 : TemplateMap(path, map)
 {
 	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &OgrTemplate::applySettings);
-	
-	const Georeferencing& georef = map->getGeoreferencing();
-	connect(&georef, &Georeferencing::projectionChanged, this, &OgrTemplate::mapTransformationChanged);
-	connect(&georef, &Georeferencing::transformationChanged, this, &OgrTemplate::mapTransformationChanged);
 }
 
 OgrTemplate::OgrTemplate(const OgrTemplate& proto)
@@ -145,16 +133,13 @@ OgrTemplate::OgrTemplate(const OgrTemplate& proto)
 , template_track_compatibility(proto.template_track_compatibility)
 , use_real_coords(proto.use_real_coords)
 , center_in_view(proto.center_in_view)
-, reload_pending(proto.reload_pending)
 {
 	if (proto.explicit_georef)
 		explicit_georef = std::make_unique<Georeferencing>(*proto.explicit_georef);
+	if (proto.map_configuration_georef)
+		map_configuration_georef = std::make_unique<Georeferencing>(*proto.map_configuration_georef);
 	
 	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &OgrTemplate::applySettings);
-	
-	const Georeferencing& georef = map->getGeoreferencing();
-	connect(&georef, &Georeferencing::projectionChanged, this, &OgrTemplate::mapTransformationChanged);
-	connect(&georef, &Georeferencing::transformationChanged, this, &OgrTemplate::mapTransformationChanged);
 }
 
 OgrTemplate::~OgrTemplate()
@@ -168,7 +153,7 @@ OgrTemplate* OgrTemplate::duplicate() const
 {
 	auto* copy = new OgrTemplate(*this);
 	if (template_state == Loaded)
-		copy->loadTemplateFileImpl(false);
+		copy->loadTemplateFileImpl();
 	return copy;
 }
 
@@ -180,7 +165,7 @@ const char* OgrTemplate::getTemplateType() const
 
 
 
-std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing(const QString& path)
+std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing(const QString& path) const
 {
 	// Is the template's SRS orthographic, or can it be converted?
 	/// \todo Use the template's datum etc. instead of WGS84?
@@ -204,13 +189,41 @@ std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing(cons
 	return georef;
 }
 
+std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing() const
+{
+	// For a transition period, copy behaviour from
+	// TemplateTrack::loadTemplateFileImpl(),
+	// TemplateTrack::calculateLocalGeoreferencing().
+	// This is an extra expense (by loading the data twice), but
+	// only until the map (projected_crs_spec) is saved once.
+	// If the TemplateTrack approach failed, use local approach.
+	TemplateTrack track{template_path, map};
+	if (track.track.loadFrom(template_path, false))
+		return makeGeoreferencing(track.calculateLocalGeoreferencing());
+	else
+		return makeOrthographicGeoreferencing(template_path);
+}
 
-bool OgrTemplate::preLoadConfiguration(QWidget* dialog_parent)
+std::unique_ptr<Georeferencing> OgrTemplate::makeGeoreferencing(const QString& spec) const
+{
+	auto georef = std::make_unique<Georeferencing>();
+	georef->setScaleDenominator(int(map->getScaleDenominator()));
+	georef->setProjectedCRS(QString{}, spec);
+	georef->setProjectedRefPoint({}, false, false);
+	georef->setCombinedScaleFactor(1.0);
+	georef->setGrivation(0.0);
+	return georef;
+}
+
+
+bool OgrTemplate::preLoadSetup(QWidget* dialog_parent)
 try
 {
 	is_georeferenced = false;
 	explicit_georef.reset();
+	map_configuration_georef.reset();
 	track_crs_spec.clear();
+	projected_crs_spec.clear();
 	transform = {};
 	updateTransformationMatrices();
 	
@@ -252,6 +265,8 @@ try
 		if (OgrFileImport::checkGeoreferencing(template_path, map->getGeoreferencing()))
 		{
 			is_georeferenced = true;
+			// Data is to be transformed to the map CRS directly.
+			track_crs_spec = Georeferencing::geographic_crs_spec;
 			return true;
 		}
 	}
@@ -272,6 +287,9 @@ try
 		else
 			preserveRefPoints(*data_georef, initial_georef);
 		explicit_georef = std::move(data_georef);
+		// Data is to be transformed to the projected CRS.
+		track_crs_spec = Georeferencing::geographic_crs_spec;
+		projected_crs_spec = explicit_georef->getProjectedCRSSpec();
 	}
 	
 	TemplatePositioningDialog dialog(dialog_parent);
@@ -294,9 +312,17 @@ catch (FileFormatException& e)
 }
 
 
-bool OgrTemplate::loadTemplateFileImpl(bool configuring)
+bool OgrTemplate::loadTemplateFileImpl()
 try
 {
+	if (explicit_georef_pending)
+	{
+		// Need to create an orthographic projection during data loading.
+		explicit_georef = makeOrthographicGeoreferencing();
+		projected_crs_spec = explicit_georef->getProjectedCRSSpec();
+		explicit_georef_pending = false;
+	}
+	
 	auto new_template_map = std::make_unique<Map>();
 	auto unit_type = use_real_coords ? OgrFileImport::UnitOnGround : OgrFileImport::UnitOnPaper;
 	OgrFileImport importer{template_path, new_template_map.get(), nullptr, unit_type };
@@ -305,78 +331,6 @@ try
 	updateView(*new_template_map);
 	
 	const auto& map_georef = map->getGeoreferencing();
-	
-	if (template_track_compatibility)
-	{
-		if (configuring)
-		{
-			if (is_georeferenced)
-			{
-				// Data is to be transformed to the map CRS directly.
-				track_crs_spec = Georeferencing::geographic_crs_spec;
-				projected_crs_spec.clear();
-			}
-			else if (explicit_georef)
-			{
-				// Data is to be transformed to the projected CRS.
-				track_crs_spec = Georeferencing::geographic_crs_spec;
-				projected_crs_spec = explicit_georef->getProjectedCRSSpec();
-			}
-			else
-			{
-				track_crs_spec.clear();
-				projected_crs_spec.clear();
-			}
-		}
-		else
-		{
-			if (is_georeferenced)
-			{
-				// Data is to be transformed to the map CRS directly.
-				Q_ASSERT(projected_crs_spec.isEmpty());
-			}
-			else if (!track_crs_spec.contains(QLatin1String("+proj=latlong")))
-			{
-				// Nothing to do with this configuration
-				Q_ASSERT(projected_crs_spec.isEmpty());
-			}
-			else if (!explicit_georef)
-			{
-				// Data is to be transformed to the projected CRS.
-				if (projected_crs_spec.isEmpty())
-				{
-					// Need to create an orthographic projection.
-					// For a transition period, copy behaviour from
-					// TemplateTrack::loadTemplateFileImpl(),
-					// TemplateTrack::calculateLocalGeoreferencing().
-					// This is an extra expense (by loading the data twice), but
-					// only until the map (projected_crs_spec) is saved once.
-					TemplateTrack track{template_path, map};
-					if (track.track.loadFrom(template_path, false))
-					{
-						projected_crs_spec = track.calculateLocalGeoreferencing();
-					}
-					else
-					{
-						// If the TemplateTrack approach failed, use local approach.
-						explicit_georef = makeOrthographicGeoreferencing(template_path);
-						projected_crs_spec = explicit_georef->getProjectedCRSSpec();
-					}
-				}
-				
-				if (!explicit_georef)
-				{
-					explicit_georef = std::make_unique<Georeferencing>();
-					explicit_georef->setScaleDenominator(int(map_georef.getScaleDenominator()));
-					explicit_georef->setProjectedCRS(QString{}, projected_crs_spec);
-					explicit_georef->setProjectedRefPoint({}, false, false);
-					explicit_georef->setCombinedScaleFactor(1.0);
-					explicit_georef->setGrivation(0.0);
-				}
-			}
-		}
-	}
-	
 	
 	if (is_georeferenced || !explicit_georef)
 	{
@@ -429,7 +383,7 @@ catch (FileFormatException& e)
 }
 
 
-bool OgrTemplate::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
+bool OgrTemplate::postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view)
 {
 	Q_UNUSED(dialog_parent)
 	out_center_in_view = center_in_view;
@@ -437,39 +391,18 @@ bool OgrTemplate::postLoadConfiguration(QWidget* dialog_parent, bool& out_center
 }
 
 
-
-void OgrTemplate::mapProjectionChanged()
+bool OgrTemplate::canChangeTemplateGeoreferenced() const
 {
-	if (is_georeferenced && template_state == Template::Loaded)
-		reloadLater();
+	return false;
 }
+
+
 
 void OgrTemplate::mapTransformationChanged()
 {
 	if (is_georeferenced)
 	{
-		if (template_state != Template::Loaded)
-			return;
-		
-		auto const& templ_georef = templateMap()->getGeoreferencing();
-		auto const& map_georef = map->getGeoreferencing();
-		if (templateMap()->getScaleDenominator() == map->getScaleDenominator()
-		    && templ_georef.getProjectedCRSSpec() == map_georef.getProjectedCRSSpec())
-		{
-			auto const t = templ_georef.mapToProjected() * map_georef.projectedToMap();
-			templateMap()->applyOnAllObjects([&t](Object* o) { o->transform(t); });
-			templateMap()->setGeoreferencing(map_georef);
-		}
-		else
-		{
-			// If the projected CRS changed: The necessary transformation
-			//   involves at least two CRS and might give imprecise results.
-			// If the scale changed: We can't know how to correctly scale
-			//   symbol dimensions.
-			// Reloading is a slow but safe way to get the same results as they
-			// will appear when opening the file the next time.
-			reloadLater();
-		}
+		TemplateMap::mapTransformationChanged();
 	}
 	else if (explicit_georef)
 	{
@@ -478,34 +411,15 @@ void OgrTemplate::mapTransformationChanged()
 	else if (template_state == Template::Loaded)
 	{
 		template_track_compatibility = false;
-		if (!explicit_georef)
-		{
-			explicit_georef = std::make_unique<Georeferencing>(templateMap()->getGeoreferencing());
-			resetTemplatePositionOffset();
-		}
+		explicit_georef = std::make_unique<Georeferencing>(templateMap()->getGeoreferencing());
+		resetTemplatePositionOffset();
 	}
-}
-
-
-
-void OgrTemplate::reloadLater()
-{
-	if (reload_pending)
-		return;
-	setTemplateAreaDirty();
-	if (template_state == Loaded)
-		templateMap()->clear(); // no expensive operations before reloading
-	QTimer::singleShot(0, this, &OgrTemplate::reload);
-	reload_pending = true;
-}
-
-void OgrTemplate::reload()
-{
-	if (template_state == Loaded)
-		unloadTemplateFile();
-	loadTemplateFile(false);
-	reload_pending = false;
-	setTemplateAreaDirty();
+	else if (map_configuration_georef)
+	{
+		template_track_compatibility = false;
+		explicit_georef = std::move(map_configuration_georef);
+		resetTemplatePositionOffset();
+	}
 }
 
 
@@ -568,6 +482,44 @@ bool OgrTemplate::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	return true;
 }
 
+bool OgrTemplate::finishTypeSpecificTemplateConfiguration()
+{
+	if (!TemplateMap::finishTypeSpecificTemplateConfiguration())
+		return false;
+	
+	if (template_track_compatibility)
+	{
+		if (is_georeferenced)
+		{
+			// Data is to be transformed to the map CRS directly.
+			Q_ASSERT(projected_crs_spec.isEmpty());
+		}
+		else if (!track_crs_spec.contains(QLatin1String("+proj=latlong")))
+		{
+			// Nothing to do with this configuration
+			Q_ASSERT(projected_crs_spec.isEmpty());
+			if (!explicit_georef)
+				map_configuration_georef = std::make_unique<Georeferencing>(map->getGeoreferencing());
+		}
+		else if (projected_crs_spec.isEmpty())
+		{
+			// Data is to be transformed to a projected CRS.
+			// But we cannot calculate this georeferencing now,
+			// because the template path is not yet validated.
+			explicit_georef_pending = !explicit_georef;
+		}
+		else if (!explicit_georef)
+		{
+			// Data is to be transformed to the projected CRS.
+			explicit_georef = makeGeoreferencing(projected_crs_spec);
+		}
+	}
+	else if (!is_georeferenced && !explicit_georef)
+	{
+		map_configuration_georef = std::make_unique<Georeferencing>(map->getGeoreferencing());
+	}
+	return true;
+}
 
 void OgrTemplate::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {

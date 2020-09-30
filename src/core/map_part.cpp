@@ -125,6 +125,12 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol
 	return part;
 }
 
+
+bool MapPart::contains(const Object* const object) const
+{
+	return existsObject([object](auto const* o) { return object == o; });
+}
+
 int MapPart::findObjectIndex(const Object* object) const
 {
 	int size = objects.size();

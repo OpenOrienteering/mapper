@@ -47,6 +47,7 @@
 #include <QVarLengthArray>
 
 #include "core/map.h"
+#include "core/map_part.h"
 #include "core/path_coord.h"
 #include "core/virtual_coord_vector.h"
 #include "core/virtual_path.h"
@@ -164,9 +165,10 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coor
 			{
 				if (!editingInProgress())
 				{
-					if (snap_info.type == SnappingToolHelper::ObjectCorners &&
-						(snap_info.coord_index == 0 || snap_info.coord_index == snap_info.object->asPath()->getCoordinateCount() - 1) &&
-						snap_info.object->getSymbol() == editor->activeSymbol())
+					if (snap_info.type == SnappingToolHelper::ObjectCorners
+					    && (snap_info.coord_index == 0 || snap_info.coord_index == snap_info.object->asPath()->getCoordinateCount() - 1)
+					    && snap_info.object->getSymbol() == editor->activeSymbol()
+					    && map()->getCurrentPart()->contains(snap_info.object))
 					{
 						// Appending to another path
 						start_appending = true;

@@ -63,7 +63,7 @@ const char* GdalTemplate::getTemplateType() const
 	return "GdalTemplate";
 }
 
-bool GdalTemplate::loadTemplateFileImpl(bool configuring)
+bool GdalTemplate::loadTemplateFileImpl()
 {
 	GdalImageReader reader(template_path);
 	if (!reader.canRead())
@@ -92,7 +92,7 @@ bool GdalTemplate::loadTemplateFileImpl(bool configuring)
 	
 	// Duplicated from TemplateImage, for compatibility
 	available_georef = findAvailableGeoreferencing(reader.readGeoTransform());
-	if (!configuring && is_georeferenced)
+	if (is_georeferenced)
 	{
 		if (!isGeoreferencingUsable())
 		{

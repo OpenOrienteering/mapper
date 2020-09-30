@@ -19,6 +19,7 @@
 
 #include <algorithm>
 #include <cstring>
+#include <exception>
 #include <iostream>
 #include <iterator>
 #include <string>
@@ -102,7 +103,6 @@ void dumpGdalDrivers()
 	
 	std::vector<std::string> raster_import_drivers;
 	std::vector<std::string> vector_import_drivers;
-	std::vector<std::string> secondary_vector_import_drivers;
 	std::vector<std::string> vector_export_drivers;
 	
 	auto const count = GDALGetDriverCount();
@@ -155,15 +155,21 @@ void dumpGdalDrivers()
 	prefixDuplicates(qimagereader_extensions, raster_import_drivers, "raster.");
 	
 	std::cout << "## GDAL driver list for OpenOrienteering Mapper" << std::endl << std::endl;
-	dumpDriverList("Raster import drivers", std::move(raster_import_drivers));
-	dumpDriverList("Vector import drivers", std::move(vector_import_drivers));
-	dumpDriverList("Vector export drivers", std::move(vector_export_drivers));
+	dumpDriverList("### Raster import drivers", std::move(raster_import_drivers));
+	dumpDriverList("### Vector import drivers", std::move(vector_import_drivers));
+	dumpDriverList("### Vector export drivers", std::move(vector_export_drivers));
 }
 
 
 int main(int /*argc*/, char** /*argv*/)
+try
 {
 	GDALAllRegister();
 	dumpGdalDrivers();
 	return 0;
+}
+catch (std::exception& e)
+{
+	std::cout << "Exception: " << e.what() << std::endl;
+	return 1;
 }

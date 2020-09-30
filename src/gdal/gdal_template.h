@@ -54,7 +54,7 @@ public:
 	const char* getTemplateType() const override;
 	
 protected:
-	bool loadTemplateFileImpl(bool configuring) override;
+	bool loadTemplateFileImpl() override;
 	
 };
 

@@ -39,6 +39,7 @@
 #include <QPen>
 #include <QRect>
 #include <QRgb>
+#include <QSize>
 #include <QStringRef>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -244,7 +245,7 @@ bool TemplateTrack::saveTemplateFile() const
     return track.saveTo(template_path);
 }
 
-bool TemplateTrack::loadTemplateFileImpl(bool configuring)
+bool TemplateTrack::loadTemplateFileImpl()
 {
 	if (preserved_georef)
 	{
@@ -261,7 +262,7 @@ bool TemplateTrack::loadTemplateFileImpl(bool configuring)
 	if (!track.loadFrom(template_path, false))
 		return false;
 	
-	if (!configuring)
+	if (getTemplateState() != Configuring)
 	{
 		if (!is_georeferenced)
 		{
@@ -279,7 +280,7 @@ bool TemplateTrack::loadTemplateFileImpl(bool configuring)
 	return true;
 }
 
-bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& /*out_center_in_view*/)
+bool TemplateTrack::postLoadSetup(QWidget* dialog_parent, bool& /*out_center_in_view*/)
 {
 	is_georeferenced = true;
 	
@@ -397,7 +398,7 @@ void TemplateTrack::drawWaypoints(QPainter* painter) const
 	QFont font = painter->font();
 	font.setPixelSize(2); // 2 mm at 100%
 	painter->setFont(font);
-	int height = painter->fontMetrics().height();
+	auto const font_metrics = painter->fontMetrics();
 	
 	int size = track.getNumWaypoints();
 	for (int i = 0; i < size; ++i)
@@ -410,11 +411,11 @@ void TemplateTrack::drawWaypoints(QPainter* painter) const
 		if (!point_name.isEmpty())
 		{
 			painter->setPen(qRgb(255, 0, 0));
-			int width = painter->fontMetrics().width(point_name);
-			painter->drawText(QRect(qRound(point.map_coord.x() - 0.5*width),
-			                        qRound(point.map_coord.y() - height),
-			                        width,
-			                        height),
+			auto const size = font_metrics.boundingRect(point_name).size();
+			painter->drawText(QRect(qRound(point.map_coord.x() - 0.5*size.width()),
+			                        qRound(point.map_coord.y() - size.height()),
+			                        size.width(),
+			                        size.height()),
 			                  Qt::AlignCenter,
 			                  point_name);
 			painter->setPen(Qt::NoPen);
@@ -455,7 +456,7 @@ QRectF TemplateTrack::calculateTemplateBoundingBox() const
 	return bbox;
 }
 
-int TemplateTrack::getTemplateBoundingBoxPixelBorder()
+int TemplateTrack::getTemplateBoundingBoxPixelBorder() const
 {
 	// As we don't estimate the extent of the widest waypoint text,
 	// return a "very big" number to cover everything

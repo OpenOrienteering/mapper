@@ -672,10 +672,13 @@ Footprint: 6 m diameter (7.5 m diameter).</source>
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
 
-To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
-of the boulders.</source>
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un peñasco que es mayor que los peñascos vecinos (204), o una peña que es menor que las peñas vecinas (205).
+
+Para poder mostrar la distinción entre peñascos (204) vecinos (separadas por menos de 30 metros) con marcadas diferencias de tamaño, se permite utilizar este símbolo (0,5 mm) como un aumento del símbol 204 para los peñascos mayores.
+
+Para poder mostrar la distinción entre peñas (205) vecinas (separadas por menos de 30 metros) con marcadas diferencias de tamaño, se permite utilizar este símbolo (0,5 mm) como una reducción del símbol 205 para las peñas menores.</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -1459,7 +1462,7 @@ Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <source>Cultivated land. This symbol must be used together with another symbol:
 - For land used for growing crops, combine with symbol Open land (401).
 - For agroforrestry, use with symbol Forest (405) or Open land with scattered trees (402).
-Runnability may vary according to the type of crops or trees, and the time of year. 
+Runnability may vary according to the type of crops or trees, and the time of year.
 Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
@@ -1869,7 +1872,7 @@ Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 
         <translation>Muro</translation>
     </message>
     <message>
-        <source>A significant wall of stone, concrete, wood or other materials. 
+        <source>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 513</comment>
@@ -1882,8 +1885,7 @@ Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
     </message>
     <message>
         <source>A ruined or less distinct wall. Minimum height 0.5 m.
-Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object
-must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
+Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
         <comment>Description of symbol 514</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -2310,7 +2312,7 @@ North lines shall be broken to improve the legibility of the map, for instance w
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
-Water levels are given without the dot. 
+Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</source>
         <comment>Description of symbol 603.0</comment>
         <translation type="unfinished"></translation>
@@ -2322,7 +2324,7 @@ Spot heights must only be used where they do not conflict with other symbols.</s
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
-Water levels are given without the dot. 
+Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</source>
         <comment>Description of symbol 603.1</comment>
         <translation type="unfinished"></translation>
@@ -2867,8 +2869,7 @@ Las depresiones peqeñas con laterales empinados se representan con el símbolo 
         <translation>Hoyo</translation>
     </message>
     <message>
-        <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of
-gravity of the symbol, and the symbol is orientated to north.</source>
+        <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.</source>
         <comment>Description of symbol 112</comment>
         <translation>Hoyos y agujeros con evidentes laterales empinados que no se pueden representar a escala utilizando el símbolo 104 (terraplén). Profundidad mínima: 1 m. Anchura mínima: 1 m. Un hoyo mayor de 5 m x 5 m normalmente se debería exagerar y dibujar utilizando el símbolo 104 (terraplén). Los hoyos sin laterales empinados se representan con el símbolo 111 (depresión pequeña). La ubicación del símbolo es el centro de gravedad del mismo, y el símbolo está orientado al norte.</translation>
     </message>
@@ -2956,7 +2957,7 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
         <comment>Description of symbol 201.1</comment>
         <translation>Un cortado, excavación o terraplén que es tan alto y empinado que es imposible pasar/ascender o es peligroso.
-Los extremos de la línea superior pueden ser redondeados o cuadrados. 
+Los extremos de la línea superior pueden ser redondeados o cuadrados.
 El espacio entre dos cortados impasables o entre cortados impasables y otros símbolos de elementos impasables debe ser superior a 0,3 mm sobre el mapa.
 Cuando un cortado impasable cae directamente sobre el agua, haciendo imposible pasar bajo el cortado por el borde del agua, la línea de la orilla se omite o las líneas de extensión superarán claramente la línea de la orilla. Un cortado impasable debería acoplarse con las curvas de nivel.</translation>
     </message>
@@ -2972,7 +2973,7 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
         <comment>Description of symbol 201.2</comment>
         <translation>Un cortado, excavación o terraplén que es tan alto y empinado que es imposible pasar/ascender o es peligroso.
-Para paredes verticales de roca se pueden omitir las líneas de extensión si hay escasez de espacio.  &lt;b&gt;Para representación de forma plana, la anchura mínima es 0,35 mm.&lt;/b&gt; Las líneas de extensión pueden ser más cortas en los extremos.
+Para paredes verticales de roca se pueden omitir las líneas de extensión si hay escasez de espacio. &lt;b&gt;Para representación de forma plana, la anchura mínima es 0,35 mm.&lt;/b&gt; Las líneas de extensión pueden ser más cortas en los extremos.
 El espacio entre dos cortados impasables o entre cortados impasables y otros símbolos de elementos impasables debe ser superior a 0,3 mm sobre el mapa.
 Cuando un cortado impasable cae directamente sobre el agua, haciendo imposible pasar bajo el cortado por el borde del agua, la línea de la orilla se omite o las líneas de extensión superarán claramente la línea de la orilla. Un cortado impasable debería acoplarse con las curvas de nivel.</translation>
     </message>
@@ -3008,7 +3009,7 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
         <comment>Description of symbol 201.9</comment>
         <translation>Un cortado, excavación o terraplén que es tan alto y empinado que es imposible pasar/ascender o es peligroso.
-Los extremos de la línea superior pueden ser redondeados o cuadrados. 
+Los extremos de la línea superior pueden ser redondeados o cuadrados.
 El espacio entre dos cortados impasables o entre cortados impasables y otros símbolos de elementos impasables debe ser superior a 0,3 mm sobre el mapa.
 Cuando un cortado impasable cae directamente sobre el agua, haciendo imposible pasar bajo el cortado por el borde del agua, la línea de la orilla se omite o las líneas de extensión superarán claramente la línea de la orilla. Un cortado impasable debería acoplarse con las curvas de nivel.</translation>
     </message>
@@ -3052,7 +3053,7 @@ Ends of the top line may be rounded or square. A passage between two cliffs must
 Crossing a cliff will normally slow progress.</source>
         <comment>Description of symbol 202.2</comment>
         <translation>Un cortado o excavación pasable. Altura mínima: 1 m.
-Las pequeñas líneas de extensión indican la dirección de caída de la pendiente ya que dicha dirección de caída no es deducible de las curvas de nivel, o también mejoran la legibilidad. En cortados no verticales, las líneas de extensión deberían dibujarse para mostrar la extensión horizontal completa. 
+Las pequeñas líneas de extensión indican la dirección de caída de la pendiente ya que dicha dirección de caída no es deducible de las curvas de nivel, o también mejoran la legibilidad. En cortados no verticales, las líneas de extensión deberían dibujarse para mostrar la extensión horizontal completa.
 Los extremos de la línea superior pueden ser redondeados o cuadrados. Un pasillo entre dos cortados debe ser de al menos 0,2 mm. Un cortado debería acoplarse con las curvas de nivel.
 Superar un cortado normalmente ralentizará la progresión.</translation>
     </message>
@@ -3068,7 +3069,7 @@ Ends of the top line may be rounded or square. A passage between two cliffs must
 Crossing a cliff will normally slow progress.</source>
         <comment>Description of symbol 202.3</comment>
         <translation>Un cortado o excavación pasable. Altura mínima: 1 m.
-Las pequeñas líneas de extensión indican la dirección de caída de la pendiente ya que dicha dirección de caída no es deducible de las curvas de nivel, o también mejoran la legibilidad. En cortados no verticales, las líneas de extensión deberían dibujarse para mostrar la extensión horizontal completa. 
+Las pequeñas líneas de extensión indican la dirección de caída de la pendiente ya que dicha dirección de caída no es deducible de las curvas de nivel, o también mejoran la legibilidad. En cortados no verticales, las líneas de extensión deberían dibujarse para mostrar la extensión horizontal completa.
 Los extremos de la línea superior pueden ser redondeados o cuadrados. Un pasillo entre dos cortados debe ser de al menos 0,2 mm. Un cortado debería acoplarse con las curvas de nivel.
 Superar un cortado normalmente ralentizará la progresión.</translation>
     </message>
@@ -3084,7 +3085,7 @@ Ends of the top line may be rounded or square. A passage between two cliffs must
 Crossing a cliff will normally slow progress.</source>
         <comment>Description of symbol 202.9</comment>
         <translation>Un cortado o excavación pasable. Altura mínima: 1 m.
-Las pequeñas líneas de extensión indican la dirección de caída de la pendiente ya que dicha dirección de caída no es deducible de las curvas de nivel, o también mejoran la legibilidad. En cortados no verticales, las líneas de extensión deberían dibujarse para mostrar la extensión horizontal completa. 
+Las pequeñas líneas de extensión indican la dirección de caída de la pendiente ya que dicha dirección de caída no es deducible de las curvas de nivel, o también mejoran la legibilidad. En cortados no verticales, las líneas de extensión deberían dibujarse para mostrar la extensión horizontal completa.
 Los extremos de la línea superior pueden ser redondeados o cuadrados. Un pasillo entre dos cortados debe ser de al menos 0,2 mm. Un cortado debería acoplarse con las curvas de nivel.
 Superar un cortado normalmente ralentizará la progresión.</translation>
     </message>
@@ -3654,11 +3655,9 @@ Se puede combinar con el símbolo 407 (vegetación, carrera lenta, buena visibil
     </message>
     <message>
         <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
-The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow
-running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
+The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
 The symbol is orientated to north.
-Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
-open land).</source>
+Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough open land).</source>
         <comment>Description of symbol 404</comment>
         <translation>Las zonas con árboles dispersos o arbustos en monte despejado se pueden generalizar utilizando un patrón regular de grandes puntos dentro de la trama amarilla.
 Los puntos pueden ser blancos (árboles dispersos) o verdes (arbustos/matorrales dispersos). Sólo la variante de puntos blancos se puede combinar con el símbolo 407 (vegetación, carrera lenta, buena visibilidad) o el 409 (vegetación, caminar, buena visibilidad) para indicar una reducción de la velocidad de carrera.
@@ -3672,11 +3671,9 @@ Anchura mínima: 1,5 mm (huella 22,5 m). Área mínima: 2,5 x 2,5 mm. Las áreas
     </message>
     <message>
         <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
-The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow
-running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
+The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
 The symbol is orientated to north.
-Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
-open land).</source>
+Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough open land).</source>
         <comment>Description of symbol 404.1</comment>
         <translation>Las zonas con árboles dispersos o arbustos en monte despejado se pueden generalizar utilizando un patrón regular de grandes puntos dentro de la trama amarilla.
 Los puntos pueden ser blancos (árboles dispersos) o verdes (arbustos/matorrales dispersos). Sólo la variante de puntos blancos se puede combinar con el símbolo 407 (vegetación, carrera lenta, buena visibilidad) o el 409 (vegetación, caminar, buena visibilidad) para indicar una reducción de la velocidad de carrera.
@@ -3849,7 +3846,7 @@ Anchura mínima: 0,35 mm</translation>
 Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is combined with symbol 709 (out of bounds area) to show cultivated land that shall not be entered.</source>
         <comment>Description of symbol 412</comment>
-        <translation>Terreno cultivado, normalmente usado para el crecimiento de las cosechas. La velocidad de carrera puede variar según el tipo de cultivos y la época del año. Para plantaciones forestales,  se puede utilizar el símbolo 405 (bosque) o el 402 (campo abierto con árboles dispersos) en lugar del amarillo.
+        <translation>Terreno cultivado, normalmente usado para el crecimiento de las cosechas. La velocidad de carrera puede variar según el tipo de cultivos y la época del año. Para plantaciones forestales, se puede utilizar el símbolo 405 (bosque) o el 402 (campo abierto con árboles dispersos) en lugar del amarillo.
 Como la velocidad de carrera puede variar, estas zonas deberían evitarse al trazar los recorridos.
 El símbolo se combina con el 709 (zona prohibida) para representar terreno cultivado al que no se debe entrar.</translation>
     </message>
@@ -4014,10 +4011,7 @@ Huella: 7,5 m x 7,5 m.</translation>
     <message>
         <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 +
 2*0.14 mm – footprint 8.7 m)
-The outer boundary lines may be replaced with other black line symbols, such as
-symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) if the
-feature is so close to the road edge that it cannot practically be shown as a separate
-symbol.</source>
+The outer boundary lines may be replaced with other black line symbols, such as symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.</source>
         <comment>Description of symbol 502</comment>
         <translation>La anchura deberái dibujarse a escala, pero no menor que la anchura mínima (0,3 + 2*0,14 - huella 8,7 m)
 Las líneas delimitadoras exteriores pueden remplazarse con otros símbolos de líneas negras, tales como el 516 (valla), 518 (valla impasable), 513 (muro) o 515 (muro impasable) si el elemento está tan próximo al borde de la carretera que no puede representarse en la práctica como separado.</translation>
@@ -4991,7 +4985,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
         <comment>Description of symbol 103</comment>
-        <translation>Una curva de nivel intermedia. Las curvas auxiliares se utilizan donde se debe aportar más información sobre la forma del terreno. Las curvas auxiliares se añaden sólamente donde la representación sería incompleta con curvas normales.  Solo una única curva auxiliar se debe utilizar entre curvas vecinas.</translation>
+        <translation>Una curva de nivel intermedia. Las curvas auxiliares se utilizan donde se debe aportar más información sobre la forma del terreno. Las curvas auxiliares se añaden sólamente donde la representación sería incompleta con curvas normales. Solo una única curva auxiliar se debe utilizar entre curvas vecinas.</translation>
     </message>
     <message>
         <source>Slope line</source>
@@ -5019,7 +5013,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <translation>Terraplén</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
         <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes impasables se deben representar utilizando el símbolo 201 (cortado impasable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
     </message>
@@ -5029,7 +5023,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <translation>Terraplén, tamaño mínimo</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
         <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes impasables se deben representar utilizando el símbolo 201 (cortado impasable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
     </message>
@@ -5886,7 +5880,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
         <comment>Description of symbol 103</comment>
-        <translation>Una curva de nivel intermedia. Las curvas auxiliares se utilizan donde se debe aportar más información sobre la forma del terreno. Las curvas auxiliares se añaden sólamente donde la representación sería incompleta con curvas normales.  Solo una única curva auxiliar se debe utilizar entre curvas vecinas.</translation>
+        <translation>Una curva de nivel intermedia. Las curvas auxiliares se utilizan donde se debe aportar más información sobre la forma del terreno. Las curvas auxiliares se añaden sólamente donde la representación sería incompleta con curvas normales. Solo una única curva auxiliar se debe utilizar entre curvas vecinas.</translation>
     </message>
     <message>
         <source>Slope line, form line</source>
@@ -6872,7 +6866,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
+        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
@@ -6885,7 +6879,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
+        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
@@ -6955,7 +6949,7 @@ Minimum area: 9 mm² (144 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses. 
+        <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is combined with symbol Out-of-bounds area (709) to show cultivated land that shall not be entered.
 Minimum width: 3 mm.
 Minimum area: 9 mm² (144 m²).</source>
@@ -7396,7 +7390,7 @@ The bars indicate the exact location of the pylons. If a section of a power line
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles. 
+        <source>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles.
 Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 &lt;span style=&quot;color: red&quot;&gt;Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
@@ -7673,7 +7667,7 @@ Minimum length: 2.2 mm (footprint 8.8 m).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track. 
+        <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track.
 The definition of the symbol must be given on the map.
 A prominent impassable line feature shall not be crossed.
 Minimum length: 3 mm (footprint 12 m).</source>
@@ -8145,7 +8139,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
         <comment>Description of symbol 103</comment>
-        <translation>Una curva de nivel intermedia. Las curvas auxiliares se utilizan donde se debe aportar más información sobre la forma del terreno. Las curvas auxiliares se añaden sólamente donde la representación sería incompleta con curvas normales.  Solo una única curva auxiliar se debe utilizar entre curvas vecinas.</translation>
+        <translation>Una curva de nivel intermedia. Las curvas auxiliares se utilizan donde se debe aportar más información sobre la forma del terreno. Las curvas auxiliares se añaden sólamente donde la representación sería incompleta con curvas normales. Solo una única curva auxiliar se debe utilizar entre curvas vecinas.</translation>
     </message>
     <message>
         <source>Slope line</source>
@@ -8700,7 +8694,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <translation>Terraplén</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
         <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes impasables se deben representar utilizando el símbolo 201 (cortado impasable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
     </message>
@@ -8710,7 +8704,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <translation>Terraplén, tamaño mínimo</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
         <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes impasables se deben representar utilizando el símbolo 201 (cortado impasable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
     </message>
@@ -9054,8 +9048,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <translation>Huerto de árboles frutales</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -9195,9 +9188,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud,
-erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be
-required to dismount. Speed max 25 %.</source>
+        <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud, erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 837</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -9277,8 +9268,7 @@ required to dismount. Speed max 25 %.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to
-cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
+        <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 521</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -9528,10 +9518,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <translation>Ruta señalizada</translation>
     </message>
     <message>
-        <source>A marked route is shown on the map with a dashed line. If the symbol is used instead
-of symbol 704 before or after a control, it represents an obligatory route for the
-competitors. The symbol can also be used in areas where off-track riding is forbidden
-to represent allowed routes that are marked in the terrain.</source>
+        <source>A marked route is shown on the map with a dashed line. If the symbol is used instead of symbol 704 before or after a control, it represents an obligatory route for the competitors. The symbol can also be used in areas where off-track riding is forbidden to represent allowed routes that are marked in the terrain.</source>
         <comment>Description of symbol 705</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -9586,11 +9573,7 @@ to represent allowed routes that are marked in the terrain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The
-zigzag line should be as continuous as possible. If there is a crossing point over the
-forbidden route, it shall be presented like a gate by two perpendicular lines over the
-forbidden route. Also a longer crossing section shall be presented clearly on the map
-by using the perpendicular lines at the end of the zigzag lines.</source>
+        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
         <comment>Description of symbol 711.1</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -9666,7 +9649,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
         <comment>Description of symbol 103</comment>
-        <translation>Una curva de nivel intermedia. Las curvas auxiliares se utilizan donde se debe aportar más información sobre la forma del terreno. Las curvas auxiliares se añaden sólamente donde la representación sería incompleta con curvas normales.  Solo una única curva auxiliar se debe utilizar entre curvas vecinas.</translation>
+        <translation>Una curva de nivel intermedia. Las curvas auxiliares se utilizan donde se debe aportar más información sobre la forma del terreno. Las curvas auxiliares se añaden sólamente donde la representación sería incompleta con curvas normales. Solo una única curva auxiliar se debe utilizar entre curvas vecinas.</translation>
     </message>
     <message>
         <source>Small earth wall</source>
@@ -10465,7 +10448,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
         <comment>Description of symbol 103</comment>
-        <translation>Una curva de nivel intermedia. Las curvas auxiliares se utilizan donde se debe aportar más información sobre la forma del terreno. Las curvas auxiliares se añaden sólamente donde la representación sería incompleta con curvas normales.  Solo una única curva auxiliar se debe utilizar entre curvas vecinas.</translation>
+        <translation>Una curva de nivel intermedia. Las curvas auxiliares se utilizan donde se debe aportar más información sobre la forma del terreno. Las curvas auxiliares se añaden sólamente donde la representación sería incompleta con curvas normales. Solo una única curva auxiliar se debe utilizar entre curvas vecinas.</translation>
     </message>
     <message>
         <source>Slope line</source>
@@ -10493,7 +10476,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Terraplén</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
         <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes impasables se deben representar utilizando el símbolo 201 (cortado impasable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
     </message>
@@ -10503,7 +10486,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Terraplén, tamaño mínimo</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
         <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes impasables se deben representar utilizando el símbolo 201 (cortado impasable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
     </message>
@@ -11662,10 +11645,13 @@ Footprint: 6 m diameter (7.5 m diameter).</source>
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
 
-To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
-of the boulders.</source>
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un peñasco que es mayor que los peñascos vecinos (204), o una peña que es menor que las peñas vecinas (205).
+
+Para poder mostrar la distinción entre peñascos (204) vecinos (separadas por menos de 30 metros) con marcadas diferencias de tamaño, se permite utilizar este símbolo (0,5 mm) como un aumento del símbol 204 para los peñascos mayores.
+
+Para poder mostrar la distinción entre peñas (205) vecinas (separadas por menos de 30 metros) con marcadas diferencias de tamaño, se permite utilizar este símbolo (0,5 mm) como una reducción del símbol 205 para las peñas menores.</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -12283,7 +12269,7 @@ Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 
         <translation>Muro</translation>
     </message>
     <message>
-        <source>A significant wall of stone, concrete, wood or other materials. 
+        <source>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 513</comment>
@@ -12712,8 +12698,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks
-rougher and softer than the wide skateable tracks in the area.</source>
+        <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks rougher and softer than the wide skateable tracks in the area.</source>
         <comment>Description of symbol 802</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -12723,8 +12708,7 @@ rougher and softer than the wide skateable tracks in the area.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may
-be made wider to reduce widening during competition.</source>
+        <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may be made wider to reduce widening during competition.</source>
         <comment>Description of symbol 803</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -12734,9 +12718,7 @@ be made wider to reduce widening during competition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
-slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
-technique for slowing and stopping.
+        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing technique for slowing and stopping.
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
@@ -12758,9 +12740,7 @@ In order to clarify a junction, the beginning of a slow track is drawn with a sh
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -12770,9 +12750,7 @@ heavily sanded roads should normally be marked as forbidden routes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -12826,8 +12804,7 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
-The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
+The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -12839,8 +12816,7 @@ that it is more clearly visible in the track network.</source>
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
-The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
+The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809.1</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -13102,7 +13078,7 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty. 
+        <source>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty.
  - Scheme: | Course code | Length | Height climb |
  - The course length is given in kilometres rounded to the nearest 0.1 km.
  - The height climb is given in metres rounded to the nearest 5 m.</source>
@@ -13115,7 +13091,7 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Scheme of columns: |A|B|C|D|E|F|G|H| 
+        <source>Scheme of columns: |A|B|C|D|E|F|G|H|
 
 A: Control number
 B: Control code
@@ -13357,7 +13333,7 @@ Map symbol: ISOM 106</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.s
+        <source>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.
 
 Map symbols: ISOM 107, 108</source>
         <comment>Description of symbol 1.6</comment>

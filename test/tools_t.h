@@ -34,6 +34,8 @@ private slots:
 	void initTestCase();
 	
 	void editTool();
+	
+	void paintOnTemplateFeature();
 };
 
 #endif

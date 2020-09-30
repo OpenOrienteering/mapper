@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2017, 2018 Kai Pastor
+ *    Copyright 2017-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,35 +27,27 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QColor>
-#include <QDialog>
+#include <QFlags>
 #include <QObject>
 #include <QPointer>
 #include <QRectF>
-#include <QSize>
 #include <QString>
-#include <QWidget>
 
 #include "core/map_coord.h"
+#include "templates/template.h"
 #include "tools/tool.h"
 
 class QAction;
+class QActionGroup;
 class QCursor;
-class QListWidget;
 class QMouseEvent;
-class QPaintEvent;
 class QPainter;
-class QPushButton;
-class QRect;
 
 namespace OpenOrienteering {
 
-class MainWindow;
-class Map;
+class ActionGridBar;
 class MapEditorController;
-class MapView;
 class MapWidget;
-class PaintOnTemplatePaletteWidget;
-class Template;
 
 
 /**
@@ -65,6 +57,13 @@ class PaintOnTemplateTool : public MapEditorTool
 {
 Q_OBJECT
 public:
+	enum ErasingOption {
+		NoErasing = 0,
+		ExplicitErasing = 1,
+		RightMouseButtonErasing = 2
+	};
+	Q_DECLARE_FLAGS(ErasingOptions, ErasingOption)
+	
 	PaintOnTemplateTool(MapEditorController* editor, QAction* tool_action);
 	~PaintOnTemplateTool() override;
 	
@@ -79,21 +78,34 @@ public:
 	
 	void draw(QPainter* painter, MapWidget* widget) override;
 	
-public slots:
-	void templateDeleted(int pos, const OpenOrienteering::Template* temp);
-	void colorSelected(const QColor& color);
+protected:
+	void templateAboutToBeDeleted(int pos, Template* temp);
+	
+public:
+	Template::ScribbleOptions options() const noexcept { return paint_options; }
+	void setOptions(Template::ScribbleOptions options);
+	
+	const QColor& color() const noexcept { return paint_color; }
+	void setColor(const QColor& color);
+	
 	void undoSelected();
 	void redoSelected();
+
+protected:
+	ActionGridBar* makeToolBar();
 	
 private:
+	ErasingOptions erasing = {};
 	bool dragging = false;
-	bool erasing  = false;
+	Template::ScribbleOptions paint_options = {};
 	QColor paint_color = Qt::black;
 	QRectF map_bbox;
 	std::vector<MapCoordF> coords;
 	
 	Template* temp = nullptr;
-	QPointer<PaintOnTemplatePaletteWidget> widget;
+	QPointer<ActionGridBar> widget;
+	QAction* background_drawing_action = nullptr;
+	QActionGroup* fill_options = nullptr;
 	
 	static int erase_width;
 	
@@ -101,72 +113,10 @@ private:
 };
 
 
-
-/**
- * A color selection widget for PaintOnTemplateTool.
- */
-class PaintOnTemplatePaletteWidget : public QWidget
-{
-Q_OBJECT
-public:
-	PaintOnTemplatePaletteWidget(bool close_on_selection);
-	~PaintOnTemplatePaletteWidget() override;
-
-	QColor getSelectedColor();
-	
-	QSize sizeHint() const override;
-	
-signals:
-	void colorSelected(const QColor& color);
-	void undoSelected();
-	void redoSelected();
-	
-protected:
-	void paintEvent(QPaintEvent* event) override;
-	void mousePressEvent(QMouseEvent* event) override;
-	void mouseReleaseEvent(QMouseEvent* event) override;
-	
-private:
-	int getNumFieldsX() const;
-	int getNumFieldsY() const;
-	QColor getFieldColor(int x, int y) const;
-	bool isUndoField(int x, int y) const;
-	bool isRedoField(int x, int y) const;
-	
-	void drawIcon(QPainter* painter, const QString& resource_path, const QRect& field_rect);
-	
-	Qt::MouseButtons::Int pressed_buttons;
-	int selected_color;
-	bool close_on_selection;
-};
-
-
-
-/**
- * Template selection dialog for PaintOnTemplateTool.
-*/
-class PaintOnTemplateSelectDialog : public QDialog
-{
-Q_OBJECT
-public:
-	PaintOnTemplateSelectDialog(Map* map, MapView* view, Template* selected, MainWindow* parent);
-	
-	Template* getSelectedTemplate() const { return selection; }
-	
-protected:
-	void drawClicked();
-	
-	Template* addNewTemplate() const;
-	
-private:
-	Map* map;
-	MapView* view;
-	Template* selection = nullptr;
-	QListWidget* template_list;
-	QPushButton* draw_button;
-};
-
-
 }  // namespace OpenOrienteering
+
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::PaintOnTemplateTool::ErasingOptions)
+
 
 #endif

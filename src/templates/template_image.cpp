@@ -21,6 +21,7 @@
 
 #include "template_image.h"
 
+#include <algorithm>
 #include <iosfwd>
 #include <iterator>
 #include <utility>
@@ -28,6 +29,7 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
+#include <QBrush>
 #include <QByteArray>
 #include <QDialog>
 #include <QFileInfo>  // IWYU pragma: keep
@@ -157,7 +159,7 @@ bool TemplateImage::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	return true;
 }
 
-bool TemplateImage::loadTemplateFileImpl(bool configuring)
+bool TemplateImage::loadTemplateFileImpl()
 {
 	QImageReader reader(template_path);
 	
@@ -196,7 +198,7 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 	available_georef = findAvailableGeoreferencing({});
 #endif
 	
-	if (!configuring && is_georeferenced)
+	if (is_georeferenced)
 	{
 		if (!isGeoreferencingUsable())
 		{
@@ -211,7 +213,7 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 	return true;
 }
 
-bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
+bool TemplateImage::postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view)
 {
 	TemplateImageOpenDialog open_dialog(this, dialog_parent);
 	open_dialog.setWindowModality(Qt::WindowModal);
@@ -361,7 +363,7 @@ QPointF TemplateImage::calcCenterOfGravity(QRgb background_color)
 }
 
 
-bool TemplateImage::canChangeTemplateGeoreferenced()
+bool TemplateImage::canChangeTemplateGeoreferenced() const
 {
 	// No need to care for CRS here and now: This is handled by the dialog ATM.
 	return !available_georef.effective.transform.source.isEmpty();
@@ -377,7 +379,7 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 		
 		if (value)
 		{
-			// Cf. postLoadConfiguration
+			// Cf. postLoadSetup
 			// Let user select the coordinate reference system.
 			// \todo Change description text below (no longer just for world files.)
 			Q_UNUSED(QT_TR_NOOP("Select the coordinate reference system of the georeferenced image."))
@@ -404,15 +406,25 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 		{
 			is_georeferenced = false;
 		}
-		map->setTemplatesDirty();
+		map->emitTemplateChanged(this);
 	}
 	return isTemplateGeoreferenced() == value;
 }
 
 void TemplateImage::updateGeoreferencing()
 {
-	if (is_georeferenced && template_state == Template::Loaded)
-		updatePosFromGeoreferencing();
+	if (is_georeferenced)
+	{
+		if (map->getGeoreferencing().isLocal())
+		{
+			is_georeferenced = false;
+			map->emitTemplateChanged(this);
+		}
+		else if (template_state == Template::Loaded)
+		{
+			updatePosFromGeoreferencing();
+		}
+	}
 }
 
 
@@ -495,21 +507,12 @@ bool TemplateImage::isGeoreferencingUsable() const
 }
 
 
-void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width)
+void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width, ScribbleOptions mode)
 {
-	QPointF* points;
+	QPointF* points;   /// \todo Retain allocated memory until the tool is closed.
 	QRect radius_bbox;
-	int draw_iterations = 1;
-
-	bool all_coords_equal = true;
-	for (int i = 1; i < num_coords; ++i)
-	{
-		if (coords[i] != coords[i-1])
-		{
-			all_coords_equal = false;
-			break;
-		}
-	}
+	
+	auto const all_coords_equal = std::equal(coords + 1, coords + num_coords, coords);
 	
 	// Special case for points because drawPolyline() draws nothing in this case.
 	// drawPoint() is also unsuitable because it aligns the point to the closest pixel.
@@ -519,7 +522,6 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, cons
 		const qreal ring_radius = 0.8;
 		const qreal width_factor = 2.0;
 		
-		draw_iterations = 2;
 		width *= width_factor;
 		num_coords = 5;
 		points = new QPointF[5];
@@ -563,23 +565,44 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, cons
 	if (color.alpha() == 0 && image.format() != QImage::Format_ARGB32_Premultiplied)
 		image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
 	
-    QPainter painter;
-	painter.begin(&image);
-	if (color.alpha() == 0)
-		painter.setCompositionMode(QPainter::CompositionMode_Clear);
-	else
-		painter.setOpacity(color.alphaF());
-
+	QPainter painter(&image);
+	painter.setRenderHint(QPainter::Antialiasing);
+	
 	QPen pen(color);
 	pen.setWidthF(width);
 	pen.setCapStyle(Qt::RoundCap);
 	pen.setJoinStyle(Qt::RoundJoin);
-	painter.setPen(pen);
-	painter.setRenderHint(QPainter::Antialiasing);
-	for (int i = 0; i < draw_iterations; ++ i)
-		painter.drawPolyline(points, num_coords);
 	
-	painter.end();
+	QBrush brush(color);
+	
+	if (mode.testFlag(FilledAreas))
+		pen.setCosmetic(true);
+	else
+		brush.setStyle(Qt::NoBrush);
+	
+	if (color.alpha() == 0)
+		painter.setCompositionMode(QPainter::CompositionMode_Clear);
+	else if (mode.testFlag(ComposeBackground))
+		painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
+	else
+		painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+	
+	painter.setPen(pen);
+	if (brush.style() == Qt::NoBrush || all_coords_equal)
+	{
+		painter.drawPolyline(points, num_coords);
+	}
+	else
+	{
+		if (mode.testFlag(PatternFill))
+		{
+			painter.setPen(Qt::NoPen);
+			brush.setStyle(Qt::Dense4Pattern);
+		}
+		painter.setBrush(brush);
+		painter.drawPolygon(points, num_coords);
+	}
+	
 	delete[] points;
 }
 

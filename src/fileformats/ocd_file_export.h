@@ -55,6 +55,7 @@ class PathObject;
 class PointObject;
 class PointSymbol;
 class Symbol;
+class Template;
 class TextObject;
 class TextSymbol;
 
@@ -275,6 +276,10 @@ protected:
 	
 	void exportTemplates();
 	
+	QString stringForTemplate(const Template& temp, const MapCoord& area_offset);
+	
+	QString pathForTemplate(const Template& temp) const;
+	
 	
 	template< class Format >
 	void exportExtras(OcdFile<Format>& file);
@@ -333,7 +338,7 @@ private:
 	std::vector<BreakdownEntry> breakdown_list;
 	std::unordered_map<quint32, std::size_t> breakdown_index;
 	
-	std::vector<std::unique_ptr<const Symbol>> number_owners;
+	std::vector<std::unique_ptr<const Symbol>> temporary_symbols;
 	
 	quint16 ocd_version;
 	

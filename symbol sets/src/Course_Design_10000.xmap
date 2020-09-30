@@ -509,7 +509,7 @@ A bounding line may be drawn if there is no natural boundary, as follows:
                 </point_symbol>
             </symbol>
             <symbol type="1" id="19" code="99.2" name="Course nature">
-                <description>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty. 
+                <description>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty.
  - Scheme: | Course code | Length | Height climb |
  - The course length is given in kilometres rounded to the nearest 0.1 km.
  - The height climb is given in metres rounded to the nearest 5 m.</description>
@@ -578,7 +578,7 @@ A bounding line may be drawn if there is no natural boundary, as follows:
                 </point_symbol>
             </symbol>
             <symbol type="1" id="20" code="99.3" name="Description of individual control">
-                <description>Scheme of columns: |A|B|C|D|E|F|G|H| 
+                <description>Scheme of columns: |A|B|C|D|E|F|G|H|
 
 A: Control number
 B: Control code
@@ -1652,7 +1652,7 @@ Map symbol: ISOM 106</description>
                 </point_symbol>
             </symbol>
             <symbol type="1" id="42" code="1.6" name="|D| Earth wall">
-                <description>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.s
+                <description>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.
 
 Map symbols: ISOM 107, 108</description>
                 <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="5">

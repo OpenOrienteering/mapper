@@ -128,10 +128,8 @@ bool Morphology::rosenfeld(ProgressObserver* progressObserver)
 {
 	bool cancel = false; // whether the thinning was canceled
 	unsigned int x, y;   // Pixel coordinates
-	unsigned int pc = 0; // Pass count
 	unsigned int count;  // Deleted pixel count
 	unsigned int p, q;   // Neighborhood maps of adjacent cells
-	unsigned int m;		 // Deletion direction mask
 
 	thinnedImage = image;
 	thinnedImage.detach();
@@ -144,7 +142,6 @@ bool Morphology::rosenfeld(ProgressObserver* progressObserver)
 
 	do
 	{ // Thin image lines until there are no deletions
-		pc++;
 		count = 0;
 
 		for (auto const m : masks)

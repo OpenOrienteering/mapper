@@ -16,7 +16,7 @@
 <context>
     <name>OpenOrienteering::Importer</name>
     <message numerus="yes">
-        <location filename="../src/fileformats/file_import_export.cpp" line="204"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="201"/>
         <source>Dropped %n irregular object(s).</source>
         <translation>
             <numerusform>Dropped one irregular object.</numerusform>
@@ -27,7 +27,7 @@
 <context>
     <name>OpenOrienteering::MapEditorController</name>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1790"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1816"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
         <translation>
@@ -36,7 +36,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1842"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1868"/>
         <source>Copied %n object(s)</source>
         <translation>
             <numerusform>Copied one object</numerusform>
@@ -44,7 +44,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1882"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1908"/>
         <source>Pasted %n object(s)</source>
         <translation>
             <numerusform>Pasted one object</numerusform>
@@ -52,7 +52,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="2683"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2740"/>
         <source>Duplicated %n object(s)</source>
         <translation>
             <numerusform>Duplicated one object</numerusform>
@@ -74,11 +74,11 @@
 <context>
     <name>OpenOrienteering::OgrFileImport</name>
     <message numerus="yes">
-        <location filename="../src/gdal/ogr_file_format.cpp" line="860"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="865"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="870"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="875"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="880"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="862"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="867"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="872"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="877"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="882"/>
         <source>Unable to load %n objects, reason: %1</source>
         <translation>
             <numerusform>Unable to load one object, reason: %1</numerusform>
@@ -89,7 +89,7 @@
 <context>
     <name>OpenOrienteering::TagSelectWidget</name>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_find_feature.cpp" line="231"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="240"/>
         <source>%n object(s) selected</source>
         <translation>
             <numerusform>One object selected</numerusform>

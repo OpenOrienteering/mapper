@@ -22,6 +22,7 @@
 #include "georeferencing_dialog.h"
 
 #include <cmath>
+#include <functional>
 #include <vector>
 
 #include <Qt>
@@ -72,9 +73,9 @@
 #include "core/latlon.h"
 #include "core/map.h"
 #include "gui/main_window.h"
-#include "gui/map/map_dialog_rotate.h"
-#include "gui/map/map_dialog_stretch.h"
 #include "gui/map/map_editor.h"
+#include "gui/map/rotate_map_dialog.h"
+#include "gui/map/stretch_map_dialog.h"
 #include "gui/widgets/crs_selector.h"
 #include "gui/util_gui.h"
 #include "util/backports.h"  // IWYU pragma: keep
@@ -440,7 +441,7 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	if (!no_confirm)
 	{
 		int result = QMessageBox::question(this, tr("Online declination lookup"),
-		  trUtf8("The magnetic declination for the reference point %1° %2° will now be retrieved from <a href=\"%3\">%3</a>. Do you want to continue?").
+		  tr("The magnetic declination for the reference point %1° %2° will now be retrieved from <a href=\"%3\">%3</a>. Do you want to continue?").
 		    arg(latlon.latitude()).arg(latlon.longitude()).arg(user_url),
 		  QMessageBox::Yes | QMessageBox::No,
 		  QMessageBox::Yes );
@@ -514,6 +515,9 @@ void GeoreferencingDialog::accept()
 {
 	auto const declination_change_degrees = georef->getDeclination() - initial_georef->getDeclination();
 	auto const scale_factor_change = georef->getAuxiliaryScaleFactor() / initial_georef->getAuxiliaryScaleFactor();
+	auto rotate = RotateMapDialog::RotationOp {};
+	auto stretch = StretchMapDialog::StretchOp {};
+	
 	if (grivation_locked)
 	{
 		georef->updateGrivation();
@@ -523,22 +527,22 @@ void GeoreferencingDialog::accept()
 	{
 		int result = QMessageBox::question(this, tr("Declination change"), tr("The declination has been changed. Do you want to rotate the map content accordingly, too?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
 		if (result == QMessageBox::Cancel)
-		{
 			return;
-		}
-		else if (result == QMessageBox::Yes)
+		
+		if (result == QMessageBox::Yes)
 		{
-			RotateMapDialog dialog(this, map);
+			RotateMapDialog dialog(*map, this);
 			dialog.setWindowModality(Qt::WindowModal);
 			dialog.setRotationDegrees(declination_change_degrees);
 			dialog.setRotateAroundGeorefRefPoint();
 			dialog.setAdjustDeclination(false);
 			dialog.showAdjustDeclination(false);
-			int result = dialog.exec();
-			if (result == QDialog::Rejected)
+			if (dialog.exec() == QDialog::Rejected)
 				return;
+			rotate = dialog.makeRotation();
 		}
 	}
+	
 	if (scale_factor_locked)
 	{
 		georef->updateCombinedScaleFactor();
@@ -548,17 +552,38 @@ void GeoreferencingDialog::accept()
 	{
 		int result = QMessageBox::question(this, tr("Scale factor change"), tr("The scale factor has been changed. Do you want to stretch/shrink the map content accordingly, too?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
 		if (result == QMessageBox::Cancel)
-		{
 			return;
-		}
-		else if (result == QMessageBox::Yes)
+		
+		if (result == QMessageBox::Yes)
 		{
-			StretchMapDialog dialog(this, map, 1.0/scale_factor_change);
+			StretchMapDialog dialog(*map, 1.0/scale_factor_change, this);
 			dialog.setWindowModality(Qt::WindowModal);
-			int result = dialog.exec();
-			if (result == QDialog::Rejected)
+			if (dialog.exec() == QDialog::Rejected)
 				return;
+			stretch = dialog.makeStretch();
 		}
+	}
+	
+	if (rotate || stretch)
+	{
+		if (georef->isLocal() && !map->getGeoreferencing().isLocal())
+		{
+			// When switching the map to a local georeferencing, templates may
+			// switch to a non-georeferenced mode. Rotating and stretching
+			// must be applied to the mode-changing templates, too. So we add
+			// an intermediate step: switching to a local georeferencing with the same
+			// scale factors and rotation as before.
+			auto const& map_georef = map->getGeoreferencing();
+			Georeferencing local_georef { map_georef };
+			local_georef.setState(Georeferencing::Local);
+			local_georef.setDeclination(map_georef.getDeclination());
+			local_georef.setAuxiliaryScaleFactor(map_georef.getAuxiliaryScaleFactor());
+			map->setGeoreferencing(local_georef);
+		}
+		if (rotate)
+			rotate(*map);
+		if (stretch)
+			stretch(*map);
 	}
 	
 	map->setGeoreferencing(*georef);
@@ -604,7 +629,7 @@ void GeoreferencingDialog::updateDeclinationButton()
 
 void GeoreferencingDialog::updateCombinedFactor()
 {
-	QString text = trUtf8("%1", "scale factor value").arg(QLocale().toString(georef->getCombinedScaleFactor(), 'f', Georeferencing::scaleFactorPrecision()));
+	QString text = tr("%1", "scale factor value").arg(QLocale().toString(georef->getCombinedScaleFactor(), 'f', Georeferencing::scaleFactorPrecision()));
 	if (scale_factor_locked)
 		text.append(QString::fromLatin1(" (%1)").arg(tr("locked")));
 	combined_factor_display->setText(text);
@@ -612,7 +637,7 @@ void GeoreferencingDialog::updateCombinedFactor()
 
 void GeoreferencingDialog::updateGrivation()
 {
-	QString text = trUtf8("%1 °", "degree value").arg(QLocale().toString(georef->getGrivation(), 'f', Georeferencing::declinationPrecision()));
+	QString text = tr("%1 °", "degree value").arg(QLocale().toString(georef->getGrivation(), 'f', Georeferencing::declinationPrecision()));
 	if (grivation_locked)
 		text.append(QString::fromLatin1(" (%1)").arg(tr("locked")));
 	grivation_label->setText(text);

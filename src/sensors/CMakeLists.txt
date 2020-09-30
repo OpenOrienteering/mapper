@@ -28,6 +28,37 @@ endif()
 set(CMAKE_AUTOMOC ON)
 
 
+# FakePositionPlugin
+
+set(FAKE_POSITION_DEFINITIONS
+  PRIVATE
+    QT_NO_CAST_FROM_ASCII
+    QT_NO_CAST_TO_ASCII
+    QT_USE_QSTRINGBUILDER
+    QT_STATICPLUGIN
+)
+set(FAKE_POSITION_SOURCES )
+set(FAKE_POSITION_LINK_LIBRARIES )
+if(TARGET Qt5::Positioning)
+	list(APPEND FAKE_POSITION_DEFINITIONS
+	  PUBLIC MAPPER_USE_FAKE_POSITION_PLUGIN
+	)
+	list(APPEND FAKE_POSITION_SOURCES
+	  fake_position_plugin.cpp
+	  fake_position_plugin.json
+	  fake_position_source.cpp
+	)
+	list(APPEND FAKE_POSITION_LINK_LIBRARIES
+	  PRIVATE Qt5::Gui Qt5::Positioning
+	)
+endif()
+
+add_library(fake_position_source STATIC  ${FAKE_POSITION_SOURCES})
+target_compile_definitions(fake_position_source  ${FAKE_POSITION_DEFINITIONS})
+target_include_directories(fake_position_source  PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(fake_position_source  ${FAKE_POSITION_LINK_LIBRARIES})
+
+
 # OpenOrienteeringNmeaPlugin
 #
 # For testing purposes, we build this plugin on all platforms,
@@ -139,6 +170,13 @@ foreach(lib Qt5::Positioning Qt5::Sensors Qt5::SerialPort Qt5::AndroidExtras)
 		target_link_libraries(mapper-sensors  PRIVATE ${lib})
 	endif()
 endforeach()
+
+if(Mapper_DEVELOPMENT_BUILD)
+	target_link_libraries(mapper-sensors
+	  PUBLIC
+		fake_position_source
+	)
+endif()
 
 
 # Translations

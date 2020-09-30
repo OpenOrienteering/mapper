@@ -31,9 +31,9 @@ class MapWidget;
 
 
 /**
- * Represents a type of editing activity, e.g. template position adjustment.
- * Only one activity can be active at a time.
+ * Represents a complex editing activity, e.g. template position adjustment.
  * 
+ * Only one activity can be active at a time.
  * This is for example used to close the template adjustment window when
  * selecting an edit tool.
  * It can also be used to paint activity-specific graphics onto the map.
@@ -45,51 +45,26 @@ public:
 	~MapEditorActivity() override;
 	
 	/**
-	 * All initializations apart from setting variables like the activity object
-	 * should be done here instead of in the constructor, as at the time init()
-	 * is called, the old activity was properly destroyed
-	 * (including resetting the activity drawing).
+	 * Starts this activity, setting up the editor as needed.
+	 * 
+	 * This function is called by MapEditorController::setEditorActivity()
+	 * after the previous activity was properly destroyed.
+	 * 
+	 * The constructor may run long before the activity becomes active.
+	 * So the main work of initialization and setting up the editor for
+	 * the activity must be done here.
 	 */
 	virtual void init();
 	
 	/**
-	 * Sets the "activity object", which is a void pointer which can be
-	 * used for various purposes (such as identifying the activity).
-	 */
-	void setActivityObject(void* address);
-	
-	/**
-	 * Returns the "activity object".
-	 * @see setActivityObject()
-	 */
-	inline void* getActivityObject() const;
-	
-	/**
 	 * All dynamic drawings must be drawn here using the given painter.
+	 * 
 	 * Drawing is only possible in the area specified
 	 * by calling map->setActivityBoundingBox().
 	 */
 	virtual void draw(QPainter* painter, MapWidget* widget);
 	
-protected:
-	void* activity_object;
 };
-
-
-
-//### MapEditorActivity inline code ###
-
-inline
-void MapEditorActivity::setActivityObject(void* address)
-{
-	activity_object = address;
-}
-
-inline
-void* MapEditorActivity::getActivityObject() const
-{
-	return activity_object;
-}
 
 
 }  // namespace OpenOrienteering

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2019 Kai Pastor
+ *    Copyright 2014-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -138,7 +138,7 @@ public:
 	 * Completely repainting widgets can be slow.
 	 * Try to do partial updates instead, if possible.
 	 */
-	void updateAllMapWidgets();
+	void updateAllMapWidgets(VisibilityFeature change = MultipleFeatures);
 	
 	
 	/** Converts the point (with origin at the center of the view) to map coordinates */
@@ -323,13 +323,6 @@ public:
 	bool hasAlpha() const;
 	
 	
-	/** Temporarily blocks automatic template loading on visibility changes. */
-	void setTemplateLoadingBlocked(bool blocked);
-	
-	/** Returns true when template loading on visibility changes is disabled. */
-	bool templateLoadingBlocked() const { return template_loading_blocked; }
-	
-	
 signals:
 	/**
 	 * Indicates a change of the viewed area of the map.
@@ -350,7 +343,7 @@ signals:
 	 * @param active  The features current state of activation.
 	 * @param temp    If a the feature is a template, a pointer to this template.
 	 */
-	void visibilityChanged(OpenOrienteering::MapView::VisibilityFeature feature, bool active, const OpenOrienteering::Template* temp = nullptr);
+	void visibilityChanged(OpenOrienteering::MapView::VisibilityFeature feature, bool active, OpenOrienteering::Template* temp = nullptr);
 	
 	
 public:
@@ -368,7 +361,12 @@ protected:
 	bool setTemplateVisibilityHelper(const Template *temp, TemplateVisibility vis);
 	
 	/**
-	 * Creates the visibility data when a template is added to the map.
+	 * Creates a default visibility entry (100% opaque, hidden) before a template is added to the map.
+	 */
+	void onAboutToAddTemplate(int pos, Template* temp);
+	
+	/**
+	 * Changes the visibility entry to 100% visible after a template is added to the map.
 	 */
 	void onTemplateAdded(int pos, Template* temp);
 	
@@ -419,8 +417,6 @@ private:
 	bool all_templates_hidden;
 	bool grid_visible;
 	bool overprinting_simulation_enabled;
-	
-	bool template_loading_blocked;
 };
 
 

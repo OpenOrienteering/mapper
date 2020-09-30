@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2015 Kai Pastor
+ *    Copyright 2015-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -40,6 +40,7 @@
 #include "gui/main_window.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
+#include "templates/paint_on_template_feature.h"
 #include "tools/edit_point_tool.h"
 #include "tools/edit_tool.h"
 
@@ -133,7 +134,7 @@ TestMapEditor::~TestMapEditor()
 
 void TestMapEditor::simulateClick(const QPoint& pos)
 {
-	QTest::mouseClick(map_widget, Qt::LeftButton, nullptr, pos);
+	QTest::mouseClick(map_widget, Qt::LeftButton, {}, pos);
 }
 
 void TestMapEditor::simulateClick(const QPointF& pos)
@@ -143,7 +144,7 @@ void TestMapEditor::simulateClick(const QPointF& pos)
 
 void TestMapEditor::simulateDrag(const QPoint& start_pos, const QPoint& end_pos)
 {
-	QTest::mousePress(map_widget, Qt::LeftButton, nullptr, start_pos);
+	QTest::mousePress(map_widget, Qt::LeftButton, {}, start_pos);
 	
 	// NOTE: the implementation of QTest::mouseMove() does not seem to work (tries to set the real cursor position ...)
 	//QTest::mouseMove(map_widget, end_pos);
@@ -151,7 +152,7 @@ void TestMapEditor::simulateDrag(const QPoint& start_pos, const QPoint& end_pos)
 	QMouseEvent event(QEvent::MouseMove, end_pos, map_widget->mapToGlobal(end_pos), Qt::NoButton, Qt::LeftButton, Qt::NoModifier);
 	QApplication::sendEvent(map_widget, &event);
 	
-	QTest::mouseRelease(map_widget, Qt::LeftButton, nullptr, end_pos);
+	QTest::mouseRelease(map_widget, Qt::LeftButton, {}, end_pos);
 }
 
 void TestMapEditor::simulateDrag(const QPointF& start_pos, const QPointF& end_pos)
@@ -202,6 +203,29 @@ void ToolsTest::editTool()
 	
 	// Cleanup
 	editor.editor->setTool(nullptr);
+}
+
+
+
+void ToolsTest::paintOnTemplateFeature()
+{
+	// Designed for images of 100 mm at 10 pixel per mm.
+	QCOMPARE(PaintOnTemplateFeature::alignmentBase(20000), 200);
+	QCOMPARE(PaintOnTemplateFeature::alignmentBase(15000), 100);
+	QCOMPARE(PaintOnTemplateFeature::alignmentBase(10000), 100);
+	QCOMPARE(PaintOnTemplateFeature::alignmentBase(7500) , 100);
+	QCOMPARE(PaintOnTemplateFeature::alignmentBase(5000) , 50);
+	QCOMPARE(PaintOnTemplateFeature::alignmentBase(4000) , 50);
+	QCOMPARE(PaintOnTemplateFeature::alignmentBase(1000) , 10);
+	
+	QCOMPARE(PaintOnTemplateFeature::roundToMultiple(-347,  10), -350);
+	QCOMPARE(PaintOnTemplateFeature::roundToMultiple(-347,  20), -340);
+	QCOMPARE(PaintOnTemplateFeature::roundToMultiple(-347,  50), -350);
+	QCOMPARE(PaintOnTemplateFeature::roundToMultiple(-347, 100), -300);
+	QCOMPARE(PaintOnTemplateFeature::roundToMultiple(347,  10), 350);
+	QCOMPARE(PaintOnTemplateFeature::roundToMultiple(347,  20), 340);
+	QCOMPARE(PaintOnTemplateFeature::roundToMultiple(347,  50), 350);
+	QCOMPARE(PaintOnTemplateFeature::roundToMultiple(347, 100), 300);
 }
 
 

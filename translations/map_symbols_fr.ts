@@ -203,7 +203,7 @@ Pour assurer une bonne lisibilité, il y a parfois besoin d&apos;exagérer dans 
 La précision absolue des altitudes n&apos;a que peu d&apos;importance, mais les différences d&apos;altitude relative entre éléments voisins devraient être représentées sur la carte le plus précisément possible. Il est autorisé de modifier légèrement l&apos;altitude d&apos;une courbe de niveau si cela améliore la représentation d&apos;un élément. L&apos;écart ne doit pas dépasser 25% de l&apos;équidistance et une attention particulière doit être portée aux éléments proches.
 La courbure minimale d&apos;une courbe de niveau est de 0,25 mm de centre à centre de la ligne (emprise au sol de 4m). L&apos;entrée d&apos;un rentrant ou d&apos;un éperon doit mesurer au moins 0,5 mm de centre à centre de la ligne (emprise au sol 8 m).
 La longueur minimum d&apos;une colline est de 0,9 mm (emprise au sol de 13,5 m) et la largeur minimale de 0,6 mm (emprise au sol de 9 m) mesurée depuis les bords extérieurs des lignes. Des buttes remarquables plus petites peuvent être représentées par le symbole Petite butte (109) ou Petite butte allongée (110) ou bien elles peuvent être exagérées pour respecter les dimensions minimum.
-Comme une dépression doit comprendre un tiret de pente, sa longueur minimale est de 1,1 mm (16,5 m au sol) et sa largeur minimale de 0,7 mm mesurée depuis les bords extérieurs de la ligne. Des dépressions remarquables plus petites peuvent être représentées par le symbole Petite dépression (111) ou bien elles peuvent être exagérées pour respecter les dimensions minimum. 
+Comme une dépression doit comprendre un tiret de pente, sa longueur minimale est de 1,1 mm (16,5 m au sol) et sa largeur minimale de 0,7 mm mesurée depuis les bords extérieurs de la ligne. Des dépressions remarquables plus petites peuvent être représentées par le symbole Petite dépression (111) ou bien elles peuvent être exagérées pour respecter les dimensions minimum.
 Les courbes de niveau devraient être déplacées (plutôt que coupées) quand il est nécessaire d&apos;éviter de toucher des symboles Petite butte (109) ou Petite butte allongée (110).</translation>
     </message>
     <message>
@@ -638,7 +638,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente. 
+        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente.
 Pour des falaises non verticales, les tirets devraient être dessinés pour indiquer l&apos;étendue horizontale de la falaise. En l’absence de tirets, les extrémités du trait principal doivent être arrondies. Un passage entre deux falaises doit mesurer au moins 0,2 mm. Une falaise devrait s&apos;imbriquer avec les courbes de niveau.
 Franchir une falaise ralentira normalement la progression.
 Hauteur minimum : 1 m.
@@ -656,7 +656,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente. 
+        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente.
 Pour des falaises non verticales, les tirets devraient être dessinés pour indiquer l&apos;étendue horizontale de la falaise. En l’absence de tirets, les extrémités du trait principal doivent être arrondies. Un passage entre deux falaises doit mesurer au moins 0,2 mm. Une falaise devrait s&apos;imbriquer avec les courbes de niveau.
 Franchir une falaise ralentira normalement la progression.
 Hauteur minimum : 1 m.
@@ -674,7 +674,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente. 
+        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente.
 Pour des falaises non verticales, les tirets devraient être dessinés pour indiquer l&apos;étendue horizontale de la falaise. En l’absence de tirets, les extrémités du trait principal doivent être arrondies. Un passage entre deux falaises doit mesurer au moins 0,2 mm. Une falaise devrait s&apos;imbriquer avec les courbes de niveau.
 Franchir une falaise ralentira normalement la progression.
 Hauteur minimum : 1 m.
@@ -692,7 +692,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente. 
+        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente.
 Pour des falaises non verticales, les tirets devraient être dessinés pour indiquer l&apos;étendue horizontale de la falaise. En l’absence de tirets, les extrémités du trait principal doivent être arrondies. Un passage entre deux falaises doit mesurer au moins 0,2 mm. Une falaise devrait s&apos;imbriquer avec les courbes de niveau.
 Franchir une falaise ralentira normalement la progression.
 Hauteur minimum : 1 m.
@@ -774,8 +774,7 @@ Emprise au sol : 6 m de diamètre (7,5 m de diamètre).</translation>
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
 
-To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
-of the boulders.</source>
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
         <translation>Un bloc rocheux qui est plus grand que d&apos;autres blocs (204) dans les environs, ou bien un grand bloc rocheux qui est plus petit que les autres grands blocs rocheux (205) dans les environs.
 Pour mettre en évidence la différence entre blocs rocheux (204) voisins (à moins de 30 m de distance) de tailles différentes, il est autorisé d&apos;utiliser ce symbole (0,5 mm) comme une version agrandie du symbole 204 pour certains d&apos;entre eux.
@@ -896,7 +895,7 @@ The maximum centre to centre distance between neighbouring triangles is 0.6 mm.
 Density: 2-3 symbols / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 209</comment>
-        <translation>Une zone qui est couverte de tellement de blocs rocheux dispersés qu&apos;ils ne peuvent pas être dessinés individuellement et qui ralentira la vitesse de course est représentée par des triangles pleins, placés et orientés aléatoirement. Un minimum de deux triangles doit être utilisé. 
+        <translation>Une zone qui est couverte de tellement de blocs rocheux dispersés qu&apos;ils ne peuvent pas être dessinés individuellement et qui ralentira la vitesse de course est représentée par des triangles pleins, placés et orientés aléatoirement. Un minimum de deux triangles doit être utilisé.
 La distance maximum centre à centre entre triangles voisins est de 0,6 mm.
 Densité : 2 à 3 symboles/mm². Pour mettre en évidence les différences de hauteur à l&apos;intérieur de zone de blocs rocheux, il est autorisé d&apos;augmenter la dimension de certains triangles de 20%.
 Emprise au sol d&apos;un triangle individuel : 12 m x 6 m.</translation>
@@ -981,7 +980,7 @@ The minimum centre to centre distance between neighbouring dots is 0.25 mm.
 Density: 10-12 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 212</comment>
-        <translation>Un sol pierreux ou rocailleux, qui est difficilement traversable (à moins de 20% de la vitesse normale). 
+        <translation>Un sol pierreux ou rocailleux, qui est difficilement traversable (à moins de 20% de la vitesse normale).
 Les points doivent être répartis aléatoirement mais ne doivent pas occulter la représentation d&apos;éléments importants. Des points individuels peuvent être utilisés pour le dessin.
 Le nombre minimum de points est de trois (emprise au sol 7 m x 7 m).
 La distance maximum centre à centre entre points voisins est de 0,32 mm.
@@ -1015,7 +1014,7 @@ An area of less runnable bare rock should be shown using a stony ground symbol (
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 214</comment>
         <translation>Une zone rocheuse sans terre ni végétation sur laquelle il est possible de courir devrait être dessinée en affleurement rocheux.
-Un affleurement rocheux couvert d&apos;herbe, de mousse ou de toute autre végétation basse ne doit pas être dessinée en utilisant ce symbole. 
+Un affleurement rocheux couvert d&apos;herbe, de mousse ou de toute autre végétation basse ne doit pas être dessinée en utilisant ce symbole.
 Un affleurement rocheux sur lequel il est plus difficile de courir devrait être représentée en utilisant un symbole Sol pierreux (210).
 Dimensions minimum : 1 mm x 1 mm (emprise au sol 15 m x 15 m).</translation>
     </message>
@@ -1031,7 +1030,7 @@ Shorter trenches may be exaggerated to the minimum graphical dimension.
 Impassable trenches shall be represented using symbol Impassable cliff (201).
 Collapsed and easily crossable trenches should be mapped as erosion gullies.</source>
         <comment>Description of symbol 215</comment>
-        <translation>Une tranchée rocheuse ou artificielle. Sa profondeur minimale devrait être de 1 m. 
+        <translation>Une tranchée rocheuse ou artificielle. Sa profondeur minimale devrait être de 1 m.
 Longueur minimum : 1 mm (emprise au sol 15 m).
 Des tranchées plus courtes peuvent être exagérées pour atteindre la dimension graphique minimum.
 Des tranchées infranchissables doivent être dessinées en utilisant le symbole Falaise infranchissable (201).
@@ -1198,7 +1197,7 @@ Emprise au sol : 10,5 m x 12 m.</translation>
         <source>Should be at least 2 m wide.
 Minimum length (isolated): 1 mm (footprint 15 m).</source>
         <comment>Description of symbol 304</comment>
-        <translation>Sa largeur devrait être d&apos;au moins 2 m. 
+        <translation>Sa largeur devrait être d&apos;au moins 2 m.
 Longueur minimum (isolée) : 1 mm (15 m au sol).</translation>
     </message>
     <message>
@@ -1677,7 +1676,7 @@ Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <source>Cultivated land. This symbol must be used together with another symbol:
 - For land used for growing crops, combine with symbol Open land (401).
 - For agroforrestry, use with symbol Forest (405) or Open land with scattered trees (402).
-Runnability may vary according to the type of crops or trees, and the time of year. 
+Runnability may vary according to the type of crops or trees, and the time of year.
 Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
@@ -2089,7 +2088,7 @@ Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 
         <translation>Mur</translation>
     </message>
     <message>
-        <source>A significant wall of stone, concrete, wood or other materials. 
+        <source>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 513</comment>
@@ -2102,8 +2101,7 @@ Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
     </message>
     <message>
         <source>A ruined or less distinct wall. Minimum height 0.5 m.
-Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object
-must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
+Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
         <comment>Description of symbol 514</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -2529,7 +2527,7 @@ North lines shall be broken to improve the legibility of the map, for instance w
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
-Water levels are given without the dot. 
+Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</source>
         <comment>Description of symbol 603.0</comment>
         <translation type="unfinished"></translation>
@@ -2541,7 +2539,7 @@ Spot heights must only be used where they do not conflict with other symbols.</s
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
-Water levels are given without the dot. 
+Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</source>
         <comment>Description of symbol 603.1</comment>
         <translation type="unfinished"></translation>
@@ -2929,7 +2927,7 @@ Les courbes de niveau doivent être corrigées et non pas coupées pour ne pas t
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 101.1</comment>
         <translation>Ce symbole est un complément du symbole de courbe de niveau (101.0).
-Les tirets de pentes peuvent être ajoutés du côté aval d&apos;une courbe de niveau, afin de clarifier le sens de la pente. 
+Les tirets de pentes peuvent être ajoutés du côté aval d&apos;une courbe de niveau, afin de clarifier le sens de la pente.
 Ils doivent être positionnés au niveau des rentrants.
 Une dépression doit comprendre un tiret de pente. Sa longueur minimale est de 1,1 mm (16,5 m au sol) et sa largeur minimale de 0,7 mm mesurée depuis les bords extérieurs de la
 ligne. Des dépressions remarquables plus petites peuvent être représentées par le symbole 111 (petite dépression) ou bien elles peuvent être exagérées pour respecter les dimensions minimum.</translation>
@@ -3125,7 +3123,7 @@ Emprise au sol 12 m X 6 m.</translation>
         <source>A small depression or hollow without steep sides that is too small to be shown by contours. Minimum depth: 1 m. Minimum width: 2 m.
 Small depressions with steep sides are represented with symbol 112 (pit). The symbol may not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.</source>
         <comment>Description of symbol 111</comment>
-        <translation>Une petite dépression sans bords raides qui est trop petite pour être représentée par une courbe de niveau. 
+        <translation>Une petite dépression sans bords raides qui est trop petite pour être représentée par une courbe de niveau.
 Profondeur minimum : 1 m.
 Largeur minimum : 2 m.
 Les petites dépressions dont les bords sont raides sont représentées par le symbole 112 (trou).
@@ -3139,10 +3137,9 @@ Emprise au sol : 12 m x 6 m.</translation>
         <translation>Trou</translation>
     </message>
     <message>
-        <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of
-gravity of the symbol, and the symbol is orientated to north.</source>
+        <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.</source>
         <comment>Description of symbol 112</comment>
-        <translation>Trou aux bords raides nets qui ne peut pas être dessiné en utilisant le symbole 104 (abrupt de terre). 
+        <translation>Trou aux bords raides nets qui ne peut pas être dessiné en utilisant le symbole 104 (abrupt de terre).
 Profondeur minimum : 1 m.
 Largeur minimum : 1 m.
 Un trou plus grand que 5m par 5 m devrait normalement être exagéré et représenté en utilisant le symbole 104 (abrupt de terre). Des trous dont les bords ne sont pas raides sont représentés par le symbole 111 (petite dépression).
@@ -3208,7 +3205,7 @@ Densité : 7-9 points par mm2 (22-28 %).</translation>
     <message>
         <source>The feature must be very clearly distinguishable from its surroundings. Location is the centre of gravity of the symbol, which is orientated to north. The symbol may not touch or overlap other brown symbols.</source>
         <comment>Description of symbol 115</comment>
-        <translation>L’élément doit être facile à distinguer dans l’environnement. 
+        <translation>L’élément doit être facile à distinguer dans l’environnement.
 Le positionnement est le centre de gravité du symbole et il est orienté au Nord.
 Le symbole ne doit pas toucher ou se superposer avec d’autres symboles de couleur brune.
 Emprise au sol : 13,5 m x 11,5 m.</translation>
@@ -3242,7 +3239,7 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
         <comment>Description of symbol 201.1</comment>
         <translation>Une falaise, une carrière ou un abrupt de terrain si haut et si raide qu’il n’est pas possible ou qu’il est dangereux de le franchir ou de le gravir.
-Les extrémités du trait principal peuvent être rondes ou carrées. 
+Les extrémités du trait principal peuvent être rondes ou carrées.
 L’espace entre deux falaises infranchissables ou entre une falaise infranchissable et un autre symbole d’élément infranchissable doit être supérieur à 0,3 mm sur la carte.
 Quand une falaise infranchissable plonge directement dans de l’eau rendant impossible le passage entre la falaise et l’eau soit le trait de rive de l’eau est omis, soit les tirets doivent clairement le dépasser. Une falaise infranchissable devrait s’imbriquer avec les courbes de niveau.</translation>
     </message>
@@ -3987,13 +3984,11 @@ Des surfaces plus petites doivent être laissées de côté, exagérées ou dess
     </message>
     <message>
         <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
-The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow
-running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
+The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
 The symbol is orientated to north.
-Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
-open land).</source>
+Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough open land).</source>
         <comment>Description of symbol 404</comment>
-        <translation>Une zone d’arbres dispersés dans un terrain découvert encombré peut être généralisée en utilisant un motif régulier de gros points blancs dans la trame jaune. Seuls la variante à pois blancs peut être associé avec le symbole 407 (végétation, course lente, bonne visibilité) ou 409 (végétation, marche, bonne visibilité) pour indiquer une capacité à courir réduite. 
+        <translation>Une zone d’arbres dispersés dans un terrain découvert encombré peut être généralisée en utilisant un motif régulier de gros points blancs dans la trame jaune. Seuls la variante à pois blancs peut être associé avec le symbole 407 (végétation, course lente, bonne visibilité) ou 409 (végétation, marche, bonne visibilité) pour indiquer une capacité à courir réduite.
 Le symbole est orienté vers le Nord.
 Largeur minimale : 1,5 mm (22,5 m au sol).
 Surface minimum : 2,5 mm x 2,5 mm (37,5 m x 37,5 m au sol).
@@ -4006,13 +4001,11 @@ Des surfaces plus petites doivent être laissées de côté, exagérées ou dess
     </message>
     <message>
         <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
-The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow
-running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
+The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
 The symbol is orientated to north.
-Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
-open land).</source>
+Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough open land).</source>
         <comment>Description of symbol 404.1</comment>
-        <translation>Une zone de buissons dispersés dans un terrain découvert encombré peut être généralisée en utilisant un motif régulier de gros points verts dans la trame jaune. Seuls la variante à pois blancs peut être associé avec le symbole 407 (végétation, course lente, bonne visibilité) ou 409 (végétation, marche, bonne visibilité) pour indiquer une capacité à courir réduite. 
+        <translation>Une zone de buissons dispersés dans un terrain découvert encombré peut être généralisée en utilisant un motif régulier de gros points verts dans la trame jaune. Seuls la variante à pois blancs peut être associé avec le symbole 407 (végétation, course lente, bonne visibilité) ou 409 (végétation, marche, bonne visibilité) pour indiquer une capacité à courir réduite.
 Le symbole est orienté vers le Nord.
 Largeur minimale : 1,5 mm (22,5 m au sol).
 Surface minimum : 2,5 mm x 2,5 mm (37,5 m x 37,5 m au sol).
@@ -4026,7 +4019,7 @@ Des surfaces plus petites doivent être laissées de côté, exagérées ou dess
     <message>
         <source>Typical open forest for the particular type of terrain. If no part of the forest is easily runnable then no white should appear on the map.</source>
         <comment>Description of symbol 405</comment>
-        <translation>Une forêt ouverte typique du type de terrain. Si aucune partie de la forêt ne permet une course normale, alors aucune zone blanche ne doit apparaître sur la carte. 
+        <translation>Une forêt ouverte typique du type de terrain. Si aucune partie de la forêt ne permet une course normale, alors aucune zone blanche ne doit apparaître sur la carte.
 Surface minimum : 1 mm x 1 mm (15 m x 15 m au sol) pour des zones insérées dans des trames d’une autre couleur, sauf pour le 408 (végétation, marche) et le 401 (terrain découvert) pour lesquels la surface minimum est de 0,7 mm x 0,7 mm (10,5 m X 10,5 m au sol). Pour des insertions dans le 410 (végétation, progression difficile) la surface minimale est de 0,5 mm x 0, 5 mm ( 8 m X 8 m au sol).</translation>
     </message>
     <message>
@@ -4231,7 +4224,7 @@ Points de 0.16 mm distance centre à centre 0.2 mm</translation>
 Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is combined with symbol 709 (out of bounds area) to show cultivated land that shall not be entered.</source>
         <comment>Description of symbol 412</comment>
-        <translation>Terrain cultivé, utilisé normalement pour des cultures. La capacité à courir peut dépendre de la culture et de la période de l’année. Pour de l’agroforesterie, le symbole 405 (forêt) ou 402 (terrain découvert avec arbres dispersés) peut être utilisé à la place du jaune. Du fait de la variabilité de la capacité à courir, les zones de ce type doivent être évitées lors du tracé des parcours. 
+        <translation>Terrain cultivé, utilisé normalement pour des cultures. La capacité à courir peut dépendre de la culture et de la période de l’année. Pour de l’agroforesterie, le symbole 405 (forêt) ou 402 (terrain découvert avec arbres dispersés) peut être utilisé à la place du jaune. Du fait de la variabilité de la capacité à courir, les zones de ce type doivent être évitées lors du tracé des parcours.
 Le symbole est associé au symbole 709 (zone interdite d’accès) s’il est interdit d’y pénétrer.
 Le symbole est orienté au Nord.
 Surface minimum : 3 mm x 3 mm (45 m x 45 m).</translation>
@@ -4349,7 +4342,7 @@ Couleur : vert et noir 50 % (tireté) / noir (pointillé).</translation>
 
 Footprint: 7.5 m x 7.5 m.</source>
         <comment>Description of symbol 418</comment>
-        <translation>À utiliser avec parcimonie, car il est confondu par les personnes ayant un handicap de perception de couleurs avec le symbole 109 (petite butte). 
+        <translation>À utiliser avec parcimonie, car il est confondu par les personnes ayant un handicap de perception de couleurs avec le symbole 109 (petite butte).
 Emprise au sol : 7.5 m X 7,5 m.</translation>
     </message>
     <message>
@@ -4360,7 +4353,7 @@ Emprise au sol : 7.5 m X 7,5 m.</translation>
     <message>
         <source>Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 419</comment>
-        <translation>Le symbole est orienté au Nord. 
+        <translation>Le symbole est orienté au Nord.
 Emprise au sol 13,5 m X 13,5 m.</translation>
     </message>
     <message>
@@ -4371,7 +4364,7 @@ Emprise au sol 13,5 m X 13,5 m.</translation>
     <message>
         <source>An area with a firm level surface such as asphalt, hard gravel, tiles, concrete or the like. Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.</source>
         <comment>Description of symbol 501</comment>
-        <translation>Une zone avec une surface au sol ferme comme du goudron, de l’enrobé, des pavés, du béton. Les zones pavées doivent être bordées (ou encadrées) d’une fine ligne noire dès lors qu’elles ont une bordure franche. 
+        <translation>Une zone avec une surface au sol ferme comme du goudron, de l’enrobé, des pavés, du béton. Les zones pavées doivent être bordées (ou encadrées) d’une fine ligne noire dès lors qu’elles ont une bordure franche.
 Surface minimale : 1 mm x 1 mm (15 m X 15 m au sol).</translation>
     </message>
     <message>
@@ -4403,10 +4396,7 @@ franche. Surface minimale : 1 mm x 1 mm (15 m X 15 m au sol).</translation>
     <message>
         <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 +
 2*0.14 mm – footprint 8.7 m)
-The outer boundary lines may be replaced with other black line symbols, such as
-symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) if the
-feature is so close to the road edge that it cannot practically be shown as a separate
-symbol.</source>
+The outer boundary lines may be replaced with other black line symbols, such as symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.</source>
         <comment>Description of symbol 502</comment>
         <translation>La largeur devrait être dessinée à l’échelle, mais sans descendre sous le minimum (0,3 + 2 x 0,14 mm - 8,7 m au sol).
 La bordure extérieure peut être remplacée par d’autres symboles de ligne noir, par exemple les symboles 516 (clôture), 518 (clôture infranchissable), 513 (mur) ou 515 (mur infranchissable) si l’élément est si proche de la bordure de la route qu’il ne serait pas possible de la représenter comme un symbole séparé.
@@ -4486,7 +4476,7 @@ Longueur minimum (isolé) : 2 tirets (2,25 mm - 34 m au sol).</translation>
     <message>
         <source>A runnable less distinct / visible small path or forestry extraction track.</source>
         <comment>Description of symbol 507</comment>
-        <translation>Un petit chemin ou un chemin de débardage peu visible sur lequel on peut courir. 
+        <translation>Un petit chemin ou un chemin de débardage peu visible sur lequel on peut courir.
 Longueur minimum : 2 sections de tirets doubles (5,3 mm - 79,5 m au sol).</translation>
     </message>
     <message>
@@ -4567,8 +4557,8 @@ Longueur minimum : 2 tirets (4,25 mm - 64 m au sol).</translation>
         <source>A railway or other kind of railed track.
 If it is forbidden to run along the railway, it shall be combined with the overprint symbol for forbidden route. If it is forbidden to cross the railway, it must be combined with a symbol for forbidden area.</source>
         <comment>Description of symbol 509</comment>
-        <translation>Une voie de chemin de fer ou toute autre voie ferrée. 
-S’il est interdit de courir le long de la voie ferrée, le symbole doit être associé avec le symbole 711 (route interdite). S’il est interdit de traverser la voie ferrée, le symbole doit être combiné avec les symboles 520 (Zone interdite d’accès) ou 709 (Zone interdite d’accès). 
+        <translation>Une voie de chemin de fer ou toute autre voie ferrée.
+S’il est interdit de courir le long de la voie ferrée, le symbole doit être associé avec le symbole 711 (route interdite). S’il est interdit de traverser la voie ferrée, le symbole doit être combiné avec les symboles 520 (Zone interdite d’accès) ou 709 (Zone interdite d’accès).
 Longueur minimum (isolée) : 2 tirets (4 mm - 60 m au sol).</translation>
     </message>
     <message>
@@ -4627,7 +4617,7 @@ If it is not possible to get through a tunnel (or under a bridge), it shall be o
 Small bridges connected to a track/path are shown by centring a track dash on the crossing. Tracks/paths are broken for water course crossings without bridges.</source>
         <comment>Description of symbol 512</comment>
         <translation>Les ponts et les tunnels sont représentés en utilisant le même symbole de base. S’il n’est possible de traverser un tunnel (ou sous un pont), il ne doit pas être dessiné. Longueur minimum (de la ligne de base) : 0,4 mm (6m au sol). Les ponts de petite taille reliés à un chemin ou à un sentier sont dessinés en centrant un tiret du chemin sur le croisement.
-Les chemins et les sentiers sont interrompus si le croisement avec le cours d’eau n’est pas équipé d’un pont. 
+Les chemins et les sentiers sont interrompus si le croisement avec le cours d’eau n’est pas équipé d’un pont.
 Un petit pont piéton sans sentier y menant est représenté par un simple tiret.</translation>
     </message>
     <message>
@@ -4640,7 +4630,7 @@ Un petit pont piéton sans sentier y menant est représenté par un simple tiret
 If it is not possible to get through a tunnel (or under a bridge), it shall be omitted.</source>
         <comment>Description of symbol 512.1</comment>
         <translation>Les ponts et les tunnels sont représentés en utilisant le même symbole de base. S’il n’est possible de traverser un tunnel (ou sous un pont), il ne doit pas être dessiné. Longueur minimum (de la ligne de base) : 0,4 mm (6m au sol). Les ponts de petite taille reliés à un chemin ou à un sentier sont dessinés en centrant un tiret du chemin sur le croisement.
-Les chemins et les sentiers sont interrompus si le croisement avec le cours d’eau n’est pas équipé d’un pont. 
+Les chemins et les sentiers sont interrompus si le croisement avec le cours d’eau n’est pas équipé d’un pont.
 Un petit pont piéton sans sentier y menant est représenté par un simple tiret.</translation>
     </message>
     <message>
@@ -4675,7 +4665,7 @@ Longueur minimum (isolé) : 2 mm (30 m au sol).</translation>
         <source>A ruined or less distinct wall. Minimum height 0.5 m.</source>
         <comment>Description of symbol 514</comment>
         <translation>Un mur ruiné ou moins significatif. Hauteur minimum : 0,5 m.
-Longueur minimum : 2 tirets (3,65 mm - 55 m au sol). 
+Longueur minimum : 2 tirets (3,65 mm - 55 m au sol).
 Si l’élément est plus court il doit être exagéré à la longueur graphique minimum ou remplacé par le symbole 513 (mur).</translation>
     </message>
     <message>
@@ -4710,7 +4700,7 @@ Longueur minimum (isolé) : 1,5 mm (22,5 m au sol).</translation>
         <source>A ruined or less distinct fence. If the fence forms an enclosed area, tags should be placed inside.</source>
         <comment>Description of symbol 517</comment>
         <translation>Une clôture ruinée ou moins significative. Si la clôture est refermée sur elle-même les chevrons devraient être placés à l’intérieur.
-Longueur minimum : 2 tirets (3,65 mm - 55 m au sol). 
+Longueur minimum : 2 tirets (3,65 mm - 55 m au sol).
 Si l’élément est plus court il doit être exagéré à la longueur graphique minimum ou remplacé par le symbole 516 (clôture).</translation>
     </message>
     <message>
@@ -4912,7 +4902,7 @@ Largeur minimum (entre bords intérieurs) : 0,3 mm (4,5 m).</translation>
     <message>
         <source>A ruined building. The ground plan of a ruin is shown to scale, down to the minimum size.</source>
         <comment>Description of symbol 523</comment>
-        <translation>Un bâtiment en ruine. La surface au sol de la ruine est représentée à l’échelle dès que la surface minimum est dépassée. Les ruines trop petites pour être représentées à l’échelle peuvent l’être en utilisant un trait continu. 
+        <translation>Un bâtiment en ruine. La surface au sol de la ruine est représentée à l’échelle dès que la surface minimum est dépassée. Les ruines trop petites pour être représentées à l’échelle peuvent l’être en utilisant un trait continu.
 Surface minimum (mesures bords extérieurs) : 0,8 mm x 0,8mm (12 m x 12 m au sol).</translation>
     </message>
     <message>
@@ -4923,7 +4913,7 @@ Surface minimum (mesures bords extérieurs) : 0,8 mm x 0,8mm (12 m x 12 m au sol
     <message>
         <source>Ruins that are so small that they cannot be drawn to scale may be represented using a solid line.</source>
         <comment>Description of symbol 523.1</comment>
-        <translation>Un bâtiment en ruine. La surface au sol de la ruine est représentée à l’échelle dès que la surface minimum est dépassée. Les ruines trop petites pour être représentées à l’échelle peuvent l’être en utilisant un trait continu. 
+        <translation>Un bâtiment en ruine. La surface au sol de la ruine est représentée à l’échelle dès que la surface minimum est dépassée. Les ruines trop petites pour être représentées à l’échelle peuvent l’être en utilisant un trait continu.
 Surface minimum (mesures bords extérieurs) : 0,8 mm x 0,8mm (12 m x 12 m au sol).</translation>
     </message>
     <message>
@@ -4959,7 +4949,7 @@ Le symbole est orienté au Nord. Emprise au sol : 15 m x 15 m.</translation>
         <source>A prominent cairn, memorial stone, boundary stone or trigonometric point.
 Minimum height: 0.5 m.</source>
         <comment>Description of symbol 526</comment>
-        <translation>Un cairn notoire, un mémorial, une borne frontière, ou un point trigonométrique. 
+        <translation>Un cairn notoire, un mémorial, une borne frontière, ou un point trigonométrique.
 Hauteur minimum : 0,5 m.
 Emprise au sol : 12 m x 12 m.</translation>
     </message>
@@ -4974,7 +4964,7 @@ Location is at the centre of gravity of the symbol.</source>
         <comment>Description of symbol 527</comment>
         <translation>Une mangeoire isolée ou attachée à un arbre.
 Sa position est le centre de gravité du symbole.
-Le symbole est orienté au Nord. 
+Le symbole est orienté au Nord.
 Emprise au sol : 13,5 m x 13,5 m.</translation>
     </message>
     <message>
@@ -5168,7 +5158,7 @@ La ligne doit passer par les points de passage obligatoire. Il devrait y avoir u
     <message>
         <source>A marked route that is a part of the course. It is mandatory to follow the marked route.</source>
         <comment>Description of symbol 707</comment>
-        <translation>Un itinéraire balisé qui fait partie du parcours. Il est obligatoire de suivre l’itinéraire balisé. 
+        <translation>Un itinéraire balisé qui fait partie du parcours. Il est obligatoire de suivre l’itinéraire balisé.
 Longueur minimum : 2 tirets (4,5 mm - 67,5 m au sol).</translation>
     </message>
     <message>
@@ -6166,7 +6156,7 @@ Une limite peut être dessinée s&apos;il n&apos;y a pas de limite naturelle, de
     <message>
         <source>Out-of-bounds area, solid boundary</source>
         <comment>Name of symbol 709.1</comment>
-        <translation type="unfinished">Zone interdite,  ligne continue</translation>
+        <translation type="unfinished">Zone interdite, ligne continue</translation>
     </message>
     <message>
         <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
@@ -6433,7 +6423,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 101.1</comment>
         <translation>Ce symbole est un complément du symbole de courbe de niveau (101.0).
-Les tirets de pentes peuvent être ajoutés du côté aval d&apos;une courbe de niveau, afin de clarifier le sens de la pente. 
+Les tirets de pentes peuvent être ajoutés du côté aval d&apos;une courbe de niveau, afin de clarifier le sens de la pente.
 Ils doivent être positionnés au niveau des rentrants.
 Une dépression doit comprendre un tiret de pente. Sa longueur minimale est de 1,1 mm (16,5 m au sol) et sa largeur minimale de 0,7 mm mesurée depuis les bords extérieurs de la
 ligne. Des dépressions remarquables plus petites peuvent être représentées par le symbole 111 (petite dépression) ou bien elles peuvent être exagérées pour respecter les dimensions minimum.</translation>
@@ -6457,7 +6447,7 @@ ligne. Des dépressions remarquables plus petites peuvent être représentées p
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 102.1</comment>
         <translation>Ce symbole est un complément du symbole de courbe de niveau (101.0).
-Les tirets de pentes peuvent être ajoutés du côté aval d&apos;une courbe de niveau, afin de clarifier le sens de la pente. 
+Les tirets de pentes peuvent être ajoutés du côté aval d&apos;une courbe de niveau, afin de clarifier le sens de la pente.
 Ils doivent être positionnés au niveau des rentrants.
 Une dépression doit comprendre un tiret de pente. Sa longueur minimale est de 1,1 mm (16,5 m au sol) et sa largeur minimale de 0,7 mm mesurée depuis les bords extérieurs de la
 ligne. Des dépressions remarquables plus petites peuvent être représentées par le symbole 111 (petite dépression) ou bien elles peuvent être exagérées pour respecter les dimensions minimum.</translation>
@@ -6491,7 +6481,7 @@ ligne. Des dépressions remarquables plus petites peuvent être représentées p
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 103.1</comment>
         <translation>Ce symbole est un complément du symbole de courbe de niveau (101.0).
-Les tirets de pentes peuvent être ajoutés du côté aval d&apos;une courbe de niveau, afin de clarifier le sens de la pente. 
+Les tirets de pentes peuvent être ajoutés du côté aval d&apos;une courbe de niveau, afin de clarifier le sens de la pente.
 Ils doivent être positionnés au niveau des rentrants.
 Une dépression doit comprendre un tiret de pente. Sa longueur minimale est de 1,1 mm (16,5 m au sol) et sa largeur minimale de 0,7 mm mesurée depuis les bords extérieurs de la
 ligne. Des dépressions remarquables plus petites peuvent être représentées par le symbole 111 (petite dépression) ou bien elles peuvent être exagérées pour respecter les dimensions minimum.</translation>
@@ -7472,7 +7462,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
+        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
@@ -7485,7 +7475,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
+        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
@@ -7555,7 +7545,7 @@ Minimum area: 9 mm² (144 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses. 
+        <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is combined with symbol Out-of-bounds area (709) to show cultivated land that shall not be entered.
 Minimum width: 3 mm.
 Minimum area: 9 mm² (144 m²).</source>
@@ -7996,7 +7986,7 @@ The bars indicate the exact location of the pylons. If a section of a power line
         <translation>Passage souterrain ou tunnel</translation>
     </message>
     <message>
-        <source>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles. 
+        <source>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles.
 Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 &lt;span style=&quot;color: red&quot;&gt;Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
@@ -8273,7 +8263,7 @@ Minimum length: 2.2 mm (footprint 8.8 m).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track. 
+        <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track.
 The definition of the symbol must be given on the map.
 A prominent impassable line feature shall not be crossed.
 Minimum length: 3 mm (footprint 12 m).</source>
@@ -8807,11 +8797,11 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <translation>Courbe de niveau</translation>
     </message>
     <message>
-        <source>A line joining points of equal height. The standard vertical interval between contours is 2 or 2.5 m. To emphasize the 3-dimensional effect of the contour line image, contour lines shall be represented as continuous lines through all symbols, also building (526.1) and canopy (526.2). However, contour lines shall be cut out for better legibility, if they touch the following symbols: small earth wall (108.1), small knoll (112), small elongated knoll (113), small depression (115), pit or hole (116), prominent landform feature (118), step or edge of paved area (529.1). 
+        <source>A line joining points of equal height. The standard vertical interval between contours is 2 or 2.5 m. To emphasize the 3-dimensional effect of the contour line image, contour lines shall be represented as continuous lines through all symbols, also building (526.1) and canopy (526.2). However, contour lines shall be cut out for better legibility, if they touch the following symbols: small earth wall (108.1), small knoll (112), small elongated knoll (113), small depression (115), pit or hole (116), prominent landform feature (118), step or edge of paved area (529.1).
 
 The relative height difference between neighbouring features must be represented on the map as accurately as possible. Absolute height accuracy is of less importance. It is permissible to alter the height of a contour slightly if this will improve the representation of a feature. This deviation should not exceed 25% of the contour interval and attention must be paid to neighbouring features. The smallest bend in a contour is 0.4 mm from centre to centre of the lines.</source>
         <comment>Description of symbol 101</comment>
-        <translation>Ligne qui rejoint les points d&apos;altitude équivalente. L&apos;intervalle vertical standard (équidistance) est 2 ou 2,5 mètres. Pour mettre en évidence l&apos;effet 3D de l&apos;image des courbes de niveau, celles-ci seront représentées en ligne continue au dessus des autres symboles, y compris les bâtiments (526.1) et les auvents (526.2). Cependant, elles seront interrompues si elles touchent les symboles ci-après : petite levée de terre (108.1), petite butte (112), petite butte allongée (113), petite dépréssion (115), trou (116), élément de relief bien visible (118), marche ou zone pavée (529.1). 
+        <translation>Ligne qui rejoint les points d&apos;altitude équivalente. L&apos;intervalle vertical standard (équidistance) est 2 ou 2,5 mètres. Pour mettre en évidence l&apos;effet 3D de l&apos;image des courbes de niveau, celles-ci seront représentées en ligne continue au dessus des autres symboles, y compris les bâtiments (526.1) et les auvents (526.2). Cependant, elles seront interrompues si elles touchent les symboles ci-après : petite levée de terre (108.1), petite butte (112), petite butte allongée (113), petite dépréssion (115), trou (116), élément de relief bien visible (118), marche ou zone pavée (529.1).
 
 La différence d&apos;altitude relative entre des éléments voisins doit être représentée aussi précisément que possible. La précision de l&apos;altitude absolue est de moindre importance. Il est permis de modifier légèrement une courbe de niveau si cela peut améliorer la représentation d&apos;un élément. La déviation ne peut cependant dépasser 25 % de l&apos;équidistance et il convient de porter attention aux éléments voisins. La courbure minimale d&apos;une courbe de niveau est de 0,4 mm, de centre à centre des lignes.</translation>
     </message>
@@ -8935,7 +8925,7 @@ La différence d&apos;altitude relative entre des éléments voisins doit être 
 
 The symbol may not be drawn in free form or such that two elongated knoll symbols touch or overlap.</source>
         <comment>Description of symbol 113</comment>
-        <translation>Petit monticule visible, allongé et qui ne peut être dessiné à l&apos;échelle avec une courbe de niveau (101), maîtresse (102) ou de forme (103). La longueur maximum sera de 6 m et sa largeur maximale 2 m. La hauteur d&apos;une butte doit être d&apos;au moins 1 m par rapport au terrain qui l&apos;entoure. Les buttes plus importantes doivent être dessinées avec des courbes de niveau. 
+        <translation>Petit monticule visible, allongé et qui ne peut être dessiné à l&apos;échelle avec une courbe de niveau (101), maîtresse (102) ou de forme (103). La longueur maximum sera de 6 m et sa largeur maximale 2 m. La hauteur d&apos;une butte doit être d&apos;au moins 1 m par rapport au terrain qui l&apos;entoure. Les buttes plus importantes doivent être dessinées avec des courbes de niveau.
 
 Ce symbole ne peut être dessiné sous forme libre ou de telle manière que deux d&apos;entre eux se recouvrent.</translation>
     </message>
@@ -8995,16 +8985,16 @@ Ce symbole ne peut être dessiné sous forme libre ou de telle manière que deux
         <translation>Falaise infranchissable &lt;span style=&quot;color:magenta&quot;&gt;(interdit)&lt;/span&gt;</translation>
     </message>
     <message>
-        <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
+        <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).
 
 The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 201</comment>
-        <translation>Falaise infranchissable, carrière ou abrupt de terre (voir 106). Des tirets vers l&apos;aval montrent l&apos;importance de l&apos;élément de la ligne de sommet à son pied. Pour des faces verticales, les tirets peuvent être omis s&apos;il n&apos;y a pas assez de place, par ex. un passage étroit entre des falaises. (les passages doivent être représentés par une largeur d&apos;au moins 0,3 mm). 
+        <translation>Falaise infranchissable, carrière ou abrupt de terre (voir 106). Des tirets vers l&apos;aval montrent l&apos;importance de l&apos;élément de la ligne de sommet à son pied. Pour des faces verticales, les tirets peuvent être omis s&apos;il n&apos;y a pas assez de place, par ex. un passage étroit entre des falaises. (les passages doivent être représentés par une largeur d&apos;au moins 0,3 mm).
 
-Les tirets peuvent s&apos;étendre sur un symbole de surface qui représente le détail directement sous la face rocheuse. Quand une falaise tombe directement dans l&apos;eau, rendant impossible le passage au pied de la falaise, soit le trait marquant la rive est omis, soit les tirets doivent nettement le dépasser. La hauteur minimale est 2 m. 
+Les tirets peuvent s&apos;étendre sur un symbole de surface qui représente le détail directement sous la face rocheuse. Quand une falaise tombe directement dans l&apos;eau, rendant impossible le passage au pied de la falaise, soit le trait marquant la rive est omis, soit les tirets doivent nettement le dépasser. La hauteur minimale est 2 m.
 
 &lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir ce type de falaise !
 Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</translation>
@@ -9015,16 +9005,16 @@ Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</
         <translation>Falaise infranchissable, taille minimum &lt;span style=&quot;color:magenta&quot;&gt;(interdit)&lt;/span&gt;</translation>
     </message>
     <message>
-        <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
+        <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).
 
 The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 201.0.1</comment>
-        <translation>Falaise infranchissable, carrière ou abrupt de terre (voir 106). Des tirets vers l&apos;aval montrent l&apos;importance de l&apos;élément de la ligne de sommet à son pied. Pour des faces verticales, les tirets peuvent être omis s&apos;il n&apos;y a pas assez de place, par ex. un passage étroit entre des falaises. (les passages doivent être représentés par une largeur d&apos;au moins 0,3 mm). 
+        <translation>Falaise infranchissable, carrière ou abrupt de terre (voir 106). Des tirets vers l&apos;aval montrent l&apos;importance de l&apos;élément de la ligne de sommet à son pied. Pour des faces verticales, les tirets peuvent être omis s&apos;il n&apos;y a pas assez de place, par ex. un passage étroit entre des falaises. (les passages doivent être représentés par une largeur d&apos;au moins 0,3 mm).
 
-Les tirets peuvent s&apos;étendre sur un symbole de surface qui représente le détail directement sous la face rocheuse. Quand une falaise tombe directement dans l&apos;eau, rendant impossible le passage au pied de la falaise, soit le trait marquant la rive est omis, soit les tirets doivent nettement le dépasser. La hauteur minimale est 2 m. 
+Les tirets peuvent s&apos;étendre sur un symbole de surface qui représente le détail directement sous la face rocheuse. Quand une falaise tombe directement dans l&apos;eau, rendant impossible le passage au pied de la falaise, soit le trait marquant la rive est omis, soit les tirets doivent nettement le dépasser. La hauteur minimale est 2 m.
 
 &lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de franchir ce type de falaise !
 Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</translation>
@@ -9419,7 +9409,7 @@ Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</
         <translation>Marais</translation>
     </message>
     <message>
-        <source>A crossable marsh, usually with a distinct edge. The symbol shall be combined with vegetation symbols to show runnability and openness. 
+        <source>A crossable marsh, usually with a distinct edge. The symbol shall be combined with vegetation symbols to show runnability and openness.
 
 Minimum size: not less than 2 lines, 5 mm long.</source>
         <comment>Description of symbol 310</comment>
@@ -9594,11 +9584,11 @@ Taille minimum : 0,25 mm.</translation>
         <translation>Végétation : course très difficile</translation>
     </message>
     <message>
-        <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced 1-20% of normal speed. 
+        <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced 1-20% of normal speed.
 
 Minimum width: 0.25 mm.</source>
         <comment>Description of symbol 410</comment>
-        <translation>Zone de végétation dens (arbres ou végétation au sol) difficilement pénétrable. La course est réduite à 1-20% de la vitesse normale. 
+        <translation>Zone de végétation dens (arbres ou végétation au sol) difficilement pénétrable. La course est réduite à 1-20% de la vitesse normale.
 
 Taille minimum : 0,25 mm.</translation>
     </message>
@@ -9724,17 +9714,17 @@ Taille minimum : 0,25 mm.</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is impassable or which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor.
- 
+
 Minimum width: 0.4 mm.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross impassable vegetation!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 421</comment>
         <translation>Zone de végétation dense (arbres ou végétation au sol) qui est infranchissable ou ne DOIT être franchie, à cause de l&apos;interdiction de son accès ou parce qu&apos;elle peut constituer un danger pour le coureur.
- 
+
 Taille minimum : 0,4 mm.
 
-&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de pénétrer dans une telle zone ! 
+&lt;span style=&quot;color:magenta&quot;&gt;Il est interdit de pénétrer dans une telle zone !
 Les concurrents ne respectant pas cette règle seront disqualifiés.&lt;/span&gt;</translation>
     </message>
     <message>
@@ -9754,11 +9744,11 @@ To improve the legibility of this symbol in non-urban parts of the map, the line
 
 Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (min.60lines/cm) (non-urban); the colour and the line width shall be the same as for the symbols paved area (529) and step or edge of paved areas (529.1).</source>
         <comment>Description of symbol 506.1.1</comment>
-        <translation>Sentier non pavé ou trace de véhicule constituant un passage possible à pied, par opposition à une surface plane et dure. La densité du remplissage en brun devra être la même que celle choisie pour le symbole 529 (zone pavée). 
+        <translation>Sentier non pavé ou trace de véhicule constituant un passage possible à pied, par opposition à une surface plane et dure. La densité du remplissage en brun devra être la même que celle choisie pour le symbole 529 (zone pavée).
 
 Pour améliorer la lisibilité de ce symbole dans les parties non-urbaines de la carte, l&apos;épaisseur de la ligne peut dans ces zones non-urbaines être augmentée de 0.07 à 0.14 mm et le remplissage en brun rendu plus foncé. Si un remplissage (x %) est utilisé dans les parties urbaines, un brun (x + 20 %) pourra être utilisé en zone non-urbaine de la carte.
 
-Couleur : noir, brun 0 (blanc),10 %, 20 % ou 30 % (zone urbaine) / 20 %, 30 %, 40 %, 50 % (zone non-urbaine) - (min 60 lignes / cm); la couleur et l&apos;épaisseur de la ligne devront être les mêmes quepour les symboles 529 (zone 
+Couleur : noir, brun 0 (blanc),10 %, 20 % ou 30 % (zone urbaine) / 20 %, 30 %, 40 %, 50 % (zone non-urbaine) - (min 60 lignes / cm); la couleur et l&apos;épaisseur de la ligne devront être les mêmes quepour les symboles 529 (zone
 pavée) ou 529.1 (escalier en zone pavée).</translation>
     </message>
     <message>
@@ -9773,11 +9763,11 @@ To improve the legibility of this symbol in non-urban parts of the map, the line
 
 Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (min.60lines/cm) (non-urban); the colour and the line width shall be the same as for the symbols paved area (529) and step or edge of paved areas (529.1).</source>
         <comment>Description of symbol 506.1.2</comment>
-        <translation>Sentier non pavé ou trace de véhicule constituant un passage possible à pied, par opposition à une surface plane et dure. La densité du remplissage en brun devra être la même que celle choisie pour le symbole 529 (zone pavée). 
+        <translation>Sentier non pavé ou trace de véhicule constituant un passage possible à pied, par opposition à une surface plane et dure. La densité du remplissage en brun devra être la même que celle choisie pour le symbole 529 (zone pavée).
 
 Pour améliorer la lisibilité de ce symbole dans les parties non-urbaines de la carte, l&apos;épaisseur de la ligne peut dans ces zones non-urbaines être augmentée de 0.07 à 0.14 mm et le remplissage en brun rendu plus foncé. Si un remplissage (x %) est utilisé dans les parties urbaines, un brun (x + 20 %) pourra être utilisé en zone non-urbaine de la carte.
 
-Couleur : noir, brun 0 (blanc),10 %, 20 % ou 30 % (zone urbaine) / 20 %, 30 %, 40 %, 50 % (zone non-urbaine) - (min 60 lignes / cm); la couleur et l&apos;épaisseur de la ligne devront être les mêmes quepour les symboles 529 (zone 
+Couleur : noir, brun 0 (blanc),10 %, 20 % ou 30 % (zone urbaine) / 20 %, 30 %, 40 %, 50 % (zone non-urbaine) - (min 60 lignes / cm); la couleur et l&apos;épaisseur de la ligne devront être les mêmes quepour les symboles 529 (zone
 pavée) ou 529.1 (escalier en zone pavée).</translation>
     </message>
     <message>
@@ -9792,11 +9782,11 @@ To improve the legibility of this symbol in non-urban parts of the map, the line
 
 Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (min.60lines/cm) (non-urban); the colour and the line width shall be the same as for the symbols paved area (529) and step or edge of paved areas (529.1).</source>
         <comment>Description of symbol 506.1.3</comment>
-        <translation>Sentier non pavé ou trace de véhicule constituant un passage possible à pied, par opposition à une surface plane et dure. La densité du remplissage en brun devra être la même que celle choisie pour le symbole 529 (zone pavée). 
+        <translation>Sentier non pavé ou trace de véhicule constituant un passage possible à pied, par opposition à une surface plane et dure. La densité du remplissage en brun devra être la même que celle choisie pour le symbole 529 (zone pavée).
 
 Pour améliorer la lisibilité de ce symbole dans les parties non-urbaines de la carte, l&apos;épaisseur de la ligne peut dans ces zones non-urbaines être augmentée de 0.07 à 0.14 mm et le remplissage en brun rendu plus foncé. Si un remplissage (x %) est utilisé dans les parties urbaines, un brun (x + 20 %) pourra être utilisé en zone non-urbaine de la carte.
 
-Couleur : noir, brun 0 (blanc),10 %, 20 % ou 30 % (zone urbaine) / 20 %, 30 %, 40 %, 50 % (zone non-urbaine) - (min 60 lignes / cm); la couleur et l&apos;épaisseur de la ligne devront être les mêmes quepour les symboles 529 (zone 
+Couleur : noir, brun 0 (blanc),10 %, 20 % ou 30 % (zone urbaine) / 20 %, 30 %, 40 %, 50 % (zone non-urbaine) - (min 60 lignes / cm); la couleur et l&apos;épaisseur de la ligne devront être les mêmes quepour les symboles 529 (zone
 pavée) ou 529.1 (escalier en zone pavée).</translation>
     </message>
     <message>
@@ -9811,11 +9801,11 @@ To improve the legibility of this symbol in non-urban parts of the map, the line
 
 Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (min.60lines/cm) (non-urban); the colour and the line width shall be the same as for the symbols paved area (529) and step or edge of paved areas (529.1).</source>
         <comment>Description of symbol 506.1.4</comment>
-        <translation>Sentier non pavé ou trace de véhicule constituant un passage possible à pied, par opposition à une surface plane et dure. La densité du remplissage en brun devra être la même que celle choisie pour le symbole 529 (zone pavée). 
+        <translation>Sentier non pavé ou trace de véhicule constituant un passage possible à pied, par opposition à une surface plane et dure. La densité du remplissage en brun devra être la même que celle choisie pour le symbole 529 (zone pavée).
 
 Pour améliorer la lisibilité de ce symbole dans les parties non-urbaines de la carte, l&apos;épaisseur de la ligne peut dans ces zones non-urbaines être augmentée de 0.07 à 0.14 mm et le remplissage en brun rendu plus foncé. Si un remplissage (x %) est utilisé dans les parties urbaines, un brun (x + 20 %) pourra être utilisé en zone non-urbaine de la carte.
 
-Couleur : noir, brun 0 (blanc),10 %, 20 % ou 30 % (zone urbaine) / 20 %, 30 %, 40 %, 50 % (zone non-urbaine) - (min 60 lignes / cm); la couleur et l&apos;épaisseur de la ligne devront être les mêmes quepour les symboles 529 (zone 
+Couleur : noir, brun 0 (blanc),10 %, 20 % ou 30 % (zone urbaine) / 20 %, 30 %, 40 %, 50 % (zone non-urbaine) - (min 60 lignes / cm); la couleur et l&apos;épaisseur de la ligne devront être les mêmes quepour les symboles 529 (zone
 pavée) ou 529.1 (escalier en zone pavée).</translation>
     </message>
     <message>
@@ -10042,11 +10032,11 @@ Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</
         <translation>Construction infranchissable &lt;span style=&quot;color:magenta&quot;&gt;(accès interdit)&lt;/span&gt;</translation>
     </message>
     <message>
-        <source>A building is a relatively permanent construction having a roof. Buildings within symbol area with forbidden access (527.1) may just be represented in a simplified manner.Areas totally contained within a building shall be mapped as being a part of the building. 
+        <source>A building is a relatively permanent construction having a roof. Buildings within symbol area with forbidden access (527.1) may just be represented in a simplified manner.Areas totally contained within a building shall be mapped as being a part of the building.
 
-The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map. 
+The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map.
 
-&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to pass through or over a building! 
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to pass through or over a building!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 526.1</comment>
         <translation>Un bâtiment est une construction permanente avec un toit. Les bâtiment à l&apos;intérieur d&apos;une zone d&apos;accès interdit (528.1) peuvent être représentés d&apos;une manière simplifiée. Les zones entièrement contenues à l&apos;intérieur d&apos;un bâtiment seront dessinées comme en faisant partie.
@@ -10082,11 +10072,11 @@ Le concurrent qui ne respete pas cette règle sera disqualifié.&lt;/span&gt;</t
         <translation>Construction, taille minimum &lt;span style=&quot;color:magenta&quot;&gt;(accès interdit)&lt;/span&gt;</translation>
     </message>
     <message>
-        <source>A building is a relatively permanent construction having a roof. Buildings within symbol area with forbidden access (527.1) may just be represented in a simplified manner.Areas totally contained within a building shall be mapped as being a part of the building. 
+        <source>A building is a relatively permanent construction having a roof. Buildings within symbol area with forbidden access (527.1) may just be represented in a simplified manner.Areas totally contained within a building shall be mapped as being a part of the building.
 
-The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map. 
+The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map.
 
-&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to pass through or over a building! 
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to pass through or over a building!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 526.1.3</comment>
         <translation>Un bâtiment est une construction permanente avec un toit. Les bâtiment à l&apos;intérieur d&apos;une zone d&apos;accès interdit (528.1) peuvent être représentés d&apos;une manière simplifiée. Les zones entièrement contenues à l&apos;intérieur d&apos;un bâtiment seront dessinées comme en faisant partie.
@@ -10102,11 +10092,11 @@ Le concurrent qui ne respete pas cette règle sera disqualifié.&lt;/span&gt;</t
         <translation>Passage couvert</translation>
     </message>
     <message>
-        <source>A canopy is a building construction (with a roof), normally supported by pillars, poles or walls, such as passages, gangways, courts, bus stops, gas stations or garages. 
+        <source>A canopy is a building construction (with a roof), normally supported by pillars, poles or walls, such as passages, gangways, courts, bus stops, gas stations or garages.
 
 Small passable parts of buildings which can not easily be crossed by competitors, shall not be represented on the map and shall be closed during the competition.</source>
         <comment>Description of symbol 526.2</comment>
-        <translation>Un passage couvert est une construction (avec un toit) généralement soutenue par des piliers, piquets ou murs, telle que des passages, couloir, cour, arrêts de bus, stations d&apos;essence, garage. 
+        <translation>Un passage couvert est une construction (avec un toit) généralement soutenue par des piliers, piquets ou murs, telle que des passages, couloir, cour, arrêts de bus, stations d&apos;essence, garage.
 
 De petites parties de bâtiments qui ne peuvent être franchies facilement par les coureurs ne seront pas représentées et seront fermées durant la compétition.</translation>
     </message>
@@ -10157,7 +10147,7 @@ Areas with forbidden access totally contained within buildings shall be mapped a
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an area with forbidden access!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 528.1</comment>
-        <translation>Une zone interdite est, par exemple, une propriété privée, un parterre de fleurs, une zone de rails, etc. Aucun élément à l&apos;intérieur d&apos;une telle zone ne sera représenté, excepté les éléments très visibles tels les rails, les grands bâtiments, les très grands arbres. 
+        <translation>Une zone interdite est, par exemple, une propriété privée, un parterre de fleurs, une zone de rails, etc. Aucun élément à l&apos;intérieur d&apos;une telle zone ne sera représenté, excepté les éléments très visibles tels les rails, les grands bâtiments, les très grands arbres.
 
 Les accès routiers seront clairement représentés. Si ces zones ont entièrement contenues à l&apos;intérieur d&apos;un bâtiment, elles seront dessinées comme en faisant partie.
 
@@ -10176,7 +10166,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (min.60lines/cm) (non-urban); the colour and the line width shall be the same as for the symbol unpaved footpath or track (506.1).</source>
         <comment>Description of symbol 529.0.1</comment>
-        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation. 
+        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation.
 
 Lorsqu’une route, chemin piétonnier ou trace en dur traverse une zone non-urbaine le remplissage brun doit être plus foncé, de façon à ce que si (x)% de brun est utilisé pour ces zones urbaines, (x + 20 %) sera utilisé pour les zones non-urbaines et l’épaisseur de la ligne extérieure noire sera augmentée de 0,07 mm à 0,14 mm. La limite noire peut être omise lorsque c’est logique (par ex. transitions peu distinctes ou progressives entre gravier et herbe).
 
@@ -10194,7 +10184,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
         <comment>Description of symbol 529.0.2</comment>
-        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation. 
+        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation.
 
 Lorsqu’une route, chemin piétonnier ou trace en dur traverse une zone non-urbaine le remplissage brun doit être plus foncé, de façon à ce que si (x)% de brun est utilisé pour ces zones urbaines, (x + 20 %) sera utilisé pour les zones non-urbaines et l’épaisseur de la ligne extérieure noire sera augmentée de 0,07 mm à 0,14 mm. La limite noire peut être omise lorsque c’est logique (par ex. transitions peu distinctes ou progressives entre gravier et herbe).
 
@@ -10212,7 +10202,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
         <comment>Description of symbol 529.0.3</comment>
-        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation. 
+        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation.
 
 Lorsqu’une route, chemin piétonnier ou trace en dur traverse une zone non-urbaine le remplissage brun doit être plus foncé, de façon à ce que si (x)% de brun est utilisé pour ces zones urbaines, (x + 20 %) sera utilisé pour les zones non-urbaines et l’épaisseur de la ligne extérieure noire sera augmentée de 0,07 mm à 0,14 mm. La limite noire peut être omise lorsque c’est logique (par ex. transitions peu distinctes ou progressives entre gravier et herbe).
 
@@ -10230,7 +10220,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
         <comment>Description of symbol 529.0.4</comment>
-        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation. 
+        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation.
 
 Lorsqu’une route, chemin piétonnier ou trace en dur traverse une zone non-urbaine le remplissage brun doit être plus foncé, de façon à ce que si (x)% de brun est utilisé pour ces zones urbaines, (x + 20 %) sera utilisé pour les zones non-urbaines et l’épaisseur de la ligne extérieure noire sera augmentée de 0,07 mm à 0,14 mm. La limite noire peut être omise lorsque c’est logique (par ex. transitions peu distinctes ou progressives entre gravier et herbe).
 
@@ -10248,7 +10238,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
         <comment>Description of symbol 529.0.5</comment>
-        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation. 
+        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation.
 
 Lorsqu’une route, chemin piétonnier ou trace en dur traverse une zone non-urbaine le remplissage brun doit être plus foncé, de façon à ce que si (x)% de brun est utilisé pour ces zones urbaines, (x + 20 %) sera utilisé pour les zones non-urbaines et l’épaisseur de la ligne extérieure noire sera augmentée de 0,07 mm à 0,14 mm. La limite noire peut être omise lorsque c’est logique (par ex. transitions peu distinctes ou progressives entre gravier et herbe).
 
@@ -10266,7 +10256,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
         <comment>Description of symbol 529.0.6</comment>
-        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation. 
+        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation.
 
 Lorsqu’une route, chemin piétonnier ou trace en dur traverse une zone non-urbaine le remplissage brun doit être plus foncé, de façon à ce que si (x)% de brun est utilisé pour ces zones urbaines, (x + 20 %) sera utilisé pour les zones non-urbaines et l’épaisseur de la ligne extérieure noire sera augmentée de 0,07 mm à 0,14 mm. La limite noire peut être omise lorsque c’est logique (par ex. transitions peu distinctes ou progressives entre gravier et herbe).
 
@@ -10284,7 +10274,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
         <comment>Description of symbol 529.0.7</comment>
-        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation. 
+        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation.
 
 Lorsqu’une route, chemin piétonnier ou trace en dur traverse une zone non-urbaine le remplissage brun doit être plus foncé, de façon à ce que si (x)% de brun est utilisé pour ces zones urbaines, (x + 20 %) sera utilisé pour les zones non-urbaines et l’épaisseur de la ligne extérieure noire sera augmentée de 0,07 mm à 0,14 mm. La limite noire peut être omise lorsque c’est logique (par ex. transitions peu distinctes ou progressives entre gravier et herbe).
 
@@ -10302,7 +10292,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
         <comment>Description of symbol 529.0.8</comment>
-        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation. 
+        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation.
 
 Lorsqu’une route, chemin piétonnier ou trace en dur traverse une zone non-urbaine le remplissage brun doit être plus foncé, de façon à ce que si (x)% de brun est utilisé pour ces zones urbaines, (x + 20 %) sera utilisé pour les zones non-urbaines et l’épaisseur de la ligne extérieure noire sera augmentée de 0,07 mm à 0,14 mm. La limite noire peut être omise lorsque c’est logique (par ex. transitions peu distinctes ou progressives entre gravier et herbe).
 
@@ -10320,7 +10310,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
         <comment>Description of symbol 529.0.9</comment>
-        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation. 
+        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation.
 
 Lorsqu’une route, chemin piétonnier ou trace en dur traverse une zone non-urbaine le remplissage brun doit être plus foncé, de façon à ce que si (x)% de brun est utilisé pour ces zones urbaines, (x + 20 %) sera utilisé pour les zones non-urbaines et l’épaisseur de la ligne extérieure noire sera augmentée de 0,07 mm à 0,14 mm. La limite noire peut être omise lorsque c’est logique (par ex. transitions peu distinctes ou progressives entre gravier et herbe).
 
@@ -10338,7 +10328,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
         <comment>Description of symbol 529.0.10</comment>
-        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation. 
+        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation.
 
 Lorsqu’une route, chemin piétonnier ou trace en dur traverse une zone non-urbaine le remplissage brun doit être plus foncé, de façon à ce que si (x)% de brun est utilisé pour ces zones urbaines, (x + 20 %) sera utilisé pour les zones non-urbaines et l’épaisseur de la ligne extérieure noire sera augmentée de 0,07 mm à 0,14 mm. La limite noire peut être omise lorsque c’est logique (par ex. transitions peu distinctes ou progressives entre gravier et herbe).
 
@@ -10356,7 +10346,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
         <comment>Description of symbol 529.0.11</comment>
-        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation. 
+        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation.
 
 Lorsqu’une route, chemin piétonnier ou trace en dur traverse une zone non-urbaine le remplissage brun doit être plus foncé, de façon à ce que si (x)% de brun est utilisé pour ces zones urbaines, (x + 20 %) sera utilisé pour les zones non-urbaines et l’épaisseur de la ligne extérieure noire sera augmentée de 0,07 mm à 0,14 mm. La limite noire peut être omise lorsque c’est logique (par ex. transitions peu distinctes ou progressives entre gravier et herbe).
 
@@ -10374,7 +10364,7 @@ Where a paved road, footpath or track goes through a non-urban area, the brown f
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</source>
         <comment>Description of symbol 529.0.12</comment>
-        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation. 
+        <translation>Une zone qui possède un surface ferme, comme l’asphalte, gravier tassé, carrelage, béton ou similaire. Elle doit être bordée (ou encadrée) avec le symbole 529.1 (marche ou bord de zone pavée). Les différences visibles à l’intérieur de la zone pavée peuvent être représentées avec le symbole 529.1 (marche ou bord de zone pavée) si elles sont utiles à l’orientation.
 
 Lorsqu’une route, chemin piétonnier ou trace en dur traverse une zone non-urbaine le remplissage brun doit être plus foncé, de façon à ce que si (x)% de brun est utilisé pour ces zones urbaines, (x + 20 %) sera utilisé pour les zones non-urbaines et l’épaisseur de la ligne extérieure noire sera augmentée de 0,07 mm à 0,14 mm. La limite noire peut être omise lorsque c’est logique (par ex. transitions peu distinctes ou progressives entre gravier et herbe).
 
@@ -10512,7 +10502,7 @@ Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</
         <translation>Lignes du nord magnétique, noir</translation>
     </message>
     <message>
-        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground.
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601.0.1</comment>
@@ -10526,7 +10516,7 @@ Les lignes du nord peuvent être interrompues lorsqu‘elles cachent un petit é
         <translation>Lignes du nord magnétique, noir avec flèche</translation>
     </message>
     <message>
-        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground.
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.
 
@@ -10572,7 +10562,7 @@ Les lignes du nord peuvent être interrompues lorsqu‘elles cachent un petit é
         <translation>Lignes du nord magnétique, bleu avec flèche</translation>
     </message>
     <message>
-        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground.
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.
 
@@ -10590,7 +10580,7 @@ Les lignes du nord peuvent être interrompues lorsqu‘elles cachent un petit é
         <translation>Ligne du nord magnétique, bleu, aide</translation>
     </message>
     <message>
-        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground.
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. Cut holes in the pattern to create these breaks.</source>
         <comment>Description of symbol 601.0.6</comment>
@@ -10712,11 +10702,11 @@ Le concurrent qui ne respecte pas cettre règle sera disqualifié.&lt;/span&gt;<
         <translation>Point de passage</translation>
     </message>
     <message>
-        <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards. 
+        <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.
 
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with symbol crossing point (708) or crossing section (708.1).</source>
         <comment>Description of symbol 708</comment>
-        <translation>Un point de passage à travers ou au-dessus d&apos;un mur, d&apos;une clôture, le franchissement d&apos;une route, d&apos;un chemin de fer ou d&apos;un tunnel est représenté sur la carte par deux parenthèses inversées. 
+        <translation>Un point de passage à travers ou au-dessus d&apos;un mur, d&apos;une clôture, le franchissement d&apos;une route, d&apos;un chemin de fer ou d&apos;un tunnel est représenté sur la carte par deux parenthèses inversées.
 
 Si de tels passages souterrains ou tunnels doivent être utilisés pendant une compétition, ils doivent être renforcés par le symbole 708 (point de passage) ou 708.1 (passage).</translation>
     </message>
@@ -10761,7 +10751,7 @@ Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</
     <message>
         <source>Out-of-bounds area, solid boundary</source>
         <comment>Name of symbol 709.1</comment>
-        <translation>Zone interdite,  ligne continue</translation>
+        <translation>Zone interdite, ligne continue</translation>
     </message>
     <message>
         <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
@@ -11012,7 +11002,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <translation type="unfinished">Abrupt de terre</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -11022,7 +11012,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <translation>Abrupt de terre (taille minimale)</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -11371,8 +11361,7 @@ dispersés</translation>
         <translation type="unfinished">Verger</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -11512,9 +11501,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud,
-erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be
-required to dismount. Speed max 25 %.</source>
+        <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud, erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 837</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -11594,8 +11581,7 @@ required to dismount. Speed max 25 %.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to
-cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
+        <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 521</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -11847,10 +11833,7 @@ Emprise au sol : 12 m x 12 m.</translation>
         <translation type="unfinished">Itinéraire balisé</translation>
     </message>
     <message>
-        <source>A marked route is shown on the map with a dashed line. If the symbol is used instead
-of symbol 704 before or after a control, it represents an obligatory route for the
-competitors. The symbol can also be used in areas where off-track riding is forbidden
-to represent allowed routes that are marked in the terrain.</source>
+        <source>A marked route is shown on the map with a dashed line. If the symbol is used instead of symbol 704 before or after a control, it represents an obligatory route for the competitors. The symbol can also be used in areas where off-track riding is forbidden to represent allowed routes that are marked in the terrain.</source>
         <comment>Description of symbol 705</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -11905,11 +11888,7 @@ to represent allowed routes that are marked in the terrain.</source>
         <translation>Route interdite</translation>
     </message>
     <message>
-        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The
-zigzag line should be as continuous as possible. If there is a crossing point over the
-forbidden route, it shall be presented like a gate by two perpendicular lines over the
-forbidden route. Also a longer crossing section shall be presented clearly on the map
-by using the perpendicular lines at the end of the zigzag lines.</source>
+        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
         <comment>Description of symbol 711.1</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -11995,7 +11974,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
     <message>
         <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
         <comment>Description of symbol 108</comment>
-        <translation>Une levée de terre en ruine ou moins facile à distinguer. 
+        <translation>Une levée de terre en ruine ou moins facile à distinguer.
 Hauteur minimum 0,5 m.
 Longueur minimum : 2 tirets (3,65 mm - 55m au sol).
 Si la levée de terre est plus courte le dessin doit l’exagérer pour atteindre la longueur minimum ou il faut utiliser le symbole 105 (levée de terre).</translation>
@@ -13274,7 +13253,7 @@ Une limite peut être dessinée s&apos;il n&apos;y a pas de limite naturelle, de
     <message>
         <source>Out-of-bounds area, solid boundary</source>
         <comment>Name of symbol 709.1</comment>
-        <translation type="unfinished">Zone interdite,  ligne continue</translation>
+        <translation type="unfinished">Zone interdite, ligne continue</translation>
     </message>
     <message>
         <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
@@ -13364,7 +13343,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
     <message>
         <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
         <comment>Description of symbol 108</comment>
-        <translation>Une levée de terre en ruine ou moins facile à distinguer. 
+        <translation>Une levée de terre en ruine ou moins facile à distinguer.
 Hauteur minimum 0,5 m.
 Longueur minimum : 2 tirets (3,65 mm - 55m au sol).
 Si la levée de terre est plus courte le dessin doit l’exagérer pour atteindre la longueur minimum ou il faut utiliser le symbole 105 (levée de terre).</translation>
@@ -13816,7 +13795,7 @@ portée aux éléments proches.
 La courbure minimale d&apos;une courbe de niveau est de 0,25 mm de centre à centre de la ligne (emprise au sol de 4m). L&apos;entrée d&apos;un rentrant ou d&apos;un
 éperon doit mesurer au moins 0,5 mm de centre à centre de la ligne (emprise au sol 8 m).
 La longueur minimum d&apos;une colline est de 0,9 mm (emprise au sol de 13,5 m) et la largeur minimale de 0,6 mm (emprise au sol de 9 m) mesurée depuis les bords extérieurs des lignes. Des buttes remarquables plus petites peuvent être représentées par le symbole Petite butte (109) ou Petite butte allongée (110) ou bien elles peuvent être exagérées pour respecter les dimensions minimum.
-Comme une dépression doit comprendre un tiret de pente, sa longueur minimale est de 1,1 mm (16,5 m au sol) et sa largeur minimale de 0,7 mm mesurée depuis les bords extérieurs de la ligne. Des dépressions remarquables plus petites peuvent être représentées par le symbole Petite dépression (111) ou bien elles peuvent être exagérées pour respecter les dimensions minimum. 
+Comme une dépression doit comprendre un tiret de pente, sa longueur minimale est de 1,1 mm (16,5 m au sol) et sa largeur minimale de 0,7 mm mesurée depuis les bords extérieurs de la ligne. Des dépressions remarquables plus petites peuvent être représentées par le symbole Petite dépression (111) ou bien elles peuvent être exagérées pour respecter les dimensions minimum.
 Les courbes de niveau devraient être déplacées (plutôt que coupées) quand il est nécessaire d&apos;éviter de toucher des symboles Petite butte (109) ou Petite butte allongée (110).</translation>
     </message>
     <message>
@@ -13879,7 +13858,7 @@ Longueur minimale pour une courbe refermée sur elle-même (colline ou dépressi
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 103.1</comment>
         <translation>Ce symbole est un complément du symbole de courbe de niveau (101.0).
-Les tirets de pentes peuvent être ajoutés du côté aval d&apos;une courbe de niveau, afin de clarifier le sens de la pente. 
+Les tirets de pentes peuvent être ajoutés du côté aval d&apos;une courbe de niveau, afin de clarifier le sens de la pente.
 Ils doivent être positionnés au niveau des rentrants.
 Une dépression doit comprendre un tiret de pente. Sa longueur minimale est de 1,1 mm (16,5 m au sol) et sa largeur minimale de 0,7 mm mesurée depuis les bords extérieurs de la
 ligne. Des dépressions remarquables plus petites peuvent être représentées par le symbole 111 (petite dépression) ou bien elles peuvent être exagérées pour respecter les dimensions minimum.</translation>
@@ -14108,7 +14087,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente. 
+        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente.
 Pour des falaises non verticales, les tirets devraient être dessinés pour indiquer l&apos;étendue horizontale de la falaise. En l’absence de tirets, les extrémités du trait principal doivent être arrondies. Un passage entre deux falaises doit mesurer au moins 0,2 mm. Une falaise devrait s&apos;imbriquer avec les courbes de niveau.
 Franchir une falaise ralentira normalement la progression.
 Hauteur minimum : 1 m.
@@ -14126,7 +14105,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente. 
+        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente.
 Pour des falaises non verticales, les tirets devraient être dessinés pour indiquer l&apos;étendue horizontale de la falaise. En l’absence de tirets, les extrémités du trait principal doivent être arrondies. Un passage entre deux falaises doit mesurer au moins 0,2 mm. Une falaise devrait s&apos;imbriquer avec les courbes de niveau.
 Franchir une falaise ralentira normalement la progression.
 Hauteur minimum : 1 m.
@@ -14144,7 +14123,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente. 
+        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente.
 Pour des falaises non verticales, les tirets devraient être dessinés pour indiquer l&apos;étendue horizontale de la falaise. En l’absence de tirets, les extrémités du trait principal doivent être arrondies. Un passage entre deux falaises doit mesurer au moins 0,2 mm. Une falaise devrait s&apos;imbriquer avec les courbes de niveau.
 Franchir une falaise ralentira normalement la progression.
 Hauteur minimum : 1 m.
@@ -14162,7 +14141,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente. 
+        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente.
 Pour des falaises non verticales, les tirets devraient être dessinés pour indiquer l&apos;étendue horizontale de la falaise. En l’absence de tirets, les extrémités du trait principal doivent être arrondies. Un passage entre deux falaises doit mesurer au moins 0,2 mm. Une falaise devrait s&apos;imbriquer avec les courbes de niveau.
 Franchir une falaise ralentira normalement la progression.
 Hauteur minimum : 1 m.
@@ -14202,8 +14181,7 @@ Emprise au sol : 6 m de diamètre (7,5 m de diamètre).</translation>
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
 
-To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
-of the boulders.</source>
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
         <translation>Un bloc rocheux qui est plus grand que d&apos;autres blocs (204) dans les environs, ou bien un grand bloc rocheux qui est plus petit que les autres grands blocs rocheux (205) dans les environs.
 Pour mettre en évidence la différence entre blocs rocheux (204) voisins (à moins de 30 m de distance) de tailles différentes, il est autorisé d&apos;utiliser ce symbole (0,5 mm) comme une version agrandie du symbole 204 pour certains d&apos;entre eux.
@@ -14324,7 +14302,7 @@ The maximum centre to centre distance between neighbouring triangles is 0.6 mm.
 Density: 2-3 symbols / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 209</comment>
-        <translation>Une zone qui est couverte de tellement de blocs rocheux dispersés qu&apos;ils ne peuvent pas être dessinés individuellement et qui ralentira la vitesse de course est représentée par des triangles pleins, placés et orientés aléatoirement. Un minimum de deux triangles doit être utilisé. 
+        <translation>Une zone qui est couverte de tellement de blocs rocheux dispersés qu&apos;ils ne peuvent pas être dessinés individuellement et qui ralentira la vitesse de course est représentée par des triangles pleins, placés et orientés aléatoirement. Un minimum de deux triangles doit être utilisé.
 La distance maximum centre à centre entre triangles voisins est de 0,6 mm.
 Densité : 2 à 3 symboles/mm². Pour mettre en évidence les différences de hauteur à l&apos;intérieur de zone de blocs rocheux, il est autorisé d&apos;augmenter la dimension de certains triangles de 20%.
 Emprise au sol d&apos;un triangle individuel : 12 m x 6 m.</translation>
@@ -14398,7 +14376,7 @@ Emprise au sol d&apos;un triangle individuel : 12 m x 6 m.</translation>
         <source>Should be at least 2 m wide.
 Minimum length (isolated): 1 mm (footprint 15 m).</source>
         <comment>Description of symbol 304</comment>
-        <translation>Sa largeur devrait être d&apos;au moins 2 m. 
+        <translation>Sa largeur devrait être d&apos;au moins 2 m.
 Longueur minimum (isolée) : 1 mm (15 m au sol).</translation>
     </message>
     <message>
@@ -14858,7 +14836,7 @@ Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 
         <translation>Mur</translation>
     </message>
     <message>
-        <source>A significant wall of stone, concrete, wood or other materials. 
+        <source>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 513</comment>
@@ -15297,8 +15275,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks
-rougher and softer than the wide skateable tracks in the area.</source>
+        <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks rougher and softer than the wide skateable tracks in the area.</source>
         <comment>Description of symbol 802</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -15308,8 +15285,7 @@ rougher and softer than the wide skateable tracks in the area.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may
-be made wider to reduce widening during competition.</source>
+        <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may be made wider to reduce widening during competition.</source>
         <comment>Description of symbol 803</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -15319,9 +15295,7 @@ be made wider to reduce widening during competition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
-slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
-technique for slowing and stopping.
+        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing technique for slowing and stopping.
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
@@ -15343,9 +15317,7 @@ In order to clarify a junction, the beginning of a slow track is drawn with a sh
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -15355,9 +15327,7 @@ heavily sanded roads should normally be marked as forbidden routes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -15411,8 +15381,7 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
-The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
+The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -15424,8 +15393,7 @@ that it is more clearly visible in the track network.</source>
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
-The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
+The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809.1</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -15608,7 +15576,7 @@ Une limite peut être dessinée s&apos;il n&apos;y a pas de limite naturelle, de
     <message>
         <source>Out-of-bounds area, solid boundary</source>
         <comment>Name of symbol 709.1</comment>
-        <translation>Zone interdite,  ligne continue</translation>
+        <translation>Zone interdite, ligne continue</translation>
     </message>
     <message>
         <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
@@ -15691,7 +15659,7 @@ Une limite peut être dessinée s&apos;il n&apos;y a pas de limite naturelle, de
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty. 
+        <source>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty.
  - Scheme: | Course code | Length | Height climb |
  - The course length is given in kilometres rounded to the nearest 0.1 km.
  - The height climb is given in metres rounded to the nearest 5 m.</source>
@@ -15704,7 +15672,7 @@ Une limite peut être dessinée s&apos;il n&apos;y a pas de limite naturelle, de
         <translation>Définition de chaque poste</translation>
     </message>
     <message>
-        <source>Scheme of columns: |A|B|C|D|E|F|G|H| 
+        <source>Scheme of columns: |A|B|C|D|E|F|G|H|
 
 A: Control number
 B: Control code
@@ -15946,7 +15914,7 @@ Map symbol: ISOM 106</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.s
+        <source>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.
 
 Map symbols: ISOM 107, 108</source>
         <comment>Description of symbol 1.6</comment>

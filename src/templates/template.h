@@ -27,6 +27,7 @@
 #include <vector>
 
 #include <QtGlobal>
+#include <QFlags>
 #include <QObject>
 #include <QPointF>
 #include <QString>
@@ -119,6 +120,9 @@ public:
 		/// The template data is not yet loaded or has been unloaded.
 		/// It is assumed to be available, so it can be (re-)loaded if needed.
 		Unloaded,
+		/// The template's configuration/setup is not yet finished.
+		/// This is the initial state after construction.
+		Configuring,
 		/// A required resource cannot be found (e.g. missing image or font),
 		/// so the template data cannot be loaded.
 		Invalid
@@ -134,6 +138,19 @@ public:
 		FoundByRelPath = 2,  ///< File found by relative path from the map's directory.
 		FoundByAbsPath = 3,  ///< File found by absolute path.
 	};
+
+	/**
+	 * Modifier options for the scribble tool operation.
+	 */
+	enum ScribbleOption
+	{
+		NoScribbleOptions   = 0x00,
+		FilledAreas         = 0x01,  ///< Fill the area defined by the scribble line.
+		ComposeBackground   = 0x02,  ///< Draw lines or fill areas only in transparent areas.
+		PatternFill         = 0x04,  ///< Fill areas with a dot pattern.
+		ScribbleOptionsMask = 0x07,  ///< All bits used by ScribbleOption.
+	};
+	Q_DECLARE_FLAGS(ScribbleOptions, ScribbleOption)
 	
 	/**
 	 * Indicates arguments which must not be nullptr.
@@ -197,6 +214,8 @@ public:
 	/**
 	 * Creates and returns a template from the configuration in the XML stream.
 	 * 
+	 * The template will be in Unloaded state after this function.
+	 * 
 	 * Returns a null pointer in the case of error.
 	 */
 	static std::unique_ptr<Template> loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, bool& open);
@@ -219,12 +238,22 @@ public:
 	void switchTemplateFile(const QString& new_path, bool load_file);
 	
 	/**
-	 * Shows the dialog to find a moved template.
+	 * Interactively changes the template file.
 	 * 
-	 * If the user selects a new file, tries to switch to the selected template
-	 * file using switchTemplateFile() and by trying to load the new file.
-	 * Returns true if this succeeds; if not, reverts the switch and returns
-	 * false. Also returns false if the dialog is aborted.
+	 * This functions shows a file dialog for selecting a new template file.
+	 * Upon selection, it tries to load the template file. When loading fails,
+	 * the original path and state is restored.
+	 * 
+	 * When this function is called on a TemplatePlaceholder object, an object
+	 * of an actual template implementation class is created in order to load
+	 * the data file. After successful loading, this new object replaces the
+	 * original object in the map's list of active templates, destroying the
+	 * original object. Thus the current object may be no longer in the map's
+	 * active list, and it will be destroyed when control returns to the event
+	 * loop.
+	 * 
+	 * Returns true if a file is selected and the loading succeeds,
+	 * false otherwise.
 	 */
 	bool execSwitchTemplateFileDialog(QWidget* dialog_parent);
 	
@@ -232,12 +261,13 @@ public:
 	/**
 	 * Does everything needed to load a template.
 	 * 
-	 * Calls preLoadConfiguration(), loadTemplateFile() and
-	 * postLoadConfiguration(). Returns if the process was successful. 
+	 * This function can be called only if the template state is Configuring.
+	 * Calls preLoadSetup(), loadTemplateFile() and postLoadSetup().
+	 * Returns true if the process was successful.
 	 * 
 	 * The passed-in view is used to center the template if needed.
 	 */
-	bool configureAndLoad(QWidget* dialog_parent, MapView* view);
+	bool setupAndLoad(QWidget* dialog_parent, const MapView* view);
 	
 	/**
 	 * Tries to find the template file non-interactively.
@@ -283,35 +313,31 @@ public:
 	
 	
 	/** 
-	 * Does configuration before the actual template is loaded.
+	 * Setup event before the template is loaded for the first time.
 	 * 
 	 * This function is called after the user chooses the template file, but
-	 * before it is loaded. Derived classes can show dialogs here to get user
+	 * before regular loading. Derived classes can show dialogs here to get user
 	 * input which is needed to interpret the template file.
 	 * 
 	 * If the implementation returns false, loading the template is aborted.
 	 * 
 	 * \note Derived classes should set is_georeferenced either here or in
-	 *       postLoadConfiguration().
+	 *       postLoadSetup().
 	 *       By default templates are loaded as non-georeferenced.
 	 */
-	virtual bool preLoadConfiguration(QWidget* dialog_parent);
+	virtual bool preLoadSetup(QWidget* dialog_parent);
 	
 	/**
 	 * Loads the template file.
 	 * 
-	 * This function can be called if the template state is Invalid or Unloaded.
+	 * This function can be called if the template state is Configuring, Invalid or Unloaded.
 	 * It must not be called if the template file is already loaded.
 	 * It returns true if the template is loaded successfully.
-	 * 
-	 * Set the configuring parameter to true if the template is currently being
-	 * configured by the user (in contrast to the case where it is reloaded, e.g.
-	 * when loaded while reopening an existing map file).
 	 */
-	bool loadTemplateFile(bool configuring);
+	bool loadTemplateFile();
 	
 	/**
-	 * Does configuration after the actual template is loaded.
+	 * Setup event after the template is loaded for the first time.
 	 * 
 	 * This function is called after the user chose the template file and after
 	 * the chosen file was successfully loaded. Derived classes can show dialogs
@@ -323,7 +349,7 @@ public:
 	 * template should be centered in the active view (only if it is not
 	 * georeferenced.)
 	 */
-	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view);
+	virtual bool postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view);
 	
 	/**
 	 * Unloads the template file.
@@ -357,7 +383,7 @@ public:
 	 * regardless of the zoom level so that a bounding box in map coords
 	 * cannot be calculated.
 	 */
-	virtual int getTemplateBoundingBoxPixelBorder() {return 0;}
+	virtual int getTemplateBoundingBoxPixelBorder() const {return 0;}
 	
 	/** 
 	 * Marks the whole area of the template as needing a redraw.
@@ -387,7 +413,7 @@ public:
 	 * 
 	 * \todo Rewrite using a range of MapCoordF.
 	 */
-	void drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, const QColor& color, qreal width, QRectF map_bbox);
+	void drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, const QColor& color, qreal width, QRectF map_bbox, ScribbleOptions mode);
 	
 	/** 
 	 * Triggers an undo or redo action for template freehand drawing.
@@ -417,6 +443,13 @@ public:
 	 * \note For non-georeferenced templates only!
 	 */
 	virtual QRectF getTemplateExtent() const;
+	
+	/**
+	 * Returns the bounding rectangle of the template in map coordinates.
+	 * 
+	 * The default implementation relies on getTemplateExtent().
+	 */
+	virtual QRectF boundingRect() const;
 	
 	/** 
 	 * Scales the template with the given scaling center.
@@ -494,6 +527,18 @@ public:
 	/// Changes the path and filename only. Does not do any reloading etc.
 	void setTemplatePath(const QString& value);
 	
+	/**
+	 * Returns an updated relative path.
+	 * 
+	 * If the template is in a valid state and map_dir is given, this function
+	 * returns the corresponding relative path to the template file.
+	 * 
+	 * Otherwise it returns the original relative path if it is not empty, or
+	 * just the template file name.
+	 */
+	QString getTemplateRelativePath(const QDir* map_dir) const;
+	
+	/// Returns the relative path which was set when template was configured from XML.
 	inline const QString& getTemplateRelativePath() const {return template_relative_path;}
 	inline void setTemplateRelativePath(const QString& value) {template_relative_path = value;}
 	
@@ -513,7 +558,7 @@ public:
 	 * 
 	 * The default implementation returns false.
 	 */
-	virtual bool canChangeTemplateGeoreferenced();
+	virtual bool canChangeTemplateGeoreferenced() const;
 	
 	/**
 	 * Tries to change the usage of georeferencing data.
@@ -635,16 +680,32 @@ protected:
 	 */
 	virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml);
 	
+	/**
+	 * Hook which is called at the end of template configuration loading.
+	 * 
+	 * Derived classes may override this function if they need to do any post-
+	 * processing on the configuration. Unlike loadTypeSpecificTemplateConfiguration(),
+	 * this function is always called, even when there is no type-specific data.
+	 * 
+	 * The implementation must not do expensive calculations because it is
+	 * called also for hidden and closed templates. It cannot reliably access
+	 * the template data (or sidecar files) because it is called before the
+	 * validation/updating of the template path.
+	 * 
+	 * Returns true on success.
+	 */
+	virtual bool finishTypeSpecificTemplateConfiguration();
+	
 	
 	/**
 	 * Hook for loading the actual template file non-interactively.
 	 * 
 	 * Returns true if successful.
 	 * 
-	 * If configuring is true, a call to postLoadConfiguration() will follow
+	 * If configuring is true, a call to postLoadSetup() will follow
 	 * if this returns true.
 	 */
-	virtual bool loadTemplateFileImpl(bool configuring) = 0;
+	virtual bool loadTemplateFileImpl() = 0;
 	
 	/**
 	 * Hook for unloading the template file.
@@ -658,7 +719,7 @@ protected:
 	 * Draws the polyline given by the points onto the template.
 	 * Required if canBeDrawnOnto() returns true.
 	 */
-	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width);
+	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width, ScribbleOptions mode);
 	
 	
 	/**
@@ -683,7 +744,7 @@ protected:
 	QString template_relative_path;
 	
 	/// The template lifetime state
-	State template_state = Unloaded;
+	State template_state = Configuring;
 	
 	/// The description of the last error
 	QString error_string;
@@ -736,5 +797,8 @@ protected:
 
 
 }  // namespace OpenOrienteering
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Template::ScribbleOptions)
+
 
 #endif

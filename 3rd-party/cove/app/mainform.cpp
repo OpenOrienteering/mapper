@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright (c) 2005-2020 Libor Pecháček.
  * Copyright 2020 Kai Pastor
  *
  * This file is part of CoVe 
@@ -247,15 +247,6 @@ void mainForm::afterLoadImage()
 		}
 		setTabEnabled(ui.colorsTab, true);
 	}
-}
-
-//! Simple About dialog.
-void mainForm::aboutDialog()
-{
-	QMessageBox::about(this, tr("About"),
-					   trUtf8("<h3>COntour VEctorizer</h3><br />"
-							  "Author: Libor Pecháček<br />"
-							  "License: GPL"));
 }
 
 /*! Return color randomly created from image pixels.  It takes 5 scanlines and
@@ -633,7 +624,7 @@ void mainForm::on_classificationOptionsButton_clicked()
 void mainForm::on_initialColorsButton_clicked()
 {
 	ColorsEditForm* optionsDialog = new ColorsEditForm(this);
-	int settingsNColors = settings.getInt("nColors");
+	auto settingsNColors = static_cast<std::size_t>(settings.getInt("nColors"));
 	std::vector<QString> comments;
 	auto colors = settings.getInitColors(comments);
 	auto nColors = colors.size();
@@ -791,7 +782,7 @@ void mainForm::on_bwImageSaveButton_clicked()
 
 	QString selectedFilter("PNG (*.png)");
 	QString newfilename = QFileDialog::getSaveFileName(
-		this, QString::null, QFileInfo(imageFileName).dir().path(), filter,
+		this, QString(), QFileInfo(imageFileName).dir().path(), filter,
 		&selectedFilter);
 
 	if (!newfilename.isEmpty())

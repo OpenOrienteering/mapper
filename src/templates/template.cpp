@@ -27,6 +27,7 @@
 #include <iterator>
 #include <new>
 #include <type_traits>
+#include <utility>
 
 #include <Qt>
 #include <QtMath>
@@ -41,6 +42,7 @@
 #include <QMessageBox>
 #include <QPainter>
 #include <QRectF>
+#include <QSizeF>
 #include <QStringRef>
 #include <QTransform>
 #include <QXmlStreamAttributes>
@@ -282,14 +284,7 @@ void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open, const
 	xml.writeAttribute(QString::fromLatin1("open"), QString::fromLatin1(open ? "true" : "false"));
 	xml.writeAttribute(QString::fromLatin1("name"), getTemplateFilename());
 	auto primary_path = getTemplatePath();
-	auto relative_path = getTemplateRelativePath();
-	if (getTemplateState() != Invalid)
-	{
-		if (map_dir)
-			relative_path = map_dir->relativeFilePath(primary_path);
-		else if (relative_path.isEmpty())
-			relative_path = getTemplateFilename();
-	}
+	auto relative_path = getTemplateRelativePath(map_dir);
 	if (suppressAbsolutePaths && QFileInfo(primary_path).isAbsolute())
 		primary_path = relative_path;
 	xml.writeAttribute(QString::fromLatin1("path"), primary_path);
@@ -450,6 +445,12 @@ Q_ASSERT(temp->passpoints.size() == 0);
 		}
 	}
 	
+	if (temp && !temp->finishTypeSpecificTemplateConfiguration())
+		temp.reset();
+	
+	if (temp)
+		temp->setTemplateState(Unloaded);
+	
 	return temp;
 }
 
@@ -472,7 +473,7 @@ void Template::switchTemplateFile(const QString& new_path, bool load_file)
 	template_state         = Template::Unloaded;
 	
 	if (load_file)
-		loadTemplateFile(false);
+		loadTemplateFile();
 }
 
 bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
@@ -488,15 +489,37 @@ bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
 	const State   old_state = getTemplateState();
 	const QString old_path  = getTemplatePath();
 	
-	switchTemplateFile(new_path, true);
+	if (auto* placeholder = qobject_cast<TemplatePlaceholder*>(this))
+	{
+		setTemplatePath(new_path);
+		auto new_temp = placeholder->makeActualTemplate();
+		if (new_temp)
+		{
+			auto pos = map->findTemplateIndex(this);
+			if (pos >= 0)
+			{
+				auto self = map->setTemplate(pos, std::move(new_temp));
+				if (map->getTemplate(pos)->loadTemplateFile())
+				{
+					// Loading succeeded. This object must be destroyed.
+					self.release()->deleteLater();
+					return true;
+				}
+				// Loading failed. This object must be put back.
+				map->setTemplate(pos, std::move(self));
+				return false;
+			}
+		}
+	}
+	else
+	{
+		switchTemplateFile(new_path, true);
+	}
 	if (getTemplateState() != Loaded)
 	{
 		QString error_template = QCoreApplication::translate("OpenOrienteering::TemplateListWidget", "Cannot open template\n%1:\n%2").arg(new_path);
 		QString error = errorString();
 		Q_ASSERT(!error.isEmpty());
-		QMessageBox::warning(dialog_parent,
-		                     tr("Error"),
-		                     error_template.arg(error));
 		
 		// Revert change
 		switchTemplateFile(old_path, old_state == Loaded);
@@ -504,21 +527,25 @@ bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
 		{
 			template_state = Invalid;
 		}
+		
+		QMessageBox::warning(dialog_parent, tr("Error"), error_template.arg(error));
 		return false;
 	}
 	
 	return true;
 }
 
-bool Template::configureAndLoad(QWidget* dialog_parent, MapView* view)
+bool Template::setupAndLoad(QWidget* dialog_parent, const MapView* view)
 {
+	Q_ASSERT(getTemplateState() == Template::Configuring);
+	
 	bool center_in_view = true;
 	
-	if (!preLoadConfiguration(dialog_parent))
+	if (!preLoadSetup(dialog_parent))
 		return false;
-	if (!loadTemplateFile(true))
+	if (!loadTemplateFile())
 		return false;
-	if (!postLoadConfiguration(dialog_parent, center_in_view))
+	if (!postLoadSetup(dialog_parent, center_in_view))
 	{
 		unloadTemplateFile();
 		return false;
@@ -528,7 +555,7 @@ bool Template::configureAndLoad(QWidget* dialog_parent, MapView* view)
 	if (!isTemplateGeoreferenced() && center_in_view)
 	{
 		auto offset = MapCoord { calculateTemplateBoundingBox().center() };
-		setTemplatePosition(view->center() - offset);
+		setTemplatePosition(view->center() - offset + templatePosition());
 	}
 	
 	return true;
@@ -600,15 +627,15 @@ Template::LookupResult Template::tryToFindTemplateFile(const QString& map_path)
 bool Template::tryToFindAndReloadTemplateFile(const QString& map_path)
 {
 	return tryToFindTemplateFile(map_path) != NotFound
-	       && loadTemplateFile(false);
+	       && loadTemplateFile();
 }
 
-bool Template::preLoadConfiguration(QWidget* /*dialog_parent*/)
+bool Template::preLoadSetup(QWidget* /*dialog_parent*/)
 {
 	return true;
 }
 
-bool Template::loadTemplateFile(bool configuring)
+bool Template::loadTemplateFile()
 {
 	Q_ASSERT(template_state != Loaded);
 	
@@ -622,9 +649,10 @@ bool Template::loadTemplateFile(bool configuring)
 			template_state = Invalid;
 			setErrorString(tr("No such file."));
 		}
-		else if (loadTemplateFileImpl(configuring))
+		else if (loadTemplateFileImpl())
 		{
 			template_state = Loaded;
+			setTemplateAreaDirty();
 		}
 		else
 		{
@@ -655,7 +683,7 @@ bool Template::loadTemplateFile(bool configuring)
 	return template_state == Loaded;
 }
 
-bool Template::postLoadConfiguration(QWidget* /*dialog_parent*/, bool& /*out_center_in_view*/)
+bool Template::postLoadSetup(QWidget* /*dialog_parent*/, bool& /*out_center_in_view*/)
 {
 	return true;
 }
@@ -675,7 +703,7 @@ void Template::unloadTemplateFile()
 
 
 // virtual
-bool Template::canChangeTemplateGeoreferenced()
+bool Template::canChangeTemplateGeoreferenced() const
 {
 	return false;
 }
@@ -711,6 +739,16 @@ QRectF Template::getTemplateExtent() const
 {
 	Q_ASSERT(!is_georeferenced);
 	return infiniteRectF();
+}
+
+QRectF Template::boundingRect() const
+{
+	auto const extent = getTemplateExtent();
+	auto rect = QRectF { templateToMap(extent.topLeft()), QSizeF{} };
+	rectInclude(rect, templateToMap(extent.topRight()));
+	rectInclude(rect, templateToMap(extent.bottomRight()));
+	rectInclude(rect, templateToMap(extent.bottomLeft()));
+	return rect;
 }
 
 void Template::scale(double factor, const MapCoord& center)
@@ -762,7 +800,7 @@ QRectF Template::calculateTemplateBoundingBox() const
 	return bbox;
 }
 
-void Template::drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, const QColor& color, qreal width, QRectF map_bbox)
+void Template::drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, const QColor& color, qreal width, QRectF map_bbox, ScribbleOptions mode)
 {
 	Q_ASSERT(canBeDrawnOnto());
 	Q_ASSERT(num_coords > 1);
@@ -777,7 +815,7 @@ void Template::drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, con
 	QRectF radius_bbox = QRectF(map_bbox.left() - radius, map_bbox.top() - radius,
 								map_bbox.width() + 2*radius, map_bbox.height() + 2*radius);
 	
-	drawOntoTemplateImpl(coords, num_coords, color, width);
+	drawOntoTemplateImpl(coords, num_coords, color, width, mode);
 	map->setTemplateAreaDirty(this, radius_bbox, 0);
 	
 	setHasUnsavedChanges(true);
@@ -817,7 +855,7 @@ void Template::switchTransforms()
 	
 	adjusted = !adjusted;
 	setTemplateAreaDirty();
-	map->setTemplatesDirty();
+	map->emitTemplateChanged(this);
 }
 void Template::getTransform(TemplateTransform& out) const
 {
@@ -833,7 +871,7 @@ void Template::setTransform(const TemplateTransform& transform)
 	updateTransformationMatrices();
 	
 	setTemplateAreaDirty();
-	map->setTemplatesDirty();
+	map->emitTemplateChanged(this);
 }
 void Template::getOtherTransform(TemplateTransform& out) const
 {
@@ -857,6 +895,16 @@ void Template::setTemplateFileInfo(const QFileInfo& file_info)
 void Template::setTemplatePath(const QString& value)
 {
 	setTemplateFileInfo(QFileInfo(value));
+}
+
+QString Template::getTemplateRelativePath(const QDir* map_dir) const
+{
+	auto path = getTemplateRelativePath();
+	if (getTemplateState() != Invalid && map_dir)
+		path = map_dir->relativeFilePath(getTemplatePath());
+	if (path.isEmpty())
+		path = getTemplateFilename();
+	return path;
 }
 
 void Template::setHasUnsavedChanges(bool value)
@@ -964,8 +1012,8 @@ std::unique_ptr<Template> Template::templateForType(const QStringRef& type, cons
 	
 	// We must respect the customizable handling of tracks,
 	// which is reflected in OgrTemplate::supportedExtensions().
-#ifdef MAPPER_USE_GDAL
 	auto const is_track = endsWithAnyOf(path, TemplateTrack::supportedExtensions());
+#ifdef MAPPER_USE_GDAL
 	auto const track_with_gdal = (is_track && endsWithAnyOf(path, OgrTemplate::supportedExtensions()));
 #else
 	constexpr auto const track_with_gdal = false;
@@ -976,10 +1024,8 @@ std::unique_ptr<Template> Template::templateForType(const QStringRef& type, cons
 		t = std::make_unique<TemplateImage>(path, map);
 	else if (type_cstring == "TemplateMap")
 		t = std::make_unique<TemplateMap>(path, map);
-#ifdef MAPPER_USE_GDAL
 	else if (type_cstring == "OgrTemplate" && is_track && !track_with_gdal)
 		t = std::make_unique<TemplateTrack>(path, map);
-#endif
 	else if (type_cstring == "TemplateTrack" && !track_with_gdal)
 		t = std::make_unique<TemplateTrack>(path, map);
 #ifdef MAPPER_USE_GDAL
@@ -1004,7 +1050,14 @@ bool Template::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	return true;
 }
 
-void Template::drawOntoTemplateImpl(MapCoordF* /*coords*/, int /*num_coords*/, const QColor& /*color*/, qreal /*width*/)
+bool Template::finishTypeSpecificTemplateConfiguration()
+{
+	return true;
+}
+
+
+
+void Template::drawOntoTemplateImpl(MapCoordF* /*coords*/, int /*num_coords*/, const QColor& /*color*/, qreal /*width*/, ScribbleOptions /*mode*/)
 {
 	// nothing
 }

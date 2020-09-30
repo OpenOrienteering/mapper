@@ -26,17 +26,20 @@
 #include <iterator>
 #include <memory>
 #include <type_traits>
+#include <utility>
 
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
 #include <QByteArray>
+#include <QCoreApplication>
 #include <QDebug>
 #include <QIODevice>
 #include <QPaintEngine>
 #include <QPainter>
 #include <QPoint>
 #include <QPointF>
+#include <QSignalBlocker>
 #include <QTimer>
 #include <QTranslator>
 
@@ -446,13 +449,8 @@ void Map::clear()
 {
 	undo_manager->clear();
 	
-	for (auto temp : templates)
-		delete temp;
 	templates.clear();
 	first_front_template = 0;
-	
-	for (auto temp : closed_templates)
-		delete temp;
 	closed_templates.clear();
 	
 	object_selection.clear();
@@ -1235,11 +1233,6 @@ void Map::setColor(MapColor* color, int pos)
 void Map::addColor(MapColor* color, int pos)
 {
 	color_set->insert(pos, color);
-	if (getNumColors() == 1)
-	{
-		// This is the first color - the help text in the map widget(s) should be updated
-		updateAllMapWidgets();
-	}
 	setColorsDirty();
 	emit colorAdded(pos, color);
 	color->setPriority(pos);
@@ -1262,12 +1255,6 @@ void Map::deleteColor(int pos)
 	}
 	
 	color_set->erase(pos);
-	
-	if (getNumColors() == 0)
-	{
-		// That was the last color - the help text in the map widget(s) should be updated
-		updateAllMapWidgets();
-	}
 	
 	// Treat combined symbols first before their parts
 	for (Symbol* symbol : symbols)
@@ -1530,12 +1517,6 @@ void Map::initStatic()
 void Map::addSymbol(Symbol* symbol, int pos)
 {
 	symbols.insert(symbols.begin() + pos, symbol);
-	if (symbols.size() == 1)
-	{
-		// This is the first symbol - the help text in the map widget(s) should be updated
-		updateAllMapWidgets();
-	}
-	
 	emit symbolAdded(pos, symbol);
 	setSymbolsDirty();
 }
@@ -1628,13 +1609,6 @@ void Map::deleteSymbol(int pos)
 	Symbol* temp = symbols[pos];
 	delete symbols[pos];
 	symbols.erase(symbols.begin() + pos);
-	
-	if (symbols.empty())
-	{
-		// That was the last symbol - the help text in the map widget(s) should be updated
-		updateAllMapWidgets();
-	}
-	
 	emit symbolDeleted(pos, temp);
 	setSymbolsDirty();
 }
@@ -1798,43 +1772,110 @@ void Map::updateSymbolIconZoom()
 
 
 
-void Map::setTemplate(Template* temp, int pos)
+void Map::setFirstFrontTemplate(int pos)
 {
-	templates[pos] = temp;
-	emit templateChanged(pos, templates[pos]);
-}
-
-void Map::addTemplate(Template* temp, int pos)
-{
-	templates.insert(templates.begin() + pos, temp);
-	if (templates.size() == 1)
-	{
-		// This is the first template - the help text in the map widget(s) should be updated
-		updateAllMapWidgets();
-	}
+	if (getFirstFrontTemplate() == pos)
+		return;
 	
-	emit templateAdded(pos, temp);
+	auto first = begin(templates) + std::min(getNumTemplates(), pos);
+	auto last  = begin(templates) + std::min(getNumTemplates(), getFirstFrontTemplate());
+	if (getFirstFrontTemplate() < pos)
+	{
+		using std::swap;
+		swap(first, last);
+	}
+	auto const old_pos = first_front_template;
+	std::for_each(first, last, [](auto& templ) { templ->setTemplateAreaDirty(); });
+	emit firstFrontTemplateAboutToBeChanged(old_pos, pos);
+	first_front_template = pos;
+	emit firstFrontTemplateChanged(old_pos, pos);
+	std::for_each(first, last, [](auto& templ) { templ->setTemplateAreaDirty(); });
+	setTemplatesDirty();
 }
 
-void Map::removeTemplate(int pos)
+std::unique_ptr<Template> Map::setTemplate(int pos, std::unique_ptr<Template> temp)
 {
-	auto it = templates.begin() + pos;
-	Template* temp = *it;
+	using std::swap;
+	auto const it = begin(templates) + pos;
+	for (auto* widget : widgets)
+	{
+		auto* view = widget->getMapView();
+		view->setTemplateVisibility(temp.get(), view->getTemplateVisibility(it->get()));
+	}
+	(*it)->setTemplateAreaDirty();
+	swap(temp, *it);
+	emit templateChanged(pos, it->get());
+	(*it)->setTemplateAreaDirty();
+	setTemplatesDirty();
+	return temp;
+}
+
+void Map::addTemplate(int pos, std::unique_ptr<Template> temp)
+{
+	auto front = getFirstFrontTemplate();
+	auto in_background = pos < front;
+	if (in_background)
+	{
+		if (pos < 0)
+			pos = front;
+		++front;
+	}
+	auto it = begin(templates) + pos;
+	emit templateAboutToBeAdded(pos, temp.get(), in_background);
+	it = templates.insert(it, std::move(temp));
+	{
+		QSignalBlocker block(this);
+		setFirstFrontTemplate(front);
+	}
+	emit templateAdded(pos, it->get());
+	setTemplatesDirty();
+}
+
+void Map::moveTemplate(int old_pos, int new_pos)
+{
+	if (old_pos == new_pos)
+		return;
+	
+	auto* temp = getTemplate(old_pos);
+	temp->setTemplateAreaDirty();
+	emit templateAboutToBeMoved(old_pos, new_pos, temp);
+	
+	auto old_it = begin(templates) + old_pos;
+	auto new_it = begin(templates) + new_pos;
+	if (old_pos < new_pos)
+		std::rotate(old_it, old_it + 1, new_it + 1);
+	else
+		std::rotate(new_it, old_it, old_it + 1);
+	
+	emit templateMoved(old_pos, new_pos, temp);
+	temp->setTemplateAreaDirty();
+	setTemplatesDirty();
+}
+
+std::unique_ptr<Template> Map::removeTemplate(int pos)
+{
+	auto front = getFirstFrontTemplate();
+	if (pos < front || getNumTemplates() < front)
+	{
+		--front;
+	}
+	auto const it = begin(templates) + pos;
+	(*it)->setTemplateAreaDirty();
+	emit templateAboutToBeDeleted(pos, it->get());
+	auto temp = std::move(*it);
 	templates.erase(it);
-	if (templates.empty())
 	{
-		// That was the last template - the help text in the map widget(s) should maybe be updated (if there are no objects)
-		updateAllMapWidgets();
+		QSignalBlocker block(this);
+		setFirstFrontTemplate(front);
 	}
-	
-	emit templateDeleted(pos, temp);
+	emit templateDeleted(pos, temp.get());
+	setTemplatesDirty();
+	return temp;
 }
 
 void Map::deleteTemplate(int pos)
 {
-	Template* temp = getTemplate(pos);
-	removeTemplate(pos);
-	delete temp;
+	void(removeTemplate(pos));
 }
 
 void Map::setTemplateAreaDirty(Template* temp, const QRectF& area, int pixel_border)
@@ -1849,25 +1890,20 @@ void Map::setTemplateAreaDirty(Template* temp, const QRectF& area, int pixel_bor
 	}
 }
 
-void Map::setTemplateAreaDirty(int i)
+void Map::setTemplateAreaDirty(int pos)
 {
-	if (i == -1)
+	if (pos == -1)
 		return;	// no assert here as convenience, so setTemplateAreaDirty(-1) can be called without effect for the map part
-	Q_ASSERT(i >= 0 && i < (int)templates.size());
-	
-	templates[i]->setTemplateAreaDirty();
+	Q_ASSERT(pos < getNumTemplates());
+	getTemplate(pos)->setTemplateAreaDirty();
 }
 
 int Map::findTemplateIndex(const Template* temp) const
 {
-	int size = (int)templates.size();
-	for (int i = 0; i < size; ++i)
-	{
-		if (templates[i] == temp)
-			return i;
-	}
-	Q_ASSERT(false);
-	return -1;
+	auto const first = begin(templates);
+	auto const last = end(templates);
+	auto const it = std::find_if(first, last, [temp](auto const& t) { return t.get() == temp; });
+	return it == last ? -1 : int(std::distance(first, it));
 }
 
 void Map::setTemplatesDirty()
@@ -1878,7 +1914,10 @@ void Map::setTemplatesDirty()
 
 void Map::emitTemplateChanged(Template* temp)
 {
-	emit templateChanged(findTemplateIndex(temp), temp);
+	setTemplatesDirty();
+	auto const pos = findTemplateIndex(temp);
+	if (pos >= 0)
+		emit templateChanged(pos, temp);
 }
 
 void Map::clearClosedTemplates()
@@ -1886,23 +1925,19 @@ void Map::clearClosedTemplates()
 	if (closed_templates.empty())
 		return;
 	
-	for (Template* temp : closed_templates)
-		delete temp;
-	
 	closed_templates.clear();
 	setTemplatesDirty();
 	emit closedTemplateAvailabilityChanged();
 }
 
-void Map::closeTemplate(int i)
+void Map::closeTemplate(int pos)
 {
-	Template* temp = getTemplate(i);
-	removeTemplate(i);
+	auto temp = removeTemplate(pos);
 	
 	if (temp->getTemplateState() == Template::Loaded)
 		temp->unloadTemplateFile();
 	
-	closed_templates.push_back(temp);
+	closed_templates.push_back(std::move(temp));
 	setTemplatesDirty();
 	if (closed_templates.size() == 1)
 		emit closedTemplateAvailabilityChanged();
@@ -1910,31 +1945,60 @@ void Map::closeTemplate(int i)
 
 bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, const QString& map_path)
 {
-	Template* temp = closed_templates[i];
+	// Move the template from closed to regular.
+	auto const it_closed = begin(closed_templates) + i;
+	auto unique_temp = std::move(*it_closed);
+	auto *temp = unique_temp.get();
+	closed_templates.erase(it_closed);
+	addTemplate(target_pos, std::move(unique_temp));
 	
-	// Try to find and load the template again
-	if (temp->getTemplateState() != Template::Loaded)
+	// Try to find and load the template again.
+	auto loaded = temp->getTemplateState() == Template::Loaded;
+	if (!loaded)
+	    loaded = temp->tryToFindAndReloadTemplateFile(map_path);
+	if (!loaded)
+	    loaded = temp->execSwitchTemplateFileDialog(dialog_parent);
+	
+	if (closed_templates.empty())
+		emit closedTemplateAvailabilityChanged();
+	
+	return loaded;
+}
+
+void Map::loadTemplateFiles(const MapView& view)
+{
+	for (auto& temp : templates)
 	{
-		if (!temp->tryToFindAndReloadTemplateFile(map_path))
+		if (temp->getTemplateState() == Template::Unloaded
+		    && view.getTemplateVisibility(temp.get()).visible)
+			temp->loadTemplateFile();
+	}
+}
+
+// cppcheck-suppress passedByValue
+void Map::loadTemplateFilesAsync(MapView& view, std::function<void(const QString&)> listener)
+{
+	(void)listener; // fix false-positive warning from misc-unused-parameters
+	
+	for (auto& temp : templates)
+	{
+		if (temp->getTemplateState() == Template::Unloaded
+		    && view.getTemplateVisibility(temp.get()).visible)
 		{
-			if (!temp->execSwitchTemplateFileDialog(dialog_parent))
-				return false;
+			QTimer::singleShot(10, temp.get(), ([this, &view, &temp, log = std::move(listener)]() {
+				log(qApp->translate("OpenOrienteering::MainWindow", "Opening %1")
+				         .arg(temp->getTemplateFilename()));
+				if (temp->getTemplateState() != Template::Loaded)
+					temp->loadTemplateFile();
+				log(QString{});
+				loadTemplateFilesAsync(view, std::move(log));
+			}));
+			return;
 		}
 	}
-	
-	// If successfully loaded, add to template list again
-	if (temp->getTemplateState() == Template::Loaded)
-	{
-		closed_templates.erase(closed_templates.begin() + i);
-		addTemplate(temp, target_pos);
-		temp->setTemplateAreaDirty();
-		setTemplatesDirty();
-		if (closed_templates.empty())
-			emit closedTemplateAvailabilityChanged();
-		return true;
-	}
-	return false;
 }
+
+
 
 void Map::push(UndoStep *step)
 {
@@ -2125,9 +2189,9 @@ QRectF Map::calculateExtent(bool include_helper_symbols, bool include_templates,
 	// Templates
 	if (include_templates)
 	{
-		for (const Template* temp : templates)
+		for (const auto& temp : templates)
 		{
-			if (view && !view->isTemplateVisible(temp))
+			if (view && !view->isTemplateVisible(temp.get()))
 				continue;
 			if (temp->getTemplateState() != Template::Loaded)
 				continue;
@@ -2395,16 +2459,25 @@ void Map::setHasUnsavedChanges(bool has_unsaved_changes)
 		templates_dirty = false;
 		objects_dirty = false;
 		other_dirty = false;
-		if (unsaved_changes)
+		if (unsaved_changes || unsaved_changes_signaled)
 		{
 			unsaved_changes = false;
 			emit hasUnsavedChanged(unsaved_changes);
 		}
 	}
-	else if (!unsaved_changes)
+	else if (!unsaved_changes || !unsaved_changes_signaled)
 	{
 		unsaved_changes = true;
 		emit hasUnsavedChanged(unsaved_changes);
+	}
+	
+	if (!signalsBlocked())
+	{
+		// Save what has been signaled to observers.
+		// We update unsaved_changes also when signals are blocked. The extra
+		// variable helps to ensure that a signal is emitted in the first
+		// invocation as soon as signals are unblocked.
+		unsaved_changes_signaled = unsaved_changes;
 	}
 }
 

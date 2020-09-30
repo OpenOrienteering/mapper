@@ -26,7 +26,6 @@
         <file>images/cursor-georeferencing-move.png</file>
         <file>images/cursor-hollow.png</file>
         <file>images/cursor-invisible.png</file>
-        <file>images/cursor-paint-on-template.png</file>
         <file>images/cursor-rotate.png</file>
         <file>images/cursor-scale.png</file>
         <file>images/cut.png</file>
@@ -69,6 +68,7 @@
         <file>images/redo.png</file>
         <file>images/rotate-map.png</file>
         <file>images/save.png</file>
+        <file>images/scribble-fill-shapes.png</file>
         <file>images/settings.png</file>
         <file>images/symbols.png</file>
         <file>images/symbol_point_explanation.png</file>
