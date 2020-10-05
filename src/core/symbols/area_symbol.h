@@ -64,7 +64,6 @@ class AreaSymbol : public Symbol
 {
 friend class AreaSymbolSettings;
 friend class PointSymbolEditorWidget;
-friend class OCAD8FileImport;
 public:
 	/** Describes a fill pattern. */
 	struct FillPattern

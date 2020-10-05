@@ -66,7 +66,6 @@ class VirtualCoordVector;
 class Object  // clazy:exclude=copyable-polymorphic
 {
 friend class ObjectRenderables;
-friend class OCAD8FileImport;
 friend class XMLImportExport;
 public:
 	/** Enumeration of possible object types. */
