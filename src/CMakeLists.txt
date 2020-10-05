@@ -123,7 +123,6 @@ set(Mapper_Common_SRCS
   fileformats/file_format.cpp
   fileformats/file_format_registry.cpp
   fileformats/file_import_export.cpp
-  fileformats/ocad8_file_format.cpp
   fileformats/ocd_file_export.cpp
   fileformats/ocd_file_format.cpp
   fileformats/ocd_file_import.cpp
@@ -268,7 +267,6 @@ set(Mapper_Common_HEADERS
   core/renderables/renderable_implementation.h
   
   fileformats/file_import_export.h  # translations
-  fileformats/ocad8_file_format_p.h
   fileformats/ocd_file_import.h     # translations
   fileformats/ocd_types.h
   fileformats/ocd_types_v8.h
@@ -294,7 +292,6 @@ add_dependencies(Mapper_Common
   Mapper_prerequisites
 )
 target_link_libraries(Mapper_Common
-  libocad
   Polyclipping::Polyclipping
   PROJ4::proj
   Qt5::Widgets

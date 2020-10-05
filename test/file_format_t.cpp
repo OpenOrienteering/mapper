@@ -315,14 +315,10 @@ namespace
 			COMPARE_SYMBOL_PROPERTY(actual.getFillPattern(i).rotatable(), pattern_rotable, expected);
 	}
 	
-	void fuzzyCompareSymbol(const Symbol& actual, const Symbol& expected, const QByteArray& format_id)
+	void fuzzyCompareSymbol(const Symbol& actual, const Symbol& expected, const QByteArray& /*format_id*/)
 	{
 		COMPARE_SYMBOL_PROPERTY(actual.isHidden(), expected.isHidden(), expected);
 		COMPARE_SYMBOL_PROPERTY(actual.isProtected(), expected.isProtected(), expected);
-		
-		if (format_id == "OCD-legacy")
-			return;  // Unmaintained, no other properties testedd.
-		
 		COMPARE_SYMBOL_PROPERTY(actual.isRotatable(), expected.isRotatable(), expected);
 		
 		/// \todo Ideally, the dominant color would be preserved.
@@ -375,7 +371,7 @@ namespace
 			
 			actual = symbol;
 		}
-		if (format_id == "OCD8" || format_id == "OCD-legacy")
+		if (format_id == "OCD8")
 		{
 			// Don't elaborate testing for these legacy formats.
 			switch (expected->getType())
@@ -387,8 +383,6 @@ namespace
 				break;
 			case Symbol::Line:
 				// Expected symbol may be entirely turned into combined symbol.
-				if (!actual && format_id == "OCD-legacy")
-					return;
 				break;
 			default:
 				;  // nothing
@@ -764,9 +758,6 @@ void FileFormatTest::saveAndLoad_data()
 				auto ocd_id = id;
 				ocd_id.append(" (default)");
 				QTest::newRow(ocd_id) << ocd_id << QByteArray{format_id} << int(OcdFileExport::default_version) << path;
-				ocd_id = id;
-				ocd_id.append("-legacy");
-				QTest::newRow(ocd_id) << ocd_id << QByteArray{format_id}+"-legacy" << 8 << path;
 			}
 			else
 			{

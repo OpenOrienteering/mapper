@@ -133,9 +133,6 @@ public:
 protected:
 	/**
 	 * Exports an OCD file.
-	 * 
-	 * For now, this simply uses the OCAD8FileExport class unless the file name
-	 * ends with "test-vVERSION.ocd".
 	 */
 	bool exportImplementation() override;
 	

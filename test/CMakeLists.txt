@@ -126,7 +126,6 @@ function(add_system_test testname)
 	add_test_helper("${testname}" ${Mapper_AUTORUN_SYSTEM_TESTS} ${ARGN})
 	target_link_libraries(${testname} PRIVATE
 	  Mapper_Common
-	  libocad
 	  Qt5::Widgets
 	)
 endfunction()
