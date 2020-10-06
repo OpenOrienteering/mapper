@@ -1533,7 +1533,7 @@
     <message>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="112"/>
         <source>Unsupported raster data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Непідтримувані растрові дані: %1</translation>
     </message>
 </context>
 <context>
@@ -2303,7 +2303,7 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="203"/>
         <source>Save symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Іконка збереження ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
@@ -2321,7 +2321,7 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="226"/>
         <source>Load symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Іконка завантаження ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="235"/>
@@ -2362,7 +2362,7 @@
         <location filename="../src/core/symbols/symbol.cpp" line="318"/>
         <location filename="../src/undo/object_undo.cpp" line="616"/>
         <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невірно сформований ID знаку &apos;%1&apos; у строці %2 колонки %3.</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="389"/>
@@ -2794,12 +2794,12 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="677"/>
         <source>Cap length at start:</source>
-        <translation type="unfinished"></translation>
+        <translation>Протяжність наконечника на початку:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="678"/>
         <source>Cap length at end:</source>
-        <translation type="unfinished"></translation>
+        <translation>Протяжність наконечника в кінці:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="682"/>
@@ -4209,7 +4209,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4238"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation>Питання</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4239"/>
@@ -4423,7 +4423,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="989"/>
         <source>Keep my location on screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Утримувати моє положення в межах екрану</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1003"/>
@@ -4785,7 +4785,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="245"/>
         <source>Background drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Малювати на задньому плані</translation>
     </message>
 </context>
 <context>
@@ -5182,7 +5182,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1737"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation>Неможливо експортувати зміщення візеруноку заповнення для площадного об&apos;єкту</translation>
+        <translation>Неможливо експортувати зміщення візерунку для площинного об&apos;єкту</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1872"/>
@@ -5441,7 +5441,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/core/objects/object_query.cpp" line="382"/>
         <source>not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ні</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="386"/>
@@ -5545,7 +5545,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1918"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished"></translation>
+        <translation>У текстовому знаку % 1: встановлено спеціальний інтервал між символами, його реалізація ще не відповідає поведінці в OCAD</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1934"/>
@@ -5560,12 +5560,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2159"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>У комбінованому знаку %1: Не підтримується знак з індексом %2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2365"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="unfinished">Неможливо експортувати зміщення візеруноку заповнення для площадного об&apos;єкту</translation>
+        <translation>Неможливо експортувати зміщення візерунку для площинного об&apos;єкту</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2570"/>
@@ -6014,12 +6014,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="277"/>
         <source>Solid</source>
-        <translation>Тверді</translation>
+        <translation>Суцільно</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="278"/>
         <source>Pattern</source>
-        <translation type="unfinished">Візерунок</translation>
+        <translation>Растр</translation>
     </message>
 </context>
 <context>
