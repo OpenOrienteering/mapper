@@ -1,5 +1,5 @@
 #
-#    Copyright 2019 Kai Pastor
+#    Copyright 2019-2020 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -33,26 +33,17 @@ function(configure_and_install in_file out_dir)
 endfunction()
 
 
+set(ANDROID_PACKAGE_SOURCE_DIR "@ANDROID_PACKAGE_SOURCE_DIR@")
+file(INSTALL "@MAPPER_PRO_DIR@/AndroidManifest.xml" DESTINATION "${ANDROID_PACKAGE_SOURCE_DIR}")
+file(INSTALL "@MAPPER_PRO_DIR@/tmp/strings.xml" DESTINATION "${ANDROID_PACKAGE_SOURCE_DIR}/res/values")
 
 set(MAPPER_APP_ID "@MAPPER_APP_ID@")
-set(ANDROID_PACKAGE_SOURCE_DIR "@ANDROID_PACKAGE_SOURCE_DIR@")
 set(Mapper_VERSION "@Mapper_VERSION@")
-set(Mapper_VERSION_DISPLAY "@Mapper_VERSION_DISPLAY@")
-if(NOT "${Mapper_VERSION_DISPLAY}" STREQUAL "${Mapper_VERSION}")
-	set(Mapper_VERSION_SUFFIX " ${Mapper_VERSION_DISPLAY}")
-endif()
-
-
-
-configure_and_install("@CMAKE_CURRENT_SOURCE_DIR@/AndroidManifest.xml.in" "${ANDROID_PACKAGE_SOURCE_DIR}" "AndroidManifest.xml")
-
 foreach(file @INPUT_FILES@)
 	if("${file}" MATCHES "java/(org/openorienteering/mapper/.*.java)")
 		configure_and_install("@INPUT_SOURCE_DIR@/${file}" "${ANDROID_PACKAGE_SOURCE_DIR}/src/org/openorienteering/mapper" "${CMAKE_MATCH_1}")
 	endif()
 endforeach()
-
-configure_and_install("@CMAKE_CURRENT_SOURCE_DIR@/strings.xml.in" "${ANDROID_PACKAGE_SOURCE_DIR}/res/values" "strings.xml")
 
 set(icons
   drawable-ldpi   36
@@ -71,3 +62,19 @@ while(icons)
 	)
 	list(REMOVE_AT icons 0 1)
 endwhile()
+
+$<$<VERSION_LESS:@Qt5Core_VERSION@,5.15.0>:
+# Copy the Mapper runtime from the CMake project to the qmake project.
+# androiddeployqt uses this location.
+file(INSTALL
+  DESTINATION "@MAPPER_PRO_DIR@"
+  FILES "$<TARGET_FILE:Mapper>"
+  )
+>
+
+# Copy the Mapper runtime from the CMake project to the packaging dir.
+# androiddeployqt checks this location.
+file(INSTALL
+  DESTINATION "@MAPPER_PRO_DIR@/android-build/libs/@ANDROID_ABI@"
+  FILES "$<TARGET_FILE:Mapper>"
+)

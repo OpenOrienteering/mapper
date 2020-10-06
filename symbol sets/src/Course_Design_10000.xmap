@@ -509,7 +509,7 @@ A bounding line may be drawn if there is no natural boundary, as follows:
                 </point_symbol>
             </symbol>
             <symbol type="1" id="19" code="99.2" name="Course nature">
-                <description>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty. 
+                <description>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty.
  - Scheme: | Course code | Length | Height climb |
  - The course length is given in kilometres rounded to the nearest 0.1 km.
  - The height climb is given in metres rounded to the nearest 5 m.</description>
@@ -578,7 +578,7 @@ A bounding line may be drawn if there is no natural boundary, as follows:
                 </point_symbol>
             </symbol>
             <symbol type="1" id="20" code="99.3" name="Description of individual control">
-                <description>Scheme of columns: |A|B|C|D|E|F|G|H| 
+                <description>Scheme of columns: |A|B|C|D|E|F|G|H|
 
 A: Control number
 B: Control code

@@ -20,7 +20,7 @@ Georeferencing of a map is the best way for aligning templates (such as base map
 
 Georeferencing properties are set in a dialog which is available from the menu **Map &gt; Georeferencing...**. The dialog is divided in four sections: Map coordinate reference system, Reference point, Map north, and Scale compensation.
 
-![Georeferencing dialog](images/georeferencing.png)
+![Georeferencing dialog](images/georeferencing_dialog.png)
 
 #### Map coordinate reference system
 

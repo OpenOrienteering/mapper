@@ -533,6 +533,9 @@ void MainWindow::showStatusBarMessage(const QString& text, int timeout)
 void MainWindow::showStatusBarMessageImmediately(const QString& text, int timeout)
 {
 	showStatusBarMessage(text, timeout);
+	// Make sure that paint events reach the user screen, by processing events
+	// until the queue is empty, including events appended during processing.
+	// In the worst case, this will stop after 100 ms.
 	QApplication::processEvents(QEventLoop::ExcludeUserInputEvents, 100 /* ms */);
 }
 

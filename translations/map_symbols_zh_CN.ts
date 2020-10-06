@@ -772,15 +772,13 @@ Footprint: 6 m diameter (7.5 m diameter).</source>
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
 
-To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
-of the boulders.</source>
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
         <translation>大于相邻大石（204）的石头，或者小于相邻巨石（205）的巨石。
 
 为了能够显示相邻的（距离少于30米）大石（204）在尺寸大小上明显的区别，允许使用此符号（0.5 mm）作为对某些符号204的放大石头。
 
-为了能够显示相邻的（距离少于30米）巨石（205）在尺寸大小上明显的区别，允许使用此符号（0.5 mm）作为对某些符号205
-的缩小巨石。</translation>
+为了能够显示相邻的（距离少于30米）巨石（205）在尺寸大小上明显的区别，允许使用此符号（0.5 mm）作为对某些符号205的缩小巨石。</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -1725,12 +1723,12 @@ Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <source>Cultivated land. This symbol must be used together with another symbol:
 - For land used for growing crops, combine with symbol Open land (401).
 - For agroforrestry, use with symbol Forest (405) or Open land with scattered trees (402).
-Runnability may vary according to the type of crops or trees, and the time of year. 
+Runnability may vary according to the type of crops or trees, and the time of year.
 Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <comment>Description of symbol 412.1</comment>
-        <translation>耕作地。该符号必须与另一个符号一起使用： 
+        <translation>耕作地。该符号必须与另一个符号一起使用：
 -对于用于种植农作物的土地，请与符号开放土地（401）组合。
 -对于农林业，可以使用符号 可跑树林（405）或 稀树空旷地（402）而不是黄色。
 可跑性根据种植的作物类型和一年中的时间而变化。
@@ -1819,7 +1817,7 @@ Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
 Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
         <comment>Description of symbol 416</comment>
         <translation>树林中明显的树林边缘或植被边界。
-非常明显的树林边缘和植被边界可以使用耕作地边界符号来表示。在地图上只能使用一个植被分界线符号（黑色虚线或绿色虚线）。对于具有大量岩石特征的区域，建议使用绿色虚线表示植被分界线。
+非常明显的树林边缘和植被边界可以使用耕作地边界符号来表示。在地图上只能使用一个植被分界线符号（黑色虚线或绿色虚线）。对于具有大量岩石特征的区域，推荐使用绿色虚线表示植被分界线。
 绿线的一个缺点是它不能用于在符号难行植被（410） 周围和内部表示明显的植被边界。这些情况的替代方案是使用符号 耕作地分界线（415） 。
 最小长度， 黑点： 5点（ 2.5mm - 实地长度37米）。
 最小长度， 绿线： 4 段虚线（1.8mm - 实地长度27米）。</translation>
@@ -1837,7 +1835,7 @@ Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
 Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
         <comment>Description of symbol 416.1</comment>
         <translation>树林中明显的树林边缘或植被边界。
-非常明显的树林边缘和植被边界可以使用耕作地边界符号来表示。在地图上只能使用一个植被分界线符号（黑色虚线或绿色虚线）。对于具有大量岩石特征的区域，建议使用绿色虚线表示植被分界线。
+非常明显的树林边缘和植被边界可以使用耕作地边界符号来表示。在地图上只能使用一个植被分界线符号（黑色虚线或绿色虚线）。对于具有大量岩石特征的区域，推荐使用绿色虚线表示植被分界线。
 绿线的一个缺点是它不能用于在符号难行植被（410）周围和内部表示明显的植被边界。这些情况的替代方案是使用符号 耕作地分界线（415） 。
 最小长度， 黑点： 5点（ 2.5mm - 实地长度37米）。
 最小长度， 绿线： 4 段虚线（1.8mm - 实地长度27米）。</translation>
@@ -1875,7 +1873,7 @@ The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 419</comment>
         <translation>符号朝北。
-必须在地图上给出符号的定义。 
+必须在地图上给出符号的定义。
 符号占地面积：13.5米 x 13.5米。</translation>
     </message>
     <message>
@@ -2198,7 +2196,7 @@ Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 
         <translation>墙</translation>
     </message>
     <message>
-        <source>A significant wall of stone, concrete, wood or other materials. 
+        <source>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 513</comment>
@@ -2213,12 +2211,10 @@ Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
     </message>
     <message>
         <source>A ruined or less distinct wall. Minimum height 0.5 m.
-Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object
-must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
+Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
         <comment>Description of symbol 514</comment>
         <translation>残破或不明显的墙。最小高度为 0.5米。
-最小长度: 两条虚线(3.65mm – 实地尺寸55米)。
-如果较短， 则必须将符号夸大为最小长度尺寸或更改为符号墙（513）。</translation>
+最小长度: 两条虚线(3.65mm – 实地尺寸55米)。如果较短， 则必须将符号夸大为最小长度尺寸或更改为符号墙（513）。</translation>
     </message>
     <message>
         <source>Impassable wall</source>
@@ -2717,7 +2713,7 @@ North lines shall be broken to improve the legibility of the map, for instance w
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
-Water levels are given without the dot. 
+Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</source>
         <comment>Description of symbol 603.0</comment>
         <translation>高程点用于粗略评估高差度。高程取整数米。
@@ -2731,7 +2727,7 @@ Spot heights must only be used where they do not conflict with other symbols.</s
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
-Water levels are given without the dot. 
+Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</source>
         <comment>Description of symbol 603.1</comment>
         <translation>高程点用于粗略评估高差度。高程取整数米。
@@ -3287,6 +3283,19 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
         <source>Boulder or large boulder, different size</source>
         <comment>Name of symbol 204.5</comment>
         <translation>不同尺寸的石块或大石块</translation>
+    </message>
+    <message>
+        <source>A boulder which is larger than neighboring boulders (204), or a large boulder which is smaller than neighboring large boulders (205).
+
+To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
+
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
+        <comment>Description of symbol 204.5</comment>
+        <translation>大于相邻大石（204）的石头，或者小于相邻巨石（205）的巨石。
+
+为了能够显示相邻的（距离少于30米）大石（204）在尺寸大小上明显的区别，允许使用此符号（0.5 mm）作为对某些符号204的放大石头。
+
+为了能够显示相邻的（距离少于30米）巨石（205）在尺寸大小上明显的区别，允许使用此符号（0.5 mm）作为对某些符号205的缩小巨石。</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -4195,7 +4204,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>土崖</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
         <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可翻越的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
     </message>
@@ -4205,7 +4214,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>土崖最小尺寸</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
         <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可翻越的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
     </message>
@@ -4860,11 +4869,9 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>果园(空旷地)</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
-        <translation>用果树或灌木种植的土地。点阵的方向可以表示
-种植方向。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
+        <translation>用果树或灌木种植的土地。点阵的方向可以表示种植方向。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
     </message>
     <message>
         <source>Vineyard</source>
@@ -6603,7 +6610,7 @@ Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
         <comment>Description of symbol 302</comment>
         <translation>可以穿过的浅水区，如池塘、河流或喷泉，水体深度应小于0.5 米，并能通行。
 如果水体不能通行，则应以符号“不可通行水域”（301）表示。如果其他线条符号未接触可通行水域的边界，则边界应以蓝色线条表示。
-最小宽度：0.3mm 
+最小宽度：0.3mm
 最小面积（内部）：0.5mm²（实地面积 8m²）</translation>
     </message>
     <message>
@@ -6619,7 +6626,7 @@ Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
         <comment>Description of symbol 302.1</comment>
         <translation>可以穿过的浅水区，如池塘、河流或喷泉，水体深度应小于0.5 米，并能通行。
 如果水体不能通行，则应以符号“不可通行水域”（301）表示。如果其他线条符号未接触可通行水域的边界，则边界应以蓝色线条表示。
-最小宽度：0.3mm 
+最小宽度：0.3mm
 最小面积（内部）：0.5mm²（实地面积 8m²）</translation>
     </message>
     <message>
@@ -7001,14 +7008,14 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <translation>单向慢行树林（白条纹）</translation>
     </message>
     <message>
-        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
+        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <comment>Description of symbol 408.1</comment>
         <translation>一个树木茂密或树丛茂密（能见度低）的区域，将行进速度降低到正常速度的 20-60%。
 当单一方向的行进性能更好时， 网格上会留下一个白色/绿色 30%条纹的规则图案，以显示更好的行进方向。至少两条条纹应清晰可见。
-最小宽度：0.4mm 。 
+最小宽度：0.4mm 。
 最小面积：0.5mm²（实地面积 8m²）。</translation>
     </message>
     <message>
@@ -7017,14 +7024,14 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <translation>单向慢行树林（绿30％条纹）</translation>
     </message>
     <message>
-        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
+        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <comment>Description of symbol 408.2</comment>
         <translation>一个树木茂密或树丛茂密（能见度低）的区域，将行进速度降低到正常速度的 20-60%。
 当单一方向的行进性能更好时， 网格上会留下一个白色/绿色 30%条纹的规则图案，以显示更好的行进方向。至少两条条纹应清晰可见。
-最小宽度：0.4mm。 
+最小宽度：0.4mm。
 最小面积：0.5mm²（实地面积 8m²）。</translation>
     </message>
     <message>
@@ -7097,7 +7104,7 @@ Minimum area: 9 mm² (144 m²).</source>
         <translation>耕地(黑点)</translation>
     </message>
     <message>
-        <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses. 
+        <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is combined with symbol Out-of-bounds area (709) to show cultivated land that shall not be entered.
 Minimum width: 3 mm.
 Minimum area: 9 mm² (144 m²).</source>
@@ -7599,7 +7606,7 @@ The bars indicate the exact location of the pylons. If a section of a power line
         <translation>地下通道或隧道</translation>
     </message>
     <message>
-        <source>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles. 
+        <source>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles.
 Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 &lt;span style=&quot;color: red&quot;&gt;Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
@@ -7933,7 +7940,7 @@ Minimum length: 2.2 mm (footprint 8.8 m).</source>
         <translation> 突出的不可翻越线状特征物</translation>
     </message>
     <message>
-        <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track. 
+        <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track.
 The definition of the symbol must be given on the map.
 A prominent impassable line feature shall not be crossed.
 Minimum length: 3 mm (footprint 12 m).</source>
@@ -9208,7 +9215,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>土崖</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
         <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可翻越的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
     </message>
@@ -9218,7 +9225,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>土崖-最小尺寸</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
         <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可翻越的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
     </message>
@@ -9566,11 +9573,9 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <translation>果园(空旷地)</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
-        <translation>用果树或灌木种植的土地。点阵的方向可以表示
-种植方向。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
+        <translation>用果树或灌木种植的土地。点阵的方向可以表示种植方向。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
     </message>
     <message>
         <source>Vineyard</source>
@@ -9708,13 +9713,9 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>赛道：难以骑行</translation>
     </message>
     <message>
-        <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud,
-erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be
-required to dismount. Speed max 25 %.</source>
+        <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud, erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 837</comment>
-        <translation>至少1.5 m宽的轨道，有困难的障碍物，例如树根，深沙/泥浆，
-侵蚀或岩石台阶。骑行非常缓慢或无法骑行。熟练/健康的骑手可能是
-需要下马。最高速度25％。</translation>
+        <translation>至少1.5 m宽的轨道，有困难的障碍物，例如树根，深沙/泥浆，侵蚀或岩石台阶。骑行非常缓慢或无法骑行。熟练/健康的骑手可能是需要下马。最高速度25％。</translation>
     </message>
     <message>
         <source>Path: difficult to ride</source>
@@ -9792,11 +9793,9 @@ required to dismount. Speed max 25 %.</source>
         <translation>石墙</translation>
     </message>
     <message>
-        <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to
-cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
+        <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 521</comment>
-        <translation>此石墙符号应代表所有可见的墙。如果是禁止翻越的石墙，
-应标有符号707（不可跨越的边界）。</translation>
+        <translation>此石墙符号应代表所有可见的墙。如果是禁止翻越的石墙，应标有符号707（不可跨越的边界）。</translation>
     </message>
     <message>
         <source>High fence</source>
@@ -11003,7 +11002,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>土崖</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
         <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可翻越的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
     </message>
@@ -11013,7 +11012,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>土崖最小尺寸</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
         <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可翻越的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
     </message>
@@ -11323,11 +11322,9 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>果园(空旷地)</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
-        <translation>用果树或灌木种植的土地。点阵的方向可以表示
-种植方向。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
+        <translation>用果树或灌木种植的土地。点阵的方向可以表示种植方向。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
     </message>
     <message>
         <source>Vineyard</source>
@@ -11700,15 +11697,11 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>滑雪中心的非常快、宽的雪道，由滑雪道修正设备或道路平整设备修建。</translation>
     </message>
     <message>
-        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
-slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
-technique for slowing and stopping.
+        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing technique for slowing and stopping.
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
-        <translation>不平的，慢速路径，雪少或有一些树枝。这个符号不用于陡
-坡上，如果道路的宽度允许使用人字台阶来上山，或铲雪
-技术来减速或停止。
+        <translation>不平的，慢速路径，雪少或有一些树枝。这个符号不用于陡坡上，如果道路的宽度允许使用人字台阶来上山，或铲雪技术来减速或停止。
 
 为了使交叉点清晰，慢速路径的起点以短线绘制出。</translation>
     </message>
@@ -11728,13 +11721,9 @@ In order to clarify a junction, the beginning of a slow track is drawn with a sh
         <translation>砂质的或无雪的道路，线条符号</translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806</comment>
-        <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型
-标记，穿过道路符号，显示道路不可滑行。无雪的道路，和
-砂质含量大的道路，通常标记为禁止的路线。</translation>
+        <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型标记，穿过道路符号，显示道路不可滑行。无雪的道路，和砂质含量大的道路，通常标记为禁止的路线。</translation>
     </message>
     <message>
         <source>Sanded or snowless road, single symbol</source>
@@ -11742,13 +11731,9 @@ heavily sanded roads should normally be marked as forbidden routes.</source>
         <translation>砂质的或无雪的道路，单一符号</translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
-        <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型
-标记，穿过道路符号，显示道路不可滑行。无雪的道路，和
-砂质含量大的道路，通常标记为禁止的路线。</translation>
+        <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型标记，穿过道路符号，显示道路不可滑行。无雪的道路，和砂质含量大的道路，通常标记为禁止的路线。</translation>
     </message>
     <message>
         <source>Unploughed road</source>
@@ -13147,11 +13132,9 @@ Footprint: 6 m diameter (7.5 m diameter).</source>
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
 
-To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
-of the boulders.</source>
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
         <translation>大于相邻大石（204）的石头，或者小于相邻巨石（205）的巨石。
-
 为了能够显示相邻的（距离少于30米）大石（204）在尺寸大小上明显的区别，允许使用此符号（0.5 mm）作为对某些符号204的放大石头。
 
 为了能够显示相邻的（距离少于30米）巨石（205）在尺寸大小上明显的区别，允许使用此符号（0.5 mm）作为对某些符号205
@@ -13580,7 +13563,7 @@ Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
 Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
         <comment>Description of symbol 416</comment>
         <translation>树林中明显的树林边缘或植被边界。
-非常明显的树林边缘和植被边界可以使用耕作地边界符号来表示。在地图上只能使用一个植被分界线符号（黑色虚线或绿色虚线）。对于具有大量岩石特征的区域，建议使用绿色虚线表示植被分界线。
+非常明显的树林边缘和植被边界可以使用耕作地边界符号来表示。在地图上只能使用一个植被分界线符号（黑色虚线或绿色虚线）。对于具有大量岩石特征的区域，推荐使用绿色虚线表示植被分界线。
 绿线的一个缺点是它不能用于在符号难行植被（410） 周围和内部表示明显的植被边界。这些情况的替代方案是使用符号 耕作地分界线（415） 。
 最小长度， 黑点： 5点（ 2.5mm - 实地长度37米）。
 最小长度， 绿线： 4 段虚线（1.8mm - 实地长度27米）。</translation>
@@ -13863,7 +13846,7 @@ Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 
         <translation>墙</translation>
     </message>
     <message>
-        <source>A significant wall of stone, concrete, wood or other materials. 
+        <source>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 513</comment>
@@ -14355,11 +14338,9 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>宽的路径 1.5 - 3.0 m</translation>
     </message>
     <message>
-        <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks
-rougher and softer than the wide skateable tracks in the area.</source>
+        <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks rougher and softer than the wide skateable tracks in the area.</source>
         <comment>Description of symbol 802</comment>
-        <translation>快速可滑行的路径，由雪地摩托造成，宽度通常为 1.5 - 3.0 m 。可滑行的路径
-比区域中宽的可滑行路径更不平，更软。</translation>
+        <translation>快速可滑行的路径，由雪地摩托造成，宽度通常为 1.5 - 3.0 m 。可滑行的路径比区域中宽的可滑行路径更不平，更软。</translation>
     </message>
     <message>
         <source>Track 1.0 - 1.5 m</source>
@@ -14367,11 +14348,9 @@ rougher and softer than the wide skateable tracks in the area.</source>
         <translation>路径 1.0 - 1.5 m</translation>
     </message>
     <message>
-        <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may
-be made wider to reduce widening during competition.</source>
+        <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may be made wider to reduce widening during competition.</source>
         <comment>Description of symbol 803</comment>
-        <translation>雪地摩托造成的良好路径，通常 1.0 - 1.5 m 宽。在陡坡上，路径会
-造得更宽，完成时减少宽度。</translation>
+        <translation>雪地摩托造成的良好路径，通常 1.0 - 1.5 m 宽。在陡坡上，路径会造得更宽，完成时减少宽度。</translation>
     </message>
     <message>
         <source>Track, slow 0.8 - 1.0 m</source>
@@ -14379,15 +14358,11 @@ be made wider to reduce widening during competition.</source>
         <translation>路径，慢速 0.8 - 1.0 m</translation>
     </message>
     <message>
-        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
-slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
-technique for slowing and stopping.
+        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing technique for slowing and stopping.
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
-        <translation>不平的，慢速路径，雪少或有一些树枝。这个符号不用于陡
-坡上，如果道路的宽度允许使用人字台阶来上山，或铲雪
-技术来减速或停止。
+        <translation>不平的，慢速路径，雪少或有一些树枝。这个符号不用于陡坡上，如果道路的宽度允许使用人字台阶来上山，或铲雪技术来减速或停止。
 
 为了使交叉点清晰，慢速路径的起点以短线绘制出。</translation>
     </message>
@@ -14407,13 +14382,9 @@ In order to clarify a junction, the beginning of a slow track is drawn with a sh
         <translation>砂质的或无雪的道路，线条符号</translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806</comment>
-        <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型
-标记，穿过道路符号，显示道路不可滑行。无雪的道路，和
-砂质含量大的道路，通常标记为禁止的路线。</translation>
+        <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型标记，穿过道路符号，显示道路不可滑行。无雪的道路，和砂质含量大的道路，通常标记为禁止的路线。</translation>
     </message>
     <message>
         <source>Sanded or snowless road, single symbol</source>
@@ -14421,13 +14392,9 @@ heavily sanded roads should normally be marked as forbidden routes.</source>
         <translation>砂质的或无雪的道路，单一符号</translation>
     </message>
     <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
-        <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型
-标记，穿过道路符号，显示道路不可滑行。无雪的道路，和
-砂质含量大的道路，通常标记为禁止的路线。</translation>
+        <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型标记，穿过道路符号，显示道路不可滑行。无雪的道路，和砂质含量大的道路，通常标记为禁止的路线。</translation>
     </message>
     <message>
         <source>Unploughed road</source>
@@ -14481,13 +14448,11 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
-The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
+The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809</comment>
         <translation>由禁止路线符号来标记的线性特征，可以穿过但不能沿路奔跑。
 必须使用至少两个符号来标记禁止的路线。
-在滑雪定向越野地图上，禁止路线的符号（ 711 ）以大的尺寸绘制，从而
-在路径网络中更清晰可见。</translation>
+在滑雪定向越野地图上，禁止路线的符号（ 711 ）以大的尺寸绘制，从而在路径网络中更清晰可见。</translation>
     </message>
     <message>
         <source>Forbidden route, crossable, single symbol</source>
@@ -14497,13 +14462,11 @@ that it is more clearly visible in the track network.</source>
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
-The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
+The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809.1</comment>
         <translation>由禁止路线符号来标记的线性特征，可以穿过但不能沿路奔跑。
 必须使用至少两个符号来标记禁止的路线。
-在滑雪定向越野地图上，禁止路线的符号（ 711 ）以大的尺寸绘制，从而
-在路径网络中更清晰可见。</translation>
+在滑雪定向越野地图上，禁止路线的符号（ 711 ）以大的尺寸绘制，从而在路径网络中更清晰可见。</translation>
     </message>
     <message>
         <source>Public snow mobile route</source>
@@ -14768,7 +14731,7 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <translation>线路属性</translation>
     </message>
     <message>
-        <source>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty. 
+        <source>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty.
  - Scheme: | Course code | Length | Height climb |
  - The course length is given in kilometres rounded to the nearest 0.1 km.
  - The height climb is given in metres rounded to the nearest 5 m.</source>
@@ -14784,7 +14747,7 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <translation>独立的检查点说明</translation>
     </message>
     <message>
-        <source>Scheme of columns: |A|B|C|D|E|F|G|H| 
+        <source>Scheme of columns: |A|B|C|D|E|F|G|H|
 
 A: Control number
 B: Control code
@@ -15910,7 +15873,7 @@ Map symbol: ISOM 538</source>
 
 The default line shows a box of 5 mm by 5mm and can be removed from the final symbols.</source>
         <comment>Description of symbol 7</comment>
-        <translation>通常不建议引入本地符号。如果使用了本地符号，那么在像吸引国际参赛的活动中，本地符号的信息应该在赛前具体提供给选手。
+        <translation>通常不推荐引入本地符号。如果使用了本地符号，那么在像吸引国际参赛的活动中，本地符号的信息应该在赛前具体提供给选手。
 
 默认的线显示了 5mm X 5mm 的方块，可以从最终符号中去掉。</translation>
     </message>

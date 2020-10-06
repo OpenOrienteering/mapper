@@ -101,6 +101,7 @@ for I in \
   template_map.cpp \
   template_placeholder.cpp \
   template_table_model.cpp \
+  template_t.cpp \
   template_tool \
   template_track.cpp \
   text_object_editor_helper.cpp \

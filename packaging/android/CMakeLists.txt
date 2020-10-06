@@ -1,5 +1,5 @@
 #
-#    Copyright 2019 Kai Pastor
+#    Copyright 2019-2020 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -49,6 +49,16 @@ set(MAPPER_PRO_DIR "${CMAKE_CURRENT_BINARY_DIR}/Mapper")
 set(ANDROID_PACKAGE_SOURCE_DIR "${MAPPER_PRO_DIR}/${MAPPER_APP_ID}")
 
 
+if("${Qt5Core_VERSION}" VERSION_GREATER_EQUAL 5.13.0)
+	set(ANDROID_MIN_SDK_VERSION 21)
+elseif("${ANDROID_ABI}" MATCHES "64")
+	set(ANDROID_MIN_SDK_VERSION 21)
+else()
+	set(ANDROID_MIN_SDK_VERSION 16)
+endif()
+set(ANDROID_TARGET_SDK_VERSION 28)
+
+
 set(KEYSTORE_URL "KEYSTORE_URL-NOTFOUND" CACHE STRING
   "URL of the keystore to be used when signing APK packages."
 )
@@ -95,12 +105,24 @@ endif()
 # The directory name must match the Mapper binary.
 configure_file(
   "Mapper.pro.in"
-  "${MAPPER_PRO_DIR}/tmp/Mapper.pro"
+  "${MAPPER_PRO_DIR}/Mapper.pro"
+  @ONLY
+)
+
+configure_file(
+  "AndroidManifest.xml.in"
+  "${MAPPER_PRO_DIR}/tmp/AndroidManifest.xml"
   @ONLY
 )
 file(GENERATE
-  OUTPUT "${MAPPER_PRO_DIR}/Mapper.pro"
-  INPUT  "${MAPPER_PRO_DIR}/tmp/Mapper.pro"
+  OUTPUT "${MAPPER_PRO_DIR}/AndroidManifest.xml"
+  INPUT  "${MAPPER_PRO_DIR}/tmp/AndroidManifest.xml"
+)
+
+configure_file(
+  "strings.xml.in"
+  "${MAPPER_PRO_DIR}/tmp/strings.xml"
+  @ONLY
 )
 
 # Setup ANDROID_PACKAGE_SOURCE_DIR for qmake/androiddeployqt
@@ -108,7 +130,11 @@ get_target_property(INPUT_SOURCE_DIR Mapper_Android SOURCE_DIR)
 get_target_property(INPUT_FILES Mapper_Android SOURCES)
 configure_file(
   "install_android_package.cmake.in"
-  "install_android_package.cmake"
+  "${MAPPER_PRO_DIR}/tmp/install_android_package.cmake"
   @ONLY
+)
+file(GENERATE
+  OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/install_android_package.cmake"
+  INPUT  "${MAPPER_PRO_DIR}/tmp/install_android_package.cmake"
 )
 install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/install_android_package.cmake")
