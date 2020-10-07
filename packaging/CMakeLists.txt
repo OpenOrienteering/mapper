@@ -1,5 +1,5 @@
 #
-#    Copyright 2012-2019 Kai Pastor
+#    Copyright 2012-2020 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -234,17 +234,37 @@ unset(MAPPER_LIB_HINTS)
 unset(MAPPER_LIBS)
 
 if(Mapper_PACKAGE_PROJ)
-	if(PROJ4_DIR AND NOT PROJ4_ROOT)
-		# Cf. find_package documentation
-		string(REGEX REPLACE "/CMake$|/cmake$" "" PROJ4_ROOT "${PROJ4_DIR}")            # U
-		string(REGEX REPLACE "/PROJ4[^/]*$|/proj4[^/]*$" "" PROJ4_ROOT "${PROJ4_ROOT}") # U, W
-		string(REGEX REPLACE "/cmake$" "" PROJ4_ROOT "${PROJ4_ROOT}")                   # U
-		string(REGEX REPLACE "/lib/[^/]*$|/lib$|/share$" "" PROJ4_ROOT "${PROJ4_ROOT}") # U, W
-	elseif(NOT PROJ4_ROOT)
-		message(FATAL_ERROR "PROJ4_ROOT must be set when Mapper_PACKAGE_PROJ is enabled.")
+	if(NOT PROJ_DATA_DIR)
+		unset(PROJ_DATA_DIR CACHE)
+		if(PROJ4_ROOT)
+			set(proj_data_paths "${PROJ4_ROOT}/share/proj")
+		elseif(PROJ4_DIR)
+			# Cf. find_package documentation
+			string(REGEX REPLACE "/CMake$|/cmake$" "" proj_data_paths "${PROJ4_DIR}")                 # U
+			string(REGEX REPLACE "/PROJ4[^/]*$|/proj4[^/]*$" "" proj_data_paths "${proj_data_paths}") # U, W
+			string(REGEX REPLACE "/cmake$" "" proj_data_paths "${proj_data_paths}")                   # U
+			string(REGEX REPLACE "/lib/[^/]*$|/lib$|/share$" "" proj_data_paths "${proj_data_paths}") # U, W
+			set(proj_data_paths "${proj_data_paths}/share/proj")
+		elseif(PROJ4_INCLUDE_DIRS)
+			string(REGEX REPLACE "/include$" "/share/proj" proj_data_paths ${PROJ4_INCLUDE_DIRS}) # MSYS2 et al.
+		else()
+			set(proj_data_paths PATHS "${CMAKE_INSTALL_PREFIX}/share/proj")
+		endif()
+		find_path(PROJ_DATA_DIR
+		  DOC "The PROJ data files directory"
+		  NAMES epsg proj.db
+		  PATHS ${proj_data_paths}
+		  NO_DEFAULT_PATH
+		)
+	endif()
+	if(NOT PROJ_DATA_DIR)
+		message(SEND_ERROR
+		  "PROJ_DATA_DIR must be found or set "
+		  "when Mapper_BUILD_PACKAGE and Mapper_PACKAGE_PROJ are enabled."
+		)
 	endif()
 	install(
-	  DIRECTORY "${PROJ4_ROOT}/share/proj"
+	  DIRECTORY "${PROJ_DATA_DIR}"
 	  DESTINATION "${MAPPER_DATA_DESTINATION}")
 	list(APPEND MAPPER_LIB_HINTS ${PROJ4_ROOT}/bin)
 endif()
@@ -254,19 +274,33 @@ if(Mapper_PACKAGE_GDAL)
 		unset(GDAL_CONFIG CACHE)
 		find_program(GDAL_CONFIG gdal-config ONLY_CMAKE_FIND_ROOT_PATH)
 		if(GDAL_CONFIG)
-			exec_program(${GDAL_CONFIG} ARGS --datadir OUTPUT_VARIABLE gdal_data_dir)
-		endif()
-		if(gdal_data_dir)
-			# Search in CMAKE_FIND_ROOT_PATH
-			find_path(GDAL_DATA_DIR
-			  NAMES ellipsoid.csv
-			  HINTS ${gdal_data_dir}
+			execute_process(
+			  COMMAND "${GDAL_CONFIG}" --datadir
+			  OUTPUT_VARIABLE gdal_data_dir
+			  OUTPUT_STRIP_TRAILING_WHITESPACE
+			  RESULT_VARIABLE gdal_config_result
 			)
 		endif()
+		if(GDAL_CONFIG AND gdal_config_result EQUAL 0)
+			set(gdal_data_paths "${gdal_data_dir}")
+		elseif(GDAL_INCLUDE_DIRS)
+			string(REGEX REPLACE "/include$" "/share/gdal" gdal_data_paths ${GDAL_INCLUDE_DIRS}) # MSYS2 et al.
+		else()
+			set(gdal_data_paths PATHS "${CMAKE_INSTALL_PREFIX}/share/gdal")
+		endif()
+		find_path(GDAL_DATA_DIR
+		  DOC "The GDAL data files directory"
+		  NAMES ellipsoid.csv gdalvrt.xsd
+		  PATHS ${gdal_data_paths}
+		  NO_DEFAULT_PATH
+		)
 	endif()
 	if(NOT GDAL_DATA_DIR)
-		message(FATAL_ERROR "The gdal-config script must be available, or GDAL_DATA_DIR must be set, "
-		                    "when Mapper_PACKAGE_GDAL is enabled.")
+		message(SEND_ERROR
+		  "The gdal-config script must be available, "
+		  "or GDAL_DATA_DIR must be set, "
+		  "when Mapper_BUILD_PACKAGE and Mapper_PACKAGE_GDAL are enabled."
+		)
 	endif()
 	install(
 	  DIRECTORY "${GDAL_DATA_DIR}/"
