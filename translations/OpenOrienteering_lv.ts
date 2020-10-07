@@ -1602,12 +1602,12 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>Clip layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Apgriezt slāņus</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="59"/>
         <source>Use GDAL for GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>Lietot GDAL priekš GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
@@ -1632,7 +1632,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="77"/>
         <source>Create a layer for each symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Izveidot slāni katram simbolam</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="82"/>
@@ -1652,7 +1652,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="107"/>
         <source>GDAL</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="108"/>
@@ -2064,24 +2064,24 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="216"/>
         <source>Show scale factors</source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt mēroga koeficientus</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="217"/>
         <source>Scale compensation</source>
-        <translation type="unfinished"></translation>
+        <translation>Mēroga kompensācija</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="222"/>
         <source>Combined scale factor:</source>
         <extracomment>The combined scale factor is the ratio between a length on the ground and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kombinētais mēroga koeficients:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="228"/>
         <source>Auxiliary scale factor:</source>
         <extracomment>The auxiliary scale factor is the ratio between a length in the curved earth model and the corresponding length on the ground. It is applied as a factor to ground distances to get curved earth model distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ārējais mēroga koeficients:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="246"/>
@@ -2127,12 +2127,12 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="553"/>
         <source>Scale factor change</source>
-        <translation type="unfinished"></translation>
+        <translation>Mēroga koeficienta izmaiņa</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="553"/>
         <source>The scale factor has been changed. Do you want to stretch/shrink the map content accordingly, too?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mēroga koeficients ir ticis izmainīts. Vai Jūs vēlaties arī attiecīgi izstiept/samazināt karti?</translation>
     </message>
     <message>
         <source>Projected coordinates:</source>
@@ -2288,7 +2288,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="157"/>
         <source>Touch mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Skārienjūtīgais režīms</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="162"/>
@@ -2390,7 +2390,7 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
         <source>Default icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Noklusējuma ikona</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="69"/>
@@ -2400,23 +2400,23 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="70"/>
         <source>Preview width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Priekšskatījuma platums:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="86"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="118"/>
         <source>Save...</source>
-        <translation type="unfinished"></translation>
+        <translation>Saglabāt...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="88"/>
         <source>Copy to custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopēt uz pielāgoto ikonu</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="98"/>
         <source>Custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Pielāgota ikona</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
@@ -2426,22 +2426,22 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
         <source>Load...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ielādēt...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="122"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Notīrīt</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="169"/>
         <source>%1 px</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="203"/>
         <source>Save symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Saglabāt simbola ikonu...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
@@ -2453,12 +2453,13 @@
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevarēja saglabāt attēlu:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="226"/>
         <source>Load symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ielādēt simbola ikonu...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="235"/>
@@ -2503,7 +2504,7 @@
         <location filename="../src/core/symbols/symbol.cpp" line="318"/>
         <location filename="../src/undo/object_undo.cpp" line="616"/>
         <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepareizi ievadīts simbola ID &apos;%1&apos; %2. līnijā un %3. kolonnā.</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="389"/>
@@ -2537,12 +2538,12 @@
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="49"/>
         <source>OCAD version 8, old implementation</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD 8. versija, veca implementācija</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="51"/>
         <source>OCAD version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD %1. versija</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="225"/>
@@ -2627,7 +2628,7 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="155"/>
         <source>Georeferencing mismatch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ģeorefrencēšanas nesaderība:</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="250"/>
@@ -2879,22 +2880,22 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="172"/>
         <source>Mid symbols placement:</source>
-        <translation type="unfinished"></translation>
+        <translation>Simbola novietojums pa vidu:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="174"/>
         <source>Center of dashes</source>
-        <translation type="unfinished"></translation>
+        <translation>Raustītu līniju vidus</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="175"/>
         <source>Center of dash groups</source>
-        <translation type="unfinished"></translation>
+        <translation>Raustītu līniju grupu vidus</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="176"/>
         <source>Center of gaps</source>
-        <translation type="unfinished"></translation>
+        <translation>Tukšumu vidus</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="206"/>
@@ -2949,12 +2950,12 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="682"/>
         <source>Offset at start:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nobīde sākumā:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="683"/>
         <source>Offset at end:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nobīde beigās:</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1774"/>
@@ -3204,7 +3205,7 @@ Vai vēlies saglabāt izmaiņas?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="776"/>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Simbolu kopa iztraisīja brīdinājumus.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="780"/>
@@ -4390,7 +4391,7 @@ jo saglabāšana kā %2 (.%3) netiek atbalstīta.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="989"/>
         <source>Keep my location on screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Atstāt manu atrašanās vietu uz ekrāna</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1003"/>
@@ -4952,7 +4953,7 @@ Mainīt importējamo datu mērogu?</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="245"/>
         <source>Background drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Fona zīmējums</translation>
     </message>
 </context>
 <context>
@@ -5348,7 +5349,7 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1872"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevar saglabāt pareizo trūkstošās veidnes pozīciju: &quot;% 1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1912"/>
@@ -5606,7 +5607,7 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="382"/>
         <source>not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ne</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="386"/>
@@ -5710,7 +5711,7 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1918"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished"></translation>
+        <translation>Teksta simbolā %1: pielāgoto rakstzīmju atstatums ir iestatīts, tā implementācija vēl neatbilst OCAD uzvedībai</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1934"/>
@@ -5725,7 +5726,7 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2159"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kombinētā simbolā %1: Neatbalstīts apakšsimbols ar indeksu %2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2365"/>
