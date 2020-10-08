@@ -95,6 +95,39 @@ make
 ```
 
 
+## Compiling for Windows (without OpenOrienteering superbuild)
+
+A development environment on 64-bit Windows can be set up and maintained easily
+with the MSYS2 distribution. It provides up-to-date Windows packages of bash,
+gcc, mingw-w64, CMake, Ninja, Qt, PROJ, GDAL and Doxygen.
+
+First of all, you need to install (and update) MSYS2, https://www.msys2.org/.
+The next step is to install all dependencies used by Mapper at build time
+and at run time. This will download more than 1.3 GB and take more than 9 GB
+of disk spaced after installation. In an msys2 terminal window, type:
+
+```
+pacman -S git mingw-w64-x86_64-qt-creator mingw-w64-x86_64-proj mingw-w64-x86_64-gdal mingw-w64-x86_64-ninja mingw-w64-x86_64-cmake mingw-w64-x86_64-doxygen mingw-w64-x86_64-gdb
+```
+
+For development you will start with an mingw64 terminal. Clone the
+OpenOrienteering Mapper repository (or use a source archive), as
+written above.
+
+```
+git clone https://github.com/OpenOrienteering/mapper.git
+```
+
+Run Qt Creator:
+
+```
+qtcreator.exe &
+```
+
+Adjust the Qt Kit settings and set the CMake generator to Ninja.
+Then open CMakeList.txt from the source directory.
+
+
 ## Compiling with OpenOrienteering superbuild
 
 The OpenOrienteering superbuild project
