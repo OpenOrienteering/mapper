@@ -35,7 +35,9 @@ namespace OpenOrienteering {
 
 
 /**
- * Dialog allowing for positioning of a template.
+ * Dialog for initial setup of vector templates (coordinate system, position).
+ * 
+ * \see TemplateImageOpenDialog, SelectCRSDialog
  */
 class TemplatePositioningDialog : public QDialog
 {
