@@ -42,7 +42,7 @@ class TemplatePositioningDialog : public QDialog
 Q_OBJECT
 public:
 	~TemplatePositioningDialog() override;
-	explicit TemplatePositioningDialog(QWidget* parent = nullptr);
+	explicit TemplatePositioningDialog(const QString& display_name, QWidget* parent = nullptr);
 	TemplatePositioningDialog(const TemplatePositioningDialog&) = delete;
 	TemplatePositioningDialog(TemplatePositioningDialog&&) = delete;
 	TemplatePositioningDialog& operator=(const TemplatePositioningDialog&) = delete;

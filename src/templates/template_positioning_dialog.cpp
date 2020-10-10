@@ -30,6 +30,7 @@
 #include <QSpacerItem>
 
 #include "gui/util_gui.h"
+#include "templates/template_image_open_dialog.h"
 
 
 namespace OpenOrienteering {
@@ -37,11 +38,11 @@ namespace OpenOrienteering {
 // not inline
 TemplatePositioningDialog::~TemplatePositioningDialog() = default;
 
-TemplatePositioningDialog::TemplatePositioningDialog(QWidget* parent)
+TemplatePositioningDialog::TemplatePositioningDialog(const QString& display_name, QWidget* parent)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
 	setWindowModality(Qt::WindowModal);
-	setWindowTitle(tr("Track scaling and positioning"));
+	setWindowTitle(TemplateImageOpenDialog::tr("Opening %1").arg(display_name));
 	
 	auto* layout = new QFormLayout();
 	

@@ -285,7 +285,7 @@ try
 		projected_crs_spec = explicit_georef->getProjectedCRSSpec();
 	}
 	
-	TemplatePositioningDialog dialog(dialog_parent);
+	TemplatePositioningDialog dialog(getTemplateFilename(), dialog_parent);
 	if (dialog.exec() == QDialog::Rejected)
 		return false;
 	
