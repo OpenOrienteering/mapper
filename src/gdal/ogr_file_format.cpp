@@ -686,21 +686,21 @@ bool OgrFileImport::canRead(const QString& path)
 }
 
 
-OgrFileImport::OgrFileImport(const QString& path, Map* map, MapView* view, UnitType unit_type)
+OgrFileImport::OgrFileImport(const QString& path, Map* map, MapView* view, CoordinateSystem::Domain cs_domain)
  : Importer(path, map, view)
  , manager{ OGR_SM_Create(nullptr) }
- , unit_type{ unit_type }
+ , cs_domain{ cs_domain }
 {
 	GdalManager manager;
 	manager.configure();
 	
-	switch (unit_type)
+	switch (cs_domain)
 	{
-	case UnitOnPaper:
+	case CoordinateSystem::DomainMap:
 		to_map_coord = &OgrFileImport::fromDrawing;
 		break;
 		
-	case UnitOnGround:
+	case CoordinateSystem::DomainGround:
 		to_map_coord = &OgrFileImport::fromProjected;
 		break;
 	}
@@ -1343,7 +1343,7 @@ std::unique_ptr<OgrFileImport::Clipping> OgrFileImport::getLayerClipping(OGRLaye
 
 bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
 {
-	if (unit_type == UnitOnPaper)
+	if (cs_domain == CoordinateSystem::DomainMap)
 	{
 		return true;
 	}

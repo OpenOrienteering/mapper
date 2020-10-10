@@ -109,7 +109,7 @@ std::unique_ptr<Georeferencing> OgrTemplate::getDataGeoreferencing(const QString
 {
 	Map tmp_map;
 	tmp_map.setGeoreferencing(initial_georef);
-	OgrFileImport importer{ path, &tmp_map, nullptr, OgrFileImport::UnitOnGround};
+	OgrFileImport importer{ path, &tmp_map, nullptr, CoordinateSystem::DomainGround};
 	importer.setGeoreferencingImportEnabled(true);
 	importer.setLoadSymbolsOnly(true);
 	if (!importer.doImport())
@@ -129,8 +129,8 @@ OgrTemplate::OgrTemplate(const OgrTemplate& proto)
 : TemplateMap(proto)
 , track_crs_spec(proto.track_crs_spec)
 , projected_crs_spec(proto.projected_crs_spec)
+, cs_domain(proto.cs_domain)
 , template_track_compatibility(proto.template_track_compatibility)
-, use_real_coords(proto.use_real_coords)
 , center_in_view(proto.center_in_view)
 {
 	if (proto.explicit_georef)
@@ -290,12 +290,18 @@ try
 		return false;
 	
 	center_in_view  = dialog.centerOnView();
-	use_real_coords = dialog.useRealCoords();
+	auto const use_real_coords = dialog.useRealCoords();
 	if (use_real_coords)
 	{
+		cs_domain = CoordinateSystem::DomainGround;
 		transform.template_scale_x = transform.template_scale_y = dialog.getUnitScale();
 		updateTransformationMatrices();
 	}
+	else
+	{
+		cs_domain = CoordinateSystem::DomainMap;
+	}
+	
 	return true;
 }
 catch (FileFormatException& e)
@@ -317,8 +323,7 @@ try
 	}
 	
 	auto new_template_map = std::make_unique<Map>();
-	auto unit_type = use_real_coords ? OgrFileImport::UnitOnGround : OgrFileImport::UnitOnPaper;
-	OgrFileImport importer{template_path, new_template_map.get(), nullptr, unit_type };
+	OgrFileImport importer{template_path, new_template_map.get(), nullptr, cs_domain};
 	
 	// Configure generation of renderables.
 	updateView(*new_template_map);

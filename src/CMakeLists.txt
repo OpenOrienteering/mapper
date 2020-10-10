@@ -85,6 +85,7 @@ set(Mapper_Common_SRCS
   
   core/app_permissions.cpp
   core/autosave.cpp
+  core/coordinate_system.cpp
   core/crs_template.cpp
   core/crs_template_implementation.cpp
   core/georeferencing.cpp

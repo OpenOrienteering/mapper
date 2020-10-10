@@ -26,6 +26,7 @@
 #include <QObject>
 #include <QString>
 
+#include "core/coordinate_system.h"
 #include "templates/template_map.h"
 
 class QByteArray;
@@ -87,8 +88,8 @@ public:
 	 * template_map will be configured to use this particular georeferencing
 	 * to produce a projection of the original data.
 	 * 
-	 * Otherwise, the data will be handled as raw map or paper data, depending on
-	 * use_real_coords.
+	 * Otherwise, the data will be handled as raw ground or paper units,
+	 * depending on cs_domain.
 	 */
 	bool loadTemplateFileImpl() override;
 	
@@ -115,9 +116,9 @@ private:
 	std::unique_ptr<Georeferencing> map_configuration_georef;
 	QString track_crs_spec;           // (limited) TemplateTrack compatibility
 	QString projected_crs_spec;       // (limited) TemplateTrack compatibility
+	CoordinateSystem::Domain cs_domain { CoordinateSystem::DomainGround };  //  transient
 	bool template_track_compatibility { false };  //  transient
 	bool explicit_georef_pending      { false };  //  transient
-	bool use_real_coords              { true };   //  transient
 	bool center_in_view               { false };  //  transient
 };
 
