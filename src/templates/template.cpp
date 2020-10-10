@@ -558,6 +558,9 @@ bool Template::setupAndLoad(QWidget* dialog_parent, const MapView* view)
 		setTemplatePosition(view->center() - offset + templatePosition());
 	}
 	
+	setTemplateState(Loaded);
+	setTemplateAreaDirty();
+	emit templateStateChanged();
 	return true;
 }
 
@@ -649,12 +652,7 @@ bool Template::loadTemplateFile()
 			template_state = Invalid;
 			setErrorString(tr("No such file."));
 		}
-		else if (loadTemplateFileImpl())
-		{
-			template_state = Loaded;
-			setTemplateAreaDirty();
-		}
-		else
+		else if (!loadTemplateFileImpl())
 		{
 			template_state = Invalid;
 			if (errorString().isEmpty())
@@ -664,6 +662,11 @@ bool Template::loadTemplateFile()
 				         getTemplateType() );
 				setErrorString(tr("Is the format of the file correct for this template type?"));
 			}
+		}
+		else if (old_state != Configuring)
+		{
+			template_state = Loaded;
+			setTemplateAreaDirty();
 		}
 	}
 	catch (std::bad_alloc&)
@@ -680,7 +683,7 @@ bool Template::loadTemplateFile()
 	if (old_state != template_state)
 		emit templateStateChanged();
 		
-	return template_state == Loaded;
+	return template_state != Invalid;
 }
 
 bool Template::postLoadSetup(QWidget* /*dialog_parent*/, bool& /*out_center_in_view*/)
@@ -690,7 +693,7 @@ bool Template::postLoadSetup(QWidget* /*dialog_parent*/, bool& /*out_center_in_v
 
 void Template::unloadTemplateFile()
 {
-	Q_ASSERT(template_state == Loaded);
+	Q_ASSERT(template_state == Loaded || template_state == Configuring);
 	if (hasUnsavedChanges())
 	{
 		// The changes are lost

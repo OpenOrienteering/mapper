@@ -160,7 +160,6 @@ bool TemplateMap::loadTemplateFileImpl()
 			is_georeferenced = false;
 			transform = transformForOcd();
 			updateTransformationMatrices();
-			setTemplateAreaDirty();
 			setProperty(ocdTransformProperty(), false);
 		}
 		else if (is_georeferenced)
