@@ -231,10 +231,9 @@ try
 	template_track_compatibility = ends_with_any_of(template_path, TemplateTrack::supportedExtensions());
 	
 	auto data_georef = std::unique_ptr<Georeferencing>();
-	auto& initial_georef = map->getGeoreferencing();
-	if (initial_georef.getState() != Georeferencing::Geospatial)
+	if (map->getGeoreferencing().getState() != Georeferencing::Geospatial)
 	{
-		data_georef = getDataGeoreferencing(template_path, initial_georef);
+		data_georef = getDataGeoreferencing(template_path, map->getGeoreferencing());
 		if (data_georef && data_georef->getState() == Georeferencing::Geospatial)
 		{
 			// If yes, does the user want to use this for the map?
@@ -242,7 +241,7 @@ try
 			if (template_track_compatibility)
 				data_georef->setGrivation(0);
 			else
-				keep_projected = preserveRefPoints(*data_georef, initial_georef);
+				keep_projected = preserveRefPoints(*data_georef, map->getGeoreferencing());
 			GeoreferencingDialog dialog(dialog_parent, map, data_georef.get());
 			if (keep_projected)
 				dialog.setKeepProjectedRefCoords();
@@ -252,8 +251,7 @@ try
 		}
 	}
 	
-	auto& georef = map->getGeoreferencing();  // initial_georef might be outdated.
-	if (georef.getState() == Georeferencing::Geospatial)
+	if (map->getGeoreferencing().getState() == Georeferencing::Geospatial)
 	{
 		// The map has got a proper georeferencing.
 		// Can the template's SRS be converted to the map's CRS?
@@ -280,7 +278,7 @@ try
 		if (template_track_compatibility)
 			data_georef->setGrivation(0);
 		else
-			preserveRefPoints(*data_georef, initial_georef);
+			preserveRefPoints(*data_georef, map->getGeoreferencing());
 		explicit_georef = std::move(data_georef);
 		// Data is to be transformed to the projected CRS.
 		track_crs_spec = Georeferencing::geographic_crs_spec;
@@ -325,11 +323,9 @@ try
 	// Configure generation of renderables.
 	updateView(*new_template_map);
 	
-	const auto& map_georef = map->getGeoreferencing();
-	
 	if (is_georeferenced || !explicit_georef)
 	{
-		new_template_map->setGeoreferencing(map_georef);
+		new_template_map->setGeoreferencing(map->getGeoreferencing());
 	}
 	else
 	{
