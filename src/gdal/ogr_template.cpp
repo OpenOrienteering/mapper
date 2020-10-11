@@ -163,29 +163,25 @@ const char* OgrTemplate::getTemplateType() const
 }
 
 
+std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing(const LatLon& center) const
+{
+	auto georef = std::make_unique<Georeferencing>();
+	georef->setScaleDenominator(int(map->getGeoreferencing().getScaleDenominator()));
+	georef->setProjectedCRS(QString{},
+	                        QStringLiteral("+proj=ortho +datum=WGS84 +ellps=WGS84 +units=m +lat_0=%1 +lon_0=%2 +no_defs")
+	                        .arg(QString::number(center.latitude(), 'f'), QString::number(center.longitude(), 'f')));
+	georef->setProjectedRefPoint({}, false);
+	return georef;
+}
 
 std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing(const QString& path) const
 {
-	// Is the template's SRS orthographic, or can it be converted?
 	/// \todo Use the template's datum etc. instead of WGS84?
-	auto georef = std::make_unique<Georeferencing>();
-	georef->setScaleDenominator(int(map->getGeoreferencing().getScaleDenominator()));
-	georef->setProjectedCRS(QString{}, QStringLiteral("+proj=ortho +datum=WGS84 +ellps=WGS84 +units=m +no_defs"));
-	if (OgrFileImport::checkGeoreferencing(path, *georef))
-	{
-		auto center = OgrFileImport::calcAverageLatLon(path);
-		georef->setProjectedCRS(QString{},
-		                             QString::fromLatin1("+proj=ortho +datum=WGS84 +ellps=WGS84 +units=m +lat_0=%1 +lon_0=%2 +no_defs")
-		                             .arg(center.latitude()).arg(center.longitude()));
-		georef->setProjectedRefPoint({}, false, false);
-		georef->setCombinedScaleFactor(1.0);
-		georef->setGrivation(0.0);
-	}
-	else
-	{
-		georef.reset();
-	}
-	return georef;
+	auto const has_suitable_georeferencing = [this](const QString& path) -> bool {
+		auto const georef = makeOrthographicGeoreferencing(LatLon{});
+		return OgrFileImport::checkGeoreferencing(path, *georef);
+	} (path);
+	return has_suitable_georeferencing ? makeOrthographicGeoreferencing(OgrFileImport::calcAverageLatLon(path)) : nullptr;
 }
 
 std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing() const

@@ -36,6 +36,7 @@ class QXmlStreamWriter;
 namespace OpenOrienteering {
 
 class Georeferencing;
+class LatLon;
 class Map;
 
 
@@ -67,6 +68,7 @@ public:
 	
 	const char* getTemplateType() const override;
 	
+	std::unique_ptr<Georeferencing> makeOrthographicGeoreferencing(const LatLon& center) const;
 	std::unique_ptr<Georeferencing> makeOrthographicGeoreferencing(const QString& path) const;
 	std::unique_ptr<Georeferencing> makeOrthographicGeoreferencing() const;
 	std::unique_ptr<Georeferencing> makeGeoreferencing(const QString& spec) const;
