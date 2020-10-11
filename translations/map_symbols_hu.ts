@@ -14280,7 +14280,7 @@ Az előkészített területek határait keskeny zöld vonal (0,13 mm) mutatja, �
     <message>
         <source>Forbidden route, forbidden to cross</source>
         <comment>Name of symbol 814</comment>
-        <translation type="unfinished">Tiltott útvonal, tilos átkelni</translation>
+        <translation>Tiltott útvonal, tilos átkelni</translation>
     </message>
     <message>
         <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
@@ -16907,7 +16907,7 @@ A csomópont tisztázása érdekében a lassú pálya kezdetét rövid vonallal 
     <message>
         <source>Unploughed road</source>
         <comment>Name of symbol 807</comment>
-        <translation type="unfinished"></translation>
+        <translation>Szántatlan út</translation>
     </message>
     <message>
         <source>A road which is not opened for traffic, no skiable track.</source>
@@ -17244,7 +17244,7 @@ A határoló vonalat, ha az nem természetes határ, a következő módon jelöl
  - The course length is given in kilometres rounded to the nearest 0.1 km.
  - The height climb is given in metres rounded to the nearest 5 m.</source>
         <comment>Description of symbol 99.2</comment>
-        <translation type="unfinished">Ez a blokk a futam fő paramétereit írja le. Célja, hogy segítsen megérteni a nehézségi fokot.
+        <translation>Ez a blokk a futam fő paramétereit írja le. Célja, hogy segítsen megérteni a nehézségi fokot.
  - Rendszer: | Kategória | Hossz | Magasságemelkedés |
  - A pálya hosszát 0,1 km-re kerekített kilométerben adják meg.
  - A magasságemelkedést a legközelebbi 5 m-re kerekített méterben kell megadni.</translation>
@@ -17266,7 +17266,7 @@ F: Dimensions, combinations
 G: Location of the control flag
 H: Other information</source>
         <comment>Description of symbol 99.3</comment>
-        <translation type="unfinished">Oszlopok vázlata: | A | B | C | D | E | F | G | H |
+        <translation>Oszlopok vázlata: | A | B | C | D | E | F | G | H |
 
 V: Ellenőrzőpont sorszám
 B: Ellenőrző kód
@@ -17303,14 +17303,14 @@ B: Ellenőrző pont kódja</translation>
 
 In this symbol set, you need to add this symbol manually after the start location row and after every three consequent rows of 99.3 Description of individual control.</source>
         <comment>Description of symbol 99.5</comment>
-        <translation type="unfinished">Minden harmadik pontleírás után és bármely speciális utasítás mindkét oldalán vastagabb vízszintes vonalat kell használni.
+        <translation>Minden harmadik pontleírás után és bármely speciális utasítás mindkét oldalán vastagabb vízszintes vonalat kell használni.
 
 Ebben a szimbólumkészletben ezt a szimbólumot manuálisan kell hozzáadnia a kezdő helysor után és a 99.3 minden további sora után. Az egyedi ellenőrzőpontok leírása.</translation>
     </message>
     <message>
         <source>|A| Start location</source>
         <comment>Name of symbol 99.6</comment>
-        <translation type="unfinished">| A | Indulás helye</translation>
+        <translation>| A | Rajt helye</translation>
     </message>
     <message>
         <source>Shown in first line of descriptions, using the description as if it were a control feature.
@@ -17331,14 +17331,14 @@ Térkép szimbólum: ISOM 701</translation>
 
 Map symbol: ISOM 703</source>
         <comment>Description of symbol 99.7</comment>
-        <translation type="unfinished">Az ellenőrzőpont számozása abban a sorrendben történik, ahogyan meg kell látogatni azokat, kivéve, ha a leírás egy Pontszám versenyre vonatkozik.
+        <translation>Az ellenőrzőpont számozása abban a sorrendben történik, ahogyan meg kell látogatni azokat, kivéve, ha a leírás egy Pontszámgyűjtő versenyre vonatkozik.
 
 Térkép szimbólum: ISOM 703</translation>
     </message>
     <message>
         <source>|B| Control code</source>
         <comment>Name of symbol 99.8</comment>
-        <translation type="unfinished">| B | Ellenőrző kód</translation>
+        <translation>| B | Ellenőrző pont kódja</translation>
     </message>
     <message>
         <source>The control code should be a number greater than 30.</source>
@@ -17353,7 +17353,7 @@ Térkép szimbólum: ISOM 703</translation>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.1.1</comment>
-        <translation type="unfinished">A két hasonló jellemző északibb, vagy a legtöbb hasonló jellemző északi része.</translation>
+        <translation>Az északibb két hasonló jellemzőből , vagy a legészakibb több hasonló jellemzőből.</translation>
     </message>
     <message>
         <source>|C| North Eastern</source>
@@ -17363,127 +17363,127 @@ Térkép szimbólum: ISOM 703</translation>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.2.1</comment>
-        <translation type="unfinished">A két hasonló jellemző északibb, vagy a legtöbb hasonló jellemző északi része.</translation>
+        <translation>Az északibb két hasonló jellemzőből , vagy a legészakibb több hasonló jellemzőből.</translation>
     </message>
     <message>
         <source>|C| Eastern</source>
         <comment>Name of symbol 0.1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>| C| Keleti</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.1.2</comment>
-        <translation type="unfinished">A két hasonló jellemző északibb, vagy a legtöbb hasonló jellemző északi része.</translation>
+        <translation>Az északibb két hasonló jellemzőből , vagy a legészakibb több hasonló jellemzőből.</translation>
     </message>
     <message>
         <source>|C| South Eastern</source>
         <comment>Name of symbol 0.2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>| C | Délkeleti</translation>
     </message>
     <message>
         <source>The more south eastern of two similar features, or the south-eastern-most of several similar features.</source>
         <comment>Description of symbol 0.2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Két, vagy több hasonló jellemző közül a legdélkeletibb.</translation>
     </message>
     <message>
         <source>|C| Southern</source>
         <comment>Name of symbol 0.1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>| C | Déli</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.1.3</comment>
-        <translation type="unfinished">A két hasonló jellemző északibb, vagy a legtöbb hasonló jellemző északi része.</translation>
+        <translation>Az északibb két hasonló jellemzőből , vagy a legészakibb több hasonló jellemzőből.</translation>
     </message>
     <message>
         <source>|C| South western</source>
         <comment>Name of symbol 0.2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>| C | Délnyugati</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.2.3</comment>
-        <translation type="unfinished">A két hasonló jellemző északibb, vagy a legtöbb hasonló jellemző északi része.</translation>
+        <translation>Az északibb két hasonló jellemzőből , vagy a legészakibb több hasonló jellemzőből.</translation>
     </message>
     <message>
         <source>|C| Western</source>
         <comment>Name of symbol 0.1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>| C | Nyugati</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.1.4</comment>
-        <translation type="unfinished">A két hasonló jellemző északibb, vagy a legtöbb hasonló jellemző északi része.</translation>
+        <translation>Az északibb két hasonló jellemzőből , vagy a legészakibb több hasonló jellemzőből.</translation>
     </message>
     <message>
         <source>|C| North Western</source>
         <comment>Name of symbol 0.2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>| C | Északnyugati</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.2.4</comment>
-        <translation type="unfinished">A két hasonló jellemző északibb, vagy a legtöbb hasonló jellemző északi része.</translation>
+        <translation>Az északibb két hasonló jellemzőből , vagy a legészakibb több hasonló jellemzőből.</translation>
     </message>
     <message>
         <source>|C| Upper</source>
         <comment>Name of symbol 0.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>| C| Felső</translation>
     </message>
     <message>
         <source>Where the control feature is the middle one of a number of similar features.</source>
         <comment>Description of symbol 0.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ahol az ellenőrzőpont számos hasonló jellemző közül a középső.</translation>
     </message>
     <message>
         <source>|C| Lower</source>
         <comment>Name of symbol 0.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>| C| Alsó</translation>
     </message>
     <message>
         <source>Where the control feature is the middle one of a number of similar features.</source>
         <comment>Description of symbol 0.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ahol az ellenőrzőpont számos hasonló jellemző közül a középső.</translation>
     </message>
     <message>
         <source>|C| Middle</source>
         <comment>Name of symbol 0.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>| C | Középső</translation>
     </message>
     <message>
         <source>Where the control feature is the middle one of a number of similar features.</source>
         <comment>Description of symbol 0.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ahol az ellenőrzőpont számos hasonló jellemző közül a középsőn van.</translation>
     </message>
     <message>
         <source>|D| Terrace</source>
         <comment>Name of symbol 1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D| Terasz</translation>
     </message>
     <message>
         <source>A level area on a slope.</source>
         <comment>Description of symbol 1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy lejtőn lévő sík terület.</translation>
     </message>
     <message>
         <source>|D| Spur</source>
         <comment>Name of symbol 1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Pihenő, orr</translation>
     </message>
     <message>
         <source>A contour projection or “nose” rising from the surrounding ground.</source>
         <comment>Description of symbol 1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy szintvonal kitüremkedése (pihenő) vagy egy „orr” emelkedik ki a környező talajról.</translation>
     </message>
     <message>
         <source>|D| Re-entrant</source>
         <comment>Name of symbol 1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Hajlat</translation>
     </message>
     <message>
         <source>A contour indentation; a valley; the opposite of a spur.</source>
         <comment>Description of symbol 1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy szintvonal behajlás; egy völgy; az orr ellentéte.</translation>
     </message>
     <message>
         <source>|D| Earth bank</source>
@@ -17495,125 +17495,145 @@ Térkép szimbólum: ISOM 703</translation>
 
 Map symbol: ISOM 106</source>
         <comment>Description of symbol 1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>A talajszint hirtelen változása, amely egyértelműen megkülönböztethető a környezetétől.
+
+Térkép szimbólum: ISOM 106</translation>
     </message>
     <message>
         <source>|D| Quarry</source>
         <comment>Name of symbol 1.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Kőbánya</translation>
     </message>
     <message>
         <source>Gravel, sand or stone working in flat or inclined ground.
 
 Map symbol: ISOM 106</source>
         <comment>Description of symbol 1.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kavics, homok vagy kő, lapos vagy ferde talajban.
+
+Térkép szimbólum: ISOM 106</translation>
     </message>
     <message>
         <source>|D| Earth wall</source>
         <comment>Name of symbol 1.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Földletörés</translation>
     </message>
     <message>
         <source>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.
 
 Map symbols: ISOM 107, 108</source>
         <comment>Description of symbol 1.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>A környező terep fölé kinyúló keskeny földfal; részben kőfelületű lehet, általában ember alkotta. A 8.11 szimbólummal egy romos földfal jelzésére szolgál.
+
+Térkép szimbólumok: ISOM 107, 108</translation>
     </message>
     <message>
         <source>|D| Erosion gully</source>
         <comment>Name of symbol 1.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Árok, metsződés</translation>
     </message>
     <message>
         <source>An erosion gully or trench, normally dry.
 
 Map symbol: ISOM 109</source>
         <comment>Description of symbol 1.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eróziós vízmosás vagy árok, általában száraz.
+
+Térkép szimbólum: ISOM 109</translation>
     </message>
     <message>
         <source>|D| Small erosion gully</source>
         <comment>Name of symbol 1.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kis eróziós árok</translation>
     </message>
     <message>
         <source>A small erosion gully or trench, normally dry.
 
 Map symbol: ISOM 110</source>
         <comment>Description of symbol 1.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy kis eróziós vízmosás vagy árok, általában száraz.
+
+Térkép szimbólum: ISOM 110</translation>
     </message>
     <message>
         <source>|D| Hill</source>
         <comment>Name of symbol 1.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Hegy, domb</translation>
     </message>
     <message>
         <source>A high point. Shown on the map with contour lines.
 
 Map symbols: ISOM 101, 111</source>
         <comment>Description of symbol 1.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magas pont. Szintvonalakkal jelenik meg a térképen.
+
+Térkép szimbólum: ISOM 301</translation>
     </message>
     <message>
         <source>|D| Knol</source>
         <comment>Name of symbol 1.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Halom</translation>
     </message>
     <message>
         <source>A small obvious mound. Used with symbol 8.6 to indicate a rocky knoll.
 
 Map symbols: ISOM 112, 113</source>
         <comment>Description of symbol 1.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy jól elkülöníthető kis halom. A 8.6 szimbólummal a sziklás halmot jelölik.
+
+Térkép szimbólumok: ISOM 112, 113</translation>
     </message>
     <message>
         <source>|D| Saddle</source>
         <comment>Name of symbol 1.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Nyereg</translation>
     </message>
     <message>
         <source>The low point between two higher points.</source>
         <comment>Description of symbol 1.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>A mélypont két magasabb pont között.</translation>
     </message>
     <message>
         <source>|D| Depression</source>
         <comment>Name of symbol 1.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D| Mélyedés</translation>
     </message>
     <message>
         <source>A depression or hollow from which the ground rises on all sides. Shown on the map with contour lines.
 
 Map symbol: ISOM 114</source>
         <comment>Description of symbol 1.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy mélyedés vagy üreg, amelyből a talaj minden oldalról emelkedik. Szintvonalakkal jelenik meg a térképen.
+
+Térkép szimbólum: ISOM 114</translation>
     </message>
     <message>
         <source>|D| Small depression</source>
         <comment>Name of symbol 1.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Kis mélyedés</translation>
     </message>
     <message>
         <source>A small, shallow, natural depression or hollow from which the ground rises on all sides.
 
 Map symbol: ISOM 115</source>
         <comment>Description of symbol 1.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kicsi, sekély, természetes mélyedés vagy üreg, amelyből a talaj minden oldalról emelkedik.
+
+Térkép szimbólum: ISOM 115</translation>
     </message>
     <message>
         <source>|D| Pit</source>
         <comment>Name of symbol 1.14</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D| Gödör</translation>
     </message>
     <message>
         <source>A pit or hole with distinct steep-sides. Usually man made. Used with symbol 8.6 to indicate a rocky pit.
 
 Map symbols: ISOM 116, 204</source>
         <comment>Description of symbol 1.14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Különálló meredek oldalú gödör vagy lyuk. Általában ember alkotta. A sziklás gödröt a 8.6 szimbólummal használják.
+
+Térkép szimbólumok: ISOM 116, 204</translation>
     </message>
     <message>
         <source>|D| Broken ground </source>
@@ -17625,113 +17645,131 @@ Map symbols: ISOM 116, 204</source>
 
 Map symbol: ISOM 107</source>
         <comment>Description of symbol 1.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egyértelműen zavart talaj, túl kicsi vagy túl sok jellemzővel ahhoz, hogy egyedileg feltérképezhetők legyenek; beleértve az állati földeket is.
+
+Térkép szimbólum: ISOM 107</translation>
     </message>
     <message>
         <source>|D| Ant hill (termite mound)</source>
         <comment>Name of symbol 1.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Hangyaboly (termeszes halom)</translation>
     </message>
     <message>
         <source>The mound made by ants or termites.</source>
         <comment>Description of symbol 1.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>A hangyák vagy termeszek által készített halom.</translation>
     </message>
     <message>
         <source>|D| Cliff, Rock face</source>
         <comment>Name of symbol 2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Szikla, sziklafal</translation>
     </message>
     <message>
         <source>A cliff or rock face. May be passable or impassable.
 
 Map symbols: ISOM 201, 203</source>
         <comment>Description of symbol 2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Szikla vagy sziklafal. Lehet járható vagy járhatatlan.
+
+Térkép szimbólumok: ISOM 201, 203</translation>
     </message>
     <message>
         <source>|D| Rock pillar</source>
         <comment>Name of symbol 2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Sziklaoszlop</translation>
     </message>
     <message>
         <source>A high, natural rock projection.
 
 Map symbol: ISOM 202</source>
         <comment>Description of symbol 2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy magas, természetes sziklavetület.
+
+Térkép szimbólum: ISOM 202</translation>
     </message>
     <message>
         <source>|D| Cave</source>
         <comment>Name of symbol 2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D| Barlang</translation>
     </message>
     <message>
         <source>A hole in a rock face or hill side, often leading to underground workings.
 
 Map symbol: ISOM 205</source>
         <comment>Description of symbol 2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy lyuk egy sziklafalon vagy domboldalon, ami gyakran a föld alatt folytatódik.
+
+Térkép szimbólum: ISOM 205</translation>
     </message>
     <message>
         <source>|D| Boulder</source>
         <comment>Name of symbol 2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Szikla</translation>
     </message>
     <message>
         <source>A prominent free-standing block of rock or stone.
 
 Map symbols: ISOM 206, 207</source>
         <comment>Description of symbol 2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kiemelkedő szabadon álló kő- vagy kőtömb.
+
+Térkép szimbólumok: ISOM 206, 207</translation>
     </message>
     <message>
         <source>|D| Boulder field</source>
         <comment>Name of symbol 2.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D| Sziklamező</translation>
     </message>
     <message>
         <source>An area covered by so many boulders that they cannot be individually mapped.
 
 Map symbol: ISOM 208</source>
         <comment>Description of symbol 2.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy olyan terület, amelyet olyan sok szikla borít, hogy nem lehet őket egyenként feltérképezni.
+
+Térkép szimbólum: ISOM 208</translation>
     </message>
     <message>
         <source>|D| Boulder cluster</source>
         <comment>Name of symbol 2.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sziklacsoport</translation>
     </message>
     <message>
         <source>A small distinct group of boulders so closely clustered together that they cannot be individually mapped.
 
 Map symbol: ISOM 209</source>
         <comment>Description of symbol 2.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sziklák egy kis külön csoportja ami olyan szorosan csoportosul, hogy azokat nem lehet külön-külön feltérképezni.
+
+Térkép szimbólum: ISOM 209</translation>
     </message>
     <message>
         <source>|D| Stony ground</source>
         <comment>Name of symbol 2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Kőmező</translation>
     </message>
     <message>
         <source>An area covered with many small stones or rocks.
 
 Map symbol: ISOM 210</source>
         <comment>Description of symbol 2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sok apró kővel vagy sziklával borított terület.
+
+Térkép szimbólum: ISOM 210</translation>
     </message>
     <message>
         <source>|D| Bare rock</source>
         <comment>Name of symbol 2.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Csupasz szikla</translation>
     </message>
     <message>
         <source>A runnable area of rock with no earth or vegetation cover.
 
 Map symbol: ISOM 212</source>
         <comment>Description of symbol 2.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Futható kőzet, föld és növénytakaró nélkül.
+
+Térkép szimbólum: ISOM 212</translation>
     </message>
     <message>
         <source>|D| Narrow passage</source>
@@ -17858,14 +17896,16 @@ Térkép szimbólumok: ISOM 309, 310, 311</translation>
     <message>
         <source>|D| Well</source>
         <comment>Name of symbol 3.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D| Kút</translation>
     </message>
     <message>
         <source>A shaft containing water or a captive spring, clearly visible on the ground. Often with some form of man-made surround.
 
 Map symbol: ISOM 312</source>
         <comment>Description of symbol 3.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Víz- vagy befoglalt forrás, amely jól látható a talajon. Gyakran valamilyen ember alkotta forma veszi körül.
+
+Térkép szimbólum: ISOM 312</translation>
     </message>
     <message>
         <source>|D| Spring</source>
@@ -17932,515 +17972,563 @@ Térkép szimbólumok: ISOM 402, 404</translation>
     <message>
         <source>|D| Clearing</source>
         <comment>Name of symbol 4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Tisztás</translation>
     </message>
     <message>
         <source>A small area of land free from trees within the forest.
 
 Map symbols: ISOM 401, 403</source>
         <comment>Description of symbol 4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az erdőben fáktól mentes kis terület.
+
+Térkép szimbólumok: ISOM 401, 403</translation>
     </message>
     <message>
         <source>|D| Thicket</source>
         <comment>Name of symbol 4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Bozót</translation>
     </message>
     <message>
         <source>A small area of forest where the tree cover or undergrowth is so dense that it is difficult to pass.
 
 Map symbols: ISOM 408, 410</source>
         <comment>Description of symbol 4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kis erdőterület, ahol a fával borítottság vagy az aljnövényzet olyan sűrű, hogy nehéz áthaladni.
+
+Térkép szimbólumok: ISOM 408, 410</translation>
     </message>
     <message>
         <source>|D| Linear thicket</source>
         <comment>Name of symbol 4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Vonalszerű bozót (sövény)</translation>
     </message>
     <message>
         <source>A man-made line of trees or bushes that is difficult to cross.
 
 Map symbol: ISOM 410</source>
         <comment>Description of symbol 4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ember által készített fák vagy bokrok sora, amelyet nehéz átlépni.
+
+Térkép szimbólum: ISOM 410</translation>
     </message>
     <message>
         <source>|D| Vegetation boundary</source>
         <comment>Name of symbol 4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Növényzethatár</translation>
     </message>
     <message>
         <source>A distinct boundary between different types of trees or vegetation.
 
 Map symbol: ISOM 416</source>
         <comment>Description of symbol 4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Különálló határ a különböző fafajták vagy növényzet között.
+
+Térkép szimbólum: ISOM 416</translation>
     </message>
     <message>
         <source>|D| Copse</source>
         <comment>Name of symbol 4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Csalit</translation>
     </message>
     <message>
         <source>A small area of trees in open ground.
 
 Map symbols: ISOM 405, 406</source>
         <comment>Description of symbol 4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kis területen a fák a nyílt terepen.
+
+Térkép szimbólumok: ISOM 405, 406</translation>
     </message>
     <message>
         <source>|D| Distinctive tree</source>
         <comment>Name of symbol 4.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D| Megkülönböztethető fa</translation>
     </message>
     <message>
         <source>An unusual or distinctive tree in either open land or forest; frequently information is also given as to its type.</source>
         <comment>Description of symbol 4.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Szokatlan vagy jellegzetes fa nyílt területen vagy erdőben; gyakran adnak információt a típusáról is.</translation>
     </message>
     <message>
         <source>|D| Tree stump, Root stock</source>
         <comment>Name of symbol 4.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Fatönk, gyökérállomány</translation>
     </message>
     <message>
         <source>The stump of a tree. The upturned root of a fallen tree, with or without the trunk.</source>
         <comment>Description of symbol 4.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy fa tuskója. Egy kidőlt fa felfordított gyökere, törzzsel vagy anélkül.</translation>
     </message>
     <message>
         <source>|D| Road</source>
         <comment>Name of symbol 5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Út</translation>
     </message>
     <message>
         <source>A metalled/asphalt surfaced or dirt road, suitable for vehicles in normal weather conditions.
 
 Map symbols: ISOM 501, 502, 503, 504</source>
         <comment>Description of symbol 5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fémes / aszfalt felületű vagy földút, amely normál időjárási körülmények között használható járművek számára.
+
+Térkép szimbólumok: ISOM 501, 502, 503, 504</translation>
     </message>
     <message>
         <source>|D| Track / Path</source>
         <comment>Name of symbol 5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D| Pálya / Útvonal</translation>
     </message>
     <message>
         <source>A visible route made by people or animals. Tracks may be driven by rugged vehicles.
 
 Map symbols: ISOM 505, 506, 507, 508</source>
         <comment>Description of symbol 5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Emberek vagy állatok által hagyott út. A nyomokat robusztus járművek is hagyhatták.
+
+Térkép szimbólumok: ISOM 505, 506, 507, 508</translation>
     </message>
     <message>
         <source>|D| Ride</source>
         <comment>Name of symbol 5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D|Nyom</translation>
     </message>
     <message>
         <source>A clearly visible linear break in the forest which does not have a distinct path along it.
 
 Map symbol: ISOM 509</source>
         <comment>Description of symbol 5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jól látható lineáris törés az erdőben, amelynek nincs külön útja.
+
+Térkép szimbólum: ISOM 509</translation>
     </message>
     <message>
         <source>|D| Bridge</source>
         <comment>Name of symbol 5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Híd</translation>
     </message>
     <message>
         <source>A crossing point over a watercourse, or other linear feature.
 
 Map symbols: ISOM 512, 513</source>
         <comment>Description of symbol 5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Átkelési pont egy vízfolyás felett, vagy más lineáris jellemző.
+
+Térkép szimbólumok: ISOM 512, 513</translation>
     </message>
     <message>
         <source>|D| Power line</source>
         <comment>Name of symbol 5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D| Elektromos vezeték</translation>
     </message>
     <message>
         <source>A power or telephone line, cableway or ski lift.
 
 Map symbols: ISOM 516, 517</source>
         <comment>Description of symbol 5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Elektromos vagy telefonvonal, kötélpálya vagy sífelvonó.
+
+Térkép szimbólumok: ISOM 516, 517</translation>
     </message>
     <message>
         <source>|D| Power line pylon</source>
         <comment>Name of symbol 5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Elektromos vezeték pilon</translation>
     </message>
     <message>
         <source>A support for power or telephone line, cableway or ski lift.
 
 Map symbols: ISOM 516, 517</source>
         <comment>Description of symbol 5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Elektromos vagy telefonvonal, kötélpálya vagy sífelvonó.
+
+Térkép szimbólumok: ISOM 516, 517</translation>
     </message>
     <message>
         <source>|D| Tunnel</source>
         <comment>Name of symbol 5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D| Alagút</translation>
     </message>
     <message>
         <source>A way under roads, railways, etc.
 
 Map symbol: ISOM 518</source>
         <comment>Description of symbol 5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Út utak, vasutak stb. alatt
+
+Térkép szimbólum: ISOM 518</translation>
     </message>
     <message>
         <source>|D| Stone wall</source>
         <comment>Name of symbol 5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D| Kőfal</translation>
     </message>
     <message>
         <source>A stone boundary wall or stone faced bank. Used with symbol 8.11 to indicate a ruined stone wall.
 
 Map symbols: ISOM 519, 520, 521</source>
         <comment>Description of symbol 5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kő határfal vagy kővel borított part. A 8.11 szimbólummal egy romos kőfalat jelölnek.
+
+Térkép szimbólumok: ISOM 519, 520, 521</translation>
     </message>
     <message>
         <source>|D| Fence</source>
         <comment>Name of symbol 5.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D| Kerítés</translation>
     </message>
     <message>
         <source>A wire or wooden boundary. Used with symbol 8.11 to indicate a ruined fence.
 
 Map symbols: ISOM 522, 523, 524</source>
         <comment>Description of symbol 5.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Drótból, vagy fából készült határoló. A 8.11 szimbólummal együtt jelzi a romos kerítést.
+
+Térkép szimbólumok: ISOM 522, 523, 524</translation>
     </message>
     <message>
         <source>|D| Crossing point</source>
         <comment>Name of symbol 5.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Átkelőhely</translation>
     </message>
     <message>
         <source>A way through or over a wall, fence, or pipeline, including a gate or stile.
 
 Map symbol: ISOM 525</source>
         <comment>Description of symbol 5.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>A falon, a kerítésen vagy a csővezetéken vagy azon keresztül vezető út, beleértve a kaput vagy a cölöpöt.
+
+Térkép szimbólum: ISOM 525</translation>
     </message>
     <message>
         <source>|D| Building</source>
         <comment>Name of symbol 5.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Épület</translation>
     </message>
     <message>
         <source>A standing brick, wood or stone structure.
 
 Map symbol: ISOM 526</source>
         <comment>Description of symbol 5.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Álló tégla, fa vagy kő szerkezet.
+
+Térkép szimbólum: ISOM 526</translation>
     </message>
     <message>
         <source>|D| Paved area</source>
         <comment>Name of symbol 5.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D| Burkolt terület</translation>
     </message>
     <message>
         <source>An area of hard standing used for parking or other purposes.
 
 Map symbol: ISOM 529</source>
         <comment>Description of symbol 5.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Keményen álló terület parkolásra vagy más célokra.
+
+Térkép szimbólum: ISOM 529</translation>
     </message>
     <message>
         <source>|D| Ruin</source>
         <comment>Name of symbol 5.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Rom</translation>
     </message>
     <message>
         <source>The remains of a building that has fallen down.
 
 Map symbol: ISOM 530</source>
         <comment>Description of symbol 5.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Leomlott épület maradványai.
+
+Térkép szimbólum: ISOM 530</translation>
     </message>
     <message>
         <source>|D| Pipeline</source>
         <comment>Name of symbol 5.14</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D| Csővezeték</translation>
     </message>
     <message>
         <source>A pipeline (gas, water, oil, etc.) above ground level.
 
 Map symbols: ISOM 533, 534</source>
         <comment>Description of symbol 5.14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Csővezeték (gáz, víz, olaj stb.) a talajszint felett.
+
+Térkép szimbólumok: ISOM 533, 534</translation>
     </message>
     <message>
         <source>|D| Tower</source>
         <comment>Name of symbol 5.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Torony</translation>
     </message>
     <message>
         <source>A tall metal, wooden or brick structure, usually built for forest observation.
 
 Map symbols: ISOM 535, 536</source>
         <comment>Description of symbol 5.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magas fém, fa vagy tégla szerkezet, amelyet általában erdei megfigyelésre építenek.
+
+Térkép szimbólumok: ISOM 535, 536</translation>
     </message>
     <message>
         <source>|D| Shooting platform</source>
         <comment>Name of symbol 5.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Lövészplatform</translation>
     </message>
     <message>
         <source>A structure attached to a tree where a marksman or observer can sit.
 
 Map symbol: ISOM 536</source>
         <comment>Description of symbol 5.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>A fához rögzített szerkezet, ahol lövész vagy megfigyelő ülhet.
+
+Térkép szimbólum: ISOM 536</translation>
     </message>
     <message>
         <source>|D| Boundary stone, Cairn</source>
         <comment>Name of symbol 5.17</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Határkő, kőhalom</translation>
     </message>
     <message>
         <source>A man made stone or pile of stones. A cairn, memorial stone, boundary stone or trigonometric point.
 
 Map symbol: ISOM 537</source>
         <comment>Description of symbol 5.17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy ember készítette, kő vagy kőkupacot. Kőhalom, emlékkő, határkő vagy háromszögelési pont.
+
+Térkép szimbólum: ISOM 537</translation>
     </message>
     <message>
         <source>|D| Fodder rack</source>
         <comment>Name of symbol 5.18</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Takarmánytartó</translation>
     </message>
     <message>
         <source>A construction for holding feed for animals.
 
 Map symbol: ISOM 538</source>
         <comment>Description of symbol 5.18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Állatok takarmányának tartására szolgáló építmény.
+
+Térkép szimbóluma: ISOM 538</translation>
     </message>
     <message>
         <source>|D| Charcoal burning ground</source>
         <comment>Name of symbol 5.19</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Szénégető hely</translation>
     </message>
     <message>
         <source>The clear remains of an area where charcoal was burned. A small level man made area on a slope. (A platform).</source>
         <comment>Description of symbol 5.19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy olyan terület tiszta maradványai, ahol szén égett. Egye ember alkotta kis sík hely egy lejtőn. (Egy platform).</translation>
     </message>
     <message>
         <source>|D| Monument or Statue</source>
         <comment>Name of symbol 5.20</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D| Emlékmű vagy szobor</translation>
     </message>
     <message>
         <source>A monument, memorial or statue.</source>
         <comment>Description of symbol 5.20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Műemlék, emlékmű vagy szobor.</translation>
     </message>
     <message>
         <source>|D| Building pass through</source>
         <comment>Name of symbol 5.23</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Épület átjárással</translation>
     </message>
     <message>
         <source>An arcade, indoor passage or route through a building.</source>
         <comment>Description of symbol 5.23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Árkád, beltéri átjáró vagy útvonal egy épületen keresztül.</translation>
     </message>
     <message>
         <source>|D| Stairway</source>
         <comment>Name of symbol 5.24</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Lépcsőház</translation>
     </message>
     <message>
         <source>A stairway of at least two steps.</source>
         <comment>Description of symbol 5.24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Legalább két lépcsős lépcső.</translation>
     </message>
     <message>
         <source>|D| Special item</source>
         <comment>Name of symbol 6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Különleges elem</translation>
     </message>
     <message>
         <source>If used, an explanation of its meaning must be supplied to competitors in the pre-race information.</source>
         <comment>Description of symbol 6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ha használják, a verseny előtti tájékoztatóban magyarázatot kell adni a versenyzőknek.</translation>
     </message>
     <message>
         <source>|D| Special item</source>
         <comment>Name of symbol 6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Különleges elem</translation>
     </message>
     <message>
         <source>If used, an explanation of its meaning must be supplied to competitors in the pre-race information.</source>
         <comment>Description of symbol 6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ha használják, a verseny előtti tájékoztatóban magyarázatot kell adni a versenyzőknek.</translation>
     </message>
     <message>
         <source>|D| Country Specific features (template)</source>
         <comment>Name of symbol 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>| D | Országspecifikus jellemzők (sablon)</translation>
     </message>
     <message>
         <source>It is not generally recommended to introduce local symbols. If local symbols are used then at events likely to attract an international entry information about them should be supplied to competitors in the pre-race details.
 
 The default line shows a box of 5 mm by 5mm and can be removed from the final symbols.</source>
         <comment>Description of symbol 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Általában nem ajánlott a helyi szimbólumok bevezetése. Ha helyi szimbólumokat használnak, akkor azokon az eseményeken, amelyek valószínűleg vonzzák a nemzetközi nevezést, a verseny előtti részletekben a versenyzőknek információkat kell szolgáltatniuk róla.
+
+Az alapértelmezett sor egy 5 x 5 mm-es négyzetet mutat, és eltávolítható az utolsó szimbólumokból.</translation>
     </message>
     <message>
         <source>|E| Low</source>
         <comment>Name of symbol 8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>| E | Alacsony</translation>
     </message>
     <message>
         <source>Where the control feature is particularly low or flat at but this is not indicated on the map; e.g. Hill, low.</source>
         <comment>Description of symbol 8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ha az ellenőrző pont jellemzője, hogy különösen alacsony vagy lapos, de ez nem szerepel a térképen; pl. alacsony halom.</translation>
     </message>
     <message>
         <source>|E| Shallow</source>
         <comment>Name of symbol 8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>| E| Sekély</translation>
     </message>
     <message>
         <source>Where the control feature is particularly shallow but this is not indicated on the map; e.g. Re-entrant, shallow.</source>
         <comment>Description of symbol 8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ahol az ellenőrző pont jellemzője különösen sekély, de ezt a térkép nem jelzi; például. Sekély hajlat.</translation>
     </message>
     <message>
         <source>|E| Deep</source>
         <comment>Name of symbol 8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>| E| Mély</translation>
     </message>
     <message>
         <source>Where the control feature is particularly deep but this is not indicated on the map; e.g. Pit, deep.</source>
         <comment>Description of symbol 8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ha az ellenőrző pont jellemzője, hogy különösen mély, de ez nincs feltüntetve a térképen; pl. Mély gödör.</translation>
     </message>
     <message>
         <source>|E| Overgrown</source>
         <comment>Name of symbol 8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>| E| Benőtt</translation>
     </message>
     <message>
         <source>Where the feature is partially covered in undergrowth or bushes that are not indicated on the map; e.g. Ruin, overgrown.</source>
         <comment>Description of symbol 8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ahol a jellemzőt részben aljnövényzet vagy bokrok borítják, amelyek nincsenek feltüntetve a térképen; például. Benőtt rom.</translation>
     </message>
     <message>
         <source>|E| Open</source>
         <comment>Name of symbol 8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>| E| Nyit</translation>
     </message>
     <message>
         <source>Where the feature is in an area where the tree cover is less than the surroundings but this is not indicated on the map; e.g. Marsh, open.</source>
         <comment>Description of symbol 8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ahol a jellemző egy olyan területen található, ahol a fával borítottság kisebb, mint a környéké, de ezt a térkép nem jelzi; például. Nyílt mocsár.</translation>
     </message>
     <message>
         <source>|E| Rocky, Stony </source>
         <comment>Name of symbol 8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>| E| Sziklás, Köves </translation>
     </message>
     <message>
         <source>Where the feature is in an area of rocky or stony ground not indicated on the map; e.g. Pit, rocky.</source>
         <comment>Description of symbol 8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ha a jellemző sziklás vagy köves talajú de az nem szerepel a térképen; pl. Sziklás gödör.</translation>
     </message>
     <message>
         <source>|E| Marshy</source>
         <comment>Name of symbol 8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>| E| Mocsaras</translation>
     </message>
     <message>
         <source>Where the feature is in an area of marshy ground not indicated on the map; e.g. Re-entrant, marshy.</source>
         <comment>Description of symbol 8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ahol a jellemző a mocsaras talaj olyan területén található, amelyet a térkép nem jelöl; például. Mocsaras hajlat.</translation>
     </message>
     <message>
         <source>|E| Sandy</source>
         <comment>Name of symbol 8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>| E| Homokos</translation>
     </message>
     <message>
         <source>Where the feature is in an area of sandy ground not indicated on the map; e.g. Spur, sandy.</source>
         <comment>Description of symbol 8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ha a jellemző olyan területen van, amely jellemző a térképen nem szerepel; pl.homokos Spur, .</translation>
     </message>
     <message>
         <source>|E| Needle leaved</source>
         <comment>Name of symbol 8.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>| E | Tűlevelű</translation>
     </message>
     <message>
         <source>Where the tree or trees associated with the control feature have needle shaped leaves; e.g. Distinctive tree, needle leaved.</source>
         <comment>Description of symbol 8.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ahol az ellenőrző ponttal kapcsolatos fának vagy fáknak tű alakú levelei vannak; például. Megkülönböztető fa, tűlevelű.</translation>
     </message>
     <message>
         <source>|E| Broad leaved</source>
         <comment>Name of symbol 8.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>| E | Széles levelű</translation>
     </message>
     <message>
         <source>Where the tree or trees associated with the control feature are broad-leaved; e.g. Copse, broad leaved.</source>
         <comment>Description of symbol 8.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ahol az ellenőrző ponttal társított fa vagy fák széles levelűek; például. Széles levelű csalit.</translation>
     </message>
     <message>
         <source>|E| Ruined</source>
         <comment>Name of symbol 8.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>| E | Romos</translation>
     </message>
     <message>
         <source>Where the feature has fallen to ground level; e.g. Fence, ruined.</source>
         <comment>Description of symbol 8.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ahol a jellemző a földszintre ledőlt; például. Tönkrement kerítés.</translation>
     </message>
     <message>
         <source>|F| Height or Depth</source>
         <comment>Name of symbol 9.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>| F| Magasság vagy mélység</translation>
     </message>
     <message>
         <source>Height or Depth of the feature in metres; e.g. 2.6</source>
         <comment>Description of symbol 9.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>A jellemző magassága vagy mélysége méterben; pl. 2,6</translation>
     </message>
     <message>
         <source>|F| Size</source>
         <comment>Name of symbol 9.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>| F | Méret</translation>
     </message>
     <message>
         <source>Horizontal dimensions of the feature in metres; e.g. 8 x 4</source>
         <comment>Description of symbol 9.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>A jellemző vízszintes méretei méterben; pl. 8 x 4</translation>
     </message>
     <message>
         <source>|F| Slash for height on slope</source>
         <comment>Name of symbol 9.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>| F| Perjel a magassághoz a lejtésnél</translation>
     </message>
     <message>
         <source>Use with text symbol 9.4</source>
         <comment>Description of symbol 9.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Használja a 9.4 szöveges szimbólummal</translation>
     </message>
     <message>
         <source>|F| Heights of two features, or on slope</source>
         <comment>Name of symbol 9.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>| F| Két jellemző magassága, vagy lejtőn</translation>
     </message>
     <message>
         <source>Use this text symbol to give two numbers in different lines.
@@ -18456,288 +18544,315 @@ Use the slash symbol 9.3 for separating the numbers; e.g.
 2.0
 3.0</source>
         <comment>Description of symbol 9.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ezzel a szövegszimbólummal két számot adhat meg különböző sorokban.
+
+9.3 Magasság a lejtőn: A jellemző magassága méterben.
+A számok elválasztására a 9.3 perjelet kell használni. Pl.
+
+0.5/
+    / 3.0
+
+9.4 Két jellemző magassága: Két jellemző magassága, köztük a vezérléssel. Írjon egy számot a másik fölé; Pl.
+
+2.0
+3.0</translation>
     </message>
     <message>
         <source>|F| Crossing</source>
         <comment>Name of symbol 10.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>| F| Átkelő</translation>
     </message>
     <message>
         <source>The point at which two linear features cross. The two features which either cross or meet must be shown in columns |D| and |E|.</source>
         <comment>Description of symbol 10.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az a pont, ahol két lineáris jellemző keresztezi egymást. A két jellemzőt, amelyek keresztezik vagy találkoznak, a | D| és | E| oszlopban kell feltüntetni.</translation>
     </message>
     <message>
         <source>|F| Junction</source>
         <comment>Name of symbol 10.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>| F | Csomópont</translation>
     </message>
     <message>
         <source>The point at which two linear features meet. The two features which either cross or meet must be shown in columns |D| and |E|.</source>
         <comment>Description of symbol 10.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az a pont, ahol két lineáris jellemző keresztezi egymást. A két jellemzőt, amelyek keresztezik vagy találkoznak, a | D| és | E| oszlopban kell feltüntetni.</translation>
     </message>
     <message>
         <source>|G| North Side</source>
         <comment>Name of symbol 11.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Északi oldal</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használják, ha a jellemző a talaj felszíne felett helyezkedik el; pl.: Szikla, északkeleti oldala; Rom, nyugati oldala.</translation>
     </message>
     <message>
         <source>|G| North east Side</source>
         <comment>Name of symbol 11.1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Északkeleti oldal</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használják, ha a jellemző a talaj felszíne felett helyezkedik el; pl.: Szikla, északkeleti oldala; Rom, nyugati oldala.</translation>
     </message>
     <message>
         <source>|G| East Side</source>
         <comment>Name of symbol 11.1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Keleti oldal</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használják, ha a jellemző a talaj felszíne felett helyezkedik el; pl.: Szikla, északkeleti oldala; Rom, nyugati oldala.</translation>
     </message>
     <message>
         <source>|G| South east Side</source>
         <comment>Name of symbol 11.1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Délkeleti oldal</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használják, ha a jellemző a talaj felszíne felett helyezkedik el; pl.: Szikla, északkeleti oldala; Rom, nyugati oldala.</translation>
     </message>
     <message>
         <source>|G| South Side</source>
         <comment>Name of symbol 11.1.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Déli oldal</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használják, ha a jellemző a talaj felszíne felett helyezkedik el; pl.: Szikla, északkeleti oldala; Rom, nyugati oldala.</translation>
     </message>
     <message>
         <source>|G| South west Side</source>
         <comment>Name of symbol 11.1.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Délnyugati oldal</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használják, ha a jellemző a talaj felszíne felett helyezkedik el; pl.: Szikla, északkeleti oldala; Rom, nyugati oldala.</translation>
     </message>
     <message>
         <source>|G| West Side</source>
         <comment>Name of symbol 11.1.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Nyugati oldal</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használják, ha a jellemző a talaj felszíne felett helyezkedik el; pl.: Szikla, északkeleti oldala; Rom, nyugati oldala.</translation>
     </message>
     <message>
         <source>|G| North west Side</source>
         <comment>Name of symbol 11.1.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Észak-nyugati oldal</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használják, ha a jellemző a talaj felszíne felett helyezkedik el; pl.: Szikla, északkeleti oldala; Rom, nyugati oldala.</translation>
     </message>
     <message>
         <source>|G| North Edge</source>
         <comment>Name of symbol 11.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Északi perem</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző a környező talaj felszínéről lefelé terjed, és az ellenőrző pont a talaj elem szélén helyezkedik el; pl. mélyedés, délkeleti széle.
+b) A jellemző egy jelentős területre terjed ki, és az ellenőrzés az adott terület határán helyezkedik el; pl. Mocsár, nyugati széle; Tisztás, észak-nyugati határa.</translation>
     </message>
     <message>
         <source>|G| North east Edge</source>
         <comment>Name of symbol 11.2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Északkelet-keleti széle</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző a környező talaj felszínéről lefelé terjed, és az ellenőrző pont a talaj elem szélén helyezkedik el; pl. mélyedés, délkeleti széle.
+b) A jellemző egy jelentős területre terjed ki, és az ellenőrzés az adott terület határán helyezkedik el; pl. Mocsár, nyugati széle; Tisztás, észak-nyugati széle.</translation>
     </message>
     <message>
         <source>|G| East Edge</source>
         <comment>Name of symbol 11.2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Keleti széle</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző a környező talaj felszínéről lefelé terjed, és az ellenőrző pont a talaj elem szélén helyezkedik el; pl. mélyedés, délkeleti széle.
+b) A jellemző egy jelentős területre terjed ki, és az ellenőrzés az adott terület határán helyezkedik el; pl. Mocsár, nyugati széle; Tisztás, észak-nyugati határa.</translation>
     </message>
     <message>
         <source>|G| South east Edge</source>
         <comment>Name of symbol 11.2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Dél-keleti széle</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző a környező talaj felszínéről lefelé terjed, és az ellenőrző pont a talaj elem szélén helyezkedik el; pl. mélyedés, délkeleti széle.
+b) A jellemző egy jelentős területre terjed ki, és az ellenőrzés az adott terület határán helyezkedik el; pl. Mocsár, nyugati széle; Tisztás, észak-nyugati határa.</translation>
     </message>
     <message>
         <source>|G| South Edge</source>
         <comment>Name of symbol 11.2.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Déli széle</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző a környező talaj felszínéről lefelé terjed, és az ellenőrző pont a talaj elem szélén helyezkedik el; pl. mélyedés, délkeleti széle.
+b) A jellemző egy jelentős területre terjed ki, és az ellenőrzés az adott terület határán helyezkedik el; pl. Mocsár, nyugati széle; Tisztás, észak-nyugati határa.</translation>
     </message>
     <message>
         <source>|G| South west Edge</source>
         <comment>Name of symbol 11.2.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Dél-nyugati széle</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző a környező talaj felszínéről lefelé terjed, és az ellenőrző pont a talaj elem szélén helyezkedik el; pl. mélyedés, délkeleti széle.
+b) A jellemző egy jelentős területre terjed ki, és az ellenőrzés az adott terület határán helyezkedik el; pl. Mocsár, nyugati széle; Tisztás, észak-nyugati határa.</translation>
     </message>
     <message>
         <source>|G| West Edge</source>
         <comment>Name of symbol 11.2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Nyugati széle</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző a környező talaj felszínéről lefelé terjed, és az ellenőrző pont a talaj elem szélén helyezkedik el; pl. mélyedés, délkeleti széle.
+b) A jellemző egy jelentős területre terjed ki, és az ellenőrzés az adott terület határán helyezkedik el; pl. Mocsár, nyugati széle; Tisztás, észak-nyugati határa.</translation>
     </message>
     <message>
         <source>|G| North west Edge</source>
         <comment>Name of symbol 11.2.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Északnyugati széle</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző a környező talaj felszínéről lefelé terjed, és az ellenőrző pont a talaj elem szélén helyezkedik el; pl. mélyedés, délkeleti széle.
+b) A jellemző egy jelentős területre terjed ki, és az ellenőrzés az adott terület határán helyezkedik el; pl. Mocsár, nyugati széle; Tisztás, észak-nyugati határa.</translation>
     </message>
     <message>
         <source>|G| North Part</source>
         <comment>Name of symbol 11.3.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Északi rész</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használatos, ha a jellemző egy jelentős területre terjed ki, és az ellenőrző pont sem a középpontban, sem a széleken nem helyezkedik el; pl. Mocsár, nyugati rész; Mélyedés, délkeleti rész.</translation>
     </message>
     <message>
         <source>|G| North east Part</source>
         <comment>Name of symbol 11.3.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Északkeleti rész</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használatos, ha a jellemző egy jelentős területre terjed ki, és az ellenőrző pont sem a középpontban, sem a széleken nem helyezkedik el; pl. Mocsár, nyugati rész; Mélyedés, délkeleti rész.</translation>
     </message>
     <message>
         <source>|G| East Part</source>
         <comment>Name of symbol 11.3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Keleti rész</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használatos, ha a jellemző egy jelentős területre terjed ki, és az ellenőrző pont sem a középpontban, sem a széleken nem helyezkedik el; pl. Mocsár, nyugati rész; Mélyedés, délkeleti rész.</translation>
     </message>
     <message>
         <source>|G| South east Part</source>
         <comment>Name of symbol 11.3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Délkeleti rész</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használatos, ha a jellemző egy jelentős területre terjed ki, és az ellenőrző pont sem a középpontban, sem a széleken nem helyezkedik el; pl. Mocsár, nyugati rész; Mélyedés, délkeleti rész.</translation>
     </message>
     <message>
         <source>|G| South Part</source>
         <comment>Name of symbol 11.3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Déli rész</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használatos, ha a jellemző egy jelentős területre terjed ki, és az ellenőrző pont sem a középpontban, sem a széleken nem helyezkedik el; pl. Mocsár, nyugati rész; Mélyedés, délkeleti rész.</translation>
     </message>
     <message>
         <source>|G| South west part</source>
         <comment>Name of symbol 11.3.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Délnyugati rész</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használatos, ha a jellemző egy jelentős területre terjed ki, és az ellenőrző pont sem a középpontban, sem a széleken nem helyezkedik el; pl. Mocsár, nyugati rész; Mélyedés, délkeleti rész.</translation>
     </message>
     <message>
         <source>|G| West Part</source>
         <comment>Name of symbol 11.3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Nyugati rész</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használatos, ha a jellemző egy jelentős területre terjed ki, és az ellenőrző pont sem a középpontban, sem a széleken nem helyezkedik el; pl. Mocsár, nyugati rész; Mélyedés, délkeleti rész.</translation>
     </message>
     <message>
         <source>|G| North west Part</source>
         <comment>Name of symbol 11.3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Észak-nyugati rész</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használatos, ha a jellemző egy jelentős területre terjed ki, és az ellenőrző pont sem a középpontban, sem a széleken nem helyezkedik el; pl. Mocsár, nyugati rész; Mélyedés, délkeleti rész.</translation>
     </message>
     <message>
         <source>|G| North Corner (inside)</source>
         <comment>Name of symbol 11.4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Északi sarok (belül)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18745,12 +18860,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző széle 45-135 fokos szöget zár be; például. nyílt terület, keleti sarok (belül).
+b) Egy lineáris jellemző sarkon fordul; például. Kerítés, déli sarok (belül).
+A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
     <message>
         <source>|G| North east Corner (inside)</source>
         <comment>Name of symbol 11.4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Északkeleti sarok (belül)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18758,12 +18876,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző széle 45-135 fokos szöget zár be; például. nyílt terület, keleti sarok (belül).
+b) Egy lineáris jellemző sarkon fordul; például. Kerítés, déli sarok (belül).
+A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
     <message>
         <source>|G| East Corner (inside)</source>
         <comment>Name of symbol 11.4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Keleti sarok (belül)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18771,12 +18892,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző széle 45-135 fokos szöget zár be; például. nyílt terület, keleti sarok (belül).
+b) Egy lineáris jellemző sarkon fordul; például. Kerítés, déli sarok (belül).
+A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
     <message>
         <source>|G| South east Corner (inside)</source>
         <comment>Name of symbol 11.4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Délkeleti sarok (belül)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18784,12 +18908,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző széle 45-135 fokos szöget zár be; például. nyílt terület, keleti sarok (belül).
+b) Egy lineáris jellemző sarkon fordul; például. Kerítés, déli sarok (belül).
+A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
     <message>
         <source>|G| South Corner (inside)</source>
         <comment>Name of symbol 11.4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Déli sarok (belül)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18797,12 +18924,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző széle 45-135 fokos szöget zár be; például. nyílt terület, keleti sarok (belül).
+b) Egy lineáris jellemző sarkon fordul; például. Kerítés, déli sarok (belül).
+A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
     <message>
         <source>|G| South west Corner (inside)</source>
         <comment>Name of symbol 11.4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Délnyugati sarok (belül)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18810,12 +18940,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző széle 45-135 fokos szöget zár be; például. nyílt terület, keleti sarok (belül).
+b) Egy lineáris jellemző sarkon fordul; például. Kerítés, déli sarok (belül).
+A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
     <message>
         <source>|G| West Corner (inside)</source>
         <comment>Name of symbol 11.4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Nyugati sarok (belül)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18823,12 +18956,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző széle 45-135 fokos szöget zár be; például. nyílt terület, keleti sarok (belül).
+b) Egy lineáris jellemző sarkon fordul; például. Kerítés, déli sarok (belül).
+A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
     <message>
         <source>|G| North west Corner (inside)</source>
         <comment>Name of symbol 11.4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Észak-nyugati sarok (belül)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18836,12 +18972,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző széle 45-135 fokos szöget zár be; például. nyílt terület, keleti sarok (belül).
+b) Egy lineáris jellemző sarkon fordul; például. Kerítés, déli sarok (belül).
+A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
     <message>
         <source>|G| North Corner (outside)</source>
         <comment>Name of symbol 11.5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | North Corner (kívül)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18849,12 +18988,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül). 
+b) Egy lineáris jellemző sarkon fordul; például. Kőfal, délnyugati sarok (kívül).
+A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
     <message>
         <source>|G| North east Corner (outside)</source>
         <comment>Name of symbol 11.5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Északkeleti sarok (kívül)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18862,12 +19004,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül). 
+b) Egy lineáris jellemző sarkon fordul; például. Kőfal, délnyugati sarok (kívül).
+A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
     <message>
         <source>|G| East Corner (outside)</source>
         <comment>Name of symbol 11.5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Keleti sarok (kívül)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18875,12 +19020,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül). 
+b) Egy lineáris jellemző sarkon fordul; például. Kőfal, délnyugati sarok (kívül).
+A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
     <message>
         <source>|G| South east Corner (outside)</source>
         <comment>Name of symbol 11.5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Délkeleti sarok (kívül)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18888,12 +19036,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül). 
+b) Egy lineáris jellemző sarkon fordul; például. Kőfal, délnyugati sarok (kívül).
+A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
     <message>
         <source>|G| South Corner (outside)</source>
         <comment>Name of symbol 11.5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Déli sarok (kívül)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18901,12 +19052,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül). 
+b) Egy lineáris jellemző sarkon fordul; például. Kőfal, délnyugati sarok (kívül).
+A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
     <message>
         <source>|G| South west Corner (outside)</source>
         <comment>Name of symbol 11.5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Délnyugati sarok (kívül)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18914,12 +19068,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül). 
+b) Egy lineáris jellemző sarkon fordul; például. Kőfal, délnyugati sarok (kívül).
+A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
     <message>
         <source>|G| West Corner (outside)</source>
         <comment>Name of symbol 11.5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Nyugati sarok (kívül)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18927,12 +19084,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül). 
+b) Egy lineáris jellemző sarkon fordul; például. Kőfal, délnyugati sarok (kívül).
+A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
     <message>
         <source>|G| North west Corner (outside)</source>
         <comment>Name of symbol 11.5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Északnyugati sarok (kívül)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18940,447 +19100,450 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ott használják, ahol:
+a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül). 
+b) Egy lineáris jellemző sarkon fordul; például. Kőfal, délnyugati sarok (kívül).
+A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
     <message>
         <source>|G| North Tip</source>
         <comment>Name of symbol 11.6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Északi hegye</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használják, ha egy jellemző széle 45 foknál kisebb szögben fordul át; például. Mocsár, délnyugati hegye.</translation>
     </message>
     <message>
         <source>|G| North east Tip</source>
         <comment>Name of symbol 11.6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Északkeleti hegye</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használják, ha egy jellemző széle 45 foknál kisebb szögben fordul át; például. Mocsár, délnyugati hegye.</translation>
     </message>
     <message>
         <source>|G| East Tip</source>
         <comment>Name of symbol 11.6.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Keleti hegye</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használják, ha egy jellemző széle 45 foknál kisebb szögben fordul át; például. Mocsár, délnyugati hegye.</translation>
     </message>
     <message>
         <source>|G| South east Tip</source>
         <comment>Name of symbol 11.6.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Délkeleti csúcs</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használják, ha egy jellemző széle 45 foknál kisebb szögben fordul át; például. Mocsár, délnyugati hegye.</translation>
     </message>
     <message>
         <source>|G| South Tip</source>
         <comment>Name of symbol 11.6.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Déli-hegye</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használják, ha egy jellemző széle 45 foknál kisebb szögben fordul át; például. Mocsár, délnyugati hegye.</translation>
     </message>
     <message>
         <source>|G| South west Tip</source>
         <comment>Name of symbol 11.6.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Délnyugati hegye</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használják, ha egy jellemző széle 45 foknál kisebb szögben fordul át; például. Mocsár, délnyugati hegye.</translation>
     </message>
     <message>
         <source>|G| West Tip</source>
         <comment>Name of symbol 11.6.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Nyugati hegye</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használják, ha egy jellemző széle 45 foknál kisebb szögben fordul át; például. Mocsár, délnyugati hegye.</translation>
     </message>
     <message>
         <source>|G| North west Tip</source>
         <comment>Name of symbol 11.6.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Észak-nyugati hegye</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használják, ha egy jellemző széle 45 foknál kisebb szögben fordul át; például. Mocsár, délnyugati hegye.</translation>
     </message>
     <message>
         <source>|G| Bend</source>
         <comment>Name of symbol 11.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Hajlat</translation>
     </message>
     <message>
         <source>Used where a linear feature makes a smooth change of direction; e.g. Path bend; River bend.</source>
         <comment>Description of symbol 11.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akkor használják, ha egy lineáris jellemző simán változtatja az irányt; pl.: Útkanyar; Folyókanyarulat.</translation>
     </message>
     <message>
         <source>|G| North End</source>
         <comment>Name of symbol 11.8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Északi vége</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; például. keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
     </message>
     <message>
         <source>|G| North east End</source>
         <comment>Name of symbol 11.8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Északkeleti vége</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; pl.: keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
     </message>
     <message>
         <source>|G| East End</source>
         <comment>Name of symbol 11.8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Keleti vége</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; például. keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
     </message>
     <message>
         <source>|G| South east End</source>
         <comment>Name of symbol 11.8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Délkeleti vége</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; pl.: keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
     </message>
     <message>
         <source>|G| South End</source>
         <comment>Name of symbol 11.8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Déli vége</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; pl.: keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
     </message>
     <message>
         <source>|G| South west End</source>
         <comment>Name of symbol 11.8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Délnyugati vége</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; például. keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
     </message>
     <message>
         <source>|G| West End</source>
         <comment>Name of symbol 11.8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Nyugati vége</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; például. keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
     </message>
     <message>
         <source>|G| North west End</source>
         <comment>Name of symbol 11.8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Északnyugati vége</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; pl.: keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
     </message>
     <message>
         <source>|G| Upper Part</source>
         <comment>Name of symbol 11.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Felső része</translation>
     </message>
     <message>
         <source>Where the feature extends over two or more contours and the control is located near the top; e.g. Erosion Gully, upper part.</source>
         <comment>Description of symbol 11.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ahol a jellemző két vagy több szintvonalra terjed ki, és az ellenőrzőpont a teteje közelében helyezkedik el; például. metsződés, felső része.</translation>
     </message>
     <message>
         <source>|G| Lower Part</source>
         <comment>Name of symbol 11.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Alsó rész</translation>
     </message>
     <message>
         <source>Where the feature extends over two or more contours and the control is located near the bottom; e.g. Re-entrant, lower part.</source>
         <comment>Description of symbol 11.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ahol a jellemző két vagy több szintvonalra terjed ki, és az ellenőrző pont az alja közelében helyezkedik el; például. Hajlat, alsó rész.</translation>
     </message>
     <message>
         <source>|G| Top</source>
         <comment>Name of symbol 11.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Tetején</translation>
     </message>
     <message>
         <source>Where the control is located at the highest point of the feature and this is not the usual location; e.g. Cliff, top.</source>
         <comment>Description of symbol 11.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ahol az ellenőrző pont a jellemző legmagasabb pontján található, és ez nem a szokásos hely; például. Szikla, teteje.</translation>
     </message>
     <message>
         <source>|G| Beneath</source>
         <comment>Name of symbol 11.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Alatt</translation>
     </message>
     <message>
         <source>Where the control is located underneath the feature; e.g. Pipeline, beneath.</source>
         <comment>Description of symbol 11.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ahol az ellenőrzőpont a jellemző alatt található; pl. csővezeték alatt.</translation>
     </message>
     <message>
         <source>|G| Foot (no direction)</source>
         <comment>Name of symbol 11.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Lába (nincs irány)</translation>
     </message>
     <message>
         <source>Where the control is located at the lower junction of the slope of the feature and the surface of the surrounding area; e.g. Earth bank, foot.</source>
         <comment>Description of symbol 11.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Amennyiben az ellenőrzőpont a jellemző lejtésének és a környező terület felületének alsó csomópontjánál helyezkedik el; pl. Földlrtörés, lába.</translation>
     </message>
     <message>
         <source>|G| North Foot</source>
         <comment>Name of symbol 11.14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Északi lába</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mint fent, de ahol a jellemző elég nagy ahhoz, hogy az ellenőrzőpontot egynél több helyen lehessen elhelyezni körülötte; például. Hegy, északkeleti lába.</translation>
     </message>
     <message>
         <source>|G| North east Foot</source>
         <comment>Name of symbol 11.14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Északkeleti lába</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mint fent, de ahol a jellemző elég nagy ahhoz, hogy az ellenőrzőpontot egynél több helyen lehessen elhelyezni körülötte; például. Hegy, északkeleti lába.</translation>
     </message>
     <message>
         <source>|G| East Foot</source>
         <comment>Name of symbol 11.14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Keleti lába</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mint fent, de ahol a jellemző elég nagy ahhoz, hogy az ellenőrzőpontot egynél több helyen lehessen elhelyezni körülötte; például. Hegy, északkeleti lába.</translation>
     </message>
     <message>
         <source>|G| South east Foot</source>
         <comment>Name of symbol 11.14.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Délkeleti lába</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mint fent, de ahol a jellemző elég nagy ahhoz, hogy az ellenőrzőpontot egynél több helyen lehessen elhelyezni körülötte; például. Hegy, északkeleti lába.</translation>
     </message>
     <message>
         <source>|G| South Foot</source>
         <comment>Name of symbol 11.14.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Déli lába</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mint fent, de ahol a jellemző elég nagy ahhoz, hogy az ellenőrzőpontot egynél több helyen lehessen elhelyezni körülötte; például. Hegy, északkeleti lába.</translation>
     </message>
     <message>
         <source>|G| South west Foot</source>
         <comment>Name of symbol 11.14.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Délnyugati lába</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mint fent, de ahol a jellemző elég nagy ahhoz, hogy az ellenőrzőpontot egynél több helyen lehessen elhelyezni körülötte; például. Hegy, északkeleti láb.</translation>
     </message>
     <message>
         <source>|G| West Foot</source>
         <comment>Name of symbol 11.14.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G| Nyugati lába</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mint fent, de ahol a jellemző elég nagy ahhoz, hogy az ellenőrzőpontot egynél több helyen lehessen elhelyezni körülötte; például. Hegy, északkeleti lába.</translation>
     </message>
     <message>
         <source>|G| North west Foot</source>
         <comment>Name of symbol 11.14.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Északnyugati lába</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mint fent, de ahol a jellemző elég nagy ahhoz, hogy az ellenőrzőpontot egynél több helyen lehessen elhelyezni körülötte; például. Hegy, északkeleti lába.</translation>
     </message>
     <message>
         <source>|G| Between</source>
         <comment>Name of symbol 11.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Között</translation>
     </message>
     <message>
         <source>Where the control is located between two features; e.g. Between thickets; Between boulder and knoll. The two features which the control is between must be shown separately in columns |D| and |E|.</source>
         <comment>Description of symbol 11.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ha az ellenőrző pont két jellemző között helyezkedik el; pl. bozótok között; Szikla és halom között. Azt a két jellemzőt, amelyek között az ellenőrző pont van, külön kell feltüntetni a | D| és | E| oszlopokban.</translation>
     </message>
     <message>
         <source>|G| First aid post</source>
         <comment>Name of symbol 12.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Elsősegélyhely</translation>
     </message>
     <message>
         <source>Control site where First aid is available.</source>
         <comment>Description of symbol 12.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrzési hely, ahol az elsősegély elérhető.</translation>
     </message>
     <message>
         <source>|G| Refreshment point</source>
         <comment>Name of symbol 12.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Frissítési pont</translation>
     </message>
     <message>
         <source>Control site where Refreshments are available.</source>
         <comment>Description of symbol 12.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrző pont, ahol frissítők állnak rendelkezésre.</translation>
     </message>
     <message>
         <source>|G| Radio or TV control</source>
         <comment>Name of symbol 12.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>| G | Rádiós vagy TV-s ellenőrző pont</translation>
     </message>
     <message>
         <source>Location of a Radio or TV control.</source>
         <comment>Description of symbol 12.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rádiós vagy TV-s pont helye.</translation>
     </message>
     <message>
         <source>|G| Control check</source>
         <comment>Name of symbol 12.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G|Pontérintés ellenőrzés</translation>
     </message>
     <message>
         <source>Manned control site where the control card is checked.</source>
         <comment>Description of symbol 12.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Személyzettel ellátott ellenőrzési hely, ahol az ellenőrző kártyát ellenőrzik.</translation>
     </message>
     <message>
         <source>Taped Route, away from control</source>
         <comment>Name of symbol 13.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Szalagos útvonal, az ellenőrzéstől távol</translation>
     </message>
     <message>
         <source>A marked route is to be followed away from a particular control. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>A kijelölt útvonalat egy adott ellenőrző ponttól távol kell követni. Újra hangsúlyozza a térképen láthatóakat.</translation>
     </message>
     <message>
         <source>Taped Route, between controls</source>
         <comment>Name of symbol 13.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Szalagos útvonal, az ellenőrző pontok között</translation>
     </message>
     <message>
         <source>A marked route is to be followed between controls. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az ellenőrző pontok között egy megjelölt útvonalat kell követni. Újra hangsúlyozza, hogy mi jelenik meg a térképen.</translation>
     </message>
     <message>
         <source>Mandatory crossing point</source>
         <comment>Name of symbol 13.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kötelező átkelőhely</translation>
     </message>
     <message>
         <source>Mandatory crossing points (or points) between two controls. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kötelező keresztezési pontok (vagy pontok) két ellenőrző pont között. Újra hangsúlyozza a térképen láthatóakat.</translation>
     </message>
     <message>
         <source>Mandatory passage through out of bounds area</source>
         <comment>Name of symbol 13.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kötelező áthaladás a tiltott területen</translation>
     </message>
     <message>
         <source>Mandatory route between two controls. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kötelező útvonal két ellenőrző pont között. Újra hangsúlyozza a térképen láthatóakat.</translation>
     </message>
     <message>
         <source>Taped Route from Control to Map Exchange</source>
         <comment>Name of symbol 13.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ragasztott útvonal a vezérléstől a térkép cseréig</translation>
     </message>
     <message>
         <source>At a map exchange, or if a marked route is to be followed from a control to a map exchange, this instruction follows the last control description of the first part of the course.</source>
         <comment>Description of symbol 13.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Térképcserénél, vagy ha egy kijelölt útvonalat kell követni az ellenőrző ponttól a térképcseréig, ez az utasítás követi a pálya első részének utolsó ellenőrzési leírását.</translation>
     </message>
     <message>
         <source>Taped Route from last control to Finish</source>
         <comment>Name of symbol 14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Szalagos útvonal az utolsó ellenőrző ponttól a célig</translation>
     </message>
     <message>
         <source>Mandatory route from the last control to the Finish. Re-emphasises what is shown on the map. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kötelező útvonal az utolsó ellenőrző ponttól a célig. Újra hangsúlyozza a térképen láthatóakat. Megadja a távolságot az utolsó ellenőrző ponttól a célig.</translation>
     </message>
     <message>
         <source>Taped Route from finish funnel to Finish</source>
         <comment>Name of symbol 14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Szalagos útvonal a célkordon tölcsölcsértől a célig</translation>
     </message>
     <message>
         <source>The competitor has to navigate from the last control to finish funnel, and then follow tapes. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>A versenyzőnek az utolsó ellenőrző ponttól kell navigálnia a céltölcsérig, majd a szalagokat követnie. Megadja a távolságot az utolsó ellenőrző ponttól a Befejezésig.</translation>
     </message>
     <message>
         <source>Navigation from last control to Finish (no Taped Route)</source>
         <comment>Name of symbol 14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Navigáció az utolsó vezérlőtől a célig (nincs szalagos útvonal)</translation>
     </message>
     <message>
         <source>The competitor has to navigate from the last control to finish. No tapes. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>A versenyzőnek az utolsó ellenőrző ponttól a célig kell navigálnia. Nincsenek szalagok. Megadja a távolságot az utolsó ellenőrző ponttól a célig.</translation>
     </message>
     <message>
         <source>Length of special route</source>
         <comment>Name of symbol 13.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>A különleges útvonal hossza</translation>
     </message>
     <message>
         <source>This is used with the special instruction (13.x) to give the distance from the last control to the end of the route (control, map exchange, or finish).</source>
         <comment>Description of symbol 13.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ezt a speciális utasítással (13.x) használják, hogy megadják a távolságot az utolsó ellenőrző ponttól az útvonal végéig (ellenőrző pont, térképcsere vagy cél).</translation>
     </message>
 </context>
 </TS>
