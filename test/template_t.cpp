@@ -169,7 +169,7 @@ private slots:
 		QVERIFY(map.loadFrom(QStringLiteral("testdata:templates/world-file.xmap"), &view));
 		
 		const auto& georef = map.getGeoreferencing();
-		QVERIFY(georef.isValid());
+		QCOMPARE(georef.getState(), Georeferencing::Geospatial);
 		
 		QCOMPARE(map.getNumTemplates(), 1);
 		auto temp = map.getTemplate(0);
@@ -251,7 +251,7 @@ private slots:
 		QVERIFY(map.loadFrom(QStringLiteral("testdata:templates/geotiff.xmap"), &view));
 		
 		const auto& georef = map.getGeoreferencing();
-		QVERIFY(georef.isValid());
+		QCOMPARE(georef.getState(), Georeferencing::Geospatial);
 		
 		QCOMPARE(map.getNumTemplates(), 1);
 		auto temp = map.getTemplate(0);
@@ -395,7 +395,7 @@ private slots:
 		QVERIFY(map.loadFrom(map_file, &view));
 		
 		auto const& georef = map.getGeoreferencing();
-		QVERIFY(georef.isValid());
+		QCOMPARE(georef.getState(), Georeferencing::Geospatial);
 		QVERIFY(std::abs(georef.getGrivation()) >= 0.01);
 		
 		QVERIFY(map.getNumTemplates() > template_index);

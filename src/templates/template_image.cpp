@@ -225,7 +225,7 @@ bool TemplateImage::postLoadSetup(QWidget* dialog_parent, bool& out_center_in_vi
 		if (!open_dialog.isGeorefRadioChecked())
 			break;
 		
-		if (map->getGeoreferencing().isLocal())
+		if (map->getGeoreferencing().getState() != Georeferencing::Geospatial)
 		{
 			// Make sure that the map is georeferenced.
 			Georeferencing initial_georef(map->getGeoreferencing());
@@ -242,10 +242,10 @@ bool TemplateImage::postLoadSetup(QWidget* dialog_parent, bool& out_center_in_vi
 			}
 			
 			GeoreferencingDialog dialog(dialog_parent, map, &initial_georef, false);
-			if (initial_georef.isLocal())
-				dialog.setKeepProjectedRefCoords();
-			else
+			if (initial_georef.getState() == Georeferencing::Geospatial)
 				dialog.setKeepGeographicRefCoords();
+			else
+				dialog.setKeepProjectedRefCoords();
 			if (dialog.exec() == QDialog::Rejected)
 				continue;
 			
@@ -256,7 +256,7 @@ bool TemplateImage::postLoadSetup(QWidget* dialog_parent, bool& out_center_in_vi
 			}
 		}
 		
-		if (!map->getGeoreferencing().isLocal())
+		if (map->getGeoreferencing().getState() == Georeferencing::Geospatial)
 		{
 			// Let user select the coordinate reference system.
 			// \todo Change description text below (no longer just for world files.)
@@ -279,10 +279,8 @@ bool TemplateImage::postLoadSetup(QWidget* dialog_parent, bool& out_center_in_vi
 		calculateGeoreferencing();
 		// If not both the template and the map are fully georeferenced,
 		// we use the transform, but don't claim the georeferenced state.
-		is_georeferenced = georef->isValid()
-		                   && !georef->isLocal()
-		                   && map->getGeoreferencing().isValid()
-		                   && !map->getGeoreferencing().isLocal();
+		is_georeferenced = georef->getState() == Georeferencing::Geospatial
+		                   && map->getGeoreferencing().getState() == Georeferencing::Geospatial;
 		out_center_in_view = false;
 	}
 	else
@@ -396,10 +394,8 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 			calculateGeoreferencing();
 			// If not both the template and the map are fully georeferenced,
 			// we use the transform, but don't claim the georeferenced state.
-			is_georeferenced = georef->isValid()
-			                   && !georef->isLocal()
-			                   && map->getGeoreferencing().isValid()
-			                   && !map->getGeoreferencing().isLocal();
+			is_georeferenced = georef->getState() == Georeferencing::Geospatial
+			                   && map->getGeoreferencing().getState() == Georeferencing::Geospatial;
 			setTemplateAreaDirty();
 		}
 		else
@@ -415,7 +411,7 @@ void TemplateImage::updateGeoreferencing()
 {
 	if (is_georeferenced)
 	{
-		if (map->getGeoreferencing().isLocal())
+		if (map->getGeoreferencing().getState() != Georeferencing::Geospatial)
 		{
 			is_georeferenced = false;
 			map->emitTemplateChanged(this);
@@ -671,7 +667,7 @@ void TemplateImage::calculateGeoreferencing()
 	georef = std::make_unique<Georeferencing>();
 	georef->setProjectedCRS(QString{}, available_georef.effective.crs_spec);
 	georef->setTransformationDirectly(available_georef.effective.transform.pixel_to_world);
-	if (map->getGeoreferencing().isValid())
+	if (map->getGeoreferencing().getState() == Georeferencing::Geospatial)
 		updatePosFromGeoreferencing();
 }
 

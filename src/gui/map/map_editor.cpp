@@ -1064,7 +1064,7 @@ void MapEditorController::createActions()
 	
 	touch_cursor_action = newCheckAction("touchcursor", tr("Enable touch cursor"), map_widget, SLOT(enableTouchCursor(bool)), "tool-touch-cursor.png", QString{}, "toolbars.html#touch_cursor"); // TODO: write documentation
 	gps_display_action = newCheckAction("gpsdisplay", tr("Enable GPS display"), this, SLOT(enableGPSDisplay(bool)), "tool-gps-display.png", QString{}, "toolbars.html#gps_display"); // TODO: write documentation
-	gps_display_action->setEnabled(map->getGeoreferencing().isValid() && ! map->getGeoreferencing().isLocal());
+	gps_display_action->setEnabled(map->getGeoreferencing().getState() == Georeferencing::Geospatial);
 	gps_distance_rings_action = newCheckAction("gpsdistancerings", tr("Enable GPS distance rings"), this, SLOT(enableGPSDistanceRings(bool)), "gps-distance-rings.png", QString{}, "toolbars.html#gps_distance_rings"); // TODO: write documentation
 	gps_distance_rings_action->setEnabled(false);
 	draw_point_gps_act = newToolAction("drawpointgps", tr("Set point object at GPS position"), this, SLOT(drawPointGPSClicked()), "draw-point-gps.png", QString{}, "toolbars.html#tool_draw_point_gps"); // TODO: write documentation
@@ -2073,7 +2073,7 @@ void MapEditorController::projectionChanged()
 	
 	projected_coordinates_act->setText(geo.getProjectedCoordinatesName());
 	
-	bool enable_geographic = !geo.isLocal();
+	bool enable_geographic = geo.getState() == Georeferencing::Geospatial;
 	geographic_coordinates_act->setEnabled(enable_geographic);
 	geographic_coordinates_dms_act->setEnabled(enable_geographic);
 	if (!enable_geographic &&
@@ -2316,7 +2316,7 @@ void MapEditorController::georeferencingDialogFinished()
 	georeferencing_dialog.take()->deleteLater();
 	map->updateAllMapWidgets();
 	
-	bool gps_display_possible = map->getGeoreferencing().isValid() && ! map->getGeoreferencing().isLocal();
+	bool gps_display_possible = map->getGeoreferencing().getState() == Georeferencing::Geospatial;
 	if (!gps_display_possible)
 	{
 		gps_display_action->setChecked(false);

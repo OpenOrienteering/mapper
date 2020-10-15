@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2015, 2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -41,6 +41,11 @@ private slots:
 	 * Tests the behaviour for unset projected CRS.
 	 */
 	void testEmptyProjectedCRS();
+	
+	/**
+	 * Tests supported state changes.
+	 */
+	void testStateChanges();
 	
 	/**
 	 * Tests the effect of a grid scale factor.

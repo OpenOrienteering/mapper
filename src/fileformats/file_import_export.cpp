@@ -145,7 +145,7 @@ void Importer::importFailed()
 void Importer::validate()
 {
 	auto const& georef = map->getGeoreferencing();
-	if (georef.isValid() && !georef.isLocal())
+	if (georef.getState() == Georeferencing::Geospatial)
 	{
 		auto const expected = georef.getProjectedRefPoint();
 		auto const actual = georef.toProjectedCoords(georef.getGeographicRefPoint());

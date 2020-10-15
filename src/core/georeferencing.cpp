@@ -529,7 +529,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 
 bool Georeferencing::isGeographic() const
 {
-	return ProjTransform::crs(getProjectedCRSSpec()).isGeographic();
+	return getState() == Geospatial && ProjTransform::crs(getProjectedCRSSpec()).isGeographic();
 }
 
 
@@ -663,10 +663,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	if (!projected_crs_spec.isEmpty())
 	{
 		proj_transform = {projected_crs_spec};
-		if (proj_transform.isValid())
-		{
-			state = Normal;
-		}
+		state = proj_transform.isValid() ? Geospatial : BrokenGeospatial;
 		updateGridCompensation();
 		if (!georef_element.hasAttribute(literal::auxiliary_scale_factor))
 		{
@@ -733,7 +730,7 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 		}
 	}
 	
-	if (state == Normal)
+	if (getState() == Geospatial)
 	{
 		XmlElementWriter crs_element(xml, literal::geographic_crs);
 		crs_element.writeAttribute(literal::id, literal::geographic_coordinates);
@@ -758,14 +755,14 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 }
 
 
-void Georeferencing::setState(Georeferencing::State value)
+void Georeferencing::setState(Georeferencing::State const value)
 {
-	if (state != value)
+	if (getState() != value)
 	{
 		state = value;
 		updateTransformation();
 		
-		if (state != Normal)
+		if (value == Local)
 		{
 			setProjectedCRS(QStringLiteral("Local"), {});
 		}
@@ -857,20 +854,18 @@ void Georeferencing::setMapRefPoint(const MapCoord& point)
 
 void Georeferencing::setProjectedRefPoint(const QPointF& point, bool update_grivation, bool update_scale_factor)
 {
-	if (projected_ref_point != point || state == Normal)
+	if (projected_ref_point != point || getState() == Geospatial)
 	{
 		projected_ref_point = point;
 		bool ok = {};
 		LatLon new_geo_ref_point;
 		
-		switch (state)
+		switch (getState())
 		{
-		default:
-			qWarning("Undefined georeferencing state");
-			Q_FALLTHROUGH();
 		case Local:
+		case BrokenGeospatial:
 			break;
-		case Normal:
+		case Geospatial:
 			new_geo_ref_point = toGeographicCoords(point, &ok);
 			if (ok && new_geo_ref_point != geographic_ref_point)
 			{
@@ -915,7 +910,7 @@ void Georeferencing::updateGridCompensation()
 	convergence = 0.0;
 	grid_scale_factor = 1.0;
 
-	if (state != Normal || !isValid())
+	if (getState() != Geospatial)
 		return;
 
 	const double delta = 1000.0; // meters
@@ -980,11 +975,11 @@ void Georeferencing::updateGridCompensation()
 void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation, bool update_scale_factor)
 {
 	bool geo_ref_point_changed = geographic_ref_point != lat_lon;
-	if (geo_ref_point_changed || state == Normal)
+	if (geo_ref_point_changed || getState() == Geospatial)
 	{
 		geographic_ref_point = lat_lon;
-		if (state != Normal)
-			setState(Normal);
+		if (getState() == Local)
+			setState(BrokenGeospatial);
 		
 		bool ok = {};
 		QPointF new_projected_ref = toProjectedCoords(lat_lon, &ok);
@@ -1069,7 +1064,7 @@ const QTransform& Georeferencing::projectedToMap() const
 bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vector<QString> params)
 {
 	// Default return value if no change is necessary
-	bool ok = (state == Normal || projected_crs_spec.isEmpty());
+	bool ok = (getState() == Geospatial || projected_crs_spec.isEmpty());
 	
 	for (const auto& substitution : spec_substitutions)
 	{
@@ -1093,17 +1088,21 @@ bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vecto
 		{
 			projected_crs_parameters.clear();
 			proj_transform = {};
-			ok = (state != Normal);
+			ok = (getState() == Local);
+			if (!ok)
+				setState(BrokenGeospatial);
 		}
 		else
 		{
 			projected_crs_parameters.swap(params); // params was passed by value!
 			proj_transform = {projected_crs_spec};
 			ok = proj_transform.isValid();
-			if (ok && state != Normal)
-				setState(Normal);
+			if (ok)
+				setState(Geospatial);
+			else
+				setState(BrokenGeospatial);
 		}
-		if (isValid() && !isLocal())
+		if (getState() == Geospatial)
 			updateGridCompensation();
 		
 		emit projectionChanged();
@@ -1166,10 +1165,10 @@ MapCoordF Georeferencing::toMapCoordF(const Georeferencing* other, const MapCoor
 		return map_coords;
 	}
 	
-	if (isLocal() || other->isLocal())
+	if (getState() != Geospatial || other->getState() != Geospatial)
 	{
 		if (ok)
-			*ok = true;
+			*ok = getState() != BrokenGeospatial && other->getState() != BrokenGeospatial;
 		return toMapCoordF(other->toProjectedCoords(map_coords));
 	}
 	
@@ -1216,6 +1215,18 @@ QString Georeferencing::degToDMS(double val)
 
 QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 {
+	auto state = [](auto state) -> const char* {
+		switch (state)
+		{
+		case Georeferencing::Local:
+			return "local";
+		case Georeferencing::BrokenGeospatial:
+			return "broken";
+		case Georeferencing::Geospatial:
+			return "geospatial";
+		}
+		return "unknown";
+	};
 	dbg.nospace() 
 	  << "Georeferencing(1:" << georef.scale_denominator
 	  << " " << georef.combined_scale_factor
@@ -1223,12 +1234,9 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 	  << " " << georef.grivation
 	  << "deg, " << georef.projected_crs_id
 	  << " (" << georef.projected_crs_spec
-	  << ") " << QString::number(georef.projected_ref_point.x(), 'f', 8) << "," << QString::number(georef.projected_ref_point.y(), 'f', 8);
-	if (georef.isLocal())
-		dbg.nospace() << ", local)";
-	else
-		dbg.nospace() << ", geographic)";
-	
+	  << ") " << QString::number(georef.projected_ref_point.x(), 'f', 8) << "," << QString::number(georef.projected_ref_point.y(), 'f', 8)
+	  << ", " << state(georef.getState())
+	  << ")";
 	return dbg.space();
 }
 

@@ -62,7 +62,7 @@ RotateMapDialog::RotateMapDialog(const Map& map, QWidget* parent, Qt::WindowFlag
 	
 	//: Rotation center point
 	center_georef_radio = new QRadioButton(tr("Georeferencing reference point"));
-	if (!map.getGeoreferencing().isValid())
+	if (map.getGeoreferencing().getState() == Georeferencing::Local)
 		center_georef_radio->setEnabled(false);
 	layout->addRow(center_georef_radio);
 	
@@ -83,14 +83,14 @@ RotateMapDialog::RotateMapDialog(const Map& map, QWidget* parent, Qt::WindowFlag
 	layout->addRow(Util::Headline::create(tr("Options")));
 	
 	adjust_georeferencing_check = new QCheckBox(tr("Adjust georeferencing reference point"));
-	if (map.getGeoreferencing().isValid())
+	if (map.getGeoreferencing().getState() == Georeferencing::Geospatial)
 		adjust_georeferencing_check->setChecked(true);
 	else
 		adjust_georeferencing_check->setEnabled(false);
 	layout->addRow(adjust_georeferencing_check);
 	
 	adjust_declination_check = new QCheckBox(tr("Adjust georeferencing declination"));
-	if (map.getGeoreferencing().isValid())
+	if (map.getGeoreferencing().getState() == Georeferencing::Geospatial)
 		adjust_declination_check->setChecked(true);
 	else
 		adjust_declination_check->setEnabled(false);

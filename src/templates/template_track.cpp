@@ -291,7 +291,7 @@ bool TemplateTrack::postLoadSetup(QWidget* dialog_parent, bool& /*out_center_in_
 			tr("Load the track in georeferenced or non-georeferenced mode?"),
 			QDialogButtonBox::Abort);
 		QString georef_text = tr("Positions the track according to the map's georeferencing settings.");
-		if (!map->getGeoreferencing().isValid())
+		if (map->getGeoreferencing().getState() != Georeferencing::Geospatial)
 			georef_text += QLatin1Char(' ') + tr("These are not configured yet, so they will be shown as the next step.");
 		QAbstractButton* georef_button = georef_dialog.addCommandButton(tr("Georeferenced"), georef_text);
 		QAbstractButton* non_georef_button = georef_dialog.addCommandButton(tr("Non-georeferenced"), tr("Projects the track using an orthographic projection with center at the track's coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position."));
@@ -307,8 +307,7 @@ bool TemplateTrack::postLoadSetup(QWidget* dialog_parent, bool& /*out_center_in_
 	
 	// If the track is loaded as georeferenced and the transformation parameters
 	// were not set yet, it must be done now
-	if (is_georeferenced &&
-		(!map->getGeoreferencing().isValid() || map->getGeoreferencing().isLocal()))
+	if (is_georeferenced && map->getGeoreferencing().getState() != Georeferencing::Geospatial)
 	{
 		// Set default for real world reference point as some average of the track coordinates
 		Georeferencing georef(map->getGeoreferencing());
@@ -317,7 +316,7 @@ bool TemplateTrack::postLoadSetup(QWidget* dialog_parent, bool& /*out_center_in_
 		// Show the parameter dialog
 		GeoreferencingDialog dialog(dialog_parent, map, &georef);
 		dialog.setKeepGeographicRefCoords();
-		if (dialog.exec() == QDialog::Rejected || map->getGeoreferencing().isLocal())
+		if (dialog.exec() == QDialog::Rejected || map->getGeoreferencing().getState() != Georeferencing::Geospatial)
 			return false;
 	}
 	
