@@ -737,7 +737,7 @@ ogr::unique_srs OgrFileImport::srsFromMap()
 {
 	auto srs = ogr::unique_srs(OSRNewSpatialReference(nullptr));
 	auto& georef = map->getGeoreferencing();
-	if (georef.isValid() && !georef.isLocal())
+	if (georef.getState() == Georeferencing::Geospatial)
 	{
 		OSRSetProjCS(srs.get(), "Projected map SRS");
 		OSRSetWellKnownGeogCS(srs.get(), "WGS84");
@@ -1721,7 +1721,7 @@ MapCoord OgrFileImport::fromProjected(double x, double y) const
 // static
 bool OgrFileImport::checkGeoreferencing(const QString& path, const Georeferencing& georef)
 {
-	if (georef.isLocal() || !georef.isValid())
+	if (georef.getState() != Georeferencing::Geospatial)
 		return false;
 	
 	GdalManager();

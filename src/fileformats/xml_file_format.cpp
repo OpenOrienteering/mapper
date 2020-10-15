@@ -695,7 +695,7 @@ void XMLFileImporter::importGeoreferencing()
 	Georeferencing georef;
 	georef.load(xml, loadSymbolsOnly());
 	map->setGeoreferencing(georef);
-	if (!georef.isValid())
+	if (georef.getState() == Georeferencing::BrokenGeospatial)
 	{
 		QString error_text = georef.getErrorText();
 		if (error_text.isEmpty())
@@ -717,7 +717,7 @@ void XMLFileImporter::importGeoreferencing()
 void XMLFileImporter::validateGeoreferencing()
 {
 	auto const& loaded_georef = map->getGeoreferencing();
-	if (!loaded_georef.isValid() || loaded_georef.isLocal())
+	if (loaded_georef.getState() != Georeferencing::Geospatial)
 		return;
 	
 	// Check for georeferencings with inconsistent declination/grivation,

@@ -206,7 +206,7 @@ namespace
 		const auto& actual_georef = actual.getGeoreferencing();
 		const auto& expected_georef = expected.getGeoreferencing();
 		QCOMPARE(actual_georef.getScaleDenominator(), expected_georef.getScaleDenominator());
-		QCOMPARE(actual_georef.isLocal(), expected_georef.isLocal());
+		QCOMPARE(actual_georef.getState(), expected_georef.getState());
 		QCOMPARE(actual_georef.getCombinedScaleFactor(), expected_georef.getCombinedScaleFactor());
 		QCOMPARE(actual_georef.getAuxiliaryScaleFactor(), expected_georef.getAuxiliaryScaleFactor());
 		QCOMPARE(actual_georef.getDeclination(), expected_georef.getDeclination());
@@ -429,11 +429,11 @@ namespace
 		QVERIFY2(qAbs(actual_point.x() - expected_point.x()) < 1.0, qPrintable(test_label.arg(actual_point.x()).arg(expected_point.x())));
 		QVERIFY2(qAbs(actual_point.y() - expected_point.y()) < 1.0, qPrintable(test_label.arg(actual_point.y()).arg(expected_point.y())));
 		
-		if (!actual_georef.isLocal())
-		{
-			QCOMPARE(actual_georef.isLocal(), expected_georef.isLocal());
+		if (format_id != "OCD8")
+			QCOMPARE(int(actual_georef.getState()), int(expected_georef.getState()));
+		
+		if (actual_georef.getState() == Georeferencing::Geospatial)
 			QCOMPARE(actual_georef.toGeographicCoords(actual_point), expected_georef.toGeographicCoords(actual_point));
-		}
 		
 		// Colors
 		QVERIFY2(actual.getNumColors() >= expected.getNumColors(), qPrintable(test_label.arg(actual.getNumColors()).arg(expected.getNumColors())));
@@ -905,7 +905,7 @@ void FileFormatTest::ogrExportTest()
 	{
 		Map map;
 		QVERIFY(map.loadFrom(map_filepath));
-		QVERIFY(map.getGeoreferencing().isValid());
+		QCOMPARE(map.getGeoreferencing().getState(), Georeferencing::Geospatial);
 		
 		auto const exported_latlon = map.getGeoreferencing().getGeographicRefPoint();
 		QCOMPARE(qRound(exported_latlon.latitude()), latitude);
@@ -928,7 +928,7 @@ void FileFormatTest::ogrExportTest()
 		auto importer = format->makeImporter(ogr_filepath, &map, nullptr);
 		QVERIFY(bool(importer));
 		QVERIFY(importer->doImport());
-		QVERIFY(map.getGeoreferencing().isValid());
+		QCOMPARE(map.getGeoreferencing().getState(), Georeferencing::Geospatial);
 		
 		auto const imported_latlon = map.getGeoreferencing().getGeographicRefPoint();
 		QCOMPARE(qRound(imported_latlon.latitude()), latitude);

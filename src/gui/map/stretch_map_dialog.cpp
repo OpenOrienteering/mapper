@@ -54,13 +54,13 @@ StretchMapDialog::StretchMapDialog(const Map& map, double stretch_factor, QWidge
 	
 	//: Scaling center point
 	center_origin_radio = new QRadioButton(tr("Map coordinate system origin"));
-	if (!map.getGeoreferencing().isValid())
+	if (map.getGeoreferencing().getState() == Georeferencing::Local)
 		center_origin_radio->setChecked(true);
 	layout->addRow(center_origin_radio);
 	
 	//: Scaling center point
 	center_georef_radio = new QRadioButton(tr("Georeferencing reference point"));
-	if (map.getGeoreferencing().isValid())
+	if (map.getGeoreferencing().getState() != Georeferencing::Local)
 		center_georef_radio->setChecked(true);
 	else
 		center_georef_radio->setEnabled(false);
@@ -82,7 +82,7 @@ StretchMapDialog::StretchMapDialog(const Map& map, double stretch_factor, QWidge
 	layout->addRow(Util::Headline::create(tr("Options")));
 	
 	adjust_georeferencing_check = new QCheckBox(tr("Adjust georeferencing reference point"));
-	if (map.getGeoreferencing().isValid())
+	if (map.getGeoreferencing().getState() == Georeferencing::Geospatial)
 		adjust_georeferencing_check->setChecked(true);
 	else
 		adjust_georeferencing_check->setEnabled(false);

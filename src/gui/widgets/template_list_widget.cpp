@@ -502,7 +502,7 @@ void TemplateListWidget::updateButtons()
 		else if (current_row >= 0)
 		{
 			// map row
-			is_georeferenced = map.getGeoreferencing().isValid() && !map.getGeoreferencing().isLocal();
+			is_georeferenced = map.getGeoreferencing().getState() == Georeferencing::Geospatial;
 		}
 		
 		edit_button->setEnabled(edit_enabled);

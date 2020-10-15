@@ -67,10 +67,9 @@ namespace {
 	{
 		// Keep a configured local reference point from initial_georef?
 		auto data_crs_spec = data_georef.getProjectedCRSSpec();
-		if ((!initial_georef.isValid() || initial_georef.isLocal())
+		if (initial_georef.getState() != Georeferencing::Geospatial
 		    && initial_georef.getProjectedRefPoint() != QPointF{}
-		    && data_georef.isValid()
-		    && !data_georef.isLocal()
+		    && data_georef.getState() == Georeferencing::Geospatial
 		    && data_georef.getProjectedRefPoint() == QPointF{}
 		    && data_georef.getMapRefPoint() == MapCoord{}
 		    && data_crs_spec.contains(QLatin1String("+proj=ortho"))
@@ -237,10 +236,10 @@ try
 	
 	auto data_georef = std::unique_ptr<Georeferencing>();
 	auto& initial_georef = map->getGeoreferencing();
-	if (!initial_georef.isValid() || initial_georef.isLocal())
+	if (initial_georef.getState() != Georeferencing::Geospatial)
 	{
 		data_georef = getDataGeoreferencing(template_path, initial_georef);
-		if (data_georef && data_georef->isValid() && !data_georef->isLocal())
+		if (data_georef && data_georef->getState() == Georeferencing::Geospatial)
 		{
 			// If yes, does the user want to use this for the map?
 			auto keep_projected = false;
@@ -258,7 +257,7 @@ try
 	}
 	
 	auto& georef = map->getGeoreferencing();  // initial_georef might be outdated.
-	if (georef.isValid() && !georef.isLocal())
+	if (georef.getState() == Georeferencing::Geospatial)
 	{
 		// The map has got a proper georeferencing.
 		// Can the template's SRS be converted to the map's CRS?
