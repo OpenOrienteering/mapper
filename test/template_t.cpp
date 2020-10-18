@@ -95,8 +95,11 @@ Q_OBJECT
 private slots:
 	void initTestCase()
 	{
+		// Use distinct QSettings
 		QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
 		QCoreApplication::setApplicationName(QString::fromLatin1(metaObject()->className()));
+		QVERIFY2(QDir::home().exists(), "The home dir must be writable in order to use QSettings.");
+		
 		Q_INIT_RESOURCE(resources);
 		doStaticInitializations();
 		// Static map initializations

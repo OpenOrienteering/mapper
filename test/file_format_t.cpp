@@ -40,6 +40,7 @@
 #include <QIODevice>
 #include <QLatin1Char>
 #include <QLatin1String>
+#include <QMetaObject>
 #include <QPageSize>
 #include <QPoint>
 #include <QPointF>
@@ -509,8 +510,10 @@ namespace
 
 void FileFormatTest::initTestCase()
 {
+	// Use distinct QSettings
 	QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
-	QCoreApplication::setApplicationName(QString::fromLatin1("FileFormatTest"));
+	QCoreApplication::setApplicationName(QString::fromLatin1(metaObject()->className()));
+	QVERIFY2(QDir::home().exists(), "The home dir must be writable in order to use QSettings.");
 	
 	doStaticInitializations();
 	
