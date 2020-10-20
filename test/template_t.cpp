@@ -37,8 +37,6 @@
 #include <QLineF>
 #include <QMetaObject>
 #include <QObject>
-#include <QPainter>
-#include <QPicture>
 #include <QPointF>
 #include <QRectF>
 #include <QSignalSpy>  // IWYU pragma: keep
@@ -67,19 +65,12 @@ using namespace OpenOrienteering;
 namespace
 {
 
-QPointF center(const TemplateTrack* temp)
-{
-	QPicture picture;
-	QPainter painter(&picture);
-	temp->drawTracks(&painter, false);
-	painter.end();
-	return QRectF(picture.boundingRect()).center();
-}
-
 QPointF center(const Template* temp)
 {
+	// TemplateTrack intentionally doesn't provide a tight extent
+	// but the bounding box is fine.
 	if (auto* template_track = qobject_cast<const TemplateTrack*>(temp))
-		return center(template_track);
+		return template_track->calculateTemplateBoundingBox().center();
 	return temp->templateToMap(temp->getTemplateExtent().center());
 }
 
@@ -306,7 +297,7 @@ private slots:
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 
 		auto const expected_center = map.calculateExtent().center();
-		if (QLineF(center(temp), expected_center).length() > 0.5)
+		if (QLineF(center(temp), expected_center).length() > 0.125) // 50 cm
 			QCOMPARE(center(temp), expected_center);
 		else
 			QVERIFY2(true, "Centers do match");
@@ -345,7 +336,7 @@ private slots:
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 
 		auto const expected_center = map.calculateExtent().center();
-		if (QLineF(center(temp), expected_center).length() > 0.5)
+		if (QLineF(center(temp), expected_center).length() > 0.25) // 1 m
 			QCOMPARE(center(temp), expected_center);
 		else
 			QVERIFY2(true, "Centers do match");
