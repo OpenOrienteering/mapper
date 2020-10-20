@@ -1607,12 +1607,12 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>Clip layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Leikkaa tasoja</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="59"/>
         <source>Use GDAL for GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>Käytä GDAL:ia GPX:ään</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
@@ -1886,7 +1886,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="569"/>
         <source>Invalid auxiliary scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Virheellinen ylimääräinen skaalauskerroin: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="601"/>
@@ -2070,24 +2070,24 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="216"/>
         <source>Show scale factors</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä mittakaavakertoimet</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="217"/>
         <source>Scale compensation</source>
-        <translation type="unfinished"></translation>
+        <translation>Mittakaavan kompensointi</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="222"/>
         <source>Combined scale factor:</source>
         <extracomment>The combined scale factor is the ratio between a length on the ground and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Yhteinen mittakaavakerroin:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="228"/>
         <source>Auxiliary scale factor:</source>
         <extracomment>The auxiliary scale factor is the ratio between a length in the curved earth model and the corresponding length on the ground. It is applied as a factor to ground distances to get curved earth model distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ylimääräinen mittakaavakerroin:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="246"/>
@@ -2139,7 +2139,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="553"/>
         <source>The scale factor has been changed. Do you want to stretch/shrink the map content accordingly, too?</source>
-        <translation type="unfinished"></translation>
+        <translation>Skaalauskerrointa on muutettu. Haluatko venyttää/kutistaa myös kartan sisältöä?</translation>
     </message>
     <message>
         <source>Projected coordinates:</source>
@@ -2634,7 +2634,7 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="155"/>
         <source>Georeferencing mismatch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferointi ei sovi yhteen:</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="250"/>
@@ -4510,7 +4510,7 @@ tallentaminen %2 (.%3) ei ole tuettu.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="989"/>
         <source>Keep my location on screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Pidä sijaintini kuvaruudulla</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1003"/>
@@ -5712,7 +5712,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1620"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished"></translation>
+        <translation>Viivasymboli &quot;%1&quot;, ohitetaan katkoviivojen ryhmitys.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1632"/>
@@ -5762,7 +5762,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2615"/>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Taustakartan &apos;%1&apos; muokattua asemointia ei voi tallentaa.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2945"/>
@@ -6129,7 +6129,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="868"/>
         <source>Can&apos;t determine the coordinate transformation: %1</source>
-        <translation>Ei voitu määrittää koordinaattitransformointia: %1</translation>
+        <translation>Ei voitu määrittää koordinaattimuunnosta: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="873"/>
@@ -6207,7 +6207,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="277"/>
         <source>Solid</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiinteä</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="278"/>
@@ -8251,7 +8251,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
         <location filename="../src/templates/template_image.cpp" line="263"/>
         <location filename="../src/templates/template_image.cpp" line="385"/>
         <source>Select the coordinate reference system of the georeferenced image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Valitse georeferoidun kuvan koordinaattijärjestelmä.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="268"/>
@@ -9032,7 +9032,7 @@ Tuetaan vain versioon %2 asti.</translation>
     <message>
         <location filename="../src/gui/widgets/crs_param_widgets.cpp" line="77"/>
         <source>Calculate</source>
-        <translation>Laskea</translation>
+        <translation>Laske</translation>
     </message>
 </context>
 <context>
@@ -9186,7 +9186,7 @@ Tuetaan vain versioon %2 asti.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="731"/>
         <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
-        <translation type="unfinished"></translation>
+        <translation>Erisuuruinen eranto havaittu. Erannoksi määritetty automaattisesti %1°.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="861"/>
