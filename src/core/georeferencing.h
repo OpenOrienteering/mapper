@@ -134,6 +134,7 @@ public:
 	 * A shared PROJ specification of a WGS84 geographic CRS.
 	 */
 	static const QString geographic_crs_spec;
+	static const QString legacy_geographic_crs_spec;
 	
 	
 	/**

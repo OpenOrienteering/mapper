@@ -452,7 +452,8 @@ QString ProjTransform::errorText() const
 
 //### Georeferencing ###
 
-const QString Georeferencing::geographic_crs_spec(QString::fromLatin1("+proj=latlong +datum=WGS84"));
+const QString Georeferencing::geographic_crs_spec(QString::fromLatin1("+init=epsg:7665"));
+const QString Georeferencing::legacy_geographic_crs_spec(QString::fromLatin1("+proj=latlong +datum=WGS84"));
 
 Georeferencing::Georeferencing()
 : state(Local),
@@ -634,7 +635,8 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 						if (language != literal::proj_4)
 							throw FileFormatException(tr("Unknown CRS specification language: %1").arg(language));
 						QString geographic_crs_spec = xml.readElementText();
-						if (Georeferencing::geographic_crs_spec != geographic_crs_spec)
+						if (Georeferencing::geographic_crs_spec != geographic_crs_spec &&
+						    Georeferencing::legacy_geographic_crs_spec != geographic_crs_spec)
 							throw FileFormatException(tr("Unsupported geographic CRS specification: %1").arg(geographic_crs_spec));
 					}
 					else if (xml.name() == literal::ref_point)
