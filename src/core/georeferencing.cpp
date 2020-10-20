@@ -28,6 +28,7 @@
 #include <QtGlobal>
 #include <QtMath>
 #include <QByteArray>
+#include <QDate>
 #include <QDebug>
 #include <QDir> // IWYU pragma: keep
 #include <QFileInfo>
@@ -37,6 +38,7 @@
 #include <QSignalBlocker>
 #include <QStandardPaths> // IWYU pragma: keep
 #include <QStringRef>
+#include <QTime>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -422,10 +424,10 @@ bool ProjTransform::isGeographic() const
 
 }
 
-QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
+QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok, double epoch) const
 {
 	proj_errno_reset(pj);
-	auto pj_coord = proj_trans(pj, PJ_FWD, proj_coord(lat_lon.longitude(), lat_lon.latitude(), 0, HUGE_VAL));
+	auto pj_coord = proj_trans(pj, PJ_FWD, proj_coord(lat_lon.longitude(), lat_lon.latitude(), 0, epoch));
 	if (ok)
 		*ok = proj_errno(pj) == 0;
 	return {pj_coord.xy.x, pj_coord.xy.y};
@@ -454,6 +456,18 @@ QString ProjTransform::errorText() const
 
 const QString Georeferencing::geographic_crs_spec(QString::fromLatin1("+init=epsg:7665"));
 const QString Georeferencing::legacy_geographic_crs_spec(QString::fromLatin1("+proj=latlong +datum=WGS84"));
+
+double Georeferencing::toEpoch(QDateTime datetime)
+{
+	if (datetime == QDateTime())
+	{
+		return HUGE_VAL;
+	}
+	auto year = datetime.date().year();
+	auto begin = QDateTime(QDate(year, 1, 1), QTime(12, 0), Qt::UTC);
+	auto end = QDateTime(QDate(year+1, 1, 1), QTime(12, 0), Qt::UTC);
+	return year + double(begin.secsTo(datetime)) / double(begin.secsTo(end));
+}
 
 Georeferencing::Georeferencing()
 : state(Local),
@@ -1150,19 +1164,19 @@ LatLon Georeferencing::toGeographicCoords(const QPointF& projected_coords, bool*
 	return proj_transform.isValid() ? proj_transform.inverse(projected_coords, ok) : LatLon{};
 }
 
-QPointF Georeferencing::toProjectedCoords(const LatLon& lat_lon, bool* ok) const
+QPointF Georeferencing::toProjectedCoords(const LatLon& lat_lon, bool* ok, double epoch) const
 {
-	return proj_transform.isValid() ? proj_transform.forward(lat_lon, ok) : QPointF{};
+	return proj_transform.isValid() ? proj_transform.forward(lat_lon, ok, epoch) : QPointF{};
 }
 
-MapCoord Georeferencing::toMapCoords(const LatLon& lat_lon, bool* ok) const
+MapCoord Georeferencing::toMapCoords(const LatLon& lat_lon, bool* ok, double epoch) const
 {
-	return toMapCoords(toProjectedCoords(lat_lon, ok));
+	return toMapCoords(toProjectedCoords(lat_lon, ok, epoch));
 }
 
-MapCoordF Georeferencing::toMapCoordF(const LatLon& lat_lon, bool* ok) const
+MapCoordF Georeferencing::toMapCoordF(const LatLon& lat_lon, bool* ok, double epoch) const
 {
-	return toMapCoordF(toProjectedCoords(lat_lon, ok));
+	return toMapCoordF(toProjectedCoords(lat_lon, ok, epoch));
 }
 
 MapCoordF Georeferencing::toMapCoordF(const Georeferencing* other, const MapCoordF& map_coords, bool* ok) const

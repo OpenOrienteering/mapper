@@ -66,7 +66,7 @@ struct ProjTransform
 	bool isValid() const noexcept;
 	bool isGeographic() const;
 	
-	QPointF forward(const LatLon& lat_lon, bool* ok) const;
+	QPointF forward(const LatLon& lat_lon, bool* ok, double epoch = HUGE_VAL) const;
 	LatLon inverse(const QPointF& projected, bool* ok) const;
 	
 	QString errorText() const;
@@ -169,6 +169,9 @@ public:
 	 * @see declinationPrecision();
 	 */
 	static double roundDeclination(double);
+	
+	
+	static double toEpoch(QDateTime datetime);
 	
 	
 	/** 
@@ -488,17 +491,17 @@ public:
 	/**
 	 * Transforms geographic coordinates (lat/lon) to CRS coordinates.
 	 */
-	QPointF toProjectedCoords(const LatLon& lat_lon, bool* ok = 0) const;
+	QPointF toProjectedCoords(const LatLon& lat_lon, bool* ok = 0, double epoch = HUGE_VAL) const;
 	
 	/**
 	 * Transforms geographic coordinates (lat/lon) to map coordinates.
 	 */
-	MapCoord toMapCoords(const LatLon& lat_lon, bool* ok = nullptr) const;
+	MapCoord toMapCoords(const LatLon& lat_lon, bool* ok = nullptr, double epoch = HUGE_VAL) const;
 	
 	/**
 	 * Transforms geographic coordinates (lat/lon) to map coordinates.
 	 */
-	MapCoordF toMapCoordF(const LatLon& lat_lon, bool* ok = nullptr) const;
+	MapCoordF toMapCoordF(const LatLon& lat_lon, bool* ok = nullptr, double epoch = HUGE_VAL) const;
 	
 	
 	/**

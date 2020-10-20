@@ -368,9 +368,15 @@ void Track::projectPoints()
 {
 	/// \todo Check for errors from Georeferencing::toMapCoordF()
 	for (auto& waypoint : waypoints)
-		waypoint.map_coord = map_georef.toMapCoordF(waypoint.latlon, nullptr); 
+	{
+		auto epoch = Georeferencing::toEpoch(waypoint.datetime);
+		waypoint.map_coord = map_georef.toMapCoordF(waypoint.latlon, nullptr, epoch);
+	}
 	for (auto& segment_point : segment_points)
-		segment_point.map_coord = map_georef.toMapCoordF(segment_point.latlon, nullptr); 
+	{
+		auto epoch = Georeferencing::toEpoch(segment_point.datetime);
+		segment_point.map_coord = map_georef.toMapCoordF(segment_point.latlon, nullptr, epoch);
+	}
 }
 
 
