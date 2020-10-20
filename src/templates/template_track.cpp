@@ -343,6 +343,46 @@ void TemplateTrack::unloadTemplateFileImpl()
 	track.clear();
 }
 
+QPointF TemplateTrack::getCenter() const
+{
+	qreal left;
+	qreal right;
+	qreal top;
+	qreal bottom;
+	int count = 0;
+	for (int i = 0; i < track.getNumSegments(); ++i)
+	{
+		int size = track.getSegmentPointCount(i);
+		for (int k = 0; k < size; ++k)
+		{
+			const TrackPoint& point = track.getSegmentPoint(i, k);
+			if (count == 0)
+			{
+				left = right = point.map_coord.x();
+				top = bottom = point.map_coord.y();
+			}
+			else
+			{
+				if (point.map_coord.x() < left)
+					left = point.map_coord.x();
+				else if (right < point.map_coord.x())
+					right = point.map_coord.x();
+				if (point.map_coord.y() < bottom)
+					bottom = point.map_coord.y();
+				else if (top < point.map_coord.y())
+					top = point.map_coord.y();
+			}
+			count += 1;
+		}
+	}
+	if (count > 0)
+	{
+		QPointF cp = QPointF((left+right)/2, (bottom+top)/2);
+		return is_georeferenced ? cp : templateToMap(cp);
+	}
+	return QPointF();
+}
+
 void TemplateTrack::drawTemplate(QPainter* painter, const QRectF& /*clip_rect*/, double /*scale*/, bool on_screen, qreal opacity) const
 {
 	painter->save();

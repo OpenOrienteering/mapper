@@ -79,6 +79,7 @@ public:
 	bool postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view) override;
 	void unloadTemplateFileImpl() override;
 	
+	QPointF getCenter() const;
 	void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const override;
 	QRectF getTemplateExtent() const override;
 	QRectF calculateTemplateBoundingBox() const override;
