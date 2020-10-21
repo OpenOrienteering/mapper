@@ -892,7 +892,7 @@ Pisteitä ei piirretä viivamaiseen muotoon, että vältetään kivikon merkkien
     <message>
         <source>Sandy ground</source>
         <comment>Name of symbol 213</comment>
-        <translation type="unfinished">Avonainen hietikko</translation>
+        <translation>Hietikko</translation>
     </message>
     <message>
         <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.
@@ -1362,12 +1362,17 @@ Minimum width: 1.5 mm (footprint 22.5 m).
 Minimum area: 2.5 mm x 2.5 mm (footprint 37.5 m x 37.5 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Rough open land (403).</source>
         <comment>Description of symbol 404</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avoimet alueet, joissa on hajanaisesti pensaita tai puita, voidaan yleistää käyttämällä valkoisia pyöreitä pisteitä keltaisessa väripohjassa.
+Pisteet voivat olla valkoisia (hajanaisia puita) tai vihreitä (hajanaisia pensaita). Vain valkoisten pisteiden yhteyteen voidaan liittää maapohjan hidastavuutta osoittavat symbolit 407 ja 409.
+Minimileveys 1.5 mm (maastomitta 22.5 m).
+Minimialue 2.5 mm x 2.5 mm (maastomitta 37.5 m x 37.5 m).
+Pienemmät alueet pitää joko jättää pois tai suurentaa tai käyttää symbolia 403.
+Symboli piirretään pohjois-eteläsuunnassa.</translation>
     </message>
     <message>
         <source>Rough open land with scattered bushes (green dots)</source>
         <comment>Name of symbol 404.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avoin alue, jossa hajanaisesti pensaita (vihreitä pisteitä)</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
@@ -1377,12 +1382,17 @@ Minimum width: 1.5 mm (footprint 22.5 m).
 Minimum area: 2.5 mm x 2.5 mm (footprint 37.5 m x 37.5 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Rough open land (403).</source>
         <comment>Description of symbol 404.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avoimet alueet, joissa on hajanaisesti pensaita tai puita, voidaan yleistää käyttämällä valkoisia pyöreitä pisteitä keltaisessa väripohjassa.
+Pisteet voivat olla valkoisia (hajanaisia puita) tai vihreitä (hajanaisia pensaita). Vain valkoisten pisteiden yhteyteen voidaan liittää maapohjan hidastavuutta osoittavat symbolit 407 ja 409.
+Minimileveys 1.5 mm (maastomitta 22.5 m).
+Minimialue 2.5 mm x 2.5 mm (maastomitta 37.5 m x 37.5 m).
+Pienemmät alueet pitää joko jättää pois tai suurentaa tai käyttää symbolia 403.
+Symboli piirretään pohjois-eteläsuunnassa.</translation>
     </message>
     <message>
         <source>Forest</source>
         <comment>Name of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>Metsä</translation>
     </message>
     <message>
         <source>Typical open forest for the particular type of terrain. If no part of the forest is easily runnable then no white should appear on the map.
@@ -1391,12 +1401,16 @@ For openings in symbol Open land (401), the minimum area is 0.7 mm x 0.7 mm (foo
 For openings in symbol Vegetation: walk (408), the minimum area is 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 For openings in symbol Vegetation: fight (410) the minimum area is 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>Helppokulkuinen metsämaasto, jossa näkyvyys on hyvä, esitetään valkoisena. Jos alueella ei ole helppokulkuisia alueita, ei kartalla esiinny valkoista.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).
+Symbolin 408 yhteydessä minimialue 0.7 mm x 0.7 mm (maastomitta 10.5 m x 10.5 m).
+Symbolin 401 yhteydessä minimialue 0.7 mm x 0.7 mm (maastomitta 10.5 m x 10.5 m).
+Symbolin 410 yhteydessä minimialue 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running</source>
         <comment>Name of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, hidastaa</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
@@ -1404,12 +1418,15 @@ Where runnability is better in one direction, a regular pattern of white stripes
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</source>
         <comment>Description of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden hidastama metsä, jossa näkyvyys on huonompi ja jossa juoksunopeus hidastuu 60-80 %:iin normaalinopeudesta.
+Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista viivoitusta tätä osoittamaan.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).
+Minimileveys 0.4 mm (maastomitta 6 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, normal running in one direction</source>
         <comment>Name of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, hidastaa, juostavuus yhteen suuntaan parempi</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
@@ -1417,60 +1434,71 @@ Where runnability is better in one direction, a regular pattern of white stripes
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</source>
         <comment>Description of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden hidastama metsä, jossa näkyvyys on huonompi ja jossa juoksunopeus hidastuu 60-80 %:iin normaalinopeudesta.
+Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista viivoitusta tätä osoittamaan.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).
+Minimileveys 0.4 mm (maastomitta 6 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, good visibility</source>
         <comment>Name of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, hidastaa, hyvä näkyvyys</translation>
     </message>
     <message>
         <source>An area of good visibility and reduced runnability, due to, for instance, undergrowth (brambles, heather, low bushes, cut branches). Running speed is reduced to about 60-80% of normal speed.
 The symbol is orientated to north.
 Minimum area: 1.5 mm x 1 mm (footprint 22.5 m x 15 m).</source>
         <comment>Description of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alue, jossa on tiheä aluskasvillisuus (harvennusta, saniaista, heinää, vatukkoa, risukkoa yms.), mutta näkyvyys on yleensä hyvä. Alueella juoksunopeus hidastuu 60-80 %:iin normaalinopeudesta.
+Minimialue 1.5 mm x 1 mm (maastomitta 22.5 m x 15 m).
+Symboli piirretään pohjois-eteläsuunnassa.</translation>
     </message>
     <message>
         <source>Vegetation: walk</source>
         <comment>Name of symbol 408</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, käveltävä</translation>
     </message>
     <message>
         <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width: 0.3 mm (footprint 4.5 m).</source>
         <comment>Description of symbol 408</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden hidastama metsä, jossa näkyvyys on huonontunut ja jossa juoksunopeus hidastuu 20-60 %:iin normaalinopeudesta. Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista tai vihreää 30 % viivoitusta tätä osoittamaan.
+Minimialue 0.7 mm x 0.7 mm (maastomitta 10.5 m x 10.5 m).
+Minimileveys 0.3 mm (maastomitta 4.5 m).</translation>
     </message>
     <message>
         <source>Vegetation: walk, normal running in one direction</source>
         <comment>Name of symbol 408.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, käveltävä, hyvä juostavuus yhteen suuntaan</translation>
     </message>
     <message>
         <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width: 0.3 mm (footprint 4.5 m).</source>
         <comment>Description of symbol 408.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden hidastama metsä, jossa näkyvyys on huonontunut ja jossa juoksunopeus hidastuu 20-60 %:iin normaalinopeudesta. Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista tai vihreää 30 % viivoitusta tätä osoittamaan.
+Minimialue 0.7 mm x 0.7 mm (maastomitta 10.5 m x 10.5 m).
+Minimileveys 0.3 mm (maastomitta 4.5 m).</translation>
     </message>
     <message>
         <source>Vegetation: walk, slow running in one direction</source>
         <comment>Name of symbol 408.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, käveltävä, hidastaa yhteen suuntaan</translation>
     </message>
     <message>
         <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width: 0.3 mm (footprint 4.5 m).</source>
         <comment>Description of symbol 408.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden hidastama metsä, jossa näkyvyys on huonontunut ja jossa juoksunopeus hidastuu 20-60 %:iin normaalinopeudesta. Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista tai vihreää 30 % viivoitusta tätä osoittamaan.
+Minimialue 0.7 mm x 0.7 mm (maastomitta 10.5 m x 10.5 m).
+Minimileveys 0.3 mm (maastomitta 4.5 m).</translation>
     </message>
     <message>
         <source>Vegetation: walk, good visibility</source>
         <comment>Name of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, käveltävä, hyvä näkyvyys</translation>
     </message>
     <message>
         <source>An area of good visibility that is difficult to run through, due to, for instance, undergrowth (brambles, heather, low bushes, cut branches). Running speed is reduced to about 20-60% of normal speed.
@@ -1478,12 +1506,15 @@ Areas of good visibility that are very difficult to run or impassable are repres
 The symbol is orientated to north.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alue, jossa on tiheä aluskasvillisuus (harvennusta, saniaista, heinää, vatukkoa, risukkoa yms.), mutta näkyvyys on yleensä hyvä. Alueella juoksunopeus hidastuu 20-60 %:iin normaalinopeudesta.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).
+Alueet, joissa on hyvä näkyvyys, mutta jotka ovat erittäin hitaita tai läpipääsemättömiä, kuvataan symbolilla 410.
+Symboli piirretään pohjois-eteläsuunnassa.</translation>
     </message>
     <message>
         <source>Vegetation: fight</source>
         <comment>Name of symbol 410</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, erittäin hidas</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
@@ -1491,12 +1522,15 @@ Where runnability is better in one direction, a regular pattern of white, green 
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</source>
         <comment>Description of symbol 410</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden (puusto tai aluskasvillisuus) hidastama alue, jossa juoksunopeus hidastuu alle 20 %:iin normaalinopeudesta.
+Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista / vihreää 30 % / vihreää 60 % viivoitusta tätä osoittamaan.
+Minimialue 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).
+Minimileveys 0.25 mm (maastomitta 3.8 m).</translation>
     </message>
     <message>
         <source>Vegetation: fight, normal running in one direction</source>
         <comment>Name of symbol 410.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, erittäin hidas, normaali juostavuus yhteen suuntaan</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
@@ -1504,12 +1538,15 @@ Where runnability is better in one direction, a regular pattern of white, green 
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</source>
         <comment>Description of symbol 410.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden (puusto tai aluskasvillisuus) hidastama alue, jossa juoksunopeus hidastuu alle 20 %:iin normaalinopeudesta.
+Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista / vihreää 30 % / vihreää 60 % viivoitusta tätä osoittamaan.
+Minimialue 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).
+Minimileveys 0.25 mm (maastomitta 3.8 m).</translation>
     </message>
     <message>
         <source>Vegetation: fight, slow running in one direction</source>
         <comment>Name of symbol 410.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, erittäin hidas, hidastaa yhteen suuntaan</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
@@ -1517,12 +1554,15 @@ Where runnability is better in one direction, a regular pattern of white, green 
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</source>
         <comment>Description of symbol 410.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden (puusto tai aluskasvillisuus) hidastama alue, jossa juoksunopeus hidastuu alle 20 %:iin normaalinopeudesta.
+Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista / vihreää 30 % / vihreää 60 % viivoitusta tätä osoittamaan.
+Minimialue 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).
+Minimileveys 0.25 mm (maastomitta 3.8 m).</translation>
     </message>
     <message>
         <source>Vegetation: fight, walk in one direction</source>
         <comment>Name of symbol 410.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, erittäin hidas, käveltävä yhteen suuntaan</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
@@ -1530,28 +1570,32 @@ Where runnability is better in one direction, a regular pattern of white, green 
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</source>
         <comment>Description of symbol 410.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden (puusto tai aluskasvillisuus) hidastama alue, jossa juoksunopeus hidastuu alle 20 %:iin normaalinopeudesta.
+Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista / vihreää 30 % / vihreää 60 % viivoitusta tätä osoittamaan.
+Minimialue 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).
+Minimileveys 0.25 mm (maastomitta 3.8 m).</translation>
     </message>
     <message>
         <source>Vegetation: fight, minimum width</source>
         <comment>Name of symbol 410.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, erittäin hidas, minimileveys</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
 Minimum width: 0.35 mm</source>
         <comment>Description of symbol 410.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden (puusto tai aluskasvillisuus) hidastama alue, jossa juoksunopeus hidastuu alle 20 %:iin normaalinopeudesta.
+Minimileveys 0.35 mm</translation>
     </message>
     <message>
         <source>Vegetation, impassable (from ISOM 2017, first edition)</source>
         <comment>Name of symbol 411</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, läpipääsemätön (ISOM 2017:sta)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM 2000. Use either Vegetation: fight (410) or Area that shall not be entered (520) instead.</source>
         <comment>Description of symbol 411</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varattu muunnokselle ISOM 2000:sta. Käytä tämän sijaan symboleita 410 tai 520.</translation>
     </message>
     <message>
         <source>Cultivated land</source>
@@ -1565,12 +1609,16 @@ The symbol is combined with symbol Out-of-bounds area (709) to show cultivated l
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <comment>Description of symbol 412</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viljelty peltomaa.
+Jos alueen käyttö on kielletty, on symboliin liitettävä violetin värinen kielletyn alueen symboli 709 osoittamaan kieltoa.
+Koska juostavuus voi vaihdella viljelykauden ajankohdasta ja kasvilajeista riippuen, pitäisi alueen käyttöä välttää ratasuunnittelussa.
+Symboli piirretään pohjois-eteläsuunnassa.
+Minimialue 3 mm x 3 mm (maastomitta 45 m x 45 m).</translation>
     </message>
     <message>
         <source>Cultivated land (black pattern)</source>
         <comment>Name of symbol 412.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viljelty maa (musta kuviointi)</translation>
     </message>
     <message>
         <source>Cultivated land. This symbol must be used together with another symbol:
@@ -1581,7 +1629,11 @@ Since the runnability may vary, such areas should be avoided when setting course
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <comment>Description of symbol 412.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viljelty peltomaa.
+Jos alueen käyttö on kielletty, on symboliin liitettävä violetin värinen kielletyn alueen symboli 709 osoittamaan kieltoa.
+Koska juostavuus voi vaihdella viljelykauden ajankohdasta ja kasvilajeista riippuen, pitäisi alueen käyttöä välttää ratasuunnittelussa.
+Symboli piirretään pohjois-eteläsuunnassa.
+Minimialue 3 mm x 3 mm (maastomitta 45 m x 45 m).</translation>
     </message>
     <message>
         <source>Orchard</source>
@@ -1594,12 +1646,15 @@ Must be combined with either symbol Open land (401) or Rough open land (403).
 May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 413</comment>
-        <translation type="unfinished"></translation>
+        <translation>Puutarhapuita tai -pensaita kasvava peltomaa. Pistejonon suunnalla voidaan osoittaa istutusten suunta.
+Käytetään symbolin 401 tai symbolin 403 kanssa.
+Voidaan yhdistää joko symbolin 407 tai 409 kanssa osoittamaan juostavuuden hidastumista.
+Minimialue 2 mm x 2 mm (maastomitta 30 m x 30 m).</translation>
     </message>
     <message>
         <source>Orchard, rough open land</source>
         <comment>Name of symbol 413.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Puutarha, avoin alue</translation>
     </message>
     <message>
         <source>Land planted with trees or bushes, normally in a regular pattern. The dot lines may be orientated to show the direction of planting.
@@ -1607,29 +1662,34 @@ Must be combined with either symbol Open land (401) or Rough open land (403).
 May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 413.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Puutarhapuita tai -pensaita kasvava peltomaa. Pistejonon suunnalla voidaan osoittaa istutusten suunta.
+Käytetään symbolin 401 tai symbolin 403 kanssa.
+Voidaan yhdistää joko symbolin 407 tai 409 kanssa osoittamaan juostavuuden hidastumista.
+Minimialue 2 mm x 2 mm (maastomitta 30 m x 30 m).</translation>
     </message>
     <message>
         <source>Vineyard or similar</source>
         <comment>Name of symbol 414</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viinitarha tai vastaava</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 414</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viinitarha tai vastaava riviin istutettu alue, jossa juostavuus on hyvä tai normaali istutusten suuntaan. Viivat piirretään istutuksen suuntaan. Käytetään symbolin 401 tai symbolin 403 kanssa.
+Minimialue 2 mm x 2 mm (maastomitta 30 m x 30 m).</translation>
     </message>
     <message>
         <source>Vineyard or similar, rough open land</source>
         <comment>Name of symbol 414.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viinitarha tai vastaava, avoin alue</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 414.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viinitarha tai vastaava riviin istutettu alue, jossa juostavuus on hyvä tai normaali istutusten suuntaan. Viivat piirretään istutuksen suuntaan. Käytetään symbolin 401 tai symbolin 403 kanssa.
+Minimialue 2 mm x 2 mm (maastomitta 30 m x 30 m).</translation>
     </message>
     <message>
         <source>Distinct cultivation boundary</source>
@@ -1640,7 +1700,8 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <source>A boundary of cultivated land vegetation (symbols 401, 412, 413, 414) or a boundary between areas of cultivated land when not shown with other symbols (fence, wall, path, etc.).
 Minimum length: 2 mm (footprint 30 m).</source>
         <comment>Description of symbol 415</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symbolien 401, 412, 413 tai 414 raja, jos aluetta ei erota muu symboli (aita, muuri, polku jne.).
+Minimipituus 2 mm (maastomitta 30 m).</translation>
     </message>
     <message>
         <source>Distinct vegetation boundary</source>
@@ -1654,12 +1715,17 @@ A disadvantage with a green line is that it cannot be used to show distinct vege
 Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
 Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
         <comment>Description of symbol 416</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvä metsän reuna tai selvästi havaittava metsätyypin ero.
+Erittäin selkeä metsän ja kasvillisuuden raja voidaan esittää symbolilla 415. Runsaasti kivi- ja kalliokohteita sisältävässä maastossa on suositeltavaa käyttää kuviorajana vihreää katkoviivaa.
+Haittapuolena tässä on, ettei vihreällä katkoviivalla voida esittää kasvillisuuden kuviorajoja symbolin 410 kanssa. Näissä tapauksissa vaihtoehtoinen kuvioraja on symboli 415.
+Vain yhtä kuviorajatyyppiä voidaan käyttää samalla kartalla. Yleensä suomalaisissa maastotyypeissä on suositeltavampaa käyttää mustaa pistekatkoviivaa.
+Minimipituus mustilla pisteillä 5 pistettä (2.5 mm, maastomitta 37 m).
+Minimipituus vihreällä katkoviivalla 4 viivan osaa (1.8 mm, maastomitta 27 m).</translation>
     </message>
     <message>
         <source>Distinct vegetation boundary, green dashed line</source>
         <comment>Name of symbol 416.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selkeä kasvillisuuden raja, vihreä katkoviiva</translation>
     </message>
     <message>
         <source>A distinct forest edge or vegetation boundary within the forest.
@@ -1668,7 +1734,12 @@ A disadvantage with a green line is that it cannot be used to show distinct vege
 Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
 Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
         <comment>Description of symbol 416.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvä metsän reuna tai selvästi havaittava metsätyypin ero.
+Erittäin selkeä metsän ja kasvillisuuden raja voidaan esittää symbolilla 415. Runsaasti kivi- ja kalliokohteita sisältävässä maastossa on suositeltavaa käyttää kuviorajana vihreää katkoviivaa.
+Haittapuolena tässä on, ettei vihreällä katkoviivalla voida esittää kasvillisuuden kuviorajoja symbolin 410 kanssa. Näissä tapauksissa vaihtoehtoinen kuvioraja on symboli 415.
+Vain yhtä kuviorajatyyppiä voidaan käyttää samalla kartalla. Yleensä suomalaisissa maastotyypeissä on suositeltavampaa käyttää mustaa pistekatkoviivaa.
+Minimipituus mustilla pisteillä 5 pistettä (2.5 mm, maastomitta 37 m).
+Minimipituus vihreällä katkoviivalla 4 viivan osaa (1.8 mm, maastomitta 27 m).</translation>
     </message>
     <message>
         <source>Prominent large tree</source>
@@ -1678,18 +1749,19 @@ Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</
     <message>
         <source>Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 417</comment>
-        <translation type="unfinished"></translation>
+        <translation>Valkoinen tausta vihreän ympyrän alla parantamaan luettavuutta. Maastomitta 13.5 m x 13.5 m.</translation>
     </message>
     <message>
         <source>Prominent bush or tree</source>
         <comment>Name of symbol 418</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selkeästi erottuva pensas tai puu</translation>
     </message>
     <message>
         <source>Use sparingly, as it is easily mistaken for symbol Small knoll (109).
 Footprint: 9.0 m x 9.0 m.</source>
         <comment>Description of symbol 418</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytettävä harkiten, koska värisokeat voivat sekoittaa symboliin 109 (pieni kumpare). Pieni valkoinen piste symbolin keskellä auttaa luettavuutta.
+Maastomitta 9 m x 9 m.</translation>
     </message>
     <message>
         <source>Prominent vegetation feature</source>
@@ -1701,7 +1773,9 @@ Footprint: 9.0 m x 9.0 m.</source>
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 419</comment>
-        <translation type="unfinished"></translation>
+        <translation>Valkoinen tausta vihreä ristin alla parantamaan luettavuutta. Symboli piirretään pohjois-eteläsuunnassa. 
+Määritelmä annettava erikseen kartassa.
+Maastomitta 13.5 m x 13.5 m.</translation>
     </message>
     <message>
         <source>Paved area, with bounding line</source>
