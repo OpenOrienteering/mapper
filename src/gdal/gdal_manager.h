@@ -163,6 +163,14 @@ public:
 	 * Unsets a GDAL configuration parameter value.
 	 */
 	void unsetParameter(const QString& key);
+	
+	
+	/**
+	 * A proxy for OSRSetPROJSearchPaths.
+	 * 
+	 * Does nothing for GDAL < 3.0.0.
+	 */
+	static void setProjSearchPaths(const char* const* search_paths);
 };
 
 
