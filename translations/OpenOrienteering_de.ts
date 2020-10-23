@@ -8462,7 +8462,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
         <location filename="../src/templates/template_map.cpp" line="171"/>
         <location filename="../src/templates/template_map.cpp" line="305"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished">Koordinatentransformation fehlgeschlagen.</translation>
+        <translation>Koordinatentransformation fehlgeschlagen.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_map.cpp" line="198"/>
