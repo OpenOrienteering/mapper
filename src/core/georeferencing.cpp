@@ -52,6 +52,10 @@
 #include "fileformats/xml_file_format.h"
 #include "util/xml_stream_util.h"
 
+#ifdef MAPPER_USE_GDAL
+#  include "gdal/gdal_manager.h"  // IWYU pragma: keep
+#endif
+
 
 // ### A namespace which collects various string constants of type QLatin1String. ###
 
@@ -214,8 +218,11 @@ namespace
 			if (proj_data.exists())
 			{
 				static auto const location = proj_data.absoluteFilePath().toLocal8Bit();
-				static auto* const data = location.constData();
-				proj_context_set_search_paths(nullptr, 1, &data);
+				static const char* const data[2] = { location.constData(), nullptr };
+				proj_context_set_search_paths(nullptr, 1, data);
+#if defined(MAPPER_USE_GDAL)// && !defined(QT_TESTLIB_LIB)
+				GdalManager::setProjSearchPaths(data);
+#endif
 			}
 #endif  // ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 		}

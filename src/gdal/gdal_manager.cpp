@@ -26,6 +26,7 @@
 
 #include <cpl_conv.h>
 #include <gdal.h>
+#include <ogr_srs_api.h>
 // IWYU pragma: no_include <gdal_version.h>
 
 #include <QtGlobal>
@@ -516,6 +517,14 @@ void GdalManager::setParameterValue(const QString& key, const QString& value)
 void GdalManager::unsetParameter(const QString& key)
 {
 	p->unsetParameter(key);
+}
+
+
+void GdalManager::setProjSearchPaths(const char* const* search_paths)
+{
+#if GDAL_VERSION_NUM >= GDAL_COMPUTE_VERSION(3,0,0)
+		OSRSetPROJSearchPaths(search_paths);
+#endif
 }
 
 

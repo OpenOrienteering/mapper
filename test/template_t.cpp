@@ -58,6 +58,7 @@
 #include "gdal/ogr_template.h"
 #include "gdal/gdal_manager.h"
 #include "templates/template.h"
+#include "templates/template_image.h"
 #include "templates/template_table_model.h"
 #include "templates/template_track.h"
 #include "templates/world_file.h"
@@ -273,6 +274,35 @@ private slots:
 		QCOMPARE(rotation_template, rotation_map);
 #endif
 	}
+	
+#ifdef MAPPER_USE_GDAL
+	void geoTiffSRSTest()
+	{
+		auto file_info = QFileInfo(QStringLiteral("testdata:templates/epsg-27700.tiff"));
+		QVERIFY(file_info.exists());
+		
+		Map map;
+		auto temp = Template::templateForPath(file_info.absoluteFilePath(), &map);
+		QCOMPARE(temp->getTemplateType(), "GdalTemplate");
+		QVERIFY(temp->loadTemplateFile());
+		
+		auto gdal_template = qobject_cast<TemplateImage*>(temp.get());
+		QVERIFY(gdal_template);
+		auto options = gdal_template->availableGeoreferencing();
+		QVERIFY(!options.template_file.crs_spec.isEmpty());
+		
+		Georeferencing georef;
+		georef.setProjectedCRS({}, options.template_file.crs_spec);
+		bool ok;
+		auto projected = georef.toProjectedCoords(LatLon(54.558203, -3.393209), &ok);
+		QVERIFY(ok);
+		auto expected = QPointF{310000, 519000};
+		if (QLineF(projected, expected).length() > 0.5)
+			QCOMPARE(projected, expected);
+		else
+			QVERIFY2(true, "SRS from GeoTIFF is okay");
+	}
+#endif
 	
 	void templateTrackTest_data()
 	{

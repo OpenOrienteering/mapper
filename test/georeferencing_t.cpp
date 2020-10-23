@@ -34,7 +34,7 @@
 #  include <proj.h>
 #endif
 
-#ifdef MAPPER_USE_GDAL
+#ifdef MAPPER_TEST_GDAL
 #  include <gdal.h>
 #  include <ogr_api.h>
 #  include <ogr_srs_api.h>
@@ -430,7 +430,7 @@ void GeoreferencingTest::testProjection()
 	if (std::fabs(lat_lon.longitude() - longitude) > (max_angl_error * std::cos(qDegreesToRadians(latitude))))
 		QCOMPARE(QString::number(lat_lon.longitude(), 'f'), QString::number(longitude, 'f'));
 	
-#ifdef MAPPER_USE_GDAL
+#ifdef MAPPER_TEST_GDAL
 	// Cf. OgrFileExport::setupGeoreferencing
 	auto* map_srs = OSRNewSpatialReference(nullptr);
 	OSRSetProjCS(map_srs, "Projected map SRS");
@@ -470,7 +470,7 @@ void GeoreferencingTest::testProjection()
 	
 	OSRDestroySpatialReference(geo_srs);
 	OSRDestroySpatialReference(map_srs);
-#endif  // MAPPPER_USE_GDAL
+#endif  // MAPPER_TEST_GDAL
 }
 
 
