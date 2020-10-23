@@ -4144,7 +4144,7 @@ exportieren, weil das Speichern als %2 (.%3) nicht unterstützt wird.</translati
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="989"/>
         <source>Keep my location on screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Meine Position auf dem Bildschirm behalten</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1003"/>
@@ -4905,7 +4905,7 @@ gewählt</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="245"/>
         <source>Background drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Hintergrundzeichnung</translation>
     </message>
 </context>
 <context>
@@ -6145,12 +6145,12 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="277"/>
         <source>Solid</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgefüllt</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="278"/>
         <source>Pattern</source>
-        <translation type="unfinished">Muster</translation>
+        <translation>Muster</translation>
     </message>
 </context>
 <context>
