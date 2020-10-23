@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="9">
+    <notes></notes>
+    <georeferencing scale="4000" auxiliary_scale_factor="1.0004" declination="8" grivation="8">
+        <projected_crs id="EPSG">
+            <spec language="PROJ.4">+init=epsg:6342</spec>
+            <parameter>6342</parameter>
+            <ref_point x="500000" y="4430000"/>
+        </projected_crs>
+        <geographic_crs id="Geographic coordinates">
+            <spec language="PROJ.4">+proj=latlong +datum=WGS84</spec>
+            <ref_point_deg lat="40.02021349" lon="-105.00001013"/>
+        </geographic_crs>
+    </georeferencing>
+    <colors count="1">
+        <color priority="0" name="Purple" c="0.2" m="1" y="0" k="0" opacity="1">
+            <spotcolors>
+                <namedcolor>PURPLE</namedcolor>
+            </spotcolors>
+            <cmyk method="custom"/>
+            <rgb method="cmyk" r="0.8" g="0" b="1"/>
+        </color>
+    </colors>
+    <barrier version="6" required="0.6.0">
+        <symbols count="1">
+            <symbol type="2" id="0" code="1" name="Line">
+                <line_symbol color="0" line_width="100" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            </symbol>
+        </symbols>
+        <parts count="1" current="0">
+            <part name="default part">
+                <objects count="1">
+                    <object type="1" symbol="0">
+                        <coords count="5">
+                            <coord x="-157978" y="170354"/>
+                            <coord x="-157266" y="175421"/>
+                            <coord x="-150742" y="174504"/>
+                            <coord x="-151454" y="169437"/>
+                            <coord x="-157978" y="170354" flags="18"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </objects>
+            </part>
+        </parts>
+        <templates count="1" first_front_template="1">
+            <template type="TemplateTrack" open="true" name="template-track-NA-2019.gpx" path="template-track-NA-2019.gpx" relpath="template-track-NA-2019.gpx" georef="true">
+                <crs_spec>+proj=latlong +datum=WGS84</crs_spec>
+            </template>
+            <defaults use_meters_per_pixel="true" meters_per_pixel="0" dpi="0" scale="0"/>
+        </templates>
+        <view>
+            <grid color="#646464" display="0" alignment="1" additional_rotation="0" unit="0" h_spacing="0.1" v_spacing="0.1" h_offset="0" v_offset="0" snapping_enabled="true"/>
+            <map_view zoom="32" position_x="-154449" position_y="172553">
+                <map opacity="1" visible="true"/>
+                <templates count="1">
+                    <ref template="0" visible="true" opacity="1"/>
+                </templates>
+            </map_view>
+        </view>
+    </barrier>
+</map>
