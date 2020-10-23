@@ -19,15 +19,15 @@
     </message>
     <message>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="vanished">Impossible de créer la fonction dans la couche&#x202f;: %1</translation>
+        <translation type="vanished">Impossible de créer la fonction dans la couche : %1</translation>
     </message>
     <message>
         <source>Failed to create layer %1: %2</source>
-        <translation type="vanished">Impossible de créer la couche %1&#x202f;: %2</translation>
+        <translation type="vanished">Impossible de créer la couche %1 : %2</translation>
     </message>
     <message>
         <source>Failed to create name field: %1</source>
-        <translation type="vanished">Impossible de créer le nom du champ&#x202f;: %1</translation>
+        <translation type="vanished">Impossible de créer le nom du champ : %1</translation>
     </message>
 </context>
 <context>
@@ -1587,12 +1587,12 @@
         <location filename="../src/gdal/gdal_image_reader.cpp" line="56"/>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="143"/>
         <source>Failed to read image data: %1</source>
-        <translation>Échec de lecture des données d&apos;image&#x202f;: %1</translation>
+        <translation>Échec de lecture des données d&apos;image : %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="112"/>
         <source>Unsupported raster data: %1</source>
-        <translation>Données raster non supportées&#x202f;: %1</translation>
+        <translation>Données raster non supportées : %1</translation>
     </message>
 </context>
 <context>
@@ -2504,7 +2504,7 @@
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="312"/>
         <source>Symbol ID &apos;%1&apos; not unique at line %2 column %3.</source>
-        <translation>L&apos;identifiant du symbole «&#x202f;%1&#x202f;»n&apos;est pas unique à la ligne %2 colonne %3.</translation>
+        <translation>L&apos;identifiant du symbole « %1 »n&apos;est pas unique à la ligne %2 colonne %3.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="392"/>
@@ -2525,7 +2525,7 @@
         <location filename="../src/core/symbols/symbol.cpp" line="318"/>
         <location filename="../src/undo/object_undo.cpp" line="616"/>
         <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
-        <translation>Malformation du symbole ID «&#x202f;%1&#x202f;», ligne %2 colonne %3.</translation>
+        <translation>Malformation du symbole ID « %1 », ligne %2 colonne %3.</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="389"/>
@@ -2614,7 +2614,7 @@
 %1:
 %2</source>
         <translation>Ne peut pas ouvrir le fichier
-%1&#x202f;:
+%1 :
 %2</translation>
     </message>
     <message>
@@ -2638,12 +2638,12 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="226"/>
         <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
-        <translation>Le modèle «&#x202f;%1&#x202f;» a été chargé depuis le répertoire de la carte au lieu de l&apos;emplacement relatif au fichier de la carte où il se trouvait précédemment.</translation>
+        <translation>Le modèle « %1 » a été chargé depuis le répertoire de la carte au lieu de l&apos;emplacement relatif au fichier de la carte où il se trouvait précédemment.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="319"/>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
-        <translation>Fichier modèle «&#x202f;%1&#x202f;» ne peut pas être chargé, raison&#x202f;: %2</translation>
+        <translation>Fichier modèle « %1 » ne peut pas être chargé, raison : %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="155"/>
@@ -2654,7 +2654,7 @@
         <location filename="../src/fileformats/file_import_export.cpp" line="250"/>
         <source>Warnings when loading template &apos;%1&apos;:
 %2</source>
-        <translation>Alertes durant le chagement du modèle «&#x202f;%1&#x202f;»&#x202f;:
+        <translation>Alertes durant le chagement du modèle « %1 » :
 %2</translation>
     </message>
     <message>
@@ -5757,7 +5757,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2570"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation>Impossible d&apos;enregistrer la position correcte du modèle manquant&#x202f;: &quot;%1&quot;</translation>
+        <translation>Impossible d&apos;enregistrer la position correcte du modèle manquant : &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2555"/>
@@ -5772,7 +5772,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2945"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
-        <translation>Texte tronqué à &apos;|&apos;)&#x202f;: %1</translation>
+        <translation>Texte tronqué à &apos;|&apos;) : %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_georef_fields.cpp" line="878"/>
@@ -6066,12 +6066,12 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2307"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished">Impossible de créer la couche %1&#x202f;: %2</translation>
+        <translation type="unfinished">Impossible de créer la couche %1 : %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2314"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished">Impossible de créer le nom du champ&#x202f;: %1</translation>
+        <translation type="unfinished">Impossible de créer le nom du champ : %1</translation>
     </message>
 </context>
 <context>
@@ -8482,7 +8482,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="293"/>
         <source>Vectorize lines</source>
-        <translation type="unfinished">Vectoriser les lignes</translation>
+        <translation>Vectoriser les lignes</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="673"/>
@@ -8534,7 +8534,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="983"/>
         <source>Cannot change the georeferencing state.</source>
-        <translation type="unfinished">Impossible de modifier l&apos;état du géoréférencement.</translation>
+        <translation>Impossible de modifier l&apos;état du géoréférencement.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_table_model.cpp" line="257"/>
@@ -8569,7 +8569,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/templates/template_placeholder.cpp" line="178"/>
         <source>Unknown file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Format de fichier inconnu</translation>
     </message>
 </context>
 <context>
@@ -8607,7 +8607,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="61"/>
         <source>Shear:</source>
-        <translation type="unfinished">Transvection :</translation>
+        <translation>Transvection :</translation>
     </message>
 </context>
 <context>
@@ -8669,17 +8669,17 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/templates/template_track.cpp" line="83"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Piste</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="96"/>
         <source>Route</source>
-        <translation type="unfinished"></translation>
+        <translation>Itinéraire</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="109"/>
         <source>Waypoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Point de passage</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="290"/>
@@ -8689,7 +8689,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/templates/template_track.cpp" line="291"/>
         <source>Load the track in georeferenced or non-georeferenced mode?</source>
-        <translation>Charger la trace en mode géoréférencé ou non-géoréférencé ?</translation>
+        <translation>Charger la trace en mode géoréférencé ou non-géoréférencé ?</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="293"/>
@@ -8734,7 +8734,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/templates/template_track.cpp" line="505"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
-        <translation>Les points GPS (waypoints), doivent-ils être importés dans une ligne reliant tous les points ?</translation>
+        <translation>Les points GPS (waypoints), doivent-ils être importés dans une ligne reliant tous les points ?</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="569"/>
@@ -8861,7 +8861,7 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="111"/>
         <source>Font size:</source>
-        <translation>Taille de la police :</translation>
+        <translation>Taille de la police :</translation>
     </message>
     <message>
         <source>Determine size...</source>
@@ -8892,7 +8892,7 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="133"/>
         <source>Text color:</source>
-        <translation>Couleur du texte :</translation>
+        <translation>Couleur du texte :</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="136"/>
@@ -8912,7 +8912,7 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="143"/>
         <source>Text style:</source>
-        <translation>Style du texte :</translation>
+        <translation>Style du texte :</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="147"/>
@@ -8928,7 +8928,7 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="151"/>
         <source>Paragraph spacing:</source>
-        <translation>Espace entre les paragraphes :</translation>
+        <translation>Espace entre les paragraphes :</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="154"/>
@@ -8979,12 +8979,12 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="193"/>
         <source>Left/Right Offset:</source>
-        <translation>Décalage Gauche/Droite :</translation>
+        <translation>Décalage gauche/droite :</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="196"/>
         <source>Top/Down Offset:</source>
-        <translation>Décalage Haut/Bas :</translation>
+        <translation>Décalage haut/bas :</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="200"/>
@@ -8999,7 +8999,7 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="211"/>
         <source>Line width:</source>
-        <translation>Épaisseur de ligne :</translation>
+        <translation>Épaisseur de ligne :</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="214"/>
@@ -9019,7 +9019,7 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="217"/>
         <source>Distance from baseline:</source>
-        <translation>Distance depuis la ligne de base :</translation>
+        <translation>Distance depuis la ligne de base :</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="221"/>
@@ -9051,7 +9051,7 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="140"/>
         <source>Cannot undo because the last undo step became invalid. This can for example happen if you change the symbol of an object to another and then delete the old symbol.</source>
-        <translation>Impossible d&apos;annuler car la dernière action &quot;Annuler&quot; deviendrait alors invalide. Cela peut arriver par exemple lorsque vous changez le symbole d&apos;un objet par un autre et qu&apos;ensuite vous supprimez l&apos;ancien symbole.</translation>
+        <translation>Impossible d&apos;annuler car la dernière action « Annuler » deviendrait alors invalide. Ceci peut arriver par exemple lorsque vous changez le symbole d&apos;un objet par un autre et qu&apos;ensuite vous supprimez l&apos;ancien symbole.</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="147"/>
@@ -9061,12 +9061,12 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="147"/>
         <source>Undoing this step will go beyond the point where the file was loaded. Are you sure?</source>
-        <translation>Annuler cette action vous ramènera dans l&apos;état ANTÉRIEUR au chargement de ce fichier. Êtes vous sûr de vouloir annuler ?</translation>
+        <translation>Annuler cette action vous ramènera dans l&apos;état ANTÉRIEUR au chargement de ce fichier. Êtes-vous sûr·e de vouloir annuler ?</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="185"/>
         <source>Cannot redo because the first redo step became invalid. This can for example happen if you delete the symbol of an object you have drawn.</source>
-        <translation>Impossible d&apos;annuler la dernière action car elle deviendrait invalide. Cela peut arriver par exemple lorsque vous supprimez le symbole d&apos;un objet que vous avez dessiné.</translation>
+        <translation>Impossible d&apos;annuler la dernière action car elle deviendrait invalide. Ceci peut arriver par exemple lorsque vous supprimez le symbole d&apos;un objet que vous avez dessiné.</translation>
     </message>
 </context>
 <context>
