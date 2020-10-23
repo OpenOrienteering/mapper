@@ -3971,6 +3971,9 @@ void MapEditorController::setMapAndView(Map* map, MapView* map_view)
 {
 	Q_ASSERT(map);
 	Q_ASSERT(map_view);
+#ifdef __clang_analyzer__
+	if (!map || !map_view) { return; }
+#endif
 	
 	if (this->map)
 	{
