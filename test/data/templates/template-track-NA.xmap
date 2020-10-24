@@ -69,8 +69,26 @@
                 </objects>
             </part>
         </parts>
-        <templates count="2" first_front_template="0">
+        <templates count="8" first_front_template="0">
             <template type="TemplateTrack" open="true" name="template-track-NA-2019.gpx" path="template-track-NA-2019.gpx" relpath="template-track-NA-2019.gpx" georef="true">
+                <crs_spec>+proj=latlong +datum=WGS84</crs_spec>
+            </template>
+            <template type="TemplateTrack" open="true" name="template-track-NA-2014.gpx" path="template-track-NA-2014.gpx" relpath="template-track-NA-2014.gpx" georef="true">
+                <crs_spec>+proj=latlong +datum=WGS84</crs_spec>
+            </template>
+            <template type="TemplateTrack" open="true" name="template-track-NA-2013.gpx" path="template-track-NA-2013.gpx" relpath="template-track-NA-2013.gpx" georef="true">
+                <crs_spec>+proj=latlong +datum=WGS84</crs_spec>
+            </template>
+            <template type="TemplateTrack" open="true" name="template-track-NA-2012.gpx" path="template-track-NA-2012.gpx" relpath="template-track-NA-2012.gpx" georef="true">
+                <crs_spec>+proj=latlong +datum=WGS84</crs_spec>
+            </template>
+            <template type="TemplateTrack" open="true" name="template-track-NA-2003.gpx" path="template-track-NA-2003.gpx" relpath="template-track-NA-2003.gpx" georef="true">
+                <crs_spec>+proj=latlong +datum=WGS84</crs_spec>
+            </template>
+            <template type="TemplateTrack" open="true" name="template-track-NA-2001.gpx" path="template-track-NA-2001.gpx" relpath="template-track-NA-2001.gpx" georef="true">
+                <crs_spec>+proj=latlong +datum=WGS84</crs_spec>
+            </template>
+            <template type="TemplateTrack" open="true" name="template-track-NA-1997.gpx" path="template-track-NA-1997.gpx" relpath="template-track-NA-1997.gpx" georef="true">
                 <crs_spec>+proj=latlong +datum=WGS84</crs_spec>
             </template>
             <template type="OgrTemplate" open="true" name="template-track-NA-2019.gpx" path="template-track-NA-2019.gpx" relpath="template-track-NA-2019.gpx" georef="true">
@@ -82,9 +100,15 @@
             <grid color="#80646464" display="0" alignment="1" additional_rotation="0" unit="1" h_spacing="1" v_spacing="1" h_offset="0" v_offset="0" snapping_enabled="true"/>
             <map_view zoom="16" position_x="-155208" position_y="173045">
                 <map opacity="1" visible="true"/>
-                <templates count="2">
+                <templates count="8">
                     <ref template="0" visible="true" opacity="1"/>
                     <ref template="1" visible="true" opacity="1"/>
+                    <ref template="2" visible="true" opacity="1"/>
+                    <ref template="3" visible="true" opacity="1"/>
+                    <ref template="4" visible="true" opacity="1"/>
+                    <ref template="5" visible="true" opacity="1"/>
+                    <ref template="6" visible="true" opacity="1"/>
+                    <ref template="7" visible="true" opacity="1"/>
                 </templates>
             </map_view>
         </view>
