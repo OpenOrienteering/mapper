@@ -7305,7 +7305,7 @@ erottelut</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="314"/>
         <source>Extra permissions are required to access &apos;%1&apos;.</source>
-        <translation>Lisäluvat tarvitaan pääsyyn &apos;%1&apos;.</translation>
+        <translation>Lisälupa vaaditaan pääsyyn &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="317"/>
