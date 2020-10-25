@@ -14229,6 +14229,11 @@ A csomópont tisztázása érdekében a lassú pálya kezdetét rövid vonallal 
         <translation>Út a térképen, amely a verseny alatt homokos vagy havas. &quot;V&quot;-lánc jelek az út szimbólumán azt mutatják, hogy az út nem síelhető. A hómentes utakat és az erősen homokos utakat általában tiltott útvonalakként kell megjelölni.</translation>
     </message>
     <message>
+        <source>Unploughed road</source>
+        <comment>Name of symbol 807</comment>
+        <translation>Szántatlan út</translation>
+    </message>
+    <message>
         <source>A road which is not opened for traffic, no skiable track.</source>
         <comment>Description of symbol 807</comment>
         <translation>A forgalom számára nem nyitott út, nincs síelhető pálya.</translation>
