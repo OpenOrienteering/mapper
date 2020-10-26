@@ -66,7 +66,7 @@
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Musta ylemmän ruskean 50% alla</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
@@ -76,12 +76,12 @@
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Musta alemman ruskean 50% alla</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sininen 100% aluekohteille</translation>
     </message>
     <message>
         <source>Blue 70%</source>
@@ -101,22 +101,22 @@
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Keltainen 100% ajouralle tai kapealle linjalle</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vihreä 60% ajouralle tai kapealle linjalle</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vihreä 30% ajouralle tai kapealle linjalle</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Valkoinen vihreän päällä</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
@@ -136,7 +136,7 @@
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vihreä 100% vihreille aluekohteille</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -151,17 +151,17 @@
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vihreä 100% maapohjalle</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Valkoinen keltaisen päällä</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Musta avoimelle alueelle</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -171,7 +171,7 @@
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 33</comment>
-        <translation type="unfinished"></translation>
+        <translation>Keltainen 100% aluekohteille</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
@@ -241,7 +241,9 @@ The index contour level must be carefully selected in flat terrain. The ideal le
 Minimum length (non-closed): two dashes.
 Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</source>
         <comment>Description of symbol 103</comment>
-        <translation>Apukäyriä (muotokäyriä) käytetään kohdissa, joissa pitää antaa enemmän tietoa maanpinnan muodoista. Apukäyriä lisätään vain sellaisiin kohtiin, joissa karttakuvaus olisi riittämätön käyttäen pelkkiä korkeuskäyriä. Apukäyrää ei saa käyttää korkeuskäyrien välissä kulkevana jatkuvana välikäyränä. Kahden korkeuskäyrän välissä pitäisi käyttää vain yhtä apukäyrää. On tärkeää, että apukäyrä asettuu johdonmukaisesti muiden korkeuskäyrien kokonaisuuteen. Apukäyrän alku- ja loppupäät piirretään mahdollisimman samansuuntaisiksi kuin viereiset korkeuskäyrät. Apukäyrien viivan katkot asetellaan viivan suorimmille osille. Apukäyriä voidaan käyttää erottamaan laakeampia kumpareita ja notkoja selkeämmistä. Minimipituus (avoin käyrä) kaksi viivan osaa. Apukäyräkumpareen tai supan minimipituus 1.1 mm (maastomitta 16.5 m) ulkomittoina.</translation>
+        <translation>Apukäyriä (muotokäyriä) käytetään kohdissa, joissa pitää antaa enemmän tietoa maanpinnan muodoista. Apukäyriä lisätään vain sellaisiin kohtiin, joissa karttakuvaus olisi riittämätön käyttäen pelkkiä korkeuskäyriä. Apukäyrää ei saa käyttää korkeuskäyrien välissä kulkevana jatkuvana välikäyränä. Kahden korkeuskäyrän välissä pitäisi käyttää vain yhtä apukäyrää. On tärkeää, että apukäyrä asettuu johdonmukaisesti muiden korkeuskäyrien kokonaisuuteen. Apukäyrän alku- ja loppupäät piirretään mahdollisimman samansuuntaisiksi kuin viereiset korkeuskäyrät. Apukäyrien viivan katkot asetellaan viivan suorimmille osille. Apukäyriä voidaan käyttää erottamaan laakeampia kumpareita ja notkoja selkeämmistä. 
+Minimipituus (avoin käyrä) kaksi viivan osaa. 
+Apukäyräkumpareen tai supan minimipituus 1.1 mm (maastomitta 16.5 m) ulkomittoina</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
@@ -310,7 +312,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varattu ISOM2000 muunnokselle. Symbolin käyttöä uusissa kartoissa ei suositella.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -444,7 +446,7 @@ Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.
 Density: 3-4 dots / mm².</source>
         <comment>Description of symbol 113.1</comment>
-        <translation>Pienimuotoinen maasto, kuoppa- tai kumparekenttä, jota ei voida kuvata yksittäisillä symboleilla ja jolla on pieni vaikutus juostavuuteen. Pisteet sijoitetaan satunnaisesti siten, etteivät ne peitä tärkeitä kartanlukukohteita. Minimimäärä pisteitä on 3 kpl (maastomitta 10 m x 10 m). Maksimimitta keskeltä keskelle vierekkäisillä pisteillä on 0.6 mm. Minimimitta keskeltä keskelle vierekkäisillä pisteillä on 0.5 mm. Korkeuskäyriä ei katkaista pienimuotoisella alueella. Pisteistä ei saa muodostua viivamaista muotoa. Pistetiheys 3-4 pistettä / mm2</translation>
+        <translation>Pienimuotoinen maasto, kuoppa- tai kumparekenttä, jota ei voida kuvata yksittäisillä symboleilla ja jolla on pieni vaikutus juostavuuteen. Pisteet sijoitetaan satunnaisesti siten, etteivät ne peitä tärkeitä kartanlukukohteita. Minimimäärä pisteitä on 3 kpl (maastomitta 10 m x 10 m). Maksimimitta keskeltä keskelle vierekkäisillä pisteillä on 0.6 mm. Minimimitta keskeltä keskelle vierekkäisillä pisteillä on 0.5 mm. Korkeuskäyriä ei katkaista pienimuotoisella alueella. Pisteistä ei saa muodostua viivamaista muotoa. Pistetiheys 3-4 pistettä / mm2.</translation>
     </message>
     <message>
         <source>Very broken ground</source>
@@ -507,12 +509,12 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylipääsemätön jyrkänne (ISOM2000:sta)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varattu ISOM2000 muunnokselle. Symbolin käyttöä uusissa kartoissa ei suositella.</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
@@ -546,7 +548,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varattu ISOM2000 muunnokselle. Symbolin käyttöä uusissa kartoissa ei suositella.</translation>
     </message>
     <message>
         <source>Cliff</source>
@@ -612,7 +614,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varattu ISOM2000 muunnokselle. Symbolin käyttöä uusissa kartoissa ei suositella.</translation>
     </message>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
@@ -648,7 +650,7 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 203.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varattu ISOM2000 muunnokselle. Symbolin käyttöä uusissa kartoissa ei suositella.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -690,7 +692,9 @@ Vierekkäisten kivien (205) suuruuseron osoittamiseksi (lähempänä kuin 30 m t
 To be able to show the distinction between neighbouring (closer than 30 m apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.
 Footprint: 9 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 205</comment>
-        <translation type="unfinished"></translation>
+        <translation>Erikoisen suuri ja huomattava kivi. Tällä merkillä kuvattujen kivien pitäisi olla vähintään 2 metriä korkeita. 
+Vierekkäisten kivien suuruuseron osoittamiseksi (lähempänä kuin 30 m toisistaan) voidaan symbolia pienentää kokoon 0.5 mm joillakin kivillä. 
+Maastomitta 9 m halkaisijaltaan (7.5 m halkaisijaltaan).</translation>
     </message>
     <message>
         <source>Gigantic boulder</source>
@@ -703,7 +707,10 @@ The gap between gigantic boulders or between gigantic boulders and other impassa
 Minimum width: 0.25 mm (footprint 3.75 m).
 Minimum area: 0.3 mm² (footprint 67 m²).</source>
         <comment>Description of symbol 206</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jättimäinen kivi tai kalliopylväs. Esitetään muodossaan. 
+Kahden symbolin väli pitää olla minimissään 0.15 mm. 
+Minimileveys 0.3 mm (maastomitta 4.5 m).
+Minimialue 0.3 mm² (maastomitta 67 m²).</translation>
     </message>
     <message>
         <source>Boulder cluster</source>
@@ -717,7 +724,10 @@ To be able to show the distinction between neighbouring (maximum 30 m apart) bou
 The symbol is orientated to north.
 Footprint: 12 m x 10 m.</source>
         <comment>Description of symbol 207</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni selvä ryhmä kiviä niin lähekkäin toisiaan, ettei niitä voida kuvata yksitellen. Ryhmän kivien pitäisi olla korkeampia kuin 1 m.
+Symbolia saa suurentaa 20 % (sivumitta 0.96 mm), kun halutaan kuvata selvästi suurempien lähellä olevien (max. 30 m) kivien ryhmä. 
+Symboli on musta kolmio, jonka kärki osoittaa pohjoiseen. 
+Maastomitta 12 m x 10 m.</translation>
     </message>
     <message>
         <source>Boulder cluster, large</source>
@@ -727,7 +737,7 @@ Footprint: 12 m x 10 m.</source>
     <message>
         <source>To be able to show the distinction between neighbouring (maximum 30 m apart) boulder clusters with significant difference in boulder size, it is permitted to use this symbol instead of regular Boulder cluster (207) for some of the boulder clusters.</source>
         <comment>Description of symbol 207.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kun halutaan kuvata selvästi suurempien lähellä olevien (max. 30 m) kivien ryhmä, voidaan käyttää tätä symbolia tavallisen kiviryhmän symbolin (207) sijaan.</translation>
     </message>
     <message>
         <source>Boulder field</source>
@@ -741,7 +751,11 @@ The maximum centre to centre distance between neighbouring triangles is 1.2 mm. 
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kivien pääosin peittämä alue, jossa kiviä on niin paljon, ettei niitä voida esittää yksitellen. Symboleina ovat kolmiot, jotka sijoitetaan satunnaisesti eri astekulmiin. Symbolikolmion sivujen suhde 8:6:5 (sisäkulmat 92.9, 48.5, 38.6). Louhikko ei vaikuta juostavuuteen. Jos louhikko hidastaa juostavuutta, käytetään symbolia 209 (tiheä louhikko). 
+Minimissään käytetään kahta louhikon merkkiä. Yhtä louhikon merkkiä voidaan käyttää, jos sitä käytetään yhdessä jonkun toisen kivi- tai jyrkännesymbolin kanssa (201, 202, 204, 205, 206) tai jos se yhdistetään kivikon symboleihin (210, 211, 212). 
+Maksimimitta keskeltä keskelle vierekkäisillä symboleilla on 1.2 mm. Minimimitta keskeltä keskelle vierekkäisillä symboleilla on 0.75mm.
+Tiheys 0.8-1 symbolia / mm2. Korkeuseron osoittamiseksi louhikon sisällä voidaan joidenkin louhikon symboleiden kokoa suurentaa 20%.
+Maastomitta (yksi symboli) 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle</source>
@@ -755,22 +769,26 @@ The maximum centre to centre distance between neighbouring triangles is 1.2 mm. 
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kivien pääosin peittämä alue, jossa kiviä on niin paljon, ettei niitä voida esittää yksitellen. Symboleina ovat kolmiot, jotka sijoitetaan satunnaisesti eri astekulmiin. Symbolikolmion sivujen suhde 8:6:5 (sisäkulmat 92.9, 48.5, 38.6). Louhikko ei vaikuta juostavuuteen. Jos louhikko hidastaa juostavuutta, käytetään symbolia 209 (tiheä louhikko). 
+Minimissään käytetään kahta louhikon merkkiä. Yhtä louhikon merkkiä voidaan käyttää, jos sitä käytetään yhdessä jonkun toisen kivi- tai jyrkännesymbolin kanssa (201, 202, 204, 205, 206) tai jos se yhdistetään kivikon symboleihin (210, 211, 212). 
+Maksimimitta keskeltä keskelle vierekkäisillä symboleilla on 1.2 mm. Minimimitta keskeltä keskelle vierekkäisillä symboleilla on 0.75mm.
+Tiheys 0.8-1 symbolia / mm2. Korkeuseron osoittamiseksi louhikon sisällä voidaan joidenkin louhikon symboleiden kokoa suurentaa 20%.
+Maastomitta (yksi symboli) 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle, enlarged</source>
         <comment>Name of symbol 208.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Louhikko, yksi kolmio, suurennettu</translation>
     </message>
     <message>
         <source>To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
         <comment>Description of symbol 208.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Korkeuseron osoittamiseksi louhikon sisällä voidaan joidenkin louhikon symboleiden kokoa suurentaa 20%.</translation>
     </message>
     <message>
         <source>Dense boulder field</source>
         <comment>Name of symbol 209</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tiheä louhikko, hidastaa</translation>
     </message>
     <message>
         <source>An area which is covered with so many blocks of stone that they cannot be marked individually and the runnability is affected, is shown with randomly placed and orientated solid triangles. A minimum of two triangles must be used.
@@ -778,12 +796,15 @@ The maximum centre to centre distance between neighbouring triangles is 0.6 mm.
 Density: 2-3 symbols / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 209</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kivien pääosin peittämä alue, jossa kiviä on niin paljon, ettei niitä voida esittää yksitellen ja juostavuus hidastuu. Symboleina ovat kolmiot, jotka sijoitetaan satunnaisesti eri astekulmiin. Symbolikolmion sivujen suhde 8:6:5 (sisäkulmat 92.9, 48.5, 38.6). Minimissään käytetään kahta louhikon merkkiä. 
+Maksimimitta keskeltä keskelle vierekkäisillä symboleilla on 0.6 mm.
+Tiheys 2-3 symbolia / mm². Korkeuseron osoittamiseksi louhikon sisällä, voidaan joidenkin louhikon symboleiden kokoa suurentaa 20%.
+Maastomitta (yksi symboli) 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Stony ground, slow running</source>
         <comment>Name of symbol 210</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kivikko, hidastaa</translation>
     </message>
     <message>
         <source>Stony or rocky ground which reduces runnability to about 60-80% of normal speed.
@@ -794,12 +815,18 @@ The minimum centre to centre distance between neighbouring dots is 0.45 mm.
 Density: 3-4 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 210</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pienten kivien kokonaan tai lähes kokonaan peittämä alue. Juostavuus hidastuu 60-80%:iin verraten normaaliin nopeuteen.
+Merkit sijoitetaan satunnaisesti kuitenkaan muita tärkeitä kohteita peittämättä.
+Minimi kolme pistettä (maastomitta 10 m x 10 m).
+Maksimimitta keskeltä keskelle vierekkäisillä symboleilla on 0.6mm.
+Minimimitta keskeltä keskelle vierekkäisillä symboleilla on 0.45 mm.
+Tiheys 3-4 pistettä / mm². 
+Pisteitä ei piirretä viivamaiseen muotoon, että vältetään kivikon merkkien sekoittuminen kasvillisuusrajan symbolin (416) kanssa.</translation>
     </message>
     <message>
         <source>Stony ground, individual dot</source>
         <comment>Name of symbol 210.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kivikko, yksittäinen piste</translation>
     </message>
     <message>
         <source>Stony or rocky ground which reduces runnability to about 60-80% of normal speed.
@@ -810,12 +837,18 @@ The minimum centre to centre distance between neighbouring dots is 0.45 mm.
 Density: 3-4 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 210.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pienten kivien kokonaan tai lähes kokonaan peittämä alue. Juostavuus hidastuu 60-80%:iin verraten normaaliin nopeuteen.
+Merkit sijoitetaan satunnaisesti kuitenkaan muita tärkeitä kohteita peittämättä.
+Minimi kolme pistettä (maastomitta 10 m x 10 m).
+Maksimimitta keskeltä keskelle vierekkäisillä symboleilla on 0.6mm.
+Minimimitta keskeltä keskelle vierekkäisillä symboleilla on 0.45 mm.
+Tiheys 3-4 pistettä / mm². 
+Pisteitä ei piirretä viivamaiseen muotoon, että vältetään kivikon merkkien sekoittuminen kasvillisuusrajan symbolin (416) kanssa.</translation>
     </message>
     <message>
         <source>Stony ground, walk</source>
         <comment>Name of symbol 211</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kivikko, käveltävä</translation>
     </message>
     <message>
         <source>Stony or rocky ground which reduces the runnability significantly (to about 20-60% of normal speed).
@@ -826,12 +859,18 @@ The minimum centre to centre distance between neighbouring dots is 0.32 mm.
 Density: 6-8 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 211</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pienten kivien kokonaan tai lähes kokonaan peittämä alue. Juostavuus hidastuu huomattavasti, 20-60%:iin, verraten normaaliin nopeuteen.
+Merkit sijoitetaan satunnaisesti kuitenkaan muita tärkeitä kohteita peittämättä. 
+Minimi kolme pistettä maastomitta 8 m x 8 m).
+Maksimimitta keskeltä keskelle vierekkäisillä symboleilla on 0.4mm.
+Minimimitta keskeltä keskelle vierekkäisillä symboleilla on 0.32mm.
+Tiheys 6-8pistettä / mm².
+Pisteitä ei piirretä viivamaiseen muotoon, että vältetään kivikon merkkien sekoittuminen kasvillisuusrajan symbolin (416) kanssa.</translation>
     </message>
     <message>
         <source>Stony ground, fight</source>
         <comment>Name of symbol 212</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kivikko, erittäin hidas</translation>
     </message>
     <message>
         <source>Stony or rocky ground which is hardly passable (less than 20% of normal speed).
@@ -842,19 +881,27 @@ The minimum centre to centre distance between neighbouring dots is 0.25 mm.
 Density: 10-12 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 212</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pienten kivien kokonaan tai lähes kokonaan peittämä alue. Juostavuus hidastuu huomattavasti, alle 20%:iin verraten normaaliin nopeuteen.
+Merkit sijoitetaan satunnaisesti kuitenkaan muita tärkeitä kohteita peittämättä.
+Minimi kolme pistettä (maastomitta 7 m x 7 m).
+Maksimimitta keskeltä keskelle vierekkäisillä symboleilla on 0.32 mm.
+Minimimitta keskeltä keskelle vierekkäisillä symboleilla on 0.25 mm.
+Tiheys 10-12 pistettä / mm².
+Pisteitä ei piirretä viivamaiseen muotoon, että vältetään kivikon merkkien sekoittuminen kasvillisuusrajan symbolin (416) kanssa.</translation>
     </message>
     <message>
         <source>Sandy ground</source>
         <comment>Name of symbol 213</comment>
-        <translation type="unfinished">Avonainen hietikko</translation>
+        <translation>Hietikko</translation>
     </message>
     <message>
         <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.
 The symbol is orientated to north.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 213</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hiekan peittämä alue, jossa juostavuus hidastuu alle 80 %:iin verraten normaaliin nopeuteen.
+Symboli piirretään pohjois-eteläsuunnassa.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).</translation>
     </message>
     <message>
         <source>Bare rock</source>
@@ -867,12 +914,15 @@ An area of rock covered with grass, moss or other low vegetation, shall not be s
 An area of less runnable bare rock should be shown using a stony ground symbol (210-212).
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 214</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kulkukelpoisuudeltaan hyvä kallioalue, josta pääosin puuttuu irtomaa tai kasvillisuus, kuvataan avokalliona.
+Alueita, joiden pinta on ruohoa, sammalta tai muuta matalaa kasvillisuutta, ei kuvata avokalliona.
+Hidaskulkuiset ja rosoisen kiviset kallioalueet kuvataan kivikkosymboleilla.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).</translation>
     </message>
     <message>
         <source>Trench</source>
         <comment>Name of symbol 215</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaivanto, juoksuhauta</translation>
     </message>
     <message>
         <source>Rocky or artificial trench. Minimum depth should be 1 m.
@@ -881,12 +931,15 @@ Shorter trenches may be exaggerated to the minimum graphical dimension.
 Impassable trenches shall be represented using symbol Impassable cliff (201).
 Collapsed and easily crossable trenches should be mapped as erosion gullies.</source>
         <comment>Description of symbol 215</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kivinen tai keinotekoinen kaivanto. Minimisyvyys 1 m.
+Minimipituus 1 mm (maastomitta 15 m).
+Ylipääsemättömät kaivannot on kuvattava ylipääsemättömänä jyrkänteenä (symboli 201).
+Romahtaneet ja helposti ylitettävät kaivannot on kuvattava uurteena (symboli 107).</translation>
     </message>
     <message>
         <source>Uncrossable body of water (full colour), with bank line</source>
         <comment>Name of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylipääsemätön vesialue</translation>
     </message>
     <message>
         <source>The black bank line emphasises that the feature is uncrossable.
@@ -894,24 +947,30 @@ Dominant areas of water may be shown with 70% colour. Small areas of water and b
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>Musta reunaviiva korostaa, että alue on ylipääsemätön.
+Suuret ja hallitsevat vesialueet voidaan kuvata 70 % värillä. Pienet vesialueet kuvataan aina 100 % värillä.
+Minimileveys 0.3 mm (sisämitta).
+Minimialue (sisämitta) 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Uncrossable body of water (full colour)</source>
         <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylipääsemätön vesialue (100 % väri)</translation>
     </message>
     <message>
         <source>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Musta reunaviiva korostaa, että alue on ylipääsemätön.
+Suuret ja hallitsevat vesialueet voidaan kuvata 70 % värillä. Pienet vesialueet kuvataan aina 100 % värillä.
+Minimileveys 0.3 mm (sisämitta).
+Minimialue (sisämitta) 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Uncrossable body of water (dominant), with bank line</source>
         <comment>Name of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylipääsemätön vesialue (suuri ja hallitseva), rantaviivalla</translation>
     </message>
     <message>
         <source>The black bank line emphasises that the feature is uncrossable.
@@ -919,24 +978,30 @@ Dominant areas of water may be shown with 70% colour. Small areas of water and b
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Musta reunaviiva korostaa, että alue on ylipääsemätön.
+Suuret ja hallitsevat vesialueet voidaan kuvata 70 % värillä. Pienet vesialueet kuvataan aina 100 % värillä.
+Minimileveys 0.3 mm (sisämitta).
+Minimialue (sisämitta) 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Uncrossable body of water (dominant)</source>
         <comment>Name of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylipääsemätön vesialue (suuri ja hallitseva)</translation>
     </message>
     <message>
         <source>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Musta reunaviiva korostaa, että alue on ylipääsemätön. Suuret ja hallitsevat vesialueet voidaan kuvata 70 %
+värillä. Pienet vesialueet kuvataan aina 100 % värillä.
+Minimileveys 0.3 mm (sisämitta).
+Minimialue (sisämitta) 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Uncrossable body of water, bank line</source>
         <comment>Name of symbol 301.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylipääsemätön vesialue, rantaviiva</translation>
     </message>
     <message>
         <source>A black bank line indicates that the feature cannot be crossed.</source>
@@ -946,7 +1011,7 @@ Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
     <message>
         <source>Shallow body of water, with solid outline</source>
         <comment>Name of symbol 302</comment>
-        <translation type="unfinished"></translation>
+        <translation>Matala vesialue, kiinteä reunaviiva</translation>
     </message>
     <message>
         <source>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).
@@ -955,12 +1020,16 @@ Minimum area (inside): 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width (full colour): 0.3 mm.
 Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 302</comment>
-        <translation type="unfinished"></translation>
+        <translation>Matala vesialue, jossa veden korkeus voi vaihdella kausittain, voidaan esittää ulkoreunan katkoviivalla. Pienet matalat vesialueet esitetään 100 % sinisellä ilman reunaviivaa.
+Minimileveys (sisämitta) 0.3 mm.
+Minimialue (sisämitta) 0.7 mm x 0.7 mm (maastomitta 10.5 m x10.5 m).
+Minimileveys (sisämitta) 100% sinisellä 0.3 mm.
+Minimialue (sisämitta) 100% sinisellä 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Shallow body of water</source>
         <comment>Name of symbol 302.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Matala vesialue</translation>
     </message>
     <message>
         <source>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).
@@ -969,39 +1038,45 @@ Minimum area (inside): 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width (full colour): 0.3 mm.
 Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 302.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Matala vesialue, jossa veden korkeus voi vaihdella kausittain, voidaan esittää ulkoreunan katkoviivalla. Pienet matalat vesialueet esitetään 100 % sinisellä ilman reunaviivaa.
+Minimileveys (sisämitta) 0.3 mm.
+Minimialue (sisämitta) 0.7 mm x 0.7 mm (maastomitta 10.5 m x10.5 m).
+Minimileveys (sisämitta) 100% sinisellä 0.3 mm.
+Minimialue (sisämitta) 100% sinisellä 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Shallow body of water, solid outline</source>
         <comment>Name of symbol 302.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Matala vesialue, kiinteä reunaviiva</translation>
     </message>
     <message>
         <source>Use this symbol to represent the outline of a shallow body of water which is not seasonal or periodic.</source>
         <comment>Description of symbol 302.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytä tätä symbolia matalalle vesialueelle, jonka korkeus ei vaihtele.</translation>
     </message>
     <message>
         <source>Shallow body of water, dashed outline</source>
         <comment>Name of symbol 302.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Matala vesialue, katkoreunaviiva</translation>
     </message>
     <message>
         <source>Use this symbol to represent the outline of a shallow seasonal or periodic body of water.</source>
         <comment>Description of symbol 302.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytä tätä symbolia matalaan vesialueeseen, jonka korkeus vaihtelee.</translation>
     </message>
     <message>
         <source>Small shallow body of water (full colour)</source>
         <comment>Name of symbol 302.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni matala vesialue (100 % väri)</translation>
     </message>
     <message>
         <source>Small shallow water bodies may be represented using this symbol (without an outline).
 Minimum width: 0.3 mm.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 302.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni matala vesialue voidaan esittää tällä symbolilla ilman reunaviivaa.
+Minimileveys (sisämitta) 0.3 mm.
+Minimialue (sisämitta) 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Waterhole</source>
@@ -1012,7 +1087,8 @@ Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 303</comment>
-        <translation type="unfinished"></translation>
+        <translation>Veden täyttämä kuoppa, jota ei pienen kokonsa vuoksi voida kuvata pohjapiirroksen mukaisesti. Symbolin painopiste osoittaa kohteen sijainnin. Symboli avautuu pohjoiseen.
+Maastomitta 10.5 m x 12 m.</translation>
     </message>
     <message>
         <source>Crossable watercourse</source>
@@ -1023,7 +1099,8 @@ Footprint: 10.5 m x 12 m.</source>
         <source>Should be at least 2 m wide.
 Minimum length (isolated): 1 mm (footprint 15 m).</source>
         <comment>Description of symbol 304</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylitettävissä oleva yleensä vähintään 2 m leveä vesiuoma.
+Minimipituus 1 mm (maastomitta 15 m).</translation>
     </message>
     <message>
         <source>Small crossable watercourse</source>
@@ -1033,30 +1110,33 @@ Minimum length (isolated): 1 mm (footprint 15 m).</source>
     <message>
         <source>Minimum length (isolated): 1 mm (footprint 15 m).</source>
         <comment>Description of symbol 305</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylitettävissä oleva puro tai oja. Minimipituus 1 mm (maastomitta 15 m).</translation>
     </message>
     <message>
         <source>Minor/seasonal water channel</source>
         <comment>Name of symbol 306</comment>
-        <translation type="unfinished"></translation>
+        <translation>Epäselvä puro tai oja</translation>
     </message>
     <message>
         <source>A natural or man-made minor water channel which may contain water only intermittently.
 Minimum length (isolated): two dashes (2.75 mm - footprint 41 m).</source>
         <comment>Description of symbol 306</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni kaivettu tai luonnon vesiuoma, joka voi olla ajoittain kuiva.
+Minimipituus kaksi viivan osaa (2.75 mm, maastomitta 41 m).</translation>
     </message>
     <message>
         <source>Uncrossable marsh, with outline</source>
         <comment>Name of symbol 307</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylipääsemätön suo, reunaviivalla</translation>
     </message>
     <message>
         <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol Uncrossable body of water (301). The symbol may be combined with a rough open land symbol (403, 404) to show openness.
 The symbol is orientated to north.
 Minimum width: 0.3 mm (inside). Minimum area: 0.5 mm² (inside).</source>
         <comment>Description of symbol 307</comment>
-        <translation type="unfinished"></translation>
+        <translation>Suo, jonka ylittäminen on vaarallista tai mahdotonta. Ympäröidään mustalla ylipääsemättömyyden osoittavalla reunaviivalla. Avoimille soille lisätään symboli 403 tai 404. Ylipääsemättömän suon ja ylipääsemättömän vesialueen väliin ei piirretä mustaa viivaa.
+Symboli piirretään pohjois-eteläsuunnassa.
+Minimileveys 0.3 mm (sisämitta). Minimialue 0.5 mm2 (sisämitta).</translation>
     </message>
     <message>
         <source>Uncrossable marsh</source>
@@ -1068,17 +1148,19 @@ Minimum width: 0.3 mm (inside). Minimum area: 0.5 mm² (inside).</source>
 The symbol is orientated to north.
 Minimum width: 0.3 mm (inside). Minimum area: 0.5 mm² (inside).</source>
         <comment>Description of symbol 307.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Suo, jonka ylittäminen on vaarallista tai mahdotonta. Ympäröidään mustalla ylipääsemättömyyden osoittavalla reunaviivalla. Avoimille soille lisätään symboli 403 tai 404. Ylipääsemättömän suon ja ylipääsemättömän vesialueen väliin ei piirretä mustaa viivaa.
+Symboli piirretään pohjois-eteläsuunnassa.
+Minimileveys 0.3 mm (sisämitta). Minimialue 0.5 mm2 (sisämitta).</translation>
     </message>
     <message>
         <source>Uncrossable marsh, outline</source>
         <comment>Name of symbol 307.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylipääsemätön suo, reunaviiva</translation>
     </message>
     <message>
         <source>The black outline emphasises that the feature is uncrossable.</source>
         <comment>Description of symbol 307.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Musta reunaviiva osoittaa, että suo on ylipääsemätön.</translation>
     </message>
     <message>
         <source>Marsh</source>
@@ -1091,7 +1173,10 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</source>
         <comment>Description of symbol 308</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylitettävä selväreunainen suo.
+Symboliin yhdistetään muita symboleita osoittamaan juostavuutta ja alueen avoimuutta.
+Symboli piirretään pohjois-eteläsuunnassa.
+Minimimitta 0.5 mm x 0.4 mm (maastomitta 7.5 m x 6 m).</translation>
     </message>
     <message>
         <source>Marsh, minimum size</source>
@@ -1104,7 +1189,10 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</source>
         <comment>Description of symbol 308.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylitettävä selväreunainen suo.
+Symboliin yhdistetään muita symboleita osoittamaan juostavuutta ja alueen avoimuutta.
+Symboli piirretään pohjois-eteläsuunnassa.
+Minimimitta 0.5 mm x 0.4 mm (maastomitta 7.5 m x 6 m).</translation>
     </message>
     <message>
         <source>Narrow marsh</source>
@@ -1115,7 +1203,8 @@ Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</source>
         <source>A marsh or trickle of water which is too narrow (less than about 5 m wide) to be shown with the marsh symbol.
 Minimum length (isolated): two dots (0.7 mm - footprint 10.5 m).</source>
         <comment>Description of symbol 309</comment>
-        <translation type="unfinished"></translation>
+        <translation>Maastossa selvästi havaittava suomainen juotti, jota ei kapeutensa (alle 5 m) vuoksi voida kuvata suona.
+Minimipituus kaksi pistettä (0.7 mm, maastomitta 10.5 m).</translation>
     </message>
     <message>
         <source>Indistinct marsh</source>
@@ -1128,7 +1217,10 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</source>
         <comment>Description of symbol 310</comment>
-        <translation type="unfinished"></translation>
+        <translation>Metsän ja suon välimuoto, soistumis- tai kuivumisvaiheessa oleva alue. Soistuvan alueen reuna on yleensä epämääräinen ja kasvillisuus samanlaista ympäröivän maaston kanssa.
+Symboliin yhdistetään muita symboleita osoittamaan juostavuutta ja alueen avoimuutta.
+Symboli piirretään pohjois-eteläsuunnassa.
+Minimialue 2.0 mm x 0.7 mm (maastomitta 30 m x 10.5 m).</translation>
     </message>
     <message>
         <source>Indistinct marsh, minimum size</source>
@@ -1141,18 +1233,22 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</source>
         <comment>Description of symbol 310.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Metsän ja suon välimuoto, soistumis- tai kuivumisvaiheessa oleva alue. Soistuvan alueen reuna on yleensä epämääräinen ja kasvillisuus samanlaista ympäröivän maaston kanssa.
+Symboliin yhdistetään muita symboleita osoittamaan juostavuutta ja alueen avoimuutta.
+Symboli piirretään pohjois-eteläsuunnassa.
+Minimialue 2.0 mm x 0.7 mm (maastomitta 30 m x 10.5 m).</translation>
     </message>
     <message>
         <source>Well, fountain or water tank</source>
         <comment>Name of symbol 311</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaivo, suihkulähde, vesivarasto</translation>
     </message>
     <message>
         <source>A prominent well, fountain, water tank or captive spring.
 Footprint: 12 m x 12 m.</source>
         <comment>Description of symbol 311</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selkeästi maastosta erottuva kaivo, suihkulähde tai vesivarasto.
+Maastomitta 12 x 12 m.</translation>
     </message>
     <message>
         <source>Spring</source>
@@ -1165,7 +1261,9 @@ Location is the centre of gravity of the symbol.
 The symbol is orientated to open downstream.
 Footprint: 13.5 m x 7 m.</source>
         <comment>Description of symbol 312</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi maastossa havaittava vesilähde.
+Symbolin painopiste osoittaa kohteen sijainnin ja avautuu puron suuntaan.
+Maastomitta 13.5 m x 7 m.</translation>
     </message>
     <message>
         <source>Prominent water feature</source>
@@ -1177,7 +1275,9 @@ Footprint: 13.5 m x 7 m.</source>
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 313</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symboli piirretään pohjois-eteläsuunnassa.
+Määritelmä annettava erikseen kartassa.
+Maastomitta 13.5 m x 13.5 m.</translation>
     </message>
     <message>
         <source>Open land</source>
@@ -1189,7 +1289,9 @@ Footprint: 13.5 m x 13.5 m.</source>
 Shall not be combined with area symbols other than Broken ground (113), Boulder field (208), Marsh (308) and Indistinct marsh (310).
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 401</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avoin alue nurmi, sammal tms. -pinnalla, jossa juostavuus on parempi kuin normaalissa avoimessa metsässä. Jos keltainen väri tulee hallitsevaksi, voidaan käyttää keltaisen väriarvoa 75 % täyden keltaisen asemasta.
+Symboliin voidaan yhdistää vain symboli 113, 208, 308 tai 310.
+Minimialue 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
@@ -1204,12 +1306,17 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</source>
         <comment>Description of symbol 402</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avoimet nurmimaiset alueet, joissa on hajanaisesti pensaita tai puita, voidaan yleistää käyttämällä valkoisia pyöreitä pisteitä keltaisessa väripohjassa. Pisteet voivat olla valkoisia (hajanaisia puita) tai vihreitä (hajanaisia pensaita). Yksittäiset selkeästi erottuvat puut voidaan merkitä symbolilla 417. Jos keltainen väri tulee hallitsevaksi, voidaan käyttää keltaisen väriarvoa 75 % täyden keltaisen asemasta.
+Symboliin voidaan yhdistää vain symboli 113 , 208 , 308 tai 310.
+Minimileveys 1.5 mm (maastomitta 22.5 m).
+Minimialue 2 mm x 2 mm (maastomitta 30 m x 30 m).
+Pienemmät alueet pitää joko jättää pois tai suurentaa tai käyttää symbolia 401.
+Symboli piirretään pohjois-eteläsuunnassa.</translation>
     </message>
     <message>
         <source>Open land with scattered bushes (green dots)</source>
         <comment>Name of symbol 402.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avoin nopeakulkuinen alue, jossa hajanaisesti pensaita (vihreäitä pisteitä)</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes / thickets). Prominent individual trees may be added using symbol Prominent large tree (417). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
@@ -1219,7 +1326,12 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</source>
         <comment>Description of symbol 402.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avoimet nurmimaiset alueet, joissa on hajanaisesti pensaita tai puita, voidaan yleistää käyttämällä valkoisia pyöreitä pisteitä keltaisessa väripohjassa. Pisteet voivat olla valkoisia (hajanaisia puita) tai vihreitä (hajanaisia pensaita). Yksittäiset selkeästi erottuvat puut voidaan merkitä symbolilla 417. Jos keltainen väri tulee hallitsevaksi, voidaan käyttää keltaisen väriarvoa 75 % täyden keltaisen asemasta.
+Symboliin voidaan yhdistää vain symboli 113 , 208 , 308 tai 310.
+Minimileveys 1.5 mm (maastomitta 22.5 m).
+Minimialue 2 mm x 2 mm (maastomitta 30 m x 30 m).
+Pienemmät alueet pitää joko jättää pois tai suurentaa tai käyttää symbolia 401.
+Symboli piirretään pohjois-eteläsuunnassa.</translation>
     </message>
     <message>
         <source>Rough open land</source>
@@ -1232,7 +1344,10 @@ May be combined with symbol Vegetation: slow running, good visibility (407) or V
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).</source>
         <comment>Description of symbol 403</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avoin kanerva- ja heinänummi, juuri istutettu taimikko (korkeus alle 1 m) tai muu matalaa kasvillisuutta (heinä tms.) sisältävä avoin alue, jossa juostavuus on samanlainen kuin normaalissa avoimessa metsässä.
+Symboliin voidaan liittää maapohjan hidastavuutta osoittavat symbolit 407 ja 409.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).
+Pienemmät alueet pitää joko jättää pois tai suurentaa tai käyttää symbolia 401.</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
@@ -1247,12 +1362,17 @@ Minimum width: 1.5 mm (footprint 22.5 m).
 Minimum area: 2.5 mm x 2.5 mm (footprint 37.5 m x 37.5 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Rough open land (403).</source>
         <comment>Description of symbol 404</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avoimet alueet, joissa on hajanaisesti pensaita tai puita, voidaan yleistää käyttämällä valkoisia pyöreitä pisteitä keltaisessa väripohjassa.
+Pisteet voivat olla valkoisia (hajanaisia puita) tai vihreitä (hajanaisia pensaita). Vain valkoisten pisteiden yhteyteen voidaan liittää maapohjan hidastavuutta osoittavat symbolit 407 ja 409.
+Minimileveys 1.5 mm (maastomitta 22.5 m).
+Minimialue 2.5 mm x 2.5 mm (maastomitta 37.5 m x 37.5 m).
+Pienemmät alueet pitää joko jättää pois tai suurentaa tai käyttää symbolia 403.
+Symboli piirretään pohjois-eteläsuunnassa.</translation>
     </message>
     <message>
         <source>Rough open land with scattered bushes (green dots)</source>
         <comment>Name of symbol 404.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avoin alue, jossa hajanaisesti pensaita (vihreitä pisteitä)</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
@@ -1262,12 +1382,17 @@ Minimum width: 1.5 mm (footprint 22.5 m).
 Minimum area: 2.5 mm x 2.5 mm (footprint 37.5 m x 37.5 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Rough open land (403).</source>
         <comment>Description of symbol 404.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avoimet alueet, joissa on hajanaisesti pensaita tai puita, voidaan yleistää käyttämällä valkoisia pyöreitä pisteitä keltaisessa väripohjassa.
+Pisteet voivat olla valkoisia (hajanaisia puita) tai vihreitä (hajanaisia pensaita). Vain valkoisten pisteiden yhteyteen voidaan liittää maapohjan hidastavuutta osoittavat symbolit 407 ja 409.
+Minimileveys 1.5 mm (maastomitta 22.5 m).
+Minimialue 2.5 mm x 2.5 mm (maastomitta 37.5 m x 37.5 m).
+Pienemmät alueet pitää joko jättää pois tai suurentaa tai käyttää symbolia 403.
+Symboli piirretään pohjois-eteläsuunnassa.</translation>
     </message>
     <message>
         <source>Forest</source>
         <comment>Name of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>Metsä</translation>
     </message>
     <message>
         <source>Typical open forest for the particular type of terrain. If no part of the forest is easily runnable then no white should appear on the map.
@@ -1276,12 +1401,16 @@ For openings in symbol Open land (401), the minimum area is 0.7 mm x 0.7 mm (foo
 For openings in symbol Vegetation: walk (408), the minimum area is 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 For openings in symbol Vegetation: fight (410) the minimum area is 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>Helppokulkuinen metsämaasto, jossa näkyvyys on hyvä, esitetään valkoisena. Jos alueella ei ole helppokulkuisia alueita, ei kartalla esiinny valkoista.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).
+Symbolin 408 yhteydessä minimialue 0.7 mm x 0.7 mm (maastomitta 10.5 m x 10.5 m).
+Symbolin 401 yhteydessä minimialue 0.7 mm x 0.7 mm (maastomitta 10.5 m x 10.5 m).
+Symbolin 410 yhteydessä minimialue 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running</source>
         <comment>Name of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, hidastaa</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
@@ -1289,12 +1418,15 @@ Where runnability is better in one direction, a regular pattern of white stripes
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</source>
         <comment>Description of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden hidastama metsä, jossa näkyvyys on huonompi ja jossa juoksunopeus hidastuu 60-80 %:iin normaalinopeudesta.
+Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista viivoitusta tätä osoittamaan.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).
+Minimileveys 0.4 mm (maastomitta 6 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, normal running in one direction</source>
         <comment>Name of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, hidastaa, juostavuus yhteen suuntaan parempi</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
@@ -1302,60 +1434,71 @@ Where runnability is better in one direction, a regular pattern of white stripes
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</source>
         <comment>Description of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden hidastama metsä, jossa näkyvyys on huonompi ja jossa juoksunopeus hidastuu 60-80 %:iin normaalinopeudesta.
+Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista viivoitusta tätä osoittamaan.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).
+Minimileveys 0.4 mm (maastomitta 6 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, good visibility</source>
         <comment>Name of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, hidastaa, hyvä näkyvyys</translation>
     </message>
     <message>
         <source>An area of good visibility and reduced runnability, due to, for instance, undergrowth (brambles, heather, low bushes, cut branches). Running speed is reduced to about 60-80% of normal speed.
 The symbol is orientated to north.
 Minimum area: 1.5 mm x 1 mm (footprint 22.5 m x 15 m).</source>
         <comment>Description of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alue, jossa on tiheä aluskasvillisuus (harvennusta, saniaista, heinää, vatukkoa, risukkoa yms.), mutta näkyvyys on yleensä hyvä. Alueella juoksunopeus hidastuu 60-80 %:iin normaalinopeudesta.
+Minimialue 1.5 mm x 1 mm (maastomitta 22.5 m x 15 m).
+Symboli piirretään pohjois-eteläsuunnassa.</translation>
     </message>
     <message>
         <source>Vegetation: walk</source>
         <comment>Name of symbol 408</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, käveltävä</translation>
     </message>
     <message>
         <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width: 0.3 mm (footprint 4.5 m).</source>
         <comment>Description of symbol 408</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden hidastama metsä, jossa näkyvyys on huonontunut ja jossa juoksunopeus hidastuu 20-60 %:iin normaalinopeudesta. Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista tai vihreää 30 % viivoitusta tätä osoittamaan.
+Minimialue 0.7 mm x 0.7 mm (maastomitta 10.5 m x 10.5 m).
+Minimileveys 0.3 mm (maastomitta 4.5 m).</translation>
     </message>
     <message>
         <source>Vegetation: walk, normal running in one direction</source>
         <comment>Name of symbol 408.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, käveltävä, hyvä juostavuus yhteen suuntaan</translation>
     </message>
     <message>
         <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width: 0.3 mm (footprint 4.5 m).</source>
         <comment>Description of symbol 408.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden hidastama metsä, jossa näkyvyys on huonontunut ja jossa juoksunopeus hidastuu 20-60 %:iin normaalinopeudesta. Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista tai vihreää 30 % viivoitusta tätä osoittamaan.
+Minimialue 0.7 mm x 0.7 mm (maastomitta 10.5 m x 10.5 m).
+Minimileveys 0.3 mm (maastomitta 4.5 m).</translation>
     </message>
     <message>
         <source>Vegetation: walk, slow running in one direction</source>
         <comment>Name of symbol 408.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, käveltävä, hidastaa yhteen suuntaan</translation>
     </message>
     <message>
         <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width: 0.3 mm (footprint 4.5 m).</source>
         <comment>Description of symbol 408.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden hidastama metsä, jossa näkyvyys on huonontunut ja jossa juoksunopeus hidastuu 20-60 %:iin normaalinopeudesta. Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista tai vihreää 30 % viivoitusta tätä osoittamaan.
+Minimialue 0.7 mm x 0.7 mm (maastomitta 10.5 m x 10.5 m).
+Minimileveys 0.3 mm (maastomitta 4.5 m).</translation>
     </message>
     <message>
         <source>Vegetation: walk, good visibility</source>
         <comment>Name of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, käveltävä, hyvä näkyvyys</translation>
     </message>
     <message>
         <source>An area of good visibility that is difficult to run through, due to, for instance, undergrowth (brambles, heather, low bushes, cut branches). Running speed is reduced to about 20-60% of normal speed.
@@ -1363,12 +1506,15 @@ Areas of good visibility that are very difficult to run or impassable are repres
 The symbol is orientated to north.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alue, jossa on tiheä aluskasvillisuus (harvennusta, saniaista, heinää, vatukkoa, risukkoa yms.), mutta näkyvyys on yleensä hyvä. Alueella juoksunopeus hidastuu 20-60 %:iin normaalinopeudesta.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).
+Alueet, joissa on hyvä näkyvyys, mutta jotka ovat erittäin hitaita tai läpipääsemättömiä, kuvataan symbolilla 410.
+Symboli piirretään pohjois-eteläsuunnassa.</translation>
     </message>
     <message>
         <source>Vegetation: fight</source>
         <comment>Name of symbol 410</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, erittäin hidas</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
@@ -1376,12 +1522,15 @@ Where runnability is better in one direction, a regular pattern of white, green 
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</source>
         <comment>Description of symbol 410</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden (puusto tai aluskasvillisuus) hidastama alue, jossa juoksunopeus hidastuu alle 20 %:iin normaalinopeudesta.
+Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista / vihreää 30 % / vihreää 60 % viivoitusta tätä osoittamaan.
+Minimialue 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).
+Minimileveys 0.25 mm (maastomitta 3.8 m).</translation>
     </message>
     <message>
         <source>Vegetation: fight, normal running in one direction</source>
         <comment>Name of symbol 410.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, erittäin hidas, normaali juostavuus yhteen suuntaan</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
@@ -1389,12 +1538,15 @@ Where runnability is better in one direction, a regular pattern of white, green 
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</source>
         <comment>Description of symbol 410.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden (puusto tai aluskasvillisuus) hidastama alue, jossa juoksunopeus hidastuu alle 20 %:iin normaalinopeudesta.
+Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista / vihreää 30 % / vihreää 60 % viivoitusta tätä osoittamaan.
+Minimialue 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).
+Minimileveys 0.25 mm (maastomitta 3.8 m).</translation>
     </message>
     <message>
         <source>Vegetation: fight, slow running in one direction</source>
         <comment>Name of symbol 410.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, erittäin hidas, hidastaa yhteen suuntaan</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
@@ -1402,12 +1554,15 @@ Where runnability is better in one direction, a regular pattern of white, green 
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</source>
         <comment>Description of symbol 410.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden (puusto tai aluskasvillisuus) hidastama alue, jossa juoksunopeus hidastuu alle 20 %:iin normaalinopeudesta.
+Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista / vihreää 30 % / vihreää 60 % viivoitusta tätä osoittamaan.
+Minimialue 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).
+Minimileveys 0.25 mm (maastomitta 3.8 m).</translation>
     </message>
     <message>
         <source>Vegetation: fight, walk in one direction</source>
         <comment>Name of symbol 410.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, erittäin hidas, käveltävä yhteen suuntaan</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
@@ -1415,28 +1570,32 @@ Where runnability is better in one direction, a regular pattern of white, green 
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</source>
         <comment>Description of symbol 410.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden (puusto tai aluskasvillisuus) hidastama alue, jossa juoksunopeus hidastuu alle 20 %:iin normaalinopeudesta.
+Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista / vihreää 30 % / vihreää 60 % viivoitusta tätä osoittamaan.
+Minimialue 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).
+Minimileveys 0.25 mm (maastomitta 3.8 m).</translation>
     </message>
     <message>
         <source>Vegetation: fight, minimum width</source>
         <comment>Name of symbol 410.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, erittäin hidas, minimileveys</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
 Minimum width: 0.35 mm</source>
         <comment>Description of symbol 410.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden (puusto tai aluskasvillisuus) hidastama alue, jossa juoksunopeus hidastuu alle 20 %:iin normaalinopeudesta.
+Minimileveys 0.35 mm</translation>
     </message>
     <message>
         <source>Vegetation, impassable (from ISOM 2017, first edition)</source>
         <comment>Name of symbol 411</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, läpipääsemätön (ISOM 2017:sta)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM 2000. Use either Vegetation: fight (410) or Area that shall not be entered (520) instead.</source>
         <comment>Description of symbol 411</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varattu muunnokselle ISOM 2000:sta. Käytä tämän sijaan symboleita 410 tai 520.</translation>
     </message>
     <message>
         <source>Cultivated land</source>
@@ -1450,12 +1609,16 @@ The symbol is combined with symbol Out-of-bounds area (709) to show cultivated l
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <comment>Description of symbol 412</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viljelty peltomaa.
+Jos alueen käyttö on kielletty, on symboliin liitettävä violetin värinen kielletyn alueen symboli 709 osoittamaan kieltoa.
+Koska juostavuus voi vaihdella viljelykauden ajankohdasta ja kasvilajeista riippuen, pitäisi alueen käyttöä välttää ratasuunnittelussa.
+Symboli piirretään pohjois-eteläsuunnassa.
+Minimialue 3 mm x 3 mm (maastomitta 45 m x 45 m).</translation>
     </message>
     <message>
         <source>Cultivated land (black pattern)</source>
         <comment>Name of symbol 412.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viljelty maa (musta kuviointi)</translation>
     </message>
     <message>
         <source>Cultivated land. This symbol must be used together with another symbol:
@@ -1466,7 +1629,11 @@ Since the runnability may vary, such areas should be avoided when setting course
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <comment>Description of symbol 412.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viljelty peltomaa.
+Jos alueen käyttö on kielletty, on symboliin liitettävä violetin värinen kielletyn alueen symboli 709 osoittamaan kieltoa.
+Koska juostavuus voi vaihdella viljelykauden ajankohdasta ja kasvilajeista riippuen, pitäisi alueen käyttöä välttää ratasuunnittelussa.
+Symboli piirretään pohjois-eteläsuunnassa.
+Minimialue 3 mm x 3 mm (maastomitta 45 m x 45 m).</translation>
     </message>
     <message>
         <source>Orchard</source>
@@ -1479,12 +1646,15 @@ Must be combined with either symbol Open land (401) or Rough open land (403).
 May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 413</comment>
-        <translation type="unfinished"></translation>
+        <translation>Puutarhapuita tai -pensaita kasvava peltomaa. Pistejonon suunnalla voidaan osoittaa istutusten suunta.
+Käytetään symbolin 401 tai symbolin 403 kanssa.
+Voidaan yhdistää joko symbolin 407 tai 409 kanssa osoittamaan juostavuuden hidastumista.
+Minimialue 2 mm x 2 mm (maastomitta 30 m x 30 m).</translation>
     </message>
     <message>
         <source>Orchard, rough open land</source>
         <comment>Name of symbol 413.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Puutarha, avoin alue</translation>
     </message>
     <message>
         <source>Land planted with trees or bushes, normally in a regular pattern. The dot lines may be orientated to show the direction of planting.
@@ -1492,29 +1662,34 @@ Must be combined with either symbol Open land (401) or Rough open land (403).
 May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 413.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Puutarhapuita tai -pensaita kasvava peltomaa. Pistejonon suunnalla voidaan osoittaa istutusten suunta.
+Käytetään symbolin 401 tai symbolin 403 kanssa.
+Voidaan yhdistää joko symbolin 407 tai 409 kanssa osoittamaan juostavuuden hidastumista.
+Minimialue 2 mm x 2 mm (maastomitta 30 m x 30 m).</translation>
     </message>
     <message>
         <source>Vineyard or similar</source>
         <comment>Name of symbol 414</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viinitarha tai vastaava</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 414</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viinitarha tai vastaava riviin istutettu alue, jossa juostavuus on hyvä tai normaali istutusten suuntaan. Viivat piirretään istutuksen suuntaan. Käytetään symbolin 401 tai symbolin 403 kanssa.
+Minimialue 2 mm x 2 mm (maastomitta 30 m x 30 m).</translation>
     </message>
     <message>
         <source>Vineyard or similar, rough open land</source>
         <comment>Name of symbol 414.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viinitarha tai vastaava, avoin alue</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 414.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viinitarha tai vastaava riviin istutettu alue, jossa juostavuus on hyvä tai normaali istutusten suuntaan. Viivat piirretään istutuksen suuntaan. Käytetään symbolin 401 tai symbolin 403 kanssa.
+Minimialue 2 mm x 2 mm (maastomitta 30 m x 30 m).</translation>
     </message>
     <message>
         <source>Distinct cultivation boundary</source>
@@ -1525,7 +1700,8 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <source>A boundary of cultivated land vegetation (symbols 401, 412, 413, 414) or a boundary between areas of cultivated land when not shown with other symbols (fence, wall, path, etc.).
 Minimum length: 2 mm (footprint 30 m).</source>
         <comment>Description of symbol 415</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symbolien 401, 412, 413 tai 414 raja, jos aluetta ei erota muu symboli (aita, muuri, polku jne.).
+Minimipituus 2 mm (maastomitta 30 m).</translation>
     </message>
     <message>
         <source>Distinct vegetation boundary</source>
@@ -1539,12 +1715,17 @@ A disadvantage with a green line is that it cannot be used to show distinct vege
 Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
 Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
         <comment>Description of symbol 416</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvä metsän reuna tai selvästi havaittava metsätyypin ero.
+Erittäin selkeä metsän ja kasvillisuuden raja voidaan esittää symbolilla 415. Runsaasti kivi- ja kalliokohteita sisältävässä maastossa on suositeltavaa käyttää kuviorajana vihreää katkoviivaa.
+Haittapuolena tässä on, ettei vihreällä katkoviivalla voida esittää kasvillisuuden kuviorajoja symbolin 410 kanssa. Näissä tapauksissa vaihtoehtoinen kuvioraja on symboli 415.
+Vain yhtä kuviorajatyyppiä voidaan käyttää samalla kartalla. Yleensä suomalaisissa maastotyypeissä on suositeltavampaa käyttää mustaa pistekatkoviivaa.
+Minimipituus mustilla pisteillä 5 pistettä (2.5 mm, maastomitta 37 m).
+Minimipituus vihreällä katkoviivalla 4 viivan osaa (1.8 mm, maastomitta 27 m).</translation>
     </message>
     <message>
         <source>Distinct vegetation boundary, green dashed line</source>
         <comment>Name of symbol 416.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selkeä kasvillisuuden raja, vihreä katkoviiva</translation>
     </message>
     <message>
         <source>A distinct forest edge or vegetation boundary within the forest.
@@ -1553,7 +1734,12 @@ A disadvantage with a green line is that it cannot be used to show distinct vege
 Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
 Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
         <comment>Description of symbol 416.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvä metsän reuna tai selvästi havaittava metsätyypin ero.
+Erittäin selkeä metsän ja kasvillisuuden raja voidaan esittää symbolilla 415. Runsaasti kivi- ja kalliokohteita sisältävässä maastossa on suositeltavaa käyttää kuviorajana vihreää katkoviivaa.
+Haittapuolena tässä on, ettei vihreällä katkoviivalla voida esittää kasvillisuuden kuviorajoja symbolin 410 kanssa. Näissä tapauksissa vaihtoehtoinen kuvioraja on symboli 415.
+Vain yhtä kuviorajatyyppiä voidaan käyttää samalla kartalla. Yleensä suomalaisissa maastotyypeissä on suositeltavampaa käyttää mustaa pistekatkoviivaa.
+Minimipituus mustilla pisteillä 5 pistettä (2.5 mm, maastomitta 37 m).
+Minimipituus vihreällä katkoviivalla 4 viivan osaa (1.8 mm, maastomitta 27 m).</translation>
     </message>
     <message>
         <source>Prominent large tree</source>
@@ -1563,18 +1749,19 @@ Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</
     <message>
         <source>Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 417</comment>
-        <translation type="unfinished"></translation>
+        <translation>Valkoinen tausta vihreän ympyrän alla parantamaan luettavuutta. Maastomitta 13.5 m x 13.5 m.</translation>
     </message>
     <message>
         <source>Prominent bush or tree</source>
         <comment>Name of symbol 418</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selkeästi erottuva pensas tai puu</translation>
     </message>
     <message>
         <source>Use sparingly, as it is easily mistaken for symbol Small knoll (109).
 Footprint: 9.0 m x 9.0 m.</source>
         <comment>Description of symbol 418</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytettävä harkiten, koska värisokeat voivat sekoittaa symboliin 109 (pieni kumpare). Pieni valkoinen piste symbolin keskellä auttaa luettavuutta.
+Maastomitta 9 m x 9 m.</translation>
     </message>
     <message>
         <source>Prominent vegetation feature</source>
@@ -1586,7 +1773,9 @@ Footprint: 9.0 m x 9.0 m.</source>
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 419</comment>
-        <translation type="unfinished"></translation>
+        <translation>Valkoinen tausta vihreä ristin alla parantamaan luettavuutta. Symboli piirretään pohjois-eteläsuunnassa. 
+Määritelmä annettava erikseen kartassa.
+Maastomitta 13.5 m x 13.5 m.</translation>
     </message>
     <message>
         <source>Paved area, with bounding line</source>
@@ -1597,7 +1786,8 @@ Footprint: 13.5 m x 13.5 m.</source>
         <source>An area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 501</comment>
-        <translation type="unfinished"></translation>
+        <translation>Asfaltilla, kovalla soralla, laatoituksella tai betonilla päällystetty alue. Alueeseen liitetään musta reunaviiiva, kun reuna on selkeä. 
+Minimialue 1 mm x 1 mm (15 m x 15 m).</translation>
     </message>
     <message>
         <source>Paved area</source>
@@ -1608,7 +1798,8 @@ Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <source>An area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 501.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Asfaltilla, kovalla soralla, laatoituksella tai betonilla päällystetty alue. Alueeseen liitetään musta reunaviiiva, kun reuna on selkeä.
+Minimialue 1 mm x 1 mm (15 m x 15 m).</translation>
     </message>
     <message>
         <source>Paved area, bounding line</source>
@@ -1618,41 +1809,45 @@ Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
     <message>
         <source>Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.</source>
         <comment>Description of symbol 501.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Päällystetttyyn alueeseen liitetään musta reunaviiiva, kun reuna on selkeä.</translation>
     </message>
     <message>
         <source>Wide road, minimum width</source>
         <comment>Name of symbol 502</comment>
-        <translation type="unfinished"></translation>
+        <translation>Leveä tie, minimileveys</translation>
     </message>
     <message>
         <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
 The space between the black lines is filled with brown (50%).
 A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
         <comment>Description of symbol 502</comment>
-        <translation type="unfinished"></translation>
+        <translation>Leveys piirretään mittakaavassa, mutta ei saa olla pienempi kuin minimileveys (0.3 + 2*0.14 mm, maastomitta 8.7 m). Ulkoreunan musta viiva voidaan tarvittaessa korvata muilla mustilla viivamaisilla symboleilla, kuten symboli 516, 518, 513 tai 515.
+Mustien viivojen välinen alue täytetään 50 % ruskealla.
+Leveä kahden ajoradan tie voidaan esittää siten, että keskellä on yksi reunaviiva.</translation>
     </message>
     <message>
         <source>Wide road, 0.5 mm (from ISOM2000)</source>
         <comment>Name of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Leveä tie, 0.5 mm (ISOM2000:sta)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varattu ISOM2000 muunnokselle. Symbolin käyttöä uusissa kartoissa ei suositella.</translation>
     </message>
     <message>
         <source>Road with two carriageways</source>
         <comment>Name of symbol 502.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kahden ajoradan tie</translation>
     </message>
     <message>
         <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
 The space between the black lines is filled with brown (50%).
 A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
         <comment>Description of symbol 502.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Leveys piirretään mittakaavassa, mutta ei saa olla pienempi kuin minimileveys (0.3 + 2*0.14 mm, maastomitta 8.7 m). Ulkoreunan musta viiva voidaan tarvittaessa korvata muilla mustilla viivamaisilla symboleilla, kuten symboli 516, 518, 513 tai 515.
+Mustien viivojen välinen alue täytetään 50 % ruskealla.
+Leveä kahden ajoradan tie voidaan esittää siten, että keskellä on yksi reunaviiva.</translation>
     </message>
     <message>
         <source>Road</source>
@@ -1662,7 +1857,7 @@ A road with two carriageways can be represented using two wide road symbols side
     <message>
         <source>A maintained road suitable for motor vehicles in all weather. Width less than 5 m.</source>
         <comment>Description of symbol 503</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hoidettu tie, jota pitkin voidaan ajaa moottoriajoneuvoilla kaikissa sääoloissa. Leveys on yleensä alle 5 m.</translation>
     </message>
     <message>
         <source>Vehicle track</source>
@@ -1674,7 +1869,9 @@ A road with two carriageways can be represented using two wide road symbols side
 For indistinct junctions the dashes of the symbols are not joined.
 Minimum length (isolated): two dashes (6.25 mm - footprint 94 m).</source>
         <comment>Description of symbol 504</comment>
-        <translation type="unfinished"></translation>
+        <translation>Polku tai pohjustettu heikko tie, jolla voidaan ajaa hitaasti. Selkeissä risteyksissä mustat viivat piirretään yhteen,
+epäselvissä risteyksissä symboliviivoja ei piirretä yhteen.
+Minimipituus kaksi viivan osaa (6.25 mm, maastomitta).</translation>
     </message>
     <message>
         <source>Footpath</source>
@@ -1687,12 +1884,14 @@ For distinct junctions the dashes of the symbols are joined at the junction.
 For indistinct junctions the dashes of the symbols are not joined.
 Minimum length (isolated): two dashes (4.25 mm - footprint 64 m)</source>
         <comment>Description of symbol 505</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi havaittava hyvin juostava polku, polkupyöräura tai vanha ajopolku.
+Selkeissä risteyksissä mustat viivat piirretään yhteen, epäselvissä risteyksissä symboliviivoja ei piirretä yhteen.
+Minimipituus kaksi viivan osaa (4.25 mm, maastomitta 64 m)</translation>
     </message>
     <message>
         <source>Small footpath</source>
         <comment>Name of symbol 506</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni polku</translation>
     </message>
     <message>
         <source>A runnable small path or (temporary) forest extraction track which can be followed at competition speed.
@@ -1700,18 +1899,21 @@ For distinct junctions the dashes of the symbols are joined at the junction.
 For indistinct junctions the dashes of the symbols are not joined.
 Minimum length (isolated): two dashes (2.25 mm - footprint 34 m).</source>
         <comment>Description of symbol 506</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni juostava polku tai (väliaikainen) puiden korjuu-ura, jota on helppo seurata kilpailuvauhdilla.
+Selkeissä risteyksissä mustat viivat piirretään yhteen, epäselvissä risteyksissä symboliviivoja ei piirretä yhteen.
+Minimipituus kaksi viivan osaa (2.25 mm, maastomitta 34 m).</translation>
     </message>
     <message>
         <source>Less distinct small footpath</source>
         <comment>Name of symbol 507</comment>
-        <translation type="unfinished"></translation>
+        <translation>Epäselvä polku</translation>
     </message>
     <message>
         <source>A runnable less distinct / visible small path or forestry extraction track.
 Minimum length: two sections of double dashes (5.3 mm - footprint 79.5 m).</source>
         <comment>Description of symbol 507</comment>
-        <translation type="unfinished"></translation>
+        <translation>Juostava vähemmän selkeä / näkyvä polku tai vanha puiden korjuu-ura.
+Minimipituus kaksi kahden viivanosan paria (5.3 mm, maastomitta 79.5 m).</translation>
     </message>
     <message>
         <source>Narrow ride</source>
@@ -1727,51 +1929,61 @@ Green 30%: slow running.
 Green 60%: walk.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
         <comment>Description of symbol 508</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linja tai ura, esim. metsäkoneura tai hiihtoladun pohja, jossa ei ole selkeästi havaittavaa polkua. Juostavuus esitetään symboliviivaa hieman paksummalla taustaviivalla (keltainen, vihreä, valkoinen tausta):
+•Valkoinen (ei taustaviivaa): sama juostavuus kuin ympäröivässä maastossa.
+•Keltainen 100 %: hyvä juostavuus.
+•Valkoinen vihreässä: normaali juostavuus.
+•Vihreä 30 %: hidastava juostavuus.
+•Vihreä 60 %: käveltävä.
+Minimipituus kaksi viivan osaa (3.25 mm, maastomitta 48 m).</translation>
     </message>
     <message>
         <source>Narrow ride, easy running</source>
         <comment>Name of symbol 508.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ajoura tai kapea linja</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
         <comment>Description of symbol 508.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linja tai ura, esim. metsäkoneura tai hiihtoladun pohja, jossa ei ole selkeästi havaittavaa polkua. Juostavuus esitetään symboliviivaa hieman paksummalla taustaviivalla (keltainen, vihreä, valkoinen tausta):
+Minimipituus kaksi viivan osaa (3.25 mm, maastomitta 48 m).</translation>
     </message>
     <message>
         <source>Narrow ride, normal runnability</source>
         <comment>Name of symbol 508.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ajoura tai kapea linja, normaali juostavuus</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
         <comment>Description of symbol 508.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linja tai ura, esim. metsäkoneura tai hiihtoladun pohja, jossa ei ole selkeästi havaittavaa polkua. Juostavuus esitetään symboliviivaa hieman paksummalla taustaviivalla (keltainen, vihreä, valkoinen tausta):
+Minimipituus kaksi viivan osaa (3.25 mm, maastomitta 48 m).</translation>
     </message>
     <message>
         <source>Narrow ride, slow running</source>
         <comment>Name of symbol 508.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ajoura tai kapea linja, hidastava juostavuus</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
         <comment>Description of symbol 508.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linja tai ura, esim. metsäkoneura tai hiihtoladun pohja, jossa ei ole selkeästi havaittavaa polkua. Juostavuus esitetään symboliviivaa hieman paksummalla taustaviivalla (keltainen, vihreä, valkoinen tausta):
+Minimipituus kaksi viivan osaa (3.25 mm, maastomitta 48 m).</translation>
     </message>
     <message>
         <source>Narrow ride, walk</source>
         <comment>Name of symbol 508.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ajoura tai kapea linja, käveltävä</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
         <comment>Description of symbol 508.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linja tai ura, esim. metsäkoneura tai hiihtoladun pohja, jossa ei ole selkeästi havaittavaa polkua. Juostavuus esitetään symboliviivaa hieman paksummalla taustaviivalla (keltainen, vihreä, valkoinen tausta):
+Minimipituus kaksi viivan osaa (3.25 mm, maastomitta 48 m).</translation>
     </message>
     <message>
         <source>Railway</source>
@@ -1783,7 +1995,9 @@ Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
 If it is forbidden to run along the railway, it shall be combined with symbol Out-of-bounds route (711). If it is forbidden to cross the railway, it must be combined with symbol Area that shall not be entered (520) or Out-of-bounds area (709).
 Minimum length (isolated): two dashes (4 mm - footprint 60 m).</source>
         <comment>Description of symbol 509</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaikki kiskotiet.
+Jos rautatietä pitkin kulkeminen on kielletty, siihen yhdistetään symboli 711. Jos myös rautatien ylitys on kielletty, yhdistetään symboli 520 tai 709.
+Minimipituus kaksi viivan osaa (4 mm, maastomitta 60 m).</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift</source>
@@ -1795,18 +2009,21 @@ Minimum length (isolated): two dashes (4 mm - footprint 60 m).</source>
 If a section of a power line, cableway or skilift goes along a road or path (and does not offer significant additional navigational value) it should be omitted.
 Minimum length (isolated): 5 mm (footprint: 75 m).</source>
         <comment>Description of symbol 510</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sähkölinjat, köysiradat ja hiihtohissit. Poikkiviivoilla osoitetaan tarkasti pylväiden paikat. Viiva voidaan katkaista tarvittaessa kartan luettavuuden parantamiseksi.
+Jos sähkölinja kulkee tien vieressä eikä linjan esittäminen paranna kartan sisältöä, voidaan symboli jättää pois siltä osin.
+Minimipituus 5 mm (maastomitta 75 m).</translation>
     </message>
     <message>
         <source>Major power line, minimum width</source>
         <comment>Name of symbol 511</comment>
-        <translation type="unfinished"></translation>
+        <translation>Voimalinja, minimileveys</translation>
     </message>
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the power line. The lines may be broken to improve legibility.
 Very large carrying masts shall be represented in plan shape using outline of symbol Building (521) or with symbol High tower (524).</source>
         <comment>Description of symbol 511</comment>
-        <translation type="unfinished"></translation>
+        <translation>Voimalinjat kuvataan kaksoisviivalla. Viiva voidaan katkaista tarvittaessa kartan luettavuuden parantamiseksi. Linjavälillä voidaan kuvata linjan leveyttä.
+Erittäin suuret pylväät esitetään muodossaan käyttäen symbolia 521.</translation>
     </message>
     <message>
         <source>Major power line</source>
@@ -1816,22 +2033,22 @@ Very large carrying masts shall be represented in plan shape using outline of sy
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the power line. The lines may be broken to improve legibility. The bars show the exact location of the pylons. Very large carrying masts shall be represented in plan shape using outline of symbol Building (521) or with symbol High tower (524).</source>
         <comment>Description of symbol 511.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Voimalinjat kuvataan kaksoisviivalla. Viiva voidaan katkaista tarvittaessa kartan luettavuuden parantamiseksi. Linjavälillä voidaan kuvata linjan leveyttä. Erittäin suuret pylväät esitetään muodossaan käyttäen symbolia 521.</translation>
     </message>
     <message>
         <source>Major power line, large carrying masts</source>
         <comment>Name of symbol 511.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Voimalinja, suuret pylväät</translation>
     </message>
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline. The bars show the exact location of the pylons. The lines may be broken to improve legibility. Very large carrying masts shall be represented in plan shape using symbol 521 (building) or with symbol 524 (high tower).</source>
         <comment>Description of symbol 511.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Voimalinjat kuvataan kaksoisviivalla. Viiva voidaan katkaista tarvittaessa kartan luettavuuden parantamiseksi. Linjavälillä voidaan kuvata linjan leveyttä. Erittäin suuret pylväät esitetään muodossaan käyttäen symbolia 521.</translation>
     </message>
     <message>
         <source>Bridge / tunnel</source>
         <comment>Name of symbol 512</comment>
-        <translation type="unfinished"></translation>
+        <translation>Silta tai tunneli</translation>
     </message>
     <message>
         <source>Bridges and tunnels are represented using the same basic symbols.
@@ -1839,12 +2056,15 @@ If it is not possible to get through a tunnel (or under a bridge), it shall be o
 Minimum length (of baseline): 0.4 mm (footprint 6 m).
 Small bridges connected to a track/path are shown by centring a track dash on the crossing. Tracks/paths are broken for water course crossings without bridges. A small footbridge with no path leading to it is represented with a single dash.</source>
         <comment>Description of symbol 512</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sillat ja tunnelit esitetään samalla symbolilla.
+Jos tunnelin läpi tai sillan ali ei ole mahdollista päästä, jätetään merkki pois.
+Minimipituus 0.4 mm (maastomitta 6 m).
+Pienet poluilla olevat sillat kuvataan keskittämällä katkoviivan viiva ylityskohtaan. Ilman siltaa olevissa vesialueiden ylityskohdissa viiva katkaistaan. Jos sillalle ei johda polkua, se kuvataan yksittäisellä polun viivalla.</translation>
     </message>
     <message>
         <source>Bridge / tunnel, minimum size</source>
         <comment>Name of symbol 512.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Silta tai tunneli, minimikoko</translation>
     </message>
     <message>
         <source>Bridges and tunnels are represented using the same basic symbols.
@@ -1852,7 +2072,10 @@ If it is not possible to get through a tunnel (or under a bridge), it shall be o
 Minimum length (of baseline): 0.4 mm (footprint 6 m).
 Small bridges connected to a track/path are shown by centring a track dash on the crossing. Tracks/paths are broken for water course crossings without bridges. A small footbridge with no path leading to it is represented with a single dash.</source>
         <comment>Description of symbol 512.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sillat ja tunnelit esitetään samalla symbolilla.
+Jos tunnelin läpi tai sillan ali ei ole mahdollista päästä, jätetään merkki pois.
+Minimipituus 0.4 mm (maastomitta 6 m).
+Pienet poluilla olevat sillat kuvataan keskittämällä katkoviivan viiva ylityskohtaan. Ilman siltaa olevissa vesialueiden ylityskohdissa viiva katkaistaan. Jos sillalle ei johda polkua, se kuvataan yksittäisellä polun viivalla.</translation>
     </message>
     <message>
         <source>Footbridge</source>
@@ -1863,7 +2086,8 @@ Small bridges connected to a track/path are shown by centring a track dash on th
         <source>A small footbridge with no path leading to it is represented with a single dash.
 Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 mm over both sides of the stream!</source>
         <comment>Description of symbol 512.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pienet poluilla olevat sillat kuvataan keskittämällä katkoviivan viiva ylityskohtaan.
+Huom: jos vesialue on leveämpi kuin 0.25 mm, muuta symbolin kokoa siten, että jatkuu 0.5 mm veden molemmille puolille!</translation>
     </message>
     <message>
         <source>Wall</source>
@@ -1875,7 +2099,9 @@ Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 513</comment>
-        <translation type="unfinished"></translation>
+        <translation>Huomattava aita tai seinämä kivestä, betonista, puusta tai muusta materiaalista.
+Minimikorkeus 1 m.
+Minimipituus 1.4 mm (maastomitta 21 m).</translation>
     </message>
     <message>
         <source>Ruined wall</source>
@@ -1886,18 +2112,20 @@ Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <source>A ruined or less distinct wall. Minimum height 0.5 m.
 Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
         <comment>Description of symbol 514</comment>
-        <translation type="unfinished"></translation>
+        <translation>Matala tai sortunut havaittavissa oleva kiviaita.
+Minimikorkeus 0.5 m. Minimipituus kaksi viivan osaa (3.65 mm, maastomitta 55 m). Jos kohde on lyhyempi, on piirrosta suurennettava tai käytettävä symbolia 513.</translation>
     </message>
     <message>
         <source>Impassable wall</source>
         <comment>Name of symbol 515</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylipääsemätön kiviaita tai muuri</translation>
     </message>
     <message>
         <source>An impassable or uncrossable wall, normally more than 1.5 m high.
 Minimum length (isolated): 3 mm (footprint 45 m).</source>
         <comment>Description of symbol 515</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yli- tai läpipääsemätön kiviaita, normaalisti yli 1.5 m korkea.
+Minimipituus 3 mm (maastomitta 45 m).</translation>
     </message>
     <message>
         <source>Fence</source>
@@ -1908,7 +2136,8 @@ Minimum length (isolated): 3 mm (footprint 45 m).</source>
         <source>If the fence forms an enclosed area, tags should be placed inside.
 Minimum length (isolated): 1.5 mm (footprint 22.5 m).</source>
         <comment>Description of symbol 516</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jos aita sulkee alueen, väkäset pitäisi osoittaa sisäänpäin.
+Minimipituus 1.5 mm (maastomitta 22.5 m).</translation>
     </message>
     <message>
         <source>Ruined fence</source>
@@ -1919,19 +2148,22 @@ Minimum length (isolated): 1.5 mm (footprint 22.5 m).</source>
         <source>A ruined or less distinct fence. If the fence forms an enclosed area, tags should be placed inside.
 Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol Fence (516).</source>
         <comment>Description of symbol 517</comment>
-        <translation type="unfinished"></translation>
+        <translation>Matala tai sortunut havaittavissa oleva aita. Jos aita sulkee alueen, väkäset pitäisi osoittaa sisäänpäin.
+Minimipituus kaksi viivan osaa (3.65 mm, maastomitta 55 m). Jos kohde on lyhyempi, on piirrosta suurennettava tai käytettävä symbolia 516.</translation>
     </message>
     <message>
         <source>Impassable fence</source>
         <comment>Name of symbol 518</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylipääsemätön aita</translation>
     </message>
     <message>
         <source>An impassable or uncrossable fence, normally more than 1.5 m high.
 If the fence forms an enclosed area, tags should be placed inside.
 Minimum length (isolated): 2 mm (footprint 30 m).</source>
         <comment>Description of symbol 518</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yli- tai läpipääsemätön aita, normaalisti yli 1.5 m korkea.
+Jos aita sulkee alueen, pitäisi väkäset osoittaa sisäänpäin.
+Minimipituus 2 mm (maastomitta 30 m).</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -1942,12 +2174,13 @@ Minimum length (isolated): 2 mm (footprint 30 m).</source>
         <source>A way through or over a wall, fence or other linear feature, including a gate or stile.
 For impassable features, the line shall be broken at the crossing point. For passable features, the line shall not be broken if passing involves a degree of climb.</source>
         <comment>Description of symbol 519</comment>
-        <translation type="unfinished"></translation>
+        <translation>Muurien, aitojen yms. läpikulkukohta.
+Ylipääsemättömien kohteiden porttien kohdalla viiva katkaistaan symbolin kohdalta. Ylitettävissä kohteissa viivaa ei katkaista, jos läpikulku edellyttää jonkinasteista nousua.</translation>
     </message>
     <message>
         <source>Area that shall not be entered</source>
         <comment>Name of symbol 520</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kielletty piha-alue</translation>
     </message>
     <message>
         <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
@@ -1957,22 +2190,26 @@ The vertical black stripes version of the symbol is orientated to north.
 An out-of-bounds area shall not be entered.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 520</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kielletty alue, kuten yksityinen piha-alue, puutarha, tehdas tai muu teollisuusalue. Vain korkeuskäyrät ja merkittävät kohteet, kuten rautatiet ja suuret rakennukset, esitetään kielletyn alueen sisällä. Pysyvää kieltoa esittämään voidaan käyttää myös mustaa pystyviivoitusta esim. maastoalueilla. Pystyviivoitus piirretään pohjois-eteläsuunnassa. Jos kielletyn alueen läpi kulkeva polku tai ura on sallittu kulkea, katkaistaan kielletyn alueen merkintä selvästi pois polun tai uran päältä.
+Kielletyn alueen merkki ympäröidään mustalla reunaviivalla tai muulla mustalla symbolilla, esim. aita.
+Jos raja on epäselvä, mustaa reunaviivaa ei käytetä.
+Symbolia 709 voidaan käyttää esittämään väliaikaisesti kiellettyä aluetta.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).</translation>
     </message>
     <message>
         <source>Area that shall not be entered, solid colour, bounding line</source>
         <comment>Name of symbol 520.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kielletty piha-alue, kiinteä väri, reunaviiva</translation>
     </message>
     <message>
         <source>Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.</source>
         <comment>Description of symbol 520.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kielletyn alueen merkki ympäröidään mustalla reunaviivalla tai muulla mustalla symbolilla, esim. aita. Jos raja on epäselvä, mustaa reunaviivaa ei käytetä.</translation>
     </message>
     <message>
         <source>Area that shall not be entered, stripes</source>
         <comment>Name of symbol 520.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kielletty piha-alue, viivoitettu</translation>
     </message>
     <message>
         <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
@@ -1982,17 +2219,21 @@ The vertical black stripes version of the symbol is orientated to north.
 An out-of-bounds area shall not be entered.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 520.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kielletty alue, kuten yksityinen piha-alue, puutarha, tehdas tai muu teollisuusalue. Vain korkeuskäyrät ja merkittävät kohteet, kuten rautatiet ja suuret rakennukset, esitetään kielletyn alueen sisällä. Pysyvää kieltoa esittämään voidaan käyttää myös mustaa pystyviivoitusta esim. maastoalueilla. Pystyviivoitus piirretään pohjois-eteläsuunnassa. Jos kielletyn alueen läpi kulkeva polku tai ura on sallittu kulkea, katkaistaan kielletyn alueen merkintä selvästi pois polun tai uran päältä.
+Kielletyn alueen merkki ympäröidään mustalla reunaviivalla tai muulla mustalla symbolilla, esim. aita.
+Jos raja on epäselvä, mustaa reunaviivaa ei käytetä.
+Symbolia 709 voidaan käyttää esittämään väliaikaisesti kiellettyä aluetta.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).</translation>
     </message>
     <message>
         <source>Area that shall not be entered, stripes, bounding line</source>
         <comment>Name of symbol 520.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kielletty piha-alue, viivoitettu, reuvaviiva</translation>
     </message>
     <message>
         <source>Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.</source>
         <comment>Description of symbol 520.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kielletyn alueen merkki ympäröidään mustalla reunaviivalla tai muulla mustalla symbolilla, esim. aita. Jos raja on epäselvä, mustaa reunaviivaa ei käytetä.</translation>
     </message>
     <message>
         <source>Building</source>
@@ -2981,7 +3222,7 @@ When an impassable cliff drops straight into water, making it impossible to pass
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
         <comment>Description of symbol 201.4</comment>
-        <translation type="unfinished">Käytä tätä kuvaamaan jyrkänteiden todellinen korkeus. </translation>
+        <translation>Käytä tätä kuvaamaan jyrkänteiden todellinen korkeus.</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size (from ISOM2000)</source>
@@ -3184,9 +3425,39 @@ To be able to show the distinction between neighbouring (maximum 30 metres apart
         <translation type="unfinished">Kivien pääosin peittämä alue tai alue, jossa kiviä on niin paljon, ettei niitä voida esittää yksitellen. Kivien koko on oltava sellainen, että joko louhikko suunnistettaessa kierretään tai kivien välissä voidaan juosta. Louhikko kuvataan epämääräisillä kolmioilla, lohkareilla. Lohkareiden tiheys osoittaa louhikon kulkukelpoisuutta ja peittävyyttä maastossa. Louhikon kivien koko on yli 0.60 m. Pienin louhikko osoitetaan kahdella lohkareen merkillä.</translation>
     </message>
     <message>
+        <source>Boulder field, single triangle, enlarged</source>
+        <comment>Name of symbol 208.2</comment>
+        <translation>Louhikko, yksi kolmio, suurennettu</translation>
+    </message>
+    <message>
         <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
         <comment>Description of symbol 208.2</comment>
         <translation type="unfinished">Louhikon kivien koon esittämiseksi merkkiä voidaan suurentaa 20%.</translation>
+    </message>
+    <message>
+        <source>Dense boulder field</source>
+        <comment>Name of symbol 209</comment>
+        <translation>Tiheä louhikko, hidastaa</translation>
+    </message>
+    <message>
+        <source>Stony ground, slow running</source>
+        <comment>Name of symbol 210</comment>
+        <translation>Kivikko, hidastaa</translation>
+    </message>
+    <message>
+        <source>Stony ground, individual dot</source>
+        <comment>Name of symbol 210.1</comment>
+        <translation>Kivikko, yksittäinen piste</translation>
+    </message>
+    <message>
+        <source>Stony ground, walk</source>
+        <comment>Name of symbol 211</comment>
+        <translation>Kivikko, käveltävä</translation>
+    </message>
+    <message>
+        <source>Stony ground, fight</source>
+        <comment>Name of symbol 212</comment>
+        <translation>Kivikko, erittäin hidas</translation>
     </message>
     <message>
         <source>Sandy ground</source>
@@ -3204,14 +3475,39 @@ To be able to show the distinction between neighbouring (maximum 30 metres apart
         <translation>Avokallio</translation>
     </message>
     <message>
+        <source>Trench</source>
+        <comment>Name of symbol 215</comment>
+        <translation>Kaivanto, juoksuhauta</translation>
+    </message>
+    <message>
         <source>Uncrossable body of water, with bank line</source>
         <comment>Name of symbol 301</comment>
         <translation>Ylipääsemätön vesialue</translation>
     </message>
     <message>
+        <source>Uncrossable body of water, bank line</source>
+        <comment>Name of symbol 301.2</comment>
+        <translation>Ylipääsemätön vesialue, rantaviiva</translation>
+    </message>
+    <message>
         <source>A black bank line indicates that the feature cannot be crossed.</source>
         <comment>Description of symbol 301.2</comment>
         <translation type="unfinished">Rantaviiva esittää ylipääsemättömyyttä. Kahluupaikan kohdalta rantaviiva jätetään pois.</translation>
+    </message>
+    <message>
+        <source>Shallow body of water</source>
+        <comment>Name of symbol 302.1</comment>
+        <translation>Matala vesialue</translation>
+    </message>
+    <message>
+        <source>Shallow body of water, solid outline</source>
+        <comment>Name of symbol 302.2</comment>
+        <translation>Matala vesialue, kiinteä reunaviiva</translation>
+    </message>
+    <message>
+        <source>Shallow body of water, dashed outline</source>
+        <comment>Name of symbol 302.3</comment>
+        <translation>Matala vesialue, katkoreunaviiva</translation>
     </message>
     <message>
         <source>Waterhole</source>
@@ -3233,6 +3529,11 @@ Minimum length (isolated): footprint 15 m.</source>
         <source>Small crossable watercourse</source>
         <comment>Name of symbol 305</comment>
         <translation>Ylitettävä pieni puro tai oja</translation>
+    </message>
+    <message>
+        <source>Minor/seasonal water channel</source>
+        <comment>Name of symbol 306</comment>
+        <translation>Epäselvä puro tai oja</translation>
     </message>
     <message>
         <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
@@ -3278,6 +3579,11 @@ Minimum length (isolated): footprint 15 m.</source>
         <source>Indistinct marsh, minimum size</source>
         <comment>Name of symbol 310.1</comment>
         <translation>Soistuva maa, minimikoko</translation>
+    </message>
+    <message>
+        <source>Well, fountain or water tank</source>
+        <comment>Name of symbol 311</comment>
+        <translation>Kaivo, suihkulähde, vesivarasto</translation>
     </message>
     <message>
         <source>Spring</source>
@@ -3326,6 +3632,11 @@ Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller ar
         <translation>Avoimet alueet, joissa on hajanaisesti pensaita tai puita, voidaan yleistää käyttämällä valkoisia pyöreitä pisteitä keltaisessa väripohjassa. Pisteet voivat olla valkoisia (hajanaisia puita) tai vihreitä (hajanaisia pensaita). Vain valkoisten pisteiden yhteyteen voidaan liittää maapohjan hidastavuutta osoittavat symbolit 407 ja 409. Minimileveys 1.5 mm (maastomitta 22.5 m). Minimialue 2.5 mm x 2.5 mm (maastomitta 37.5 m x 37.5 m). Pienemmät alueet pitää joko jättää pois tai suurentaa tai käyttää symbolia 403. Symboli piirretään pohjois-eteläsuunnassa. Väri: keltainen 50 %, pisteet valkoinen tai vihreä 50 % (keltainen 35 %).</translation>
     </message>
     <message>
+        <source>Forest</source>
+        <comment>Name of symbol 405</comment>
+        <translation>Metsä</translation>
+    </message>
+    <message>
         <source>Vegetation runnable in one direction, 1</source>
         <comment>Name of symbol 406.1</comment>
         <translation>Kasvillisuutta, juostavuus parempi valkoisten viivoitusten suuntaan, 1</translation>
@@ -3338,7 +3649,7 @@ Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller ar
     <message>
         <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
         <comment>Description of symbol 407</comment>
-        <translation type="unfinished">Alue jossa on tiheä aluskasvillisuus, (saniaista, heinää, vatukkoa, risukkoa yms.), mutta näkyvyys on yleensä hyvä. Alueella juoksunopeus hidastuu 60-80%:iin normaalinopeudesta. </translation>
+        <translation>Alue jossa on tiheä aluskasvillisuus, (saniaista, heinää, vatukkoa, risukkoa yms.), mutta näkyvyys on yleensä hyvä. Alueella juoksunopeus hidastuu 60-80%:iin normaalinopeudesta.</translation>
     </message>
     <message>
         <source>Vegetation runnable in one direction, 2</source>
@@ -3376,6 +3687,13 @@ Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller ar
         <translation>Yhteen suuntaan helppokulkuinen metsä, 3, 50%</translation>
     </message>
     <message>
+        <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
+Minimum width: 0.35 mm</source>
+        <comment>Description of symbol 411.2</comment>
+        <translation>Kasvillisuuden (puusto tai aluskasvillisuus) hidastama alue, jossa juoksunopeus hidastuu alle 20 %:iin normaalinopeudesta.
+Minimileveys 0.35 mm</translation>
+    </message>
+    <message>
         <source>Cultivated land</source>
         <comment>Name of symbol 412</comment>
         <translation>Viljelty maa</translation>
@@ -3401,14 +3719,34 @@ Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller ar
         <translation type="unfinished">Selvä kuvioraja</translation>
     </message>
     <message>
+        <source>Distinct vegetation boundary, green dashed line</source>
+        <comment>Name of symbol 416.1</comment>
+        <translation>Selkeä kasvillisuuden raja, vihreä katkoviiva</translation>
+    </message>
+    <message>
         <source>Prominent large tree</source>
         <comment>Name of symbol 417</comment>
         <translation>Huomattava suuri puu</translation>
     </message>
     <message>
+        <source>Footprint: 13.5 m x 13.5 m.</source>
+        <comment>Description of symbol 417</comment>
+        <translation>Valkoinen tausta vihreän ympyrän alla parantamaan luettavuutta. Maastomitta 13.5 m x 13.5 m.</translation>
+    </message>
+    <message>
+        <source>Prominent bush or tree</source>
+        <comment>Name of symbol 418</comment>
+        <translation>Selkeästi erottuva pensas tai puu</translation>
+    </message>
+    <message>
         <source>Prominent vegetation feature</source>
         <comment>Name of symbol 419</comment>
         <translation>Huomattava kasvillisuuden erikoiskohde</translation>
+    </message>
+    <message>
+        <source>Footprint: 13.5 m x 13.5 m.</source>
+        <comment>Description of symbol 419</comment>
+        <translation>Valkoinen tausta vihreän ympyrän alla parantamaan luettavuutta. Maastomitta 13.5 m x 13.5 m.</translation>
     </message>
     <message>
         <source>Paved area, with bounding line</source>
@@ -3426,6 +3764,16 @@ Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller ar
         <translation type="unfinished">Kenttä, reunaviiva</translation>
     </message>
     <message>
+        <source>Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.</source>
+        <comment>Description of symbol 501.2</comment>
+        <translation>Päällystetttyyn alueeseen liitetään musta reunaviiiva, kun reuna on selkeä.</translation>
+    </message>
+    <message>
+        <source>Wide road, minimum width</source>
+        <comment>Name of symbol 502</comment>
+        <translation>Leveä tie, minimileveys</translation>
+    </message>
+    <message>
         <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 +
 2*0.14 mm – footprint 8.7 m)
 The outer boundary lines may be replaced with other black line symbols, such as symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.</source>
@@ -3433,9 +3781,19 @@ The outer boundary lines may be replaced with other black line symbols, such as 
         <translation>Leveys piirretään mittakaavassa, mutta ei saa olla pienempi kuin minimileveys (0.3 + 2*0.14 mm, maastomitta 8.7 m). Ulkoreunan musta viiva voidaan tarvittaessa korvata muilla mustilla viivamaisilla symboleilla, kuten symboli 516, 518, 513 tai 515. Mustien viivojen välinen alue täytetään ruskealla (ruskea 50 %). Leveä kahden ajoradan tie voidaan esittää siten, että keskellä on yksi reunaviiva.</translation>
     </message>
     <message>
+        <source>Road with two carriageways</source>
+        <comment>Name of symbol 502.2</comment>
+        <translation>Kahden ajoradan tie</translation>
+    </message>
+    <message>
         <source>Road</source>
         <comment>Name of symbol 503</comment>
         <translation>Ajotie</translation>
+    </message>
+    <message>
+        <source>A maintained road suitable for motor vehicles in all weather. Width less than 5 m.</source>
+        <comment>Description of symbol 503</comment>
+        <translation>Hoidettu tie, jota pitkin voidaan ajaa moottoriajoneuvoilla kaikissa sääoloissa. Leveys on yleensä alle 5 m.</translation>
     </message>
     <message>
         <source>Vehicle track</source>
@@ -3446,6 +3804,16 @@ The outer boundary lines may be replaced with other black line symbols, such as 
         <source>Footpath</source>
         <comment>Name of symbol 505</comment>
         <translation>Polku</translation>
+    </message>
+    <message>
+        <source>Small footpath</source>
+        <comment>Name of symbol 506</comment>
+        <translation>Pieni polku</translation>
+    </message>
+    <message>
+        <source>Less distinct small footpath</source>
+        <comment>Name of symbol 507</comment>
+        <translation>Epäselvä polku</translation>
     </message>
     <message>
         <source>Narrow ride</source>
@@ -3500,9 +3868,29 @@ Minimipituus kaksi viivan osaa (4.25 mm, maastomitta 64 m).</translation>
         <translation>Sähkölinja, köysirata, hiihtohissi</translation>
     </message>
     <message>
+        <source>Major power line, minimum width</source>
+        <comment>Name of symbol 511</comment>
+        <translation>Voimalinja, minimileveys</translation>
+    </message>
+    <message>
         <source>Major power line</source>
         <comment>Name of symbol 511.1</comment>
         <translation type="unfinished">Korkeajännitelinja</translation>
+    </message>
+    <message>
+        <source>Major power line, large carrying masts</source>
+        <comment>Name of symbol 511.2</comment>
+        <translation>Voimalinja, suuret pylväät</translation>
+    </message>
+    <message>
+        <source>Bridge / tunnel</source>
+        <comment>Name of symbol 512</comment>
+        <translation>Silta tai tunneli</translation>
+    </message>
+    <message>
+        <source>Bridge / tunnel, minimum size</source>
+        <comment>Name of symbol 512.1</comment>
+        <translation>Silta tai tunneli, minimikoko</translation>
     </message>
     <message>
         <source>Footbridge</source>
@@ -3518,6 +3906,11 @@ Minimipituus kaksi viivan osaa (4.25 mm, maastomitta 64 m).</translation>
         <source>Ruined wall</source>
         <comment>Name of symbol 514</comment>
         <translation type="unfinished">Matala kiviaita</translation>
+    </message>
+    <message>
+        <source>Impassable wall</source>
+        <comment>Name of symbol 515</comment>
+        <translation>Ylipääsemätön kiviaita tai muuri</translation>
     </message>
     <message>
         <source>Fence</source>
@@ -3537,9 +3930,26 @@ Jos aita sulkee alueen, väkäset osoitetaan sisäänpäin. Minimipituus 1.5 mm 
         <translation type="unfinished">Sortunut aita</translation>
     </message>
     <message>
+        <source>Impassable fence</source>
+        <comment>Name of symbol 518</comment>
+        <translation>Ylipääsemätön aita</translation>
+    </message>
+    <message>
         <source>Crossing point</source>
         <comment>Name of symbol 519</comment>
         <translation type="unfinished">Portti</translation>
+    </message>
+    <message>
+        <source>A way through or over a wall, fence or other linear feature, including a gate or stile.
+For impassable features, the line shall be broken at the crossing point. For passable features, the line shall not be broken if passing involves a degree of climb.</source>
+        <comment>Description of symbol 519</comment>
+        <translation>Muurien, aitojen yms. läpikulkukohta.
+Ylipääsemättömien kohteiden porttien kohdalla viiva katkaistaan symbolin kohdalta. Ylitettävissä kohteissa viivaa ei katkaista, jos läpikulku edellyttää jonkinasteista nousua.</translation>
+    </message>
+    <message>
+        <source>Area that shall not be entered</source>
+        <comment>Name of symbol 520</comment>
+        <translation>Kielletty piha-alue</translation>
     </message>
     <message>
         <source>Building</source>
@@ -5524,7 +5934,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sininen 100% aluekohteille</translation>
     </message>
     <message>
         <source>Blue 70%</source>
@@ -5549,7 +5959,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
     <message>
         <source>White over green</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Valkoinen vihreän päällä</translation>
     </message>
     <message>
         <source>Green 50%/Yellow 100%</source>
@@ -5564,7 +5974,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vihreä 100% vihreille aluekohteille</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -5579,17 +5989,17 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vihreä 100% maapohjalle</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 28</comment>
-        <translation type="unfinished"></translation>
+        <translation>Valkoinen keltaisen päällä</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Musta avoimelle alueelle</translation>
     </message>
     <message>
         <source>Yellow 100%</source>
@@ -6139,7 +6549,7 @@ To be able to show obvious height differences within a boulder field, it is perm
     <message>
         <source>Boulder field, single triangle, enlarged</source>
         <comment>Name of symbol 208.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Louhikko, yksi kolmio, suurennettu</translation>
     </message>
     <message>
         <source>An area which is covered with so many scattered blocks of stone that they cannot be marked individually is represented with randomly placed and orientated solid triangles. The runnability is reduced and is indicated by the density of the triangles.
@@ -6151,7 +6561,7 @@ To be able to show obvious height differences within a boulder field, it is perm
     <message>
         <source>Dense boulder field</source>
         <comment>Name of symbol 208.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tiheä louhikko, hidastaa</translation>
     </message>
     <message>
         <source>An area which is covered with so many scattered blocks of stone that they cannot be marked individually is represented with randomly placed and orientated solid triangles. The runnability is reduced and is indicated by the density of the triangles.
@@ -6238,7 +6648,7 @@ Minimum area: 1 mm² (footprint 16 m²).</source>
     <message>
         <source>Uncrossable body of water (full colour)</source>
         <comment>Name of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylipääsemätön vesialue (100 % väri)</translation>
     </message>
     <message>
         <source>An area of deep water such as a lake, pond, river or fountain. The dark blue colour and the bordering black line indicate that the feature shall not be crossed.
@@ -6264,7 +6674,7 @@ Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
     <message>
         <source>Uncrossable body of water (dominant)</source>
         <comment>Name of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylipääsemätön vesialue (suuri ja hallitseva)</translation>
     </message>
     <message>
         <source>An area of deep water such as a lake, pond, river or fountain. The dark blue colour and the bordering black line indicate that the feature shall not be crossed.
@@ -6290,7 +6700,7 @@ Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
     <message>
         <source>Uncrossable body of water, bank line</source>
         <comment>Name of symbol 301.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylipääsemätön vesialue, rantaviiva</translation>
     </message>
     <message>
         <source>The bordering black line indicates that the feature shall not be crossed.</source>
@@ -6574,7 +6984,7 @@ Smaller areas must be left out, exaggerated or shown using either the symbol Rou
     <message>
         <source>Forest</source>
         <comment>Name of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>Metsä</translation>
     </message>
     <message>
         <source>Typical open forest for the particular type of terrain. If no part of the forest is easily runnable then no white should appear on the map.
@@ -6598,7 +7008,7 @@ Minimum area: 1 mm² (footprint 16 m²).</source>
     <message>
         <source>Vegetation: slow running, normal running in one direction</source>
         <comment>Name of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, hidastaa, juostavuus yhteen suuntaan parempi</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
@@ -6645,7 +7055,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
     <message>
         <source>Vegetation: walk, normal running in one direction</source>
         <comment>Name of symbol 408.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, käveltävä, hyvä juostavuus yhteen suuntaan</translation>
     </message>
     <message>
         <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
@@ -6658,7 +7068,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
     <message>
         <source>Vegetation: walk, slow running in one direction</source>
         <comment>Name of symbol 408.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, käveltävä, hidastaa yhteen suuntaan</translation>
     </message>
     <message>
         <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
@@ -6681,7 +7091,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
     <message>
         <source>Vegetation: walk, good visibility</source>
         <comment>Name of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, käveltävä, hyvä näkyvyys</translation>
     </message>
     <message>
         <source>An area of good visibility and reduced runnability due to, for instance, undergrowth (brambles, heather, low bushes, cut branches, etc.). Running speed is reduced to about 20-60% of normal speed.
@@ -6728,7 +7138,7 @@ Minimum area: 9 mm² (144 m²).</source>
     <message>
         <source>Cultivated land (black pattern)</source>
         <comment>Name of symbol 412.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viljelty maa (musta kuviointi)</translation>
     </message>
     <message>
         <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses.
@@ -6754,7 +7164,7 @@ Minimum area: 4 mm² (64 m²)</source>
     <message>
         <source>Orchard, rough open land</source>
         <comment>Name of symbol 413.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Puutarha, avoin alue</translation>
     </message>
     <message>
         <source>Land planted with fruit trees or bushes, normally in regular pattern.
@@ -7206,7 +7616,7 @@ Minimum length (isolated): 2.4 mm (footprint 9.6 m).</source>
     <message>
         <source>Impassable wall</source>
         <comment>Name of symbol 515</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylipääsemätön kiviaita tai muuri</translation>
     </message>
     <message>
         <source>An impassable or uncrossable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed.
@@ -10281,7 +10691,7 @@ Kansainvälisten kilpailujen kartoissa johtokäyrät on aina kuvattava. Suomessa
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
         <comment>Description of symbol 106.2</comment>
-        <translation type="unfinished">Käytä tätä kuvaamaan leveiden irtomaarinteiden todellinen leveys. </translation>
+        <translation>Käytä tätä kuvaamaan leveiden irtomaarinteiden todellinen leveys.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -10341,7 +10751,7 @@ Kansainvälisten kilpailujen kartoissa johtokäyrät on aina kuvattava. Suomessa
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation type="unfinished">Käytä tätä kuvaamaan jyrkänteiden todellinen korkeus. </translation>
+        <translation>Käytä tätä kuvaamaan jyrkänteiden todellinen korkeus.</translation>
     </message>
     <message>
         <source>Rock pillars/cliffs</source>
@@ -10987,7 +11397,7 @@ Suomessa merkki 418 kuvaa suurta yksittäistä puuta.</translation>
     <message>
         <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
         <comment>Description of symbol 602</comment>
-        <translation type="unfinished">Kartta-alan eri kulmiin sijoitetaan neljä kohdistusristiä. Kohdistusristien avulla tarkistetaan värien kohdistuminen painossa. </translation>
+        <translation>Kartta-alan eri kulmiin sijoitetaan neljä kohdistusristiä. Kohdistusristien avulla tarkistetaan värien kohdistuminen painossa.</translation>
     </message>
     <message>
         <source>Spot height, dot</source>
@@ -11196,7 +11606,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
         <comment>Description of symbol 103</comment>
-        <translation type="unfinished">Maanpinnan muotojen kuvausta täydentämään käytetään puolta käyräväliä vastaavia apukäyriä. Niiden avulla voidaan antaa maanpinnan muodoista lisätietoja, kun muotoja ei saada kuvatuiksi käyräväliä vastaavin korkeuskäyrin. Kahden korkeuskäyrän välissä saa käyttää vain yhtä apukäyrää. </translation>
+        <translation>Maanpinnan muotojen kuvausta täydentämään käytetään puolta käyräväliä vastaavia apukäyriä. Niiden avulla voidaan antaa maanpinnan muodoista lisätietoja, kun muotoja ei saada kuvatuiksi käyräväliä vastaavin korkeuskäyrin. Kahden korkeuskäyrän välissä saa käyttää vain yhtä apukäyrää.</translation>
     </message>
     <message>
         <source>Small earth wall</source>
@@ -11257,7 +11667,7 @@ Minimimitta halkaisija 2m. Kaivetut pienet kuopat kuvataan merkillä 116.</trans
     <message>
         <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
         <comment>Description of symbol 116</comment>
-        <translation type="unfinished">Pieni kaivettu kuoppa, jota ei voida sen pienen koon vuoksi kuvata pohjapiirroksen mukaisesti (minimimitta halkaisija 2m). Merkin käyttö edellyttää yleensä vähintään 1 metrin korkeuseroa. Merkki avautuu pohjoiseen. </translation>
+        <translation>Pieni kaivettu kuoppa, jota ei voida sen pienen koon vuoksi kuvata pohjapiirroksen mukaisesti (minimimitta halkaisija 2m). Merkin käyttö edellyttää yleensä vähintään 1 metrin korkeuseroa. Merkki avautuu pohjoiseen.</translation>
     </message>
     <message>
         <source>Broken ground, small</source>
@@ -11368,7 +11778,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
     <message>
         <source>A cave is represented by the same symbol as a rocky pit. In this case the symbol should be orientated to point up the slope as indicated opposite. The centre of gravity of the symbol marks the opening.</source>
         <comment>Description of symbol 205</comment>
-        <translation type="unfinished">Luola kuvataan samalla merkillä kuin vaarallinen kuoppa. Merkki sijoitetaan avautuvaksi samaan suuntaa kuin luolan aukko. Jyrkänteessä oleva luola osoitetaan merkin kärjellä. </translation>
+        <translation>Luola kuvataan samalla merkillä kuin vaarallinen kuoppa. Merkki sijoitetaan avautuvaksi samaan suuntaa kuin luolan aukko. Jyrkänteessä oleva luola osoitetaan merkin kärjellä.</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -11483,7 +11893,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
     <message>
         <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
         <comment>Description of symbol 407</comment>
-        <translation type="unfinished">Alue jossa on tiheä aluskasvillisuus, (saniaista, heinää, vatukkoa, risukkoa yms.), mutta näkyvyys on yleensä hyvä. Alueella juoksunopeus hidastuu 60-80%:iin normaalinopeudesta. </translation>
+        <translation>Alue jossa on tiheä aluskasvillisuus, (saniaista, heinää, vatukkoa, risukkoa yms.), mutta näkyvyys on yleensä hyvä. Alueella juoksunopeus hidastuu 60-80%:iin normaalinopeudesta.</translation>
     </message>
     <message>
         <source>Forest: difficult to run</source>
@@ -11503,7 +11913,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
     <message>
         <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
         <comment>Description of symbol 409</comment>
-        <translation type="unfinished">Alue, jolla on tiheä aluskasvillisuus (saniaista, heinää, vatukkoa, risukkoa yms.), mutta näkyvyys on yleensä hyvä. Alueella juoksunopeus hidastuu 20-60%:iin normaali nopeudesta. </translation>
+        <translation>Alue, jolla on tiheä aluskasvillisuus (saniaista, heinää, vatukkoa, risukkoa yms.), mutta näkyvyys on yleensä hyvä. Alueella juoksunopeus hidastuu 20-60%:iin normaali nopeudesta.</translation>
     </message>
     <message>
         <source>Vegetation: very difficult to run, impassable</source>
@@ -11573,7 +11983,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
     <message>
         <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
         <comment>Description of symbol 415</comment>
-        <translation type="unfinished">Viljelty peltomaa, joka eri vuodenaikoina voi olla viljelyn eri vaiheissa kynnöksestä sadonkorjuuseen. Alue on pysyvästi kielletty viljelyn vaiheista riippumatta. Alueelle meno voidaan sallia vain kilpailuohjeissa mainitulla tavalla. </translation>
+        <translation>Viljelty peltomaa, joka eri vuodenaikoina voi olla viljelyn eri vaiheissa kynnöksestä sadonkorjuuseen. Alue on pysyvästi kielletty viljelyn vaiheista riippumatta. Alueelle meno voidaan sallia vain kilpailuohjeissa mainitulla tavalla.</translation>
     </message>
     <message>
         <source>Distinct vegetation boundary</source>
@@ -11583,7 +11993,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
     <message>
         <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
         <comment>Description of symbol 416</comment>
-        <translation type="unfinished">Selvä metsän reuna ja selvästi havaittava metsätyypin ero (ikä ja laatu). Kuvioraja piirretään ojan, polun, linjan, aidan tms. viereen, jos metsän reunaa tai metsätyypin eroa ei voida väripinnoista havaita. </translation>
+        <translation>Selvä metsän reuna ja selvästi havaittava metsätyypin ero (ikä ja laatu). Kuvioraja piirretään ojan, polun, linjan, aidan tms. viereen, jos metsän reunaa tai metsätyypin eroa ei voida väripinnoista havaita.</translation>
     </message>
     <message>
         <source>Motorway, under construction</source>
@@ -11623,7 +12033,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
     <message>
         <source>A maintained road suitable for motor vehicles in all weather. Width less than 3 m.</source>
         <comment>Description of symbol 504</comment>
-        <translation type="unfinished">Rakennettu tie, jota pitkin voidaan ajaa vaikeuksitta mm henkilöautolla, kuten metsäautotiet. Erilliset kevyen liikenteen väylät ja kylätiet. Ajoradan leveys alle 3 m. </translation>
+        <translation>Rakennettu tie, jota pitkin voidaan ajaa vaikeuksitta mm henkilöautolla, kuten metsäautotiet. Erilliset kevyen liikenteen väylät ja kylätiet. Ajoradan leveys alle 3 m.</translation>
     </message>
     <message>
         <source>Vehicle track</source>
@@ -11745,7 +12155,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Areas which are permanently forbidden to the runner are shown as out of bounds. The screen is superimposed on the normal map detail. A bounding line may be drawn if there is no natural boundary (see 709).</source>
         <comment>Description of symbol 528</comment>
-        <translation type="unfinished">Pysyvästi kielletty alue. Merkki sijoitetaan alle jäävän karttakuvan päälle. Alue rajataan, ellei sillä ole selkeitä rajoja kuten aita, oja, tie jne. </translation>
+        <translation>Pysyvästi kielletty alue. Merkki sijoitetaan alle jäävän karttakuvan päälle. Alue rajataan, ellei sillä ole selkeitä rajoja kuten aita, oja, tie jne.</translation>
     </message>
     <message>
         <source>Permanently out of bounds, bounding line</source>
@@ -11755,7 +12165,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>A bounding line may be drawn if there is no natural boundary (see 709).</source>
         <comment>Description of symbol 528.1</comment>
-        <translation type="unfinished">Alue rajataan, ellei sillä ole selkeitä rajoja kuten aita, oja, tie jne. </translation>
+        <translation>Alue rajataan, ellei sillä ole selkeitä rajoja kuten aita, oja, tie jne.</translation>
     </message>
     <message>
         <source>Ruin</source>
@@ -11775,7 +12185,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Very small ruins may be drawn with a solid line.</source>
         <comment>Description of symbol 530.1</comment>
-        <translation type="unfinished">Minimimitoilla kuvatut rauniot piirretään yhtenäisellä viivalla. </translation>
+        <translation>Minimimitoilla kuvatut rauniot piirretään yhtenäisellä viivalla.</translation>
     </message>
     <message>
         <source>Ruin, minimum size</source>
@@ -11785,7 +12195,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Very small ruins may be drawn with a solid line.</source>
         <comment>Description of symbol 530.2</comment>
-        <translation type="unfinished">Minimimitoilla kuvatut rauniot piirretään yhtenäisellä viivalla. </translation>
+        <translation>Minimimitoilla kuvatut rauniot piirretään yhtenäisellä viivalla.</translation>
     </message>
     <message>
         <source>Crossable pipeline</source>
@@ -11815,7 +12225,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601</comment>
-        <translation type="unfinished">Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyys 1:15000 kartalla on 33.33 mm (500 maastometriä). Viivojen etäisyys 1:10000 kartalla on 25.00 mm (250 maastometriä. Muissa mittakaavoissa viivat piirretään 20-40 mm:n välein niin, että niiden väli maastometreinä on tasametrejä (esim. 50, 100, 250 tai 500 m). Maastoalue asemoidaan arkille aina niin, että suunnanottoviivat tulevat arkin reunojen suuntaisesti pystysuoraan. Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä, kuten kumpareita, kiviä, polunhaaroja, polunpäitä jne. </translation>
+        <translation>Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyys 1:15000 kartalla on 33.33 mm (500 maastometriä). Viivojen etäisyys 1:10000 kartalla on 25.00 mm (250 maastometriä. Muissa mittakaavoissa viivat piirretään 20-40 mm:n välein niin, että niiden väli maastometreinä on tasametrejä (esim. 50, 100, 250 tai 500 m). Maastoalue asemoidaan arkille aina niin, että suunnanottoviivat tulevat arkin reunojen suuntaisesti pystysuoraan. Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä, kuten kumpareita, kiviä, polunhaaroja, polunpäitä jne.</translation>
     </message>
     <message>
         <source>North lines pattern</source>
@@ -11840,7 +12250,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>An area presenting danger to the competitor is shown with cross-hatched diagonal lines.</source>
         <comment>Description of symbol 710</comment>
-        <translation type="unfinished">Merkillä osoitetaan suunnistajalle vaaralliset alueet. Rajaukset tehdään kuten merkissä 709. </translation>
+        <translation>Merkillä osoitetaan suunnistajalle vaaralliset alueet. Rajaukset tehdään kuten merkissä 709.</translation>
     </message>
     <message>
         <source>Forbidden route</source>
@@ -11850,7 +12260,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>A route which is out-of-bounds is shown with crosses.</source>
         <comment>Description of symbol 711</comment>
-        <translation type="unfinished">Merkillä osoitetaan väylä, jota suunnistaja ei saa käyttää (tie, rautatie jne.)</translation>
+        <translation>Merkillä osoitetaan väylä, jota suunnistaja ei saa käyttää (tie, rautatie jne.).</translation>
     </message>
 </context>
 <context>
@@ -12003,7 +12413,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished">Korkeuserojen nopeaa arviointia helpottamaan kuvataan joka viides käyrä johtokäyränä. Johtokäyrälle osuvat pienmuodot, kuten notkot ja nenät, sekä pienet kukkulat ja supat kuvataan korkeuskäyrällä (101). </translation>
+        <translation>Korkeuserojen nopeaa arviointia helpottamaan kuvataan joka viides käyrä johtokäyränä. Johtokäyrälle osuvat pienmuodot, kuten notkot ja nenät, sekä pienet kukkulat ja supat kuvataan korkeuskäyrällä (101).</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -12013,7 +12423,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
         <comment>Description of symbol 103</comment>
-        <translation type="unfinished">Maanpinnan muotojen kuvausta täydentämään käytetään puolta käyräväliä vastaavia apukäyriä. Niiden avulla voidaan antaa maanpinnan muodoista lisätietoja, kun muotoja ei saada kuvatuiksi käyräväliä vastaavin korkeuskäyrin. Kahden korkeuskäyrän välissä saa käyttää vain yhtä apukäyrää. </translation>
+        <translation>Maanpinnan muotojen kuvausta täydentämään käytetään puolta käyräväliä vastaavia apukäyriä. Niiden avulla voidaan antaa maanpinnan muodoista lisätietoja, kun muotoja ei saada kuvatuiksi käyräväliä vastaavin korkeuskäyrin. Kahden korkeuskäyrän välissä saa käyttää vain yhtä apukäyrää.</translation>
     </message>
     <message>
         <source>Slope line</source>
@@ -12033,7 +12443,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished">Korkeuslukuja käytetään helpottamaan erittäin suurten korkeuserojen lukemista. Ne sijoitetaan lähinnä johtokäyriin ja sellaisiin kohtiin, missä ne eivät häiritse muuta karttakuvausta. Numeroiden yläreunojen on osoitettava nousevan rinteen suuntaan. </translation>
+        <translation>Korkeuslukuja käytetään helpottamaan erittäin suurten korkeuserojen lukemista. Ne sijoitetaan lähinnä johtokäyriin ja sellaisiin kohtiin, missä ne eivät häiritse muuta karttakuvausta. Numeroiden yläreunojen on osoitettava nousevan rinteen suuntaan.</translation>
     </message>
     <message>
         <source>Earth bank</source>
@@ -12083,7 +12493,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
         <comment>Description of symbol 106.2</comment>
-        <translation type="unfinished">Käytä tätä kuvaamaan leveiden irtomaarinteiden todellinen leveys. </translation>
+        <translation>Käytä tätä kuvaamaan leveiden irtomaarinteiden todellinen leveys.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -12133,7 +12543,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
         <comment>Description of symbol 201.1</comment>
-        <translation type="unfinished">Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Tämä tulee kyseeseen erikoisesti solissa. Solissa selkäviivaa voidaan ohentaa 0.30 mm. </translation>
+        <translation>Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Tämä tulee kyseeseen erikoisesti solissa. Solissa selkäviivaa voidaan ohentaa 0.30 mm.</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
@@ -12143,7 +12553,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation type="unfinished">Käytä tätä kuvaamaan jyrkänteiden todellinen korkeus. </translation>
+        <translation>Käytä tätä kuvaamaan jyrkänteiden todellinen korkeus.</translation>
     </message>
     <message>
         <source>Rock pillars/cliffs</source>
@@ -12418,7 +12828,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
         <comment>Description of symbol 416</comment>
-        <translation type="unfinished">Selvä metsän reuna ja selvästi havaittava metsätyypin ero (ikä ja laatu). Kuvioraja piirretään ojan, polun, linjan, aidan tms. viereen, jos metsän reunaa tai metsätyypin eroa ei voida väripinnoista havaita. </translation>
+        <translation>Selvä metsän reuna ja selvästi havaittava metsätyypin ero (ikä ja laatu). Kuvioraja piirretään ojan, polun, linjan, aidan tms. viereen, jos metsän reunaa tai metsätyypin eroa ei voida väripinnoista havaita.</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
@@ -12448,7 +12858,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Road wider than 5m. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 502</comment>
-        <translation type="unfinished">Tie, jonka leveys on yli 5 m. Reunaviivojen väli täytetään ruskealla värillä. </translation>
+        <translation>Tie, jonka leveys on yli 5 m. Reunaviivojen väli täytetään ruskealla värillä.</translation>
     </message>
     <message>
         <source>Minor road</source>
@@ -12468,7 +12878,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>A maintained road suitable for motor vehicles in all weather. Width less than 3 m.</source>
         <comment>Description of symbol 504</comment>
-        <translation type="unfinished">Rakennettu tie, jota pitkin voidaan ajaa vaikeuksitta mm henkilöautolla, kuten metsäautotiet. Erilliset kevyen liikenteen väylät ja kylätiet. Ajoradan leveys alle 3 m. </translation>
+        <translation>Rakennettu tie, jota pitkin voidaan ajaa vaikeuksitta mm henkilöautolla, kuten metsäautotiet. Erilliset kevyen liikenteen väylät ja kylätiet. Ajoradan leveys alle 3 m.</translation>
     </message>
     <message>
         <source>Narrow ride</source>
@@ -12508,7 +12918,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.</source>
         <comment>Description of symbol 517</comment>
-        <translation type="unfinished">Korkeajännitelinjat kuvataan kaksoisviivalla. Linjan aukko kuvataan kuten merkissä 516. </translation>
+        <translation>Korkeajännitelinjat kuvataan kaksoisviivalla. Linjan aukko kuvataan kuten merkissä 516.</translation>
     </message>
     <message>
         <source>Tunnel</source>
@@ -12623,7 +13033,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Areas which are permanently forbidden to the runner are shown as out of bounds. The screen is superimposed on the normal map detail. A bounding line may be drawn if there is no natural boundary (see 709).</source>
         <comment>Description of symbol 528</comment>
-        <translation type="unfinished">Pysyvästi kielletty alue. Merkki sijoitetaan alle jäävän karttakuvan päälle. Alue rajataan, ellei sillä ole selkeitä rajoja kuten aita, oja, tie jne. </translation>
+        <translation>Pysyvästi kielletty alue. Merkki sijoitetaan alle jäävän karttakuvan päälle. Alue rajataan, ellei sillä ole selkeitä rajoja kuten aita, oja, tie jne.</translation>
     </message>
     <message>
         <source>Permanently out of bounds, bounding line</source>
@@ -12633,7 +13043,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>A bounding line may be drawn if there is no natural boundary (see 709).</source>
         <comment>Description of symbol 528.1</comment>
-        <translation type="unfinished">Alue rajataan, ellei sillä ole selkeitä rajoja kuten aita, oja, tie jne. </translation>
+        <translation>Alue rajataan, ellei sillä ole selkeitä rajoja kuten aita, oja, tie jne.</translation>
     </message>
     <message>
         <source>Paved area</source>
@@ -12725,7 +13135,7 @@ Rasti: koju, romukasa, autonromu tms.</translation>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601</comment>
-        <translation type="unfinished">Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyys 1:15000 kartalla on 33.33 mm (500 maastometriä). Viivojen etäisyys 1:10000 kartalla on 25.00 mm (250 maastometriä. Muissa mittakaavoissa viivat piirretään 20-40 mm:n välein niin, että niiden väli maastometreinä on tasametrejä (esim. 50, 100, 250 tai 500 m). Maastoalue asemoidaan arkille aina niin, että suunnanottoviivat tulevat arkin reunojen suuntaisesti pystysuoraan. Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä, kuten kumpareita, kiviä, polunhaaroja, polunpäitä jne. </translation>
+        <translation>Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyys 1:15000 kartalla on 33.33 mm (500 maastometriä). Viivojen etäisyys 1:10000 kartalla on 25.00 mm (250 maastometriä. Muissa mittakaavoissa viivat piirretään 20-40 mm:n välein niin, että niiden väli maastometreinä on tasametrejä (esim. 50, 100, 250 tai 500 m). Maastoalue asemoidaan arkille aina niin, että suunnanottoviivat tulevat arkin reunojen suuntaisesti pystysuoraan. Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä, kuten kumpareita, kiviä, polunhaaroja, polunpäitä jne.</translation>
     </message>
     <message>
         <source>North lines pattern</source>
@@ -12740,7 +13150,7 @@ Rasti: koju, romukasa, autonromu tms.</translation>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.2</comment>
-        <translation type="unfinished">Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyys 1:15000 kartalla on 33.33 mm (500 maastometriä). Viivojen etäisyys 1:10000 kartalla on 25.00 mm (250 maastometriä. Muissa mittakaavoissa viivat piirretään 20-40 mm:n välein niin, että niiden väli maastometreinä on tasametrejä (esim. 50, 100, 250 tai 500 m). Maastoalue asemoidaan arkille aina niin, että suunnanottoviivat tulevat arkin reunojen suuntaisesti pystysuoraan. Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä, kuten kumpareita, kiviä, polunhaaroja, polunpäitä jne. </translation>
+        <translation>Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyys 1:15000 kartalla on 33.33 mm (500 maastometriä). Viivojen etäisyys 1:10000 kartalla on 25.00 mm (250 maastometriä. Muissa mittakaavoissa viivat piirretään 20-40 mm:n välein niin, että niiden väli maastometreinä on tasametrejä (esim. 50, 100, 250 tai 500 m). Maastoalue asemoidaan arkille aina niin, että suunnanottoviivat tulevat arkin reunojen suuntaisesti pystysuoraan. Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä, kuten kumpareita, kiviä, polunhaaroja, polunpäitä jne.</translation>
     </message>
     <message>
         <source>North lines pattern, blue</source>
@@ -12755,7 +13165,7 @@ Rasti: koju, romukasa, autonromu tms.</translation>
     <message>
         <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
         <comment>Description of symbol 602</comment>
-        <translation type="unfinished">Kartta-alan eri kulmiin sijoitetaan neljä kohdistusristiä. Kohdistusristien avulla tarkistetaan värien kohdistuminen painossa. </translation>
+        <translation>Kartta-alan eri kulmiin sijoitetaan neljä kohdistusristiä. Kohdistusristien avulla tarkistetaan värien kohdistuminen painossa.</translation>
     </message>
     <message>
         <source>Spot height, dot</source>
@@ -13000,17 +13410,10 @@ A bounding line may be drawn if there is no natural boundary, as follows:
 - a dashed line indicates intermittent marking on the ground,
 - no line indicates no marking on the ground.</source>
         <comment>Description of symbol 709</comment>
-        <translation type="unfinished">
-Kielletty alue (ks. myös merkki 528), merkitään pystysuorin viivoin. Mikäli maastossa ei ole ko. alueen luonnollista rajaa, merkitään raja seuraavasti:
+        <translation>Kielletty alue (ks. myös merkki 528), merkitään pystysuorin viivoin. Mikäli maastossa ei ole ko. alueen luonnollista rajaa, merkitään raja seuraavasti:
 - yhtenäinen viiva, jos alue on merkitty maastoon yhtenäisellä nauhalla,
 - katkoviiva, jos alue on merkitty maastoon viitoitusnauhoin ja
-- ilman rajausta, jos aluetta ei ole merkitty maastoon.
-
-
-
-
-
-</translation>
+- ilman rajausta, jos aluetta ei ole merkitty maastoon.</translation>
     </message>
     <message>
         <source>Out-of-bounds area, solid boundary</source>
@@ -13040,7 +13443,7 @@ Kielletty alue (ks. myös merkki 528), merkitään pystysuorin viivoin. Mikäli 
     <message>
         <source>An area presenting danger to the competitor is shown with cross-hatched diagonal lines.</source>
         <comment>Description of symbol 710</comment>
-        <translation type="unfinished">Merkillä osoitetaan suunnistajalle vaaralliset alueet. Rajaukset tehdään kuten merkissä 709. </translation>
+        <translation>Merkillä osoitetaan suunnistajalle vaaralliset alueet. Rajaukset tehdään kuten merkissä 709.</translation>
     </message>
     <message>
         <source>Forbidden route</source>
@@ -13050,7 +13453,7 @@ Kielletty alue (ks. myös merkki 528), merkitään pystysuorin viivoin. Mikäli 
     <message>
         <source>A route which is out-of-bounds is shown with crosses.</source>
         <comment>Description of symbol 711</comment>
-        <translation type="unfinished">Merkillä osoitetaan väylä, jota suunnistaja ei saa käyttää (tie, rautatie jne.)</translation>
+        <translation>Merkillä osoitetaan väylä, jota suunnistaja ei saa käyttää (tie, rautatie jne.).</translation>
     </message>
     <message>
         <source>First aid post</source>
@@ -13155,7 +13558,7 @@ Minimimitta halkaisija 2m. Kaivetut pienet kuopat kuvataan merkillä 116.</trans
     <message>
         <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
         <comment>Description of symbol 116</comment>
-        <translation type="unfinished">Pieni kaivettu kuoppa, jota ei voida sen pienen koon vuoksi kuvata pohjapiirroksen mukaisesti (minimimitta halkaisija 2m). Merkin käyttö edellyttää yleensä vähintään 1 metrin korkeuseroa. Merkki avautuu pohjoiseen. </translation>
+        <translation>Pieni kaivettu kuoppa, jota ei voida sen pienen koon vuoksi kuvata pohjapiirroksen mukaisesti (minimimitta halkaisija 2m). Merkin käyttö edellyttää yleensä vähintään 1 metrin korkeuseroa. Merkki avautuu pohjoiseen.</translation>
     </message>
     <message>
         <source>Broken ground, small</source>
@@ -13206,7 +13609,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
     <message>
         <source>A cave is represented by the same symbol as a rocky pit. In this case the symbol should be orientated to point up the slope as indicated opposite. The centre of gravity of the symbol marks the opening.</source>
         <comment>Description of symbol 205</comment>
-        <translation type="unfinished">Luola kuvataan samalla merkillä kuin vaarallinen kuoppa. Merkki sijoitetaan avautuvaksi samaan suuntaa kuin luolan aukko. Jyrkänteessä oleva luola osoitetaan merkin kärjellä. </translation>
+        <translation>Luola kuvataan samalla merkillä kuin vaarallinen kuoppa. Merkki sijoitetaan avautuvaksi samaan suuntaa kuin luolan aukko. Jyrkänteessä oleva luola osoitetaan merkin kärjellä.</translation>
     </message>
     <message>
         <source>Stony ground, small</source>
@@ -13306,7 +13709,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
     <message>
         <source>A marsh which is uncrossable or dangerous for the runner. A black line surrounds the symbol.</source>
         <comment>Description of symbol 309</comment>
-        <translation type="unfinished">Suo, jonka ylittäminen on vaarallista ja mahdotonta. Ympäröidään mustalla rantaviivalla. Kun ylipääsemätön suo rajoittuu vesialueeseen on se erotettava siitä rantaviivalla. </translation>
+        <translation>Suo, jonka ylittäminen on vaarallista ja mahdotonta. Ympäröidään mustalla rantaviivalla. Kun ylipääsemätön suo rajoittuu vesialueeseen on se erotettava siitä rantaviivalla.</translation>
     </message>
     <message>
         <source>Uncrossable marsh, border line</source>
@@ -13331,7 +13734,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
     <message>
         <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
         <comment>Description of symbol 310</comment>
-        <translation type="unfinished">Ylitettävä selväreunainen suo, joka selvästi eroaa ympäristöstään tyypillisen suokasvustonsa perustella. Luonnostaan avoin pieni suo kuvataan lisäksi merkillä 401 ja suuret avosuot merkillä 403. Tiheät ja muusta kuin normaalista suokasvillisuudesta johtuva kulkukelpoisuuden hidastavuus kuvataan lisäksi merkeillä 406-410. </translation>
+        <translation>Ylitettävä selväreunainen suo, joka selvästi eroaa ympäristöstään tyypillisen suokasvustonsa perustella. Luonnostaan avoin pieni suo kuvataan lisäksi merkillä 401 ja suuret avosuot merkillä 403. Tiheät ja muusta kuin normaalista suokasvillisuudesta johtuva kulkukelpoisuuden hidastavuus kuvataan lisäksi merkeillä 406-410.</translation>
     </message>
     <message>
         <source>Marsh, minimum size</source>
@@ -13371,7 +13774,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
     <message>
         <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
         <comment>Description of symbol 313</comment>
-        <translation type="unfinished">Selvästi maastossa havaittava vesipiste josta virtaa puro. Merkki avautuu puron suuntaan. Jos virtaavaa puroa ei ole avautuu merkki pohjoiseen. </translation>
+        <translation>Selvästi maastossa havaittava vesipiste josta virtaa puro. Merkki avautuu puron suuntaan. Jos virtaavaa puroa ei ole avautuu merkki pohjoiseen.</translation>
     </message>
     <message>
         <source>Special water feature</source>
@@ -13391,7 +13794,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
     <message>
         <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
         <comment>Description of symbol 407</comment>
-        <translation type="unfinished">Alue jossa on tiheä aluskasvillisuus, (saniaista, heinää, vatukkoa, risukkoa yms.), mutta näkyvyys on yleensä hyvä. Alueella juoksunopeus hidastuu 60-80%:iin normaalinopeudesta. </translation>
+        <translation>Alue jossa on tiheä aluskasvillisuus, (saniaista, heinää, vatukkoa, risukkoa yms.), mutta näkyvyys on yleensä hyvä. Alueella juoksunopeus hidastuu 60-80%:iin normaalinopeudesta.</translation>
     </message>
     <message>
         <source>Undergrowth: difficult to run</source>
@@ -13401,7 +13804,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
     <message>
         <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
         <comment>Description of symbol 409</comment>
-        <translation type="unfinished">Alue, jolla on tiheä aluskasvillisuus (saniaista, heinää, vatukkoa, risukkoa yms.), mutta näkyvyys on yleensä hyvä. Alueella juoksunopeus hidastuu 20-60%:iin normaali nopeudesta. </translation>
+        <translation>Alue, jolla on tiheä aluskasvillisuus (saniaista, heinää, vatukkoa, risukkoa yms.), mutta näkyvyys on yleensä hyvä. Alueella juoksunopeus hidastuu 20-60%:iin normaali nopeudesta.</translation>
     </message>
     <message>
         <source>Vegetation: very difficult to run, impassable</source>
@@ -13461,7 +13864,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation
     <message>
         <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
         <comment>Description of symbol 415</comment>
-        <translation type="unfinished">Viljelty peltomaa, joka eri vuodenaikoina voi olla viljelyn eri vaiheissa kynnöksestä sadonkorjuuseen. Alue on pysyvästi kielletty viljelyn vaiheista riippumatta. Alueelle meno voidaan sallia vain kilpailuohjeissa mainitulla tavalla. </translation>
+        <translation>Viljelty peltomaa, joka eri vuodenaikoina voi olla viljelyn eri vaiheissa kynnöksestä sadonkorjuuseen. Alue on pysyvästi kielletty viljelyn vaiheista riippumatta. Alueelle meno voidaan sallia vain kilpailuohjeissa mainitulla tavalla.</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
@@ -13603,7 +14006,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Very small ruins may be drawn with a solid line.</source>
         <comment>Description of symbol 530.1</comment>
-        <translation type="unfinished">Minimimitoilla kuvatut rauniot piirretään yhtenäisellä viivalla. </translation>
+        <translation>Minimimitoilla kuvatut rauniot piirretään yhtenäisellä viivalla.</translation>
     </message>
     <message>
         <source>Ruin, minimum size</source>
@@ -13613,7 +14016,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Very small ruins may be drawn with a solid line.</source>
         <comment>Description of symbol 530.2</comment>
-        <translation type="unfinished">Minimimitoilla kuvatut rauniot piirretään yhtenäisellä viivalla. </translation>
+        <translation>Minimimitoilla kuvatut rauniot piirretään yhtenäisellä viivalla.</translation>
     </message>
     <message>
         <source>Grave</source>
@@ -13726,7 +14129,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Musta ylemmän ruskean 50% alla</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
@@ -13736,12 +14139,12 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Musta alemman ruskean 50% alla</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sininen 100% aluekohteille</translation>
     </message>
     <message>
         <source>Blue 70%</source>
@@ -13761,22 +14164,22 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Keltainen 100% ajouralle tai kapealle linjalle</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vihreä 60% ajouralle tai kapealle linjalle</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vihreä 30% ajouralle tai kapealle linjalle</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Valkoinen vihreän päällä</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
@@ -13796,7 +14199,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vihreä 100% vihreille aluekohteille</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -13811,17 +14214,17 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vihreä 100% maapohjalle</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Valkoinen keltaisen päällä</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 32</comment>
-        <translation type="unfinished"></translation>
+        <translation>Musta avoimelle alueelle</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -13831,7 +14234,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 34</comment>
-        <translation type="unfinished"></translation>
+        <translation>Keltainen 100% aluekohteille</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
@@ -13901,7 +14304,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
 Minimum length (non-closed): two dashes.
 Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</source>
         <comment>Description of symbol 103</comment>
-        <translation>Apukäyriä (muotokäyriä) käytetään kohdissa, joissa pitää antaa enemmän tietoa maanpinnan muodoista. Apukäyriä lisätään vain sellaisiin kohtiin, joissa karttakuvaus olisi riittämätön käyttäen pelkkiä korkeuskäyriä. Apukäyrää ei saa käyttää korkeuskäyrien välissä kulkevana jatkuvana välikäyränä. Kahden korkeuskäyrän välissä pitäisi käyttää vain yhtä apukäyrää. On tärkeää, että apukäyrä asettuu johdonmukaisesti muiden korkeuskäyrien kokonaisuuteen. Apukäyrän alku- ja loppupäät piirretään mahdollisimman samansuuntaisiksi kuin viereiset korkeuskäyrät. Apukäyrien viivan katkot asetellaan viivan suorimmille osille. Apukäyriä voidaan käyttää erottamaan laakeampia kumpareita ja notkoja selkeämmistä. Minimipituus (avoin käyrä) kaksi viivan osaa. Apukäyräkumpareen tai supan minimipituus 1.1 mm (maastomitta 16.5 m) ulkomittoina.</translation>
+        <translation>Apukäyriä (muotokäyriä) käytetään kohdissa, joissa pitää antaa enemmän tietoa maanpinnan muodoista. Apukäyriä lisätään vain sellaisiin kohtiin, joissa karttakuvaus olisi riittämätön käyttäen pelkkiä korkeuskäyriä. Apukäyrää ei saa käyttää korkeuskäyrien välissä kulkevana jatkuvana välikäyränä. Kahden korkeuskäyrän välissä pitäisi käyttää vain yhtä apukäyrää. On tärkeää, että apukäyrä asettuu johdonmukaisesti muiden korkeuskäyrien kokonaisuuteen. Apukäyrän alku- ja loppupäät piirretään mahdollisimman samansuuntaisiksi kuin viereiset korkeuskäyrät. Apukäyrien viivan katkot asetellaan viivan suorimmille osille. Apukäyriä voidaan käyttää erottamaan laakeampia kumpareita ja notkoja selkeämmistä. Minimipituus (avoin käyrä) kaksi viivan osaa. Apukäyräkumpareen tai supan minimipituus 1.1 mm (maastomitta 16.5 m) ulkomittoina</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
@@ -13970,7 +14373,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varattu ISOM2000 muunnokselle. Symbolin käyttöä uusissa kartoissa ei suositella.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -14054,12 +14457,12 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylipääsemätön jyrkänne (ISOM2000:sta)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varattu ISOM2000 muunnokselle. Symbolin käyttöä uusissa kartoissa ei suositella.</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
@@ -14083,7 +14486,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
         <comment>Description of symbol 201.4</comment>
-        <translation type="unfinished">Käytä tätä kuvaamaan jyrkänteiden todellinen korkeus. </translation>
+        <translation>Käytä tätä kuvaamaan jyrkänteiden todellinen korkeus.</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size (from ISOM2000)</source>
@@ -14093,7 +14496,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varattu ISOM2000 muunnokselle. Symbolin käyttöä uusissa kartoissa ei suositella.</translation>
     </message>
     <message>
         <source>Cliff</source>
@@ -14159,7 +14562,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varattu ISOM2000 muunnokselle. Symbolin käyttöä uusissa kartoissa ei suositella.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -14201,7 +14604,9 @@ Vierekkäisten kivien (205) suuruuseron osoittamiseksi (lähempänä kuin 30 m t
 To be able to show the distinction between neighbouring (closer than 30 m apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.
 Footprint: 9 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 205</comment>
-        <translation type="unfinished"></translation>
+        <translation>Erikoisen suuri ja huomattava kivi. Tällä merkillä kuvattujen kivien pitäisi olla vähintään 2 metriä korkeita. 
+Vierekkäisten kivien suuruuseron osoittamiseksi (lähempänä kuin 30 m toisistaan) voidaan symbolia pienentää kokoon 0.5 mm joillakin kivillä. 
+Maastomitta 9 m halkaisijaltaan (7.5 m halkaisijaltaan).</translation>
     </message>
     <message>
         <source>Gigantic boulder</source>
@@ -14214,7 +14619,10 @@ The gap between gigantic boulders or between gigantic boulders and other impassa
 Minimum width: 0.25 mm (footprint 3.75 m).
 Minimum area: 0.3 mm² (footprint 67 m²).</source>
         <comment>Description of symbol 206</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jättimäinen kivi tai kalliopylväs. Esitetään muodossaan. 
+Kahden symbolin väli pitää olla minimissään 0.15 mm. 
+Minimileveys 0.3 mm (maastomitta 4.5 m).
+Minimialue 0.3 mm² (maastomitta 67 m²).</translation>
     </message>
     <message>
         <source>Boulder cluster</source>
@@ -14228,7 +14636,10 @@ To be able to show the distinction between neighbouring (maximum 30 m apart) bou
 The symbol is orientated to north.
 Footprint: 12 m x 10 m.</source>
         <comment>Description of symbol 207</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni selvä ryhmä kiviä niin lähekkäin toisiaan, ettei niitä voida kuvata yksitellen. Ryhmän kivien pitäisi olla korkeampia kuin 1 m.
+Symbolia saa suurentaa 20 % (sivumitta 0.96 mm), kun halutaan kuvata selvästi suurempien lähellä olevien (max. 30 m) kivien ryhmä. 
+Symboli on musta kolmio, jonka kärki osoittaa pohjoiseen. 
+Maastomitta 12 m x 10 m.</translation>
     </message>
     <message>
         <source>Boulder cluster, large</source>
@@ -14238,7 +14649,7 @@ Footprint: 12 m x 10 m.</source>
     <message>
         <source>To be able to show the distinction between neighbouring (maximum 30 m apart) boulder clusters with significant difference in boulder size, it is permitted to use this symbol instead of regular Boulder cluster (207) for some of the boulder clusters.</source>
         <comment>Description of symbol 207.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kun halutaan kuvata selvästi suurempien lähellä olevien (max. 30 m) kivien ryhmä, voidaan käyttää tätä symbolia tavallisen kiviryhmän symbolin (207) sijaan.</translation>
     </message>
     <message>
         <source>Boulder field</source>
@@ -14252,7 +14663,11 @@ The maximum centre to centre distance between neighbouring triangles is 1.2 mm. 
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kivien pääosin peittämä alue, jossa kiviä on niin paljon, ettei niitä voida esittää yksitellen. Symboleina ovat kolmiot, jotka sijoitetaan satunnaisesti eri astekulmiin. Symbolikolmion sivujen suhde 8:6:5 (sisäkulmat 92.9, 48.5, 38.6). Louhikko ei vaikuta juostavuuteen. Jos louhikko hidastaa juostavuutta, käytetään symbolia 209 (tiheä louhikko). 
+Minimissään käytetään kahta louhikon merkkiä. Yhtä louhikon merkkiä voidaan käyttää, jos sitä käytetään yhdessä jonkun toisen kivi- tai jyrkännesymbolin kanssa (201, 202, 204, 205, 206) tai jos se yhdistetään kivikon symboleihin (210, 211, 212). 
+Maksimimitta keskeltä keskelle vierekkäisillä symboleilla on 1.2 mm. Minimimitta keskeltä keskelle vierekkäisillä symboleilla on 0.75mm.
+Tiheys 0.8-1 symbolia / mm2. Korkeuseron osoittamiseksi louhikon sisällä voidaan joidenkin louhikon symboleiden kokoa suurentaa 20%.
+Maastomitta (yksi symboli) 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle</source>
@@ -14266,22 +14681,26 @@ The maximum centre to centre distance between neighbouring triangles is 1.2 mm. 
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kivien pääosin peittämä alue, jossa kiviä on niin paljon, ettei niitä voida esittää yksitellen. Symboleina ovat kolmiot, jotka sijoitetaan satunnaisesti eri astekulmiin. Symbolikolmion sivujen suhde 8:6:5 (sisäkulmat 92.9, 48.5, 38.6). Louhikko ei vaikuta juostavuuteen. Jos louhikko hidastaa juostavuutta, käytetään symbolia 209 (tiheä louhikko). 
+Minimissään käytetään kahta louhikon merkkiä. Yhtä louhikon merkkiä voidaan käyttää, jos sitä käytetään yhdessä jonkun toisen kivi- tai jyrkännesymbolin kanssa (201, 202, 204, 205, 206) tai jos se yhdistetään kivikon symboleihin (210, 211, 212). 
+Maksimimitta keskeltä keskelle vierekkäisillä symboleilla on 1.2 mm. Minimimitta keskeltä keskelle vierekkäisillä symboleilla on 0.75mm.
+Tiheys 0.8-1 symbolia / mm2. Korkeuseron osoittamiseksi louhikon sisällä voidaan joidenkin louhikon symboleiden kokoa suurentaa 20%.
+Maastomitta (yksi symboli) 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle, enlarged</source>
         <comment>Name of symbol 208.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Louhikko, yksi kolmio, suurennettu</translation>
     </message>
     <message>
         <source>To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
         <comment>Description of symbol 208.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Korkeuseron osoittamiseksi louhikon sisällä voidaan joidenkin louhikon symboleiden kokoa suurentaa 20%.</translation>
     </message>
     <message>
         <source>Dense boulder field</source>
         <comment>Name of symbol 209</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tiheä louhikko, hidastaa</translation>
     </message>
     <message>
         <source>An area which is covered with so many blocks of stone that they cannot be marked individually and the runnability is affected, is shown with randomly placed and orientated solid triangles. A minimum of two triangles must be used.
@@ -14289,7 +14708,10 @@ The maximum centre to centre distance between neighbouring triangles is 0.6 mm.
 Density: 2-3 symbols / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 209</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kivien pääosin peittämä alue, jossa kiviä on niin paljon, ettei niitä voida esittää yksitellen ja juostavuus hidastuu. Symboleina ovat kolmiot, jotka sijoitetaan satunnaisesti eri astekulmiin. Symbolikolmion sivujen suhde 8:6:5 (sisäkulmat 92.9, 48.5, 38.6). Minimissään käytetään kahta louhikon merkkiä. 
+Maksimimitta keskeltä keskelle vierekkäisillä symboleilla on 0.6 mm.
+Tiheys 2-3 symbolia / mm². Korkeuseron osoittamiseksi louhikon sisällä, voidaan joidenkin louhikon symboleiden kokoa suurentaa 20%.
+Maastomitta (yksi symboli) 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Body of water that shall not be crossed, with bank line</source>
@@ -14360,7 +14782,8 @@ Footprint of individual triangle: 12 m x 6 m.</source>
         <source>Should be at least 2 m wide.
 Minimum length (isolated): 1 mm (footprint 15 m).</source>
         <comment>Description of symbol 304</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylitettävissä oleva yleensä vähintään 2 m leveä vesiuoma.
+Minimipituus 1 mm (maastomitta 15 m).</translation>
     </message>
     <message>
         <source>Small crossable watercourse</source>
@@ -14370,7 +14793,7 @@ Minimum length (isolated): 1 mm (footprint 15 m).</source>
     <message>
         <source>Minimum length (isolated): 1 mm (footprint 15 m).</source>
         <comment>Description of symbol 305</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylitettävissä oleva puro tai oja. Minimipituus 1 mm (maastomitta 15 m).</translation>
     </message>
     <message>
         <source>Marsh (in ski orienteering map)</source>
@@ -14392,7 +14815,9 @@ Minimum length (isolated): 1 mm (footprint 15 m).</source>
 Shall not be combined with area symbols other than Broken ground (113), Boulder field (208), Marsh (308) and Indistinct marsh (310).
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 401</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avoin alue nurmi, sammal tms. -pinnalla, jossa juostavuus on parempi kuin normaalissa avoimessa metsässä. Jos keltainen väri tulee hallitsevaksi, voidaan käyttää keltaisen väriarvoa 75 % täyden keltaisen asemasta.
+Symboliin voidaan yhdistää vain symboli 113, 208, 308 tai 310.
+Minimialue 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
@@ -14407,7 +14832,12 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</source>
         <comment>Description of symbol 402</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avoimet nurmimaiset alueet, joissa on hajanaisesti pensaita tai puita, voidaan yleistää käyttämällä valkoisia pyöreitä pisteitä keltaisessa väripohjassa. Pisteet voivat olla valkoisia (hajanaisia puita) tai vihreitä (hajanaisia pensaita). Yksittäiset selkeästi erottuvat puut voidaan merkitä symbolilla 417. Jos keltainen väri tulee hallitsevaksi, voidaan käyttää keltaisen väriarvoa 75 % täyden keltaisen asemasta.
+Symboliin voidaan yhdistää vain symboli 113 , 208 , 308 tai 310.
+Minimileveys 1.5 mm (maastomitta 22.5 m).
+Minimialue 2 mm x 2 mm (maastomitta 30 m x 30 m).
+Pienemmät alueet pitää joko jättää pois tai suurentaa tai käyttää symbolia 401.
+Symboli piirretään pohjois-eteläsuunnassa.</translation>
     </message>
     <message>
         <source>Rough open land</source>
@@ -14420,7 +14850,10 @@ May be combined with symbol Vegetation: slow running, good visibility (407) or V
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).</source>
         <comment>Description of symbol 403</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avoin kanerva- ja heinänummi, juuri istutettu taimikko (korkeus alle 1 m) tai muu matalaa kasvillisuutta (heinä tms.) sisältävä avoin alue, jossa juostavuus on samanlainen kuin normaalissa avoimessa metsässä.
+Symboliin voidaan liittää maapohjan hidastavuutta osoittavat symbolit 407 ja 409.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).
+Pienemmät alueet pitää joko jättää pois tai suurentaa tai käyttää symbolia 401.</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
@@ -14435,12 +14868,17 @@ Minimum width: 1.5 mm (footprint 22.5 m).
 Minimum area: 2.5 mm x 2.5 mm (footprint 37.5 m x 37.5 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Rough open land (403).</source>
         <comment>Description of symbol 404</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avoimet alueet, joissa on hajanaisesti pensaita tai puita, voidaan yleistää käyttämällä valkoisia pyöreitä pisteitä keltaisessa väripohjassa.
+Pisteet voivat olla valkoisia (hajanaisia puita) tai vihreitä (hajanaisia pensaita). Vain valkoisten pisteiden yhteyteen voidaan liittää maapohjan hidastavuutta osoittavat symbolit 407 ja 409.
+Minimileveys 1.5 mm (maastomitta 22.5 m).
+Minimialue 2.5 mm x 2.5 mm (maastomitta 37.5 m x 37.5 m).
+Pienemmät alueet pitää joko jättää pois tai suurentaa tai käyttää symbolia 403.
+Symboli piirretään pohjois-eteläsuunnassa.</translation>
     </message>
     <message>
         <source>Forest</source>
         <comment>Name of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>Metsä</translation>
     </message>
     <message>
         <source>Typical open forest for the particular type of terrain. If no part of the forest is easily runnable then no white should appear on the map.
@@ -14449,12 +14887,16 @@ For openings in symbol Open land (401), the minimum area is 0.7 mm x 0.7 mm (foo
 For openings in symbol Vegetation: walk (408), the minimum area is 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 For openings in symbol Vegetation: fight (410) the minimum area is 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>Helppokulkuinen metsämaasto, jossa näkyvyys on hyvä, esitetään valkoisena. Jos alueella ei ole helppokulkuisia alueita, ei kartalla esiinny valkoista.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).
+Symbolin 408 yhteydessä minimialue 0.7 mm x 0.7 mm (maastomitta 10.5 m x 10.5 m).
+Symbolin 401 yhteydessä minimialue 0.7 mm x 0.7 mm (maastomitta 10.5 m x 10.5 m).
+Symbolin 410 yhteydessä minimialue 0.55 mm x 0.55 mm (maastomitta 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running</source>
         <comment>Name of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, hidastaa</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
@@ -14462,12 +14904,15 @@ Where runnability is better in one direction, a regular pattern of white stripes
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</source>
         <comment>Description of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden hidastama metsä, jossa näkyvyys on huonompi ja jossa juoksunopeus hidastuu 60-80 %:iin normaalinopeudesta.
+Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista viivoitusta tätä osoittamaan.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).
+Minimileveys 0.4 mm (maastomitta 6 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, normal running in one direction</source>
         <comment>Name of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuus, hidastaa, juostavuus yhteen suuntaan parempi</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
@@ -14475,7 +14920,10 @@ Where runnability is better in one direction, a regular pattern of white stripes
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</source>
         <comment>Description of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kasvillisuuden hidastama metsä, jossa näkyvyys on huonompi ja jossa juoksunopeus hidastuu 60-80 %:iin normaalinopeudesta.
+Kun juostavuus yhteen suuntaan on parempi, voidaan käyttää valkoista viivoitusta tätä osoittamaan.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).
+Minimileveys 0.4 mm (maastomitta 6 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, minimum width</source>
@@ -14498,12 +14946,15 @@ Must be combined with either symbol Open land (401) or Rough open land (403).
 May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 413</comment>
-        <translation type="unfinished"></translation>
+        <translation>Puutarhapuita tai -pensaita kasvava peltomaa. Pistejonon suunnalla voidaan osoittaa istutusten suunta.
+Käytetään symbolin 401 tai symbolin 403 kanssa.
+Voidaan yhdistää joko symbolin 407 tai 409 kanssa osoittamaan juostavuuden hidastumista.
+Minimialue 2 mm x 2 mm (maastomitta 30 m x 30 m).</translation>
     </message>
     <message>
         <source>Orchard, rough open land</source>
         <comment>Name of symbol 413.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Puutarha, avoin alue</translation>
     </message>
     <message>
         <source>Land planted with trees or bushes, normally in a regular pattern. The dot lines may be orientated to show the direction of planting.
@@ -14511,29 +14962,34 @@ Must be combined with either symbol Open land (401) or Rough open land (403).
 May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 413.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Puutarhapuita tai -pensaita kasvava peltomaa. Pistejonon suunnalla voidaan osoittaa istutusten suunta.
+Käytetään symbolin 401 tai symbolin 403 kanssa.
+Voidaan yhdistää joko symbolin 407 tai 409 kanssa osoittamaan juostavuuden hidastumista.
+Minimialue 2 mm x 2 mm (maastomitta 30 m x 30 m).</translation>
     </message>
     <message>
         <source>Vineyard or similar</source>
         <comment>Name of symbol 414</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viinitarha tai vastaava</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 414</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viinitarha tai vastaava riviin istutettu alue, jossa juostavuus on hyvä tai normaali istutusten suuntaan. Viivat piirretään istutuksen suuntaan. Käytetään symbolin 401 tai symbolin 403 kanssa.
+Minimialue 2 mm x 2 mm (maastomitta 30 m x 30 m).</translation>
     </message>
     <message>
         <source>Vineyard or similar, rough open land</source>
         <comment>Name of symbol 414.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viinitarha tai vastaava, avoin alue</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 414.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viinitarha tai vastaava riviin istutettu alue, jossa juostavuus on hyvä tai normaali istutusten suuntaan. Viivat piirretään istutuksen suuntaan. Käytetään symbolin 401 tai symbolin 403 kanssa.
+Minimialue 2 mm x 2 mm (maastomitta 30 m x 30 m).</translation>
     </message>
     <message>
         <source>Distinct cultivation boundary</source>
@@ -14544,7 +15000,8 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <source>A boundary of cultivated land vegetation (symbols 401, 412, 413, 414) or a boundary between areas of cultivated land when not shown with other symbols (fence, wall, path, etc.).
 Minimum length: 2 mm (footprint 30 m).</source>
         <comment>Description of symbol 415</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symbolien 401, 412, 413 tai 414 raja, jos aluetta ei erota muu symboli (aita, muuri, polku jne.).
+Minimipituus 2 mm (maastomitta 30 m).</translation>
     </message>
     <message>
         <source>Distinct vegetation boundary</source>
@@ -14558,7 +15015,12 @@ A disadvantage with a green line is that it cannot be used to show distinct vege
 Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
 Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
         <comment>Description of symbol 416</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvä metsän reuna tai selvästi havaittava metsätyypin ero.
+Erittäin selkeä metsän ja kasvillisuuden raja voidaan esittää symbolilla 415. Runsaasti kivi- ja kalliokohteita sisältävässä maastossa on suositeltavaa käyttää kuviorajana vihreää katkoviivaa.
+Haittapuolena tässä on, ettei vihreällä katkoviivalla voida esittää kasvillisuuden kuviorajoja symbolin 410 kanssa. Näissä tapauksissa vaihtoehtoinen kuvioraja on symboli 415.
+Vain yhtä kuviorajatyyppiä voidaan käyttää samalla kartalla. Yleensä suomalaisissa maastotyypeissä on suositeltavampaa käyttää mustaa pistekatkoviivaa.
+Minimipituus mustilla pisteillä 5 pistettä (2.5 mm, maastomitta 37 m).
+Minimipituus vihreällä katkoviivalla 4 viivan osaa (1.8 mm, maastomitta 27 m).</translation>
     </message>
     <message>
         <source>Prominent vegetation feature</source>
@@ -14570,7 +15032,9 @@ Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 419</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symboli piirretään pohjois-eteläsuunnassa.
+Määritelmä annettava erikseen kartassa.
+Maastomitta 13.5 m x 13.5 m.</translation>
     </message>
     <message>
         <source>Paved area, with bounding line</source>
@@ -14581,7 +15045,8 @@ Footprint: 13.5 m x 13.5 m.</source>
         <source>An area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 501</comment>
-        <translation type="unfinished"></translation>
+        <translation>Asfaltilla, kovalla soralla, laatoituksella tai betonilla päällystetty alue. Alueeseen liitetään musta reunaviiiva, kun reuna on selkeä. 
+Minimialue 1 mm x 1 mm (15 m x 15 m).</translation>
     </message>
     <message>
         <source>Paved area</source>
@@ -14592,7 +15057,8 @@ Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <source>An area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 501.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Asfaltilla, kovalla soralla, laatoituksella tai betonilla päällystetty alue. Alueeseen liitetään musta reunaviiiva, kun reuna on selkeä. 
+Minimialue 1 mm x 1 mm (15 m x 15 m).</translation>
     </message>
     <message>
         <source>Paved area, bounding line</source>
@@ -14602,41 +15068,45 @@ Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
     <message>
         <source>Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.</source>
         <comment>Description of symbol 501.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Päällystetttyyn alueeseen liitetään musta reunaviiiva, kun reuna on selkeä.</translation>
     </message>
     <message>
         <source>Wide road, minimum width</source>
         <comment>Name of symbol 502</comment>
-        <translation type="unfinished"></translation>
+        <translation>Leveä tie, minimileveys</translation>
     </message>
     <message>
         <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
 The space between the black lines is filled with brown (50%).
 A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
         <comment>Description of symbol 502</comment>
-        <translation type="unfinished"></translation>
+        <translation>Leveys piirretään mittakaavassa, mutta ei saa olla pienempi kuin minimileveys (0.3 + 2*0.14 mm, maastomitta 8.7 m). Ulkoreunan musta viiva voidaan tarvittaessa korvata muilla mustilla viivamaisilla symboleilla, kuten symboli 516, 518, 513 tai 515.
+Mustien viivojen välinen alue täytetään 50 % ruskealla.
+Leveä kahden ajoradan tie voidaan esittää siten, että keskellä on yksi reunaviiva.</translation>
     </message>
     <message>
         <source>Wide road, 0.5 mm (from ISOM2000)</source>
         <comment>Name of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Leveä tie, 0.5 mm (ISOM2000:sta)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varattu ISOM2000 muunnokselle. Symbolin käyttöä uusissa kartoissa ei suositella.</translation>
     </message>
     <message>
         <source>Road with two carriageways</source>
         <comment>Name of symbol 502.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kahden ajoradan tie</translation>
     </message>
     <message>
         <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
 The space between the black lines is filled with brown (50%).
 A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
         <comment>Description of symbol 502.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Leveys piirretään mittakaavassa, mutta ei saa olla pienempi kuin minimileveys (0.3 + 2*0.14 mm, maastomitta 8.7 m). Ulkoreunan musta viiva voidaan tarvittaessa korvata muilla mustilla viivamaisilla symboleilla, kuten symboli 516, 518, 513 tai 515.
+Mustien viivojen välinen alue täytetään 50 % ruskealla.
+Leveä kahden ajoradan tie voidaan esittää siten, että keskellä on yksi reunaviiva.</translation>
     </message>
     <message>
         <source>Road</source>
@@ -14646,7 +15116,7 @@ A road with two carriageways can be represented using two wide road symbols side
     <message>
         <source>A maintained road suitable for motor vehicles in all weather. Width less than 5 m.</source>
         <comment>Description of symbol 503</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hoidettu tie, jota pitkin voidaan ajaa moottoriajoneuvoilla kaikissa sääoloissa. Leveys on yleensä alle 5 m.</translation>
     </message>
     <message>
         <source>Vehicle track</source>
@@ -14658,7 +15128,9 @@ A road with two carriageways can be represented using two wide road symbols side
 For indistinct junctions the dashes of the symbols are not joined.
 Minimum length (isolated): two dashes (6.25 mm - footprint 94 m).</source>
         <comment>Description of symbol 504</comment>
-        <translation type="unfinished"></translation>
+        <translation>Polku tai pohjustettu heikko tie, jolla voidaan ajaa hitaasti. Selkeissä risteyksissä mustat viivat piirretään yhteen,
+epäselvissä risteyksissä symboliviivoja ei piirretä yhteen.
+Minimipituus kaksi viivan osaa (6.25 mm, maastomitta).</translation>
     </message>
     <message>
         <source>Narrow ride</source>
@@ -14674,40 +15146,49 @@ Green 30%: slow running.
 Green 60%: walk.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
         <comment>Description of symbol 508</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linja tai ura, esim. metsäkoneura tai hiihtoladun pohja, jossa ei ole selkeästi havaittavaa polkua. Juostavuus esitetään symboliviivaa hieman paksummalla taustaviivalla (keltainen, vihreä, valkoinen tausta):
+•Valkoinen (ei taustaviivaa): sama juostavuus kuin ympäröivässä maastossa.
+•Keltainen 100 %: hyvä juostavuus.
+•Valkoinen vihreässä: normaali juostavuus.
+•Vihreä 30 %: hidastava juostavuus.
+•Vihreä 60 %: käveltävä.
+Minimipituus kaksi viivan osaa (3.25 mm, maastomitta 48 m).</translation>
     </message>
     <message>
         <source>Narrow ride, easy running</source>
         <comment>Name of symbol 508.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ajoura tai kapea linja</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
         <comment>Description of symbol 508.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linja tai ura, esim. metsäkoneura tai hiihtoladun pohja, jossa ei ole selkeästi havaittavaa polkua. Juostavuus esitetään symboliviivaa hieman paksummalla taustaviivalla (keltainen, vihreä, valkoinen tausta):
+Minimipituus kaksi viivan osaa (3.25 mm, maastomitta 48 m).</translation>
     </message>
     <message>
         <source>Narrow ride, normal runnability</source>
         <comment>Name of symbol 508.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ajoura tai kapea linja, normaali juostavuus</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
         <comment>Description of symbol 508.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linja tai ura, esim. metsäkoneura tai hiihtoladun pohja, jossa ei ole selkeästi havaittavaa polkua. Juostavuus esitetään symboliviivaa hieman paksummalla taustaviivalla (keltainen, vihreä, valkoinen tausta):
+Minimipituus kaksi viivan osaa (3.25 mm, maastomitta 48 m).</translation>
     </message>
     <message>
         <source>Narrow ride, slow running</source>
         <comment>Name of symbol 508.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ajoura tai kapea linja, hidastava juostavuus</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
         <comment>Description of symbol 508.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linja tai ura, esim. metsäkoneura tai hiihtoladun pohja, jossa ei ole selkeästi havaittavaa polkua. Juostavuus esitetään symboliviivaa hieman paksummalla taustaviivalla (keltainen, vihreä, valkoinen tausta):
+Minimipituus kaksi viivan osaa (3.25 mm, maastomitta 48 m).</translation>
     </message>
     <message>
         <source>Railway</source>
@@ -14719,7 +15200,9 @@ Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
 If it is forbidden to run along the railway, it shall be combined with symbol Out-of-bounds route (711). If it is forbidden to cross the railway, it must be combined with symbol Area that shall not be entered (520) or Out-of-bounds area (709).
 Minimum length (isolated): two dashes (4 mm - footprint 60 m).</source>
         <comment>Description of symbol 509</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaikki kiskotiet.
+Jos rautatietä pitkin kulkeminen on kielletty, siihen yhdistetään symboli 711. Jos myös rautatien ylitys on kielletty, yhdistetään symboli 520 tai 709.
+Minimipituus kaksi viivan osaa (4 mm, maastomitta 60 m).</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift</source>
@@ -14731,18 +15214,21 @@ Minimum length (isolated): two dashes (4 mm - footprint 60 m).</source>
 If a section of a power line, cableway or skilift goes along a road or path (and does not offer significant additional navigational value) it should be omitted.
 Minimum length (isolated): 5 mm (footprint: 75 m).</source>
         <comment>Description of symbol 510</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sähkölinjat, köysiradat ja hiihtohissit. Poikkiviivoilla osoitetaan tarkasti pylväiden paikat. Viiva voidaan katkaista tarvittaessa kartan luettavuuden parantamiseksi.
+Jos sähkölinja kulkee tien vieressä eikä linjan esittäminen paranna kartan sisältöä, voidaan symboli jättää pois siltä osin.
+Minimipituus 5 mm (maastomitta 75 m).</translation>
     </message>
     <message>
         <source>Major power line, minimum width</source>
         <comment>Name of symbol 511</comment>
-        <translation type="unfinished"></translation>
+        <translation>Voimalinja, minimileveys</translation>
     </message>
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the power line. The lines may be broken to improve legibility.
 Very large carrying masts shall be represented in plan shape using outline of symbol Building (521) or with symbol High tower (524).</source>
         <comment>Description of symbol 511</comment>
-        <translation type="unfinished"></translation>
+        <translation>Voimalinjat kuvataan kaksoisviivalla. Viiva voidaan katkaista tarvittaessa kartan luettavuuden parantamiseksi. Linjavälillä voidaan kuvata linjan leveyttä.
+Erittäin suuret pylväät esitetään muodossaan käyttäen symbolia 521.</translation>
     </message>
     <message>
         <source>Major power line</source>
@@ -14752,22 +15238,22 @@ Very large carrying masts shall be represented in plan shape using outline of sy
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the power line. The lines may be broken to improve legibility. The bars show the exact location of the pylons. Very large carrying masts shall be represented in plan shape using outline of symbol Building (521) or with symbol High tower (524).</source>
         <comment>Description of symbol 511.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Voimalinjat kuvataan kaksoisviivalla. Viiva voidaan katkaista tarvittaessa kartan luettavuuden parantamiseksi. Linjavälillä voidaan kuvata linjan leveyttä. Erittäin suuret pylväät esitetään muodossaan käyttäen symbolia 521.</translation>
     </message>
     <message>
         <source>Major power line, large carrying masts</source>
         <comment>Name of symbol 511.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Voimalinja, suuret pylväät</translation>
     </message>
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline. The bars show the exact location of the pylons. The lines may be broken to improve legibility. Very large carrying masts shall be represented in plan shape using symbol 521 (building) or with symbol 524 (high tower).</source>
         <comment>Description of symbol 511.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Voimalinjat kuvataan kaksoisviivalla. Viiva voidaan katkaista tarvittaessa kartan luettavuuden parantamiseksi. Linjavälillä voidaan kuvata linjan leveyttä. Erittäin suuret pylväät esitetään muodossaan käyttäen symbolia 521.</translation>
     </message>
     <message>
         <source>Bridge / tunnel</source>
         <comment>Name of symbol 512</comment>
-        <translation type="unfinished"></translation>
+        <translation>Silta tai tunneli</translation>
     </message>
     <message>
         <source>Bridges and tunnels are represented using the same basic symbols.
@@ -14775,12 +15261,15 @@ If it is not possible to get through a tunnel (or under a bridge), it shall be o
 Minimum length (of baseline): 0.4 mm (footprint 6 m).
 Small bridges connected to a track/path are shown by centring a track dash on the crossing. Tracks/paths are broken for water course crossings without bridges. A small footbridge with no path leading to it is represented with a single dash.</source>
         <comment>Description of symbol 512</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sillat ja tunnelit esitetään samalla symbolilla.
+Jos tunnelin läpi tai sillan ali ei ole mahdollista päästä, jätetään merkki pois.
+Minimipituus 0.4 mm (maastomitta 6 m).
+Pienet poluilla olevat sillat kuvataan keskittämällä katkoviivan viiva ylityskohtaan. Ilman siltaa olevissa vesialueiden ylityskohdissa viiva katkaistaan. Jos sillalle ei johda polkua, se kuvataan yksittäisellä polun viivalla.</translation>
     </message>
     <message>
         <source>Bridge / tunnel, minimum size</source>
         <comment>Name of symbol 512.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Silta tai tunneli, minimikoko</translation>
     </message>
     <message>
         <source>Bridges and tunnels are represented using the same basic symbols.
@@ -14788,7 +15277,10 @@ If it is not possible to get through a tunnel (or under a bridge), it shall be o
 Minimum length (of baseline): 0.4 mm (footprint 6 m).
 Small bridges connected to a track/path are shown by centring a track dash on the crossing. Tracks/paths are broken for water course crossings without bridges. A small footbridge with no path leading to it is represented with a single dash.</source>
         <comment>Description of symbol 512.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sillat ja tunnelit esitetään samalla symbolilla.
+Jos tunnelin läpi tai sillan ali ei ole mahdollista päästä, jätetään merkki pois.
+Minimipituus 0.4 mm (maastomitta 6 m).
+Pienet poluilla olevat sillat kuvataan keskittämällä katkoviivan viiva ylityskohtaan. Ilman siltaa olevissa vesialueiden ylityskohdissa viiva katkaistaan. Jos sillalle ei johda polkua, se kuvataan yksittäisellä polun viivalla.</translation>
     </message>
     <message>
         <source>Footbridge</source>
@@ -14799,7 +15291,8 @@ Small bridges connected to a track/path are shown by centring a track dash on th
         <source>A small footbridge with no path leading to it is represented with a single dash.
 Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 mm over both sides of the stream!</source>
         <comment>Description of symbol 512.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pienet poluilla olevat sillat kuvataan keskittämällä katkoviivan viiva ylityskohtaan.
+Huom: jos vesialue on leveämpi kuin 0.25 mm, muuta symbolin kokoa siten, että jatkuu 0.5 mm veden molemmille puolille!</translation>
     </message>
     <message>
         <source>Wall</source>
@@ -14811,18 +15304,21 @@ Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 513</comment>
-        <translation type="unfinished"></translation>
+        <translation>Huomattava aita tai seinämä kivestä, betonista, puusta tai muusta materiaalista.
+Minimikorkeus 1 m.
+Minimipituus 1.4 mm (maastomitta 21 m).</translation>
     </message>
     <message>
         <source>Impassable wall</source>
         <comment>Name of symbol 515</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylipääsemätön kiviaita tai muuri</translation>
     </message>
     <message>
         <source>An impassable or uncrossable wall, normally more than 1.5 m high.
 Minimum length (isolated): 3 mm (footprint 45 m).</source>
         <comment>Description of symbol 515</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yli- tai läpipääsemätön kiviaita, normaalisti yli 1.5 m korkea.
+Minimipituus 3 mm (maastomitta 45 m).</translation>
     </message>
     <message>
         <source>Fence</source>
@@ -14833,19 +15329,22 @@ Minimum length (isolated): 3 mm (footprint 45 m).</source>
         <source>If the fence forms an enclosed area, tags should be placed inside.
 Minimum length (isolated): 1.5 mm (footprint 22.5 m).</source>
         <comment>Description of symbol 516</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jos aita sulkee alueen, väkäset pitäisi osoittaa sisäänpäin.
+Minimipituus 1.5 mm (maastomitta 22.5 m).</translation>
     </message>
     <message>
         <source>Impassable fence</source>
         <comment>Name of symbol 518</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylipääsemätön aita</translation>
     </message>
     <message>
         <source>An impassable or uncrossable fence, normally more than 1.5 m high.
 If the fence forms an enclosed area, tags should be placed inside.
 Minimum length (isolated): 2 mm (footprint 30 m).</source>
         <comment>Description of symbol 518</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yli- tai läpipääsemätön aita, normaalisti yli 1.5 m korkea.
+Jos aita sulkee alueen, pitäisi väkäset osoittaa sisäänpäin.
+Minimipituus 2 mm (maastomitta 30 m).</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -14856,12 +15355,13 @@ Minimum length (isolated): 2 mm (footprint 30 m).</source>
         <source>A way through or over a wall, fence or other linear feature, including a gate or stile.
 For impassable features, the line shall be broken at the crossing point. For passable features, the line shall not be broken if passing involves a degree of climb.</source>
         <comment>Description of symbol 519</comment>
-        <translation type="unfinished"></translation>
+        <translation>Muurien, aitojen yms. läpikulkukohta.
+Ylipääsemättömien kohteiden porttien kohdalla viiva katkaistaan symbolin kohdalta. Ylitettävissä kohteissa viivaa ei katkaista, jos läpikulku edellyttää jonkinasteista nousua.</translation>
     </message>
     <message>
         <source>Area that shall not be entered</source>
         <comment>Name of symbol 520</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kielletty piha-alue</translation>
     </message>
     <message>
         <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
@@ -14871,22 +15371,26 @@ The vertical black stripes version of the symbol is orientated to north.
 An out-of-bounds area shall not be entered.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 520</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kielletty alue, kuten yksityinen piha-alue, puutarha, tehdas tai muu teollisuusalue. Vain korkeuskäyrät ja merkittävät kohteet, kuten rautatiet ja suuret rakennukset, esitetään kielletyn alueen sisällä. Pysyvää kieltoa esittämään voidaan käyttää myös mustaa pystyviivoitusta esim. maastoalueilla. Pystyviivoitus piirretään pohjois-eteläsuunnassa. Jos kielletyn alueen läpi kulkeva polku tai ura on sallittu kulkea, katkaistaan kielletyn alueen merkintä selvästi pois polun tai uran päältä.
+Kielletyn alueen merkki ympäröidään mustalla reunaviivalla tai muulla mustalla symbolilla, esim. aita.
+Jos raja on epäselvä, mustaa reunaviivaa ei käytetä.
+Symbolia 709 voidaan käyttää esittämään väliaikaisesti kiellettyä aluetta.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).</translation>
     </message>
     <message>
         <source>Area that shall not be entered, solid colour, bounding line</source>
         <comment>Name of symbol 520.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kielletty piha-alue, kiinteä väri, reunaviiva</translation>
     </message>
     <message>
         <source>Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.</source>
         <comment>Description of symbol 520.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kielletyn alueen merkki ympäröidään mustalla reunaviivalla tai muulla mustalla symbolilla, esim. aita. Jos raja on epäselvä, mustaa reunaviivaa ei käytetä.</translation>
     </message>
     <message>
         <source>Area that shall not be entered, stripes</source>
         <comment>Name of symbol 520.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kielletty piha-alue, viivoitettu</translation>
     </message>
     <message>
         <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
@@ -14896,17 +15400,21 @@ The vertical black stripes version of the symbol is orientated to north.
 An out-of-bounds area shall not be entered.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 520.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kielletty alue, kuten yksityinen piha-alue, puutarha, tehdas tai muu teollisuusalue. Vain korkeuskäyrät ja merkittävät kohteet, kuten rautatiet ja suuret rakennukset, esitetään kielletyn alueen sisällä. Pysyvää kieltoa esittämään voidaan käyttää myös mustaa pystyviivoitusta esim. maastoalueilla. Pystyviivoitus piirretään pohjois-eteläsuunnassa. Jos kielletyn alueen läpi kulkeva polku tai ura on sallittu kulkea, katkaistaan kielletyn alueen merkintä selvästi pois polun tai uran päältä.
+Kielletyn alueen merkki ympäröidään mustalla reunaviivalla tai muulla mustalla symbolilla, esim. aita.
+Jos raja on epäselvä, mustaa reunaviivaa ei käytetä.
+Symbolia 709 voidaan käyttää esittämään väliaikaisesti kiellettyä aluetta.
+Minimialue 1 mm x 1 mm (maastomitta 15 m x 15 m).</translation>
     </message>
     <message>
         <source>Area that shall not be entered, stripes, bounding line</source>
         <comment>Name of symbol 520.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kielletty piha-alue, viivoitettu, reuvaviiva</translation>
     </message>
     <message>
         <source>Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.</source>
         <comment>Description of symbol 520.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kielletyn alueen merkki ympäröidään mustalla reunaviivalla tai muulla mustalla symbolilla, esim. aita. Jos raja on epäselvä, mustaa reunaviivaa ei käytetä.</translation>
     </message>
     <message>
         <source>Building</source>
@@ -15569,7 +16077,7 @@ Mikäli maastossa ei ole ko. alueen luonnollista rajaa, merkitään raja seuraav
     <message>
         <source>An area presenting danger to the competitor is shown with cross-hatched diagonal lines.</source>
         <comment>Description of symbol 710</comment>
-        <translation type="unfinished">Merkillä osoitetaan suunnistajalle vaaralliset alueet. Rajaukset tehdään kuten merkissä 709. </translation>
+        <translation>Merkillä osoitetaan suunnistajalle vaaralliset alueet. Rajaukset tehdään kuten merkissä 709.</translation>
     </message>
     <message>
         <source>Forbidden route</source>
@@ -15579,7 +16087,7 @@ Mikäli maastossa ei ole ko. alueen luonnollista rajaa, merkitään raja seuraav
     <message>
         <source>A route which is out-of-bounds is shown with crosses.</source>
         <comment>Description of symbol 711</comment>
-        <translation type="unfinished">Merkillä osoitetaan väylä, jota suunnistaja ei saa käyttää (tie, rautatie jne.)</translation>
+        <translation>Merkillä osoitetaan väylä, jota suunnistaja ei saa käyttää (tie, rautatie jne.).</translation>
     </message>
     <message>
         <source>First aid post</source>
