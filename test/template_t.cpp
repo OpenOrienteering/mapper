@@ -376,6 +376,66 @@ private slots:
 		QCOMPARE(qRound(latlon.latitude()), 50);
 		QCOMPARE(qRound(latlon.longitude()), 8);
 	}
+	
+	void templateTypesConsistentTest_data()
+	{
+		QTest::addColumn<QString>("map_file");
+		QTest::addColumn<int>("template_index");
+
+		QTest::newRow("TemplateTrack georef")     << QStringLiteral("testdata:templates/template-track.xmap") << 0;
+		QTest::newRow("OgrTemplate georef")       << QStringLiteral("testdata:templates/template-track.xmap") << 2;
+		QTest::newRow("TemplateTrack NAD83")      << QStringLiteral("testdata:templates/template-track-NA.xmap") << 0;
+		QTest::newRow("OgrTemplate NAD83")        << QStringLiteral("testdata:templates/template-track-NA.xmap") << 1;
+	}
+	
+	void templateTypesConsistentTest()
+	{
+		QFETCH(QString, map_file);
+		QFETCH(int, template_index);
+		
+		GdalManager().setFormatEnabled(GdalManager::GPX, false);
+		QPointF template_track_center;
+		{
+			Map map;
+			MapView view{ &map };
+			QVERIFY(map.loadFrom(map_file, &view));
+
+			QVERIFY(map.getNumTemplates() > template_index);
+			auto const* temp = map.getTemplate(template_index);
+			QCOMPARE(temp->getTemplateType(), "TemplateTrack");
+			QCOMPARE(temp->getTemplateState(), Template::Unloaded);
+			QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
+			QCOMPARE(temp->getTemplateState(), Template::Loaded);
+
+			template_track_center = center(temp);
+		}
+
+		GdalManager().setFormatEnabled(GdalManager::GPX, true);
+		QPointF ogr_template_center;
+		{
+			Map map;
+			MapView view{ &map };
+			QVERIFY(map.loadFrom(map_file, &view));
+
+			QVERIFY(map.getNumTemplates() > template_index);
+			auto const* temp = map.getTemplate(template_index);
+			QCOMPARE(temp->getTemplateType(), "OgrTemplate");
+			QCOMPARE(temp->getTemplateState(), Template::Unloaded);
+			QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
+			QCOMPARE(temp->getTemplateState(), Template::Loaded);
+
+			ogr_template_center = center(temp);
+		}
+		
+#if !defined(ACCEPT_USE_OF_DEPRECATED_PROJ_API_H) || PJ_VERSION >= 600
+		QEXPECT_FAIL("TemplateTrack NAD83", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
+		QEXPECT_FAIL("OgrTemplate NAD83", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
+#endif
+		if (QLineF(ogr_template_center, template_track_center).length() > 0.1) // 40 cm
+			QCOMPARE(ogr_template_center, template_track_center);
+		else
+			QVERIFY2(true, "Centers do match");
+	}
 #endif
 	
 	void templateRotationTest_data()
