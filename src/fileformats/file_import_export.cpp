@@ -248,7 +248,7 @@ void Importer::validate()
 		if (!error_string.isEmpty())
 		{
 			addWarning(tr("Warnings when loading template '%1':\n%2")
-			           .arg(temp->getTemplateFilename(), temp->errorString()));
+			           .arg(temp->getTemplateFilename(), error_string));
 		}
 	}
 	
