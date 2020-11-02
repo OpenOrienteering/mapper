@@ -200,6 +200,9 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 	// Template grouping is not yet implemented.
 	template_table->hideColumn(TemplateTableModel::groupColumn());
 #endif
+	connect(template_model, &TemplateTableModel::rowsInserted, this, [this](const QModelIndex& /*unused*/, int first) {
+		template_table->selectRow(first);
+	});
 	
 	auto* percentage_delegate = new PercentageDelegate(this, 5);
 	template_table->setItemDelegateForColumn(1, percentage_delegate);
