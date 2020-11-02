@@ -843,6 +843,8 @@ void TemplateListWidget::positionClicked(bool checked)
 		controller.addFloatingDockWidget(dock_widget);
 		dock_widget->show();
 		dock_widget->raise();
+		if (dock_widget->isFloating())
+			dock_widget->activateWindow();
 		connect(&controller, &MapEditorController::destroyed, dock_widget, &TemplateAdjustDockWidget::close);
 		connect(this, &TemplateListWidget::currentRowChanged, dock_widget, &TemplateAdjustDockWidget::close);
 		connect(this, &TemplateListWidget::closePositionDockWidget, dock_widget, &TemplateAdjustDockWidget::close);
