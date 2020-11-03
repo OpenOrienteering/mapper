@@ -502,10 +502,10 @@ namespace {
 	 * 
 	 * \see CutoutOperation::operator()
 	 */
-	class ClippingImplementation : public OgrFileImport::Clipping
+	class ClippingImplementation final : public OgrFileImport::Clipping
 	{
 	public:
-		~ClippingImplementation() final = default;
+		~ClippingImplementation() = default;
 		
 		explicit ClippingImplementation(MapCoordVector boundary)
 		: tool { BooleanTool::Intersection, nullptr }
