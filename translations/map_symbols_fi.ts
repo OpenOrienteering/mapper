@@ -3598,7 +3598,7 @@ To be able to show the distinction between neighbouring (maximum 30 metres apart
         <source>Should be at least 2 m wide.
 Minimum length (isolated): footprint 15 m.</source>
         <comment>Description of symbol 304</comment>
-        <translation>Ylitettävissä oleva vähintään 2 m leveä vesiuoma. Minimipituus 1 mm (maastomitta 15 m).</translation>
+        <translation>Ylitettävissä oleva vähintään 2 m leveä vesiuoma. Maastomitta 15 m.</translation>
     </message>
     <message>
         <source>Small crossable watercourse</source>
@@ -6661,8 +6661,8 @@ The boulders in the cluster should be higher than 0.5 m. A boulder cluster must 
 Footprint: 4.8 m x 4.0 m</source>
         <comment>Description of symbol 207</comment>
         <translation>Pieni selvä ryhmä kiviä niin lähekkäin toisiaan, ettei niitä voida kuvata yksitellen.
-Ryhmän kivien pitäisi olla korkeampia kuin 0.5 m. Kiviryhmä pitää olla selkeästi havaittavissa ryhmäksi. Symbolia saa suurentaa 20 %  (sivumitta 1.44 mm), kun halutaan kuvata selvästi suurempien lähellä olevien (max. 8 m) kivien ryhmä. Symboli on musta kolmio, jonka kärki osoittaa pohjoiseen. 
-Maastomitta 4.8 m x 4.0 m.</translation>
+Ryhmän kivien pitäisi olla korkeampia kuin 0.5 m. Kiviryhmä pitää olla selkeästi havaittavissa ryhmäksi. Symbolia saa suurentaa 20 % (sivumitta 1.44 mm), kun halutaan kuvata selvästi suurempien lähellä olevien (max. 8 m) kivien ryhmä. Symboli on musta kolmio, jonka kärki osoittaa pohjoiseen. 
+Maastomitta 4.8 m x 4.0 m</translation>
     </message>
     <message>
         <source>Boulder cluster, large</source>
@@ -6675,8 +6675,8 @@ The boulders in the cluster should be higher than 0.5 m. A boulder cluster must 
 Footprint: 4.8 m x 4.0 m</source>
         <comment>Description of symbol 207.1</comment>
         <translation>Pieni selvä ryhmä kiviä niin lähekkäin toisiaan, ettei niitä voida kuvata yksitellen.
-Ryhmän kivien pitäisi olla korkeampia kuin 0.5 m. Kiviryhmä pitää olla selkeästi havaittavissa ryhmäksi. Symbolia saa suurentaa 20 %  (sivumitta 1.44 mm), kun halutaan kuvata selvästi suurempien lähellä olevien (max. 8 m) kivien ryhmä. Symboli on musta kolmio, jonka kärki osoittaa pohjoiseen. 
-Maastomitta 4.8 m x 4.0 m.</translation>
+Ryhmän kivien pitäisi olla korkeampia kuin 0.5 m. Kiviryhmä pitää olla selkeästi havaittavissa ryhmäksi. Symbolia saa suurentaa 20 % (sivumitta 1.44 mm), kun halutaan kuvata selvästi suurempien lähellä olevien (max. 8 m) kivien ryhmä. Symboli on musta kolmio, jonka kärki osoittaa pohjoiseen. 
+Maastomitta 4.8 m x 4.0 m</translation>
     </message>
     <message>
         <source>Boulder field</source>
@@ -16687,7 +16687,7 @@ Karttasymboli: ISOM 701</translation>
 
 Map symbol: ISOM 703</source>
         <comment>Description of symbol 99.7</comment>
-        <translation>Rastit  esitetään  käyntijärjestyksessä.  Erikoiskilpailuissa  tästä  säännöstä  voidaan  poiketa  (esim.  partiokilpailu,  joissa  sääntöjen  mukaan  osalla  rasteista  saa  käydä  vapaavalintaisessa  järjestyksessä), jolloin tämä voidaan jättää tyhjäksi tai se kertoo rastin arvon.
+        <translation>Rastit esitetään käyntijärjestyksessä. Erikoiskilpailuissa tästä säännöstä voidaan poiketa (esim. partiokilpailu, joissa sääntöjen mukaan osalla rasteista saa käydä vapaavalintaisessa järjestyksessä), jolloin tämä voidaan jättää tyhjäksi tai se kertoo rastin arvon.
 
 Karttasymboli: ISOM 703</translation>
     </message>
@@ -16893,7 +16893,9 @@ Karttasymbolit: ISOM 107, 108</translation>
 
 Map symbol: ISOM 109</source>
         <comment>Description of symbol 1.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Irtomaarinteinen kapea uoma, yleensä kuiva.
+
+Karttasymboli: ISOM 109</translation>
     </message>
     <message>
         <source>|D| Small erosion gully</source>
@@ -16905,41 +16907,47 @@ Map symbol: ISOM 109</source>
 
 Map symbol: ISOM 110</source>
         <comment>Description of symbol 1.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hyvin pieni uoma, yleensä kuiva. 
+
+Karttasymboli: ISOM 110</translation>
     </message>
     <message>
         <source>|D| Hill</source>
         <comment>Name of symbol 1.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Kukkula</translation>
     </message>
     <message>
         <source>A high point. Shown on the map with contour lines.
 
 Map symbols: ISOM 101, 111</source>
         <comment>Description of symbol 1.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hyvin havaittava kohouma, joka kuvataan kartalla korkeuskäyrällä.
+
+Karttasymbolit: ISOM 101, 111</translation>
     </message>
     <message>
         <source>|D| Knol</source>
         <comment>Name of symbol 1.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Pieni kumpare</translation>
     </message>
     <message>
         <source>A small obvious mound. Used with symbol 8.6 to indicate a rocky knoll.
 
 Map symbols: ISOM 112, 113</source>
         <comment>Description of symbol 1.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni selvä kohouma, jota ei voida kuvata kartalla korkeuskäyrällä. Käytetään symbolin 8.6 kanssa, kun määritellään kivinen pieni kumpare.
+
+Karttasymbolit: ISOM 112, 113</translation>
     </message>
     <message>
         <source>|D| Saddle</source>
         <comment>Name of symbol 1.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Satula</translation>
     </message>
     <message>
         <source>The low point between two higher points.</source>
         <comment>Description of symbol 1.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alava kohta kahden korkeamman kohteen välissä.</translation>
     </message>
     <message>
         <source>|D| Depression</source>
@@ -16951,7 +16959,9 @@ Map symbols: ISOM 112, 113</source>
 
 Map symbol: ISOM 114</source>
         <comment>Description of symbol 1.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Luonnonmaaston syvennys, luonnon kuoppa, jonka jokainen reuna on nousevaa rinnettä. Kuvataan kartalla korkeuskäyrillä.
+
+Karttasymboli: ISOM 114</translation>
     </message>
     <message>
         <source>|D| Small depression</source>
@@ -16963,7 +16973,9 @@ Map symbol: ISOM 114</source>
 
 Map symbol: ISOM 115</source>
         <comment>Description of symbol 1.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni luonnonmaaston suppa, jonka jokainen reuna on nousevaa rinnettä ja jota ei voida kuvata kartalla korkeuskäyrillä.
+
+Karttasymboli: ISOM 115</translation>
     </message>
     <message>
         <source>|D| Pit</source>
@@ -16975,53 +16987,61 @@ Map symbol: ISOM 115</source>
 
 Map symbols: ISOM 116, 204</source>
         <comment>Description of symbol 1.14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni kaivettu jyrkkäreunainen kuoppa, yleensä ihmisen tekemä. Käytetään symbolin 8.6 kanssa, kun määritellään kivinen kuoppa tai kalliokuoppa.
+
+Karttasymbolit: ISOM 116, 204</translation>
     </message>
     <message>
         <source>|D| Broken ground </source>
         <comment>Name of symbol 1.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Pienimuotoinen alue </translation>
     </message>
     <message>
         <source>Clearly disturbed ground with features too small or too numerous to be mapped individually; including animal earths.
 
 Map symbol: ISOM 107</source>
         <comment>Description of symbol 1.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Erittäin pienimuotoinen maasto, kuoppa- tai kumparekenttä, jota ei voida kuvata kartalla yksittäisillä symboleilla.
+
+Karttasymboli: ISOM 107</translation>
     </message>
     <message>
         <source>|D| Ant hill (termite mound)</source>
         <comment>Name of symbol 1.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Muurahaispesä (termiittikeko)</translation>
     </message>
     <message>
         <source>The mound made by ants or termites.</source>
         <comment>Description of symbol 1.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Muurahaispesä (tai termiittikeko).</translation>
     </message>
     <message>
         <source>|D| Cliff, Rock face</source>
         <comment>Name of symbol 2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Jyrkänne</translation>
     </message>
     <message>
         <source>A cliff or rock face. May be passable or impassable.
 
 Map symbols: ISOM 201, 203</source>
         <comment>Description of symbol 2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pystysuora jyrkänne, voi olla ylipääsemätön tai pieni jyrkänne.
+
+Karttasymbolit: ISOM 201, 203</translation>
     </message>
     <message>
         <source>|D| Rock pillar</source>
         <comment>Name of symbol 2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Kivipilari</translation>
     </message>
     <message>
         <source>A high, natural rock projection.
 
 Map symbol: ISOM 202</source>
         <comment>Description of symbol 2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Korkea kivimuodostuma, luonnonmukainen. Symbolia ei käytetä Suomessa.
+
+Karttasymboli: ISOM 202</translation>
     </message>
     <message>
         <source>|D| Cave</source>
@@ -17033,7 +17053,9 @@ Map symbol: ISOM 202</source>
 
 Map symbol: ISOM 205</source>
         <comment>Description of symbol 2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Luolan suuaukko kalliorinteessä tai mäen seinämässä.
+
+Karttasymboli: ISOM 205</translation>
     </message>
     <message>
         <source>|D| Boulder</source>
@@ -17045,7 +17067,9 @@ Map symbol: ISOM 205</source>
 
 Map symbols: ISOM 206, 207</source>
         <comment>Description of symbol 2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi havaittava kivi. Rastinmääritesymboli on sama sekä kivelle (206) että suurelle kivelle (207).
+
+Karttasymbolit: ISOM 206, 207</translation>
     </message>
     <message>
         <source>|D| Boulder field</source>
@@ -17057,7 +17081,9 @@ Map symbols: ISOM 206, 207</source>
 
 Map symbol: ISOM 208</source>
         <comment>Description of symbol 2.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alue, jolla on niin paljon kiviä ja kivilohkareita, että niitä ei voida kuvata kartalla yksitellen.
+
+Karttasymboli: ISOM 208</translation>
     </message>
     <message>
         <source>|D| Boulder cluster</source>
@@ -17069,19 +17095,23 @@ Map symbol: ISOM 208</source>
 
 Map symbol: ISOM 209</source>
         <comment>Description of symbol 2.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni selvästi havaittava ryhmä kiviä, jotka ovat niin lähellä toisiaan, että niitä ei voida kuvata kartalla yksitellen.
+
+Karttasymboli: ISOM 209</translation>
     </message>
     <message>
         <source>|D| Stony ground</source>
         <comment>Name of symbol 2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Kivikko</translation>
     </message>
     <message>
         <source>An area covered with many small stones or rocks.
 
 Map symbol: ISOM 210</source>
         <comment>Description of symbol 2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pienten (Ø 10-50 cm) kivien ja lohkareiden kokonaan tai lähes kokonaan peittämä alue.
+
+Karttasymboli: ISOM 210</translation>
     </message>
     <message>
         <source>|D| Bare rock</source>
@@ -17093,17 +17123,19 @@ Map symbol: ISOM 210</source>
 
 Map symbol: ISOM 212</source>
         <comment>Description of symbol 2.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tasainen kallio, jonka alueelta puuttuu irtomaa ja kasvillisuus ja joka selvästi ulkonäöltään erottuu muusta ympäröivästä maapohjasta sekä tuntuu askeltaessa kovalta.
+
+Karttasymboli: ISOM 212</translation>
     </message>
     <message>
         <source>|D| Narrow passage</source>
         <comment>Name of symbol 2.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Sola</translation>
     </message>
     <message>
         <source>A gap between two cliffs or rock faces that face each other.</source>
         <comment>Description of symbol 2.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kahden vastakkaisen jyrkänteen tai kallioseinämän välinen sola (kuilu).</translation>
     </message>
     <message>
         <source>|D| Lake</source>
@@ -17115,7 +17147,9 @@ Map symbol: ISOM 212</source>
 
 Map symbol: ISOM 301</source>
         <comment>Description of symbol 3.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Suuri vesialue (meri, järvi, lampi), kuvattu yleensä kartassa ylipääsemättömäksi.
+
+Karttasymboli: ISOM 301</translation>
     </message>
     <message>
         <source>|D| Pond</source>
@@ -17127,43 +17161,51 @@ Map symbol: ISOM 301</source>
 
 Map symbol: ISOM 302</source>
         <comment>Description of symbol 3.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni vesialue. Voi olla matala tai vedenkorkeus voi vaihdella kausittain. Kun vesialue on pienempi kuin 1 mm2 painetussa kartassa, jätetään rantaviiva kuvaamatta.
+
+Karttasymboli: ISOM 302</translation>
     </message>
     <message>
         <source>|D| Waterhole</source>
         <comment>Name of symbol 3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Vesikuoppa</translation>
     </message>
     <message>
         <source>A waterholed pit or depression.
 
 Map symbol: ISOM 303</source>
         <comment>Description of symbol 3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Veden täyttämä kuoppa.
+
+Karttasymboli: ISOM 303</translation>
     </message>
     <message>
         <source>|D| River, Stream, Watercourse</source>
         <comment>Name of symbol 3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Joki, puro, oja</translation>
     </message>
     <message>
         <source>A natural or artificial watercourse with either moving or standing water.
 
 Map symbols: ISOM 304, 305, 306</source>
         <comment>Description of symbol 3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Luonnonmukainen tai kaivettu vesiuoma, jossa vesi virtaa tai on paikalla.
+
+Karttasymbolit: ISOM 304, 305, 306</translation>
     </message>
     <message>
         <source>|D| Minor water channel, Ditch</source>
         <comment>Name of symbol 3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Epäselvä oja</translation>
     </message>
     <message>
         <source>A natural or man made minor water channel which may contain water only intermittently.
 
 Map symbol: ISOM 307</source>
         <comment>Description of symbol 3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi havaittava pieni luonnonmukainen tai kaivettu vesiuoma, joka voi ajoittain olla kuiva.
+
+Karttasymboli: ISOM 307</translation>
     </message>
     <message>
         <source>|D| Narrow marsh</source>
@@ -17175,43 +17217,51 @@ Map symbol: ISOM 307</source>
 
 Map symbol: ISOM 308</source>
         <comment>Description of symbol 3.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi havaittava suomainen juotti, jota ei kapeutensa vuoksi voida kuvata kartalla suon merkillä.
+
+Karttasymboli: ISOM 308</translation>
     </message>
     <message>
         <source>|D| Marsh</source>
         <comment>Name of symbol 3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Suo</translation>
     </message>
     <message>
         <source>A permanently wet area with marsh vegetation.
 
 Map symbols: ISOM 309, 310, 311</source>
         <comment>Description of symbol 3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pysyvästi kostea alue, jolla on suokasvillisuutta. Rastinmääritesymboli on sama sekä ylipääsemättömälle suolle (309), suolle (310) että soistuvalle maalle (311).
+
+Karttasymbolit: ISOM 309, 310, 311</translation>
     </message>
     <message>
         <source>|D| Firm ground in marsh</source>
         <comment>Name of symbol 3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Kovan maan alue suolla</translation>
     </message>
     <message>
         <source>A non-marshy area within a marsh, or between two marshes.
 
 Map symbols: ISOM 309, 310, 311</source>
         <comment>Description of symbol 3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Suon keskellä tai laidalla tai soiden välissä oleva alue, joka ei ole suota.
+
+Karttasymbolit: ISOM 309, 310, 311</translation>
     </message>
     <message>
         <source>|D| Well</source>
         <comment>Name of symbol 3.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Kaivo</translation>
     </message>
     <message>
         <source>A shaft containing water or a captive spring, clearly visible on the ground. Often with some form of man-made surround.
 
 Map symbol: ISOM 312</source>
         <comment>Description of symbol 3.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaivo tai katettu lähde, joka on selvästi havaittavissa maastossa.
+
+Karttasymboli: ISOM 312</translation>
     </message>
     <message>
         <source>|D| Spring</source>
@@ -17223,251 +17273,287 @@ Map symbol: ISOM 312</source>
 
 Map symbol: ISOM 313</source>
         <comment>Description of symbol 3.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi havaittavissa oleva vesipiste, josta virtaa puro.
+
+Karttasymboli: ISOM 313</translation>
     </message>
     <message>
         <source>|D| Water tank, Water trough</source>
         <comment>Name of symbol 3.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Vesisäiliö</translation>
     </message>
     <message>
         <source>A man made water container.</source>
         <comment>Description of symbol 3.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Paikalleen rakennettu tai tuotu vesisäiliö.</translation>
     </message>
     <message>
         <source>|D| Open land</source>
         <comment>Name of symbol 4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Avoin alue</translation>
     </message>
     <message>
         <source>An area with no trees. Grassland, a meadow or a field. Also heath or moorland.
 
 Map symbols: ISOM 401, 403</source>
         <comment>Description of symbol 4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>(401) Avoin viljelyksestä poistettu peltomaa ja peltomainen avoin alue, kuten peltolaidun, urheilukenttä, golfkenttä, avoin puisto.Huom. Pienten metsäaukkojen rastinmäärite on 4.4.(403) Avoin nummi, alle 1 m kasvillisuutta kasvava pakettipelto, tunturin puurajan yläpuolinen alue, laskettelurinne, suuri avosuo ja täysin avoin hakkuu, kalliomaaston avoin matalan kasvillisuuden alue.
+
+Karttasymbolit: ISOM 401, 403</translation>
     </message>
     <message>
         <source>|D| Semi-open land</source>
         <comment>Name of symbol 4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Puoliavoin alue</translation>
     </message>
     <message>
         <source>An area of open land with scattered trees or bushes.
 
 Map symbols: ISOM 402, 404</source>
         <comment>Description of symbol 4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>(402) Niitty, laidun- ja hakamaa sekä puistoalue, jolla kasvaa yksittäisiä puita ja/tai pensaita.(404) Hakkuuala.
+
+Karttasymbolit: ISOM 402, 404</translation>
     </message>
     <message>
         <source>|D| Forest corner</source>
         <comment>Name of symbol 4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Metsän kulma</translation>
     </message>
     <message>
         <source>The corner or tip of a forested area projecting into open land.</source>
         <comment>Description of symbol 4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Metsäalueen kulma tai kärki, joka on kohti avointa aluetta.</translation>
     </message>
     <message>
         <source>|D| Clearing</source>
         <comment>Name of symbol 4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Aukko</translation>
     </message>
     <message>
         <source>A small area of land free from trees within the forest.
 
 Map symbols: ISOM 401, 403</source>
         <comment>Description of symbol 4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni puuton aukko metsässä.
+
+Karttasymbolit: ISOM 401, 403</translation>
     </message>
     <message>
         <source>|D| Thicket</source>
         <comment>Name of symbol 4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Tiheikkö</translation>
     </message>
     <message>
         <source>A small area of forest where the tree cover or undergrowth is so dense that it is difficult to pass.
 
 Map symbols: ISOM 408, 410</source>
         <comment>Description of symbol 4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni alue metsässä, jonka läpi on puuston tai aluskasvillisuuden johdosta vaikea kulkea. Voi olla myös yksittäinen pensas (tyypillisesti sprintissä).
+
+Karttasymbolit: ISOM 408, 410</translation>
     </message>
     <message>
         <source>|D| Linear thicket</source>
         <comment>Name of symbol 4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Tiheikkökaistale</translation>
     </message>
     <message>
         <source>A man-made line of trees or bushes that is difficult to cross.
 
 Map symbol: ISOM 410</source>
         <comment>Description of symbol 4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Istutettu puu- tai pensasrivi, josta on vaikea kulkea läpi. Voi olla myös pensasaita (tyypillisesti sprintissä).
+
+Karttasymboli: ISOM 410</translation>
     </message>
     <message>
         <source>|D| Vegetation boundary</source>
         <comment>Name of symbol 4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Selvä kuvioraja</translation>
     </message>
     <message>
         <source>A distinct boundary between different types of trees or vegetation.
 
 Map symbol: ISOM 416</source>
         <comment>Description of symbol 4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi havaittava metsätyypin tai kasvillisuuden raja
+
+Karttasymboli: ISOM 416</translation>
     </message>
     <message>
         <source>|D| Copse</source>
         <comment>Name of symbol 4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Puuryhmä</translation>
     </message>
     <message>
         <source>A small area of trees in open ground.
 
 Map symbols: ISOM 405, 406</source>
         <comment>Description of symbol 4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni alue puita avoimella alueella.
+
+Karttasymbolit: ISOM 405, 406</translation>
     </message>
     <message>
         <source>|D| Distinctive tree</source>
         <comment>Name of symbol 4.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Selkeästi erottuva puu</translation>
     </message>
     <message>
         <source>An unusual or distinctive tree in either open land or forest; frequently information is also given as to its type.</source>
         <comment>Description of symbol 4.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Epätavallinen tai selkeästi erottuva puu joko avoimella alueella tai metsässä; puutyypistä annetaan kilpailuohjeissa erillistä tietoa.</translation>
     </message>
     <message>
         <source>|D| Tree stump, Root stock</source>
         <comment>Name of symbol 4.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Juurakko, kanto</translation>
     </message>
     <message>
         <source>The stump of a tree. The upturned root of a fallen tree, with or without the trunk.</source>
         <comment>Description of symbol 4.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kanto tai pystyyn noussut puun juurakko (puun runko joko jäljellä tai poistettu).</translation>
     </message>
     <message>
         <source>|D| Road</source>
         <comment>Name of symbol 5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Tie</translation>
     </message>
     <message>
         <source>A metalled/asphalt surfaced or dirt road, suitable for vehicles in normal weather conditions.
 
 Map symbols: ISOM 501, 502, 503, 504</source>
         <comment>Description of symbol 5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Asfaltti-, sora- tai metsätie, joka on ajokelpoinen normaaliolosuhteissa.
+
+Karttasymbolit: ISOM 501, 502, 503, 504</translation>
     </message>
     <message>
         <source>|D| Track / Path</source>
         <comment>Name of symbol 5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Polku</translation>
     </message>
     <message>
         <source>A visible route made by people or animals. Tracks may be driven by rugged vehicles.
 
 Map symbols: ISOM 505, 506, 507, 508</source>
         <comment>Description of symbol 5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ihmisten tai eläinten tekemä näkyvä polku, joka voi olla ajettavissa maastokelpoisella ajoneuvolla.
+
+Karttasymbolit: ISOM 505, 506, 507, 508</translation>
     </message>
     <message>
         <source>|D| Ride</source>
         <comment>Name of symbol 5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Linja</translation>
     </message>
     <message>
         <source>A clearly visible linear break in the forest which does not have a distinct path along it.
 
 Map symbol: ISOM 509</source>
         <comment>Description of symbol 5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linja tai ura, esim. metsäkoneura tai hiihtoladun pohja, jossa ei ole selkeästi havaittavaa polkua.
+
+Karttasymboli: ISOM 509</translation>
     </message>
     <message>
         <source>|D| Bridge</source>
         <comment>Name of symbol 5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Silta</translation>
     </message>
     <message>
         <source>A crossing point over a watercourse, or other linear feature.
 
 Map symbols: ISOM 512, 513</source>
         <comment>Description of symbol 5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Silta tai muu vesistön ylityspaikka.
+
+Karttasymbolit: ISOM 512, 513</translation>
     </message>
     <message>
         <source>|D| Power line</source>
         <comment>Name of symbol 5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Sähkölinja</translation>
     </message>
     <message>
         <source>A power or telephone line, cableway or ski lift.
 
 Map symbols: ISOM 516, 517</source>
         <comment>Description of symbol 5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sähkö- tai puhelinlinja, köysirata, hiihtohissi.
+
+Karttasymbolit: ISOM 516, 517</translation>
     </message>
     <message>
         <source>|D| Power line pylon</source>
         <comment>Name of symbol 5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Sähkölinjan pylväs</translation>
     </message>
     <message>
         <source>A support for power or telephone line, cableway or ski lift.
 
 Map symbols: ISOM 516, 517</source>
         <comment>Description of symbol 5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sähkö- tai puhelinlinjan, köysiradan tai hiihtohissin pylväs.
+
+Karttasymbolit: ISOM 516, 517</translation>
     </message>
     <message>
         <source>|D| Tunnel</source>
         <comment>Name of symbol 5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Tunneli</translation>
     </message>
     <message>
         <source>A way under roads, railways, etc.
 
 Map symbol: ISOM 518</source>
         <comment>Description of symbol 5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tien, rautatien ym. alikulkutunneli.
+
+Karttasymboli: ISOM 518</translation>
     </message>
     <message>
         <source>|D| Stone wall</source>
         <comment>Name of symbol 5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Muuri</translation>
     </message>
     <message>
         <source>A stone boundary wall or stone faced bank. Used with symbol 8.11 to indicate a ruined stone wall.
 
 Map symbols: ISOM 519, 520, 521</source>
         <comment>Description of symbol 5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kivistä tai muusta materiaalista tehty muuri.Sortunut tai heikosti havaittava muuri osoitetaan lisämerkillä 8.11.
+
+Karttasymbolit: ISOM 519, 520, 521</translation>
     </message>
     <message>
         <source>|D| Fence</source>
         <comment>Name of symbol 5.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Aita</translation>
     </message>
     <message>
         <source>A wire or wooden boundary. Used with symbol 8.11 to indicate a ruined fence.
 
 Map symbols: ISOM 522, 523, 524</source>
         <comment>Description of symbol 5.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Muu kuin kiviaita.Sortunut aita osoitetaan lisämerkillä 8.11.
+
+Karttasymbolit: ISOM 522, 523, 524</translation>
     </message>
     <message>
         <source>|D| Crossing point</source>
         <comment>Name of symbol 5.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Kulkuaukko</translation>
     </message>
     <message>
         <source>A way through or over a wall, fence, or pipeline, including a gate or stile.
 
 Map symbol: ISOM 525</source>
         <comment>Description of symbol 5.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Aitojen ja muurien läpikulku- ja ylityskohdat, putkilinjan alitus- tai ylityspaikka mukaan lukien näihin liittyvät portaat.
+
+Karttasymboli: ISOM 525</translation>
     </message>
     <message>
         <source>|D| Building</source>
@@ -17479,19 +17565,23 @@ Map symbol: ISOM 525</source>
 
 Map symbol: ISOM 526</source>
         <comment>Description of symbol 5.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rakennus tai muu symbolilla 526 kartassa kuvattava rakennelma.
+
+Karttasymboli: ISOM 526</translation>
     </message>
     <message>
         <source>|D| Paved area</source>
         <comment>Name of symbol 5.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Kenttä</translation>
     </message>
     <message>
         <source>An area of hard standing used for parking or other purposes.
 
 Map symbol: ISOM 529</source>
         <comment>Description of symbol 5.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kenttä, pysäköintialue tai muu kovapintainen alue.
+
+Karttasymboli: ISOM 529</translation>
     </message>
     <message>
         <source>|D| Ruin</source>
@@ -17503,19 +17593,23 @@ Map symbol: ISOM 529</source>
 
 Map symbol: ISOM 530</source>
         <comment>Description of symbol 5.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rakennuksen raunio.
+
+Karttasymboli: ISOM 530</translation>
     </message>
     <message>
         <source>|D| Pipeline</source>
         <comment>Name of symbol 5.14</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Putkilinja, kelkkarata</translation>
     </message>
     <message>
         <source>A pipeline (gas, water, oil, etc.) above ground level.
 
 Map symbols: ISOM 533, 534</source>
         <comment>Description of symbol 5.14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Maanpinnan yläpuolinen putki- tai johtolinja (kaasu-, vesi-, öljy-, kaukolämpölinja ym.) tai kelkkarata.
+
+Karttasymbolit: ISOM 533, 534</translation>
     </message>
     <message>
         <source>|D| Tower</source>
@@ -17527,31 +17621,37 @@ Map symbols: ISOM 533, 534</source>
 
 Map symbols: ISOM 535, 536</source>
         <comment>Description of symbol 5.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Metallista, puusta, kivistä tai tiilistä tehty torni tai pylväs.
+
+Karttasymbolit: ISOM 535, 536</translation>
     </message>
     <message>
         <source>|D| Shooting platform</source>
         <comment>Name of symbol 5.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Metsästyslava</translation>
     </message>
     <message>
         <source>A structure attached to a tree where a marksman or observer can sit.
 
 Map symbol: ISOM 536</source>
         <comment>Description of symbol 5.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Metsästyslava.
+
+Karttasymboli: ISOM 536</translation>
     </message>
     <message>
         <source>|D| Boundary stone, Cairn</source>
         <comment>Name of symbol 5.17</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Rajapyykki</translation>
     </message>
     <message>
         <source>A man made stone or pile of stones. A cairn, memorial stone, boundary stone or trigonometric point.
 
 Map symbol: ISOM 537</source>
         <comment>Description of symbol 5.17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi havaittava rajapyykki, rajakivirakennelma tai muu ladottu kivirakennelma, kilometripylväs, muistokivi.
+
+Karttasymboli: ISOM 537</translation>
     </message>
     <message>
         <source>|D| Fodder rack</source>
@@ -17563,224 +17663,228 @@ Map symbol: ISOM 537</source>
 
 Map symbol: ISOM 538</source>
         <comment>Description of symbol 5.18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eläinten ruokintateline tai -katos.
+
+Karttasymboli: ISOM 538</translation>
     </message>
     <message>
         <source>|D| Charcoal burning ground</source>
         <comment>Name of symbol 5.19</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Miilun pohja, tekotasanne</translation>
     </message>
     <message>
         <source>The clear remains of an area where charcoal was burned. A small level man made area on a slope. (A platform).</source>
         <comment>Description of symbol 5.19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi havaittava tervahaudan tai sysimiilun pohja tai pieni tasattu alue rinteessä.</translation>
     </message>
     <message>
         <source>|D| Monument or Statue</source>
         <comment>Name of symbol 5.20</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Monumentti, patsas</translation>
     </message>
     <message>
         <source>A monument, memorial or statue.</source>
         <comment>Description of symbol 5.20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Monumentti tai patsas.</translation>
     </message>
     <message>
         <source>|D| Building pass through</source>
         <comment>Name of symbol 5.23</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Rakennuksen läpikulku</translation>
     </message>
     <message>
         <source>An arcade, indoor passage or route through a building.</source>
         <comment>Description of symbol 5.23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytävä tai rakennuksen läpikulku.</translation>
     </message>
     <message>
         <source>|D| Stairway</source>
         <comment>Name of symbol 5.24</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Portaat</translation>
     </message>
     <message>
         <source>A stairway of at least two steps.</source>
         <comment>Description of symbol 5.24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vähintään kaksiaskelmaiset portaat.</translation>
     </message>
     <message>
         <source>|D| Special item</source>
         <comment>Name of symbol 6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Selvästi havaittava kohde, erikoiskohde</translation>
     </message>
     <message>
         <source>If used, an explanation of its meaning must be supplied to competitors in the pre-race information.</source>
         <comment>Description of symbol 6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kilpailijoille tulee kertoa kilpailuohjeissa, mikä tai minkälainen maastokohde on kyseessä.</translation>
     </message>
     <message>
         <source>|D| Special item</source>
         <comment>Name of symbol 6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Selvästi havaittava kohde, erikoiskohde</translation>
     </message>
     <message>
         <source>If used, an explanation of its meaning must be supplied to competitors in the pre-race information.</source>
         <comment>Description of symbol 6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kilpailijoille tulee kertoa kilpailuohjeissa, mikä tai minkälainen maastokohde on kyseessä.</translation>
     </message>
     <message>
         <source>|D| Country Specific features (template)</source>
         <comment>Name of symbol 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Maakohtainen rastimäärite</translation>
     </message>
     <message>
         <source>It is not generally recommended to introduce local symbols. If local symbols are used then at events likely to attract an international entry information about them should be supplied to competitors in the pre-race details.
 
 The default line shows a box of 5 mm by 5mm and can be removed from the final symbols.</source>
         <comment>Description of symbol 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Maakohtaisten (paikallisten) rastinmääritesymbolien käyttö ei ole suositeltavaa. Kilpailijoille tulee kertoa kilpailuohjeissa, mikä tai minkälainen maastokohde on kyseessä. Erityisen tärkeätä on esitellä maakohtaiset symbolit ulkomaalaisille kilpailijoille.
+
+Oletuksena piirretään 5 x 5 mm laatikko, joka voidaan poistaa lopullisista symboleista.</translation>
     </message>
     <message>
         <source>|E| Low</source>
         <comment>Name of symbol 8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Matala</translation>
     </message>
     <message>
         <source>Where the control feature is particularly low or flat at but this is not indicated on the map; e.g. Hill, low.</source>
         <comment>Description of symbol 8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Täsmennystä käytetään, kun rastikohde on erityisen matala, mutta kohteen mataluus ei käy ilmi kartasta; esim. kukkula, matala.</translation>
     </message>
     <message>
         <source>|E| Shallow</source>
         <comment>Name of symbol 8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Laakea</translation>
     </message>
     <message>
         <source>Where the control feature is particularly shallow but this is not indicated on the map; e.g. Re-entrant, shallow.</source>
         <comment>Description of symbol 8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Täsmennystä käytetään, kun rastikohde on erityisen laakea, mutta kohteen laakeus ei käy ilmi kartasta; esim. notko, laakea.</translation>
     </message>
     <message>
         <source>|E| Deep</source>
         <comment>Name of symbol 8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Syvä</translation>
     </message>
     <message>
         <source>Where the control feature is particularly deep but this is not indicated on the map; e.g. Pit, deep.</source>
         <comment>Description of symbol 8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Täsmennystä käytetään, kun rastikohde on erityisen syvä, mutta kohteen syvyys ei käy ilmi kartasta; esim. kuoppa, syvä.</translation>
     </message>
     <message>
         <source>|E| Overgrown</source>
         <comment>Name of symbol 8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Umpeenkasvanut</translation>
     </message>
     <message>
         <source>Where the feature is partially covered in undergrowth or bushes that are not indicated on the map; e.g. Ruin, overgrown.</source>
         <comment>Description of symbol 8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Täsmennystä käytetään, kun rastikohde on osittain aluskasvillisuuden tai pensaiden peitossa niin, että se kuitenkaan ei käy ilmi kartasta; esim. raunio, umpeenkasvanut.</translation>
     </message>
     <message>
         <source>|E| Open</source>
         <comment>Name of symbol 8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Avoin</translation>
     </message>
     <message>
         <source>Where the feature is in an area where the tree cover is less than the surroundings but this is not indicated on the map; e.g. Marsh, open.</source>
         <comment>Description of symbol 8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Täsmennystä käytetään, kun rastikohde on alueella, jolla on puustoa vähemmän kuin ympäristössään niin, että tämä ei kuitenkaan käy ilmi kartasta.</translation>
     </message>
     <message>
         <source>|E| Rocky, Stony </source>
         <comment>Name of symbol 8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Louhikkoinen, kivinen </translation>
     </message>
     <message>
         <source>Where the feature is in an area of rocky or stony ground not indicated on the map; e.g. Pit, rocky.</source>
         <comment>Description of symbol 8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Täsmennystä käytetään, kun rastikohde on alueella, joka on louhikkoinen tai kivikkoinen niin, että tämä ei kuitenkaan käy ilmi kartasta.</translation>
     </message>
     <message>
         <source>|E| Marshy</source>
         <comment>Name of symbol 8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Soinen</translation>
     </message>
     <message>
         <source>Where the feature is in an area of marshy ground not indicated on the map; e.g. Re-entrant, marshy.</source>
         <comment>Description of symbol 8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Täsmennystä käytetään, kun rastikohde on alueella, joka on soinen niin, että tämä ei kuitenkaan käy ilmi kartasta.</translation>
     </message>
     <message>
         <source>|E| Sandy</source>
         <comment>Name of symbol 8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Hietikkoinen</translation>
     </message>
     <message>
         <source>Where the feature is in an area of sandy ground not indicated on the map; e.g. Spur, sandy.</source>
         <comment>Description of symbol 8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Täsmennystä käytetään, kun rastikohde on alueella, joka on hietikkoinen.</translation>
     </message>
     <message>
         <source>|E| Needle leaved</source>
         <comment>Name of symbol 8.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Havupuu, havupensas</translation>
     </message>
     <message>
         <source>Where the tree or trees associated with the control feature have needle shaped leaves; e.g. Distinctive tree, needle leaved.</source>
         <comment>Description of symbol 8.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Täsmennystä käytetään, kun rastikohde on havupuu tai havupensas.</translation>
     </message>
     <message>
         <source>|E| Broad leaved</source>
         <comment>Name of symbol 8.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Lehtipuu, lehtipensas</translation>
     </message>
     <message>
         <source>Where the tree or trees associated with the control feature are broad-leaved; e.g. Copse, broad leaved.</source>
         <comment>Description of symbol 8.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Täsmennystä käytetään, kun rastikohde on lehtipuu tai lehtipensas.</translation>
     </message>
     <message>
         <source>|E| Ruined</source>
         <comment>Name of symbol 8.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Sortunut</translation>
     </message>
     <message>
         <source>Where the feature has fallen to ground level; e.g. Fence, ruined.</source>
         <comment>Description of symbol 8.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Täsmennystä käytetään, kun rastikohde on kokonaan tai osittain sortunut; esim. aita, sortunut.</translation>
     </message>
     <message>
         <source>|F| Height or Depth</source>
         <comment>Name of symbol 9.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| Korkeus tai syvyys</translation>
     </message>
     <message>
         <source>Height or Depth of the feature in metres; e.g. 2.6</source>
         <comment>Description of symbol 9.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rastikohteen korkeus tai syvyys metreissä</translation>
     </message>
     <message>
         <source>|F| Size</source>
         <comment>Name of symbol 9.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| Laajuus</translation>
     </message>
     <message>
         <source>Horizontal dimensions of the feature in metres; e.g. 8 x 4</source>
         <comment>Description of symbol 9.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rastikohteen äärimitat (pituus x leveys) metreissä</translation>
     </message>
     <message>
         <source>|F| Slash for height on slope</source>
         <comment>Name of symbol 9.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| Korkeus rinteessä</translation>
     </message>
     <message>
         <source>Use with text symbol 9.4</source>
         <comment>Description of symbol 9.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytä yhdessä tekstisymbolin 9.4 kanssa</translation>
     </message>
     <message>
         <source>|F| Heights of two features, or on slope</source>
         <comment>Name of symbol 9.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| Kohteiden korkeus</translation>
     </message>
     <message>
         <source>Use this text symbol to give two numbers in different lines.
@@ -17796,288 +17900,315 @@ Use the slash symbol 9.3 for separating the numbers; e.g.
 2.0
 3.0</source>
         <comment>Description of symbol 9.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Anna tällä tekstisymbolilla kaksi numeroa eri riveille.
+
+9.3 Korkeus rinteessä: Kohteen korkeus rinteessä metreinä.
+Käytä kauttaviivaa 9.3 numeroiden välissä, esim.
+
+0.5/
+    / 3.0
+
+9.4 Kahden kohteen korkeus: Niiden kahden maastokohteen korkeudet, joiden välissä rasti on. Kirjoita numerot päällekkäin, esim.
+
+2.0
+3.0</translation>
     </message>
     <message>
         <source>|F| Crossing</source>
         <comment>Name of symbol 10.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| Risteys</translation>
     </message>
     <message>
         <source>The point at which two linear features cross. The two features which either cross or meet must be shown in columns |D| and |E|.</source>
         <comment>Description of symbol 10.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kahden linjamaisen kohteen risteyspaikka. Risteävät kohteet merkitään sarakkeisiin |D| ja|E|.</translation>
     </message>
     <message>
         <source>|F| Junction</source>
         <comment>Name of symbol 10.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| Haara</translation>
     </message>
     <message>
         <source>The point at which two linear features meet. The two features which either cross or meet must be shown in columns |D| and |E|.</source>
         <comment>Description of symbol 10.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Paikka, jossa kaksi linjamaista kohdetta kohtaavat tai jossa linjamainen kohde kohtaa aluemaisen kohteen reunan tai kulman. Kohteet merkitään sarakkeisiin |D| ja|E|.</translation>
     </message>
     <message>
         <source>|G| North Side</source>
         <comment>Name of symbol 11.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Pohjoissivu</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on maanpinnan yläpuolinen, esim. kivi, koillissivu. Rasti ei aina näy vastakkaisen sivun puolelta.</translation>
     </message>
     <message>
         <source>|G| North east Side</source>
         <comment>Name of symbol 11.1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Koillissivu</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on maanpinnan yläpuolinen, esim. kivi, koillissivu. Rasti ei aina näy vastakkaisen sivun puolelta.</translation>
     </message>
     <message>
         <source>|G| East Side</source>
         <comment>Name of symbol 11.1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Itäsivu</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on maanpinnan yläpuolinen, esim. kivi, koillissivu. Rasti ei aina näy vastakkaisen sivun puolelta.</translation>
     </message>
     <message>
         <source>|G| South east Side</source>
         <comment>Name of symbol 11.1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kaakkoissivu</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on maanpinnan yläpuolinen, esim. kivi, koillissivu. Rasti ei aina näy vastakkaisen sivun puolelta.</translation>
     </message>
     <message>
         <source>|G| South Side</source>
         <comment>Name of symbol 11.1.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Eteläsivu</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on maanpinnan yläpuolinen, esim. kivi, koillissivu. Rasti ei aina näy vastakkaisen sivun puolelta.</translation>
     </message>
     <message>
         <source>|G| South west Side</source>
         <comment>Name of symbol 11.1.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Lounaissivu</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on maanpinnan yläpuolinen, esim. kivi, koillissivu. Rasti ei aina näy vastakkaisen sivun puolelta.</translation>
     </message>
     <message>
         <source>|G| West Side</source>
         <comment>Name of symbol 11.1.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Länsisivu</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on maanpinnan yläpuolinen, esim. kivi, koillissivu. Rasti ei aina näy vastakkaisen sivun puolelta.</translation>
     </message>
     <message>
         <source>|G| North west Side</source>
         <comment>Name of symbol 11.1.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Luoteissivu</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on maanpinnan yläpuolinen, esim. kivi, koillissivu. Rasti ei aina näy vastakkaisen sivun puolelta.</translation>
     </message>
     <message>
         <source>|G| North Edge</source>
         <comment>Name of symbol 11.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Pohjoisreuna</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastikohde laskee ympäristönsä korkeustasoon nähden alaspäin ja kun rastilippu sijaitsee tämän kohteen taitepisteessä maan tasossa; esim. suppa, länsireuna.
+b) rastikohde kattaa selvästi havaittavan alueen maastossa ja kun rastilippu sijaitsee tämän alueen rajalla; esim. suo, itäreuna.</translation>
     </message>
     <message>
         <source>|G| North east Edge</source>
         <comment>Name of symbol 11.2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Koillisreuna</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastikohde laskee ympäristönsä korkeustasoon nähden alaspäin ja kun rastilippu sijaitsee tämän kohteen taitepisteessä maan tasossa; esim. suppa, länsireuna.
+b) rastikohde kattaa selvästi havaittavan alueen maastossa ja kun rastilippu sijaitsee tämän alueen rajalla; esim. suo, itäreuna.</translation>
     </message>
     <message>
         <source>|G| East Edge</source>
         <comment>Name of symbol 11.2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Itäreuna</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastikohde laskee ympäristönsä korkeustasoon nähden alaspäin ja kun rastilippu sijaitsee tämän kohteen taitepisteessä maan tasossa; esim. suppa, länsireuna.
+b) rastikohde kattaa selvästi havaittavan alueen maastossa ja kun rastilippu sijaitsee tämän alueen rajalla; esim. suo, itäreuna.</translation>
     </message>
     <message>
         <source>|G| South east Edge</source>
         <comment>Name of symbol 11.2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kaakkoisreuna</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastikohde laskee ympäristönsä korkeustasoon nähden alaspäin ja kun rastilippu sijaitsee tämän kohteen taitepisteessä maan tasossa; esim. suppa, länsireuna.
+b) rastikohde kattaa selvästi havaittavan alueen maastossa ja kun rastilippu sijaitsee tämän alueen rajalla; esim. suo, itäreuna.</translation>
     </message>
     <message>
         <source>|G| South Edge</source>
         <comment>Name of symbol 11.2.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Eteläreuna</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastikohde laskee ympäristönsä korkeustasoon nähden alaspäin ja kun rastilippu sijaitsee tämän kohteen taitepisteessä maan tasossa; esim. suppa, länsireuna.
+b) rastikohde kattaa selvästi havaittavan alueen maastossa ja kun rastilippu sijaitsee tämän alueen rajalla; esim. suo, itäreuna.</translation>
     </message>
     <message>
         <source>|G| South west Edge</source>
         <comment>Name of symbol 11.2.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Lounaisreuna</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastikohde laskee ympäristönsä korkeustasoon nähden alaspäin ja kun rastilippu sijaitsee tämän kohteen taitepisteessä maan tasossa; esim. suppa, länsireuna.
+b) rastikohde kattaa selvästi havaittavan alueen maastossa ja kun rastilippu sijaitsee tämän alueen rajalla; esim. suo, itäreuna.</translation>
     </message>
     <message>
         <source>|G| West Edge</source>
         <comment>Name of symbol 11.2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Länsireuna</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastikohde laskee ympäristönsä korkeustasoon nähden alaspäin ja kun rastilippu sijaitsee tämän kohteen taitepisteessä maan tasossa; esim. suppa, länsireuna.
+b) rastikohde kattaa selvästi havaittavan alueen maastossa ja kun rastilippu sijaitsee tämän alueen rajalla; esim. suo, itäreuna.</translation>
     </message>
     <message>
         <source>|G| North west Edge</source>
         <comment>Name of symbol 11.2.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Luoteisreuna</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastikohde laskee ympäristönsä korkeustasoon nähden alaspäin ja kun rastilippu sijaitsee tämän kohteen taitepisteessä maan tasossa; esim. suppa, länsireuna.
+b) rastikohde kattaa selvästi havaittavan alueen maastossa ja kun rastilippu sijaitsee tämän alueen rajalla; esim. suo, itäreuna.</translation>
     </message>
     <message>
         <source>|G| North Part</source>
         <comment>Name of symbol 11.3.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Pohjoisosa</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde kattaa selvästi havaittavan alueen maastossa ja kun rastilippu sijaitsee muualla kuin alueen keskellä tai reunoilla; esim. suppa, länsiosa.</translation>
     </message>
     <message>
         <source>|G| North east Part</source>
         <comment>Name of symbol 11.3.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Koillisosa</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde kattaa selvästi havaittavan alueen maastossa ja kun rastilippu sijaitsee muualla kuin alueen keskellä tai reunoilla; esim. suppa, länsiosa.</translation>
     </message>
     <message>
         <source>|G| East Part</source>
         <comment>Name of symbol 11.3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Itäosa</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde kattaa selvästi havaittavan alueen maastossa ja kun rastilippu sijaitsee muualla kuin alueen keskellä tai reunoilla; esim. suppa, länsiosa.</translation>
     </message>
     <message>
         <source>|G| South east Part</source>
         <comment>Name of symbol 11.3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kaakkoisosa</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde kattaa selvästi havaittavan alueen maastossa ja kun rastilippu sijaitsee muualla kuin alueen keskellä tai reunoilla; esim. suppa, länsiosa.</translation>
     </message>
     <message>
         <source>|G| South Part</source>
         <comment>Name of symbol 11.3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Eteläosa</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde kattaa selvästi havaittavan alueen maastossa ja kun rastilippu sijaitsee muualla kuin alueen keskellä tai reunoilla; esim. suppa, länsiosa.</translation>
     </message>
     <message>
         <source>|G| South west part</source>
         <comment>Name of symbol 11.3.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Lounaisosa</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde kattaa selvästi havaittavan alueen maastossa ja kun rastilippu sijaitsee muualla kuin alueen keskellä tai reunoilla; esim. suppa, länsiosa.</translation>
     </message>
     <message>
         <source>|G| West Part</source>
         <comment>Name of symbol 11.3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Länsiosa</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde kattaa selvästi havaittavan alueen maastossa ja kun rastilippu sijaitsee muualla kuin alueen keskellä tai reunoilla; esim. suppa, länsiosa.</translation>
     </message>
     <message>
         <source>|G| North west Part</source>
         <comment>Name of symbol 11.3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Luoteisosa</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde kattaa selvästi havaittavan alueen maastossa ja kun rastilippu sijaitsee muualla kuin alueen keskellä tai reunoilla; esim. suppa, länsiosa.</translation>
     </message>
     <message>
         <source>|G| North Corner (inside)</source>
         <comment>Name of symbol 11.4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Pohjoiskulma (sisäpuolella)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18085,12 +18216,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on 45-135 astetta; esim. avoin alue, itäkulma (sisäpuolella); raunio, luoteiskulma (ulkopuolella).
+b) rastilippu on linjamaisen rastikohteen kulmassa; esim. aita, eteläkulma (sisäpuolella); kiviaita, lounaiskulma (ulkopuolella)
+Huom. Rakennuksen reuna käsitellään viivamaisena kohteena ja tällöin ”rakennus, itäkulma (sisäpuolella) ei tarkoita ”rakennuksen siäpuolella”. Symbolin kääntösuunta osoittaa, mihin suuntaan rastikohteen kulma on.</translation>
     </message>
     <message>
         <source>|G| North east Corner (inside)</source>
         <comment>Name of symbol 11.4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Koilliskulma (sisäpuolella)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18098,12 +18232,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on 45-135 astetta; esim. avoin alue, itäkulma (sisäpuolella); raunio, luoteiskulma (ulkopuolella).
+b) rastilippu on linjamaisen rastikohteen kulmassa; esim. aita, eteläkulma (sisäpuolella); kiviaita, lounaiskulma (ulkopuolella)
+Huom. Rakennuksen reuna käsitellään viivamaisena kohteena ja tällöin ”rakennus, itäkulma (sisäpuolella) ei tarkoita ”rakennuksen siäpuolella”. Symbolin kääntösuunta osoittaa, mihin suuntaan rastikohteen kulma on.</translation>
     </message>
     <message>
         <source>|G| East Corner (inside)</source>
         <comment>Name of symbol 11.4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Itäkulma (sisäpuolella)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18111,12 +18248,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on 45-135 astetta; esim. avoin alue, itäkulma (sisäpuolella); raunio, luoteiskulma (ulkopuolella).
+b) rastilippu on linjamaisen rastikohteen kulmassa; esim. aita, eteläkulma (sisäpuolella); kiviaita, lounaiskulma (ulkopuolella)
+Huom. Rakennuksen reuna käsitellään viivamaisena kohteena ja tällöin ”rakennus, itäkulma (sisäpuolella) ei tarkoita ”rakennuksen siäpuolella”. Symbolin kääntösuunta osoittaa, mihin suuntaan rastikohteen kulma on.</translation>
     </message>
     <message>
         <source>|G| South east Corner (inside)</source>
         <comment>Name of symbol 11.4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kaakkoiskulma (sisäpuolella)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18124,12 +18264,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on 45-135 astetta; esim. avoin alue, itäkulma (sisäpuolella); raunio, luoteiskulma (ulkopuolella).
+b) rastilippu on linjamaisen rastikohteen kulmassa; esim. aita, eteläkulma (sisäpuolella); kiviaita, lounaiskulma (ulkopuolella)
+Huom. Rakennuksen reuna käsitellään viivamaisena kohteena ja tällöin ”rakennus, itäkulma (sisäpuolella) ei tarkoita ”rakennuksen siäpuolella”. Symbolin kääntösuunta osoittaa, mihin suuntaan rastikohteen kulma on.</translation>
     </message>
     <message>
         <source>|G| South Corner (inside)</source>
         <comment>Name of symbol 11.4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Eteläkulma (sisäpuolella)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18137,12 +18280,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on 45-135 astetta; esim. avoin alue, itäkulma (sisäpuolella); raunio, luoteiskulma (ulkopuolella).
+b) rastilippu on linjamaisen rastikohteen kulmassa; esim. aita, eteläkulma (sisäpuolella); kiviaita, lounaiskulma (ulkopuolella)
+Huom. Rakennuksen reuna käsitellään viivamaisena kohteena ja tällöin ”rakennus, itäkulma (sisäpuolella) ei tarkoita ”rakennuksen siäpuolella”. Symbolin kääntösuunta osoittaa, mihin suuntaan rastikohteen kulma on.</translation>
     </message>
     <message>
         <source>|G| South west Corner (inside)</source>
         <comment>Name of symbol 11.4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Lounaiskulma (sisäpuolella)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18150,12 +18296,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on 45-135 astetta; esim. avoin alue, itäkulma (sisäpuolella); raunio, luoteiskulma (ulkopuolella).
+b) rastilippu on linjamaisen rastikohteen kulmassa; esim. aita, eteläkulma (sisäpuolella); kiviaita, lounaiskulma (ulkopuolella)
+Huom. Rakennuksen reuna käsitellään viivamaisena kohteena ja tällöin ”rakennus, itäkulma (sisäpuolella) ei tarkoita ”rakennuksen siäpuolella”. Symbolin kääntösuunta osoittaa, mihin suuntaan rastikohteen kulma on.</translation>
     </message>
     <message>
         <source>|G| West Corner (inside)</source>
         <comment>Name of symbol 11.4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Länsikulma (sisäpuolella)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18163,12 +18312,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on 45-135 astetta; esim. avoin alue, itäkulma (sisäpuolella); raunio, luoteiskulma (ulkopuolella).
+b) rastilippu on linjamaisen rastikohteen kulmassa; esim. aita, eteläkulma (sisäpuolella); kiviaita, lounaiskulma (ulkopuolella)
+Huom. Rakennuksen reuna käsitellään viivamaisena kohteena ja tällöin ”rakennus, itäkulma (sisäpuolella) ei tarkoita ”rakennuksen siäpuolella”. Symbolin kääntösuunta osoittaa, mihin suuntaan rastikohteen kulma on.</translation>
     </message>
     <message>
         <source>|G| North west Corner (inside)</source>
         <comment>Name of symbol 11.4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Luoteiskulma (sisäpuolella)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18176,12 +18328,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on 45-135 astetta; esim. avoin alue, itäkulma (sisäpuolella); raunio, luoteiskulma (ulkopuolella).
+b) rastilippu on linjamaisen rastikohteen kulmassa; esim. aita, eteläkulma (sisäpuolella); kiviaita, lounaiskulma (ulkopuolella)
+Huom. Rakennuksen reuna käsitellään viivamaisena kohteena ja tällöin ”rakennus, itäkulma (sisäpuolella) ei tarkoita ”rakennuksen siäpuolella”. Symbolin kääntösuunta osoittaa, mihin suuntaan rastikohteen kulma on.</translation>
     </message>
     <message>
         <source>|G| North Corner (outside)</source>
         <comment>Name of symbol 11.5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Pohjoiskulma (ulkopuolella)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18189,12 +18344,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on 45-135 astetta; esim. avoin alue, itäkulma (sisäpuolella); raunio, luoteiskulma (ulkopuolella).
+b) rastilippu on linjamaisen rastikohteen kulmassa; esim. aita, eteläkulma (sisäpuolella); kiviaita, lounaiskulma (ulkopuolella)
+Huom. Rakennuksen reuna käsitellään viivamaisena kohteena ja tällöin ”rakennus, itäkulma (sisäpuolella) ei tarkoita ”rakennuksen siäpuolella”. Symbolin kääntösuunta osoittaa, mihin suuntaan rastikohteen kulma on.</translation>
     </message>
     <message>
         <source>|G| North east Corner (outside)</source>
         <comment>Name of symbol 11.5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Koilliskulma (ulkopuolella)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18202,12 +18360,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on 45-135 astetta; esim. avoin alue, itäkulma (sisäpuolella); raunio, luoteiskulma (ulkopuolella).
+b) rastilippu on linjamaisen rastikohteen kulmassa; esim. aita, eteläkulma (sisäpuolella); kiviaita, lounaiskulma (ulkopuolella)
+Huom. Rakennuksen reuna käsitellään viivamaisena kohteena ja tällöin ”rakennus, itäkulma (sisäpuolella) ei tarkoita ”rakennuksen siäpuolella”. Symbolin kääntösuunta osoittaa, mihin suuntaan rastikohteen kulma on.</translation>
     </message>
     <message>
         <source>|G| East Corner (outside)</source>
         <comment>Name of symbol 11.5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Itäkulma (ulkopuolella)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18215,12 +18376,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on 45-135 astetta; esim. avoin alue, itäkulma (sisäpuolella); raunio, luoteiskulma (ulkopuolella).
+b) rastilippu on linjamaisen rastikohteen kulmassa; esim. aita, eteläkulma (sisäpuolella); kiviaita, lounaiskulma (ulkopuolella)
+Huom. Rakennuksen reuna käsitellään viivamaisena kohteena ja tällöin ”rakennus, itäkulma (sisäpuolella) ei tarkoita ”rakennuksen siäpuolella”. Symbolin kääntösuunta osoittaa, mihin suuntaan rastikohteen kulma on.</translation>
     </message>
     <message>
         <source>|G| South east Corner (outside)</source>
         <comment>Name of symbol 11.5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kaakkoiskulma (ulkopuolella)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18228,12 +18392,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on 45-135 astetta; esim. avoin alue, itäkulma (sisäpuolella); raunio, luoteiskulma (ulkopuolella).
+b) rastilippu on linjamaisen rastikohteen kulmassa; esim. aita, eteläkulma (sisäpuolella); kiviaita, lounaiskulma (ulkopuolella)
+Huom. Rakennuksen reuna käsitellään viivamaisena kohteena ja tällöin ”rakennus, itäkulma (sisäpuolella) ei tarkoita ”rakennuksen siäpuolella”. Symbolin kääntösuunta osoittaa, mihin suuntaan rastikohteen kulma on.</translation>
     </message>
     <message>
         <source>|G| South Corner (outside)</source>
         <comment>Name of symbol 11.5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Eteläkulma (ulkopuolella)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18241,12 +18408,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on 45-135 astetta; esim. avoin alue, itäkulma (sisäpuolella); raunio, luoteiskulma (ulkopuolella).
+b) rastilippu on linjamaisen rastikohteen kulmassa; esim. aita, eteläkulma (sisäpuolella); kiviaita, lounaiskulma (ulkopuolella)
+Huom. Rakennuksen reuna käsitellään viivamaisena kohteena ja tällöin ”rakennus, itäkulma (sisäpuolella) ei tarkoita ”rakennuksen siäpuolella”. Symbolin kääntösuunta osoittaa, mihin suuntaan rastikohteen kulma on.</translation>
     </message>
     <message>
         <source>|G| South west Corner (outside)</source>
         <comment>Name of symbol 11.5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Lounaiskulma (ulkopuolella)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18254,12 +18424,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on 45-135 astetta; esim. avoin alue, itäkulma (sisäpuolella); raunio, luoteiskulma (ulkopuolella).
+b) rastilippu on linjamaisen rastikohteen kulmassa; esim. aita, eteläkulma (sisäpuolella); kiviaita, lounaiskulma (ulkopuolella)
+Huom. Rakennuksen reuna käsitellään viivamaisena kohteena ja tällöin ”rakennus, itäkulma (sisäpuolella) ei tarkoita ”rakennuksen siäpuolella”. Symbolin kääntösuunta osoittaa, mihin suuntaan rastikohteen kulma on.</translation>
     </message>
     <message>
         <source>|G| West Corner (outside)</source>
         <comment>Name of symbol 11.5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Länsikulma (ulkopuolella)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18267,12 +18440,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on 45-135 astetta; esim. avoin alue, itäkulma (sisäpuolella); raunio, luoteiskulma (ulkopuolella).
+b) rastilippu on linjamaisen rastikohteen kulmassa; esim. aita, eteläkulma (sisäpuolella); kiviaita, lounaiskulma (ulkopuolella)
+Huom. Rakennuksen reuna käsitellään viivamaisena kohteena ja tällöin ”rakennus, itäkulma (sisäpuolella) ei tarkoita ”rakennuksen siäpuolella”. Symbolin kääntösuunta osoittaa, mihin suuntaan rastikohteen kulma on.</translation>
     </message>
     <message>
         <source>|G| North west Corner (outside)</source>
         <comment>Name of symbol 11.5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Luoteiskulma (ulkopuolella)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18280,327 +18456,330 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun:
+a) rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on 45-135 astetta; esim. avoin alue, itäkulma (sisäpuolella); raunio, luoteiskulma (ulkopuolella).
+b) rastilippu on linjamaisen rastikohteen kulmassa; esim. aita, eteläkulma (sisäpuolella); kiviaita, lounaiskulma (ulkopuolella)
+Huom. Rakennuksen reuna käsitellään viivamaisena kohteena ja tällöin ”rakennus, itäkulma (sisäpuolella) ei tarkoita ”rakennuksen siäpuolella”. Symbolin kääntösuunta osoittaa, mihin suuntaan rastikohteen kulma on.</translation>
     </message>
     <message>
         <source>|G| North Tip</source>
         <comment>Name of symbol 11.6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Pohjoiskärki</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on alle 45 astetta; esim. suo, lounaiskärki.</translation>
     </message>
     <message>
         <source>|G| North east Tip</source>
         <comment>Name of symbol 11.6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Koilliskärki</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on alle 45 astetta; esim. suo, lounaiskärki.</translation>
     </message>
     <message>
         <source>|G| East Tip</source>
         <comment>Name of symbol 11.6.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Itäkärki</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on alle 45 astetta; esim. suo, lounaiskärki.</translation>
     </message>
     <message>
         <source>|G| South east Tip</source>
         <comment>Name of symbol 11.6.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kaakkoiskärki</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on alle 45 astetta; esim. suo, lounaiskärki.</translation>
     </message>
     <message>
         <source>|G| South Tip</source>
         <comment>Name of symbol 11.6.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Eteläkärki</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on alle 45 astetta; esim. suo, lounaiskärki.</translation>
     </message>
     <message>
         <source>|G| South west Tip</source>
         <comment>Name of symbol 11.6.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Lounaiskärki</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on alle 45 astetta; esim. suo, lounaiskärki.</translation>
     </message>
     <message>
         <source>|G| West Tip</source>
         <comment>Name of symbol 11.6.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Länsikärki</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on alle 45 astetta; esim. suo, lounaiskärki.</translation>
     </message>
     <message>
         <source>|G| North west Tip</source>
         <comment>Name of symbol 11.6.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Luoteiskärki</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastilippu on sellaisessa rastikohteena olevan alueen kulmassa, joka on alle 45 astetta; esim. suo, lounaiskärki.</translation>
     </message>
     <message>
         <source>|G| Bend</source>
         <comment>Name of symbol 11.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Mutka</translation>
     </message>
     <message>
         <source>Used where a linear feature makes a smooth change of direction; e.g. Path bend; River bend.</source>
         <comment>Description of symbol 11.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastilippu on viivamaisen rastikohteen pehmeämuotoisessa mutkassa; esim. polun mutka; joen mutka.</translation>
     </message>
     <message>
         <source>|G| North End</source>
         <comment>Name of symbol 11.8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Pohjoispää</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään viivamaisen rastikohteen päässä.</translation>
     </message>
     <message>
         <source>|G| North east End</source>
         <comment>Name of symbol 11.8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Koillispää</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään viivamaisen rastikohteen päässä.</translation>
     </message>
     <message>
         <source>|G| East End</source>
         <comment>Name of symbol 11.8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Itäpää</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään viivamaisen rastikohteen päässä.</translation>
     </message>
     <message>
         <source>|G| South east End</source>
         <comment>Name of symbol 11.8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kaakkoispää</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään viivamaisen rastikohteen päässä.</translation>
     </message>
     <message>
         <source>|G| South End</source>
         <comment>Name of symbol 11.8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Eteläpää</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään viivamaisen rastikohteen päässä.</translation>
     </message>
     <message>
         <source>|G| South west End</source>
         <comment>Name of symbol 11.8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Lounaispää</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään viivamaisen rastikohteen päässä.</translation>
     </message>
     <message>
         <source>|G| West End</source>
         <comment>Name of symbol 11.8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Länsipää</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään viivamaisen rastikohteen päässä.</translation>
     </message>
     <message>
         <source>|G| North west End</source>
         <comment>Name of symbol 11.8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Luoteispää</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään viivamaisen rastikohteen päässä.</translation>
     </message>
     <message>
         <source>|G| Upper Part</source>
         <comment>Name of symbol 11.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Yläosa (ylhäällä)</translation>
     </message>
     <message>
         <source>Where the feature extends over two or more contours and the control is located near the top; e.g. Erosion Gully, upper part.</source>
         <comment>Description of symbol 11.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on rinteessä, joka kuvataan kahdella tai useammalla korkeuskäyrällä ja kun rastilippu on lähellä rastikohteen korkeinta kohtaa; esim. uurre, yläosa.</translation>
     </message>
     <message>
         <source>|G| Lower Part</source>
         <comment>Name of symbol 11.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Alaosa (alhaalla)</translation>
     </message>
     <message>
         <source>Where the feature extends over two or more contours and the control is located near the bottom; e.g. Re-entrant, lower part.</source>
         <comment>Description of symbol 11.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on rinteessä, joka kuvataan kahdella tai useammalla korkeuskäyrällä ja kun rastilippu on lähellä rastikohteen matalinta kohtaa; esim. notko, alaosa.</translation>
     </message>
     <message>
         <source>|G| Top</source>
         <comment>Name of symbol 11.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Päällä</translation>
     </message>
     <message>
         <source>Where the control is located at the highest point of the feature and this is not the usual location; e.g. Cliff, top.</source>
         <comment>Description of symbol 11.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastilippu on sijoitettu normaalista poiketen rastikohteen korkeimmalle kohdalle; esim. jyrkänne, päällä; porras, päällä.</translation>
     </message>
     <message>
         <source>|G| Beneath</source>
         <comment>Name of symbol 11.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Alla</translation>
     </message>
     <message>
         <source>Where the control is located underneath the feature; e.g. Pipeline, beneath.</source>
         <comment>Description of symbol 11.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastilippu on sijoitettu rastikohteen alle; esim. putkilinja, alla.</translation>
     </message>
     <message>
         <source>|G| Foot (no direction)</source>
         <comment>Name of symbol 11.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Juurella (ei suuntaa)</translation>
     </message>
     <message>
         <source>Where the control is located at the lower junction of the slope of the feature and the surface of the surrounding area; e.g. Earth bank, foot.</source>
         <comment>Description of symbol 11.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastilippu on sijoitettu yhdellä tai useammalla korkeuskäyrällä kuvattavan rinteen alempaan taitepisteeseen normaalista poiketen ja niin, että se on ympäröivän alueen korkeustasolla; esim. maavalli, juurella.</translation>
     </message>
     <message>
         <source>|G| North Foot</source>
         <comment>Name of symbol 11.14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Pohjoisjuuri</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on niin laaja, että rastilippu on mahdollista sijoittaa usealla puolelle rastikohdetta; esim. kukkula, koillisjuuri.</translation>
     </message>
     <message>
         <source>|G| North east Foot</source>
         <comment>Name of symbol 11.14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Koillisjuuri</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on niin laaja, että rastilippu on mahdollista sijoittaa usealla puolelle rastikohdetta; esim. kukkula, koillisjuuri.</translation>
     </message>
     <message>
         <source>|G| East Foot</source>
         <comment>Name of symbol 11.14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Itäjuuri</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on niin laaja, että rastilippu on mahdollista sijoittaa usealla puolelle rastikohdetta; esim. kukkula, koillisjuuri.</translation>
     </message>
     <message>
         <source>|G| South east Foot</source>
         <comment>Name of symbol 11.14.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kaakkoisjuuri</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on niin laaja, että rastilippu on mahdollista sijoittaa usealla puolelle rastikohdetta; esim. kukkula, koillisjuuri.</translation>
     </message>
     <message>
         <source>|G| South Foot</source>
         <comment>Name of symbol 11.14.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Eteläjuuri</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on niin laaja, että rastilippu on mahdollista sijoittaa usealla puolelle rastikohdetta; esim. kukkula, koillisjuuri.</translation>
     </message>
     <message>
         <source>|G| South west Foot</source>
         <comment>Name of symbol 11.14.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Lounaisjuuri</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on niin laaja, että rastilippu on mahdollista sijoittaa usealla puolelle rastikohdetta; esim. kukkula, koillisjuuri.</translation>
     </message>
     <message>
         <source>|G| West Foot</source>
         <comment>Name of symbol 11.14.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Länsijuuri</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on niin laaja, että rastilippu on mahdollista sijoittaa usealla puolelle rastikohdetta; esim. kukkula, koillisjuuri.</translation>
     </message>
     <message>
         <source>|G| North west Foot</source>
         <comment>Name of symbol 11.14.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Luoteisjuuri</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastikohde on niin laaja, että rastilippu on mahdollista sijoittaa usealla puolelle rastikohdetta; esim. kukkula, koillisjuuri.</translation>
     </message>
     <message>
         <source>|G| Between</source>
         <comment>Name of symbol 11.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Välissä</translation>
     </message>
     <message>
         <source>Where the control is located between two features; e.g. Between thickets; Between boulder and knoll. The two features which the control is between must be shown separately in columns |D| and |E|.</source>
         <comment>Description of symbol 11.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Käytetään, kun rastilippu on sijoitettu kahden maastokohteen väliin; esim. kiven ja kumpareen välissä. Kohteet merkitään sarakkeisiin |D| ja|E|.</translation>
     </message>
     <message>
         <source>|G| First aid post</source>
         <comment>Name of symbol 12.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Ensiapu</translation>
     </message>
     <message>
         <source>Control site where First aid is available.</source>
         <comment>Description of symbol 12.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rasti, jonka tuntumassa on saatavilla ensiapua.</translation>
     </message>
     <message>
         <source>|G| Refreshment point</source>
@@ -18610,117 +18789,117 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Control site where Refreshments are available.</source>
         <comment>Description of symbol 12.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rasti, jonka tuntumassa on saatavilla juomaa.</translation>
     </message>
     <message>
         <source>|G| Radio or TV control</source>
         <comment>Name of symbol 12.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Radio tai TV rasti</translation>
     </message>
     <message>
         <source>Location of a Radio or TV control.</source>
         <comment>Description of symbol 12.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rastilla radio tai TV.</translation>
     </message>
     <message>
         <source>|G| Control check</source>
         <comment>Name of symbol 12.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Miehitetty rasti</translation>
     </message>
     <message>
         <source>Manned control site where the control card is checked.</source>
         <comment>Description of symbol 12.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rasti, joka on miehitetty.</translation>
     </message>
     <message>
         <source>Taped Route, away from control</source>
         <comment>Name of symbol 13.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viitoitettu reitti rastilta</translation>
     </message>
     <message>
         <source>A marked route is to be followed away from a particular control. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viitoitettua reittiä on seurattava rastilta. Korostaa kartalla esitettyä.</translation>
     </message>
     <message>
         <source>Taped Route, between controls</source>
         <comment>Name of symbol 13.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viitoitettu reitti, rastien välillä</translation>
     </message>
     <message>
         <source>A marked route is to be followed between controls. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viitoitettua reittiä on seurattava rastilta rastille. Korostaa kartalla esitettyä.</translation>
     </message>
     <message>
         <source>Mandatory crossing point</source>
         <comment>Name of symbol 13.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pakollinen ylitys/alituspaikka</translation>
     </message>
     <message>
         <source>Mandatory crossing points (or points) between two controls. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pakollilnen ylitys/alituspaikka rastien välillä. Korostaa kartalla esitettyä.</translation>
     </message>
     <message>
         <source>Mandatory passage through out of bounds area</source>
         <comment>Name of symbol 13.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pakollinen reitti läpi kielletyn alueen</translation>
     </message>
     <message>
         <source>Mandatory route between two controls. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pakollinen reitti rastien välillä. Korostaa kartalla esitettyä.</translation>
     </message>
     <message>
         <source>Taped Route from Control to Map Exchange</source>
         <comment>Name of symbol 13.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viitoitettu reitti rastilta kartanvaihtoon</translation>
     </message>
     <message>
         <source>At a map exchange, or if a marked route is to be followed from a control to a map exchange, this instruction follows the last control description of the first part of the course.</source>
         <comment>Description of symbol 13.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kartanvaihdossa, tai jos viitoitettua reittiä on seurattava rastilta kartanvaihtoon, tämä merkitään radan alkuosan viimeisen rastimääritteen alle.</translation>
     </message>
     <message>
         <source>Taped Route from last control to Finish</source>
         <comment>Name of symbol 14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viitoitettu reitti viimeiseltä rastilta maaliin</translation>
     </message>
     <message>
         <source>Mandatory route from the last control to the Finish. Re-emphasises what is shown on the map. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pakollinen reitti viimeiseltä rastilta maaliin. Korostaa kartalla esitettyä. Merkitään etäisyys viimeiseltä rastilta maaliin.</translation>
     </message>
     <message>
         <source>Taped Route from finish funnel to Finish</source>
         <comment>Name of symbol 14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Viitoitettu reitti maalisuoraa maaliin</translation>
     </message>
     <message>
         <source>The competitor has to navigate from the last control to finish funnel, and then follow tapes. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kilpailijan on suunnistettava viimeiseltä rastilta loppusuoralle, jota seurataan maaliin. Merkitään etäisyys viimeiseltä rastilta maaliin.</translation>
     </message>
     <message>
         <source>Navigation from last control to Finish (no Taped Route)</source>
         <comment>Name of symbol 14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Suunnistettava viimeiseltä rastilta maaliin (ei viitoitusta)</translation>
     </message>
     <message>
         <source>The competitor has to navigate from the last control to finish. No tapes. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kilpailijan on suunnistettava viimeiseltä rastilta maaliin. Reitillä ei ole viitoitusta. Merkitään etäisyys viimeiseltä rastilta maaliin.</translation>
     </message>
     <message>
         <source>Length of special route</source>
         <comment>Name of symbol 13.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Reitin pituus</translation>
     </message>
     <message>
         <source>This is used with the special instruction (13.x) to give the distance from the last control to the end of the route (control, map exchange, or finish).</source>
         <comment>Description of symbol 13.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tällä merkitään kuljettavan reitin pituus ohjeen (13.x) yhteyteen. Pituus merkitään edelliseltä rastilta reitin loppuun (rasti, kartanvaihto tai maali).</translation>
     </message>
 </context>
 </TS>
