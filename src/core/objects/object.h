@@ -1292,7 +1292,7 @@ double ObjectPathCoord::findClosestPointTo(const MapCoordF& map_coord)
 inline
 constexpr ObjectPathCoord::operator bool() const
 {
-	return bool { object };
+	return static_cast<bool>(object);
 }
 
 }  // namespace OpenOrienteering
