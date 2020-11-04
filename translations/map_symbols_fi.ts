@@ -3297,7 +3297,7 @@ When an impassable cliff drops straight into water, making it impossible to pass
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
         <comment>Description of symbol 201.4</comment>
-        <translation>Käytä tätä kuvaamaan jyrkänteiden todellinen korkeus.</translation>
+        <translation>Käytä tätä kuvaamaan jyrkänteiden todellinen leveys.</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size (from ISOM2000)</source>
