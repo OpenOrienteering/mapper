@@ -384,8 +384,13 @@ private slots:
 		QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 
+#if !defined(ACCEPT_USE_OF_DEPRECATED_PROJ_API_H) || PJ_VERSION >= 600
+		QEXPECT_FAIL("TemplateTrack from v0.8.4", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
+		QEXPECT_FAIL("OGRTemplate from v0.9.3", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
+#else
 		QEXPECT_FAIL("TemplateTrack NAD83", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
 		QEXPECT_FAIL("OgrTemplate NAD83", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
+#endif
 		auto const expected_center = map.calculateExtent().center();
 		if (QLineF(center(temp), expected_center).length() > 0.25) // 1 m
 			QCOMPARE(center(temp), expected_center);
@@ -457,10 +462,6 @@ private slots:
 			ogr_template_center = center(temp);
 		}
 		
-#if !defined(ACCEPT_USE_OF_DEPRECATED_PROJ_API_H) || PJ_VERSION >= 600
-		QEXPECT_FAIL("TemplateTrack NAD83", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
-		QEXPECT_FAIL("OgrTemplate NAD83", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
-#endif
 		if (QLineF(ogr_template_center, template_track_center).length() > 0.1) // 40 cm
 			QCOMPARE(ogr_template_center, template_track_center);
 		else

@@ -1283,6 +1283,14 @@ std::unique_ptr<OgrFileImport::Clipping> OgrFileImport::getLayerClipping(OGRLaye
 
 bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
 {
+	// Handle legacy TemplateTrackCompatibility.
+	if (unit_type == UnitGeographic)
+	{
+		to_map_coord = &OgrFileImport::fromLonLat;
+		data_transform.reset();
+		return true;
+	}
+	
 	to_map_coord = &OgrFileImport::fromProjected;
 	if (srs && data_srs != srs)
 	{
@@ -1713,6 +1721,11 @@ MapCoord OgrFileImport::fromDrawing(double x, double y) const
 MapCoord OgrFileImport::fromProjected(double x, double y) const
 {
 	return MapCoord::load(map->getGeoreferencing().toMapCoordF(QPointF{ x, y }), MapCoord::Flags{});
+}
+
+MapCoord OgrFileImport::fromLonLat(double x, double y) const
+{
+	return MapCoord::load(map->getGeoreferencing().toMapCoordF(LatLon{ y, x }), MapCoord::Flags{});
 }
 
 

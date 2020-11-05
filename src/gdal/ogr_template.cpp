@@ -323,7 +323,13 @@ try
 	}
 	
 	auto new_template_map = std::make_unique<Map>();
-	auto unit_type = use_real_coords ? OgrFileImport::UnitOnGround : OgrFileImport::UnitOnPaper;
+	auto const unit_type = [this]() {
+		if (!use_real_coords)
+			return OgrFileImport::UnitOnPaper;
+		if (template_track_compatibility && is_georeferenced)
+			return OgrFileImport::UnitGeographic;
+		return OgrFileImport::UnitOnGround;
+	} ();
 	OgrFileImport importer{template_path, new_template_map.get(), nullptr, unit_type };
 	
 	// Configure generation of renderables.

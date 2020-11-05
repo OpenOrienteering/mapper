@@ -212,8 +212,9 @@ public:
 	 */
 	enum UnitType
 	{
-		UnitOnGround,  ///< Data refers to real dimensions. Includes geograghic CS.
-		UnitOnPaper    ///< Data refers to dimensions in the (printed) map.
+		UnitGeographic,  ///< Data refers to degrees in geographic coordinates.
+		UnitOnGround,    ///< Data refers to real dimensions (projected CRS).
+		UnitOnPaper      ///< Data refers to dimensions in the (printed) map.
 	};
 	
 	/**
@@ -317,6 +318,13 @@ protected:
 	 * A MapCoordConstructor which interprets the given coordinates as projected.
 	 */
 	MapCoord fromProjected(double x, double y) const;
+	
+	/**
+	 * A MapCoordConstructor which interprets the given coordinates as Longitude/Latitude.
+	 * 
+	 * This implements the easting-northing axis order for geographic coordinates.
+	 */
+	MapCoord fromLonLat(double x, double y) const;
 	
 	
 	static LatLon calcAverageLatLon(OGRDataSourceH data_source);
