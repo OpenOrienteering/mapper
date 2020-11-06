@@ -505,7 +505,7 @@ namespace {
 	class ClippingImplementation final : public OgrFileImport::Clipping
 	{
 	public:
-		~ClippingImplementation() = default;
+		~ClippingImplementation() override = default;
 		
 		explicit ClippingImplementation(MapCoordVector boundary)
 		: tool { BooleanTool::Intersection, nullptr }
