@@ -62,7 +62,7 @@ public:
 	Progress(Progress&& p) = delete;
 	Progress& operator=(const Progress&) = delete;
 	Progress& operator=(Progress&& p) = delete;
-	~Progress() = default;
+	~Progress() override = default;
 	
 	int getPercentage() const noexcept;
 	void setPercentage(int percentage) final;
