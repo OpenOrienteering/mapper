@@ -336,8 +336,13 @@ try
 	updateView(*new_template_map);
 	
 	const auto& map_georef = map->getGeoreferencing();
-	
-	if (is_georeferenced || !explicit_georef)
+	if (unit_type == OgrFileImport::UnitGeographic)
+	{
+		auto georef = map_georef;
+		Track::fixupRefPointConsistency(georef);
+		new_template_map->setGeoreferencing(georef);
+	}
+	else if (is_georeferenced || !explicit_georef)
 	{
 		new_template_map->setGeoreferencing(map_georef);
 	}

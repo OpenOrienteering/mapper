@@ -116,8 +116,21 @@ public:
 	 */
 	void appendWaypoint(const TrackPoint& point, const QString& name);
 	
+	
 	/** Updates the map positions of all points based on the new georeferencing. */
 	void changeMapGeoreferencing(const Georeferencing& new_map_georef);
+	
+	/**
+	 * Fixes a mismatch of geographic and projected reference point for the purpose
+	 * of conversion between geographic coordinates and map coordinates.
+	 * 
+	 * Sometimes, there is a mismatch of geographic and projected reference 
+	 * point of a georeferencing object due to PROJ library and data changes.
+	 * This function compensates the mismatch by adjusting the reference point
+	 * in projected coordinates.
+	 */
+	static void fixupRefPointConsistency(Georeferencing& georef);
+	
 	
 	// Getters
 	int getNumSegments() const;

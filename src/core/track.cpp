@@ -229,12 +229,26 @@ void Track::appendWaypoint(const TrackPoint& point, const QString& name)
 	waypoint_names.push_back(name);
 }
 
+
 void Track::changeMapGeoreferencing(const Georeferencing& new_map_georef)
 {
 	map_georef = new_map_georef;
-	
+	fixupRefPointConsistency(map_georef);
 	projectPoints();
 }
+
+void Track::fixupRefPointConsistency(Georeferencing& georef)
+{
+	if (georef.getState() == Georeferencing::Geospatial)
+	{
+		auto const expected = georef.getMapRefPoint();
+		auto const actual = georef.toMapCoords(georef.getGeographicRefPoint());
+		auto const offset = actual - expected;
+		if (offset.length() >= 0.1) // mm
+			georef.setProjectedRefPoint(georef.toProjectedCoords(expected + offset));
+	}
+}
+
 
 int Track::getNumSegments() const
 {
