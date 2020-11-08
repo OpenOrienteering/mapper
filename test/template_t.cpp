@@ -308,6 +308,7 @@ private slots:
 		QTest::newRow("OgrTemplate NAD83")            << QStringLiteral("testdata:templates/template-track-NA.xmap") << 1;
 		QTest::newRow("TemplateTrack from v0.8.4")    << QStringLiteral("testdata:templates/template-track-NA-084.xmap") << 0;
 		QTest::newRow("TemplateTrack from v0.9.3")    << QStringLiteral("testdata:templates/template-track-NA-093-PROJ.xmap") << 0;
+		QTest::newRow("OgrTemplate from v0.9.3")      << QStringLiteral("testdata:templates/template-track-NA-093-GDAL.xmap") << 0;
 	}
 	
 	void templateTrackTest()
@@ -330,6 +331,7 @@ private slots:
 		QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 
+		QEXPECT_FAIL("OgrTemplate from v0.9.3", "Position changed to match TemplateTrack", Continue);
 		auto const expected_center = map.calculateExtent().center();
 		if (QLineF(center(temp), expected_center).length() > 0.125) // 50 cm
 			QCOMPARE(center(temp), expected_center);
@@ -352,7 +354,8 @@ private slots:
 		QTest::newRow("TemplateTrack NAD83")          << QStringLiteral("testdata:templates/template-track-NA.xmap") << 0;
 		QTest::newRow("OgrTemplate NAD83")            << QStringLiteral("testdata:templates/template-track-NA.xmap") << 1;
 		QTest::newRow("TemplateTrack from v0.8.4")    << QStringLiteral("testdata:templates/template-track-NA-084.xmap") << 0;
-		QTest::newRow("OGRTemplate from v0.9.3")      << QStringLiteral("testdata:templates/template-track-NA-093-GDAL.xmap") << 0;
+		QTest::newRow("TemplateTrack from v0.9.3")    << QStringLiteral("testdata:templates/template-track-NA-093-PROJ.xmap") << 0;
+		QTest::newRow("OgrTemplate from v0.9.3")      << QStringLiteral("testdata:templates/template-track-NA-093-GDAL.xmap") << 0;
 	}
 	
 	void ogrTemplateTest()
@@ -373,7 +376,7 @@ private slots:
 		QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 
-		QEXPECT_FAIL("OGRTemplate from v0.9.3", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
+		QEXPECT_FAIL("OgrTemplate from v0.9.3", "Position changed to match TemplateTrack", Continue);
 		auto const expected_center = map.calculateExtent().center();
 		if (QLineF(center(temp), expected_center).length() > 0.25) // 1 m
 			QCOMPARE(center(temp), expected_center);
@@ -404,6 +407,9 @@ private slots:
 		QTest::newRow("OgrTemplate georef")       << QStringLiteral("testdata:templates/template-track.xmap") << 2;
 		QTest::newRow("TemplateTrack NAD83")      << QStringLiteral("testdata:templates/template-track-NA.xmap") << 0;
 		QTest::newRow("OgrTemplate NAD83")        << QStringLiteral("testdata:templates/template-track-NA.xmap") << 1;
+		QTest::newRow("TemplateTrack from v0.8.4")<< QStringLiteral("testdata:templates/template-track-NA-084.xmap") << 0;
+		QTest::newRow("TemplateTrack from v0.9.3")<< QStringLiteral("testdata:templates/template-track-NA-093-PROJ.xmap") << 0;
+		QTest::newRow("OgrTemplate from v0.9.3")  << QStringLiteral("testdata:templates/template-track-NA-093-GDAL.xmap") << 0;
 	}
 	
 	void templateTypesConsistentTest()
