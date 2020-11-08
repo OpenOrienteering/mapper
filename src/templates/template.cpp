@@ -45,6 +45,7 @@
 #include <QSizeF>
 #include <QStringRef>
 #include <QTransform>
+#include <QVariant>
 #include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -350,6 +351,8 @@ std::unique_ptr<Template> Template::loadTemplateConfiguration(QXmlStreamReader& 
 		temp = templateForPath(path, &map);
 	if (!temp)
 		temp = std::make_unique<TemplatePlaceholder>(type.toUtf8(), path, &map);
+	else
+		temp->setProperty("original-type", type.toString());
 	
 	temp->setTemplateRelativePath(attributes.value(QLatin1String("relpath")).toString());
 	if (attributes.hasAttribute(QLatin1String("name")))
