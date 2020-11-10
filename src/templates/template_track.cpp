@@ -41,6 +41,7 @@
 #include <QRgb>
 #include <QSize>
 #include <QStringRef>
+#include <QVariant>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -273,7 +274,9 @@ bool TemplateTrack::loadTemplateFileImpl()
 		else
 		{
 			projected_crs_spec.clear();
-			track.changeMapGeoreferencing(map->getGeoreferencing());
+			auto const from_ogr = property("original-type").toString() == QStringLiteral("OgrTemplate");
+			auto const fixup = from_ogr ? Track::OgrTemplateMethod : Track::TemplateTrackMethod;
+			track.changeMapGeoreferencing(map->getGeoreferencing(), fixup);
 		}
 	}
 	

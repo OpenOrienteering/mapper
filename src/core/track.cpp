@@ -230,23 +230,54 @@ void Track::appendWaypoint(const TrackPoint& point, const QString& name)
 }
 
 
-void Track::changeMapGeoreferencing(const Georeferencing& new_map_georef)
+void Track::changeMapGeoreferencing(const Georeferencing& new_map_georef, TransformationMethod method)
 {
 	map_georef = new_map_georef;
-	fixupRefPointConsistency(map_georef);
+	fixupRefPointConsistency(map_georef, method);
 	projectPoints();
 }
 
-void Track::fixupRefPointConsistency(Georeferencing& georef)
+void Track::fixupRefPointConsistency(Georeferencing& georef, TransformationMethod const method)
 {
-	if (georef.getState() == Georeferencing::Geospatial)
+	if (georef.getState() != Georeferencing::Geospatial)
+		return;
+	
+	auto const expected = georef.getMapRefPoint();
+	auto offset = MapCoord {};
+	switch (method)
 	{
-		auto const expected = georef.getMapRefPoint();
-		auto const actual = georef.toMapCoords(georef.getGeographicRefPoint());
-		auto const offset = actual - expected;
-		if (offset.length() >= 0.1) // mm
-			georef.setProjectedRefPoint(georef.toProjectedCoords(expected + offset));
+	case TemplateTrackMethod:
+		{
+			// TemplateTrack relies on class Georeferencing.
+			// Inconsistency may come from PROJ version and data changes.
+			auto const actual = georef.toMapCoords(georef.getGeographicRefPoint());
+			offset = actual - expected;
+		}
+		break;
+		
+	case OgrTemplateMethod:
+		{
+			// OgrTemplate relies on GDAL/OGR's SRS API.
+			// Inconsistency may come from PROJ version and data changes,
+			// and from GDAL version and configuration changes.
+			// Modern GDAL uses WGS84 (EPSG:4326) as geographic CRS
+			// (e.g.SRS_WKT_WGS84_LAT_LONG for GPX), but may omit TOWGS84
+			// in contexts where it was available in past versions.
+			// Note that legacy PROJ does not understand "EPSG:4326" and so
+			// will never set ok to true. This is okay for our test files.
+			bool ok;
+			auto const t = ProjTransform(QStringLiteral("EPSG:4326"), georef.getProjectedCRSSpec());
+			auto gdal_projected = t.forward(georef.getGeographicRefPoint(), &ok);
+			if (ok)
+			{
+				auto const actual = georef.toMapCoords(gdal_projected);
+				offset = expected - actual;
+			}
+		}
+		break;
 	}
+	if (offset.length() >= 0.1) // mm
+		georef.setProjectedRefPoint(georef.toProjectedCoords(expected + offset));
 }
 
 

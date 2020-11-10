@@ -326,7 +326,8 @@ try
 	auto const unit_type = [this]() {
 		if (!use_real_coords)
 			return OgrFileImport::UnitOnPaper;
-		if (template_track_compatibility && is_georeferenced)
+		if (template_track_compatibility && is_georeferenced
+		    && property("original-type").toString() == QStringLiteral("TemplateTrack"))
 			return OgrFileImport::UnitGeographic;
 		return OgrFileImport::UnitOnGround;
 	} ();
@@ -339,7 +340,7 @@ try
 	if (unit_type == OgrFileImport::UnitGeographic)
 	{
 		auto georef = map_georef;
-		Track::fixupRefPointConsistency(georef);
+		Track::fixupRefPointConsistency(georef, Track::TemplateTrackMethod);
 		new_template_map->setGeoreferencing(georef);
 	}
 	else if (is_georeferenced || !explicit_georef)

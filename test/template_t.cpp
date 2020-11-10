@@ -331,7 +331,7 @@ private slots:
 		QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 
-		QEXPECT_FAIL("OgrTemplate from v0.9.3", "Position changed to match TemplateTrack", Continue);
+		QEXPECT_FAIL("OgrTemplate NAD83", "Synthetic test file", Continue);
 		auto const expected_center = map.calculateExtent().center();
 		if (QLineF(center(temp), expected_center).length() > 0.125) // 50 cm
 			QCOMPARE(center(temp), expected_center);
@@ -376,7 +376,7 @@ private slots:
 		QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 
-		QEXPECT_FAIL("OgrTemplate from v0.9.3", "Position changed to match TemplateTrack", Continue);
+		QEXPECT_FAIL("OgrTemplate NAD83", "Synthetic test file", Continue);
 		auto const expected_center = map.calculateExtent().center();
 		if (QLineF(center(temp), expected_center).length() > 0.25) // 1 m
 			QCOMPARE(center(temp), expected_center);

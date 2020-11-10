@@ -70,6 +70,16 @@ inline bool operator!=(const TrackPoint& lhs, const TrackPoint& rhs) { return !(
 class Track
 {
 public:
+	/**
+	 * Coordinate transformation methods known by fixupRefPointConsistency.
+	 */
+	enum TransformationMethod
+	{
+		TemplateTrackMethod,  ///< Transformation as implemented by TemplateTrack.
+		OgrTemplateMethod,    ///< Transformation as implemented by OgrTemplate.
+	};
+	
+	
 	/// Constructs an empty track
 	Track() = default;
 	
@@ -117,8 +127,12 @@ public:
 	void appendWaypoint(const TrackPoint& point, const QString& name);
 	
 	
-	/** Updates the map positions of all points based on the new georeferencing. */
-	void changeMapGeoreferencing(const Georeferencing& new_map_georef);
+	/**
+	 * Updates the map positions of all points based on the new georeferencing.
+	 * 
+	 * The method parameter defines how to check and fix coordinate transformations.
+	 */
+	void changeMapGeoreferencing(const Georeferencing& new_map_georef, TransformationMethod method = TemplateTrackMethod);
 	
 	/**
 	 * Fixes a mismatch of geographic and projected reference point for the purpose
@@ -128,8 +142,11 @@ public:
 	 * point of a georeferencing object due to PROJ library and data changes.
 	 * This function compensates the mismatch by adjusting the reference point
 	 * in projected coordinates.
+	 * 
+	 * The method parameter controls whether the expected positioning is based
+	 * on transformations originally done via TemplateTrack or via OgrTemplate.
 	 */
-	static void fixupRefPointConsistency(Georeferencing& georef);
+	static void fixupRefPointConsistency(Georeferencing& georef, TransformationMethod method);
 	
 	
 	// Getters
