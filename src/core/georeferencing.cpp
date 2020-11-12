@@ -255,9 +255,18 @@ namespace
 
 #ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 
-ProjTransform::ProjTransform(ProjTransformData* pj) noexcept
-: pj{pj}
-{}
+namespace {
+
+QByteArray fixupCrsSpec(const QString& crs_spec)
+{
+	auto spec_latin1 = crs_spec.toLatin1();
+	if (!spec_latin1.contains("+no_defs"))
+		spec_latin1.append(" +no_defs");
+	return spec_latin1;
+}
+
+}
+
 
 ProjTransform::ProjTransform(ProjTransform&& other) noexcept
 {
@@ -266,12 +275,8 @@ ProjTransform::ProjTransform(ProjTransform&& other) noexcept
 
 ProjTransform::ProjTransform(const QString& crs_spec)
 {
-	auto spec_latin1 = crs_spec.toLatin1();
-	if (!spec_latin1.contains("+no_defs"))
-		spec_latin1.append(" +no_defs");
-	
 	*pj_get_errno_ref() = 0;
-	pj = pj_init_plus(spec_latin1);
+	pj = pj_init_plus(fixupCrsSpec(crs_spec));
 }
 
 ProjTransform::~ProjTransform()
@@ -290,10 +295,8 @@ ProjTransform& ProjTransform::operator=(ProjTransform&& other) noexcept
 ProjTransform ProjTransform::crs(const QString& crs_spec)
 {
 	ProjTransform result;
-	auto crs_spec_latin1 = crs_spec.toLatin1();
-	if (!crs_spec_latin1.contains("+no_defs"))
-		crs_spec_latin1.append(" +no_defs");
-	result.pj = pj_init_plus(crs_spec_latin1);
+	*pj_get_errno_ref() = 0;
+	result.pj = pj_init_plus(fixupCrsSpec(crs_spec));
 	return result;
 }
 
@@ -351,9 +354,20 @@ QString ProjTransform::errorText() const
 
 #else
 
-ProjTransform::ProjTransform(ProjTransformData* pj) noexcept
-: pj{pj}
-{}
+namespace {
+
+QByteArray fixupCrsSpec(const QString& crs_spec)
+{
+	auto spec_utf8 = crs_spec.toUtf8();
+#ifdef PROJ_ISSUE_1573
+	// Cf. https://github.com/OSGeo/PROJ/pull/1573
+	spec_utf8.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
+#endif
+	return spec_utf8;
+}
+
+}
+
 
 ProjTransform::ProjTransform(ProjTransform&& other) noexcept
 {
@@ -365,14 +379,11 @@ ProjTransform::ProjTransform(const QString& crs_spec)
 	if (crs_spec.isEmpty())
 		return;
 	
-	auto spec_latin1 = crs_spec.toLatin1();
-#ifdef PROJ_ISSUE_1573
-	// Cf. https://github.com/OSGeo/PROJ/pull/1573
-	spec_latin1.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
-#endif
-	pj = proj_create_crs_to_crs(PJ_DEFAULT_CTX, Georeferencing::geographic_crs_spec.toLatin1(), spec_latin1, nullptr);
-	if (pj)
-		operator=({proj_normalize_for_visualization(PJ_DEFAULT_CTX, pj)});
+	if (auto* initial_pj = proj_create_crs_to_crs(PJ_DEFAULT_CTX, Georeferencing::geographic_crs_spec.toLatin1(), fixupCrsSpec(crs_spec), nullptr))
+	{
+		pj = proj_normalize_for_visualization(PJ_DEFAULT_CTX, initial_pj);
+		proj_destroy(initial_pj);
+	}
 }
 
 ProjTransform::~ProjTransform()
@@ -391,12 +402,7 @@ ProjTransform& ProjTransform::operator=(ProjTransform&& other) noexcept
 ProjTransform ProjTransform::crs(const QString& crs_spec)
 {
 	ProjTransform result;
-	auto crs_spec_utf8 = crs_spec.toUtf8();
-#ifdef PROJ_ISSUE_1573
-	// Cf. https://github.com/OSGeo/PROJ/pull/1573
-	crs_spec_utf8.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
-#endif
-	result.pj = proj_create(PJ_DEFAULT_CTX, crs_spec_utf8);
+	result.pj = proj_create(PJ_DEFAULT_CTX, fixupCrsSpec(crs_spec));
 	return result;
 }
 

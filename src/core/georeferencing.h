@@ -72,8 +72,6 @@ struct ProjTransform
 	QString errorText() const;
 	
 private:
-	ProjTransform(ProjTransformData* pj) noexcept;
-	
 	ProjTransformData* pj = nullptr;
 	
 };
