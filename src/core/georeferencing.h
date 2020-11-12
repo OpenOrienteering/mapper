@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -72,8 +72,6 @@ struct ProjTransform
 	QString errorText() const;
 	
 private:
-	ProjTransform(ProjTransformData* pj) noexcept;
-	
 	ProjTransformData* pj = nullptr;
 	
 };
