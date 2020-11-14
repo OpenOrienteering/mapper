@@ -255,33 +255,63 @@ namespace
 
 #ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 
-ProjTransform::ProjTransform(ProjTransformData* pj) noexcept
-: pj{pj}
-{}
+namespace {
+
+QByteArray fixupCrsSpec(const QString& crs_spec)
+{
+	auto spec_latin1 = crs_spec.toLatin1();
+	for (auto const& substitution : spec_substitutions)
+	{
+		if (substitution[0] == spec_latin1)
+		{
+			spec_latin1 = substitution[1];
+			break;
+		}
+	}
+	if (!spec_latin1.contains("+no_defs"))
+		spec_latin1.append(" +no_defs");
+	return spec_latin1;
+}
+
+}
+
 
 ProjTransform::ProjTransform(ProjTransform&& other) noexcept
 {
 	operator=(std::move(other));
 }
 
-ProjTransform::ProjTransform(const QString& crs_spec)
+ProjTransform::ProjTransform(const QString& target)
+: ProjTransform(Georeferencing::geographic_crs_spec, target)
+{}
+
+ProjTransform::ProjTransform(const QString& source, const QString& target)
 {
-	auto spec_latin1 = crs_spec.toLatin1();
-	if (!spec_latin1.contains("+no_defs"))
-		spec_latin1.append(" +no_defs");
-	
 	*pj_get_errno_ref() = 0;
-	pj = pj_init_plus(spec_latin1);
+	source_pj = pj_init_plus(fixupCrsSpec(source));
+	if (source_pj)
+		pj = pj_init_plus(fixupCrsSpec(target));
+	Q_ASSERT(!pj || source_pj); // invariant: pj implies source_pj
 }
+
+ProjTransform::ProjTransform(const QString& source, const QString& target, const LatLon& /*point_of_interest*/)
+: ProjTransform(source, target)
+{}
 
 ProjTransform::~ProjTransform()
 {
-	if (pj)
-		pj_free(pj);
+	if (source_pj)
+	{
+		if (source_pj != pj)
+			pj_free(source_pj);
+		if (pj)
+			pj_free(pj);
+	}
 }
 
 ProjTransform& ProjTransform::operator=(ProjTransform&& other) noexcept
 {
+	std::swap(source_pj, other.source_pj);
 	std::swap(pj, other.pj);
 	return *this;
 }
@@ -290,12 +320,11 @@ ProjTransform& ProjTransform::operator=(ProjTransform&& other) noexcept
 ProjTransform ProjTransform::crs(const QString& crs_spec)
 {
 	ProjTransform result;
-	auto crs_spec_latin1 = crs_spec.toLatin1();
-	if (!crs_spec_latin1.contains("+no_defs"))
-		crs_spec_latin1.append(" +no_defs");
-	result.pj = pj_init_plus(crs_spec_latin1);
+	*pj_get_errno_ref() = 0;
+	result.source_pj = result.pj = pj_init_plus(fixupCrsSpec(crs_spec));
 	return result;
 }
+
 
 bool ProjTransform::isValid() const noexcept
 {
@@ -309,12 +338,11 @@ bool ProjTransform::isGeographic() const
 
 QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
 {
-	static auto const geographic_crs = ProjTransform(Georeferencing::geographic_crs_spec);
-	
-	double easting = qDegreesToRadians(lat_lon.longitude()), northing = qDegreesToRadians(lat_lon.latitude());
-	if (geographic_crs.isValid())
+	double easting = qDegreesToRadians(lat_lon.longitude());
+	double northing = qDegreesToRadians(lat_lon.latitude());
+	if (pj)
 	{
-		auto ret = pj_transform(geographic_crs.pj, pj, 1, 1, &easting, &northing, nullptr);
+		auto ret = pj_transform(source_pj, pj, 1, 1, &easting, &northing, nullptr);
 		if (ok)
 			*ok = (ret == 0);
 	}
@@ -327,12 +355,11 @@ QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
 
 LatLon ProjTransform::inverse(const QPointF& projected_coords, bool* ok) const
 {
-	static auto const geographic_crs = ProjTransform(Georeferencing::geographic_crs_spec);
-	
-	double easting = projected_coords.x(), northing = projected_coords.y();
-	if (geographic_crs.isValid())
+	double easting = projected_coords.x();
+	double northing = projected_coords.y();
+	if (pj)
 	{
-		auto ret = pj_transform(pj, geographic_crs.pj, 1, 1, &easting, &northing, nullptr);
+		auto ret = pj_transform(pj, source_pj, 1, 1, &easting, &northing, nullptr);
 		if (ok)
 			*ok = (ret == 0);
 	}
@@ -343,6 +370,32 @@ LatLon ProjTransform::inverse(const QPointF& projected_coords, bool* ok) const
 	return LatLon::fromRadiant(northing, easting);
 }
 
+QPointF ProjTransform::transform(const QPointF& point, bool* ok) const
+{
+	QPointF p = point;
+	if (pj)
+	{
+		if (pj_is_latlong(source_pj))
+		{
+			p.setX(qDegreesToRadians(p.x()));
+			p.setY(qDegreesToRadians(p.y()));
+		}
+		auto ret = pj_transform(source_pj, pj, 1, 1, &p.rx(), &p.ry(), nullptr);
+		if (ok)
+			*ok = (ret == 0);
+		if (pj_is_latlong(pj))
+		{
+			p.setX(qRadiansToDegrees(p.x()));
+			p.setY(qRadiansToDegrees(p.y()));
+		}
+	}
+	else if (ok)
+	{
+		*ok = false;
+	}
+	return p;
+}
+
 QString ProjTransform::errorText() const
 {
 	auto err_no = *pj_get_errno_ref();
@@ -351,28 +404,61 @@ QString ProjTransform::errorText() const
 
 #else
 
-ProjTransform::ProjTransform(ProjTransformData* pj) noexcept
-: pj{pj}
-{}
+namespace {
+
+QByteArray fixupCrsSpec(const QString& crs_spec)
+{
+	auto spec_utf8 = crs_spec.toUtf8();
+#ifdef PROJ_ISSUE_1573
+	// Cf. https://github.com/OSGeo/PROJ/pull/1573
+	spec_utf8.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
+#endif
+	return spec_utf8;
+}
+
+struct PJconsts* normalizeForVisualization(struct PJconsts* pj)
+{
+	if (auto* initial_pj = pj)
+	{
+		pj = proj_normalize_for_visualization(PJ_DEFAULT_CTX, initial_pj);
+		proj_destroy(initial_pj);
+	}
+	return pj;
+}
+
+}
+
 
 ProjTransform::ProjTransform(ProjTransform&& other) noexcept
 {
 	operator=(std::move(other));
 }
 
-ProjTransform::ProjTransform(const QString& crs_spec)
+ProjTransform::ProjTransform(const QString& target)
+: ProjTransform(Georeferencing::geographic_crs_spec, target)
+{}
+
+ProjTransform::ProjTransform(const QString& source, const QString& target)
 {
-	if (crs_spec.isEmpty())
+	if (source.isEmpty() || target.isEmpty())
 		return;
 	
-	auto spec_latin1 = crs_spec.toLatin1();
-#ifdef PROJ_ISSUE_1573
-	// Cf. https://github.com/OSGeo/PROJ/pull/1573
-	spec_latin1.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
-#endif
-	pj = proj_create_crs_to_crs(PJ_DEFAULT_CTX, Georeferencing::geographic_crs_spec.toLatin1(), spec_latin1, nullptr);
-	if (pj)
-		operator=({proj_normalize_for_visualization(PJ_DEFAULT_CTX, pj)});
+	auto* initial_pj = proj_create_crs_to_crs(PJ_DEFAULT_CTX, fixupCrsSpec(source), fixupCrsSpec(target), nullptr);
+	pj = normalizeForVisualization(initial_pj);
+}
+
+ProjTransform::ProjTransform(const QString& source, const QString& target, const LatLon& point_of_interest)
+{
+	if (source.isEmpty() || target.isEmpty())
+		return;
+	
+	auto* area = proj_area_create();
+	proj_area_set_bbox(area,
+	                   point_of_interest.longitude()-0.1, point_of_interest.latitude()-0.1,
+	                   point_of_interest.longitude()+0.1, point_of_interest.latitude()+0.1);
+	auto* initial_pj = proj_create_crs_to_crs(PJ_DEFAULT_CTX, fixupCrsSpec(source), fixupCrsSpec(target), area);
+	pj = normalizeForVisualization(initial_pj);
+	proj_area_destroy(area);
 }
 
 ProjTransform::~ProjTransform()
@@ -391,12 +477,8 @@ ProjTransform& ProjTransform::operator=(ProjTransform&& other) noexcept
 ProjTransform ProjTransform::crs(const QString& crs_spec)
 {
 	ProjTransform result;
-	auto crs_spec_utf8 = crs_spec.toUtf8();
-#ifdef PROJ_ISSUE_1573
-	// Cf. https://github.com/OSGeo/PROJ/pull/1573
-	crs_spec_utf8.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
-#endif
-	result.pj = proj_create(PJ_DEFAULT_CTX, crs_spec_utf8);
+	if (!crs_spec.isEmpty())
+		result.pj = proj_create(PJ_DEFAULT_CTX, fixupCrsSpec(crs_spec));
 	return result;
 }
 
@@ -440,13 +522,22 @@ LatLon ProjTransform::inverse(const QPointF& projected_coords, bool* ok) const
 	return {pj_coord.lp.phi, pj_coord.lp.lam};
 }
 
+QPointF ProjTransform::transform(const QPointF& projected_coords, bool* ok) const
+{
+	proj_errno_reset(pj);
+	auto pj_coord = proj_trans(pj, PJ_FWD, proj_coord(projected_coords.x(), projected_coords.y(), 0, HUGE_VAL));
+	if (ok)
+		*ok = proj_errno(pj) == 0;
+	return {pj_coord.xy.x, pj_coord.xy.y};
+}
+
 QString ProjTransform::errorText() const
 {
 	auto err_no = proj_errno(pj);
 	return (err_no == 0) ? QString() : QString::fromLatin1(proj_errno_string(err_no));
 }
 
-#endif
+#endif  // ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 
 
 
@@ -1073,6 +1164,9 @@ bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vecto
 	// Default return value if no change is necessary
 	bool ok = (getState() == Geospatial || projected_crs_spec.isEmpty());
 	
+	// ProjTransform will check this substitutions, too, but this is not
+	// reflected in the Georeferencing properties which are used to e.g.
+	// to setup transformations with GDAL/OGR.
 	for (const auto& substitution : spec_substitutions)
 	{
 		if (QLatin1String(substitution[0]) == spec)
