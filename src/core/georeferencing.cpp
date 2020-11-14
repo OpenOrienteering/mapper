@@ -1179,18 +1179,12 @@ MapCoordF Georeferencing::toMapCoordF(const Georeferencing* other, const MapCoor
 		return toMapCoordF(other->toProjectedCoords(map_coords));
 	}
 	
-	bool ok_forward = proj_transform.isValid();
-	bool ok_inverse = other->proj_transform.isValid();
-	QPointF projected = other->toProjectedCoords(map_coords);
-	if (ok_forward && ok_inverse) {
-		// Use geographic coordinates as intermediate step to enforce
-		// that coordinates are assumed to have WGS84 datum if datum is specified in only one CRS spec.
-		/// \todo Use direct pipeline instead of intermediate WGS84
-		bool ok_inverse, ok_forward;
-		projected = proj_transform.forward(other->proj_transform.inverse(projected, &ok_inverse), &ok_forward);
-	}
-	if (ok)
-		*ok = ok_inverse && ok_forward;
+	auto const t = ProjTransform(other->getProjectedCRSSpec(), getProjectedCRSSpec(), getGeographicRefPoint());
+	auto projected = other->toProjectedCoords(map_coords);
+	if (t.isValid())
+		projected = t.transform(projected, ok);
+	else if (ok)
+		*ok = false;
 	return toMapCoordF(projected);
 }
 
