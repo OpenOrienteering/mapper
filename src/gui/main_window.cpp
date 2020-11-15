@@ -1266,22 +1266,7 @@ bool MainWindow::showSaveAsDialog()
 		return false;
 	}
 	
-	// Ensure that the provided filename has a correct file extension.
-	// Among other things, this will ensure that FileFormats.formatForFilename()
-	// returns the same thing the user selected in the dialog.
-// 	QString selected_extension = "." + format->primaryExtension();
-	QStringList selected_extensions(format->fileExtensions());
-	selected_extensions.replaceInStrings(QRegExp(QString::fromLatin1("^")), QString::fromLatin1("."));
-	bool has_extension = std::any_of(selected_extensions.constBegin(), selected_extensions.constEnd(), [&path](const auto& selected_extension) {
-		return path.endsWith(selected_extension, Qt::CaseInsensitive);
-	});
-	if (!has_extension)
-		path += QLatin1Char('.') + format->primaryExtension();
-	// Ensure that the file name matches the format.
-	Q_ASSERT(format->fileExtensions().contains(QFileInfo(path).suffix()));
-	// Fails when using different formats for import and export:
-	//	Q_ASSERT(FileFormats.findFormatForFilename(path, ***) == format);
-	
+	path = format->fixupExtension(path);
 	return saveTo(path, *format);
 }
 

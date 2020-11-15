@@ -1775,6 +1775,7 @@ void MapEditorController::exportVector()
 		return;
 	}
 	
+	filename = format->fixupExtension(filename);
 	exportTo(filename, *format);
 }
 

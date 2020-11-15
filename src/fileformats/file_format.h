@@ -272,6 +272,15 @@ public:
 	
 	
 	/**
+	 * Returns a filepath which ends with one of the formats extensions.
+	 * 
+	 * If the filepath does not already end with one the extensions,
+	 * this function appends the primary extension (separated by dot).
+	 */
+	QString fixupExtension(QString filepath) const;
+	
+	
+	/**
 	 * Creates an Importer that will read a map file from the given stream.
 	 * 
 	 * The default implementation returns an unset unique_ptr.

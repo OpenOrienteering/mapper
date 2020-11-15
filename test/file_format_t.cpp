@@ -557,6 +557,33 @@ void FileFormatTest::mapCoordtoString()
 
 
 
+void FileFormatTest::fixupExtensionTest_data()
+{
+	QTest::addColumn<QByteArray>("format_id");
+	QTest::addColumn<QString>("expected");
+	
+	QTest::newRow("file.omap")   << QByteArray("XML") << QStringLiteral("file.omap");
+	QTest::newRow("file")        << QByteArray("XML") << QStringLiteral("file.omap");
+	QTest::newRow("file.")       << QByteArray("XML") << QStringLiteral("file..omap");
+	QTest::newRow("file_omap")   << QByteArray("XML") << QStringLiteral("file_omap.omap");
+	QTest::newRow("file.xmap")   << QByteArray("XML") << QStringLiteral("file.xmap");
+	QTest::newRow("f.omap.zip")  << QByteArray("XML") << QStringLiteral("f.omap.zip.omap");
+}
+
+void FileFormatTest::fixupExtensionTest()
+{
+	QFETCH(QByteArray, format_id);
+	QFETCH(QString, expected);
+	
+	auto const* format = FileFormats.findFormat(format_id);
+	QVERIFY(format);
+	
+	auto const filename = QString::fromUtf8(QTest::currentDataTag());
+	QCOMPARE(format->fixupExtension(filename), expected);
+}
+
+
+
 void FileFormatTest::understandsTest_data()
 {
 	quint8 ocd_start_raw[2] = { 0xAD, 0x0C };

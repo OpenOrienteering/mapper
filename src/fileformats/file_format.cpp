@@ -20,6 +20,11 @@
 
 #include "file_format.h"
 
+#include <algorithm>
+#include <iterator>
+
+#include <Qt>
+#include <QFileInfo>
 #include <QLatin1Char>
 #include <QLatin1String>
 
@@ -80,6 +85,26 @@ bool FileFormat::supportsWriting() const
 FileFormat::ImportSupportAssumption FileFormat::understands(const char* /*buffer*/, int /*size*/) const
 {
 	return supportsReading() ? Unknown : NotSupported;
+}
+
+
+QString FileFormat::fixupExtension(QString filepath) const
+{
+	auto const& extensions = fileExtensions();
+	if (!extensions.empty())
+	{
+		using std::begin; using std::end;
+		auto const has_extension = std::any_of(begin(extensions), end(extensions), [&filepath](const auto& extension) {
+			return filepath.endsWith(extension, Qt::CaseInsensitive)
+			        && filepath.midRef(filepath.length() - extension.length() - 1, 1) == QLatin1String(".");
+		});
+		if (!has_extension)
+			filepath += QLatin1Char('.') + primaryExtension();
+		
+		// Ensure that the file name matches the format.
+		Q_ASSERT(extensions.contains(QFileInfo(filepath).suffix()));
+	}
+	return filepath;
 }
 
 
