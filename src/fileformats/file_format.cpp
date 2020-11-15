@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2018 Kai Pastor
+ *    Copyright 2018-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,6 +19,9 @@
  */
 
 #include "file_format.h"
+
+#include <QLatin1Char>
+#include <QLatin1String>
 
 #include "file_import_export.h"
 
@@ -59,7 +62,7 @@ FileFormat::~FileFormat() = default;
 void FileFormat::addExtension(const QString& file_extension)
 {
 	file_extensions << file_extension;
-	format_filter = QString::fromLatin1("%1 (*.%2)").arg(format_description, file_extensions.join(QString::fromLatin1(" *.")));
+	format_filter.clear();
 }
 
 
@@ -90,6 +93,21 @@ std::unique_ptr<Exporter> FileFormat::makeExporter(const QString& /*path*/, cons
 {
 	qWarning("Format '%s' does not support export", format_id);
 	return nullptr;
+}
+
+const QString& OpenOrienteering::FileFormat::filter() const
+{
+	if (format_filter.isEmpty())
+	{
+		auto const label = [](QString description) {
+			description.replace(QLatin1Char('('), QLatin1Char('['));
+			description.replace(QLatin1Char(')'), QLatin1Char(']'));
+			return description;
+		} (format_description);
+		auto const extensions = file_extensions.join(QStringLiteral(" *."));
+		format_filter = label + QLatin1String(" (*.") + extensions + QLatin1String(")");
+	}
+	return format_filter;
 }
 
 

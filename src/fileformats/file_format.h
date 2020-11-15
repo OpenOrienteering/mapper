@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2018 Kai Pastor
+ *    Copyright 2018-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -290,7 +290,7 @@ private:
 	const char* format_id;
 	QString format_description;
 	QStringList file_extensions;
-	QString format_filter;
+	mutable QString format_filter;
 	Features format_features;
 };
 
@@ -359,12 +359,6 @@ inline
 const QStringList& FileFormat::fileExtensions() const
 {
 	return file_extensions;
-}
-
-inline
-const QString& FileFormat::filter() const
-{
-	return format_filter;
 }
 
 
