@@ -39,6 +39,7 @@
 #include <QtGlobal>
 #include <QtMath>
 #include <QByteArray>
+#include <QChar>
 #include <QColor>
 #include <QFileInfo>
 #include <QFlags>
@@ -51,6 +52,7 @@
 #include <QRegularExpressionMatch>
 #include <QScopedValueRollback>
 #include <QString>
+#include <QStringList>
 #include <QStringRef>
 #include <QVariant>
 
@@ -622,19 +624,48 @@ std::unique_ptr<Importer> OgrFileImportFormat::makeImporter(const QString& path,
 
 // ### OgrFileExportFormat ###
 
-OgrFileExportFormat::OgrFileExportFormat()
- : FileFormat(OgrFile, "OGR-export",
-              ::OpenOrienteering::ImportExport::tr("Geospatial vector data"),
+OgrFileExportFormat::OgrFileExportFormat(QByteArray id, const char* name, const char* extensions)
+ : FileFormat(OgrFile, id.data(),
+              ::OpenOrienteering::ImportExport::tr(qstrlen(name) > 0 ? name : id.constData()),
               QString{},
               Feature::FileExport | Feature::WritingLossy )
+ , meta_data(std::move(id))
 {
-	for (const auto& extension : GdalManager().supportedVectorExportExtensions())
-		addExtension(QString::fromLatin1(extension));
+	auto const extension_list = QString::fromUtf8(extensions).split(QChar::Space);
+	for (auto const& extension : extension_list)
+		addExtension(extension);
 }
 
 std::unique_ptr<Exporter> OgrFileExportFormat::makeExporter(const QString& path, const Map* map, const MapView* view) const
 {
-	return std::make_unique<OgrFileExport>(path, map, view);
+	return std::make_unique<OgrFileExport>(path, map, view, id());
+}
+
+// static
+std::vector<std::unique_ptr<OgrFileExportFormat>> OgrFileExportFormat::makeAll()
+{
+	std::vector<std::unique_ptr<OgrFileExportFormat>> result;
+	
+	auto count = GDALGetDriverCount();
+	result.reserve(count / 2);
+	
+	for (auto i = 0; i < count; ++i)
+	{
+		auto driver_data = GDALGetDriver(i);
+		auto const* cap_vector = GDALGetMetadataItem(driver_data, GDAL_DCAP_VECTOR, nullptr);
+		auto const* cap_create = GDALGetMetadataItem(driver_data, GDAL_DCAP_CREATE, nullptr);
+		auto const* extensions = GDALGetMetadataItem(driver_data, GDAL_DMD_EXTENSIONS, nullptr);
+		if (qstrcmp(cap_vector, "YES") != 0
+		    || qstrcmp(cap_create, "YES") != 0
+		    || qstrlen(extensions) == 0)
+			continue;
+		
+		auto id = QByteArray("OGR-export-");
+		id.append(GDALGetDriverShortName(driver_data));
+		auto const* long_name  = GDALGetDriverLongName(driver_data);
+		result.push_back(std::make_unique<OgrFileExportFormat>(id, long_name, extensions));
+	}
+	return result;
 }
 
 
@@ -1815,9 +1846,15 @@ QPointF OgrFileImport::calcAverageCoords(OGRDataSourceH data_source, OGRDataSour
 
 // ### OgrFileExport ###
 
-OgrFileExport::OgrFileExport(const QString& path, const Map* map, const MapView* view)
+OgrFileExport::OgrFileExport(const QString& path, const Map* map, const MapView* view, const char* id)
 : Exporter(path, map, view)
+, id(id)
 {
+	if (qstrncmp(id, "OGR-export-", 11) == 0)
+		this->id += 11;
+	if (qstrlen(id) == 0)
+		this->id = nullptr;
+	
 	GdalManager manager;
 	bool one_layer_per_symbol = manager.isExportOptionEnabled(GdalManager::OneLayerPerSymbol);
 	setOption(QString::fromLatin1("Per Symbol Layers"), one_layer_per_symbol);
@@ -1834,39 +1871,20 @@ bool OgrFileExport::exportImplementation()
 {
 	// Choose driver and setup format-specific features
 	QFileInfo info(path);
-	QString file_extn = info.completeSuffix();
 	GDALDriverH po_driver = nullptr;
-
-	auto count = GDALGetDriverCount();
-	for (auto i = 0; i < count; ++i)
+	
+	if (id)
 	{
-		auto driver_data = GDALGetDriver(i);
-
+		auto driver_data = GDALGetDriverByName(id);
 		auto type = GDALGetMetadataItem(driver_data, GDAL_DCAP_VECTOR, nullptr);
-		if (qstrcmp(type, "YES") != 0)
-			continue;
-
 		auto cap_create = GDALGetMetadataItem(driver_data, GDAL_DCAP_CREATE, nullptr);
-		if (qstrcmp(cap_create, "YES") != 0)
-			continue;
-
-		auto extensions_raw = GDALGetMetadataItem(driver_data, GDAL_DMD_EXTENSIONS, nullptr);
-		auto extensions = QByteArray::fromRawData(extensions_raw, int(qstrlen(extensions_raw)));
-		for (auto pos = 0; pos >= 0; )
-		{
-			auto start = pos ? pos + 1 : 0;
-			pos = extensions.indexOf(' ', start);
-			auto extension = extensions.mid(start, pos - start);
-			if (file_extn == QString::fromLatin1(extension))
-			{
-				po_driver = driver_data;
-				break;
-			}
-		}
+		if (qstrcmp(type, "YES") == 0 && qstrcmp(cap_create, "YES") == 0)
+			po_driver = driver_data;
 	}
 
 	if (!po_driver)
-		throw FileFormatException(tr("Couldn't find a driver for file extension %1").arg(file_extn));
+		throw FileFormatException(::OpenOrienteering::ImportExport::tr("Cannot find a vector data export driver named '%1'")
+		                          .arg(QString::fromUtf8(id)));
 
 	setupQuirks(po_driver);
 
