@@ -99,7 +99,11 @@ QString FileFormat::fixupExtension(QString filepath) const
 			        && filepath.midRef(filepath.length() - extension.length() - 1, 1) == QLatin1String(".");
 		});
 		if (!has_extension)
-			filepath += QLatin1Char('.') + primaryExtension();
+		{
+			if (!filepath.endsWith(QLatin1Char('.')))
+				filepath.append(QLatin1Char('.'));
+			filepath.append(primaryExtension());
+		}
 		
 		// Ensure that the file name matches the format.
 		Q_ASSERT(extensions.contains(QFileInfo(filepath).suffix()));

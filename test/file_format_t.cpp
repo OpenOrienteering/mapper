@@ -564,7 +564,7 @@ void FileFormatTest::fixupExtensionTest_data()
 	
 	QTest::newRow("file.omap")   << QByteArray("XML") << QStringLiteral("file.omap");
 	QTest::newRow("file")        << QByteArray("XML") << QStringLiteral("file.omap");
-	QTest::newRow("file.")       << QByteArray("XML") << QStringLiteral("file..omap");
+	QTest::newRow("file.")       << QByteArray("XML") << QStringLiteral("file.omap");
 	QTest::newRow("file_omap")   << QByteArray("XML") << QStringLiteral("file_omap.omap");
 	QTest::newRow("file.xmap")   << QByteArray("XML") << QStringLiteral("file.xmap");
 	QTest::newRow("f.omap.zip")  << QByteArray("XML") << QStringLiteral("f.omap.zip.omap");
