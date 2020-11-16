@@ -557,6 +557,33 @@ void FileFormatTest::mapCoordtoString()
 
 
 
+void FileFormatTest::fixupExtensionTest_data()
+{
+	QTest::addColumn<QByteArray>("format_id");
+	QTest::addColumn<QString>("expected");
+	
+	QTest::newRow("file.omap")   << QByteArray("XML") << QStringLiteral("file.omap");
+	QTest::newRow("file")        << QByteArray("XML") << QStringLiteral("file.omap");
+	QTest::newRow("file.")       << QByteArray("XML") << QStringLiteral("file.omap");
+	QTest::newRow("file_omap")   << QByteArray("XML") << QStringLiteral("file_omap.omap");
+	QTest::newRow("file.xmap")   << QByteArray("XML") << QStringLiteral("file.xmap");
+	QTest::newRow("f.omap.zip")  << QByteArray("XML") << QStringLiteral("f.omap.zip.omap");
+}
+
+void FileFormatTest::fixupExtensionTest()
+{
+	QFETCH(QByteArray, format_id);
+	QFETCH(QString, expected);
+	
+	auto const* format = FileFormats.findFormat(format_id);
+	QVERIFY(format);
+	
+	auto const filename = QString::fromUtf8(QTest::currentDataTag());
+	QCOMPARE(format->fixupExtension(filename), expected);
+}
+
+
+
 void FileFormatTest::understandsTest_data()
 {
 	quint8 ocd_start_raw[2] = { 0xAD, 0x0C };
@@ -881,12 +908,13 @@ void FileFormatTest::pristineMapTest()
 void FileFormatTest::ogrExportTest_data()
 {
 	QTest::addColumn<QString>("map_filepath");
+	QTest::addColumn<QByteArray>("ogr_format_id");
 	QTest::addColumn<QString>("ogr_extension");
 	QTest::addColumn<int>("latitude");
 	QTest::addColumn<int>("longitude");
 	
 	QTest::newRow("complete map") << QString::fromLatin1("data:/examples/complete map.omap")
-	                              << QString::fromLatin1("gpx")
+	                              << QByteArray("OGR-export-GPX") << QString::fromLatin1("gpx")
 	                              << 48 << 12;
 }
 
@@ -894,6 +922,7 @@ void FileFormatTest::ogrExportTest()
 {
 #ifdef MAPPER_USE_GDAL
 	QFETCH(QString, map_filepath);
+	QFETCH(QByteArray, ogr_format_id);
 	QFETCH(QString, ogr_extension);
 	QFETCH(int, latitude);
 	QFETCH(int, longitude);
@@ -911,7 +940,7 @@ void FileFormatTest::ogrExportTest()
 		QCOMPARE(qRound(exported_latlon.latitude()), latitude);
 		QCOMPARE(qRound(exported_latlon.longitude()), longitude);
 		
-		auto const* format = FileFormats.findFormat("OGR-export");
+		auto const* format = FileFormats.findFormat(ogr_format_id);
 		QVERIFY(format);
 		
 		auto exporter = format->makeExporter(ogr_filepath, &map, nullptr);

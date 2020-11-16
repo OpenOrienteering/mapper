@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2018 Kai Pastor
+ *    Copyright 2018-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -272,6 +272,15 @@ public:
 	
 	
 	/**
+	 * Returns a filepath which ends with one of the formats extensions.
+	 * 
+	 * If the filepath does not already end with one the extensions,
+	 * this function appends the primary extension (separated by dot).
+	 */
+	QString fixupExtension(QString filepath) const;
+	
+	
+	/**
 	 * Creates an Importer that will read a map file from the given stream.
 	 * 
 	 * The default implementation returns an unset unique_ptr.
@@ -290,7 +299,7 @@ private:
 	const char* format_id;
 	QString format_description;
 	QStringList file_extensions;
-	QString format_filter;
+	mutable QString format_filter;
 	Features format_features;
 };
 
@@ -359,12 +368,6 @@ inline
 const QStringList& FileFormat::fileExtensions() const
 {
 	return file_extensions;
-}
-
-inline
-const QString& FileFormat::filter() const
-{
-	return format_filter;
 }
 
 

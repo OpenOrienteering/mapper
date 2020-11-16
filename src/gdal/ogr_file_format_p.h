@@ -407,7 +407,7 @@ public:
 	 */
 	Q_DECLARE_FLAGS(OgrQuirks, OgrQuirk)
 
-	OgrFileExport(const QString& path, const Map *map, const MapView *view);
+	OgrFileExport(const QString& path, const Map *map, const MapView *view, const char* id);
 	~OgrFileExport() override;
 
 	bool supportsQIODevice() const noexcept override;
@@ -432,6 +432,7 @@ protected:
 	void setupQuirks(GDALDriverH po_driver);
 
 private:
+	const char* id;
 	ogr::unique_datasource po_ds;
 	ogr::unique_fielddefn o_name_field;
 	ogr::unique_srs map_srs;

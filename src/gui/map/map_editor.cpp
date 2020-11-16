@@ -953,10 +953,11 @@ void MapEditorController::createActions()
 	print_act_mapper->setMapping(export_image_act, PrintWidget::EXPORT_IMAGE_TASK);
 	export_pdf_act = newAction("export-pdf", tr("&PDF"), print_act_mapper, SLOT(map()), nullptr, QString{}, "file_menu.html");
 	print_act_mapper->setMapping(export_pdf_act, PrintWidget::EXPORT_PDF_TASK);
-	if (auto* vector_format = FileFormats.findFormat("OGR-export"))
-		export_vector_act = newAction("export-vector", vector_format->description(), this, SLOT(exportVector()), nullptr, {}, "edit_menu.html");
-	else
-		export_vector_act = nullptr;
+#ifdef MAPPER_USE_GDAL
+	export_vector_act = newAction("export-vector", ::OpenOrienteering::ImportExport::tr("Geospatial vector data"), this, SLOT(exportVector()), nullptr, {}, "edit_menu.html");
+#else
+	export_vector_act = nullptr;
+#endif
 	
 #else
 	print_act = nullptr;
@@ -1739,25 +1740,42 @@ bool MapEditorController::keyReleaseEventFilter(QKeyEvent* event)
 void MapEditorController::exportVector()
 {
 	QSettings settings;
-	QString import_directory = settings.value(QString::fromLatin1("importFileDirectory"), QDir::homePath()).toString();
+	QString const import_directory = settings.value(QString::fromLatin1("importFileDirectory"), QDir::homePath()).toString();
+	QString selected_filter = settings.value(QString::fromLatin1("lastExportFormat"), QDir::homePath()).toString();
 	
-	auto* format = FileFormats.findFormat("OGR-export");
-	if (!format)
-		return;  /// \todo Error message?
+	// Build the list of supported file filters based on the file format registry
+	QStringList filters;
+	for (auto format : FileFormats.formats())
+	{
+		if (format->supportsFileExport())
+			filters.append(format->filter());
+	}
+	filters.sort();
 	
 	QString filename = FileDialog::getSaveFileName(
 	                       window,
 	                       tr("Export"),
 	                       import_directory,
-	                       QString::fromLatin1("%1 (%2);;%3 (*.*)")
-	                       .arg(format->description(),
-	                            QLatin1String("*.") + format->fileExtensions().join(QString::fromLatin1(" *.")),
-	                            tr("All files")) );
-	if (filename.isEmpty() || filename.isNull())
+	                       filters.join(QLatin1String(";;")),
+	                       &selected_filter);
+	if (filename.isEmpty())
 		return;
 	
 	settings.setValue(QString::fromLatin1("importFileDirectory"), QFileInfo(filename).canonicalPath());
+	settings.setValue(QString::fromLatin1("lastExportFormat"), selected_filter);
 	
+	auto const* format = FileFormats.findFormatByFilter(selected_filter, &FileFormat::supportsFileExport);
+	if (!format)
+	{
+		QMessageBox::information(window, tr("Error"),
+		                         ::OpenOrienteering::MainWindow::tr("File could not be saved:") + QLatin1Char('\n')
+		                         + ::OpenOrienteering::ImportExport::tr("Cannot find a vector data export driver named '%1'")
+		                           .arg(selected_filter) + QLatin1Char('\n') + QLatin1Char('\n')
+		                         + ::OpenOrienteering::MainWindow::tr("Please report this as a bug.") );
+		return;
+	}
+	
+	filename = format->fixupExtension(filename);
 	exportTo(filename, *format);
 }
 

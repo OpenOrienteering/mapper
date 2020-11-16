@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -41,6 +41,12 @@ private slots:
 	 */
 	void mapCoordtoString();
 	void mapCoordtoString_data();
+	
+	/**
+	 * Tests filename extension fixup.
+	 */
+	void fixupExtensionTest();
+	void fixupExtensionTest_data();
 	
 	/**
 	 * Tests FileFormat::understands() implementations.
