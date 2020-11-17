@@ -320,23 +320,46 @@ private slots:
 		QFETCH(QString, map_file);
 		QFETCH(int, template_index);
 		
-		Map map;
-		MapView view{ &map };
-		QVERIFY(map.loadFrom(map_file, &view));
-		
-		QVERIFY(map.getNumTemplates() > template_index);
-		auto const* temp = map.getTemplate(template_index);
-		QCOMPARE(temp->getTemplateType(), "TemplateTrack");
-		QCOMPARE(temp->getTemplateState(), Template::Unloaded);
-		QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
-		QCOMPARE(temp->getTemplateState(), Template::Loaded);
-
-		QEXPECT_FAIL("OgrTemplate NAD83", "Synthetic test file", Continue);
-		auto const expected_center = map.calculateExtent().center();
-		if (QLineF(center(temp), expected_center).length() > 0.125) // 50 cm
-			QCOMPARE(center(temp), expected_center);
-		else
-			QVERIFY2(true, "Centers do match");
+		QBuffer buffer;
+		{
+			Map map;
+			MapView view{ &map };
+			QVERIFY(map.loadFrom(map_file, &view));
+			
+			QVERIFY(map.getNumTemplates() > template_index);
+			auto const* temp = map.getTemplate(template_index);
+			QCOMPARE(temp->getTemplateType(), "TemplateTrack");
+			QCOMPARE(temp->getTemplateState(), Template::Unloaded);
+			QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
+			QCOMPARE(temp->getTemplateState(), Template::Loaded);
+			
+			QEXPECT_FAIL("OgrTemplate NAD83", "Synthetic test file", Continue);
+			auto const expected_center = map.calculateExtent().center();
+			if (QLineF(center(temp), expected_center).length() > 0.125) // 50 cm
+				QCOMPARE(center(temp), expected_center);
+			else
+				QVERIFY2(true, "Centers do match");
+			
+			QVERIFY(map.exportToIODevice(buffer));
+		}
+		{
+			Map map;
+			QVERIFY(map.importFromIODevice(buffer));
+			
+			QVERIFY(map.getNumTemplates() > template_index);
+			auto const* temp = map.getTemplate(template_index);
+			QCOMPARE(temp->getTemplateType(), "TemplateTrack");
+			QCOMPARE(temp->getTemplateState(), Template::Unloaded);
+			QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
+			QCOMPARE(temp->getTemplateState(), Template::Loaded);
+			
+			QEXPECT_FAIL("OgrTemplate NAD83", "Synthetic test file", Continue);
+			auto const expected_center = map.calculateExtent().center();
+			if (QLineF(center(temp), expected_center).length() > 0.125) // 50 cm
+				QCOMPARE(center(temp), expected_center);
+			else
+				QVERIFY2(true, "Centers do match");
+		}
 	}
 	
 #ifdef MAPPER_USE_GDAL
@@ -365,26 +388,50 @@ private slots:
 		QFETCH(QString, map_file);
 		QFETCH(int, template_index);
 		
-		Map map;
-		MapView view{ &map };
-		QVERIFY(map.loadFrom(map_file, &view));
-		
-		QVERIFY(map.getNumTemplates() > template_index);
-		auto const* temp = map.getTemplate(template_index);
-		QCOMPARE(temp->getTemplateType(), "OgrTemplate");
-		QCOMPARE(temp->getTemplateState(), Template::Unloaded);
-		QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
-		QCOMPARE(temp->getTemplateState(), Template::Loaded);
-
-		QEXPECT_FAIL("OgrTemplate NAD83", "Synthetic test file", Continue);
-		auto const expected_center = map.calculateExtent().center();
-		if (QLineF(center(temp), expected_center).length() > 0.25) // 1 m
-			QCOMPARE(center(temp), expected_center);
-		else
-			QVERIFY2(true, "Centers do match");
-		
-		// Test boundingRect for OgrTemplate
-		QCOMPARE(temp->boundingRect().center(), center(temp));
+		QBuffer buffer;
+		{
+			Map map;
+			MapView view{ &map };
+			QVERIFY(map.loadFrom(map_file, &view));
+			
+			QVERIFY(map.getNumTemplates() > template_index);
+			auto const* temp = map.getTemplate(template_index);
+			QCOMPARE(temp->getTemplateType(), "OgrTemplate");
+			QCOMPARE(temp->getTemplateState(), Template::Unloaded);
+			QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
+			QCOMPARE(temp->getTemplateState(), Template::Loaded);
+			
+			QEXPECT_FAIL("OgrTemplate NAD83", "Synthetic test file", Continue);
+			auto const expected_center = map.calculateExtent().center();
+			if (QLineF(center(temp), expected_center).length() > 0.25) // 1 m
+				QCOMPARE(center(temp), expected_center);
+			else
+				QVERIFY2(true, "Centers do match");
+			
+			// Test boundingRect for OgrTemplate
+			QCOMPARE(temp->boundingRect().center(), center(temp));
+			
+			QVERIFY(map.exportToIODevice(buffer));
+		}
+		{
+			Map map;
+			QVERIFY(map.importFromIODevice(buffer));
+			
+			QVERIFY(map.getNumTemplates() > template_index);
+			auto const* temp = map.getTemplate(template_index);
+			QCOMPARE(temp->getTemplateState(), Template::Unloaded);
+			QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
+			QCOMPARE(temp->getTemplateState(), Template::Loaded);
+			QEXPECT_FAIL("OgrTemplate NAD83", "Synthetic test file", Continue);
+			auto const expected_center = map.calculateExtent().center();
+			if (QLineF(center(temp), expected_center).length() > 0.25) // 1 m
+				QCOMPARE(center(temp), expected_center);
+			else
+				QVERIFY2(true, "Centers do match");
+			
+			// Test boundingRect for OgrTemplate
+			QCOMPARE(temp->boundingRect().center(), center(temp));
+		}
 	}
 	
 	void ogrTemplateGeoreferencingTest()
