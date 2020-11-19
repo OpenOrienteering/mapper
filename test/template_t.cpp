@@ -48,6 +48,12 @@
 #  include <proj_api.h>
 #endif
 
+#ifdef MAPPER_USE_GDAL
+#  include <gdal.h>
+#  include <ogr_api.h>
+#  include <ogr_srs_api.h>
+#endif
+
 #include "test_config.h"
 
 #include "global.h"
@@ -298,6 +304,78 @@ private slots:
 			QVERIFY2(true, "SRS from GeoTIFF is okay");
 	}
 #endif
+	
+	// Before testing template georeferencing inconsistency resolutions,
+	// we must test general georeferencing inconsistency detection.
+	void testFileGeorefTest_data()
+	{
+		QTest::addColumn<QString>("map_file");
+		
+		QTest::newRow("template-track.xmap")             << QStringLiteral("testdata:templates/template-track.xmap");
+		QTest::newRow("template-track-NA.xmap")          << QStringLiteral("testdata:templates/template-track-NA.xmap");
+		QTest::newRow("template-track-NA-084.xmap")      << QStringLiteral("testdata:templates/template-track-NA-084.xmap");
+		QTest::newRow("template-track-NA-093-PROJ.xmap") << QStringLiteral("testdata:templates/template-track-NA-093-PROJ.xmap");
+		QTest::newRow("template-track-NA-093-GDAL.xmap") << QStringLiteral("testdata:templates/template-track-NA-093-GDAL.xmap");
+	}
+	
+	void testFileGeorefTest()
+	{
+		QFETCH(QString, map_file);
+		
+		Map map;
+		QVERIFY(map.loadFrom(map_file));
+		auto const& georef = map.getGeoreferencing();
+		QVERIFY(map.getGeoreferencing().getState() == Georeferencing::Geospatial);
+		
+		{
+			// For this particular test, expected failures do reflect expected behaviour.
+#if !defined(ACCEPT_USE_OF_DEPRECATED_PROJ_API_H) || PJ_VERSION >= 600
+			QEXPECT_FAIL("template-track-NA-084.xmap", "Inconsistent when loading with modern PROJ", Continue);
+#else
+			QEXPECT_FAIL("template-track-NA.xmap", "Inconsistent when loading with PROJ 4.9", Continue);
+			QEXPECT_FAIL("template-track-NA-093-PROJ.xmap", "Inconsistent when loading with PROJ 4.9", Continue);
+			QEXPECT_FAIL("template-track-NA-093-GDAL.xmap", "Inconsistent when loading with PROJ 4.9", Continue);
+#endif
+			auto const expected = georef.getProjectedRefPoint();
+			auto const actual = georef.toProjectedCoords(georef.getGeographicRefPoint());
+			if ((georef.toMapCoords(expected) - georef.toMapCoords(actual)).length() >= 0.1)
+				QCOMPARE(actual, expected);
+			else
+				QVERIFY2(true, "Saved georeferencing is consistent actual result from PROJ");
+		}
+		
+#ifdef MAPPER_USE_GDAL
+		{
+			auto geographic_srs = OSRNewSpatialReference(nullptr);
+			OSRSetWellKnownGeogCS(geographic_srs, "WGS84");
+			QCOMPARE(OSRImportFromProj4(geographic_srs, Georeferencing::geographic_crs_spec.toLatin1()), OGRERR_NONE);
+			
+			auto map_srs = OSRNewSpatialReference(nullptr);
+			OSRSetWellKnownGeogCS(map_srs, "WGS84");
+			OSRSetProjCS(map_srs, "Projected map SRS");
+			auto spec = QByteArray(georef.getProjectedCRSSpec().toLatin1());
+			QCOMPARE(OSRImportFromProj4(map_srs, spec), OGRERR_NONE);
+			auto t = OCTNewCoordinateTransformation(geographic_srs, map_srs);
+			QVERIFY(t);
+			
+			auto const latlon = georef.getGeographicRefPoint();
+			auto actual = QPointF{latlon.longitude(), latlon.latitude()};
+			auto z = 0.0;
+			QCOMPARE(OCTTransform(t, 1, &actual.rx(), &actual.ry(), &z), TRUE);
+			
+			OCTDestroyCoordinateTransformation(t);
+			OSRDestroySpatialReference(map_srs);
+			OSRDestroySpatialReference(geographic_srs);
+			
+			// The result expected from GDAL is the actual result from PROJ.
+			auto const expected = georef.toProjectedCoords(georef.getGeographicRefPoint());
+			if ((georef.toMapCoords(expected) - georef.toMapCoords(actual)).length() >= 0.1)
+				QCOMPARE(actual, expected);
+			else
+				QVERIFY2(true, "OCTTransform is consistent with PROJ");
+		}
+#endif
+	}
 	
 	void templateTrackTest_data()
 	{
