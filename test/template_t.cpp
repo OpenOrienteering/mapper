@@ -328,14 +328,9 @@ private slots:
 		QVERIFY(map.getGeoreferencing().getState() == Georeferencing::Geospatial);
 		
 		{
-			// For this particular test, expected failures do reflect expected behaviour.
-#if !defined(ACCEPT_USE_OF_DEPRECATED_PROJ_API_H) || PJ_VERSION >= 600
-			QEXPECT_FAIL("template-track-NA-084.xmap", "Inconsistent when loading with modern PROJ", Continue);
-#else
-			QEXPECT_FAIL("template-track-NA.xmap", "Inconsistent when loading with PROJ 4.9", Continue);
-			QEXPECT_FAIL("template-track-NA-093-PROJ.xmap", "Inconsistent when loading with PROJ 4.9", Continue);
-			QEXPECT_FAIL("template-track-NA-093-GDAL.xmap", "Inconsistent when loading with PROJ 4.9", Continue);
-#endif
+			QEXPECT_FAIL("template-track-NA.xmap", "Mixed inconsistencies", Continue);
+			QEXPECT_FAIL("template-track-NA-093-PROJ.xmap", "Mixed inconsistencies", Continue);
+			QEXPECT_FAIL("template-track-NA-093-GDAL.xmap", "Mixed inconsistencies", Continue);
 			auto const expected = georef.getProjectedRefPoint();
 			auto const actual = georef.toProjectedCoords(georef.getGeographicRefPoint());
 			if ((georef.toMapCoords(expected) - georef.toMapCoords(actual)).length() >= 0.1)
@@ -367,6 +362,12 @@ private slots:
 			OSRDestroySpatialReference(map_srs);
 			OSRDestroySpatialReference(geographic_srs);
 			
+#if !defined(ACCEPT_USE_OF_DEPRECATED_PROJ_API_H) || PJ_VERSION >= 600
+			QEXPECT_FAIL("template-track-NA.xmap", "Mixed inconsistencies", Continue);
+			QEXPECT_FAIL("template-track-NA-084.xmap", "Mixed inconsistencies", Continue);
+			QEXPECT_FAIL("template-track-NA-093-PROJ.xmap", "Mixed inconsistencies", Continue);
+			QEXPECT_FAIL("template-track-NA-093-GDAL.xmap", "Mixed inconsistencies", Continue);
+#endif
 			// The result expected from GDAL is the actual result from PROJ.
 			auto const expected = georef.toProjectedCoords(georef.getGeographicRefPoint());
 			if ((georef.toMapCoords(expected) - georef.toMapCoords(actual)).length() >= 0.1)
@@ -413,14 +414,9 @@ private slots:
 		QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 
-#if !defined(ACCEPT_USE_OF_DEPRECATED_PROJ_API_H) || PJ_VERSION >= 600
-		QEXPECT_FAIL("TemplateTrack from v0.8.4", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
-		QEXPECT_FAIL("OgrTemplate from v0.9.3", "PROJ/GDAL/OGR inconsistency", Continue);
-#else
 		QEXPECT_FAIL("TemplateTrack NAD83", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
 		QEXPECT_FAIL("OgrTemplate NAD83", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
 		QEXPECT_FAIL("TemplateTrack from v0.9.3", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
-#endif
 		auto const expected_center = map.calculateExtent().center();
 		if (QLineF(center(temp), expected_center).length() > 0.125) // 50 cm
 			QCOMPARE(center(temp), expected_center);
@@ -542,13 +538,6 @@ private slots:
 			ogr_template_center = center(temp);
 		}
 		
-#if !defined(ACCEPT_USE_OF_DEPRECATED_PROJ_API_H) || PJ_VERSION >= 600
-		QEXPECT_FAIL("TemplateTrack NAD83", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
-		QEXPECT_FAIL("OgrTemplate NAD83", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
-		QEXPECT_FAIL("TemplateTrack from v0.8.4", "PROJ version bump", Continue);
-		QEXPECT_FAIL("TemplateTrack from v0.9.3", "PROJ/GDAL/OGR inconsistency", Continue);
-		QEXPECT_FAIL("OgrTemplate from v0.9.3", "PROJ/GDAL/OGR inconsistency", Continue);
-#endif
 		if (QLineF(ogr_template_center, template_track_center).length() > 0.1) // 40 cm
 			QCOMPARE(ogr_template_center, template_track_center);
 		else
