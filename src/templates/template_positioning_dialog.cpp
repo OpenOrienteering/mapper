@@ -124,6 +124,10 @@ void TemplatePositioningDialog::updateWidgets()
 {
 	switch (csDomain())
 	{
+	case CoordinateSystem::DomainGeospatial:
+		Q_UNREACHABLE();
+		Q_FALLTHROUGH();
+		
 	case CoordinateSystem::DomainGround:  // Real
 		unit_scale_edit->setMinimum(0.0001);
 		unit_scale_edit->setDecimals(3);

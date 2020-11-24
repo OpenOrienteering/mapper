@@ -701,6 +701,7 @@ OgrFileImport::OgrFileImport(const QString& path, Map* map, MapView* view, Coord
 		break;
 		
 	case CoordinateSystem::DomainGround:
+	case CoordinateSystem::DomainGeospatial:
 		to_map_coord = &OgrFileImport::fromProjected;
 		break;
 	}
@@ -1355,8 +1356,18 @@ bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
 	
 	if (!srs)
 	{
-		data_srs = {};
-		data_transform = {};
+		if (cs_domain == CoordinateSystem::DomainGround)
+		{
+			// Ground CS data doesn't need a SRS.
+			data_srs = {};
+			data_transform = {};
+		}
+		else
+		{
+			// Geospatial data is required to have a SRS.
+			++no_transformation;
+			return false;
+		}
 	}
 	else if (data_srs != srs)
 	{

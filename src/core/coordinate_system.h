@@ -31,6 +31,7 @@ namespace CoordinateSystem {
 enum Domain {
 	DomainMap,          ///< Data refers to map (paper) coordinates, base: 1 mm.
 	DomainGround,       ///< Data refers to (real) ground coordinates, base 1 m.
+	DomainGeospatial,   ///< Data is georeferenced, base depending on CRS (possibly degrees!).
 };
 
 
