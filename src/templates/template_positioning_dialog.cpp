@@ -22,19 +22,26 @@
 #include "template_positioning_dialog.h"
 
 #include <Qt>
+#include <QtGlobal>
+#include <QChar>
 #include <QComboBox>
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
 #include <QFormLayout>
 #include <QRadioButton>
 #include <QSpacerItem>
+#include <QVariant>
 #include <QVBoxLayout>
 
 #include "gui/util_gui.h"
 #include "templates/template_image_open_dialog.h"
+#include "util/backports.h"  // IWYU pragma: keep
 
 
 namespace OpenOrienteering {
+
+class MapCoordF;
+
 
 // not inline
 TemplatePositioningDialog::~TemplatePositioningDialog() = default;
@@ -49,13 +56,13 @@ TemplatePositioningDialog::TemplatePositioningDialog(const QString& display_name
 	
 	coord_system_box = new QComboBox();
 	layout->addRow(tr("Coordinate system"), coord_system_box);
-	coord_system_box->addItem(tr("Real"));
-	coord_system_box->addItem(tr("Map"));
+	coord_system_box->addItem(tr("Ground"), CoordinateSystem::DomainGround);
+	coord_system_box->addItem(tr("Map"), CoordinateSystem::DomainMap);
 	coord_system_box->setCurrentIndex(0);
 	
 	layout->addItem(Util::SpacerItem::create(this));
 	
-	unit_scale_edit = Util::SpinBox::create(6, 0, 99999.999999, tr("m", "meters"));
+	unit_scale_edit = Util::SpinBox::create(4, 0, 1000.0);
 	unit_scale_edit->setValue(1);
 	unit_scale_edit->setEnabled(false);
 	layout->addRow(tr("One coordinate unit equals:"), unit_scale_edit);
@@ -80,16 +87,28 @@ TemplatePositioningDialog::TemplatePositioningDialog(const QString& display_name
 	
 	setLayout(vbox_layout);
 	
+	connect(coord_system_box, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TemplatePositioningDialog::updateWidgets);
+	updateWidgets();
+	
 	connect(button_box, &QDialogButtonBox::accepted, this, &QDialog::accept);
 	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
 }
 
-bool TemplatePositioningDialog::useRealCoords() const
+CoordinateSystem::Domain TemplatePositioningDialog::csDomain() const
 {
-	return coord_system_box->currentIndex() == 0;
+	auto const domain = coord_system_box->currentData().toInt();
+	switch (domain)
+	{
+	case CoordinateSystem::DomainMap:
+	case CoordinateSystem::DomainGround:
+		return static_cast<CoordinateSystem::Domain>(domain);
+	default:
+		qDebug("Unexpected domain: %d", domain);
+		return CoordinateSystem::DomainMap;
+	}
 }
 
-double TemplatePositioningDialog::getUnitScale() const
+double TemplatePositioningDialog::unitScaleFactor() const
 {
 	return unit_scale_edit->value();
 }
@@ -97,6 +116,28 @@ double TemplatePositioningDialog::getUnitScale() const
 bool TemplatePositioningDialog::centerOnView() const
 {
 	return view_center_radio->isChecked();
+}
+
+
+// slot
+void TemplatePositioningDialog::updateWidgets()
+{
+	switch (csDomain())
+	{
+	case CoordinateSystem::DomainGround:  // Real
+		unit_scale_edit->setMinimum(0.0001);
+		unit_scale_edit->setDecimals(3);
+		unit_scale_edit->setSuffix(QChar::Space + Util::InputProperties<Util::RealMeters>::unit());
+		break;
+		
+	case CoordinateSystem::DomainMap: // Map
+		unit_scale_edit->setMinimum(0.01);
+		unit_scale_edit->setDecimals(2);
+		unit_scale_edit->setSuffix(QChar::Space + Util::InputProperties<MapCoordF>::unit());
+		break;
+		
+	}
+	unit_scale_edit->setValue(1);
 }
 
 

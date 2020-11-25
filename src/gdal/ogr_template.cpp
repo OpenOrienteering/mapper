@@ -290,17 +290,9 @@ try
 		return false;
 	
 	center_in_view  = dialog.centerOnView();
-	auto const use_real_coords = dialog.useRealCoords();
-	if (use_real_coords)
-	{
-		cs_domain = CoordinateSystem::DomainGround;
-		transform.template_scale_x = transform.template_scale_y = dialog.getUnitScale();
-		updateTransformationMatrices();
-	}
-	else
-	{
-		cs_domain = CoordinateSystem::DomainMap;
-	}
+	cs_domain = dialog.csDomain();
+	transform.template_scale_x = transform.template_scale_y = dialog.unitScaleFactor();
+	updateTransformationMatrices();
 	
 	return true;
 }

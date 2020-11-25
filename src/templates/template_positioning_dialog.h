@@ -26,6 +26,8 @@
 #include <QObject>
 #include <QString>
 
+#include "core/coordinate_system.h"
+
 class QComboBox;
 class QDoubleSpinBox;
 class QRadioButton;
@@ -50,9 +52,15 @@ public:
 	TemplatePositioningDialog& operator=(const TemplatePositioningDialog&) = delete;
 	TemplatePositioningDialog& operator=(TemplatePositioningDialog&&) = delete;
 	
-	bool useRealCoords() const;
-	double getUnitScale() const;
+	/** Returns the selected domain of the coordinate system. */
+	CoordinateSystem::Domain csDomain() const;
+	/** Returns the length of one data unit in terms of one base unit. */
+	double unitScaleFactor() const;
+	/** Returns whether non-georeferenced data shall be centered in the current view. */
 	bool centerOnView() const;
+	
+protected:
+	void updateWidgets();
 	
 private:
 	QComboBox* coord_system_box;
