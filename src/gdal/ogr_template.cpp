@@ -60,6 +60,8 @@ namespace {
 		const auto crs_spec           = QLatin1String("crs_spec");
 		const auto georeferencing     = QLatin1String("georeferencing");
 		const auto projected_crs_spec = QLatin1String("projected_crs_spec");
+		const auto srs                = QLatin1String("srs");
+		const auto map                = QLatin1String("map");
 	}
 	
 	
@@ -462,6 +464,12 @@ bool OgrTemplate::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 		projected_crs_spec = xml.readElementText();
 		template_track_compatibility = true;
 	}
+	else if (xml.name() == literal::srs)
+	{
+		auto srs = xml.readElementText();
+		if (srs == literal::map)
+			cs_domain = CoordinateSystem::DomainMap;
+	}
 	else
 	{
 		xml.skipCurrentElement();
@@ -516,6 +524,10 @@ void OgrTemplate::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) c
 		xml.writeTextElement(literal::crs_spec, track_crs_spec);
 		if (!projected_crs_spec.isEmpty())
 			xml.writeTextElement(literal::projected_crs_spec, projected_crs_spec);
+	}
+	else if (cs_domain == CoordinateSystem::DomainMap)
+	{
+		xml.writeTextElement(literal::srs, literal::map);
 	}
 	else if (explicit_georef)
 	{
