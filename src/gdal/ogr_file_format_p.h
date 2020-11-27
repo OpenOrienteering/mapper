@@ -296,6 +296,8 @@ protected:
 	
 	bool setSRS(OGRSpatialReferenceH srs);
 	
+	bool transform(OGRGeometryH geometry);
+	
 	
 	Symbol* getSymbol(Symbol::Type type, const char* raw_style_string);
 	
