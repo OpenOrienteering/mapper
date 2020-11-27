@@ -1058,19 +1058,11 @@ void OgrFileImport::importLayer(MapPart* map_part, OGRLayerH layer)
 
 void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_definition, OGRFeatureH feature, OGRGeometryH geometry, const Clipping* clipping)
 {
-	auto new_srs = OGR_G_GetSpatialReference(geometry);
-	if (!setSRS(new_srs))
+	if (!setSRS(OGR_G_GetSpatialReference(geometry)))
 		return;
 	
-	if (new_srs)
-	{
-		auto error = OGR_G_Transform(geometry, data_transform.get());
-		if (error)
-		{
-			++failed_transformation;
-			return;
-		}
-	}
+	if (!transform(geometry))
+		return;
 	
 	auto objects = importGeometry(feature, geometry);
 	if (clipping)
@@ -1289,18 +1281,10 @@ std::unique_ptr<OgrFileImport::Clipping> OgrFileImport::getLayerClipping(OGRLaye
 		OGR_G_AddPoint_2D(outline.get(), envelope.MinX, envelope.MinY);
 		OGR_G_CloseRings(outline.get());
 		
-		auto layer_srs = OGR_L_GetSpatialRef(layer);
-		if (setSRS(layer_srs))
+		if (setSRS(OGR_L_GetSpatialRef(layer)))
 		{
-			if (layer_srs)
-			{
-				auto error = OGR_G_Transform(outline.get(), data_transform.get());
-				if (error)
-				{
-					++failed_transformation;
-					return {};
-				}
-			}
+			if (!transform(outline.get()))
+				return {};
 		}
 		
 		MapCoordVector coords;
@@ -1335,6 +1319,20 @@ bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
 	if (!srs && unit_type == UnitOnPaper)
 	{
 		to_map_coord = &OgrFileImport::fromDrawing;
+	}
+	return true;
+}
+
+bool OgrFileImport::transform(OGRGeometryH geometry)
+{
+	if (data_transform)
+	{
+		auto error = OGR_G_Transform(geometry, data_transform.get());
+		if (error)
+		{
+			++failed_transformation;
+			return false;
+		}
 	}
 	return true;
 }
