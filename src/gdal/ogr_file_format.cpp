@@ -1315,7 +1315,12 @@ bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
 		return true;
 	}
 	
-	if (srs && data_srs != srs)
+	if (!srs)
+	{
+		data_srs = {};
+		data_transform = {};
+	}
+	else if (data_srs != srs)
 	{
 		// New SRS, indeed.
 		auto transformation = ogr::unique_transformation{ OCTNewCoordinateTransformation(srs, map_srs.get()) };
