@@ -349,7 +349,7 @@ private:
 	
 	ogr::unique_srs map_srs;
 	
-	OGRSpatialReferenceH data_srs;
+	OGRSpatialReferenceH data_srs = {};
 	
 	ogr::unique_transformation data_transform;
 	
