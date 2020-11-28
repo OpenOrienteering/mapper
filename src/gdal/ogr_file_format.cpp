@@ -694,6 +694,17 @@ OgrFileImport::OgrFileImport(const QString& path, Map* map, MapView* view, UnitT
 	GdalManager manager;
 	manager.configure();
 	
+	switch (unit_type)
+	{
+	case UnitOnPaper:
+		to_map_coord = &OgrFileImport::fromDrawing;
+		break;
+		
+	case UnitOnGround:
+		to_map_coord = &OgrFileImport::fromProjected;
+		break;
+	}
+	
 	clip_layers = manager.isImportOptionEnabled(GdalManager::ClipLayers);
 	setOption(QString::fromLatin1("Clip layers"), clip_layers);
 	
@@ -1299,10 +1310,8 @@ std::unique_ptr<OgrFileImport::Clipping> OgrFileImport::getLayerClipping(OGRLaye
 
 bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
 {
-	to_map_coord = &OgrFileImport::fromProjected;
 	if (unit_type == UnitOnPaper)
 	{
-		to_map_coord = &OgrFileImport::fromDrawing;
 		return true;
 	}
 	
