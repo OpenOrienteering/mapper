@@ -1300,6 +1300,12 @@ std::unique_ptr<OgrFileImport::Clipping> OgrFileImport::getLayerClipping(OGRLaye
 bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
 {
 	to_map_coord = &OgrFileImport::fromProjected;
+	if (unit_type == UnitOnPaper)
+	{
+		to_map_coord = &OgrFileImport::fromDrawing;
+		return true;
+	}
+	
 	if (srs && data_srs != srs)
 	{
 		// New SRS, indeed.
@@ -1315,10 +1321,6 @@ bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
 		data_transform = std::move(transformation);
 	}
 	
-	if (!srs && unit_type == UnitOnPaper)
-	{
-		to_map_coord = &OgrFileImport::fromDrawing;
-	}
 	return true;
 }
 
