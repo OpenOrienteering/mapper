@@ -775,6 +775,39 @@ void OgrFileImport::setGeoreferencingImportEnabled(bool enabled)
 
 
 
+QString OgrFileImport::overrideCrs() const
+{
+	return override_srs_spec;
+}
+
+bool OgrFileImport::setOverrideCrs(const QString& spec)
+{
+	if (spec.isEmpty())
+	{
+		override_srs_spec.clear();
+		override_srs.reset();
+		return true;
+	}
+	
+	auto srs = ogr::unique_srs(OSRNewSpatialReference(nullptr));
+	auto spec_latin1 = spec.toLatin1();
+#ifdef PROJ_ISSUE_1573
+	// Cf. https://github.com/OSGeo/PROJ/pull/1573
+	spec_latin1.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
+#endif
+	if (auto error = OSRImportFromProj4(srs.get(), spec_latin1))
+	{
+		addWarning(tr("Unable to setup \"%1\" SRS for GDAL: %2")
+		           .arg(spec, QString::number(error)));
+		return false;
+	}
+	override_srs_spec = spec;
+	override_srs = std::move(srs);
+	return true;
+}
+
+
+
 ogr::unique_srs OgrFileImport::srsFromMap()
 {
 	auto srs = ogr::unique_srs(OSRNewSpatialReference(nullptr));
@@ -1313,6 +1346,11 @@ bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
 	if (unit_type == UnitOnPaper)
 	{
 		return true;
+	}
+	
+	if (override_srs)
+	{
+		srs = override_srs.get();
 	}
 	
 	if (!srs)

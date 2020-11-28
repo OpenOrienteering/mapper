@@ -242,6 +242,19 @@ public:
 	
 	
 	/**
+	 * Returns the CRS specification which overrides the SRS information from the data or driver.
+	 */
+	QString overrideCrs() const;
+	
+	/**
+	 * Set a CRS which overrides the SRS information from the data or driver.
+	 * 
+	 * Returns true on success.
+	 */
+	bool setOverrideCrs(const QString& spec);
+	
+	
+	/**
 	 * Tests if the file's spatial references can be used with the given georeferencing.
 	 * 
 	 * This returns true only if all layers' spatial references can be
@@ -352,6 +365,9 @@ private:
 	ogr::unique_srs map_srs;
 	
 	OGRSpatialReferenceH data_srs = {};
+	
+	QString override_srs_spec;
+	ogr::unique_srs override_srs;
 	
 	ogr::unique_transformation data_transform;
 	
