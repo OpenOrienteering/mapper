@@ -1271,30 +1271,29 @@ PathObject* OgrFileImport::importPolygonGeometry(OGRFeatureH feature, OGRGeometr
 std::unique_ptr<OgrFileImport::Clipping> OgrFileImport::getLayerClipping(OGRLayerH layer)
 {
 	OGREnvelope envelope;
-	if (OGR_L_GetExtent(layer, &envelope, false) == OGRERR_NONE)
-	{
-		auto outline = ogr::unique_geometry(OGR_G_CreateGeometry(wkbLinearRing));
-		OGR_G_AddPoint_2D(outline.get(), envelope.MinX, envelope.MinY);
-		OGR_G_AddPoint_2D(outline.get(), envelope.MaxX, envelope.MinY);
-		OGR_G_AddPoint_2D(outline.get(), envelope.MaxX, envelope.MaxY);
-		OGR_G_AddPoint_2D(outline.get(), envelope.MinX, envelope.MaxY);
-		OGR_G_AddPoint_2D(outline.get(), envelope.MinX, envelope.MinY);
-		OGR_G_CloseRings(outline.get());
-		
-		if (setSRS(OGR_L_GetSpatialRef(layer)))
-		{
-			if (!transform(outline.get()))
-				return {};
-		}
-		
-		MapCoordVector coords;
-		coords.reserve(5);
-		for (int i = 0; i < 5; ++i)
-			coords.emplace_back(toMapCoord(OGR_G_GetX(outline.get(), i), OGR_G_GetY(outline.get(), i)));
-		coords.back().setClosePoint(true);
-		return std::make_unique<ClippingImplementation>(std::move(coords));
-	}
-	return {};
+	if (OGR_L_GetExtent(layer, &envelope, false) != OGRERR_NONE)
+		return {};
+	
+	if (!setSRS(OGR_L_GetSpatialRef(layer)))
+		return {};
+	
+	auto outline = ogr::unique_geometry(OGR_G_CreateGeometry(wkbLinearRing));
+	OGR_G_AddPoint_2D(outline.get(), envelope.MinX, envelope.MinY);
+	OGR_G_AddPoint_2D(outline.get(), envelope.MaxX, envelope.MinY);
+	OGR_G_AddPoint_2D(outline.get(), envelope.MaxX, envelope.MaxY);
+	OGR_G_AddPoint_2D(outline.get(), envelope.MinX, envelope.MaxY);
+	OGR_G_AddPoint_2D(outline.get(), envelope.MinX, envelope.MinY);
+	OGR_G_CloseRings(outline.get());
+	
+	if (!transform(outline.get()))
+		return {};
+	
+	MapCoordVector coords;
+	coords.reserve(5);
+	for (int i = 0; i < 5; ++i)
+		coords.emplace_back(toMapCoord(OGR_G_GetX(outline.get(), i), OGR_G_GetY(outline.get(), i)));
+	coords.back().setClosePoint(true);
+	return std::make_unique<ClippingImplementation>(std::move(coords));
 }
 
 
