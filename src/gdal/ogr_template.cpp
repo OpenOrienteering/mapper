@@ -238,12 +238,21 @@ try
 		data_georef = getDataGeoreferencing(template_path, map->getGeoreferencing());
 		if (data_georef && data_georef->getState() == Georeferencing::Geospatial)
 		{
-			// If yes, does the user want to use this for the map?
-			auto keep_projected = false;
 			if (template_track_compatibility)
 				data_georef->setGrivation(0);
-			else
-				keep_projected = preserveRefPoints(*data_georef, map->getGeoreferencing());
+		}
+	}
+	
+	{
+		if (map->getGeoreferencing().getState() != Georeferencing::Geospatial)
+		{
+			auto keep_projected = false;
+			if (data_georef && data_georef->getState() == Georeferencing::Geospatial)
+			{
+				if (!template_track_compatibility)
+					keep_projected = preserveRefPoints(*data_georef, map->getGeoreferencing());
+			}
+			
 			GeoreferencingDialog dialog(dialog_parent, map, data_georef.get());
 			if (keep_projected)
 				dialog.setKeepProjectedRefCoords();
@@ -267,24 +276,26 @@ try
 	}
 	
 	// Is the template's SRS orthographic, or can it be converted?
-	if (data_georef && !data_georef->getProjectedCRSSpec().contains(QLatin1String("+proj=ortho")))
 	{
-		data_georef.reset();
-	}
-	if (!data_georef)
-	{
-		data_georef = makeOrthographicGeoreferencing(template_path);
-	}
-	if (data_georef)
-	{
-		if (template_track_compatibility)
-			data_georef->setGrivation(0);
-		else
-			preserveRefPoints(*data_georef, map->getGeoreferencing());
-		explicit_georef = std::move(data_georef);
-		// Data is to be transformed to the projected CRS.
-		track_crs_spec = Georeferencing::geographic_crs_spec;
-		projected_crs_spec = explicit_georef->getProjectedCRSSpec();
+		if (data_georef && !data_georef->getProjectedCRSSpec().contains(QLatin1String("+proj=ortho")))
+		{
+			data_georef.reset();
+		}
+		if (!data_georef)
+		{
+			data_georef = makeOrthographicGeoreferencing(template_path);
+		}
+		if (data_georef)
+		{
+			if (template_track_compatibility)
+				data_georef->setGrivation(0);
+			else
+				preserveRefPoints(*data_georef, map->getGeoreferencing());
+			explicit_georef = std::move(data_georef);
+			// Data is to be transformed to the projected CRS.
+			track_crs_spec = Georeferencing::geographic_crs_spec;
+			projected_crs_spec = explicit_georef->getProjectedCRSSpec();
+		}
 	}
 	
 	TemplatePositioningDialog dialog(getTemplateFilename(), dialog_parent);
