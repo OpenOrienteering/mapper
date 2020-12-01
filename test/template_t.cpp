@@ -288,7 +288,6 @@ private slots:
 		QBuffer buffer;
 		exporter->setDevice(&buffer);
 		QVERIFY(exporter->doExport());
-		QEXPECT_FAIL("", "GH-1791 (Template data saved only for default file format)", Abort);
 		QVERIFY(!temp->hasUnsavedChanges());
 	}
 	

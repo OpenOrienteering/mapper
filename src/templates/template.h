@@ -222,10 +222,10 @@ public:
 	
 	
 	/**
-	 *  Saves the template itself, returns true if successful.
+	 * Saves the template contents and returns true if successful.
 	 *
 	 * This is called when saving the map if the template's hasUnsavedChanges()
-	 * is true.
+	 * is true. After successful saving, hasUnsavedChanges() shall return false.
 	 */
 	virtual bool saveTemplateFile() const;
 	

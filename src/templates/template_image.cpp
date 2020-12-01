@@ -124,12 +124,16 @@ TemplateImage* TemplateImage::duplicate() const
 
 bool TemplateImage::saveTemplateFile() const
 {
-	const auto result = image.save(template_path);
+	if (!image.save(template_path))
+		return false;
+	
 #ifdef Q_OS_ANDROID
 	// Make the MediaScanner aware of the *updated* file.
 	Android::mediaScannerScanFile(QFileInfo(template_path).absolutePath());
 #endif
-	return result;
+	
+	const_cast<TemplateImage*>(this)->setHasUnsavedChanges(false);
+	return true;
 }
 
 

@@ -326,12 +326,6 @@ void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open, const
 	
 	saveTypeSpecificTemplateConfiguration(xml);
 	
-	if (open && hasUnsavedChanges())
-	{
-		// Save the template itself (e.g. image, gpx file, etc.)
-		saveTemplateFile();
-		const_cast<Template*>(this)->setHasUnsavedChanges(false); // TODO: Error handling?
-	}
 	xml.writeEndElement(/*template*/);
 }
 
