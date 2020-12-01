@@ -24,16 +24,19 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QChar>
-#include <QComboBox>
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
 #include <QFormLayout>
+#include <QLabel>
+#include <QLatin1String>
+#include <QPushButton>
 #include <QRadioButton>
 #include <QSpacerItem>
-#include <QVariant>
 #include <QVBoxLayout>
 
+#include "core/georeferencing.h"
 #include "gui/util_gui.h"
+#include "gui/widgets/crs_selector.h"
 #include "templates/template_image_open_dialog.h"
 #include "util/backports.h"  // IWYU pragma: keep
 
@@ -46,7 +49,7 @@ class MapCoordF;
 // not inline
 TemplatePositioningDialog::~TemplatePositioningDialog() = default;
 
-TemplatePositioningDialog::TemplatePositioningDialog(const QString& display_name, QWidget* parent)
+TemplatePositioningDialog::TemplatePositioningDialog(const QString& display_name, const Georeferencing& data_georef, QWidget* parent)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
 	setWindowModality(Qt::WindowModal);
@@ -54,18 +57,25 @@ TemplatePositioningDialog::TemplatePositioningDialog(const QString& display_name
 	
 	auto* layout = new QFormLayout();
 	
-	coord_system_box = new QComboBox();
+	coord_system_box = new CRSSelector(data_georef);
 	layout->addRow(tr("Coordinate system"), coord_system_box);
-	coord_system_box->addItem(tr("Ground"), CoordinateSystem::DomainGround);
-	coord_system_box->addItem(tr("Map"), CoordinateSystem::DomainMap);
-	coord_system_box->setCurrentIndex(0);
-	
-	layout->addItem(Util::SpacerItem::create(this));
 	
 	unit_scale_edit = Util::SpinBox::create(4, 0, 1000.0);
 	unit_scale_edit->setValue(1);
 	unit_scale_edit->setEnabled(false);
 	layout->addRow(tr("One coordinate unit equals:"), unit_scale_edit);
+	
+	status_label = new QLabel();
+	layout->addRow(tr("Status:"), status_label);
+	
+	layout->addItem(Util::SpacerItem::create(this));
+	coord_system_box->setDialogLayout(layout);
+	
+	if (data_georef.getState() == Georeferencing::Geospatial)
+		coord_system_box->addCustomItem(tr("From the data"), CoordinateSystem::DomainGeospatial);
+	coord_system_box->addCustomItem(tr("Ground"), CoordinateSystem::DomainGround);
+	coord_system_box->addCustomItem(tr("Paper"), CoordinateSystem::DomainMap);
+	coord_system_box->setCurrentIndex(0);
 	
 	layout->addItem(Util::SpacerItem::create(this));
 	
@@ -82,12 +92,12 @@ TemplatePositioningDialog::TemplatePositioningDialog(const QString& display_name
 	vbox_layout->addLayout(layout);
 	vbox_layout->addStretch(1);
 	
-	auto* button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+	button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
 	vbox_layout->addWidget(button_box);
 	
 	setLayout(vbox_layout);
 	
-	connect(coord_system_box, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TemplatePositioningDialog::updateWidgets);
+	connect(coord_system_box, &CRSSelector::crsChanged, this, &TemplatePositioningDialog::updateWidgets);
 	updateWidgets();
 	
 	connect(button_box, &QDialogButtonBox::accepted, this, &QDialog::accept);
@@ -96,15 +106,14 @@ TemplatePositioningDialog::TemplatePositioningDialog(const QString& display_name
 
 CoordinateSystem::Domain TemplatePositioningDialog::csDomain() const
 {
-	auto const domain = coord_system_box->currentData().toInt();
+	auto const domain = coord_system_box->currentCustomItem();
 	switch (domain)
 	{
 	case CoordinateSystem::DomainMap:
 	case CoordinateSystem::DomainGround:
 		return static_cast<CoordinateSystem::Domain>(domain);
 	default:
-		qDebug("Unexpected domain: %d", domain);
-		return CoordinateSystem::DomainMap;
+		return CoordinateSystem::DomainGeospatial;
 	}
 }
 
@@ -119,14 +128,31 @@ bool TemplatePositioningDialog::centerOnView() const
 }
 
 
+QString TemplatePositioningDialog::currentCRSSpec() const
+{
+	switch (coord_system_box->currentCustomItem())
+	{
+	case CoordinateSystem::DomainMap:
+	case CoordinateSystem::DomainGround:
+	case CoordinateSystem::DomainGeospatial:
+		return {};
+	default:
+		return coord_system_box->currentCRSSpec();
+	}
+}
+
+
 // slot
 void TemplatePositioningDialog::updateWidgets()
 {
+	auto georeferenced = false;
 	switch (csDomain())
 	{
 	case CoordinateSystem::DomainGeospatial:
-		Q_UNREACHABLE();
-		Q_FALLTHROUGH();
+		georeferenced = true;
+		unit_scale_edit->setSuffix({});
+		original_pos_radio->setChecked(true);
+		break;
 		
 	case CoordinateSystem::DomainGround:  // Real
 		unit_scale_edit->setMinimum(0.0001);
@@ -140,8 +166,29 @@ void TemplatePositioningDialog::updateWidgets()
 		unit_scale_edit->setSuffix(QChar::Space + Util::InputProperties<MapCoordF>::unit());
 		break;
 		
+	default:
+		Q_UNREACHABLE();
 	}
+	
 	unit_scale_edit->setValue(1);
+	unit_scale_edit->setEnabled(!georeferenced);
+	view_center_radio->setEnabled(!georeferenced);
+	view_center_radio->setChecked(!georeferenced);
+	
+	auto valid = true;
+	auto error_text = QString{};
+	if (georeferenced)
+	{
+		Georeferencing georef;
+		auto spec =  coord_system_box->currentCRSSpec();
+		valid = spec.isEmpty() || georef.setProjectedCRS({}, spec);
+		error_text = georef.getErrorText();
+	}
+	if (valid)
+		status_label->setText(tr("valid"));
+	else
+		status_label->setText(QLatin1String("<b style=\"color:red\">") + error_text + QLatin1String("</b>"));
+	button_box->button(QDialogButtonBox::Ok)->setEnabled(valid);
 }
 
 

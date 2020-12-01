@@ -81,12 +81,16 @@ public:
 	 * Loads the geospatial vector data into the template_map.
 	 * 
 	 * If is_georereferenced is true, the template_map will be configured to use
-	 * the georeferencing of the map given in the constructor, and OgrFileImportFormat
-	 * will let OGR do coordinate transformations as needed.
+	 * the explicit_georef if defined, or the georeferencing of the map given in
+	 * the constructor otherwise.
+	 * OgrFileImport will let OGR do coordinate transformations as needed and
+	 * possible. Data which is not georeferenced will be dropped.
 	 * 
 	 * If is_georeferenced is false and an explicit_georef is defined, the
-	 * template_map will be configured to use this particular georeferencing
-	 * to produce a projection of the original data.
+	 * template_map will be configured to use this particular georeferencing.
+	 * OgrFileImport will let OGR do coordinate transformations as needed and
+	 * possible. Data which is not georeferenced will be assumed to have map
+	 * coordinates. This is for legacy template track compatibility.
 	 * 
 	 * Otherwise, the data will be handled as raw ground or paper units,
 	 * depending on cs_domain.
@@ -116,6 +120,7 @@ private:
 	std::unique_ptr<Georeferencing> map_configuration_georef;
 	QString track_crs_spec;           // (limited) TemplateTrack compatibility
 	QString projected_crs_spec;       // (limited) TemplateTrack compatibility
+	QString data_crs_spec;
 	CoordinateSystem::Domain cs_domain { CoordinateSystem::DomainGround };  //  transient
 	bool template_track_compatibility { false };  //  transient
 	bool explicit_georef_pending      { false };  //  transient

@@ -28,12 +28,16 @@
 
 #include "core/coordinate_system.h"
 
-class QComboBox;
+class QDialogButtonBox;
 class QDoubleSpinBox;
+class QLabel;
 class QRadioButton;
 class QWidget;
 
 namespace OpenOrienteering {
+
+class CRSSelector;
+class Georeferencing;
 
 
 /**
@@ -46,7 +50,7 @@ class TemplatePositioningDialog : public QDialog
 Q_OBJECT
 public:
 	~TemplatePositioningDialog() override;
-	explicit TemplatePositioningDialog(const QString& display_name, QWidget* parent = nullptr);
+	explicit TemplatePositioningDialog(const QString& display_name, const Georeferencing& data_georef, QWidget* parent = nullptr);
 	TemplatePositioningDialog(const TemplatePositioningDialog&) = delete;
 	TemplatePositioningDialog(TemplatePositioningDialog&&) = delete;
 	TemplatePositioningDialog& operator=(const TemplatePositioningDialog&) = delete;
@@ -59,14 +63,19 @@ public:
 	/** Returns whether non-georeferenced data shall be centered in the current view. */
 	bool centerOnView() const;
 	
+	/** Returns the current CRS spec for georeferenced data. */
+	QString currentCRSSpec() const;
+	
 protected:
 	void updateWidgets();
 	
 private:
-	QComboBox* coord_system_box;
+	CRSSelector* coord_system_box;
+	QLabel* status_label;
 	QDoubleSpinBox* unit_scale_edit;
 	QRadioButton* original_pos_radio;
 	QRadioButton* view_center_radio;
+	QDialogButtonBox* button_box;
 };
 
 

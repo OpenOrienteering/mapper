@@ -243,17 +243,30 @@ try
 		}
 	}
 	
+	TemplatePositioningDialog dialog(getTemplateFilename(), *data_georef, dialog_parent);
+	dialog.setWindowModality(Qt::WindowModal);
+	do
 	{
+		if (dialog.exec() == QDialog::Rejected)
+			return false;
+		
+		cs_domain = dialog.csDomain();
+		if (cs_domain != CoordinateSystem::DomainGeospatial)
+			break;
+		
 		if (map->getGeoreferencing().getState() != Georeferencing::Geospatial)
 		{
+			// Make sure that the map is georeferenced.
+			Georeferencing initial_georef(map->getGeoreferencing());
 			auto keep_projected = false;
 			if (data_georef && data_georef->getState() == Georeferencing::Geospatial)
 			{
+				initial_georef.setProjectedCRS(data_georef->getProjectedCRSId(), data_georef->getProjectedCRSSpec());
 				if (!template_track_compatibility)
-					keep_projected = preserveRefPoints(*data_georef, map->getGeoreferencing());
+					keep_projected = preserveRefPoints(initial_georef, map->getGeoreferencing());
 			}
 			
-			GeoreferencingDialog dialog(dialog_parent, map, data_georef.get());
+			GeoreferencingDialog dialog(dialog_parent, map, &initial_georef);
 			if (keep_projected)
 				dialog.setKeepProjectedRefCoords();
 			else
@@ -261,22 +274,14 @@ try
 			dialog.exec();
 		}
 	}
+	while (cs_domain == CoordinateSystem::DomainGeospatial
+	       && map->getGeoreferencing().getState() != Georeferencing::Geospatial);
 	
-	if (map->getGeoreferencing().getState() == Georeferencing::Geospatial)
+	switch (cs_domain)
 	{
-		// The map has got a proper georeferencing.
-		// Can the template's SRS be converted to the map's CRS?
-		if (OgrFileImport::checkGeoreferencing(template_path, map->getGeoreferencing()))
-		{
-			is_georeferenced = true;
-			// Data is to be transformed to the map CRS directly.
-			track_crs_spec = Georeferencing::geographic_crs_spec;
-			return true;
-		}
-	}
-	
-	// Is the template's SRS orthographic, or can it be converted?
-	{
+	case CoordinateSystem::DomainMap:
+	case CoordinateSystem::DomainGround:
+		// Is the template's SRS orthographic, or can it be converted?
 		if (data_georef && !data_georef->getProjectedCRSSpec().contains(QLatin1String("+proj=ortho")))
 		{
 			data_georef.reset();
@@ -296,14 +301,15 @@ try
 			track_crs_spec = Georeferencing::geographic_crs_spec;
 			projected_crs_spec = explicit_georef->getProjectedCRSSpec();
 		}
+		break;
+		
+	case CoordinateSystem::DomainGeospatial:
+		is_georeferenced = true;
+		data_crs_spec = dialog.currentCRSSpec();
+		break;
 	}
 	
-	TemplatePositioningDialog dialog(getTemplateFilename(), dialog_parent);
-	if (dialog.exec() == QDialog::Rejected)
-		return false;
-	
 	center_in_view  = dialog.centerOnView();
-	cs_domain = dialog.csDomain();
 	transform.template_scale_x = transform.template_scale_y = dialog.unitScaleFactor();
 	updateTransformationMatrices();
 	
@@ -344,6 +350,7 @@ try
 	
 	const auto pp0 = new_template_map->getGeoreferencing().getProjectedRefPoint();
 	importer.setGeoreferencingImportEnabled(false);
+	importer.setOverrideCrs(data_crs_spec);
 	if (!importer.doImport())
 	{
 		setErrorString(importer.warnings().back());
