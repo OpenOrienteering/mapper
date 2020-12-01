@@ -23,18 +23,22 @@
 #include <memory>
 #include <vector>
 
+#include <Qt>
 #include <QtGlobal>
 #include <QtMath>
 #include <QtTest>
 #include <QBuffer>
 #include <QByteArray>
+#include <QColor>
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
 #include <QFileDevice>
 #include <QFileInfo>
+#include <QImageWriter>
 #include <QIODevice>
 #include <QLineF>
+#include <QList>
 #include <QMetaObject>
 #include <QObject>
 #include <QPointF>
@@ -42,6 +46,7 @@
 #include <QSignalSpy>  // IWYU pragma: keep
 #include <QString>
 #include <QStringList>
+#include <QTemporaryDir>
 #include <QTransform>
 
 #ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
@@ -56,6 +61,9 @@
 #include "core/map.h"
 #include "core/map_coord.h"
 #include "core/map_view.h"
+#include "fileformats/file_format.h"
+#include "fileformats/file_format_registry.h"
+#include "fileformats/file_import_export.h"
 #include "fileformats/xml_file_format_p.h"
 #include "gdal/ogr_template.h"
 #include "gdal/gdal_manager.h"
@@ -238,6 +246,50 @@ private slots:
 		
 		// The exported data matches the original data.
 		QCOMPARE(out_buffer.buffer(), original_data);
+	}
+	
+	void templateImageDrawableTest()
+	{
+		QVERIFY(!QImageWriter::supportedImageFormats().isEmpty());
+		
+		Map map;
+		XMLFileImporter importer{ QStringLiteral("testdata:templates/world-file.xmap"), &map, nullptr };
+		QVERIFY(importer.doImport());
+		
+		QCOMPARE(map.getNumTemplates(), 1);
+		auto* temp = map.getTemplate(0);
+		QCOMPARE(temp->getTemplateType(), "TemplateImage");
+		QCOMPARE(temp->getTemplateFilename(), QStringLiteral("world-file.png"));
+		QCOMPARE(temp->getTemplateState(), Template::Unloaded);
+		QVERIFY(!temp->canBeDrawnOnto());
+		
+		QVERIFY(temp->loadTemplateFile());
+		QCOMPARE(temp->getTemplateState(), Template::Loaded);
+		if (!QImageWriter::supportedImageFormats().contains("png"))
+			QEXPECT_FAIL("", "No PNG support in this build of Qt", Abort);
+		QVERIFY(temp->canBeDrawnOnto());
+		QVERIFY(!temp->hasUnsavedChanges());
+		
+		QTemporaryDir tmp_dir;
+		QVERIFY(tmp_dir.isValid());
+		temp->setTemplatePath(tmp_dir.filePath(temp->getTemplateFilename()));
+		QVERIFY(temp->canBeDrawnOnto());
+		QVERIFY(!temp->hasUnsavedChanges());
+		
+		auto const box = temp->calculateTemplateBoundingBox();
+		MapCoordF map_coords[] = { MapCoordF(box.topLeft()), MapCoordF(box.bottomRight()) };
+		temp->drawOntoTemplate(map_coords, 2, QColor(Qt::red), box.width()+box.height(), box, {});
+		QVERIFY(temp->hasUnsavedChanges());
+		
+		auto format = FileFormats.findFormatForFilename(QStringLiteral("some.ocd"), &FileFormat::supportsFileSave);
+		QVERIFY(bool(format));
+		auto exporter = format->makeExporter(QString{}, &map, nullptr);
+		QVERIFY(bool(exporter));
+		QBuffer buffer;
+		exporter->setDevice(&buffer);
+		QVERIFY(exporter->doExport());
+		QEXPECT_FAIL("", "GH-1791 (Template data saved only for default file format)", Abort);
+		QVERIFY(!temp->hasUnsavedChanges());
 	}
 	
 	void geoTiffTemplateTest()
