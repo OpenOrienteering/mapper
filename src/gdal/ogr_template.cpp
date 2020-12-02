@@ -19,15 +19,10 @@
 
 #include "ogr_template.h"
 
-#include <algorithm>
-#include <iosfwd>
-#include <iterator>
 #include <memory>
 #include <utility>
 
-#include <Qt>
 #include <QtGlobal>
-#include <QByteArray>
 #include <QDialog>
 #include <QLatin1String>
 #include <QPoint>
@@ -214,6 +209,7 @@ std::unique_ptr<Georeferencing> OgrTemplate::makeGeoreferencing(const QString& s
 bool OgrTemplate::preLoadSetup(QWidget* dialog_parent)
 try
 {
+	template_track_compatibility = TemplateTrack::supports(template_path);
 	is_georeferenced = false;
 	explicit_georef.reset();
 	map_configuration_georef.reset();
@@ -221,14 +217,6 @@ try
 	projected_crs_spec.clear();
 	transform = {};
 	updateTransformationMatrices();
-	
-	auto ends_with_any_of = [](const QString& path, const std::vector<QByteArray>& list) -> bool {
-		using namespace std;
-		return any_of(begin(list), end(list), [path](const QByteArray& extension) {
-			return path.endsWith(QLatin1String(extension), Qt::CaseInsensitive);
-		} );
-	};
-	template_track_compatibility = ends_with_any_of(template_path, TemplateTrack::supportedExtensions());
 	
 	auto data_georef = std::unique_ptr<Georeferencing>();
 	if (map->getGeoreferencing().getState() != Georeferencing::Geospatial)

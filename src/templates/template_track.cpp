@@ -148,6 +148,12 @@ const std::vector<QByteArray>& TemplateTrack::supportedExtensions()
 	return extensions;
 }
 
+bool TemplateTrack::supports(const QString& filename)
+{
+	return filename.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive);
+}
+
+
 TemplateTrack::TemplateTrack(const QString& path, Map* map)
  : Template(path, map)
 {

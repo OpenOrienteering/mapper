@@ -46,15 +46,28 @@ class Georeferencing;
 class Map;
 
 
-/** A template consisting of a set of tracks (polylines) and waypoints */
+/**
+ * A template class for visualizing of GPX files.
+ * 
+ * This class offers specialized support for visualizing tracks and waypoints
+ * from GPX files.
+ */
 class TemplateTrack : public Template
 {
 Q_OBJECT
 public:
 	/**
 	 * Returns the filename extensions supported by this template class.
+	 * 
+	 * Class TemplateTrack only supports ".gpx".
 	 */
 	static const std::vector<QByteArray>& supportedExtensions();
+	
+	/**
+	 * Tests if a filename ends with the supported extension, ".gpx".
+	 */
+	static bool supports(const QString& filename);
+	
 	
 	TemplateTrack(const QString& path, Map* map);
 protected:
