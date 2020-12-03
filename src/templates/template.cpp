@@ -891,7 +891,7 @@ void Template::setTemplateFileInfo(const QFileInfo& file_info)
 {
 	template_path = file_info.canonicalFilePath();
 	if (template_path.isEmpty())
-		template_path = file_info.path();
+		template_path = file_info.filePath();
 	template_file = file_info.fileName();
 }
 
