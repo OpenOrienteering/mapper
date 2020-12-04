@@ -326,12 +326,6 @@ void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open, const
 	
 	saveTypeSpecificTemplateConfiguration(xml);
 	
-	if (open && hasUnsavedChanges())
-	{
-		// Save the template itself (e.g. image, gpx file, etc.)
-		saveTemplateFile();
-		const_cast<Template*>(this)->setHasUnsavedChanges(false); // TODO: Error handling?
-	}
 	xml.writeEndElement(/*template*/);
 }
 
@@ -891,7 +885,7 @@ void Template::setTemplateFileInfo(const QFileInfo& file_info)
 {
 	template_path = file_info.canonicalFilePath();
 	if (template_path.isEmpty())
-		template_path = file_info.path();
+		template_path = file_info.filePath();
 	template_file = file_info.fileName();
 }
 

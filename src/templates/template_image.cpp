@@ -42,6 +42,7 @@
 #include <QPen>
 #include <QPoint>
 #include <QRect>
+#include <QSaveFile>
 #include <QSize>
 #include <QStringRef>
 #include <QTransform>
@@ -72,6 +73,23 @@ namespace OpenOrienteering {
 TemplateImage::GeoreferencingOption readGdalGeoTransform(const QString& filepath);
 
 #endif
+
+
+namespace {
+
+QByteArray findExportFormat(const QString& filename)
+{
+	auto const formats = QImageWriter::supportedImageFormats();
+	for (auto const& format : formats)
+	{
+		if (format.length() >= 3
+		    && filename.endsWith(QLatin1String(format.constData()), Qt::CaseInsensitive))
+			return format;
+	}
+	return {};
+}
+
+}
 
 
 const std::vector<QByteArray>& TemplateImage::supportedExtensions()
@@ -124,12 +142,35 @@ TemplateImage* TemplateImage::duplicate() const
 
 bool TemplateImage::saveTemplateFile() const
 {
-	const auto result = image.save(template_path);
+	auto const format = findExportFormat(template_path);
+	if (format.isEmpty())
+	{
+		const_cast<TemplateImage*>(this)->setErrorString(tr("Format not supported"));
+		return false;
+	}
+	
+	{
+		QSaveFile file{template_path};
+		QImageWriter writer{&file, format};
+		if (!writer.write(image))
+		{
+			const_cast<TemplateImage*>(this)->setErrorString(writer.errorString());
+			return false;
+		}
+		if (!file.commit())
+		{
+			const_cast<TemplateImage*>(this)->setErrorString(file.errorString());
+			return false;
+		}
+	}
+	
 #ifdef Q_OS_ANDROID
 	// Make the MediaScanner aware of the *updated* file.
 	Android::mediaScannerScanFile(QFileInfo(template_path).absolutePath());
 #endif
-	return result;
+	
+	const_cast<TemplateImage*>(this)->setHasUnsavedChanges(false);
+	return true;
 }
 
 
@@ -162,10 +203,6 @@ bool TemplateImage::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 bool TemplateImage::loadTemplateFileImpl()
 {
 	QImageReader reader(template_path);
-	
-	// QImageReader::format() cannot be called after reading.
-	drawable = QImageWriter::supportedImageFormats().contains(reader.format());
-	
 	const QSize size = reader.size();
 	const QImage::Format format = reader.imageFormat();
 	if (size.isEmpty() || format == QImage::Format_Invalid)
@@ -210,6 +247,7 @@ bool TemplateImage::loadTemplateFileImpl()
 		calculateGeoreferencing();
 	}
 	
+	drawable = !findExportFormat(template_path).isEmpty();
 	return true;
 }
 

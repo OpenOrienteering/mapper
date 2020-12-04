@@ -296,21 +296,24 @@ bool Exporter::doExport()
 		}
 	}
 	
+	auto success = true;
+	// Save the map
 	try
 	{
 		if (!exportImplementation())
 		{
 			Q_ASSERT(!warnings().empty());
-			return false;
+			success = false;
 		}
-		if (managed_file && !managed_file->commit())
+		if (success && managed_file && !managed_file->commit())
 		{
 			addWarning(tr("Cannot save file\n%1:\n%2").arg(path, managed_file->errorString()));
-			return false;
+			success = false;
 		}
 #ifdef Q_OS_ANDROID
 		// Make the MediaScanner aware of the *updated* file.
-		if (auto* file_device = qobject_cast<QFileDevice*>(device_))
+		auto* file_device = qobject_cast<QFileDevice*>(device_);
+		if (success && file_device)
 		{
 			const auto file_info = QFileInfo(file_device->fileName());
 			Android::mediaScannerScanFile(file_info.absolutePath());
@@ -320,10 +323,30 @@ bool Exporter::doExport()
 	catch (std::exception &e)
 	{
 		addWarning(tr("Cannot save file\n%1:\n%2").arg(path, QString::fromLocal8Bit(e.what())));
-		return false;
+		success = false;
 	}
 	
-	return true;
+	// Save modified templates
+	for (auto i = 0; i < map->getNumTemplates(); ++i)
+	{
+		auto const* temp = map->getTemplate(i);
+		auto const filename = temp->getTemplateFilename();
+		try
+		{
+			if (temp->hasUnsavedChanges() && !temp->saveTemplateFile())
+			{
+				addWarning(tr("Cannot save file\n%1:\n%2").arg(filename, temp->errorString()));
+				success = false;
+			}
+		}
+		catch (std::exception &e)
+		{
+			addWarning(tr("Cannot save file\n%1:\n%2").arg(filename, QString::fromLocal8Bit(e.what())));
+			success = false;
+		}
+	}
+	
+	return success;
 }
 
 
