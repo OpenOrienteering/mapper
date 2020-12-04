@@ -256,6 +256,9 @@ public:
 	static LatLon calcAverageLatLon(const QString& path);
 	
 	
+	QByteArray driverName() const { return driver_name; }
+	
+	
 protected:
 	ogr::unique_srs srsFromMap();
 	
@@ -333,6 +336,8 @@ private:
 	TextSymbol* getSymbolForLabel(OGRStyleToolH tool, const QByteArray& style_string);
 	LineSymbol* getSymbolForPen(OGRStyleToolH tool, const QByteArray& style_string);
 	AreaSymbol* getSymbolForBrush(OGRStyleToolH tool, const QByteArray& style_string);
+	
+	QByteArray driver_name;
 	
 	QHash<QByteArray, Symbol*> point_symbols;
 	PointSymbol* default_point_symbol;

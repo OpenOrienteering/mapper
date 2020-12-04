@@ -810,7 +810,8 @@ bool OgrFileImport::importImplementation()
 	
 	if (auto driver = OGR_DS_GetDriver(data_source.get()))
 	{
-		if (auto driver_name = OGR_Dr_GetName(driver))
+		driver_name = OGR_Dr_GetName(driver);
+		if (!driver_name.isEmpty())
 		{
 			map->setSymbolSetId(QString::fromLatin1(driver_name));
 		}
