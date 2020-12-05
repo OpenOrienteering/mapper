@@ -24,6 +24,7 @@
 
 #include <QString>
 
+#include "templates/template.h"
 #include "templates/template_image.h"
 
 class QByteArray;
@@ -52,6 +53,10 @@ protected:
 	
 public:
 	const char* getTemplateType() const override;
+	
+	LookupResult tryToFindTemplateFile(const QString& map_path) override;
+	
+	bool fileExists() const override;
 	
 protected:
 	bool loadTemplateFileImpl() override;

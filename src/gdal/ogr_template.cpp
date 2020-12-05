@@ -43,6 +43,7 @@
 #include "core/map_coord.h"
 #include "core/track.h"
 #include "fileformats/file_format.h"
+#include "gdal/gdal_file.h"
 #include "gdal/gdal_manager.h"
 #include "gdal/ogr_file_format_p.h"
 #include "gui/georeferencing_dialog.h"
@@ -162,6 +163,33 @@ const char* OgrTemplate::getTemplateType() const
 	return "OgrTemplate";
 }
 
+
+Template::LookupResult OgrTemplate::tryToFindTemplateFile(const QString& map_path)
+{
+	auto template_path_utf8 = template_path.toUtf8();
+	if (GdalFile::isRelative(template_path_utf8))
+	{
+		auto absolute_path_utf8 = GdalFile::tryToFindRelativeTemplateFile(template_path_utf8, map_path.toUtf8());
+		if (!absolute_path_utf8.isEmpty())
+		{
+			setTemplatePath(QString::fromUtf8(absolute_path_utf8));
+			return FoundByRelPath;
+		}
+	}
+	
+	if (GdalFile::exists(template_path_utf8))
+	{
+		return FoundByAbsPath;
+	}
+	
+	return TemplateMap::tryToFindTemplateFile(map_path);
+}
+
+bool OgrTemplate::fileExists() const
+{
+	return GdalFile::exists(getTemplatePath().toUtf8())
+	       || TemplateMap::fileExists();
+}
 
 
 std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing(const QString& path) const

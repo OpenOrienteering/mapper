@@ -272,13 +272,14 @@ public:
 	/**
 	 * Tries to find the template file non-interactively.
 	 * 
-	 * Thus function updates the path and name variables, and the template state.
+	 * This function updates the path and name variables, and the template state.
 	 * If successful, changes the state from Invalid to Unloaded if necessary,
 	 * and returns true. Otherwise, changes the state from Unloaded to Invalid
 	 * if necessary, and returns false. (If the state is Loaded, it is left
 	 * unchanged.) It returns an indication of its success.
 	 * 
-	 * This function searches for the template in the following locations:
+	 * The default implementation searches for the template in the following
+	 * locations:
 	 * 
 	 *  1. The relative path with regard to the map directory, if both are valid.
 	 *     This alternative has precedence because it should always work,
@@ -297,7 +298,16 @@ public:
 	 * \param map_path  Either the full filepath of the map, or an arbitrary
 	 *                  directory which shall be regarded as the map directory.
 	 */
-	LookupResult tryToFindTemplateFile(const QString& map_path);
+	virtual LookupResult tryToFindTemplateFile(const QString& map_path);
+	
+	/**
+	 * A check if the template file exists.
+	 * 
+	 * The default implementation checks if the file exists in the file system.
+	 * This maybe overridden to handle virtual file systems such as KMZ files.
+	 * If it returns false, template loading will fail with "No such file.".
+	 */
+	virtual bool fileExists() const;
 	
 	/**
 	 * Tries to find and load the template file non-interactively.

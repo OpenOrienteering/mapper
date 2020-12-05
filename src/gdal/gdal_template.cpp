@@ -25,6 +25,7 @@
 #include <QImageReader>
 #include <QString>
 
+#include "gdal/gdal_file.h"
 #include "gdal/gdal_image_reader.h"
 #include "gdal/gdal_manager.h"
 
@@ -62,6 +63,35 @@ const char* GdalTemplate::getTemplateType() const
 {
 	return "GdalTemplate";
 }
+
+
+Template::LookupResult GdalTemplate::tryToFindTemplateFile(const QString& map_path)
+{
+	auto template_path_utf8 = template_path.toUtf8();
+	if (GdalFile::isRelative(template_path_utf8))
+	{
+		auto absolute_path_utf8 = GdalFile::tryToFindRelativeTemplateFile(template_path_utf8, map_path.toUtf8());
+		if (!absolute_path_utf8.isEmpty())
+		{
+			setTemplatePath(QString::fromUtf8(absolute_path_utf8));
+			return FoundByRelPath;
+		}
+	}
+	
+	if (GdalFile::exists(template_path_utf8))
+	{
+		return FoundByAbsPath;
+	}
+	
+	return TemplateImage::tryToFindTemplateFile(map_path);
+}
+
+bool GdalTemplate::fileExists() const
+{
+	return GdalFile::exists(getTemplatePath().toUtf8())
+	       || TemplateImage::fileExists();
+}
+
 
 bool GdalTemplate::loadTemplateFileImpl()
 {

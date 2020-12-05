@@ -26,6 +26,7 @@
 #include <QObject>
 #include <QString>
 
+#include "templates/template.h"
 #include "templates/template_map.h"
 
 class QByteArray;
@@ -66,6 +67,12 @@ public:
 	
 	
 	const char* getTemplateType() const override;
+	
+	
+	LookupResult tryToFindTemplateFile(const QString& map_path) override;
+	
+	bool fileExists() const override;
+	
 	
 	std::unique_ptr<Georeferencing> makeOrthographicGeoreferencing(const QString& path) const;
 	std::unique_ptr<Georeferencing> makeOrthographicGeoreferencing() const;
