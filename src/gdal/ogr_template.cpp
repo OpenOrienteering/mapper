@@ -30,8 +30,10 @@
 #include <QByteArray>
 #include <QDialog>
 #include <QLatin1String>
+#include <QPainter>
 #include <QPoint>
 #include <QPointF>
+#include <QRectF>
 #include <QStringRef>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -41,6 +43,7 @@
 #include "core/latlon.h"
 #include "core/map.h"
 #include "core/map_coord.h"
+#include "core/map_view.h"
 #include "core/track.h"
 #include "fileformats/file_format.h"
 #include "gdal/gdal_file.h"
@@ -351,8 +354,9 @@ try
 	}
 	
 	auto new_template_map = std::make_unique<Map>();
+	auto* view = new MapView(new_template_map.get(), new_template_map.get());
 	auto unit_type = use_real_coords ? OgrFileImport::UnitOnGround : OgrFileImport::UnitOnPaper;
-	OgrFileImport importer{template_path, new_template_map.get(), nullptr, unit_type };
+	OgrFileImport importer{template_path, new_template_map.get(), view, unit_type };
 	
 	// Configure generation of renderables.
 	updateView(*new_template_map);
@@ -386,6 +390,7 @@ try
 	setTemplatePositionOffset(pm1 - pm0);
 	
 	setTemplateMap(std::move(new_template_map));
+	loadChildTemplatesAsync(*view);
 	
 	const auto& warnings = importer.warnings();
 	if (!warnings.empty())
@@ -418,6 +423,43 @@ bool OgrTemplate::postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view
 }
 
 
+void OgrTemplate::loadChildTemplatesAsync(MapView& view)
+{
+	for (int i = 0; i < templateMap()->getNumTemplates(); ++i)
+	{
+		auto* temp = templateMap()->getTemplate(i);
+		connect(temp, &Template::templateStateChanged, this, [this, temp]() {
+			auto const child_area = temp->calculateTemplateBoundingBox();
+			map->setTemplateAreaDirty(this, child_area, 0);
+		});
+	}
+	templateMap()->loadTemplateFilesAsync(view, [](const QString& message) {
+		/// \todo Redirect to UI
+		qDebug("%s", qUtf8Printable(message));
+	});
+}
+
+
+void OgrTemplate::unloadTemplateFileImpl()
+{
+	for (int i = 0; i < templateMap()->getNumTemplates(); ++i)
+	{
+		auto* temp = templateMap()->getTemplate(i);
+		temp->disconnect();
+		switch (temp->getTemplateState())
+		{
+		case Configuring:
+		case Loaded:
+			temp->unloadTemplateFile();
+			break;
+		default:
+			break;
+		}
+	}
+	TemplateMap::unloadTemplateFileImpl();
+}
+
+
 bool OgrTemplate::canChangeTemplateGeoreferenced() const
 {
 	return false;
@@ -447,6 +489,38 @@ void OgrTemplate::mapTransformationChanged()
 		explicit_georef = std::move(map_configuration_georef);
 		resetTemplatePositionOffset();
 	}
+}
+
+
+
+void OgrTemplate::drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const
+{
+	// For efficiency, re-implementing Map::drawTemplates
+	auto const draw_child_templates = [this, painter, &clip_rect, scale, on_screen, opacity](int first, int  last)  {
+		for (int i = first; i < last; ++i)
+		{
+			auto const* temp = templateMap()->getTemplate(i);
+			if (temp->getTemplateState() != Template::Loaded)
+				continue;
+			if (!clip_rect.intersects(temp->calculateTemplateBoundingBox()))
+				continue;
+			painter->save();
+			temp->drawTemplate(painter, clip_rect, scale, on_screen, opacity);
+			painter->restore();
+		}
+	};
+	draw_child_templates(0, templateMap()->getFirstFrontTemplate());
+	TemplateMap::drawTemplate(painter, clip_rect, scale, on_screen, opacity);
+	draw_child_templates(templateMap()->getFirstFrontTemplate(), templateMap()->getNumTemplates());
+}
+
+QRectF OgrTemplate::getTemplateExtent() const
+{
+	// If the template is invalid, the extent is an empty rectangle.
+	QRectF extent;
+	if (templateMap())
+		extent = templateMap()->calculateExtent(false, true, nullptr);
+	return extent;
 }
 
 

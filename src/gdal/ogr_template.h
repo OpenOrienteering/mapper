@@ -23,6 +23,7 @@
 #include <memory>
 #include <vector>
 
+#include <QtGlobal>
 #include <QObject>
 #include <QString>
 
@@ -30,6 +31,8 @@
 #include "templates/template_map.h"
 
 class QByteArray;
+class QPainter;
+class QRectF;
 class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
@@ -38,6 +41,7 @@ namespace OpenOrienteering {
 
 class Georeferencing;
 class Map;
+class MapView;
 
 
 /**
@@ -97,13 +101,25 @@ public:
 	 */
 	bool loadTemplateFileImpl() override;
 	
+private:
+	void loadChildTemplatesAsync(MapView& view);
+	
+public:
 	bool postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view) override;
+	
+	void unloadTemplateFileImpl() override;
 	
 	
 	bool canChangeTemplateGeoreferenced() const override;
 	
 	
+	void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const override;
+	
+	QRectF getTemplateExtent() const override;
+	
+	
 	void applySettings();
+	
 	
 protected:
 	void updateView(Map& template_map);
