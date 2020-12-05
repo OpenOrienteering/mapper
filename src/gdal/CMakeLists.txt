@@ -1,5 +1,5 @@
 #
-#    Copyright 2016-2017 Kai Pastor
+#    Copyright 2016-2020 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -29,6 +29,7 @@ set(MAPPER_GDAL_HEADERS
 )
 	
 set(MAPPER_GDAL_SOURCES
+  gdal_file.cpp
   gdal_image_reader.cpp
   gdal_manager.cpp
   gdal_settings_page.cpp

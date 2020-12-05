@@ -73,6 +73,10 @@
 #include "templates/template_track.h"
 #include "templates/world_file.h"
 
+#ifdef MAPPER_USE_GDAL
+#  include "gdal/gdal_file.h"
+#endif
+
 using namespace OpenOrienteering;
 
 namespace
@@ -110,6 +114,57 @@ private slots:
 		Map map;
 		QDir::addSearchPath(QStringLiteral("testdata"), QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("data")));
 	}
+	
+#ifdef MAPPER_USE_GDAL
+	// These tests are related to GDAL/OGR template support, but also for OgrFileFormat.
+	void gdalUtilTest()
+	{
+		QString const test_file = QStringLiteral("testdata:templates/vsi-test.kmz");
+		auto const test_file_info = QFileInfo(test_file);
+		QVERIFY(test_file_info.exists());
+		
+		auto const abs_path_utf8 = test_file_info.absoluteFilePath().toUtf8();
+		QVERIFY(GdalFile::exists(abs_path_utf8));
+		QVERIFY(!GdalFile::exists(abs_path_utf8 + "_xy"));
+		
+		auto const vsizip = QByteArray("/vsizip/" + abs_path_utf8);
+		QVERIFY(GdalFile::exists(vsizip + "/doc.kml"));
+		QVERIFY(!GdalFile::exists(vsizip + "/doc.kml_xy"));
+		QVERIFY(GdalFile::exists(vsizip + "/files"));
+		QVERIFY(!GdalFile::exists(vsizip + "/files_xy"));
+		
+		QVERIFY(GdalFile::exists(vsizip + "/files/1.jpg"));
+		QVERIFY(!GdalFile::exists(vsizip + "/files/1.jpg_xy"));
+		
+		QVERIFY(GdalFile::isRelative("files/1.jpg"));
+		QVERIFY(GdalFile::isRelative("../doc.kml"));
+		
+		QVERIFY(GdalFile::isDir(vsizip + "/files"));
+		QVERIFY(!GdalFile::isDir(vsizip + "/doc.kml"));
+		QVERIFY(!GdalFile::isDir(vsizip + "/doc.kml_xy"));
+		
+		auto resolved_path = GdalFile::tryToFindRelativeTemplateFile("files/1.jpg", vsizip);
+		QVERIFY(!resolved_path.isEmpty());
+		QVERIFY(resolved_path.startsWith("/vsizip/"));
+		QVERIFY(resolved_path.endsWith("/1.jpg"));
+		QVERIFY(GdalFile::exists(resolved_path));
+		
+		resolved_path = GdalFile::tryToFindRelativeTemplateFile("files/1.jpg", vsizip + "/doc.kml");
+		QVERIFY(!resolved_path.isEmpty());
+		QVERIFY(resolved_path.startsWith("/vsizip/"));
+		QVERIFY(resolved_path.endsWith("/1.jpg"));
+		QVERIFY(GdalFile::exists(resolved_path));
+		
+		resolved_path = GdalFile::tryToFindRelativeTemplateFile("../doc.kml", vsizip + "/files/1.jpg");
+		QVERIFY(!resolved_path.isEmpty());
+		QVERIFY(resolved_path.startsWith("/vsizip/"));
+		QVERIFY(resolved_path.endsWith("/doc.kml"));
+		QVERIFY(GdalFile::exists(resolved_path));
+		
+		resolved_path = GdalFile::tryToFindRelativeTemplateFile("../doc.kml_xy", vsizip + "/files/1.jpg");
+		QVERIFY(resolved_path.isEmpty());
+	}
+#endif
 	
 	void worldFilePathTest()
 	{
