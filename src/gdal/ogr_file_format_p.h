@@ -329,6 +329,9 @@ protected:
 	static QPointF calcAverageCoords(OGRDataSourceH data_source, OGRDataSourceH srs);
 	
 	
+	void handleKmlOverlayIcon(OgrFileImport::ObjectList& objects, const QHash<QString, QString>& tags) const;
+	
+	
 private:
 	Symbol* getSymbolForPointGeometry(const QByteArray& style_string);
 	LineSymbol* getLineSymbol(const QByteArray& style_string);

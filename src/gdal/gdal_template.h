@@ -44,6 +44,8 @@ public:
 	
 	static const std::vector<QByteArray>& supportedExtensions();
 	
+	static const char* applyCornerPassPointsProperty();
+	
 	GdalTemplate(const QString& path, Map* map);
 	~GdalTemplate() override;
 	
@@ -61,6 +63,7 @@ public:
 protected:
 	bool loadTemplateFileImpl() override;
 	
+	bool applyCornerPassPoints();
 };
 
 
