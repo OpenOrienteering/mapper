@@ -1074,6 +1074,8 @@ void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_def
 	}
 	
 	auto objects = importGeometry(feature, geometry);
+	auto const tags = importFields(feature_definition, feature);
+	
 	if (clipping)
 	{
 		auto clipped_objects = clipping->process(objects);
@@ -1082,21 +1084,25 @@ void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_def
 	
 	for (auto* object : objects)
 	{
+		object->setTags(tags);
 		map_part->addObject(object);
-		if (!feature_definition)
-			continue;
-		
-		auto num_fields = OGR_FD_GetFieldCount(feature_definition);
-		for (int i = 0; i < num_fields; ++i)
+	}
+}
+
+QHash<QString, QString> OgrFileImport::importFields(OGRFeatureDefnH feature_definition, OGRFeatureH feature)
+{
+	QHash<QString, QString> tags;
+	auto const num_fields = feature_definition ? OGR_FD_GetFieldCount(feature_definition) : 0;
+	for (int i = 0; i < num_fields; ++i)
+	{
+		auto const value = OGR_F_GetFieldAsString(feature, i);
+		if (value && qstrlen(value) > 0)
 		{
-			auto value = OGR_F_GetFieldAsString(feature, i);
-			if (value && qstrlen(value) > 0)
-			{
-				auto field_definition = OGR_FD_GetFieldDefn(feature_definition, i);
-				object->setTag(QString::fromUtf8(OGR_Fld_GetNameRef(field_definition)), QString::fromUtf8(value));
-			}
+			auto const field_definition = OGR_FD_GetFieldDefn(feature_definition, i);
+			tags[QString::fromUtf8(OGR_Fld_GetNameRef(field_definition))] = QString::fromUtf8(value);
 		}
 	}
+	return tags;
 }
 
 OgrFileImport::ObjectList OgrFileImport::importGeometry(OGRFeatureH feature, OGRGeometryH geometry)

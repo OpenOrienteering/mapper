@@ -284,6 +284,8 @@ protected:
 	void importFeature(MapPart* map_part, OGRFeatureDefnH feature_definition, OGRFeatureH feature, OGRGeometryH geometry, const Clipping* clipping);
 	
 	
+	QHash<QString, QString> importFields(OGRFeatureDefnH feature_definition, OGRFeatureH feature);
+		
 	ObjectList importGeometry(OGRFeatureH feature, OGRGeometryH geometry);
 	
 	ObjectList importGeometryCollection(OGRFeatureH feature, OGRGeometryH geometry);
