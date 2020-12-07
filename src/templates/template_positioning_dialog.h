@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012 Thomas Schöps
- *    Copyright 2013, 2017 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,38 +22,60 @@
 #ifndef OPENORIENTEERING_TEMPLATE_POSITIIONING_DIALOG_H
 #define OPENORIENTEERING_TEMPLATE_POSITIIONING_DIALOG_H
 
-#include <QtGlobal>
 #include <QDialog>
 #include <QObject>
+#include <QString>
 
-class QComboBox;
+#include "core/coordinate_system.h"
+
+class QDialogButtonBox;
 class QDoubleSpinBox;
+class QLabel;
 class QRadioButton;
 class QWidget;
 
 namespace OpenOrienteering {
 
+class CRSSelector;
+class Georeferencing;
+
 
 /**
- * Dialog allowing for positioning of a template.
+ * Dialog for initial setup of vector templates (coordinate system, position).
+ * 
+ * \see TemplateImageOpenDialog, SelectCRSDialog
  */
 class TemplatePositioningDialog : public QDialog
 {
 Q_OBJECT
 public:
-	TemplatePositioningDialog(QWidget* parent = nullptr);
+	~TemplatePositioningDialog() override;
+	explicit TemplatePositioningDialog(const QString& display_name, const Georeferencing& data_georef, QWidget* parent = nullptr);
+	TemplatePositioningDialog(const TemplatePositioningDialog&) = delete;
+	TemplatePositioningDialog(TemplatePositioningDialog&&) = delete;
+	TemplatePositioningDialog& operator=(const TemplatePositioningDialog&) = delete;
+	TemplatePositioningDialog& operator=(TemplatePositioningDialog&&) = delete;
 	
-	bool useRealCoords() const;
-	double getUnitScale() const;
+	/** Returns the selected domain of the coordinate system. */
+	CoordinateSystem::Domain csDomain() const;
+	/** Returns the length of one data unit in terms of one base unit. */
+	double unitScaleFactor() const;
+	/** Returns whether non-georeferenced data shall be centered in the current view. */
 	bool centerOnView() const;
 	
+	/** Returns the current CRS spec for georeferenced data. */
+	QString currentCRSSpec() const;
+	
+protected:
+	void updateWidgets();
+	
 private:
-	QComboBox* coord_system_box;
+	CRSSelector* coord_system_box;
+	QLabel* status_label;
 	QDoubleSpinBox* unit_scale_edit;
 	QRadioButton* original_pos_radio;
 	QRadioButton* view_center_radio;
-	
-	Q_DISABLE_COPY(TemplatePositioningDialog)
+	QDialogButtonBox* button_box;
 };
 
 

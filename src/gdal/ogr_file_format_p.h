@@ -38,6 +38,7 @@
 #include <ogr_srs_api.h>
 // IWYU pragma: no_include <ogr_core.h>
 
+#include "core/coordinate_system.h"
 #include "core/map_coord.h"
 #include "core/symbols/symbol.h"
 #include "fileformats/file_import_export.h"
@@ -208,15 +209,6 @@ public:
 	static bool canRead(const QString& path);
 	
 	/**
-	 * The unit type indicates the coordinate system the data units refers to.
-	 */
-	enum UnitType
-	{
-		UnitOnGround,  ///< Data refers to real dimensions. Includes geograghic CS.
-		UnitOnPaper    ///< Data refers to dimensions in the (printed) map.
-	};
-	
-	/**
 	 * A Pointer to a function which creates a MapCoordF from double coordinates.
 	 */
 	using MapCoordConstructor = MapCoord (OgrFileImport::*)(double, double) const;
@@ -224,7 +216,7 @@ public:
 	/**
 	 * Constructs a new importer.
 	 */
-	OgrFileImport(const QString& path, Map *map, MapView *view, UnitType unit_type = UnitOnGround);
+	OgrFileImport(const QString& path, Map *map, MapView *view, CoordinateSystem::Domain unit_type = CoordinateSystem::DomainGround);
 	
 	~OgrFileImport() override;
 	
@@ -379,7 +371,7 @@ private:
 	int unsupported_geometry_type = 0;
 	int too_few_coordinates = 0;
 	
-	UnitType unit_type;
+	CoordinateSystem::Domain cs_domain;
 	
 	bool georeferencing_import_enabled = true;
 	bool clip_layers;

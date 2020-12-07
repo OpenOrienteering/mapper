@@ -51,6 +51,7 @@ for I in \
   boolean_tool.cpp \
   combined_symbol.cpp \
   configure_grid_dialog.cpp \
+  coordinate_system.cpp \
   crs_param_widgets.cpp \
   crs_template.cpp \
   crs_template_implementation.cpp \
@@ -100,6 +101,7 @@ for I in \
   template_list_widget.cpp \
   template_map.cpp \
   template_placeholder.cpp \
+  template_positioning_dialog.cpp \
   template_table_model.cpp \
   template_t.cpp \
   template_tool \

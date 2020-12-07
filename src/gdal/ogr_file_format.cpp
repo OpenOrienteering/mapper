@@ -686,21 +686,22 @@ bool OgrFileImport::canRead(const QString& path)
 }
 
 
-OgrFileImport::OgrFileImport(const QString& path, Map* map, MapView* view, UnitType unit_type)
+OgrFileImport::OgrFileImport(const QString& path, Map* map, MapView* view, CoordinateSystem::Domain cs_domain)
  : Importer(path, map, view)
  , manager{ OGR_SM_Create(nullptr) }
- , unit_type{ unit_type }
+ , cs_domain{ cs_domain }
 {
 	GdalManager manager;
 	manager.configure();
 	
-	switch (unit_type)
+	switch (cs_domain)
 	{
-	case UnitOnPaper:
+	case CoordinateSystem::DomainMap:
 		to_map_coord = &OgrFileImport::fromDrawing;
 		break;
 		
-	case UnitOnGround:
+	case CoordinateSystem::DomainGround:
+	case CoordinateSystem::DomainGeospatial:
 		to_map_coord = &OgrFileImport::fromProjected;
 		break;
 	}
@@ -1343,7 +1344,7 @@ std::unique_ptr<OgrFileImport::Clipping> OgrFileImport::getLayerClipping(OGRLaye
 
 bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
 {
-	if (unit_type == UnitOnPaper)
+	if (cs_domain == CoordinateSystem::DomainMap)
 	{
 		return true;
 	}
@@ -1355,8 +1356,18 @@ bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
 	
 	if (!srs)
 	{
-		data_srs = {};
-		data_transform = {};
+		if (cs_domain == CoordinateSystem::DomainGround)
+		{
+			// Ground CS data doesn't need a SRS.
+			data_srs = {};
+			data_transform = {};
+		}
+		else
+		{
+			// Geospatial data is required to have a SRS.
+			++no_transformation;
+			return false;
+		}
 	}
 	else if (data_srs != srs)
 	{
