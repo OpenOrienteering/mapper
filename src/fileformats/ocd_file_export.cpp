@@ -2037,8 +2037,6 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 		
 	case 2:
 		// Two subsymbols: Area with border, or line with framing, if sufficient.
-	case 3:
-		// Three subsymbols: Line with framing line and filled double line, if sufficient.
 		if (parts[0]->getType() != Symbol::Line && parts[1]->getType() != Symbol::Line)
 		{
 			break;
@@ -2051,7 +2049,7 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 		
 		if (parts[0]->getType() == Symbol::Area)
 		{
-			if (ocd_version < 9 || num_parts != 2)
+			if (ocd_version < 9)
 				break;
 			
 			// Area symbol with border, since OCD V9
@@ -2075,7 +2073,10 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 			add_breakdown(symbol_number, Ocd::SymbolTypeArea);
 			return;
 		}
+		Q_FALLTHROUGH();
 		
+	case 3:
+		// (Up to) three subsymbols: Line with framing line and filled double line, if sufficient.
 		if (parts[0]->getType() == Symbol::Line && parts[1]->getType() == Symbol::Line
 		    && (num_parts == 2 || parts[2]->getType() == Symbol::Line))
 		{
