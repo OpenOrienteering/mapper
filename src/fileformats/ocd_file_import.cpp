@@ -174,7 +174,7 @@ QString OcdFileImport::convertOcdString(const QChar* src, uint maxlen) const
 	}
 	/// \todo Create and use static decoder
 	QTextCodec* utf16 = QTextCodec::codecForName("UTF-16LE");
-	Q_ASSERT(utf16);
+	FILEFORMAT_ASSERT(utf16);
 	auto decoder = std::unique_ptr<QTextDecoder>(utf16->makeDecoder(QTextCodec::ConvertInvalidToNull));
 	return decoder->toUnicode(reinterpret_cast<const char*>(src), 2*int(last - src));
 }
@@ -330,7 +330,7 @@ void OcdFileImport::importImplementation()
 	}
 	
 	// No deep copy during import
-	Q_ASSERT(file.byteArray().constData() == buffer.constData());
+	FILEFORMAT_ASSERT(file.byteArray().constData() == buffer.constData());
 }
 
 
@@ -849,7 +849,7 @@ void OcdFileImport::resolveSubsymbols()
 void OcdFileImport::importObjects(const OcdFile<Ocd::FormatV8>& file)
 {
 	MapPart* part = map->getCurrentPart();
-	Q_ASSERT(part);
+	FILEFORMAT_ASSERT(part);
 	
 	for (auto ocd_object : file.objects())
 	{
@@ -865,7 +865,7 @@ template< class F >
 void OcdFileImport::importObjects(const OcdFile< F >& file)
 {
 	MapPart* part = map->getCurrentPart();
-	Q_ASSERT(part);
+	FILEFORMAT_ASSERT(part);
 	
 	for (auto ocd_object : file.objects())
 	{
@@ -1548,7 +1548,7 @@ void OcdFileImport::mergeLineSymbol(CombinedSymbol* full_line, LineSymbol* main_
 
 Symbol* OcdFileImport::importAreaSymbol(const Ocd::AreaSymbolV8& ocd_symbol)
 {
-	Q_ASSERT(ocd_version <= 8);
+	FILEFORMAT_ASSERT(ocd_version <= 8);
 	auto symbol = new OcdImportedAreaSymbol();
 	setupBaseSymbol(symbol, ocd_symbol.base);
 	setupAreaSymbolCommon(
@@ -1564,7 +1564,7 @@ Symbol* OcdFileImport::importAreaSymbol(const Ocd::AreaSymbolV8& ocd_symbol)
 template< class S >
 Symbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol)
 {
-	Q_ASSERT(ocd_version >= 9);
+	FILEFORMAT_ASSERT(ocd_version >= 9);
 	auto symbol = new OcdImportedAreaSymbol();
 	setupBaseSymbol(symbol, ocd_symbol.base);
 	setupAreaSymbolCommon(
@@ -1757,7 +1757,7 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 
 void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements)
 {
-	Q_ASSERT(symbol);
+	FILEFORMAT_ASSERT(symbol);
 	
 	symbol->setRotatable(true);
 	bool base_symbol_used = false;

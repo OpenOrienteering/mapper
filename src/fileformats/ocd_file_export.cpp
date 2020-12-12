@@ -273,7 +273,7 @@ std::unique_ptr<PointSymbol> postProcessFillPattern(const FillPatternSequence& p
 	// ... except for the second pattern when the OCD structure is "shifted rows".
 	if (structure_mode == Ocd::StructureShiftedRows)
 	{
-		Q_ASSERT(patterns.size() == 2);
+		FILEFORMAT_ASSERT(patterns.size() == 2);
 		if (first != last)
 			++first;
 	}
@@ -1094,7 +1094,7 @@ void OcdFileExport::exportSymbols(OcdFile<Format>& file)
 			Q_UNREACHABLE();
 		}
 		
-		Q_ASSERT(!ocd_symbol.isEmpty());
+		FILEFORMAT_ASSERT(!ocd_symbol.isEmpty());
 		file.symbols().insert(ocd_symbol);
 	}
 }
@@ -1237,7 +1237,7 @@ QByteArray OcdFileExport::exportPointSymbol(const PointSymbol* point_symbol)
 	data.reserve(header_size + pattern_size);
 	data.append(reinterpret_cast<const char*>(&ocd_symbol), header_size);
 	exportPattern<typename OcdPointSymbol::Element>(point_symbol, data);
-	Q_ASSERT(data.size() == header_size + pattern_size);
+	FILEFORMAT_ASSERT(data.size() == header_size + pattern_size);
 	
 	return data;
 }
@@ -1365,7 +1365,7 @@ QByteArray OcdFileExport::exportAreaSymbol(const AreaSymbol* area_symbol, quint3
 	data.reserve(header_size + pattern_size);
 	data.append(reinterpret_cast<const char*>(&ocd_symbol), header_size);
 	exportPattern<typename OcdAreaSymbol::Element>(pattern_symbol, data);
-	Q_ASSERT(data.size() == header_size + pattern_size);
+	FILEFORMAT_ASSERT(data.size() == header_size + pattern_size);
 	
 	return data;
 }
@@ -1473,7 +1473,7 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 	// Post-processing
 	if (!point_patterns.empty())
 	{
-		Q_ASSERT(ocd_area_common.structure_mode != Ocd::StructureNone);
+		FILEFORMAT_ASSERT(ocd_area_common.structure_mode != Ocd::StructureNone);
 		auto point_symbol = postProcessFillPattern(point_patterns, ocd_area_common.structure_mode);
 		pattern_symbol = point_symbol.get();
 		temporary_symbols.push_back(std::move(point_symbol));
@@ -1565,7 +1565,7 @@ QByteArray OcdFileExport::exportLineSymbol(const LineSymbol* line_symbol, quint3
 	exportPattern<typename OcdLineSymbol::Element>(line_symbol->getDashSymbol(), data);
 	exportPattern<typename OcdLineSymbol::Element>(line_symbol->getStartSymbol(), data);
 	exportPattern<typename OcdLineSymbol::Element>(line_symbol->getEndSymbol(), data);
-	Q_ASSERT(data.size() == int(header_size + pattern_size));
+	FILEFORMAT_ASSERT(data.size() == int(header_size + pattern_size));
 	
 	return data;
 }
@@ -1836,7 +1836,7 @@ void OcdFileExport::exportTextSymbol(OcdFile<Format>& file, const TextSymbol* te
 	if (text_format->count == 0)
 		text_format->alignment = TextObject::AlignHCenter;  // default if unused: centered
 	auto ocd_symbol = exportTextSymbol<typename Format::TextSymbol>(text_symbol, text_format->symbol_number, text_format->alignment);
-	Q_ASSERT(!ocd_symbol.isEmpty());
+	FILEFORMAT_ASSERT(!ocd_symbol.isEmpty());
 	file.symbols().insert(ocd_symbol);
 	
 	++text_format;
@@ -1846,7 +1846,7 @@ void OcdFileExport::exportTextSymbol(OcdFile<Format>& file, const TextSymbol* te
 		temporary_symbols.emplace_back(new PointSymbol());
 		symbol_numbers[temporary_symbols.back().get()] = text_format->symbol_number;
 		ocd_symbol = exportTextSymbol<typename Format::TextSymbol>(text_symbol, text_format->symbol_number, text_format->alignment);
-		Q_ASSERT(!ocd_symbol.isEmpty());
+		FILEFORMAT_ASSERT(!ocd_symbol.isEmpty());
 		file.symbols().insert(ocd_symbol);
 		
 		++text_format;
@@ -1856,7 +1856,7 @@ void OcdFileExport::exportTextSymbol(OcdFile<Format>& file, const TextSymbol* te
 			temporary_symbols.emplace_back(new PointSymbol());
 			symbol_numbers[temporary_symbols.back().get()] = text_format->symbol_number;
 			ocd_symbol = exportTextSymbol<typename Format::TextSymbol>(text_symbol, text_format->symbol_number, text_format->alignment);
-			Q_ASSERT(!ocd_symbol.isEmpty());
+			FILEFORMAT_ASSERT(!ocd_symbol.isEmpty());
 			file.symbols().insert(ocd_symbol);
 			
 			++text_format;
@@ -1886,7 +1886,7 @@ QByteArray OcdFileExport::exportTextSymbol(const TextSymbol* text_symbol, quint3
 	QByteArray data;
 	data.reserve(header_size);
 	data.append(reinterpret_cast<const char*>(&ocd_symbol), header_size);
-	Q_ASSERT(data.size() == header_size);
+	FILEFORMAT_ASSERT(data.size() == header_size);
 	
 	return data;
 }
@@ -2165,7 +2165,7 @@ void OcdFileExport::exportGenericCombinedSymbol(OcdFile<Format>& file, const Com
 		}
 		else
 		{
-			Q_ASSERT(!ocd_data.isEmpty());
+			FILEFORMAT_ASSERT(!ocd_data.isEmpty());
 			breakdown_list.push_back({symbol_number, type});
 			if (number_owner)
 			{
@@ -2285,7 +2285,7 @@ void OcdFileExport::exportObjects(OcdFile<Format>& file)
 			{
 			case Object::Point:
 				ocd_object = exportPointObject<typename Format::Object>(static_cast<const PointObject*>(object), entry);
-				Q_ASSERT(!ocd_object.isEmpty());
+				FILEFORMAT_ASSERT(!ocd_object.isEmpty());
 				file.objects().insert(ocd_object, entry);
 				break;
 				
@@ -2295,7 +2295,7 @@ void OcdFileExport::exportObjects(OcdFile<Format>& file)
 				
 			case Object::Text:
 				ocd_object = exportTextObject<typename Format::Object>(static_cast<const TextObject*>(object), entry);
-				Q_ASSERT(!ocd_object.isEmpty());
+				FILEFORMAT_ASSERT(!ocd_object.isEmpty());
 				file.objects().insert(ocd_object, entry);
 				break;
 			}
@@ -2376,7 +2376,7 @@ void OcdFileExport::exportPathObject(OcdFile<Format>& file, const PathObject* pa
 	{
 		ocd_object.symbol = entry.symbol = decltype(entry.symbol)(symbol_numbers[symbol]);
 		auto data = exportObjectCommon(path, ocd_object, entry);
-		Q_ASSERT(!data.isEmpty());
+		FILEFORMAT_ASSERT(!data.isEmpty());
 		
 		auto breakdown_index_entry = breakdown_index.find(quint32(entry.symbol));
 		if (breakdown_index_entry == end(breakdown_index))
@@ -2398,7 +2398,7 @@ void OcdFileExport::exportPathObject(OcdFile<Format>& file, const PathObject* pa
 				if (Q_UNLIKELY(breakdown->type == 99))
 				{
 					auto child_index_entry = breakdown_index.find(breakdown->number);
-					Q_ASSERT(child_index_entry != end(breakdown_index));
+					FILEFORMAT_ASSERT(child_index_entry != end(breakdown_index));
 					backlog.push_back(quint32(child_index_entry->second));
 					continue;
 				}
@@ -2450,7 +2450,7 @@ QByteArray OcdFileExport::exportTextObject(const TextObject* text, typename OcdO
 	auto text_format = std::find_if(begin(text_format_mapping), end(text_format_mapping), [symbol, alignment](const auto& m) {
 		return m.symbol == symbol && m.alignment == alignment;
 	});
-	Q_ASSERT(text_format != end(text_format_mapping));
+	FILEFORMAT_ASSERT(text_format != end(text_format_mapping));
 	
 	OcdObject ocd_object = {};
 	ocd_object.type = text->hasSingleAnchor() ? 4 : 5;
@@ -2514,7 +2514,7 @@ QByteArray OcdFileExport::exportObjectCommon(const Object* object, OcdObject& oc
 			exportCoordinates(coords, object->getSymbol(), data, bottom_left, top_right);
 		}
 	}
-	Q_ASSERT(data.size() == header_size + items_size);
+	FILEFORMAT_ASSERT(data.size() == header_size + items_size);
 	
 	entry.bottom_left_bound = convertPoint(bottom_left);
 	entry.top_right_bound = convertPoint(top_right);
@@ -2901,7 +2901,7 @@ quint16 OcdFileExport::exportTextCoordinatesBox(const TextObject* object, QByteA
 QByteArray OcdFileExport::exportTextData(const TextObject* object, int chunk_size, int max_chunks)
 {
 	auto max_size = chunk_size * max_chunks;
-	Q_ASSERT(max_size > 0);
+	FILEFORMAT_ASSERT(max_size > 0);
 	
 	// Convert text to OCD format:
 	// - If it starts with a newline, add another.
@@ -2927,12 +2927,12 @@ QByteArray OcdFileExport::exportTextData(const TextObject* object, int chunk_siz
 	delete encoder;
 	
 	auto text_size = encoded_text.size();
-	Q_ASSERT(text_size < max_size);
+	FILEFORMAT_ASSERT(text_size < max_size);
 	
 	// Resize to multiple of chunk size, appending trailing zeros.
 	encoded_text.resize(text_size + (max_size - text_size) % chunk_size);
-	Q_ASSERT(encoded_text.size() <= max_size);
-	Q_ASSERT(encoded_text.size() % chunk_size == 0);
+	FILEFORMAT_ASSERT(encoded_text.size() <= max_size);
+	FILEFORMAT_ASSERT(encoded_text.size() % chunk_size == 0);
 	std::fill(encoded_text.begin() + text_size, encoded_text.end(), 0);
 	return encoded_text;
 }

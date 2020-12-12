@@ -24,11 +24,13 @@
 #include <iterator>
 
 #include <Qt>
+#include <QCoreApplication>
 #include <QFileInfo>
 #include <QLatin1Char>
 #include <QLatin1String>
 
-#include "file_import_export.h"
+#include "mapper_config.h"
+#include "fileformats/file_import_export.h"
 
 
 namespace OpenOrienteering {
@@ -42,6 +44,21 @@ FileFormatException::~FileFormatException() noexcept = default;
 const char* FileFormatException::what() const noexcept
 {
 	return msg_c.constData();
+}
+
+
+// static
+FileFormatException FileFormatException::internalError(const char* function_info)
+{
+	return FileFormatException {
+		QCoreApplication::translate("OpenOrienteering::Util",
+		                            "Internal error detected!"
+		                            " Please report this issue."
+		                            "\nVersion: %1"
+		                            "\nLocation: %2")
+		        .arg(QString::fromUtf8(APP_VERSION),
+		             QString::fromUtf8(function_info))
+	};
 }
 
 

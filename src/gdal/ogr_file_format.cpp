@@ -88,7 +88,7 @@ namespace {
 		auto pen_width = OGR_ST_GetParamDbl(tool, OGRSTPenWidth, &is_null);
 		if (!is_null)
 		{
-			Q_ASSERT(OGR_ST_GetUnit(tool) == OGRSTUMM);
+			FILEFORMAT_ASSERT(OGR_ST_GetUnit(tool) == OGRSTUMM);
 	
 			if (pen_width <= 0.01)
 				pen_width = 0.1;
@@ -1032,7 +1032,7 @@ void OgrFileImport::importStyles(OGRDataSourceH data_source)
 
 void OgrFileImport::importLayer(MapPart* map_part, OGRLayerH layer)
 {
-	Q_ASSERT(map_part);
+	FILEFORMAT_ASSERT(map_part);
 	
 	auto feature_definition = OGR_L_GetLayerDefn(layer);
 	
@@ -1162,8 +1162,8 @@ Object* OgrFileImport::importPointGeometry(OGRFeatureH feature, OGRGeometryH geo
 		const auto& description = symbol->getDescription();
 		auto length = description.length();
 		auto split = description.indexOf(QLatin1Char(' '));
-		Q_ASSERT(split > 0);
-		Q_ASSERT(split < length);
+		FILEFORMAT_ASSERT(split > 0);
+		FILEFORMAT_ASSERT(split < length);
 		
 		auto label = description.right(length - split - 1);
 		if (label.startsWith(QLatin1Char{'{'}) && label.endsWith(QLatin1Char{'}'}))
@@ -1379,7 +1379,7 @@ Symbol* OgrFileImport::getSymbol(Symbol::Type type, const char* raw_style_string
 		Q_UNREACHABLE();
 	}
 	
-	Q_ASSERT(symbol);
+	FILEFORMAT_ASSERT(symbol);
 	return symbol;
 }
 
@@ -1621,7 +1621,7 @@ PointSymbol* OgrFileImport::getSymbolForOgrSymbol(OGRStyleToolH tool, const QByt
 
 TextSymbol* OgrFileImport::getSymbolForLabel(OGRStyleToolH tool, const QByteArray& /*style_string*/)
 {
-	Q_ASSERT(OGR_ST_GetType(tool) == OGRSTCLabel);
+	FILEFORMAT_ASSERT(OGR_ST_GetType(tool) == OGRSTCLabel);
 	
 	int is_null;
 	auto label_string = OGR_ST_GetParamStr(tool, OGRSTLabelTextString, &is_null);
@@ -1679,7 +1679,7 @@ TextSymbol* OgrFileImport::getSymbolForLabel(OGRStyleToolH tool, const QByteArra
 
 LineSymbol* OgrFileImport::getSymbolForPen(OGRStyleToolH tool, const QByteArray& style_string)
 {
-	Q_ASSERT(OGR_ST_GetType(tool) == OGRSTCPen);
+	FILEFORMAT_ASSERT(OGR_ST_GetType(tool) == OGRSTCPen);
 	
 	auto raw_tool_key = OGR_ST_GetStyleString(tool);
 	auto tool_key = QByteArray::fromRawData(raw_tool_key, int(qstrlen(raw_tool_key)));
@@ -1711,7 +1711,7 @@ LineSymbol* OgrFileImport::getSymbolForPen(OGRStyleToolH tool, const QByteArray&
 
 AreaSymbol* OgrFileImport::getSymbolForBrush(OGRStyleToolH tool, const QByteArray& style_string)
 {
-	Q_ASSERT(OGR_ST_GetType(tool) == OGRSTCBrush);
+	FILEFORMAT_ASSERT(OGR_ST_GetType(tool) == OGRSTCBrush);
 	
 	auto raw_tool_key = OGR_ST_GetStyleString(tool);
 	auto tool_key = QByteArray::fromRawData(raw_tool_key, int(qstrlen(raw_tool_key)));
