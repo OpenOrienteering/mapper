@@ -2061,7 +2061,7 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 				// An unknown border symbol must be a private one
 				auto border_duplicate = duplicate(static_cast<const LineSymbol&>(*border_symbol));
 				copySymbolHead(*combined_symbol, *border_duplicate);
-				border_duplicate->setName(QLatin1String("Border of ") + border_symbol->getName());
+				border_duplicate->setName(QLatin1String("Border of ") + combined_symbol->getName());
 				border_symbol = border_duplicate.get();
 				temporary_symbols.emplace_back(std::move(border_duplicate));
 				auto border_symbol_number = makeUniqueSymbolNumber(symbol_number);
