@@ -291,7 +291,7 @@ bool Exporter::doExport()
 		}
 		if (!device_->isOpen() && !device_->open(QIODevice::WriteOnly))
 		{
-			addWarning(tr("Cannot save file\n%1:\n%2").arg(path, device_->errorString()));
+			addWarning(device_->errorString());
 			return false;
 		}
 	}
@@ -307,7 +307,7 @@ bool Exporter::doExport()
 		}
 		if (success && managed_file && !managed_file->commit())
 		{
-			addWarning(tr("Cannot save file\n%1:\n%2").arg(path, managed_file->errorString()));
+			addWarning(managed_file->errorString());
 			success = false;
 		}
 #ifdef Q_OS_ANDROID
@@ -322,7 +322,7 @@ bool Exporter::doExport()
 	}
 	catch (std::exception &e)
 	{
-		addWarning(tr("Cannot save file\n%1:\n%2").arg(path, QString::fromLocal8Bit(e.what())));
+		addWarning(QString::fromLocal8Bit(e.what()));
 		success = false;
 	}
 	
