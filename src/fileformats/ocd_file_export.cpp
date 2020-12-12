@@ -1979,6 +1979,15 @@ void OcdFileExport::setupTextSymbolFraming(const TextSymbol* text_symbol, OcdTex
 template< class Format >
 void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSymbol* combined_symbol)
 {
+	// Creates a breakdown record for combined symbols which are mapped to
+	// a simple OCD symbol. This record is needed to handle path objects
+	// which use such symbols.
+	auto const add_breakdown = [this](quint32 symbol_number, quint8 type) {
+		breakdown_index[symbol_number] = breakdown_list.size();
+		breakdown_list.push_back({symbol_number, type});
+		breakdown_list.push_back({0, 0});
+	};
+	
 	auto num_parts = 0;  // The count of non-null parts.
 	const Symbol* parts[3] = {};  // A random access list without holes
 	for (auto i = 0; i < combined_symbol->getNumParts(); ++i)
@@ -2004,6 +2013,7 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 				copySymbolHead(*combined_symbol, *copy);
 				auto ocd_subsymbol = exportAreaSymbol<typename Format::AreaSymbol>(copy.get(), symbol_number);
 				file.symbols().insert(ocd_subsymbol);
+				add_breakdown(symbol_number, Ocd::SymbolTypeArea);
 			}
 			return;
 		case Symbol::Line:
@@ -2012,6 +2022,7 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 				copySymbolHead(*combined_symbol, *copy);
 				auto ocd_subsymbol = exportLineSymbol<typename Format::LineSymbol>(copy.get(), symbol_number);
 				file.symbols().insert(ocd_subsymbol);
+				add_breakdown(symbol_number, Ocd::SymbolTypeLine);
 			}
 			return;
 		case Symbol::Combined:
@@ -2061,6 +2072,7 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 			auto copy = duplicate(static_cast<const AreaSymbol&>(*parts[0]));
 			copySymbolHead(*combined_symbol, *copy);
 			file.symbols().insert(exportCombinedAreaSymbol<typename Format::AreaSymbol>(symbol_number, combined_symbol, copy.get(), border_symbol));
+			add_breakdown(symbol_number, Ocd::SymbolTypeArea);
 			return;
 		}
 		
@@ -2101,6 +2113,7 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 			auto copy = duplicate(static_cast<const LineSymbol&>(*main_line));
 			copySymbolHead(*combined_symbol, *copy);
 			file.symbols().insert(exportCombinedLineSymbol<typename Format::LineSymbol>(symbol_number, combined_symbol, copy.get(), framing, double_line));
+			add_breakdown(symbol_number, Ocd::SymbolTypeLine);
 			return;
 		}
 		break;
