@@ -70,10 +70,35 @@ public:
 	 */
 	const char* what() const noexcept override;
 	
+	
+	/**
+	 * Returns an exception object representing an internal error
+	 * in the given function.
+	 * 
+	 * This is a helper function used by the FILEFORMAT_ASSERT macro.
+	 */
+	static FileFormatException internalError(const char* function_info);
+	
+	
 private:
 	QString const msg;
 	QByteArray const msg_c;
 };
+
+
+/**
+ * Checks if the condition is true, and raises an exception otherwise.
+ * 
+ * This macro is to be used by importer and exporter implementations instead
+ * of plain assert or Q_ASSERT: In most cases, program consistency is not
+ * affected by internal errors of importers or exporters, and so there is no
+ * reason to abort the program (debug builds) or to let it run into a crash
+ * (release build). However, on hot paths, evaluating the condition must not
+ * be expensive.
+ */
+#define FILEFORMAT_ASSERT(condition) \
+	if (Q_UNLIKELY(!(condition))) throw FileFormatException::internalError(Q_FUNC_INFO);
+
 
 
 /** Describes a file format understood by this application. Each file format has an ID

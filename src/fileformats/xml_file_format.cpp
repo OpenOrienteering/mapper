@@ -688,7 +688,7 @@ void XMLFileImporter::importMapNotes()
 
 void XMLFileImporter::importGeoreferencing()
 {
-	Q_ASSERT(xml.name() == literal::georeferencing);
+	FILEFORMAT_ASSERT(xml.name() == literal::georeferencing);
 	
 	bool check_for_offset = MapCoord::boundsOffset().check_for_offset;
 	
@@ -993,7 +993,7 @@ void XMLFileImporter::importMapParts()
 
 void XMLFileImporter::importTemplates()
 {
-	Q_ASSERT(xml.name() == literal::templates);
+	FILEFORMAT_ASSERT(xml.name() == literal::templates);
 	
 	XmlElementReader templates_element(xml);
 	int first_front_template = templates_element.attribute<int>(literal::first_front_template);
@@ -1033,7 +1033,7 @@ void XMLFileImporter::importTemplates()
 
 void XMLFileImporter::importView()
 {
-	Q_ASSERT(xml.name() == literal::view);
+	FILEFORMAT_ASSERT(xml.name() == literal::view);
 	
 	XmlElementReader view_element(xml);
 	if (view_element.attribute<bool>(literal::area_hatching_enabled))
@@ -1063,7 +1063,7 @@ void XMLFileImporter::importView()
 
 void XMLFileImporter::importPrint()
 {
-	Q_ASSERT(xml.name() == literal::print);
+	FILEFORMAT_ASSERT(xml.name() == literal::print);
 	
 	try
 	{
