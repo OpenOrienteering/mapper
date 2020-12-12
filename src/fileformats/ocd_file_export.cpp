@@ -1992,7 +1992,7 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 	const Symbol* parts[3] = {};  // A random access list without holes
 	for (auto i = 0; i < combined_symbol->getNumParts(); ++i)
 	{
-		if (auto part = combined_symbol->getPart(i))
+		if (auto const* part = combined_symbol->getPart(i))
 		{
 			if (num_parts < 3)
 				parts[num_parts] = part;
@@ -2060,11 +2060,11 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 				auto border_duplicate = duplicate(static_cast<const LineSymbol&>(*border_symbol));
 				copySymbolHead(*combined_symbol, *border_duplicate);
 				border_duplicate->setName(QLatin1String("Border of ") + combined_symbol->getName());
+				auto const border_symbol_number = makeUniqueSymbolNumber(symbol_number);
+				symbol_numbers[border_duplicate.get()] = border_symbol_number;
+				file.symbols().insert(exportLineSymbol<typename Format::LineSymbol>(border_duplicate.get(), border_symbol_number));
 				border_symbol = border_duplicate.get();
 				temporary_symbols.emplace_back(std::move(border_duplicate));
-				auto border_symbol_number = makeUniqueSymbolNumber(symbol_number);
-				symbol_numbers[border_symbol] = border_symbol_number;
-				file.symbols().insert(exportLineSymbol<typename Format::LineSymbol>(border_symbol, border_symbol_number));
 			}
 			
 			auto copy = duplicate(static_cast<const AreaSymbol&>(*parts[0]));
