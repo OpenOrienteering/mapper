@@ -1091,7 +1091,7 @@ void OcdFileExport::exportSymbols(OcdFile<Format>& file)
 			
 		case Symbol::NoSymbol:
 		case Symbol::AllSymbols:
-			Q_UNREACHABLE();
+			FILEFORMAT_ASSERT(false); // unreachable
 		}
 		
 		FILEFORMAT_ASSERT(!ocd_symbol.isEmpty());
@@ -1331,7 +1331,7 @@ qint16 OcdFileExport::exportSubPattern(const MapCoordVector& coords, const Symbo
 	case Symbol::AllSymbols:
 	case Symbol::Combined:
 	case Symbol::Text:
-		Q_UNREACHABLE();
+		FILEFORMAT_ASSERT(false); // unreachable
 	}
 	
 	return num_coords;
@@ -2153,7 +2153,7 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 		case Symbol::Text:
 		case Symbol::NoSymbol:
 		case Symbol::AllSymbols:
-			Q_UNREACHABLE();
+			FILEFORMAT_ASSERT(false); // unreachable
 		}
 		break;
 		
@@ -2315,7 +2315,7 @@ void OcdFileExport::exportGenericCombinedSymbol(OcdFile<Format>& file, const Com
 			break;
 		case Symbol::NoSymbol:
 		case Symbol::AllSymbols:
-			Q_UNREACHABLE();
+			FILEFORMAT_ASSERT(false); // unreachable
 		}
 		if (type == 0)
 		{
@@ -2353,7 +2353,7 @@ QByteArray OcdFileExport::exportCombinedAreaSymbol<Ocd::AreaSymbolV8>(
         const AreaSymbol* /*area_symbol*/,
         const Symbol* /*line_symbol*/)
 {
-	Q_UNREACHABLE();
+	FILEFORMAT_ASSERT(false); // unreachable
 }
 
 
