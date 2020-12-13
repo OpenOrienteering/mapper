@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2018 Kai Pastor
+ *    Copyright 2016-2020 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -227,6 +227,8 @@ protected:
 	template< class OcdTextSymbolFraming >
 	void setupTextSymbolFraming(const TextSymbol* text_symbol, OcdTextSymbolFraming& ocd_text_framing);
 	
+	int checkCombinedSymbol(const CombinedSymbol* combined_symbol) const;
+	
 	template< class Format >
 	void exportCombinedSymbol(OcdFile<Format>& file, const CombinedSymbol* combined_symbol);
 	
@@ -238,7 +240,7 @@ protected:
 	        quint32 symbol_number,
 	        const CombinedSymbol* combined_symbol,
 	        const AreaSymbol* area_symbol,
-	        const LineSymbol* line_symbol );
+	        const Symbol* line_symbol );
 	
 	template< class OcdLineSymbol >
 	QByteArray exportCombinedLineSymbol(

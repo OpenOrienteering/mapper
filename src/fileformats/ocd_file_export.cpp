@@ -1976,6 +1976,128 @@ void OcdFileExport::setupTextSymbolFraming(const TextSymbol* text_symbol, OcdTex
 
 
 
+/**
+ * Returns the type of symbol which would be constructed by exportCombinedSymbol().
+ */
+int OcdFileExport::checkCombinedSymbol(const CombinedSymbol* combined_symbol) const
+{
+	// The implementation must mirror exportCombinedSymbol()!
+	
+	auto num_parts = 0;  // The count of non-null parts.
+	const Symbol* parts[3] = {};  // A random access list without holes
+	for (auto i = 0; i < combined_symbol->getNumParts(); ++i)
+	{
+		if (auto const* part = combined_symbol->getPart(i))
+		{
+			if (num_parts < 3)
+				parts[num_parts] = part;
+			++num_parts;
+		}
+	}
+	
+	switch (num_parts)
+	{
+	case 1:
+		// Single subsymbol: Output just this subsymbol, if sufficient.
+		switch (combined_symbol->getType())
+		{
+		case Symbol::Area:
+			return Ocd::SymbolTypeArea;
+		case Symbol::Line:
+			return Ocd::SymbolTypeLine;
+		case Symbol::Combined:
+			return 99;
+		case Symbol::Point:
+		case Symbol::Text:
+		case Symbol::NoSymbol:
+		case Symbol::AllSymbols:
+			return 99;
+		}
+		break;
+		
+	case 2:
+		// Two subsymbols: Area with border, or line with framing, if sufficient.
+		if (parts[1]->getType() == Symbol::Area)
+		{
+			std::swap(parts[0], parts[1]);
+		}
+		
+		if (parts[0]->getType() == Symbol::Area)
+		{
+			if (ocd_version < 9)
+				break;
+			
+			// Area symbol with border, since OCD V9
+			auto const exported_as_line = [this](Symbol const* symbol) -> bool {
+				auto const type = symbol->getType();
+				return type == Symbol::Line
+				       || (type == Symbol::Combined
+				           && checkCombinedSymbol(static_cast<CombinedSymbol const*>(symbol)) == Ocd::SymbolTypeLine);
+			};
+			
+			auto const* border_symbol = parts[1];
+			if (!exported_as_line(border_symbol))
+			{
+				// Not a suitable border line symbol
+				break;
+			}
+			else
+			{
+				// Same result for different branches in exportCombinedSymbol.
+				return Ocd::SymbolTypeArea;
+			}
+		}
+		Q_FALLTHROUGH();
+		
+	case 3:
+		// Three subsymbols: Line with framing line and filled double line, if sufficient.
+		if (parts[0]->getType() == Symbol::Line && parts[1]->getType() == Symbol::Line
+		    && (num_parts == 2 || parts[2]->getType() == Symbol::Line))
+		{
+			// Complex line symbol
+			// Desired assignment, after rearrangement
+			auto main_line   = static_cast<const LineSymbol*>(parts[0]);
+			auto framing     = static_cast<const LineSymbol*>(parts[1]);
+			auto double_line = static_cast<const LineSymbol*>(parts[2]);
+			if (!maybeDoubleFilling(double_line))
+			{
+				// Select candidate double line/filling
+				if (maybeDoubleFilling(main_line))
+					std::swap(main_line, double_line);
+				else if (maybeDoubleFilling(framing))
+					std::swap(framing, double_line);
+				else if (double_line)
+					break;
+			}
+			if (!maybeFraming(framing))
+			{
+				// Select candidate framing
+				if (!main_line || maybeFraming(main_line))
+					std::swap(main_line, framing);
+				else if (framing)
+					break;
+			}
+			if (!maybeMainLine(main_line))
+			{
+				if (main_line)
+					break;
+				std::swap(main_line, framing);
+			}
+			
+			return Ocd::SymbolTypeLine;
+		}
+		break;
+	
+	default:
+		break;
+	}
+	
+	// Fallback
+	return 99;
+}
+
+
+// The behaviour of this function must be mirrored by checkCombinedSymbol().
 template< class Format >
 void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSymbol* combined_symbol)
 {
@@ -2037,11 +2159,6 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 		
 	case 2:
 		// Two subsymbols: Area with border, or line with framing, if sufficient.
-		if (parts[0]->getType() != Symbol::Line && parts[1]->getType() != Symbol::Line)
-		{
-			break;
-		}
-		
 		if (parts[1]->getType() == Symbol::Area)
 		{
 			std::swap(parts[0], parts[1]);
@@ -2053,10 +2170,26 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 				break;
 			
 			// Area symbol with border, since OCD V9
-			auto border_symbol = static_cast<const LineSymbol*>(parts[1]);
-			if (symbol_numbers.find(border_symbol) == end(symbol_numbers))
+			auto const exported_as_line = [this](Symbol const* symbol) -> bool {
+				auto const type = symbol->getType();
+				return type == Symbol::Line
+				       || (type == Symbol::Combined
+				           && checkCombinedSymbol(static_cast<CombinedSymbol const*>(symbol)) == Ocd::SymbolTypeLine);
+			};
+			
+			auto const* border_symbol = parts[1];
+			if (!exported_as_line(border_symbol))
 			{
-				// An unknown border symbol must be a private one
+				// Not a suitable border line symbol
+				break;
+			}
+			else if (symbol_numbers.find(border_symbol) != end(symbol_numbers))
+			{
+				// The border line is a regular symbol.
+			}
+			else if (border_symbol->getType() == Symbol::Line)
+			{
+				// The border line is a private LineSymbol.
 				auto border_duplicate = duplicate(static_cast<const LineSymbol&>(*border_symbol));
 				copySymbolHead(*combined_symbol, *border_duplicate);
 				border_duplicate->setName(QLatin1String("Border of ") + combined_symbol->getName());
@@ -2065,6 +2198,22 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 				file.symbols().insert(exportLineSymbol<typename Format::LineSymbol>(border_duplicate.get(), border_symbol_number));
 				border_symbol = border_duplicate.get();
 				temporary_symbols.emplace_back(std::move(border_duplicate));
+			}
+			else if (border_symbol->getType() == Symbol::Combined)
+			{
+				// The border line is a private CombinedSymbol, exported as OCD line symbol.
+				auto border_duplicate = duplicate(static_cast<const CombinedSymbol&>(*border_symbol));
+				copySymbolHead(*combined_symbol, *border_duplicate);
+				border_duplicate->setName(QLatin1String("Border of ") + combined_symbol->getName());
+				auto const border_symbol_number = makeUniqueSymbolNumber(symbol_number);
+				symbol_numbers[border_duplicate.get()] = border_symbol_number;
+				exportCombinedSymbol<Format>(file, border_duplicate.get());
+				border_symbol = border_duplicate.get();
+				temporary_symbols.emplace_back(std::move(border_duplicate));
+			}
+			else
+			{
+				FILEFORMAT_ASSERT(false); // unreachable
 			}
 			
 			auto copy = duplicate(static_cast<const AreaSymbol&>(*parts[0]));
@@ -2202,7 +2351,7 @@ QByteArray OcdFileExport::exportCombinedAreaSymbol<Ocd::AreaSymbolV8>(
         quint32 /*symbol_number*/,
         const CombinedSymbol* /*combined_symbol*/,
         const AreaSymbol* /*area_symbol*/,
-        const LineSymbol* /*line_symbol*/)
+        const Symbol* /*line_symbol*/)
 {
 	Q_UNREACHABLE();
 }
@@ -2213,7 +2362,7 @@ QByteArray OcdFileExport::exportCombinedAreaSymbol(
         quint32 symbol_number,
         const CombinedSymbol* combined_symbol,
         const AreaSymbol* area_symbol,
-        const LineSymbol* line_symbol )
+        const Symbol* line_symbol )
 {
 	auto ocd_symbol = exportAreaSymbol<OcdAreaSymbol>(area_symbol, symbol_number);
 	auto ocd_subsymbol_data = reinterpret_cast<OcdAreaSymbol*>(ocd_symbol.data());
