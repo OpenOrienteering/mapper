@@ -17,6 +17,7 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
 find_package(GDAL REQUIRED)
+find_library(MINIZIP_LIBRARY NAMES minizip QUIET)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
@@ -53,6 +54,9 @@ target_include_directories(mapper-gdal SYSTEM PRIVATE "${GDAL_INCLUDE_DIR}")
 target_include_directories(mapper-gdal PRIVATE "${PROJECT_SOURCE_DIR}/src")
 
 target_link_libraries(mapper-gdal "${GDAL_LIBRARY}" Qt5::Core Qt5::Gui Qt5::Widgets Mapper_Common)
+if(MINIZIP_LIBRARY)
+	target_link_libraries(mapper-gdal "${MINIZIP_LIBRARY}")
+endif()
 
 set_target_properties(mapper-gdal PROPERTIES PREFIX "")
 
