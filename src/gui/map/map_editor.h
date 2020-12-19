@@ -688,6 +688,7 @@ private:
 	
 	QAction* print_act;
 	QAction* export_image_act;
+	QAction* export_kmz_act;
 	QAction* export_pdf_act;
 	QAction* export_vector_act;
 	

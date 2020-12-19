@@ -391,6 +391,12 @@ const QPrinterInfo* MapPrinter::imageTarget()
 	return &image_target;
 }
 
+const QPrinterInfo* MapPrinter::kmzTarget()
+{
+	static QPrinterInfo kmz_target; // TODO: set name and features?
+	return &kmz_target;
+}
+
 
 // QPageSize (::key(), ::name()) made this list mostly obsolete.
 // But we keep it in v0.9 for loading maps where we used names
@@ -454,6 +460,8 @@ void MapPrinter::setTarget(const QPrinterInfo* new_target)
 			target = new_target;
 		else if (new_target == imageTarget())
 			target = new_target;
+		else if (new_target == kmzTarget())
+			target = new_target;
 		else
 		{
 			// We don't own this target, so we need to make a copy.
@@ -461,7 +469,8 @@ void MapPrinter::setTarget(const QPrinterInfo* new_target)
 			target = &target_copy;
 		}
 		
-		if (old_target == imageTarget() || new_target == imageTarget())
+		if (old_target == imageTarget() || new_target == imageTarget()
+		    || old_target == kmzTarget() || new_target == kmzTarget())
 		{
 			// No page margins. Will emit pageFormatChanged( ).
 			setCustomPageSize(page_format.page_rect.size());
@@ -536,7 +545,8 @@ bool MapPrinter::isPrinter() const
 {
 	bool is_printer = target
 	                  && target != imageTarget()
-	                  && target != pdfTarget();
+	                  && target != pdfTarget()
+	                  && target != kmzTarget();
 	return is_printer;
 }
 
@@ -547,7 +557,7 @@ void MapPrinter::setPrintArea(const QRectF& area)
 	{
 		print_area = area;
 		
-		if (target == imageTarget() && print_area.size() != page_format.paper_dimensions)
+		if ((target == imageTarget() || target == kmzTarget()) && print_area.size() != page_format.paper_dimensions)
 			setCustomPageSize(print_area.size() * scale_adjustment);
 		
 		updatePageBreaks();
@@ -627,7 +637,7 @@ void MapPrinter::setOverlap(qreal h_overlap, qreal v_overlap)
 
 void MapPrinter::updatePaperDimensions()
 {
-	if (target == imageTarget() && page_format.page_size == QPageSize::Custom)
+	if ((target == imageTarget() || target == kmzTarget()) && page_format.page_size == QPageSize::Custom)
 	{
 		// No margins, no need to query QPrinter.
 		page_format.page_rect = QRectF(QPointF(0.0, 0.0), page_format.paper_dimensions);
@@ -639,7 +649,7 @@ void MapPrinter::updatePaperDimensions()
 	
 	QPrinter* printer = target ? new QPrinter(*target, QPrinter::HighResolution)
 	                           : new QPrinter(QPrinter::HighResolution);
-	if (!printer->isValid() || target == imageTarget() || target == pdfTarget())
+	if (!printer->isValid() || target == imageTarget() || target == kmzTarget() || target == pdfTarget())
 		printer->setOutputFormat(QPrinter::PdfFormat);
 	  
 	if (page_format.page_size == QPageSize::Custom)
@@ -657,7 +667,7 @@ void MapPrinter::updatePaperDimensions()
 	page_format.page_rect = printer->paperRect(QPrinter::Millimeter);
 	page_format.paper_dimensions = page_format.page_rect.size();
 	
-	if ( target != imageTarget() && target != pdfTarget() &&
+	if ( target != imageTarget() && target != kmzTarget() && target != pdfTarget() &&
 		 page_format.page_size != QPageSize::Custom )
 	{
 		page_format.page_rect = printer->pageRect(QPrinter::Millimeter);
@@ -896,7 +906,7 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 	if (!printer) return;
 
 	MapPrinterPageFormat f(*printer);
-	if (target == pdfTarget() || target == imageTarget())
+	if (target == pdfTarget() || target == imageTarget() || target == kmzTarget())
 	{
 		f.page_rect = QRectF(QPointF(0.0, 0.0), f.paper_dimensions);
 	}
@@ -966,7 +976,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, c
 	 * When the target is an image, use the temporary image to enforce the given
 	 * resolution.
 	 */
-	const bool use_buffer_for_map = rasterModeSelected() || target == imageTarget() || engineWillRasterize();
+	const bool use_buffer_for_map = rasterModeSelected() || target == imageTarget() || target == kmzTarget() || engineWillRasterize();
 	bool use_page_buffer = use_buffer_for_map;
 	
 	auto first_front_template = map.getFirstFrontTemplate();
@@ -1234,7 +1244,7 @@ void MapPrinter::drawSeparationPages(QPrinter* printer, QPainter* device_painter
 	
 	// Translate and clip for margins and print area
 	device_painter->translate(-page_extent.left(), -page_extent.top());
-	device_painter->setClipRect(page_extent.intersected(print_area), Qt::ReplaceClip);
+	device_painter->setClipRect(page_extent.intersected(print_area).adjusted(-10, 10, 10, 10), Qt::ReplaceClip);
 	
 	bool need_new_page = false;
 	for (int i = map.getNumColors() - 1; i >= 0; --i)

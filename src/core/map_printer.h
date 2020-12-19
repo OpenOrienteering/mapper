@@ -229,6 +229,9 @@ public:
 	/** Returns a QPrinterInfo pointer which signals printing to a raster file. */
 	static const QPrinterInfo* imageTarget();
 	
+	/** Returns a QPrinterInfo pointer which signals printing to a KML ground overlay. */
+	static const QPrinterInfo* kmzTarget();
+	
 	/** Returns a reference to a hash which maps paper sizes to names as C strings.
 	 *  These strings are not translated.
 	 *
