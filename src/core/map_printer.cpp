@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018  Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -922,6 +922,20 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 
 void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, QImage* page_buffer) const
 {
+	// Determine transformation and clipping for page extent and region
+	const qreal units_per_mm = options.resolution / 25.4;
+	// Translate for top left page margin
+	auto transform = QTransform::fromScale(units_per_mm, units_per_mm);
+	transform.translate(page_format.page_rect.left(), page_format.page_rect.top());
+	// Convert native map scale to print scale
+	transform.scale(scale_adjustment, scale_adjustment);
+	// Translate and clip for margins and print area
+	transform.translate(-page_extent.left(), -page_extent.top());
+	drawPage(device_painter, page_extent, transform, page_buffer);
+}
+
+void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, const QTransform& page_extent_transform, QImage* page_buffer) const
+{
 	// Logical units per mm
 	const qreal units_per_mm = options.resolution / 25.4;
 	
@@ -929,18 +943,6 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	const auto render_hints = saved_hints
 	                          | QPainter::Antialiasing
 	                          | QPainter::SmoothPixmapTransform;
-	
-	// Determine transformation and clipping for page extent and region
-	const auto page_extent_transform = [this, units_per_mm, page_extent]() {
-		// Translate for top left page margin 
-		auto transform = QTransform::fromScale(units_per_mm, units_per_mm);
-		transform.translate(page_format.page_rect.left(), page_format.page_rect.top());
-		// Convert native map scale to print scale
-		transform.scale(scale_adjustment, scale_adjustment);
-		// Translate and clip for margins and print area
-		transform.translate(-page_extent.left(), -page_extent.top());
-		return transform;
-	}();
 	
 	const auto page_region_used = page_extent.intersected(print_area);
 	
