@@ -2447,7 +2447,7 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1946"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1779"/>
         <source>Cannot find a vector data export driver named &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось найти драйвер экспорта векторных данных &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
@@ -2590,17 +2590,17 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="186"/>
         <source>For KML/KMZ export, the map must be georeferenced.</source>
-        <translation type="unfinished"></translation>
+        <translation>Для экспорта в KML/KMZ карта должна иметь геопривязку.</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="193"/>
         <source>Unknown error</source>
-        <translation type="unfinished">Неизвестная ошибка</translation>
+        <translation>Неизвестная ошибка</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="208"/>
         <source>%1 already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 уже существует.</translation>
     </message>
 </context>
 <context>
@@ -4045,7 +4045,7 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="954"/>
         <source>&amp;KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="983"/>
@@ -6192,7 +6192,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="449"/>
         <source>KMZ export</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспорт в KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="987"/>
@@ -6227,18 +6227,18 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1207"/>
         <source>KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1208"/>
         <source>KML</source>
-        <translation type="unfinished"></translation>
+        <translation>KML</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1235"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished">Не удалось сохранить изображение:
+        <translation>Не удалось сохранить изображение:
 %1</translation>
     </message>
     <message>
@@ -7751,7 +7751,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_image.cpp" line="148"/>
         <source>Format not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Формат не поддерживается</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="301"/>
@@ -8625,7 +8625,9 @@ The maximum supported version is %2.</source>
         <source>Internal error detected! Please report this issue.
 Version: %1
 Location: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Обнаружена внутренняя ошибка! Пожалуйста, сообщите об этой проблеме.
+Версия: %1
+Местоположение: %2</translation>
     </message>
 </context>
 <context>
