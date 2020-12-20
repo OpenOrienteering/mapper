@@ -177,7 +177,6 @@ QString KmzGroundOverlayExport::errorString() const
 
 bool KmzGroundOverlayExport::doExport(const MapPrinter& map_printer)
 {
-	
 	error_message.clear();
 	
 #ifdef QT_PRINTSUPPORT_LIB
@@ -238,6 +237,7 @@ bool KmzGroundOverlayExport::doExport(const MapPrinter& map_printer)
 	setProgress(maximumProgress());
 	return result;
 #else
+	Q_UNUSED(map_printer)
 	return false;
 #endif // QT_PRINTSUPPORT_LIB
 }
@@ -276,6 +276,9 @@ try
 	}
 	return true;
 #else
+	Q_UNUSED(map_printer)
+	Q_UNUSED(metrics)
+	Q_UNUSED(tiles)
 	return false;
 #endif  // QT_PRINTSUPPORT_LIB
 }
