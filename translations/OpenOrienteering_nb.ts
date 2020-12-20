@@ -3248,12 +3248,12 @@ Vil du tilpasse symbolemene til den valgte målestokken?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="868"/>
         <source>Crash warning</source>
-        <translation>Kræsj-melding</translation>
+        <translation>Krasj-melding</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="869"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
-        <translation>Det ser ut som %1 kræsjet forrige gang filen ble åpnet:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Skal du virkelig åpne filen på nytt?</translation>
+        <translation>Det ser ut som %1 krasjet forrige gang filen ble åpnet:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Skal du virkelig åpne filen på nytt?</translation>
     </message>
     <message>
         <source>File recovery</source>

@@ -1635,7 +1635,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>Clip layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Recortar capas</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="59"/>
@@ -1915,7 +1915,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="569"/>
         <source>Invalid auxiliary scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor de escala auxiliar inválido: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="601"/>
@@ -2109,13 +2109,13 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="222"/>
         <source>Combined scale factor:</source>
         <extracomment>The combined scale factor is the ratio between a length on the ground and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Factor de escala combinado:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="228"/>
         <source>Auxiliary scale factor:</source>
         <extracomment>The auxiliary scale factor is the ratio between a length in the curved earth model and the corresponding length on the ground. It is applied as a factor to ground distances to get curved earth model distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Factor de escala auxiliar:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="246"/>
@@ -2167,7 +2167,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="553"/>
         <source>The scale factor has been changed. Do you want to stretch/shrink the map content accordingly, too?</source>
-        <translation type="unfinished"></translation>
+        <translation>El factor de escala ha cambiado. ¿Desea también agrandar/comprimir el mapa en concordancia?</translation>
     </message>
     <message>
         <source>Projected coordinates:</source>
@@ -2187,7 +2187,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="632"/>
         <source>%1</source>
         <comment>scale factor value</comment>
-        <translation type="unfinished">%1° {1?}</translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="634"/>
@@ -2675,7 +2675,7 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="155"/>
         <source>Georeferencing mismatch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Desajuste de georreferenciación:</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="250"/>
@@ -3861,7 +3861,7 @@ porque guardar como %2 (.%3) no está soportado.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="989"/>
         <source>Keep my location on screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantener mi ubicación en pantalla</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1003"/>
@@ -5032,7 +5032,7 @@ selecc</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="245"/>
         <source>Background drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibujo de fondo</translation>
     </message>
 </context>
 <context>
@@ -5685,7 +5685,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="382"/>
         <source>not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>no</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="386"/>
@@ -5716,7 +5716,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="621"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">La codificación &apos;%1&apos; no está disponible. Compruebe la configuración.</translation>
+        <translation>La codificación &apos;%1&apos; no está disponible. Compruebe la configuración.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="650"/>
@@ -5737,7 +5737,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="789"/>
         <source>The georeferencing cannot be saved in OCD version 8.</source>
-        <translation>La georeferenciación no se puede salvar en versión 8 de OCAD.</translation>
+        <translation>La georreferenciación no se puede salvar en versión 8 de OCAD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="839"/>
@@ -5759,7 +5759,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1427"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1467"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished"></translation>
+        <translation>En el símbolo de área &quot;% 1&quot;, se omite un patrón de relleno.</translation>
     </message>
     <message>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
@@ -5769,47 +5769,47 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1598"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2241"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished"></translation>
+        <translation>En el símbolo lineal &quot;% 1&quot;, no se puede representar una combinación de límite/unión.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1620"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished"></translation>
+        <translation>En el símbolo lineal &quot;% 1&quot;, se ignora la agrupación de guiones.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1632"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished"></translation>
+        <translation>En el símbolo lineal &quot;% 1&quot;, el número de guiones en un grupo se reduce a 2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1727"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished">En símbolo de línea &quot;%1&quot;, no se pueden exportar los bordes correctamente.</translation>
+        <translation>En símbolo lineal &quot;%1&quot;, no se pueden exportar los bordes correctamente.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1918"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished">En símbolo de texto %1: se ha establecido un carácter personalizado de espaciado, su implenentación no se corresponde con el comportamiento de OCAD todavía</translation>
+        <translation>En símbolo de texto %1: está establecido un carácter de espaciado personalizado, su implementación todavía no se corresponde con el comportamiento en OCAD</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1934"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished">En símbolo de texto &quot;%1&quot;: se ignora subrayado</translation>
+        <translation>En el símbolo de texto &quot;%1&quot;: se ignora subrayado</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1937"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished"></translation>
+        <translation>En el símbolo de texto %1: se ignora el kerning</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2159"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished">En símbolo combinado %1: Subsímbolo no soportado en índice %2.</translation>
+        <translation>En el símbolo combinado %1: Sub-símbolo no soportado en índice %2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2365"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="unfinished">Imposible exportar el desplazamiento de patrón de relleno para un objeto de tipo área</translation>
+        <translation>No se puede exportar el cambio de patrón de relleno para un objeto de área</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2570"/>
@@ -5824,7 +5824,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2615"/>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede guardar la posición personalizada de la plantilla &apos;% 1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2945"/>
@@ -6100,12 +6100,12 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2064"/>
         <source>The map is not georeferenced. Local georeferencing only.</source>
-        <translation>El mapa no está georeferenciado. Solo georeferenciación local.</translation>
+        <translation>El mapa no está georreferenciado. Solo georreferenciación local.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2077"/>
         <source>Failed to properly export the georeferencing info. Local georeferencing only.</source>
-        <translation>Fallo exportando la información de georeferenciación. Sólo georeferenciación local.</translation>
+        <translation>Fallo exportando la información de georreferenciación. Sólo georreferenciación local.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2087"/>
@@ -6123,12 +6123,12 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2307"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished">Fallo creando capa %1: %2</translation>
+        <translation>No se pudo crear la capa %1: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2314"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished">Fallo creando campo nombre: %1</translation>
+        <translation>Error al crear el campo nombre: %1</translation>
     </message>
 </context>
 <context>
@@ -6255,22 +6255,22 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="234"/>
         <source>Erase</source>
-        <translation type="unfinished"></translation>
+        <translation>Borrar</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="255"/>
         <source>Filled area</source>
-        <translation type="unfinished"></translation>
+        <translation>Área rellena</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="277"/>
         <source>Solid</source>
-        <translation type="unfinished"></translation>
+        <translation>Sólido</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="278"/>
         <source>Pattern</source>
-        <translation type="unfinished">Patrón</translation>
+        <translation>Patrón</translation>
     </message>
 </context>
 <context>
@@ -7241,7 +7241,7 @@ de color</translation>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="76"/>
         <source>From template file</source>
-        <translation type="unfinished"></translation>
+        <translation>Desde archivo de plantilla</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="78"/>
@@ -7309,13 +7309,13 @@ de color</translation>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
         <source>NMEA (Qt)</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (Qt)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"/>
         <source>NMEA (OpenOrienteering)</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (OpenOrienteering)</translation>
     </message>
     <message>
         <source>Serial port (NMEA)</source>
@@ -7380,62 +7380,62 @@ de color</translation>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="47"/>
         <source>Change scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar el factor de escala</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="51"/>
         <source>Scaling parameters</source>
-        <translation type="unfinished">Configuración de escalado</translation>
+        <translation>Parámetros de escala</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="53"/>
         <source>Scaling center:</source>
-        <translation type="unfinished">Centro de escalado:</translation>
+        <translation>Centro de escala:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="56"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Origen del sistema de coordenadas del mapa</translation>
+        <translation>Origen del sistema de coordenadas del mapa</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="62"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Punto de referencia de la georreferenciación</translation>
+        <translation>Punto de referencia de georreferenciación</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="70"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Otro punto,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="75"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="79"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="82"/>
         <source>Options</source>
-        <translation type="unfinished">Opciones</translation>
+        <translation>Opciones</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="84"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished">Ajustar punto de referencia de la georreferenciación</translation>
+        <translation>Ajustar el punto de referencia de georreferenciación</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="91"/>
         <source>Scale non-georeferenced templates</source>
-        <translation type="unfinished">Escalar plantillas no georreferenciadas</translation>
+        <translation>Escalar plantillas no georreferenciadas</translation>
     </message>
 </context>
 <context>
@@ -8293,7 +8293,7 @@ Sin embargo, si no pretende dibujar sobre esta plantilla, entonces no hay proble
         <location filename="../src/templates/template_image.cpp" line="263"/>
         <location filename="../src/templates/template_image.cpp" line="385"/>
         <source>Select the coordinate reference system of the georeferenced image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione el sistema de referencia de coordenadas de la imagen georreferenciada.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="268"/>
@@ -8607,7 +8607,7 @@ Sin embargo, si no pretende dibujar sobre esta plantilla, entonces no hay proble
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="983"/>
         <source>Cannot change the georeferencing state.</source>
-        <translation>No se puede cambiar el estado de georeferenciación.</translation>
+        <translation>No se puede cambiar el estado de georreferenciación.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_table_model.cpp" line="257"/>
@@ -8621,7 +8621,7 @@ Sin embargo, si no pretende dibujar sobre esta plantilla, entonces no hay proble
         <location filename="../src/templates/template_map.cpp" line="171"/>
         <location filename="../src/templates/template_map.cpp" line="305"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished">Fallo al transformar las coordenadas.</translation>
+        <translation>No se pudieron transformar las coordenadas.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_map.cpp" line="198"/>
@@ -8642,7 +8642,7 @@ Sin embargo, si no pretende dibujar sobre esta plantilla, entonces no hay proble
     <message>
         <location filename="../src/templates/template_placeholder.cpp" line="178"/>
         <source>Unknown file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato de archivo desconocido</translation>
     </message>
 </context>
 <context>
@@ -8742,17 +8742,17 @@ Sin embargo, si no pretende dibujar sobre esta plantilla, entonces no hay proble
     <message>
         <location filename="../src/templates/template_track.cpp" line="83"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Pista</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="96"/>
         <source>Route</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruta</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="109"/>
         <source>Waypoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Waypoint</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="290"/>
@@ -9264,7 +9264,7 @@ La máxima versión soportada es %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="731"/>
         <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se detectó declinación/grivación inconsistente. Resuelto por ajuste automático de la declinación a %1 °.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="861"/>

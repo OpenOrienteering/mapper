@@ -310,22 +310,22 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
         <source>Screen frequency:</source>
-        <translation type="unfinished">Linijatura rastera:</translation>
+        <translation>Linijatura rastera:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
         <source>lpi</source>
-        <translation type="unfinished">lpi</translation>
+        <translation>lpi</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
         <source>Undefined</source>
-        <translation type="unfinished">Nedefiniran</translation>
+        <translation>Neodređeno</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Screen angle:</source>
-        <translation type="unfinished">Kut rastera:</translation>
+        <translation>Kut rastera:</translation>
     </message>
     <message>
         <source>°</source>
@@ -564,7 +564,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished">%1 (%2°, %3 lpi)</translation>
+        <translation>%1 (%2°, %3 lpi)</translation>
     </message>
 </context>
 <context>
@@ -572,7 +572,7 @@
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="87"/>
         <source>&amp;Number of parts:</source>
-        <translation>&amp;Broj djelova:</translation>
+        <translation>&amp;Broj dijelova:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="95"/>
@@ -1235,17 +1235,17 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="740"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Keep opposite handle positions. </source>
         <extracomment>Actually, this means: &quot;Keep the opposite handle&apos;s position. &quot;</extracomment>
-        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: Držite suprotne položaje ručke. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Održi položaje nasuprotne ručke. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="761"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation type="unfinished">&lt;b&gt;%1+Klik&lt;/b&gt; na točku: Briše ju; na stazu: Dodaje novu crticu; s &lt;b&gt;%2&lt;/b&gt;: Dodaje normalnu točku. </translation>
+        <translation>&lt;b&gt;%1+Klik&lt;/b&gt; na točku: Briše točku; na stazu: Dodaje novu crticu; s &lt;b&gt;%2&lt;/b&gt;: Dodaje normalnu točku. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="764"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation type="unfinished">&lt;b&gt;%1+Klik&lt;/b&gt; na točku: Briše ju; na stazu: Dodaje novu točku; s &lt;b&gt;%2&lt;/b&gt;: Dodaje crticu. </translation>
+        <translation>&lt;b&gt;%1+Klik&lt;/b&gt; na točku: Briše točku; na stazu: Dodaje novu točku; s &lt;b&gt;%2&lt;/b&gt;: Dodaje crticu. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="768"/>
@@ -7957,12 +7957,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="107"/>
         <source>Font family:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrsta fonta:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="111"/>
         <source>Font size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Veličina fonta:</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/text_symbol.cpp" line="525"/>

@@ -347,7 +347,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
         <source>lpi</source>
-        <translation type="unfinished"></translation>
+        <translation>lpi</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
@@ -582,7 +582,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (%2°, %3 lpi)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1612,17 +1612,17 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
         <source>Templates</source>
-        <translation type="unfinished">Šabloni</translation>
+        <translation>Veidnes</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="67"/>
         <source>Hatch areas</source>
-        <translation type="unfinished">Svītrlaukumi</translation>
+        <translation>Svītrlaukumi</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Baseline view</source>
-        <translation type="unfinished">Bāzes līnijas skats</translation>
+        <translation>Bāzes līnijas skats</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="75"/>
@@ -1632,7 +1632,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="77"/>
         <source>Create a layer for each symbol</source>
-        <translation>Izveidot slāni katram simbolam</translation>
+        <translation>Izveido slāni katram simbolam</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="82"/>
@@ -1881,7 +1881,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="569"/>
         <source>Invalid auxiliary scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepieļaujams papildus mēroga koeficients: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="601"/>
@@ -2152,7 +2152,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="632"/>
         <source>%1</source>
         <comment>scale factor value</comment>
-        <translation type="unfinished">%1° {1?}</translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="634"/>
@@ -2354,7 +2354,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="533"/>
         <source>Help</source>
-        <translation type="unfinished">Palīdzība</translation>
+        <translation>Palīdzība</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="554"/>
@@ -2380,12 +2380,12 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="48"/>
         <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="49"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Visas datnes (*.*)</translation>
+        <translation>Visas datnes (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
@@ -2395,7 +2395,7 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="69"/>
         <source>px</source>
-        <translation type="unfinished">px</translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="70"/>
@@ -2421,7 +2421,7 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
         <source>Width:</source>
-        <translation type="unfinished">Platums:</translation>
+        <translation>Platums:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
@@ -2447,7 +2447,7 @@
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="234"/>
         <source>Error</source>
-        <translation type="unfinished">Kļūda</translation>
+        <translation>Kļūda</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
@@ -2467,7 +2467,7 @@
 %1
 
 %2</source>
-        <translation type="unfinished">Nevar atvērt datni:
+        <translation>Nevar atvērt datni:
 %1
 
 %2</translation>
@@ -2543,7 +2543,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="51"/>
         <source>OCAD version %1</source>
-        <translation>OCAD %1. versija</translation>
+        <translation>OCAD versija %1</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="225"/>
@@ -2659,7 +2659,7 @@
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="548"/>
         <source>Unsupported obsolete file format version. Please use program version v%1 or older to load and update the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neatbalstīta novecojusi datnes formāta versija. Lūdzu, lietojiet programmas versiju v%1 vai vecāku, lai ielasītu un atjaunotu datni.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="560"/>
@@ -2940,12 +2940,12 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="677"/>
         <source>Cap length at start:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gala simbola garums sākumā:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="678"/>
         <source>Cap length at end:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gala simbola garums beigās:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="682"/>
@@ -3333,14 +3333,14 @@ Spied No, lai izvēlētos citu formātu.</translation>
         <location filename="../src/gui/main_window_controller.cpp" line="63"/>
         <location filename="../src/gui/main_window_controller.cpp" line="71"/>
         <source>Error</source>
-        <translation type="unfinished">Kļūda</translation>
+        <translation>Kļūda</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window_controller.cpp" line="64"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
-        <translation type="unfinished">Nevarēja eksportēt karti kā
+        <translation>Nevarēja eksportēt karti kā
 &quot;%1&quot;
 jo formāts ir nezināms.</translation>
     </message>
@@ -3349,7 +3349,7 @@ jo formāts ir nezināms.</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">Nevarēja eksportēt karti kā
+        <translation>Nevarēja eksportēt karti kā
 &quot;%1&quot;
 jo saglabāšana kā %2 (.%3) netiek atbalstīta.</translation>
     </message>
@@ -4225,7 +4225,7 @@ Vai tomēr importēt datus?</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">Nevarēja eksportēt karti kā
+        <translation>Nevarēja eksportēt karti kā
 &quot;%1&quot;
 jo saglabāšana kā %2 (.%3) netiek atbalstīta.</translation>
     </message>
@@ -4235,7 +4235,7 @@ jo saglabāšana kā %2 (.%3) netiek atbalstīta.</translation>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Nevar saglabāt datni
+        <translation>Nevar saglabāt datni
 %1:
 %2</translation>
     </message>
@@ -4245,18 +4245,18 @@ jo saglabāšana kā %2 (.%3) netiek atbalstīta.</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="4154"/>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="84"/>
         <source>Warning</source>
-        <translation type="unfinished">Brīdinājums</translation>
+        <translation>Brīdinājums</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="631"/>
         <source>The map export generated warnings.</source>
-        <translation type="unfinished">Kartes eksportā izveidotie brīdinājumi.</translation>
+        <translation>Kartes eksportā ir brīdinājumi.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="693"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4154"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">Kartes importā izveidotie brīdinājumi.</translation>
+        <translation>Kartes importā ir brīdinājumi.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="903"/>
@@ -4653,7 +4653,7 @@ atlasīti</translation>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">Importēto datu mērogs ir 1: %1, kas atškiras no kartes mēroga 1:%2
+        <translation>Importēto datu mērogs ir 1: %1, kas atškiras no šīs kartes mēroga 1:%2.
 
 Mainīt importējamo datu mērogu?</translation>
     </message>
@@ -5638,7 +5638,7 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="621"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">Kodējums &apos;%1&apos; nav pieejams. Pārbaudiet iestatījumus.</translation>
+        <translation>Kodējums &apos;%1&apos; nav pieejams. Pārbaudiet iestatījumus.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="650"/>
@@ -5681,7 +5681,7 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1427"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1467"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished">Laukuma simbolā &quot;%1&quot; izlaiž pildījuma paraugu.</translation>
+        <translation>Laukuma simbolā &quot;%1&quot;, izlaižot pildījuma paraugu.</translation>
     </message>
     <message>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
@@ -5691,22 +5691,22 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1598"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2241"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">Līnijveida simbolā &quot;%1&quot; nevar attēlot gala/savienojuma kombināciju.</translation>
+        <translation>Līnijveida simbolā &quot;%1&quot;, neizdodas attēlot gala/savienojuma kombināciju.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1620"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished">Līnijveida simbolā &quot;%1&quot; neņem vērā mezglu grupējumu.</translation>
+        <translation>Līnijveida simbolā &quot;%1&quot;, neņemot vērā mezglu grupējumu.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1632"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished">Līnijveida simbolā &quot;%1&quot; mezglu skaits grupā samazināts līdz 2.</translation>
+        <translation>Līnijveida simbolā &quot;%1&quot;, mezglu skaitu grupā samazinot līdz 2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1727"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished">Līnijveida simbolā &quot;%1&quot; neizdevās korekti eksportēt robežas.</translation>
+        <translation>Līnijveida simbolā &quot;%1&quot;, nekorekti eksportējot robežas.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1918"/>
@@ -5716,12 +5716,12 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1934"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished">Teksta simbolā %1: ignorē pasvītrojumu</translation>
+        <translation>Teksta simbolā %1: ignorējot pasvītrojumu</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1937"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished">Teksta simbolā %1: ignorē simbola nobīdi</translation>
+        <translation>Teksta simbolā %1: ignorējot simbola nobīdi</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2159"/>
@@ -5731,12 +5731,12 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2365"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="unfinished">Neizdevās eksportēt aizpildījuma parauga nobīdi laukuma objektam</translation>
+        <translation>Neizdevās eksportēt aizpildījuma parauga nobīdi laukuma objektam</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2570"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās saglabāt korektu pozīciju trūkstošajam šablonam: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2555"/>
@@ -5746,17 +5746,17 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2615"/>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevar saglabāt šablona &apos;%1&apos; izvēles pozīciju.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2945"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Teksts atmests pie &apos;|&apos;): %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_georef_fields.cpp" line="878"/>
         <source>Could not translate coordinate reference system &apos;%1:%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevar pārveidot koordinātu references sistēmu &apos;%1:%2&apos;.</translation>
     </message>
 </context>
 <context>
@@ -5893,22 +5893,22 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="518"/>
         <source>Color &quot;%1&quot; is imported as special color &quot;Registration black&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Krāsa &quot;%1&quot; importēta kā speciālā krāsa &quot;Registration black&quot;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1530"/>
         <source> - main line</source>
-        <translation type="unfinished"></translation>
+        <translation> - galvenā līnija</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1537"/>
         <source> - double line</source>
-        <translation type="unfinished"></translation>
+        <translation> - dubultā līnija</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1544"/>
         <source> - framing</source>
-        <translation type="unfinished"></translation>
+        <translation> - rāmējums</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1584"/>
@@ -5944,7 +5944,7 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2416"/>
         <source>Support for OCD version %1 files is experimental.</source>
-        <translation type="unfinished"></translation>
+        <translation>OCD versijas %1 atbalsts ir eksperimentāls.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2422"/>
@@ -5999,32 +5999,32 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1869"/>
         <source>Couldn&apos;t find a driver for file extension %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās atrast draiveri paplašinājumam %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1881"/>
         <source>Failed to create dataset: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās izveidot datu kopu: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1926"/>
         <source>Failed to create layer: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevarēja izveidot slāni: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2064"/>
         <source>The map is not georeferenced. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation>Karte nav ģeoreferencēta. Tikai vietējā ģeoreference.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2077"/>
         <source>Failed to properly export the georeferencing info. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās korekti eksportēt ģeoreferencēšanas info. Tikai vietējā ģeoreference.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2087"/>
         <source>The %1 driver requires valid georefencing info.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 draiverim vajag derīgu ģeoreferences info.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2162"/>
@@ -6032,17 +6032,17 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2251"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2297"/>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās izveidot objektu slānī: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2307"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās izveidot slāni %1: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2314"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās izveidot nosaukuma lauku: %1</translation>
     </message>
 </context>
 <context>
@@ -6170,22 +6170,22 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="234"/>
         <source>Erase</source>
-        <translation type="unfinished"></translation>
+        <translation>Dzēst</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="255"/>
         <source>Filled area</source>
-        <translation type="unfinished"></translation>
+        <translation>Aizpildīts laukums</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="277"/>
         <source>Solid</source>
-        <translation type="unfinished"></translation>
+        <translation>Vienlaidus</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="278"/>
         <source>Pattern</source>
-        <translation type="unfinished">Paraugs</translation>
+        <translation>Paraugs</translation>
     </message>
 </context>
 <context>
@@ -6624,7 +6624,7 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="962"/>
         <source>The map contains transparent elements which require the raster mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Karte satur caurspīdīgus elementus, kas prasa rastra režīmu.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1125"/>
@@ -6898,31 +6898,31 @@ dalījumi</translation>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="59"/>
         <source>Map coordinate system origin</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kartes koordinātu sistēmas sākumpunkts</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="64"/>
         <source>Georeferencing reference point</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ģeoreferencēšanas references punkts</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="70"/>
         <source>Other point,</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished">Cits punkts,</translation>
+        <translation>Cits punkts,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="75"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="79"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="83"/>
@@ -7039,37 +7039,37 @@ dalījumi</translation>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="53"/>
         <source>New scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Jaunais mērogs:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="58"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kartes koordinātu sistēmas sākumpunkts</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="63"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ģeoreferencēšanas references punkts</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="69"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Cits punkts,</translation>
+        <translation>Cits punkts,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="74"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="78"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="81"/>
@@ -7112,7 +7112,7 @@ dalījumi</translation>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="77"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Switch to individual object scaling. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%12&lt;/b&gt;: Pārslēgt uz atsevišķu objektu mērogošanu. </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="73"/>
@@ -7144,7 +7144,7 @@ dalījumi</translation>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="76"/>
         <source>From template file</source>
-        <translation type="unfinished"></translation>
+        <translation>No šablona datnes</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="78"/>
@@ -7183,22 +7183,22 @@ dalījumi</translation>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="52"/>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vieta:</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="55"/>
         <source>Source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Avots:</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="64"/>
         <source>Serial port (NMEA):</source>
-        <translation type="unfinished"></translation>
+        <translation>Seriālais ports (NMEA):</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="79"/>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Sensori</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="91"/>
@@ -7206,37 +7206,37 @@ dalījumi</translation>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="146"/>
         <source>Default</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished">Pēc noklusējuma</translation>
+        <translation>Pēc noklusējuma</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
         <source>NMEA (Qt)</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (Qt)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"/>
         <source>NMEA (OpenOrienteering)</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (OpenOrienteering)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="123"/>
         <source>Windows</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Windows</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="126"/>
         <source>GeoClue</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>GeoClue</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="129"/>
         <source>Core Location</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Galvenā Vieta</translation>
     </message>
 </context>
 <context>
@@ -7266,7 +7266,7 @@ dalījumi</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="314"/>
         <source>Extra permissions are required to access &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; piekļuvei vajag papildus atļaujas.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="317"/>
@@ -7279,62 +7279,62 @@ dalījumi</translation>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="47"/>
         <source>Change scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Mainīt mēroga koeficientu</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="51"/>
         <source>Scaling parameters</source>
-        <translation type="unfinished">Mērogošanas parametri</translation>
+        <translation>Mērogošanas parametri</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="53"/>
         <source>Scaling center:</source>
-        <translation type="unfinished">Mērogošanas centrs:</translation>
+        <translation>Mērogošanas centrs:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="56"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kartes koordinātu sistēmas sākumpunkts</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="62"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ģeoreferencēšanas references punkts</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="70"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Cits punkts,</translation>
+        <translation>Cits punkts,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="75"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="79"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="82"/>
         <source>Options</source>
-        <translation type="unfinished">Opcijas</translation>
+        <translation>Opcijas</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="84"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished">Pielāgot ģeoreferencēšanas references punktu</translation>
+        <translation>Pielāgot ģeoreferencēšanas references punktu</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="91"/>
         <source>Scale non-georeferenced templates</source>
-        <translation type="unfinished">Mērogot neģeoreferencētos šablonus</translation>
+        <translation>Mērogot neģeoreferencētos šablonus</translation>
     </message>
 </context>
 <context>
@@ -7388,7 +7388,7 @@ dalījumi</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="133"/>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikona</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="224"/>
@@ -7565,7 +7565,7 @@ dalījumi</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="138"/>
         <source>Show custom icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt izvēles ikonas</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="142"/>
@@ -7806,7 +7806,7 @@ Vai vēlaties saglabāt savas izmaiņas?</translation>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="251"/>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="260"/>
         <source>Cannot load symbol set, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās ielasīt simbolu kopu, atteikums.</translation>
     </message>
     <message>
         <source>Cannot load map file, aborting.</source>
@@ -7821,7 +7821,7 @@ Vai vēlaties saglabāt savas izmaiņas?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="268"/>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Simbolu kopas importā ir brīdinājumi.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="276"/>
@@ -8170,7 +8170,7 @@ to jump over the lazy dog
         <location filename="../src/gdal/gdal_template.cpp" line="100"/>
         <location filename="../src/templates/template_image.cpp" line="206"/>
         <source>Georeferencing not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Ģeoreference nav atrasta</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -8188,7 +8188,7 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
         <location filename="../src/templates/template_image.cpp" line="263"/>
         <location filename="../src/templates/template_image.cpp" line="385"/>
         <source>Select the coordinate reference system of the georeferenced image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvēlies koordinātu references sistēmu ģeoreferencētajam attēlam.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="268"/>
@@ -8369,7 +8369,7 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="285"/>
         <source>Georeferenced</source>
-        <translation type="unfinished">Ģeoreferencēts</translation>
+        <translation>Ģeoreferencēts</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="290"/>
@@ -8450,7 +8450,7 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="293"/>
         <source>Vectorize lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Vektorizēt līnijas</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="673"/>
@@ -8466,17 +8466,17 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="887"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="933"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">Neizdevās ielasīt kartes datni, atceļ.</translation>
+        <translation>Neizdevās ielasīt kartes datni, atteikums.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="897"/>
         <source>Warning</source>
-        <translation type="unfinished">Brīdinājums</translation>
+        <translation>Brīdinājums</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="897"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">Kartes importā izveidotie brīdinājumi.</translation>
+        <translation>Kartes importā ir brīdinājumi.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="910"/>
@@ -8502,7 +8502,7 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="983"/>
         <source>Cannot change the georeferencing state.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās mainīt ģeoreferences stāvokli.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_table_model.cpp" line="257"/>
@@ -8516,12 +8516,12 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
         <location filename="../src/templates/template_map.cpp" line="171"/>
         <location filename="../src/templates/template_map.cpp" line="305"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished">Neizdevās pārveidot koordinātas.</translation>
+        <translation>Neizdevās pārveidot koordinātas.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_map.cpp" line="198"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">Neizdevās ielasīt kartes datni, atceļ.</translation>
+        <translation>Neizdevās ielasīt kartes datni, atteikums.</translation>
     </message>
 </context>
 <context>
@@ -8537,7 +8537,7 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
     <message>
         <location filename="../src/templates/template_placeholder.cpp" line="178"/>
         <source>Unknown file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Neatpazīts datnes formāts</translation>
     </message>
 </context>
 <context>
@@ -8575,7 +8575,7 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="61"/>
         <source>Shear:</source>
-        <translation type="unfinished"></translation>
+        <translation>Griezt:</translation>
     </message>
 </context>
 <context>
@@ -8637,17 +8637,17 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
     <message>
         <location filename="../src/templates/template_track.cpp" line="83"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Treks</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="96"/>
         <source>Route</source>
-        <translation type="unfinished"></translation>
+        <translation>Maršruts</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="109"/>
         <source>Waypoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Ceļa punkts</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="290"/>
@@ -9045,7 +9045,7 @@ Maksimālā atbalstītā versija ir %2.</translation>
         <location filename="../src/gui/util_gui.cpp" line="212"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="649"/>
@@ -9145,7 +9145,7 @@ Maksimālā atbalstītā versija ir %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="731"/>
         <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
-        <translation type="unfinished"></translation>
+        <translation>Konstatēta neatbilstoša deklinācija/grivācija. Automātiski pielāgota līdz %1°.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="861"/>
