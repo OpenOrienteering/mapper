@@ -2578,12 +2578,12 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="193"/>
         <source>Unknown error</source>
-        <translation type="unfinished">Невідома помилка</translation>
+        <translation>Невідома помилка</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="208"/>
         <source>%1 already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>% 1 вже існує.</translation>
     </message>
 </context>
 <context>
@@ -4419,7 +4419,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="954"/>
         <source>&amp;KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="983"/>
@@ -6166,7 +6166,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="449"/>
         <source>KMZ export</source>
-        <translation type="unfinished"></translation>
+        <translation>Експорт в KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="987"/>
@@ -6201,12 +6201,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1207"/>
         <source>KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1208"/>
         <source>KML</source>
-        <translation type="unfinished"></translation>
+        <translation>KML</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1235"/>
