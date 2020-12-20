@@ -824,17 +824,6 @@
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::DXFParser</name>
-    <message>
-        <source>Could not open the file.</source>
-        <translation type="vanished">Ne mogu otvoriti datoteku.</translation>
-    </message>
-    <message>
-        <source>The file is not an DXF file.</source>
-        <translation type="vanished">Datoteka nije u DXF formatu.</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::DetermineFontSizeDialog</name>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="116"/>

@@ -840,17 +840,6 @@
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::DXFParser</name>
-    <message>
-        <source>Could not open the file.</source>
-        <translation type="vanished">Неможливо відкрити файл.</translation>
-    </message>
-    <message>
-        <source>The file is not an DXF file.</source>
-        <translation type="vanished">Цей фал не є DXF файлом.</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::DetermineFontSizeDialog</name>
     <message>
         <source>Determine font size</source>
@@ -5189,192 +5178,6 @@ zoom using the mouse wheel, if available.</source>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OCAD8FileExport</name>
-    <message>
-        <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
-        <translation type="vanished">Карта містить понад 256 кольорів що не підтримується форматом ocd версії 8.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad повернула %1</translation>
-    </message>
-    <message>
-        <source>Registration black is exported as a regular color.</source>
-        <translation type="vanished">Реєстраційний чорний експортовано як звичайний колір.</translation>
-    </message>
-    <message>
-        <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="vanished">Неможливо експортувати зміщення візерунку для площинного об&apos;єкту</translation>
-    </message>
-    <message>
-        <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="vanished">Неможливо зберегти коректне положення втраченої підложки: &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="vanished">Неможливо експортувати підложку: тип файлу &quot;%1&quot; поки що не підтримується</translation>
-    </message>
-    <message>
-        <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="vanished">Координати обмежено щоб вмістити в зону креслення OCAD 8 (-2 м ... 2 м).</translation>
-    </message>
-    <message>
-        <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="vanished">Деякі координати виходять за межі зони креслення OCAD 8. Вони можуть бути недоступними в OCAD.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">Для лінійного знаку &quot;%1&quot;, неможливо відобразити комбінацію закінчення/з’єднання.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="vanished">Для лінійного знаку &quot;%1&quot;, не виконано групування штрихів.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="vanished">Для лінійного знаку &quot;%1&quot;, кількість штрихів у групі зменшено в 2 рази.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="vanished">Для лінійного знаку %1, неможливо експортувати границі.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="vanished">Для площинного знаку &quot;%1&quot;, пропущено заповнення візерунком.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="vanished">Для площинного знаку &quot;%1&quot;, виявлено &quot;зміщення рядків&quot; точкового візерунку. Це може бути як добре так і погано.</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">Для текстового знаку %1: встановлений такий міжсимвольний інтервал, що покищо неможе бути збережений у форматі OCAD</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="vanished">Для текстового знаку %1: проігноровано підкреслення</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="vanished">Для текстового знаку %1: проігноровано кернінг</translation>
-    </message>
-    <message>
-        <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
-        <translation type="vanished">Рядок обрізаний (обрізання позначено з допомогою потрійного &apos;|&apos;): %1</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OCAD8FileImport</name>
-    <message>
-        <source>Could not allocate buffer.</source>
-        <translation type="vanished">Неможливо виділити буфер.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad повернула %1</translation>
-    </message>
-    <message>
-        <source>OCAD files of version %1 are not supported!</source>
-        <translation type="vanished">OCAD файли версії %1 не підтримуються!</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation type="vanished">
-            <numerusform>%n виділення кольору пропущено, причина: Імпорт заборонений.</numerusform>
-            <numerusform>%n виділення кольорів пропущено, причина: Імпорт заборонений.</numerusform>
-            <numerusform>%n виділень кольорів пропущено, причина: Імпорт заборонений.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Could not load the spot color definitions, error: %1</source>
-        <translation type="vanished">Не вдалося завантажити визначення планшетного кольору, помилка: %1</translation>
-    </message>
-    <message>
-        <source>Color &quot;Registration black&quot; is imported as a special color.</source>
-        <translation type="vanished">Колір &quot;Реєстраційний чорний&quot; імпортовано як спеціальний колір.</translation>
-    </message>
-    <message>
-        <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation type="vanished">Неможливо імпортувати знак &quot;%3&quot; (%1.%2)</translation>
-    </message>
-    <message>
-        <source>OCAD import layer</source>
-        <translation type="vanished">Шар імпорту OCAD</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">У штриховій лінії знака %1, довжина загострення на початку і кінці різні (%2 і %3). Використовується %4.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
-        <translation type="vanished">У штриховій лінії знака %1, довжина останнього штриха не може бути коректно імпортована.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation type="vanished">У штриховій лінії знака %1, кінцевий проміжок не може бути коректно імпортований.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">У штриховій лінії знака %1, довжина головного і кінцевого штриха різні (%2 і %3). Використовується %4.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">У штриховій лінії знака %1, проміжки D та E різні (%2 і %3). Використовується %4.</translation>
-    </message>
-    <message>
-        <source>Line symbol %1: suppressing dash symbol at line ends.</source>
-        <translation type="vanished">Лінійний знак %1: подвляти штриховий знак на кінцях відрізку.</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation type="vanished">Під час імпорту текстового знаку %1: проігноровано центрування</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation type="vanished">Під час імпорту текстового знаку %1: проігноровано нестандартну ширину (%2)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">Під час імпорту текстового знаку %1: встановлено нестандартний міжсимвольний інтервал, його реалізація покищо не сумісна з OCAD</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation type="vanished">Під час імпорту текстового знаку %1: проігноровано нестандартний інтервал між словами (%2%)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation type="vanished">Під час імпорту текстового знаку %1: проігноровано користувацькі відступи (%2/%3)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation type="vanished">Під час імпорту текстового знаку %1: проігноровано обрамлення тексту (значення %2)</translation>
-    </message>
-    <message>
-        <source>Unable to load object</source>
-        <translation type="vanished">Неможливо завантажити об&apos;єкт</translation>
-    </message>
-    <message>
-        <source>Unable to import rectangle object</source>
-        <translation type="vanished">Неможливо імпортувати прямокутний об&apos;єкт</translation>
-    </message>
-    <message>
-        <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="vanished">Не імпортовано текстовий знак, невдається відобразити зовнішній шлях&apos; (npts=%1): %2</translation>
-    </message>
-    <message>
-        <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation type="vanished">Неможливо імпортувати підложку: схоже що фон &quot;%1&quot; не є растровим зображенням</translation>
-    </message>
-    <message>
-        <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="vanished">Спроба імпортувати текстовий об&apos;єкт з невідомим форматом координат</translation>
-    </message>
-    <message>
-        <source>Color id not found: %1, ignoring this color</source>
-        <translation type="vanished">Ідентифікатор кольору не знайдено: %1, цей колір проігноровано</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::ObjectQuery</name>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="360"/>
@@ -5435,17 +5238,6 @@ zoom using the mouse wheel, if available.</source>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
         <translation>нечинний</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdAreaSymbolCommon</name>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="vanished">Для площинного знаку &quot;%1&quot;, пропущено заповнення візерунком.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="vanished">Для площинного знаку &quot;%1&quot;, виявлено &quot;зміщення рядків&quot; точкового візерунку. Це може бути як добре так і погано.</translation>
     </message>
 </context>
 <context>
@@ -5773,43 +5565,6 @@ zoom using the mouse wheel, if available.</source>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OcdLineSymbol</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">Для лінійного знаку &quot;%1&quot;, неможливо відобразити комбінацію закінчення/з’єднання.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdLineSymbolCommon</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">Для лінійного знаку &quot;%1&quot;, неможливо відобразити комбінацію закінчення/з’єднання.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="vanished">Для лінійного знаку &quot;%1&quot;, не виконано групування штрихів.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="vanished">Для лінійного знаку &quot;%1&quot;, кількість штрихів у групі зменшено в 2 рази.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="vanished">Для лінійного знаку %1, неможливо експортувати границі.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdTextSymbolBasic</name>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="vanished">Для текстового знаку %1: проігноровано підкреслення</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="vanished">Для текстового знаку %1: проігноровано кернінг</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::OgrFileExport</name>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1959"/>
@@ -5948,21 +5703,6 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="306"/>
         <source>Template file exists: &apos;%1&apos;</source>
         <translation>Файл підложки існує: &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::PaintOnTemplateSelectDialog</name>
-    <message>
-        <source>Select template to draw onto</source>
-        <translation type="vanished">Оберіть підложку для малювання</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Скасувати</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Малювати</translation>
     </message>
 </context>
 <context>
@@ -8502,17 +8242,6 @@ The maximum supported version is %2.</source>
     <message>
         <source>%1 nodes could not be processed correctly.</source>
         <translation type="vanished">%1 вузлів неможливо правильно обробити.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::TextBrowserDialog</name>
-    <message>
-        <source>External link: %1</source>
-        <translation type="vanished">Зовнішнє посилання: %1</translation>
-    </message>
-    <message>
-        <source>Click to view</source>
-        <translation type="vanished">Клацніть для перегляду</translation>
     </message>
 </context>
 <context>

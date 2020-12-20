@@ -4810,17 +4810,6 @@ zoom using the mouse wheel, if available.</source>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OCAD8FileExport</name>
-    <message>
-        <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="vanished">Koordinatlar OCAD 8 çizim alanına sığacak şekilde ayarlanır (-2 m ... 2 m).</translation>
-    </message>
-    <message>
-        <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="vanished">Bazı koordinatlar OCAD 8 çizim alanının dışında kalmaktadır. OCAD&apos;de erişilemez olabilirler.</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::ObjectQuery</name>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="360"/>

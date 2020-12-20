@@ -861,17 +861,6 @@
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::DXFParser</name>
-    <message>
-        <source>Could not open the file.</source>
-        <translation type="vanished">Nevar atvērt datni.</translation>
-    </message>
-    <message>
-        <source>The file is not an DXF file.</source>
-        <translation type="vanished">Datne nav DXF datne.</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::DetermineFontSizeDialog</name>
     <message>
         <source>Determine font size</source>
@@ -5351,196 +5340,6 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OCAD8FileExport</name>
-    <message>
-        <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
-        <translation type="vanished">Karte satur vairāk kā 256 krāsas, kas netiek atbalstīts ocd 8.versijā.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad rezultāts ir %1</translation>
-    </message>
-    <message>
-        <source>Registration black is exported as a regular color.</source>
-        <translation type="vanished">Reģistrācijas melno eksportē kā parastu krāsu.</translation>
-    </message>
-    <message>
-        <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="vanished">Neizdevās eksportēt aizpildījuma parauga nobīdi laukuma objektam</translation>
-    </message>
-    <message>
-        <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="vanished">Nevar saglabāt pareizo trūkstošās veidnes pozīciju: &quot;% 1&quot;</translation>
-    </message>
-    <message>
-        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="vanished">Nav iespējams eksportēt šablonu: datnes tips &quot;%1&quot; pagaidām netiek atbalstīts</translation>
-    </message>
-    <message>
-        <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="vanished">Koordinātas tiek pielāgotas, lai ietilptu OCAD 8 zīmēšanas laukumā (-2 m... 2 m).</translation>
-    </message>
-    <message>
-        <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="vanished">Dažas koordinātes paliek ārpus OCAD 8 zīmēšanas laukuma. Tās varētu būt nesasniedzamas OCAD.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">Līnijveida simbolā &quot;%1&quot; nevar attēlot gala/savienojuma kombināciju.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="vanished">Līnijveida simbolā &quot;%1&quot; neņem vērā mezglu grupējumu.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="vanished">Līnijveida simbolā &quot;%1&quot; mezglu skaits grupā samazināts līdz 2.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="vanished">Līnijveida simbolā &quot;%1&quot; neizdevās korekti eksportēt robežas.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="vanished">Laukuma simbolā &quot;%1&quot; izlaiž pildījuma paraugu.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="vanished">Laukuma simbolā &quot;%1&quot; pieņem &quot;nobīdīto rindu&quot; punktveida paraugu. Tas var būt gan korekti, gan nekorekti.</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">Teksta simbolā &quot;%1&quot;: tiek lietota mainīta simbolu atkāpe, tās realizācija pagaidām neatbilst OCAD lietotajai</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="vanished">Teksta simbolā %1: ignorē pasvītrojumu</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="vanished">Teksta simbolā %1: ignorē simbola nobīdi</translation>
-    </message>
-    <message>
-        <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
-        <translation type="vanished">Simbolu virkne nogriezta (marķēts ar trīs &apos;|&apos;): %1</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OCAD8FileImport</name>
-    <message>
-        <source>Could not allocate buffer.</source>
-        <translation type="vanished">Neizdevās rezervēt atmiņu.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad rezultāts ir %1</translation>
-    </message>
-    <message>
-        <source>OCAD files of version %1 are not supported!</source>
-        <translation type="vanished">OCAD datnes ar versiju %1 netiek atbalstītas!</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation type="vanished">
-            <numerusform>%n krāsdales tika izlaistas, iemesls: Imports ir atspējots.</numerusform>
-            <numerusform>%n krāsdale tika izlaista, iemesls: Imports ir atspējots.</numerusform>
-            <numerusform>%n krāsdales tika izlaistas, iemesls: Imports ir atspējots.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Could not load the spot color definitions, error: %1</source>
-        <translation type="vanished">Nevarēja ielādēt īpatkrāsu definīcijas, kļūda: %1</translation>
-    </message>
-    <message>
-        <source>Color &quot;Registration black&quot; is imported as a special color.</source>
-        <translation type="vanished">Krāsa &quot;Reģistrācijas melnā&quot; tiek importēta kā īpaša krāsa.</translation>
-    </message>
-    <message>
-        <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation type="vanished">Nevar importēt simbolu &quot;%3&quot; (%1.%2)</translation>
-    </message>
-    <message>
-        <source>OCAD import layer</source>
-        <translation type="vanished">OCAD importa slānis</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">Svītrlīnijas simbolam %1 asā gala garumi sākumam un beigām ir dažādi (%2 un %3). Lietojam %4.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
-        <translation type="vanished">Svītrlīnijas simbolam %1 nevar korekti importēt beigu garumu.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation type="vanished">Svītrlīnijas simbolam %1 nevar korekti importēt beigu atstarpi.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">Svītrlīnijas simbolam %1 pamata un beigu līniju garumi ir atšķirīgi (%2 un %3). Lietojam %4.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">Svītrlīnijas simbolam %1 atstarpes D un E ir atšķirīgas (%2 un %3). Lietojam %4.</translation>
-    </message>
-    <message>
-        <source>Line symbol %1: suppressing dash symbol at line ends.</source>
-        <translation type="vanished">Līnijas simbols %1: neizmanto svītras simbolu līnijas galos.</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation type="vanished">Ignorē izlīdzinājumu teksta simbola %1 importā</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation type="vanished">Ignorē izvēles lielumu (%2) teksta simbola %1 importā</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">Simbola %1 importā ir noteikts simbolu izvēles atkāpinājums, tā realizācija patlaban neatbilst OCAD lietotajai</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation type="vanished">Ignorē vārdu izvēles atstarpes (%2%) teksta simbola %1 importā</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation type="vanished">Ignorē izvēles rindu atkāpes (%2/%3) teksta simbola %1 importā</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation type="vanished">Ignorē teksta ierāmējumu (režīms %2) teksta simbola %1 importā</translation>
-    </message>
-    <message>
-        <source>Unable to load object</source>
-        <translation type="vanished">Nav iespējams ielasīt objektu</translation>
-    </message>
-    <message>
-        <source>Unable to import rectangle object</source>
-        <translation type="vanished">Nav iespējams ielasīt taisnstūrveida objektu</translation>
-    </message>
-    <message>
-        <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="vanished">Teksta simbols nav importēts, nav iespējams noskaidrot sekošanas līniju (npts=%1): %2</translation>
-    </message>
-    <message>
-        <source>Unable to import template: %1</source>
-        <translation type="obsolete">Nav iespējams importēt šablonu: %1</translation>
-    </message>
-    <message>
-        <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation type="vanished">Nav iespējams importēt šablonu: fons &quot;%1&quot; nav rastra zīmējums</translation>
-    </message>
-    <message>
-        <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="vanished">Mēģinājums importēt teksta objektu ar nezināmu koordinātu formātu</translation>
-    </message>
-    <message>
-        <source>Color id not found: %1, ignoring this color</source>
-        <translation type="vanished">Krāsa %1 netika atrasta, ignorējam to</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::ObjectQuery</name>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="360"/>
@@ -5601,17 +5400,6 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
         <translation>nederīgs</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdAreaSymbolCommon</name>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="obsolete">Laukuma simbolā &quot;%1&quot; izlaiž pildījuma paraugu.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="obsolete">Laukuma simbolā &quot;%1&quot; pieņem &quot;nobīdīto rindu&quot; punktveida paraugu. Tas var būt gan korekti, gan nekorekti.</translation>
     </message>
 </context>
 <context>
@@ -5939,43 +5727,6 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OcdLineSymbol</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="obsolete">Līnijveida simbolā &quot;%1&quot; nevar attēlot gala/savienojuma kombināciju.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdLineSymbolCommon</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="obsolete">Līnijveida simbolā &quot;%1&quot; nevar attēlot gala/savienojuma kombināciju.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="obsolete">Līnijveida simbolā &quot;%1&quot; neņem vērā mezglu grupējumu.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="obsolete">Līnijveida simbolā &quot;%1&quot; mezglu skaits grupā samazināts līdz 2.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="obsolete">Līnijveida simbolā &quot;%1&quot; neizdevās korekti eksportēt robežas.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdTextSymbolBasic</name>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="obsolete">Teksta simbolā %1: ignorē pasvītrojumu</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="obsolete">Teksta simbolā %1: ignorē simbola nobīdi</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::OgrFileExport</name>
     <message>
         <source>Couldn&apos;t find a driver for file extension %1</source>
@@ -6118,21 +5869,6 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="306"/>
         <source>Template file exists: &apos;%1&apos;</source>
         <translation>Veidnes fails jau eksistē: &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::PaintOnTemplateSelectDialog</name>
-    <message>
-        <source>Select template to draw onto</source>
-        <translation type="vanished">Atlasīt šablonu, uz kura zīmēt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Atcelt</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Zīmēt</translation>
     </message>
 </context>
 <context>
@@ -6805,13 +6541,6 @@ dalījumi</translation>
         <location filename="../src/gui/print_widget.cpp" line="1448"/>
         <source>The map area is empty. Output canceled.</source>
         <translation>Kartes apgabals ir tukšs. Izvads atcelts.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::ProjectedCRSSelector</name>
-    <message>
-        <source>&amp;Coordinate reference system:</source>
-        <translation type="vanished">&amp;Koordinātu references sistēma:</translation>
     </message>
 </context>
 <context>

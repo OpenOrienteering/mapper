@@ -838,17 +838,6 @@
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::DXFParser</name>
-    <message>
-        <source>Could not open the file.</source>
-        <translation type="vanished">无法打开该文件。</translation>
-    </message>
-    <message>
-        <source>The file is not an DXF file.</source>
-        <translation type="vanished">该文件不是 DXF 文件。</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::DetermineFontSizeDialog</name>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="116"/>
@@ -1492,13 +1481,6 @@
         <location filename="../src/tools/fill_tool.cpp" line="243"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
         <translation>&lt;b&gt;单击&lt;/b&gt;︰ 用选中的符号填充区域。要填充的区域必须是有边界的多条线段或地区，不考虑其他符号。 </translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::Format</name>
-    <message>
-        <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="vanished">在组合符号％1中：序号％2处不支持的子符号。</translation>
     </message>
 </context>
 <context>
@@ -5142,190 +5124,6 @@ zoom using the mouse wheel, if available.</source>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OCAD8FileExport</name>
-    <message>
-        <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
-        <translation type="vanished">该地图包含256种以上的颜色，而OCAD版本8不支持。</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad 返回 %1</translation>
-    </message>
-    <message>
-        <source>Registration black is exported as a regular color.</source>
-        <translation type="vanished">注册黑色导出为定期的颜色。</translation>
-    </message>
-    <message>
-        <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="vanished">无法导出区域对象的填充模式转变</translation>
-    </message>
-    <message>
-        <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="vanished">无法保存丢失底图的正确位置：“%1”</translation>
-    </message>
-    <message>
-        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="vanished">无法导出底图：文件类型“％1”尚不支持</translation>
-    </message>
-    <message>
-        <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="vanished">调整坐标以适应OCAD8绘图区域（-2 米 ... 2米）。</translation>
-    </message>
-    <message>
-        <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="vanished">一些坐标仍在OCAD8绘图区域之外，在OCAD中可能无法访问它们。</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">在行的符号&quot;%1&quot;，不能代表帽/联接组合。</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="vanished">行中的符号&quot;%1&quot;，忽视了短跑分组。</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="vanished">在行符号“％1”中，组中的短划线数量已减少为2。</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="vanished">在行的符号&quot;%1&quot;，不能正确导出边界。</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="vanished">在地区的符号&quot;%1&quot;，跳过填充图案。</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="vanished">在地区的符号&quot;%1&quot;，假设&quot;转移的行&quot;点模式。这可能是正确的以及不正确。</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">在文本符号％1中：设置了自定义字符间距，实现与OCAD不匹配</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="vanished">在文本中的符号 %1︰ 忽略下划线</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="vanished">在文本中的符号 %1︰ 忽略字偶间距调整</translation>
-    </message>
-    <message>
-        <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
-        <translation type="vanished">字符串被截断 (截断标记三个 &apos; |&apos;): %1</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OCAD8FileImport</name>
-    <message>
-        <source>Could not allocate buffer.</source>
-        <translation type="vanished">无法分配缓冲区。</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad 返回 %1</translation>
-    </message>
-    <message>
-        <source>OCAD files of version %1 are not supported!</source>
-        <translation type="vanished">不支持 OCAD 文件的版本是 %1 ！</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation type="vanished">
-            <numerusform>%n 颜色 separation(s) 被跳过，原因︰ 导入已禁用。</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Could not load the spot color definitions, error: %1</source>
-        <translation type="vanished">不能加载专色定义，错误: %1</translation>
-    </message>
-    <message>
-        <source>Color &quot;Registration black&quot; is imported as a special color.</source>
-        <translation type="vanished">作为特殊的颜色，导入颜色&quot;注册黑&quot;。</translation>
-    </message>
-    <message>
-        <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation type="vanished">无法导入符号&quot;%3&quot;(%1.%2)</translation>
-    </message>
-    <message>
-        <source>OCAD import layer</source>
-        <translation type="vanished">OCAD 导入图层</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">在虚线符号 %1，尖尖的帽长度为开始和结束都不同 （%2 和 %3）。使用 %4。</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
-        <translation type="vanished">在虚线符号 %1，末端长度不能正确导入。</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation type="vanished">在虚线符号 %1，结束差距无法正确导入。</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">在虚线符号 %1，主要和结束长度是不同 （%2 和 %3）。使用 %4。</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">在虚线符号 %1，D 和 E 的差距是不同 （%2 和 %3）。使用 %4。</translation>
-    </message>
-    <message>
-        <source>Line symbol %1: suppressing dash symbol at line ends.</source>
-        <translation type="vanished">线符号％1：禁止在线的末端使用短划线符号。</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation type="vanished">文本导入过程中符号 %1︰ 忽略两端的对齐</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation type="vanished">文本导入过程中符号 %1︰ 忽略自定义权重 (%2)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">导入文本符号％1时：设置了自定义字符间距，但实现与OCAD不匹配</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation type="vanished">文本导入过程中符号 %1︰ 忽略自定义单词间距 （%2%)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation type="vanished">文本导入过程中符号 %1︰ 忽略自定义缩进 (%2 / 3%)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation type="vanished">文本导入过程中符号 %1︰ 忽略文本边框 （模式 %2）</translation>
-    </message>
-    <message>
-        <source>Unable to load object</source>
-        <translation type="vanished">无法加载对象</translation>
-    </message>
-    <message>
-        <source>Unable to import rectangle object</source>
-        <translation type="vanished">无法导入矩形对象</translation>
-    </message>
-    <message>
-        <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="vanished">不导入文本符号，找不出路径 &apos; (npts = %1): %2</translation>
-    </message>
-    <message>
-        <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation type="vanished">无法导入底图：背景“％1”似乎不是光栅图像</translation>
-    </message>
-    <message>
-        <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="vanished">尝试导入具有未知坐标格式的文本对象</translation>
-    </message>
-    <message>
-        <source>Color id not found: %1, ignoring this color</source>
-        <translation type="vanished">找不到的颜色 id: %1，无视这种颜色</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::ObjectQuery</name>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="360"/>
@@ -5386,17 +5184,6 @@ zoom using the mouse wheel, if available.</source>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
         <translation>无效</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdAreaSymbolCommon</name>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="vanished">在区域符号%1中，跳过填充图案。</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="vanished">在区域符号%1中，假设“移位行”点模式。这可能是正确的，也可能是不正确的。</translation>
     </message>
 </context>
 <context>
@@ -5724,47 +5511,6 @@ zoom using the mouse wheel, if available.</source>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OcdLineSymbol</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">在线符号“％1”中，不能表示覆盖/合并组合。</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdLineSymbolCommon</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">在行符号&quot;%1&quot;，不能代表覆盖/合并组合。</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="vanished">在行符号%1中，忽略短划线分组。</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="vanished">在行符号“％1”中，组中的短线已减少为2。</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="vanished">在线符号“％1”中，无法正确导出边框。</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdTextSymbolBasic</name>
-    <message>
-        <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">文本符号%1：设置了自定义字符间距，实现与OCAD的方式还不匹配</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="vanished">在文本符号%1中：忽略下划线</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="vanished">在文本符号％1中：忽略字距调整</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::OgrFileExport</name>
     <message>
         <source>Couldn&apos;t find a driver for file extension %1</source>
@@ -5901,21 +5647,6 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="306"/>
         <source>Template file exists: &apos;%1&apos;</source>
         <translation>底图文件存在：“%1”</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::PaintOnTemplateSelectDialog</name>
-    <message>
-        <source>Select template to draw onto</source>
-        <translation type="vanished">选择要绘制的底图</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">取消</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">绘制</translation>
     </message>
 </context>
 <context>
@@ -8464,17 +8195,6 @@ The maximum supported version is %2.</source>
     <message>
         <source>%1 nodes could not be processed correctly.</source>
         <translation type="vanished">节点 %1 不能正确处理。</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::TextBrowserDialog</name>
-    <message>
-        <source>External link: %1</source>
-        <translation type="vanished">外部链接: %1</translation>
-    </message>
-    <message>
-        <source>Click to view</source>
-        <translation type="vanished">单击此处可查看</translation>
     </message>
 </context>
 <context>

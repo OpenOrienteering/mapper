@@ -847,17 +847,6 @@
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::DXFParser</name>
-    <message>
-        <source>Could not open the file.</source>
-        <translation type="vanished">Impossibile aprire il file.</translation>
-    </message>
-    <message>
-        <source>The file is not an DXF file.</source>
-        <translation type="vanished">Il file non è un DXF.</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::DetermineFontSizeDialog</name>
     <message>
         <source>Determine font size</source>
@@ -1513,13 +1502,6 @@
         <location filename="../src/tools/fill_tool.cpp" line="243"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
         <translation>&lt;b&gt;Click&lt;/b&gt;: Riempie l&apos;area con il simbolo selezionato. L&apos;area da riempire deve essere limitata da linee o aree, altri simboli non sono considerati. </translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::Format</name>
-    <message>
-        <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="vanished">Nel simbolo combinato %1: simbolo non supportato con indice %2.</translation>
     </message>
 </context>
 <context>
@@ -5252,191 +5234,6 @@ zoomma con la rotella del mouse, se ce l&apos;hai.</translation>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OCAD8FileExport</name>
-    <message>
-        <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
-        <translation type="vanished">La mappa contiene più di 256 colori, quindi non è supportata da OCAD versione 8.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad ha restituito %1</translation>
-    </message>
-    <message>
-        <source>Registration black is exported as a regular color.</source>
-        <translation type="vanished">Il nero &quot;registration&quot; è esportato come un colore normale.</translation>
-    </message>
-    <message>
-        <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="vanished">Impossibile esportare lo &quot;shift&quot; di un motivo per un oggetto d&apos;area</translation>
-    </message>
-    <message>
-        <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="vanished">Impossibile salvare la posizione corretta del template mancante: &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="vanished">Impossibile esportare il template: i file di tipo &quot;%1&quot; non sono ancora supportati</translation>
-    </message>
-    <message>
-        <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="vanished">Le coordinate sono state sistemate per stare nell&apos;area di disegno di OCAD 8 (-2 m ... 2 m).</translation>
-    </message>
-    <message>
-        <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="vanished">Delle coordinate rimangono fuori dall&apos;area di disegno di OCAD 8. Potrebbero essere irraggiungibili con OCAD.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">Nel simbolo linea &quot;%1&quot;, impossibile rappresentare la combinazione di termini e giunzioni.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="vanished">Nel simbolo linea &quot;%1&quot;, viene ignorato il raggruppamento del tratteggio.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="vanished">Nel simbolo linea &quot;%1&quot;, il numero di tratteggi per gruppo è stato ridotto a 2.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="vanished">Nel simbolo linea &quot;%1&quot;, impossibile esportare i bordi correttamente.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="vanished">Nel simbolo linea &quot;%1&quot;, motivo di riempimento saltato.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="vanished">Nel simbolo area &quot;%1&quot;, assumiamo un &quot;shifted rows&quot;come motivo puntiforme. Questo può essere sia corretto che no.</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">Nel simbolo testo %1: è impostata una spaziatura dei caratteri personalizzata, questa implementazione non corrisponde ancora al comportamento di OCAD</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="vanished">Nel simbolo di testo %1: viene ignorata la sottolineatura</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="vanished">Nel simbolo testo %1: crenatura ignorata</translation>
-    </message>
-    <message>
-        <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
-        <translation type="vanished">Stringa truncata (abbreviazione marcata con tre &apos;|&apos;): %1</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OCAD8FileImport</name>
-    <message>
-        <source>Could not allocate buffer.</source>
-        <translation type="vanished">Impossibile allocare buffer.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad ha restituito %1</translation>
-    </message>
-    <message>
-        <source>OCAD files of version %1 are not supported!</source>
-        <translation type="vanished">I file OCAD versione %1 non sono supportati!</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation type="vanished">
-            <numerusform>Il separatore di colore %n è stato ignorato, motivo: Importazione disabilitata.</numerusform>
-            <numerusform>l separatori di colore %n sono stati ignorati, motivo: Importazione disabilitata.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Could not load the spot color definitions, error: %1</source>
-        <translation type="vanished">Impossibile importare la definizione del colore di calamaio, errore: %1</translation>
-    </message>
-    <message>
-        <source>Color &quot;Registration black&quot; is imported as a special color.</source>
-        <translation type="vanished">Il colore &quot;registration nero&quot; è importato come colore speciale.</translation>
-    </message>
-    <message>
-        <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation type="vanished">Impossibile importare il simbolo &quot;%3&quot; (%1,%2)</translation>
-    </message>
-    <message>
-        <source>OCAD import layer</source>
-        <translation type="vanished">Strato di importazione OCAD</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">Nel simbolo linea tratteggiata %1, le lunghezza dei terminali appuntiti di inizio e fine differiscono (%2 e %3). Viene usato %4.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
-        <translation type="vanished">Nel simbolo linea tratteggiata %1, la lunghezza dei terminali non può essere importata correttamente.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation type="vanished">Nel simbolo linea tratteggiata %1, la lunghezza dell&apos;intervallo terminale non può essere importata correttamente.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">Nel simbolo linea tratteggiata %1, lunghezza principale e finale differenti (%2 e %3). Viene usato %4.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">Nel simbolo linea tratteggiata %1, gli intervalli D ed E sono differenti (%2 e %3). Viene usato %4.</translation>
-    </message>
-    <message>
-        <source>Line symbol %1: suppressing dash symbol at line ends.</source>
-        <translation type="vanished">Simbolo linea %1: viene soppresso il simbolo di tratteggio all&apos;estremità.</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation type="vanished">Durante l&apos;importazione del simbolo testo %1: viene ignorato l&apos;allineamento giustificato</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation type="vanished">Durante l&apos;importazione del simbolo testo %1: viene ignorato il peso personalizzato (%2)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">Durante l&apos;importazione del simbolo testo %1: risulta attivata la spaziatura caratteri personalizzata, la sua implementazione non corrisponde ancora al comportamento di OCAD</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation type="vanished">Durante l&apos;importazione del simbolo testo %1: ignorata la spaziatura personalizzata delle parole (%2%)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation type="vanished">Durante l&apos;importazione del simbolo testo %1: viene ignorato l&apos;indentazione personalizzata (%2/%3)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation type="vanished">Durante l&apos;importazione del simbolo testo %1: viene ignorato l&apos;incorniciatura (modo %2)</translation>
-    </message>
-    <message>
-        <source>Unable to load object</source>
-        <translation type="vanished">Impossibile caricare l&apos;oggetto</translation>
-    </message>
-    <message>
-        <source>Unable to import rectangle object</source>
-        <translation type="vanished">Impossibile importare l&apos;oggetto rettangolare</translation>
-    </message>
-    <message>
-        <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="vanished">Importazione del simbolo testo non avvenuta, impossibile immaginare il percorso (npts=%1):%2</translation>
-    </message>
-    <message>
-        <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation type="vanished">Impossibile importare il template: sfondo &quot;%1&quot; non sembra essere una immagine raster</translation>
-    </message>
-    <message>
-        <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="vanished">Tentativo di importazione di un oggetto testo avente formato delle coordinate sconosciuto</translation>
-    </message>
-    <message>
-        <source>Color id not found: %1, ignoring this color</source>
-        <translation type="vanished">Id colore non trovato: %1, questo colore verrà ignorato</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::ObjectQuery</name>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="360"/>
@@ -5497,17 +5294,6 @@ zoomma con la rotella del mouse, se ce l&apos;hai.</translation>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
         <translation>non valido</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdAreaSymbolCommon</name>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="vanished">Nel simbolo d&apos;area &quot;%1&quot;, un motivo di riempimento saltato.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="vanished">Nel simbolo area &quot;%1&quot;, assumiamo un &quot;shifted rows&quot;come motivo puntiforme. Questo può essere sia corretto che no.</translation>
     </message>
 </context>
 <context>
@@ -5839,47 +5625,6 @@ zoomma con la rotella del mouse, se ce l&apos;hai.</translation>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OcdLineSymbol</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">Nel simbolo lineare &quot;%1&quot;, impossibile rappresentare la combinazione di termini e giunzioni.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdLineSymbolCommon</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">Nel simbolo lineare &quot;%1&quot;, impossibile rappresentare la combinazione di termini e giunzioni.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="vanished">Nel simbolo linea &quot;%1&quot;, viene ignorato il raggruppamento del tratteggio.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="vanished">Nel simbolo linea &quot;%1&quot;, il numero di tratteggi per gruppo è stato ridotto a 2.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="vanished">Nel simbolo linea &quot;%1&quot;, impossibile esportare i bordi correttamente.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdTextSymbolBasic</name>
-    <message>
-        <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">Nel simbolo di testo %1: è definita la spaziatura personalizzata dei caratteri, la sua implementazione ancora non corrisponde al comportamento di OCAD</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="vanished">Nel simbolo di testo %1: viene ignorata la sottolineatura</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="vanished">Nel simbolo testo %1: crenatura ignorata</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::OgrFileExport</name>
     <message>
         <source>Couldn&apos;t find a driver for file extension %1</source>
@@ -6021,21 +5766,6 @@ zoomma con la rotella del mouse, se ce l&apos;hai.</translation>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="306"/>
         <source>Template file exists: &apos;%1&apos;</source>
         <translation>Il file template esiste: &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::PaintOnTemplateSelectDialog</name>
-    <message>
-        <source>Select template to draw onto</source>
-        <translation type="vanished">Selezionare il template su cui disegnare</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Annulla</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Disegna</translation>
     </message>
 </context>
 <context>
@@ -6704,13 +6434,6 @@ colori</translation>
         <location filename="../src/gui/print_widget.cpp" line="1448"/>
         <source>The map area is empty. Output canceled.</source>
         <translation>L&apos;area della mappa è vuota. Produzione annullata.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::ProjectedCRSSelector</name>
-    <message>
-        <source>&amp;Coordinate reference system:</source>
-        <translation type="vanished">Sistema di riferimento delle &amp;coordinate:</translation>
     </message>
 </context>
 <context>
@@ -8623,17 +8346,6 @@ La versione massima supportata è %2.</translation>
     <message>
         <source>%1 nodes could not be processed correctly.</source>
         <translation type="vanished">%1 nodi non possono essere elaborati correttamente.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::TextBrowserDialog</name>
-    <message>
-        <source>External link: %1</source>
-        <translation type="vanished">Link Esterno: %1</translation>
-    </message>
-    <message>
-        <source>Click to view</source>
-        <translation type="vanished">Cliccare per vedere</translation>
     </message>
 </context>
 <context>

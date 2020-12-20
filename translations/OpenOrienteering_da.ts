@@ -823,17 +823,6 @@
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::DXFParser</name>
-    <message>
-        <source>Could not open the file.</source>
-        <translation type="vanished">Kunne ikke åbne filen.</translation>
-    </message>
-    <message>
-        <source>The file is not an DXF file.</source>
-        <translation type="vanished">Filen er ikke en DXF-fil.</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::DetermineFontSizeDialog</name>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="116"/>
@@ -4952,63 +4941,6 @@ zoom using the mouse wheel, if available.</source>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OCAD8FileExport</name>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad returnerede %1</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OCAD8FileImport</name>
-    <message>
-        <source>Could not allocate buffer.</source>
-        <translation type="vanished">Kunne ikke allokere bufferen.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad returnerede %1</translation>
-    </message>
-    <message>
-        <source>OCAD files of version %1 are not supported!</source>
-        <translation type="vanished">OCAD filer af version %1 understøttes ikke!</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation type="vanished">
-            <numerusform>%n farveseparation blev sprunget over, årsag: import deaktiveret.</numerusform>
-            <numerusform>%n farveseparationer blev sprunget over, årsag: import deaktiveret.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation type="vanished">Kan ikke importere symbol &quot;%3&quot; (%1. %2)</translation>
-    </message>
-    <message>
-        <source>OCAD import layer</source>
-        <translation type="vanished">OCAD import lag</translation>
-    </message>
-    <message>
-        <source>Unable to load object</source>
-        <translation type="vanished">Objekt kan ikke indlæses</translation>
-    </message>
-    <message>
-        <source>Unable to import rectangle object</source>
-        <translation type="vanished">Kan ikke importere rektangelobjekt</translation>
-    </message>
-    <message>
-        <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="vanished">Tekstsymbol ikke importeret: kunne ikke bestemme sti (npts =%1): % 2</translation>
-    </message>
-    <message>
-        <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="vanished">Forsøger at importere et tekstobjekt med ukendt koordinatformat</translation>
-    </message>
-    <message>
-        <source>Color id not found: %1, ignoring this color</source>
-        <translation type="vanished">Farve-id blev ikke fundet: %1, ignorerer farven</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::ObjectQuery</name>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="360"/>
@@ -5516,21 +5448,6 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="306"/>
         <source>Template file exists: &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::PaintOnTemplateSelectDialog</name>
-    <message>
-        <source>Select template to draw onto</source>
-        <translation type="vanished">Vælg skabelon til at tegne på</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Annuller</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Tegn</translation>
     </message>
 </context>
 <context>

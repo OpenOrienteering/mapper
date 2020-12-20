@@ -827,17 +827,6 @@
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::DXFParser</name>
-    <message>
-        <source>Could not open the file.</source>
-        <translation type="vanished">Ne povis malfermi la dosieron.</translation>
-    </message>
-    <message>
-        <source>The file is not an DXF file.</source>
-        <translation type="vanished">La dosiero ne estas DXF dosiero.</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::DetermineFontSizeDialog</name>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="116"/>
@@ -5091,56 +5080,6 @@ zoom using the mouse wheel, if available.</source>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OCAD8FileExport</name>
-    <message>
-        <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
-        <translation type="vanished">La mapo enhavas pli ol 256 koloroj, ke estas nesubtenata de OCD-versio 8.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad redonis %1</translation>
-    </message>
-    <message>
-        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="vanished">Ne eblas eksporti ŝablonon: dosiertipo &quot;%1&quot; ankoraŭ ne estas subtenata</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OCAD8FileImport</name>
-    <message>
-        <source>Could not allocate buffer.</source>
-        <translation type="vanished">Ne povis asigni bufron.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad redonis %1</translation>
-    </message>
-    <message>
-        <source>OCAD files of version %1 are not supported!</source>
-        <translation type="vanished">Versio %1 de OCAD-dosieroj ne estas subtenata!</translation>
-    </message>
-    <message>
-        <source>Could not load the spot color definitions, error: %1</source>
-        <translation type="vanished">Ne povis ŝargi la spot-koloran difinon, eraro: %1</translation>
-    </message>
-    <message>
-        <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation type="vanished">Ne eblas importi simbolon &quot;%3&quot; (%1.%2)</translation>
-    </message>
-    <message>
-        <source>Unable to load object</source>
-        <translation type="vanished">Ne eblas ŝarĝi objekton</translation>
-    </message>
-    <message>
-        <source>Unable to import rectangle object</source>
-        <translation type="vanished">Ne eblas importi ortangulan objekton</translation>
-    </message>
-    <message>
-        <source>Color id not found: %1, ignoring this color</source>
-        <translation type="vanished">Kolora id ne trovita: %1, malatentas tiun koloron</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::ObjectQuery</name>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="360"/>
@@ -5652,21 +5591,6 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="306"/>
         <source>Template file exists: &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::PaintOnTemplateSelectDialog</name>
-    <message>
-        <source>Select template to draw onto</source>
-        <translation type="vanished">Elekti ŝablonon por desegni sur ĝin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Rezigni</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Desegni</translation>
     </message>
 </context>
 <context>
@@ -8193,17 +8117,6 @@ La maksimuma subtenata versio estas %2.</translation>
     <message>
         <source>%1 nodes could not be processed correctly.</source>
         <translation type="vanished">%1 nodoj ne povis esti traktita ĝuste.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::TextBrowserDialog</name>
-    <message>
-        <source>External link: %1</source>
-        <translation type="vanished">Ekstera ligilo: %1</translation>
-    </message>
-    <message>
-        <source>Click to view</source>
-        <translation type="vanished">Klaki por vidigi</translation>
     </message>
 </context>
 <context>

@@ -61,16 +61,6 @@
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OCAD8FileImport</name>
-    <message numerus="yes">
-        <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation type="vanished">
-            <numerusform>One color separation was skipped, reason: Import disabled.</numerusform>
-            <numerusform>%n color separations were skipped, reason: Import disabled.</numerusform>
-        </translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::OgrFileImport</name>
     <message numerus="yes">
         <location filename="../src/gdal/ogr_file_format.cpp" line="899"/>

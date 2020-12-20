@@ -911,17 +911,6 @@
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::DXFParser</name>
-    <message>
-        <source>Could not open the file.</source>
-        <translation type="vanished">Kunde inte öppna filen.</translation>
-    </message>
-    <message>
-        <source>The file is not an DXF file.</source>
-        <translation type="vanished">Denna fil är ingen DFX-fil.</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::DetermineFontSizeDialog</name>
     <message>
         <source>Determine font size</source>
@@ -1669,13 +1658,6 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/tools/fill_tool.cpp" line="243"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
         <translation>&lt;b&gt;Klicka&lt;/b&gt;: Fyll ytan med den aktiva symbolen. Ytan måste vara avgränsad av linjer eller andra ytor, ingen hänsyn tas till andra symboler. </translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::Format</name>
-    <message>
-        <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="vanished">I den kombinerade symbolen %1: Undersymbolen stöds inte vid index %2.</translation>
     </message>
 </context>
 <context>
@@ -5781,195 +5763,6 @@ zooma med scrollhjulet om tillgängligt.</translation>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OCAD8FileExport</name>
-    <message>
-        <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
-        <translation type="vanished">Kartan innehåller fler än 256 färger vilket inte stöds av OCD version 8.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad gav %1</translation>
-    </message>
-    <message>
-        <source>Registration black is exported as a regular color.</source>
-        <translation type="vanished">Registrerings svart exporteras som en vanlig färg.</translation>
-    </message>
-    <message>
-        <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="vanished">Det gick inte att exportera fyllningsmönsterförskjutningen för ett ytobjekt</translation>
-    </message>
-    <message>
-        <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="vanished">Kan inte spara korrekt position för saknad mall: &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="vanished">Kunde inte exportera bakgrund: filtypen &quot;%1&quot; stöds inte än</translation>
-    </message>
-    <message>
-        <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="vanished">Koordinaterna justerades till att passa i OCAD 8&apos;s ritarea (-2 m ... 2 m).</translation>
-    </message>
-    <message>
-        <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="vanished">Några koordinater är fortfarande utanför ritningsytan för OCAD 8. Dessa kanske inte kan läsas av OCAD.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">I linjesymbolen &quot;%1&quot;. kan inte visa ände/kopplings-kombination.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="vanished">I linjesymbolen &quot;%1&quot;, ignorerars strecknings-grupperingen.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="vanished">I linjesymbolen &quot;%1&quot;, har antalet streck i en grupp har minskats till 2.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="vanished">I linjesymbol &quot;%1&quot; kan inte kantlinjen exporteras korrekt.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="vanished">I ytsymbol &quot;%1&quot;. Hoppar över ett fyllningsmönster.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="vanished">I ytsymbol &quot;%1&quot;. Antar ett &quot;radskiftat&quot; mönster. Detta kan vara rätt eller fel.</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">I textsymbolen %1: ett eget symbolutrymme är satt, implementationen matchar inte OCAD:s beteende än</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="vanished">I textsymbol %1: understreck ignoreras</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="vanished">I textsymbol %1: kerning ignoreras</translation>
-    </message>
-    <message>
-        <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
-        <translation type="vanished">Sträng avkortad (avkortning märkt med tre &apos;|&apos;): %1</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OCAD8FileImport</name>
-    <message>
-        <source>Could not allocate buffer.</source>
-        <translation type="vanished">Kunde inte tilldela buffert.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad gav %1</translation>
-    </message>
-    <message>
-        <source>OCAD files of version %1 are not supported!</source>
-        <translation type="vanished">OCAD-filer av version %1 stöds ej!</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation type="vanished">
-            <numerusform>%n färgseparation hoppades över. Orsak: import avstängd.</numerusform>
-            <numerusform>%n färgseparationer hoppades över. Orsak: import avstängd.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Could not load the spot color definitions, error: %1</source>
-        <translation type="vanished">Kunde inte läsa dekorfärgers definition, fel: %1</translation>
-    </message>
-    <message>
-        <source>Color &quot;Registration black&quot; is imported as a special color.</source>
-        <translation type="vanished">Färg &quot;Registrations svart&quot; är importerad som en specialfärg.</translation>
-    </message>
-    <message>
-        <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation type="vanished">Kunde inte importera symbol &quot;%3&quot; (%1.%2)</translation>
-    </message>
-    <message>
-        <source>OCAD import layer</source>
-        <translation type="vanished">OCAD importlager</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">I streckad linje-symbolen %1 är längden för spetsiga linjeslut olika (%2 och %3). Använder %4.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
-        <translation type="vanished">I streckad linje-symbol %1 kan inte slutlängden importeras korrekt.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation type="vanished">I streckad linje-symbol %1 kan inte slutmellanrumet importeras korrekt.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">I streckad linje-symbol %1 är huvud- och slutlängden olika (%2 och %3). Använder %4.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">I streckad linje-symbol %1 är mellanrummen D och E olika (%2 och %3). Använder %4.</translation>
-    </message>
-    <message>
-        <source>Line symbol %1: suppressing dash symbol at line ends.</source>
-        <translation type="vanished">Linjesymbol %1: döljer strecksymbol vid linjeslut.</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation type="vanished">Vid import av textsymbol %1: ignorerar marginaljustering av texten</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation type="vanished">Vid import av textsymbol %1: ignorerar egen tjocklek (%2)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">Vid import av textsymbol %1: eget teckenavstånd inställt, implementationen matchar inte OCADs beteende än</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation type="vanished">Vid import av textsymbol %1: ignorerar egeninställt ordavstånd (%2%)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation type="vanished">Vid import av textsymbol %1: ignorerar egeninställda tabbavstånd (%2/%3)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation type="vanished">Vid import av textsymbol %1: ignorerar textram (läge %2)</translation>
-    </message>
-    <message>
-        <source>Unable to load object</source>
-        <translation type="vanished">Kunde inte ladda objekt</translation>
-    </message>
-    <message>
-        <source>Unable to import rectangle object</source>
-        <translation type="vanished">Kunde inte importera rektangelobjekt</translation>
-    </message>
-    <message>
-        <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="vanished">Importerar inte textsymbol, kunde inte beräkna bana (npts=%1): %2</translation>
-    </message>
-    <message>
-        <source>Unable to import template: %1</source>
-        <translation type="obsolete">Kunde inte importera bakgrundsbild: %1</translation>
-    </message>
-    <message>
-        <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation type="vanished">Kunde inte importera bakgrundsbild: &quot;%1&quot; verkar inte vara en rasterbild</translation>
-    </message>
-    <message>
-        <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="vanished">Försöker importera textobjekt med okänt koordinatformat</translation>
-    </message>
-    <message>
-        <source>Color id not found: %1, ignoring this color</source>
-        <translation type="vanished">Färg-ID gick inte att hitta: %1, ignorerar denna färg</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::ObjectQuery</name>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="360"/>
@@ -6030,17 +5823,6 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
         <translation>ogiltig</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdAreaSymbolCommon</name>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="vanished">I ytsymbol &quot;%1&quot;. Hoppar över fyllnadsmönster.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="vanished">I ytsymbol &quot;%1&quot;. Ett &quot;radskiftat&quot; mönster antas. Detta kan vara rätt eller fel.</translation>
     </message>
 </context>
 <context>
@@ -6372,47 +6154,6 @@ zooma med scrollhjulet om tillgängligt.</translation>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OcdLineSymbol</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">I linjesymbol &quot;%1&quot;. Kan inte visa slut/anslutnings-kombinationen.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdLineSymbolCommon</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">I linjesymbol &quot;%1&quot;. Kan inte visa slut/anslutnings-kombinationen.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="vanished">I linjesymbol &quot;%1&quot;. Ignorerar streckgrupperingen.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="vanished">I linjesymbol &quot;%1&quot;. Antalet streck i en grupp har minskats till 2.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="vanished">I linjesymbolen &quot;%1&quot; kan inte kantlinjen exporteras korrekt.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdTextSymbolBasic</name>
-    <message>
-        <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">I textsymbol %1: anpassat teckenavstånd är inställt, dess implementering matchar inte OCADs beteende ännu</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="vanished">I textsymbol %1: ignorerar understrykning</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="vanished">I textsymbol %1: ignorerar kerning</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::OgrFileExport</name>
     <message>
         <source>Couldn&apos;t find a driver for file extension %1</source>
@@ -6554,21 +6295,6 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="306"/>
         <source>Template file exists: &apos;%1&apos;</source>
         <translation>Bakgrundsfil finns: &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::PaintOnTemplateSelectDialog</name>
-    <message>
-        <source>Select template to draw onto</source>
-        <translation type="vanished">Välj bakgrundsbild att rita på</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Avbryt</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Rita</translation>
     </message>
 </context>
 <context>
@@ -7307,13 +7033,6 @@ separationer</translation>
     <message>
         <source>The map is empty, there is nothing to print!</source>
         <translation type="obsolete">Kartan är tom, det finns inget att skriva ut!</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::ProjectedCRSSelector</name>
-    <message>
-        <source>&amp;Coordinate reference system:</source>
-        <translation type="vanished">&amp;Koordinatsystem:</translation>
     </message>
 </context>
 <context>
@@ -9403,17 +9122,6 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <source>%1 nodes could not be processed correctly.</source>
         <translation type="vanished">%1 nod kunde inte bearbetas korrekt.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::TextBrowserDialog</name>
-    <message>
-        <source>External link: %1</source>
-        <translation type="vanished">Extern länk: %1</translation>
-    </message>
-    <message>
-        <source>Click to view</source>
-        <translation type="vanished">Klicka för att visa</translation>
     </message>
 </context>
 <context>

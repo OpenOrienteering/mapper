@@ -910,17 +910,6 @@
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::DXFParser</name>
-    <message>
-        <source>Could not open the file.</source>
-        <translation type="vanished">ファイルを開くことができませんでした。</translation>
-    </message>
-    <message>
-        <source>The file is not an DXF file.</source>
-        <translation type="vanished">ファイルがDXFファイルではありません。</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::DetermineFontSizeDialog</name>
     <message>
         <source>Determine font size</source>
@@ -1676,13 +1665,6 @@
         <location filename="../src/tools/fill_tool.cpp" line="243"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
         <translation>&lt;b&gt;クリック&lt;/b&gt;: 選択中の記号でエリアを塗りつぶします。塗りつぶすエリアは、線またはエリアで閉じている必要があります、他の記号は考慮しません。 </translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::Format</name>
-    <message>
-        <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="vanished">結合シンボル %1: インデックス %2 にサポートされていないサブシンボル。</translation>
     </message>
 </context>
 <context>
@@ -5723,194 +5705,6 @@ zoom using the mouse wheel, if available.</source>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OCAD8FileExport</name>
-    <message>
-        <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
-        <translation type="vanished">地図に256以上の色が含まれています。ocd バージョン 8 ではサポートされません。</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad が %1 を返しました</translation>
-    </message>
-    <message>
-        <source>Registration black is exported as a regular color.</source>
-        <translation type="vanished">レジストレーションブラックは、標準色としてエクスポートされます。</translation>
-    </message>
-    <message>
-        <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="vanished">エリアオブジェクトの塗りつぶしパターンのシフトをエクスポートできません</translation>
-    </message>
-    <message>
-        <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="vanished">見つからないテンプレートの正しい位置を保存できません: &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="vanished">&quot;%1&quot; 形式のテンプレートのエクスポートは、まだサポートされていません</translation>
-    </message>
-    <message>
-        <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="vanished">座標は、OCAD 8 描画領域に収まるように調整されます (-2 m ... 2 m)。</translation>
-    </message>
-    <message>
-        <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="vanished">一部の座標が OCAD 8 描画領域外に残っています。 OCAD で到達できない可能性があります。</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">線の記号「%1」で、キャップ/結合の組み合わせを表すことはできません。</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="vanished">線の記号「%1」で、ダッシュ グループを無視します。</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="vanished">線の記号「%1」で、グループの破線の数を 2 に減らしました。</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="vanished">線の記号「%1」で、境界線を正しくエクスポートできません。</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="vanished">エリア記号「%1」で、塗りつぶしパターンをスキップします。</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="vanished">エリア記号「%1」に「シフト行」ポイントパターンを想定します。これは正しくない可能性もあります。</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">テキスト記号 %1 で: カスタムの文字間隔を設定しました。その実装では OCAD の動作はまだ一致しません</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="vanished">テキスト記号 %1 で: 下線を無視しています</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="vanished">テキスト記号 %1 で: カーニングを無視しています</translation>
-    </message>
-    <message>
-        <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
-        <translation type="vanished">文字列を切り捨てました (切り捨てマークは 3 つの &apos;|&apos;): %1</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OCAD8FileImport</name>
-    <message>
-        <source>Could not allocate buffer.</source>
-        <translation type="vanished">バッファーを割り当てできませんでした。</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad が %1 を返しました</translation>
-    </message>
-    <message>
-        <source>OCAD files of version %1 are not supported!</source>
-        <translation type="vanished">バージョン %1 の OCAD ファイルはサポートされていません!</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation type="vanished">
-            <numerusform>%n 色セパレーションをスキップしました。理由: インポートが無効です。</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Could not load the spot color definitions, error: %1</source>
-        <translation type="vanished">スポットカラーの定義を読み込むことができません。エラー: %1</translation>
-    </message>
-    <message>
-        <source>Color &quot;Registration black&quot; is imported as a special color.</source>
-        <translation type="vanished">色「レジストレーションブラック」は、特別色としてインポートされます。</translation>
-    </message>
-    <message>
-        <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation type="vanished">記号 &quot;%3&quot; をインポートできません (%1.%2)</translation>
-    </message>
-    <message>
-        <source>OCAD import layer</source>
-        <translation type="vanished">OCADインポートレイヤー</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">破線のライン記号 %1 で、三角のキャップの長さが、始点と終点で異なっています (%2 と %3)。%4 を使用してください。</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
-        <translation type="vanished">破線のライン記号 %1 で、末端の長さを正しくインポートできません。</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation type="vanished">破線のライン記号 %1 で、末端のギャップを正しくインポートできません。</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">破線のライン記号 %1 で、本体と末端の長さが異なっています (%2 と %3)。%4 を使用してください。</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">破線のライン記号 %1 で、キャップ D と E が異なっています (%2 と %3)。%4 を使用してください。</translation>
-    </message>
-    <message>
-        <source>Line symbol %1: suppressing dash symbol at line ends.</source>
-        <translation type="vanished">線記号 %1: 線の終点のダッシュ記号を抑制します。</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation type="vanished">テキスト記号 %1 をインポートする際、テキストの均等割付を無視します</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation type="vanished">テキスト記号 %1 をインポートする際、文字の太さ (weight) を無視します (%2)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">テキスト記号 %1 をインポートする際、カスタムの文字間隔が設定されていますが、この実装はまだ OCAD の動作と一致しません</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation type="vanished">テキスト記号 %1 をインポートする際、カスタムの語間隔 (%2%) を無視します</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation type="vanished">テキスト記号 %1 をインポートする際、カスタムの字下げ (%2/%3) を無視します</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation type="vanished">テキスト記号 %1 をインポートする際、テキストフレーム (モード %2) を無視します</translation>
-    </message>
-    <message>
-        <source>Unable to load object</source>
-        <translation type="vanished">オブジェクトを読み込むことができません</translation>
-    </message>
-    <message>
-        <source>Unable to import rectangle object</source>
-        <translation type="vanished">矩形オブジェクトを読み込むことができません</translation>
-    </message>
-    <message>
-        <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="vanished">テキスト記号をインポートしません。パスを把握できませんでした (npts=%1): %2</translation>
-    </message>
-    <message>
-        <source>Unable to import template: %1</source>
-        <translation type="obsolete">テンプレートをインポートすることができません: %1</translation>
-    </message>
-    <message>
-        <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation type="vanished">テンプレートをインポートできません: 背景「%1」はラスター画像ではないようです</translation>
-    </message>
-    <message>
-        <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="vanished">不明な座標形式でテキスト オブジェクトをインポートしようとしています</translation>
-    </message>
-    <message>
-        <source>Color id not found: %1, ignoring this color</source>
-        <translation type="vanished">色 ID が見つかりませんでした %1 。この色を無視します</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::ObjectQuery</name>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="360"/>
@@ -5971,17 +5765,6 @@ zoom using the mouse wheel, if available.</source>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
         <translation>無効</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdAreaSymbolCommon</name>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="vanished">エリア記号「%1」で、塗りつぶしパターンをスキップします。</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="vanished">エリア記号「%1」に「シフト行」ポイントパターンを想定します。これは正しくない可能性もあります。</translation>
     </message>
 </context>
 <context>
@@ -6309,47 +6092,6 @@ zoom using the mouse wheel, if available.</source>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OcdLineSymbol</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">線の記号「%1」で、キャップ/結合の組み合わせを表すことはできません。</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdLineSymbolCommon</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">線の記号「%1」で、キャップ/結合の組み合わせを表すことはできません。</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="vanished">線の記号「%1」で、破線グループを無視します。</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="vanished">線の記号「%1」で、グループの破線の数を 2 に減らしました。</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="vanished">線の記号「%1」で、境界線を正しくエクスポートできません。</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdTextSymbolBasic</name>
-    <message>
-        <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">テキスト記号 %1: カスタム文字間隔が設定され、その実装はまだ OCAD の動作と一致しません</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="vanished">テキスト記号 %1 で: 下線を無視しています</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="vanished">テキスト記号 %1 で: カーニングを無視しています</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::OgrFileExport</name>
     <message>
         <source>Couldn&apos;t find a driver for file extension %1</source>
@@ -6490,21 +6232,6 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="306"/>
         <source>Template file exists: &apos;%1&apos;</source>
         <translation>テンプレートファイルが存在します: &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::PaintOnTemplateSelectDialog</name>
-    <message>
-        <source>Select template to draw onto</source>
-        <translation type="vanished">書き込むテンプレートを選択</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">キャンセル</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">書き込む</translation>
     </message>
 </context>
 <context>
@@ -7285,13 +7012,6 @@ separations</source>
     <message>
         <source>The map is empty, there is nothing to print!</source>
         <translation type="obsolete">印刷する地図がありません!</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::ProjectedCRSSelector</name>
-    <message>
-        <source>&amp;Coordinate reference system:</source>
-        <translation type="vanished">座標参照系 (&amp;C) :</translation>
     </message>
 </context>
 <context>
@@ -9417,17 +9137,6 @@ The maximum supported version is %2.</source>
     <message>
         <source>%1 nodes could not be processed correctly.</source>
         <translation type="vanished">%1 ノードを正しく処理できませんでした。</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::TextBrowserDialog</name>
-    <message>
-        <source>External link: %1</source>
-        <translation type="vanished">外部リンク: %1</translation>
-    </message>
-    <message>
-        <source>Click to view</source>
-        <translation type="vanished">クリックすると表示</translation>
     </message>
 </context>
 <context>

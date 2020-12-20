@@ -859,17 +859,6 @@
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::DXFParser</name>
-    <message>
-        <source>Could not open the file.</source>
-        <translation type="vanished">Tiedostoa ei voitu avata.</translation>
-    </message>
-    <message>
-        <source>The file is not an DXF file.</source>
-        <translation type="vanished">Tiedosto ei ole DXF-tiedosto.</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::DetermineFontSizeDialog</name>
     <message>
         <source>Determine font size</source>
@@ -1537,13 +1526,6 @@
         <location filename="../src/tools/fill_tool.cpp" line="243"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
         <translation>&lt;b&gt;Click&lt;/b&gt;: Täytä alue aktivoidulla symbolilla. Täytetty alueen täytyy olla ympäröity viivoilla tai alueilla. Muita symboleita ei oteta huomioon. </translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::Format</name>
-    <message>
-        <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="vanished">Koostettu symboli %1: Koostavaa symbolia kohdassa %2 ei tueta.</translation>
     </message>
 </context>
 <context>
@@ -5372,191 +5354,6 @@ zoomaa hiiren rullalla.</translation>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OCAD8FileExport</name>
-    <message>
-        <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
-        <translation type="vanished">Kartassa on enemmän kuin 256 väriä mitä ei tueta Ocad 8-versiossa.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad palautti %1</translation>
-    </message>
-    <message>
-        <source>Registration black is exported as a regular color.</source>
-        <translation type="vanished">Värierottelu viedään tavallisena värinä.</translation>
-    </message>
-    <message>
-        <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="vanished">Täyttökuvion siirtoa ei voi viedä</translation>
-    </message>
-    <message>
-        <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="vanished">Taustakartan sijainnin tallennus epäonnistui: taustakartta &quot;%1&quot; puuttuu</translation>
-    </message>
-    <message>
-        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="vanished">Taustakarttaa ei voi viedä: tiedostomuotoa &quot;%1&quot; ei vielä tueta</translation>
-    </message>
-    <message>
-        <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="vanished">Koordinaatit ovat mukautettu sopimaan OCAD 8 piirtoalueeseen (-2 m ... 2 m).</translation>
-    </message>
-    <message>
-        <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="vanished">Jotkut koordinaatit pysyvät OCAD 8 piirtoalueen ulkopuolella. Ne saattavat olla saavuttamattomia OCADissa.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">Viivasymbolissa &quot;%1&quot;, viivan pää/liitos-yhdistelmää ei voida esittää.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="vanished">Viivasymbolissa &quot;%1&quot;,katkoviivojen ryhmiä ei huomioida.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="vanished">Viivasymbolissa &quot;%1&quot;, katkoviivojen määrä ryhmässä vähennetään kahteen.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="vanished">Viivasymbolissa &quot;%1&quot;, reunaviivoja ei voida viedä oikein.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="vanished">Aluesymbolissa &quot;%1&quot;, ohitetaan täyttökuvio.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="vanished">Aluesymbolissa &quot;%1&quot;, oletetaan &quot;siirretyt rivit&quot;-kuvio. Voi olla oikein tai väärin.</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">Tekstisymbolissa %1: käytetään muokattua merkkiväliä, OCAD ei vielä tue sen esittämistä</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="vanished">Tekstisymbolissa %1: ohitetaan alleviivaus</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="vanished">Tekstisymbolissa %1: ohitetaan välistys</translation>
-    </message>
-    <message>
-        <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
-        <translation type="vanished">Merkkijono typistetty (typisteys merkitty kolmella &apos;|&apos;): %1</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OCAD8FileImport</name>
-    <message>
-        <source>Could not allocate buffer.</source>
-        <translation type="vanished">Ei voitu varata puskuria.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad palautti %1</translation>
-    </message>
-    <message>
-        <source>OCAD files of version %1 are not supported!</source>
-        <translation type="vanished">OCAD version %1 tiedostoja ei tueta!</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation type="vanished">
-            <numerusform>%n värierottelu ohitettiin, tuonti ei toiminnassa.</numerusform>
-            <numerusform>%n värierottelua ohitettiin, tuonti ei toiminnassa.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Could not load the spot color definitions, error: %1</source>
-        <translation type="vanished">Spottivärin määrittelyä ei voitu ladata, virhe %1</translation>
-    </message>
-    <message>
-        <source>Color &quot;Registration black&quot; is imported as a special color.</source>
-        <translation type="vanished">Väri &quot;Värierottelu&quot; tuodaan erikoisvärinä.</translation>
-    </message>
-    <message>
-        <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation type="vanished">Ei voitu tuoda symbolia &quot;%3&quot; (%1 %2)</translation>
-    </message>
-    <message>
-        <source>OCAD import layer</source>
-        <translation type="vanished">OCAD tuontitaso</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">Katkoviivasymbolissa %1 terävän viivanpään pituus on eri alussa ja lopussa (%2 ja %3). Käytetään %4.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
-        <translation type="vanished">Katkoviivasymbolissa %1 loppuosan pituutta ei voi tuoda oikein.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation type="vanished">Katkoviivasymbolissa %1 viivanpään loppua ei voi tuoda oikein.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">Katkoviivasymbolissa %1 pääviivan ja loppuosan pituudet ovat erilaiset (%2 ja %3). Käytetään %4.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">Katkoviivasymbolissa %1 katkot D ja E ovat erilaiset (%2 ja %3). Käytetään %4.</translation>
-    </message>
-    <message>
-        <source>Line symbol %1: suppressing dash symbol at line ends.</source>
-        <translation type="vanished">Viivasymboli %1: häivytetään solmupisteen symboli viivan päistä.</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation type="vanished">Tekstisymbolin %1 tuonti: ohitetaan tasattu tasaus</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation type="vanished">Tekstisymbolin %1 tuonti: ohitetaan muokattu korostus (%2)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">Tekstisymbolin %1 tuonti: muokattu merkkiväli on käytössä, OCAD ei vielä tue sen esittämistä</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation type="vanished">Tekstisymbolin %1 tuonti: ohitetaan muokattu sanaväli (%2%)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation type="vanished">Tekstisymbolin %1 tuonti: ohitetaan muokattu sisennys (%2/%3)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation type="vanished">Tekstisymbolin %1 tuonti: ohitetaan tekstin kehykset (muoto %2)</translation>
-    </message>
-    <message>
-        <source>Unable to load object</source>
-        <translation type="vanished">Kohdetta ei voitu ladata</translation>
-    </message>
-    <message>
-        <source>Unable to import rectangle object</source>
-        <translation type="vanished">Suorakulmaista kohdetta ei voitu tuoda</translation>
-    </message>
-    <message>
-        <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="vanished">Tekstisymbolia ei tuoda, couldn&apos;t figure out path&apos; (npts=%1): %2</translation>
-    </message>
-    <message>
-        <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation type="vanished">Taustakartta ei voitu tuoda: tausta &quot;%1&quot; ei näyttäisi olevan rasterikuva</translation>
-    </message>
-    <message>
-        <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="vanished">Yritetään tuoda tekstisymbolia jonka koordinaattimuotoa ei tunnisteta</translation>
-    </message>
-    <message>
-        <source>Color id not found: %1, ignoring this color</source>
-        <translation type="vanished">Värin id ei löydy: %1, ohitetaan tämä väri</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::ObjectQuery</name>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="360"/>
@@ -5617,17 +5414,6 @@ zoomaa hiiren rullalla.</translation>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
         <translation>virheellinen</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdAreaSymbolCommon</name>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="vanished">Aluesymbolissa &quot;%1&quot;, ohitetaan täyttökuvio.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="vanished">Aluesymbolissa &quot;%1&quot;, oletetaan &quot;siirretyt rivit&quot;-kuvio. Voi olla oikein tai väärin.</translation>
     </message>
 </context>
 <context>
@@ -5959,47 +5745,6 @@ zoomaa hiiren rullalla.</translation>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OcdLineSymbol</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">Viivasymbolissa &quot;%1&quot;, viivan pää/liitos-yhdistelmää ei voida esittää.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdLineSymbolCommon</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">Viivasymbolissa &quot;%1&quot;, viivan pää/liitos-yhdistelmää ei voida esittää.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="vanished">Viivasymbolissa &quot;%1&quot;, katkoviivojen ryhmiä ei huomioida.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="vanished">Viivasymbolissa &quot;%1&quot;, katkoviivojen määrä ryhmässä vähennetään kahteen.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="vanished">Viivasymbolissa &quot;%1&quot;, reunaviivoja ei voida viedä oikein.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdTextSymbolBasic</name>
-    <message>
-        <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">Tekstisymbolissa %1: mukautettu merkkijako päällä, se ei vastaa vielä OCD käyttäytymistä</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="vanished">Tekstisymbolissa %1: ohitetaan alleviivaus</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="vanished">Tekstisymbolissa %1: ohitetaan välistys</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::OgrFileExport</name>
     <message>
         <source>Couldn&apos;t find a driver for file extension %1</source>
@@ -6141,21 +5886,6 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="306"/>
         <source>Template file exists: &apos;%1&apos;</source>
         <translation>Taustakartta-tiedosto on olemassa: &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::PaintOnTemplateSelectDialog</name>
-    <message>
-        <source>Select template to draw onto</source>
-        <translation type="vanished">Valitse taustakartta johon haluat piirtää</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Peruuta</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Piirrä</translation>
     </message>
 </context>
 <context>
@@ -6836,13 +6566,6 @@ erottelut</translation>
         <location filename="../src/gui/print_widget.cpp" line="1448"/>
         <source>The map area is empty. Output canceled.</source>
         <translation>Kartan alue on tyhjä. Tulostus keskeytettiin.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::ProjectedCRSSelector</name>
-    <message>
-        <source>&amp;Coordinate reference system:</source>
-        <translation type="vanished">&amp;Koordinaattijärjestelmä:</translation>
     </message>
 </context>
 <context>
@@ -8798,17 +8521,6 @@ Tuetaan vain versioon %2 asti.</translation>
     <message>
         <source>%1 nodes could not be processed correctly.</source>
         <translation type="vanished">%1 solmupistettä(node) ei voitu käsitellä oikein.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::TextBrowserDialog</name>
-    <message>
-        <source>External link: %1</source>
-        <translation type="vanished">Ulkoinen linkki: %1</translation>
-    </message>
-    <message>
-        <source>Click to view</source>
-        <translation type="vanished">Klikkaa nähdäksesi</translation>
     </message>
 </context>
 <context>

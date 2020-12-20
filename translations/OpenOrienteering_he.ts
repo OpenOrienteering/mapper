@@ -827,17 +827,6 @@
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::DXFParser</name>
-    <message>
-        <source>Could not open the file.</source>
-        <translation type="vanished">לא היתה אפשרות לפתוח את הקובץ.</translation>
-    </message>
-    <message>
-        <source>The file is not an DXF file.</source>
-        <translation type="vanished">הקובץ אינו קובץ DXF.</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::DetermineFontSizeDialog</name>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="116"/>
@@ -4866,25 +4855,6 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="262"/>
         <source>All files</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OCAD8FileExport</name>
-    <message>
-        <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="obsolete">לא ניתן לשמור את המיקום הנכון של התבנית החסרה: &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="obsolete">לא ניתן לייצא: סוג קובץ &quot;%1&quot; לא נתמך כעת</translation>
-    </message>
-    <message>
-        <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="obsolete">הקורדינאטות שונו בכדי להתאים לאזור השרטוט של OCAD גרסא 8 (-2 m ... 2 m).</translation>
-    </message>
-    <message>
-        <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="obsolete">חלק מהקורדינאטות נשארו מחוץ לאזור השרטוט של OCAD 8. יש סיכוי שלא תוכל להשיגם בOCAD.</translation>
     </message>
 </context>
 <context>

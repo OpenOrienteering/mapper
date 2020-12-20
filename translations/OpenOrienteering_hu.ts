@@ -861,17 +861,6 @@
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::DXFParser</name>
-    <message>
-        <source>Could not open the file.</source>
-        <translation type="vanished">A fájl nem megnyitható.</translation>
-    </message>
-    <message>
-        <source>The file is not an DXF file.</source>
-        <translation type="vanished">Ez a fájl nem egy DXF fájl.</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::DetermineFontSizeDialog</name>
     <message>
         <source>Determine font size</source>
@@ -1547,13 +1536,6 @@
         <location filename="../src/tools/fill_tool.cpp" line="243"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
         <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Terület kitöltése aktív szimbólummal. A kitöltendő területet vonalaknak, vagy más területeknek kell határolniuk, más szimbólumok nem vehetők figyelembe. </translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::Format</name>
-    <message>
-        <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="vanished">A (z) %1 egyesített szimbólumban: nem támogatott részszimbólum a (z) %2 indexnél.</translation>
     </message>
 </context>
 <context>
@@ -5308,192 +5290,6 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OCAD8FileExport</name>
-    <message>
-        <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
-        <translation type="vanished">A térkép több, mint 256 színt tartalmaz, ami nem támogatott az OCAD8-as verzióban.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad visszatért %1</translation>
-    </message>
-    <message>
-        <source>Registration black is exported as a regular color.</source>
-        <translation type="vanished">Fekete beállítás helyi színként exportálva.</translation>
-    </message>
-    <message>
-        <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="vanished">Nem lehet exportálni a terület objektum megváltoztatott kitöltési mintáját</translation>
-    </message>
-    <message>
-        <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="vanished">Képtelenség helyes pozícióba menteni az elveszett &quot;%1&quot; hátteret</translation>
-    </message>
-    <message>
-        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="vanished">Nem exportálható háttér: %1 típusú fájl jelenleg nem támogatott</translation>
-    </message>
-    <message>
-        <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="vanished">A koordináták adaptálva lettek, hogy illeszkedjenek OCAD-8-rajz területbe (-2 m … 2 m).</translation>
-    </message>
-    <message>
-        <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="vanished">Néhány koordináta kívül esik az OCAD 8 rajzterületen. Lehet, hogy elérhetetlenek lesznek OCAD-ben.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">A(z) &quot;%1&quot; vonalas szimbólumban ebben a kombinációban nem ábrázolható.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="vanished">A(z) &quot;%1&quot; vonalas szimbólumban a szaggatott vonalak csoportosítása kihagyva.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="vanished">A(z) &quot;%1&quot; vonalas szimbólumban, a szaggatott vonalak csoporton belüli száma kettőre csökkentve.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="vanished">A(z) &quot;%1&quot; vonalas szimbólumban a szegélyek nem exportálhatók megfelelően.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="vanished">A(z) &quot;%1&quot; terület szimbólumban a kitöltési minta kihagyva.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="vanished">A(z) &quot;%1&quot; terület szimbólumban váltakozó pontsoros minta alkalmazva. Ez lehet hogy megfelelő, de az is hogy nem.</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">A(z) &quot;%1&quot; szöveges szimbólumban: egyedi betűköz van beállítva, aminek a végrehajtása egyelőre nem illeszkedik az OCAD működéséhez</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="vanished">A(z) &quot;%1&quot; szöveges objektumban: aláhúzás figyelmen kívül hagyva</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="vanished">A(z) &quot;%1&quot; szöveges szimbólumban: alsó index figyelmen kívül hagyva</translation>
-    </message>
-    <message>
-        <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
-        <translation type="vanished">A szöveg levágva (A vágást három &apos;|&apos; karakter jelzi): %1</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OCAD8FileImport</name>
-    <message>
-        <source>Could not allocate buffer.</source>
-        <translation type="vanished">Háttérkapacitás foglalása sikertelen.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad visszatért %1</translation>
-    </message>
-    <message>
-        <source>OCAD files of version %1 are not supported!</source>
-        <translation type="vanished">Az OCAD %1 verziójú fájlok nem támogatottak!</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <extracomment>The singular form will not be used!</extracomment>
-        <extracomment>The singular form will not be used!</extracomment>
-        <translation type="vanished">
-            <numerusform>%n szín(ek)kiszorítása kihagyva, eredmény: Import letiltott.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Could not load the spot color definitions, error: %1</source>
-        <translation type="vanished">Pontszín betöltése sikertelen, hiba: %1</translation>
-    </message>
-    <message>
-        <source>Color &quot;Registration black&quot; is imported as a special color.</source>
-        <translation type="vanished">&quot;Fekete beállítás&quot; szín különleges színként importálva.</translation>
-    </message>
-    <message>
-        <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation type="vanished">Szimbólum &quot;%3&quot; importálása sikertelen (%1.%2)</translation>
-    </message>
-    <message>
-        <source>OCAD import layer</source>
-        <translation type="vanished">OCAD importálási réteg</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">A(z) %1 szaggatott vonalas szimbólumban különböző végződések (%2 és %3) vannak. %4 alkalmazva.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
-        <translation type="vanished">A(z) %1 szaggatott vonalas szimbólumban a végződés hossza nem importálható megfelelően.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation type="vanished">A(z) %1 szaggatott vonalas szimbólumban a befejeződési távolság nem importálható megfelelően.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">A(z) %1 szaggatott vonalas szimbólumban a fő és a záró távolságok (%2 és %3) eltérnek. %4 alkalmazva.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">A(z) %1 szaggatott vonalas szimbólumban D és E távolságok eltérnek. (%2 és %3). %4 alkalmazva.</translation>
-    </message>
-    <message>
-        <source>Line symbol %1: suppressing dash symbol at line ends.</source>
-        <translation type="vanished">A(z) %1 vonal szimbólum végeinél a szaggatott jel elnyomva.</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation type="vanished">A(z) %1 szöveges szimbólum importálása során: sorkizárás figyelmen kívül hagyva</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation type="vanished">A(z) %1 szöveges szimbólum importálása során: (%2) egyedi súlyozás figyelmen kívül hagyva</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">A(z) %1 szöveges szimbólum importálása során: egyedi betűköz van beállítva, aminek a végrehajtása egyelőre nem illeszkedik az OCAD működéséhez</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation type="vanished">A(z) %1 szöveges szimbólum importálása során: (%2%) egyedi betűköz beállítás figyelmen kívül hagyva</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation type="vanished">A(z) %1 szöveges szimbólum importálása során: (%2/%3) egyedi bekezdés beállítások figyelmen kívül hagyva</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation type="vanished">A(z) %1 szöveges szimbólum importálása során: (%2) szövegkeretezés figyelmen kívül hagyva</translation>
-    </message>
-    <message>
-        <source>Unable to load object</source>
-        <translation type="vanished">Objektum betöltése sikertelen</translation>
-    </message>
-    <message>
-        <source>Unable to import rectangle object</source>
-        <translation type="vanished">Szögletes objektum importálása sikertelen</translation>
-    </message>
-    <message>
-        <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="vanished">Szöveg szimbólum importálás sikertelen, útvonal nem található &apos; (npts=%1): %2</translation>
-    </message>
-    <message>
-        <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation type="vanished">Háttér importálása sikertelen: a &quot;%1&quot; háttérkép nem raszteres</translation>
-    </message>
-    <message>
-        <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="vanished">Ismeretlen koordináta formátumú szöveges objektum importálásának megkísérlése</translation>
-    </message>
-    <message>
-        <source>Color id not found: %1, ignoring this color</source>
-        <translation type="vanished">Színkód nem ismert: %1, ez a szín figyelmen kívül hagyva</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::ObjectQuery</name>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="360"/>
@@ -5554,17 +5350,6 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
         <translation>érvénytelen</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdAreaSymbolCommon</name>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="vanished">A(z) &quot;%1&quot; terület szimbólumban a kitöltési minta kihagyva.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="vanished">A(z) &quot;%1&quot; terület szimbólumban váltakozó pontsoros minta alkalmazva. Ez lehet hogy megfelelő, de az is hogy nem.</translation>
     </message>
 </context>
 <context>
@@ -5896,47 +5681,6 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OcdLineSymbol</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">A(z) &quot;%1&quot; vonalas szimbólumban nem ábrázolható a vég/csatlakozás kombinációja.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdLineSymbolCommon</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">A(z) &quot;%1&quot; vonalas szimbólumban nem ábrázolható a vég/csatlakozás kombinációja.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="vanished">A(z) &quot;%1&quot; vonalas szimbólumban a szaggatott vonalak csoportosítása kihagyva.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="vanished">A(z) &quot;%1&quot; vonal szimbólumban, a szaggatott vonalak csoporton belüli száma kettőre csökkent.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="vanished">A(z) &quot;%1&quot; vonal szimbólumban a szegélyek nem exportálhatók megfelelően.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdTextSymbolBasic</name>
-    <message>
-        <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">A(z) &quot;%1&quot; szöveges szimbólumban egyedi betűköz van beállítva, aminek a viselkedése egyelőre nem illeszkedik az OCAD-hoz</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="vanished">A(z) &quot;%1&quot; szöveges szimbólumban: aláhúzás figyelmen kívül hagyva</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="vanished">A(z) &quot;%1&quot; szöveges szimbólumban: alsó index (alávágás) figyelmen kívül hagyva</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::OgrFileExport</name>
     <message>
         <source>Couldn&apos;t find a driver for file extension %1</source>
@@ -6079,21 +5823,6 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="306"/>
         <source>Template file exists: &apos;%1&apos;</source>
         <translation>Háttérfájl létezik: &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::PaintOnTemplateSelectDialog</name>
-    <message>
-        <source>Select template to draw onto</source>
-        <translation type="vanished">Válasszon hátteret a rárajzoláshoz</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Mégsem</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Rajzol</translation>
     </message>
 </context>
 <context>
@@ -6762,13 +6491,6 @@ bontás</translation>
         <location filename="../src/gui/print_widget.cpp" line="1448"/>
         <source>The map area is empty. Output canceled.</source>
         <translation>A térkép területe üres. A kimenet elvetve.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::ProjectedCRSSelector</name>
-    <message>
-        <source>&amp;Coordinate reference system:</source>
-        <translation type="vanished">&amp;Koordináta hivatkozási rendszer:</translation>
     </message>
 </context>
 <context>
@@ -8831,17 +8553,6 @@ A legnagyobb támogatott verzió a %2.</translation>
     <message>
         <source>- Map -</source>
         <translation type="vanished">- Térkép -</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::TextBrowserDialog</name>
-    <message>
-        <source>External link: %1</source>
-        <translation type="obsolete">Külső link: %1</translation>
-    </message>
-    <message>
-        <source>Click to view</source>
-        <translation type="obsolete">Kattins a megtekintéshez</translation>
     </message>
 </context>
 <context>

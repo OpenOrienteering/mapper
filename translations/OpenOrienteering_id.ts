@@ -826,17 +826,6 @@
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::DXFParser</name>
-    <message>
-        <source>Could not open the file.</source>
-        <translation type="vanished">Tidak dapat membuka file.</translation>
-    </message>
-    <message>
-        <source>The file is not an DXF file.</source>
-        <translation type="vanished">File yang bukanlah DXF file.</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::DetermineFontSizeDialog</name>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="116"/>
@@ -5121,178 +5110,6 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OCAD8FileExport</name>
-    <message>
-        <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
-        <translation type="vanished">Peta berisi lebih dari 256 warna yang tidak didukung oleh ocd versi 8.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad kembali %1</translation>
-    </message>
-    <message>
-        <source>Registration black is exported as a regular color.</source>
-        <translation type="vanished">Pendaftaran hitam diekspor sebagai warna yang biasa.</translation>
-    </message>
-    <message>
-        <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="vanished">Tidak dapat mengekspor pergeseran pola mengisi sebuah objek daerah</translation>
-    </message>
-    <message>
-        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="vanished">Tidak dapat mengekspor template: file jenis &quot;%1&quot; tidak didukung namun</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">Dalam baris simbol &quot;%1&quot;, tidak bisa mewakili topi bergabung-dengan kombinasi.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="vanished">Dalam baris simbol &quot;%1&quot;, mengabaikan pengelompokan dash.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="vanished">Dalam baris simbol &quot;%1&quot;, jumlah berlari dalam kelompok telah berkurang menjadi 2.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="vanished">Dalam baris simbol &quot;%1&quot;, tidak dapat mengekspor perbatasan dengan benar.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="vanished">Di daerah simbol &quot;%1&quot;, melompat-lompat pola mengisi.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="vanished">Di daerah simbol &quot;%1&quot;, dengan asumsi &quot;bergeser baris&quot; titik pola. Ini mungkin benar serta salah.</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">Dalam teks simbol %1: spasi karakter kustom terletak, pelaksanaannya tidak sesuai perilaku OCAD yang belum</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="vanished">Dalam teks simbol %1: mengabaikan menggarisbawahi</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="vanished">Dalam teks simbol %1: mengabaikan highlight</translation>
-    </message>
-    <message>
-        <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
-        <translation type="vanished">String yang terpotong (pemotongan ditandai dengan tiga &apos;|&apos;): %1</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OCAD8FileImport</name>
-    <message>
-        <source>Could not allocate buffer.</source>
-        <translation type="vanished">Tidak dapat mengalokasikan buffer.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad kembali %1</translation>
-    </message>
-    <message>
-        <source>OCAD files of version %1 are not supported!</source>
-        <translation type="vanished">OCAD file versi %1 tidak didukung!</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation type="vanished">
-            <numerusform>%n warna separation(s) telah dicetak, alasan: impor Cacat.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Could not load the spot color definitions, error: %1</source>
-        <translation type="vanished">Tidak dapat memuat spot color untuk definisi, kesalahan: %1</translation>
-    </message>
-    <message>
-        <source>Color &quot;Registration black&quot; is imported as a special color.</source>
-        <translation type="vanished">Warna &quot;Pendaftaran hitam&quot; diimpor sebagai warna khusus.</translation>
-    </message>
-    <message>
-        <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation type="vanished">Dapat mengimpor simbol &quot;%3&quot; (%1.%2)</translation>
-    </message>
-    <message>
-        <source>OCAD import layer</source>
-        <translation type="vanished">OCAD impor lapisan</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">Di garis putus-putus simbol %1, menunjuk topi panjang untuk mulai dan akhir berbeda (%2 dan %3). Menggunakan %4.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
-        <translation type="vanished">Di garis putus-putus simbol %1, panjang akhir tidak dapat diimpor dengan benar.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation type="vanished">Di garis putus-putus simbol %1, kesenjangan akhir tidak dapat diimpor dengan benar.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">Pada garis putus-putus simbol %1, utama dan akhir panjang berbeda (%2 dan %3). Menggunakan %4.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">Di garis putus-putus simbol %1, kesenjangan D dan E berbeda (%2 dan %3). Menggunakan %4.</translation>
-    </message>
-    <message>
-        <source>Line symbol %1: suppressing dash symbol at line ends.</source>
-        <translation type="vanished">Baris simbol %1: menekan simbol dash di ujung baris.</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation type="vanished">Selama impor teks simbol %1: mengabaikan perataan tengah</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation type="vanished">Selama impor teks simbol %1: mengabaikan kustom berat (%2)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">Selama impor teks simbol %1: spasi karakter kustom terletak, pelaksanaannya tidak sesuai perilaku OCAD yang belum</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation type="vanished">Selama impor teks simbol %1: mengabaikan spasi kustom kata (%2%)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation type="vanished">Selama impor teks simbol %1: mengabaikan kustom indentasi (%2/%3)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation type="vanished">Selama impor teks simbol %1: mengabaikan teks pembingkaian (mode %2)</translation>
-    </message>
-    <message>
-        <source>Unable to load object</source>
-        <translation type="vanished">Tidak dapat memuat objek</translation>
-    </message>
-    <message>
-        <source>Unable to import rectangle object</source>
-        <translation type="vanished">Dapat mengimpor objek persegi panjang</translation>
-    </message>
-    <message>
-        <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="vanished">Tidak mengimpor simbol teks, tidak tahu jalan &apos; (npts = %1): %2</translation>
-    </message>
-    <message>
-        <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation type="vanished">Dapat mengimpor template: latar belakang &quot;%1&quot; tidak ada gambar raster</translation>
-    </message>
-    <message>
-        <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="vanished">Mencoba untuk mengimpor sebuah obyek teks dengan format koordinat yang tidak diketahui</translation>
-    </message>
-    <message>
-        <source>Color id not found: %1, ignoring this color</source>
-        <translation type="vanished">Id warna tidak ditemukan: %1, mengabaikan warna ini</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::ObjectQuery</name>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="360"/>
@@ -5353,17 +5170,6 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdAreaSymbolCommon</name>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="obsolete">Di daerah simbol &quot;%1&quot;, melompat-lompat pola mengisi.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="obsolete">Di daerah simbol &quot;%1&quot;, dengan asumsi &quot;bergeser baris&quot; titik pola. Ini mungkin benar serta salah.</translation>
     </message>
 </context>
 <context>
@@ -5691,43 +5497,6 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OcdLineSymbol</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="obsolete">Dalam baris simbol &quot;%1&quot;, tidak bisa mewakili topi bergabung-dengan kombinasi.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdLineSymbolCommon</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="obsolete">Dalam baris simbol &quot;%1&quot;, tidak bisa mewakili topi bergabung-dengan kombinasi.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="obsolete">Dalam baris simbol &quot;%1&quot;, mengabaikan pengelompokan dash.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="obsolete">Dalam baris simbol &quot;%1&quot;, jumlah berlari dalam kelompok telah berkurang menjadi 2.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="obsolete">Dalam baris simbol &quot;%1&quot;, tidak dapat mengekspor perbatasan dengan benar.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdTextSymbolBasic</name>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="obsolete">Dalam teks simbol %1: mengabaikan menggarisbawahi</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="obsolete">Dalam teks simbol %1: mengabaikan highlight</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::OgrFileExport</name>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1959"/>
@@ -5859,21 +5628,6 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="306"/>
         <source>Template file exists: &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::PaintOnTemplateSelectDialog</name>
-    <message>
-        <source>Select template to draw onto</source>
-        <translation type="vanished">Pilih template untuk menarik ke</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Batal</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Menggambar</translation>
     </message>
 </context>
 <context>
@@ -8416,17 +8170,6 @@ Didukung versi maksimum adalah %2.</translation>
     <message>
         <source>%1 nodes could not be processed correctly.</source>
         <translation type="vanished">node %1 tidak akan diproses dengan benar.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::TextBrowserDialog</name>
-    <message>
-        <source>External link: %1</source>
-        <translation type="vanished">Link eksternal: %1</translation>
-    </message>
-    <message>
-        <source>Click to view</source>
-        <translation type="vanished">Klik untuk melihat</translation>
     </message>
 </context>
 <context>

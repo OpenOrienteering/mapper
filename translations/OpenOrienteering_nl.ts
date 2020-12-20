@@ -838,17 +838,6 @@
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::DXFParser</name>
-    <message>
-        <source>Could not open the file.</source>
-        <translation type="vanished">Het bestand kon niet geopend worden.</translation>
-    </message>
-    <message>
-        <source>The file is not an DXF file.</source>
-        <translation type="vanished">Dit is geen DXF-bestand.</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::DetermineFontSizeDialog</name>
     <message>
         <source>Determine font size</source>
@@ -5463,187 +5452,6 @@ en gebruik -indien beschikbaar- het muiswiel om uit te vergroten/verkleinen.</tr
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OCAD8FileExport</name>
-    <message>
-        <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
-        <translation type="vanished">De kaart bevat meer dan 256 kleuren, wat doro ocd-versie 8 niet wordt ondersteund.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad-fout %1</translation>
-    </message>
-    <message>
-        <source>Registration black is exported as a regular color.</source>
-        <translation type="vanished">Process-zwart is als reguliere kleur opgeslagen.</translation>
-    </message>
-    <message>
-        <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="vanished">Het is niet mogelijk op vlak-vullings verschuiving voor een oppervlak-object te exporteren</translation>
-    </message>
-    <message>
-        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="vanished">Het is niet mogelijk om het sjabloon te exporteren: bestanden met type &quot;%1&quot; worden nog niet ondersteund</translation>
-    </message>
-    <message>
-        <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="vanished">Coördinaten zijn aangepast om binnen het OCAD 8 werkgebied te passen (-2 m ... 2 m).</translation>
-    </message>
-    <message>
-        <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="vanished">Enkele coördinaten vallen nog buiten het OCAD 8 werkgebied. Deze zouden niet bereikbaar kunnen zijn in OCAD.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="vanished">De combinatie van uiteinde/knikpunt van lijn-symbool &quot;%1&quot; kan niet worden weergegeven.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="vanished">Streep-groepering in lijn-symbool &quot;%1&quot; is weggelaten.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="vanished">Het aantal strepen in een groep in lijn-symbool &quot;%1&quot; is teruggebracht tot 2.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="vanished">De randen in lijn-symbool &quot;%1&quot; kunnen niet correct worden geëxporteerd.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="vanished">Vulpatroon in vlak-symbool &quot;%1&quot; is weggelaten.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="vanished">Aangenomen werd dat een &quot;verschoven rijen&quot; punten-patroon werd bedoeld in vlak-symbool &quot;%1&quot;. Dan kan wel of niet juist zijn.</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">In tekst-symbool &quot;%1&quot; is een aangepaste letter-afstand gebuikt. De implementatie daar van komt nog niet overeen met het gedrag van OCAD</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="vanished">De onderstreping van tekst-symbool &quot;%1&quot; is achterwege gelaten</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="vanished">De afspatiëring in tekst-symbool &quot;%1&quot; is niet toegepast</translation>
-    </message>
-    <message>
-        <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
-        <translation type="vanished">Regel afgebroken (afbreekplaats is met drie &apos;|&apos; aangegeven): %1</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OCAD8FileImport</name>
-    <message>
-        <source>Could not allocate buffer.</source>
-        <translation type="vanished">Kan buffer niet alloceren.</translation>
-    </message>
-    <message>
-        <source>libocad returned %1</source>
-        <translation type="vanished">libocad-fout %1</translation>
-    </message>
-    <message>
-        <source>OCAD files of version %1 are not supported!</source>
-        <translation type="vanished">OCAD-bestanden in versie %1 worden niet ondersteund!</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation type="vanished">
-            <numerusform>Een kleurscheiding is overgeslagen, met reden: Importeren is uitgezet.</numerusform>
-            <numerusform>%n kleurscheidingen zijn overgeslagen, met reden: Importeren is uitgezet.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Could not load the spot color definitions, error: %1</source>
-        <translation type="vanished">Inlezen van steunkleur-definities mislukt, fout: %1</translation>
-    </message>
-    <message>
-        <source>Color &quot;Registration black&quot; is imported as a special color.</source>
-        <translation type="vanished">Kleur &quot;CMYK-zwart&quot; is als speciale kleur geimporteerd.</translation>
-    </message>
-    <message>
-        <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation type="vanished">Kan symbool &quot;%3&quot; (%1.%2) niet importeren</translation>
-    </message>
-    <message>
-        <source>OCAD import layer</source>
-        <translation type="vanished">OCAD-import laag</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">In gestreept lijn-symbool %1 sind de lengtes voor de uiteinden aan het begin en eind verschillend (%2 and %3); %4 wordt gebruikt.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
-        <translation type="vanished">In gestreept lijn-symbool %1 kan de lengte van het eindpunt niet correct geimporteerd worden.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation type="vanished">In gestreept lijn-symbool %1 kan de opening van het eindpunt niet correct geimporteerd worden.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">In gestreept lijn-symbool %1 zijn de hoofd- en eind-lengte verschillend (%2 en %3); %4 wordt gebruikt.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation type="vanished">In gestreept lijn-symbool %1 zijn de opengingen D en E verschillend (%2 and %3); %4 wordt bebruikt.</translation>
-    </message>
-    <message>
-        <source>Line symbol %1: suppressing dash symbol at line ends.</source>
-        <translation type="vanished">Lijn-symbool %1: het streep-symbool aan de uiteinden is weggelaten.</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation type="vanished">Negeer uitvulling bij importeren van tekstsymbool %1</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation type="vanished">Negeer aangepaste lettergrootte (%2) bij importeren van tekstsymbool %1</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="vanished">Bij het importeren van tekstsymbool %1: een aangepaste letter-afstand gebuikt, waarvan de implementatie nog niet overeenkomt met het gedrag van OCAD</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation type="vanished">Negeer aangepaste woord-afstand (%2%) bij het importeren van tekstsymbool %1</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation type="vanished">Negeer aangepast inspringen (%2/%3) bij het importeren van tekstsymbool %1</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation type="vanished">Negeer tekst-omlijning (modus %2) bij het importeren van tekstsymbool %1</translation>
-    </message>
-    <message>
-        <source>Unable to load object</source>
-        <translation type="vanished">Kan object niet laden</translation>
-    </message>
-    <message>
-        <source>Unable to import rectangle object</source>
-        <translation type="vanished">Kan rechthoekig object niet importeren</translation>
-    </message>
-    <message>
-        <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="vanished">Tekstsymbool niet geimporteerd: interpreteren van kromme niet gelukt (npts=%1): %2</translation>
-    </message>
-    <message>
-        <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation type="vanished">Sjabloon importeren mislukt: achtergrond &quot;%1&quot; lijkt geen raster-afbeelding te zijn</translation>
-    </message>
-    <message>
-        <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="vanished">Poging tot importeren van tekstobject met onbekend coördinaten-formaat</translation>
-    </message>
-    <message>
-        <source>Color id not found: %1, ignoring this color</source>
-        <translation type="vanished">Kleur-ID niet gevonden: %1; deze kleur wordt genegeerd</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::ObjectQuery</name>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="360"/>
@@ -5704,17 +5512,6 @@ en gebruik -indien beschikbaar- het muiswiel om uit te vergroten/verkleinen.</tr
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
         <translation>ongeldig</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdAreaSymbolCommon</name>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="obsolete">Vulpatroon in vlak-symbool &quot;%1&quot; is weggelaten.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="obsolete">Aangenomen werd dat een &quot;verschoven rijen&quot; punten-patroon werd bedoeld in vlak-symbool &quot;%1&quot;. Dan kan wel of niet juist zijn.</translation>
     </message>
 </context>
 <context>
@@ -6046,43 +5843,6 @@ en gebruik -indien beschikbaar- het muiswiel om uit te vergroten/verkleinen.</tr
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::OcdLineSymbol</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="obsolete">De combinatie van uiteinde/knikpunt van lijn-symbool &quot;%1&quot; kan niet worden weergegeven.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdLineSymbolCommon</name>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="obsolete">De combinatie van uiteinde/knikpunt van lijn-symbool &quot;%1&quot; kan niet worden weergegeven.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="obsolete">Streep-groepering in lijn-symbool &quot;%1&quot; is weggelaten.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="obsolete">Het aantal strepen in een groep in lijn-symbool &quot;%1&quot; is teruggebracht tot 2.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="obsolete">De randen in lijn-symbool &quot;%1&quot; kunnen niet correct worden geëxporteerd.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::OcdTextSymbolBasic</name>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="obsolete">De onderstreping van tekst-symbool &quot;%1&quot; is achterwege gelaten</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="obsolete">De afspatiëring in tekst-symbool &quot;%1&quot; is niet toegepast</translation>
-    </message>
-</context>
-<context>
     <name>OpenOrienteering::OgrFileExport</name>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1959"/>
@@ -6220,21 +5980,6 @@ en gebruik -indien beschikbaar- het muiswiel om uit te vergroten/verkleinen.</tr
         <location filename="../src/templates/paint_on_template_feature.cpp" line="306"/>
         <source>Template file exists: &apos;%1&apos;</source>
         <translation>Sjabloonbestand bestaat: &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::PaintOnTemplateSelectDialog</name>
-    <message>
-        <source>Select template to draw onto</source>
-        <translation type="vanished">Kies sjabloon om op te tekenen</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Annuleer</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Tekenen</translation>
     </message>
 </context>
 <context>
@@ -6913,13 +6658,6 @@ separations</source>
         <location filename="../src/gui/print_widget.cpp" line="1448"/>
         <source>The map area is empty. Output canceled.</source>
         <translation>De kaart-zone is leeg. Uitvoer is afgebroken.</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::ProjectedCRSSelector</name>
-    <message>
-        <source>&amp;Coordinate reference system:</source>
-        <translation type="vanished">&amp;Coördinatensysteem:</translation>
     </message>
 </context>
 <context>
@@ -8988,17 +8726,6 @@ Vorlage konnte Niet geladen werden. Existiert deze Gegevens?</translation>
     <message>
         <source>- Map -</source>
         <translation type="vanished">- Kaart -</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::TextBrowserDialog</name>
-    <message>
-        <source>External link: %1</source>
-        <translation type="vanished">Externe koppeling: %1</translation>
-    </message>
-    <message>
-        <source>Click to view</source>
-        <translation type="vanished">Klik om te bekijken</translation>
     </message>
 </context>
 <context>
