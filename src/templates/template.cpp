@@ -620,6 +620,11 @@ Template::LookupResult Template::tryToFindTemplateFile(const QString& map_path)
 	return NotFound;
 }
 
+bool Template::fileExists() const
+{
+	return QFileInfo::exists(template_path);
+}
+
 
 bool Template::tryToFindAndReloadTemplateFile(const QString& map_path)
 {
@@ -641,7 +646,7 @@ bool Template::loadTemplateFile()
 	setErrorString(QString());
 	try
 	{
-		if (!QFileInfo::exists(template_path))
+		if (!fileExists())
 		{
 			template_state = Invalid;
 			setErrorString(tr("No such file."));

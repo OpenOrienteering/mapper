@@ -6021,10 +6021,6 @@ zoomaa hiiren rullalla.</translation>
 <context>
     <name>OpenOrienteering::OgrFileExport</name>
     <message>
-        <source>Unknown file extension %1, only GPX, KML, and SHP files are supported.</source>
-        <translation type="vanished">Tuntematon tiedostolaajennus %1, vain GPX, KML ja SHP tiedostot ovat tuettuja.</translation>
-    </message>
-    <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1869"/>
         <source>Couldn&apos;t find a driver for file extension %1</source>
         <translation>Ajuria tiedostolaajennukselle %1 ei löytynyt</translation>

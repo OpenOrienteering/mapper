@@ -36,6 +36,7 @@
 // IWYU pragma: no_include <cpl_error.h>
 // IWYU pragma: no_include <gdal_version.h>
 
+#include <Qt>
 #include <QtGlobal>
 #include <QtMath>
 #include <QByteArray>
@@ -62,6 +63,7 @@
 #include "core/map_color.h"
 #include "core/map_coord.h"
 #include "core/map_part.h"
+#include "core/map_view.h"
 #include "core/path_coord.h"
 #include "core/virtual_path.h"
 #include "core/objects/boolean_tool.h"
@@ -74,7 +76,10 @@
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
 #include "fileformats/file_import_export.h"
+#include "gdal/gdal_file.h"
 #include "gdal/gdal_manager.h"
+#include "gdal/gdal_template.h"
+#include "templates/template.h"
 
 // IWYU pragma: no_forward_declare QFile
 
@@ -810,7 +815,8 @@ bool OgrFileImport::importImplementation()
 	
 	if (auto driver = OGR_DS_GetDriver(data_source.get()))
 	{
-		if (auto driver_name = OGR_Dr_GetName(driver))
+		driver_name = OGR_Dr_GetName(driver);
+		if (!driver_name.isEmpty())
 		{
 			map->setSymbolSetId(QString::fromLatin1(driver_name));
 		}
@@ -1073,6 +1079,13 @@ void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_def
 	}
 	
 	auto objects = importGeometry(feature, geometry);
+	auto const tags = importFields(feature_definition, feature);
+	
+	if (driverName() == "LIBKML" && tags.contains(QStringLiteral("icon")))
+	{
+		handleKmlOverlayIcon(objects, tags);
+	}
+	
 	if (clipping)
 	{
 		auto clipped_objects = clipping->process(objects);
@@ -1081,21 +1094,25 @@ void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_def
 	
 	for (auto* object : objects)
 	{
+		object->setTags(tags);
 		map_part->addObject(object);
-		if (!feature_definition)
-			continue;
-		
-		auto num_fields = OGR_FD_GetFieldCount(feature_definition);
-		for (int i = 0; i < num_fields; ++i)
+	}
+}
+
+QHash<QString, QString> OgrFileImport::importFields(OGRFeatureDefnH feature_definition, OGRFeatureH feature)
+{
+	QHash<QString, QString> tags;
+	auto const num_fields = feature_definition ? OGR_FD_GetFieldCount(feature_definition) : 0;
+	for (int i = 0; i < num_fields; ++i)
+	{
+		auto const value = OGR_F_GetFieldAsString(feature, i);
+		if (value && qstrlen(value) > 0)
 		{
-			auto value = OGR_F_GetFieldAsString(feature, i);
-			if (value && qstrlen(value) > 0)
-			{
-				auto field_definition = OGR_FD_GetFieldDefn(feature_definition, i);
-				object->setTag(QString::fromUtf8(OGR_Fld_GetNameRef(field_definition)), QString::fromUtf8(value));
-			}
+			auto const field_definition = OGR_FD_GetFieldDefn(feature_definition, i);
+			tags[QString::fromUtf8(OGR_Fld_GetNameRef(field_definition))] = QString::fromUtf8(value);
 		}
 	}
+	return tags;
 }
 
 OgrFileImport::ObjectList OgrFileImport::importGeometry(OGRFeatureH feature, OGRGeometryH geometry)
@@ -1841,6 +1858,49 @@ LatLon OgrFileImport::calcAverageLatLon(OGRDataSourceH data_source)
 QPointF OgrFileImport::calcAverageCoords(OGRDataSourceH data_source, OGRDataSourceH srs)
 {
 	return QPointF{AverageCoords(data_source, srs)};
+}
+
+
+void OgrFileImport::handleKmlOverlayIcon(OgrFileImport::ObjectList& objects, const QHash<QString, QString>& tags) const
+{
+	using std::begin; using std::end;
+	auto match = [](Object const* object) {
+		return object->getType() == Object::Path
+		       && static_cast<PathObject const*>(object)->getCoordinateCount() == 5;
+	};
+	auto const first = std::remove_if(begin(objects), end(objects), match);
+	auto const last = end(objects);
+	for (auto it = first; it != last; ++it)
+	{
+		auto const icon_field = tags[QStringLiteral("icon")];
+		auto icon_file_path = [this, icon_field]() -> QString {
+			if (icon_field.startsWith(QLatin1Char('/')) || icon_field.contains(QLatin1Char(':')))
+				return icon_field;
+			if (path.endsWith(QLatin1String(".kmz"), Qt::CaseInsensitive))
+			    return QLatin1String("/vsizip/") + path + QLatin1Char('/') + icon_field;
+			return QFileInfo(path).absolutePath() + QLatin1Char('/') + icon_field;
+		} ();
+		if (GdalFile::exists(icon_file_path.toUtf8()))
+		{
+			// The positioning must be calculate after loading.
+			auto* temp = new GdalTemplate(icon_file_path, map);
+			temp->setProperty(GdalTemplate::applyCornerPassPointsProperty(), true);
+			for (auto const& coord : static_cast<PathObject const*>(*it)->getRawCoordinateVector())
+				temp->addPassPoint({ {}, MapCoordF(coord), {}, 0 }, temp->getNumPassPoints());
+			temp->setTemplateState(Template::Unloaded);
+			map->addTemplate(-1, std::unique_ptr<GdalTemplate>(temp));
+			if (view)
+				view->setTemplateVisibility(temp, {1, true});
+			delete *it;
+			*it = nullptr;
+		}
+		else
+		{
+			qDebug("No such icon file: %s", qUtf8Printable(icon_field));
+		}
+	}
+	auto const first_handled = std::remove_if(first, last, [](auto const* o) { return o == nullptr; });
+	objects.erase(first_handled, last);
 }
 
 

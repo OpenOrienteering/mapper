@@ -951,6 +951,11 @@ void MapEditorController::createActions()
 	print_act_mapper->setMapping(print_act, PrintWidget::PRINT_TASK);
 	export_image_act = newAction("export-image", tr("&Image"), print_act_mapper, SLOT(map()), nullptr, QString{}, "file_menu.html");
 	print_act_mapper->setMapping(export_image_act, PrintWidget::EXPORT_IMAGE_TASK);
+	export_kmz_act = newAction("export-kml", tr("&KMZ"), print_act_mapper, SLOT(map()), nullptr, QString{}, "file_menu.html");
+	print_act_mapper->setMapping(export_kmz_act, PrintWidget::EXPORT_KMZ_TASK);
+#ifndef MAPPER_USE_GDAL
+	export_kmz_act->setVisible(false);
+#endif
 	export_pdf_act = newAction("export-pdf", tr("&PDF"), print_act_mapper, SLOT(map()), nullptr, QString{}, "file_menu.html");
 	print_act_mapper->setMapping(export_pdf_act, PrintWidget::EXPORT_PDF_TASK);
 #ifdef MAPPER_USE_GDAL
@@ -962,6 +967,7 @@ void MapEditorController::createActions()
 #else
 	print_act = nullptr;
 	export_image_act = nullptr;
+	export_kmz_act = nullptr;
 	export_pdf_act = nullptr;
 #endif
 	
@@ -1132,6 +1138,7 @@ void MapEditorController::createMenuAndToolbars()
 	QMenu* export_menu = new QMenu(tr("&Export as..."), file_menu);
 	export_menu->menuAction()->setMenuRole(QAction::NoRole);
 	export_menu->addAction(export_image_act);
+	export_menu->addAction(export_kmz_act);
 	export_menu->addAction(export_pdf_act);
 	if (export_vector_act)
 		export_menu->addAction(export_vector_act);

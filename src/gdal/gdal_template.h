@@ -24,6 +24,7 @@
 
 #include <QString>
 
+#include "templates/template.h"
 #include "templates/template_image.h"
 
 class QByteArray;
@@ -43,6 +44,8 @@ public:
 	
 	static const std::vector<QByteArray>& supportedExtensions();
 	
+	static const char* applyCornerPassPointsProperty();
+	
 	GdalTemplate(const QString& path, Map* map);
 	~GdalTemplate() override;
 	
@@ -53,9 +56,14 @@ protected:
 public:
 	const char* getTemplateType() const override;
 	
+	LookupResult tryToFindTemplateFile(const QString& map_path) override;
+	
+	bool fileExists() const override;
+	
 protected:
 	bool loadTemplateFileImpl() override;
 	
+	bool applyCornerPassPoints();
 };
 
 

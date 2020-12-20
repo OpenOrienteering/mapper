@@ -6117,10 +6117,6 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
 <context>
     <name>OpenOrienteering::OgrFileExport</name>
     <message>
-        <source>Unknown file extension %1, only GPX, KML, and SHP files are supported.</source>
-        <translation type="vanished">Neznámá přípona souboru %1, pouze GPX, KML, a SHP soubory jsou podporovány.</translation>
-    </message>
-    <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1869"/>
         <source>Couldn&apos;t find a driver for file extension %1</source>
         <translation>Nelze najít ovladač pro příponu souboru %1</translation>
