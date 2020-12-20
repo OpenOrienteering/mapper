@@ -2108,7 +2108,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="244"/>
         <source>Show tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Günün ipucunu göster</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="248"/>
