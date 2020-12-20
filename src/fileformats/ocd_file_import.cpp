@@ -1206,7 +1206,13 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	
 	// Import a 'double' line, including an optional filling?
 	OcdImportedLineSymbol* double_line = nullptr;
-	if (ocd_symbol.common.double_mode != OcdLineSymbolCommon::DoubleLineOff)
+	auto const is_visible_double_line = [](auto const& ocd_attributes) {
+		return ocd_attributes.double_mode != OcdLineSymbolCommon::DoubleLineOff
+		       && (ocd_attributes.double_width > 0
+		           || ocd_attributes.double_left_width > 0
+		           || ocd_attributes.double_right_width > 0);
+	};
+	if (is_visible_double_line(ocd_symbol.common))
 	{
 		double_line = main_line;
 		if (main_line->dashed
