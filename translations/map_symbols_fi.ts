@@ -3712,6 +3712,11 @@ Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller ar
         <translation>Metsä</translation>
     </message>
     <message>
+        <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.</source>
+        <comment>Description of symbol 406</comment>
+        <translation>Kasvillisuuden hidastama metsä, jossa näkyvyys on huonompi ja jossa juoksunopeus hidastuu 60-80 %:iin normaalinopeudesta.</translation>
+    </message>
+    <message>
         <source>Vegetation runnable in one direction, 1</source>
         <comment>Name of symbol 406.1</comment>
         <translation>Kasvillisuutta, juostavuus parempi valkoisten viivoitusten suuntaan, 1</translation>
@@ -4062,6 +4067,11 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
 Minimialue 0.5 mm x 0.5 mm (maastomitta 7.5 m x 7.5 m).</translation>
     </message>
     <message>
+        <source>Large building with outline</source>
+        <comment>Name of symbol 521.2</comment>
+        <translation>Suuri rakennus, reunaviivalla</translation>
+    </message>
+    <message>
         <source>In urban areas, buildings larger than 75 m x 75 m may be represented with a dark grey infill.
 
 Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m). Buildings within forbidden areas are generalised. Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.25 mm.</source>
@@ -4074,6 +4084,11 @@ Läpikulkujen rakennusten läpi täytyy olla minimissään 0.3 mm leveitä (maas
         <source>Large building</source>
         <comment>Name of symbol 521.3</comment>
         <translation>Iso rakennus</translation>
+    </message>
+    <message>
+        <source>Canopy with outline</source>
+        <comment>Name of symbol 522</comment>
+        <translation>Katos, reunaviivalla</translation>
     </message>
     <message>
         <source>Canopy</source>
@@ -4111,9 +4126,29 @@ Läpikulkujen rakennusten läpi täytyy olla minimissään 0.3 mm leveitä (maas
         <translation>Ruokintateline</translation>
     </message>
     <message>
+        <source>Prominent line feature</source>
+        <comment>Name of symbol 528</comment>
+        <translation>Selkeästi erottuva linjakohde</translation>
+    </message>
+    <message>
+        <source>Prominent impassable line feature</source>
+        <comment>Name of symbol 529</comment>
+        <translation>Selkeästi erottuva ylipääsemätön linjakohde</translation>
+    </message>
+    <message>
+        <source>Prominent man-made feature – ring</source>
+        <comment>Name of symbol 530</comment>
+        <translation>Selkeästi erottuva erikoiskohde, tervahauta</translation>
+    </message>
+    <message>
         <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
         <comment>Description of symbol 530</comment>
         <translation>Symbolin painopiste osoittaa kohteen paikan. Määritelmä annettava erikseen kartassa.</translation>
+    </message>
+    <message>
+        <source>Prominent man-made feature – x</source>
+        <comment>Name of symbol 531</comment>
+        <translation>Selkeästi erottuva erikoiskohde</translation>
     </message>
     <message>
         <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
@@ -4161,6 +4196,21 @@ Läpikulkujen rakennusten läpi täytyy olla minimissään 0.3 mm leveitä (maas
         <translation>Lähtö</translation>
     </message>
     <message>
+        <source>The place where the orienteering starts. The centre of the triangle shows the precise position where the orienteering course starts. The start must be on a clearly identifiable point on the map. The triangle points in the direction of the first control.</source>
+        <comment>Description of symbol 701</comment>
+        <translation>Kolmiopiste (K-piste) on se paikka, josta varsinainen suunnistustehtävä alkaa. Symbolin keskipiste osoittaa lähdön tarkan paikan, jonka pitää olla selkeästi luettava kohde kartalla. Kolmion kärki osoittaa kohti ensimmäistä rastia.</translation>
+    </message>
+    <message>
+        <source>Map issue point</source>
+        <comment>Name of symbol 702</comment>
+        <translation>Kartanottopaikka</translation>
+    </message>
+    <message>
+        <source>If there is a marked route to the start point, the map issue point is marked using this symbol.</source>
+        <comment>Description of symbol 702</comment>
+        <translation>Jos K-pisteelle on viitoitus, merkitään paikka, josta kartta otetaan tällä symbolilla (poikkiviiva viitoitukseen nähden).</translation>
+    </message>
+    <message>
         <source>Control point</source>
         <comment>Name of symbol 703</comment>
         <translation>Rasti</translation>
@@ -4176,14 +4226,34 @@ Läpikulkujen rakennusten läpi täytyy olla minimissään 0.3 mm leveitä (maas
         <translation>Rastit numeroidaan käyntijärjestyksen mukaisesti. Pystysuoraan kirjoitettavat rastinumerot (ja rastitunnukset) sijoitetaan niin, ettei niillä peitetä suorituksen kannalta tärkeitä kartanlukukohteita. Numerot sijoitetaan pohjois-eteläsuuntaisesti.</translation>
     </message>
     <message>
+        <source>Course line</source>
+        <comment>Name of symbol 705</comment>
+        <translation>Rastiväliviiva</translation>
+    </message>
+    <message>
+        <source>Where controls are to be visited in order, the sequence is shown using straight lines from the start to the first control and then from each control to the next one. Sections of lines should be omitted to leave important detail showing. The line should be drawn via mandatory crossing points. There should be gaps between the line and the control circle in order to increase the readability of the underlying detail close to the control.</source>
+        <comment>Description of symbol 705</comment>
+        <translation>Lähtö ja rastit yhdistetään rastiväliviivalla käyntijärjestyksen mukaisesti. Väliviivat pitäisi katkaista niiltä kohdin, kun ne peittävät tärkeitä kartanlukukohteita. Väliviivat pitäisi piirtää pakollisten ylitys- ja alituskohtien kautta. Väliviivan ja rastiympyrän väliin jätetään pieni rako luettavuuden parantamiseksi, jos rastin lähistöllä on luettavia kohteita.</translation>
+    </message>
+    <message>
         <source>Finish</source>
         <comment>Name of symbol 706</comment>
         <translation>Maali</translation>
     </message>
     <message>
+        <source>The end of the course.</source>
+        <comment>Description of symbol 706</comment>
+        <translation>Radan loppu.</translation>
+    </message>
+    <message>
         <source>Marked route</source>
         <comment>Name of symbol 707</comment>
         <translation>Viitoitus</translation>
+    </message>
+    <message>
+        <source>Out-of-bounds boundary</source>
+        <comment>Name of symbol 708</comment>
+        <translation>Ylityskiellon leveä viiva</translation>
     </message>
     <message>
         <source>Out-of-bounds area</source>
@@ -4214,6 +4284,21 @@ Läpikulkujen rakennusten läpi täytyy olla minimissään 0.3 mm leveitä (maas
         <source>Crossing point</source>
         <comment>Name of symbol 710</comment>
         <translation>Läpikulkupaikka</translation>
+    </message>
+    <message>
+        <source>A crossing point, for instance through or over a wall or fence, across a road or railway, through a tunnel or out-of-bounds area, or over an uncrossable boundary is drawn on the map with two lines curving outwards. The lines shall reflect the length of the crossing.</source>
+        <comment>Description of symbol 710</comment>
+        <translation>Kohteen läpikulkupaikka piirretään kahdella kaareutuvalla viivalla (esim. aidan läpi, muurin läpi, kielletyn alueen läpi, tien ylitys, tunneli rautatien ali). Viivojen pituus kuvaa läpikulun pituutta.</translation>
+    </message>
+    <message>
+        <source>Out-of-bounds route</source>
+        <comment>Name of symbol 711</comment>
+        <translation>Kielletty reitti</translation>
+    </message>
+    <message>
+        <source>Out-of-bounds route, single cross</source>
+        <comment>Name of symbol 711.1</comment>
+        <translation>Kielletty reitti, yksittäinen risti</translation>
     </message>
     <message>
         <source>First aid post</source>
@@ -13075,6 +13160,11 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <translation>Ylitettävä, maastossa selvästi havaittava puro tai oja , leveys alle 2 m.</translation>
     </message>
     <message>
+        <source>Marsh (in ski orienteering map)</source>
+        <comment>Name of symbol 310.0.1</comment>
+        <translation>Suo (hiihtosuunnistuskartassa)</translation>
+    </message>
+    <message>
         <source>Open land</source>
         <comment>Name of symbol 401</comment>
         <translation>Avoin puuton alue</translation>
@@ -13594,6 +13684,11 @@ Uran alku piirretään yhtenäisellä viivalla selventämään risteystä tai ha
         <translation>Kilpailun aikana hiekoituksen tai lumettomuuden takia hiihtokelvoton tie.</translation>
     </message>
     <message>
+        <source>Sanded or snowless road, single symbol</source>
+        <comment>Name of symbol 806.1</comment>
+        <translation>Hiekoitettu tai lumeton tie, yksittäinen symboli</translation>
+    </message>
+    <message>
         <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
         <translation>Kilpailun aikana hiekoituksen tai lumettomuuden takia hiihtokelvoton tie.</translation>
@@ -13621,11 +13716,26 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
 Alueen reunat selvennetään reunaviivalla, jotta alueen muodot ovat selkeästi luettavissa kartasta.</translation>
     </message>
     <message>
+        <source>Prepared area, fill pattern</source>
+        <comment>Name of symbol 808.0.1</comment>
+        <translation>Tampattu alue, täyttökuvio</translation>
+    </message>
+    <message>
         <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
 The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
         <comment>Description of symbol 808.0.1</comment>
         <translation>Laajat, hiihtokelpoiset ja kovapintaiset alueet, esim. laskettelurinteet.
 Alueen reunat selvennetään reunaviivalla, jotta alueen muodot ovat selkeästi luettavissa kartasta.</translation>
+    </message>
+    <message>
+        <source>Prepared area, boundary</source>
+        <comment>Name of symbol 801.0.2</comment>
+        <translation>Tampattu alue, reunaviiva</translation>
+    </message>
+    <message>
+        <source>The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
+        <comment>Description of symbol 801.0.2</comment>
+        <translation>Alueen reunat selvennetään kapealla vihreällä viivalla (0.13 mm), jotta alueen muodot ovat selkeästi luettavissa kartasta.</translation>
     </message>
     <message>
         <source>Public snow mobile route</source>
@@ -13638,9 +13748,24 @@ Alueen reunat selvennetään reunaviivalla, jotta alueen muodot ovat selkeästi 
         <translation>Yleisessä käytössä oleva maastoon merkitty reitti moottorikelkkailua varten. Reitti voi olla käytössä hiihtosuunnistuskilpailun aikana. Tällaiset reitit ovat usein pinnaltaan epätasaisia ja niiden leveys ja laatu vaihtelevat. Järjestäjien pitää ilmoittaa kilpailuohjeissa reittien laatu (esim. valokuvilla) ja varmistaa kilpailijoiden turvallisuus sulkemalla reitti väliaikaisesti, miehittämällä reitti tai muulla tavoin ilmoittamalla jokaiselle moottorikelkkailijalle mahdollisuudesta kohdata hiihtosuunnistajia reitillä. Jos kilpailijoiden turvallisuutta ei voida taata, IOF:n valvojan pitää merkitä reitti kielletyksi reitiksi ja varmistaa turvalliset ylityspaikat.</translation>
     </message>
     <message>
+        <source>Forbidden route, forbidden to cross</source>
+        <comment>Name of symbol 814</comment>
+        <translation>Kielletty reitti, ylitys kielletty</translation>
+    </message>
+    <message>
         <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
         <comment>Description of symbol 814</comment>
         <translation>Reitti, jota ei saa käyttää, osoitetaan siksak-viivalla. Viivan tulee olla mahdollisimman jatkuva. Mikäli kielletyn reitin poikki on sallittu ylityspaikka, merkitään se portin tavoin kahdella kohtisuoralla viivalla yli kielletyn reitin. Kielletyn reitin pitempi sallittu osa rajataan samalla tavalla kohtisuorin viivoin.</translation>
+    </message>
+    <message>
+        <source>Forbidden route, crossable, line symbol</source>
+        <comment>Name of symbol 809</comment>
+        <translation>Kielletty reitti, ylitettävissä, viivasymboli</translation>
+    </message>
+    <message>
+        <source>Forbidden route, crossable, single symbol</source>
+        <comment>Name of symbol 809.0.1</comment>
+        <translation>Kielletty reitti, ylitettävissä, yksittäinen symboli</translation>
     </message>
     <message>
         <source>Equipment deposit</source>
