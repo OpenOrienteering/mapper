@@ -5959,10 +5959,6 @@ Zoomen ist mit dem Mausrad möglich.</translation>
 <context>
     <name>OpenOrienteering::OgrFileExport</name>
     <message>
-        <source>Unknown file extension %1, only GPX, KML, and SHP files are supported.</source>
-        <translation type="vanished">Unbekannte Datei-Erweiterung %1. Nur GPX, KML und SHP werden unterstützt.</translation>
-    </message>
-    <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1869"/>
         <source>Couldn&apos;t find a driver for file extension %1</source>
         <translation>Für die Dateierweiterung &apos;%1&apos; konnte kein Treiber gefunden werden</translation>

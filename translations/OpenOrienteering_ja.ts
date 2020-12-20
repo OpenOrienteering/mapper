@@ -6371,10 +6371,6 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::OgrFileExport</name>
     <message>
-        <source>Unknown file extension %1, only GPX, KML, and SHP files are supported.</source>
-        <translation type="vanished">不明なファイル拡張子 %1。GPX、KML、および SHP ファイルのみがサポートされています。</translation>
-    </message>
-    <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1869"/>
         <source>Couldn&apos;t find a driver for file extension %1</source>
         <translation>ファイル拡張子 %1 のドライバーが見つかりませんでした</translation>
