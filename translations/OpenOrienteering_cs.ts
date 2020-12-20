@@ -2604,7 +2604,7 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1946"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1779"/>
         <source>Cannot find a vector data export driver named &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze najít ovladač exportu vektorových dat s názvem</translation>
     </message>
 </context>
 <context>
@@ -2751,17 +2751,17 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="186"/>
         <source>For KML/KMZ export, the map must be georeferenced.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pro export KML/KMZ musí být mapa georeferencována.</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="193"/>
         <source>Unknown error</source>
-        <translation type="unfinished">Neznámá chyba</translation>
+        <translation>Neznámá chyba</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="208"/>
         <source>%1 already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 již existuje.</translation>
     </message>
 </context>
 <context>
@@ -3847,7 +3847,7 @@ protože uložení jako %2 (.%3) není podporováno.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="954"/>
         <source>&amp;KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="983"/>
@@ -6483,7 +6483,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="449"/>
         <source>KMZ export</source>
-        <translation type="unfinished"></translation>
+        <translation>KMZ export</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="987"/>
@@ -6518,18 +6518,18 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1207"/>
         <source>KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1208"/>
         <source>KML</source>
-        <translation type="unfinished"></translation>
+        <translation>KML</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1235"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished">Nepodařilo se uložit obrázek:
+        <translation>Nepodařilo se uložit obrázek:
 % 1</translation>
     </message>
     <message>
@@ -8089,7 +8089,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
     <message>
         <location filename="../src/templates/template_image.cpp" line="148"/>
         <source>Format not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Formát není podporován</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="301"/>
@@ -9007,7 +9007,9 @@ Nejvyšší podporovaná verze je %2.</translation>
         <source>Internal error detected! Please report this issue.
 Version: %1
 Location: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Byla zjištěna interní chyba! Nahlaste prosím tento problém.
+Verze: %1
+Umístění: %2</translation>
     </message>
 </context>
 <context>
