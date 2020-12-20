@@ -5901,10 +5901,6 @@ zoomma con la rotella del mouse, se ce l&apos;hai.</translation>
 <context>
     <name>OpenOrienteering::OgrFileExport</name>
     <message>
-        <source>Unknown file extension %1, only GPX, KML, and SHP files are supported.</source>
-        <translation type="vanished">Estensione file %1 sconosciuta, sono supportati solo i file GPX, KML, e SHP.</translation>
-    </message>
-    <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1869"/>
         <source>Couldn&apos;t find a driver for file extension %1</source>
         <translation>Impossibile trovare un driver per l&apos;estensione %1</translation>

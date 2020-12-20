@@ -42,6 +42,21 @@
 #include "gdal/gdal_manager.h"
 
 
+namespace {
+
+QString toWkt(OGRSpatialReferenceH srs)
+{
+	QString wkt;
+	char* wkt_cstring = nullptr;
+	if (srs && OSRExportToWkt(srs, &wkt_cstring) == OGRERR_NONE)
+		wkt = QString::fromUtf8(wkt_cstring);
+	CPLFree(wkt_cstring);
+	return wkt;
+}
+
+}
+
+
 namespace OpenOrienteering {
 
 GdalImageReader::GdalImageReader(const QString& path)
@@ -284,7 +299,11 @@ TemplateImage::GeoreferencingOption GdalImageReader::readGeoTransform()
 		auto const result = GDALGetGeoTransform(dataset, geo_transform.data());
 		if (result == CE_None)
 		{
+#if GDAL_VERSION_NUM >= GDAL_COMPUTE_VERSION(3,0,0) && !defined(ACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
+			georef.crs_spec = toWkt(GDALGetSpatialRef(dataset));
+#else
 			georef.crs_spec = toProjSpec(GDALGetProjectionRef(dataset));
+#endif
 			georef.transform.source = GDALGetDriverShortName(GDALGetDatasetDriver(dataset));
 			georef.transform.pixel_to_world = { geo_transform[1], geo_transform[2],
 			                                    geo_transform[4], geo_transform[5],

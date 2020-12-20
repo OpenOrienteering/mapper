@@ -160,7 +160,6 @@ bool TemplateMap::loadTemplateFileImpl()
 			is_georeferenced = false;
 			transform = transformForOcd();
 			updateTransformationMatrices();
-			setTemplateAreaDirty();
 			setProperty(ocdTransformProperty(), false);
 		}
 		else if (is_georeferenced)
@@ -204,7 +203,7 @@ bool TemplateMap::loadTemplateFileImpl()
 bool TemplateMap::postLoadSetup(QWidget* /* dialog_parent */, bool& out_center_in_view)
 {
 	auto const is_unconfigured = [](auto const& georef) {
-		return georef.isLocal() && georef.toProjectedCoords(MapCoordF{}) == QPointF{};
+		return georef.getState() != Georeferencing::Geospatial && georef.toProjectedCoords(MapCoordF{}) == QPointF{};
 	};
 	out_center_in_view = is_unconfigured(templateMap()->getGeoreferencing());
 	return true;
@@ -451,11 +450,9 @@ bool TemplateMap::georeferencedStateSupported() const
 		return success;
 	};
 	return !block_georeferencing
-	       && map->getGeoreferencing().isValid()
-	       && !map->getGeoreferencing().isLocal()
+	       && map->getGeoreferencing().getState() == Georeferencing::Geospatial
 	       && templateMap()
-	       && templateMap()->getGeoreferencing().isValid()
-	       && !templateMap()->getGeoreferencing().isLocal()
+	       && templateMap()->getGeoreferencing().getState() == Georeferencing::Geospatial
 	       && test_transform(templateMap()->getGeoreferencing(), map->getGeoreferencing());
 }
 

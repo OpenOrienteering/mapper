@@ -31,12 +31,15 @@
 #include <QtTest>
 #include <QByteArray>
 #include <QDataStream>
+#include <QDir>
 #include <QFile>
 #include <QIODevice>
 #include <QImage>
 #include <QPointF>
 
 #include "libvectorizer/Polygons.h"
+
+#include "test_config.h"
 
 // Benchmarking adds significant overhead when enabled.
 // With the focus on (CI) testing, we default to disabling benchmarking
@@ -45,6 +48,11 @@
 #ifndef COVE_BENCHMARK
 #  define COVE_BENCHMARK
 #endif
+
+void PolygonTest::initTestCase()
+{
+	QDir::addSearchPath(QStringLiteral("testdata"), QDir(QString::fromUtf8(COVE_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("data")));
+}
 
 void PolygonTest::testJoins_data()
 {
@@ -56,8 +64,8 @@ void PolygonTest::testJoins_data()
 	QTest::addColumn<QString>("resultFile");
 
 	QTest::newRow("simple joins")
-		<< true << 5.0 << 9 << 0.0 << "data/PolygonTest1-sample.png"
-		<< "data/PolygonTest1-simple-joins-result.dat";
+		<< true << 5.0 << 9 << 0.0 << "testdata:PolygonTest1-sample.png"
+		<< "testdata:PolygonTest1-simple-joins-result.dat";
 }
 
 void PolygonTest::testJoins()
@@ -72,7 +80,7 @@ void PolygonTest::testJoins()
 	QFETCH(QString, imageFile);
 	QFETCH(QString, resultFile);
 
-	QVERIFY(sampleImage.load(QFINDTESTDATA(imageFile)));
+	QVERIFY(sampleImage.load(imageFile));
 
 	polyTracer.setSimpleOnly(simpleOnly);
 	polyTracer.setMaxDistance(maxDistance);
@@ -85,8 +93,8 @@ void PolygonTest::testJoins()
 		polys = polyTracer.createPolygonsFromImage(sampleImage);
 	}
 
-	//    saveResults(polys, QFINDTESTDATA(resultFile));
-	compareResults(polys, QFINDTESTDATA(resultFile));
+	// saveResults(polys, resultFile);
+	compareResults(polys, resultFile);
 }
 
 void PolygonTest::saveResults(const cove::PolygonList& polys,

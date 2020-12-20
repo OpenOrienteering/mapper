@@ -146,7 +146,7 @@ void dumpGdalDrivers()
 		{
 			if (cap_open && CPLTestBoolean(cap_open))
 				vector_import_drivers.push_back(driver_line);
-			if (cap_create && CPLTestBoolean(cap_create))
+			if (cap_create && CPLTestBoolean(cap_create) && extensions && *extensions != 0)
 				vector_export_drivers.push_back(driver_line);
 		}
 	}

@@ -66,7 +66,6 @@ class VirtualCoordVector;
 class Object  // clazy:exclude=copyable-polymorphic
 {
 friend class ObjectRenderables;
-friend class OCAD8FileImport;
 friend class XMLImportExport;
 public:
 	/** Enumeration of possible object types. */
@@ -1293,7 +1292,7 @@ double ObjectPathCoord::findClosestPointTo(const MapCoordF& map_coord)
 inline
 constexpr ObjectPathCoord::operator bool() const
 {
-	return bool { object };
+	return static_cast<bool>(object);
 }
 
 }  // namespace OpenOrienteering

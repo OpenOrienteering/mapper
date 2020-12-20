@@ -96,13 +96,17 @@ private:
  * of the coordinate reference system of the projected coordinates. The actual
  * geographic transformation is done by the PROJ library for geographic 
  * projections. 
- *
- * If no (valid) specification is given, the projected coordinates are regarded
- * as local coordinates. Local coordinates cannot be converted to other 
- * geographic coordinate systems. The georeferencing is "local".
  * 
  * Conversions between "map coordinates" and "geographic coordinates" use the
  * projected coordinates as intermediate step.
+ *
+ * If no geospatial specification of the projected coordinate references system
+ * is given, the projected coordinates are regarded as "local coordinates". The
+ * georeferencing is "local".
+ * 
+ * If the georeferencing is local, or if the specification of the coordinate
+ * reference system is invalid, coordinates cannot be converted to other
+ * geospatial coordinate systems.
  */
 class Georeferencing : public QObject  // clazy:exclude=copyable-polymorphic
 {
@@ -115,11 +119,14 @@ public:
 	enum State
 	{
 		/// Only conversions between map and local projected coordinates are possible.
-		Local  = 1,
+		Local,
 		
-		/// All coordinate conversions are possible (if there is no error in the
-		/// crs specification).
-		Normal = 2
+		/// Only conversions between map and local projected coordinates are possible,
+		/// because the given projected CRS is not usable.
+		BrokenGeospatial,
+		
+		/// All coordinate conversions are possible.
+		Geospatial,
 	};
 	
 	
@@ -204,24 +211,6 @@ public:
 	
 	
 	/**
-	 * Returns if the georeferencing settings are valid.
-	 * 
-	 * This means that coordinates can be converted between map and projected
-	 * coordinates. isLocal() can be checked to determine if a conversion
-	 * to geographic coordinates is also possible.
-	 */
-	bool isValid() const;
-	
-	/** 
-	 * Returns true if this georeferencing is local.
-	 * 
-	 * A georeferencing is local if no (valid) coordinate system specification
-	 * is given for the projected coordinates. A local georeferencing cannot 
-	 * convert coordinates from and to geographic coordinate systems.
-	 */
-	bool isLocal() const;
-	
-	/**
 	 * Returns true if the "projected CRS" is actually geographic.
 	 * 
 	 * \see proj_angular_output(PJ *, enum PJ_DIRECTION) in PROJ
@@ -232,17 +221,21 @@ public:
 	/**
 	 * Returns the georeferencing state.
 	 */
-	State getState() const;
+	State getState() const noexcept { return state; }
 	
 	/**
+	 * Switches the georeferencing to local state.
+	 */
+	void setLocalState() { setState(Georeferencing::Local); }
+	
+protected:
+	/**
 	 * Sets the georeferencing state.
-	 * 
-	 * This is only necessary to decrease the state to Local, as otherwise it
-	 * will be automatically changed when setting the respective values.
 	 */
 	void setState(State value);
 	
 	
+public:
 	/**
 	 * Returns the principal scale denominator.
 	 * 
@@ -422,6 +415,10 @@ public:
 	 * grivation. It is up to the user to decide how to reestablish a valid
 	 * configuration of geographic reference point, projected reference point,
 	 * declination and grivation.
+	 * 
+	 * If the spec is an empty (zero-length) string, the georeferencing will
+	 * be in Local state when this function returns. In all other case, it will
+	 * be either in Geospatial or BrokenGeospatial state.
 	 * 
 	 * @param id  an identifier
 	 * @param spec the PROJ specification of the CRS
@@ -718,24 +715,6 @@ double Georeferencing::roundDeclination(double value)
 {
 	// This must match the implementation in declinationPrecision().
 	return floor(value*100.0+0.5)/100.0;
-}
-
-inline
-bool Georeferencing::isValid() const
-{
-	return state == Local || proj_transform.isValid();
-}
-
-inline
-bool Georeferencing::isLocal() const
-{
-	return state == Local;
-}
-
-inline
-Georeferencing::State Georeferencing::getState() const
-{
-	return state;
 }
 
 inline

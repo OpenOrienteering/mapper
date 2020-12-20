@@ -688,14 +688,14 @@ void XMLFileImporter::importMapNotes()
 
 void XMLFileImporter::importGeoreferencing()
 {
-	Q_ASSERT(xml.name() == literal::georeferencing);
+	FILEFORMAT_ASSERT(xml.name() == literal::georeferencing);
 	
 	bool check_for_offset = MapCoord::boundsOffset().check_for_offset;
 	
 	Georeferencing georef;
 	georef.load(xml, loadSymbolsOnly());
 	map->setGeoreferencing(georef);
-	if (!georef.isValid())
+	if (georef.getState() == Georeferencing::BrokenGeospatial)
 	{
 		QString error_text = georef.getErrorText();
 		if (error_text.isEmpty())
@@ -717,7 +717,7 @@ void XMLFileImporter::importGeoreferencing()
 void XMLFileImporter::validateGeoreferencing()
 {
 	auto const& loaded_georef = map->getGeoreferencing();
-	if (!loaded_georef.isValid() || loaded_georef.isLocal())
+	if (loaded_georef.getState() != Georeferencing::Geospatial)
 		return;
 	
 	// Check for georeferencings with inconsistent declination/grivation,
@@ -993,7 +993,7 @@ void XMLFileImporter::importMapParts()
 
 void XMLFileImporter::importTemplates()
 {
-	Q_ASSERT(xml.name() == literal::templates);
+	FILEFORMAT_ASSERT(xml.name() == literal::templates);
 	
 	XmlElementReader templates_element(xml);
 	int first_front_template = templates_element.attribute<int>(literal::first_front_template);
@@ -1033,7 +1033,7 @@ void XMLFileImporter::importTemplates()
 
 void XMLFileImporter::importView()
 {
-	Q_ASSERT(xml.name() == literal::view);
+	FILEFORMAT_ASSERT(xml.name() == literal::view);
 	
 	XmlElementReader view_element(xml);
 	if (view_element.attribute<bool>(literal::area_hatching_enabled))
@@ -1063,7 +1063,7 @@ void XMLFileImporter::importView()
 
 void XMLFileImporter::importPrint()
 {
-	Q_ASSERT(xml.name() == literal::print);
+	FILEFORMAT_ASSERT(xml.name() == literal::print);
 	
 	try
 	{

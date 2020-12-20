@@ -1,6 +1,5 @@
 # Cf. https://github.com/Microsoft/azure-pipelines-tasks/blob/master/docs/authoring/commands.md
 /:.*[0-9]: [Ww]arning:/ {
-  /libocad/ b
   s,^\([a-zA-Z]:\)?/.*/1/s/,,
   s,^\([a-zA-Z]:\)?/.*/build/,,
   s,^,##vso[task.LogIssue type=warning;],

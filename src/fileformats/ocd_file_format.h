@@ -60,8 +60,6 @@ public:
 	 * In addition to these versions, the following special values are valid:
 	 * - `autoDeterminedVersion()` supports import only. It determines the
 	 *   version from the imported data.
-	 * - `legacyVersion()` selects the old implementations of OCD export or
-	 *   import.
 	 * 
 	 * Supplying an unsupported version will cause the program to abort.
 	 */
@@ -88,9 +86,6 @@ public:
 	
 	/// A special value which indicates the usage of an auto-detected (or default) version.
 	static constexpr quint16 autoDeterminedVersion() { return 0; }
-	
-	/// A special value which indicates the usage of the legacy import/export.
-	static constexpr quint16 legacyVersion() { return 1; }
 	
 private:
 	quint16 version = 0;

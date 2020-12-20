@@ -27,7 +27,6 @@
 #include <QApplication>
 #include <QBrush>
 #include <QByteArray>
-#include <QChildEvent>
 #include <QColor>
 #include <QCommonStyle> // IWYU pragma: keep
 #include <QCoreApplication>
@@ -134,11 +133,26 @@ void MapperProxyStyle::onSettingsChanged()
 	}
 }
 
+void MapperProxyStyle::fixupProxyChain(QStyle* base_style)
+{
+	// QTBUG-24279 QProxyStyle doesn't support proxies
+	// This function makes this proxy style the direct proxy of all underlying
+	// styles, while keeping the top-down base style chain.
+	if (auto* base_proxy_style = qobject_cast<QProxyStyle*>(base_style))
+	{
+		fixupProxyChain(base_proxy_style->baseStyle());
+	}
+	auto* const old_base = baseStyle();
+	old_base->setParent(nullptr);     // Prevent deletion on setBaseStyle().
+	setBaseStyle(base_style);         // Set base_style's proxy and parent to this.
+	old_base->setParent(this);        // Restore healthy ownership.
+}
 
 void MapperProxyStyle::polish(QApplication* application)
 {
 	common_style = qobject_cast<QCommonStyle*>(baseStyle());
 	
+	fixupProxyChain(baseStyle());
 	QProxyStyle::polish(application);
 	QApplication::setPalette(default_palette);
 	
@@ -204,13 +218,6 @@ void MapperProxyStyle::unpolish(QApplication* application)
 	QProxyStyle::unpolish(application);
 	
 	common_style = nullptr;
-}
-
-
-void MapperProxyStyle::childEvent(QChildEvent* event)
-{
-	if (event->added() || event->removed())
-		common_style = qobject_cast<QCommonStyle*>(baseStyle());
 }
 
 

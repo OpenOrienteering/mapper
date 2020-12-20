@@ -126,7 +126,6 @@ function(add_system_test testname)
 	add_test_helper("${testname}" ${Mapper_AUTORUN_SYSTEM_TESTS} ${ARGN})
 	target_link_libraries(${testname} PRIVATE
 	  Mapper_Common
-	  libocad
 	  Qt5::Widgets
 	)
 endfunction()
@@ -170,7 +169,7 @@ add_unit_test(georeferencing_t ../src/core/georeferencing
 )
 if (Mapper_USE_GDAL)
 	# cf. src/gdal/CMakeLists.txt
-	target_compile_definitions(georeferencing_t PRIVATE MAPPER_USE_GDAL)
+	target_compile_definitions(georeferencing_t PRIVATE MAPPER_TEST_GDAL)
 	target_include_directories(georeferencing_t SYSTEM PRIVATE "${GDAL_INCLUDE_DIR}")
 	target_link_libraries(georeferencing_t PRIVATE "${GDAL_LIBRARY}")
 endif()

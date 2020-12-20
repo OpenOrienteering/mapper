@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -229,6 +229,9 @@ public:
 	/** Returns a QPrinterInfo pointer which signals printing to a raster file. */
 	static const QPrinterInfo* imageTarget();
 	
+	/** Returns a QPrinterInfo pointer which signals printing to a KML ground overlay. */
+	static const QPrinterInfo* kmzTarget();
+	
 	/** Returns a reference to a hash which maps paper sizes to names as C strings.
 	 *  These strings are not translated.
 	 *
@@ -360,6 +363,8 @@ public:
 	 *  resolution and size. Parameter units_per_inch has no influence on this
 	 *  buffer but refers to the logical coordinates of device_painter. */
 	void drawPage(QPainter* device_painter, const QRectF& page_extent, QImage* page_buffer = nullptr) const;
+	
+	void drawPage(QPainter* device_painter, const QRectF& page_extent, const QTransform& page_extent_transform, QImage* page_buffer = nullptr) const;
 	
 	/** Draws the separations as distinct pages to the printer. */
 	void drawSeparationPages(QPrinter* printer, QPainter* device_painter, const QRectF& page_extent) const;

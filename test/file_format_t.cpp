@@ -40,6 +40,7 @@
 #include <QIODevice>
 #include <QLatin1Char>
 #include <QLatin1String>
+#include <QMetaObject>
 #include <QPageSize>
 #include <QPoint>
 #include <QPointF>
@@ -205,7 +206,7 @@ namespace
 		const auto& actual_georef = actual.getGeoreferencing();
 		const auto& expected_georef = expected.getGeoreferencing();
 		QCOMPARE(actual_georef.getScaleDenominator(), expected_georef.getScaleDenominator());
-		QCOMPARE(actual_georef.isLocal(), expected_georef.isLocal());
+		QCOMPARE(actual_georef.getState(), expected_georef.getState());
 		QCOMPARE(actual_georef.getCombinedScaleFactor(), expected_georef.getCombinedScaleFactor());
 		QCOMPARE(actual_georef.getAuxiliaryScaleFactor(), expected_georef.getAuxiliaryScaleFactor());
 		QCOMPARE(actual_georef.getDeclination(), expected_georef.getDeclination());
@@ -315,14 +316,10 @@ namespace
 			COMPARE_SYMBOL_PROPERTY(actual.getFillPattern(i).rotatable(), pattern_rotable, expected);
 	}
 	
-	void fuzzyCompareSymbol(const Symbol& actual, const Symbol& expected, const QByteArray& format_id)
+	void fuzzyCompareSymbol(const Symbol& actual, const Symbol& expected, const QByteArray& /*format_id*/)
 	{
 		COMPARE_SYMBOL_PROPERTY(actual.isHidden(), expected.isHidden(), expected);
 		COMPARE_SYMBOL_PROPERTY(actual.isProtected(), expected.isProtected(), expected);
-		
-		if (format_id == "OCD-legacy")
-			return;  // Unmaintained, no other properties testedd.
-		
 		COMPARE_SYMBOL_PROPERTY(actual.isRotatable(), expected.isRotatable(), expected);
 		
 		/// \todo Ideally, the dominant color would be preserved.
@@ -375,7 +372,7 @@ namespace
 			
 			actual = symbol;
 		}
-		if (format_id == "OCD8" || format_id == "OCD-legacy")
+		if (format_id == "OCD8")
 		{
 			// Don't elaborate testing for these legacy formats.
 			switch (expected->getType())
@@ -387,8 +384,6 @@ namespace
 				break;
 			case Symbol::Line:
 				// Expected symbol may be entirely turned into combined symbol.
-				if (!actual && format_id == "OCD-legacy")
-					return;
 				break;
 			default:
 				;  // nothing
@@ -434,11 +429,11 @@ namespace
 		QVERIFY2(qAbs(actual_point.x() - expected_point.x()) < 1.0, qPrintable(test_label.arg(actual_point.x()).arg(expected_point.x())));
 		QVERIFY2(qAbs(actual_point.y() - expected_point.y()) < 1.0, qPrintable(test_label.arg(actual_point.y()).arg(expected_point.y())));
 		
-		if (!actual_georef.isLocal())
-		{
-			QCOMPARE(actual_georef.isLocal(), expected_georef.isLocal());
+		if (format_id != "OCD8")
+			QCOMPARE(int(actual_georef.getState()), int(expected_georef.getState()));
+		
+		if (actual_georef.getState() == Georeferencing::Geospatial)
 			QCOMPARE(actual_georef.toGeographicCoords(actual_point), expected_georef.toGeographicCoords(actual_point));
-		}
 		
 		// Colors
 		QVERIFY2(actual.getNumColors() >= expected.getNumColors(), qPrintable(test_label.arg(actual.getNumColors()).arg(expected.getNumColors())));
@@ -515,8 +510,10 @@ namespace
 
 void FileFormatTest::initTestCase()
 {
+	// Use distinct QSettings
 	QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
-	QCoreApplication::setApplicationName(QString::fromLatin1("FileFormatTest"));
+	QCoreApplication::setApplicationName(QString::fromLatin1(metaObject()->className()));
+	QVERIFY2(QDir::home().exists(), "The home dir must be writable in order to use QSettings.");
 	
 	doStaticInitializations();
 	
@@ -556,6 +553,33 @@ void FileFormatTest::mapCoordtoString()
 	
 	MapCoord::StringBuffer<char> buffer;
 	QCOMPARE(coord.toUtf8(buffer), expected);
+}
+
+
+
+void FileFormatTest::fixupExtensionTest_data()
+{
+	QTest::addColumn<QByteArray>("format_id");
+	QTest::addColumn<QString>("expected");
+	
+	QTest::newRow("file.omap")   << QByteArray("XML") << QStringLiteral("file.omap");
+	QTest::newRow("file")        << QByteArray("XML") << QStringLiteral("file.omap");
+	QTest::newRow("file.")       << QByteArray("XML") << QStringLiteral("file.omap");
+	QTest::newRow("file_omap")   << QByteArray("XML") << QStringLiteral("file_omap.omap");
+	QTest::newRow("file.xmap")   << QByteArray("XML") << QStringLiteral("file.xmap");
+	QTest::newRow("f.omap.zip")  << QByteArray("XML") << QStringLiteral("f.omap.zip.omap");
+}
+
+void FileFormatTest::fixupExtensionTest()
+{
+	QFETCH(QByteArray, format_id);
+	QFETCH(QString, expected);
+	
+	auto const* format = FileFormats.findFormat(format_id);
+	QVERIFY(format);
+	
+	auto const filename = QString::fromUtf8(QTest::currentDataTag());
+	QCOMPARE(format->fixupExtension(filename), expected);
 }
 
 
@@ -764,9 +788,6 @@ void FileFormatTest::saveAndLoad_data()
 				auto ocd_id = id;
 				ocd_id.append(" (default)");
 				QTest::newRow(ocd_id) << ocd_id << QByteArray{format_id} << int(OcdFileExport::default_version) << path;
-				ocd_id = id;
-				ocd_id.append("-legacy");
-				QTest::newRow(ocd_id) << ocd_id << QByteArray{format_id}+"-legacy" << 8 << path;
 			}
 			else
 			{
@@ -887,12 +908,13 @@ void FileFormatTest::pristineMapTest()
 void FileFormatTest::ogrExportTest_data()
 {
 	QTest::addColumn<QString>("map_filepath");
+	QTest::addColumn<QByteArray>("ogr_format_id");
 	QTest::addColumn<QString>("ogr_extension");
 	QTest::addColumn<int>("latitude");
 	QTest::addColumn<int>("longitude");
 	
 	QTest::newRow("complete map") << QString::fromLatin1("data:/examples/complete map.omap")
-	                              << QString::fromLatin1("gpx")
+	                              << QByteArray("OGR-export-GPX") << QString::fromLatin1("gpx")
 	                              << 48 << 12;
 }
 
@@ -900,6 +922,7 @@ void FileFormatTest::ogrExportTest()
 {
 #ifdef MAPPER_USE_GDAL
 	QFETCH(QString, map_filepath);
+	QFETCH(QByteArray, ogr_format_id);
 	QFETCH(QString, ogr_extension);
 	QFETCH(int, latitude);
 	QFETCH(int, longitude);
@@ -911,13 +934,13 @@ void FileFormatTest::ogrExportTest()
 	{
 		Map map;
 		QVERIFY(map.loadFrom(map_filepath));
-		QVERIFY(map.getGeoreferencing().isValid());
+		QCOMPARE(map.getGeoreferencing().getState(), Georeferencing::Geospatial);
 		
 		auto const exported_latlon = map.getGeoreferencing().getGeographicRefPoint();
 		QCOMPARE(qRound(exported_latlon.latitude()), latitude);
 		QCOMPARE(qRound(exported_latlon.longitude()), longitude);
 		
-		auto const* format = FileFormats.findFormat("OGR-export");
+		auto const* format = FileFormats.findFormat(ogr_format_id);
 		QVERIFY(format);
 		
 		auto exporter = format->makeExporter(ogr_filepath, &map, nullptr);
@@ -934,7 +957,7 @@ void FileFormatTest::ogrExportTest()
 		auto importer = format->makeImporter(ogr_filepath, &map, nullptr);
 		QVERIFY(bool(importer));
 		QVERIFY(importer->doImport());
-		QVERIFY(map.getGeoreferencing().isValid());
+		QCOMPARE(map.getGeoreferencing().getState(), Georeferencing::Geospatial);
 		
 		auto const imported_latlon = map.getGeoreferencing().getGeographicRefPoint();
 		QCOMPARE(qRound(imported_latlon.latitude()), latitude);

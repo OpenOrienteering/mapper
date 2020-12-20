@@ -29,7 +29,7 @@ endif()
 
 # Project declaration
 
-project(Mapper VERSION 0.9.4 LANGUAGES CXX C)
+project(Mapper VERSION 0.9.5 LANGUAGES CXX C)
 set(Mapper_COPYRIGHT "(C) 2020 The OpenOrienteering developers")
 
 math(EXPR Mapper_VERSION_CODE "${Mapper_VERSION_MAJOR} * 10000 + ${Mapper_VERSION_MINOR} * 100 + ${Mapper_VERSION_PATCH} * 2 + ${CMAKE_SIZEOF_VOID_P} / 4 - 1")
@@ -63,8 +63,10 @@ endif()
 
 option(Mapper_DEBUG_TRANSLATIONS "Debug missing translations" OFF)
 
-# Used for some Linux distributions which do not provide the polyclipping lib.
-option(Mapper_BUILD_CLIPPER "Build the Clipper package from source" OFF)
+# To improve developer experience, build clipper if it is not found
+set(Mapper_BUILD_CLIPPER "auto" CACHE STRING
+  "Build the Clipper package from source, alternatives: ON, OFF"
+)
 
 option(Mapper_USE_GDAL   "Use the GDAL library" ON)
 
@@ -174,6 +176,19 @@ add_custom_target(Mapper_prerequisites
 )
 set(Mapper_prerequisites_FOUND TRUE)
 
+if(Mapper_BUILD_CLIPPER STREQUAL "auto")
+	find_package(Polyclipping 6.1.3 MODULE)
+	if(NOT Polyclipping_FOUND)
+		message(WARNING
+		  "System polyclipping is missing. Enabling embedded build.\n"
+		  "Set Mapper_BUILD_CLIPPER=OFF to disable embedded build."
+		)
+		set_property(CACHE Mapper_BUILD_CLIPPER PROPERTY VALUE "ON")
+	else()
+		set_property(CACHE Mapper_BUILD_CLIPPER PROPERTY VALUE "OFF")
+	endif()
+	set_property(CACHE Mapper_BUILD_CLIPPER PROPERTY TYPE "BOOL")
+endif()
 if(Mapper_BUILD_CLIPPER)
 	add_subdirectory(3rd-party/clipper)
 	add_feature_info(Mapper_BUILD_CLIPPER 1 "version: ${CLIPPER_VERSION}")
@@ -274,7 +289,6 @@ endif()
 if (Mapper_USE_GDAL)
 	add_subdirectory("src/gdal")
 endif()
-add_subdirectory("src/libocad")
 if(NOT ANDROID)
 	add_subdirectory("src/printsupport")
 endif()

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016  Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -79,6 +79,7 @@ public:
 		PRINT_TASK         = 0x14, // 0x10 | 0x04
 		EXPORT_PDF_TASK    = 0x26, // 0x20 | 0x04 | 0x02
 		EXPORT_IMAGE_TASK  = 0x42, // 0x40        | 0x02
+		EXPORT_KMZ_TASK    = 0x82, // 0x80        | 0x02
 		
 		END_JOB_TYPE
 	};
@@ -254,6 +255,9 @@ protected:
 	/** Checks whether the template order warning needs to be displayed. */
 	void checkTemplateConfiguration();
 	
+	/** Exports to a KML ground overlay file. */
+	void exportToKmz();
+
 	/** Exports to an image file. */
 	void exportToImage();
 
@@ -269,8 +273,10 @@ protected:
 private:
 	enum Exporters
 	{
-		PdfExporter = -1,
-		ImageExporter = -2
+		PdfExporter   = -1,
+		ImageExporter = -2,
+		KmzExporter   = -3,
+		LastExporter  = KmzExporter
 	};
 	TaskFlags task;
 	

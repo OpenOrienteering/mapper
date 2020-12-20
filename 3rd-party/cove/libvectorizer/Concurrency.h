@@ -46,7 +46,7 @@ namespace Concurrency {
  * is const in order to ensure thread safety also in accessing this object
  * (cf. std::shared_ptr documentation).
  */
-class Progress : public ProgressObserver
+class Progress final : public ProgressObserver
 {
 private:
 	struct Data
@@ -62,7 +62,7 @@ public:
 	Progress(Progress&& p) = delete;
 	Progress& operator=(const Progress&) = delete;
 	Progress& operator=(Progress&& p) = delete;
-	~Progress() final = default;
+	~Progress() override = default;
 	
 	int getPercentage() const noexcept;
 	void setPercentage(int percentage) final;

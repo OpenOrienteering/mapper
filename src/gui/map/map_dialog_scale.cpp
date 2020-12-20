@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2019 Kai Pastor
+ *    Copyright 2019-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -61,7 +61,7 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	
 	//: Scaling center point
 	center_georef_radio = new QRadioButton(tr("Georeferencing reference point"));
-	if (!map->getGeoreferencing().isValid())
+	if (map->getGeoreferencing().getState() == Georeferencing::Local)
 		center_georef_radio->setEnabled(false);
 	layout->addRow(center_georef_radio);
 	
@@ -95,7 +95,7 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	layout->addRow(adjust_objects_check);
 	
 	adjust_georeferencing_check = new QCheckBox(tr("Adjust georeferencing reference point"));
-	if (map->getGeoreferencing().isValid())
+	if (map->getGeoreferencing().getState() == Georeferencing::Geospatial)
 		adjust_georeferencing_check->setChecked(true);
 	else
 		adjust_georeferencing_check->setEnabled(false);

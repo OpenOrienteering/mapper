@@ -27,6 +27,7 @@
 #include <QObject>
 #include <QPalette>
 #include <QPixmap>
+#include <QPointer>
 #include <QProxyStyle>
 #include <QRect>
 #include <QSize>
@@ -34,7 +35,6 @@
 #include <QStyle>
 
 class QApplication;
-class QChildEvent;
 class QCommonStyle;
 class QPainter;
 class QStyleHintReturn;
@@ -101,11 +101,6 @@ public:
 	void unpolish(QApplication* application) override;
 	
 	
-protected:
-	void childEvent(QChildEvent* event) override;
-	
-	
-public:
 	/**
 	 * Draws the given primitive element.
 	 * 
@@ -198,7 +193,9 @@ private:
 	
 	void onSettingsChanged();
 	
-	QCommonStyle* common_style = nullptr;
+	void fixupProxyChain(QStyle* proxy_style);
+	
+	QPointer<QCommonStyle> common_style;
 	QPalette default_palette;
 	ToolBarMetrics toolbar = {};
 	MenuMetrics menu       = {};

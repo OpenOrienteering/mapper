@@ -34,7 +34,7 @@
 #  include <proj.h>
 #endif
 
-#ifdef MAPPER_USE_GDAL
+#ifdef MAPPER_TEST_GDAL
 #  include <gdal.h>
 #  include <ogr_api.h>
 #  include <ogr_srs_api.h>
@@ -123,8 +123,6 @@ void GeoreferencingTest::initTestCase()
 void GeoreferencingTest::testEmptyProjectedCRS()
 {
 	Georeferencing new_georef;
-	QVERIFY(new_georef.isValid());
-	QVERIFY(new_georef.isLocal());
 	QCOMPARE(new_georef.getState(), Georeferencing::Local);
 	QCOMPARE(new_georef.getScaleDenominator(), 1000u);
 	QCOMPARE(new_georef.getCombinedScaleFactor(), 1.0);
@@ -135,6 +133,27 @@ void GeoreferencingTest::testEmptyProjectedCRS()
 	QCOMPARE(new_georef.getConvergence(), 0.0);
 	QCOMPARE(new_georef.getMapRefPoint(), MapCoord(0, 0));
 	QCOMPARE(new_georef.getProjectedRefPoint(), QPointF(0.0, 0.0));
+}
+
+void GeoreferencingTest::testStateChanges()
+{
+	Georeferencing georef;
+	QCOMPARE(georef.getState(), Georeferencing::Local);
+	// From local to broken
+	georef.setProjectedCRS(QStringLiteral("Broken"), QStringLiteral("+init=epsg:BROKEN"));
+	QCOMPARE(georef.getState(), Georeferencing::BrokenGeospatial);
+	// From broken to geospatial
+	georef.setProjectedCRS(QStringLiteral("UTM 32"), utm32_spec);
+	QCOMPARE(georef.getState(), Georeferencing::Geospatial);
+	// From geospatial to broken
+	georef.setProjectedCRS(QStringLiteral("Broken"), QStringLiteral("+init=epsg:BROKEN"));
+	QCOMPARE(georef.getState(), Georeferencing::BrokenGeospatial);
+	// From broken to broken
+	georef.setProjectedCRS(QStringLiteral("Broken"), {});
+	QCOMPARE(georef.getState(), Georeferencing::BrokenGeospatial);
+	// From broken to local
+	georef.setLocalState();
+	QCOMPARE(georef.getState(), Georeferencing::Local);
 }
 
 void GeoreferencingTest::testGridScaleFactor_data()
@@ -160,11 +179,11 @@ void GeoreferencingTest::testGridScaleFactor()
 	
 	Georeferencing georef;
 	georef.setProjectedCRS(QString::fromLatin1(QTest::currentDataTag()), spec);
-	QVERIFY2(georef.isValid(), georef.getErrorText().toLatin1());
+	QCOMPARE(georef.getState(), Georeferencing::Geospatial);
 	
 	auto const latlon = LatLon{lat, lon};
 	georef.setGeographicRefPoint(latlon);
-	QVERIFY2(georef.isValid(), georef.getErrorText().toLatin1());
+	QCOMPARE(georef.getState(), Georeferencing::Geospatial);
 	
 	// Verify scale_x
 	auto const east = georef.getProjectedRefPoint() + QPointF{500.0, 0.0};
@@ -231,7 +250,7 @@ void GeoreferencingTest::testGridScaleFactor()
 	
 	// See that the auxiliary scale factor is preserved when the CRS changes.
 	georef.setProjectedCRS(QString::fromLatin1(QTest::currentDataTag()), utm32_spec);
-	QVERIFY2(georef.isValid(), georef.getErrorText().toLatin1());
+	QCOMPARE(georef.getState(), Georeferencing::Geospatial);
 	QCOMPARE(georef.getAuxiliaryScaleFactor(), elevation_scale_factor);
 	map_distance = QLineF{georef.toMapCoordF(sw), georef.toMapCoordF(ne)}.length();
 	ground_distance = map_distance * georef.getScaleDenominator() / 1000;
@@ -248,7 +267,7 @@ void GeoreferencingTest::testGridScaleFactor()
 	georef.setAuxiliaryScaleFactor(0.95);
 	auto const expected_combined = georef.getCombinedScaleFactor();
 	auto const map_coord = georef.toMapCoordF(sw);
-	georef.setState(Georeferencing::Local);
+	georef.setLocalState();
 	QVERIFY(georef.getProjectedCRSSpec().isEmpty());
 	// This call to setDeclination must not have side-effects.
 	georef.setDeclination(georef.getDeclination());
@@ -353,7 +372,7 @@ void GeoreferencingTest::testCRSTemplates()
 	
 	Georeferencing georef;
 	georef.setProjectedCRS(QStringLiteral("EPSG"), epsg_template->specificationTemplate().arg(QStringLiteral("5514")), { QStringLiteral("5514") });
-	QVERIFY(georef.isValid());
+	QCOMPARE(georef.getState(), Georeferencing::Geospatial);
 	QCOMPARE(georef.getProjectedCoordinatesName(), QStringLiteral("EPSG 5514 coordinates"));
 }
 
@@ -430,7 +449,7 @@ void GeoreferencingTest::testProjection()
 	if (std::fabs(lat_lon.longitude() - longitude) > (max_angl_error * std::cos(qDegreesToRadians(latitude))))
 		QCOMPARE(QString::number(lat_lon.longitude(), 'f'), QString::number(longitude, 'f'));
 	
-#ifdef MAPPER_USE_GDAL
+#ifdef MAPPER_TEST_GDAL
 	// Cf. OgrFileExport::setupGeoreferencing
 	auto* map_srs = OSRNewSpatialReference(nullptr);
 	OSRSetProjCS(map_srs, "Projected map SRS");
@@ -470,7 +489,7 @@ void GeoreferencingTest::testProjection()
 	
 	OSRDestroySpatialReference(geo_srs);
 	OSRDestroySpatialReference(map_srs);
-#endif  // MAPPPER_USE_GDAL
+#endif  // MAPPER_TEST_GDAL
 }
 
 
