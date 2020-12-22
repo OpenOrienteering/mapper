@@ -420,10 +420,17 @@ bool ProjTransform::isValid() const noexcept
 
 bool ProjTransform::isGeographic() const
 {
-	if (!isValid())
-		return false;
+	auto type = pj ? proj_get_type(pj) : PJ_TYPE_UNKNOWN;
+	if (type == PJ_TYPE_BOUND_CRS)
+	{
+		// "Coordinates referring to a BoundCRS are expressed into its source/base CRS."
+		// (https://proj.org/development/reference/cpp/crs.html)
+		auto* base_crs = proj_get_source_crs(nullptr, pj);
+		type = proj_get_type(base_crs);
+		proj_destroy(base_crs);
+	}
 	
-	switch (proj_get_type(pj))
+	switch (type)
 	{
 	case PJ_TYPE_GEOGRAPHIC_CRS:
 	case PJ_TYPE_GEOGRAPHIC_2D_CRS:
@@ -432,7 +439,6 @@ bool ProjTransform::isGeographic() const
 	default:
 		return false;
 	}
-
 }
 
 QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
