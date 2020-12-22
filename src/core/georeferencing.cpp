@@ -289,12 +289,7 @@ ProjTransform& ProjTransform::operator=(ProjTransform&& other) noexcept
 // static
 ProjTransform ProjTransform::crs(const QString& crs_spec)
 {
-	ProjTransform result;
-	auto crs_spec_latin1 = crs_spec.toLatin1();
-	if (!crs_spec_latin1.contains("+no_defs"))
-		crs_spec_latin1.append(" +no_defs");
-	result.pj = pj_init_plus(crs_spec_latin1);
-	return result;
+	return ProjTransform(crs_spec);
 }
 
 bool ProjTransform::isValid() const noexcept
