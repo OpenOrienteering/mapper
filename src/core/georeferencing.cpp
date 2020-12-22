@@ -306,10 +306,12 @@ QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
 {
 	static auto const geographic_crs = ProjTransform(Georeferencing::geographic_crs_spec);
 	
-	double easting = qDegreesToRadians(lat_lon.longitude()), northing = qDegreesToRadians(lat_lon.latitude());
+	auto point = isGeographic()
+	             ? QPointF{lat_lon.longitude(), lat_lon.latitude()}
+	             : QPointF{qDegreesToRadians(lat_lon.longitude()), qDegreesToRadians(lat_lon.latitude())};
 	if (geographic_crs.isValid())
 	{
-		auto ret = pj_transform(geographic_crs.pj, pj, 1, 1, &easting, &northing, nullptr);
+		auto ret = pj_transform(geographic_crs.pj, pj, 1, 1, &point.rx(), &point.ry(), nullptr);
 		if (ok)
 			*ok = (ret == 0);
 	}
@@ -317,7 +319,7 @@ QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
 	{
 		*ok = false;
 	}
-	return {easting, northing};
+	return point;
 }
 
 LatLon ProjTransform::inverse(const QPointF& projected_coords, bool* ok) const
@@ -335,7 +337,7 @@ LatLon ProjTransform::inverse(const QPointF& projected_coords, bool* ok) const
 	{
 		*ok = false;
 	}
-	return LatLon::fromRadiant(northing, easting);
+	return isGeographic() ? LatLon{northing, easting} : LatLon::fromRadiant(northing, easting);
 }
 
 QString ProjTransform::errorText() const
