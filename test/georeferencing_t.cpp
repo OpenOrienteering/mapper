@@ -333,6 +333,14 @@ void GeoreferencingTest::testCRS_data()
 	        << utm32_spec
 	        << utm32_spec
 	        << false;
+	QTest::newRow("latlong basic")
+	        << QStringLiteral("EPSG:4326")
+	        << QStringLiteral("+proj=latlong +datum=WGS84")
+	        << true;
+	QTest::newRow("longlat +no_defs")
+	        << QStringLiteral("urn:ogc:def:crs:OGC:1.3:CRS84")
+	        << QStringLiteral("+proj=longlat +datum=WGS84 +no_defs")
+	        << true;
 }
 
 void GeoreferencingTest::testCRS()
@@ -363,10 +371,18 @@ void GeoreferencingTest::testCRS()
 	{
 		auto t = ProjTransform::crs(spec);
 		QVERIFY(t.isValid());
+#ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+		QEXPECT_FAIL("latlong basic", "Broken", Continue);
+		QEXPECT_FAIL("longlat +no_defs", "Broken", Continue);
+#endif
 		QCOMPARE(t.isGeographic(), is_geographic);
 		
 		Georeferencing georef;
 		QVERIFY2(georef.setProjectedCRS(id, spec), georef.getErrorText().toLatin1());
+#ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+		QEXPECT_FAIL("latlong basic", "Broken", Continue);
+		QEXPECT_FAIL("longlat +no_defs", "Broken", Continue);
+#endif
 		QCOMPARE(georef.isGeographic(), is_geographic);
 	}
 }
