@@ -374,12 +374,14 @@ ProjTransform::ProjTransform(const QString& crs_spec)
 	if (crs_spec.isEmpty())
 		return;
 	
-	auto spec_latin1 = crs_spec.toLatin1();
+	static auto const geographic_crs_spec_utf8 = Georeferencing::geographic_crs_spec.toUtf8();
+	
+	auto crs_spec_utf8 = crs_spec.toUtf8();
 #ifdef PROJ_ISSUE_1573
 	// Cf. https://github.com/OSGeo/PROJ/pull/1573
-	spec_latin1.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
+	crs_spec_utf8.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
 #endif
-	pj = proj_create_crs_to_crs(PJ_DEFAULT_CTX, Georeferencing::geographic_crs_spec.toLatin1(), spec_latin1, nullptr);
+	pj = proj_create_crs_to_crs(PJ_DEFAULT_CTX, geographic_crs_spec_utf8, crs_spec_utf8, nullptr);
 	if (pj)
 		operator=({proj_normalize_for_visualization(PJ_DEFAULT_CTX, pj)});
 }
