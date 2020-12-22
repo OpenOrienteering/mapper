@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -371,18 +371,10 @@ void GeoreferencingTest::testCRS()
 	{
 		auto t = ProjTransform::crs(spec);
 		QVERIFY(t.isValid());
-#ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
-		QEXPECT_FAIL("latlong basic", "Broken", Continue);
-		QEXPECT_FAIL("longlat +no_defs", "Broken", Continue);
-#endif
 		QCOMPARE(t.isGeographic(), is_geographic);
 		
 		Georeferencing georef;
 		QVERIFY2(georef.setProjectedCRS(id, spec), georef.getErrorText().toLatin1());
-#ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
-		QEXPECT_FAIL("latlong basic", "Broken", Continue);
-		QEXPECT_FAIL("longlat +no_defs", "Broken", Continue);
-#endif
 		QCOMPARE(georef.isGeographic(), is_geographic);
 	}
 }

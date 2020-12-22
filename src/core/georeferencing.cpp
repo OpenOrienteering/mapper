@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -346,6 +346,20 @@ QString ProjTransform::errorText() const
 
 #else
 
+namespace {
+
+QByteArray withTypeCrs(QByteArray crs_spec_utf8)
+{
+	if ((crs_spec_utf8.startsWith("+proj=") || crs_spec_utf8.startsWith("+init="))
+	    && !crs_spec_utf8.contains("+type=crs"))
+	{
+		crs_spec_utf8.append(" +type=crs");
+	}
+	return crs_spec_utf8;
+}
+
+}
+
 ProjTransform::ProjTransform(ProjTransformData* pj) noexcept
 : pj{pj}
 {}
@@ -386,7 +400,7 @@ ProjTransform& ProjTransform::operator=(ProjTransform&& other) noexcept
 ProjTransform ProjTransform::crs(const QString& crs_spec)
 {
 	ProjTransform result;
-	auto crs_spec_utf8 = crs_spec.toUtf8();
+	auto crs_spec_utf8 = withTypeCrs(crs_spec.toUtf8().trimmed());
 #ifdef PROJ_ISSUE_1573
 	// Cf. https://github.com/OSGeo/PROJ/pull/1573
 	crs_spec_utf8.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
