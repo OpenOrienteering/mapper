@@ -428,6 +428,12 @@ void GeoreferencingTest::testProjection_data()
 	auto epsg27700_spec = QStringLiteral("+init=epsg:27700");
 	QTest::newRow("EPSG 27700 NY 06071 11978") << epsg27700_spec << 306071.0  << 511978.0 << 54.494403  << -3.4517026;
 	QTest::newRow("EPSG 27700 Lake District")  << epsg27700_spec << 306074.66 << 511974.0 << 54.4943673 << -3.4516448;
+	
+	// latlong vs. longlat
+	QTest::newRow("latlong basic") << QStringLiteral("+proj=latlong +datum=WGS84")             << -6.0 << 51.0 << 51.0 << -6.0;
+	QTest::newRow("latlong +no_defs") << QStringLiteral("+proj=latlong +datum=WGS84 +no_defs") << 16.0 << 49.0 << 49.0 << 16.0;
+	QTest::newRow("longlat basic") << QStringLiteral("+proj=longlat +datum=WGS84")             << -6.0  << 51.0 << 51.0 << -6.0;
+	QTest::newRow("longlat +no_defs") << QStringLiteral("+proj=longlat +datum=WGS84 +no_defs") << 16.0  << 49.0 << 49.0 << 16.0;
 }
 
 
@@ -453,8 +459,20 @@ void GeoreferencingTest::testProjection()
 	QPointF proj_coord = georef.toProjectedCoords(lat_lon, &ok);
 	QVERIFY(ok);
 	
+#ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+	QEXPECT_FAIL("latlong basic", "Georeferencing converts deg to rad", Continue);
+	QEXPECT_FAIL("latlong +no_defs", "Georeferencing converts deg to rad", Continue);
+	QEXPECT_FAIL("longlat basic", "Georeferencing converts deg to rad", Continue);
+	QEXPECT_FAIL("longlat +no_defs", "Georeferencing converts deg to rad", Continue);
+#endif
 	if (std::fabs(proj_coord.x() - easting) > max_dist_error)
 		QCOMPARE(QString::number(proj_coord.x(), 'f'), QString::number(easting, 'f'));
+#ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+	QEXPECT_FAIL("latlong basic", "Georeferencing converts deg to rad", Continue);
+	QEXPECT_FAIL("latlong +no_defs", "Georeferencing converts deg to rad", Continue);
+	QEXPECT_FAIL("longlat basic", "Georeferencing converts deg to rad", Continue);
+	QEXPECT_FAIL("longlat +no_defs", "Georeferencing converts deg to rad", Continue);
+#endif
 	if (std::fabs(proj_coord.y() - northing) > max_dist_error)
 		QCOMPARE(QString::number(proj_coord.y(), 'f'), QString::number(northing, 'f'));
 	
@@ -462,8 +480,20 @@ void GeoreferencingTest::testProjection()
 	proj_coord = QPointF(easting, northing);
 	lat_lon = georef.toGeographicCoords(proj_coord, &ok);
 	QVERIFY(ok);
+#ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+	QEXPECT_FAIL("latlong basic", "Georeferencing converts deg to rad", Continue);
+	QEXPECT_FAIL("latlong +no_defs", "Georeferencing converts deg to rad", Continue);
+	QEXPECT_FAIL("longlat basic", "Georeferencing converts deg to rad", Continue);
+	QEXPECT_FAIL("longlat +no_defs", "Georeferencing converts deg to rad", Continue);
+#endif
 	if (std::fabs(lat_lon.latitude() - latitude) > max_angl_error)
 		QCOMPARE(QString::number(lat_lon.latitude(), 'f'), QString::number(latitude, 'f'));
+#ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+	QEXPECT_FAIL("latlong basic", "Georeferencing converts deg to rad", Continue);
+	QEXPECT_FAIL("latlong +no_defs", "Georeferencing converts deg to rad", Continue);
+	QEXPECT_FAIL("longlat basic", "Georeferencing converts deg to rad", Continue);
+	QEXPECT_FAIL("longlat +no_defs", "Georeferencing converts deg to rad", Continue);
+#endif
 	if (std::fabs(lat_lon.longitude() - longitude) > (max_angl_error * std::cos(qDegreesToRadians(latitude))))
 		QCOMPARE(QString::number(lat_lon.longitude(), 'f'), QString::number(longitude, 'f'));
 	
