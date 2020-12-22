@@ -117,6 +117,16 @@ namespace
 void GeoreferencingTest::initTestCase()
 {
 	XMLFileFormat::active_version = 6;
+	
+#ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+	auto info = proj_info();
+	QVERIFY(info.major == PROJ_VERSION_MAJOR);
+	QVERIFY(info.minor == PROJ_VERSION_MINOR);
+#endif
+	
+#ifdef MAPPER_TEST_GDAL
+	QVERIFY(GDALCheckVersion(GDAL_VERSION_MAJOR, GDAL_VERSION_MINOR, "GeoreferencingTest") == TRUE);
+#endif
 }
 
 
