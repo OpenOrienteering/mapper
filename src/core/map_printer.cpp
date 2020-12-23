@@ -548,13 +548,18 @@ std::unique_ptr<QPrinter> MapPrinter::makePrinter() const
 	return printer;
 }
 
-bool MapPrinter::isPrinter() const
+bool MapPrinter::isPrinter() const noexcept
 {
-	bool is_printer = target
-	                  && target != imageTarget()
-	                  && target != pdfTarget()
-	                  && target != kmzTarget();
-	return is_printer;
+	return isPrinter(target);
+}
+
+// static
+bool MapPrinter::isPrinter(const QPrinterInfo* const target) noexcept
+{
+	return target
+	       && target != imageTarget()
+	       && target != kmzTarget()
+	       && target != pdfTarget();
 }
 
 // slot
