@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2019 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -202,6 +202,19 @@ void XmlElementWriter::write(const MapCoordVector& coords)
 	}
 }
 
+void OpenOrienteering::XmlElementWriter::write(const QHash<QString, QString>& tags)
+{
+	namespace literal = XmlStreamLiteral;
+	typedef QHash<QString, QString> Tags;
+	
+	for (Tags::const_iterator tag = tags.constBegin(), end = tags.constEnd(); tag != end; ++tag)
+	{
+		XmlElementWriter tag_element(xml, literal::t);
+		tag_element.writeAttribute(literal::k, tag.key());
+		xml.writeCharacters(tag.value());
+	}
+}
+
 
 
 //### XmlElementReader ###
@@ -341,6 +354,24 @@ void XmlElementReader::readForText(MapCoordVector& coords)
 	}
 }
 
+void OpenOrienteering::XmlElementReader::read(QHash<QString, QString>& tags)
+{
+	namespace literal = XmlStreamLiteral;
+	
+	tags.clear();
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == literal::t)
+		{
+			const QString key(xml.attributes().value(literal::k).toString());
+			tags.insert(key, xml.readElementText());
+		}
+		else
+		{
+			xml.skipCurrentElement();
+		}
+	}
+}
 
 
 }  // namespace OpenOrienteering

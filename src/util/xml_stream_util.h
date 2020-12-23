@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2019 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -564,19 +564,6 @@ void XmlElementWriter::write(const QSizeF& size, int precision)
 	writeAttribute( literal::height, size.height(), precision );
 }
 
-inline
-void XmlElementWriter::write(const QHash<QString, QString> &tags)
-{
-	namespace literal = XmlStreamLiteral;
-	typedef QHash<QString, QString> Tags;
-	
-	for (Tags::const_iterator tag = tags.constBegin(), end = tags.constEnd(); tag != end; ++tag)
-	{
-		XmlElementWriter tag_element(xml, literal::t);
-		tag_element.writeAttribute(literal::k, tag.key());
-		xml.writeCharacters(tag.value());
-	}
-}
 
 //### XmlElementReader inline implemenentation ###
 
@@ -731,26 +718,6 @@ void XmlElementReader::read(QSizeF& size)
 	size.setWidth(QString::fromRawData(ref.data(), ref.size()).toDouble());
 	ref = attributes.value(literal::height);
 	size.setHeight(QString::fromRawData(ref.data(), ref.size()).toDouble());
-}
-
-inline
-void XmlElementReader::read(QHash<QString, QString> &tags)
-{
-	namespace literal = XmlStreamLiteral;
-	
-	tags.clear();
-	while (xml.readNextStartElement())
-	{
-		if (xml.name() == literal::t)
-		{
-			const QString key(xml.attributes().value(literal::k).toString());
-			tags.insert(key, xml.readElementText());
-		}
-		else
-		{
-			xml.skipCurrentElement();
-		}
-	}
 }
 
 
