@@ -22,6 +22,7 @@
 #include "map_printer.h"
 
 #include <cmath>
+#include <cstddef>
 
 #include <Qt>
 #include <QtMath>
@@ -868,7 +869,8 @@ void MapPrinter::updatePageBreaks()
 	const qreal right_bound = print_area.right() - h_overlap - 0.05;
 	if (page_width >= 0.01)
 	{
-		for (h_pos += page_width; h_pos < right_bound; h_pos += page_width)
+		auto const max_size = std::size_t(std::ceil((right_bound - h_pos) / page_width));
+		for (h_pos += page_width; h_page_pos.size() < max_size; h_pos += page_width)
 			h_page_pos.push_back(h_pos);
 		
 		// Center the print area on the pages total area.
@@ -886,7 +888,8 @@ void MapPrinter::updatePageBreaks()
 	const qreal bottom_bound = print_area.bottom() - v_overlap - 0.05;
 	if (page_height >= 0.01)
 	{
-		for (v_pos += page_height; v_pos < bottom_bound; v_pos += page_height)
+		auto const max_size = std::size_t(std::ceil((bottom_bound - v_pos) / page_height));
+		for (v_pos += page_height; v_page_pos.size() < max_size; v_pos += page_height)
 			v_page_pos.push_back(v_pos);
 		
 		// Don't pre-calculate offset to avoid FP precision problems
