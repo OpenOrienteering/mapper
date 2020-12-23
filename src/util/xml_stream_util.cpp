@@ -30,6 +30,7 @@
 #include <QBuffer>
 #include <QByteArray>
 #include <QChar>
+#include <QHash>
 #include <QIODevice>
 #include <QLatin1Char>
 #include <QScopedValueRollback>
@@ -40,6 +41,7 @@
 #include "fileformats/file_format.h"
 #include "fileformats/file_import_export.h"
 #include "fileformats/xml_file_format.h"
+#include "util/key_value_container.h"
 
 
 namespace OpenOrienteering {
@@ -202,12 +204,11 @@ void XmlElementWriter::write(const MapCoordVector& coords)
 	}
 }
 
-void OpenOrienteering::XmlElementWriter::write(const QHash<QString, QString>& tags)
+void OpenOrienteering::XmlElementWriter::write(const KeyValueContainer& tags)
 {
 	namespace literal = XmlStreamLiteral;
-	typedef QHash<QString, QString> Tags;
 	
-	for (Tags::const_iterator tag = tags.constBegin(), end = tags.constEnd(); tag != end; ++tag)
+	for (auto tag = tags.constBegin(), end = tags.constEnd(); tag != end; ++tag)
 	{
 		XmlElementWriter tag_element(xml, literal::t);
 		tag_element.writeAttribute(literal::k, tag.key());
@@ -354,7 +355,7 @@ void XmlElementReader::readForText(MapCoordVector& coords)
 	}
 }
 
-void OpenOrienteering::XmlElementReader::read(QHash<QString, QString>& tags)
+void OpenOrienteering::XmlElementReader::read(KeyValueContainer& tags)
 {
 	namespace literal = XmlStreamLiteral;
 	

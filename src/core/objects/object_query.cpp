@@ -39,6 +39,7 @@
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/symbols/symbol.h"
+#include "util/key_value_container.h"
 
 
 // ### Local utilities ###

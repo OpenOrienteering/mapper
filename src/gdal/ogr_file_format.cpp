@@ -80,6 +80,7 @@
 #include "gdal/gdal_manager.h"
 #include "gdal/gdal_template.h"
 #include "templates/template.h"
+#include "util/key_value_container.h"
 
 // IWYU pragma: no_forward_declare QFile
 
@@ -1099,9 +1100,9 @@ void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_def
 	}
 }
 
-QHash<QString, QString> OgrFileImport::importFields(OGRFeatureDefnH feature_definition, OGRFeatureH feature)
+KeyValueContainer OgrFileImport::importFields(OGRFeatureDefnH feature_definition, OGRFeatureH feature)
 {
-	QHash<QString, QString> tags;
+	KeyValueContainer tags;
 	auto const num_fields = feature_definition ? OGR_FD_GetFieldCount(feature_definition) : 0;
 	for (int i = 0; i < num_fields; ++i)
 	{
@@ -1861,7 +1862,7 @@ QPointF OgrFileImport::calcAverageCoords(OGRDataSourceH data_source, OGRDataSour
 }
 
 
-void OgrFileImport::handleKmlOverlayIcon(OgrFileImport::ObjectList& objects, const QHash<QString, QString>& tags) const
+void OgrFileImport::handleKmlOverlayIcon(OgrFileImport::ObjectList& objects, const KeyValueContainer& tags) const
 {
 	if (objects.size() != 1 || !tags.contains(QStringLiteral("icon")))
 		return;

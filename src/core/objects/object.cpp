@@ -33,6 +33,7 @@
 #include <Qt>
 #include <QtNumeric>
 #include <QFlags>
+#include <QHash>
 #include <QLatin1String>
 #include <QPoint>
 #include <QPointF>
@@ -686,7 +687,7 @@ Object* Object::getObjectForType(Object::Type type, const Symbol* symbol)
 	return nullptr;
 }
 
-void Object::setTags(const Object::Tags& tags)
+void Object::setTags(const KeyValueContainer& tags)
 {
 	if (object_tags != tags)
 	{

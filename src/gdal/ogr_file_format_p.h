@@ -55,6 +55,7 @@ class MapView;
 class MapColor;
 class MapPart;
 class Object;
+class KeyValueContainer;
 class PathObject;
 class PointSymbol;
 class TextSymbol;
@@ -284,7 +285,7 @@ protected:
 	void importFeature(MapPart* map_part, OGRFeatureDefnH feature_definition, OGRFeatureH feature, OGRGeometryH geometry, const Clipping* clipping);
 	
 	
-	QHash<QString, QString> importFields(OGRFeatureDefnH feature_definition, OGRFeatureH feature);
+	KeyValueContainer importFields(OGRFeatureDefnH feature_definition, OGRFeatureH feature);
 		
 	ObjectList importGeometry(OGRFeatureH feature, OGRGeometryH geometry);
 	
@@ -329,7 +330,7 @@ protected:
 	static QPointF calcAverageCoords(OGRDataSourceH data_source, OGRDataSourceH srs);
 	
 	
-	void handleKmlOverlayIcon(OgrFileImport::ObjectList& objects, const QHash<QString, QString>& tags) const;
+	void handleKmlOverlayIcon(OgrFileImport::ObjectList& objects, const KeyValueContainer& tags) const;
 	
 	
 private:

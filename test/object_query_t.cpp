@@ -58,12 +58,14 @@ const Object* ObjectQueryTest::testObject()
 	static TextObject obj;
 	if (obj.tags().isEmpty())
 	{
-		obj.setTags( {
+		KeyValueContainer tags;
+		tags.QHash<QString, QString>::operator=(QHash<QString, QString> {
 		  { QLatin1String("a"), QLatin1String("1") },
 		  { QLatin1String("b"), QLatin1String("2") },
 		  { QLatin1String("c"), QLatin1String("3") },
 		  { QLatin1String("abc"), QLatin1String("123") }
 		});
+		obj.setTags(tags);
 		obj.setText(QStringLiteral("ac 13"));
 	}
 	Q_ASSERT(!obj.tags().contains(QLatin1String("d")));

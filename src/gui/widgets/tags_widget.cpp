@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -139,10 +139,10 @@ void TagsWidget::objectTagsChanged()
 	const Object* object = map->getFirstSelectedObject();
 	if (object)
 	{
-		const Object::Tags& tags = object->tags();
+		auto const& tags = object->tags();
 		tags_table->clearContents();
 		tags_table->setRowCount(tags.size() + 1);
-		for (Object::Tags::const_iterator tag = tags.constBegin(), end = tags.constEnd(); tag != end; ++tag)
+		for (auto tag = tags.constBegin(), end = tags.constEnd(); tag != end; ++tag)
 		{
 			tags_table->setItem(row, 0, new QTableWidgetItem(tag.key()));
 			tags_table->item(row, 0)->setData(Qt::UserRole, tag.key());

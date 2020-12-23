@@ -152,6 +152,7 @@ add_unit_test(georef_ocd_mapping_t
 	../src/core/crs_template_implementation
 	../src/fileformats/ocd_georef_fields
 	../src/fileformats/file_format
+	../src/util/key_value_container
 	../src/util/xml_stream_util
 	../src/core/map_coord
 )
@@ -164,6 +165,7 @@ add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/gui/widgets/crs_param_widgets
 	../src/mapper_resource
 	../src/fileformats/file_format
+	../src/util/key_value_container
 	../src/util/xml_stream_util
 	../src/core/map_coord
 )

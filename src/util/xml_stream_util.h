@@ -21,7 +21,6 @@
 #define OPENORIENTEERING_XML_STREAM_UTIL_H
 
 #include <QtGlobal>
-#include <QHash>
 #include <QLatin1String>
 #include <QRectF>
 #include <QSizeF>
@@ -39,6 +38,8 @@ class QXmlStreamReader;
 class QXmlStreamWriter;
 
 namespace OpenOrienteering {
+
+class KeyValueContainer;
 
 
 /**
@@ -249,7 +250,7 @@ public:
 	/**
 	 * Writes tags.
 	 */
-	void write(const QHash<QString, QString>& tags);
+	void write(const KeyValueContainer& tags);
 	
 private:
 	QXmlStreamWriter& xml;
@@ -360,7 +361,7 @@ public:
 	/**
 	 * Read tags.
 	 */
-	void read(QHash<QString, QString>& tags);
+	void read(KeyValueContainer& tags);
 	
 private:
 	QXmlStreamReader& xml;
