@@ -25,15 +25,20 @@
 
 #include <Qt>
 #include <QtMath>
+#include <QByteArray>
 #include <QColor>
+#include <QFlags>
 #include <QHash>
 #include <QImage>
 #include <QLatin1String>
 #include <QPagedPaintDevice>
-#include <QPaintDevice>
 #include <QPaintEngine> // IWYU pragma: keep
 #include <QPainter>
+#include <QPageLayout>
 #include <QPointF>
+#include <QRect>
+#include <QRgb>
+#include <QSize>
 #include <QStringRef>
 #include <QTransform>
 #include <QXmlStreamReader>
@@ -51,6 +56,7 @@
 #include "core/georeferencing.h"
 #include "core/map.h"
 #include "core/map_color.h"
+#include "core/map_grid.h"
 #include "core/map_view.h"
 #include "core/renderables/renderable.h"
 #include "templates/template.h"

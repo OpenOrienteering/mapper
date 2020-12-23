@@ -27,11 +27,11 @@
 
 #include <QtGlobal>
 #include <QObject>
-#include <QRect>
+#include <QPageSize>
 #include <QRectF>
-#include <QSize>
 #include <QSizeF>
 #include <QString>
+#include <QTransform>
 
 #ifdef QT_PRINTSUPPORT_LIB
 #  include <QPrinterInfo>
@@ -44,6 +44,8 @@ class QHash;
 class QImage;
 class QPainter;
 class QPrinter;
+class QRectF;
+class QSizeF;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
