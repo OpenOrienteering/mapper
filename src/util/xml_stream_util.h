@@ -426,9 +426,6 @@ namespace XmlStreamLiteral
 	static const QLatin1String count("count");
 	
 	static const QLatin1String object("object");
-	static const QLatin1String tags("tags");
-	static const QLatin1String tag("tag"); ///< @deprecated
-	static const QLatin1String key("key"); ///< @deprecated
 	static const QLatin1String t("t");
 	static const QLatin1String k("k");
 	
@@ -749,22 +746,10 @@ void XmlElementReader::read(QHash<QString, QString> &tags)
 			const QString key(xml.attributes().value(literal::k).toString());
 			tags.insert(key, xml.readElementText());
 		}
-		else if (xml.name() == literal::tag)
-		{
-			// Full keywords were used in pre-0.6.0 master branch
-			// TODO Remove after Mapper 0.6.x releases
-			const QString key(xml.attributes().value(literal::key).toString());
-			tags.insert(key, xml.readElementText());
-		}
-		else if (xml.name() == literal::tags)
-		{
-			// Fix for broken Object::save in pre-0.6.0 master branch
-			// TODO Remove after Mapper 0.6.x releases
-			const QString key(xml.attributes().value(literal::key).toString());
-			tags.insert(key, xml.readElementText());
-		}
 		else
+		{
 			xml.skipCurrentElement();
+		}
 	}
 }
 
