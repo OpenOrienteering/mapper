@@ -771,7 +771,7 @@ qreal AreaSymbol::dimensionForIcon() const
 }
 
 
-
+// override
 bool AreaSymbol::hasRotatableFillPattern() const
 {
 	return std::any_of(begin(patterns), end(patterns), [](auto& pattern){

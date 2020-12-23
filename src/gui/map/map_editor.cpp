@@ -107,7 +107,6 @@
 #include "core/objects/boolean_tool.h"
 #include "core/objects/object.h"
 #include "core/objects/object_operations.h"
-#include "core/symbols/area_symbol.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/symbol_icon_decorator.h"
 #include "fileformats/file_format.h"
@@ -2528,15 +2527,11 @@ void MapEditorController::updateObjectDependentActions()
 			}
 			
 			have_rotatable_object |= symbol->isRotatable();
+			have_rotatable_pattern |= symbol->hasRotatableFillPattern();
 			
 			if (Symbol::areTypesCompatible(symbol->getType(), Symbol::Area))
 			{
 				++num_selected_paths;
-				
-				if (symbol->getType() == Symbol::Area)
-				{
-					have_rotatable_pattern |= symbol->asArea()->hasRotatableFillPattern();
-				}
 				
 				int const contained_types = symbol->getContainedTypes();
 				
@@ -2549,23 +2544,6 @@ void MapEditorController::updateObjectDependentActions()
 				{
 					have_area = true;
 					have_area_with_holes |= object->asPath()->parts().size() > 1;
-				}
-			}
-		}
-		
-		if (have_area && !have_rotatable_pattern)
-		{
-			map->determineSymbolUseClosure(symbols_in_selection);
-			for (std::size_t i = 0, end = symbols_in_selection.size(); i < end; ++i)
-			{
-				if (symbols_in_selection[i])
-				{
-					Symbol* symbol = map->getSymbol(i);
-					if (symbol->getType() == Symbol::Area)
-					{
-						have_rotatable_pattern = symbol->asArea()->hasRotatableFillPattern();
-						break;
-					}
 				}
 			}
 		}

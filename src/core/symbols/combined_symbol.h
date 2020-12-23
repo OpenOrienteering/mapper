@@ -112,6 +112,8 @@ public:
 	inline bool isPartPrivate(int i) const {return private_parts[i];}
 	inline void setPartPrivate(int i, bool set_private) {private_parts[i] = set_private;}
 	
+	bool hasRotatableFillPattern() const override;
+	
 	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	
 protected:

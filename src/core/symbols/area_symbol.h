@@ -282,7 +282,7 @@ public:
 	inline void setNumFillPatterns(int count) {patterns.resize(std::size_t(count));}
 	inline FillPattern& getFillPattern(int i) {return patterns[std::size_t(i)];}
 	inline const FillPattern& getFillPattern(int i) const {return patterns[std::size_t(i)];}
-	bool hasRotatableFillPattern() const;
+	bool hasRotatableFillPattern() const override;
 	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	
 protected:
