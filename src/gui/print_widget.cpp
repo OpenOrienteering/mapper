@@ -1003,7 +1003,7 @@ void PrintWidget::updateResolutions(const QPrinterInfo* target) const
 	
 	// Numeric resolution list
 	QList<int> supported_resolutions;
-	if (target && target != MapPrinter::imageTarget())
+	if (MapPrinter::isPrinter(target))
 	{
 		QPrinter pr(*target, QPrinter::HighResolution);
 		supported_resolutions = pr.supportedResolutions();
