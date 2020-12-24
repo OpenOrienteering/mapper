@@ -1,7 +1,7 @@
 ---
 title: Geospatial data support with GDAL
 keywords: GDAL
-edited: 20 September 2020
+edited: 24 December 2020
 ---
 
 OpenOrienteering Mapper uses the [GDAL library](https://gdal.org)
@@ -13,7 +13,10 @@ GDAL's vector data support used to be known as OGR,
 so you will sometimes find this name, too.
 
 Geospatial raster data and vector data can be used as templates.
-But it also possible to open vector data files as maps
+However, currently only graphical templates can be displayed;
+Mapper does not yet process raw raster data, such as altitudes,
+which first need to be rendered in other software.
+It also possible to open vector data files as maps
 and to import vector data into map files.
 
 In addition, the [File menu](file_menu.md) offers the option to export a map
