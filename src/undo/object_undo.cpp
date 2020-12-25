@@ -724,12 +724,13 @@ UndoStep* ObjectTagsUndoStep::undo()
 	return redo_step;
 }
 
+// override
 void ObjectTagsUndoStep::saveObject(XmlElementWriter& xml, int index) const
 {
-	/// \todo Write tags in deterministic order
 	xml.write(object_tags_map.at(index));
 }
 
+// override
 void ObjectTagsUndoStep::loadObject(XmlElementReader& xml, int index)
 {
 	xml.read(object_tags_map[index]);

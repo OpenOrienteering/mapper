@@ -25,11 +25,11 @@
 #include <iterator>
 #include <new>
 #include <utility>
+#include <vector>
 
 #include <Qt>
 #include <QtGlobal>
 #include <QChar>
-#include <QHash>
 #include <QLatin1Char>
 #include <QLatin1String>
 #include <QString>
@@ -398,24 +398,31 @@ QString ObjectQuery::labelFor(ObjectQuery::Operator op)
 
 bool ObjectQuery::operator()(const Object* object) const
 {
-	const auto& object_tags = object->tags();
-
 	switch(op)
 	{
 	case OperatorIs:
-		return object_tags.contains(tags.key) && object_tags.value(tags.key) == tags.value;
+		return [](auto const& container,  auto const& tags) {
+			auto const it = container.find(tags.key);
+			return it != container.end() && it->value == tags.value;
+		} (object->tags(), tags);
 	case OperatorIsNot:
 		// If the object does have the tag, not is true
-		return !object_tags.contains(tags.key) || object_tags.value(tags.key) != tags.value;
+		return [](auto const& container,  auto const& tags) {
+			auto const it = container.find(tags.key);
+			return it == container.end() || it->value != tags.value;
+		} (object->tags(), tags);
 	case OperatorContains:
-		return object_tags.contains(tags.key) && object_tags.value(tags.key).contains(tags.value);
+		return [](auto const& container,  auto const& tags) {
+			auto const it = container.find(tags.key);
+			return it != container.end() && it->value.contains(tags.value);
+		} (object->tags(), tags);
 	case OperatorSearch:
 		if (object->getSymbol() && object->getSymbol()->getName().contains(tags.value, Qt::CaseInsensitive))
 			return true;
-		for (auto it = object_tags.begin(), last = object_tags.end(); it != last; ++it)
+		for (auto const& current : object->tags())
 		{
-			if (it.key().contains(tags.value, Qt::CaseInsensitive)
-			    || it.value().contains(tags.value, Qt::CaseInsensitive))
+			if (current.key.contains(tags.value, Qt::CaseInsensitive)
+			    || current.value.contains(tags.value, Qt::CaseInsensitive))
 				return true;
 		}
 		return false;

@@ -1110,7 +1110,7 @@ KeyValueContainer OgrFileImport::importFields(OGRFeatureDefnH feature_definition
 		if (value && qstrlen(value) > 0)
 		{
 			auto const field_definition = OGR_FD_GetFieldDefn(feature_definition, i);
-			tags[QString::fromUtf8(OGR_Fld_GetNameRef(field_definition))] = QString::fromUtf8(value);
+			tags.insert_or_assign(QString::fromUtf8(OGR_Fld_GetNameRef(field_definition)), QString::fromUtf8(value));
 		}
 	}
 	return tags;
@@ -1871,7 +1871,7 @@ void OgrFileImport::handleKmlOverlayIcon(OgrFileImport::ObjectList& objects, con
 	if (object->getType() != Object::Path || static_cast<PathObject const*>(object)->getCoordinateCount() != 5)
 		return;
 	
-	auto const icon_field = tags[QStringLiteral("icon")];
+	auto const icon_field = tags.at(QStringLiteral("icon"));
 	auto const icon_file_path = [](const QString& path, const QString& icon_field) -> QString {
 		if (icon_field.startsWith(QLatin1Char('/')) || icon_field.contains(QLatin1Char(':')))
 			return icon_field;

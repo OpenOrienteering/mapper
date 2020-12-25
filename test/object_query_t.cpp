@@ -56,15 +56,13 @@ ObjectQueryTest::ObjectQueryTest(QObject* parent)
 const Object* ObjectQueryTest::testObject()
 {
 	static TextObject obj;
-	if (obj.tags().isEmpty())
+	if (obj.tags().empty())
 	{
 		KeyValueContainer tags;
-		tags.QHash<QString, QString>::operator=(QHash<QString, QString> {
-		  { QLatin1String("a"), QLatin1String("1") },
-		  { QLatin1String("b"), QLatin1String("2") },
-		  { QLatin1String("c"), QLatin1String("3") },
-		  { QLatin1String("abc"), QLatin1String("123") }
-		});
+		tags.insert_or_assign(QLatin1String("a"), QLatin1String("1"));
+		tags.insert_or_assign(QLatin1String("b"), QLatin1String("2"));
+		tags.insert_or_assign(QLatin1String("c"), QLatin1String("3"));
+		tags.insert_or_assign(QLatin1String("abc"), QLatin1String("123"));
 		obj.setTags(tags);
 		obj.setText(QStringLiteral("ac 13"));
 	}

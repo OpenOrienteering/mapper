@@ -33,7 +33,6 @@
 #include <Qt>
 #include <QtNumeric>
 #include <QFlags>
-#include <QHash>
 #include <QLatin1String>
 #include <QPoint>
 #include <QPointF>
@@ -162,9 +161,6 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 		}
 	}
 	
-	if (object_tags != other->object_tags)
-		return false;
-	
 	if (qAbs(getRotation() - other->getRotation()) >= 0.000001)  // six decimal places in XML
 		return false;
 	
@@ -190,7 +186,11 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 			return false;
 	}
 	
-	return true;
+	if (object_tags.empty())
+		return other->object_tags.empty();
+	
+	using std::begin; using std::end;
+	return std::is_permutation(object_tags.begin(), object_tags.end(), other->object_tags.begin(), other->object_tags.end());
 }
 
 
@@ -701,11 +701,18 @@ void Object::setTags(const KeyValueContainer& tags)
 	}
 }
 
+QString OpenOrienteering::Object::getTag(const QString& key) const
+{
+	auto const it = object_tags.find(key);
+	return it == object_tags.end() ? QString{} : it->value;
+}
+
 void Object::setTag(const QString& key, const QString& value)
 {
-	if (!object_tags.contains(key) || object_tags.value(key) != value)
+	auto it = object_tags.find(key);
+	if (it != object_tags.end() || it->value != value)
 	{
-		object_tags.insert(key, value);
+		object_tags.insert_or_assign(it, key, value);
 		if (map)
 		{
 			map->setObjectsDirty();
@@ -717,9 +724,10 @@ void Object::setTag(const QString& key, const QString& value)
 
 void Object::removeTag(const QString& key)
 {
-	if (object_tags.contains(key))
+	auto it = object_tags.find(key);
+	if (it != object_tags.end())
 	{
-		object_tags.remove(key);
+		object_tags.erase(it);
 		if (map)
 			map->setObjectsDirty();
 	}

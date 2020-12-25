@@ -1170,12 +1170,6 @@ const KeyValueContainer& Object::tags() const
 	return object_tags;
 }
 
-inline
-QString Object::getTag(const QString& key) const
-{
-	return object_tags.value(key);
-}
-
 
 
 //### PathPart inline code ###

@@ -30,7 +30,6 @@
 #include <QBuffer>
 #include <QByteArray>
 #include <QChar>
-#include <QHash>
 #include <QIODevice>
 #include <QLatin1Char>
 #include <QScopedValueRollback>
@@ -208,11 +207,11 @@ void OpenOrienteering::XmlElementWriter::write(const KeyValueContainer& tags)
 {
 	namespace literal = XmlStreamLiteral;
 	
-	for (auto tag = tags.constBegin(), end = tags.constEnd(); tag != end; ++tag)
+	for (auto const& tag : tags)
 	{
 		XmlElementWriter tag_element(xml, literal::t);
-		tag_element.writeAttribute(literal::k, tag.key());
-		xml.writeCharacters(tag.value());
+		tag_element.writeAttribute(literal::k, tag.key);
+		xml.writeCharacters(tag.value);
 	}
 }
 
@@ -365,7 +364,7 @@ void OpenOrienteering::XmlElementReader::read(KeyValueContainer& tags)
 		if (xml.name() == literal::t)
 		{
 			const QString key(xml.attributes().value(literal::k).toString());
-			tags.insert(key, xml.readElementText());
+			tags.insert_or_assign(key, xml.readElementText());
 		}
 		else
 		{
