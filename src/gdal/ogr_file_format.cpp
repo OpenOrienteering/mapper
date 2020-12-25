@@ -1081,7 +1081,7 @@ void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_def
 	auto objects = importGeometry(feature, geometry);
 	auto const tags = importFields(feature_definition, feature);
 	
-	if (driverName() == "LIBKML" && tags.contains(QStringLiteral("icon")))
+	if (driverName() == "LIBKML")
 	{
 		handleKmlOverlayIcon(objects, tags);
 	}
@@ -1863,44 +1863,39 @@ QPointF OgrFileImport::calcAverageCoords(OGRDataSourceH data_source, OGRDataSour
 
 void OgrFileImport::handleKmlOverlayIcon(OgrFileImport::ObjectList& objects, const QHash<QString, QString>& tags) const
 {
-	using std::begin; using std::end;
-	auto match = [](Object const* object) {
-		return object->getType() == Object::Path
-		       && static_cast<PathObject const*>(object)->getCoordinateCount() == 5;
-	};
-	auto const first = std::remove_if(begin(objects), end(objects), match);
-	auto const last = end(objects);
-	for (auto it = first; it != last; ++it)
+	if (objects.size() != 1 || !tags.contains(QStringLiteral("icon")))
+		return;
+	
+	auto* object = objects.front();
+	if (object->getType() != Object::Path || static_cast<PathObject const*>(object)->getCoordinateCount() != 5)
+		return;
+	
+	auto const icon_field = tags[QStringLiteral("icon")];
+	auto const icon_file_path = [](const QString& path, const QString& icon_field) -> QString {
+		if (icon_field.startsWith(QLatin1Char('/')) || icon_field.contains(QLatin1Char(':')))
+			return icon_field;
+		if (path.endsWith(QLatin1String(".kmz"), Qt::CaseInsensitive))
+		    return QLatin1String("/vsizip/") + path + QLatin1Char('/') + icon_field;
+		return QFileInfo(path).absolutePath() + QLatin1Char('/') + icon_field;
+	} (path, icon_field);
+	if (!GdalFile::exists(icon_file_path.toUtf8()))
 	{
-		auto const icon_field = tags[QStringLiteral("icon")];
-		auto icon_file_path = [this, icon_field]() -> QString {
-			if (icon_field.startsWith(QLatin1Char('/')) || icon_field.contains(QLatin1Char(':')))
-				return icon_field;
-			if (path.endsWith(QLatin1String(".kmz"), Qt::CaseInsensitive))
-			    return QLatin1String("/vsizip/") + path + QLatin1Char('/') + icon_field;
-			return QFileInfo(path).absolutePath() + QLatin1Char('/') + icon_field;
-		} ();
-		if (GdalFile::exists(icon_file_path.toUtf8()))
-		{
-			// The positioning must be calculate after loading.
-			auto* temp = new GdalTemplate(icon_file_path, map);
-			temp->setProperty(GdalTemplate::applyCornerPassPointsProperty(), true);
-			for (auto const& coord : static_cast<PathObject const*>(*it)->getRawCoordinateVector())
-				temp->addPassPoint({ {}, MapCoordF(coord), {}, 0 }, temp->getNumPassPoints());
-			temp->setTemplateState(Template::Unloaded);
-			map->addTemplate(-1, std::unique_ptr<GdalTemplate>(temp));
-			if (view)
-				view->setTemplateVisibility(temp, {1, true});
-			delete *it;
-			*it = nullptr;
-		}
-		else
-		{
-			qDebug("No such icon file: %s", qUtf8Printable(icon_field));
-		}
+		qDebug("No such icon file: %s", qUtf8Printable(icon_field));
+		return;
 	}
-	auto const first_handled = std::remove_if(first, last, [](auto const* o) { return o == nullptr; });
-	objects.erase(first_handled, last);
+	
+	// The positioning must be calculate after loading.
+	auto* temp = new GdalTemplate(icon_file_path, map);
+	for (auto const& coord : object->getRawCoordinateVector())
+		temp->addPassPoint({ {}, MapCoordF(coord), {}, 0 }, temp->getNumPassPoints());
+	temp->setProperty(GdalTemplate::applyCornerPassPointsProperty(), true);
+	temp->setTemplateState(Template::Unloaded);
+	map->addTemplate(-1, std::unique_ptr<GdalTemplate>(temp));
+	if (view)
+		view->setTemplateVisibility(temp, {1, true});
+	
+	delete object;
+	objects.clear();
 }
 
 
