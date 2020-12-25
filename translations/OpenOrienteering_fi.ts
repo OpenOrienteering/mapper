@@ -2572,7 +2572,7 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1946"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1779"/>
         <source>Cannot find a vector data export driver named &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos;-ohjainta vektoridatan vientiä varten ei löydy</translation>
     </message>
 </context>
 <context>
@@ -2719,7 +2719,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="186"/>
         <source>For KML/KMZ export, the map must be georeferenced.</source>
-        <translation type="unfinished"></translation>
+        <translation>KML/KMZ-vientiä varten kartan on oltava georeferoitu.</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="193"/>
