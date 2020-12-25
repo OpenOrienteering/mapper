@@ -27,11 +27,11 @@
 
 #include <QtGlobal>
 #include <QObject>
-#include <QRect>
+#include <QPageSize>
 #include <QRectF>
-#include <QSize>
 #include <QSizeF>
 #include <QString>
+#include <QTransform>
 
 #ifdef QT_PRINTSUPPORT_LIB
 #  include <QPrinterInfo>
@@ -44,6 +44,8 @@ class QHash;
 class QImage;
 class QPainter;
 class QPrinter;
+class QRectF;
+class QSizeF;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
@@ -257,7 +259,10 @@ public:
 	}
 	
 	/** Returns true if a real printer is configured. */
-	bool isPrinter() const;
+	bool isPrinter() const noexcept;
+	
+	/** Returns true if the target is not representing a virtual printer. */
+	static bool isPrinter(const QPrinterInfo* target) noexcept;
 	
 	/** Returns the page format specification. */
 	const MapPrinterPageFormat& getPageFormat() const
