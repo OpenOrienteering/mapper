@@ -1081,7 +1081,7 @@ void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_def
 	auto objects = importGeometry(feature, geometry);
 	auto const tags = importFields(feature_definition, feature);
 	
-	if (driverName() == "LIBKML" && tags.contains(QStringLiteral("icon")))
+	if (driverName() == "LIBKML")
 	{
 		handleKmlOverlayIcon(objects, tags);
 	}
@@ -1863,7 +1863,7 @@ QPointF OgrFileImport::calcAverageCoords(OGRDataSourceH data_source, OGRDataSour
 
 void OgrFileImport::handleKmlOverlayIcon(OgrFileImport::ObjectList& objects, const QHash<QString, QString>& tags) const
 {
-	if (objects.size() != 1)
+	if (objects.size() != 1 || !tags.contains(QStringLiteral("icon")))
 		return;
 	
 	auto* object = objects.front();
