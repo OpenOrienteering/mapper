@@ -963,7 +963,40 @@ void FileFormatTest::ogrExportTest()
 		QCOMPARE(qRound(imported_latlon.latitude()), latitude);
 		QCOMPARE(qRound(imported_latlon.longitude()), longitude);
 	}
-#endif
+#endif  // MAPPER_USE_GDAL
+}
+
+
+void FileFormatTest::importTemplateTest_data()
+{
+	QTest::addColumn<QString>("filepath");
+	
+	QTest::newRow("Course Design") << QStringLiteral("data:symbol sets/10000/Course_Design_10000.omap");
+#ifdef MAPPER_USE_GDAL
+	QTest::newRow("KMZ") << QStringLiteral("testdata:templates/vsi-test.kmz");  // needs libkml
+#endif  // MAPPER_USE_GDAL
+}
+
+void FileFormatTest::importTemplateTest()
+{
+	QFETCH(QString, filepath);
+	QVERIFY(QFileInfo::exists(filepath));
+	
+	{
+		Map map;
+		
+		auto const* format = FileFormats.findFormatForFilename(filepath, &FileFormat::supportsReading);
+		QVERIFY(format);
+		
+		auto importer = format->makeImporter(QFileInfo(filepath).canonicalFilePath(), &map, nullptr);
+		QVERIFY(bool(importer));
+		QVERIFY(importer->doImport());
+		
+		QVERIFY(map.getNumTemplates() >= 1);
+		auto* temp = map.getTemplate(0);
+		temp->loadTemplateFile();
+		QCOMPARE(temp->getTemplateState(), Template::Loaded);
+	}
 }
 
 
