@@ -111,6 +111,8 @@ private:
 	QByteArray basepath_utf8;
 	QByteArray doc_filepath_utf8;
 	QString error_message;
+	qreal overlap = 0.000000000001;
+	int precision = 13;
 	bool is_kmz = false;
 	
 };
