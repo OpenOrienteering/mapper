@@ -1521,7 +1521,7 @@
     <message>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="127"/>
         <source>Unsupported raster data: %1</source>
-        <translation type="unfinished">Непідтримувані растрові дані: %1</translation>
+        <translation>Непідтримувані растрові дані: %1</translation>
     </message>
 </context>
 <context>
@@ -1547,7 +1547,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"/>
         <source>Import Options</source>
-        <translation type="unfinished">Опції імпорту</translation>
+        <translation>Опції імпорту</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
@@ -1997,7 +1997,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="216"/>
         <source>Scale compensation</source>
-        <translation type="unfinished">Коректування масштабу</translation>
+        <translation>Коректування масштабу</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="221"/>
@@ -2478,7 +2478,7 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="155"/>
         <source>Georeferencing mismatch:</source>
-        <translation type="unfinished">Невідповідність геопив&apos;язок:</translation>
+        <translation>Невідповідність геопив&apos;язок:</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="250"/>
@@ -3067,7 +3067,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="779"/>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished">Імпортований набір знаків створює попередження.</translation>
+        <translation>Імпортований набір знаків створює попередження.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="783"/>
@@ -5245,7 +5245,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="621"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">Кодування &apos;%1&apos; не доступне. Перевірте налаштування.</translation>
+        <translation>Кодування &apos;%1&apos; не доступне. Перевірте налаштування.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="650"/>
@@ -5323,12 +5323,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1934"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished">Для текстового знаку %1: проігноровано підкреслення</translation>
+        <translation>Для текстового знаку %1: проігноровано підкреслення</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1937"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished">Для текстового знаку %1: проігноровано кернінг</translation>
+        <translation>Для текстового знаку %1: проігноровано кернінг</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2322"/>
@@ -5505,17 +5505,17 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1536"/>
         <source> - main line</source>
-        <translation type="unfinished"></translation>
+        <translation> - основна лінія</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1543"/>
         <source> - double line</source>
-        <translation type="unfinished"></translation>
+        <translation> - подвійна лінія</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1550"/>
         <source> - framing</source>
-        <translation type="unfinished"></translation>
+        <translation> - обрамлення</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1590"/>
@@ -5569,7 +5569,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1959"/>
         <source>Failed to create dataset: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося створити набір даних: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2004"/>
@@ -6212,7 +6212,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="1235"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished">Не вдалося зберегти зображення:
+        <translation>Не вдалося зберегти зображення:
 %1</translation>
     </message>
     <message>
@@ -6702,7 +6702,7 @@ separations</source>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="52"/>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Місцезнаходження:</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="55"/>
@@ -6807,12 +6807,12 @@ separations</source>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="51"/>
         <source>Scaling parameters</source>
-        <translation type="unfinished">Параетри масштабування</translation>
+        <translation>Параетри масштабування</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="53"/>
         <source>Scaling center:</source>
-        <translation type="unfinished">Центр масштабування:</translation>
+        <translation>Центр масштабування:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="56"/>
@@ -6852,12 +6852,12 @@ separations</source>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="84"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished">Підігнати опорну точку геоприв&apos;язки</translation>
+        <translation>Підігнати опорну точку геоприв&apos;язки</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="91"/>
         <source>Scale non-georeferenced templates</source>
-        <translation type="unfinished">Масштабувати негеоприв&apos;язані підложки</translation>
+        <translation>Масштабувати негеоприв&apos;язані підложки</translation>
     </message>
 </context>
 <context>
@@ -7344,7 +7344,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="268"/>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished">Імпортований набір знаків створює попередження.</translation>
+        <translation>Імпортований набір знаків створює попередження.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="276"/>
@@ -7701,7 +7701,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_image.cpp" line="148"/>
         <source>Format not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Формат не підтримується</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="301"/>
@@ -8003,7 +8003,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/templates/template_map.cpp" line="170"/>
         <location filename="../src/templates/template_map.cpp" line="304"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished">Невдається трасформувати координати.</translation>
+        <translation>Невдається трасформувати координати.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_map.cpp" line="197"/>
@@ -8124,17 +8124,17 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_track.cpp" line="83"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Трек</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="96"/>
         <source>Route</source>
-        <translation type="unfinished"></translation>
+        <translation>Маршрут</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="109"/>
         <source>Waypoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Маршрутна точка</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="294"/>
