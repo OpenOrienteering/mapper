@@ -20,6 +20,7 @@
 #include "kmz_groundoverlay_export.h"
 
 #include <algorithm>
+#include <cmath>
 #include <iterator>
 #include <vector>
 
@@ -304,9 +305,11 @@ std::vector<KmzGroundOverlayExport::Tile> KmzGroundOverlayExport::makeTiles(cons
 	auto const start_map = georef.toMapCoordF(fromLonLat(bounding_box_lonlat.topLeft()));
 	auto tile_lonlat = QRectF(bounding_box_lonlat.topLeft(),
 	                          toLonLat(georef.toGeographicCoords(MapCoordF(start_map + eastwards + southwards)))).normalized();
-	while (tile_lonlat.top() < bounding_box_lonlat.bottom())
+	auto const last_y = int(std::ceil(bounding_box_lonlat.height() / tile_lonlat.height()));
+	for (int y = 0; y < last_y; ++y)
 	{
-		while (tile_lonlat.left() < bounding_box_lonlat.right())
+		auto const last_x = int(std::ceil(bounding_box_lonlat.width() / tile_lonlat.width()));
+		for (int x = 0; x < last_x; ++x)
 		{
 			MapCoordF tile_map[] = {
 			    georef.toMapCoordF(fromLonLat(tile_lonlat.topLeft())),
@@ -320,7 +323,7 @@ std::vector<KmzGroundOverlayExport::Tile> KmzGroundOverlayExport::makeTiles(cons
 			    && std::any_of(begin(tile_map), end(tile_map), [&bounding_box_map](auto& p) { return p.y() >= bounding_box_map.top(); })
 			    && std::any_of(begin(tile_map), end(tile_map), [&bounding_box_map](auto& p) { return p.y() <= bounding_box_map.bottom(); }))
 			{
-				auto const name = QByteArray(QByteArray::number(int(tiles.size())) + ".jpg");
+				auto const name = QByteArray("tile_" + QByteArray::number(x) + '_' + QByteArray::number(y) + ".jpg");
 				auto const filepath = QByteArray("files/" + name);
 				tiles.push_back({name, filepath, tile_lonlat, boundingBox(tile_map[0], tile_map[1], tile_map[2], tile_map[3])});
 			}
