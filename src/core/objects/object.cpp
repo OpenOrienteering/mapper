@@ -560,6 +560,12 @@ void Object::scale(double factor_x, double factor_y)
 	setOutputDirty();
 }
 
+// virtual
+void Object::rotatePatternOrigin(const MapCoordF& /*center*/, qreal /*sin_angle*/, qreal /*cos_angle*/)
+{
+	qDebug("Unexpected call to %s", Q_FUNC_INFO);
+}
+
 void Object::rotateAround(const MapCoordF& center, qreal angle)
 {
 	auto sin_angle = std::sin(angle);
@@ -572,7 +578,12 @@ void Object::rotateAround(const MapCoordF& center, qreal angle)
 		coord.setY(center.y() - sin_angle * center_to_coord.x() + cos_angle * center_to_coord.y());
 	}
 	
-	if (symbol->isRotatable())
+	if (symbol->hasRotatableFillPattern())
+	{
+		rotation += angle;
+		rotatePatternOrigin(center, sin_angle, cos_angle);
+	}
+	else if (symbol->isRotatable())
 	{
 		rotation += angle;
 	}
@@ -591,7 +602,12 @@ void Object::rotate(qreal angle)
 		coord.setY(- sin_angle * old_coord.x() + cos_angle * old_coord.y());
 	}
 	
-	if (symbol->isRotatable())
+	if (symbol->hasRotatableFillPattern())
+	{
+		rotation += angle;
+		rotatePatternOrigin(MapCoordF{}, sin_angle, cos_angle);
+	}
+	else if (symbol->isRotatable())
 	{
 		rotation += angle;
 	}
@@ -1072,6 +1088,14 @@ void PathObject::partSizeChanged(PathPartVector::iterator part, MapCoordVector::
 		part->first_index += change;
 		part->last_index += change;
 	}
+}
+
+// override
+void PathObject::rotatePatternOrigin(const MapCoordF& center, qreal sin_angle, qreal cos_angle)
+{
+	auto const center_to_coord = MapCoordF(pattern_origin.x() - center.x(), pattern_origin.y() - center.y());
+	pattern_origin.setX(center.x() + cos_angle * center_to_coord.x() + sin_angle * center_to_coord.y());
+	pattern_origin.setY(center.y() - sin_angle * center_to_coord.x() + cos_angle * center_to_coord.y());
 }
 
 

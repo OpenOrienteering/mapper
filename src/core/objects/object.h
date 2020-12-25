@@ -209,6 +209,12 @@ public:
 	 */
 	virtual void scale(double factor_x, double factor_y);
 	
+protected:
+	/** Rotates the pattern origin around the center point.
+	 *  The angle must be given in radians. */
+	virtual void rotatePatternOrigin(const MapCoordF& center, qreal sin_angle, qreal cos_angle);
+	
+public:
 	/** Rotates the whole object around the center point.
 	 *  The angle must be given in radians. */
 	void rotateAround(const MapCoordF& center, qreal angle);
@@ -900,6 +906,9 @@ protected:
 	 * output_dirty must be set before calling this function.
 	 */
 	void partSizeChanged(PathPartVector::iterator part, MapCoordVector::difference_type change);
+	
+	
+	void rotatePatternOrigin(const MapCoordF& center, qreal sin_angle, qreal cos_angle) override;
 	
 	
 	void prepareDeleteBezierPoint(MapCoordVector::size_type pos, int delete_bezier_point_action);
