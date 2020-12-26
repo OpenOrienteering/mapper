@@ -950,7 +950,7 @@ void MapEditorController::createActions()
 	print_act_mapper->setMapping(print_act, PrintWidget::PRINT_TASK);
 	export_image_act = newAction("export-image", tr("&Image"), print_act_mapper, SLOT(map()), nullptr, QString{}, "file_menu.html");
 	print_act_mapper->setMapping(export_image_act, PrintWidget::EXPORT_IMAGE_TASK);
-	export_kmz_act = newAction("export-kml", tr("&KMZ"), print_act_mapper, SLOT(map()), nullptr, QString{}, "file_menu.html");
+	export_kmz_act = newAction("export-kmz", tr("&KMZ"), print_act_mapper, SLOT(map()), nullptr, QString{}, "file_menu.html");
 	print_act_mapper->setMapping(export_kmz_act, PrintWidget::EXPORT_KMZ_TASK);
 #ifndef MAPPER_USE_GDAL
 	export_kmz_act->setVisible(false);
