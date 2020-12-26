@@ -302,11 +302,12 @@ std::vector<KmzGroundOverlayExport::Tile> KmzGroundOverlayExport::makeTiles(cons
 	auto const bounding_box_map = boundingBoxMap(georef, bounding_box_lonlat);
 	
 	auto eastwards = QLineF::fromPolar(metrics.tile_size_mm, georef.getDeclination()).p2();
-	auto southwards = QLineF::fromPolar(metrics.tile_size_mm, georef.getDeclination() + 270).p2();
+	auto northwards = QLineF::fromPolar(metrics.tile_size_mm, georef.getDeclination() + 90).p2();
 	
 	auto const start_map = georef.toMapCoordF(fromLonLat(bounding_box_lonlat.topLeft()));
 	auto tile_lonlat = QRectF(bounding_box_lonlat.topLeft(),
-	                          toLonLat(georef.toGeographicCoords(MapCoordF(start_map + eastwards + southwards)))).normalized();
+	                          toLonLat(georef.toGeographicCoords(MapCoordF(start_map + eastwards + northwards))))
+	                   .normalized();
 	auto const delta = QPointF(tile_lonlat.width() - overlap, tile_lonlat.height() - overlap);
 	
 	auto const last_y = int(std::ceil((bounding_box_lonlat.height() - overlap) / delta.y()));
