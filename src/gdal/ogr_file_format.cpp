@@ -80,6 +80,7 @@
 #include "gdal/gdal_manager.h"
 #include "gdal/gdal_template.h"
 #include "templates/template.h"
+#include "util/key_value_container.h"
 
 // IWYU pragma: no_forward_declare QFile
 
@@ -1099,9 +1100,9 @@ void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_def
 	}
 }
 
-QHash<QString, QString> OgrFileImport::importFields(OGRFeatureDefnH feature_definition, OGRFeatureH feature)
+KeyValueContainer OgrFileImport::importFields(OGRFeatureDefnH feature_definition, OGRFeatureH feature)
 {
-	QHash<QString, QString> tags;
+	KeyValueContainer tags;
 	auto const num_fields = feature_definition ? OGR_FD_GetFieldCount(feature_definition) : 0;
 	for (int i = 0; i < num_fields; ++i)
 	{
@@ -1109,7 +1110,7 @@ QHash<QString, QString> OgrFileImport::importFields(OGRFeatureDefnH feature_defi
 		if (value && qstrlen(value) > 0)
 		{
 			auto const field_definition = OGR_FD_GetFieldDefn(feature_definition, i);
-			tags[QString::fromUtf8(OGR_Fld_GetNameRef(field_definition))] = QString::fromUtf8(value);
+			tags.insert_or_assign(QString::fromUtf8(OGR_Fld_GetNameRef(field_definition)), QString::fromUtf8(value));
 		}
 	}
 	return tags;
@@ -1861,7 +1862,7 @@ QPointF OgrFileImport::calcAverageCoords(OGRDataSourceH data_source, OGRDataSour
 }
 
 
-void OgrFileImport::handleKmlOverlayIcon(OgrFileImport::ObjectList& objects, const QHash<QString, QString>& tags) const
+void OgrFileImport::handleKmlOverlayIcon(OgrFileImport::ObjectList& objects, const KeyValueContainer& tags) const
 {
 	if (objects.size() != 1 || !tags.contains(QStringLiteral("icon")))
 		return;
@@ -1870,7 +1871,7 @@ void OgrFileImport::handleKmlOverlayIcon(OgrFileImport::ObjectList& objects, con
 	if (object->getType() != Object::Path || static_cast<PathObject const*>(object)->getCoordinateCount() != 5)
 		return;
 	
-	auto const icon_field = tags[QStringLiteral("icon")];
+	auto const icon_field = tags.at(QStringLiteral("icon"));
 	auto const icon_file_path = [](const QString& path, const QString& icon_field) -> QString {
 		if (icon_field.startsWith(QLatin1Char('/')) || icon_field.contains(QLatin1Char(':')))
 			return icon_field;

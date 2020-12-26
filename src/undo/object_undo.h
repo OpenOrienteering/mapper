@@ -423,7 +423,7 @@ protected:
 	
 	void loadObject(XmlElementReader& xml, int index) override;
 	
-	typedef std::map<int, Object::Tags> ObjectTagsMap;
+	typedef std::map<int, KeyValueContainer> ObjectTagsMap;
 	
 	ObjectTagsMap object_tags_map;
 };

@@ -64,6 +64,7 @@ for I in \
   georeferencing_t.cpp \
   icon_engine \
   key_button_bar.cpp \
+  key_value_container \
   line_symbol.cpp \
   main.cpp \
   /map.cpp \
