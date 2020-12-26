@@ -264,8 +264,7 @@ Minsta längd för en hjälpkurvehöjd/-grop: 1,1 mm (16,5 m) yttermått</trans
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 103.1</comment>
-        <translation>Lutningsstreck kan ritas på den lägre sidan av en kurva för att klarlägga
-markens lutningsförhållande. Lutningsstreck bör ritas i sänkor.</translation>
+        <translation>Lutningsstreck kan ritas på den lägre sidan av en kurva för att klarlägga markens lutningsförhållande. Lutningsstreck bör ritas i sänkor.</translation>
     </message>
     <message>
         <source>Earth bank</source>
@@ -294,10 +293,9 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation>En skärning är en kraftig förändring i marknivån som tydligt kan urskiljasfrån sin omgivning, till exempel grus- och sandtag eller skärningar för vägaroch järnvägar. Minsta höjd: 1 m. En skärning kan påverka löpbarheten.Lutningsstrecken ska motsvara skärningens horisontella utsträckning.
-För långa skärningar är det tillåtet att använda kortare taggar vid
-ändpunkterna. Lutningsstreck kan utelämnas för två närliggande
-skärningar. Opasserbara skärningar ska ritas med symbol 201 ( opasserbar brant).
+        <translation>En skärning är en kraftig förändring i marknivån som tydligt kan urskiljas från sin omgivning, till exempel grus- och sandtag eller skärningar för vägar och järnvägar.
+Minsta höjd: 1 m. En skärning kan påverka löpbarheten. Lutningsstrecken ska motsvara skärningens horisontella utsträckning.
+För långa skärningar är det tillåtet att använda kortare taggar vid ändpunkterna. Lutningsstreck kan utelämnas för två närliggande skärningar. Opasserbara skärningar ska ritas med symbol 201 (opasserbar brant).
 Minsta längd: 0,6 mm (9 m).</translation>
     </message>
     <message>
@@ -345,7 +343,7 @@ Minsta längd: 0,6 mm (avtryck 9m).</translation>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 105</comment>
-        <translation>Tydlig jordvall.Lägsta höjd:1m.
+        <translation>Tydlig jordvall. Lägsta höjd: 1 m.
 Minsta längd: 1,4 mm (21 m).</translation>
     </message>
     <message>
@@ -415,8 +413,9 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 110</comment>
-        <translation>En tydlig avlång höjd som inte kan ritas skalriktigt med höjdkurva. Lägsta
-höjd: 1 m. Symbolen ska inte vidröra eller överlappa höjdkurvor.
+        <translation>En tydlig avlång höjd som inte kan ritas skalriktigt med höjdkurva.
+Lägsta höjd: 1 m.
+Symbolen ska inte vidröra eller överlappa höjdkurvor.
 Utbredning: 12 x 6 m.</translation>
     </message>
     <message>
@@ -431,11 +430,10 @@ Small depressions with steep sides are represented with symbol Pit (112).
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation>En liten grop eller håla utan branta sidor som inte kan redovisas
-skalenligt med höjdkurvor. Minsta djup: 1 m. Minsta bredd: 2 m.
+        <translation>En liten grop eller håla utan branta sidor som inte kan redovisas skalenligt med höjdkurvor.
+Minsta djup: 1 m. Minsta bredd: 2 m.
 Små gropar med branta sidor redovisas med symbol 112.
-Symbolen får inte vidröra eller överlappa andra bruna symboler.
-Symbolens tyngdpunkt anger läget. Symbolen orienteras mot norr.
+Symbolen får inte vidröra eller överlappa andra bruna symboler. Symbolens tyngdpunkt anger läget. Symbolen orienteras mot norr.
 Utbredning: 12 x 6 m.</translation>
     </message>
     <message>
@@ -450,13 +448,11 @@ A pit larger than 5 m x 5 m should normally be exaggerated and drawn using Earth
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 112</comment>
-        <translation>Gropar och hålor med tydliga, branta sidor som inte kan redovisas skalenligt
-med symbol 104 (skärning).
+        <translation>Gropar och hålor med tydliga, branta sidor som inte kan redovisas skalenligt med symbol 104 (skärning).
 Minsta djup: 1 m. Minsta bredd: 1 m.
 En grop större än 5 x 5 m bör i normalfallet överdrivas och redovisas med symbol 104 (skärning). Gropar utan branta sidor redovisas med symbol 111
 (liten grop).
-Symbolen får inte vidröra eller överlappa andra bruna symboler. Symbolens
-tyngdpunkt anger läget. Symbolen orienteras mot norr.
+Symbolen får inte vidröra eller överlappa andra bruna symboler. Symbolens tyngdpunkt anger läget. Symbolen orienteras mot norr.
 Utbredning: 10,5 x 12 m.</translation>
     </message>
     <message>
@@ -2976,7 +2972,7 @@ sidan av stödkurvan.</translation>
     <message>
         <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.</source>
         <comment>Description of symbol 103</comment>
-        <translation>Hjälpkurvor används för att komplettera kurvinformationen. De används enbart när fullständig redovisning med vanliga höjdkurvor inte är möjlig. Hjälpkurvor ska inte användas som intermediära kurvor. Endast en hjälpkurva ska användas mellan närliggande höjdkurvor. Det är mycket viktigt att hjälpkurvorna används logiskt, vilket innebär att start- och slut av en hjälpkurva ska vara parallella med närliggande höjdkurvor. Uppehållen i hjälpkurvorna ska placeras på någorlunda raka delar av hjälpkurvan. Hjälpkurvor kan användas för att skilja mellan platta och mer tydliga höjder och gropar (lägsta höjd /djup bör vara 1 m).</translation>
+        <translation>Hjälpkurvor används för att komplettera kurvinformationen. De används enbart när fullständig redovisning med vanliga höjdkurvor inte är möjlig. Hjälpkurvor ska inte användas som intermediära kurvor. Endast en hjälpkurva ska användas mellan närliggande höjdkurvor. Det är mycket viktigt att hjälpkurvorna används logiskt, vilket innebär att start- och slut av en hjälpkurva ska vara parallella med närliggande höjdkurvor. Uppehållen i hjälpkurvorna ska placeras på någorlunda raka delar av hjälpkurvan. Hjälpkurvor kan användas för att skilja mellan platta och mer tydliga höjder och gropar.</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
@@ -3485,7 +3481,7 @@ To be able to show the distinction between neighbouring (maximum 30 metres apart
 A minimum of two triangles should be used. One triangle may be used if it is combined with other rock symbols (for instance directly below cliff symbols (201, 202), adjacent to boulder symbols (204-206) or combined with stony ground symbols (210-212)).
 To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
         <comment>Description of symbol 208</comment>
-        <translation>Ett område täckt av så många stenblock att de inte kan redovisas individuellt, redovisas med slumpmässigt utplacerade fyllda roterade trianglar, sidförhållande 8:6:5 (inre vinklar: 92.9, 48.5, 38.6). Blockterräng påverkar normalt inte löpbarheten. Om löpbarheten påverkas bör symbol 209 (tät blockterräng) användas eller symbolen kombineras med stenig mark. Minst 2 trianglar ska användas. En triangel kan användas om den kombineras med annan sten/brantsymbol, exempelvis direkt under branter (201,202), bredvid stenar (204-206) eller kombinerat med stenig mark (210-212). Största tillåtna avståndet mellan närliggande trianglar är 1,2 mm ( centrummått ). Minsta tillåtna avståndet mellan närliggande trianglar är 0,75 mm ( centrummått ). Täthet: 0,8-   1 symbol/mm 2 (12-16 %). För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120 %.</translation>
+        <translation>Ett område täckt av så många stenblock att de inte kan redovisas individuellt, redovisas med slumpmässigt utplacerade fyllda roterade trianglar, sidförhållande 8:6:5 (inre vinklar: 92.9, 48.5, 38.6). Blockterräng påverkar normalt inte löpbarheten. Om löpbarheten påverkas bör symbol 209 (tät blockterräng) användas eller symbolen kombineras med stenig mark. Minst 2 trianglar ska användas. En triangel kan användas om den kombineras med annan sten/brantsymbol, exempelvis direkt under branter (201, 202), bredvid stenar (204-206) eller kombinerat med stenig mark (210-212). Största tillåtna avståndet mellan närliggande trianglar är 1,2 mm (centrummått). Minsta tillåtna avståndet mellan närliggande trianglar är 0,75 mm (centrummått). Täthet: 0,8-1 symbol/mm² (12-16%). För att visa tydliga höjdskillnader mellan block i blockterräng är det tillåtet att förstora somliga trianglar till 120%.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle</source>
