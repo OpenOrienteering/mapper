@@ -89,6 +89,11 @@ private slots:
 	void ogrExportTest_data();
 	
 	/**
+	 * Tests the export of KML courses.
+	 */
+	void kmlCourseExportTest();
+	
+	/**
 	 * Test the creation of templates.
 	 */
 	void importTemplateTest_data();
