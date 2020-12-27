@@ -78,6 +78,10 @@
 #include "undo/undo_manager.h"
 #include "util/backports.h"  // IWYU pragma: keep
 
+#ifdef MAPPER_USE_GDAL
+#  include "gdal/gdal_manager.h"
+#endif
+
 using namespace OpenOrienteering;
 
 
@@ -1051,7 +1055,8 @@ void FileFormatTest::importTemplateTest_data()
 	
 	QTest::newRow("Course Design") << QStringLiteral("data:symbol sets/10000/Course_Design_10000.omap");
 #ifdef MAPPER_USE_GDAL
-	QTest::newRow("KMZ") << QStringLiteral("testdata:templates/vsi-test.kmz");  // needs libkml
+	if (GdalManager::isDriverEnabled("LIBKML"))
+		QTest::newRow("KMZ") << QStringLiteral("testdata:templates/vsi-test.kmz");  // needs libkml
 #endif  // MAPPER_USE_GDAL
 }
 
