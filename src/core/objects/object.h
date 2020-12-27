@@ -27,7 +27,6 @@
 #include <utility>
 
 #include <QtGlobal>
-#include <QHash>
 #include <QRectF>
 #include <QString>
 // IWYU pragma: no_include <QTransform>
@@ -37,6 +36,7 @@
 #include "core/virtual_path.h"
 #include "core/renderables/renderable.h"
 #include "core/symbols/symbol.h"
+#include "util/key_value_container.h"
 
 class QTransform;
 class QXmlStreamReader;
@@ -209,6 +209,12 @@ public:
 	 */
 	virtual void scale(double factor_x, double factor_y);
 	
+protected:
+	/** Rotates the pattern origin around the center point.
+	 *  The angle must be given in radians. */
+	virtual void rotatePatternOrigin(const MapCoordF& center, qreal sin_angle, qreal cos_angle);
+	
+public:
 	/** Rotates the whole object around the center point.
 	 *  The angle must be given in radians. */
 	void rotateAround(const MapCoordF& center, qreal angle);
@@ -290,14 +296,11 @@ public:
 	static Object* getObjectForType(Type type, const Symbol* symbol = nullptr);
 	
 	
-	/** Defines a type which maps keys to values, to be used for tagging objects. */
-	typedef QHash<QString, QString> Tags;
-	
 	/** Returns a const reference to the object's tags. */
-	const Tags& tags() const;
+	const KeyValueContainer& tags() const;
 	
 	/** Replaces the object's tags. */
-	void setTags(const Tags& tags);
+	void setTags(const KeyValueContainer& tags);
 	
 	/** Returns the value of the given tag key. */
 	QString getTag(const QString& key) const;
@@ -323,7 +326,7 @@ protected:
 	const Symbol* symbol = nullptr;
 	MapCoordVector coords;
 	Map* map = nullptr;
-	Tags object_tags;
+	KeyValueContainer object_tags;
 	
 private:
 	qreal rotation = 0;               ///< The object's rotation (in radians).
@@ -902,6 +905,9 @@ protected:
 	void partSizeChanged(PathPartVector::iterator part, MapCoordVector::difference_type change);
 	
 	
+	void rotatePatternOrigin(const MapCoordF& center, qreal sin_angle, qreal cos_angle) override;
+	
+	
 	void prepareDeleteBezierPoint(MapCoordVector::size_type pos, int delete_bezier_point_action);
 	
 	/**
@@ -1159,15 +1165,9 @@ Map* Object::getMap() const
 }
 
 inline
-const Object::Tags& Object::tags() const
+const KeyValueContainer& Object::tags() const
 {
 	return object_tags;
-}
-
-inline
-QString Object::getTag(const QString& key) const
-{
-	return object_tags.value(key);
 }
 
 

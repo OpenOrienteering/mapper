@@ -65,9 +65,11 @@
 #include "core/objects/text_object.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/symbol.h"
+#include "core/symbols/line_symbol.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
+#include "fileformats/kml_course_export.h"
 #include "fileformats/ocd_file_export.h"
 #include "fileformats/ocd_file_format.h"
 #include "fileformats/xml_file_format.h"
@@ -963,7 +965,116 @@ void FileFormatTest::ogrExportTest()
 		QCOMPARE(qRound(imported_latlon.latitude()), latitude);
 		QCOMPARE(qRound(imported_latlon.longitude()), longitude);
 	}
+#endif  // MAPPER_USE_GDAL
+}
+
+
+void FileFormatTest::kmlCourseExportTest()
+{
+	QTemporaryDir dir;
+	QVERIFY(dir.isValid());
+	auto const filepath = QDir(dir.path()).absoluteFilePath(QStringLiteral("test.kml"));
+	{
+		Georeferencing georef;
+		georef.setScaleDenominator(100000);
+		georef.setProjectedCRS({}, QStringLiteral("+proj=utm +zone=32 +datum=WGS84 +no_defs"));
+		georef.setGeographicRefPoint({50, 9});
+		QCOMPARE(georef.getState(), Georeferencing::Geospatial);
+		
+		Map map;
+		map.setGeoreferencing(georef);
+		
+		KmlCourseExport exporter{map};
+		QVERIFY(!exporter.canExport());  // empty map
+		
+		auto* path_object = new PathObject(Map::getUndefinedLine());
+		path_object->addCoordinate(georef.toMapCoords(LatLon{50.001, 9.000}));  // start
+		path_object->addCoordinate(georef.toMapCoords(LatLon{50.001, 9.001}));  // 1
+		path_object->addCoordinate(georef.toMapCoords(LatLon{50.000, 9.001}));  // 2
+		path_object->addCoordinate(georef.toMapCoords(LatLon{50.000, 9.000}));  // finish
+		QVERIFY(exporter.canExport(path_object));
+		
+		map.getPart(0)->addObject(path_object);
+		QVERIFY(exporter.canExport());
+		
+		QVERIFY(exporter.doExport(filepath));
+	}
+#ifdef MAPPER_USE_GDAL
+	{
+		auto const* format = FileFormats.findFormatForFilename(filepath, &FileFormat::supportsReading);
+		QVERIFY(format);
+		
+		Map map;
+		auto importer = format->makeImporter(QFileInfo(filepath).canonicalFilePath(), &map, nullptr);
+		QVERIFY(bool(importer));
+		QVERIFY(importer->doImport());
+		
+		auto const* part = map.getPart(0);
+		struct {
+			int start = 0;
+			int control = 0;
+			int finish = 0;
+			int other = 0;
+		} count;
+		for (int i = 0; i < part->getNumObjects(); ++i)
+		{
+			auto const* object = part->getObject(i);
+			auto const name = object->getTag(QStringLiteral("Name"));
+			if (object->getType() != Object::Point)
+				++count.other;
+			else if (name == QLatin1String("S1"))
+				++count.start;
+			else if (name == QLatin1String("F1"))
+				++count.finish;
+			else if ([](auto name) { bool ok; void(name.toInt(&ok)); return ok; }(name))
+				++count.control;
+			else
+				++count.other;
+		}
+		QCOMPARE(count.start, 1);
+		QCOMPARE(count.control, 2);
+		QCOMPARE(count.finish, 1);
+		QCOMPARE(count.other, 0);
+		
+		auto const center_map = MapCoordF(map.calculateExtent().center());
+		auto const center = map.getGeoreferencing().toGeographicCoords(center_map);
+		QCOMPARE(int(center.latitude()), 50);
+		QCOMPARE(int(center.longitude()), 9);
+	}
 #endif
+}
+
+
+void FileFormatTest::importTemplateTest_data()
+{
+	QTest::addColumn<QString>("filepath");
+	
+	QTest::newRow("Course Design") << QStringLiteral("data:symbol sets/10000/Course_Design_10000.omap");
+#ifdef MAPPER_USE_GDAL
+	QTest::newRow("KMZ") << QStringLiteral("testdata:templates/vsi-test.kmz");  // needs libkml
+#endif  // MAPPER_USE_GDAL
+}
+
+void FileFormatTest::importTemplateTest()
+{
+	QFETCH(QString, filepath);
+	QVERIFY(QFileInfo::exists(filepath));
+	
+	{
+		Map map;
+		
+		auto const* format = FileFormats.findFormatForFilename(filepath, &FileFormat::supportsReading);
+		QVERIFY(format);
+		
+		auto importer = format->makeImporter(QFileInfo(filepath).canonicalFilePath(), &map, nullptr);
+		QVERIFY(bool(importer));
+		QVERIFY(importer->doImport());
+		
+		QVERIFY(map.getNumTemplates() >= 1);
+		auto* temp = map.getTemplate(0);
+		temp->loadTemplateFile();
+		QCOMPARE(temp->getTemplateState(), Template::Loaded);
+	}
 }
 
 

@@ -152,6 +152,7 @@ add_unit_test(georef_ocd_mapping_t
 	../src/core/crs_template_implementation
 	../src/fileformats/ocd_georef_fields
 	../src/fileformats/file_format
+	../src/util/key_value_container
 	../src/util/xml_stream_util
 	../src/core/map_coord
 )
@@ -164,6 +165,7 @@ add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/gui/widgets/crs_param_widgets
 	../src/mapper_resource
 	../src/fileformats/file_format
+	../src/util/key_value_container
 	../src/util/xml_stream_util
 	../src/core/map_coord
 )
@@ -174,6 +176,7 @@ if (Mapper_USE_GDAL)
 	target_link_libraries(georeferencing_t PRIVATE "${GDAL_LIBRARY}")
 endif()
 add_unit_test(grid_t ../src/util/util)
+add_unit_test(key_value_container_t ../src/util/key_value_container)
 add_unit_test(locale_t ../src/util/translation_util)
 add_unit_test(map_color_t ../src/core/map_color)
 add_unit_test(ocd_t ../src/fileformats/ocd_types)
@@ -189,6 +192,7 @@ add_system_test(coord_xml_t MANUAL)
 add_system_test(file_format_t)
 add_system_test(duplicate_equals_t)
 add_system_test(map_t)
+add_system_test(map_printer_t)
 add_system_test(object_query_t)
 add_system_test(path_object_t)
 add_system_test(style_t)

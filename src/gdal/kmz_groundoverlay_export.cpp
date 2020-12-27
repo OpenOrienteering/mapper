@@ -20,6 +20,7 @@
 #include "kmz_groundoverlay_export.h"
 
 #include <algorithm>
+#include <cmath>
 #include <iterator>
 #include <vector>
 
@@ -147,8 +148,10 @@ KmzGroundOverlayExport::Metrics KmzGroundOverlayExport::makeMetrics(qreal const 
 KmzGroundOverlayExport::~KmzGroundOverlayExport() = default;
 
 KmzGroundOverlayExport::KmzGroundOverlayExport(const QString& path, const Map& map)
-    : map(map)
-    , is_kmz(path.endsWith(QLatin1String(".kmz"), Qt::CaseInsensitive))
+: map(map)
+, overlap(std::max(2 * (std::nexttoward(180.0, 181.0) - 180.0), 0.000000000000001))
+, precision(std::max(std::ceil(log(overlap)/log(0.1) + 0.5), 12.0))
+, is_kmz(path.endsWith(QLatin1String(".kmz"), Qt::CaseInsensitive))
 {
 	auto const fileinfo = QFileInfo(path);
 	if (is_kmz)
@@ -299,14 +302,19 @@ std::vector<KmzGroundOverlayExport::Tile> KmzGroundOverlayExport::makeTiles(cons
 	auto const bounding_box_map = boundingBoxMap(georef, bounding_box_lonlat);
 	
 	auto eastwards = QLineF::fromPolar(metrics.tile_size_mm, georef.getDeclination()).p2();
-	auto southwards = QLineF::fromPolar(metrics.tile_size_mm, georef.getDeclination() + 270).p2();
+	auto northwards = QLineF::fromPolar(metrics.tile_size_mm, georef.getDeclination() + 90).p2();
 	
 	auto const start_map = georef.toMapCoordF(fromLonLat(bounding_box_lonlat.topLeft()));
 	auto tile_lonlat = QRectF(bounding_box_lonlat.topLeft(),
-	                          toLonLat(georef.toGeographicCoords(MapCoordF(start_map + eastwards + southwards)))).normalized();
-	while (tile_lonlat.top() < bounding_box_lonlat.bottom())
+	                          toLonLat(georef.toGeographicCoords(MapCoordF(start_map + eastwards + northwards))))
+	                   .normalized();
+	auto const delta = QPointF(tile_lonlat.width() - overlap, tile_lonlat.height() - overlap);
+	
+	auto const last_y = int(std::ceil((bounding_box_lonlat.height() - overlap) / delta.y()));
+	for (int y = 0; y < last_y; ++y)
 	{
-		while (tile_lonlat.left() < bounding_box_lonlat.right())
+		auto const last_x = int(std::ceil((bounding_box_lonlat.width() - overlap) / delta.x()));
+		for (int x = 0; x < last_x; ++x)
 		{
 			MapCoordF tile_map[] = {
 			    georef.toMapCoordF(fromLonLat(tile_lonlat.topLeft())),
@@ -320,15 +328,15 @@ std::vector<KmzGroundOverlayExport::Tile> KmzGroundOverlayExport::makeTiles(cons
 			    && std::any_of(begin(tile_map), end(tile_map), [&bounding_box_map](auto& p) { return p.y() >= bounding_box_map.top(); })
 			    && std::any_of(begin(tile_map), end(tile_map), [&bounding_box_map](auto& p) { return p.y() <= bounding_box_map.bottom(); }))
 			{
-				auto const name = QByteArray(QByteArray::number(int(tiles.size())) + ".jpg");
+				auto const name = QByteArray("tile_" + QByteArray::number(x) + '_' + QByteArray::number(y) + ".jpg");
 				auto const filepath = QByteArray("files/" + name);
 				tiles.push_back({name, filepath, tile_lonlat, boundingBox(tile_map[0], tile_map[1], tile_map[2], tile_map[3])});
 			}
 			
-			tile_lonlat.moveLeft(tile_lonlat.right());
+			tile_lonlat.moveLeft(tile_lonlat.left() + delta.x());
 		}
 		tile_lonlat.moveLeft(bounding_box_lonlat.left());
-		tile_lonlat.moveTop(tile_lonlat.bottom());
+		tile_lonlat.moveTop(tile_lonlat.top() + delta.y());
 	}
 	return tiles;
 }
@@ -352,10 +360,10 @@ void KmzGroundOverlayExport::writeKml(QByteArray& buffer, const std::vector<KmzG
 		  "   <href>").append(tile.filepath).append("</href>\n"
 		  "  </Icon>\n"
 		  "  <LatLonBox>\n"
-		  "   <north>").append(QByteArray::number(tile.rect_lonlat.bottom(), 'f', 10)).append("</north>\n"
-		  "   <south>").append(QByteArray::number(tile.rect_lonlat.top(), 'f', 10)).append("</south>\n"
-		  "   <east>").append(QByteArray::number(tile.rect_lonlat.right(), 'f', 10)).append("</east>\n"
-		  "   <west>").append(QByteArray::number(tile.rect_lonlat.left(), 'f', 10)).append("</west>\n"
+		  "   <north>").append(QByteArray::number(tile.rect_lonlat.bottom(), 'f', precision)).append("</north>\n"
+		  "   <south>").append(QByteArray::number(tile.rect_lonlat.top(), 'f', precision)).append("</south>\n"
+		  "   <east>").append(QByteArray::number(tile.rect_lonlat.right(), 'f', precision)).append("</east>\n"
+		  "   <west>").append(QByteArray::number(tile.rect_lonlat.left(), 'f', precision)).append("</west>\n"
 		  "   <rotation>0</rotation>\n"
 		  "  </LatLonBox>\n"
 		  " </GroundOverlay>\n"

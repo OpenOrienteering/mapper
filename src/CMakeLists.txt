@@ -123,6 +123,7 @@ set(Mapper_Common_SRCS
   fileformats/file_format.cpp
   fileformats/file_format_registry.cpp
   fileformats/file_import_export.cpp
+  fileformats/kml_course_export.cpp
   fileformats/ocd_file_export.cpp
   fileformats/ocd_file_format.cpp
   fileformats/ocd_file_import.cpp
@@ -248,6 +249,7 @@ set(Mapper_Common_SRCS
   
   util/encoding.cpp
   util/item_delegates.cpp
+  util/key_value_container.cpp
   util/mapper_service_proxy.cpp
   util/matrix.cpp
   util/overriding_shortcut.cpp

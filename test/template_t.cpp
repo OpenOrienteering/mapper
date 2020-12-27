@@ -325,6 +325,7 @@ private slots:
 		QVERIFY(temp->canBeDrawnOnto());
 		QVERIFY(!temp->hasUnsavedChanges());
 		
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)  // for QTemporaryDir::filePath()
 		QTemporaryDir tmp_dir;
 		QVERIFY(tmp_dir.isValid());
 		temp->setTemplatePath(tmp_dir.filePath(temp->getTemplateFilename()));
@@ -336,6 +337,7 @@ private slots:
 		temp->drawOntoTemplate(map_coords, 2, QColor(Qt::red), box.width()+box.height(), box, {});
 		QVERIFY(temp->hasUnsavedChanges());
 		
+#if !defined(MAPPER_BIG_ENDIAN)
 		auto format = FileFormats.findFormatForFilename(QStringLiteral("some.ocd"), &FileFormat::supportsFileSave);
 		QVERIFY(bool(format));
 		auto exporter = format->makeExporter(QString{}, &map, nullptr);
@@ -344,6 +346,8 @@ private slots:
 		exporter->setDevice(&buffer);
 		QVERIFY(exporter->doExport());
 		QVERIFY(!temp->hasUnsavedChanges());
+#endif  // !defined(MAPPER_BIG_ENDIAN)
+#endif  // Qt 5.9
 	}
 	
 	void geoTiffTemplateTest()

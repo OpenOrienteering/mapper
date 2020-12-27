@@ -1003,7 +1003,7 @@ void PrintWidget::updateResolutions(const QPrinterInfo* target) const
 	
 	// Numeric resolution list
 	QList<int> supported_resolutions;
-	if (target && target != MapPrinter::imageTarget())
+	if (MapPrinter::isPrinter(target))
 	{
 		QPrinter pr(*target, QPrinter::HighResolution);
 		supported_resolutions = pr.supportedResolutions();
@@ -1029,7 +1029,8 @@ void PrintWidget::updateResolutions(const QPrinterInfo* target) const
 		dpi_combo->clear();
 		dpi_combo->addItems(resolutions);
 	}
-	dpi_combo->lineEdit()->setText(dpi_text.isEmpty() ? dpi_template.arg(600) : dpi_text);
+	auto const default_resolution = (target == MapPrinter::kmzTarget()) ? 300 : 600;
+	dpi_combo->lineEdit()->setText(dpi_text.isEmpty() ? dpi_template.arg(default_resolution) : dpi_text);
 }
 
 void PrintWidget::updateColorMode()

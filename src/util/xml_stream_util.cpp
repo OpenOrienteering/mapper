@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2019 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -40,6 +40,7 @@
 #include "fileformats/file_format.h"
 #include "fileformats/file_import_export.h"
 #include "fileformats/xml_file_format.h"
+#include "util/key_value_container.h"
 
 
 namespace OpenOrienteering {
@@ -202,6 +203,18 @@ void XmlElementWriter::write(const MapCoordVector& coords)
 	}
 }
 
+void OpenOrienteering::XmlElementWriter::write(const KeyValueContainer& tags)
+{
+	namespace literal = XmlStreamLiteral;
+	
+	for (auto const& tag : tags)
+	{
+		XmlElementWriter tag_element(xml, literal::t);
+		tag_element.writeAttribute(literal::k, tag.key);
+		xml.writeCharacters(tag.value);
+	}
+}
+
 
 
 //### XmlElementReader ###
@@ -341,6 +354,24 @@ void XmlElementReader::readForText(MapCoordVector& coords)
 	}
 }
 
+void OpenOrienteering::XmlElementReader::read(KeyValueContainer& tags)
+{
+	namespace literal = XmlStreamLiteral;
+	
+	tags.clear();
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == literal::t)
+		{
+			const QString key(xml.attributes().value(literal::k).toString());
+			tags.insert_or_assign(key, xml.readElementText());
+		}
+		else
+		{
+			xml.skipCurrentElement();
+		}
+	}
+}
 
 
 }  // namespace OpenOrienteering
