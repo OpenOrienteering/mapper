@@ -499,6 +499,14 @@ const std::vector<QByteArray>& GdalManager::supportedVectorExportExtensions() co
 	return p->supportedVectorExportExtensions();
 }
 
+
+bool GdalManager::isDriverEnabled(const char* driver_name)
+{
+	auto driver = GDALGetDriverByName(driver_name);
+	return bool(driver);
+}
+
+
 QStringList GdalManager::parameterKeys() const
 {
 	return p->parameterKeys();

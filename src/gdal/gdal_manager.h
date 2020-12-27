@@ -145,6 +145,12 @@ public:
 	
 	
 	/**
+	 * Tests if a particular driver is available.
+	 */
+	static bool isDriverEnabled(const char* driver_name);
+	
+	
+	/**
 	 * Returns the list of GDAL configuration parameters.
 	 */
 	QStringList parameterKeys() const;
