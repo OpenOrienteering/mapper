@@ -1779,7 +1779,7 @@ void MapEditorController::exportKmlCourse()
 	else
 	{
 		QMessageBox::information(window, tr("Error"),
-		                         ImportExport::tr("Cannot save file\n%1:\n%2")
+		                         ::OpenOrienteering::ImportExport::tr("Cannot save file\n%1:\n%2")
 		                         .arg(filepath, exporter.errorString()));
 	}
 }
