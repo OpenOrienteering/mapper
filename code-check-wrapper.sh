@@ -65,6 +65,7 @@ for I in \
   icon_engine \
   key_button_bar.cpp \
   key_value_container \
+  kml_course_export \
   line_symbol.cpp \
   main.cpp \
   /map.cpp \
