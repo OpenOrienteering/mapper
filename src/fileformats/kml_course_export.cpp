@@ -45,7 +45,7 @@ bool KmlCourseExport::canExport(const PathObject* object)
 {
 	if (!object)
 	{
-		error_string = tr("For KML course export, a single path object must be selected.");
+		error_string = tr("For KML course export, a single line object must be selected.");
 		return false;
 	}
 	return true;
