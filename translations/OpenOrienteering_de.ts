@@ -2504,7 +2504,7 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1942"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1821"/>
         <source>Cannot find a vector data export driver named &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Vektordaten-Exporttreiber &apos;%1&apos; kann nicht gefunden werden</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1782"/>
@@ -2659,7 +2659,7 @@
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="48"/>
         <source>For KML course export, a single path object must be selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Für den KML-Bahn-Export muss ein einzelnes Linienobjekt ausgewählt werden.</translation>
     </message>
 </context>
 <context>
@@ -2667,7 +2667,7 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="189"/>
         <source>For KML/KMZ export, the map must be georeferenced.</source>
-        <translation type="unfinished"></translation>
+        <translation>Für den KML-/KMZ-Export muss die Karte georeferenziert sein.</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="196"/>
@@ -2677,7 +2677,7 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="211"/>
         <source>%1 already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 existiert bereis.</translation>
     </message>
 </context>
 <context>
@@ -4144,12 +4144,12 @@ exportieren, weil das Speichern als %2 (.%3) nicht unterstützt wird.</translati
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="954"/>
         <source>&amp;KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="959"/>
         <source>KML &amp;course</source>
-        <translation type="unfinished"></translation>
+        <translation>KML-&amp;Bahn</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="985"/>
@@ -4199,7 +4199,7 @@ exportieren, weil das Speichern als %2 (.%3) nicht unterstützt wird.</translati
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1766"/>
         <source>KML course</source>
-        <translation type="unfinished"></translation>
+        <translation>KML-Bahn</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1777"/>
@@ -6334,7 +6334,7 @@ rationen</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="449"/>
         <source>KMZ export</source>
-        <translation type="unfinished"></translation>
+        <translation>KMZ-Export</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="987"/>
@@ -6364,18 +6364,18 @@ rationen</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1208"/>
         <source>KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1209"/>
         <source>KML</source>
-        <translation type="unfinished"></translation>
+        <translation>KML</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1236"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished">Konnte Bild nicht speichern:
+        <translation>Konnte Bild nicht speichern:
 %1</translation>
     </message>
     <message>
@@ -7915,7 +7915,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
     <message>
         <location filename="../src/templates/template_image.cpp" line="148"/>
         <source>Format not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Format nicht unterstützt</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="301"/>
@@ -8795,7 +8795,9 @@ Die höchste unterstütze Version ist %2.</translation>
         <source>Internal error detected! Please report this issue.
 Version: %1
 Location: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Interner Fehler! Bitte melden Sie dieses Problem.
+Version: %1
+Kontext: %2</translation>
     </message>
 </context>
 <context>
