@@ -199,18 +199,22 @@ else()
 	find_package(Polyclipping 6.1.3 MODULE REQUIRED)
 endif()
 
-find_package(PROJ4 CONFIG QUIET)
+# We must not require a minimum version of PROJ via find_package
+# because PROJ config requires the major version to match exactly.
+set(CMAKE_FIND_PACKAGE_PREFER_CONFIG TRUE)
+find_package(PROJ4 REQUIRED)
+unset(CMAKE_FIND_PACKAGE_PREFER_CONFIG)
 if(NOT TARGET PROJ4::proj)
-	set(PROJ4_FOUND false)
-	find_package(PROJ4 MODULE REQUIRED)
+	include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindPROJ.cmake")
 endif()
-if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 6.1)
+if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 4.9)
+	message(FATAL_ERROR "At least PROJ 4.9 is required")
+elseif(PROJ4_VERSION VERSION_LESS 6.1)
 	# New PROJ API missing or incomplete.
 	# (proj_normalize_for_visualization() came in 6.1.)
 	set_property(TARGET PROJ4::proj APPEND PROPERTY
 	  INTERFACE_COMPILE_DEFINITIONS ACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
-endif()
-if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 6.2.1)
+elseif(PROJ4_VERSION VERSION_LESS 6.2.1)
 	# Datum Potsdam issue, https://github.com/OSGeo/PROJ/pull/1573
 	set_property(TARGET PROJ4::proj APPEND PROPERTY
 	  INTERFACE_COMPILE_DEFINITIONS PROJ_ISSUE_1573)
