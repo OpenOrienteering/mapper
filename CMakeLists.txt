@@ -27,6 +27,8 @@ if(CCACHE_PROGRAM)
     set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CCACHE_PROGRAM}")
 endif()
 
+option(CMAKE_FIND_PACKAGE_PREFER_CONFIG "Lookup package config files before using find modules" ON)
+
 # Project declaration
 
 project(Mapper VERSION 0.9.5 LANGUAGES CXX C)
@@ -201,9 +203,7 @@ endif()
 
 # We must not require a minimum version of PROJ via find_package
 # because PROJ config requires the major version to match exactly.
-set(CMAKE_FIND_PACKAGE_PREFER_CONFIG TRUE)
 find_package(PROJ4 REQUIRED)
-unset(CMAKE_FIND_PACKAGE_PREFER_CONFIG)
 if(NOT TARGET PROJ4::proj)
 	include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindPROJ.cmake")
 endif()
