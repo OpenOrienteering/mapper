@@ -2611,7 +2611,7 @@
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Nelze uložit soubor:
+        <translation>Nelze uložit soubor:
 %1:
 %2</translation>
     </message>
@@ -2760,7 +2760,7 @@
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="48"/>
         <source>For KML course export, a single path object must be selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pro export tratě do KML musí být označen jeden liniový objekt.</translation>
     </message>
 </context>
 <context>
@@ -3869,7 +3869,7 @@ protože uložení jako %2 (.%3) není podporováno.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="959"/>
         <source>KML &amp;course</source>
-        <translation type="unfinished"></translation>
+        <translation>KML &amp;trať</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="985"/>
@@ -3919,12 +3919,12 @@ protože uložení jako %2 (.%3) není podporováno.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1766"/>
         <source>KML course</source>
-        <translation type="unfinished"></translation>
+        <translation>KML trať</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1777"/>
         <source>Exported successfully to %1</source>
-        <translation type="unfinished">Úspěšně exportováno do %1</translation>
+        <translation>Úspěšně exportováno do %1</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4275"/>
