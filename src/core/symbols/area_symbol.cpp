@@ -165,9 +165,6 @@ bool AreaSymbol::FillPattern::equals(const AreaSymbol::FillPattern& other, Qt::C
 			return false;
 	}
 	
-	if (name.compare(other.name, case_sensitivity) != 0)
-		return false;
-	
 	return true;
 }
 
