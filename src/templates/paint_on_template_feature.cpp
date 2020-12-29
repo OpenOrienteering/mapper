@@ -351,6 +351,7 @@ Template* PaintOnTemplateFeature::setupTemplate() const
 		template_image->setTemplateScaleY(1.0/pixel_per_mm);
 		template_image->setTemplateShear(0);
 		template_image->setTemplateRotation(0);
+		template_image->setTemplateState(Template::Unloaded);
 		template_image->loadTemplateFile();
 		
 		if (template_image->getTemplateState() != Template::Loaded)
