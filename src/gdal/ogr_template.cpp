@@ -349,6 +349,11 @@ try
 	{
 		// Need to create an orthographic projection during data loading.
 		explicit_georef = makeOrthographicGeoreferencing();
+		if (!explicit_georef)
+		{
+			setErrorString(tr("Invalid template configuration."));
+			return false;
+		}
 		projected_crs_spec = explicit_georef->getProjectedCRSSpec();
 		explicit_georef_pending = false;
 	}
