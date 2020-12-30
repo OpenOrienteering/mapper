@@ -360,28 +360,24 @@ private slots:
 		
 		clone->setStartSymbol(new PointSymbol());
 		QVERIFY(clone->getStartSymbol()->isEmpty());
-		QEXPECT_FAIL("", "Empty symbols are treated different from null symbols", Continue);
 		QVERIFY(clone->equals(&l));
 		clone->cleanupPointSymbols();
 		QVERIFY(clone->equals(&l));
 		
 		l.setEndSymbol(new PointSymbol());
 		QVERIFY(l.getEndSymbol()->isEmpty());
-		QEXPECT_FAIL("", "Empty symbols are treated different from null symbols", Continue);
 		QVERIFY(clone->equals(&l));
 		l.cleanupPointSymbols();
 		QVERIFY(clone->equals(&l));
 		
 		clone->setMidSymbol(new PointSymbol());
 		QVERIFY(clone->getMidSymbol()->isEmpty());
-		QEXPECT_FAIL("", "Empty symbols are treated different from null symbols", Continue);
 		QVERIFY(clone->equals(&l));
 		clone->cleanupPointSymbols();
 		QVERIFY(clone->equals(&l));
 		
 		l.setDashSymbol(new PointSymbol());
 		QVERIFY(l.getDashSymbol()->isEmpty());
-		QEXPECT_FAIL("", "Empty symbols are treated different from null symbols", Continue);
 		QVERIFY(clone->equals(&l));
 		l.cleanupPointSymbols();
 		QVERIFY(clone->equals(&l));

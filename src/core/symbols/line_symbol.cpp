@@ -2034,11 +2034,8 @@ bool LineSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 	}
 	
 	auto const symbols_are_equal = [](const PointSymbol* lhs, const PointSymbol* rhs) -> bool {
-		if (bool(lhs) != bool(rhs))
-			return false;
-		if (lhs && !lhs->equals(rhs))
-			return false;
-		return true;
+		return ((!lhs || lhs->isEmpty()) && (!rhs || rhs->isEmpty()))
+		       || (lhs && rhs && lhs->equals(rhs));
 	};
 
 	if (!symbols_are_equal(start_symbol, line->start_symbol))
