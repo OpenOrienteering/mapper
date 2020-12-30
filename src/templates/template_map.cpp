@@ -205,7 +205,8 @@ bool TemplateMap::postLoadSetup(QWidget* /* dialog_parent */, bool& out_center_i
 	auto const is_unconfigured = [](auto const& georef) {
 		return georef.getState() != Georeferencing::Geospatial && georef.toProjectedCoords(MapCoordF{}) == QPointF{};
 	};
-	out_center_in_view = is_unconfigured(templateMap()->getGeoreferencing());
+	out_center_in_view = is_unconfigured(templateMap()->getGeoreferencing())
+	                     || is_unconfigured(map->getGeoreferencing());
 	return true;
 }
 
