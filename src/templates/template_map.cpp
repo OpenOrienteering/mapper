@@ -25,6 +25,7 @@
 
 #include <QtGlobal>
 #include <QByteArray>
+#include <QDialog>
 #include <QPaintDevice>
 #include <QPainter>
 #include <QPoint>
@@ -43,6 +44,7 @@
 #include "core/renderables/renderable.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
+#include "gui/georeferencing_dialog.h"
 #include "gui/util_gui.h"
 #include "util/transformation.h"
 #include "util/util.h"
@@ -204,8 +206,25 @@ bool TemplateMap::loadTemplateFileImpl()
 	return new_template_valid;
 }
 
-bool TemplateMap::postLoadSetup(QWidget* /* dialog_parent */, bool& out_center_in_view)
+bool TemplateMap::postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view)
 {
+	if (map->getGeoreferencing().getState() != Georeferencing::Geospatial
+	    && templateMap()->getGeoreferencing().getState() == Georeferencing::Geospatial)
+	{
+		Q_ASSERT(!is_georeferenced);
+		GeoreferencingDialog dialog(dialog_parent, map, &templateMap()->getGeoreferencing());
+		if (dialog.exec() == QDialog::Accepted)
+		{
+			QTransform q_transform;
+			if (!calculateTransformation(q_transform))
+			{
+				setErrorString(tr("Failed to transform the coordinates."));
+				return false;
+			}
+			transform = TemplateTransform::fromQTransform(q_transform);
+			updateTransformationMatrices();
+		}
+	}
 	auto const is_unconfigured = [](auto const& georef) {
 		return georef.getState() != Georeferencing::Geospatial && georef.toProjectedCoords(MapCoordF{}) == QPointF{};
 	};
