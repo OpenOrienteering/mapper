@@ -44,6 +44,8 @@
 #include "core/map.h"
 #include "core/map_color.h"
 #include "core/renderables/renderable.h"
+#include "core/symbols/line_symbol.h"
+#include "core/symbols/point_symbol.h"
 #include "core/symbols/symbol.h"
 
 using namespace OpenOrienteering;
@@ -322,6 +324,63 @@ private slots:
 			QVERIFY(!symbol->containsSymbol(symbol));
 			
 		}
+	}
+	
+	void lineSymbolTest()
+	{
+		MapColor color;
+		LineSymbol l;
+		l.setColor(&color);
+		l.setLineWidth(1.0);
+		
+		l.ensurePointSymbols(QStringLiteral("Start"), QStringLiteral("Mid"), QStringLiteral("End"), QStringLiteral("4"));
+		QVERIFY(l.getStartSymbol());
+		QVERIFY(l.getMidSymbol());
+		QVERIFY(l.getEndSymbol());
+		QVERIFY(l.getDashSymbol());
+		
+		l.cleanupPointSymbols();
+		QVERIFY(!l.getStartSymbol());
+		QVERIFY(!l.getMidSymbol());
+		QVERIFY(!l.getEndSymbol());
+		QVERIFY(!l.getDashSymbol());
+		
+		auto clone = duplicate(l);
+		QVERIFY(clone->equals(&l));
+		
+		l.setName(QStringLiteral("A"));
+		QVERIFY(!clone->equals(&l));
+		
+		clone->setName(QStringLiteral("a"));
+		QVERIFY(!clone->equals(&l));
+		QVERIFY(clone->equals(&l, Qt::CaseInsensitive));
+		
+		clone->setName(QStringLiteral("A"));
+		QVERIFY(clone->equals(&l));
+		
+		clone->setStartSymbol(new PointSymbol());
+		QVERIFY(clone->getStartSymbol()->isEmpty());
+		QVERIFY(clone->equals(&l));
+		clone->cleanupPointSymbols();
+		QVERIFY(clone->equals(&l));
+		
+		l.setEndSymbol(new PointSymbol());
+		QVERIFY(l.getEndSymbol()->isEmpty());
+		QVERIFY(clone->equals(&l));
+		l.cleanupPointSymbols();
+		QVERIFY(clone->equals(&l));
+		
+		clone->setMidSymbol(new PointSymbol());
+		QVERIFY(clone->getMidSymbol()->isEmpty());
+		QVERIFY(clone->equals(&l));
+		clone->cleanupPointSymbols();
+		QVERIFY(clone->equals(&l));
+		
+		l.setDashSymbol(new PointSymbol());
+		QVERIFY(l.getDashSymbol()->isEmpty());
+		QVERIFY(clone->equals(&l));
+		l.cleanupPointSymbols();
+		QVERIFY(clone->equals(&l));
 	}
 };
 
