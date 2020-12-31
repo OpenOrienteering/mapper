@@ -187,6 +187,10 @@ bool TemplateMap::loadTemplateFileImpl()
 			updateTransformationMatrices();
 			block_georeferencing = false;
 		}
+		else
+		{
+			block_georeferencing = false;
+		}
 	}
 	else if (importer)
 	{
