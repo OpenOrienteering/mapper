@@ -2883,7 +2883,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Kan inte spara fil
+        <translation>Kan inte spara fil
 %1:
 %2</translation>
     </message>
@@ -4431,7 +4431,7 @@ eftersom det inte stöds att spara som %2 (.%3).</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1777"/>
         <source>Exported successfully to %1</source>
-        <translation type="unfinished">Exporterad till %1</translation>
+        <translation>Exporterad till %1</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4275"/>
