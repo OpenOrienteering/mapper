@@ -42,6 +42,7 @@
 #include <QPen>
 #include <QPoint>
 #include <QRect>
+#include <QSaveFile>
 #include <QSize>
 #include <QStringRef>
 #include <QTransform>
@@ -72,6 +73,23 @@ namespace OpenOrienteering {
 TemplateImage::GeoreferencingOption readGdalGeoTransform(const QString& filepath);
 
 #endif
+
+
+namespace {
+
+QByteArray findExportFormat(const QString& filename)
+{
+	auto const formats = QImageWriter::supportedImageFormats();
+	for (auto const& format : formats)
+	{
+		if (format.length() >= 3
+		    && filename.endsWith(QLatin1String(format.constData()), Qt::CaseInsensitive))
+			return format;
+	}
+	return {};
+}
+
+}
 
 
 const std::vector<QByteArray>& TemplateImage::supportedExtensions()
@@ -124,12 +142,35 @@ TemplateImage* TemplateImage::duplicate() const
 
 bool TemplateImage::saveTemplateFile() const
 {
-	const auto result = image.save(template_path);
+	auto const format = findExportFormat(template_path);
+	if (format.isEmpty())
+	{
+		const_cast<TemplateImage*>(this)->setErrorString(tr("Format not supported"));
+		return false;
+	}
+	
+	{
+		QSaveFile file{template_path};
+		QImageWriter writer{&file, format};
+		if (!writer.write(image))
+		{
+			const_cast<TemplateImage*>(this)->setErrorString(writer.errorString());
+			return false;
+		}
+		if (!file.commit())
+		{
+			const_cast<TemplateImage*>(this)->setErrorString(file.errorString());
+			return false;
+		}
+	}
+	
 #ifdef Q_OS_ANDROID
 	// Make the MediaScanner aware of the *updated* file.
 	Android::mediaScannerScanFile(QFileInfo(template_path).absolutePath());
 #endif
-	return result;
+	
+	const_cast<TemplateImage*>(this)->setHasUnsavedChanges(false);
+	return true;
 }
 
 
@@ -162,10 +203,6 @@ bool TemplateImage::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 bool TemplateImage::loadTemplateFileImpl()
 {
 	QImageReader reader(template_path);
-	
-	// QImageReader::format() cannot be called after reading.
-	drawable = QImageWriter::supportedImageFormats().contains(reader.format());
-	
 	const QSize size = reader.size();
 	const QImage::Format format = reader.imageFormat();
 	if (size.isEmpty() || format == QImage::Format_Invalid)
@@ -210,6 +247,7 @@ bool TemplateImage::loadTemplateFileImpl()
 		calculateGeoreferencing();
 	}
 	
+	drawable = !findExportFormat(template_path).isEmpty();
 	return true;
 }
 
@@ -225,7 +263,7 @@ bool TemplateImage::postLoadSetup(QWidget* dialog_parent, bool& out_center_in_vi
 		if (!open_dialog.isGeorefRadioChecked())
 			break;
 		
-		if (map->getGeoreferencing().isLocal())
+		if (map->getGeoreferencing().getState() != Georeferencing::Geospatial)
 		{
 			// Make sure that the map is georeferenced.
 			Georeferencing initial_georef(map->getGeoreferencing());
@@ -242,10 +280,10 @@ bool TemplateImage::postLoadSetup(QWidget* dialog_parent, bool& out_center_in_vi
 			}
 			
 			GeoreferencingDialog dialog(dialog_parent, map, &initial_georef, false);
-			if (initial_georef.isLocal())
-				dialog.setKeepProjectedRefCoords();
-			else
+			if (initial_georef.getState() == Georeferencing::Geospatial)
 				dialog.setKeepGeographicRefCoords();
+			else
+				dialog.setKeepProjectedRefCoords();
 			if (dialog.exec() == QDialog::Rejected)
 				continue;
 			
@@ -256,7 +294,7 @@ bool TemplateImage::postLoadSetup(QWidget* dialog_parent, bool& out_center_in_vi
 			}
 		}
 		
-		if (!map->getGeoreferencing().isLocal())
+		if (map->getGeoreferencing().getState() == Georeferencing::Geospatial)
 		{
 			// Let user select the coordinate reference system.
 			// \todo Change description text below (no longer just for world files.)
@@ -279,10 +317,8 @@ bool TemplateImage::postLoadSetup(QWidget* dialog_parent, bool& out_center_in_vi
 		calculateGeoreferencing();
 		// If not both the template and the map are fully georeferenced,
 		// we use the transform, but don't claim the georeferenced state.
-		is_georeferenced = georef->isValid()
-		                   && !georef->isLocal()
-		                   && map->getGeoreferencing().isValid()
-		                   && !map->getGeoreferencing().isLocal();
+		is_georeferenced = georef->getState() == Georeferencing::Geospatial
+		                   && map->getGeoreferencing().getState() == Georeferencing::Geospatial;
 		out_center_in_view = false;
 	}
 	else
@@ -396,10 +432,8 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 			calculateGeoreferencing();
 			// If not both the template and the map are fully georeferenced,
 			// we use the transform, but don't claim the georeferenced state.
-			is_georeferenced = georef->isValid()
-			                   && !georef->isLocal()
-			                   && map->getGeoreferencing().isValid()
-			                   && !map->getGeoreferencing().isLocal();
+			is_georeferenced = georef->getState() == Georeferencing::Geospatial
+			                   && map->getGeoreferencing().getState() == Georeferencing::Geospatial;
 			setTemplateAreaDirty();
 		}
 		else
@@ -415,7 +449,7 @@ void TemplateImage::updateGeoreferencing()
 {
 	if (is_georeferenced)
 	{
-		if (map->getGeoreferencing().isLocal())
+		if (map->getGeoreferencing().getState() != Georeferencing::Geospatial)
 		{
 			is_georeferenced = false;
 			map->emitTemplateChanged(this);
@@ -671,7 +705,7 @@ void TemplateImage::calculateGeoreferencing()
 	georef = std::make_unique<Georeferencing>();
 	georef->setProjectedCRS(QString{}, available_georef.effective.crs_spec);
 	georef->setTransformationDirectly(available_georef.effective.transform.pixel_to_world);
-	if (map->getGeoreferencing().isValid())
+	if (map->getGeoreferencing().getState() == Georeferencing::Geospatial)
 		updatePosFromGeoreferencing();
 }
 

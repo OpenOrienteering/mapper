@@ -494,6 +494,11 @@ public:
 	 */
 	bool isRotatable() const { return is_rotatable; }
 	
+	/**
+	 * Returns if the objects has fill patterns which can be rotated in arbitrary directions.
+	 */
+	virtual bool hasRotatableFillPattern() const;
+	
 protected:
 	/**
 	 * Sets the rotatability state of the symbol.

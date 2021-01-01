@@ -161,9 +161,6 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 		}
 	}
 	
-	if (object_tags != other->object_tags)
-		return false;
-	
 	if (qAbs(getRotation() - other->getRotation()) >= 0.000001)  // six decimal places in XML
 		return false;
 	
@@ -189,7 +186,11 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 			return false;
 	}
 	
-	return true;
+	if (object_tags.empty())
+		return other->object_tags.empty();
+	
+	using std::begin; using std::end;
+	return std::is_permutation(object_tags.begin(), object_tags.end(), other->object_tags.begin(), other->object_tags.end());
 }
 
 
@@ -324,9 +325,12 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		bool conversion_ok;
 		const auto id_converted = symbol_id.toInt(&conversion_ok);
 		if (!symbol_id.isEmpty() && !conversion_ok)
+		{
+			delete object;
 			throw FileFormatException(::OpenOrienteering::ImportExport::tr("Malformed symbol ID '%1' at line %2 column %3.")
 		                              .arg(symbol_id).arg(xml.lineNumber())
 		                              .arg(xml.columnNumber()));
+		}
 		object->symbol = symbol_dict[id_converted]; // FIXME: cannot work for forward references
 		// NOTE: object->symbol may be nullptr.
 	}
@@ -560,6 +564,12 @@ void Object::scale(double factor_x, double factor_y)
 	setOutputDirty();
 }
 
+// virtual
+void Object::rotatePatternOrigin(const MapCoordF& /*center*/, qreal /*sin_angle*/, qreal /*cos_angle*/)
+{
+	qDebug("Unexpected call to %s", Q_FUNC_INFO);
+}
+
 void Object::rotateAround(const MapCoordF& center, qreal angle)
 {
 	auto sin_angle = std::sin(angle);
@@ -572,7 +582,12 @@ void Object::rotateAround(const MapCoordF& center, qreal angle)
 		coord.setY(center.y() - sin_angle * center_to_coord.x() + cos_angle * center_to_coord.y());
 	}
 	
-	if (symbol->isRotatable())
+	if (symbol->hasRotatableFillPattern())
+	{
+		rotation += angle;
+		rotatePatternOrigin(center, sin_angle, cos_angle);
+	}
+	else if (symbol->isRotatable())
 	{
 		rotation += angle;
 	}
@@ -591,7 +606,12 @@ void Object::rotate(qreal angle)
 		coord.setY(- sin_angle * old_coord.x() + cos_angle * old_coord.y());
 	}
 	
-	if (symbol->isRotatable())
+	if (symbol->hasRotatableFillPattern())
+	{
+		rotation += angle;
+		rotatePatternOrigin(MapCoordF{}, sin_angle, cos_angle);
+	}
+	else if (symbol->isRotatable())
 	{
 		rotation += angle;
 	}
@@ -670,7 +690,7 @@ Object* Object::getObjectForType(Object::Type type, const Symbol* symbol)
 	return nullptr;
 }
 
-void Object::setTags(const Object::Tags& tags)
+void Object::setTags(const KeyValueContainer& tags)
 {
 	if (object_tags != tags)
 	{
@@ -684,11 +704,18 @@ void Object::setTags(const Object::Tags& tags)
 	}
 }
 
+QString OpenOrienteering::Object::getTag(const QString& key) const
+{
+	auto const it = object_tags.find(key);
+	return it == object_tags.end() ? QString{} : it->value;
+}
+
 void Object::setTag(const QString& key, const QString& value)
 {
-	if (!object_tags.contains(key) || object_tags.value(key) != value)
+	auto it = object_tags.find(key);
+	if (it != object_tags.end() || it->value != value)
 	{
-		object_tags.insert(key, value);
+		object_tags.insert_or_assign(it, key, value);
 		if (map)
 		{
 			map->setObjectsDirty();
@@ -700,9 +727,10 @@ void Object::setTag(const QString& key, const QString& value)
 
 void Object::removeTag(const QString& key)
 {
-	if (object_tags.contains(key))
+	auto it = object_tags.find(key);
+	if (it != object_tags.end())
 	{
-		object_tags.remove(key);
+		object_tags.erase(it);
 		if (map)
 			map->setObjectsDirty();
 	}
@@ -1072,6 +1100,14 @@ void PathObject::partSizeChanged(PathPartVector::iterator part, MapCoordVector::
 		part->first_index += change;
 		part->last_index += change;
 	}
+}
+
+// override
+void PathObject::rotatePatternOrigin(const MapCoordF& center, qreal sin_angle, qreal cos_angle)
+{
+	auto const center_to_coord = MapCoordF(pattern_origin.x() - center.x(), pattern_origin.y() - center.y());
+	pattern_origin.setX(center.x() + cos_angle * center_to_coord.x() + sin_angle * center_to_coord.y());
+	pattern_origin.setY(center.y() - sin_angle * center_to_coord.x() + cos_angle * center_to_coord.y());
 }
 
 

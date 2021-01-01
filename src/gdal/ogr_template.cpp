@@ -30,8 +30,10 @@
 #include <QByteArray>
 #include <QDialog>
 #include <QLatin1String>
+#include <QPainter>
 #include <QPoint>
 #include <QPointF>
+#include <QRectF>
 #include <QStringRef>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -41,8 +43,10 @@
 #include "core/latlon.h"
 #include "core/map.h"
 #include "core/map_coord.h"
+#include "core/map_view.h"
 #include "core/track.h"
 #include "fileformats/file_format.h"
+#include "gdal/gdal_file.h"
 #include "gdal/gdal_manager.h"
 #include "gdal/ogr_file_format_p.h"
 #include "gui/georeferencing_dialog.h"
@@ -67,10 +71,9 @@ namespace {
 	{
 		// Keep a configured local reference point from initial_georef?
 		auto data_crs_spec = data_georef.getProjectedCRSSpec();
-		if ((!initial_georef.isValid() || initial_georef.isLocal())
+		if (initial_georef.getState() != Georeferencing::Geospatial
 		    && initial_georef.getProjectedRefPoint() != QPointF{}
-		    && data_georef.isValid()
-		    && !data_georef.isLocal()
+		    && data_georef.getState() == Georeferencing::Geospatial
 		    && data_georef.getProjectedRefPoint() == QPointF{}
 		    && data_georef.getMapRefPoint() == MapCoord{}
 		    && data_crs_spec.contains(QLatin1String("+proj=ortho"))
@@ -164,6 +167,33 @@ const char* OgrTemplate::getTemplateType() const
 }
 
 
+Template::LookupResult OgrTemplate::tryToFindTemplateFile(const QString& map_path)
+{
+	auto template_path_utf8 = template_path.toUtf8();
+	if (GdalFile::isRelative(template_path_utf8))
+	{
+		auto absolute_path_utf8 = GdalFile::tryToFindRelativeTemplateFile(template_path_utf8, map_path.toUtf8());
+		if (!absolute_path_utf8.isEmpty())
+		{
+			setTemplatePath(QString::fromUtf8(absolute_path_utf8));
+			return FoundByRelPath;
+		}
+	}
+	
+	if (GdalFile::exists(template_path_utf8))
+	{
+		return FoundByAbsPath;
+	}
+	
+	return TemplateMap::tryToFindTemplateFile(map_path);
+}
+
+bool OgrTemplate::fileExists() const
+{
+	return GdalFile::exists(getTemplatePath().toUtf8())
+	       || TemplateMap::fileExists();
+}
+
 
 std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing(const QString& path) const
 {
@@ -237,10 +267,10 @@ try
 	
 	auto data_georef = std::unique_ptr<Georeferencing>();
 	auto& initial_georef = map->getGeoreferencing();
-	if (!initial_georef.isValid() || initial_georef.isLocal())
+	if (initial_georef.getState() != Georeferencing::Geospatial)
 	{
 		data_georef = getDataGeoreferencing(template_path, initial_georef);
-		if (data_georef && data_georef->isValid() && !data_georef->isLocal())
+		if (data_georef && data_georef->getState() == Georeferencing::Geospatial)
 		{
 			// If yes, does the user want to use this for the map?
 			auto keep_projected = false;
@@ -258,7 +288,7 @@ try
 	}
 	
 	auto& georef = map->getGeoreferencing();  // initial_georef might be outdated.
-	if (georef.isValid() && !georef.isLocal())
+	if (georef.getState() == Georeferencing::Geospatial)
 	{
 		// The map has got a proper georeferencing.
 		// Can the template's SRS be converted to the map's CRS?
@@ -319,13 +349,19 @@ try
 	{
 		// Need to create an orthographic projection during data loading.
 		explicit_georef = makeOrthographicGeoreferencing();
+		if (!explicit_georef)
+		{
+			setErrorString(tr("Invalid template configuration."));
+			return false;
+		}
 		projected_crs_spec = explicit_georef->getProjectedCRSSpec();
 		explicit_georef_pending = false;
 	}
 	
 	auto new_template_map = std::make_unique<Map>();
+	auto* view = new MapView(new_template_map.get(), new_template_map.get());
 	auto unit_type = use_real_coords ? OgrFileImport::UnitOnGround : OgrFileImport::UnitOnPaper;
-	OgrFileImport importer{template_path, new_template_map.get(), nullptr, unit_type };
+	OgrFileImport importer{template_path, new_template_map.get(), view, unit_type };
 	
 	// Configure generation of renderables.
 	updateView(*new_template_map);
@@ -359,6 +395,7 @@ try
 	setTemplatePositionOffset(pm1 - pm0);
 	
 	setTemplateMap(std::move(new_template_map));
+	loadChildTemplatesAsync(*view);
 	
 	const auto& warnings = importer.warnings();
 	if (!warnings.empty())
@@ -391,6 +428,43 @@ bool OgrTemplate::postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view
 }
 
 
+void OgrTemplate::loadChildTemplatesAsync(MapView& view)
+{
+	for (int i = 0; i < templateMap()->getNumTemplates(); ++i)
+	{
+		auto* temp = templateMap()->getTemplate(i);
+		connect(temp, &Template::templateStateChanged, this, [this, temp]() {
+			auto const child_area = temp->calculateTemplateBoundingBox();
+			map->setTemplateAreaDirty(this, child_area, 0);
+		});
+	}
+	templateMap()->loadTemplateFilesAsync(view, [](const QString& message) {
+		/// \todo Redirect to UI
+		qDebug("%s", qUtf8Printable(message));
+	});
+}
+
+
+void OgrTemplate::unloadTemplateFileImpl()
+{
+	for (int i = 0; i < templateMap()->getNumTemplates(); ++i)
+	{
+		auto* temp = templateMap()->getTemplate(i);
+		temp->disconnect();
+		switch (temp->getTemplateState())
+		{
+		case Configuring:
+		case Loaded:
+			temp->unloadTemplateFile();
+			break;
+		default:
+			break;
+		}
+	}
+	TemplateMap::unloadTemplateFileImpl();
+}
+
+
 bool OgrTemplate::canChangeTemplateGeoreferenced() const
 {
 	return false;
@@ -420,6 +494,38 @@ void OgrTemplate::mapTransformationChanged()
 		explicit_georef = std::move(map_configuration_georef);
 		resetTemplatePositionOffset();
 	}
+}
+
+
+
+void OgrTemplate::drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const
+{
+	// For efficiency, re-implementing Map::drawTemplates
+	auto const draw_child_templates = [this, painter, &clip_rect, scale, on_screen, opacity](int first, int  last)  {
+		for (int i = first; i < last; ++i)
+		{
+			auto const* temp = templateMap()->getTemplate(i);
+			if (temp->getTemplateState() != Template::Loaded)
+				continue;
+			if (!clip_rect.intersects(temp->calculateTemplateBoundingBox()))
+				continue;
+			painter->save();
+			temp->drawTemplate(painter, clip_rect, scale, on_screen, opacity);
+			painter->restore();
+		}
+	};
+	draw_child_templates(0, templateMap()->getFirstFrontTemplate());
+	TemplateMap::drawTemplate(painter, clip_rect, scale, on_screen, opacity);
+	draw_child_templates(templateMap()->getFirstFrontTemplate(), templateMap()->getNumTemplates());
+}
+
+QRectF OgrTemplate::getTemplateExtent() const
+{
+	// If the template is invalid, the extent is an empty rectangle.
+	QRectF extent;
+	if (templateMap())
+		extent = templateMap()->calculateExtent(false, true, nullptr);
+	return extent;
 }
 
 

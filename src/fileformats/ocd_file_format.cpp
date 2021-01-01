@@ -30,7 +30,6 @@
 #include <QString>
 
 #include "fileformats/file_import_export.h"
-#include "fileformats/ocad8_file_format_p.h"
 #include "fileformats/ocd_file_export.h"
 #include "fileformats/ocd_file_import.h"
 
@@ -45,8 +44,6 @@ QString labelForVersion(quint16 version)
 	{
 	case OcdFileFormat::autoDeterminedVersion():
 		return ::OpenOrienteering::ImportExport::tr("OCAD");
-	case OcdFileFormat::legacyVersion():
-		return ::OpenOrienteering::ImportExport::tr("OCAD version 8, old implementation");
 	default:
 		return ::OpenOrienteering::ImportExport::tr("OCAD version %1").arg(version);
 	}
@@ -56,10 +53,6 @@ FileFormat::Features featuresForVersion(quint16 version)
 {
 	switch (version)
 	{
-	case OcdFileFormat::legacyVersion():
-		return FileFormat::Feature::FileOpen | FileFormat::Feature::FileImport | FileFormat::Feature::ReadingLossy |
-		       FileFormat::Feature::FileSave | FileFormat::Feature::FileSaveAs | FileFormat::Feature::WritingLossy;
-		
 	case OcdFileFormat::autoDeterminedVersion():
 		// Intentionally no FileFormat::ExportSupported. This prevents this
 		// format from being shown in the Save-as dialog. However, it is legal
@@ -99,8 +92,6 @@ const char* OcdFileFormat::idForVersion(quint16 version)
 		return "OCD11";
 	case 12:
 		return "OCD12";
-	case OcdFileFormat::legacyVersion():
-		return "OCD-legacy";
 	default:
 		qFatal("Unsupported OCD version");
 	}
@@ -118,7 +109,6 @@ std::vector<std::unique_ptr<OcdFileFormat>> OcdFileFormat::makeAll()
 	result.push_back(std::make_unique<OcdFileFormat>(10));
 	result.push_back(std::make_unique<OcdFileFormat>(9));
 	result.push_back(std::make_unique<OcdFileFormat>(8));
-	result.push_back(std::make_unique<OcdFileFormat>(legacyVersion()));
 	return result;
 }
 
@@ -147,15 +137,11 @@ FileFormat::ImportSupportAssumption OcdFileFormat::understands(const char* buffe
 
 std::unique_ptr<Importer> OcdFileFormat::makeImporter(const QString& path, Map *map, MapView *view) const
 {
-	if (version == legacyVersion())
-		return std::make_unique<OCAD8FileImport>(path, map, view);
 	return std::make_unique<OcdFileImport>(path, map, view);
 }
 
 std::unique_ptr<Exporter> OcdFileFormat::makeExporter(const QString& path, const Map* map, const MapView* view) const
 {
-	if (version == legacyVersion())
-		return std::make_unique<OCAD8FileExport>(path, map, view);
 	return std::make_unique<OcdFileExport>(path, map, view, version);
 }
 

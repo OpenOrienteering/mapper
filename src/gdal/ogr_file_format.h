@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2018 Kai Pastor
+ *    Copyright 2016-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,7 +21,9 @@
 #define OPENORIENTEERING_OGR_FILE_FORMAT_H
 
 #include <memory>
+#include <vector>
 
+#include <QByteArray>
 #include <QString>
 
 #include "fileformats/file_format.h"
@@ -63,12 +65,20 @@ public:
 	/**
 	  * Constructs a new OgrFileExportFormat.
 	  */
-	OgrFileExportFormat();
+	OgrFileExportFormat(QByteArray id, const char* name, const char* extensions);
 
 	/**
 	  * Creates an exporter for files supported by OGR.
 	  */
 	std::unique_ptr<Exporter> makeExporter(const QString &path, const Map *map, const MapView *view) const override;
+	
+	/**
+	 * Returns a container of all supported variants of this format.
+	 */
+	static std::vector<std::unique_ptr<OgrFileExportFormat>> makeAll();
+	
+private:
+	QByteArray meta_data;
 };
 
 

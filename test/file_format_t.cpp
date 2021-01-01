@@ -40,6 +40,7 @@
 #include <QIODevice>
 #include <QLatin1Char>
 #include <QLatin1String>
+#include <QMetaObject>
 #include <QPageSize>
 #include <QPoint>
 #include <QPointF>
@@ -64,9 +65,11 @@
 #include "core/objects/text_object.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/symbol.h"
+#include "core/symbols/line_symbol.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
+#include "fileformats/kml_course_export.h"
 #include "fileformats/ocd_file_export.h"
 #include "fileformats/ocd_file_format.h"
 #include "fileformats/xml_file_format.h"
@@ -74,6 +77,10 @@
 #include "undo/undo.h"
 #include "undo/undo_manager.h"
 #include "util/backports.h"  // IWYU pragma: keep
+
+#ifdef MAPPER_USE_GDAL
+#  include "gdal/gdal_manager.h"
+#endif
 
 using namespace OpenOrienteering;
 
@@ -205,7 +212,7 @@ namespace
 		const auto& actual_georef = actual.getGeoreferencing();
 		const auto& expected_georef = expected.getGeoreferencing();
 		QCOMPARE(actual_georef.getScaleDenominator(), expected_georef.getScaleDenominator());
-		QCOMPARE(actual_georef.isLocal(), expected_georef.isLocal());
+		QCOMPARE(actual_georef.getState(), expected_georef.getState());
 		QCOMPARE(actual_georef.getCombinedScaleFactor(), expected_georef.getCombinedScaleFactor());
 		QCOMPARE(actual_georef.getAuxiliaryScaleFactor(), expected_georef.getAuxiliaryScaleFactor());
 		QCOMPARE(actual_georef.getDeclination(), expected_georef.getDeclination());
@@ -315,14 +322,10 @@ namespace
 			COMPARE_SYMBOL_PROPERTY(actual.getFillPattern(i).rotatable(), pattern_rotable, expected);
 	}
 	
-	void fuzzyCompareSymbol(const Symbol& actual, const Symbol& expected, const QByteArray& format_id)
+	void fuzzyCompareSymbol(const Symbol& actual, const Symbol& expected, const QByteArray& /*format_id*/)
 	{
 		COMPARE_SYMBOL_PROPERTY(actual.isHidden(), expected.isHidden(), expected);
 		COMPARE_SYMBOL_PROPERTY(actual.isProtected(), expected.isProtected(), expected);
-		
-		if (format_id == "OCD-legacy")
-			return;  // Unmaintained, no other properties testedd.
-		
 		COMPARE_SYMBOL_PROPERTY(actual.isRotatable(), expected.isRotatable(), expected);
 		
 		/// \todo Ideally, the dominant color would be preserved.
@@ -375,7 +378,7 @@ namespace
 			
 			actual = symbol;
 		}
-		if (format_id == "OCD8" || format_id == "OCD-legacy")
+		if (format_id == "OCD8")
 		{
 			// Don't elaborate testing for these legacy formats.
 			switch (expected->getType())
@@ -387,8 +390,6 @@ namespace
 				break;
 			case Symbol::Line:
 				// Expected symbol may be entirely turned into combined symbol.
-				if (!actual && format_id == "OCD-legacy")
-					return;
 				break;
 			default:
 				;  // nothing
@@ -434,11 +435,11 @@ namespace
 		QVERIFY2(qAbs(actual_point.x() - expected_point.x()) < 1.0, qPrintable(test_label.arg(actual_point.x()).arg(expected_point.x())));
 		QVERIFY2(qAbs(actual_point.y() - expected_point.y()) < 1.0, qPrintable(test_label.arg(actual_point.y()).arg(expected_point.y())));
 		
-		if (!actual_georef.isLocal())
-		{
-			QCOMPARE(actual_georef.isLocal(), expected_georef.isLocal());
+		if (format_id != "OCD8")
+			QCOMPARE(int(actual_georef.getState()), int(expected_georef.getState()));
+		
+		if (actual_georef.getState() == Georeferencing::Geospatial)
 			QCOMPARE(actual_georef.toGeographicCoords(actual_point), expected_georef.toGeographicCoords(actual_point));
-		}
 		
 		// Colors
 		QVERIFY2(actual.getNumColors() >= expected.getNumColors(), qPrintable(test_label.arg(actual.getNumColors()).arg(expected.getNumColors())));
@@ -515,8 +516,10 @@ namespace
 
 void FileFormatTest::initTestCase()
 {
+	// Use distinct QSettings
 	QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
-	QCoreApplication::setApplicationName(QString::fromLatin1("FileFormatTest"));
+	QCoreApplication::setApplicationName(QString::fromLatin1(metaObject()->className()));
+	QVERIFY2(QDir::home().exists(), "The home dir must be writable in order to use QSettings.");
 	
 	doStaticInitializations();
 	
@@ -556,6 +559,33 @@ void FileFormatTest::mapCoordtoString()
 	
 	MapCoord::StringBuffer<char> buffer;
 	QCOMPARE(coord.toUtf8(buffer), expected);
+}
+
+
+
+void FileFormatTest::fixupExtensionTest_data()
+{
+	QTest::addColumn<QByteArray>("format_id");
+	QTest::addColumn<QString>("expected");
+	
+	QTest::newRow("file.omap")   << QByteArray("XML") << QStringLiteral("file.omap");
+	QTest::newRow("file")        << QByteArray("XML") << QStringLiteral("file.omap");
+	QTest::newRow("file.")       << QByteArray("XML") << QStringLiteral("file.omap");
+	QTest::newRow("file_omap")   << QByteArray("XML") << QStringLiteral("file_omap.omap");
+	QTest::newRow("file.xmap")   << QByteArray("XML") << QStringLiteral("file.xmap");
+	QTest::newRow("f.omap.zip")  << QByteArray("XML") << QStringLiteral("f.omap.zip.omap");
+}
+
+void FileFormatTest::fixupExtensionTest()
+{
+	QFETCH(QByteArray, format_id);
+	QFETCH(QString, expected);
+	
+	auto const* format = FileFormats.findFormat(format_id);
+	QVERIFY(format);
+	
+	auto const filename = QString::fromUtf8(QTest::currentDataTag());
+	QCOMPARE(format->fixupExtension(filename), expected);
 }
 
 
@@ -764,9 +794,6 @@ void FileFormatTest::saveAndLoad_data()
 				auto ocd_id = id;
 				ocd_id.append(" (default)");
 				QTest::newRow(ocd_id) << ocd_id << QByteArray{format_id} << int(OcdFileExport::default_version) << path;
-				ocd_id = id;
-				ocd_id.append("-legacy");
-				QTest::newRow(ocd_id) << ocd_id << QByteArray{format_id}+"-legacy" << 8 << path;
 			}
 			else
 			{
@@ -887,12 +914,13 @@ void FileFormatTest::pristineMapTest()
 void FileFormatTest::ogrExportTest_data()
 {
 	QTest::addColumn<QString>("map_filepath");
+	QTest::addColumn<QByteArray>("ogr_format_id");
 	QTest::addColumn<QString>("ogr_extension");
 	QTest::addColumn<int>("latitude");
 	QTest::addColumn<int>("longitude");
 	
 	QTest::newRow("complete map") << QString::fromLatin1("data:/examples/complete map.omap")
-	                              << QString::fromLatin1("gpx")
+	                              << QByteArray("OGR-export-GPX") << QString::fromLatin1("gpx")
 	                              << 48 << 12;
 }
 
@@ -900,6 +928,7 @@ void FileFormatTest::ogrExportTest()
 {
 #ifdef MAPPER_USE_GDAL
 	QFETCH(QString, map_filepath);
+	QFETCH(QByteArray, ogr_format_id);
 	QFETCH(QString, ogr_extension);
 	QFETCH(int, latitude);
 	QFETCH(int, longitude);
@@ -911,13 +940,13 @@ void FileFormatTest::ogrExportTest()
 	{
 		Map map;
 		QVERIFY(map.loadFrom(map_filepath));
-		QVERIFY(map.getGeoreferencing().isValid());
+		QCOMPARE(map.getGeoreferencing().getState(), Georeferencing::Geospatial);
 		
 		auto const exported_latlon = map.getGeoreferencing().getGeographicRefPoint();
 		QCOMPARE(qRound(exported_latlon.latitude()), latitude);
 		QCOMPARE(qRound(exported_latlon.longitude()), longitude);
 		
-		auto const* format = FileFormats.findFormat("OGR-export");
+		auto const* format = FileFormats.findFormat(ogr_format_id);
 		QVERIFY(format);
 		
 		auto exporter = format->makeExporter(ogr_filepath, &map, nullptr);
@@ -934,13 +963,123 @@ void FileFormatTest::ogrExportTest()
 		auto importer = format->makeImporter(ogr_filepath, &map, nullptr);
 		QVERIFY(bool(importer));
 		QVERIFY(importer->doImport());
-		QVERIFY(map.getGeoreferencing().isValid());
+		QCOMPARE(map.getGeoreferencing().getState(), Georeferencing::Geospatial);
 		
 		auto const imported_latlon = map.getGeoreferencing().getGeographicRefPoint();
 		QCOMPARE(qRound(imported_latlon.latitude()), latitude);
 		QCOMPARE(qRound(imported_latlon.longitude()), longitude);
 	}
+#endif  // MAPPER_USE_GDAL
+}
+
+
+void FileFormatTest::kmlCourseExportTest()
+{
+	QTemporaryDir dir;
+	QVERIFY(dir.isValid());
+	auto const filepath = QDir(dir.path()).absoluteFilePath(QStringLiteral("test.kml"));
+	{
+		Georeferencing georef;
+		georef.setScaleDenominator(100000);
+		georef.setProjectedCRS({}, QStringLiteral("+proj=utm +zone=32 +datum=WGS84 +no_defs"));
+		georef.setGeographicRefPoint({50, 9});
+		QCOMPARE(georef.getState(), Georeferencing::Geospatial);
+		
+		Map map;
+		map.setGeoreferencing(georef);
+		
+		KmlCourseExport exporter{map};
+		QVERIFY(!exporter.canExport());  // empty map
+		
+		auto* path_object = new PathObject(Map::getUndefinedLine());
+		path_object->addCoordinate(georef.toMapCoords(LatLon{50.001, 9.000}));  // start
+		path_object->addCoordinate(georef.toMapCoords(LatLon{50.001, 9.001}));  // 1
+		path_object->addCoordinate(georef.toMapCoords(LatLon{50.000, 9.001}));  // 2
+		path_object->addCoordinate(georef.toMapCoords(LatLon{50.000, 9.000}));  // finish
+		QVERIFY(exporter.canExport(path_object));
+		
+		map.getPart(0)->addObject(path_object);
+		QVERIFY(exporter.canExport());
+		
+		QVERIFY(exporter.doExport(filepath));
+	}
+#ifdef MAPPER_USE_GDAL
+	{
+		auto const* format = FileFormats.findFormatForFilename(filepath, &FileFormat::supportsReading);
+		QVERIFY(format);
+		
+		Map map;
+		auto importer = format->makeImporter(QFileInfo(filepath).canonicalFilePath(), &map, nullptr);
+		QVERIFY(bool(importer));
+		QVERIFY(importer->doImport());
+		
+		auto const* part = map.getPart(0);
+		struct {
+			int start = 0;
+			int control = 0;
+			int finish = 0;
+			int other = 0;
+		} count;
+		for (int i = 0; i < part->getNumObjects(); ++i)
+		{
+			auto const* object = part->getObject(i);
+			auto const name = object->getTag(QStringLiteral("Name"));
+			if (object->getType() != Object::Point)
+				++count.other;
+			else if (name == QLatin1String("S1"))
+				++count.start;
+			else if (name == QLatin1String("F1"))
+				++count.finish;
+			else if ([](auto name) { bool ok; void(name.toInt(&ok)); return ok; }(name))
+				++count.control;
+			else
+				++count.other;
+		}
+		QCOMPARE(count.start, 1);
+		QCOMPARE(count.control, 2);
+		QCOMPARE(count.finish, 1);
+		QCOMPARE(count.other, 0);
+		
+		auto const center_map = MapCoordF(map.calculateExtent().center());
+		auto const center = map.getGeoreferencing().toGeographicCoords(center_map);
+		QCOMPARE(int(center.latitude()), 50);
+		QCOMPARE(int(center.longitude()), 9);
+	}
 #endif
+}
+
+
+void FileFormatTest::importTemplateTest_data()
+{
+	QTest::addColumn<QString>("filepath");
+	
+	QTest::newRow("Course Design") << QStringLiteral("data:symbol sets/10000/Course_Design_10000.omap");
+#ifdef MAPPER_USE_GDAL
+	if (GdalManager::isDriverEnabled("LIBKML"))
+		QTest::newRow("KMZ") << QStringLiteral("testdata:templates/vsi-test.kmz");  // needs libkml
+#endif  // MAPPER_USE_GDAL
+}
+
+void FileFormatTest::importTemplateTest()
+{
+	QFETCH(QString, filepath);
+	QVERIFY(QFileInfo::exists(filepath));
+	
+	{
+		Map map;
+		
+		auto const* format = FileFormats.findFormatForFilename(filepath, &FileFormat::supportsReading);
+		QVERIFY(format);
+		
+		auto importer = format->makeImporter(QFileInfo(filepath).canonicalFilePath(), &map, nullptr);
+		QVERIFY(bool(importer));
+		QVERIFY(importer->doImport());
+		
+		QVERIFY(map.getNumTemplates() >= 1);
+		auto* temp = map.getTemplate(0);
+		temp->loadTemplateFile();
+		QCOMPARE(temp->getTemplateState(), Template::Loaded);
+	}
 }
 
 

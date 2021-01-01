@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2013, 2015-2018 Kai Pastor
+ *    Copyright 2013, 2015-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -123,8 +123,10 @@ const FileFormat *FileFormatRegistry::findFormatByFilter(const QString& filter, 
 	// Compare only before closing ')'. Needed for QTBUG 51712 workaround in
 	// file_dialog.cpp, and warranted by Q_ASSERT in registerFormat().
 	return findFormat([predicate, filter](auto format) {
+		auto const label_len_filter = filter.lastIndexOf(QLatin1String(" ("));
+		auto const label_len_format = format->filter().lastIndexOf(QLatin1String(" ("));
 		return (format->*predicate)()
-		       && filter.startsWith(format->filter().leftRef(format->filter().length()-1));
+		       && filter.leftRef(label_len_filter) == format->filter().leftRef(label_len_format);
 	});
 }
 

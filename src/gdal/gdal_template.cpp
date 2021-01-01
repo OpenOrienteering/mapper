@@ -19,14 +19,28 @@
 
 #include "gdal_template.h"
 
+#include <algorithm>
+#include <iterator>
+#include <memory>
+
 #include <QtGlobal>
 #include <QByteArray>
 #include <QChar>
 #include <QImageReader>
+#include <QPointF>
+#include <QRectF>
 #include <QString>
+#include <QVariant>
 
+#include "core/georeferencing.h"
+#include "core/latlon.h"
+#include "core/map.h"
+#include "core/map_coord.h"
+#include "gdal/gdal_file.h"
 #include "gdal/gdal_image_reader.h"
 #include "gdal/gdal_manager.h"
+#include "util/transformation.h"
+#include "util/util.h"
 
 
 namespace OpenOrienteering {
@@ -42,6 +56,13 @@ bool GdalTemplate::canRead(const QString& path)
 const std::vector<QByteArray>& GdalTemplate::supportedExtensions()
 {
 	return GdalManager().supportedRasterExtensions();
+}
+
+
+// static
+const char* GdalTemplate::applyCornerPassPointsProperty()
+{
+	return "GdalTemplate::applyCornerPassPoints";
 }
 
 
@@ -62,6 +83,35 @@ const char* GdalTemplate::getTemplateType() const
 {
 	return "GdalTemplate";
 }
+
+
+Template::LookupResult GdalTemplate::tryToFindTemplateFile(const QString& map_path)
+{
+	auto template_path_utf8 = template_path.toUtf8();
+	if (GdalFile::isRelative(template_path_utf8))
+	{
+		auto absolute_path_utf8 = GdalFile::tryToFindRelativeTemplateFile(template_path_utf8, map_path.toUtf8());
+		if (!absolute_path_utf8.isEmpty())
+		{
+			setTemplatePath(QString::fromUtf8(absolute_path_utf8));
+			return FoundByRelPath;
+		}
+	}
+	
+	if (GdalFile::exists(template_path_utf8))
+	{
+		return FoundByAbsPath;
+	}
+	
+	return TemplateImage::tryToFindTemplateFile(map_path);
+}
+
+bool GdalTemplate::fileExists() const
+{
+	return GdalFile::exists(getTemplatePath().toUtf8())
+	       || TemplateImage::fileExists();
+}
+
 
 bool GdalTemplate::loadTemplateFileImpl()
 {
@@ -103,7 +153,64 @@ bool GdalTemplate::loadTemplateFileImpl()
 		
 		calculateGeoreferencing();
 	}
+	else if (property(applyCornerPassPointsProperty()).toBool())
+	{
+		if (!applyCornerPassPoints())
+			return false;
+	}
 	
+	return true;
+}
+
+bool GdalTemplate::applyCornerPassPoints()
+{
+	if (passpoints.empty())
+		return false;
+	
+	using std::begin; using std::end;
+	
+	// Find the center of the destination coords, to be used as pivotal point.
+	auto const first = map->getGeoreferencing().toGeographicCoords(passpoints.front().dest_coords);
+	auto lonlat_box = QRectF{first.longitude(), first.latitude(), 0, 0};
+	std::for_each(begin(passpoints)+1, end(passpoints), [this, &lonlat_box](auto const& pp) {
+		auto const latlon = map->getGeoreferencing().toGeographicCoords(pp.dest_coords);
+		rectInclude(lonlat_box, QPointF{latlon.longitude(), latlon.latitude()});
+	});
+	auto const center = [](auto c) { return LatLon(c.y(), c.x()); } (lonlat_box.center());
+	
+	// Determine src_coords for each dest_coords, assuming corners relative to the center.
+	auto const current = calculateTemplateBoundingBox();
+	for (auto& pp : passpoints)
+	{
+		auto dest_latlon = map->getGeoreferencing().toGeographicCoords(pp.dest_coords);
+		if (dest_latlon.longitude() < center.longitude())
+		{
+			if (dest_latlon.latitude() > center.latitude())
+				pp.src_coords = current.topLeft();
+			else
+				pp.src_coords = current.bottomLeft();
+		}
+		else
+		{
+			if (dest_latlon.latitude() > center.latitude())
+				pp.src_coords = current.topRight();
+			else
+				pp.src_coords = current.bottomRight();
+		}
+	}
+	
+	TemplateTransform corner_alignment;
+	if (!passpoints.estimateSimilarityTransformation(&corner_alignment))
+	{
+		qDebug("%s: Failed to calculate the KML overlay raster positioning", qUtf8Printable(getTemplatePath()));
+		return false;
+	}
+	
+	// Apply transform directly, without further signals at this stage.
+	setProperty("GdalTemplate::applyPassPoints", false);
+	passpoints.clear();
+	transform = corner_alignment;
+	updateTransformationMatrices();
 	return true;
 }
 

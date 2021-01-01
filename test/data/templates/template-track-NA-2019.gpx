@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="OpenOrienteering Mapper 0.9.4">
+<!-- This track is contrived to match the map "template-track-NA.xmap"
+     per NGS's Horizontal Time-Dependent Positioning datum conversion tool,
+     between WGS 84 (G1762) and NAD 83 (2011) for the epoch of the track. -->
+<trk>
+<trkseg>
+<trkpt lat="40.0149205" lon="-105.0084468"><time>2019-09-23T20:53:53Z</time><ele>1628.14</ele><hdop>1.000</hdop></trkpt>
+<trkpt lat="40.0147469" lon="-105.0084468"><time>2019-09-23T20:53:54Z</time><ele>1628.14</ele><hdop>1.000</hdop></trkpt>
+<trkpt lat="40.0147469" lon="-105.0081521"><time>2019-09-23T20:53:55Z</time><ele>1628.14</ele><hdop>1.000</hdop></trkpt>
+<trkpt lat="40.0149205" lon="-105.0081521"><time>2019-09-23T20:53:57Z</time><ele>1628.14</ele><hdop>1.000</hdop></trkpt>
+<trkpt lat="40.0149205" lon="-105.0084468"><time>2019-09-23T20:53:58Z</time><ele>1628.14</ele><hdop>1.000</hdop></trkpt>
+</trkseg>
+</trk>
+</gpx>

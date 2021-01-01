@@ -26,6 +26,8 @@ class PolygonTest : public QObject
 {
 	Q_OBJECT
 private slots:
+	void initTestCase();
+	
 	void testJoins_data();
 	void testJoins();
 

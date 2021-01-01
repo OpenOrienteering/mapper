@@ -22,6 +22,7 @@
 #include <QtGlobal>
 #include <QtTest>
 #include <QCoreApplication>
+#include <QMetaObject>
 #include <QString>
 
 #include "settings.h"
@@ -71,11 +72,10 @@ AutosaveTest::AutosaveTest(QObject* parent)
 : QObject(parent)
 , autosave_interval(0.02) // 0.02 min = 1.2 s
 {
-	// The default settings format for Windows (registry) needs an organization.
+	// Use distinct QSettings
 	QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
-	// Set distinct application name in order to use distinct settings.
-	// Autosave objects must not be constructed before this!
-	QCoreApplication::setApplicationName(QString::fromLatin1("Tests"));
+	QCoreApplication::setApplicationName(QString::fromLatin1(metaObject()->className()));
+	QVERIFY2(QDir::home().exists(), "The home dir must be writable in order to use QSettings.");
 }
 
 void AutosaveTest::initTestCase()

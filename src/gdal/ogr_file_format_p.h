@@ -55,6 +55,7 @@ class MapView;
 class MapColor;
 class MapPart;
 class Object;
+class KeyValueContainer;
 class PathObject;
 class PointSymbol;
 class TextSymbol;
@@ -256,6 +257,9 @@ public:
 	static LatLon calcAverageLatLon(const QString& path);
 	
 	
+	QByteArray driverName() const { return driver_name; }
+	
+	
 protected:
 	ogr::unique_srs srsFromMap();
 	
@@ -281,6 +285,8 @@ protected:
 	void importFeature(MapPart* map_part, OGRFeatureDefnH feature_definition, OGRFeatureH feature, OGRGeometryH geometry, const Clipping* clipping);
 	
 	
+	KeyValueContainer importFields(OGRFeatureDefnH feature_definition, OGRFeatureH feature);
+		
 	ObjectList importGeometry(OGRFeatureH feature, OGRGeometryH geometry);
 	
 	ObjectList importGeometryCollection(OGRFeatureH feature, OGRGeometryH geometry);
@@ -324,6 +330,9 @@ protected:
 	static QPointF calcAverageCoords(OGRDataSourceH data_source, OGRDataSourceH srs);
 	
 	
+	void handleKmlOverlayIcon(OgrFileImport::ObjectList& objects, const KeyValueContainer& tags) const;
+	
+	
 private:
 	Symbol* getSymbolForPointGeometry(const QByteArray& style_string);
 	LineSymbol* getLineSymbol(const QByteArray& style_string);
@@ -333,6 +342,8 @@ private:
 	TextSymbol* getSymbolForLabel(OGRStyleToolH tool, const QByteArray& style_string);
 	LineSymbol* getSymbolForPen(OGRStyleToolH tool, const QByteArray& style_string);
 	AreaSymbol* getSymbolForBrush(OGRStyleToolH tool, const QByteArray& style_string);
+	
+	QByteArray driver_name;
 	
 	QHash<QByteArray, Symbol*> point_symbols;
 	PointSymbol* default_point_symbol;
@@ -349,7 +360,7 @@ private:
 	
 	ogr::unique_srs map_srs;
 	
-	OGRSpatialReferenceH data_srs;
+	OGRSpatialReferenceH data_srs = {};
 	
 	ogr::unique_transformation data_transform;
 	
@@ -407,7 +418,7 @@ public:
 	 */
 	Q_DECLARE_FLAGS(OgrQuirks, OgrQuirk)
 
-	OgrFileExport(const QString& path, const Map *map, const MapView *view);
+	OgrFileExport(const QString& path, const Map *map, const MapView *view, const char* id);
 	~OgrFileExport() override;
 
 	bool supportsQIODevice() const noexcept override;
@@ -432,6 +443,7 @@ protected:
 	void setupQuirks(GDALDriverH po_driver);
 
 private:
+	const char* id;
 	ogr::unique_datasource po_ds;
 	ogr::unique_fielddefn o_name_field;
 	ogr::unique_srs map_srs;

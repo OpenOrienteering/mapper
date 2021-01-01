@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2020 Kai Pastor
+#    Copyright 2012-2021 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -27,10 +27,12 @@ if(CCACHE_PROGRAM)
     set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CCACHE_PROGRAM}")
 endif()
 
+option(CMAKE_FIND_PACKAGE_PREFER_CONFIG "Lookup package config files before using find modules" ON)
+
 # Project declaration
 
 project(Mapper VERSION 0.9.5 LANGUAGES CXX C)
-set(Mapper_COPYRIGHT "(C) 2020 The OpenOrienteering developers")
+set(Mapper_COPYRIGHT "(C) 2021 The OpenOrienteering developers")
 
 math(EXPR Mapper_VERSION_CODE "${Mapper_VERSION_MAJOR} * 10000 + ${Mapper_VERSION_MINOR} * 100 + ${Mapper_VERSION_PATCH} * 2 + ${CMAKE_SIZEOF_VOID_P} / 4 - 1")
 
@@ -63,8 +65,10 @@ endif()
 
 option(Mapper_DEBUG_TRANSLATIONS "Debug missing translations" OFF)
 
-# Used for some Linux distributions which do not provide the polyclipping lib.
-option(Mapper_BUILD_CLIPPER "Build the Clipper package from source" OFF)
+# To improve developer experience, build clipper if it is not found
+set(Mapper_BUILD_CLIPPER "auto" CACHE STRING
+  "Build the Clipper package from source, alternatives: ON, OFF"
+)
 
 option(Mapper_USE_GDAL   "Use the GDAL library" ON)
 
@@ -138,10 +142,12 @@ elseif(ANDROID)
 	set(MAPPER_DATA_DESTINATION    "assets")
 	set(MAPPER_ABOUT_DESTINATION   "assets/doc")
 else() # LINUX and alike
-	set(MAPPER_RUNTIME_DESTINATION "bin")
-	set(MAPPER_LIBRARY_DESTINATION "lib/${Mapper_PACKAGE_NAME}")
-	set(MAPPER_DATA_DESTINATION    "share/${Mapper_PACKAGE_NAME}")
-	set(MAPPER_ABOUT_DESTINATION   "share/doc/${Mapper_PACKAGE_NAME}")
+	include(GNUInstallDirs)
+	set(MAPPER_RUNTIME_DESTINATION "${CMAKE_INSTALL_BINDIR}")
+	set(MAPPER_LIBRARY_DESTINATION "${CMAKE_INSTALL_LIBDIR}/${Mapper_PACKAGE_NAME}")
+	set(MAPPER_DATA_DESTINATION    "${CMAKE_INSTALL_DATADIR}/${Mapper_PACKAGE_NAME}")
+	string(REPLACE "/${PROJECT_NAME}" "/${Mapper_PACKAGE_NAME}"
+	    MAPPER_ABOUT_DESTINATION   "${CMAKE_INSTALL_DOCDIR}")
 endif()
 
 if(CMAKE_CROSSCOMPILING)
@@ -174,6 +180,19 @@ add_custom_target(Mapper_prerequisites
 )
 set(Mapper_prerequisites_FOUND TRUE)
 
+if(Mapper_BUILD_CLIPPER STREQUAL "auto")
+	find_package(Polyclipping 6.1.3 MODULE)
+	if(NOT Polyclipping_FOUND)
+		message(WARNING
+		  "System polyclipping is missing. Enabling embedded build.\n"
+		  "Set Mapper_BUILD_CLIPPER=OFF to disable embedded build."
+		)
+		set_property(CACHE Mapper_BUILD_CLIPPER PROPERTY VALUE "ON")
+	else()
+		set_property(CACHE Mapper_BUILD_CLIPPER PROPERTY VALUE "OFF")
+	endif()
+	set_property(CACHE Mapper_BUILD_CLIPPER PROPERTY TYPE "BOOL")
+endif()
 if(Mapper_BUILD_CLIPPER)
 	add_subdirectory(3rd-party/clipper)
 	add_feature_info(Mapper_BUILD_CLIPPER 1 "version: ${CLIPPER_VERSION}")
@@ -182,18 +201,20 @@ else()
 	find_package(Polyclipping 6.1.3 MODULE REQUIRED)
 endif()
 
-find_package(PROJ4 CONFIG QUIET)
+# We must not require a minimum version of PROJ via find_package
+# because PROJ config requires the major version to match exactly.
+find_package(PROJ4 REQUIRED)
 if(NOT TARGET PROJ4::proj)
-	set(PROJ4_FOUND false)
-	find_package(PROJ4 MODULE REQUIRED)
+	include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindPROJ.cmake")
 endif()
-if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 6.1)
+if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 4.9)
+	message(FATAL_ERROR "At least PROJ 4.9 is required")
+elseif(PROJ4_VERSION VERSION_LESS 6.1)
 	# New PROJ API missing or incomplete.
 	# (proj_normalize_for_visualization() came in 6.1.)
 	set_property(TARGET PROJ4::proj APPEND PROPERTY
 	  INTERFACE_COMPILE_DEFINITIONS ACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
-endif()
-if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 6.2.1)
+elseif(PROJ4_VERSION VERSION_LESS 6.2.1)
 	# Datum Potsdam issue, https://github.com/OSGeo/PROJ/pull/1573
 	set_property(TARGET PROJ4::proj APPEND PROPERTY
 	  INTERFACE_COMPILE_DEFINITIONS PROJ_ISSUE_1573)
@@ -274,7 +295,6 @@ endif()
 if (Mapper_USE_GDAL)
 	add_subdirectory("src/gdal")
 endif()
-add_subdirectory("src/libocad")
 if(NOT ANDROID)
 	add_subdirectory("src/printsupport")
 endif()

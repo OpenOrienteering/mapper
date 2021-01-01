@@ -200,6 +200,9 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 	// Template grouping is not yet implemented.
 	template_table->hideColumn(TemplateTableModel::groupColumn());
 #endif
+	connect(template_model, &TemplateTableModel::rowsInserted, this, [this](const QModelIndex& /*unused*/, int first) {
+		template_table->selectRow(first);
+	});
 	
 	auto* percentage_delegate = new PercentageDelegate(this, 5);
 	template_table->setItemDelegateForColumn(1, percentage_delegate);
@@ -499,7 +502,7 @@ void TemplateListWidget::updateButtons()
 		else if (current_row >= 0)
 		{
 			// map row
-			is_georeferenced = map.getGeoreferencing().isValid() && !map.getGeoreferencing().isLocal();
+			is_georeferenced = map.getGeoreferencing().getState() == Georeferencing::Geospatial;
 		}
 		
 		edit_button->setEnabled(edit_enabled);
@@ -840,6 +843,8 @@ void TemplateListWidget::positionClicked(bool checked)
 		controller.addFloatingDockWidget(dock_widget);
 		dock_widget->show();
 		dock_widget->raise();
+		if (dock_widget->isFloating())
+			dock_widget->activateWindow();
 		connect(&controller, &MapEditorController::destroyed, dock_widget, &TemplateAdjustDockWidget::close);
 		connect(this, &TemplateListWidget::currentRowChanged, dock_widget, &TemplateAdjustDockWidget::close);
 		connect(this, &TemplateListWidget::closePositionDockWidget, dock_widget, &TemplateAdjustDockWidget::close);

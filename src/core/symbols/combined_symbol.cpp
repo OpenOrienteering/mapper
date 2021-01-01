@@ -408,4 +408,13 @@ void CombinedSymbol::setPart(int i, const Symbol* symbol, bool is_private)
 }
 
 
+// override
+bool CombinedSymbol::hasRotatableFillPattern() const
+{
+	return std::any_of(begin(parts), end(parts), [](auto const* part) {
+		return part && part->hasRotatableFillPattern();
+	});
+}
+
+
 }  // namespace OpenOrienteering

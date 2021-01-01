@@ -30,6 +30,7 @@
 #include <QFileInfo>
 #include <QIODevice>
 #include <QLatin1String>
+#include <QMetaObject>
 #include <QObject>
 #include <QString>
 
@@ -52,8 +53,11 @@ class TrackTest : public QObject
 private slots:
 	void initTestCase()
 	{
+		// Use distinct QSettings
 		QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
-		QCoreApplication::setApplicationName(QString::fromLatin1("TrackTest"));
+		QCoreApplication::setApplicationName(QString::fromLatin1(metaObject()->className()));
+		QVERIFY2(QDir::home().exists(), "The home dir must be writable in order to use QSettings.");
+		
 		QDir::addSearchPath(QStringLiteral("testdata"), QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("data")));
 		doStaticInitializations();
 	}

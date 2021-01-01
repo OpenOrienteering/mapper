@@ -36,9 +36,11 @@
 // IWYU pragma: no_include <cpl_error.h>
 // IWYU pragma: no_include <gdal_version.h>
 
+#include <Qt>
 #include <QtGlobal>
 #include <QtMath>
 #include <QByteArray>
+#include <QChar>
 #include <QColor>
 #include <QFileInfo>
 #include <QFlags>
@@ -51,6 +53,7 @@
 #include <QRegularExpressionMatch>
 #include <QScopedValueRollback>
 #include <QString>
+#include <QStringList>
 #include <QStringRef>
 #include <QVariant>
 
@@ -60,6 +63,7 @@
 #include "core/map_color.h"
 #include "core/map_coord.h"
 #include "core/map_part.h"
+#include "core/map_view.h"
 #include "core/path_coord.h"
 #include "core/virtual_path.h"
 #include "core/objects/boolean_tool.h"
@@ -72,7 +76,11 @@
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
 #include "fileformats/file_import_export.h"
+#include "gdal/gdal_file.h"
 #include "gdal/gdal_manager.h"
+#include "gdal/gdal_template.h"
+#include "templates/template.h"
+#include "util/key_value_container.h"
 
 // IWYU pragma: no_forward_declare QFile
 
@@ -86,7 +94,7 @@ namespace {
 		auto pen_width = OGR_ST_GetParamDbl(tool, OGRSTPenWidth, &is_null);
 		if (!is_null)
 		{
-			Q_ASSERT(OGR_ST_GetUnit(tool) == OGRSTUMM);
+			FILEFORMAT_ASSERT(OGR_ST_GetUnit(tool) == OGRSTUMM);
 	
 			if (pen_width <= 0.01)
 				pen_width = 0.1;
@@ -502,10 +510,10 @@ namespace {
 	 * 
 	 * \see CutoutOperation::operator()
 	 */
-	class ClippingImplementation : public OgrFileImport::Clipping
+	class ClippingImplementation final : public OgrFileImport::Clipping
 	{
 	public:
-		~ClippingImplementation() final = default;
+		~ClippingImplementation() override = default;
 		
 		explicit ClippingImplementation(MapCoordVector boundary)
 		: tool { BooleanTool::Intersection, nullptr }
@@ -622,19 +630,48 @@ std::unique_ptr<Importer> OgrFileImportFormat::makeImporter(const QString& path,
 
 // ### OgrFileExportFormat ###
 
-OgrFileExportFormat::OgrFileExportFormat()
- : FileFormat(OgrFile, "OGR-export",
-              ::OpenOrienteering::ImportExport::tr("Geospatial vector data"),
+OgrFileExportFormat::OgrFileExportFormat(QByteArray id, const char* name, const char* extensions)
+ : FileFormat(OgrFile, id.data(),
+              ::OpenOrienteering::ImportExport::tr(qstrlen(name) > 0 ? name : id.constData()),
               QString{},
               Feature::FileExport | Feature::WritingLossy )
+ , meta_data(std::move(id))
 {
-	for (const auto& extension : GdalManager().supportedVectorExportExtensions())
-		addExtension(QString::fromLatin1(extension));
+	auto const extension_list = QString::fromUtf8(extensions).split(QChar::Space);
+	for (auto const& extension : extension_list)
+		addExtension(extension);
 }
 
 std::unique_ptr<Exporter> OgrFileExportFormat::makeExporter(const QString& path, const Map* map, const MapView* view) const
 {
-	return std::make_unique<OgrFileExport>(path, map, view);
+	return std::make_unique<OgrFileExport>(path, map, view, id());
+}
+
+// static
+std::vector<std::unique_ptr<OgrFileExportFormat>> OgrFileExportFormat::makeAll()
+{
+	std::vector<std::unique_ptr<OgrFileExportFormat>> result;
+	
+	auto count = GDALGetDriverCount();
+	result.reserve(count / 2);
+	
+	for (auto i = 0; i < count; ++i)
+	{
+		auto driver_data = GDALGetDriver(i);
+		auto const* cap_vector = GDALGetMetadataItem(driver_data, GDAL_DCAP_VECTOR, nullptr);
+		auto const* cap_create = GDALGetMetadataItem(driver_data, GDAL_DCAP_CREATE, nullptr);
+		auto const* extensions = GDALGetMetadataItem(driver_data, GDAL_DMD_EXTENSIONS, nullptr);
+		if (qstrcmp(cap_vector, "YES") != 0
+		    || qstrcmp(cap_create, "YES") != 0
+		    || qstrlen(extensions) == 0)
+			continue;
+		
+		auto id = QByteArray("OGR-export-");
+		id.append(GDALGetDriverShortName(driver_data));
+		auto const* long_name  = GDALGetDriverLongName(driver_data);
+		result.push_back(std::make_unique<OgrFileExportFormat>(id, long_name, extensions));
+	}
+	return result;
 }
 
 
@@ -737,7 +774,7 @@ ogr::unique_srs OgrFileImport::srsFromMap()
 {
 	auto srs = ogr::unique_srs(OSRNewSpatialReference(nullptr));
 	auto& georef = map->getGeoreferencing();
-	if (georef.isValid() && !georef.isLocal())
+	if (georef.getState() == Georeferencing::Geospatial)
 	{
 		OSRSetProjCS(srs.get(), "Projected map SRS");
 		OSRSetWellKnownGeogCS(srs.get(), "WGS84");
@@ -779,7 +816,8 @@ bool OgrFileImport::importImplementation()
 	
 	if (auto driver = OGR_DS_GetDriver(data_source.get()))
 	{
-		if (auto driver_name = OGR_Dr_GetName(driver))
+		driver_name = OGR_Dr_GetName(driver);
+		if (!driver_name.isEmpty())
 		{
 			map->setSymbolSetId(QString::fromLatin1(driver_name));
 		}
@@ -1001,7 +1039,7 @@ void OgrFileImport::importStyles(OGRDataSourceH data_source)
 
 void OgrFileImport::importLayer(MapPart* map_part, OGRLayerH layer)
 {
-	Q_ASSERT(map_part);
+	FILEFORMAT_ASSERT(map_part);
 	
 	auto feature_definition = OGR_L_GetLayerDefn(layer);
 	
@@ -1042,6 +1080,13 @@ void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_def
 	}
 	
 	auto objects = importGeometry(feature, geometry);
+	auto const tags = importFields(feature_definition, feature);
+	
+	if (driverName() == "LIBKML")
+	{
+		handleKmlOverlayIcon(objects, tags);
+	}
+	
 	if (clipping)
 	{
 		auto clipped_objects = clipping->process(objects);
@@ -1050,21 +1095,25 @@ void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_def
 	
 	for (auto* object : objects)
 	{
+		object->setTags(tags);
 		map_part->addObject(object);
-		if (!feature_definition)
-			continue;
-		
-		auto num_fields = OGR_FD_GetFieldCount(feature_definition);
-		for (int i = 0; i < num_fields; ++i)
+	}
+}
+
+KeyValueContainer OgrFileImport::importFields(OGRFeatureDefnH feature_definition, OGRFeatureH feature)
+{
+	KeyValueContainer tags;
+	auto const num_fields = feature_definition ? OGR_FD_GetFieldCount(feature_definition) : 0;
+	for (int i = 0; i < num_fields; ++i)
+	{
+		auto const value = OGR_F_GetFieldAsString(feature, i);
+		if (value && qstrlen(value) > 0)
 		{
-			auto value = OGR_F_GetFieldAsString(feature, i);
-			if (value && qstrlen(value) > 0)
-			{
-				auto field_definition = OGR_FD_GetFieldDefn(feature_definition, i);
-				object->setTag(QString::fromUtf8(OGR_Fld_GetNameRef(field_definition)), QString::fromUtf8(value));
-			}
+			auto const field_definition = OGR_FD_GetFieldDefn(feature_definition, i);
+			tags.insert_or_assign(QString::fromUtf8(OGR_Fld_GetNameRef(field_definition)), QString::fromUtf8(value));
 		}
 	}
+	return tags;
 }
 
 OgrFileImport::ObjectList OgrFileImport::importGeometry(OGRFeatureH feature, OGRGeometryH geometry)
@@ -1131,8 +1180,8 @@ Object* OgrFileImport::importPointGeometry(OGRFeatureH feature, OGRGeometryH geo
 		const auto& description = symbol->getDescription();
 		auto length = description.length();
 		auto split = description.indexOf(QLatin1Char(' '));
-		Q_ASSERT(split > 0);
-		Q_ASSERT(split < length);
+		FILEFORMAT_ASSERT(split > 0);
+		FILEFORMAT_ASSERT(split < length);
 		
 		auto label = description.right(length - split - 1);
 		if (label.startsWith(QLatin1Char{'{'}) && label.endsWith(QLatin1Char{'}'}))
@@ -1348,7 +1397,7 @@ Symbol* OgrFileImport::getSymbol(Symbol::Type type, const char* raw_style_string
 		Q_UNREACHABLE();
 	}
 	
-	Q_ASSERT(symbol);
+	FILEFORMAT_ASSERT(symbol);
 	return symbol;
 }
 
@@ -1590,7 +1639,7 @@ PointSymbol* OgrFileImport::getSymbolForOgrSymbol(OGRStyleToolH tool, const QByt
 
 TextSymbol* OgrFileImport::getSymbolForLabel(OGRStyleToolH tool, const QByteArray& /*style_string*/)
 {
-	Q_ASSERT(OGR_ST_GetType(tool) == OGRSTCLabel);
+	FILEFORMAT_ASSERT(OGR_ST_GetType(tool) == OGRSTCLabel);
 	
 	int is_null;
 	auto label_string = OGR_ST_GetParamStr(tool, OGRSTLabelTextString, &is_null);
@@ -1648,7 +1697,7 @@ TextSymbol* OgrFileImport::getSymbolForLabel(OGRStyleToolH tool, const QByteArra
 
 LineSymbol* OgrFileImport::getSymbolForPen(OGRStyleToolH tool, const QByteArray& style_string)
 {
-	Q_ASSERT(OGR_ST_GetType(tool) == OGRSTCPen);
+	FILEFORMAT_ASSERT(OGR_ST_GetType(tool) == OGRSTCPen);
 	
 	auto raw_tool_key = OGR_ST_GetStyleString(tool);
 	auto tool_key = QByteArray::fromRawData(raw_tool_key, int(qstrlen(raw_tool_key)));
@@ -1680,7 +1729,7 @@ LineSymbol* OgrFileImport::getSymbolForPen(OGRStyleToolH tool, const QByteArray&
 
 AreaSymbol* OgrFileImport::getSymbolForBrush(OGRStyleToolH tool, const QByteArray& style_string)
 {
-	Q_ASSERT(OGR_ST_GetType(tool) == OGRSTCBrush);
+	FILEFORMAT_ASSERT(OGR_ST_GetType(tool) == OGRSTCBrush);
 	
 	auto raw_tool_key = OGR_ST_GetStyleString(tool);
 	auto tool_key = QByteArray::fromRawData(raw_tool_key, int(qstrlen(raw_tool_key)));
@@ -1721,7 +1770,7 @@ MapCoord OgrFileImport::fromProjected(double x, double y) const
 // static
 bool OgrFileImport::checkGeoreferencing(const QString& path, const Georeferencing& georef)
 {
-	if (georef.isLocal() || !georef.isValid())
+	if (georef.getState() != Georeferencing::Geospatial)
 		return false;
 	
 	GdalManager();
@@ -1813,11 +1862,55 @@ QPointF OgrFileImport::calcAverageCoords(OGRDataSourceH data_source, OGRDataSour
 }
 
 
+void OgrFileImport::handleKmlOverlayIcon(OgrFileImport::ObjectList& objects, const KeyValueContainer& tags) const
+{
+	if (objects.size() != 1 || !tags.contains(QStringLiteral("icon")))
+		return;
+	
+	auto* object = objects.front();
+	if (object->getType() != Object::Path || static_cast<PathObject const*>(object)->getCoordinateCount() != 5)
+		return;
+	
+	auto const icon_field = tags.at(QStringLiteral("icon"));
+	auto const icon_file_path = [](const QString& path, const QString& icon_field) -> QString {
+		if (icon_field.startsWith(QLatin1Char('/')) || icon_field.contains(QLatin1Char(':')))
+			return icon_field;
+		if (path.endsWith(QLatin1String(".kmz"), Qt::CaseInsensitive))
+		    return QLatin1String("/vsizip/") + path + QLatin1Char('/') + icon_field;
+		return QFileInfo(path).absolutePath() + QLatin1Char('/') + icon_field;
+	} (path, icon_field);
+	if (!GdalFile::exists(icon_file_path.toUtf8()))
+	{
+		qDebug("No such icon file: %s", qUtf8Printable(icon_field));
+		return;
+	}
+	
+	// The positioning must be calculate after loading.
+	auto* temp = new GdalTemplate(icon_file_path, map);
+	for (auto const& coord : object->getRawCoordinateVector())
+		temp->addPassPoint({ {}, MapCoordF(coord), {}, 0 }, temp->getNumPassPoints());
+	temp->setProperty(GdalTemplate::applyCornerPassPointsProperty(), true);
+	temp->setTemplateState(Template::Unloaded);
+	map->addTemplate(-1, std::unique_ptr<GdalTemplate>(temp));
+	if (view)
+		view->setTemplateVisibility(temp, {1, true});
+	
+	delete object;
+	objects.clear();
+}
+
+
 // ### OgrFileExport ###
 
-OgrFileExport::OgrFileExport(const QString& path, const Map* map, const MapView* view)
+OgrFileExport::OgrFileExport(const QString& path, const Map* map, const MapView* view, const char* id)
 : Exporter(path, map, view)
+, id(id)
 {
+	if (qstrncmp(id, "OGR-export-", 11) == 0)
+		this->id += 11;
+	if (qstrlen(id) == 0)
+		this->id = nullptr;
+	
 	GdalManager manager;
 	bool one_layer_per_symbol = manager.isExportOptionEnabled(GdalManager::OneLayerPerSymbol);
 	setOption(QString::fromLatin1("Per Symbol Layers"), one_layer_per_symbol);
@@ -1834,39 +1927,20 @@ bool OgrFileExport::exportImplementation()
 {
 	// Choose driver and setup format-specific features
 	QFileInfo info(path);
-	QString file_extn = info.completeSuffix();
 	GDALDriverH po_driver = nullptr;
-
-	auto count = GDALGetDriverCount();
-	for (auto i = 0; i < count; ++i)
+	
+	if (id)
 	{
-		auto driver_data = GDALGetDriver(i);
-
+		auto driver_data = GDALGetDriverByName(id);
 		auto type = GDALGetMetadataItem(driver_data, GDAL_DCAP_VECTOR, nullptr);
-		if (qstrcmp(type, "YES") != 0)
-			continue;
-
 		auto cap_create = GDALGetMetadataItem(driver_data, GDAL_DCAP_CREATE, nullptr);
-		if (qstrcmp(cap_create, "YES") != 0)
-			continue;
-
-		auto extensions_raw = GDALGetMetadataItem(driver_data, GDAL_DMD_EXTENSIONS, nullptr);
-		auto extensions = QByteArray::fromRawData(extensions_raw, int(qstrlen(extensions_raw)));
-		for (auto pos = 0; pos >= 0; )
-		{
-			auto start = pos ? pos + 1 : 0;
-			pos = extensions.indexOf(' ', start);
-			auto extension = extensions.mid(start, pos - start);
-			if (file_extn == QString::fromLatin1(extension))
-			{
-				po_driver = driver_data;
-				break;
-			}
-		}
+		if (qstrcmp(type, "YES") == 0 && qstrcmp(cap_create, "YES") == 0)
+			po_driver = driver_data;
 	}
 
 	if (!po_driver)
-		throw FileFormatException(tr("Couldn't find a driver for file extension %1").arg(file_extn));
+		throw FileFormatException(::OpenOrienteering::ImportExport::tr("Cannot find a vector data export driver named '%1'")
+		                          .arg(QString::fromUtf8(id)));
 
 	setupQuirks(po_driver);
 

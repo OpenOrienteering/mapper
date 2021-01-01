@@ -64,12 +64,15 @@ for I in \
   georeferencing_t.cpp \
   icon_engine \
   key_button_bar.cpp \
+  key_value_container \
+  kml_course_export \
   line_symbol.cpp \
   main.cpp \
   /map.cpp \
   map_coord.cpp \
   map_editor.cpp \
   map_find_feature.cpp \
+  map_printer \
   map_widget.cpp \
   mapper_proxystyle.cpp \
   /object.cpp \

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,11 +27,11 @@
 
 #include <QtGlobal>
 #include <QObject>
-#include <QRect>
+#include <QPageSize>
 #include <QRectF>
-#include <QSize>
 #include <QSizeF>
 #include <QString>
+#include <QTransform>
 
 #ifdef QT_PRINTSUPPORT_LIB
 #  include <QPrinterInfo>
@@ -44,6 +44,8 @@ class QHash;
 class QImage;
 class QPainter;
 class QPrinter;
+class QRectF;
+class QSizeF;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
@@ -229,6 +231,9 @@ public:
 	/** Returns a QPrinterInfo pointer which signals printing to a raster file. */
 	static const QPrinterInfo* imageTarget();
 	
+	/** Returns a QPrinterInfo pointer which signals printing to a KML ground overlay. */
+	static const QPrinterInfo* kmzTarget();
+	
 	/** Returns a reference to a hash which maps paper sizes to names as C strings.
 	 *  These strings are not translated.
 	 *
@@ -254,7 +259,10 @@ public:
 	}
 	
 	/** Returns true if a real printer is configured. */
-	bool isPrinter() const;
+	bool isPrinter() const noexcept;
+	
+	/** Returns true if the target is not representing a virtual printer. */
+	static bool isPrinter(const QPrinterInfo* target) noexcept;
 	
 	/** Returns the page format specification. */
 	const MapPrinterPageFormat& getPageFormat() const
@@ -360,6 +368,8 @@ public:
 	 *  resolution and size. Parameter units_per_inch has no influence on this
 	 *  buffer but refers to the logical coordinates of device_painter. */
 	void drawPage(QPainter* device_painter, const QRectF& page_extent, QImage* page_buffer = nullptr) const;
+	
+	void drawPage(QPainter* device_painter, const QRectF& page_extent, const QTransform& page_extent_transform, QImage* page_buffer = nullptr) const;
 	
 	/** Draws the separations as distinct pages to the printer. */
 	void drawSeparationPages(QPrinter* printer, QPainter* device_painter, const QRectF& page_extent) const;

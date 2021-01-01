@@ -67,7 +67,6 @@ using SelectionInfoVector = std::vector<std::pair<int, Object*>> ;
  */
 class MapPart
 {
-friend class OCAD8FileImport;
 public:
 	/**
 	 * Creates a new map part with the given name for a map.

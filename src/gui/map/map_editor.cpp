@@ -107,12 +107,12 @@
 #include "core/objects/boolean_tool.h"
 #include "core/objects/object.h"
 #include "core/objects/object_operations.h"
-#include "core/symbols/area_symbol.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/symbol_icon_decorator.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
+#include "fileformats/kml_course_export.h"
 #include "gui/configure_grid_dialog.h"
 #include "gui/file_dialog.h"
 #include "gui/georeferencing_dialog.h"
@@ -951,16 +951,25 @@ void MapEditorController::createActions()
 	print_act_mapper->setMapping(print_act, PrintWidget::PRINT_TASK);
 	export_image_act = newAction("export-image", tr("&Image"), print_act_mapper, SLOT(map()), nullptr, QString{}, "file_menu.html");
 	print_act_mapper->setMapping(export_image_act, PrintWidget::EXPORT_IMAGE_TASK);
+	export_kmz_act = newAction("export-kmz", tr("&KMZ"), print_act_mapper, SLOT(map()), nullptr, QString{}, "file_menu.html");
+	print_act_mapper->setMapping(export_kmz_act, PrintWidget::EXPORT_KMZ_TASK);
+#ifndef MAPPER_USE_GDAL
+	export_kmz_act->setVisible(false);
+#endif
+	export_kml_course_act = newAction("export-kml-course", tr("KML &course"), this, SLOT(exportKmlCourse()), nullptr, QString{}, "file_menu.html");
 	export_pdf_act = newAction("export-pdf", tr("&PDF"), print_act_mapper, SLOT(map()), nullptr, QString{}, "file_menu.html");
 	print_act_mapper->setMapping(export_pdf_act, PrintWidget::EXPORT_PDF_TASK);
-	if (auto* vector_format = FileFormats.findFormat("OGR-export"))
-		export_vector_act = newAction("export-vector", vector_format->description(), this, SLOT(exportVector()), nullptr, {}, "edit_menu.html");
-	else
-		export_vector_act = nullptr;
+#ifdef MAPPER_USE_GDAL
+	export_vector_act = newAction("export-vector", ::OpenOrienteering::ImportExport::tr("Geospatial vector data"), this, SLOT(exportVector()), nullptr, {}, "edit_menu.html");
+#else
+	export_vector_act = nullptr;
+#endif
 	
 #else
 	print_act = nullptr;
 	export_image_act = nullptr;
+	export_kmz_act = nullptr;
+	export_kml_course_act = nullptr;
 	export_pdf_act = nullptr;
 #endif
 	
@@ -1064,7 +1073,7 @@ void MapEditorController::createActions()
 	
 	touch_cursor_action = newCheckAction("touchcursor", tr("Enable touch cursor"), map_widget, SLOT(enableTouchCursor(bool)), "tool-touch-cursor.png", QString{}, "toolbars.html#touch_cursor"); // TODO: write documentation
 	gps_display_action = newCheckAction("gpsdisplay", tr("Enable GPS display"), this, SLOT(enableGPSDisplay(bool)), "tool-gps-display.png", QString{}, "toolbars.html#gps_display"); // TODO: write documentation
-	gps_display_action->setEnabled(map->getGeoreferencing().isValid() && ! map->getGeoreferencing().isLocal());
+	gps_display_action->setEnabled(map->getGeoreferencing().getState() == Georeferencing::Geospatial);
 	gps_distance_rings_action = newCheckAction("gpsdistancerings", tr("Enable GPS distance rings"), this, SLOT(enableGPSDistanceRings(bool)), "gps-distance-rings.png", QString{}, "toolbars.html#gps_distance_rings"); // TODO: write documentation
 	gps_distance_rings_action->setEnabled(false);
 	draw_point_gps_act = newToolAction("drawpointgps", tr("Set point object at GPS position"), this, SLOT(drawPointGPSClicked()), "draw-point-gps.png", QString{}, "toolbars.html#tool_draw_point_gps"); // TODO: write documentation
@@ -1131,6 +1140,8 @@ void MapEditorController::createMenuAndToolbars()
 	QMenu* export_menu = new QMenu(tr("&Export as..."), file_menu);
 	export_menu->menuAction()->setMenuRole(QAction::NoRole);
 	export_menu->addAction(export_image_act);
+	export_menu->addAction(export_kmz_act);
+	export_menu->addAction(export_kml_course_act);
 	export_menu->addAction(export_pdf_act);
 	if (export_vector_act)
 		export_menu->addAction(export_vector_act);
@@ -1736,28 +1747,84 @@ bool MapEditorController::keyReleaseEventFilter(QKeyEvent* event)
 
 
 // slot
+void MapEditorController::exportKmlCourse()
+{
+	KmlCourseExport exporter{*map};
+	if (!exporter.canExport())
+	{
+		QMessageBox::warning(window, tr("Error"), exporter.errorString());
+		return;
+	}
+	
+	QSettings settings;
+	auto const import_directory = settings.value(QString::fromLatin1("importFileDirectory"), QDir::homePath()).toString();
+	
+	auto filepath = FileDialog::getSaveFileName(
+	                       window,
+	                       tr("Export"),
+	                       import_directory,
+	                       {tr("KML course") + QStringLiteral(" (*.kml)")});
+	if (filepath.isEmpty())
+		return;
+	
+	if (!filepath.endsWith(QLatin1String(".kml", Qt::CaseInsensitive)))
+		filepath.append(QLatin1String(".kml"));
+	
+	settings.setValue(QString::fromLatin1("importFileDirectory"), QFileInfo(filepath).canonicalPath());
+	
+	if (exporter.doExport(filepath))
+	{
+		window->showStatusBarMessage(tr("Exported successfully to %1").arg(filepath), 4000);
+	}
+	else
+	{
+		QMessageBox::information(window, tr("Error"),
+		                         ::OpenOrienteering::ImportExport::tr("Cannot save file\n%1:\n%2")
+		                         .arg(filepath, exporter.errorString()));
+	}
+}
+
+
+// slot
 void MapEditorController::exportVector()
 {
 	QSettings settings;
-	QString import_directory = settings.value(QString::fromLatin1("importFileDirectory"), QDir::homePath()).toString();
+	QString const import_directory = settings.value(QString::fromLatin1("importFileDirectory"), QDir::homePath()).toString();
+	QString selected_filter = settings.value(QString::fromLatin1("lastExportFormat"), QDir::homePath()).toString();
 	
-	auto* format = FileFormats.findFormat("OGR-export");
-	if (!format)
-		return;  /// \todo Error message?
+	// Build the list of supported file filters based on the file format registry
+	QStringList filters;
+	for (auto format : FileFormats.formats())
+	{
+		if (format->supportsFileExport())
+			filters.append(format->filter());
+	}
+	filters.sort();
 	
 	QString filename = FileDialog::getSaveFileName(
 	                       window,
 	                       tr("Export"),
 	                       import_directory,
-	                       QString::fromLatin1("%1 (%2);;%3 (*.*)")
-	                       .arg(format->description(),
-	                            QLatin1String("*.") + format->fileExtensions().join(QString::fromLatin1(" *.")),
-	                            tr("All files")) );
-	if (filename.isEmpty() || filename.isNull())
+	                       filters.join(QLatin1String(";;")),
+	                       &selected_filter);
+	if (filename.isEmpty())
 		return;
 	
 	settings.setValue(QString::fromLatin1("importFileDirectory"), QFileInfo(filename).canonicalPath());
+	settings.setValue(QString::fromLatin1("lastExportFormat"), selected_filter);
 	
+	auto const* format = FileFormats.findFormatByFilter(selected_filter, &FileFormat::supportsFileExport);
+	if (!format)
+	{
+		QMessageBox::information(window, tr("Error"),
+		                         ::OpenOrienteering::MainWindow::tr("File could not be saved:") + QLatin1Char('\n')
+		                         + ::OpenOrienteering::ImportExport::tr("Cannot find a vector data export driver named '%1'")
+		                           .arg(selected_filter) + QLatin1Char('\n') + QLatin1Char('\n')
+		                         + ::OpenOrienteering::MainWindow::tr("Please report this as a bug.") );
+		return;
+	}
+	
+	filename = format->fixupExtension(filename);
 	exportTo(filename, *format);
 }
 
@@ -2073,7 +2140,7 @@ void MapEditorController::projectionChanged()
 	
 	projected_coordinates_act->setText(geo.getProjectedCoordinatesName());
 	
-	bool enable_geographic = !geo.isLocal();
+	bool enable_geographic = geo.getState() == Georeferencing::Geospatial;
 	geographic_coordinates_act->setEnabled(enable_geographic);
 	geographic_coordinates_dms_act->setEnabled(enable_geographic);
 	if (!enable_geographic &&
@@ -2316,7 +2383,7 @@ void MapEditorController::georeferencingDialogFinished()
 	georeferencing_dialog.take()->deleteLater();
 	map->updateAllMapWidgets();
 	
-	bool gps_display_possible = map->getGeoreferencing().isValid() && ! map->getGeoreferencing().isLocal();
+	bool gps_display_possible = map->getGeoreferencing().getState() == Georeferencing::Geospatial;
 	if (!gps_display_possible)
 	{
 		gps_display_action->setChecked(false);
@@ -2503,15 +2570,11 @@ void MapEditorController::updateObjectDependentActions()
 			}
 			
 			have_rotatable_object |= symbol->isRotatable();
+			have_rotatable_pattern |= symbol->hasRotatableFillPattern();
 			
 			if (Symbol::areTypesCompatible(symbol->getType(), Symbol::Area))
 			{
 				++num_selected_paths;
-				
-				if (symbol->getType() == Symbol::Area)
-				{
-					have_rotatable_pattern |= symbol->asArea()->hasRotatableFillPattern();
-				}
 				
 				int const contained_types = symbol->getContainedTypes();
 				
@@ -2524,23 +2587,6 @@ void MapEditorController::updateObjectDependentActions()
 				{
 					have_area = true;
 					have_area_with_holes |= object->asPath()->parts().size() > 1;
-				}
-			}
-		}
-		
-		if (have_area && !have_rotatable_pattern)
-		{
-			map->determineSymbolUseClosure(symbols_in_selection);
-			for (std::size_t i = 0, end = symbols_in_selection.size(); i < end; ++i)
-			{
-				if (symbols_in_selection[i])
-				{
-					Symbol* symbol = map->getSymbol(i);
-					if (symbol->getType() == Symbol::Area)
-					{
-						have_rotatable_pattern = symbol->asArea()->hasRotatableFillPattern();
-						break;
-					}
 				}
 			}
 		}
@@ -3971,6 +4017,9 @@ void MapEditorController::setMapAndView(Map* map, MapView* map_view)
 {
 	Q_ASSERT(map);
 	Q_ASSERT(map_view);
+#ifdef __clang_analyzer__
+	if (!map || !map_view) { return; }
+#endif
 	
 	if (this->map)
 	{
