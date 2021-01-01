@@ -2412,7 +2412,7 @@
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Ne povas konservi dosieron
+        <translation>Ne povas konservi dosieron
 %1:
 %2</translation>
     </message>
@@ -4521,7 +4521,7 @@ elektitaj</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1777"/>
         <source>Exported successfully to %1</source>
-        <translation type="unfinished">Sukcese eksportita al %1</translation>
+        <translation>Sukcese eksportita al %1</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2530"/>
