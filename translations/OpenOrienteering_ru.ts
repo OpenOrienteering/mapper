@@ -2454,7 +2454,7 @@
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Невозможно сохранить файл
+        <translation>Невозможно сохранить файл
 %1:
 %2</translation>
     </message>
@@ -2599,7 +2599,7 @@
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="48"/>
         <source>For KML course export, a single path object must be selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Для экспорта KML курса необходимо выбрать один линейный объект.</translation>
     </message>
 </context>
 <context>
@@ -4067,7 +4067,7 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="959"/>
         <source>KML &amp;course</source>
-        <translation type="unfinished"></translation>
+        <translation>KML &amp;курс</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="985"/>
@@ -4117,12 +4117,12 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1766"/>
         <source>KML course</source>
-        <translation type="unfinished"></translation>
+        <translation>KML курс</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1777"/>
         <source>Exported successfully to %1</source>
-        <translation type="unfinished">Экспортировано успешно в %1</translation>
+        <translation>Успешно экспортировано в %1</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4275"/>
@@ -6390,7 +6390,7 @@ separations</source>
         <location filename="../src/gui/print_widget.cpp" line="1298"/>
         <location filename="../src/gui/print_widget.cpp" line="1359"/>
         <source>Exported successfully to %1</source>
-        <translation>Экспортировано успешно в %1</translation>
+        <translation>Успешно экспортировано в %1</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1355"/>
