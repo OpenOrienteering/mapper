@@ -2579,7 +2579,7 @@
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Tiedostoa ei voi tallentaa
+        <translation>Tiedostoa ei voi tallentaa
 %1:
 %2</translation>
     </message>
