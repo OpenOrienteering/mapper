@@ -370,7 +370,14 @@ ProjTransform::ProjTransform(const QString& crs_spec)
 	// Cf. https://github.com/OSGeo/PROJ/pull/1573
 	spec_latin1.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
 #endif
+#if PROJ_VERSION_MAJOR >= 6
+	// By using EPSG:4326 here, we can restrict considered transformations to
+	// those defined for EPSG. Cf. https://github.com/OSGeo/PROJ/issues/2442.
+	// We must not use "+init=epsg:4326": This would use longlat axis order.
+	pj = proj_create_crs_to_crs(PJ_DEFAULT_CTX, "EPSG:4326", spec_latin1, nullptr);
+#else
 	pj = proj_create_crs_to_crs(PJ_DEFAULT_CTX, Georeferencing::geographic_crs_spec.toLatin1(), spec_latin1, nullptr);
+#endif
 	if (pj)
 		operator=({proj_normalize_for_visualization(PJ_DEFAULT_CTX, pj)});
 }
