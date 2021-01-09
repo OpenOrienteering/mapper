@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -289,12 +289,7 @@ ProjTransform& ProjTransform::operator=(ProjTransform&& other) noexcept
 // static
 ProjTransform ProjTransform::crs(const QString& crs_spec)
 {
-	ProjTransform result;
-	auto crs_spec_latin1 = crs_spec.toLatin1();
-	if (!crs_spec_latin1.contains("+no_defs"))
-		crs_spec_latin1.append(" +no_defs");
-	result.pj = pj_init_plus(crs_spec_latin1);
-	return result;
+	return ProjTransform(crs_spec);
 }
 
 bool ProjTransform::isValid() const noexcept
@@ -311,10 +306,12 @@ QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
 {
 	static auto const geographic_crs = ProjTransform(Georeferencing::geographic_crs_spec);
 	
-	double easting = qDegreesToRadians(lat_lon.longitude()), northing = qDegreesToRadians(lat_lon.latitude());
+	auto point = isGeographic()
+	             ? QPointF{lat_lon.longitude(), lat_lon.latitude()}
+	             : QPointF{qDegreesToRadians(lat_lon.longitude()), qDegreesToRadians(lat_lon.latitude())};
 	if (geographic_crs.isValid())
 	{
-		auto ret = pj_transform(geographic_crs.pj, pj, 1, 1, &easting, &northing, nullptr);
+		auto ret = pj_transform(geographic_crs.pj, pj, 1, 1, &point.rx(), &point.ry(), nullptr);
 		if (ok)
 			*ok = (ret == 0);
 	}
@@ -322,7 +319,7 @@ QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
 	{
 		*ok = false;
 	}
-	return {easting, northing};
+	return point;
 }
 
 LatLon ProjTransform::inverse(const QPointF& projected_coords, bool* ok) const
@@ -340,7 +337,7 @@ LatLon ProjTransform::inverse(const QPointF& projected_coords, bool* ok) const
 	{
 		*ok = false;
 	}
-	return LatLon::fromRadiant(northing, easting);
+	return isGeographic() ? LatLon{northing, easting} : LatLon::fromRadiant(northing, easting);
 }
 
 QString ProjTransform::errorText() const
@@ -350,6 +347,20 @@ QString ProjTransform::errorText() const
 }
 
 #else
+
+namespace {
+
+QByteArray withTypeCrs(QByteArray crs_spec_utf8)
+{
+	if ((crs_spec_utf8.startsWith("+proj=") || crs_spec_utf8.startsWith("+init="))
+	    && !crs_spec_utf8.contains("+type=crs"))
+	{
+		crs_spec_utf8.append(" +type=crs");
+	}
+	return crs_spec_utf8;
+}
+
+}
 
 ProjTransform::ProjTransform(ProjTransformData* pj) noexcept
 : pj{pj}
@@ -365,12 +376,14 @@ ProjTransform::ProjTransform(const QString& crs_spec)
 	if (crs_spec.isEmpty())
 		return;
 	
-	auto spec_latin1 = crs_spec.toLatin1();
+	static auto const geographic_crs_spec_utf8 = Georeferencing::geographic_crs_spec.toUtf8();
+	
+	auto crs_spec_utf8 = crs_spec.toUtf8();
 #ifdef PROJ_ISSUE_1573
 	// Cf. https://github.com/OSGeo/PROJ/pull/1573
-	spec_latin1.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
+	crs_spec_utf8.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
 #endif
-	pj = proj_create_crs_to_crs(PJ_DEFAULT_CTX, Georeferencing::geographic_crs_spec.toLatin1(), spec_latin1, nullptr);
+	pj = proj_create_crs_to_crs(PJ_DEFAULT_CTX, geographic_crs_spec_utf8, crs_spec_utf8, nullptr);
 	if (pj)
 		operator=({proj_normalize_for_visualization(PJ_DEFAULT_CTX, pj)});
 }
@@ -391,7 +404,7 @@ ProjTransform& ProjTransform::operator=(ProjTransform&& other) noexcept
 ProjTransform ProjTransform::crs(const QString& crs_spec)
 {
 	ProjTransform result;
-	auto crs_spec_utf8 = crs_spec.toUtf8();
+	auto crs_spec_utf8 = withTypeCrs(crs_spec.toUtf8().trimmed());
 #ifdef PROJ_ISSUE_1573
 	// Cf. https://github.com/OSGeo/PROJ/pull/1573
 	crs_spec_utf8.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
@@ -407,10 +420,17 @@ bool ProjTransform::isValid() const noexcept
 
 bool ProjTransform::isGeographic() const
 {
-	if (!isValid())
-		return false;
+	auto type = pj ? proj_get_type(pj) : PJ_TYPE_UNKNOWN;
+	if (type == PJ_TYPE_BOUND_CRS)
+	{
+		// "Coordinates referring to a BoundCRS are expressed into its source/base CRS."
+		// (https://proj.org/development/reference/cpp/crs.html)
+		auto* base_crs = proj_get_source_crs(nullptr, pj);
+		type = proj_get_type(base_crs);
+		proj_destroy(base_crs);
+	}
 	
-	switch (proj_get_type(pj))
+	switch (type)
 	{
 	case PJ_TYPE_GEOGRAPHIC_CRS:
 	case PJ_TYPE_GEOGRAPHIC_2D_CRS:
@@ -419,7 +439,6 @@ bool ProjTransform::isGeographic() const
 	default:
 		return false;
 	}
-
 }
 
 QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
