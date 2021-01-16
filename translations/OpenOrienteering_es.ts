@@ -2613,14 +2613,14 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1942"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1821"/>
         <source>Cannot find a vector data export driver named &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede encontrar un controlador de exportación de datos vectoriales denominado &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1782"/>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">No se puede guardar el archivo
+        <translation>No se puede guardar el archivo
 %1:
 %2</translation>
     </message>
@@ -2768,7 +2768,7 @@
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="48"/>
         <source>For KML course export, a single path object must be selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Para la exportación de recorridos en KML, se debe seleccionar una única ruta.</translation>
     </message>
 </context>
 <context>
@@ -2776,17 +2776,17 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="189"/>
         <source>For KML/KMZ export, the map must be georeferenced.</source>
-        <translation type="unfinished"></translation>
+        <translation>Para la exportación KML/KMZ, el mapa debe estar georreferenciado.</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="196"/>
         <source>Unknown error</source>
-        <translation type="unfinished">Error desconocido</translation>
+        <translation>Error desconocido</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="211"/>
         <source>%1 already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>% 1 ya existe.</translation>
     </message>
 </context>
 <context>
@@ -3861,12 +3861,12 @@ porque guardar como %2 (.%3) no está soportado.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="954"/>
         <source>&amp;KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="959"/>
         <source>KML &amp;course</source>
-        <translation type="unfinished"></translation>
+        <translation>KML &amp;recorrido</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="985"/>
@@ -3916,12 +3916,12 @@ porque guardar como %2 (.%3) no está soportado.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1766"/>
         <source>KML course</source>
-        <translation type="unfinished"></translation>
+        <translation>Recorrido KML</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1777"/>
         <source>Exported successfully to %1</source>
-        <translation type="unfinished">Exportado con éxito en %1</translation>
+        <translation>Exportado con éxito a %1</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4275"/>
@@ -6453,7 +6453,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="449"/>
         <source>KMZ export</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportación KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="987"/>
@@ -6488,18 +6488,18 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1208"/>
         <source>KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1209"/>
         <source>KML</source>
-        <translation type="unfinished"></translation>
+        <translation>KML</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1236"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished">Fallo guardando la imagen:
+        <translation>No se pudo guardar la imagen:
 %1</translation>
     </message>
     <message>
@@ -8054,7 +8054,7 @@ Sin embargo, si no pretende dibujar sobre esta plantilla, entonces no hay proble
     <message>
         <location filename="../src/templates/template_image.cpp" line="148"/>
         <source>Format not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato no compatible</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="301"/>
@@ -8966,7 +8966,9 @@ La máxima versión soportada es %2.</translation>
         <source>Internal error detected! Please report this issue.
 Version: %1
 Location: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Error interno detectado! Por favor, informe de este problema.
+Versión: %1
+Ubicación: %2</translation>
     </message>
 </context>
 <context>
