@@ -1040,7 +1040,7 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1189"/>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
-        <translation>&lt;b&gt;％1 + 拖动&lt;/b&gt; ：按照现有对象 </translation>
+        <translation>&lt;b&gt;％1 + 拖动&lt;/b&gt; ：参照现有对象 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1205"/>
@@ -2413,14 +2413,16 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1942"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1821"/>
         <source>Cannot find a vector data export driver named &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>找不到名为&apos;％1&apos;的矢量数据导出驱动程序</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1782"/>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>无法保存文件
+％1：
+％2</translation>
     </message>
 </context>
 <context>
@@ -2557,7 +2559,7 @@
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="48"/>
         <source>For KML course export, a single path object must be selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>KML线路导出时，必须选择单个路径对象。</translation>
     </message>
 </context>
 <context>
@@ -2565,17 +2567,17 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="189"/>
         <source>For KML/KMZ export, the map must be georeferenced.</source>
-        <translation type="unfinished"></translation>
+        <translation>KML或KMZ格式导出时，必须对地图进行地理配准。</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="196"/>
         <source>Unknown error</source>
-        <translation type="unfinished">未知的错误</translation>
+        <translation>未知的错误</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="211"/>
         <source>%1 already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>％1已经存在。</translation>
     </message>
 </context>
 <context>
@@ -4006,12 +4008,12 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="954"/>
         <source>&amp;KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="959"/>
         <source>KML &amp;course</source>
-        <translation type="unfinished"></translation>
+        <translation>KML线路(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="985"/>
@@ -4061,12 +4063,12 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1766"/>
         <source>KML course</source>
-        <translation type="unfinished"></translation>
+        <translation>KML线路</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1777"/>
         <source>Exported successfully to %1</source>
-        <translation type="unfinished">成功导出到 %1</translation>
+        <translation>成功导出到 %1</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4275"/>
@@ -6143,7 +6145,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="449"/>
         <source>KMZ export</source>
-        <translation type="unfinished"></translation>
+        <translation>KMZ格式导出</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="987"/>
@@ -6178,18 +6180,18 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1208"/>
         <source>KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1209"/>
         <source>KML</source>
-        <translation type="unfinished"></translation>
+        <translation>KML</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1236"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished">无法保存图像：
+        <translation>无法保存图像：
 ％1</translation>
     </message>
     <message>
@@ -7692,7 +7694,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_image.cpp" line="148"/>
         <source>Format not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>格式不支持</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="301"/>
@@ -8115,7 +8117,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_track.cpp" line="83"/>
         <source>Track</source>
-        <translation>轨道</translation>
+        <translation>轨迹</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="96"/>
@@ -8549,14 +8551,16 @@ The maximum supported version is %2.</source>
         <location filename="../src/gui/util_gui.cpp" line="195"/>
         <source>See more...</source>
         <extracomment>This &quot;See more&quot; is displayed as a link to the manual in What&apos;s-this tooltips.</extracomment>
-        <translation>查看更多……</translation>
+        <translation>查看更多</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_format.cpp" line="54"/>
         <source>Internal error detected! Please report this issue.
 Version: %1
 Location: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>检测到内部错误！请报告此问题。
+版本：％1
+位置：％2</translation>
     </message>
 </context>
 <context>
