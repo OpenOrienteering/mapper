@@ -16,42 +16,42 @@
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Preto 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Branco para caminhos-de-ferro</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Azul 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Castanho 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Roxo para símbolos de trajeto</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Preto por baixo do roxo para símbolos de trajeto</translation>
     </message>
     <message>
         <source>Black 65%</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Preto 65%</translation>
     </message>
     <message>
         <source>Black 20%</source>
@@ -81,7 +81,7 @@
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Azul 100% para elementos de área</translation>
     </message>
     <message>
         <source>Blue 70%</source>
@@ -10683,7 +10683,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Mandatory route from the last control to the Finish. Re-emphasises what is shown on the map. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Percurso obrigatório desde o último controlo até ao Final. Realça novamente o que é mostrado no mapa. Dá a distância desde o último controlo até ao Final.</translation>
     </message>
     <message>
         <source>Taped Route from finish funnel to Finish</source>
