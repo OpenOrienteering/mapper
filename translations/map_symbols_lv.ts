@@ -16,172 +16,172 @@
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Melns 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zaļš 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Balts dzelzceļam</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zils 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brūns 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Violets ceļu simboliem</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Melns zem violeta ceļu simboliem</translation>
     </message>
     <message>
         <source>Black 65%</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Melns 65%</translation>
     </message>
     <message>
         <source>Black 20%</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Melns 20%</translation>
     </message>
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Augšējāis brūnais 50%</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Melns zem virsējā brūnā 50%</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Apakšējais brūnais 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Melns zem apakšējā brūnā 50%</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zils 100% laukuma elementiem</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zils 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zils 50%</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering Oranžs</translation>
     </message>
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dzeltens 100% šauram ceļam</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zaļš 60% šauram ceļam</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zaļš 30% šauram ceļam</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Balts virs zaļā</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dzeltens 100%/Zaļš 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Melns 25% (Pelēks)</translation>
     </message>
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zaļš 100%/Melns 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zaļš 100% lakuma elementiem</translation>
     </message>
     <message>
         <source>Green 60%</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zaļš 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 28</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zaļš 30%</translation>
     </message>
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zaļš 100% pamežam</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Balts virs dzeltena</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Melns atklātai zemei</translation>
     </message>
     <message>
         <source>Yellow</source>
         <comment>Color 32</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dzeltens</translation>
     </message>
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 33</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dzeltens 100% laukuma elementiem</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
         <comment>Color 34</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dzeltens 50%</translation>
     </message>
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontūrlīnija</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 m. A contour interval of 2.5 m may be used for flat terrains.
