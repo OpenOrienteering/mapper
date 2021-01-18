@@ -2572,14 +2572,14 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1942"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1821"/>
         <source>Cannot find a vector data export driver named &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevar atrast vektoru datu eksporta draiveri ar nosaukumu &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1782"/>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Nevar saglabāt datni
+        <translation>Nevar saglabāt datni
 %1:
 %2</translation>
     </message>
@@ -2728,7 +2728,7 @@
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="48"/>
         <source>For KML course export, a single path object must be selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>KML ceļu eksportēšanai jāatlasa viens ceļa objekts.</translation>
     </message>
 </context>
 <context>
@@ -2736,17 +2736,17 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="189"/>
         <source>For KML/KMZ export, the map must be georeferenced.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lai eksportētu KML/KMZ, kartei jābūt ģeoreferencētai.</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="196"/>
         <source>Unknown error</source>
-        <translation type="unfinished">Nezināma kļūda</translation>
+        <translation>Nezināma kļūda</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="211"/>
         <source>%1 already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 jau pastāv.</translation>
     </message>
 </context>
 <context>
@@ -4416,12 +4416,12 @@ jo saglabāšana kā %2 (.%3) netiek atbalstīta.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="954"/>
         <source>&amp;KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="959"/>
         <source>KML &amp;course</source>
-        <translation type="unfinished"></translation>
+        <translation>KML &amp;course</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="996"/>
@@ -4622,12 +4622,12 @@ jo saglabāšana kā %2 (.%3) netiek atbalstīta.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1766"/>
         <source>KML course</source>
-        <translation type="unfinished"></translation>
+        <translation>KML ceļš</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1777"/>
         <source>Exported successfully to %1</source>
-        <translation type="unfinished">Sekmīgs eksports uz %1</translation>
+        <translation>Sekmīgs eksports uz %1</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1858"/>
@@ -6375,7 +6375,7 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="449"/>
         <source>KMZ export</source>
-        <translation type="unfinished"></translation>
+        <translation>KMZ eksports</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="987"/>
@@ -6410,18 +6410,18 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1208"/>
         <source>KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1209"/>
         <source>KML</source>
-        <translation type="unfinished"></translation>
+        <translation>KML</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1236"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished">Nevarēja saglabāt attēlu:
+        <translation>Nevarēja saglabāt attēlu:
 %1</translation>
     </message>
     <message>
@@ -7959,7 +7959,7 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
     <message>
         <location filename="../src/templates/template_image.cpp" line="148"/>
         <source>Format not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Neatbalstīts formāts</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="301"/>
@@ -8872,7 +8872,9 @@ Maksimālā atbalstītā versija ir %2.</translation>
         <source>Internal error detected! Please report this issue.
 Version: %1
 Location: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Iekšējā kļūda atrasta! Lūdzu ziņojiet par šo kļūdu.
+Versija: %1
+Atrašanās vieta: %2</translation>
     </message>
 </context>
 <context>
