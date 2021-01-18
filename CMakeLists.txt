@@ -239,11 +239,6 @@ if(big_endian)
 endif()
 
 
-if(UNIX AND NOT APPLE)
-#	set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib/${Mapper_PACKAGE_NAME}/lib")
-	set(CMAKE_INSTALL_RPATH "${MAPPER_LIBRARY_DESTINATION}/lib")
-endif()
-
 add_definitions(-D_USE_MATH_DEFINES -DUNICODE)
 
 if(Mapper_DEVELOPMENT_BUILD)
