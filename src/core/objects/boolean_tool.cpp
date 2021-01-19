@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2020 Kai Pastor
+ *    Copyright 2014-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -480,7 +480,8 @@ void BooleanTool::executeForLine(const PathObject* area, const PathObject* line,
 	// First segment
 	auto middle_length = intersections[0].length / 2;
 	auto middle = SplitPathCoord::at(path_coords, middle_length);
-	if (area->isPointInsideArea(middle.pos) == (op == BooleanTool::Intersection))
+	if (0.0 < intersections[0].length
+	    && area->isPointInsideArea(middle.pos) == (op == BooleanTool::Intersection))
 	{
 		PathObject* segment = line->duplicate();
 		segment->changePathBounds(0, 0.0, intersections[0].length);
@@ -492,7 +493,8 @@ void BooleanTool::executeForLine(const PathObject* area, const PathObject* line,
 	{
 		middle_length = (intersections[i].length + intersections[i+1].length) / 2;
 		auto middle = SplitPathCoord::at(path_coords, middle_length);
-		if (area->isPointInsideArea(middle.pos) == (op == BooleanTool::Intersection))
+		if (intersections[i].length < intersections[i+1].length
+		    && area->isPointInsideArea(middle.pos) == (op == BooleanTool::Intersection))
 		{
 			PathObject* segment = line->duplicate();
 			segment->changePathBounds(0, intersections[i].length, intersections[i+1].length);
@@ -503,7 +505,8 @@ void BooleanTool::executeForLine(const PathObject* area, const PathObject* line,
 	// Last segment
 	middle_length = (part.length() + intersections.back().length) / 2;
 	middle = SplitPathCoord::at(path_coords, middle_length);
-	if (area->isPointInsideArea(middle.pos) == (op == BooleanTool::Intersection))
+	if (intersections.back().length < part.length()
+	    && area->isPointInsideArea(middle.pos) == (op == BooleanTool::Intersection))
 	{
 		PathObject* segment = line->duplicate();
 		segment->changePathBounds(0, intersections.back().length, part.length());
