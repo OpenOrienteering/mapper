@@ -3,7 +3,8 @@ title: Map Screen
 authors:
   - Peter Hoban
   - Thomas Schoeps
-edited: 24 February 2013
+last_modified_date: 24 February 2013
+nav_order: 0.02
 ---
 
 This is the main window when drawing maps. By default it looks similar to this:

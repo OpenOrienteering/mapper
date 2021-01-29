@@ -1,7 +1,8 @@
 ---
 title: Geospatial data support with GDAL
 keywords: GDAL
-edited: 24 December 2020
+last_modified_date: 24 December 2020
+nav_order: 0.22
 ---
 
 OpenOrienteering Mapper uses the [GDAL library](https://gdal.org)

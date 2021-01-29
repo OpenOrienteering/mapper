@@ -4,7 +4,8 @@ authors:
   - Kai Pastor
   - Libor Pecháček
 keywords: Templates
-edited: 9 March 2020
+last_modified_date: 9 March 2020
+nav_order: 0.41
 ---
 
 CoVe (for Contour Vectorizer) is the name of a tool which lets users generate

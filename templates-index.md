@@ -1,7 +1,9 @@
 ---
 title: Templates
 keywords: Templates
-edited: 26 November 2015
+last_modified_date: 26 November 2015
+nav_order: 0.21
+has_children: true
 ---
 
 Working with templates

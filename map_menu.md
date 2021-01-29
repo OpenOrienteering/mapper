@@ -5,7 +5,9 @@ authors:
   - Thomas Schoeps
   - Kai Pastor
 keywords: Menus
-edited: 20 January 2018
+parent: Reference
+nav_order: 0.5
+last_modified_date: 20 January 2018
 ---
 
 #### Georeferencing...

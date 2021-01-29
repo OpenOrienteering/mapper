@@ -4,7 +4,9 @@ authors:
   - Peter Hoban
   - Thomas Schoeps
 keywords: Colors
-edited: 26 February 2013
+last_modified_date: 26 February 2013
+parent: Colors and Symbols
+nav_order: 0.1
 ---
 
 This window can be shown by clicking the menu item Symbols -&gt; Color window.

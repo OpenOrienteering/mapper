@@ -1,9 +1,10 @@
 ---
 title: User Manual
-edited: 21 December 2019
+last_modified_date: 21 December 2019
 redirect_from:
   - /
   - /Home
+nav_order: 0.01
 ---
 
 {% if doxygen %}

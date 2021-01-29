@@ -4,7 +4,8 @@ authors:
   - Mitchell Krome
   - Kai Pastor
 keywords: Tagging
-edited: 21 January 2018
+last_modified_date: 21 January 2018
+nav_order: 0.34
 ---
 
 The "Find objects" dialog allows to find and select objects in the current map part based on their tags, text, or symbol name.
