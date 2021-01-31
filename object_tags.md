@@ -6,7 +6,8 @@ authors:
   - Kai Pastor
 keywords: Tagging
 last_modified_date: 21 January 2018
-nav_order: 0.33
+parent: Objects
+nav_order: 0.5
 ---
 
 ## About object tags

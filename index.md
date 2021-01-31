@@ -34,20 +34,14 @@ Defining the relationship between map paper coordinates and real world coordinat
 [Map grid](grid.md){: .subpage}
 Showing a helper grid in the map view.
 
+[Objects](objects-index.md){: .subpage}
+Organizing, tagging and finding map objects.
+
 [Templates and Data](templates-index.md){: .subpage}
 Using and processing images and geospatial data.
 
 [Colors and symbols](colors_symbols.md){: .subpage}
 Modifying map colors and symbols.
-
-[Map parts](map_parts.md){: .subpage}
-Organizing objects in maps.
-
-[Object tags](object_tags.md){: .subpage}
-Attaching arbitrary key-value pairs to objects.
-
-[Find objects](find_objects.md){: .subpage}
-Finding objects based on textual properties.
 
 [Course design](course_design.md){: .subpage}
 Using the course design symbol set.

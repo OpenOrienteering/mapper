@@ -4,7 +4,8 @@ authors:
   - Kai Pastor
 keywords: Map parts
 last_modified_date: 10 January 2016
-nav_order: 0.32
+parent: Objects
+nav_order: 0.3
 ---
 
 Map parts partition the map in different collections of objects which can be worked on independently.
