@@ -4,7 +4,7 @@ authors:
   - Peter Hoban
   - Thomas Schoeps
 keywords: Templates
-parent: Templates
+parent: Templates and Data
 nav_order: 0.1
 last_modified_date: 21 December 2019
 ---

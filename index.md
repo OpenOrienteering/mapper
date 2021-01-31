@@ -31,11 +31,8 @@ Defining the relationship between map paper coordinates and real world coordinat
 [Map grid](grid.md){: .subpage}
 Showing a helper grid in the map view.
 
-[Templates](templates-index.md){: .subpage}
-Working with templates.
-
-[Geospatial data](gdal.md){: .subpage}
-Geospatial raster data and vector data support based on GDAL.
+[Templates and Data](templates-index.md){: .subpage}
+Using and processing images and geospatial data.
 
 [Colors and symbols](colors_symbols.md){: .subpage}
 Modifying map colors and symbols.
@@ -51,9 +48,6 @@ Finding objects based on textual properties.
 
 [CRT files](crt_files.md){: .subpage}
 Providing rules for assigning symbols.
-
-[CoVe, the Contour Vectorizer](cove.md){: .subpage}
-Vectorizing line features in raster graphics templates.
 
 [Settings](settings.md){: .subpage}
 Adjusting the program to your preferences.
