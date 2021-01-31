@@ -19,9 +19,6 @@ Instructions to download and install OpenOrienteering.
 [Main window](main_window.md){: .subpage}
 Explanation of the main drawing window.
 
-[Reference](reference.md){: .subpage}
-Toolbar and menu items, including explanations for [all drawing tools](toolbars.md#drawing-toolbar).
-
 [Starting a new map](new_map.md){: .subpage}
 First steps.
 
@@ -46,12 +43,6 @@ Attaching arbitrary key-value pairs to objects.
 [Find objects](find_objects.md){: .subpage}
 Finding objects based on textual properties.
 
-[CRT files](crt_files.md){: .subpage}
-Providing rules for assigning symbols.
-
-[Settings](settings.md){: .subpage}
-Adjusting the program to your preferences.
-
 [Course design](course_design.md){: .subpage}
 Using the course design symbol set.
 
@@ -60,6 +51,9 @@ Using the Mapper app in "Touch Mode"
 
 [The Mapper app for Android](android-app.md){: .subpage}
 Working with the Android version of Mapper.
+
+[Reference](reference.md){: .subpage}
+Drawing tools, toolbars, menu items, settings, CRT files.
 
 [FAQ](faq.md){: .nosubpage}
 Frequently asked questions.

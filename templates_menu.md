@@ -5,7 +5,8 @@ authors:
   - Thomas Schoeps
   - Kai Pastor
 keywords: Menus
-parent: Reference
+parent: Menus
+grand_parent: Reference
 nav_order: 0.7
 last_modified_date: 20 January 2018
 ---

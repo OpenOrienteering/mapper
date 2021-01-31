@@ -4,7 +4,8 @@ authors:
   - Peter Hoban
   - Thomas Schoeps
 keywords: Menus
-parent: Reference
+parent: Menus
+grand_parent: Reference
 nav_order: 0.4
 last_modified_date: 26 February 2013
 ---

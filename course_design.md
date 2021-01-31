@@ -1,7 +1,7 @@
 ---
 title: Using the Course Design Symbol Set
 keywords: Courses, Symbol sets
-nav_order: 0.61
+nav_order: 0.51
 ---
 
 [Templates]: templates.md
