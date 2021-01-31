@@ -10,7 +10,7 @@ redirect_from:
   - /android-app/
   - '/Android Manual/'
   - /mapper-manual/pages/android-index.html
-nav_order: 0.72
+nav_order: 0.04
 has_children: true
 ---
 

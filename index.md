@@ -1,6 +1,6 @@
 ---
 title: User Manual
-last_modified_date: 21 December 2019
+last_modified_date: 31 January 2021
 redirect_from:
   - /
   - /Home
@@ -16,8 +16,14 @@ nav_order: 0.01
 [Installation](installation.md){: .subpage}
 Instructions to download and install OpenOrienteering.
 
-[Main window](main_window.md){: .subpage}
-Explanation of the main drawing window.
+[Introduction to the User Interface](main_window.md){: .subpage}
+Explanation of the home screen and main drawing window.
+
+[The Touch Mode User Interface](touch-mode.md){: .subpage}
+Using the Mapper app in "Touch Mode".
+
+[The Mapper app for Android](android-app.md){: .subpage}
+Working with the Android version of Mapper.
 
 [Starting a new map](new_map.md){: .subpage}
 First steps.
@@ -45,12 +51,6 @@ Finding objects based on textual properties.
 
 [Course design](course_design.md){: .subpage}
 Using the course design symbol set.
-
-[The Touch Mode User Interface](touch-mode.md){: .subpage}
-Using the Mapper app in "Touch Mode"
-
-[The Mapper app for Android](android-app.md){: .subpage}
-Working with the Android version of Mapper.
 
 [Reference](reference.md){: .subpage}
 Drawing tools, toolbars, menu items, settings, CRT files.

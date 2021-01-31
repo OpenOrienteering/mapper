@@ -5,7 +5,7 @@ authors:
   - Thomas Schoeps
 keywords: Touch Mode, Android
 last_modified_date: 20 September 2020
-nav_order: 0.71
+nav_order: 0.03
 ---
 
 ## Using the Mapper app in "Touch Mode"

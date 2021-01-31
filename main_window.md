@@ -1,13 +1,35 @@
 ---
-title: Map Screen
+title: Introduction to the User Interface
 authors:
   - Peter Hoban
   - Thomas Schoeps
-last_modified_date: 24 February 2013
+  - Kai Pastor
+last_modified_date: 21 January 2021
 nav_order: 0.02
 ---
 
-This is the main window when drawing maps. By default it looks similar to this:
+## The Desktop User Interface
+
+On computers running Windows, macOS or Linux, the default appearance
+of OpenOrienteering Mapper is the "Desktop User Interface".
+
+### The Home Screen
+
+When Mapper is running with no opened map file,
+the program shows the "Home" screen.
+It features buttons for key actions (left side)
+and a list of recently used files (right side).
+
+One special button is labeled "Touch mode". Using this button,
+you can toggle the [Touch Mode User Interface](touch-mode.md).
+This user interface is designed for mobile work with a touch screen,
+and it is the only user interface offered on Android devices.
+Note that the GNSS tracking feature is available only in touch mode
+at the moment.
+
+### The Map Editor
+
+In the desktop user interface, the map editor window looks like this:
 
 ![ ](images/main_window.png)
 
