@@ -4,7 +4,9 @@ authors:
   - Peter Hoban
   - Thomas Schoeps
 keywords: Settings
-edited: 25 February 2013
+last_modified_date: 25 February 2013
+parent: Reference
+nav_order: 0.3
 ---
 
 In the settings dialog, the program can be adjusted to suit your application.

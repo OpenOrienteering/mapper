@@ -5,7 +5,9 @@ authors:
   - Kai Pastor
   - Thomas Schoeps
 keywords: Toolbars
-edited: 5 June 2018
+parent: Reference
+nav_order: 0.2
+last_modified_date: 5 June 2018
 to-do:
   - Split this page and update ALL context help in Mapper.
   - Update context help for zoom-in and -out in Mapper.

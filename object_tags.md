@@ -5,7 +5,9 @@ authors:
   - Fraser Mills
   - Kai Pastor
 keywords: Tagging
-edited: 21 January 2018
+last_modified_date: 21 January 2018
+parent: Objects
+nav_order: 0.5
 ---
 
 ## About object tags
