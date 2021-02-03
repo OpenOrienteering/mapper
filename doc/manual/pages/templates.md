@@ -4,7 +4,9 @@ authors:
   - Peter Hoban
   - Thomas Schoeps
 keywords: Templates
-edited: 21 December 2019
+parent: Templates and Data
+nav_order: 0.1
+last_modified_date: 21 December 2019
 ---
 
 Images, tracks recorded with GPS receivers and other layers which are used to provide base information for the mapper are called templates. They can be loaded into the map file using the template setup window which is available via the menu item Templates -&gt; Template Setup Window. Templates can also be "abused" to display information on the final map, for example sponsor logos which are only available as raster images.

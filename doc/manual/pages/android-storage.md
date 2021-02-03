@@ -1,6 +1,8 @@
 ---
 title: Storing Maps and Templates on Android Devices
 keywords: Android
+parent: The Mapper App for Android
+nav_order: 0.3
 ---
 
 ## Storage locations

@@ -1,6 +1,7 @@
 ---
 title: Installation
-edited: 28 September 2019
+last_modified_date: 28 September 2019
+nav_order: 0.02
 ---
 
 OpenOrienteering Mapper runs on Android, Windows, macOS and Linux.

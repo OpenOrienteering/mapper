@@ -4,11 +4,14 @@ authors:
   - Kai Pastor
   - Thomas Schoeps
 keywords: Android
-edited: 19 September 2020
+last_modified_date: 19 September 2020
 redirect_from:
   - /android/
+  - /android-app/
   - '/Android Manual/'
   - /mapper-manual/pages/android-index.html
+nav_order: 0.04
+has_children: true
 ---
 
 ## Preliminary remarks
