@@ -1465,7 +1465,7 @@
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="143"/>
         <source>The clicked area is not bounded by lines or areas, cannot fill this area.</source>
-        <translation>单击的区域不受线路或地区，不能填补这一领域。</translation>
+        <translation>单击的区域不受线条或区域限制，无法填充该区域。</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="177"/>
