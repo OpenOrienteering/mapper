@@ -1,5 +1,7 @@
 ---
 title: Preparing a Map on the PC
+parent: The Mapper App for Android
+nav_order: 0.2
 ---
 
 The Android app cannot be used to create new maps because it would be cumbersome to setup the base maps there. Instead, maps should be prepared with templates and possibly georeferencing using the PC version of Mapper first and then transferred to the mobile device for surveying.

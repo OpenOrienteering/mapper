@@ -4,7 +4,8 @@ authors:
   - Peter Hoban
   - Thomas Schoeps
 keywords: Georeferencing
-edited: 25 January 2020
+nav_order: 0.12
+last_modified_date: 25 January 2020
 ---
 
  - [Introduction](#introduction)

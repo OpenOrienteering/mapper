@@ -1,13 +1,20 @@
 ---
-title: Templates
+title: Templates and Data
 keywords: Templates
-edited: 26 November 2015
+last_modified_date: 31 January 2021
+nav_order: 0.21
+has_children: true
 ---
 
-Working with templates
-
-[Templates](templates.md){: .subpage}
+[Introduction to Templates](templates.md){: .subpage}
 Types of templates, loading and positioning
 
 [Adjusting template positions](template_adjust.md){: .subpage}
 For non-georeferenced templates
+
+[CoVe, the Contour Vectorizer](cove.md){: .subpage}
+Vectorizing line features in raster graphics templates.
+
+[Geospatial data](gdal.md){: .subpage}
+Geospatial raster data and vector data support based on GDAL.
+
