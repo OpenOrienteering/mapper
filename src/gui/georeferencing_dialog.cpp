@@ -393,8 +393,8 @@ void GeoreferencingDialog::projectionChanged()
 	setValueIfChanged(lat_edit, latitude);
 	setValueIfChanged(lon_edit, longitude);
 	QString osm_link =
-	  QString::fromLatin1("http://www.openstreetmap.org/?lat=%1&lon=%2&zoom=18&layers=M").
-	  arg(latitude).arg(longitude);
+      QString::fromLatin1("http://www.openstreetmap.org/?mlat=%1&mlon=%2&zoom=18&layers=M").
+      arg(latitude,0,'g',10).arg(longitude,0,'g',10);
 	QString worldofo_link =
 	  QString::fromLatin1("http://maps.worldofo.com/?zoom=15&lat=%1&lng=%2").
 	  arg(latitude).arg(longitude);
