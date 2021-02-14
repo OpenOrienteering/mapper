@@ -2728,7 +2728,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="48"/>
         <source>For KML course export, a single path object must be selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yksi viivakohde pitää valita, jotta voidaan viedä KML tiedostoksi.</translation>
     </message>
 </context>
 <context>
@@ -4533,7 +4533,7 @@ tallentaminen %2 (.%3) ei ole tuettu.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="959"/>
         <source>KML &amp;course</source>
-        <translation type="unfinished"></translation>
+        <translation>KML &amp;rata</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="996"/>
@@ -4676,12 +4676,12 @@ tallentaminen %2 (.%3) ei ole tuettu.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1766"/>
         <source>KML course</source>
-        <translation type="unfinished"></translation>
+        <translation>KML rata</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1777"/>
         <source>Exported successfully to %1</source>
-        <translation type="unfinished">Viety onnistuneesti %1</translation>
+        <translation>Viety onnistuneesti %1</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1858"/>
