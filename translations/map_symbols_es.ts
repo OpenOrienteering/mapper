@@ -477,7 +477,7 @@ Footprint: 13.5 m x 11.5 m.</source>
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation>Cortado no franqueable</translation>
+        <translation>Cortado infranqueable</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -491,7 +491,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation>Cortado no franqueable, tamaño mínimo</translation>
+        <translation>Cortado infranqueable, tamaño mínimo</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -515,7 +515,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
-        <translation>Cortado no franqueable, línea superior</translation>
+        <translation>Cortado infranqueable, línea superior</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -529,7 +529,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation>Cortado no franqueable, línea de extensión</translation>
+        <translation>Cortado infranqueable, línea de extensión</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -539,7 +539,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation>Cortado no franqueable, tamaño mínimo (de la ISOM2000)</translation>
+        <translation>Cortado infranqueable, tamaño mínimo (de la ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -1426,7 +1426,7 @@ Minimum width: 0.25 mm (footprint 3.8 m).</source>
         <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
 Minimum width: 0.35 mm</source>
         <comment>Description of symbol 410.4</comment>
-        <translation>Una zona de vegetación densa (árboles o monte bajo) que es efectivamente no franqueable.
+        <translation>Una zona de vegetación densa (árboles o monte bajo) que es efectivamente impenetrable.
 Anchura mínima: 0,35 mm</translation>
     </message>
     <message>
@@ -1892,7 +1892,7 @@ Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object mu
     <message>
         <source>Impassable wall</source>
         <comment>Name of symbol 515</comment>
-        <translation>Muro no franqueable</translation>
+        <translation>Muro infranqueable</translation>
     </message>
     <message>
         <source>An impassable or uncrossable wall, normally more than 1.5 m high.
@@ -1925,7 +1925,7 @@ Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the symbol mu
     <message>
         <source>Impassable fence</source>
         <comment>Name of symbol 518</comment>
-        <translation>Valla no franqueable</translation>
+        <translation>Valla infranqueable</translation>
     </message>
     <message>
         <source>An impassable or uncrossable fence, normally more than 1.5 m high.
@@ -1944,7 +1944,7 @@ Minimum length (isolated): 2 mm (footprint 30 m).</source>
 For impassable features, the line shall be broken at the crossing point. For passable features, the line shall not be broken if passing involves a degree of climb.</source>
         <comment>Description of symbol 519</comment>
         <translation>Un paso a través de o sobre un muro, valla u otro elemento lineal, incluyendo una puerta o peldaños.
-Para elementos no franqueables, la línea debe cortarse en el punto de paso. Para elementos pasables, la línea no se debe cortar si el paso implica cualquier ascenso.</translation>
+Para elementos infranqueables, la línea debe cortarse en el punto de paso. Para elementos franqueables, la línea no se debe cortar si el paso implica cualquier ascenso.</translation>
     </message>
     <message>
         <source>Area that shall not be entered</source>
@@ -2193,7 +2193,7 @@ Minimum length: 1.5 mm (footprint 22.5 m).</source>
     <message>
         <source>Prominent impassable line feature</source>
         <comment>Name of symbol 529</comment>
-        <translation>Elemento lineal destacado no franqueable</translation>
+        <translation>Elemento lineal destacado infranqueable</translation>
     </message>
     <message>
         <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track. The definition of the symbol must be given on the map.
@@ -2739,7 +2739,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
         <comment>Description of symbol 104</comment>
-        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Altura mínima: 1 m. Un terraplén puede influir la transitabilidad. Las líneas de extensión representan la extensión completa del terraplén. Para terraplenes largos, se permite utilizar líneas de extensión menores que la longitud mínima en los extremos. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes impasables se deben representar utilizando el símbolo 201 (cortado no franqueable).</translation>
+        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Altura mínima: 1 m. Un terraplén puede influir la transitabilidad. Las líneas de extensión representan la extensión completa del terraplén. Para terraplenes largos, se permite utilizar líneas de extensión menores que la longitud mínima en los extremos. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes infranqueables se deben representar utilizando el símbolo 201 (cortado infranqueable).</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -2749,7 +2749,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Altura mínima: 1 m. Un terraplén puede influir la transitabilidad. Las líneas de extensión representan la extensión completa del terraplén. Para terraplenes largos, se permite utilizar líneas de extensión menores que la longitud mínima en los extremos. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes impasables se deben representar utilizando el símbolo 201 (cortado no franqueable).</translation>
+        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Altura mínima: 1 m. Un terraplén puede influir la transitabilidad. Las líneas de extensión representan la extensión completa del terraplén. Para terraplenes largos, se permite utilizar líneas de extensión menores que la longitud mínima en los extremos. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes infranqueables se deben representar utilizando el símbolo 201 (cortado infranqueable).</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
@@ -2759,7 +2759,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Altura mínima: 1 m. Un terraplén puede influir la transitabilidad. Las líneas de extensión representan la extensión completa del terraplén. Para terraplenes largos, se permite utilizar líneas de extensión menores que la longitud mínima en los extremos. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes no franqueables se deben representar utilizando el símbolo 201 (cortado no franqueable).</translation>
+        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Altura mínima: 1 m. Un terraplén puede influir la transitabilidad. Las líneas de extensión representan la extensión completa del terraplén. Para terraplenes largos, se permite utilizar líneas de extensión menores que la longitud mínima en los extremos. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes infranqueables se deben representar utilizando el símbolo 201 (cortado infranqueable).</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -2779,7 +2779,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
         <comment>Description of symbol 104.9</comment>
-        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Altura mínima: 1 m. Un terraplén puede influir la transitabilidad. Las líneas de extensión representan la extensión completa del terraplén. Para terraplenes largos, se permite utilizar líneas de extensión menores que la longitud mínima en los extremos. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes no franqueables se deben representar utilizando el símbolo 201 (cortado no franqueable).</translation>
+        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Altura mínima: 1 m. Un terraplén puede influir la transitabilidad. Las líneas de extensión representan la extensión completa del terraplén. Para terraplenes largos, se permite utilizar líneas de extensión menores que la longitud mínima en los extremos. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes infranqueables se deben representar utilizando el símbolo 201 (cortado infranqueable).</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -2932,7 +2932,7 @@ Densidad: de 8 a 10 puntos / mm² (25-32%).</translation>
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation>Cortado no franqueable</translation>
+        <translation>Cortado infranqueable</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -2942,13 +2942,13 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <comment>Description of symbol 201</comment>
         <translation>Un cortado, excavación o terraplén que es tan alto y empinado que es imposible pasar/ascender o es peligroso.
 Para paredes verticales de roca se pueden omitir las líneas de extensión si hay escasez de espacio. Los extremos de la línea superior pueden ser redondeados o cuadrados. Las líneas de extensión pueden ser más cortas en los extremos.
-El espacio entre dos cortados no franqueables o entre cortados no franqueables y otros símbolos de elementos no franqueables debe ser superior a 0,3 mm sobre el mapa.
-Cuando un cortado no franqueable cae directamente sobre el agua, haciendo imposible pasar bajo el cortado por el borde del agua, la línea de la orilla se omite o las líneas de extensión superarán claramente la línea de la orilla. Un cortado no franqueable debería acoplarse con las curvas de nivel.</translation>
+El espacio entre dos cortados infranqueables o entre cortados infranqueables y otros símbolos de elementos infranqueables debe ser superior a 0,3 mm sobre el mapa.
+Cuando un cortado infranqueable cae directamente sobre el agua, haciendo imposible pasar bajo el cortado por el borde del agua, la línea de la orilla se omite o las líneas de extensión superarán claramente la línea de la orilla. Un cortado infranqueable debería acoplarse con las curvas de nivel.</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation>Cortado no franqueable, tamaño mínimo</translation>
+        <translation>Cortado infranqueable, tamaño mínimo</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -2958,13 +2958,13 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <comment>Description of symbol 201.1</comment>
         <translation>Un cortado, excavación o terraplén que es tan alto y empinado que es imposible pasar/ascender o es peligroso.
 Los extremos de la línea superior pueden ser redondeados o cuadrados.
-El espacio entre dos cortados no franqueables o entre cortados no franqueables y otros símbolos de elementos no franqueables debe ser superior a 0,3 mm sobre el mapa.
-Cuando un cortado no franqueable cae directamente sobre el agua, haciendo imposible pasar bajo el cortado por el borde del agua, la línea de la orilla se omite o las líneas de extensión superarán claramente la línea de la orilla. Un cortado no franqueable debería acoplarse con las curvas de nivel.</translation>
+El espacio entre dos cortados infranqueables o entre cortados infranqueables y otros símbolos de elementos infranqueables debe ser superior a 0,3 mm sobre el mapa.
+Cuando un cortado infranqueable cae directamente sobre el agua, haciendo imposible pasar bajo el cortado por el borde del agua, la línea de la orilla se omite o las líneas de extensión superarán claramente la línea de la orilla. Un cortado infranqueable debería acoplarse con las curvas de nivel.</translation>
     </message>
     <message>
         <source>Impassable cliff, plan shape representation</source>
         <comment>Name of symbol 201.2</comment>
-        <translation>Cortado no franqueable, representación de forma plana</translation>
+        <translation>Cortado infranqueable, representación de forma plana</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -2974,13 +2974,13 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <comment>Description of symbol 201.2</comment>
         <translation>Un cortado, excavación o terraplén que es tan alto y empinado que es imposible pasar/ascender o es peligroso.
 Para paredes verticales de roca se pueden omitir las líneas de extensión si hay escasez de espacio. &lt;b&gt;Para representación de forma plana, la anchura mínima es 0,35 mm.&lt;/b&gt; Las líneas de extensión pueden ser más cortas en los extremos.
-El espacio entre dos cortados no franqueables o entre cortados no franqueables y otros símbolos de elementos no franqueables debe ser superior a 0,3 mm sobre el mapa.
-Cuando un cortado no franqueable cae directamente sobre el agua, haciendo imposible pasar bajo el cortado por el borde del agua, la línea de la orilla se omite o las líneas de extensión superarán claramente la línea de la orilla. Un cortado no franqueable debería acoplarse con las curvas de nivel.</translation>
+El espacio entre dos cortados infranqueables o entre cortados infranqueables y otros símbolos de elementos infranqueables debe ser superior a 0,3 mm sobre el mapa.
+Cuando un cortado infranqueable cae directamente sobre el agua, haciendo imposible pasar bajo el cortado por el borde del agua, la línea de la orilla se omite o las líneas de extensión superarán claramente la línea de la orilla. Un cortado infranqueable debería acoplarse con las curvas de nivel.</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
-        <translation>Cortado no franqueable, línea superior</translation>
+        <translation>Cortado infranqueable, línea superior</translation>
     </message>
     <message>
         <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
@@ -2990,7 +2990,7 @@ Cuando un cortado no franqueable cae directamente sobre el agua, haciendo imposi
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation>Cortado no franqueable, línea de extensión</translation>
+        <translation>Cortado infranqueable, línea de extensión</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -3000,7 +3000,7 @@ Cuando un cortado no franqueable cae directamente sobre el agua, haciendo imposi
     <message>
         <source>Impassable cliff, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation>Cortado no franqueable, tamaño mínimo (de la ISOM2000)</translation>
+        <translation>Cortado infranqueable, tamaño mínimo (de la ISOM2000)</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -3010,8 +3010,8 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <comment>Description of symbol 201.9</comment>
         <translation>Un cortado, excavación o terraplén que es tan alto y empinado que es imposible pasar/ascender o es peligroso.
 Los extremos de la línea superior pueden ser redondeados o cuadrados.
-El espacio entre dos cortados no franqueables o entre cortados no franqueables y otros símbolos de elementos no franqueables debe ser superior a 0,3 mm sobre el mapa.
-Cuando un cortado no franqueable cae directamente sobre el agua, haciendo imposible pasar bajo el cortado por el borde del agua, la línea de la orilla se omite o las líneas de extensión superarán claramente la línea de la orilla. Un cortado no franqueable debería acoplarse con las curvas de nivel.</translation>
+El espacio entre dos cortados no franqueables o entre cortados infranqueables y otros símbolos de elementos infranqueables debe ser superior a 0,3 mm sobre el mapa.
+Cuando un cortado infranqueable cae directamente sobre el agua, haciendo imposible pasar bajo el cortado por el borde del agua, la línea de la orilla se omite o las líneas de extensión superarán claramente la línea de la orilla. Un cortado infranqueable debería acoplarse con las curvas de nivel.</translation>
     </message>
     <message>
         <source>Cliff</source>
@@ -3181,7 +3181,7 @@ Para poder mostrar la distinción entre peñas (205) vecinas (separadas por meno
 The gap between gigantic boulders or between gigantic boulders and other impassable feature symbols must exceed 0.3 mm on the map.</source>
         <comment>Description of symbol 206</comment>
         <translation>Un pilar de roca o peña gigante que es tan alto y empinado que es imposible de sobrepasar/ascender.
-El espacio entre varios peñones o entre peñas gigantes y otros símbolos de elementos no franqueables debe ser mayor de 0,3 mm sobre el mapa.</translation>
+El espacio entre varios peñones o entre peñas gigantes y otros símbolos de elementos infranqueables debe ser mayor de 0,3 mm sobre el mapa.</translation>
     </message>
     <message>
         <source>Boulder cluster</source>
@@ -3354,7 +3354,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <translation>Trinchera de roca o artificial. La mínima profundidad debería ser 1 m.
 Longitud mínima: 2 mm (huella 30m).
 Las trincheras más cortas deben ser exageradas a la mínima dimensión gráfica.
-Las trincheras no franqueables deben ser representadas utilizando el símbolo 201 (cortado no franqueables).
+Las trincheras infranqueables deben ser representadas utilizando el símbolo 201 (cortado infranqueable).
 Las trincheras colapsadas y fácilmente superables deberían representarse como surcos de erosión.</translation>
     </message>
     <message>
@@ -3761,7 +3761,7 @@ Anchura mínima: 1,5 mm (huella 22,5 m). Área mínima: 2,5 x 2,5 mm. Las áreas
 Areas of good visibility that are very difficult to run or impassable are represented using symbol 410 (vegetation, fight) or 411 (vegetation, impassable).</source>
         <comment>Description of symbol 409</comment>
         <translation>Zonas de buena visibilidad que son difíciles de atravesar corriendo debido por ejemplo al monte bajo (zarzas, brezo, arbustos bajos, ramas taladas). La velocidad de carrera se reduce a un 20-60% de la velocidad normal.
-Las zonas de buena visibilidad que sean muy difíciles de atravesar o no franqueables se representan utilizando el símbolo 410 (vegetación, bregar) o el 411 (vegetación, no franqueable).</translation>
+Las zonas de buena visibilidad que sean muy difíciles de atravesar o impenetrables se representan utilizando el símbolo 410 (vegetación, bregar) o el 411 (vegetación, impenetrable).</translation>
     </message>
     <message>
         <source>Vegetation, fight</source>
@@ -3772,8 +3772,8 @@ Las zonas de buena visibilidad que sean muy difíciles de atravesar o no franque
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.
 For fairness reasons, areas that are really difficult to get through (10% and slower) shall be represented using symbol 411 (vegetation, impassable).</source>
         <comment>Description of symbol 410</comment>
-        <translation>Una zona de vegetación densa (árboles o monte bajo) que apenas es pasable. La velocidad de carrera se reduce a un 0-20% aprox. de la velocidad normal.
-Por razones de ecuanimidad, las zonas que sean realmente difíciles de atravesar (10% o más lentas) se deben representar utilizando el símbolo 411 (vegetación, no franqueable).</translation>
+        <translation>Una zona de vegetación densa (árboles o monte bajo) que apenas es penetrable. La velocidad de carrera se reduce a un 0-20% aprox. de la velocidad normal.
+Por razones de ecuanimidad, las zonas que sean realmente difíciles de atravesar (10% o más lentas) se deben representar utilizando el símbolo 411 (vegetación, impenetrable).</translation>
     </message>
     <message>
         <source>Forest runnable in one direction, 3</source>
@@ -3808,33 +3808,33 @@ Por razones de ecuanimidad, las zonas que sean realmente difíciles de atravesar
     <message>
         <source>Vegetation, impassable</source>
         <comment>Name of symbol 411</comment>
-        <translation>Vegetación, no franqueable</translation>
+        <translation>Vegetación, impenetrable</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable. Most useful for narrow and small areas.</source>
         <comment>Description of symbol 411</comment>
-        <translation>Una zona de vegetación densa (árboles o monte bajo) que es efectivamente no franqueable. Principalmente útil en zonas pequeñas o estrechas.</translation>
+        <translation>Una zona de vegetación densa (árboles o monte bajo) que es efectivamente impenetrable. Principalmente útil en zonas pequeñas o estrechas.</translation>
     </message>
     <message>
         <source>Vegetation, impassable</source>
         <comment>Name of symbol 411.1</comment>
-        <translation>Vegetación, no franqueable</translation>
+        <translation>Vegetación, impenetrable</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable. Most useful for narrow and small areas.</source>
         <comment>Description of symbol 411.1</comment>
-        <translation>Una zona de vegetación densa (árboles o monte bajo) que es efectivamente no franqueable. Principalmente útil en zonas pequeñas o estrechas.</translation>
+        <translation>Una zona de vegetación densa (árboles o monte bajo) que es efectivamente impenetrable. Principalmente útil en zonas pequeñas o estrechas.</translation>
     </message>
     <message>
         <source>Vegetation, impassable, minimum width</source>
         <comment>Name of symbol 411.2</comment>
-        <translation>Vegetación, no franqueable, anchura mínima</translation>
+        <translation>Vegetación, impenetrable, anchura mínima</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
 Minimum width: 0.35 mm</source>
         <comment>Description of symbol 411.2</comment>
-        <translation>Una zona de vegetación densa (árboles o monte bajo) que es efectivamente no franqueable.
+        <translation>Una zona de vegetación densa (árboles o monte bajo) que es efectivamente impenetrable.
 Anchura mínima: 0,35 mm</translation>
     </message>
     <message>
@@ -3938,7 +3938,7 @@ A disadvantage with a green line is that it cannot be used to show distinct vege
 Minimum length, green line implementation: 4 dashes (1.8 mm – footprint 27 m).</source>
         <comment>Description of symbol 416.1</comment>
         <translation>Para zonas con muchos elementos de roca, se recomienda utilizar la línea discontinua verde para límites de vegetación.
-Una desventaja de la línea verde es que no se puede utilizar para representar límites de vegetación alrededor y dentro de los símbolos 410 (vegetación, bregar) y 411 (vegetación, no franqueable). Una alternativa para estas situaciones es utilizar el símbolo 415 (límite de cultivo perceptible).
+Una desventaja de la línea verde es que no se puede utilizar para representar límites de vegetación alrededor y dentro de los símbolos 410 (vegetación, bregar) y 411 (vegetación, impenetrable). Una alternativa para estas situaciones es utilizar el símbolo 415 (límite de cultivo perceptible).
 Longitud mínima, implementación de línea verde: 4 rayas (1,8 mm - huella 27 m).</translation>
     </message>
     <message>
@@ -4016,7 +4016,7 @@ Huella: 7,5 m x 7,5 m.</translation>
 The outer boundary lines may be replaced with other black line symbols, such as symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.</source>
         <comment>Description of symbol 502</comment>
         <translation>La anchura debería dibujarse a escala, pero no menor que la anchura mínima (0,3 + 2*0,14 - huella 8,7 m)
-Las líneas delimitadoras exteriores pueden remplazarse con otros símbolos de líneas negras, tales como el 516 (valla), 518 (valla no franqueable), 513 (muro) o 515 (muro no franqueable) si el elemento está tan próximo al borde de la carretera que no puede representarse en la práctica como separado.</translation>
+Las líneas delimitadoras exteriores pueden remplazarse con otros símbolos de líneas negras, tales como el 516 (valla), 518 (valla infranqueable), 513 (muro) o 515 (muro infranqueable) si el elemento está tan próximo al borde de la carretera que no puede representarse en la práctica como separado.</translation>
     </message>
     <message>
         <source>Wide road, 0.5mm width</source>
@@ -4036,7 +4036,7 @@ Las líneas delimitadoras exteriores pueden remplazarse con otros símbolos de l
     <message>
         <source>A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with other black line symbols, such as symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.</source>
         <comment>Description of symbol 502.2</comment>
-        <translation>Una carretera de dos sentidos separados puede representarse utilizando dos símbolos de carretera juntos, manteniendo sólo uno de los bordes en el medio. La anchura del símbolo debería dibujarse a escala no siendo menor que la anchura mínima. Las líneas delimitadoras exteriores pueden remplazarse con otros símbolos de líneas negras, tales como el 516 (valla), 518 (valla no franqueable), 513 (muro) o 515 (muro no franqueable) si el elemento está tan próximo al borde de la carretera que no puede representarse en la práctica como separado.</translation>
+        <translation>Una carretera de dos sentidos separados puede representarse utilizando dos símbolos de carretera juntos, manteniendo sólo uno de los bordes en el medio. La anchura del símbolo debería dibujarse a escala no siendo menor que la anchura mínima. Las líneas delimitadoras exteriores pueden remplazarse con otros símbolos de líneas negras, tales como el 516 (valla), 518 (valla infranqueable), 513 (muro) o 515 (muro infranqueable) si el elemento está tan próximo al borde de la carretera que no puede representarse en la práctica como separado.</translation>
     </message>
     <message>
         <source>Road</source>
@@ -4275,12 +4275,12 @@ Nota: si el cauce es más ancho de 0,25 mm, ajustar este símbolo de forma que s
     <message>
         <source>Impassable wall</source>
         <comment>Name of symbol 515</comment>
-        <translation>Muro no franqueable</translation>
+        <translation>Muro infranqueable</translation>
     </message>
     <message>
         <source>An impassable or uncrossable wall, normally more than 1.5 m high.</source>
         <comment>Description of symbol 515</comment>
-        <translation>Un muro no franqueable o que no se puede franquear, normalmente mayor de 1,5 m de altura.</translation>
+        <translation>Un muro infranqueable o que no se puede atravesar, normalmente mayor de 1,5 m de altura.</translation>
     </message>
     <message>
         <source>Fence</source>
@@ -4307,13 +4307,13 @@ Si la valla forma un cercado cerrado, las marcas de la línea deben situarse en 
     <message>
         <source>Impassable fence</source>
         <comment>Name of symbol 518</comment>
-        <translation>Valla no franqueable</translation>
+        <translation>Valla infranqueable</translation>
     </message>
     <message>
         <source>An impassable or uncrossable fence, normally more than 1.5 m high.
 If the fence forms an enclosed area, tags should be placed inside.</source>
         <comment>Description of symbol 518</comment>
-        <translation>Una valla no franqueable o que no se puede atravesar, normalmente mayor de 1,5 m de altura.
+        <translation>Una valla infranqueable o que no se puede atravesar, normalmente mayor de 1,5 m de altura.
 Si la valla forma un cercado cerrado, las marcas de la línea deben situarse en el interior.</translation>
     </message>
     <message>
@@ -4326,7 +4326,7 @@ Si la valla forma un cercado cerrado, las marcas de la línea deben situarse en 
 For impassable features, the line shall be broken at the crossing point. For passable features, the line shall not be broken if passing involves a degree of climb.</source>
         <comment>Description of symbol 519</comment>
         <translation>Un paso a través de o sobre un muro, valla u otro elemento lineal, incluyendo una puerta o peldaños.
-Para elementos no franqueables, la línea debe cortarse en el punto de paso. Para elementos pasables, la línea no se debe cortar si el paso implica cualquier ascenso.</translation>
+Para elementos infranqueables, la línea debe cortarse en el punto de paso. Para elementos franqueables, la línea no se debe cortar si el paso implica cualquier ascenso.</translation>
     </message>
     <message>
         <source>Area that shall not be entered</source>
@@ -4388,7 +4388,7 @@ Buildings larger than 75 m x 75 m may be represented with a dark grey infill in 
         <comment>Description of symbol 521</comment>
         <translation>Una edificación se representa con su planta sobre el terreno mientras la escala lo permita.
 
-Los pasadizos a través de edificaciones deben tener una anchura mínima de 0,3 mm (huella 4,5 m). Las edificaciones dentro de áreas prohibidas se generalizan. Las áreas incluidas completamente dentro de una edificación no se deben trasladar al mapa (se deben representar siendo parte de la edificación). El espacio mínimo entre edificaciones o entre edificaciones y otros elementos no franqueables debería ser de 0,25 mm.
+Los pasadizos a través de edificaciones deben tener una anchura mínima de 0,3 mm (huella 4,5 m). Las edificaciones dentro de áreas prohibidas se generalizan. Las áreas incluidas completamente dentro de una edificación no se deben trasladar al mapa (se deben representar siendo parte de la edificación). El espacio mínimo entre edificaciones o entre edificaciones y otros elementos infranqueables debería ser de 0,25 mm.
 
 Área mínima: 0,5 mm x 0,5 mm (huella 7,5 m x 7,5 m).
 
@@ -4420,7 +4420,7 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
         <comment>Description of symbol 521.2</comment>
         <translation>Las edificaciones mayores de 75 m x 75 m se pueden representar con relleno gris oscuro en áreas urbanas.
 
-Los pasadizos a través de edificaciones deben tener una anchura mínima de 0,3 mm (huella 4,5 m). Las edificaciones dentro de áreas prohibidas se generalizan. Las áreas incluidas completamente dentro de una edificación no se deben trasladar al mapa (se deben representar siendo parte de la edificación). El espacio mínimo entre edificaciones o entre edificaciones y otros elementos no franqueables debería ser de 0,25 mm.</translation>
+Los pasadizos a través de edificaciones deben tener una anchura mínima de 0,3 mm (huella 4,5 m). Las edificaciones dentro de áreas prohibidas se generalizan. Las áreas incluidas completamente dentro de una edificación no se deben trasladar al mapa (se deben representar siendo parte de la edificación). El espacio mínimo entre edificaciones o entre edificaciones y otros elementos infranqueables debería ser de 0,25 mm.</translation>
     </message>
     <message>
         <source>Large building</source>
@@ -4549,12 +4549,12 @@ La ubicación está en el centro de gravedad del símbolo.</translation>
     <message>
         <source>Prominent impassable line feature</source>
         <comment>Name of symbol 529</comment>
-        <translation>Elemento lineal destacado no franqueable</translation>
+        <translation>Elemento lineal destacado infranqueable</translation>
     </message>
     <message>
         <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh/skeleton track. The definition of the symbol must be given on the map.</source>
         <comment>Description of symbol 529</comment>
-        <translation>Una construcción lineal no franqueable. Por ejemplo, una conducción alta (gas, agua, oleoducto, calefacción, etc.) o una estructura de pista (bobsleigh). La definición del símbolo se debe indicar en el mapa.</translation>
+        <translation>Una construcción lineal infranqueable. Por ejemplo, una conducción alta (gas, agua, oleoducto, calefacción, etc.) o una estructura de pista (bobsleigh). La definición del símbolo se debe indicar en el mapa.</translation>
     </message>
     <message>
         <source>Prominent man-made feature – ring</source>
@@ -5017,7 +5017,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
-        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes no franqueables se deben representar utilizando el símbolo 201 (cortado no franqueable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
+        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes infranqueables se deben representar utilizando el símbolo 201 (cortado infranqueable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -5027,7 +5027,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
-        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes no franqueables se deben representar utilizando el símbolo 201 (cortado no franqueable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
+        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes no franqueables se deben representar utilizando el símbolo 201 (cortado infranqueable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
     </message>
     <message>
         <source>Earth bank, very high</source>
@@ -5172,7 +5172,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation>Cortado no franqueable</translation>
+        <translation>Cortado infranqueable</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -5182,7 +5182,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.0.1</comment>
-        <translation>Cortado no franqueable, tamaño mínimo</translation>
+        <translation>Cortado infranqueable, tamaño mínimo</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -5197,7 +5197,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.2</comment>
-        <translation>Cortado no franqueable, línea de extensión</translation>
+        <translation>Cortado infranqueable, línea de extensión</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -6078,7 +6078,7 @@ Footprint: 5.4 m x 4.6 m.</source>
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation>Cortado no franqueable</translation>
+        <translation>Cortado infranqueable</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -6091,7 +6091,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation>Cortado no franqueable, tamaño mínimo</translation>
+        <translation>Cortado infranqueable, tamaño mínimo</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -6104,7 +6104,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
-        <translation>Cortado no franqueable, línea superior</translation>
+        <translation>Cortado infranqueable, línea superior</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -6117,7 +6117,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation>Cortado no franqueable, línea de extensión</translation>
+        <translation>Cortado infranqueable, línea de extensión</translation>
     </message>
     <message>
         <source>Tags are drawn downwards, showing a cliff&apos;s full extent from the top line to the foot. The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line.</source>
@@ -7426,7 +7426,7 @@ Minimum length (isolated): 2.4 mm (footprint 9.6 m).</source>
     <message>
         <source>Impassable wall</source>
         <comment>Name of symbol 515</comment>
-        <translation>Muro no franqueable</translation>
+        <translation>Muro infranqueable</translation>
     </message>
     <message>
         <source>An impassable or uncrossable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed.
@@ -8236,7 +8236,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.2</comment>
-        <translation>Cortado no franqueable, línea de extensión</translation>
+        <translation>Cortado infranqueable, línea de extensión</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -8698,7 +8698,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
-        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes no franqueables se deben representar utilizando el símbolo 201 (cortado no franqueable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
+        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes infranqueables se deben representar utilizando el símbolo 201 (cortado infranqueable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -8708,7 +8708,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
-        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes no franqueables se deben representar utilizando el símbolo 201 (cortado no franqueable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
+        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes infranqueables se deben representar utilizando el símbolo 201 (cortado infranqueable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
     </message>
     <message>
         <source>Earth bank, very high</source>
@@ -8763,7 +8763,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation>Cortado no franqueable</translation>
+        <translation>Cortado infranqueable</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -8773,7 +8773,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.0.1</comment>
-        <translation>Cortado no franqueable, tamaño mínimo</translation>
+        <translation>Cortado infranqueable, tamaño mínimo</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -8793,7 +8793,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.2</comment>
-        <translation>Cortado no franqueable, línea de extensión</translation>
+        <translation>Cortado infranqueable, línea de extensión</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -10480,7 +10480,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
-        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes no franqueables se deben representar utilizando el símbolo 201 (cortado no franqueable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
+        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes infranqueables se deben representar utilizando el símbolo 201 (cortado infranqueable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -10490,7 +10490,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
-        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes no franqueables se deben representar utilizando el símbolo 201 (cortado no franqueable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
+        <translation>Un terraplén es un abrupto desnivel en el terreno que se puede distinguir claramente en el entorno, p. ej. canteras de grava o arena, cortes o rellenos de carreteras y vías férreas. Las líneas de extensión representan la extensión completa del terraplén. Si dos terraplenes están muy juntos, las líneas de extensión se pueden omitir. Los terraplenes infranqueables se deben representar utilizando el símbolo 201 (cortado infranqueable). La anchura de línea de terraplenes muy altos puede ser 0.25 mm.</translation>
     </message>
     <message>
         <source>Earth bank, very high</source>
@@ -10545,7 +10545,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation>Cortado no franqueable</translation>
+        <translation>Cortado infranqueable</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -10555,7 +10555,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.0.1</comment>
-        <translation>Cortado no franqueable, tamaño mínimo</translation>
+        <translation>Cortado infranqueable, tamaño mínimo</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -10570,7 +10570,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.2</comment>
-        <translation>Cortado no franqueable, línea de extensión</translation>
+        <translation>Cortado infranqueable, línea de extensión</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -11490,7 +11490,7 @@ Footprint: 12 m x 6 m.</source>
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation>Cortado no franqueable</translation>
+        <translation>Cortado infranqueable</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -11504,7 +11504,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation>Cortado no franqueable, tamaño mínimo</translation>
+        <translation>Cortado infranqueable, tamaño mínimo</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -11528,7 +11528,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
-        <translation>Cortado no franqueable, línea superior</translation>
+        <translation>Cortado infranqueable, línea superior</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -11542,7 +11542,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation>Cortado no franqueable, línea de extensión</translation>
+        <translation>Cortado infranqueable, línea de extensión</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -11552,7 +11552,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation>Cortado no franqueable, tamaño mínimo (de la ISOM2000)</translation>
+        <translation>Cortado infranqueable, tamaño mínimo (de la ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -12280,7 +12280,7 @@ Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
     <message>
         <source>Impassable wall</source>
         <comment>Name of symbol 515</comment>
-        <translation>Muro no franqueable</translation>
+        <translation>Muro infranqueable</translation>
     </message>
     <message>
         <source>An impassable or uncrossable wall, normally more than 1.5 m high.
@@ -12302,7 +12302,7 @@ Minimum length (isolated): 1.5 mm (footprint 22.5 m).</source>
     <message>
         <source>Impassable fence</source>
         <comment>Name of symbol 518</comment>
-        <translation>Valla no franqueable</translation>
+        <translation>Valla infranqueable</translation>
     </message>
     <message>
         <source>An impassable or uncrossable fence, normally more than 1.5 m high.
@@ -12321,7 +12321,7 @@ Minimum length (isolated): 2 mm (footprint 30 m).</source>
 For impassable features, the line shall be broken at the crossing point. For passable features, the line shall not be broken if passing involves a degree of climb.</source>
         <comment>Description of symbol 519</comment>
         <translation>Un paso a través de o sobre un muro, valla u otro elemento lineal, incluyendo una puerta o peldaños.
-Para elementos no franqueables, la línea debe cortarse en el punto de paso. Para elementos pasables, la línea no se debe cortar si el paso implica cualquier ascenso.</translation>
+Para elementos infranqueables, la línea debe cortarse en el punto de paso. Para elementos franqueables, la línea no se debe cortar si el paso implica cualquier ascenso.</translation>
     </message>
     <message>
         <source>Area that shall not be entered</source>
@@ -12476,7 +12476,7 @@ Footprint: 15 m x 15 m.</source>
     <message>
         <source>Prominent impassable line feature</source>
         <comment>Name of symbol 529</comment>
-        <translation>Elemento lineal destacado no franqueable</translation>
+        <translation>Elemento lineal destacado infranqueable</translation>
     </message>
     <message>
         <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track. The definition of the symbol must be given on the map.
