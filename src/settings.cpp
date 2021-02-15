@@ -130,6 +130,7 @@ Settings::Settings()
 	registerSetting(MapEditor_ChangeSymbolWhenSelecting, "MapEditor/change_symbol_when_selecting", true);
 	registerSetting(MapEditor_ZoomOutAwayFromCursor, "MapEditor/zoom_out_away_from_cursor", true);
 	registerSetting(MapEditor_DrawLastPointOnRightClick, "MapEditor/draw_last_point_on_right_click", true);
+	registerSetting(MapEditor_IgnoreTouchInput, "MapEditor/ignore_touch_input", false);
 	registerSetting(MapGeoreferencing_ControlScaleFactor, "MapGeoreferencing/control_scale_factor", false);
 	
 	registerSetting(EditTool_DeleteBezierPointAction, "EditTool/delete_bezier_point_action", int(DeleteBezierPoint_RetainExistingShape));

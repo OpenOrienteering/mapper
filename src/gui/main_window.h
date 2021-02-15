@@ -270,6 +270,12 @@ public:
 	 * @see homeScreenDisabled()
 	 */
 	void setHomeScreenDisabled(bool disabled);
+
+	/**
+	 * Control whether touch input events should be ignored by the main window.
+	 */	
+	void setIgnoreTouch(bool on);
+	bool ignoreTouch();
 	
 public slots:
 	/**
@@ -509,6 +515,7 @@ private:
 	const bool create_menu;
 	bool show_menu;
 	bool shortcuts_blocked;
+	bool ignore_touch_input = false;
 	
 	QToolBar* general_toolbar;
 	QMenu* file_menu;

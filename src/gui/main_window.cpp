@@ -227,6 +227,16 @@ void MainWindow::setHomeScreenDisabled(bool disabled)
 	homescreen_disabled = disabled;
 }
 
+void MainWindow::setIgnoreTouch(bool on)
+{
+	ignore_touch_input = on;	
+}
+
+bool MainWindow::ignoreTouch()
+{
+	return ignore_touch_input;
+}
+
 void MainWindow::setController(MainWindowController* new_controller)
 {
 	setController(new_controller, false);
@@ -567,6 +577,9 @@ bool MainWindow::closeFile()
 		else
 			setController(new HomeScreenController());
 	}
+	
+	setIgnoreTouch(false);
+	
 	return closed;
 }
 
@@ -812,6 +825,8 @@ void MainWindow::showNewMapWizard()
 	new_map->undoManager().clear();
 	
 	MainWindow* new_window = hasOpenedFile() ? new MainWindow() : this;
+	auto const ignore_touch = Settings::getInstance().getSetting(Settings::MapEditor_IgnoreTouchInput).toBool();
+	new_window->setIgnoreTouch(ignore_touch);
 	new_window->setWindowFilePath(tr("Unsaved file"));
 	new_window->setController(new MapEditorController(MapEditorController::MapEditor, new_map, map_view), QString(), nullptr);
 	
@@ -922,6 +937,9 @@ bool MainWindow::openPath(const QString& path, const FileFormat* format)
 	if (has_opened_file)
 		open_window = new MainWindow();
 #endif
+	
+	auto const ignore_touch = Settings::getInstance().getSetting(Settings::MapEditor_IgnoreTouchInput).toBool();
+	open_window->setIgnoreTouch(ignore_touch);
 	
 	open_window->setController(new_controller, path, format);
 	open_window->actual_path = new_actual_path;
@@ -1328,6 +1346,18 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 			Util::showHelp(this, e->href());
 		};
 		break;
+		
+	case QEvent::TouchBegin:
+	case QEvent::TouchUpdate:
+	case QEvent::TouchEnd:
+	case QEvent::TouchCancel:
+		if (ignoreTouch())
+		{
+			event->accept();
+			return true;
+		}
+		break;
+
 #if defined(Q_OS_ANDROID)
 	case QEvent::KeyRelease:
 		if (static_cast<QKeyEvent*>(event)->key() == Qt::Key_Back && hasOpenedFile())

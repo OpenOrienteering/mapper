@@ -64,6 +64,7 @@ private:
 	QCheckBox* zoom_out_away_from_cursor;
 	QCheckBox* draw_last_point_on_right_click;
 	QCheckBox* keep_settings_of_closed_templates;
+	QCheckBox* ignore_touch_input;
 	
 	QComboBox* edit_tool_delete_bezier_point_action;
 	QComboBox* edit_tool_delete_bezier_point_action_alternative;
