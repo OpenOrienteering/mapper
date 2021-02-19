@@ -24,7 +24,9 @@
 
 #include <QAbstractButton>
 #include <QAbstractItemView>
+#include <QApplication>
 #include <QBrush>
+#include <QClipboard>
 #include <QColor>
 #include <QColorDialog>  // IWYU pragma: keep
 #include <QFlags>
@@ -185,11 +187,28 @@ PaintOnTemplateSettingsPage::PaintOnTemplateSettingsPage(QWidget* parent)
 
 	auto* apply_preset_button = new QPushButton(tr("Activate preset"), presets_box);
 	presets_layout->addWidget(apply_preset_button, row, 0, 1, 1);
+	auto* c_p_buttons_layout = new QHBoxLayout();
+	c_p_buttons_layout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum));
+	auto* copy_preset_button = new QPushButton(tr("Copy"), presets_box);
+	c_p_buttons_layout->addWidget(copy_preset_button);
+	auto* paste_preset_button = new QPushButton(tr("Paste"), presets_box);
+	c_p_buttons_layout->addWidget(paste_preset_button);
+	presets_layout->addItem(c_p_buttons_layout, row, 2, 1, 1);
+
 	layout->addWidget(presets_box);
 
 	connect(move_up_button, &QAbstractButton::clicked, this, &PaintOnTemplateSettingsPage::moveColorUp);
 	connect(move_down_button, &QAbstractButton::clicked, this, &PaintOnTemplateSettingsPage::moveColorDown);
 
+	connect(copy_preset_button, &QPushButton::clicked,
+	        this, [this]() {
+		QApplication::clipboard()->setText(custom_string_edit->text());
+	} );
+	connect(paste_preset_button, &QPushButton::clicked,
+	        this, [this]() { 
+		custom_string_edit->setText(QApplication::clipboard()->text());
+		preset_buttons.back()->setChecked(true);
+	} );
 	connect(apply_preset_button, &QPushButton::clicked,
 	        this, &PaintOnTemplateSettingsPage::applyPresets);
 	connect(custom_string_edit, &QLineEdit::textEdited,
