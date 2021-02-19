@@ -49,6 +49,7 @@ PATTERN=
 for I in \
   action_grid_bar.cpp \
   boolean_tool.cpp \
+  color_wheel_widget.cpp \
   combined_symbol.cpp \
   configure_grid_dialog.cpp \
   crs_param_widgets.cpp \
