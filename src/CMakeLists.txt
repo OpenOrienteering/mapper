@@ -186,6 +186,7 @@ set(Mapper_Common_SRCS
   gui/widgets/key_button_bar.cpp
   gui/widgets/mapper_proxystyle.cpp
   gui/widgets/measure_widget.cpp
+  gui/widgets/paint_on_template_settings_page.cpp
   gui/widgets/pie_menu.cpp
   gui/widgets/segmented_button_layout.cpp
   gui/widgets/settings_page.cpp

@@ -22,12 +22,15 @@
 #ifndef OPENORIENTEERING_SETTINGS_H
 #define OPENORIENTEERING_SETTINGS_H
 
+#include <vector>
+
 #include <QtGlobal>
 #include <QHash>
 #include <QObject>
 #include <QString>
 #include <QVariant>
 
+class QColor;
 class QSettings;
 
 
@@ -72,6 +75,7 @@ public:
 		General_StartDragDistance,
 		HomeScreen_TipsVisible,
 		HomeScreen_CurrentTip,
+		PaintOnTemplateTool_Colors,
 		END_OF_SETTINGSENUM /* Don't add items below this line. */
 	};
 	
@@ -207,6 +211,16 @@ public:
 	 */
 	void setNmeaSerialPort(const QString& name);
 	
+	/// Returns a vector of colors for paint on template tool.
+	std::vector<QColor> paintOnTemplateColors() const;
+	/// Saves the paint on template tool color vector to settings.
+	void setPaintOnTemplateColors(const std::vector<QColor>& new_colors);
+	/// Helper method for conversion of config string to vector of color.
+	/// In use by the configuration settings page.
+	static std::vector<QColor> colorsStringToVector(QString config_string);
+	/// Helper method for conversion of vector of colors to config string.
+	/// In use by the configuration settings page.
+	static QString colorsVectorToString(const std::vector<QColor>& new_colors);
 	
 signals:
 	void settingsChanged();

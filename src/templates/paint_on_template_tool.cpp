@@ -195,16 +195,8 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 	auto* toolbar = new ActionGridBar(ActionGridBar::Horizontal, 2);
 	auto* color_options = new QActionGroup(this);
 	
-	int count = 0;
-	static QColor const default_colors[] = {
-	    qRgb(255,   0,   0),
-	    qRgb(255, 255,   0),
-	    qRgb(  0, 255,   0),
-	    qRgb(219,   0, 216),
-	    qRgb(  0,   0, 255),
-	    qRgb(209,  92,   0),
-	    qRgb(  0,   0,   0),
-	};
+	auto const default_colors = Settings::getInstance().paintOnTemplateColors();
+	auto count = (default_colors.size() + 1) % 2; // align colors with the other icons
 	for (auto const& color: default_colors)
 	{
 		QPixmap pixmap(icon_size, icon_size);
