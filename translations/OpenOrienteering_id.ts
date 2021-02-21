@@ -188,22 +188,22 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="229"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished"></translation>
+        <translation>Gambar elemen di batas</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klip elemen di batas.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gambar elemen jika pusatnya berada di dalam batas.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="233"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gambar elemen jika ada titik di dalam batas.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="234"/>
@@ -317,7 +317,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
         <source>lpi</source>
-        <translation type="unfinished"></translation>
+        <translation>lpi</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
@@ -566,7 +566,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (%2°, %3 lpi)</translation>
     </message>
 </context>
 <context>
@@ -7519,7 +7519,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template.cpp" line="674"/>
         <source>Not enough free memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Memori bebas tidak cukup.</translation>
     </message>
 </context>
 <context>
@@ -7649,7 +7649,7 @@ to jump over the lazy dog
         <location filename="../src/gdal/gdal_template.cpp" line="150"/>
         <location filename="../src/templates/template_image.cpp" line="243"/>
         <source>Georeferencing not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferensi tidak ditemukan</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -7666,13 +7666,13 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
     <message>
         <location filename="../src/templates/template_image.cpp" line="148"/>
         <source>Format not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Format tidak didukung</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="301"/>
         <location filename="../src/templates/template_image.cpp" line="421"/>
         <source>Select the coordinate reference system of the georeferenced image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilih sistem referensi koordinat dari gambar georeferensi.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="306"/>
@@ -7907,7 +7907,7 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="296"/>
         <source>Vectorize lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Vektorisasi garis</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="670"/>
@@ -7954,7 +7954,7 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="988"/>
         <source>Cannot change the georeferencing state.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat mengubah status georeferensi.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_table_model.cpp" line="257"/>
@@ -7968,7 +7968,7 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
         <location filename="../src/templates/template_map.cpp" line="170"/>
         <location filename="../src/templates/template_map.cpp" line="304"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Gagal mengubah koordinat.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_map.cpp" line="197"/>
@@ -7989,7 +7989,7 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
     <message>
         <location filename="../src/templates/template_placeholder.cpp" line="178"/>
         <source>Unknown file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Format file tidak diketahui</translation>
     </message>
 </context>
 <context>
@@ -8080,7 +8080,7 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
         <location filename="../src/templates/template_track.cpp" line="256"/>
         <location filename="../src/templates/template_track.cpp" line="262"/>
         <source>This template must be loaded with GDAL/OGR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Template ini harus dimuat dengan GDAL / OGR.</translation>
     </message>
     <message>
         <source>Select the coordinate reference system of the track coordinates</source>
@@ -8089,17 +8089,17 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
     <message>
         <location filename="../src/templates/template_track.cpp" line="83"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Jalur</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="96"/>
         <source>Route</source>
-        <translation type="unfinished"></translation>
+        <translation>Rute</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="109"/>
         <source>Waypoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Titik arah</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="294"/>
@@ -8495,7 +8495,7 @@ Didukung versi maksimum adalah %2.</translation>
         <location filename="../src/tools/tool_helpers.cpp" line="650"/>
         <source>%1 m</source>
         <comment>meter</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 m</translation>
     </message>
 </context>
 <context>
@@ -8533,7 +8533,9 @@ Didukung versi maksimum adalah %2.</translation>
         <source>Internal error detected! Please report this issue.
 Version: %1
 Location: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Galat internal terdeteksi! Silakan laporkan masalah ini.
+Versi: %1
+Lokasi: %2</translation>
     </message>
 </context>
 <context>
@@ -8579,7 +8581,7 @@ Location: %2</source>
         <location filename="../src/fileformats/xml_file_format.cpp" line="684"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="968"/>
         <source>Some invalid characters had to be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Beberapa karakter yang tidak valid harus dihapus.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="702"/>
@@ -8594,7 +8596,7 @@ Location: %2</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="731"/>
         <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
-        <translation type="unfinished"></translation>
+        <translation>Deklinasi/grivasi yang tidak konsisten terdeteksi. Diselesaikan dengan penyesuaian otomatis deklinasi ke %1°.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="861"/>
