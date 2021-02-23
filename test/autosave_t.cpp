@@ -232,7 +232,7 @@ void AutosaveTest::autosaveStopTest()
 	{
 		AutosaveTestDocument doc(Autosave::PermanentFailure);
 		
-		// Test stopping autosave in permament failure mode
+		// Test stopping autosave in permanent failure mode
 		doc.setAutosaveNeeded(true);
 		QTest::qWait(msecs(autosave_interval));
 		QTRY_COMPARE_WITH_TIMEOUT((doc.autosaveCount()), 1, 2000);
