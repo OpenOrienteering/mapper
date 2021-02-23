@@ -80,7 +80,7 @@ public:
 	inline const Symbol* getUnmodifiedSymbolCopy() const { return &*source_symbol_copy; }
 	
 	/**
-	 * Returns true if the edited symbol has modfications.
+	 * Returns true if the edited symbol has modifications.
 	 */
 	inline bool isSymbolModified() const { return symbol_modified; }
 	

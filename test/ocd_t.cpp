@@ -45,7 +45,7 @@
  * - assignments of shorter, max length, and more than max length characters
  *   are covered,
  * - unused storage is filled with zero (for privacy)
- * - data following the string storage is not accidently overwritten.
+ * - data following the string storage is not accidentally overwritten.
  */
 class OcdTest : public QObject
 {
@@ -109,7 +109,7 @@ private slots:
 	
 	/*
 	 * Ocd::PascalString<N> represents a string of N bytes, preceded by a byte
-	 * giving the length. So a trailing zero is not requried.
+	 * giving the length. So a trailing zero is not required.
 	 */
 	void pascalStringTest_data()
 	{

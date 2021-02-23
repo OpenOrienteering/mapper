@@ -99,7 +99,7 @@ endfunction()
 # 
 # When Mapper_DEVELOPMENT_BUILD is disabled, the additional explicit sources
 # are ignored, and the unit test executable is linked directly to the
-# Mapper_Common libary. This is a faster choice for one-time builds like CI,
+# Mapper_Common library. This is a faster choice for one-time builds like CI,
 # and it also avoids problems with collecting test coverage information.
 #
 function(add_unit_test testname)
