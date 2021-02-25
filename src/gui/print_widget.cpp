@@ -64,6 +64,7 @@
 #include <QRegExpValidator>
 #include <QScrollArea>
 #include <QScrollBar>
+#include <QSettings>
 #include <QSignalBlocker>
 #include <QSizeF>
 #include <QSpacerItem>
@@ -256,6 +257,13 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	tile_size_combo->addItem(tr("256x256 pixel"), 256);
 	tile_size_combo->addItem(tr("512x512 pixel"), 512);
 	layout->addRow(tr("Tiles:"), tile_size_combo);
+	{
+		auto const tile_size_setting = QSettings().value(QStringLiteral("Export/KmzTileSize"), 512);
+		auto tile_size_index = tile_size_combo->findData(tile_size_setting);
+		if (tile_size_index < 0)
+			tile_size_index = tile_size_combo->findData(512);
+		tile_size_combo->setCurrentIndex(tile_size_index);
+	}
 	
 	different_scale_check = new QCheckBox(tr("Print in different scale:"));
 	// Limit the difference between nominal and printing scale in order to limit the number of page breaks.
@@ -1200,6 +1208,12 @@ void PrintWidget::printClicked()
 		                          QMessageBox::Ok | QMessageBox::Cancel) == QMessageBox::Cancel)
 			return;
 	}
+	
+	if (tile_size_combo->isVisible())
+	{
+		QSettings().setValue(QStringLiteral("Export/KmzTileSize"), tile_size_combo->currentData());
+	}
+	
 	
 	if (map_printer->getTarget() == MapPrinter::imageTarget())
 		exportToImage();
