@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -250,6 +250,13 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	// TODO: Implement spinbox-style " dpi" suffix
 	layout->addRow(tr("Resolution:"), dpi_combo);
 	
+	tile_size_combo = new QComboBox();
+	tile_size_combo->setEditable(false);
+	tile_size_combo->addItem(tr("No tiles"), 0);
+	tile_size_combo->addItem(tr("256x256 pixel"), 256);
+	tile_size_combo->addItem(tr("512x512 pixel"), 512);
+	layout->addRow(tr("Tiles:"), tile_size_combo);
+	
 	different_scale_check = new QCheckBox(tr("Print in different scale:"));
 	// Limit the difference between nominal and printing scale in order to limit the number of page breaks.
 	int min_scale = qMax(1, int(map->getScaleDenominator() / 10000) * 100);
@@ -391,13 +398,16 @@ void PrintWidget::setTask(PrintWidget::TaskFlags type)
 	if (task != type)
 	{
 		task = type;
-		bool is_print_task = type==PRINT_TASK;
-		bool is_multipage  = type.testFlag(MULTIPAGE_FLAG);
+		auto const is_print_task = type==PRINT_TASK;
+		auto const is_multipage  = type.testFlag(MULTIPAGE_FLAG);
+		auto const supports_tiles = type.testFlag(TILES_FLAG);
 		layout->labelForField(target_combo)->setVisible(is_print_task);
 		target_combo->setVisible(is_print_task);
 		layout->labelForField(copies_edit)->setVisible(is_multipage);
 		copies_edit->setVisible(is_multipage);
 		policy_combo->setVisible(is_multipage);
+		tile_size_combo->setVisible(supports_tiles);
+		layout->labelForField(tile_size_combo)->setVisible(supports_tiles);
 		updateTargets();
 		switch (type)
 		{
@@ -447,7 +457,7 @@ void PrintWidget::setTask(PrintWidget::TaskFlags type)
 					policy_combo->setCurrentIndex(policy_combo->findData(policy));
 				}
 				emit taskChanged(tr("KMZ export"));
-			break;
+				break;
 			
 			default:
 				emit taskChanged(QString{});
@@ -1230,7 +1240,7 @@ void PrintWidget::exportToKmz()
 	
 	KmzGroundOverlayExport exporter(path, *map);
 	exporter.setProgressObserver(&progress);
-	if (!exporter.doExport(*map_printer))
+	if (!exporter.doExport(*map_printer, tile_size_combo->currentData().toInt()))
 	{
 		progress.cancel();
 		QMessageBox::warning(this, tr("Error"), tr("Failed to save the image:\n%1").arg(exporter.errorString()));
