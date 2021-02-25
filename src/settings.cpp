@@ -28,12 +28,17 @@
 #include <QApplication>
 #endif
 #include <QByteArray>
+#include <QColor>
 #include <QGuiApplication>
+#include <QLatin1Char>
 #include <QLatin1String>
 #include <QLocale>
+#include <QRgb>
 #include <QScreen>
 #include <QSettings>
 #include <QStringList>
+#include <QStringRef>
+#include <QVector>
 
 
 namespace OpenOrienteering {
@@ -161,6 +166,9 @@ Settings::Settings()
 	// Set antialiasing default depending on screen pixels per inch
 	registerSetting(MapDisplay_Antialiasing, "MapDisplay/antialiasing", Util::isAntialiasingRequired(getSetting(General_PixelsPerInch).toReal()));
 	
+	// Paint On Template tool settings
+	registerSetting(PaintOnTemplateTool_Colors, "PaintOnTemplateTool/colors", QLatin1String("FF0000,FFFF00,00FF00,DB00D9,0000FF,D15C00,000000"));
+
 	QSettings settings;
 	
 #ifndef Q_OS_ANDROID
@@ -391,6 +399,41 @@ void Settings::setNmeaSerialPort(const QString& name)
 		QSettings().setValue(QLatin1String("Sensors/nmea_serialport"), name);
 		emit settingsChanged();
 	}
+}
+
+std::vector<QColor> Settings::colorsStringToVector(QString config_string)
+{
+	auto const color_strings = config_string.splitRef(QLatin1Char(','));
+
+	auto colors = std::vector<QColor>();
+	colors.reserve(color_strings.size());
+
+	// we don't bother about malformed strings and accept the resulting zero
+	for (const auto& color_string : color_strings)
+		colors.emplace_back(QRgb(color_string.toUInt(nullptr, 16)));
+
+	return colors;
+}
+
+std::vector<QColor> Settings::paintOnTemplateColors() const
+{
+	return colorsStringToVector(getSetting(PaintOnTemplateTool_Colors).toString());
+}
+
+QString Settings::colorsVectorToString(const std::vector<QColor>& new_colors)
+{
+	auto strings = QStringList {};
+	strings.reserve(new_colors.size());
+
+	for (auto const& color : new_colors)
+		strings.append(color.name().right(6).toUpper());
+
+	return strings.join(QLatin1Char(','));
+}
+
+void Settings::setPaintOnTemplateColors(const std::vector<QColor>& new_colors)
+{
+	setSetting(PaintOnTemplateTool_Colors, colorsVectorToString(new_colors));
 }
 
 

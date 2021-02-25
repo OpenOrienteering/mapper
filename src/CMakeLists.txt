@@ -176,6 +176,7 @@ set(Mapper_Common_SRCS
   gui/widgets/action_grid_bar.cpp
   gui/widgets/color_dropdown.cpp
   gui/widgets/color_list_widget.cpp
+  gui/widgets/color_wheel_widget.cpp
   gui/widgets/compass_display.cpp
   gui/widgets/crs_param_widgets.cpp
   gui/widgets/crs_selector.cpp
@@ -185,6 +186,7 @@ set(Mapper_Common_SRCS
   gui/widgets/key_button_bar.cpp
   gui/widgets/mapper_proxystyle.cpp
   gui/widgets/measure_widget.cpp
+  gui/widgets/paint_on_template_settings_page.cpp
   gui/widgets/pie_menu.cpp
   gui/widgets/segmented_button_layout.cpp
   gui/widgets/settings_page.cpp
