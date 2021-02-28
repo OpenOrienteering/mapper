@@ -25,6 +25,7 @@
 #include "fileformats/file_import_export.h"
 
 class QString;
+class QXmlStreamWriter;
 
 namespace OpenOrienteering {
 
@@ -58,10 +59,12 @@ protected:
 	
 	void writeKmlPlacemarks(const std::vector<MapCoord>& coords);
 	
-	void writeKmlPlacemark(const MapCoord& coord, const char* name, const char* description);
+	void writeKmlPlacemark(const MapCoord& coord, const QString& name, const QString& description);
 	
 	void writeCoordinates(const LatLon& latlon);
 	
+private:
+	QXmlStreamWriter* xml = nullptr;
 };
 
 

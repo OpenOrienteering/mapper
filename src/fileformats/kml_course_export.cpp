@@ -19,9 +19,11 @@
 
 #include "kml_course_export.h"
 
-#include <QByteArray>
-#include <QIODevice>
+#include <Qt>
+#include <QDateTime>
+#include <QLatin1String>
 #include <QString>
+#include <QXmlStreamWriter>
 
 #include "mapper_config.h"
 #include "core/georeferencing.h"
@@ -30,6 +32,7 @@
 #include "core/map_coord.h"
 #include "core/objects/object.h"
 #include "fileformats/simple_course_export.h"
+#include "util/xml_stream_util.h"
 
 
 namespace OpenOrienteering {
@@ -65,31 +68,35 @@ bool KmlCourseExport::exportImplementation()
 		return false;
 	}
 	
+	QXmlStreamWriter writer(device());
+	writer.setAutoFormatting(true);
+	xml = &writer;
+	xml->writeStartDocument();
 	writeKml(*object);
+	xml = nullptr;
+	
 	return true;
 }
 
 
 void KmlCourseExport::writeKml(const PathObject& object)
 {
-	auto* device = this->device();
-	device->write(
-	  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-	  "<!-- Generator: OpenOrienteering Mapper " APP_VERSION " -->\n"
-	  "<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n"
-	  "<Document>\n"
-	  " <name>Course</name>\n"
-	  " <Folder>\n"
-	  "  <name>Course 1</name>\n"
-	  "  <open>1</open>\n"
-	);
-	writeKmlPlacemarks(object.getRawCoordinateVector());
-	device->write(
-	  " </Folder>\n"
-	  "</Document>\n"
-	  "</kml>\n"
-	);
+	auto const stamp = QDateTime::currentDateTime();
+	xml->writeDefaultNamespace(QLatin1String("http://www.opengis.net/kml/2.2"));
+	xml->writeComment(QLatin1String("Generator: OpenOrienteering Mapper " APP_VERSION));
+	xml->writeComment(QLatin1String("Created:   ") + stamp.toString(Qt::ISODate));
 	
+	XmlElementWriter kml(*xml, QLatin1String("kml"));
+	{
+		XmlElementWriter document(*xml, QLatin1String("Document"));
+		xml->writeTextElement(QLatin1String("name"), QLatin1String("Event"));
+		{
+			XmlElementWriter folder(*xml, QLatin1String("Folder"));
+			xml->writeTextElement(QLatin1String("name"), QLatin1String("Course"));
+			xml->writeTextElement(QLatin1String("open"), QLatin1String("1"));
+			writeKmlPlacemarks(object.getRawCoordinateVector());
+		}
+	}
 }
 
 void KmlCourseExport::writeKmlPlacemarks(const std::vector<MapCoord>& coords)
@@ -98,48 +105,35 @@ void KmlCourseExport::writeKmlPlacemarks(const std::vector<MapCoord>& coords)
 		return current + (current->isCurveStart() ? 3 : 1);
 	};
 	
-	writeKmlPlacemark(coords.front(), "S1", "Start");
+	writeKmlPlacemark(coords.front(), QLatin1String("S1"), QLatin1String("Start"));
 	auto code_number = 1;
 	for (auto current = next(coords.begin()); current != coords.end() - 1; current = next(current))
 	{
-		auto const name = QByteArray::number(code_number);
-		writeKmlPlacemark(*current, name, QByteArray("Control " + name));
+		auto const name = QString::number(code_number);
+		writeKmlPlacemark(*current, name, QLatin1String("Control ") + name);
 		++code_number;
 	}
-	writeKmlPlacemark(coords.back(), "F1", "Finish");
+	writeKmlPlacemark(coords.back(), QLatin1String("F1"), QLatin1String("Finish"));
 }
 
-void KmlCourseExport::writeKmlPlacemark(const MapCoord& coord, const char* name, const char* description)
+void KmlCourseExport::writeKmlPlacemark(const MapCoord& coord, const QString& name, const QString& description)
 {
-	auto* device = this->device();
-	device->write(
-	  "  <Placemark>\n"
-	  "   <name>"
-	);
-	device->write(name);
-	device->write("</name>\n"
-	  "   <description>"
-	);
-	device->write(description);
-	device->write("</description>\n"
-	  "   <Point>\n"
-	  "    <coordinates>"
-	);
-	writeCoordinates(map->getGeoreferencing().toGeographicCoords(MapCoordF(coord)));
-	device->write(
-	  "</coordinates>\n"
-	  "   </Point>\n"
-	  "  </Placemark>\n"
-	);
+	XmlElementWriter placemark(*xml, QLatin1String("Placemark"));
+	xml->writeTextElement(QLatin1String("name"), name);
+	xml->writeTextElement(QLatin1String("description"), description);
+	{
+		XmlElementWriter point(*xml, QLatin1String("Point"));
+		writeCoordinates(map->getGeoreferencing().toGeographicCoords(MapCoordF(coord)));
+	}
 }
 
 void KmlCourseExport::writeCoordinates(const LatLon& latlon)
 {
-	auto* device = this->device();
-	device->write(QByteArray::number(latlon.longitude(), 'f', 7));
-	device->write(",");
-	device->write(QByteArray::number(latlon.latitude(), 'f', 7));
-	device->write(",0");
+	XmlElementWriter coordinates(*xml, QLatin1String("coordinates"));
+	xml->writeCharacters(QString::number(latlon.longitude(), 'f', 7));
+	xml->writeCharacters(QLatin1String(","));
+	xml->writeCharacters(QString::number(latlon.latitude(), 'f', 7));
+	xml->writeCharacters(QLatin1String(",0"));
 }
 
 
