@@ -34,13 +34,16 @@ class Map;
 class MapCoord;
 class MapView;
 class PathObject;
+class SimpleCourseExport;
 
 
 /**
  * This class generates KML course files for MapRunF.
  * 
  * This export handles a single path object and outputs placemarks for start
- * (S1), finish (F1), and controls in between (starting from number 1).
+ * (S1), finish (F1), and controls in between. Event name, course name, and
+ * the code number of the first control are taken from transient map properties
+ * in collaboration with the SimpleCourseExport class.
  */
 class KmlCourseExport : public Exporter
 {
@@ -65,6 +68,7 @@ protected:
 	
 private:
 	QXmlStreamWriter* xml = nullptr;
+	SimpleCourseExport* simple_course = nullptr;
 };
 
 

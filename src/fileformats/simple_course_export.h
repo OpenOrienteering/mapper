@@ -39,17 +39,32 @@ class SimpleCourseExport
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::SimpleCourseExport)
 	
 public:
+	static QString defaultEventName();
+	static QString defaultCourseName();
+	static int defaultFirstCode() noexcept;
+	
 	~SimpleCourseExport() = default;
 	
 	SimpleCourseExport(const Map& map) : map{map} {};
 	
 	SimpleCourseExport(const SimpleCourseExport&) = default;
 	
+	
 	bool canExport();
 	
 	bool canExport(const PathObject* object);
 	
 	const PathObject* findObjectForExport() const;
+	
+	
+	QString eventName() const;
+	
+	QString courseName() const;
+	
+	int firstCode() const;
+	
+	void setProperties(Map& map, const QString& event_name, const QString& course_name, int first_code);
+	
 	
 	QString errorString() const { return error_string; };
 	

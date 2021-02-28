@@ -118,6 +118,7 @@
 #include "gui/georeferencing_dialog.h"
 #include "gui/main_window.h"
 #include "gui/print_widget.h"
+#include "gui/simple_course_dialog.h"
 #include "gui/text_browser_dialog.h"
 #include "gui/util_gui.h"
 #include "gui/map/map_dialog_scale.h"
@@ -1800,6 +1801,19 @@ void MapEditorController::exportSimpleCourse()
 		return;
 	}
 	
+	SimpleCourseDialog course_dialog(simple_export, window);
+	if (course_dialog.exec() != QDialog::Accepted)
+		return;
+	
+	// Ideally, the dialog results should be passed to the exporter via options.
+	// However, the exporter is created only much later. So here, we can neither
+	// discover the supported options nor set them directly. We would have to pass
+	// them through the call stack as parameter. Instead of this intrusive approach,
+	// we rely on transient map properties handled by SimpleCourseExport.
+	simple_export.setProperties(*map,
+	                            course_dialog.eventName(),
+	                            course_dialog.courseName(),
+	                            course_dialog.firstCodeNumber());
 	exportVectorData(FileFormat::SimpleCourseFile, QStringLiteral("Export/lastSimpleCourseFormat"));
 }
 

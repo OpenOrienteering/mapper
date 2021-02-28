@@ -68,6 +68,8 @@ bool KmlCourseExport::exportImplementation()
 		return false;
 	}
 	
+	simple_course = &course_export;
+	
 	QXmlStreamWriter writer(device());
 	writer.setAutoFormatting(true);
 	xml = &writer;
@@ -75,6 +77,7 @@ bool KmlCourseExport::exportImplementation()
 	writeKml(*object);
 	xml = nullptr;
 	
+	simple_course = nullptr;
 	return true;
 }
 
@@ -89,10 +92,10 @@ void KmlCourseExport::writeKml(const PathObject& object)
 	XmlElementWriter kml(*xml, QLatin1String("kml"));
 	{
 		XmlElementWriter document(*xml, QLatin1String("Document"));
-		xml->writeTextElement(QLatin1String("name"), QLatin1String("Event"));
+		xml->writeTextElement(QLatin1String("name"), simple_course->eventName());
 		{
 			XmlElementWriter folder(*xml, QLatin1String("Folder"));
-			xml->writeTextElement(QLatin1String("name"), QLatin1String("Course"));
+			xml->writeTextElement(QLatin1String("name"), simple_course->courseName());
 			xml->writeTextElement(QLatin1String("open"), QLatin1String("1"));
 			writeKmlPlacemarks(object.getRawCoordinateVector());
 		}
@@ -106,7 +109,7 @@ void KmlCourseExport::writeKmlPlacemarks(const std::vector<MapCoord>& coords)
 	};
 	
 	writeKmlPlacemark(coords.front(), QLatin1String("S1"), QLatin1String("Start"));
-	auto code_number = 1;
+	auto code_number = simple_course->firstCode();
 	for (auto current = next(coords.begin()); current != coords.end() - 1; current = next(current))
 	{
 		auto const name = QString::number(code_number);
