@@ -124,6 +124,7 @@ set(Mapper_Common_SRCS
   fileformats/file_format.cpp
   fileformats/file_format_registry.cpp
   fileformats/file_import_export.cpp
+  fileformats/iof_course_export.cpp
   fileformats/kml_course_export.cpp
   fileformats/ocd_file_export.cpp
   fileformats/ocd_file_format.cpp

@@ -25,6 +25,7 @@
 #include <QString>
 
 #include "fileformats/file_import_export.h"
+#include "fileformats/iof_course_export.h"
 #include "fileformats/kml_course_export.h"
 
 
@@ -48,6 +49,7 @@ std::vector<std::unique_ptr<CourseFileFormat>> CourseFileFormat::makeAll()
 	std::vector<std::unique_ptr<CourseFileFormat>> result;
 	result.reserve(2);
 	
+	result.push_back(makeFileFormat<IofCourseExport>(SimpleCourseFile, "simple-iof-course"));
 	result.push_back(makeFileFormat<KmlCourseExport>(SimpleCourseFile, "simple-kml-course"));
 	return result;
 }
