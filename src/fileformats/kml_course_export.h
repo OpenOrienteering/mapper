@@ -40,9 +40,7 @@ class PathObject;
  * This class generates KML course files for MapRunF.
  * 
  * This export handles a single path object and outputs placemarks for start
- * (S1), finish (F1), and controls in between (starting from number 1). The path
- * is either the single selected path object, or the single path object
- * contained in the map's single map part.
+ * (S1), finish (F1), and controls in between (starting from number 1).
  * 
  * Due to its special mode of operation, this class is not implemented as a
  * subclass of Exporter. But the API is kept similar.
@@ -56,17 +54,11 @@ public:
 	
 	KmlCourseExport(const Map& map);
 	
-	bool canExport(const PathObject* object);
-	
-	bool canExport();
-	
 	bool doExport(const QString& filepath);
 	
 	QString errorString() const;
 	
 protected:
-	const PathObject* findObjectForExport() const;
-	
 	void writeKml(const PathObject& object);
 	
 	void writeKmlPlacemarks(const std::vector<MapCoord>& coords);

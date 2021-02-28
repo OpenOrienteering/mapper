@@ -130,6 +130,7 @@ set(Mapper_Common_SRCS
   fileformats/ocd_georef_fields.cpp
   fileformats/ocd_icon.cpp
   fileformats/ocd_types.cpp
+  fileformats/simple_course_export.cpp
   fileformats/xml_file_format.cpp
   
   gui/about_dialog.cpp

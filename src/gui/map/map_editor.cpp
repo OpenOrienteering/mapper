@@ -113,6 +113,7 @@
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
 #include "fileformats/kml_course_export.h"
+#include "fileformats/simple_course_export.h"
 #include "gui/configure_grid_dialog.h"
 #include "gui/file_dialog.h"
 #include "gui/georeferencing_dialog.h"
@@ -1749,10 +1750,10 @@ bool MapEditorController::keyReleaseEventFilter(QKeyEvent* event)
 // slot
 void MapEditorController::exportSimpleCourse()
 {
-	KmlCourseExport exporter{*map};
-	if (!exporter.canExport())
+	SimpleCourseExport course_export{*map};
+	if (!course_export.canExport())
 	{
-		QMessageBox::warning(window, tr("Error"), exporter.errorString());
+		QMessageBox::warning(window, tr("Error"), course_export.errorString());
 		return;
 	}
 	
@@ -1772,6 +1773,7 @@ void MapEditorController::exportSimpleCourse()
 	
 	settings.setValue(QString::fromLatin1("importFileDirectory"), QFileInfo(filepath).canonicalPath());
 	
+	KmlCourseExport exporter{*map};
 	if (exporter.doExport(filepath))
 	{
 		window->showStatusBarMessage(tr("Exported successfully to %1").arg(filepath), 4000);

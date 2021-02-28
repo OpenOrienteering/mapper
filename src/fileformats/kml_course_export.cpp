@@ -28,8 +28,8 @@
 #include "core/latlon.h"
 #include "core/map.h"
 #include "core/map_coord.h"
-#include "core/map_part.h"
 #include "core/objects/object.h"
+#include "fileformats/simple_course_export.h"
 
 
 namespace OpenOrienteering {
@@ -41,27 +41,13 @@ KmlCourseExport::KmlCourseExport(const Map& map)
 {}
 
 
-bool KmlCourseExport::canExport(const PathObject* object)
-{
-	if (!object)
-	{
-		error_string = tr("For KML course export, a single line object must be selected.");
-		return false;
-	}
-	return true;
-}
-
-bool KmlCourseExport::canExport()
-{
-	return canExport(findObjectForExport());
-}
-
-
 bool KmlCourseExport::doExport(const QString& filepath)
 {
-	auto const* const object = findObjectForExport();
-	if (!canExport(object))
+	auto course_export = SimpleCourseExport(map);
+	auto const* const object = course_export.findObjectForExport();
+	if (!course_export.canExport(object))
 	{
+		error_string = course_export.errorString();
 		return false;
 	}
 	
@@ -86,24 +72,6 @@ bool KmlCourseExport::doExport(const QString& filepath)
 QString KmlCourseExport::errorString() const
 {
 	return error_string;
-}
-
-
-const PathObject* KmlCourseExport::findObjectForExport() const
-{
-	const PathObject* path_object = nullptr;
-	if (map.getNumSelectedObjects() == 1
-	    && map.getFirstSelectedObject()->getType() == Object::Path)
-	{
-		path_object = static_cast<PathObject const*>(map.getFirstSelectedObject());
-	}
-	else if (map.getNumParts() == 1
-	         && map.getPart(0)->getNumObjects() == 1
-	         && map.getPart(0)->getObject(0)->getType() == Object::Path)
-	{
-		path_object = static_cast<PathObject const*>(map.getPart(0)->getObject(0));
-	}
-	return (path_object && path_object->parts().size() == 1) ? path_object : nullptr;
 }
 
 

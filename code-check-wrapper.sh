@@ -88,6 +88,7 @@ for I in \
   renderable_implementation.cpp \
   rotate_map_dialog.cpp \
   settings_dialog.cpp \
+  simple_course_export.cpp \
   stretch_map_dialog.cpp \
   style_t.cpp \
   /symbol.cpp \
