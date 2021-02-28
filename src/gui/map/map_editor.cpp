@@ -956,7 +956,7 @@ void MapEditorController::createActions()
 #ifndef MAPPER_USE_GDAL
 	export_kmz_act->setVisible(false);
 #endif
-	export_kml_course_act = newAction("export-kml-course", tr("KML &course"), this, SLOT(exportKmlCourse()), nullptr, QString{}, "file_menu.html");
+	export_simple_course_act = newAction("export-simple-course", tr("Simple &course"), this, SLOT(exportSimpleCourse()), nullptr, QString{}, "file_menu.html");
 	export_pdf_act = newAction("export-pdf", tr("&PDF"), print_act_mapper, SLOT(map()), nullptr, QString{}, "file_menu.html");
 	print_act_mapper->setMapping(export_pdf_act, PrintWidget::EXPORT_PDF_TASK);
 #ifdef MAPPER_USE_GDAL
@@ -969,7 +969,7 @@ void MapEditorController::createActions()
 	print_act = nullptr;
 	export_image_act = nullptr;
 	export_kmz_act = nullptr;
-	export_kml_course_act = nullptr;
+	export_simple_course_act = nullptr;
 	export_pdf_act = nullptr;
 #endif
 	
@@ -1140,9 +1140,9 @@ void MapEditorController::createMenuAndToolbars()
 	QMenu* export_menu = new QMenu(tr("&Export as..."), file_menu);
 	export_menu->menuAction()->setMenuRole(QAction::NoRole);
 	export_menu->addAction(export_image_act);
-	export_menu->addAction(export_kmz_act);
-	export_menu->addAction(export_kml_course_act);
 	export_menu->addAction(export_pdf_act);
+	export_menu->addAction(export_kmz_act);
+	export_menu->addAction(export_simple_course_act);
 	if (export_vector_act)
 		export_menu->addAction(export_vector_act);
 	file_menu->insertMenu(insertion_act, export_menu);
@@ -1747,7 +1747,7 @@ bool MapEditorController::keyReleaseEventFilter(QKeyEvent* event)
 
 
 // slot
-void MapEditorController::exportKmlCourse()
+void MapEditorController::exportSimpleCourse()
 {
 	KmlCourseExport exporter{*map};
 	if (!exporter.canExport())
@@ -1778,9 +1778,9 @@ void MapEditorController::exportKmlCourse()
 	}
 	else
 	{
-		QMessageBox::information(window, tr("Error"),
-		                         ::OpenOrienteering::ImportExport::tr("Cannot save file\n%1:\n%2")
-		                         .arg(filepath, exporter.errorString()));
+		QMessageBox::warning(window, tr("Error"),
+		                     ::OpenOrienteering::ImportExport::tr("Cannot save file\n%1:\n%2")
+		                     .arg(filepath, exporter.errorString()));
 	}
 }
 
@@ -1816,11 +1816,11 @@ void MapEditorController::exportVector()
 	auto const* format = FileFormats.findFormatByFilter(selected_filter, &FileFormat::supportsFileExport);
 	if (!format)
 	{
-		QMessageBox::information(window, tr("Error"),
-		                         ::OpenOrienteering::MainWindow::tr("File could not be saved:") + QLatin1Char('\n')
-		                         + ::OpenOrienteering::ImportExport::tr("Cannot find a vector data export driver named '%1'")
-		                           .arg(selected_filter) + QLatin1Char('\n') + QLatin1Char('\n')
-		                         + ::OpenOrienteering::MainWindow::tr("Please report this as a bug.") );
+		QMessageBox::warning(window, tr("Error"),
+		                     ::OpenOrienteering::MainWindow::tr("File could not be saved:") + QLatin1Char('\n')
+		                     + ::OpenOrienteering::ImportExport::tr("Cannot find a vector data export driver named '%1'")
+		                       .arg(selected_filter) + QLatin1Char('\n') + QLatin1Char('\n')
+		                     + ::OpenOrienteering::MainWindow::tr("Please report this as a bug.") );
 		return;
 	}
 	

@@ -257,9 +257,9 @@ public:
 	
 public slots:
 	/**
-	 * Lets the user export a PathObject as MapRunF KML course.
+	 * Lets the user export a PathObject as a simple course.
 	 */
-	void exportKmlCourse();
+	void exportSimpleCourse();
 	
 	/**
 	 * Lets the user export the map as geospatial vector data.
@@ -694,7 +694,7 @@ private:
 	QAction* print_act;
 	QAction* export_image_act;
 	QAction* export_kmz_act;
-	QAction* export_kml_course_act;
+	QAction* export_simple_course_act;
 	QAction* export_pdf_act;
 	QAction* export_vector_act;
 	
