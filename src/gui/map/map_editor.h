@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -254,6 +254,13 @@ public:
 	 * This implementation passes the event to MapWidget::keyReleaseEventFilter.
 	 */
 	bool keyReleaseEventFilter(QKeyEvent* event) override;
+	
+	
+	/**
+	 * Lets the user export the map as vector data file of one of the given types.
+	 */
+	void exportVectorData(int file_types, const QString& format_settings_key);
+	
 	
 public slots:
 	/**

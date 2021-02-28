@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -112,7 +112,6 @@
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
-#include "fileformats/kml_course_export.h"
 #include "fileformats/simple_course_export.h"
 #include "gui/configure_grid_dialog.h"
 #include "gui/file_dialog.h"
@@ -1747,58 +1746,17 @@ bool MapEditorController::keyReleaseEventFilter(QKeyEvent* event)
 
 
 
-// slot
-void MapEditorController::exportSimpleCourse()
-{
-	SimpleCourseExport course_export{*map};
-	if (!course_export.canExport())
-	{
-		QMessageBox::warning(window, tr("Error"), course_export.errorString());
-		return;
-	}
-	
-	QSettings settings;
-	auto const import_directory = settings.value(QString::fromLatin1("importFileDirectory"), QDir::homePath()).toString();
-	
-	auto filepath = FileDialog::getSaveFileName(
-	                       window,
-	                       tr("Export"),
-	                       import_directory,
-	                       {tr("KML course") + QStringLiteral(" (*.kml)")});
-	if (filepath.isEmpty())
-		return;
-	
-	if (!filepath.endsWith(QLatin1String(".kml", Qt::CaseInsensitive)))
-		filepath.append(QLatin1String(".kml"));
-	
-	settings.setValue(QString::fromLatin1("importFileDirectory"), QFileInfo(filepath).canonicalPath());
-	
-	KmlCourseExport exporter{*map};
-	if (exporter.doExport(filepath))
-	{
-		window->showStatusBarMessage(tr("Exported successfully to %1").arg(filepath), 4000);
-	}
-	else
-	{
-		QMessageBox::warning(window, tr("Error"),
-		                     ::OpenOrienteering::ImportExport::tr("Cannot save file\n%1:\n%2")
-		                     .arg(filepath, exporter.errorString()));
-	}
-}
-
-
-// slot
-void MapEditorController::exportVector()
+void MapEditorController::exportVectorData(int file_types, const QString& format_settings_key)
 {
 	QSettings settings;
 	QString const import_directory = settings.value(QString::fromLatin1("importFileDirectory"), QDir::homePath()).toString();
-	QString selected_filter = settings.value(QString::fromLatin1("lastExportFormat"), QDir::homePath()).toString();
+	QString selected_filter = settings.value(format_settings_key).toString();
 	
 	// Build the list of supported file filters based on the file format registry
 	QStringList filters;
 	for (auto format : FileFormats.formats())
 	{
-		if (format->supportsFileExport())
+		if (format->supportsFileExport() && format->fileType() & file_types)
 			filters.append(format->filter());
 	}
 	filters.sort();
@@ -1813,7 +1771,7 @@ void MapEditorController::exportVector()
 		return;
 	
 	settings.setValue(QString::fromLatin1("importFileDirectory"), QFileInfo(filename).canonicalPath());
-	settings.setValue(QString::fromLatin1("lastExportFormat"), selected_filter);
+	settings.setValue(format_settings_key, selected_filter);
 	
 	auto const* format = FileFormats.findFormatByFilter(selected_filter, &FileFormat::supportsFileExport);
 	if (!format)
@@ -1828,6 +1786,28 @@ void MapEditorController::exportVector()
 	
 	filename = format->fixupExtension(filename);
 	exportTo(filename, *format);
+}
+
+
+
+// slot
+void MapEditorController::exportSimpleCourse()
+{
+	auto simple_export = SimpleCourseExport(*map);
+	if (!simple_export.canExport())
+	{
+		QMessageBox::warning(window, tr("Error"), simple_export.errorString());
+		return;
+	}
+	
+	exportVectorData(FileFormat::SimpleCourseFile, QStringLiteral("Export/lastSimpleCourseFormat"));
+}
+
+
+// slot
+void MapEditorController::exportVector()
+{
+	exportVectorData(FileFormat::MapFile | FileFormat::OgrFile, QStringLiteral("Export/lastVectorFormat"));
 }
 
 

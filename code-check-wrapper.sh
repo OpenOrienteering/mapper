@@ -51,6 +51,7 @@ for I in \
   boolean_tool.cpp \
   combined_symbol.cpp \
   configure_grid_dialog.cpp \
+  course_file_format.cpp \
   crs_param_widgets.cpp \
   crs_template.cpp \
   crs_template_implementation.cpp \

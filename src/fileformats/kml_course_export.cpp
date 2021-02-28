@@ -1,5 +1,5 @@
 /*
- *    Copyright 2020 Kai Pastor
+ *    Copyright 2020-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,7 +21,7 @@
 
 #include <QByteArray>
 #include <QIODevice>
-#include <QSaveFile>
+#include <QString>
 
 #include "mapper_config.h"
 #include "core/georeferencing.h"
@@ -34,49 +34,45 @@
 
 namespace OpenOrienteering {
 
+// static
+QString KmlCourseExport::formatDescription()
+{
+	return OpenOrienteering::ImportExport::tr("KML");
+}
+
+// static
+QString KmlCourseExport::filenameExtension()
+{
+	return QStringLiteral("kml");
+}
+
+
 KmlCourseExport::~KmlCourseExport() = default;
 
-KmlCourseExport::KmlCourseExport(const Map& map)
-: map(map)
+KmlCourseExport::KmlCourseExport(const QString& path, const Map* map, const MapView* view)
+: Exporter(path, map, view)
 {}
 
 
-bool KmlCourseExport::doExport(const QString& filepath)
+// override
+bool KmlCourseExport::exportImplementation()
 {
-	auto course_export = SimpleCourseExport(map);
+	auto course_export = SimpleCourseExport(*map);
 	auto const* const object = course_export.findObjectForExport();
 	if (!course_export.canExport(object))
 	{
-		error_string = course_export.errorString();
-		return false;
-	}
-	
-	device = std::make_unique<QSaveFile>(filepath);
-	if (!device->open(QIODevice::WriteOnly))
-	{
-		error_string = device->errorString();
+		addWarning(course_export.errorString());
 		return false;
 	}
 	
 	writeKml(*object);
-	if (!device->commit())
-	{
-		error_string = device->errorString();
-		return false;
-	}
-		
 	return true;
-}
-
-
-QString KmlCourseExport::errorString() const
-{
-	return error_string;
 }
 
 
 void KmlCourseExport::writeKml(const PathObject& object)
 {
+	auto* device = this->device();
 	device->write(
 	  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 	  "<!-- Generator: OpenOrienteering Mapper " APP_VERSION " -->\n"
@@ -115,6 +111,7 @@ void KmlCourseExport::writeKmlPlacemarks(const std::vector<MapCoord>& coords)
 
 void KmlCourseExport::writeKmlPlacemark(const MapCoord& coord, const char* name, const char* description)
 {
+	auto* device = this->device();
 	device->write(
 	  "  <Placemark>\n"
 	  "   <name>"
@@ -128,7 +125,7 @@ void KmlCourseExport::writeKmlPlacemark(const MapCoord& coord, const char* name,
 	  "   <Point>\n"
 	  "    <coordinates>"
 	);
-	writeCoordinates(map.getGeoreferencing().toGeographicCoords(MapCoordF(coord)));
+	writeCoordinates(map->getGeoreferencing().toGeographicCoords(MapCoordF(coord)));
 	device->write(
 	  "</coordinates>\n"
 	  "   </Point>\n"
@@ -138,6 +135,7 @@ void KmlCourseExport::writeKmlPlacemark(const MapCoord& coord, const char* name,
 
 void KmlCourseExport::writeCoordinates(const LatLon& latlon)
 {
+	auto* device = this->device();
 	device->write(QByteArray::number(latlon.longitude(), 'f', 7));
 	device->write(",");
 	device->write(QByteArray::number(latlon.latitude(), 'f', 7));

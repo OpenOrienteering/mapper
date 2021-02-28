@@ -1,5 +1,5 @@
 /*
- *    Copyright 2020 Kai Pastor
+ *    Copyright 2020-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,19 +20,18 @@
 #ifndef OPENORIENTEERING_KML_EXPORT_EXPORT_H
 #define OPENORIENTEERING_KML_EXPORT_EXPORT_H
 
-#include <memory>
 #include <vector>
 
-#include <QCoreApplication>
-#include <QString>
+#include "fileformats/file_import_export.h"
 
-class QSaveFile;
+class QString;
 
 namespace OpenOrienteering {
 
 class LatLon;
 class Map;
 class MapCoord;
+class MapView;
 class PathObject;
 
 
@@ -41,24 +40,20 @@ class PathObject;
  * 
  * This export handles a single path object and outputs placemarks for start
  * (S1), finish (F1), and controls in between (starting from number 1).
- * 
- * Due to its special mode of operation, this class is not implemented as a
- * subclass of Exporter. But the API is kept similar.
  */
-class KmlCourseExport
+class KmlCourseExport : public Exporter
 {
-	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::KmlCourseExport)
-	
 public:
+	static QString formatDescription();
+	static QString filenameExtension();
+	
 	~KmlCourseExport();
 	
-	KmlCourseExport(const Map& map);
-	
-	bool doExport(const QString& filepath);
-	
-	QString errorString() const;
+	KmlCourseExport(const QString& path, const Map* map, const MapView* view);
 	
 protected:
+	bool exportImplementation() override;
+	
 	void writeKml(const PathObject& object);
 	
 	void writeKmlPlacemarks(const std::vector<MapCoord>& coords);
@@ -66,11 +61,6 @@ protected:
 	void writeKmlPlacemark(const MapCoord& coord, const char* name, const char* description);
 	
 	void writeCoordinates(const LatLon& latlon);
-	
-private:
-	std::unique_ptr<QSaveFile> device;
-	const Map& map;
-	QString error_string;
 	
 };
 

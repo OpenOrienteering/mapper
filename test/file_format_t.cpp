@@ -1002,8 +1002,8 @@ void FileFormatTest::kmlCourseExportTest()
 		map.getPart(0)->addObject(path_object);
 		QVERIFY(simple_export.canExport());
 		
-		KmlCourseExport exporter{map};
-		QVERIFY(exporter.doExport(filepath));
+		KmlCourseExport exporter{filepath, &map, nullptr};
+		QVERIFY(exporter.doExport());
 	}
 #ifdef MAPPER_USE_GDAL
 	{

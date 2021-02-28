@@ -120,6 +120,7 @@ set(Mapper_Common_SRCS
   core/symbols/symbol_icon_decorator.cpp
   core/symbols/text_symbol.cpp
   
+  fileformats/course_file_format.cpp
   fileformats/file_format.cpp
   fileformats/file_format_registry.cpp
   fileformats/file_import_export.cpp

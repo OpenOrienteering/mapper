@@ -23,6 +23,7 @@
 
 #include "mapper_config.h" // IWYU pragma: keep
 
+#include "fileformats/course_file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/xml_file_format.h"
 #include "fileformats/ocd_file_format.h"
@@ -44,6 +45,8 @@ void doStaticInitializations()
 	for (auto&& format : OgrFileExportFormat::makeAll())
 		FileFormats.registerFormat(format.release());
 #endif
+	for (auto&& format : CourseFileFormat::makeAll())
+		FileFormats.registerFormat(format.release());
 }
 
 
