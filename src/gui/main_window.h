@@ -277,6 +277,13 @@ public:
 	void setIgnoreTouch(bool on);
 	bool ignoreTouch();
 	
+	/**
+	 * Wrapper for setIgnoreTouch() that warns the user about touch 
+	 * input disable. If the user does not accept the new setting, 
+	 * the method keeps the status quo.
+	 */	
+	void warnAndSetIgnoreTouch(bool on);
+	
 public slots:
 	/**
 	 * Reacts to application state changes.
@@ -516,6 +523,7 @@ private:
 	bool show_menu;
 	bool shortcuts_blocked;
 	bool ignore_touch_input = false;
+	QObject* ignore_touch_test_button = nullptr;
 	
 	QToolBar* general_toolbar;
 	QMenu* file_menu;
