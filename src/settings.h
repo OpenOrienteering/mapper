@@ -54,6 +54,7 @@ public:
 		MapEditor_ChangeSymbolWhenSelecting,
 		MapEditor_ZoomOutAwayFromCursor,
 		MapEditor_DrawLastPointOnRightClick,
+		MapEditor_IgnoreTouchInput,
 		MapGeoreferencing_ControlScaleFactor,
 		EditTool_DeleteBezierPointAction,
 		EditTool_DeleteBezierPointActionAlternative,
