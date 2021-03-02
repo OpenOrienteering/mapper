@@ -319,6 +319,7 @@ set(ci
   ci/filter-stderr.sed
   ci/publish.yml
   ci/publish-coverage.yml
+  ci/release-notes.yml
   ci/setup-common.yml
   ci/setup-macos.yml
   ci/setup-msys2.yml

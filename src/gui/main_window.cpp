@@ -23,17 +23,20 @@
 
 #include <QApplication>
 #include <QCloseEvent>
+#include <QDialogButtonBox>
 #include <QDesktopServices>
 #include <QDir>
 #include <QFileDialog>
 #include <QLabel>
 #include <QMessageBox>
 #include <QMenuBar>
+#include <QPushButton>
 #include <QScopedValueRollback>
 #include <QSettings>
 #include <QStackedWidget>
 #include <QStatusBar>
 #include <QToolBar>
+#include <QVBoxLayout>
 #include <QWhatsThis>
 
 #if defined(Q_OS_ANDROID)
@@ -225,6 +228,52 @@ void MainWindow::setCentralWidget(QWidget* widget)
 void MainWindow::setHomeScreenDisabled(bool disabled)
 {
 	homescreen_disabled = disabled;
+}
+
+void MainWindow::setIgnoreTouch(bool on)
+{
+	ignore_touch_input = on;
+}
+
+void MainWindow::warnAndSetIgnoreTouch(bool on)
+{
+	if (!on || ignoreTouch())
+	{
+		setIgnoreTouch(on);
+		return;
+	}
+	
+	auto* layout = new QVBoxLayout();
+	layout->addWidget(Util::Headline::create(tr("Information")));
+	auto* text = new QLabel(tr("When you select the \"OK\" button, the editor will ignore touch input."));
+	text->setWordWrap(true);
+	layout->addWidget(text);
+	auto* buttons = new QDialogButtonBox();
+	auto* ok_button = buttons->addButton(QDialogButtonBox::Ok);
+	buttons->addButton(tr("Continue with touch input"), QDialogButtonBox::RejectRole);
+	layout->addWidget(buttons);
+	
+	QDialog dialog(this);
+	dialog.setLayout(layout);
+	dialog.setWindowModality(Qt::WindowModal);
+	connect(buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+	connect(buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+	
+	// The OK button must "accept" touch events in order to make
+	// the event filter receive and consume these events.
+	ok_button->setAttribute(Qt::WA_AcceptTouchEvents, true);
+	ok_button->setDefault(true);
+	
+	ignore_touch_test_button = ok_button;
+	auto confirmed = dialog.exec() == QDialog::Accepted;
+	ignore_touch_test_button = nullptr;
+	
+	setIgnoreTouch(confirmed);
+}
+
+bool MainWindow::ignoreTouch()
+{
+	return ignore_touch_input;
 }
 
 void MainWindow::setController(MainWindowController* new_controller)
@@ -567,6 +616,9 @@ bool MainWindow::closeFile()
 		else
 			setController(new HomeScreenController());
 	}
+	
+	setIgnoreTouch(false);
+	
 	return closed;
 }
 
@@ -812,6 +864,8 @@ void MainWindow::showNewMapWizard()
 	new_map->undoManager().clear();
 	
 	MainWindow* new_window = hasOpenedFile() ? new MainWindow() : this;
+	auto const ignore_touch = Settings::getInstance().getSetting(Settings::MapEditor_IgnoreTouchInput).toBool();
+	new_window->warnAndSetIgnoreTouch(ignore_touch);
 	new_window->setWindowFilePath(tr("Unsaved file"));
 	new_window->setController(new MapEditorController(MapEditorController::MapEditor, new_map, map_view), QString(), nullptr);
 	
@@ -922,6 +976,9 @@ bool MainWindow::openPath(const QString& path, const FileFormat* format)
 	if (has_opened_file)
 		open_window = new MainWindow();
 #endif
+	
+	auto const ignore_touch = Settings::getInstance().getSetting(Settings::MapEditor_IgnoreTouchInput).toBool();
+	open_window->warnAndSetIgnoreTouch(ignore_touch);
 	
 	open_window->setController(new_controller, path, format);
 	open_window->actual_path = new_actual_path;
@@ -1328,6 +1385,26 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 			Util::showHelp(this, e->href());
 		};
 		break;
+		
+	case QEvent::TouchBegin:
+		if (ignore_touch_test_button && object == ignore_touch_test_button)
+		{
+			showStatusBarMessage(tr("When you want to have touch input disabled,"
+			                        " you must use another pointing device"
+			                        " to select the \"OK\" button."), 3000);
+		}
+		Q_FALLTHROUGH();
+	case QEvent::TouchUpdate:
+	case QEvent::TouchEnd:
+	case QEvent::TouchCancel:
+		if (ignoreTouch()
+		    || (ignore_touch_test_button && object == ignore_touch_test_button))
+		{
+			event->accept();
+			return true;
+		}
+		break;
+
 #if defined(Q_OS_ANDROID)
 	case QEvent::KeyRelease:
 		if (static_cast<QKeyEvent*>(event)->key() == Qt::Key_Back && hasOpenedFile())

@@ -64,14 +64,23 @@
 
 namespace OpenOrienteering {
 
+namespace {
+
+/// Local wrapper for Util::ToolButton::create() adding the What's This bit.
+QToolButton* createToolButton(const QIcon& icon, const QString& text)
+{
+	return Util::ToolButton::create(icon, text, "color_dock_widget.html");
+}
+
+}  // anonymous namespace
+
+
 ColorListWidget::ColorListWidget(Map* map, MainWindow* window, QWidget* parent)
 : QWidget(parent)
 , map(map)
 , window(window)
 {
 	react_to_changes = true;
-	
-	setWhatsThis(Util::makeWhatThis("color_dock_widget.html"));
 	
 	// Color table
 	color_table = new QTableWidget(map->getNumColors(), 7);
@@ -91,18 +100,18 @@ ColorListWidget::ColorListWidget(Map* map, MainWindow* window, QWidget* parent)
 	duplicate_action->setIcon(QIcon(QString::fromLatin1(":/images/tool-duplicate.png")));
 	
 	// Buttons
-	auto new_button = newToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("New"));
+	auto new_button = createToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("New"));
 	new_button->setPopupMode(QToolButton::DelayedPopup); // or MenuButtonPopup
 	new_button->setMenu(new_button_menu);
-	delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Delete"));
+	delete_button = createToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Delete"));
 	
 	auto add_remove_layout = new SegmentedButtonLayout();
 	add_remove_layout->addWidget(new_button);
 	add_remove_layout->addWidget(delete_button);
 	
-	move_up_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-up.png")), tr("Move Up"));
+	move_up_button = createToolButton(QIcon(QString::fromLatin1(":/images/arrow-up.png")), tr("Move Up"));
 	move_up_button->setAutoRepeat(true);
-	move_down_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-down.png")), tr("Move Down"));
+	move_down_button = createToolButton(QIcon(QString::fromLatin1(":/images/arrow-down.png")), tr("Move Down"));
 	move_down_button->setAutoRepeat(true);
 	
 	auto up_down_layout = new SegmentedButtonLayout();
@@ -110,10 +119,10 @@ ColorListWidget::ColorListWidget(Map* map, MainWindow* window, QWidget* parent)
 	up_down_layout->addWidget(move_down_button);
 	
 	// TODO: In Mapper >= 0.6, switch to ColorWidget (or generic) translation context.
-	edit_button = newToolButton(QIcon(QString::fromLatin1(":/images/settings.png")), QApplication::translate("OpenOrienteering::MapEditorController", "&Edit").remove(QLatin1Char('&')));
+	edit_button = createToolButton(QIcon(QString::fromLatin1(":/images/settings.png")), QApplication::translate("OpenOrienteering::MapEditorController", "&Edit").remove(QLatin1Char('&')));
 	edit_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	
-	auto help_button = newToolButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
+	auto help_button = createToolButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
 	help_button->setAutoRaise(true);
 	
 	// The buttons row layout
@@ -195,18 +204,6 @@ void ColorListWidget::showEvent(QShowEvent* event)
 	}
 }
 
-
-
-QToolButton* ColorListWidget::newToolButton(const QIcon& icon, const QString& text)
-{
-	auto button = new QToolButton();
-	button->setToolButtonStyle(Qt::ToolButtonIconOnly);
-	button->setToolTip(text);
-	button->setIcon(icon);
-	button->setText(text);
-	button->setWhatsThis(whatsThis());
-	return button;
-}
 
 void ColorListWidget::newColor()
 {
