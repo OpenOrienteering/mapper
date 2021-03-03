@@ -120,9 +120,11 @@ set(Mapper_Common_SRCS
   core/symbols/symbol_icon_decorator.cpp
   core/symbols/text_symbol.cpp
   
+  fileformats/course_file_format.cpp
   fileformats/file_format.cpp
   fileformats/file_format_registry.cpp
   fileformats/file_import_export.cpp
+  fileformats/iof_course_export.cpp
   fileformats/kml_course_export.cpp
   fileformats/ocd_file_export.cpp
   fileformats/ocd_file_format.cpp
@@ -130,6 +132,7 @@ set(Mapper_Common_SRCS
   fileformats/ocd_georef_fields.cpp
   fileformats/ocd_icon.cpp
   fileformats/ocd_types.cpp
+  fileformats/simple_course_export.cpp
   fileformats/xml_file_format.cpp
   
   gui/about_dialog.cpp
@@ -147,6 +150,7 @@ set(Mapper_Common_SRCS
   gui/print_widget.cpp
   gui/select_crs_dialog.cpp
   gui/settings_dialog.cpp
+  gui/simple_course_dialog.cpp
   gui/task_dialog.cpp
   gui/text_browser_dialog.cpp
   gui/touch_cursor.cpp

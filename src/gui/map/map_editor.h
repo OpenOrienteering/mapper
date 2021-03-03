@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -255,11 +255,18 @@ public:
 	 */
 	bool keyReleaseEventFilter(QKeyEvent* event) override;
 	
+	
+	/**
+	 * Lets the user export the map as vector data file of one of the given types.
+	 */
+	void exportVectorData(int file_types, const QString& format_settings_key);
+	
+	
 public slots:
 	/**
-	 * Lets the user export a PathObject as MapRunF KML course.
+	 * Lets the user export a PathObject as a simple course.
 	 */
-	void exportKmlCourse();
+	void exportSimpleCourse();
 	
 	/**
 	 * Lets the user export the map as geospatial vector data.
@@ -694,7 +701,7 @@ private:
 	QAction* print_act = {};
 	QAction* export_image_act = {};
 	QAction* export_kmz_act = {};
-	QAction* export_kml_course_act = {};
+	QAction* export_simple_course_act = {};
 	QAction* export_pdf_act = {};
 	QAction* export_vector_act = {};
 	

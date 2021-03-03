@@ -1,5 +1,5 @@
 /*
- *    Copyright 2020-2021 Kai Pastor
+ *    Copyright 2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OPENORIENTEERING_KML_EXPORT_EXPORT_H
-#define OPENORIENTEERING_KML_EXPORT_EXPORT_H
+#ifndef OPENORIENTEERING_IOF_COURSE_EXPORT_H
+#define OPENORIENTEERING_IOF_COURSE_EXPORT_H
 
 #include <vector>
 
@@ -31,40 +31,44 @@ namespace OpenOrienteering {
 
 class LatLon;
 class Map;
-class MapCoord;
 class MapView;
+class MapCoord;
 class PathObject;
 class SimpleCourseExport;
 
 
 /**
- * This class generates KML course files for MapRunF.
+ * This class generates IOF Interface Standard 3.0 course files.
  * 
  * This export handles a single path object and outputs placemarks for start
  * (S1), finish (F1), and controls in between. Event name, course name, and
  * the code number of the first control are taken from transient map properties
  * in collaboration with the SimpleCourseExport class.
  */
-class KmlCourseExport : public Exporter
+class IofCourseExport : public Exporter
 {
 public:
 	static QString formatDescription();
 	static QString filenameExtension();
 	
-	~KmlCourseExport();
+	~IofCourseExport();
 	
-	KmlCourseExport(const QString& path, const Map* map, const MapView* view);
+	IofCourseExport(const QString& path, const Map* map, const MapView* view);
 	
 protected:
 	bool exportImplementation() override;
 	
-	void writeKml(const PathObject& object);
+	void writeXml(const PathObject& object);
 	
-	void writeKmlPlacemarks(const std::vector<MapCoord>& coords);
+	void writeControls(const std::vector<MapCoord>& coords);
 	
-	void writeKmlPlacemark(const MapCoord& coord, const QString& name, const QString& description);
+	void writeCourse(const std::vector<MapCoord>& coords);
 	
-	void writeCoordinates(const LatLon& latlon);
+	void writeControl(const MapCoord& coord, const QString& id);
+	
+	void writeCourseControl(const QString& type, const QString& id);
+	
+	void writePosition(const LatLon& latlon);
 	
 private:
 	QXmlStreamWriter* xml = nullptr;
@@ -74,4 +78,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif // OPENORIENTEERING_KML_EXPORT_EXPORT_H
+#endif // OPENORIENTEERING_KML_COURSE_EXPORT_H

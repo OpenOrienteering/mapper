@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -112,12 +112,13 @@
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
-#include "fileformats/kml_course_export.h"
+#include "fileformats/simple_course_export.h"
 #include "gui/configure_grid_dialog.h"
 #include "gui/file_dialog.h"
 #include "gui/georeferencing_dialog.h"
 #include "gui/main_window.h"
 #include "gui/print_widget.h"
+#include "gui/simple_course_dialog.h"
 #include "gui/text_browser_dialog.h"
 #include "gui/util_gui.h"
 #include "gui/map/map_dialog_scale.h"
@@ -956,7 +957,7 @@ void MapEditorController::createActions()
 #ifndef MAPPER_USE_GDAL
 	export_kmz_act->setVisible(false);
 #endif
-	export_kml_course_act = newAction("export-kml-course", tr("KML &course"), this, SLOT(exportKmlCourse()), nullptr, QString{}, "file_menu.html");
+	export_simple_course_act = newAction("export-simple-course", tr("Simple &course"), this, SLOT(exportSimpleCourse()), nullptr, QString{}, "file_menu.html");
 	export_pdf_act = newAction("export-pdf", tr("&PDF"), print_act_mapper, SLOT(map()), nullptr, QString{}, "file_menu.html");
 	print_act_mapper->setMapping(export_pdf_act, PrintWidget::EXPORT_PDF_TASK);
 #ifdef MAPPER_USE_GDAL
@@ -969,7 +970,7 @@ void MapEditorController::createActions()
 	print_act = nullptr;
 	export_image_act = nullptr;
 	export_kmz_act = nullptr;
-	export_kml_course_act = nullptr;
+	export_simple_course_act = nullptr;
 	export_pdf_act = nullptr;
 #endif
 	
@@ -1140,9 +1141,9 @@ void MapEditorController::createMenuAndToolbars()
 	QMenu* export_menu = new QMenu(tr("&Export as..."), file_menu);
 	export_menu->menuAction()->setMenuRole(QAction::NoRole);
 	export_menu->addAction(export_image_act);
-	export_menu->addAction(export_kmz_act);
-	export_menu->addAction(export_kml_course_act);
 	export_menu->addAction(export_pdf_act);
+	export_menu->addAction(export_kmz_act);
+	export_menu->addAction(export_simple_course_act);
 	if (export_vector_act)
 		export_menu->addAction(export_vector_act);
 	file_menu->insertMenu(insertion_act, export_menu);
@@ -1746,57 +1747,17 @@ bool MapEditorController::keyReleaseEventFilter(QKeyEvent* event)
 
 
 
-// slot
-void MapEditorController::exportKmlCourse()
-{
-	KmlCourseExport exporter{*map};
-	if (!exporter.canExport())
-	{
-		QMessageBox::warning(window, tr("Error"), exporter.errorString());
-		return;
-	}
-	
-	QSettings settings;
-	auto const import_directory = settings.value(QString::fromLatin1("importFileDirectory"), QDir::homePath()).toString();
-	
-	auto filepath = FileDialog::getSaveFileName(
-	                       window,
-	                       tr("Export"),
-	                       import_directory,
-	                       {tr("KML course") + QStringLiteral(" (*.kml)")});
-	if (filepath.isEmpty())
-		return;
-	
-	if (!filepath.endsWith(QLatin1String(".kml", Qt::CaseInsensitive)))
-		filepath.append(QLatin1String(".kml"));
-	
-	settings.setValue(QString::fromLatin1("importFileDirectory"), QFileInfo(filepath).canonicalPath());
-	
-	if (exporter.doExport(filepath))
-	{
-		window->showStatusBarMessage(tr("Exported successfully to %1").arg(filepath), 4000);
-	}
-	else
-	{
-		QMessageBox::information(window, tr("Error"),
-		                         ::OpenOrienteering::ImportExport::tr("Cannot save file\n%1:\n%2")
-		                         .arg(filepath, exporter.errorString()));
-	}
-}
-
-
-// slot
-void MapEditorController::exportVector()
+void MapEditorController::exportVectorData(int file_types, const QString& format_settings_key)
 {
 	QSettings settings;
 	QString const import_directory = settings.value(QString::fromLatin1("importFileDirectory"), QDir::homePath()).toString();
-	QString selected_filter = settings.value(QString::fromLatin1("lastExportFormat"), QDir::homePath()).toString();
+	QString selected_filter = settings.value(format_settings_key).toString();
 	
 	// Build the list of supported file filters based on the file format registry
 	QStringList filters;
 	for (auto format : FileFormats.formats())
 	{
-		if (format->supportsFileExport())
+		if (format->supportsFileExport() && format->fileType() & file_types)
 			filters.append(format->filter());
 	}
 	filters.sort();
@@ -1811,21 +1772,56 @@ void MapEditorController::exportVector()
 		return;
 	
 	settings.setValue(QString::fromLatin1("importFileDirectory"), QFileInfo(filename).canonicalPath());
-	settings.setValue(QString::fromLatin1("lastExportFormat"), selected_filter);
+	settings.setValue(format_settings_key, selected_filter);
 	
 	auto const* format = FileFormats.findFormatByFilter(selected_filter, &FileFormat::supportsFileExport);
 	if (!format)
 	{
-		QMessageBox::information(window, tr("Error"),
-		                         ::OpenOrienteering::MainWindow::tr("File could not be saved:") + QLatin1Char('\n')
-		                         + ::OpenOrienteering::ImportExport::tr("Cannot find a vector data export driver named '%1'")
-		                           .arg(selected_filter) + QLatin1Char('\n') + QLatin1Char('\n')
-		                         + ::OpenOrienteering::MainWindow::tr("Please report this as a bug.") );
+		QMessageBox::warning(window, tr("Error"),
+		                     ::OpenOrienteering::MainWindow::tr("File could not be saved:") + QLatin1Char('\n')
+		                     + ::OpenOrienteering::ImportExport::tr("Cannot find a vector data export driver named '%1'")
+		                       .arg(selected_filter) + QLatin1Char('\n') + QLatin1Char('\n')
+		                     + ::OpenOrienteering::MainWindow::tr("Please report this as a bug.") );
 		return;
 	}
 	
 	filename = format->fixupExtension(filename);
 	exportTo(filename, *format);
+}
+
+
+
+// slot
+void MapEditorController::exportSimpleCourse()
+{
+	auto simple_export = SimpleCourseExport(*map);
+	if (!simple_export.canExport())
+	{
+		QMessageBox::warning(window, tr("Error"), simple_export.errorString());
+		return;
+	}
+	
+	SimpleCourseDialog course_dialog(simple_export, window);
+	if (course_dialog.exec() != QDialog::Accepted)
+		return;
+	
+	// Ideally, the dialog results should be passed to the exporter via options.
+	// However, the exporter is created only much later. So here, we can neither
+	// discover the supported options nor set them directly. We would have to pass
+	// them through the call stack as parameter. Instead of this intrusive approach,
+	// we rely on transient map properties handled by SimpleCourseExport.
+	simple_export.setProperties(*map,
+	                            course_dialog.eventName(),
+	                            course_dialog.courseName(),
+	                            course_dialog.firstCodeNumber());
+	exportVectorData(FileFormat::SimpleCourseFile, QStringLiteral("Export/lastSimpleCourseFormat"));
+}
+
+
+// slot
+void MapEditorController::exportVector()
+{
+	exportVectorData(FileFormat::MapFile | FileFormat::OgrFile, QStringLiteral("Export/lastVectorFormat"));
 }
 
 

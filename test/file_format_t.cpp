@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -72,6 +72,7 @@
 #include "fileformats/kml_course_export.h"
 #include "fileformats/ocd_file_export.h"
 #include "fileformats/ocd_file_format.h"
+#include "fileformats/simple_course_export.h"
 #include "fileformats/xml_file_format.h"
 #include "templates/template.h"
 #include "undo/undo.h"
@@ -988,20 +989,21 @@ void FileFormatTest::kmlCourseExportTest()
 		Map map;
 		map.setGeoreferencing(georef);
 		
-		KmlCourseExport exporter{map};
-		QVERIFY(!exporter.canExport());  // empty map
+		SimpleCourseExport simple_export{map};
+		QVERIFY(!simple_export.canExport());  // empty map
 		
 		auto* path_object = new PathObject(Map::getUndefinedLine());
 		path_object->addCoordinate(georef.toMapCoords(LatLon{50.001, 9.000}));  // start
 		path_object->addCoordinate(georef.toMapCoords(LatLon{50.001, 9.001}));  // 1
 		path_object->addCoordinate(georef.toMapCoords(LatLon{50.000, 9.001}));  // 2
 		path_object->addCoordinate(georef.toMapCoords(LatLon{50.000, 9.000}));  // finish
-		QVERIFY(exporter.canExport(path_object));
+		QVERIFY(simple_export.canExport(path_object));
 		
 		map.getPart(0)->addObject(path_object);
-		QVERIFY(exporter.canExport());
+		QVERIFY(simple_export.canExport());
 		
-		QVERIFY(exporter.doExport(filepath));
+		KmlCourseExport exporter{filepath, &map, nullptr};
+		QVERIFY(exporter.doExport());
 	}
 #ifdef MAPPER_USE_GDAL
 	{
