@@ -72,6 +72,9 @@ set(Mapper_BUILD_CLIPPER "auto" CACHE STRING
 
 option(Mapper_USE_GDAL   "Use the GDAL library" ON)
 
+option(MAPPER_WITH_CUSTOM_LOCATIONS "Enable custom locations in HomeScreenWidgetMobile" OFF)
+mark_as_advanced(MAPPER_WITH_CUSTOM_LOCATIONS)
+
 if(ANDROID)
 	set(Mapper_WITH_COVE_DEFAULT OFF)
 else()
