@@ -62,7 +62,7 @@ TagsWidget::TagsWidget(Map* map, MapView* main_view, MapEditorController* contro
 	
 	layout->addWidget(tags_table);
 	
-	auto help_button = newToolButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
+	auto help_button = Util::ToolButton::create(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
 	help_button->setAutoRaise(true);
 	
 	auto all_buttons_layout = new QHBoxLayout();
@@ -91,17 +91,6 @@ TagsWidget::TagsWidget(Map* map, MapView* main_view, MapEditorController* contro
 
 TagsWidget::~TagsWidget() = default;
 
-
-
-QToolButton* TagsWidget::newToolButton(const QIcon& icon, const QString& text)
-{
-	auto button = new QToolButton();
-	button->setToolButtonStyle(Qt::ToolButtonIconOnly);
-	button->setToolTip(text);
-	button->setIcon(icon);
-	button->setText(text);
-	return button;
-}
 
 // slot
 void TagsWidget::showHelp()

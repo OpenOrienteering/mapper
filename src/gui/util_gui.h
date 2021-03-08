@@ -28,13 +28,16 @@
 
 class QCheckBox;
 class QDoubleSpinBox;
+class QIcon;
 class QLabel;
 class QObject;
 class QPainter;
 class QPointF;
 class QSpacerItem;
 class QSpinBox;
+class QToolButton;
 class QWidget;
+
 
 namespace OpenOrienteering {
 
@@ -377,6 +380,13 @@ namespace Util
 	 */
 	QString plainText(QString maybe_markup);
 	
+	
+	namespace ToolButton
+	{
+		QToolButton* create(const QIcon& icon, const QString& text, const char* whats_this = nullptr);
+	}  // namespace ToolButton
+
+
 }
 
 

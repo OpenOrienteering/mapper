@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -117,6 +117,16 @@ namespace
 void GeoreferencingTest::initTestCase()
 {
 	XMLFileFormat::active_version = 6;
+	
+#ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+	auto info = proj_info();
+	QVERIFY(info.major == PROJ_VERSION_MAJOR);
+	QVERIFY(info.minor == PROJ_VERSION_MINOR);
+#endif
+	
+#ifdef MAPPER_TEST_GDAL
+	QVERIFY(GDALCheckVersion(GDAL_VERSION_MAJOR, GDAL_VERSION_MINOR, "GeoreferencingTest") == TRUE);
+#endif
 }
 
 
@@ -323,6 +333,14 @@ void GeoreferencingTest::testCRS_data()
 	        << utm32_spec
 	        << utm32_spec
 	        << false;
+	QTest::newRow("latlong basic")
+	        << QStringLiteral("EPSG:4326")
+	        << QStringLiteral("+proj=latlong +datum=WGS84")
+	        << true;
+	QTest::newRow("longlat +no_defs")
+	        << QStringLiteral("urn:ogc:def:crs:OGC:1.3:CRS84")
+	        << QStringLiteral("+proj=longlat +datum=WGS84 +no_defs")
+	        << true;
 }
 
 void GeoreferencingTest::testCRS()
@@ -410,6 +428,12 @@ void GeoreferencingTest::testProjection_data()
 	auto epsg27700_spec = QStringLiteral("+init=epsg:27700");
 	QTest::newRow("EPSG 27700 NY 06071 11978") << epsg27700_spec << 306071.0  << 511978.0 << 54.494403  << -3.4517026;
 	QTest::newRow("EPSG 27700 Lake District")  << epsg27700_spec << 306074.66 << 511974.0 << 54.4943673 << -3.4516448;
+	
+	// latlong vs. longlat
+	QTest::newRow("latlong basic") << QStringLiteral("+proj=latlong +datum=WGS84")             << -6.0 << 51.0 << 51.0 << -6.0;
+	QTest::newRow("latlong +no_defs") << QStringLiteral("+proj=latlong +datum=WGS84 +no_defs") << 16.0 << 49.0 << 49.0 << 16.0;
+	QTest::newRow("longlat basic") << QStringLiteral("+proj=longlat +datum=WGS84")             << -6.0  << 51.0 << 51.0 << -6.0;
+	QTest::newRow("longlat +no_defs") << QStringLiteral("+proj=longlat +datum=WGS84 +no_defs") << 16.0  << 49.0 << 49.0 << 16.0;
 }
 
 

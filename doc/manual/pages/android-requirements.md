@@ -1,6 +1,8 @@
 ---
 title: Device Requirements and Recommendations
 keywords: Android
+parent: The Mapper App for Android
+nav_order: 0.1
 ---
 
 ## Android version

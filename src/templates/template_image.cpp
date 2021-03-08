@@ -513,23 +513,6 @@ TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing(
 		options.effective.transform = options.template_file.transform;
 	}
 	
-	// Modify transform from geographic CRS
-	if (!options.effective.crs_spec.isEmpty() && !options.effective.transform.source.isEmpty())
-	{
-		Georeferencing tmp_georef;
-		tmp_georef.setProjectedCRS(QString{}, options.effective.crs_spec);
-		if (tmp_georef.isGeographic())
-		{
-			constexpr auto factor = qDegreesToRadians(1.0);
-			auto& pixel_to_world = options.effective.transform.pixel_to_world;
-			pixel_to_world = {
-			    pixel_to_world.m11() * factor, pixel_to_world.m12() * factor, 0,
-			    pixel_to_world.m21() * factor, pixel_to_world.m22() * factor, 0,
-			    pixel_to_world.m31() * factor, pixel_to_world.m32() * factor, 1
-			};
-		}
-	}
-	
 	return options;
 }
 

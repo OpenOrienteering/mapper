@@ -5,7 +5,10 @@ authors:
   - Thomas Schoeps
   - Kai Pastor
 keywords: Menus
-edited: 20 January 2018
+parent: Menus
+grand_parent: Reference
+nav_order: 0.3
+last_modified_date: 20 January 2018
 ---
 
 #### ![ ](../mapper-images/move.png) Pan

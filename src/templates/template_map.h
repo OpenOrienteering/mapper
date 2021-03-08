@@ -159,7 +159,7 @@ private:
 	 * be cleared. Note that this initialization matches the behaviour before
 	 * introducing support for georeferenced maps.
 	 */
-	bool block_georeferencing = true;
+	bool block_georeferencing = false;
 	
 	static QStringList locked_maps;
 };

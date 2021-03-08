@@ -411,9 +411,8 @@ void CombinedSymbol::setPart(int i, const Symbol* symbol, bool is_private)
 // override
 bool CombinedSymbol::hasRotatableFillPattern() const
 {
-	using std::begin; using std::end;
 	return std::any_of(begin(parts), end(parts), [](auto const* part) {
-		return part->hasRotatableFillPattern();
+		return part && part->hasRotatableFillPattern();
 	});
 }
 

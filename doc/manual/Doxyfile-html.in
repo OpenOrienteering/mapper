@@ -38,8 +38,6 @@ SEARCHENGINE           = NO
 HTML_HEADER            = "@CMAKE_CURRENT_SOURCE_DIR@/header.html"
 HTML_FOOTER            = "@CMAKE_CURRENT_SOURCE_DIR@/footer.html"
 HTML_STYLESHEET        = "@CMAKE_CURRENT_SOURCE_DIR@/style.css"
-HTML_EXTRA_FILES       = "@CMAKE_CURRENT_SOURCE_DIR@/pages/attachment/scribble_1024.png"
-HTML_EXTRA_FILES      += "@CMAKE_CURRENT_SOURCE_DIR@/pages/attachment/scribble_2048.png"
 
 GENERATE_QHP           = YES
 QCH_FILE               = "../@Mapper_COMPRESSED_HELP@"

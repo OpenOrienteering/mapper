@@ -4,7 +4,8 @@ authors:
   - Peter Hoban
   - Thomas Schoeps
 keywords: Map
-edited: 25 February 2013
+nav_order: 0.13
+last_modified_date: 25 February 2013
 ---
 
 ![Grid icon](../mapper-images/grid.png) The map grid can be activated by clicking the corresponding button in the [view toolbar](toolbars.md#view-toolbar). Settings for the grid can be changed by clicking the arrow to the right of this button.

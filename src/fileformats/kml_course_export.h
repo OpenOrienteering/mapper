@@ -1,5 +1,5 @@
 /*
- *    Copyright 2020 Kai Pastor
+ *    Copyright 2020-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,66 +20,55 @@
 #ifndef OPENORIENTEERING_KML_EXPORT_EXPORT_H
 #define OPENORIENTEERING_KML_EXPORT_EXPORT_H
 
-#include <memory>
 #include <vector>
 
-#include <QCoreApplication>
-#include <QString>
+#include "fileformats/file_import_export.h"
 
-class QSaveFile;
+class QString;
+class QXmlStreamWriter;
 
 namespace OpenOrienteering {
 
 class LatLon;
 class Map;
 class MapCoord;
+class MapView;
 class PathObject;
+class SimpleCourseExport;
 
 
 /**
  * This class generates KML course files for MapRunF.
  * 
  * This export handles a single path object and outputs placemarks for start
- * (S1), finish (F1), and controls in between (starting from number 1). The path
- * is either the single selected path object, or the single path object
- * contained in the map's single map part.
- * 
- * Due to its special mode of operation, this class is not implemented as a
- * subclass of Exporter. But the API is kept similar.
+ * (S1), finish (F1), and controls in between. Event name, course name, and
+ * the code number of the first control are taken from transient map properties
+ * in collaboration with the SimpleCourseExport class.
  */
-class KmlCourseExport
+class KmlCourseExport : public Exporter
 {
-	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::KmlCourseExport)
-	
 public:
+	static QString formatDescription();
+	static QString filenameExtension();
+	
 	~KmlCourseExport();
 	
-	KmlCourseExport(const Map& map);
-	
-	bool canExport(const PathObject* object);
-	
-	bool canExport();
-	
-	bool doExport(const QString& filepath);
-	
-	QString errorString() const;
+	KmlCourseExport(const QString& path, const Map* map, const MapView* view);
 	
 protected:
-	const PathObject* findObjectForExport() const;
+	bool exportImplementation() override;
 	
 	void writeKml(const PathObject& object);
 	
 	void writeKmlPlacemarks(const std::vector<MapCoord>& coords);
 	
-	void writeKmlPlacemark(const MapCoord& coord, const char* name, const char* description);
+	void writeKmlPlacemark(const MapCoord& coord, const QString& name, const QString& description);
 	
 	void writeCoordinates(const LatLon& latlon);
 	
 private:
-	std::unique_ptr<QSaveFile> device;
-	const Map& map;
-	QString error_string;
-	
+	QXmlStreamWriter* xml = nullptr;
+	SimpleCourseExport* simple_course = nullptr;
 };
 
 

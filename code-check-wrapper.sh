@@ -49,8 +49,10 @@ PATTERN=
 for I in \
   action_grid_bar.cpp \
   boolean_tool.cpp \
+  color_wheel_widget.cpp \
   combined_symbol.cpp \
   configure_grid_dialog.cpp \
+  course_file_format.cpp \
   crs_param_widgets.cpp \
   crs_template.cpp \
   crs_template_implementation.cpp \
@@ -63,6 +65,7 @@ for I in \
   georeferencing_dialog.cpp \
   georeferencing_t.cpp \
   icon_engine \
+  iof_course_export \
   key_button_bar.cpp \
   key_value_container \
   kml_course_export \
@@ -88,6 +91,8 @@ for I in \
   renderable_implementation.cpp \
   rotate_map_dialog.cpp \
   settings_dialog.cpp \
+  simple_course_dialog.cpp \
+  simple_course_export.cpp \
   stretch_map_dialog.cpp \
   style_t.cpp \
   /symbol.cpp \

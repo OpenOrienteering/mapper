@@ -4,7 +4,9 @@ authors:
   - Peter Hoban
   - Thomas Schoeps
 keywords: Templates
-edited: 26 February 2013
+last_modified_date: 26 February 2013
+parent: Colors and Symbols
+nav_order: 0.3
 ---
 
 This dialog enables to replace the symbol set in the current map file by the set of another file. It is possible to accurately select a replacement symbol for each old symbol. Show it by clicking the menu item Symbols -&gt; Replace symbol set..., then select the map file from which to take the new symbol set. Note that this is not a way to e.g. rescale a map from 1:10000 to 1:15000, use Map -> Scale map... instead.
