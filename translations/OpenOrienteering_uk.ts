@@ -47,7 +47,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="193"/>
         <source>(project initiator)</source>
-        <translation>(засновник проекту)</translation>
+        <translation>(засновник проєкту)</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="14"/>
