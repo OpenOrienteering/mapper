@@ -206,7 +206,8 @@ Contours should be adapted (not broken) in order not to touch symbol Small knoll
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Las líneas de pendiente se pueden dibujar en la parte baja de una curva de nivel para clarificar la dirección de la pendiente. Cuando se usan, deberían de situarse en vaguadas.
+Una depresión tiene que tener al menos una línea de pendiente.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -228,7 +229,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>An index contour may have a height value assigned. A height value should only be inserted in an index contour in places where other detail is not obscured. It shall be orientated so that the top of the label is on the higher side of the contour. The index value (label) shall be 1.5 mm high and represented in a sans-serif font.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una curva maestra puede tener un valor de altura asignado. Un valor de altura solo debería de insertarse en una curva maestra en lugares donde no se oculte otros detalles. Se orientará de forma que la parte de arriba de la etiqueta esté en la parte alta de la curva. El valor de la maestra (etiqueta) será de 1.5 mm de altura y representada con una fuente sans-serif.</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -309,7 +310,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Proporcionado por migración desde ISOM2000. El uso de esta variante de símbolo está desaconsejado para mapas nuevos.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -320,7 +321,8 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Muro de tierra distinguible. Altura mínima: 1m.
+Longitud mínima: 1.4 mm (huella 21 m).</translation>
     </message>
     <message>
         <source>Ruined earth wall</source>
@@ -505,12 +507,12 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cortado infranqueable, representación de forma plana (de ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Proporcionado por migración desde ISOM2000. El uso de esta variante de símbolo se desaconseja para mapas nuevos.</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
@@ -544,7 +546,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Proporcionado por migración desde ISOM2000. El uso de esta variante de símbolo se desaconseja para mapas nuevos.</translation>
     </message>
     <message>
         <source>Cliff</source>
@@ -610,12 +612,12 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Proporcionado por migración desde ISOM2000. El uso de esta variante de símbolo se desaconseja para mapas nuevos.</translation>
     </message>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
         <comment>Name of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Agujero de piedra o cueva (sin una entrada distinguible)</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts without a distinct entrance which may constitute a danger to the competitor.
@@ -629,7 +631,7 @@ Footprint: 10.5 m x 12 m.</source>
     <message>
         <source>Cave or rocky pit (with a distinct entrance)</source>
         <comment>Name of symbol 203.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cueva o agujero de piedra (con una entrada distinguible)</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
@@ -648,7 +650,7 @@ Hoyos rocosos de más de 5 m de diámetro deberían ser exagerados y representar
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 203.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Proporcionado por migración desde ISOM2000. El uso de esta variante de símbolo se desaconseja para mapas nuevos.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -886,7 +888,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
     <message>
         <source>Uncrossable body of water (full colour), with bank line</source>
         <comment>Name of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuerpo de agua infranqueable (color completo), con línea de orilla</translation>
     </message>
     <message>
         <source>The black bank line emphasises that the feature is uncrossable.
@@ -899,7 +901,7 @@ Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
     <message>
         <source>Uncrossable body of water (full colour)</source>
         <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuerpo de agua infranqueable (color completo)</translation>
     </message>
     <message>
         <source>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
@@ -911,7 +913,7 @@ Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
     <message>
         <source>Uncrossable body of water (dominant), with bank line</source>
         <comment>Name of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuerpo de agua infranqueable (dominante), con línea de orilla</translation>
     </message>
     <message>
         <source>The black bank line emphasises that the feature is uncrossable.
@@ -924,7 +926,7 @@ Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
     <message>
         <source>Uncrossable body of water (dominant)</source>
         <comment>Name of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuerpo de agua infranqueable (dominante)</translation>
     </message>
     <message>
         <source>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
@@ -1641,7 +1643,7 @@ A road with two carriageways can be represented using two wide road symbols side
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Proporcionado por migración desde ISOM2000. El uso de esta variante de símbolo está desaconsejado para mapas nuevos.</translation>
     </message>
     <message>
         <source>Road with two carriageways</source>
@@ -6236,7 +6238,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
         <comment>Name of symbol 203</comment>
-        <translation type="unfinished"></translation>
+        <translation>Agujero de piedra o cueva (sin una entrada distinguible)</translation>
     </message>
     <message>
         <source>A rocky pit, hole, cave (without a distinct entrance) or mineshaft which may constitute a danger to the competitor.
@@ -6458,7 +6460,7 @@ Minimum area: 1 mm² (footprint 16 m²).</source>
     <message>
         <source>Uncrossable body of water (full colour)</source>
         <comment>Name of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuerpo de agua infranqueable (color completo)</translation>
     </message>
     <message>
         <source>An area of deep water such as a lake, pond, river or fountain. The dark blue colour and the bordering black line indicate that the feature shall not be crossed.
@@ -6484,7 +6486,7 @@ Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
     <message>
         <source>Uncrossable body of water (dominant)</source>
         <comment>Name of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuerpo de agua infranqueable (dominante)</translation>
     </message>
     <message>
         <source>An area of deep water such as a lake, pond, river or fountain. The dark blue colour and the bordering black line indicate that the feature shall not be crossed.
@@ -11332,7 +11334,8 @@ Contours should be adapted (not broken) in order not to touch symbol Small knoll
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Las líneas de pendiente se pueden dibujar en la parte baja de una curva de nivel para clarificar la dirección de la pendiente. Cuando se usan, deberían de situarse en vaguadas.
+Una depresión tiene que tener al menos una línea de pendiente.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -11354,7 +11357,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>An index contour may have a height value assigned. A height value should only be inserted in an index contour in places where other detail is not obscured. It shall be orientated so that the top of the label is on the higher side of the contour. The index value (label) shall be 1.5 mm high and represented in a sans-serif font.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una curva maestra puede tener un valor de altura asignado. Un valor de altura solo debería de insertarse en una curva maestra en lugares donde no se oculte otros detalles. Se orientará de forma que la parte de arriba de la etiqueta esté en la parte alta de la curva. El valor de la maestra (etiqueta) será de 1.5 mm de altura y representada con una fuente sans-serif.</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -11435,7 +11438,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Proporcionado por migración desde ISOM2000. El uso de esta variante de símbolo está desaconsejado para mapas nuevos.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -11446,7 +11449,8 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Muro de tierra distinguible. Altura mínima: 1m.
+Longitud mínima: 1.4 mm (huella 21 m).</translation>
     </message>
     <message>
         <source>Erosion gully</source>
@@ -11518,12 +11522,12 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cortado infranqueable, representación de forma plana (de ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Proporcionado por migración desde ISOM2000. El uso de esta variante de símbolo está desaconsejado para mapas nuevos.</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
@@ -11557,7 +11561,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Proporcionado por migración desde ISOM2000. El uso de esta variante de símbolo está desaconsejado para mapas nuevos.</translation>
     </message>
     <message>
         <source>Cliff</source>
@@ -11623,7 +11627,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Proporcionado por migración desde ISOM2000. El uso de esta variante de símbolo está desaconsejado para mapas nuevos.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -12088,7 +12092,7 @@ A road with two carriageways can be represented using two wide road symbols side
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Proporcionado por migración desde ISOM2000. El uso de esta variante de símbolo está desaconsejado para mapas nuevos.</translation>
     </message>
     <message>
         <source>Road with two carriageways</source>
@@ -15173,12 +15177,12 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Length of special route</source>
         <comment>Name of symbol 13.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Longitud de una ruta especial</translation>
     </message>
     <message>
         <source>This is used with the special instruction (13.x) to give the distance from the last control to the end of the route (control, map exchange, or finish).</source>
         <comment>Description of symbol 13.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Se usa con la instrucción especial (13.x) para dar la distancia desde el último control al final de la ruta (control, cambio de mapa, o meta).</translation>
     </message>
 </context>
 </TS>
