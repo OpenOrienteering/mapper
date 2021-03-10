@@ -1985,7 +1985,7 @@ void Map::loadTemplateFilesAsync(MapView& view, std::function<void(const QString
 		if (temp->getTemplateState() == Template::Unloaded
 		    && view.getTemplateVisibility(temp.get()).visible)
 		{
-			QTimer::singleShot(10, temp.get(), ([this, &view, &temp, log = std::move(listener)]() {
+			QTimer::singleShot(10, temp.get(), ([this, &view, temp = temp.get(), log = std::move(listener)]() {
 				log(qApp->translate("OpenOrienteering::MainWindow", "Opening %1")
 				         .arg(temp->getTemplateFilename()));
 				if (temp->getTemplateState() != Template::Loaded)
