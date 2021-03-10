@@ -3792,7 +3792,7 @@ Faut-il poursuivre l&apos;import ?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1154"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="122"/>
-        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="147"/>
+        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="152"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="294"/>
         <source>&amp;Edit</source>
         <translation>&amp;Édition</translation>
@@ -5968,57 +5968,63 @@ utiliser la molette de la souris pour zoomer.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="82"/>
-        <source>Revised 2020</source>
+        <source>Confetti Hybrid</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="127"/>
+        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="87"/>
+        <source>Guacamole Full</source>
+        <extracomment>Paint on template color preset entry name.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="132"/>
         <source>Add color...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="128"/>
+        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="133"/>
         <source>Remove</source>
         <translation type="unfinished">Supprimer</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="135"/>
+        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="140"/>
         <source>Move Up</source>
         <translation type="unfinished">Monter</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="138"/>
+        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="143"/>
         <source>Move Down</source>
         <translation type="unfinished">Descendre</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="170"/>
+        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="175"/>
         <source>Available palette presets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="182"/>
+        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="187"/>
         <source>Custom string</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="188"/>
+        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="193"/>
         <source>Activate preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="192"/>
+        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="197"/>
         <source>Copy</source>
         <translation type="unfinished">Copier</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="194"/>
+        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="199"/>
         <source>Paste</source>
         <translation type="unfinished">Coller</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="228"/>
+        <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="233"/>
         <source>Paint on template</source>
         <translation type="unfinished">Dessiner sur le modèle</translation>
     </message>
