@@ -206,13 +206,6 @@ void TagsWidget::cellChange(int row, int column)
 				// Jump to previous row
 				tags_table->setCurrentCell(row - 1, 1);
 			}
-			else
-			{
-				// Reset current row
-				tags_table->item(row, 1)->setText({});
-				auto value_item = tags_table->item(row, 1);
-				value_item->setFlags(value_item->flags() & ~Qt::ItemIsEnabled);
-			}
 		}
 		else if (!key.isEmpty())
 		{
