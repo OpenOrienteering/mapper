@@ -2461,7 +2461,7 @@
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="43"/>
         <source>KML</source>
-        <translation type="unfinished">KML</translation>
+        <translation>KML</translation>
     </message>
 </context>
 <context>
@@ -2973,7 +2973,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="247"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Інформація</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="248"/>
@@ -5812,17 +5812,17 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="128"/>
         <source>Remove</source>
-        <translation type="unfinished">Видалити</translation>
+        <translation>Видалити</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="135"/>
         <source>Move Up</source>
-        <translation type="unfinished">Підняти</translation>
+        <translation>Підняти</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="138"/>
         <source>Move Down</source>
-        <translation type="unfinished">Опустити</translation>
+        <translation>Опустити</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="170"/>
@@ -5842,17 +5842,17 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="192"/>
         <source>Copy</source>
-        <translation type="unfinished">Копіювати</translation>
+        <translation>Копіювати</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="194"/>
         <source>Paste</source>
-        <translation type="unfinished">Вставити</translation>
+        <translation>Вставити</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="228"/>
         <source>Paint on template</source>
-        <translation type="unfinished">Малювати на підложці</translation>
+        <translation>Малювати на підложці</translation>
     </message>
 </context>
 <context>
@@ -6321,12 +6321,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="257"/>
         <source>256x256 pixel</source>
-        <translation type="unfinished"></translation>
+        <translation>256x256 пікселів</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="258"/>
         <source>512x512 pixel</source>
-        <translation type="unfinished"></translation>
+        <translation>512x512 пікселів</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="259"/>
