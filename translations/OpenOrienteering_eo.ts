@@ -575,7 +575,7 @@
     <message>
         <location filename="../src/gui/widgets/color_wheel_widget.cpp" line="392"/>
         <source>Select</source>
-        <translation type="unfinished">Elekti</translation>
+        <translation>Elekti</translation>
     </message>
 </context>
 <context>
@@ -1595,7 +1595,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="107"/>
         <source>GDAL</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="108"/>
@@ -2436,7 +2436,7 @@
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="43"/>
         <source>KML</source>
-        <translation type="unfinished">KML</translation>
+        <translation>KML</translation>
     </message>
 </context>
 <context>
@@ -2928,7 +2928,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="247"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informoj</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="248"/>
@@ -5685,17 +5685,17 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="128"/>
         <source>Remove</source>
-        <translation type="unfinished">Forigi</translation>
+        <translation>Forigi</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="135"/>
         <source>Move Up</source>
-        <translation type="unfinished">Movi Supren</translation>
+        <translation>Movi Supren</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="138"/>
         <source>Move Down</source>
-        <translation type="unfinished">Movi Malsupren</translation>
+        <translation>Movi Malsupren</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="170"/>
@@ -5715,17 +5715,17 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="192"/>
         <source>Copy</source>
-        <translation type="unfinished">Kopii</translation>
+        <translation>Kopii</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="194"/>
         <source>Paste</source>
-        <translation type="unfinished">Alglui</translation>
+        <translation>Alglui</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="228"/>
         <source>Paint on template</source>
-        <translation type="unfinished">Desegni sur la ŝablono</translation>
+        <translation>Desegni sur la ŝablono</translation>
     </message>
 </context>
 <context>
