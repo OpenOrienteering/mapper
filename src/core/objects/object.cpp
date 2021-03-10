@@ -713,7 +713,7 @@ QString OpenOrienteering::Object::getTag(const QString& key) const
 void Object::setTag(const QString& key, const QString& value)
 {
 	auto it = object_tags.find(key);
-	if (it != object_tags.end() || it->value != value)
+	if (it == object_tags.end() || it->value != value)
 	{
 		object_tags.insert_or_assign(it, key, value);
 		if (map)
