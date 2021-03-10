@@ -71,7 +71,7 @@ struct ColorPresetEntry {
 };
 
 
-constexpr std::array<ColorPresetEntry, 2> color_presets = {
+constexpr std::array<ColorPresetEntry, 3> color_presets = {
     //: Paint on template color preset entry name.
     ColorPresetEntry {
         QT_TRANSLATE_NOOP("OpenOrienteering::PaintOnTemplateSettingsPage", "Traditional"),
@@ -79,8 +79,13 @@ constexpr std::array<ColorPresetEntry, 2> color_presets = {
     },
     //: Paint on template color preset entry name.
     ColorPresetEntry {
-        QT_TRANSLATE_NOOP("OpenOrienteering::PaintOnTemplateSettingsPage", "Revised 2020"),
-        "A9AA7E,A5FFE5,E1FEA1,FE0000,00A400,0000FE,D15C00"
+        QT_TRANSLATE_NOOP("OpenOrienteering::PaintOnTemplateSettingsPage", "Confetti Hybrid"),
+        "000000,FAF607,00A400,B4FF00,0000FE,81EEF7,F6260F,FCB9F4,FAEFD2"
+    },
+    //: Paint on template color preset entry name.
+    ColorPresetEntry {
+        QT_TRANSLATE_NOOP("OpenOrienteering::PaintOnTemplateSettingsPage", "Guacamole Full"),
+        "000000,FF0000,A24802,DCC3A8,0000FF,31DAE5,FFFF00,FFD000,78FF00,B0CF1D,446C55,ECA8EB,D918A8"
     },
 };
 
