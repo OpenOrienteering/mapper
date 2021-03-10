@@ -223,7 +223,9 @@ void TagsWidget::cellChange(int row, int column)
 				  tr("The key \"%1\" already exists and must not be used twice.").arg(key)
 				);
 				tags_table->item(row, column)->setText(old_key);
-				tags_table->setCurrentCell(row, column);
+				QTimer::singleShot(0, tags_table, [tags_table = this->tags_table, row, column] {
+					tags_table->setCurrentCell(row, column);
+				});
 			}
 			else
 			{
