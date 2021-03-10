@@ -1451,7 +1451,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
             </symbol>
             <symbol type="4" id="81" code="601.3" name="North lines pattern, blue">
                 <area_symbol inner_color="-1" min_area="0" patterns="1">
-                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="30000" line_offset="0" offset_along_line="0" color="9" line_width="180"/>
+                    <pattern type="1" angle="1.5708" line_spacing="30000" line_offset="0" offset_along_line="0" color="9" line_width="180"/>
                 </area_symbol>
             </symbol>
             <symbol type="1" id="82" code="602" name="Registration mark">
@@ -7298,7 +7298,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         </templates>
         <view>
             <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
-            <map_view zoom="11.1237" position_x="-8346" position_y="-30237" grid="true" overprinting_simulation_enabled="true">
+            <map_view zoom="11.1237" position_x="-8346" position_y="-30237" grid="true">
                 <map opacity="1" visible="true"/>
                 <templates count="0"/>
             </map_view>

@@ -3608,7 +3608,7 @@ Minimum width: 0.4 mm (IM).</description>
                 <description>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</description>
                 <area_symbol inner_color="-1" min_area="0" patterns="1">
-                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="30000" line_offset="0" offset_along_line="0" color="2" line_width="140"/>
+                    <pattern type="1" angle="1.5708" line_spacing="30000" line_offset="0" offset_along_line="0" color="2" line_width="140"/>
                 </area_symbol>
             </symbol>
             <symbol type="2" id="162" code="601" name="Magnetic north line">
@@ -3650,7 +3650,7 @@ North lines may be broken where they obscure small features such as boulders, kn
                 <description>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</description>
                 <area_symbol inner_color="-1" min_area="0" patterns="1">
-                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="30000" line_offset="0" offset_along_line="0" color="7" line_width="180"/>
+                    <pattern type="1" angle="1.5708" line_spacing="30000" line_offset="0" offset_along_line="0" color="7" line_width="180"/>
                 </area_symbol>
             </symbol>
             <symbol type="2" id="165" code="601.5" name="Magnetic north line, blue">
