@@ -403,7 +403,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
         <source>Undefined</source>
-        <translation type="unfinished"></translation>
+        <translation>Niet gedefinieerd</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
@@ -584,7 +584,7 @@
     <message>
         <location filename="../src/gui/widgets/color_wheel_widget.cpp" line="392"/>
         <source>Select</source>
-        <translation type="unfinished">Kies</translation>
+        <translation>Kies</translation>
     </message>
 </context>
 <context>
@@ -1433,7 +1433,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
         <source>Action button size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Toets afmeting</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="54"/>
@@ -1558,7 +1558,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="649"/>
         <source>Could not write file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand kon niet worden opgeslagen: %1</translation>
     </message>
 </context>
 <context>
@@ -1625,12 +1625,12 @@
         <location filename="../src/gdal/gdal_image_reader.cpp" line="71"/>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="158"/>
         <source>Failed to read image data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kon raster gegevens niet lezen: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="127"/>
         <source>Unsupported raster data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Onbekend raster format: %1</translation>
     </message>
 </context>
 <context>
@@ -1656,42 +1656,42 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"/>
         <source>Import Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Import opties</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>Clip layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagen bijsnijden</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="59"/>
         <source>Use GDAL for GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>Gebruik GDAL voor GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
         <source>Templates</source>
-        <translation type="unfinished">Sjablonen</translation>
+        <translation>Sjablonen</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="67"/>
         <source>Hatch areas</source>
-        <translation type="unfinished">Vlakken gestreept weergeven</translation>
+        <translation>Vlakken arceren</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Baseline view</source>
-        <translation type="unfinished">Alleen omtrekken</translation>
+        <translation>Doorsnede</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="75"/>
         <source>Export Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Export opties</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="77"/>
         <source>Create a layer for each symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Maak een laag voor elk symbool</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="82"/>
@@ -1711,7 +1711,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="107"/>
         <source>GDAL</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="108"/>
@@ -2212,18 +2212,18 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="215"/>
         <source>Show scale factors</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon schaalfactoren</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="216"/>
         <source>Scale compensation</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaalcorrectie</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="221"/>
         <source>Combined scale factor:</source>
         <extracomment>The combined scale factor is the ratio between a length on the ground and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Gecombineerde schaalfactor</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="227"/>
@@ -2275,12 +2275,12 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="550"/>
         <source>Scale factor change</source>
-        <translation type="unfinished"></translation>
+        <translation>Wijziging van de schaalfactor</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="550"/>
         <source>The scale factor has been changed. Do you want to stretch/shrink the map content accordingly, too?</source>
-        <translation type="unfinished"></translation>
+        <translation>De schaalfactor is gewijzigd. Moet de kaartinhoud aangepast worden?</translation>
     </message>
     <message>
         <source>Projected coordinates:</source>
@@ -2372,7 +2372,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="157"/>
         <source>Touch mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Aanraakt modus</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="162"/>
@@ -2438,7 +2438,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="533"/>
         <source>Help</source>
-        <translation type="unfinished">Help</translation>
+        <translation>Hulp</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="554"/>
@@ -2472,17 +2472,17 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="48"/>
         <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="49"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Alle bestanden (*.*)</translation>
+        <translation>Alle bestanden (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
         <source>Default icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Standaard icoon</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="69"/>
@@ -2498,12 +2498,12 @@
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="86"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="118"/>
         <source>Save...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sla op...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="88"/>
         <source>Copy to custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopieer naar gebruikers icoon</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="98"/>
@@ -2513,17 +2513,17 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
         <source>Width:</source>
-        <translation type="unfinished">Breedte:</translation>
+        <translation>Breedte:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
         <source>Load...</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="122"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijder</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="169"/>
@@ -2539,13 +2539,14 @@
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="234"/>
         <source>Error</source>
-        <translation type="unfinished">Fout</translation>
+        <translation>Fout</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kon beeld niet opslaan:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="226"/>
@@ -2628,7 +2629,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="48"/>
         <source>OCAD version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD versie %1</translation>
     </message>
     <message>
         <source>Could not parse the data.</source>
@@ -2693,7 +2694,7 @@
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="43"/>
         <source>KML</source>
-        <translation type="unfinished"></translation>
+        <translation>KML</translation>
     </message>
 </context>
 <context>
@@ -2701,7 +2702,7 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="155"/>
         <source>Georeferencing mismatch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferentie wijkt af:</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="173"/>
@@ -2847,12 +2848,12 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="202"/>
         <source>Unknown error</source>
-        <translation type="unfinished">Onbekende fout</translation>
+        <translation>Onbekende fout</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="220"/>
         <source>%1 already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 bestaat al.</translation>
     </message>
 </context>
 <context>
@@ -3188,7 +3189,7 @@
 %1
 
 %2</source>
-        <translation type="unfinished">Kan bestand niet openen:
+        <translation>Kan bestand niet openen:
 %1
 
 %2</translation>
@@ -3197,7 +3198,7 @@
         <location filename="../src/gui/main_window.cpp" line="916"/>
         <location filename="../src/gui/map/map_editor.cpp" line="661"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">Ongeldig bestandstype.</translation>
+        <translation>Ongeldig bestandstype.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="824"/>
@@ -3232,12 +3233,12 @@ Onbekend bestandsformaat.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="247"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informatie</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="248"/>
         <source>When you select the &quot;OK&quot; button, the editor will ignore touch input.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;OK&quot; negeert aanraakscherm.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="253"/>
@@ -3508,14 +3509,14 @@ Kies Nee om een ander formaat te kiezen.</translation>
         <location filename="../src/gui/main_window_controller.cpp" line="63"/>
         <location filename="../src/gui/main_window_controller.cpp" line="71"/>
         <source>Error</source>
-        <translation type="unfinished">Fout</translation>
+        <translation>Fout</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window_controller.cpp" line="64"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
-        <translation type="unfinished">Kan de kaart niet als
+        <translation>Kan de kaart niet als
 &quot;%1&quot;
 exporteren, omdat dat formaat onbekend is.</translation>
     </message>
@@ -3524,7 +3525,7 @@ exporteren, omdat dat formaat onbekend is.</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">Kan de kaart niet als
+        <translation>Kan de kaart niet als
 &quot;%1&quot;
 exporteren, omdat opslaan als %2 (.%3) niet wordt ondersteund.</translation>
     </message>
@@ -3534,16 +3535,16 @@ exporteren, omdat opslaan als %2 (.%3) niet wordt ondersteund.</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="938"/>
         <source>Question</source>
-        <translation type="unfinished">Vraag</translation>
+        <translation>Vraag</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="939"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">De schaal van de geimporteerde gegevens is 1:%1, terwijl de schaal van de kaart 1:%2 is.
+        <translation>De schaal van de geimporteerde gegevens is 1:%1, terwijl de schaal van de kaart 1:%2 is.
 
-Geimporteerde gegevens schalen?</translation>
+Geimporteerde gegevens verschalen?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="203"/>
@@ -4203,7 +4204,7 @@ exporteren, omdat opslaan als %2 (.%3) niet wordt ondersteund.</translation>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Kan bestand niet opslaan
+        <translation>Kan bestand niet opslaan
 %1:
 %2</translation>
     </message>
@@ -4213,7 +4214,7 @@ exporteren, omdat opslaan als %2 (.%3) niet wordt ondersteund.</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="4199"/>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="84"/>
         <source>Warning</source>
-        <translation type="unfinished">Waarschuwing</translation>
+        <translation>Waarschuwing</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="632"/>
@@ -4379,7 +4380,7 @@ exporteren, omdat opslaan als %2 (.%3) niet wordt ondersteund.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="999"/>
         <source>Keep my location on screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Mijn positie op het scherm houden</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1013"/>
@@ -4404,12 +4405,12 @@ exporteren, omdat opslaan als %2 (.%3) niet wordt ondersteund.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1199"/>
         <source>Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>Werkbalk</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1767"/>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteren</translation>
     </message>
     <message>
         <source>Exported successfully to %1</source>
@@ -4418,12 +4419,12 @@ exporteren, omdat opslaan als %2 (.%3) niet wordt ondersteund.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4271"/>
         <source>Nothing to import.</source>
-        <translation type="unfinished">Niets te importeren.</translation>
+        <translation>Niets te importeren.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4283"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation>Vraag</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4284"/>
@@ -5140,7 +5141,7 @@ gekozen</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="237"/>
         <source>Background drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Achtergrond tekeningen</translation>
     </message>
 </context>
 <context>
@@ -5561,7 +5562,7 @@ en gebruik -indien beschikbaar- het muiswiel om uit te vergroten/verkleinen.</tr
         <location filename="../src/core/objects/object_query.cpp" line="383"/>
         <source>not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>niet</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="387"/>
@@ -5592,7 +5593,7 @@ en gebruik -indien beschikbaar- het muiswiel om uit te vergroten/verkleinen.</tr
         <location filename="../src/fileformats/ocd_file_export.cpp" line="734"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="745"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished">Coördinaten zijn aangepast om binnen het OCAD 8 werkgebied te passen (-2 m ... 2 m).</translation>
+        <translation>De coördinaten zijn aangepast om binnen het OCAD 8 werkgebied te passen (-2 m ... 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="755"/>
