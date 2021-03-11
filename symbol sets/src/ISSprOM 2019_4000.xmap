@@ -848,14 +848,14 @@ Minimum length: 0.9 mm (footprint 3.6 m).</description>
 A small vertical rock face may be shown without tags if the direction of fall of the rock face is apparent from the contours. For passable rock faces shown without tags the end of the line must be rounded to improve legibility.
 Minimum height: 0.6 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</description>
-                <line_symbol color="2" line_width="250" minimum_length="900" join_style="1" cap_style="1" start_offset="120" end_offset="120" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                <line_symbol color="2" line_width="300" minimum_length="900" join_style="1" cap_style="1" start_offset="150" end_offset="150" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="2" id="29" code="202.1" name="Passable rock face">
                 <description>A passable cliff or quarry.
 A small vertical rock face may be shown without tags. If the direction of fall of the rock face is not apparent from the contours, or to improve legibility, short tags should be drawn in the direction of the fall. For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. For passable rock faces shown without tags the end of the line must be rounded to improve legibility.
 Minimum height: 0.6 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</description>
-                <line_symbol color="2" line_width="250" minimum_length="900" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="750" end_length="180" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+                <line_symbol color="2" line_width="300" minimum_length="900" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="750" end_length="180" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <mid_symbol>
                         <symbol type="1" code="" name="Mid symbol">
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -886,7 +886,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</description>
                 <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                     <element>
                         <symbol type="2" code="">
-                            <line_symbol color="2" line_width="250" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="2" line_width="300" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="2">
@@ -933,7 +933,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</description>
 Short tags must be drawn in the direction of the fall. For non-vertical cliffs, the tags should be drawn to show the full horizontal extent.
 Minimum height: 0.6 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</description>
-                <line_symbol color="2" line_width="250" minimum_length="900" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                <line_symbol color="2" line_width="300" minimum_length="900" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="2" id="32" code="202.4" name="Passable rock face, tag line">
                 <description>If the direction of fall of the rock face is not apparent from the contours, or to improve legibility, short tags should be drawn in the direction of the fall. For non-vertical cliffs, the tags should be drawn to show the full horizontal extent.</description>
@@ -944,7 +944,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</description>
                 <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                     <element>
                         <symbol type="2" code="">
-                            <line_symbol color="2" line_width="250" minimum_length="0" join_style="1" cap_style="1" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="2" line_width="300" minimum_length="0" join_style="1" cap_style="1" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="2">
@@ -966,7 +966,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</description>
                 <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                     <element>
                         <symbol type="2" code="">
-                            <line_symbol color="2" line_width="250" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="2" line_width="300" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="2">
@@ -3608,7 +3608,7 @@ Minimum width: 0.4 mm (IM).</description>
                 <description>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</description>
                 <area_symbol inner_color="-1" min_area="0" patterns="1">
-                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="30000" line_offset="0" offset_along_line="0" color="2" line_width="140"/>
+                    <pattern type="1" angle="1.5708" line_spacing="30000" line_offset="0" offset_along_line="0" color="2" line_width="140"/>
                 </area_symbol>
             </symbol>
             <symbol type="2" id="162" code="601" name="Magnetic north line">
@@ -3650,7 +3650,7 @@ North lines may be broken where they obscure small features such as boulders, kn
                 <description>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</description>
                 <area_symbol inner_color="-1" min_area="0" patterns="1">
-                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="30000" line_offset="0" offset_along_line="0" color="7" line_width="180"/>
+                    <pattern type="1" angle="1.5708" line_spacing="30000" line_offset="0" offset_along_line="0" color="7" line_width="180"/>
                 </area_symbol>
             </symbol>
             <symbol type="2" id="165" code="601.5" name="Magnetic north line, blue">

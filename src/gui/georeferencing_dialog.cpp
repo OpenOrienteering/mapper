@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -31,7 +31,6 @@
 #include <QCheckBox>
 #include <QCursor>
 #include <QDate>
-#include <QDebug>
 #include <QDesktopServices>  // IWYU pragma: keep
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
@@ -131,7 +130,7 @@ GeoreferencingDialog::GeoreferencingDialog(
  , allow_no_georeferencing(allow_no_georeferencing)
  , tool_active(false)
  , declination_query_in_progress(false)
- , grivation_locked(!initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal)
+ , grivation_locked(initial_georef->getState() != Georeferencing::Geospatial)
  , scale_factor_locked(grivation_locked)
 {
 	setWindowTitle(tr("Map Georeferencing"));
@@ -193,7 +192,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	
 	keep_projected_radio = new QRadioButton(tr("Projected coordinates"));
 	keep_geographic_radio = new QRadioButton(tr("Geographic coordinates"));
-	if (georef->getState() == Georeferencing::Normal && georef->isValid())
+	if (georef->getState() == Georeferencing::Geospatial)
 	{
 		keep_geographic_radio->setChecked(true);
 	}
@@ -334,10 +333,8 @@ void GeoreferencingDialog::georefStateChanged()
 		keep_geographic_radio->setEnabled(false);
 		keep_projected_radio->setChecked(true);
 		break;
-	default:
-		qDebug() << "Unhandled georeferencing state:" << georef->getState();
-		Q_FALLTHROUGH();
-	case Georeferencing::Normal:
+	case Georeferencing::BrokenGeospatial:
+	case Georeferencing::Geospatial:
 		projectionChanged();
 		keep_geographic_radio->setEnabled(true);
 	}
@@ -374,7 +371,7 @@ void GeoreferencingDialog::projectionChanged()
 	            lat_edit, lon_edit
 	);
 	
-	if (georef->getState() == Georeferencing::Normal)
+	if (georef->getState() == Georeferencing::Geospatial)
 	{
 		const std::vector< QString >& parameters = georef->getProjectedCRSParameters();
 		auto temp = CRSTemplateRegistry().find(georef->getProjectedCRSId());
@@ -396,8 +393,8 @@ void GeoreferencingDialog::projectionChanged()
 	setValueIfChanged(lat_edit, latitude);
 	setValueIfChanged(lon_edit, longitude);
 	QString osm_link =
-	  QString::fromLatin1("http://www.openstreetmap.org/?lat=%1&lon=%2&zoom=18&layers=M").
-	  arg(latitude).arg(longitude);
+	  QString::fromLatin1("https://www.openstreetmap.org/?mlat=%1&mlon=%2&zoom=18&layers=M").
+	  arg(latitude, 0, 'g', 10).arg(longitude, 0, 'g', 10);
 	QString worldofo_link =
 	  QString::fromLatin1("http://maps.worldofo.com/?zoom=15&lat=%1&lng=%2").
 	  arg(latitude).arg(longitude);
@@ -430,7 +427,7 @@ void GeoreferencingDialog::auxiliaryFactorChanged()
 
 void GeoreferencingDialog::requestDeclination(bool no_confirm)
 {
-	if (georef->isLocal())
+	if (georef->getState() != Georeferencing::Geospatial)
 		return;
 	
 	/// \todo Move URL (template) to settings.
@@ -506,7 +503,7 @@ void GeoreferencingDialog::showHelp()
 
 void GeoreferencingDialog::reset()
 {
-	scale_factor_locked = grivation_locked = ( !initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal );
+	scale_factor_locked = grivation_locked = ( initial_georef->getState() != Georeferencing::Geospatial );
 	*georef.data() = *initial_georef;
 	reset_button->setEnabled(false);
 }
@@ -566,7 +563,7 @@ void GeoreferencingDialog::accept()
 	
 	if (rotate || stretch)
 	{
-		if (georef->isLocal() && !map->getGeoreferencing().isLocal())
+		if (georef->getState() == Georeferencing::Local && map->getGeoreferencing().getState() != Georeferencing::Local)
 		{
 			// When switching the map to a local georeferencing, templates may
 			// switch to a non-georeferenced mode. Rotating and stretching
@@ -575,7 +572,7 @@ void GeoreferencingDialog::accept()
 			// scale factors and rotation as before.
 			auto const& map_georef = map->getGeoreferencing();
 			Georeferencing local_georef { map_georef };
-			local_georef.setState(Georeferencing::Local);
+			local_georef.setLocalState();
 			local_georef.setDeclination(map_georef.getDeclination());
 			local_georef.setAuxiliaryScaleFactor(map_georef.getAuxiliaryScaleFactor());
 			map->setGeoreferencing(local_georef);
@@ -609,7 +606,7 @@ void GeoreferencingDialog::updateWidgets()
 	
 	updateDeclinationButton();
 	
-	buttons_box->button(QDialogButtonBox::Ok)->setEnabled(georef->isValid());
+	buttons_box->button(QDialogButtonBox::Ok)->setEnabled(georef->getState() != Georeferencing::BrokenGeospatial);
 }
 
 void GeoreferencingDialog::updateDeclinationButton()
@@ -658,7 +655,7 @@ void GeoreferencingDialog::crsEdited()
 		Q_FALLTHROUGH();
 	case Georeferencing::Local:
 		// Local
-		georef_copy.setState(Georeferencing::Local);
+		georef_copy.setLocalState();
 		grivation_locked = true;
 		updateGrivation();
 		scale_factor_locked = true;
@@ -667,8 +664,10 @@ void GeoreferencingDialog::crsEdited()
 	case -1:
 		// CRS from list
 		Q_ASSERT(crs_template);
+		if (spec.isEmpty())
+			spec = QStringLiteral(" ");  // intentionally non-empty: enforce non-local state.
 		georef_copy.setProjectedCRS(crs_template->id(), spec, crs_selector->parameters());
-		georef_copy.setState(Georeferencing::Normal); // Allow invalid spec
+		Q_ASSERT(georef_copy.getState() != Georeferencing::Local);
 		if (keep_geographic_radio->isChecked())
 			georef_copy.setGeographicRefPoint(georef->getGeographicRefPoint(), !grivation_locked, !scale_factor_locked);
 		else

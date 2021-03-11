@@ -326,12 +326,6 @@ void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open, const
 	
 	saveTypeSpecificTemplateConfiguration(xml);
 	
-	if (open && hasUnsavedChanges())
-	{
-		// Save the template itself (e.g. image, gpx file, etc.)
-		saveTemplateFile();
-		const_cast<Template*>(this)->setHasUnsavedChanges(false); // TODO: Error handling?
-	}
 	xml.writeEndElement(/*template*/);
 }
 
@@ -558,6 +552,9 @@ bool Template::setupAndLoad(QWidget* dialog_parent, const MapView* view)
 		setTemplatePosition(view->center() - offset + templatePosition());
 	}
 	
+	setTemplateState(Loaded);
+	setTemplateAreaDirty();
+	emit templateStateChanged();
 	return true;
 }
 
@@ -623,6 +620,11 @@ Template::LookupResult Template::tryToFindTemplateFile(const QString& map_path)
 	return NotFound;
 }
 
+bool Template::fileExists() const
+{
+	return QFileInfo::exists(template_path);
+}
+
 
 bool Template::tryToFindAndReloadTemplateFile(const QString& map_path)
 {
@@ -644,17 +646,12 @@ bool Template::loadTemplateFile()
 	setErrorString(QString());
 	try
 	{
-		if (!QFileInfo::exists(template_path))
+		if (!fileExists())
 		{
 			template_state = Invalid;
 			setErrorString(tr("No such file."));
 		}
-		else if (loadTemplateFileImpl())
-		{
-			template_state = Loaded;
-			setTemplateAreaDirty();
-		}
-		else
+		else if (!loadTemplateFileImpl())
 		{
 			template_state = Invalid;
 			if (errorString().isEmpty())
@@ -664,6 +661,11 @@ bool Template::loadTemplateFile()
 				         getTemplateType() );
 				setErrorString(tr("Is the format of the file correct for this template type?"));
 			}
+		}
+		else if (old_state != Configuring)
+		{
+			template_state = Loaded;
+			setTemplateAreaDirty();
 		}
 	}
 	catch (std::bad_alloc&)
@@ -680,7 +682,7 @@ bool Template::loadTemplateFile()
 	if (old_state != template_state)
 		emit templateStateChanged();
 		
-	return template_state == Loaded;
+	return template_state != Invalid;
 }
 
 bool Template::postLoadSetup(QWidget* /*dialog_parent*/, bool& /*out_center_in_view*/)
@@ -690,7 +692,7 @@ bool Template::postLoadSetup(QWidget* /*dialog_parent*/, bool& /*out_center_in_v
 
 void Template::unloadTemplateFile()
 {
-	Q_ASSERT(template_state == Loaded);
+	Q_ASSERT(template_state == Loaded || template_state == Configuring);
 	if (hasUnsavedChanges())
 	{
 		// The changes are lost
@@ -888,7 +890,7 @@ void Template::setTemplateFileInfo(const QFileInfo& file_info)
 {
 	template_path = file_info.canonicalFilePath();
 	if (template_path.isEmpty())
-		template_path = file_info.path();
+		template_path = file_info.filePath();
 	template_file = file_info.fileName();
 }
 

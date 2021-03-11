@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019  Kai Pastor
+ *    Copyright 2012-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -56,6 +56,7 @@
 #include <QPrinter>
 #include <QPrinterInfo>
 #include <QPrintPreviewDialog>
+#include <QProgressDialog>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QRectF>
@@ -63,6 +64,7 @@
 #include <QRegExpValidator>
 #include <QScrollArea>
 #include <QScrollBar>
+#include <QSettings>
 #include <QSignalBlocker>
 #include <QSizeF>
 #include <QSpacerItem>
@@ -95,6 +97,10 @@
 #include "templates/world_file.h"
 #include "util/backports.h"  // IWYU pragma: keep
 #include "util/scoped_signals_blocker.h"
+
+#ifdef MAPPER_USE_GDAL
+#  include "gdal/kmz_groundoverlay_export.h"
+#endif
 
 
 namespace OpenOrienteering {
@@ -245,6 +251,20 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	// TODO: Implement spinbox-style " dpi" suffix
 	layout->addRow(tr("Resolution:"), dpi_combo);
 	
+	tile_size_combo = new QComboBox();
+	tile_size_combo->setEditable(false);
+	tile_size_combo->addItem(tr("No tiles"), 0);
+	tile_size_combo->addItem(tr("256x256 pixel"), 256);
+	tile_size_combo->addItem(tr("512x512 pixel"), 512);
+	layout->addRow(tr("Tiles:"), tile_size_combo);
+	{
+		auto const tile_size_setting = QSettings().value(QStringLiteral("Export/KmzTileSize"), 512);
+		auto tile_size_index = tile_size_combo->findData(tile_size_setting);
+		if (tile_size_index < 0)
+			tile_size_index = tile_size_combo->findData(512);
+		tile_size_combo->setCurrentIndex(tile_size_index);
+	}
+	
 	different_scale_check = new QCheckBox(tr("Print in different scale:"));
 	// Limit the difference between nominal and printing scale in order to limit the number of page breaks.
 	int min_scale = qMax(1, int(map->getScaleDenominator() / 10000) * 100);
@@ -386,13 +406,16 @@ void PrintWidget::setTask(PrintWidget::TaskFlags type)
 	if (task != type)
 	{
 		task = type;
-		bool is_print_task = type==PRINT_TASK;
-		bool is_multipage  = type.testFlag(MULTIPAGE_FLAG);
+		auto const is_print_task = type==PRINT_TASK;
+		auto const is_multipage  = type.testFlag(MULTIPAGE_FLAG);
+		auto const supports_tiles = type.testFlag(TILES_FLAG);
 		layout->labelForField(target_combo)->setVisible(is_print_task);
 		target_combo->setVisible(is_print_task);
 		layout->labelForField(copies_edit)->setVisible(is_multipage);
 		copies_edit->setVisible(is_multipage);
 		policy_combo->setVisible(is_multipage);
+		tile_size_combo->setVisible(supports_tiles);
+		layout->labelForField(tile_size_combo)->setVisible(supports_tiles);
 		updateTargets();
 		switch (type)
 		{
@@ -431,6 +454,19 @@ void PrintWidget::setTask(PrintWidget::TaskFlags type)
 				emit taskChanged(tr("Image export"));
 				break;
 				
+			case EXPORT_KMZ_TASK:
+				map_printer->setTarget(MapPrinter::kmzTarget());
+				if (active)
+					setOptions(map_printer->getOptions());
+				policy = SinglePage;
+				if (policy_combo->itemData(policy_combo->currentIndex()) != policy)
+				{
+					map_printer->setCustomPageSize(map_printer->getPrintAreaPaperSize());
+					policy_combo->setCurrentIndex(policy_combo->findData(policy));
+				}
+				emit taskChanged(tr("KMZ export"));
+				break;
+			
 			default:
 				emit taskChanged(QString{});
 		}
@@ -586,6 +622,10 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 	{
 		target_index = ImageExporter;
 	}
+	else if (target == MapPrinter::kmzTarget())
+	{
+		target_index = KmzExporter;
+	}
 	else
 	{
 		for (; target_index >= 0; target_index--)
@@ -615,9 +655,10 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 		printer_properties_button->setEnabled(is_printer);
 
 	bool is_image_target = target == MapPrinter::imageTarget();
-	vector_mode_button->setEnabled(!is_image_target);
-	separations_mode_button->setEnabled(!is_image_target && map->hasSpotColors());
-	if (is_image_target)
+	bool is_raster_target = target == MapPrinter::imageTarget() || MapPrinter::kmzTarget();
+	vector_mode_button->setEnabled(!is_raster_target);
+	separations_mode_button->setEnabled(!is_raster_target && map->hasSpotColors());
+	if (is_raster_target)
 	{
 		raster_mode_button->setChecked(true);
 		printModeChanged(raster_mode_button);
@@ -638,13 +679,15 @@ void PrintWidget::targetChanged(int index) const
 		return;
 	
 	int target_index = target_combo->itemData(index).toInt();
-	Q_ASSERT(target_index >= -2);
+	Q_ASSERT(target_index >= LastExporter);
 	Q_ASSERT(target_index < printers.size());
 	
 	if (target_index == PdfExporter)
 		map_printer->setTarget(MapPrinter::pdfTarget());
 	else if (target_index == ImageExporter)
 		map_printer->setTarget(MapPrinter::imageTarget());
+	else if (target_index == KmzExporter)
+		map_printer->setTarget(MapPrinter::kmzTarget());
 	else
 	{
 		auto info = QPrinterInfo::printerInfo(printers[target_index]);
@@ -978,7 +1021,7 @@ void PrintWidget::updateResolutions(const QPrinterInfo* target) const
 	
 	// Numeric resolution list
 	QList<int> supported_resolutions;
-	if (target && target != MapPrinter::imageTarget())
+	if (MapPrinter::isPrinter(target))
 	{
 		QPrinter pr(*target, QPrinter::HighResolution);
 		supported_resolutions = pr.supportedResolutions();
@@ -1004,7 +1047,8 @@ void PrintWidget::updateResolutions(const QPrinterInfo* target) const
 		dpi_combo->clear();
 		dpi_combo->addItems(resolutions);
 	}
-	dpi_combo->lineEdit()->setText(dpi_text.isEmpty() ? dpi_template.arg(600) : dpi_text);
+	auto const default_resolution = (target == MapPrinter::kmzTarget()) ? 300 : 600;
+	dpi_combo->lineEdit()->setText(dpi_text.isEmpty() ? dpi_template.arg(default_resolution) : dpi_text);
 }
 
 void PrintWidget::updateColorMode()
@@ -1165,12 +1209,63 @@ void PrintWidget::printClicked()
 			return;
 	}
 	
+	if (tile_size_combo->isVisible())
+	{
+		QSettings().setValue(QStringLiteral("Export/KmzTileSize"), tile_size_combo->currentData());
+	}
+	
+	
 	if (map_printer->getTarget() == MapPrinter::imageTarget())
 		exportToImage();
+	else if (map_printer->getTarget() == MapPrinter::kmzTarget())
+		exportToKmz();
 	else if (map_printer->getTarget() == MapPrinter::pdfTarget())
 		exportToPdf();
 	else
 		print();
+}
+
+void PrintWidget::exportToKmz()
+{
+#ifdef MAPPER_USE_GDAL
+	static const QString filter_template(QString::fromLatin1("%1 (%2)"));
+	QStringList filters = { filter_template.arg(tr("KMZ"), QString::fromLatin1("*.kmz")),
+	                        filter_template.arg(tr("KML"), QString::fromLatin1("*.kml")),
+	                        tr("All files (*.*)") };
+	QString selected_filter;
+	QString path = FileDialog::getSaveFileName(this, tr("Export map ..."), {}, filters.join(QString::fromLatin1(";;")), &selected_filter);
+	if (path.isEmpty())
+		return;
+	
+	if (!path.endsWith(QLatin1String(".kmz"), Qt::CaseInsensitive)
+	    && !path.endsWith(QLatin1String(".kml"), Qt::CaseInsensitive))
+	{
+		if (selected_filter == filters[1])
+			path.append(QString::fromLatin1(".kml"));
+		else
+			path.append(QString::fromLatin1(".kmz"));
+	}
+	
+	QProgressDialog progress(main_window);
+	progress.setWindowModality(Qt::ApplicationModal); // Required for OSX, cf. QTBUG-40112
+	progress.setWindowTitle(tr("Export map ..."));
+	progress.setMinimumDuration(500);
+	progress.setAutoClose(true);
+	
+	KmzGroundOverlayExport exporter(path, *map);
+	exporter.setProgressObserver(&progress);
+	if (!exporter.doExport(*map_printer, tile_size_combo->currentData().toInt()))
+	{
+		progress.cancel();
+		QMessageBox::warning(this, tr("Error"), tr("Failed to save the image:\n%1").arg(exporter.errorString()));
+		main_window->showStatusBarMessage(tr("Canceled."), 4000);
+	}
+	else
+	{
+		main_window->showStatusBarMessage(tr("Exported successfully to %1").arg(path), 4000);
+		emit finished(0);
+	}
+#endif
 }
 
 void PrintWidget::exportToImage()

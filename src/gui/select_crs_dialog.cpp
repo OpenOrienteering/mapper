@@ -65,7 +65,7 @@ SelectCRSDialog::SelectCRSDialog(
 	setWindowTitle(tr("Select coordinate reference system"));
 	
 	crs_selector = new CRSSelector(georef, nullptr);
-	if (georef.isLocal())
+	if (georef.getState() != Georeferencing::Geospatial)
 	{
 		crs_selector->clear();
 		crs_selector->addCustomItem(tr("Local"), SpecialCRS::Local);
@@ -93,7 +93,7 @@ SelectCRSDialog::SelectCRSDialog(
 	crs_selector->setDialogLayout(form_layout);
 	
 	auto const& crs_spec = options.effective.crs_spec;
-	if (georef.isLocal())
+	if (georef.getState() != Georeferencing::Geospatial)
 	    crs_selector->setCurrentIndex(0);
 	else if (crs_spec.isEmpty())
 		crs_selector->setCurrentIndex(crs_selector->findData(SpecialCRS::SameAsMap));

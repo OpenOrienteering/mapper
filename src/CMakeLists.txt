@@ -120,16 +120,19 @@ set(Mapper_Common_SRCS
   core/symbols/symbol_icon_decorator.cpp
   core/symbols/text_symbol.cpp
   
+  fileformats/course_file_format.cpp
   fileformats/file_format.cpp
   fileformats/file_format_registry.cpp
   fileformats/file_import_export.cpp
-  fileformats/ocad8_file_format.cpp
+  fileformats/iof_course_export.cpp
+  fileformats/kml_course_export.cpp
   fileformats/ocd_file_export.cpp
   fileformats/ocd_file_format.cpp
   fileformats/ocd_file_import.cpp
   fileformats/ocd_georef_fields.cpp
   fileformats/ocd_icon.cpp
   fileformats/ocd_types.cpp
+  fileformats/simple_course_export.cpp
   fileformats/xml_file_format.cpp
   
   gui/about_dialog.cpp
@@ -147,6 +150,7 @@ set(Mapper_Common_SRCS
   gui/print_widget.cpp
   gui/select_crs_dialog.cpp
   gui/settings_dialog.cpp
+  gui/simple_course_dialog.cpp
   gui/task_dialog.cpp
   gui/text_browser_dialog.cpp
   gui/touch_cursor.cpp
@@ -176,6 +180,7 @@ set(Mapper_Common_SRCS
   gui/widgets/action_grid_bar.cpp
   gui/widgets/color_dropdown.cpp
   gui/widgets/color_list_widget.cpp
+  gui/widgets/color_wheel_widget.cpp
   gui/widgets/compass_display.cpp
   gui/widgets/crs_param_widgets.cpp
   gui/widgets/crs_selector.cpp
@@ -185,6 +190,7 @@ set(Mapper_Common_SRCS
   gui/widgets/key_button_bar.cpp
   gui/widgets/mapper_proxystyle.cpp
   gui/widgets/measure_widget.cpp
+  gui/widgets/paint_on_template_settings_page.cpp
   gui/widgets/pie_menu.cpp
   gui/widgets/segmented_button_layout.cpp
   gui/widgets/settings_page.cpp
@@ -249,6 +255,7 @@ set(Mapper_Common_SRCS
   
   util/encoding.cpp
   util/item_delegates.cpp
+  util/key_value_container.cpp
   util/mapper_service_proxy.cpp
   util/matrix.cpp
   util/overriding_shortcut.cpp
@@ -268,7 +275,6 @@ set(Mapper_Common_HEADERS
   core/renderables/renderable_implementation.h
   
   fileformats/file_import_export.h  # translations
-  fileformats/ocad8_file_format_p.h
   fileformats/ocd_file_import.h     # translations
   fileformats/ocd_types.h
   fileformats/ocd_types_v8.h
@@ -294,7 +300,6 @@ add_dependencies(Mapper_Common
   Mapper_prerequisites
 )
 target_link_libraries(Mapper_Common
-  libocad
   Polyclipping::Polyclipping
   PROJ4::proj
   Qt5::Widgets

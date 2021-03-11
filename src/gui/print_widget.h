@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016  Kai Pastor
+ *    Copyright 2012-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -72,6 +72,7 @@ Q_OBJECT
 public:
 	enum TaskFlag
 	{
+		TILES_FLAG     = 0x01,
 		EXPORT_FLAG    = 0x02,
 		MULTIPAGE_FLAG = 0x04,
 		
@@ -79,6 +80,7 @@ public:
 		PRINT_TASK         = 0x14, // 0x10 | 0x04
 		EXPORT_PDF_TASK    = 0x26, // 0x20 | 0x04 | 0x02
 		EXPORT_IMAGE_TASK  = 0x42, // 0x40        | 0x02
+		EXPORT_KMZ_TASK    = 0x83, // 0x80        | 0x02 | 0x01
 		
 		END_JOB_TYPE
 	};
@@ -254,6 +256,9 @@ protected:
 	/** Checks whether the template order warning needs to be displayed. */
 	void checkTemplateConfiguration();
 	
+	/** Exports to a KML ground overlay file. */
+	void exportToKmz();
+
 	/** Exports to an image file. */
 	void exportToImage();
 
@@ -269,8 +274,10 @@ protected:
 private:
 	enum Exporters
 	{
-		PdfExporter = -1,
-		ImageExporter = -2
+		PdfExporter   = -1,
+		ImageExporter = -2,
+		KmzExporter   = -3,
+		LastExporter  = KmzExporter
 	};
 	TaskFlags task;
 	
@@ -289,6 +296,7 @@ private:
 	QDoubleSpinBox* page_height_edit;
 	
 	QComboBox* dpi_combo;
+	QComboBox* tile_size_combo;
 	QCheckBox* show_templates_check;
 	QLabel* templates_warning_icon;
 	QLabel* templates_warning_text;

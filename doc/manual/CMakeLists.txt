@@ -171,10 +171,16 @@ if(Mapper_MANUAL_QTHELP)
 	  DOC "The path of the sqlite3 executable"
 	)
 	if (DEFINED ENV{SOURCE_DATE_EPOCH} AND SQLITE3_EXECUTABLE)
-		file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/timestamp.sql"
-		  "update 'SettingsTable' set Value='$ENV{SOURCE_DATE_EPOCH}' where Key='CreationTime';\n"
-		  "delete from 'SettingsTable' where Key='LastRegisterTime';\n"
-		)
+		if(Qt5Core_VERSION VERSION_LESS 5.12.0)
+			file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/timestamp.sql"
+			  "UPDATE 'SettingsTable' SET Value='$ENV{SOURCE_DATE_EPOCH}' where Key='CreationTime';\n"
+			  "DELETE FROM 'SettingsTable' WHERE Key='LastRegisterTime';\n"
+			)
+		else()
+			file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/timestamp.sql"
+			  "UPDATE TimeStampTable SET TimeStamp=strftime('%Y-%m-%dT%H:%M:%S',datetime($ENV{SOURCE_DATE_EPOCH},'unixepoch'));\n"
+			)
+		endif()
 		set(source_date_commands
 	      COMMAND ${SQLITE3_EXECUTABLE} "${Mapper_HELP_COLLECTION}" < "timestamp.sql"
 		)

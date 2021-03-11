@@ -145,6 +145,12 @@ public:
 	
 	
 	/**
+	 * Tests if a particular driver is available.
+	 */
+	static bool isDriverEnabled(const char* driver_name);
+	
+	
+	/**
 	 * Returns the list of GDAL configuration parameters.
 	 */
 	QStringList parameterKeys() const;
@@ -163,6 +169,14 @@ public:
 	 * Unsets a GDAL configuration parameter value.
 	 */
 	void unsetParameter(const QString& key);
+	
+	
+	/**
+	 * A proxy for OSRSetPROJSearchPaths.
+	 * 
+	 * Does nothing for GDAL < 3.0.0.
+	 */
+	static void setProjSearchPaths(const char* const* search_paths);
 };
 
 

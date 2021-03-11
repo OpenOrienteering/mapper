@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -43,6 +43,12 @@ private slots:
 	void mapCoordtoString_data();
 	
 	/**
+	 * Tests filename extension fixup.
+	 */
+	void fixupExtensionTest();
+	void fixupExtensionTest_data();
+	
+	/**
 	 * Tests FileFormat::understands() implementations.
 	 */
 	void understandsTest();
@@ -81,6 +87,17 @@ private slots:
 	 */
 	void ogrExportTest();
 	void ogrExportTest_data();
+	
+	/**
+	 * Tests the export of KML courses.
+	 */
+	void kmlCourseExportTest();
+	
+	/**
+	 * Test the creation of templates.
+	 */
+	void importTemplateTest_data();
+	void importTemplateTest();
 	
 };
 

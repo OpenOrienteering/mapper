@@ -869,6 +869,11 @@ QString Symbol::getNumberAsString() const
 }
 
 
+// virtual
+bool Symbol::hasRotatableFillPattern() const
+{
+	return false;
+}
 
 void Symbol::setRotatable(bool value)
 {

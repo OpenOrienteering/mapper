@@ -50,6 +50,8 @@
 #include <QTextDocument>
 #include <QVariant>
 #include <QWidget>
+#include <QToolButton>
+#include <QIcon>
 
 #include "mapper_config.h"
 #include "settings.h"
@@ -378,7 +380,26 @@ namespace Util {
 		return maybe_markup;
 	}
 
-	
+
+	namespace ToolButton
+	{
+		/**
+		 * Returns a new QToolButton with a unified appearance.
+		 */
+		QToolButton* create(const QIcon& icon, const QString& text, const char* whats_this)
+		{
+			auto* button = new QToolButton();
+			button->setToolButtonStyle(Qt::ToolButtonIconOnly);
+			button->setToolTip(text);
+			button->setIcon(icon);
+			button->setText(text);
+			if (whats_this)
+				button->setWhatsThis(OpenOrienteering::Util::makeWhatThis(whats_this));
+			return button;
+		}
+	}  // namespace ToolButton
+
+
 }  // namespace Util
 
 

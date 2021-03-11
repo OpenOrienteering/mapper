@@ -9,6 +9,10 @@ find_package(Qt5Test ${Qt5Core_VERSION} REQUIRED)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_AUTOMOC ON)
 
+configure_file(test_config.h.in test_config.h)
+add_library(cove-test-config INTERFACE)
+target_include_directories(cove-test-config INTERFACE "${CMAKE_CURRENT_BINARY_DIR}")
+
 add_executable(cove-ParallelImageProcessingTest
   ParallelImageProcessingTest.cpp
 )
@@ -22,6 +26,9 @@ endif()
 
 add_executable(cove-PolygonTest
   PolygonTest.cpp
+)
+target_link_libraries(cove-PolygonTest
+  PRIVATE cove-test-config
 )
 add_test(
   NAME cove-PolygonTest

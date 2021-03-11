@@ -23,7 +23,6 @@
 #define OPENORIENTEERING_TAG_SELECT_WIDGET_H
 
 #include <QtGlobal>
-#include <QIcon>
 #include <QObject>
 #include <QString>
 #include <QTableWidget>
@@ -60,11 +59,6 @@ protected:
 	void showEvent(QShowEvent* event) override;
 	
 private:
-	/**
-	 * Returns a new QToolButton with a unified appearance.
-	 */
-	QToolButton* newToolButton(const QIcon& icon, const QString& text);
-	
 	void addRow();
 	void deleteRow();
 	void moveRow(bool up);

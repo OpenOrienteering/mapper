@@ -50,6 +50,17 @@
 
 namespace OpenOrienteering {
 
+namespace {
+
+/// Local wrapper for Util::ToolButton::create() adding the What's This bit.
+QToolButton* createToolButton(const QIcon& icon, const QString& text)
+{
+	return Util::ToolButton::create(icon, text, "find_objects.html#query-editor");
+}
+
+}  // anonymous namespace
+
+
 // ### TagSelectWidget ###
 
 TagSelectWidget::TagSelectWidget(QWidget* parent)
@@ -89,18 +100,18 @@ TagSelectWidget::~TagSelectWidget() = default;
 
 QWidget* TagSelectWidget::makeButtons(QWidget* parent)
 {
-	auto* add_button = newToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("Add Row"));
-	delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Remove Row"));
+	auto* add_button = createToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("Add Row"));
+	delete_button = createToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Remove Row"));
 	delete_button->setEnabled(false);
 	
 	auto* add_remove_layout = new SegmentedButtonLayout();
 	add_remove_layout->addWidget(add_button);
 	add_remove_layout->addWidget(delete_button);
 
-	move_up_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-up.png")), tr("Move Up"));
+	move_up_button = createToolButton(QIcon(QString::fromLatin1(":/images/arrow-up.png")), tr("Move Up"));
 	move_up_button->setAutoRepeat(true);
 	move_up_button->setEnabled(false);
-	move_down_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-down.png")), tr("Move Down"));
+	move_down_button = createToolButton(QIcon(QString::fromLatin1(":/images/arrow-down.png")), tr("Move Down"));
 	move_down_button->setAutoRepeat(true);
 	move_down_button->setEnabled(false);
 
@@ -124,20 +135,6 @@ QWidget* TagSelectWidget::makeButtons(QWidget* parent)
 	
 	return list_buttons_group;
 }
-
-
-
-QToolButton* TagSelectWidget::newToolButton(const QIcon& icon, const QString& text)
-{
-	auto* button = new QToolButton();
-	button->setToolButtonStyle(Qt::ToolButtonIconOnly);
-	button->setToolTip(text);
-	button->setIcon(icon);
-	button->setText(text);
-	button->setWhatsThis(Util::makeWhatThis("find_objects.html#query-editor"));
-	return button;
-}
-
 
 
 void TagSelectWidget::showEvent(QShowEvent* event)

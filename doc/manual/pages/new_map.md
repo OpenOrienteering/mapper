@@ -4,7 +4,8 @@ authors:
   - Peter Hoban
   - Thomas Schoeps
 keywords: Map
-edited: 26 February 2013
+nav_order: 0.11
+last_modified_date: 26 February 2013
 ---
 
 Choose the menu item File -&gt; New... to show the new map dialog.

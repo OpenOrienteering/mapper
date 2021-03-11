@@ -26,6 +26,7 @@
 
 #include <cpl_conv.h>
 #include <gdal.h>
+#include <ogr_srs_api.h>  // IWYU pragma: keep
 // IWYU pragma: no_include <gdal_version.h>
 
 #include <QtGlobal>
@@ -498,6 +499,14 @@ const std::vector<QByteArray>& GdalManager::supportedVectorExportExtensions() co
 	return p->supportedVectorExportExtensions();
 }
 
+
+bool GdalManager::isDriverEnabled(const char* driver_name)
+{
+	auto driver = GDALGetDriverByName(driver_name);
+	return bool(driver);
+}
+
+
 QStringList GdalManager::parameterKeys() const
 {
 	return p->parameterKeys();
@@ -516,6 +525,16 @@ void GdalManager::setParameterValue(const QString& key, const QString& value)
 void GdalManager::unsetParameter(const QString& key)
 {
 	p->unsetParameter(key);
+}
+
+
+void GdalManager::setProjSearchPaths(const char* const* search_paths)
+{
+#if GDAL_VERSION_NUM >= GDAL_COMPUTE_VERSION(3,0,0)
+	OSRSetPROJSearchPaths(search_paths);
+#else
+	Q_UNUSED(search_paths)
+#endif
 }
 
 

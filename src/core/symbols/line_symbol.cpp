@@ -2032,25 +2032,22 @@ bool LineSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 				return false;
 		}
 	}
+	
+	auto const symbols_are_equal = [](const PointSymbol* lhs, const PointSymbol* rhs) -> bool {
+		return ((!lhs || lhs->isEmpty()) && (!rhs || rhs->isEmpty()))
+		       || (lhs && rhs && lhs->equals(rhs));
+	};
 
-	if (bool(start_symbol) != bool(line->start_symbol))
-		return false;
-	if (start_symbol && !start_symbol->equals(line->start_symbol))
+	if (!symbols_are_equal(start_symbol, line->start_symbol))
 		return false;
 	
-	if (bool(mid_symbol) != bool(line->mid_symbol))
-		return false;
-	if (mid_symbol && !mid_symbol->equals(line->mid_symbol))
+	if (!symbols_are_equal(mid_symbol, line->mid_symbol))
 		return false;
 	
-	if (bool(end_symbol) != bool(line->end_symbol))
-		return false;
-	if (end_symbol && !end_symbol->equals(line->end_symbol))
+	if (!symbols_are_equal(end_symbol, line->end_symbol))
 		return false;
 	
-	if (bool(dash_symbol) != bool(line->dash_symbol))
-		return false;
-	if (dash_symbol && !dash_symbol->equals(line->dash_symbol))
+	if (!symbols_are_equal(dash_symbol, line->dash_symbol))
 		return false;
 	if (suppress_dash_symbol_at_ends != line->suppress_dash_symbol_at_ends)
 		return false;

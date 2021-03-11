@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2019 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,7 +21,6 @@
 #define OPENORIENTEERING_XML_STREAM_UTIL_H
 
 #include <QtGlobal>
-#include <QHash>
 #include <QLatin1String>
 #include <QRectF>
 #include <QSizeF>
@@ -39,6 +38,8 @@ class QXmlStreamReader;
 class QXmlStreamWriter;
 
 namespace OpenOrienteering {
+
+class KeyValueContainer;
 
 
 /**
@@ -249,7 +250,7 @@ public:
 	/**
 	 * Writes tags.
 	 */
-	void write(const QHash<QString, QString>& tags);
+	void write(const KeyValueContainer& tags);
 	
 private:
 	QXmlStreamWriter& xml;
@@ -360,7 +361,7 @@ public:
 	/**
 	 * Read tags.
 	 */
-	void read(QHash<QString, QString>& tags);
+	void read(KeyValueContainer& tags);
 	
 private:
 	QXmlStreamReader& xml;
@@ -426,9 +427,6 @@ namespace XmlStreamLiteral
 	static const QLatin1String count("count");
 	
 	static const QLatin1String object("object");
-	static const QLatin1String tags("tags");
-	static const QLatin1String tag("tag"); ///< @deprecated
-	static const QLatin1String key("key"); ///< @deprecated
 	static const QLatin1String t("t");
 	static const QLatin1String k("k");
 	
@@ -567,19 +565,6 @@ void XmlElementWriter::write(const QSizeF& size, int precision)
 	writeAttribute( literal::height, size.height(), precision );
 }
 
-inline
-void XmlElementWriter::write(const QHash<QString, QString> &tags)
-{
-	namespace literal = XmlStreamLiteral;
-	typedef QHash<QString, QString> Tags;
-	
-	for (Tags::const_iterator tag = tags.constBegin(), end = tags.constEnd(); tag != end; ++tag)
-	{
-		XmlElementWriter tag_element(xml, literal::t);
-		tag_element.writeAttribute(literal::k, tag.key());
-		xml.writeCharacters(tag.value());
-	}
-}
 
 //### XmlElementReader inline implemenentation ###
 
@@ -734,38 +719,6 @@ void XmlElementReader::read(QSizeF& size)
 	size.setWidth(QString::fromRawData(ref.data(), ref.size()).toDouble());
 	ref = attributes.value(literal::height);
 	size.setHeight(QString::fromRawData(ref.data(), ref.size()).toDouble());
-}
-
-inline
-void XmlElementReader::read(QHash<QString, QString> &tags)
-{
-	namespace literal = XmlStreamLiteral;
-	
-	tags.clear();
-	while (xml.readNextStartElement())
-	{
-		if (xml.name() == literal::t)
-		{
-			const QString key(xml.attributes().value(literal::k).toString());
-			tags.insert(key, xml.readElementText());
-		}
-		else if (xml.name() == literal::tag)
-		{
-			// Full keywords were used in pre-0.6.0 master branch
-			// TODO Remove after Mapper 0.6.x releases
-			const QString key(xml.attributes().value(literal::key).toString());
-			tags.insert(key, xml.readElementText());
-		}
-		else if (xml.name() == literal::tags)
-		{
-			// Fix for broken Object::save in pre-0.6.0 master branch
-			// TODO Remove after Mapper 0.6.x releases
-			const QString key(xml.attributes().value(literal::key).toString());
-			tags.insert(key, xml.readElementText());
-		}
-		else
-			xml.skipCurrentElement();
-	}
 }
 
 

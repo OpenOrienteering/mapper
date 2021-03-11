@@ -1,6 +1,5 @@
 /*
- *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2018 Kai Pastor
+ *    Copyright 2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,36 +17,53 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OPENORIENTEERING_OCAD8_FILE_FORMAT_H
-#define OPENORIENTEERING_OCAD8_FILE_FORMAT_H
+#ifndef OPENORIENTEERING_COURSE_FILE_FORMAT_H
+#define OPENORIENTEERING_COURSE_FILE_FORMAT_H
 
+#include <functional>
 #include <memory>
+#include <vector>
 
-#include "file_format.h"
+#include "fileformats/file_format.h"
 
-class QIODevice;
+class QString;
+
 
 namespace OpenOrienteering {
 
 class Exporter;
-class Importer;
 class Map;
 class MapView;
 
-
-/** Representation of the format used by OCAD 8. 
+/**
+ * A family of formats representing courses.
  */
-class OCAD8FileFormat : public FileFormat
+class CourseFileFormat : public FileFormat
 {
 public:
-	OCAD8FileFormat();
+	using ExporterBuilder = std::function<std::unique_ptr<Exporter> (const QString&, const Map*, const MapView*)>;
 	
-	ImportSupportAssumption understands(const char* buffer, int size) const override;
-	std::unique_ptr<Importer> makeImporter(const QString& path, Map *map, MapView *view) const override;
+	/**
+	 * Returns a container of all supported variants of this format.
+	 */
+	static std::vector<std::unique_ptr<CourseFileFormat>> makeAll();
+	
+	
+	/**
+	 * Constructs a new CourseFileFormat.
+	 */
+	CourseFileFormat(FileType type, const char* id, const QString& description, const QString& file_extension, ExporterBuilder exporter_builder);
+	
+	
+	/// \copydoc FileFormat::makeExporter()
 	std::unique_ptr<Exporter> makeExporter(const QString& path, const Map* map, const MapView* view) const override;
+	
+private:
+	ExporterBuilder make_exporter;
+	
 };
 
 
 }  // namespace OpenOrienteering
 
-#endif // OCAD8_FILE_IMPORT_H
+#endif // OPENORIENTEERING_COURSE_FILE_FORMAT_H

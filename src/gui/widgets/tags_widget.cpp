@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -62,7 +62,7 @@ TagsWidget::TagsWidget(Map* map, MapView* main_view, MapEditorController* contro
 	
 	layout->addWidget(tags_table);
 	
-	auto help_button = newToolButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
+	auto help_button = Util::ToolButton::create(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
 	help_button->setAutoRaise(true);
 	
 	auto all_buttons_layout = new QHBoxLayout();
@@ -91,17 +91,6 @@ TagsWidget::TagsWidget(Map* map, MapView* main_view, MapEditorController* contro
 
 TagsWidget::~TagsWidget() = default;
 
-
-
-QToolButton* TagsWidget::newToolButton(const QIcon& icon, const QString& text)
-{
-	auto button = new QToolButton();
-	button->setToolButtonStyle(Qt::ToolButtonIconOnly);
-	button->setToolTip(text);
-	button->setIcon(icon);
-	button->setText(text);
-	return button;
-}
 
 // slot
 void TagsWidget::showHelp()
@@ -139,14 +128,14 @@ void TagsWidget::objectTagsChanged()
 	const Object* object = map->getFirstSelectedObject();
 	if (object)
 	{
-		const Object::Tags& tags = object->tags();
+		auto const& tags = object->tags();
 		tags_table->clearContents();
 		tags_table->setRowCount(tags.size() + 1);
-		for (Object::Tags::const_iterator tag = tags.constBegin(), end = tags.constEnd(); tag != end; ++tag)
+		for (auto const& tag : tags)
 		{
-			tags_table->setItem(row, 0, new QTableWidgetItem(tag.key()));
-			tags_table->item(row, 0)->setData(Qt::UserRole, tag.key());
-			tags_table->setItem(row, 1, new QTableWidgetItem(tag.value()));
+			tags_table->setItem(row, 0, new QTableWidgetItem(tag.key));
+			tags_table->item(row, 0)->setData(Qt::UserRole, tag.key);
+			tags_table->setItem(row, 1, new QTableWidgetItem(tag.value));
 			++row;
 		}
 		tags_table->sortItems(0);
@@ -217,13 +206,6 @@ void TagsWidget::cellChange(int row, int column)
 				// Jump to previous row
 				tags_table->setCurrentCell(row - 1, 1);
 			}
-			else
-			{
-				// Reset current row
-				tags_table->item(row, 1)->setText({});
-				auto value_item = tags_table->item(row, 1);
-				value_item->setFlags(value_item->flags() & ~Qt::ItemIsEnabled);
-			}
 		}
 		else if (!key.isEmpty())
 		{
@@ -234,7 +216,9 @@ void TagsWidget::cellChange(int row, int column)
 				  tr("The key \"%1\" already exists and must not be used twice.").arg(key)
 				);
 				tags_table->item(row, column)->setText(old_key);
-				tags_table->setCurrentCell(row, column);
+				QTimer::singleShot(0, tags_table, [tags_table = this->tags_table, row, column] {
+					tags_table->setCurrentCell(row, column);
+				});
 			}
 			else
 			{

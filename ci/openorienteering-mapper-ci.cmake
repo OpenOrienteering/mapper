@@ -122,6 +122,7 @@ superbuild_package(
       "${CMAKE_COMMAND}" --build . --target package$<IF:$<STREQUAL:@CMAKE_GENERATOR@,Ninja>,,/fast>
   $<$<NOT:$<BOOL:@CMAKE_CROSSCOMPILING@>>:
     TEST_COMMAND
+      "${CMAKE_COMMAND}" -E env "LD_LIBRARY_PATH=${CMAKE_STAGING_PREFIX}/lib"
       "${CMAKE_CTEST_COMMAND}" -T Test --no-compress-output
     $<$<BOOL:@Mapper_CI_ENABLE_COVERAGE@>:
         --exclude-regex symbol_set_t
