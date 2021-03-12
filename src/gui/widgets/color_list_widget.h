@@ -73,8 +73,6 @@ protected slots:
 protected:
 	void showEvent(QShowEvent* event) override;
 	
-	QToolButton* newToolButton(const QIcon& icon, const QString& text);
-	
 private:
 	void addRow(int row);
 	void updateRow(int row);

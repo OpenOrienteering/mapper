@@ -31,7 +31,7 @@ option(CMAKE_FIND_PACKAGE_PREFER_CONFIG "Lookup package config files before usin
 
 # Project declaration
 
-project(Mapper VERSION 0.9.5 LANGUAGES CXX C)
+project(Mapper VERSION 0.9.6 LANGUAGES CXX C)
 set(Mapper_COPYRIGHT "(C) 2021 The OpenOrienteering developers")
 
 math(EXPR Mapper_VERSION_CODE "${Mapper_VERSION_MAJOR} * 10000 + ${Mapper_VERSION_MINOR} * 100 + ${Mapper_VERSION_PATCH} * 2 + ${CMAKE_SIZEOF_VOID_P} / 4 - 1")
@@ -239,11 +239,6 @@ if(big_endian)
 endif()
 
 
-if(UNIX AND NOT APPLE)
-#	set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib/${Mapper_PACKAGE_NAME}/lib")
-	set(CMAKE_INSTALL_RPATH "${MAPPER_LIBRARY_DESTINATION}/lib")
-endif()
-
 add_definitions(-D_USE_MATH_DEFINES -DUNICODE)
 
 if(Mapper_DEVELOPMENT_BUILD)
@@ -324,6 +319,7 @@ set(ci
   ci/filter-stderr.sed
   ci/publish.yml
   ci/publish-coverage.yml
+  ci/release-notes.yml
   ci/setup-common.yml
   ci/setup-macos.yml
   ci/setup-msys2.yml

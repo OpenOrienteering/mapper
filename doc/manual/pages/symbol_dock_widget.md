@@ -4,7 +4,9 @@ authors:
   - Peter Hoban
   - Thomas Schoeps
 keywords: Symbols
-edited: 24 February 2013
+last_modified_date: 24 February 2013
+parent: Colors and Symbols
+nav_order: 0.2
 ---
 
 ![ ](images/symbol_dock_widget.png)

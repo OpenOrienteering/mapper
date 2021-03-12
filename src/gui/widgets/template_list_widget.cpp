@@ -104,6 +104,8 @@
 #endif
 
 
+namespace OpenOrienteering {
+
 namespace {
 
 QVariant makeCheckBoxDecorator(QStyle* style, const QSize& size)
@@ -121,24 +123,14 @@ QVariant makeCheckBoxDecorator(QStyle* style, const QSize& size)
 	return pixmap;
 }
 
-/**
- * Returns a new QToolButton with a unified appearance.
- */
-QToolButton* newToolButton(const QIcon& icon, const QString& text)
+/// Local wrapper for Util::ToolButton::create() adding the What's This bit.
+QToolButton* createToolButton(const QIcon& icon, const QString& text)
 {
-	auto* button = new QToolButton();
-	button->setToolButtonStyle(Qt::ToolButtonIconOnly);
-	button->setToolTip(text);
-	button->setIcon(icon);
-	button->setText(text);
-	button->setWhatsThis(OpenOrienteering::Util::makeWhatThis("templates.html#setup"));
-	return button;
+	return Util::ToolButton::create(icon, text, "templates.html#setup");
 }
 
-}
+}  // anonymous namespace
 
-
-namespace OpenOrienteering {
 
 // ### TemplateListWidget ###
 
@@ -256,19 +248,19 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 	current_action->setDisabled(true);
 #endif
 	
-	auto* new_button = newToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("Add template..."));
+	auto* new_button = createToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("Add template..."));
 	new_button->setPopupMode(QToolButton::InstantPopup);
 	new_button->setMenu(new_button_menu);
 	
-	delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Remove"));
+	delete_button = createToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Remove"));
 	
 	auto* add_remove_layout = new SegmentedButtonLayout();
 	add_remove_layout->addWidget(new_button);
 	add_remove_layout->addWidget(delete_button);
 	
-	move_up_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-up.png")), tr("Move Up"));
+	move_up_button = createToolButton(QIcon(QString::fromLatin1(":/images/arrow-up.png")), tr("Move Up"));
 	move_up_button->setAutoRepeat(true);
-	move_down_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-down.png")), tr("Move Down"));
+	move_down_button = createToolButton(QIcon(QString::fromLatin1(":/images/arrow-down.png")), tr("Move Down"));
 	move_down_button->setAutoRepeat(true);
 	
 	auto* up_down_layout = new SegmentedButtonLayout();
@@ -277,10 +269,10 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 	
 	move_by_hand_action = new QAction(QIcon(QString::fromLatin1(":/images/move.png")), tr("Move by hand"), this);
 	move_by_hand_action->setCheckable(true);
-	move_by_hand_button = newToolButton(move_by_hand_action->icon(), move_by_hand_action->text());
+	move_by_hand_button = createToolButton(move_by_hand_action->icon(), move_by_hand_action->text());
 	move_by_hand_button->setDefaultAction(move_by_hand_action);
 	move_by_hand_button->setVisible(!mobile_mode);
-	adjust_button = newToolButton(QIcon(QString::fromLatin1(":/images/georeferencing.png")), tr("Adjust..."));
+	adjust_button = createToolButton(QIcon(QString::fromLatin1(":/images/georeferencing.png")), tr("Adjust..."));
 	adjust_button->setCheckable(true);
 	adjust_button->setVisible(!mobile_mode);
 	
@@ -298,7 +290,7 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 	vectorize_action = nullptr;
 #endif /* WITH_COVE */
 
-	edit_button = newToolButton(QIcon(QString::fromLatin1(":/images/settings.png")),
+	edit_button = createToolButton(QIcon(QString::fromLatin1(":/images/settings.png")),
 	                            ::OpenOrienteering::MapEditorController::tr("&Edit").remove(QLatin1Char('&')));
 	edit_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	edit_button->setPopupMode(QToolButton::InstantPopup);
@@ -329,7 +321,7 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 	
 	if (!mobile_mode)
 	{
-		auto help_button = newToolButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
+		auto help_button = createToolButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
 		help_button->setAutoRaise(true);
 		all_buttons_layout->addWidget(help_button);
 		connect(help_button, &QAbstractButton::clicked, this, &TemplateListWidget::showHelp);

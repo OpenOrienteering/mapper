@@ -1,6 +1,8 @@
 ---
 title: Colors and Symbols
-edited: 26 November 2015
+last_modified_date: 26 November 2015
+nav_order: 0.31
+has_children: true
 ---
 
 Modifying map colors and symbols

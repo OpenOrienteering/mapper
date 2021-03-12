@@ -71,11 +71,6 @@ protected slots:
 	void showHelp();
 	
 protected:
-	/**
-	 * Returns a new QToolButton with a unified appearance.
-	 */
-	QToolButton* newToolButton(const QIcon& icon, const QString& text);
-	
 	/** 
 	 * Sets up the last row: blank cells, right one not editable.
 	 */

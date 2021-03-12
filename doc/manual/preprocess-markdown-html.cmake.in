@@ -104,7 +104,7 @@ foreach(file ${input_files})
 		#set(output "${output}\n\n\\addindex ${keywords}")
 	endif()
 
-	get_yaml_field(edited ${frontmatter} "edited")
+	get_yaml_field(edited ${frontmatter} "last_modified_date")
 	if(edited)
 		set(output "${output}\n\n---\nUpdated on ${edited}")
 	else()

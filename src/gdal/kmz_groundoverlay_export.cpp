@@ -1,5 +1,5 @@
 /*
- *    Copyright 2020 Kai Pastor
+ *    Copyright 2020-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -138,10 +138,16 @@ QRectF boundingBoxMap(const Georeferencing& georef, const QRectF& extent_lonlat)
 // ### KmzGroudOverlayExport ###
 
 // static
-KmzGroundOverlayExport::Metrics KmzGroundOverlayExport::makeMetrics(qreal const resolution_dpi, int const tile_size_px) noexcept
+KmzGroundOverlayExport::Metrics KmzGroundOverlayExport::makeMetrics(const QSizeF& area_size, qreal const resolution_dpi, int const tile_width_px)
 {
 	auto const units_per_mm = resolution_dpi / 25.4;
-	return Metrics { tile_size_px, resolution_dpi, units_per_mm, tile_size_px / units_per_mm };
+	auto tile_size_px = QSize{ tile_width_px, tile_width_px };
+	if (tile_width_px <= 0)
+	{
+		tile_size_px.setWidth(std::ceil(area_size.width() * units_per_mm));
+		tile_size_px.setHeight(std::ceil(area_size.height() * units_per_mm));
+	}
+	return Metrics { tile_size_px, resolution_dpi, units_per_mm, QSizeF(tile_size_px) / units_per_mm };
 }
 
 
@@ -178,7 +184,7 @@ QString KmzGroundOverlayExport::errorString() const
 }
 
 
-bool KmzGroundOverlayExport::doExport(const MapPrinter& map_printer)
+bool KmzGroundOverlayExport::doExport(const MapPrinter& map_printer, int tile_width_px)
 {
 	error_message.clear();
 	
@@ -197,7 +203,10 @@ bool KmzGroundOverlayExport::doExport(const MapPrinter& map_printer)
 		return false;
 	}
 	
-	auto const metrics = makeMetrics(resolution);
+	// Non-zero declination rotates the original extent box, causing growing bounding boxes.
+	auto const bounding_box_lonlat = boundingBoxLonLat(georef, map_printer.getPrintArea());
+	auto const bounding_box_map = boundingBoxMap(georef, bounding_box_lonlat);
+	auto const metrics = makeMetrics(bounding_box_map.size(), resolution, tile_width_px);
 	auto const tiles = makeTiles(map_printer.getPrintArea(), metrics);
 	
 	if (!is_kmz)
@@ -241,6 +250,7 @@ bool KmzGroundOverlayExport::doExport(const MapPrinter& map_printer)
 	return result;
 #else
 	Q_UNUSED(map_printer)
+	Q_UNUSED(tile_width_px)
 	return false;
 #endif // QT_PRINTSUPPORT_LIB
 }
@@ -260,8 +270,8 @@ try
 	// Create the tile files, reusing the same QImage allocation.
 	mkdir(basepath_utf8 + "/files");
 	
-	QImage image(metrics.tile_size_px, metrics.tile_size_px, QImage::Format_ARGB32_Premultiplied);
-	QImage buffer(metrics.tile_size_px, metrics.tile_size_px, QImage::Format_RGB32);
+	QImage image(metrics.tile_size_px, QImage::Format_ARGB32_Premultiplied);
+	QImage buffer(metrics.tile_size_px, QImage::Format_RGB32);
 	auto progress = 0;
 	for (auto const& tile : tiles)
 	{
@@ -301,8 +311,8 @@ std::vector<KmzGroundOverlayExport::Tile> KmzGroundOverlayExport::makeTiles(cons
 	auto const bounding_box_lonlat = boundingBoxLonLat(georef, extent_map);
 	auto const bounding_box_map = boundingBoxMap(georef, bounding_box_lonlat);
 	
-	auto eastwards = QLineF::fromPolar(metrics.tile_size_mm, georef.getDeclination()).p2();
-	auto northwards = QLineF::fromPolar(metrics.tile_size_mm, georef.getDeclination() + 90).p2();
+	auto eastwards = QLineF::fromPolar(metrics.tile_size_mm.width(), georef.getDeclination()).p2();
+	auto northwards = QLineF::fromPolar(metrics.tile_size_mm.height(), georef.getDeclination() + 90).p2();
 	
 	auto const start_map = georef.toMapCoordF(fromLonLat(bounding_box_lonlat.topLeft()));
 	auto tile_lonlat = QRectF(bounding_box_lonlat.topLeft(),
@@ -380,7 +390,7 @@ void KmzGroundOverlayExport::writeKml(QByteArray& buffer, const std::vector<KmzG
 QTransform KmzGroundOverlayExport::makeTileTransform(const QRectF& tile_map, const KmzGroundOverlayExport::Metrics& metrics, qreal const declination)
 {
 	auto transform = QTransform::fromScale(metrics.units_per_mm, metrics.units_per_mm);
-	transform.translate(metrics.tile_size_mm / 2, metrics.tile_size_mm / 2);
+	transform.translate(metrics.tile_size_mm.width() / 2, metrics.tile_size_mm.height() / 2);
 	transform.rotate(declination);
 	transform.translate(-tile_map.left() - tile_map.width() / 2, -tile_map.top() - tile_map.height() / 2);
 	return transform;

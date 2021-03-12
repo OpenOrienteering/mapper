@@ -1,5 +1,5 @@
 /*
- *    Copyright 2020 Kai Pastor
+ *    Copyright 2020-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,6 +26,8 @@
 #include <QByteArray>
 #include <QCoreApplication>
 #include <QRectF>
+#include <QSize>
+#include <QSizeF>
 #include <QString>
 
 class QImage;
@@ -42,6 +44,9 @@ class MapPrinter;
 
 /**
  * A class which generates KML/KMZ files with ground overlay raster tiles.
+ * 
+ * Apart from square tiles, a non-positive tile size makes the export create
+ * a single raster image for the whole print area.
  * 
  * This class makes use of GDAL's virtual file systems for handling KMZ
  * (a zipped archive of a KML document and a set of image files).
@@ -60,13 +65,13 @@ class KmzGroundOverlayExport
 	
 	struct Metrics
 	{
-		int tile_size_px   = 512;
+		QSize tile_size_px = {512, 512};
 		qreal resolution_dpi = 300;
 		qreal units_per_mm = resolution_dpi / 25.4;
-		qreal tile_size_mm = tile_size_px / units_per_mm;
+		QSizeF tile_size_mm = QSizeF(tile_size_px) / units_per_mm;
 	};
 	
-	static Metrics makeMetrics(qreal resolution_dpi, int tile_size_px = 512) noexcept;
+	static Metrics makeMetrics(const QSizeF& area_size, qreal resolution_dpi, int tile_width_px);
 	
 public:
 	~KmzGroundOverlayExport();
@@ -77,7 +82,7 @@ public:
 	
 	QString errorString() const;
 	
-	bool doExport(const MapPrinter& map_printer);
+	bool doExport(const MapPrinter& map_printer, int tile_width_px = 512);
 	
 	
 protected:
