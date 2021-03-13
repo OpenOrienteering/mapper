@@ -588,7 +588,7 @@
     <message>
         <location filename="../src/gui/widgets/color_wheel_widget.cpp" line="392"/>
         <source>Select</source>
-        <translation type="unfinished">Виділити</translation>
+        <translation>Вибрати</translation>
     </message>
 </context>
 <context>
@@ -3281,7 +3281,7 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="938"/>
         <source>Question</source>
-        <translation type="unfinished">Запит</translation>
+        <translation>Питання</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="939"/>
@@ -6322,7 +6322,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="256"/>
         <source>No tiles</source>
-        <translation type="unfinished">Без тайлів</translation>
+        <translation>Без плиток</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="257"/>
@@ -8280,7 +8280,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="61"/>
         <source>Shear:</source>
-        <translation type="unfinished">Зріз:</translation>
+        <translation>Зріз:</translation>
     </message>
 </context>
 <context>
