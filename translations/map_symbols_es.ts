@@ -15062,117 +15062,117 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Control site where First aid is available.</source>
         <comment>Description of symbol 12.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Control donde hay disponible primeros auxilios.</translation>
     </message>
     <message>
         <source>|G| Refreshment point</source>
         <comment>Name of symbol 12.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Punto de avituallamiento</translation>
     </message>
     <message>
         <source>Control site where Refreshments are available.</source>
         <comment>Description of symbol 12.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Control donde está disponible avituallamiento.</translation>
     </message>
     <message>
         <source>|G| Radio or TV control</source>
         <comment>Name of symbol 12.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Control de radio o TV</translation>
     </message>
     <message>
         <source>Location of a Radio or TV control.</source>
         <comment>Description of symbol 12.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ubicación de un control de radio o TV.</translation>
     </message>
     <message>
         <source>|G| Control check</source>
         <comment>Name of symbol 12.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Comprobación de controles</translation>
     </message>
     <message>
         <source>Manned control site where the control card is checked.</source>
         <comment>Description of symbol 12.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lugar con personal donde se realiza una comprobación de la tarjeta de control.</translation>
     </message>
     <message>
         <source>Taped Route, away from control</source>
         <comment>Name of symbol 13.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruta con cintas, a distancia de un control</translation>
     </message>
     <message>
         <source>A marked route is to be followed away from a particular control. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Se tiene que seguir una ruta marcada que está a una distancia de un control particular. Enfatiza de nuevo lo que se muestra en el mapa.</translation>
     </message>
     <message>
         <source>Taped Route, between controls</source>
         <comment>Name of symbol 13.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruta con cintas, entre controles</translation>
     </message>
     <message>
         <source>A marked route is to be followed between controls. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Se tiene que seguir una ruta marcada entre controles. Enfatiza de nuevo lo que muestra el mapa.</translation>
     </message>
     <message>
         <source>Mandatory crossing point</source>
         <comment>Name of symbol 13.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Punto de cruce obligatorio</translation>
     </message>
     <message>
         <source>Mandatory crossing points (or points) between two controls. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Puntos de cruce obligatorios (o puntos) entre dos controles. Enfatiza de nuevo lo que se muestra en el mapa.</translation>
     </message>
     <message>
         <source>Mandatory passage through out of bounds area</source>
         <comment>Name of symbol 13.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Paso obligatorio a través de un área fuera de límites</translation>
     </message>
     <message>
         <source>Mandatory route between two controls. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruta obligatoria entre dos controles. Enfatiza de nuevo lo que se muestra en el mapa.</translation>
     </message>
     <message>
         <source>Taped Route from Control to Map Exchange</source>
         <comment>Name of symbol 13.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruta con cintas desde un control a un cambio de mapa</translation>
     </message>
     <message>
         <source>At a map exchange, or if a marked route is to be followed from a control to a map exchange, this instruction follows the last control description of the first part of the course.</source>
         <comment>Description of symbol 13.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>En un cambio de mapa, o si se tiene que seguir una ruta marcada desde un control hasta un cambio de mapa, esta instrucción viene a continuación de la descripción del último control de la primera parte del recorrido.</translation>
     </message>
     <message>
         <source>Taped Route from last control to Finish</source>
         <comment>Name of symbol 14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruta con cintas desde el último control a la meta</translation>
     </message>
     <message>
         <source>Mandatory route from the last control to the Finish. Re-emphasises what is shown on the map. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruta obligatoria desde el último control a la meta. Enfatiza de nuevo lo que se muestra en el mapa. Da la distancia desde el último control a la meta.</translation>
     </message>
     <message>
         <source>Taped Route from finish funnel to Finish</source>
         <comment>Name of symbol 14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruta con cintas desde el embudo de meta hasta la meta</translation>
     </message>
     <message>
         <source>The competitor has to navigate from the last control to finish funnel, and then follow tapes. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>El competidor tiene que navegar desde el último control al embudo de meta, y después seguir las cintas. Da la distancia desde el último control a la meta.</translation>
     </message>
     <message>
         <source>Navigation from last control to Finish (no Taped Route)</source>
         <comment>Name of symbol 14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Navegación desde el último control a la meta (ruta sin cintas)</translation>
     </message>
     <message>
         <source>The competitor has to navigate from the last control to finish. No tapes. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>El competidor tiene que navegar desde el último control a la meta. Sin cintas. Da la distancia desde el último control a la meta.</translation>
     </message>
     <message>
         <source>Length of special route</source>
