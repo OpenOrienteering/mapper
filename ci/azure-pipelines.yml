@@ -116,6 +116,7 @@ jobs:
         cmakeArgs: >
           -G Ninja
           -DCMAKE_BUILD_TYPE=RelWithDebInfo
+          -DMapper_CI_ENABLE_CODECHECKS=1
     - template: publish.yml
     - bash: |
         cd ${BUILD_SOURCESDIRECTORY}/build/source/openorienteering-mapper-ci

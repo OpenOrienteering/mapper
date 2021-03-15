@@ -32,6 +32,7 @@ set(Mapper_CI_VERSION_DISPLAY "ci" CACHE STRING "Mapper (CI): Version display st
 set(Mapper_CI_APP_ID "org.openorienteering.mapper.ci" CACHE STRING "Mapper (CI): Android App ID")
 set(Mapper_CI_LICENSING_PROVIDER "OFF" CACHE STRING "Mapper (CI): Provider for 3rd-party licensing information")
 set(Mapper_CI_QT_VERSION "5.12" CACHE STRING "Mapper (CI): Qt version")
+option(Mapper_CI_ENABLE_CODECHECKS "Mapper: Enable iwyu and clang-tidy code checks" OFF)
 option(Mapper_CI_ENABLE_COVERAGE "Mapper: Enable testing coverage analysis" OFF)
 option(Mapper_CI_ENABLE_GDAL "Mapper: Enable GDAL" ON)
 option(Mapper_CI_ENABLE_POSITIONING "Mapper: Enable positioning" ON)
@@ -71,6 +72,7 @@ superbuild_package(
     Mapper_CI_VERSION_DISPLAY
     Mapper_CI_APP_ID
     Mapper_CI_LICENSING_PROVIDER
+    Mapper_CI_ENABLE_CODECHECKS
     Mapper_CI_ENABLE_COVERAGE
     Mapper_CI_ENABLE_GDAL
     Mapper_CI_ENABLE_POSITIONING
@@ -114,6 +116,10 @@ superbuild_package(
     >
     $<$<BOOL:@Mapper_CI_ENABLE_COVERAGE@>:
       "-DMapper_DEVELOPMENT_BUILD:BOOL=FALSE"
+      "-DCMAKE_DISABLE_FIND_PACKAGE_ClangTidy:BOOL=TRUE"
+      "-DCMAKE_DISABLE_FIND_PACKAGE_IWYU:BOOL=TRUE"
+    >
+    $<$<NOT:$<BOOL:@Mapper_CI_ENABLE_CODECHECKS@>>:
       "-DCMAKE_DISABLE_FIND_PACKAGE_ClangTidy:BOOL=TRUE"
       "-DCMAKE_DISABLE_FIND_PACKAGE_IWYU:BOOL=TRUE"
     >
