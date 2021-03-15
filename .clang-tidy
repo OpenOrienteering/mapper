@@ -38,6 +38,7 @@ Checks: >-
   -modernize-use-emplace,
   -modernize-use-equals-default,
   -modernize-use-nullptr,
+  -modernize-use-trailing-return-type,
   -modernize-use-using,
   -performance-move-const-arg,
   -performance-type-promotion-in-math-fn,
