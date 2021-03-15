@@ -2778,6 +2778,7 @@ QString OcdFileExport::stringForTemplate(const Template& temp, const MapCoord& a
 			addWarning(::OpenOrienteering::OcdFileExport::tr("Cannot save custom positioning of template '%1'.")
 			           .arg(temp.getTemplateFilename()));
 		}
+		out << "\td" << d;
 	}
 	else if (ocd_version >= 11)
 	{
