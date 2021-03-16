@@ -655,7 +655,7 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 		printer_properties_button->setEnabled(is_printer);
 
 	bool is_image_target = target == MapPrinter::imageTarget();
-	bool is_raster_target = target == MapPrinter::imageTarget() || MapPrinter::kmzTarget();
+	bool is_raster_target = target == MapPrinter::imageTarget() || target == MapPrinter::kmzTarget();
 	vector_mode_button->setEnabled(!is_raster_target);
 	separations_mode_button->setEnabled(!is_raster_target && map->hasSpotColors());
 	if (is_raster_target)
