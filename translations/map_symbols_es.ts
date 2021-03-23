@@ -14708,7 +14708,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| South west Corner (outside)</source>
         <comment>Name of symbol 11.5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Esquina Suroeste (exterior)</translation>
     </message>
     <message>
         <source>Used where:
@@ -14721,7 +14721,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| West Corner (outside)</source>
         <comment>Name of symbol 11.5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Esquina Oeste (exterior)</translation>
     </message>
     <message>
         <source>Used where:
@@ -14734,7 +14734,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| North west Corner (outside)</source>
         <comment>Name of symbol 11.5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Esquina Noroeste (exterior)</translation>
     </message>
     <message>
         <source>Used where:
@@ -14747,7 +14747,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| North Tip</source>
         <comment>Name of symbol 11.6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Punta Norte</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
@@ -14757,7 +14757,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| North east Tip</source>
         <comment>Name of symbol 11.6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Punta Noreste</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
@@ -14767,7 +14767,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| East Tip</source>
         <comment>Name of symbol 11.6.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Punta Este</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
@@ -14777,7 +14777,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| South east Tip</source>
         <comment>Name of symbol 11.6.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Punta Sureste</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
@@ -14787,7 +14787,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| South Tip</source>
         <comment>Name of symbol 11.6.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Punta Sur</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
@@ -14797,7 +14797,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| South west Tip</source>
         <comment>Name of symbol 11.6.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Punta Suroeste</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
@@ -14807,7 +14807,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| West Tip</source>
         <comment>Name of symbol 11.6.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Punta Oeste</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
@@ -14817,7 +14817,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| North west Tip</source>
         <comment>Name of symbol 11.6.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Punta Noroeste</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
@@ -14827,7 +14827,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| Bend</source>
         <comment>Name of symbol 11.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Curva</translation>
     </message>
     <message>
         <source>Used where a linear feature makes a smooth change of direction; e.g. Path bend; River bend.</source>
@@ -14837,7 +14837,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| North End</source>
         <comment>Name of symbol 11.8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Extremo Norte</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
@@ -14847,7 +14847,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| North east End</source>
         <comment>Name of symbol 11.8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Extremo Noreste</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
@@ -14857,7 +14857,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| East End</source>
         <comment>Name of symbol 11.8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Extremo Este</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
@@ -14867,7 +14867,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| South east End</source>
         <comment>Name of symbol 11.8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Extremo Sureste</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
@@ -14877,7 +14877,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| South End</source>
         <comment>Name of symbol 11.8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Extremo Sur</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
@@ -14887,7 +14887,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| South west End</source>
         <comment>Name of symbol 11.8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Extremo Suroeste</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
@@ -14897,7 +14897,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| West End</source>
         <comment>Name of symbol 11.8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Extremo Oeste</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
@@ -14907,157 +14907,157 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>|G| North west End</source>
         <comment>Name of symbol 11.8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Extremo Noroeste</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>El punto en el que un objeto lineal termina o empieza; por ej., Vereda, final noroeste; Muro de piedra, final sur.</translation>
     </message>
     <message>
         <source>|G| Upper Part</source>
         <comment>Name of symbol 11.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Parte Superior</translation>
     </message>
     <message>
         <source>Where the feature extends over two or more contours and the control is located near the top; e.g. Erosion Gully, upper part.</source>
         <comment>Description of symbol 11.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando el objeto se extiende por dos curvas de nivel o más y el control se sitúa cerca de la parte de arriba; por ej., Surco de Erosión, parte superior.</translation>
     </message>
     <message>
         <source>|G| Lower Part</source>
         <comment>Name of symbol 11.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Parte Inferior</translation>
     </message>
     <message>
         <source>Where the feature extends over two or more contours and the control is located near the bottom; e.g. Re-entrant, lower part.</source>
         <comment>Description of symbol 11.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando el objeto se extiende por dos curvas de nivel o más y el control se sitúa cerca de la parte baja; por ej., Vaguada, parte inferior.</translation>
     </message>
     <message>
         <source>|G| Top</source>
         <comment>Name of symbol 11.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Cima</translation>
     </message>
     <message>
         <source>Where the control is located at the highest point of the feature and this is not the usual location; e.g. Cliff, top.</source>
         <comment>Description of symbol 11.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando el control se sitúa en el punto más alto del objeto y esta no es su localización habitual; por ej., Cortado, encima.</translation>
     </message>
     <message>
         <source>|G| Beneath</source>
         <comment>Name of symbol 11.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Bajo</translation>
     </message>
     <message>
         <source>Where the control is located underneath the feature; e.g. Pipeline, beneath.</source>
         <comment>Description of symbol 11.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando el control se sitúa debajo del objeto; por ej., Tubería, debajo.</translation>
     </message>
     <message>
         <source>|G| Foot (no direction)</source>
         <comment>Name of symbol 11.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Al pie (sin dirección)</translation>
     </message>
     <message>
         <source>Where the control is located at the lower junction of the slope of the feature and the surface of the surrounding area; e.g. Earth bank, foot.</source>
         <comment>Description of symbol 11.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando el control se sitúa en la unión inferior de la pendiente del objeto y la superficie del área circundante; por ej., Cortado de tierra, al pie.</translation>
     </message>
     <message>
         <source>|G| North Foot</source>
         <comment>Name of symbol 11.14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Al pie Norte</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Como arriba, pero cuando el objeto es suficientemente grande como para situar el control en más de una posición alrededor de él; por ej., Colina, al pie noreste.</translation>
     </message>
     <message>
         <source>|G| North east Foot</source>
         <comment>Name of symbol 11.14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Al pie Noreste</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Como arriba, pero cuando el objeto es suficientemente grande como para situar el control en más de una posición alrededor de él; por ej., Colina, al pie noreste.</translation>
     </message>
     <message>
         <source>|G| East Foot</source>
         <comment>Name of symbol 11.14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Al pie Este</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Como arriba, pero cuando el objeto es suficientemente grande como para situar el control en más de una posición alrededor de él; por ej., Colina, al pie noreste.</translation>
     </message>
     <message>
         <source>|G| South east Foot</source>
         <comment>Name of symbol 11.14.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Al pie Sureste</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Como arriba, pero cuando el objeto es suficientemente grande como para situar el control en más de una posición alrededor de él; por ej., Colina, al pie noreste.</translation>
     </message>
     <message>
         <source>|G| South Foot</source>
         <comment>Name of symbol 11.14.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Al pie Sur</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Como arriba, pero cuando el objeto es suficientemente grande como para situar el control en más de una posición alrededor de él; por ej., Colina, al pie noreste.</translation>
     </message>
     <message>
         <source>|G| South west Foot</source>
         <comment>Name of symbol 11.14.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Al pie Suroeste</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Como arriba, pero cuando el objeto es suficientemente grande como para situar el control en más de una posición alrededor de él; por ej., Colina, al pie noreste.</translation>
     </message>
     <message>
         <source>|G| West Foot</source>
         <comment>Name of symbol 11.14.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Al pie Oeste</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Como arriba, pero cuando el objeto es suficientemente grande como para situar el control en más de una posición alrededor de él; por ej., Colina, al pie noreste.</translation>
     </message>
     <message>
         <source>|G| North west Foot</source>
         <comment>Name of symbol 11.14.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Al pie Noroeste</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Como arriba, pero cuando el objeto es suficientemente grande como para situar el control en más de una posición alrededor de él; por ej., Colina, al pie noreste.</translation>
     </message>
     <message>
         <source>|G| Between</source>
         <comment>Name of symbol 11.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Entre</translation>
     </message>
     <message>
         <source>Where the control is located between two features; e.g. Between thickets; Between boulder and knoll. The two features which the control is between must be shown separately in columns |D| and |E|.</source>
         <comment>Description of symbol 11.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando el control se localiza entre dos objetos; por ej., Entre vegetaciones espesas; Entre roca y montículo. Los dos objetos entre los que se sitúa el control deben mostrarse separadamente en las columnas |D| y |E|.</translation>
     </message>
     <message>
         <source>|G| First aid post</source>
         <comment>Name of symbol 12.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Puesto de primeros auxilios</translation>
     </message>
     <message>
         <source>Control site where First aid is available.</source>
