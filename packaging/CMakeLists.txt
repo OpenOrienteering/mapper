@@ -175,16 +175,8 @@ elseif(APPLE)
 	set(MAPPER_MACOS_SUBDIR "/Mapper.app/Contents/MacOS")
 	set(CPACK_GENERATOR_DEFAULT "DragNDrop")
 	set(CPACK_PACKAGE_ICON "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper.icns")
-	set_target_properties(Mapper PROPERTIES
-	  MACOSX_BUNDLE_INFO_STRING          "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}"
-	  MACOSX_BUNDLE_ICON_FILE            "Mapper.icns"
-	  MACOSX_BUNDLE_INFO_PLIST           "${PROJECT_SOURCE_DIR}/packaging/apple/Info.plist"
-	  MACOSX_BUNDLE_GUI_IDENTIFIER       "org.openorienteering.${CMAKE_PROJECT_NAME}"
-	  MACOSX_BUNDLE_LONG_VERSION_STRING  "${CMAKE_PROJECT_NAME} ${Mapper_VERSION_DISPLAY} for macOS"
-	  MACOSX_BUNDLE_BUNDLE_NAME          "${CMAKE_PROJECT_NAME}" # less than 16 characters long
-	  MACOSX_BUNDLE_SHORT_VERSION_STRING "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
-	  MACOSX_BUNDLE_BUNDLE_VERSION       "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
-	  MACOSX_BUNDLE_COPYRIGHT            "${Mapper_COPYRIGHT}"
+	set_target_properties(Mapper PROPERTIES 
+		MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/packaging/apple/Info.plist.in"
 	)
 	install(FILES "${CPACK_PACKAGE_ICON}"
 	  DESTINATION "${MAPPER_DATA_DESTINATION}"
