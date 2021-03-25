@@ -14237,12 +14237,12 @@ The default line shows a box of 5 mm by 5mm and can be removed from the final sy
     <message>
         <source>Use with text symbol 9.4</source>
         <comment>Description of symbol 9.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usar con el símbolo de texto 9.4</translation>
     </message>
     <message>
         <source>|F| Heights of two features, or on slope</source>
         <comment>Name of symbol 9.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| Altura de dos objetos, o en pendiente</translation>
     </message>
     <message>
         <source>Use this text symbol to give two numbers in different lines.
@@ -14258,288 +14258,315 @@ Use the slash symbol 9.3 for separating the numbers; e.g.
 2.0
 3.0</source>
         <comment>Description of symbol 9.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usar este símbolo de texto para dar dos números en líneas diferentes.
+
+9.3 Altura en pendiente: Altura del objeto en una pendiente en metros.
+Usar el símbolo de línea oblícua 9.3 para separar los números; por ej.
+
+0.5/
+    / 3.0
+
+9.4 Altura de dos objetos: Altura de dos objetos con el control entre ellos. Escribir un número encima del otro; por ej.
+
+2.0
+3.0</translation>
     </message>
     <message>
         <source>|F| Crossing</source>
         <comment>Name of symbol 10.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| Cruce</translation>
     </message>
     <message>
         <source>The point at which two linear features cross. The two features which either cross or meet must be shown in columns |D| and |E|.</source>
         <comment>Description of symbol 10.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>El punto en el que se cruzan dos objetos lineales. Los dos objetos que se cruzan o se encuentran deben mostrarse en las columnas |D| y |E|.</translation>
     </message>
     <message>
         <source>|F| Junction</source>
         <comment>Name of symbol 10.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| Bifurcación</translation>
     </message>
     <message>
         <source>The point at which two linear features meet. The two features which either cross or meet must be shown in columns |D| and |E|.</source>
         <comment>Description of symbol 10.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>El punto en el que se encuentran dos objetos lineales. Los dos objetos que se cruzan o se encuentran deben mostrarse en las columnas |D| y |E|.</translation>
     </message>
     <message>
         <source>|G| North Side</source>
         <comment>Name of symbol 11.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Lado Norte</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el objeto se extiende por encima de la superficie del suelo; por ej., Roca, lado noreste; Ruina, lado oeste.</translation>
     </message>
     <message>
         <source>|G| North east Side</source>
         <comment>Name of symbol 11.1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Lado Noreste</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el objeto se extiende por encima de la superficie del suelo; por ej., Roca, lado noreste; Ruina, lado oeste.</translation>
     </message>
     <message>
         <source>|G| East Side</source>
         <comment>Name of symbol 11.1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Lado Este</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el objeto se extiende por encima de la superficie del suelo; por ej., Roca, lado noreste; Ruina, lado oeste.</translation>
     </message>
     <message>
         <source>|G| South east Side</source>
         <comment>Name of symbol 11.1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Lado Sureste</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el objeto se extiende por encima de la superficie del suelo; por ej., Roca, lado noreste; Ruina, lado oeste.</translation>
     </message>
     <message>
         <source>|G| South Side</source>
         <comment>Name of symbol 11.1.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Lado Sur</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el objeto se extiende por encima de la superficie del suelo; por ej., Roca, lado noreste; Ruina, lado oeste.</translation>
     </message>
     <message>
         <source>|G| South west Side</source>
         <comment>Name of symbol 11.1.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Lado Suroeste</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el objeto se extiende por encima de la superficie del suelo; por ej., Roca, lado noreste; Ruina, lado oeste.</translation>
     </message>
     <message>
         <source>|G| West Side</source>
         <comment>Name of symbol 11.1.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Lado Oeste</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el objeto se extiende por encima de la superficie del suelo; por ej., Roca, lado noreste; Ruina, lado oeste.</translation>
     </message>
     <message>
         <source>|G| North west Side</source>
         <comment>Name of symbol 11.1.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Lado Noroeste</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el objeto se extiende por encima de la superficie del suelo; por ej., Roca, lado noreste; Ruina, lado oeste.</translation>
     </message>
     <message>
         <source>|G| North Edge</source>
         <comment>Name of symbol 11.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Borde Norte</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El objeto se extiende por debajo de la superficie del terreno adyacente y el control se sitúa en el borde a nivel del terreno; por ej., Depresión, borde sureste.
+b) El objeto se extiende sobre un área significativa y el control se sitúa en el borde de ese área; por ej., Pantano, borde oeste; Claro, borde noroeste.</translation>
     </message>
     <message>
         <source>|G| North east Edge</source>
         <comment>Name of symbol 11.2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Borde Noreste</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El objeto se extiende por debajo de la superficie del terreno adyacente y el control se sitúa en el borde a nivel del terreno; por ej., Depresión, borde sureste.
+b) El objeto se extiende sobre un área significativa y el control se sitúa en el borde de ese área; por ej., Pantano, borde oeste; Claro, borde noroeste.</translation>
     </message>
     <message>
         <source>|G| East Edge</source>
         <comment>Name of symbol 11.2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Borde Este</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El objeto se extiende por debajo de la superficie del terreno adyacente y el control se sitúa en el borde a nivel del terreno; por ej., Depresión, borde sureste.
+b) El objeto se extiende sobre un área significativa y el control se sitúa en el borde de ese área; por ej., Pantano, borde oeste; Claro, borde noroeste.</translation>
     </message>
     <message>
         <source>|G| South east Edge</source>
         <comment>Name of symbol 11.2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Borde Sureste</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El objeto se extiende por debajo de la superficie del terreno adyacente y el control se sitúa en el borde a nivel del terreno; por ej., Depresión, borde sureste.
+b) El objeto se extiende sobre un área significativa y el control se sitúa en el borde de ese área; por ej., Pantano, borde oeste; Claro, borde noroeste.</translation>
     </message>
     <message>
         <source>|G| South Edge</source>
         <comment>Name of symbol 11.2.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Borde Sur</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El objeto se extiende por debajo de la superficie del terreno adyacente y el control se sitúa en el borde a nivel del terreno; por ej., Depresión, borde sureste.
+b) El objeto se extiende sobre un área significativa y el control se sitúa en el borde de ese área; por ej., Pantano, borde oeste; Claro, borde noroeste.</translation>
     </message>
     <message>
         <source>|G| South west Edge</source>
         <comment>Name of symbol 11.2.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Borde Suroeste</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El objeto se extiende por debajo de la superficie del terreno adyacente y el control se sitúa en el borde a nivel del terreno; por ej., Depresión, borde sureste.
+b) El objeto se extiende sobre un área significativa y el control se sitúa en el borde de ese área; por ej., Pantano, borde oeste; Claro, borde noroeste.</translation>
     </message>
     <message>
         <source>|G| West Edge</source>
         <comment>Name of symbol 11.2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Borde Oeste</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El objeto se extiende por debajo de la superficie del terreno adyacente y el control se sitúa en el borde a nivel del terreno; por ej., Depresión, borde sureste.
+b) El objeto se extiende sobre un área significativa y el control se sitúa en el borde de ese área; por ej., Pantano, borde oeste; Claro, borde noroeste.</translation>
     </message>
     <message>
         <source>|G| North west Edge</source>
         <comment>Name of symbol 11.2.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Borde Noroeste</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El objeto se extiende por debajo de la superficie del terreno adyacente y el control se sitúa en el borde a nivel del terreno; por ej., Depresión, borde sureste.
+b) El objeto se extiende sobre un área significativa y el control se sitúa en el borde de ese área; por ej., Pantano, borde oeste; Claro, borde noroeste.</translation>
     </message>
     <message>
         <source>|G| North Part</source>
         <comment>Name of symbol 11.3.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Parte Norte</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el objeto se extiende sobre un área significativa y el control no se sitúa ni en el centro, ni en ninguno de los bordes; por ej., Pantano, parte oeste; Depresión, parte sureste.</translation>
     </message>
     <message>
         <source>|G| North east Part</source>
         <comment>Name of symbol 11.3.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Parte Noreste</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el objeto se extiende sobre un área significativa y el control no se sitúa ni en el centro, ni en ninguno de los bordes; por ej., Pantano, parte oeste; Depresión, parte sureste.</translation>
     </message>
     <message>
         <source>|G| East Part</source>
         <comment>Name of symbol 11.3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Parte Este</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el objeto se extiende sobre un área significativa y el control no se sitúa ni en el centro, ni en ninguno de los bordes; por ej., Pantano, parte oeste; Depresión, parte sureste.</translation>
     </message>
     <message>
         <source>|G| South east Part</source>
         <comment>Name of symbol 11.3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Parte Sureste</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el objeto se extiende sobre un área significativa y el control no se sitúa ni en el centro, ni en ninguno de los bordes; por ej., Pantano, parte oeste; Depresión, parte sureste.</translation>
     </message>
     <message>
         <source>|G| South Part</source>
         <comment>Name of symbol 11.3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Parte Sur</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el objeto se extiende sobre un área significativa y el control no se sitúa ni en el centro, ni en ninguno de los bordes; por ej., Pantano, parte oeste; Depresión, parte sureste.</translation>
     </message>
     <message>
         <source>|G| South west part</source>
         <comment>Name of symbol 11.3.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Parte Suroeste</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el objeto se extiende sobre un área significativa y el control no se sitúa ni en el centro, ni en ninguno de los bordes; por ej., Pantano, parte oeste; Depresión, parte sureste.</translation>
     </message>
     <message>
         <source>|G| West Part</source>
         <comment>Name of symbol 11.3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Parte Oeste</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el objeto se extiende sobre un área significativa y el control no se sitúa ni en el centro, ni en ninguno de los bordes; por ej., Pantano, parte oeste; Depresión, parte sureste.</translation>
     </message>
     <message>
         <source>|G| North west Part</source>
         <comment>Name of symbol 11.3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Parte Noroeste</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el objeto se extiende sobre un área significativa y el control no se sitúa ni en el centro, ni en ninguno de los bordes; por ej., Pantano, parte oeste; Depresión, parte sureste.</translation>
     </message>
     <message>
         <source>|G| North Corner (inside)</source>
         <comment>Name of symbol 11.4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Esquina Norte (interior)</translation>
     </message>
     <message>
         <source>Used where:
@@ -14547,12 +14574,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El borde de un objeto gira en un ángulo de 45-135 grados; por ej., campo abierto, esquina este (interior).
+b) Un objeto lineal hace esquina; por ej., Valla, esquina sur (interior).
+La orientación del símbolo indica la dirección en la que apunta la esquina.</translation>
     </message>
     <message>
         <source>|G| North east Corner (inside)</source>
         <comment>Name of symbol 11.4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Esquina Noreste (interior)</translation>
     </message>
     <message>
         <source>Used where:
@@ -14560,12 +14590,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El borde de un objeto gira en un ángulo de 45-135 grados; por ej., campo abierto, esquina este (interior).
+b) Un objeto lineal hace esquina; por ej., Valla, esquina sur (interior).
+La orientación del símbolo indica la dirección en la que apunta la esquina.</translation>
     </message>
     <message>
         <source>|G| East Corner (inside)</source>
         <comment>Name of symbol 11.4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Esquina Este (interior)</translation>
     </message>
     <message>
         <source>Used where:
@@ -14573,12 +14606,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El borde de un objeto gira en un ángulo de 45-135 grados; por ej., Campo abierto, esquina este (interior).
+b) Un objeto lineal hace esquina; por ej., Valla, esquina sur (interior).
+La orientación del símbolo indica la dirección en la que apunta la esquina.</translation>
     </message>
     <message>
         <source>|G| South east Corner (inside)</source>
         <comment>Name of symbol 11.4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Esquina Sureste (interior)</translation>
     </message>
     <message>
         <source>Used where:
@@ -14586,12 +14622,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El borde de un objeto gira en un ángulo de 45-135 grados; por ej., Campo abierto, esquina este (interior).
+b) Un objeto lineal hace esquina; por ej., Valla, esquina sur (interior).
+La orientación del símbolo indica la dirección en la que apunta la esquina.</translation>
     </message>
     <message>
         <source>|G| South Corner (inside)</source>
         <comment>Name of symbol 11.4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Esquina Sur (interior)</translation>
     </message>
     <message>
         <source>Used where:
@@ -14599,12 +14638,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El borde de un objeto gira en un ángulo de 45-135 grados; por ej., Campo abierto, esquina este (interior).
+b) Un objeto lineal hace esquina; por ej., Valla, esquina sur (interior).
+La orientación del símbolo indica la dirección en la que apunta la esquina.</translation>
     </message>
     <message>
         <source>|G| South west Corner (inside)</source>
         <comment>Name of symbol 11.4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Esquina Suroeste (interior)</translation>
     </message>
     <message>
         <source>Used where:
@@ -14612,12 +14654,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El borde de un objeto gira en un ángulo de 45-135 grados; por ej., Campo abierto, esquina este (interior).
+b) Un objeto lineal hace esquina; por ej., Valla, esquina sur (interior).
+La orientación del símbolo indica la dirección en la que apunta la esquina.</translation>
     </message>
     <message>
         <source>|G| West Corner (inside)</source>
         <comment>Name of symbol 11.4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Esquina Oeste (interior)</translation>
     </message>
     <message>
         <source>Used where:
@@ -14625,12 +14670,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El borde de un objeto gira en un ángulo de 45-135 grados; por ej., Campo abierto, esquina este (interior).
+b) Un objeto lineal hace esquina; por ej., Valla, esquina sur (interior).
+La orientación del símbolo indica la dirección en la que apunta la esquina.</translation>
     </message>
     <message>
         <source>|G| North west Corner (inside)</source>
         <comment>Name of symbol 11.4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Esquina Noroeste (interior)</translation>
     </message>
     <message>
         <source>Used where:
@@ -14638,12 +14686,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El borde de un objeto gira en un ángulo de 45-135 grados; por ej., Campo abierto, esquina este (interior).
+b) Un objeto lineal hace esquina; por ej., Valla, esquina sur (interior).
+La orientación del símbolo indica la dirección en la que apunta la esquina.</translation>
     </message>
     <message>
         <source>|G| North Corner (outside)</source>
         <comment>Name of symbol 11.5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Esquina Norte (exterior)</translation>
     </message>
     <message>
         <source>Used where:
@@ -14651,12 +14702,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El borde de un objeto gira en un ángulo de 45-135 grados; por ej., Ruina, esquina noroeste (exterior).
+b) Un objeto lineal hace esquina; por ej., Muro de piedra, esquina suroeste (exterior).
+La orientación del símbolo indica la dirección en la que apunta la esquina.</translation>
     </message>
     <message>
         <source>|G| North east Corner (outside)</source>
         <comment>Name of symbol 11.5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Esquina Noreste (exterior)</translation>
     </message>
     <message>
         <source>Used where:
@@ -14664,12 +14718,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El borde de un objeto gira en un ángulo de 45-135 grados; por ej., Ruina, esquina noroeste (exterior).
+b) Un objeto lineal hace esquina; por ej., Muro de piedra, esquina suroeste (exterior).
+La orientación del símbolo indica la dirección en la que apunta la esquina.</translation>
     </message>
     <message>
         <source>|G| East Corner (outside)</source>
         <comment>Name of symbol 11.5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Esquina Este (exterior)</translation>
     </message>
     <message>
         <source>Used where:
@@ -14677,12 +14734,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El borde de un objeto gira en un ángulo de 45-135 grados; por ej., Ruina, esquina noroeste (exterior).
+b) Un objeto lineal hace esquina; por ej., Muro de piedra, esquina suroeste (exterior).
+La orientación del símbolo indica la dirección en la que apunta la esquina.</translation>
     </message>
     <message>
         <source>|G| South east Corner (outside)</source>
         <comment>Name of symbol 11.5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Esquina Sureste (exterior)</translation>
     </message>
     <message>
         <source>Used where:
@@ -14690,12 +14750,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El borde de un objeto gira en un ángulo de 45-135 grados; por ej., Ruina, esquina noroeste (exterior).
+b) Un objeto lineal hace esquina; por ej., Muro de piedra, esquina suroeste (exterior).
+La orientación del símbolo indica la dirección en la que apunta la esquina.</translation>
     </message>
     <message>
         <source>|G| South Corner (outside)</source>
         <comment>Name of symbol 11.5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Esquina Sur (exterior)</translation>
     </message>
     <message>
         <source>Used where:
@@ -14703,7 +14766,10 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El borde de un objeto gira en un ángulo de 45-135 grados; por ej., Ruina, esquina noroeste (exterior).
+b) Un objeto lineal hace esquina; por ej., Muro de piedra, esquina suroeste (exterior).
+La orientación del símbolo indica la dirección en la que apunta la esquina.</translation>
     </message>
     <message>
         <source>|G| South west Corner (outside)</source>
@@ -14716,7 +14782,10 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El borde de un objeto gira en un ángulo de 45-135 grados; por ej., Ruina, esquina noroeste (exterior).
+b) Un objeto lineal hace esquina; por ej., Muro de piedra, esquina suroeste (exterior).
+La orientación del símbolo indica la dirección en la que apunta la esquina.</translation>
     </message>
     <message>
         <source>|G| West Corner (outside)</source>
@@ -14729,7 +14798,10 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El borde de un objeto gira en un ángulo de 45-135 grados; por ej., Ruina, esquina noroeste (exterior).
+b) Un objeto lineal hace esquina; por ej., Muro de piedra, esquina suroeste (exterior).
+La orientación del símbolo indica la dirección en la que apunta la esquina.</translation>
     </message>
     <message>
         <source>|G| North west Corner (outside)</source>
@@ -14742,7 +14814,10 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando:
+a) El borde de un objeto gira en un ángulo de 45-135 grados; por ej., Ruina, esquina noroeste (exterior).
+b) Un objeto lineal hace esquina; por ej., Muro de piedra, esquina suroeste (exterior).
+La orientación del símbolo indica la dirección en la que apunta la esquina.</translation>
     </message>
     <message>
         <source>|G| North Tip</source>
@@ -14752,7 +14827,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el borde de un objeto gira en un ángulo de menos de 45 grados; por ej., Pantano, punta suroeste.</translation>
     </message>
     <message>
         <source>|G| North east Tip</source>
@@ -14762,7 +14837,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el borde de un objeto gira en un ángulo de menos de 45 grados; por ej., Pantano, punta suroeste.</translation>
     </message>
     <message>
         <source>|G| East Tip</source>
@@ -14772,7 +14847,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el borde de un objeto gira en un ángulo de menos de 45 grados; por ej., Pantano, punta suroeste.</translation>
     </message>
     <message>
         <source>|G| South east Tip</source>
@@ -14782,7 +14857,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el borde de un objeto gira en un ángulo de menos de 45 grados; por ej., Pantano, punta suroeste.</translation>
     </message>
     <message>
         <source>|G| South Tip</source>
@@ -14792,7 +14867,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el borde de un objeto gira en un ángulo de menos de 45 grados; por ej., Pantano, punta suroeste.</translation>
     </message>
     <message>
         <source>|G| South west Tip</source>
@@ -14802,7 +14877,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el borde de un objeto gira en un ángulo de menos de 45 grados; por ej., Pantano, punta suroeste.</translation>
     </message>
     <message>
         <source>|G| West Tip</source>
@@ -14812,7 +14887,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el borde de un objeto gira en un ángulo de menos de 45 grados; por ej., Pantano, punta suroeste.</translation>
     </message>
     <message>
         <source>|G| North west Tip</source>
@@ -14822,7 +14897,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando el borde de un objeto gira en un ángulo de menos de 45 grados; por ej., Pantano, punta suroeste.</translation>
     </message>
     <message>
         <source>|G| Bend</source>
@@ -14832,7 +14907,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Used where a linear feature makes a smooth change of direction; e.g. Path bend; River bend.</source>
         <comment>Description of symbol 11.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usado cuando un objeto lineal hace un cambio de dirección suave; por ej., Curva de Camino; Curva de Río.</translation>
     </message>
     <message>
         <source>|G| North End</source>
@@ -14842,7 +14917,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>El punto en el que un objeto lineal finaliza o comienza; por ej., Vereda, extremo noroeste; Muro de piedra, extremo sur.</translation>
     </message>
     <message>
         <source>|G| North east End</source>
@@ -14852,7 +14927,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>El punto en el que un objeto lineal finaliza o comienza; por ej., Vereda, extremo noroeste; Muro de piedra, extremo sur.</translation>
     </message>
     <message>
         <source>|G| East End</source>
@@ -14862,7 +14937,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>El punto en el que un objeto lineal finaliza o comienza; por ej., Vereda, extremo noroeste; Muro de piedra, extremo sur.</translation>
     </message>
     <message>
         <source>|G| South east End</source>
@@ -14872,7 +14947,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>El punto en el que un objeto lineal finaliza o comienza; por ej., Vereda, extremo noroeste; Muro de piedra, extremo sur.</translation>
     </message>
     <message>
         <source>|G| South End</source>
@@ -14882,7 +14957,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>El punto en el que un objeto lineal finaliza o comienza; por ej., Vereda, extremo noroeste; Muro de piedra, extremo sur.</translation>
     </message>
     <message>
         <source>|G| South west End</source>
@@ -14892,7 +14967,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>El punto en el que un objeto lineal finaliza o comienza; por ej., Vereda, extremo noroeste; Muro de piedra, extremo sur.</translation>
     </message>
     <message>
         <source>|G| West End</source>
@@ -14902,7 +14977,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>El punto en el que un objeto lineal finaliza o comienza; por ej., Vereda, extremo noroeste; Muro de piedra, extremo sur.</translation>
     </message>
     <message>
         <source>|G| North west End</source>
