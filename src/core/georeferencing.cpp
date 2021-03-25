@@ -1108,7 +1108,8 @@ const QTransform& Georeferencing::projectedToMap() const
 
 
 
-bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vector<QString> params)
+bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vector<QString> params,
+									 bool update_grivation)
 {
 	// Default return value if no change is necessary
 	bool ok = (getState() == Geospatial || projected_crs_spec.isEmpty());
@@ -1150,7 +1151,11 @@ bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vecto
 				setState(BrokenGeospatial);
 		}
 		if (getState() == Geospatial)
+		{
 			updateGridCompensation();
+			if (update_grivation)
+				updateGrivation();
+		}
 		
 		emit projectionChanged();
 	}

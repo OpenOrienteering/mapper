@@ -465,9 +465,11 @@ public:
 	 * @param id  an identifier
 	 * @param spec the PROJ specification of the CRS
 	 * @param params parameter values (ignore for empty spec)
+	 * @param update_grivation  whether to update grivation due to convergence
 	 * @return true if the specification is valid or empty, false otherwise
 	 */
-	bool setProjectedCRS(const QString& id, QString spec, std::vector< QString > params = std::vector<QString>());
+	bool setProjectedCRS(const QString& id, QString spec, std::vector< QString > params = std::vector<QString>(),
+						 bool update_grivation = true);
 	
 	/**
 	 * Calculates the convergence at the reference point.
