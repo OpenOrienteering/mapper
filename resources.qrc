@@ -88,16 +88,16 @@
         <file>images/tool-boolean-union.png</file>
         <file>images/tool-boolean-xor.png</file>
         <file>images/tool-boolean-merge-holes.png</file>
+        <file>images/tool-clip.png</file>
         <file>images/tool-connect-paths.png</file>
         <file>images/tool-convert-to-curves.png</file>
         <file>images/tool-cut.png</file>
         <file>images/tool-cut-hole.png</file>
-        <file>images/tool-cutout-physical.png</file>
-        <file>images/tool-cutout-physical-inner.png</file>
         <file>images/tool-distribute-points.png</file>
         <file>images/tool-duplicate.png</file>
         <file>images/tool-edit.png</file>
         <file>images/tool-edit-line.png</file>
+        <file>images/tool-erase.png</file>
         <file>images/tool-fill.png</file>
         <file>images/tool-fill-border.png</file>
         <file>images/tool-gps-display.png</file>

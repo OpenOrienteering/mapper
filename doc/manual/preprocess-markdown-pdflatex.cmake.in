@@ -189,6 +189,10 @@ foreach(file ${input_files})
 		string(REGEX REPLACE "⌘⇧" "⇧⌘" output "${output}")
 	endif()
 	
+	# Temporary icon and action replacement, cf. GH-1922
+	string(REPLACE "tool-cutout-physical.png" "tool-clip.png" output "${output}")
+	string(REPLACE "tool-cutout-physical-inner.png" "tool-erase.png" output "${output}")
+	
 	string(MD5 output_md5 "${output}")
 	set(file_md5)
 	if(EXISTS "markdown-pdflatex/${file}")

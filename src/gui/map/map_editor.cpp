@@ -1066,8 +1066,8 @@ void MapEditorController::createActions()
 	boolean_merge_holes_act = newAction("booleanmergeholes", tr("Merge area holes"), this, SLOT(booleanMergeHolesClicked()), "tool-boolean-merge-holes.png", QString{}, "toolbars.html#area_merge_holes"); // TODO:documentation
 	convert_to_curves_act = newAction("converttocurves", tr("Convert to curves"), this, SLOT(convertToCurvesClicked()), "tool-convert-to-curves.png", QString{}, "toolbars.html#convert_to_curves");
 	simplify_path_act = newAction("simplify", tr("Simplify path"), this, SLOT(simplifyPathClicked()), "tool-simplify-path.png", QString{}, "toolbars.html#simplify_path");
-	cutout_physical_act = newToolAction("cutoutphysical", tr("Cutout"), this, SLOT(cutoutPhysicalClicked()), "tool-cutout-physical.png", QString{}, "toolbars.html#cutout_physical");
-	cutaway_physical_act = newToolAction("cutawayphysical", tr("Cut away"), this, SLOT(cutawayPhysicalClicked()), "tool-cutout-physical-inner.png", QString{}, "toolbars.html#cutaway_physical");
+	clip_area_act = newToolAction("cliparea", tr("Clip area"), this, SLOT(clipAreaClicked()), "tool-clip.png", QString{}, "toolbars.html#clip_area");
+	erase_area_act = newToolAction("erasearea", tr("Erase area"), this, SLOT(eraseAreaClicked()), "tool-erase.png", QString{}, "toolbars.html#erase_area");
 	distribute_points_act = newAction("distributepoints", tr("Distribute points along path"), this, SLOT(distributePointsClicked()), "tool-distribute-points.png", QString{}, "toolbars.html#distribute_points"); // TODO: write documentation
 	
 	paint_feature = std::make_unique<PaintOnTemplateFeature>(*this);
@@ -1232,8 +1232,8 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addAction(measure_act);
 	tools_menu->addAction(convert_to_curves_act);
 	tools_menu->addAction(simplify_path_act);
-	tools_menu->addAction(cutout_physical_act);
-	tools_menu->addAction(cutaway_physical_act);
+	tools_menu->addAction(clip_area_act);
+	tools_menu->addAction(erase_area_act);
 	tools_menu->addAction(distribute_points_act);
 	tools_menu->addAction(touch_cursor_action);
 	
@@ -1371,8 +1371,8 @@ void MapEditorController::createMenuAndToolbars()
 	// Advanced editing toolbar
 	toolbar_advanced_editing = window->addToolBar(tr("Advanced editing"));
 	toolbar_advanced_editing->setObjectName(QString::fromLatin1("Advanced editing toolbar"));
-	toolbar_advanced_editing->addAction(cutout_physical_act);
-	toolbar_advanced_editing->addAction(cutaway_physical_act);
+	toolbar_advanced_editing->addAction(clip_area_act);
+	toolbar_advanced_editing->addAction(erase_area_act);
 	toolbar_advanced_editing->addAction(convert_to_curves_act);
 	toolbar_advanced_editing->addAction(simplify_path_act);
 	toolbar_advanced_editing->addAction(distribute_points_act);
@@ -2648,12 +2648,12 @@ void MapEditorController::updateObjectDependentActions()
 	boolean_merge_holes_act->setEnabled(single_object_selected && have_area_with_holes);
 	boolean_merge_holes_act->setStatusTip(tr("Merge area holes together, or merge holes with the object boundary to cut out this part.") + (boolean_merge_holes_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select one area object with holes to activate this tool."))));
 	
-	// cutout_enabled
-	bool const cutout_enabled = single_object_selected && (have_area || have_line) && !have_area_with_holes && (*(map->selectedObjectsBegin()))->asPath()->parts().front().isClosed();
-	cutout_physical_act->setEnabled(cutout_enabled);
-	cutout_physical_act->setStatusTip(tr("Create a cutout of some objects or the whole map.") + (cutout_physical_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select a closed path object as cutout shape to activate this tool."))));
-	cutaway_physical_act->setEnabled(cutout_enabled);
-	cutaway_physical_act->setStatusTip(tr("Cut away some objects or everything in a limited area.") + (cutaway_physical_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select a closed path object as cutout shape to activate this tool."))));
+	// clip_erase_enabled
+	bool const clip_erase_enabled = single_object_selected && (have_area || have_line) && !have_area_with_holes && (*(map->selectedObjectsBegin()))->asPath()->parts().front().isClosed();
+	clip_area_act->setEnabled(clip_erase_enabled);
+	clip_area_act->setStatusTip(tr("Create a cutout of some objects or the whole map.") + (clip_area_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select a closed path object as cutout shape to activate this tool."))));
+	erase_area_act->setEnabled(clip_erase_enabled);
+	erase_area_act->setStatusTip(tr("Cut away some objects or everything in a limited area.") + (erase_area_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select a closed path object as cutout shape to activate this tool."))));
 }
 
 void MapEditorController::updateSymbolAndObjectDependentActions()
@@ -3465,14 +3465,14 @@ void MapEditorController::simplifyPathClicked()
 	}
 }
 
-void MapEditorController::cutoutPhysicalClicked()
+void MapEditorController::clipAreaClicked()
 {
-	setTool(new CutoutTool(this, cutout_physical_act, false));
+	setTool(new CutoutTool(this, clip_area_act, false));
 }
 
-void MapEditorController::cutawayPhysicalClicked()
+void MapEditorController::eraseAreaClicked()
 {
-	setTool(new CutoutTool(this, cutaway_physical_act, true));
+	setTool(new CutoutTool(this, erase_area_act, true));
 }
 
 void MapEditorController::distributePointsClicked()
