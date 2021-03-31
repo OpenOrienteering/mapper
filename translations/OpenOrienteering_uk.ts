@@ -8077,7 +8077,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="280"/>
         <source>Georeferenced</source>
-        <translation>Карта геоприв&apos;язана</translation>
+        <translation>З геоприв&apos;язкою</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="285"/>
@@ -8382,7 +8382,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_track.cpp" line="301"/>
         <source>Non-georeferenced</source>
-        <translation>Карта негеоприв&apos;язана</translation>
+        <translation>Без геоприв&apos;язки</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="301"/>
