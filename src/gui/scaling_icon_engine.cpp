@@ -20,6 +20,8 @@
 
 #include "scaling_icon_engine.h"
 
+#include <algorithm>
+
 #include <Qt>
 #include <QtGlobal>
 #include <QCoreApplication>
@@ -37,24 +39,47 @@
 namespace {
 
 /**
- * Functor which returns true if an object with a particular size shall be scaled up
- * to the requested size.
+ * Utility class which helps determine the required scaling for a given source
+ * size ("from") and requested size ("to").
+ * 
+ * Scaling is applied when the requested size significantly exceeds the source
+ * size in both dimensions. The aspect ratio is kept.
  */
-struct needsScalingTo
+struct Scaling
 {
-	const QSize& requested_size;
+	QSize size;
+	QSize requested_size;
+	qreal factor;
 	
-	explicit needsScalingTo (const QSize& requested_size) noexcept : requested_size(requested_size)
-	{}
+	struct ScalingFrom {
+		QSize size;
+		constexpr Scaling to(const QSize& requested_size) const noexcept
+		{
+			qreal factor = 100.0;  // maximum scaling (guessed)
+			if (size.width() > 0)
+				factor = std::min(factor, qreal(requested_size.height()) / size.height());
+			if (size.height() > 0)
+				factor = std::min(factor, qreal(requested_size.height()) / size.height());
+			return { size, requested_size, factor };
+		}
+	};
 	
-	bool operator()(const QSize& s) const noexcept
+	static constexpr ScalingFrom from(const QSize& size) noexcept
 	{
-		return 4 * s.width() < 3 * requested_size.width();
+		return { size };
 	}
-	template<class T>
-	bool operator()(const T& t) const noexcept
+	
+	constexpr bool isNeeded() const noexcept
 	{
-		return operator()(t.size());
+		return factor > 1.3;
+	}
+	
+	constexpr QSize scaledSize() const noexcept
+	{
+		auto s = size;
+		if (isNeeded())
+			s *= factor;
+		return s;
 	}
 };
 
@@ -92,9 +117,10 @@ void ScalingIconEngine::paint(QPainter* painter, const QRect& rect, QIcon::Mode 
 QPixmap ScalingIconEngine::pixmap(const QSize& size, QIcon::Mode mode, QIcon::State state)
 {
 	auto pm = icon.pixmap(size, mode, state);
-	if (needsScalingTo(size)(pm))
+	auto const scaling = Scaling::from(pm.size()).to(size);
+	if (scaling.isNeeded())
 	{
-		pm = pm.scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+		pm = pm.scaled(scaling.scaledSize(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 		addPixmap(pm, mode, state);
 	}
 	return pm;
@@ -122,9 +148,10 @@ void ScalingIconEngine::addFile(const QString& fileName, const QSize& size, QIco
 QSize ScalingIconEngine::actualSize(const QSize& size, QIcon::Mode mode, QIcon::State state)
 {
 	auto actual_size = icon.actualSize(size, mode, state);
-	if (needsScalingTo(size)(actual_size))
+	auto const scaling = Scaling::from(actual_size).to(size);
+	if (scaling.isNeeded())
 	{
-		actual_size = size;
+		actual_size = scaling.scaledSize();
 	}
 	return actual_size;
 }
