@@ -28,9 +28,7 @@ codespell -q 7 \
   'symbol sets/src' \
   'translations/future_translations.cpp' \
   -S "$SKIP_LIST" \
-  -L copyable \
-  -L endwhile \
-  -L intrest \
+  -x codespell-ignore.txt \
   "$@"
 
 git log -n 20 | codespell -q 7 - | sed 's/^/git log: /'
