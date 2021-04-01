@@ -38,7 +38,6 @@ steps:
     set -e
     export PATH=$PATH:$HOME/.local/bin
     ./codespell.sh \
-      -L childs \
     | sed -e 's,^\([^:]*\):\([0-9]*\): *,##vso[task.LogIssue type=warning;sourcepath=\1;linenumber=\2;],'
   displayName: 'Run codespell'
 
