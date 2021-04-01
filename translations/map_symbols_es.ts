@@ -13970,269 +13970,281 @@ Map symbol: ISOM 530</source>
     <message>
         <source>|D| Pipeline</source>
         <comment>Name of symbol 5.14</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Tubería</translation>
     </message>
     <message>
         <source>A pipeline (gas, water, oil, etc.) above ground level.
 
 Map symbols: ISOM 533, 534</source>
         <comment>Description of symbol 5.14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una tubería (gas, agua, petróleo, etc.) sobre el nivel del terreno.
+
+Símbolos cartográficos: ISOM 533, 534</translation>
     </message>
     <message>
         <source>|D| Tower</source>
         <comment>Name of symbol 5.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Torre</translation>
     </message>
     <message>
         <source>A tall metal, wooden or brick structure, usually built for forest observation.
 
 Map symbols: ISOM 535, 536</source>
         <comment>Description of symbol 5.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una estructura alta de metal, madera o ladrillo, construida normalmente para observación en el bosque.
+
+Símbolos cartográficos: ISOM 535, 536</translation>
     </message>
     <message>
         <source>|D| Shooting platform</source>
         <comment>Name of symbol 5.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Plataforma de tiro</translation>
     </message>
     <message>
         <source>A structure attached to a tree where a marksman or observer can sit.
 
 Map symbol: ISOM 536</source>
         <comment>Description of symbol 5.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una estructura en un árbol donde se puede sentar un tirador o un observador.
+
+Símbolos cartográficos: ISOM 536</translation>
     </message>
     <message>
         <source>|D| Boundary stone, Cairn</source>
         <comment>Name of symbol 5.17</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Mojón, Hito</translation>
     </message>
     <message>
         <source>A man made stone or pile of stones. A cairn, memorial stone, boundary stone or trigonometric point.
 
 Map symbol: ISOM 537</source>
         <comment>Description of symbol 5.17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una construcción humana de piedra o pila de piedras. Un hito, piedra conmemorativa o punto geodésico.
+
+Símbolo cartográfico: ISOM 537</translation>
     </message>
     <message>
         <source>|D| Fodder rack</source>
         <comment>Name of symbol 5.18</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Pesebre</translation>
     </message>
     <message>
         <source>A construction for holding feed for animals.
 
 Map symbol: ISOM 538</source>
         <comment>Description of symbol 5.18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una construcción para almacenar alimentos para animales.
+
+Símbolo cartográfico: ISOM 538</translation>
     </message>
     <message>
         <source>|D| Charcoal burning ground</source>
         <comment>Name of symbol 5.19</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Carbonera</translation>
     </message>
     <message>
         <source>The clear remains of an area where charcoal was burned. A small level man made area on a slope. (A platform).</source>
         <comment>Description of symbol 5.19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Los restos claros de un área donde se ha quemado carbón. Un área de construcción humana sobre el nivel de una ladera. (Una plataforma).</translation>
     </message>
     <message>
         <source>|D| Monument or Statue</source>
         <comment>Name of symbol 5.20</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Monumento o Estatua</translation>
     </message>
     <message>
         <source>A monument, memorial or statue.</source>
         <comment>Description of symbol 5.20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un monumento, conmemoración o estatua.</translation>
     </message>
     <message>
         <source>|D| Building pass through</source>
         <comment>Name of symbol 5.23</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Paso a través de un edificio</translation>
     </message>
     <message>
         <source>An arcade, indoor passage or route through a building.</source>
         <comment>Description of symbol 5.23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una arcada, paso interior o ruta a través de un edificio.</translation>
     </message>
     <message>
         <source>|D| Stairway</source>
         <comment>Name of symbol 5.24</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Escalera</translation>
     </message>
     <message>
         <source>A stairway of at least two steps.</source>
         <comment>Description of symbol 5.24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una escalera de al menos dos peldaños.</translation>
     </message>
     <message>
         <source>|D| Special item</source>
         <comment>Name of symbol 6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Objeto especial</translation>
     </message>
     <message>
         <source>If used, an explanation of its meaning must be supplied to competitors in the pre-race information.</source>
         <comment>Description of symbol 6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Si se usa, se debe proporcionar una explicación de su significado a los competidores en los boletines previos.</translation>
     </message>
     <message>
         <source>|D| Special item</source>
         <comment>Name of symbol 6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Objeto especial</translation>
     </message>
     <message>
         <source>If used, an explanation of its meaning must be supplied to competitors in the pre-race information.</source>
         <comment>Description of symbol 6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Si se usa, se debe dar una explicación de su significado a los competidores en los boletines previos.</translation>
     </message>
     <message>
         <source>|D| Country Specific features (template)</source>
         <comment>Name of symbol 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Objetos específicos del país (plantilla)</translation>
     </message>
     <message>
         <source>It is not generally recommended to introduce local symbols. If local symbols are used then at events likely to attract an international entry information about them should be supplied to competitors in the pre-race details.
 
 The default line shows a box of 5 mm by 5mm and can be removed from the final symbols.</source>
         <comment>Description of symbol 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Normalmente no se recomienda introducir símbolos locales. Si se usan símbolos locales en eventos que esperan tener participación internacional, se debe proporcionar información acerca de ellos en los boletines previos.
+
+La línea por defecto muestra una caja de 5 mm por 5 mm y se puede eliminar de los símbolos finales.</translation>
     </message>
     <message>
         <source>|E| Low</source>
         <comment>Name of symbol 8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Bajo</translation>
     </message>
     <message>
         <source>Where the control feature is particularly low or flat at but this is not indicated on the map; e.g. Hill, low.</source>
         <comment>Description of symbol 8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando el objeto del control es particularmente bajo o llano pero no esto no está indicado en el mapa; por ej., Colina, baja.</translation>
     </message>
     <message>
         <source>|E| Shallow</source>
         <comment>Name of symbol 8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Poco profundo</translation>
     </message>
     <message>
         <source>Where the control feature is particularly shallow but this is not indicated on the map; e.g. Re-entrant, shallow.</source>
         <comment>Description of symbol 8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando el objeto del control es particularmente poco profundo pero esto no está indicado en el mapa; por ej., Vaguada, poco profunda.</translation>
     </message>
     <message>
         <source>|E| Deep</source>
         <comment>Name of symbol 8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Profundo</translation>
     </message>
     <message>
         <source>Where the control feature is particularly deep but this is not indicated on the map; e.g. Pit, deep.</source>
         <comment>Description of symbol 8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando el objeto del control es particularmente profundo pero no está indicado en el mapa; por ej., Agujero, profundo.</translation>
     </message>
     <message>
         <source>|E| Overgrown</source>
         <comment>Name of symbol 8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Maleza</translation>
     </message>
     <message>
         <source>Where the feature is partially covered in undergrowth or bushes that are not indicated on the map; e.g. Ruin, overgrown.</source>
         <comment>Description of symbol 8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando el objeto está parcialmente cubierto de maleza o arbustos que no están indicados en el mapa; por ej., Ruina, con maleza.</translation>
     </message>
     <message>
         <source>|E| Open</source>
         <comment>Name of symbol 8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Abierto</translation>
     </message>
     <message>
         <source>Where the feature is in an area where the tree cover is less than the surroundings but this is not indicated on the map; e.g. Marsh, open.</source>
         <comment>Description of symbol 8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando el objeto está en un área en la que la cobertura de árboles es menor que en los alrededores pero esto no está indicado en el mapa; por ej., Pantano, abierto.</translation>
     </message>
     <message>
         <source>|E| Rocky, Stony </source>
         <comment>Name of symbol 8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Rocoso, Pedregoso </translation>
     </message>
     <message>
         <source>Where the feature is in an area of rocky or stony ground not indicated on the map; e.g. Pit, rocky.</source>
         <comment>Description of symbol 8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando el objeto está en un área de terreno rocoso o pedregoso no indicado en el mapa; por ej., Agujero, rocoso.</translation>
     </message>
     <message>
         <source>|E| Marshy</source>
         <comment>Name of symbol 8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Pantanoso</translation>
     </message>
     <message>
         <source>Where the feature is in an area of marshy ground not indicated on the map; e.g. Re-entrant, marshy.</source>
         <comment>Description of symbol 8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando el objeto está en un área de terreno pantanoso no indicado en el mapa; por ej., Vaguada, pantanosa.</translation>
     </message>
     <message>
         <source>|E| Sandy</source>
         <comment>Name of symbol 8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Arenoso</translation>
     </message>
     <message>
         <source>Where the feature is in an area of sandy ground not indicated on the map; e.g. Spur, sandy.</source>
         <comment>Description of symbol 8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando el objeto está en un área de terreno arenoso no indicado en el mapa; por ej., Espolón, arenoso.</translation>
     </message>
     <message>
         <source>|E| Needle leaved</source>
         <comment>Name of symbol 8.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Hoja de aguja</translation>
     </message>
     <message>
         <source>Where the tree or trees associated with the control feature have needle shaped leaves; e.g. Distinctive tree, needle leaved.</source>
         <comment>Description of symbol 8.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando el árbol o árboles asociados al objeto del control tienen hojas con forma de aguja; por ej., Árbol característico, con hoja de aguja.</translation>
     </message>
     <message>
         <source>|E| Broad leaved</source>
         <comment>Name of symbol 8.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Hojas anchas</translation>
     </message>
     <message>
         <source>Where the tree or trees associated with the control feature are broad-leaved; e.g. Copse, broad leaved.</source>
         <comment>Description of symbol 8.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando el árbol o árboles asociados al objeto del control tienen hojas anchas; por ej., Bosquecillo, de hoja ancha.</translation>
     </message>
     <message>
         <source>|E| Ruined</source>
         <comment>Name of symbol 8.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Ruina</translation>
     </message>
     <message>
         <source>Where the feature has fallen to ground level; e.g. Fence, ruined.</source>
         <comment>Description of symbol 8.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando el objeto se ha caído a nivel de suelo; por ej., Valla, en ruinas.</translation>
     </message>
     <message>
         <source>|F| Height or Depth</source>
         <comment>Name of symbol 9.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| Altura o Profundidad</translation>
     </message>
     <message>
         <source>Height or Depth of the feature in metres; e.g. 2.6</source>
         <comment>Description of symbol 9.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Altura o Profundidad del objeto en metros; por ej., 2.6</translation>
     </message>
     <message>
         <source>|F| Size</source>
         <comment>Name of symbol 9.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| Tamaño</translation>
     </message>
     <message>
         <source>Horizontal dimensions of the feature in metres; e.g. 8 x 4</source>
         <comment>Description of symbol 9.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dimensiones horizontales del objeto en metro; por ej., 8 x 4</translation>
     </message>
     <message>
         <source>|F| Slash for height on slope</source>
         <comment>Name of symbol 9.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| Barra diagonal para altura en pendiente</translation>
     </message>
     <message>
         <source>Use with text symbol 9.4</source>
