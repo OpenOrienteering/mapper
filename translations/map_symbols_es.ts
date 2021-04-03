@@ -195,7 +195,16 @@ The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minim
 A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
 Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una línea que une puntos de igual altura. El intervalo estándar vertical entre curvas de nivel es 5 m. Se puede usar un intervalo de 2.5 m en terrenos llanos.
+Se pueden dibujar líneas de pendiente en el lado bajo de una curva de nivel para hacer más clara la dirección de la pendiente. Si se usa, debería situarse en vaguadas.
+Una curva cerrada representa un montículo o una depresión. Una depresión ha de tener al menos una línea de pendiente. La altura/profundidad mínima debería ser 1 m.
+La relación entre curvas de nivel adyacentes es importante. Curvas adyacentes muestran una forma y estructura. Se deberían de evitar pequeños detalles en curvas de nivel porque tienden a esconder las características principales del terreno.
+Características prominentes como depresiones, vaguadas, espolones, cortados de tierra y terrazas se pueden exagerar.
+La precisión de altura absoluta tiene una menor importancia, pero la diferencia relativa de altura entre objetos vecinos debería de representarse en el mapa con la mayor precisión posible. Se permite alterar un poco la altura de una curva si esto mejora la representación del objeto. Esta desviación no debería de exceder el 25% de la equidistancia, y se debe prestar atención a los objetos vecinos.
+La curva más pequeña en una curva de nivel es 0.25 mm desde el centro al centro de la línea (huella de 4 m). La boca de una vaguada o un espolón debe ser más ancho que 0.5 mm desde el centro al centro de la línea (huella de 8 m).
+La longitud mínima de un montículo como curva de nivel es 0.9 mm (huella de 13.5 m) y la anchura mínima es 0.6 mm (huella de 9 m) midiendo por el exterior. Se pueden representar montículos prominentes más pequeños usando el símbolo Montículo pequeño (109) o Montículo pequeño alargado (110) o se pueden exagerar en el mapa para cumplir con el tamaño mínimo.
+Una depresión debe contener una línea de pendiente, así que la longitud mínima es 1.1 mm (huella de 16.5 m) y la anchura mínima es 0.7 mm (huella de 10.5 m) midiendo por el exterior. Depresiones prominentes más pequeñas se pueden representar usando el símbolo Depresión pequeña (111) o se pueden exagerar para cumplir con el tamaño mínimo.
+Las curvas de nivel deberían de adaptarse (no cortarlas) para no tocar el símbolo Montículo pequeño (109) o Montículo pequeño alargado (110).</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -219,7 +228,9 @@ Una depresión tiene que tener al menos una línea de pendiente.</translation>
 An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cada quinta curva se dibujará con una línea más gruesa. Es una ayuda para la comprobación rápida de la diferencia de altura y la forma general de la superficie del terreno.
+Se puede representar una curva maestra como una curva normal en un área con mucho detalle. Montículos y depresiones pequeñas dibujadas con curvas de nivel no se representan normalmente usando curvas maestras.
+El nivel de la curva maestra en terrenos llanos debe ser seleccionado con cuidado. El nivel ideal de la curva maestra es la curva central en las pendientes más prominentes.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -241,7 +252,9 @@ The index contour level must be carefully selected in flat terrain. The ideal le
 Minimum length (non-closed): two dashes.
 Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</source>
         <comment>Description of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Se usan curvas auxiliares cuando se debe proporcionar más información acerca de la forma del terreno. Se añaden curvas auxiliares solo donde la representación sería incompleta con curvas normales. No se usarán como curvas intermedias. Solo debería de usarse una curva auxiliar entre curvas adyacentes. Es muy importante que una curva auxiliar cuadre correctamente en el conjunto de curvas de nivel, de forma que el comienzo y fin de una curva auxiliar deberían de ser paralelos a las curvas vecinas. Los espacios entre las líneas de una curva auxiliar deben situarse en secciones razonables de la curva auxiliar. Se pueden usar curvas auxiliares para diferenciar montículos y depresiones más planas de otras más distinguibles (la altura / profundidad mínima debería de ser 1 m). Se debe evitar el uso excesivo de curvas auxiliares ya que perturba la imagen tridimensional de la forma del terreno y complica la lectura del mapa.
+Longitud mínima (no cerrada): dos segmentos de línea.
+Longitud mínima de una curva auxiliar, montículo o depresión: 1.1 mm (huella de 16.5 m)</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
@@ -264,7 +277,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un cortado de tierra es una cambio abrupto en el nivel del terreno que se puede distinguir claramente de sus alrededores, por ej. agujeros de gravilla o arena, cortes en carreteras o vías de tren o terraplenes.
+Altura mínima: 1 m. Un cortado de tierra puede afectar a la velocidad de carrera. Los peines representan la extensión completa del cortado de tierra.
+Para cortados de tierra largos se permite usar peines más cortos que la longitud mínima en los extremos. Si dos cortados de tierra están muy próximos, se pueden omitir los peines. Los cortados de tierra infranqueables se representarán usando el símbolo cortado infranqueable (201).
+Longitud mínima: 0.6 mm (huella de 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -277,7 +293,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un cortado de tierra es una cambio abrupto en el nivel del terreno que se puede distinguir claramente de sus alrededores, por ej. agujeros de gravilla o arena, cortes en carreteras o vías de tren o terraplenes.
+Altura mínima: 1 m. Un cortado de tierra puede afectar a la velocidad de carrera. Los peines representan la extensión completa del cortado de tierra.
+Para cortados de tierra largos se permite usar peines más cortos que la longitud mínima en los extremos. Si dos cortados de tierra están muy próximos, se pueden omitir los peines. Los cortados de tierra infranqueables se representarán usando el símbolo cortado infranqueable (201).
+Longitud mínima: 0.6 mm (huella de 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
@@ -290,7 +309,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un cortado de tierra es una cambio abrupto en el nivel del terreno que se puede distinguir claramente de sus alrededores, por ej. agujeros de gravilla o arena, cortes en carreteras o vías de tren o terraplenes.
+Altura mínima: 1 m. Un cortado de tierra puede afectar a la velocidad de carrera. Los peines representan la extensión completa del cortado de tierra.
+Para cortados de tierra largos se permite usar peines más cortos que la longitud mínima en los extremos. Si dos cortados de tierra están muy próximos, se pueden omitir los peines. Los cortados de tierra infranqueables se representarán usando el símbolo cortado infranqueable (201).
+Longitud mínima: 0.6 mm (huella de 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -333,7 +355,8 @@ Longitud mínima: 1.4 mm (huella 21 m).</translation>
         <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
 Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Earth wall (105).</source>
         <comment>Description of symbol 106</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un muro de piedra en ruinas o poco distinguible. Altura mínima: 0.5 m.
+Longitud mínima: 2 líneas (3.65 mm - huella 55 m). Si es más pequeño, el objeto se debe exagerar a la longitud mínima o cambiar el símbolo de muro de tierra (105).</translation>
     </message>
     <message>
         <source>Erosion gully</source>
@@ -345,7 +368,10 @@ Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object mu
 Minimum length: 1.15 mm (footprint 17 m).
 Contour lines should not be broken around this symbol.</source>
         <comment>Description of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un surco de erosión que es demasiado pequeño para mostrarlo con el símbolo cortado de tierra (104) se muestra con una línea.
+Profundidad mínima: 1 m.
+Longitud mínima: 1.15 mm (huella 17 m).
+Las curvas de nivel no deberían de cortarse alrededor de este símbolo.</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
@@ -357,7 +383,9 @@ Contour lines should not be broken around this symbol.</source>
 Minimum length (isolated): three dots (1.15 mm - footprint 17 m).
 Contour lines should be broken around this symbol.</source>
         <comment>Description of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un surco de erosión pequeño, canal seco o trinchera. Profundidad mínima: 0.5 m.
+Longitud mínima (aislado): tres puntos (1.15 mm - huella de 17 m).
+Las curvas de nivel no deberían de cortarse alrededor de este símbolo.</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -370,7 +398,10 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 7.5 m x 7.5 m.</source>
         <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una loma o montículo evidente que no se puede dibujar a escala con una curva de nivel.
+Altura mínima: 1 m.
+El símbolo no tocará o se solapará con curvas de nivel.
+Huella: 7.5 m x 7.5 m.</translation>
     </message>
     <message>
         <source>Small elongated knoll</source>
@@ -383,7 +414,10 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un montículo alargado evidente que no se puede dibujar a escala con una curva de nivel.
+Altura mínima: 1 m.
+El símbolo no tocará o se solapará con curvas de nivel.
+Huella: 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -397,7 +431,11 @@ Small depressions with steep sides are represented with symbol Pit (112).
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una depresión pequeña o hueco sin lados abruptos que es demasiado pequeña para mostrarse con curvas de nivel.
+Profundidad mínima: 1 m, anchura mínima: 2 m.
+Depresiones pequeñas con lados abruptos se representan con el símbolo Agujero (112).
+El símbolo no tocará o se solapará con otros símbolos marrones. La ubicación es el centro de gravedad del símbolo, y el símbolo se orienta al norte.
+Huella: 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Pit</source>
@@ -411,7 +449,11 @@ A pit larger than 5 m x 5 m should normally be exaggerated and drawn using Earth
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hoyos y agujeros con lados abruptos distinguibles que no se pueden dibujar a escala usando el símbolo Muro de tierra (104).
+Profundidad mínima: 1 m, anchura mínima: 1 m.
+Un agujero mayor que 5 m x 5 m normalmente se debería de exagerar y dibujar usando Cortado de tierra (104). Agujeros sin lados abruptos se representan con el símbolo Depresión pequeña (111).
+El símbolo no tocará o se solapará con otros símbolos marrones. La ubicación es el centro de gravedad del símbolo, y el símbolo se orienta al norte.
+Huella: 10.5 m x 12 m.</translation>
     </message>
     <message>
         <source>Broken ground</source>
@@ -427,7 +469,13 @@ The minimum centre to centre distance between neighbouring dots is 0.5 mm.
 Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.</source>
         <comment>Description of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de agujeros y / o montículos que es demasiado intrincado para ser mostrado en detalle, u otros tipos de terrenos bastos y desiguales que se distinguen claramente pero que tienen poco impacto en la velocidad de carrera.
+Los puntos se deberían de distribuir aleatoriamente pero sin interferir con la representación de características y objetos importantes del terreno.
+El número mínimo de puntos es tres (huella de 10 m x 10 m).
+La distancia máxima de centro a centro entre puntos vecinos es 0.6 mm.
+La distancia mínima de centro a centro entre puntos vecinos es 0.5 mm.
+Las curvas de nivel no se deberían de cortar en áreas de terreno roto.
+Los puntos no se distribuirán de manera que formen una línea ancha de un solo punto.</translation>
     </message>
     <message>
         <source>Broken ground, individual dot</source>
@@ -444,7 +492,14 @@ Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.
 Density: 3-4 dots / mm².</source>
         <comment>Description of symbol 113.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de agujeros y / o montículos que es demasiado intrincado para ser mostrado en detalle, u otros tipos de terrenos bastos y desiguales que se distinguen claramente pero que tienen poco impacto en la velocidad de carrera.
+Los puntos se deberían de distribuir aleatoriamente pero sin interferir con la representación de características y objetos importantes del terreno.
+El número mínimo de puntos es tres (huella de 10 m x 10 m).
+La distancia máxima de centro a centro entre puntos vecinos es 0.6 mm.
+La distancia mínima de centro a centro entre puntos vecinos es 0.5 mm.
+Las curvas de nivel no se deberían de cortar en áreas de terreno roto.
+Los puntos no se distribuirán de manera que formen una línea ancha de un solo punto.
+Densidad: 3-4 puntos / mm².</translation>
     </message>
     <message>
         <source>Very broken ground</source>
@@ -460,7 +515,13 @@ The minimum centre to centre distance between neighbouring dots is 0.25 mm.
 Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.</source>
         <comment>Description of symbol 114</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de agujeros y / o montículos que es demasiado intrincado para ser mostrado en detalle, u otros tipos de terrenos bastos y desiguales que se distinguen claramente y que afecta a la velocidad de carrera.
+Los puntos se deberían de distribuir aleatoriamente pero sin interferir con la representación de características y objetos importantes del terreno.
+El número mínimo de puntos es tres (huella de 7 m x 7 m).
+La distancia máxima de centro a centro entre puntos vecinos es 0.38 mm.
+La distancia mínima de centro a centro entre puntos vecinos es 0.25 mm.
+Las curvas de nivel no se deberían de cortar en áreas de terreno roto.
+Los puntos no se distribuirán de manera que formen una línea ancha de un solo punto.</translation>
     </message>
     <message>
         <source>Prominent landform feature</source>
@@ -474,7 +535,11 @@ The symbol shall not touch or overlap other brown symbols.
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 11.5 m.</source>
         <comment>Description of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>El objeto debe ser muy distinguible de sus alrededores.
+La ubicación es el centro de gravedad del símbolo, el cual se orienta al norte.
+El símbolo no tocará o se solapará con otros símbolos marrones.
+La definición del símbolo se debe dar en el mapa.
+Huella: 13.5 m x 11.5 m.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -13782,190 +13847,218 @@ Map symbol: ISOM 416</source>
     <message>
         <source>|D| Copse</source>
         <comment>Name of symbol 4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Bosquecillo</translation>
     </message>
     <message>
         <source>A small area of trees in open ground.
 
 Map symbols: ISOM 405, 406</source>
         <comment>Description of symbol 4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un pequeño área de árboles en terreno abierto.
+
+Símbolos cartográficos: ISOM 405, 406</translation>
     </message>
     <message>
         <source>|D| Distinctive tree</source>
         <comment>Name of symbol 4.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Árbol característico</translation>
     </message>
     <message>
         <source>An unusual or distinctive tree in either open land or forest; frequently information is also given as to its type.</source>
         <comment>Description of symbol 4.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un árbol inusual o distinguible en campo abierto o en bosque; con frecuencia también se da información sobre su tipo.</translation>
     </message>
     <message>
         <source>|D| Tree stump, Root stock</source>
         <comment>Name of symbol 4.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Tocón de árbol, Raíces</translation>
     </message>
     <message>
         <source>The stump of a tree. The upturned root of a fallen tree, with or without the trunk.</source>
         <comment>Description of symbol 4.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>El tocón de un árbol. La raíz invertida de un árbol caído, con o sin el tronco.</translation>
     </message>
     <message>
         <source>|D| Road</source>
         <comment>Name of symbol 5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Carretera</translation>
     </message>
     <message>
         <source>A metalled/asphalt surfaced or dirt road, suitable for vehicles in normal weather conditions.
 
 Map symbols: ISOM 501, 502, 503, 504</source>
         <comment>Description of symbol 5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una superficie de metal/asfalto o carretera de tierra, adecuada para vehículos en condiciones climáticas normales.
+
+Símbolos cartográficos: ISOM 501, 502, 503, 504</translation>
     </message>
     <message>
         <source>|D| Track / Path</source>
         <comment>Name of symbol 5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Pista / Camino</translation>
     </message>
     <message>
         <source>A visible route made by people or animals. Tracks may be driven by rugged vehicles.
 
 Map symbols: ISOM 505, 506, 507, 508</source>
         <comment>Description of symbol 5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una ruta visible hecha por personas o animales. Las pistas pueden ser conducidas por vehículos resistentes.
+
+Símbolos cartográficos: ISOM 505, 506, 507, 508</translation>
     </message>
     <message>
         <source>|D| Ride</source>
         <comment>Name of symbol 5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Vereda</translation>
     </message>
     <message>
         <source>A clearly visible linear break in the forest which does not have a distinct path along it.
 
 Map symbol: ISOM 509</source>
         <comment>Description of symbol 5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un corte lineal en el bosque claramente visible que no tiene un camino distinguible a lo largo de él.
+
+Símbolo cartográfico: ISOM 509</translation>
     </message>
     <message>
         <source>|D| Bridge</source>
         <comment>Name of symbol 5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Puente</translation>
     </message>
     <message>
         <source>A crossing point over a watercourse, or other linear feature.
 
 Map symbols: ISOM 512, 513</source>
         <comment>Description of symbol 5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un punto de cruce sobre un curso de agua, u otra característica lineal.
+
+Símbolos cartográficos: ISOM 512, 513</translation>
     </message>
     <message>
         <source>|D| Power line</source>
         <comment>Name of symbol 5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Línea eléctrica</translation>
     </message>
     <message>
         <source>A power or telephone line, cableway or ski lift.
 
 Map symbols: ISOM 516, 517</source>
         <comment>Description of symbol 5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una línea eléctrica o telefónica, teleférico o remonte.
+
+Símbolos cartográficos: ISOM 516, 517</translation>
     </message>
     <message>
         <source>|D| Power line pylon</source>
         <comment>Name of symbol 5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Poste de línea eléctrica</translation>
     </message>
     <message>
         <source>A support for power or telephone line, cableway or ski lift.
 
 Map symbols: ISOM 516, 517</source>
         <comment>Description of symbol 5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un soporte de línea eléctrica o telefónica, teleférico o remonte.
+
+Símbolos cartográficos: ISOM 516, 517</translation>
     </message>
     <message>
         <source>|D| Tunnel</source>
         <comment>Name of symbol 5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Túnel</translation>
     </message>
     <message>
         <source>A way under roads, railways, etc.
 
 Map symbol: ISOM 518</source>
         <comment>Description of symbol 5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un paso bajo carreteras, vías de tren, etc.
+
+Símbolo cartográfico: ISOM 518</translation>
     </message>
     <message>
         <source>|D| Stone wall</source>
         <comment>Name of symbol 5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Muro de piedra</translation>
     </message>
     <message>
         <source>A stone boundary wall or stone faced bank. Used with symbol 8.11 to indicate a ruined stone wall.
 
 Map symbols: ISOM 519, 520, 521</source>
         <comment>Description of symbol 5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un muro limítrofe de piedra o un banco revestido de piedra. Usado con el símbolo 8.11 para indicar un muro de piedra en ruínas.
+
+Símbolos cartográficos: ISOM 519, 520, 521</translation>
     </message>
     <message>
         <source>|D| Fence</source>
         <comment>Name of symbol 5.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Valla</translation>
     </message>
     <message>
         <source>A wire or wooden boundary. Used with symbol 8.11 to indicate a ruined fence.
 
 Map symbols: ISOM 522, 523, 524</source>
         <comment>Description of symbol 5.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un límite de alambre o madera. Usado con el símbolo 8.11 para indicar una valla en ruínas.
+
+Símbolos cartográficos: ISOM 522, 523, 524</translation>
     </message>
     <message>
         <source>|D| Crossing point</source>
         <comment>Name of symbol 5.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Cruce</translation>
     </message>
     <message>
         <source>A way through or over a wall, fence, or pipeline, including a gate or stile.
 
 Map symbol: ISOM 525</source>
         <comment>Description of symbol 5.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un paso a través o por encima de un muro, valla o tubería, incluyendo una puerta o escalera sobre valla.
+
+Símbolos cartográficos: ISOM 525</translation>
     </message>
     <message>
         <source>|D| Building</source>
         <comment>Name of symbol 5.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Edificio</translation>
     </message>
     <message>
         <source>A standing brick, wood or stone structure.
 
 Map symbol: ISOM 526</source>
         <comment>Description of symbol 5.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una estructura levantada de ladrillo, madera o piedra.
+
+Símbolo cartográfico: ISOM 526</translation>
     </message>
     <message>
         <source>|D| Paved area</source>
         <comment>Name of symbol 5.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Área pavimentada</translation>
     </message>
     <message>
         <source>An area of hard standing used for parking or other purposes.
 
 Map symbol: ISOM 529</source>
         <comment>Description of symbol 5.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de suelo duro usado como aparcamiento o para otros propósitos.
+
+Símbolo cartográfico: ISOM 529</translation>
     </message>
     <message>
         <source>|D| Ruin</source>
         <comment>Name of symbol 5.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Ruina</translation>
     </message>
     <message>
         <source>The remains of a building that has fallen down.
 
 Map symbol: ISOM 530</source>
         <comment>Description of symbol 5.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Los restos de un edificio que se ha derrumbado.
+
+Símbolo cartográfico: ISOM 530</translation>
     </message>
     <message>
         <source>|D| Pipeline</source>
