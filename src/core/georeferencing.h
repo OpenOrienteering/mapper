@@ -137,7 +137,7 @@ public:
 	
 	
 	/**
-	 * @brief Returns the precision of the grid scale factor.
+	 * @brief Returns the precision of the combined/auxiliary scale factors.
 	 * 
 	 * The precision is given in number of decimal places,
 	 * i.e. digits after the decimal point.
@@ -145,7 +145,7 @@ public:
 	static constexpr unsigned int scaleFactorPrecision();
 	
 	/**
-	 * @brief Rounds according to the defined precision of the grid scale factor.
+	 * @brief Rounds according to the defined precision of the combined/auxiliary scale factors.
 	 * 
 	 * @see scaleFactorPrecision();
 	 */
@@ -153,17 +153,17 @@ public:
 	
 	
 	/**
-	 * @brief Returns the precision of declination/grivation/convergence.
+	 * @brief Returns the precision of declination/grivation.
 	 * 
 	 * The precision is given in number of decimal places,
 	 * i.e. digits after the decimal point.
 	 * 
-	 * All values set as declination or grivation will be rounded to this precisison.
+	 * All values set as declination or grivation will be rounded to this precision.
 	 */
 	static constexpr unsigned int declinationPrecision();
 	
 	/**
-	 * @brief Rounds according to the defined precision of declination/grivation/convergence.
+	 * @brief Rounds according to the defined precision of declination/grivation.
 	 * 
 	 * @see declinationPrecision();
 	 */
