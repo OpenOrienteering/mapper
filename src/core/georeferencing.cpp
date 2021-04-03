@@ -73,6 +73,7 @@ namespace
 	{
 		static_assert(power<scaleFactorPrecision()>(10) == scaleFactorMultiplier(), "scaleFactorPrecision");
 		static_assert(power<declinationPrecision()>(10) == declinationMultiplier(), "declinationPrecision");
+		static_assert(power<grivationPrecision()>(10) == grivationMultiplier(), "grivationPrecision");
 	};
 }
 
@@ -620,7 +621,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 			declination = roundDeclination(georef_element.attribute<double>(literal::declination));
 		if (georef_element.hasAttribute(literal::grivation))
 		{
-			grivation = roundDeclination(georef_element.attribute<double>(literal::grivation));
+			grivation = roundGrivation(georef_element.attribute<double>(literal::grivation));
 			grivation_error = georef_element.attribute<double>(literal::grivation) - grivation;
 		}
 		convergence = declination - grivation;
@@ -737,7 +738,7 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 	if (!qIsNull(declination))
 		georef_element.writeAttribute(literal::declination, declination, declinationPrecision());
 	if (!qIsNull(grivation))
-		georef_element.writeAttribute(literal::grivation, grivation, declinationPrecision());
+		georef_element.writeAttribute(literal::grivation, grivation, grivationPrecision());
 		
 	if (!qIsNull(map_ref_point.lengthSquared()))
 	{
@@ -861,13 +862,13 @@ void Georeferencing::setScaleFactors(double combined_scale_factor, double auxili
 void Georeferencing::setDeclination(double value)
 {
 	double declination = roundDeclination(value);
-	double grivation = roundDeclination(value - convergence);
+	double grivation = roundGrivation(value - convergence);
 	setDeclinationAndGrivation(declination, grivation);
 }
 
 void Georeferencing::setGrivation(double value)
 {
-	double grivation = roundDeclination(value);
+	double grivation = roundGrivation(value);
 	double declination = roundDeclination(value + convergence);
 	setDeclinationAndGrivation(declination, grivation);
 }

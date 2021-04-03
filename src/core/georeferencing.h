@@ -153,21 +153,39 @@ public:
 	
 	
 	/**
-	 * @brief Returns the precision of declination/grivation.
+	 * @brief Returns the precision of declination.
 	 * 
 	 * The precision is given in number of decimal places,
 	 * i.e. digits after the decimal point.
 	 * 
-	 * All values set as declination or grivation will be rounded to this precision.
+	 * All values set as declination will be rounded to this precision.
 	 */
 	static constexpr unsigned int declinationPrecision();
 	
 	/**
-	 * @brief Rounds according to the defined precision of declination/grivation.
+	 * @brief Rounds according to the defined precision of declination.
 	 * 
 	 * @see declinationPrecision();
 	 */
 	static double roundDeclination(double);
+	
+	
+	/**
+	 * @brief Returns the precision of grivation.
+	 * 
+	 * The precision is given in number of decimal places,
+	 * i.e. digits after the decimal point.
+	 * 
+	 * All values set as grivation will be rounded to this precision.
+	 */
+	static constexpr unsigned int grivationPrecision();
+	
+	/**
+	 * @brief Rounds according to the defined precision of grivation.
+	 * 
+	 * @see grivationPrecision();
+	 */
+	static double roundGrivation(double);
 	
 	
 	/** 
@@ -244,11 +262,19 @@ protected:
 	
 	/**
 	 * Returns the constant multiplier used when rounding
-	 * declination/grivation.
+	 * declination.
 	 *
 	 * @see roundDeclination();
 	 */
 	static constexpr unsigned int declinationMultiplier();
+	
+	/**
+	 * Returns the constant multiplier used when rounding
+	 * grivation.
+	 *
+	 * @see roundGrivation();
+	 */
+	static constexpr unsigned int grivationMultiplier();
 	
 	
 public:
@@ -344,7 +370,7 @@ public:
 	 * 
 	 * Files from Mapper versions before 0.6 may have used any number of decimal
 	 * places for grivation. Since version 0.6, grivation is rounded to the
-	 * number of decimal places defined by declinationPrecision(). When this
+	 * number of decimal places defined by grivationPrecision(). When this
 	 * rounding takes place (i.e. only when opening a file which has not been
 	 * saved by 0.6 or later), the difference between the original value and the
 	 * rounded value is temporarily provided by this function. This value can be
@@ -352,7 +378,7 @@ public:
 	 * grivation will invalidate this value.
 	 * 
 	 * @see getGrivation()
-	 * @see declinationPrecision()
+	 * @see grivationPrecision()
 	 */
 	double getGrivationError() const;
 	
@@ -740,6 +766,24 @@ inline
 double Georeferencing::roundDeclination(double value)
 {
 	return floor(value*declinationMultiplier()+0.5)/declinationMultiplier();
+}
+
+inline
+constexpr unsigned int Georeferencing::grivationPrecision()
+{
+	return 8u;
+}
+
+inline
+constexpr unsigned int Georeferencing::grivationMultiplier()
+{
+	return 1E8;
+}
+
+inline
+double Georeferencing::roundGrivation(double value)
+{
+	return floor(value*grivationMultiplier()+0.5)/grivationMultiplier();
 }
 
 inline
