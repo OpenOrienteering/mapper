@@ -343,6 +343,14 @@ public:
 	double getDeclination() const;
 	
 	/**
+	 * Returns a declination value reflecting the grivation, such that
+	 * calling 'setDeclination' with this value will restore both
+	 * declination and grivation to their present values.
+	 * The returned value is not rounded, and is as precise as grivation.
+	 */
+	double getPreciseDeclination() const;
+	
+	/**
 	 * Sets the magnetic declination (in degrees).
 	 * 
 	 * Magnetic declination is the angle between magnetic north and true north.

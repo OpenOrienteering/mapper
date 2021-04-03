@@ -859,6 +859,19 @@ void Georeferencing::setScaleFactors(double combined_scale_factor, double auxili
 	}
 }
 
+double Georeferencing::getPreciseDeclination() const
+{
+	// Re-calculate declination, based on grivation.
+	const auto alternate_declination = grivation + convergence;
+
+	// Return the average of the two declination values,
+	// weighted according to their precision.
+	const auto weighted_declination = declination*declinationMultiplier();
+	const auto weighted_alternate = alternate_declination*grivationMultiplier();
+	constexpr auto total_weighting = declinationMultiplier()+grivationMultiplier();
+	return (weighted_declination+weighted_alternate)/total_weighting;
+}
+
 void Georeferencing::setDeclination(double value)
 {
 	double declination = roundDeclination(value);
