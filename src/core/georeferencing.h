@@ -234,6 +234,22 @@ protected:
 	 */
 	void setState(State value);
 	
+	/**
+	 * Returns the constant multiplier used when rounding
+	 * combined/auxiliary scale factor.
+	 *
+	 * @see roundScaleFactor();
+	 */
+	static constexpr unsigned int scaleFactorMultiplier();
+	
+	/**
+	 * Returns the constant multiplier used when rounding
+	 * declination/grivation.
+	 *
+	 * @see roundDeclination();
+	 */
+	static constexpr unsigned int declinationMultiplier();
+	
 	
 public:
 	/**
@@ -697,24 +713,33 @@ constexpr unsigned int Georeferencing::scaleFactorPrecision()
 }
 
 inline
+constexpr unsigned int Georeferencing::scaleFactorMultiplier()
+{
+	return 1E6;
+}
+
+inline
 double Georeferencing::roundScaleFactor(double value)
 {
-	// This must match the implementation in scaleFactorPrecision().
-	return floor(value*1000000.0+0.5)/1000000.0;
+	return floor(value*scaleFactorMultiplier()+0.5)/scaleFactorMultiplier();
 }
 
 inline
 constexpr unsigned int Georeferencing::declinationPrecision()
 {
-	// This must match the implementation in declinationRound().
 	return 2u;
+}
+
+inline
+constexpr unsigned int Georeferencing::declinationMultiplier()
+{
+	return 1E2;
 }
 
 inline
 double Georeferencing::roundDeclination(double value)
 {
-	// This must match the implementation in declinationPrecision().
-	return floor(value*100.0+0.5)/100.0;
+	return floor(value*declinationMultiplier()+0.5)/declinationMultiplier();
 }
 
 inline

@@ -57,6 +57,26 @@
 #endif
 
 
+namespace
+{
+	template<int N> constexpr int power(int base)
+	{
+		return base * power<N - 1>(base);
+	}
+
+	template<> constexpr int power<0>(int /*unused*/)
+	{
+		return 1;
+	}
+
+	class GeoreferencingAssert : public OpenOrienteering::Georeferencing
+	{
+		static_assert(power<scaleFactorPrecision()>(10) == scaleFactorMultiplier(), "scaleFactorPrecision");
+		static_assert(power<declinationPrecision()>(10) == declinationMultiplier(), "declinationPrecision");
+	};
+}
+
+
 // ### A namespace which collects various string constants of type QLatin1String. ###
 
 namespace literal
