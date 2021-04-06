@@ -5791,7 +5791,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>White over light brown</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blanco sobre marrón claro</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
@@ -5801,12 +5801,12 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>Lower brown 30%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Marrón inferior 30%</translation>
     </message>
     <message>
         <source>Black below lower light brown</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Negro bajo marrón claro inferior</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
@@ -5821,12 +5821,12 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>Blue 30%</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Azul 30%</translation>
     </message>
     <message>
         <source>OpenOrienteering Blue</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Azul OpenOrienteering</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
@@ -5841,12 +5841,12 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>Green 50%/Yellow 100%</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 50%/Amarillo 100%</translation>
     </message>
     <message>
         <source>Black 30% for bare rock</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Negro 30% para afloramiento rocoso</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -5881,7 +5881,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>Yellow 100%</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Amarillo 100%</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
@@ -5899,7 +5899,10 @@ The standard vertical interval between contours is 2 or 2.5 m. To emphasize the 
 Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 However, contour lines shall be cut out for better legibility, if they touch the following symbols: Small earth wall (105), Small knoll (109), Small elongated knoll (110), Small depression (111), Pit or hole (112), Prominent landform feature (115), Stairway (532). The relative height difference between neighbouring features must be represented on the map as accurately as possible. Absolute height accuracy is of less importance. It is permissible to alter the height of a contour slightly if this will improve the representation of a feature. This deviation should not exceed 25% of the contour interval and attention must be paid to neighbouring features. The smallest bend in a contour is 0.4 mm from centre to centre of the line.</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una línea que une puntos de igual altura.
+La equidistancia estándar entre curvas de nivel es 2 ó 2.5 m. Para enfatizar el efecto tridimensional de la imagen del relieve, las curvas de nivel se representarán como líneas continuas a través de todos los símbolos, también Edificio (521) y Marquesina (522).
+Las líneas de pendiente se pueden dibujar en la parte inferior de una curva de nivel para clarificar la dirección de la pendiente. Si se usan, deberían de situarse en las vaguadas.
+Sin embargo, las curvas de nivel se cortarán para una mejor legibilidad, si tocan los siguientes símbolos: Muro de tierra pequeño (105), Montículo pequeño (109), Montículo pequeño alargado (110), Depresión pequeña (111), Hoyo o agujero (112), Característica prominente del terreno (115), Escalera (532). La diferencia relativa de altura entre objetos vecinos debe representarse en el mapa de la manera lo más precisa posible. La precisión de altura absoluta es de menos importancia. Se permite alterar ligeramente la altura de una curva de nivel si esto va a ayudar a mejorar la representación de un objeto. Esta desviación no debería de exceder el 25% de la equidistancia y se debe prestar atención a los objetos vecinos. La curva más pequeña en una curva de nivel es 0.4 mm de centro a centro de la línea.</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -5919,12 +5922,12 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with symbol Contour (101).</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cada quinta curva se dibujará con una línea más gruesa. Es una ayuda para una rápida representación de la diferencia de altura y la forma general de la superficie del terreno. Cuando una curva maestra coincide con un área con mucho detalle, se puede mostrar con el símbolo Curva de nivel (101).</translation>
     </message>
     <message>
         <source>Slope line, index contour</source>
         <comment>Name of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Línea de pendiente, curva maestra</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -5939,7 +5942,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Contour values may be included to aid assessment of large height differences. The labels shall be orientated so that the top of the label is on the higher side of the contour. They are inserted in the index contours in positions where other detail is not obscured.</source>
         <comment>Description of symbol 102.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Los valores de las curvas se pueden incluir para ayudar a representar diferencias de altura grandes. Las etiquetas se orientarán de forma que la parte superior de la etiqueta esté en la parte alta de la curva. Se insertan en curvas maestras en lugares donde no se oculten otros detalles.</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -5954,7 +5957,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Slope line, form line</source>
         <comment>Name of symbol 103.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Línea de pendiente, curva auxiliar</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -5970,7 +5973,8 @@ However, contour lines shall be cut out for better legibility, if they touch the
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments.
 The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks shall be drawn with the symbol Impassable cliff (201). The line width of very high earth banks may be 0.37 mm.</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un cortado de tierra empinado es un cambio abrupto en el nivel del terreno que se puede distinguir claramente de sus alrededores, por ej., agujeros de grava o arena, cortes de carreteras y vías de tren o terraplenes.
+Los peines deberían de mostrar la extensión completa de la pendiente, pero se pueden omitir si dos cortados están muy juntos. Cortados infranqueables se dibujarán con el símbolo Cortado infranqueable (211). La anchura de la línea de cortados de tierra muy altos puede ser 0.37 mm.</translation>
     </message>
     <message>
         <source>Earth bank, very high</source>
@@ -5981,7 +5985,8 @@ The tags should show the full extent of the slope, but may be omitted if two ban
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments.
 The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks shall be drawn with the symbol Impassable cliff (201). The line width of very high earth banks may be 0.37 mm.</source>
         <comment>Description of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un cortado de tierra empinado es un cambio abrupto en el nivel del terreno que se puede distinguir claramente de sus alrededores, por ej., agujeros de grava o arena, cortes de carreteras y vías de tren o terraplenes.
+Los peines deberían de mostrar la extensión completa de la pendiente, pero se pueden omitir si dos cortados están muy juntos. Cortados infranqueables se dibujarán con el símbolo Cortado infranqueable (211). La anchura de la línea de cortados de tierra muy altos puede ser 0.37 mm.</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -5991,7 +5996,7 @@ The tags should show the full extent of the slope, but may be omitted if two ban
     <message>
         <source>The tags should show the full extent of the slope, but may be omitted if two banks are close together.</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Los peines deberían de mostrar la extensión completa de la pendiente, pero se pueden omitir si dos cortados están muy juntos.</translation>
     </message>
     <message>
         <source>Small earth wall</source>
@@ -6004,19 +6009,24 @@ Larger earth walls should be represented with the symbols Contour (101), Form li
 Minimum height: 0.5 m.
 Minimum length: 1.4 mm (footprint 5,6 m).</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un muro de tierra distinguible pequeño, normalmente hecho por el ser humano.
+Muros de tierra más grandes deberían de representarse con los símbolos Curva de nivel (101), Curva auxiliar (103) o Cortado de tierra (104).
+Altura mínima: 0.5,
+Longitud mínima: 1.4mm (huella de 5.6 m).</translation>
     </message>
     <message>
         <source>Erosion gully or trench</source>
         <comment>Name of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>Surco de erosión o trinchera</translation>
     </message>
     <message>
         <source>An erosion gully or trench which is too small to be represented with the symbol Earth bank (104), Contour (101), Index contour (102) or Form line (103) is represented by a single line. The end of the line is pointed. Contour lines may be broken around this symbol for better readability.
 Minimum depth: 1 m.
 Minimum length: 2.0 mm (footprint 8 m).</source>
         <comment>Description of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un surco de erosión o trinchera que es demasiado pequeño como para representarse con el símbolo Cortado de tierra (104), Curva de nivel (101), Curva maestra (102) o Curva auxiliar (103) se representa con una línea sola. El extremo de la línea es puntiagudo. Las curvas de nivel se pueden cortar alrededor de este símbolo para una mayor legibilidad.
+Profundidad mínima: 1 m.
+Longitud mínima: 2.0 mm (huella de 8m).</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
@@ -6029,7 +6039,10 @@ Contour lines should be broken around this symbol.
 Minimum depth: 0.5 m.
 Minimum length (isolated): three dots (1.6 mm - footprint 6.4 m).</source>
         <comment>Description of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un surco de erosión o trinchera pequeño.
+Las curvas de nivel deberían de cortarse alrededor de este símbolo.
+Profundidad mínima: 0.5 m.
+Longitud mínima (aislado): tres puntos (1.6 mm - huella de 6.4 m).</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -6041,7 +6054,9 @@ Minimum length (isolated): three dots (1.6 mm - footprint 6.4 m).</source>
 Minimum height: 0.5 m.
 Footprint: 3 m in diameter.</source>
         <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un pequeño montículo de tierra o piedra evidente que no se puede dibujar a escala con Curva de nivel (101), Curva maestra (102) o Curva auxiliar (103). El símbolo no tocará o se solapará con curvas de nivel.
+Altura mínima: 0.5 m.
+Huella: 3 m de diámetro.</translation>
     </message>
     <message>
         <source>Small elongated knoll</source>
@@ -6071,7 +6086,7 @@ Footprint: 4.8 m x 2.4 m.</source>
     <message>
         <source>Pit or hole</source>
         <comment>Name of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hoyo o agujero</translation>
     </message>
     <message>
         <source>A pit or hole with distinct steep sides which cannot be represented to scale with the symbol Earth bank (104).
@@ -6096,7 +6111,7 @@ The minimum number of dots is three.</source>
     <message>
         <source>Broken ground, single dot</source>
         <comment>Name of symbol 113.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terreno roto, punto individual</translation>
     </message>
     <message>
         <source>An area of pits or knolls, which is too complex to be represented in detail.
@@ -6108,7 +6123,7 @@ The minimum number of dots is three.</source>
     <message>
         <source>Broken ground, dense</source>
         <comment>Name of symbol 113.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terreno roto, denso</translation>
     </message>
     <message>
         <source>An area of pits or knolls, which is too complex to be represented in detail.
@@ -6120,7 +6135,7 @@ The minimum number of dots is three.</source>
     <message>
         <source>Broken ground, single dot, enlarged</source>
         <comment>Name of symbol 113.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terreno roto, punto individual, agrandado</translation>
     </message>
     <message>
         <source>An area of pits or knolls, which is too complex to be represented in detail.
@@ -6194,7 +6209,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Impassable cliff, no tags, minimum size (from ISSOM)</source>
         <comment>Name of symbol 201.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cortado infranqueable, sin peine, tamaño mínimo (de ISSOM)</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -6205,7 +6220,7 @@ For vertical rock faces the tags may be omitted if space is short, e.g. narrow p
     <message>
         <source>Impassable cliff, minimum size (from ISSOM)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cortado infranqueable, tamaño mínimo (de ISSOM)</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -6218,7 +6233,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face, small (rounded ends, no tags)</source>
         <comment>Name of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cortado franqueable, pequeño (extremos redondeados, sin peine)</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -6231,7 +6246,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face</source>
         <comment>Name of symbol 202.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cortado franqueable</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -6244,7 +6259,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face, minimum size</source>
         <comment>Name of symbol 202.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cortado franqueable, tamaño mínimo</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -6257,7 +6272,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face, top line (flat ends)</source>
         <comment>Name of symbol 202.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cortado franqueable, línea superior (extremos planos)</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -6270,7 +6285,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face, tag line</source>
         <comment>Name of symbol 202.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cortado franqueable, peine</translation>
     </message>
     <message>
         <source>If the direction of fall of the rock face is not apparent from the contours, or to improve legibility, short tags should be drawn in the direction of the fall. For non-vertical cliffs, the tags should be drawn to show the full horizontal extent.</source>
@@ -6280,17 +6295,17 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face, small (rounded ends, no tags; minimum size, from ISSOM)</source>
         <comment>Name of symbol 202.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cortado franqueable, pequeño (extremos redondeados, sin peine; tamaño mínimo, de ISSOM)</translation>
     </message>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
         <comment>Description of symbol 202.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Debería de usarse si la dirección de caída del cortado es clara a partir de las curvas de nivel y la legibilidad es buena.</translation>
     </message>
     <message>
         <source>Passable rock face, minimum size (from ISSOM)</source>
         <comment>Name of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cortado franqueable, tamaño mínimo (de ISSOM)</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -6316,7 +6331,7 @@ Footprint: 4.4 m x 5.0 m.</source>
     <message>
         <source>Cave (with a distinct entrance)</source>
         <comment>Name of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cueva (con una entrada distinguible)</translation>
     </message>
     <message>
         <source>A cave with distinct entrance which may constitute a danger to the competitor.
@@ -6329,7 +6344,7 @@ Footprint: 4.4 m x 5.0 m.</source>
     <message>
         <source>Cave (with a distinct entrance) (from ISSOM)</source>
         <comment>Name of symbol 203.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cueva (con una entrada distinguible) (de ISSOM)</translation>
     </message>
     <message>
         <source>A cave with distinct entrance which may constitute a danger to the competitor.
@@ -6365,7 +6380,7 @@ Footprint: 3.6 m in diameter.</source>
     <message>
         <source>Gigantic boulder or rock pillar</source>
         <comment>Name of symbol 206</comment>
-        <translation type="unfinished"></translation>
+        <translation>Roca enorme o pilar rocoso</translation>
     </message>
     <message>
         <source>A gigantic boulder, rock pillar or massive cliff shall be represented in plan shape. The objects can vary in shape and width.
@@ -6450,7 +6465,7 @@ To be able to show obvious height differences within a boulder field, it is perm
     <message>
         <source>Stony ground</source>
         <comment>Name of symbol 210</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terreno pedregoso</translation>
     </message>
     <message>
         <source>An area of stony or rocky ground which reduces runnability.
@@ -6462,7 +6477,7 @@ Density: Minimum 3 dots.</source>
     <message>
         <source>Stony ground, single dot</source>
         <comment>Name of symbol 210.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terreno pedregoso, punto individual</translation>
     </message>
     <message>
         <source>An area of stony or rocky ground which reduces runnability.
@@ -6474,7 +6489,7 @@ Density: Minimum 3 dots.</source>
     <message>
         <source>Stony ground, enlarged</source>
         <comment>Name of symbol 210.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terreno pedregoso, agrandado</translation>
     </message>
     <message>
         <source>An area of stony or rocky ground which reduces runnability.
@@ -6486,7 +6501,7 @@ Density: Minimum 3 dots.</source>
     <message>
         <source>Stony ground, single dot, enlarged</source>
         <comment>Name of symbol 210.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terreno pedregoso, punto individual, agrandado</translation>
     </message>
     <message>
         <source>An area of stony or rocky ground which reduces runnability.
@@ -6745,7 +6760,7 @@ At least three blue lines shall be clearly visible.</source>
     <message>
         <source>Small fountain or well</source>
         <comment>Name of symbol 311</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fuente o pozo pequeño</translation>
     </message>
     <message>
         <source>Small fountain or well which is at least 1 m in diameter.
@@ -6868,24 +6883,28 @@ Smaller areas must be left out, exaggerated or shown using either the symbol Rou
 Minimum width (for openings): 0.3 mm.
 Minimum area: 1 mm² (footprint 16 m²) for openings in screens of other colours, except for Vegetation: walk (408) and Open land (401), where the minimum area is 0.5 mm² (footprint 8 m²).</source>
         <comment>Description of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>Típico bosque abierto para el tipo particular de terreno. Si no se puede correr fácilmente en ninguna parte del bosque entonces no debería de aparecer nada de blanco en el mapa.
+Anchura mínima (para aberturas): 0.3 mm.
+Área mínima: 1 mm² (huella de 16 m²) para aberturas en ventanas de otros colores, excepto para Vegetación: difícil (408) y Terreno abierto (401), donde el área mínima es 0.5 mm² (huella de 8 m²).</translation>
     </message>
     <message>
         <source> Vegetation: slow running</source>
         <comment>Name of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation> Vegetación: carrera lenta</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
 Minimum width: 0.4 mm.
 Minimum area: 1 mm² (footprint 16 m²).</source>
         <comment>Description of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área con vegetación densa (baja visibilidad) donde la velocidad de carrera se reduce al aproximadamente 60-80% de la velocidad normal.
+Anchura mínima: 0.4 mm.
+Área mínima: 1 mm² (huella de 16 m²).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, normal running in one direction</source>
         <comment>Name of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vegetación: carrera lenta, carrera normal en una dirección</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
@@ -6893,12 +6912,15 @@ When runnability is better in one direction a regular pattern of white stripes i
 Minimum width: 0.4 mm.
 Minimum area: 1 mm² (footprint 16 m²).</source>
         <comment>Description of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área con vegetación densa (baja visibilidad) donde la velocidad de carrera se reduce al aproximadamente 60-80% de la velocidad normal.
+Cuando la velocidad de carrera es mejor en una dirección se pone un patrón regular de bandas blancas para mostrar la dirección de la mejor velocidad de carrera. Serán claramente visibles al menos dos bandas.
+Anchura mínima: 0.4 mm.
+Área mínima: 1 mm² (huella de 16 m²).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, minimum width</source>
         <comment>Name of symbol 406.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vegetación: carrera lenta, anchura mínima</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.</source>
@@ -6908,31 +6930,35 @@ Minimum area: 1 mm² (footprint 16 m²).</source>
     <message>
         <source> Vegetation: slow running, good visibility</source>
         <comment>Name of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation> Vegetación: carrera lenta, buena visibilidad</translation>
     </message>
     <message>
         <source>An area of good visibility and reduced runnability due to, for instance, undergrowth (brambles, heather, low bushes, cut branches, etc.). Running speed is reduced to about 60-80% of normal speed.
 This symbol shall not be combined with the symbol Vegetation: slow running (406) or Vegetation: walk (408).
 Minimum width: 2 lines.</source>
         <comment>Description of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de buena visibilidad y de velocidad de carrera reducida debido a, por ejemplo, vegetación baja (zarzas, brezos, arbustos bajos, ramas cortadas, etc.). La velocidad de carrera se reduce al aproximadamente 60-80% de la velocidad normal.
+Este símbolo no se combinará con el símbolo Vegetación: carrera lenta (406) o Vegetación: difícil (408).
+Anchura mínima: 2 líneas.</translation>
     </message>
     <message>
         <source> Vegetation: walk</source>
         <comment>Name of symbol 408</comment>
-        <translation type="unfinished"></translation>
+        <translation> Vegetación: difícil</translation>
     </message>
     <message>
         <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <comment>Description of symbol 408</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área con árboles densos o matorral (baja visibilidad) donde se reduce la velocidad de carrera al aproximadamente 20-60% de la velocidad normal.
+Anchura mínima: 0.4 mm.
+Área mínima: 0.5 mm² (huella de 8 m²).</translation>
     </message>
     <message>
         <source>Vegetation: walk, normal running in one direction</source>
         <comment>Name of symbol 408.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vegetación: difícil, carrera normal en una dirección</translation>
     </message>
     <message>
         <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
@@ -6940,12 +6966,15 @@ When runnability is better in one direction a regular pattern of white / green 3
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <comment>Description of symbol 408.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área con árboles densos o matorral (baja visibilidad) donde la velocidad de carrera se reduce al aproximadamente 20-60% de la velocidad normal.
+Cuando la velocidad de carrera es mejor en una dirección se pone un patrón regular de bandas blanco / verde 30% para mostrar la dirección de la mejor velocidad de carrera. Serán claramente visibles al menos dos bandas.
+Anchura mínima: 0.4 mm.
+Área mínima: 0.5 mm² (huella de 8 m²).</translation>
     </message>
     <message>
         <source>Vegetation: walk, slow running in one direction</source>
         <comment>Name of symbol 408.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vegetación: difícil, carrera lenta en una dirección</translation>
     </message>
     <message>
         <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
@@ -6953,51 +6982,58 @@ When runnability is better in one direction a regular pattern of white / green 3
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <comment>Description of symbol 408.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área con árboles densos o matorral (baja visibilidad) donde la velocidad de carrera se reduce al aproximadamente 20-60% de la velocidad normal.
+Cuando la velocidad de carrera es mejor en una dirección se pone un patrón regular de bandas blanco / verde 30% para mostrar la dirección de la mejor velocidad de carrera. Serán claramente visibles al menos dos bandas.
+Anchura mínima: 0.4 mm.
+Área mínima: 0.5 mm² (huella de 8 m²).</translation>
     </message>
     <message>
         <source> Vegetation: walk, minimum width</source>
         <comment>Name of symbol 408.3</comment>
-        <translation type="unfinished"></translation>
+        <translation> Vegetación: difícil, anchura mínima</translation>
     </message>
     <message>
         <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.</source>
         <comment>Description of symbol 408.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área con árboles densos o matorral (baja visibilidad) donde la velocidad de carrera se reduce al aproximadamente 20-60% de la velocidad normal.</translation>
     </message>
     <message>
         <source>Vegetation: walk, good visibility</source>
         <comment>Name of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vegetación: difícil, buena visibilidad</translation>
     </message>
     <message>
         <source>An area of good visibility and reduced runnability due to, for instance, undergrowth (brambles, heather, low bushes, cut branches, etc.). Running speed is reduced to about 20-60% of normal speed.
 This symbol shall not be combined with the symbol Vegetation: slow running (406) or Vegetation: walk (408).
 Minimum width: 2 lines.</source>
         <comment>Description of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de buena visibilidad y velocidad de carrera reducida debido a, por ejemplo, vegetación baja (zarzas, brezos, arbustos bajos, ramas cortadas, etc.). La velocidad de carrera se reduce al aproximadamente 20-60% de la velocidad normal.
+Este símbolo no se combinará con el símbolo Vegetación: velocidad lenta (406) o Vegetación: difícil (408).
+Anchura mínima: 2 líneas.</translation>
     </message>
     <message>
         <source> Impassable vegetation</source>
         <comment>Name of symbol 410</comment>
-        <translation type="unfinished"></translation>
+        <translation> Vegetación infranqueable</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is impassable. Running speed is almost 0%.
 Minimum area: 0.3 mm² (footprint 5 m²). Impassable vegetation shall not be crossed.
 Minimum width: 0.4 mm.</source>
         <comment>Description of symbol 410</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de vegetación densa (árboles o vegetación baja) que es infranqueable. La velocidad de carrera es casi 0%.
+Área mínima: 0.3 mm² (huella de 5 m²). La vegetación infranqueable no se cruzará.
+Anchura mínima: 0.4 mm.</translation>
     </message>
     <message>
         <source> Impassable vegetation, minimum width (hedge)</source>
         <comment>Name of symbol 410.1</comment>
-        <translation type="unfinished"></translation>
+        <translation> Vegetación infranqueable, anchura mínima (seto)</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is impassable. Running speed is almost 0%.</source>
         <comment>Description of symbol 410.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de vegetación densa (árboles o vegetación baja) que es infranqueable. La velocidad de carrera es casi 0%.</translation>
     </message>
     <message>
         <source>Cultivated land</source>
@@ -12587,7 +12623,8 @@ Footprint: 12 m x 12 m.</source>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Las líneas de norte magnético son líneas situadas en el mapa apuntando al norte magnético, paralelas a los lados del papel. Su espaciado en el mapa será de 20 mmm que representa 300 m en el terreno a escala 1:15 000. Si el mapa se amplía a 1:10 000, el espaciado de las líneas será de 30 mm en el mapa.
+Las líneas de norte se romperán para mejorar la legibilidad del mapa, por ejemplo cuando oculten pequeños objetos. En áreas con muy pocos objetos de agua, se pueden usar líneas azules.</translation>
     </message>
     <message>
         <source>North lines pattern</source>
@@ -12598,7 +12635,8 @@ North lines shall be broken to improve the legibility of the map, for instance w
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Las líneas de norte magnético son líneas situadas en el mapa apuntando al norte magnético, paralelas a los lados del papel. Su espaciado en el mapa será de 20 mmm que representa 300 m en el terreno a escala 1:15 000. Si el mapa se amplía a 1:10 000, el espaciado de las líneas será de 30 mm en el mapa.
+Las líneas de norte se romperán para mejorar la legibilidad del mapa, por ejemplo cuando oculten pequeños objetos. En áreas con muy pocos objetos de agua, se pueden usar líneas azules.</translation>
     </message>
     <message>
         <source>Magnetic north line, blue</source>
@@ -12609,7 +12647,8 @@ North lines shall be broken to improve the legibility of the map, for instance w
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Las líneas de norte magnético son líneas situadas en el mapa apuntando al norte magnético, paralelas a los lados del papel. Su espaciado en el mapa será de 20 mmm que representa 300 m en el terreno a escala 1:15 000. Si el mapa se amplía a 1:10 000, el espaciado de las líneas será de 30 mm en el mapa.
+Las líneas de norte se romperán para mejorar la legibilidad del mapa, por ejemplo cuando oculten pequeños objetos. En áreas con muy pocos objetos de agua, se pueden usar líneas azules.</translation>
     </message>
     <message>
         <source>North lines pattern, blue</source>
@@ -12620,7 +12659,8 @@ North lines shall be broken to improve the legibility of the map, for instance w
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Las líneas de norte magnético son líneas situadas en el mapa apuntando al norte magnético, paralelas a los lados del papel. Su espaciado en el mapa será de 20 mmm que representa 300 m en el terreno a escala 1:15 000. Si el mapa se amplía a 1:10 000, el espaciado de las líneas será de 30 mm en el mapa.
+Las líneas de norte se romperán para mejorar la legibilidad del mapa, por ejemplo cuando oculten pequeños objetos. En áreas con muy pocos objetos de agua, se pueden usar líneas azules.</translation>
     </message>
     <message>
         <source>Start</source>
@@ -12838,7 +12878,7 @@ In order to clarify a junction, the beginning of a slow track is drawn with a sh
     <message>
         <source>Prepared area</source>
         <comment>Name of symbol 808</comment>
-        <translation type="unfinished"></translation>
+        <translation>Área preparada</translation>
     </message>
     <message>
         <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
@@ -12849,7 +12889,7 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
     <message>
         <source>Prepared area, fill pattern</source>
         <comment>Name of symbol 808.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Área preparada, patrón de relleno</translation>
     </message>
     <message>
         <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
@@ -12860,7 +12900,7 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
     <message>
         <source>Prepared area, boundary</source>
         <comment>Name of symbol 808.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Área preparada, límite</translation>
     </message>
     <message>
         <source>The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
@@ -12870,7 +12910,7 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
     <message>
         <source>Forbidden route, crossable, line symbol</source>
         <comment>Name of symbol 809</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruta prohibida, se puede cruzar, símbolo lineal</translation>
     </message>
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
@@ -12882,7 +12922,7 @@ The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering
     <message>
         <source>Forbidden route, crossable, single symbol</source>
         <comment>Name of symbol 809.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruta prohibida, se puede cruzar, símbolo individual</translation>
     </message>
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
@@ -12904,7 +12944,7 @@ The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering
     <message>
         <source>Forbidden route, forbidden to cross</source>
         <comment>Name of symbol 814</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruta prohibida, prohibido cruzarla</translation>
     </message>
     <message>
         <source>Linear features marked with the forbidden route symbol can not be followed, and can not be crossed except at specially marked crossing points. Do not enter road regardless of whether the road is badly plowed, ice-covered, no traffic etc.
