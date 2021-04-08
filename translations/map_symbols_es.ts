@@ -6422,7 +6422,9 @@ Huella: 3 m de diámetro.</translation>
 Minimum height: 0.5 m.
 Footprint: 4.8 m x 2.4 m.</source>
         <comment>Description of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un pequeño montículo alargado evidente que no se puede dibujar a escala con una Curva de nivel (101), Curva maestra (102) o Curva auxiliar (103). La longitud máxima debería de ser 6 m y la anchura máxima 2 m. Los montículos más grandes que eso se dibujarán con curvas de nivel. El símbolo no se dibujará con forma libre o de manera que dos montículos alargados se toquen o se solapen. El símbolo no tocará no se solapará con curvas de nivel.
+Altura mínima: 0.5 m.
+Huella: 4.8 m x 2.4 m.</translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -6435,7 +6437,10 @@ Minimum depth: 0.5 m.
 Minimum width: 1 m.
 Footprint: 4.8 m x 2.4 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una pequeña depresión natural poco profunda o un hueco que no se puede representar con el símbolo Curva de nivel (101) o Curva auxiliar (103) se representa con un semicírculo. El símbolo no debe tocar ni solaparse con otros símbolos marrones.
+Profundidad mínima: 0,5 m.
+Anchura mínima: 1 m.
+Huella: 4,8 mx 2,4 m.</translation>
     </message>
     <message>
         <source>Pit or hole</source>
@@ -6448,7 +6453,10 @@ Minimum depth: 0.5 m.
 Minimum width: 1 m.
 Footprint: 4.4 m x 5.0 m.</source>
         <comment>Description of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un hoyo o agujero con lados abruptos distinguibles que no se puede representar a escala con el símbolo Cortado de tierra (104).
+Profundidad mínima: 0.5 m.
+Anchura mínima: 1 m.
+Huella: 4.4 m x 5.0 m.</translation>
     </message>
     <message>
         <source>Broken ground</source>
@@ -6460,7 +6468,9 @@ Footprint: 4.4 m x 5.0 m.</source>
 The density of randomly placed dots may vary according to the detail on the ground. The dots shall not interfere with the representation of important terrain features or objects. Contours shall not be cut in broken ground areas. Dots shall not be arranged to form a single point wide line.
 The minimum number of dots is three.</source>
         <comment>Description of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de agujeros o montículos, que es demasiado compleja para representarla en detalle.
+La densidad de los puntos situados aleatoriamente puede variar de acuerdo al detalle en el terreno. Los puntos no interferirán con la representación de características u objetos del terreno importantes. Las curvas de nivel no se cortarán en áreas de terreno roto. Los puntos no se organizarán para formar una línea ancha de un solo punto.
+El número mínimo de puntos es tres.</translation>
     </message>
     <message>
         <source>Broken ground, single dot</source>
@@ -6472,7 +6482,9 @@ The minimum number of dots is three.</source>
 The density of randomly placed dots may vary according to the detail on the ground. The dots shall not interfere with the representation of important terrain features or objects. Contours shall not be cut in broken ground areas. Dots shall not be arranged to form a single point wide line.
 The minimum number of dots is three.</source>
         <comment>Description of symbol 113.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de agujeros o montículos, que es demasiado compleja para representarla en detalle.
+La densidad de los puntos situados aleatoriamente puede variar de acuerdo al detalle en el terreno. Los puntos no interferirán con la representación de características u objetos del terreno importantes. Las curvas de nivel no se cortarán en áreas de terreno roto. Los puntos no se organizarán para formar una línea ancha de un solo punto.
+El número mínimo de puntos es tres.</translation>
     </message>
     <message>
         <source>Broken ground, dense</source>
@@ -6484,7 +6496,9 @@ The minimum number of dots is three.</source>
 The density of randomly placed dots may vary according to the detail on the ground. The dots shall not interfere with the representation of important terrain features or objects. Contours shall not be cut in broken ground areas. Dots shall not be arranged to form a single point wide line.
 The minimum number of dots is three.</source>
         <comment>Description of symbol 113.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de agujeros o montículos, que es demasiado compleja para representarla en detalle.
+La densidad de los puntos situados aleatoriamente puede variar de acuerdo al detalle en el terreno. Los puntos no interferirán con la representación de características u objetos del terreno importantes. Las curvas de nivel no se cortarán en áreas de terreno roto. Los puntos no se organizarán para formar una línea ancha de un solo punto.
+El número mínimo de puntos es tres.</translation>
     </message>
     <message>
         <source>Broken ground, single dot, enlarged</source>
@@ -6496,7 +6510,9 @@ The minimum number of dots is three.</source>
 The density of randomly placed dots may vary according to the detail on the ground. The dots shall not interfere with the representation of important terrain features or objects. Contours shall not be cut in broken ground areas. Dots shall not be arranged to form a single point wide line.
 The minimum number of dots is three.</source>
         <comment>Description of symbol 113.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de agujeros o montículos, que es demasiado compleja para representarla en detalle.
+La densidad de los puntos situados aleatoriamente puede variar de acuerdo al detalle en el terreno. Los puntos no interferirán con la representación de características u objetos del terreno importantes. Las curvas de nivel no se cortarán en áreas de terreno roto. Los puntos no se organizarán para formar una línea ancha de un solo punto.
+El número mínimo de puntos es tres.</translation>
     </message>
     <message>
         <source>Prominent landform feature</source>
@@ -6509,7 +6525,10 @@ The symbol shall not touch or overlap contour lines or other brown symbols.
 The definition of the symbol must be given on the map.
 Footprint: 5.4 m x 4.6 m.</source>
         <comment>Description of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una pequeña característica del terreno que es significativa o prominente.
+El símbolo no tocará o se solapará con curvas de nivel u otros símbolos marrones.
+La definición del símbolo se debe dar en el mapa.
+Huella: 5.4 m x 4.6 m.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -6522,7 +6541,10 @@ Tags are drawn downwards, showing its full extent from the top line to the foot.
 Minimum height: 1.5 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un cortado infranqueable, cantera o cortado de tierra (ver símbolo Cortado de tierra 104).
+Los peines se dibujan hacia abajo en la pendiente, mostrando su extensión completa desde la línea superior hasta el pie. En cortados de piedra verticales se pueden omitir los peines si el espacio es reducido, por ej. pasadizos estrechos entre cortados (el pasadizo debería de dibujarse con una anchura de al menos 0.4 mm). Los peines se pueden extender sobre un símbolo de tipo área que representa el detalle inmediatamente por debajo del cortado. Cuando un cortado cae directo en el agua, haciendo imposible pasar por debajo del cortado a lo largo de la orilla del agua, se omite la línea de bancal o bien los peines se extienden claramente sobre la línea de bancal. Un cortado infranqueable debería de interactuar con las curvas de nivel. Un cortado infranqueable no se atravesará.
+Altura mínima: 1.5 m.
+Longitud mínima: 0.9 mm (huella de 3.6 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
@@ -6535,7 +6557,10 @@ Tags are drawn downwards, showing its full extent from the top line to the foot.
 Minimum height: 1.5 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un cortado infranqueable, cantera o cortado de tierra (ver símbolo Cortado de tierra 104).
+Los peines se dibujan hacia abajo en la pendiente, mostrando su extensión completa desde la línea superior hasta el pie. En cortados de piedra verticales se pueden omitir los peines si el espacio es reducido, por ej. pasadizos estrechos entre cortados (el pasadizo debería de dibujarse con una anchura de al menos 0.4 mm). Los peines se pueden extender sobre un símbolo de tipo área que representa el detalle inmediatamente por debajo del cortado. Cuando un cortado cae directo en el agua, haciendo imposible pasar por debajo del cortado a lo largo de la orilla del agua, se omite la línea de bancal o bien los peines se extienden claramente sobre la línea de bancal. Un cortado infranqueable debería de interactuar con las curvas de nivel. Un cortado infranqueable no se atravesará.
+Altura mínima: 1.5 m.
+Longitud mínima: 0.9 mm (huella de 3.6 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
@@ -6548,7 +6573,10 @@ Tags are drawn downwards, showing its full extent from the top line to the foot.
 Minimum height: 1.5 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 201.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un cortado infranqueable, cantera o cortado de tierra (ver símbolo Cortado de tierra 104).
+Los peines se dibujan hacia abajo en la pendiente, mostrando su extensión completa desde la línea superior hasta el pie. En cortados de piedra verticales se pueden omitir los peines si el espacio es reducido, por ej. pasadizos estrechos entre cortados (el pasadizo debería de dibujarse con una anchura de al menos 0.4 mm). Los peines se pueden extender sobre un símbolo de tipo área que representa el detalle inmediatamente por debajo del cortado. Cuando un cortado cae directo en el agua, haciendo imposible pasar por debajo del cortado a lo largo de la orilla del agua, se omite la línea de bancal o bien los peines se extienden claramente sobre la línea de bancal. Un cortado infranqueable debería de interactuar con las curvas de nivel. Un cortado infranqueable no se atravesará.
+Altura mínima: 1.5 m.
+Longitud mínima: 0.9 mm (huella de 3.6 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
@@ -6558,7 +6586,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Tags are drawn downwards, showing a cliff&apos;s full extent from the top line to the foot. The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line.</source>
         <comment>Description of symbol 201.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Los peines se dibujan hacia abajo en la pendiente, mostrando su extensión completa desde la línea superior hasta el pie. Los peines se pueden extender sobre un símbolo de tipo área que representa el detalle inmediatamente por debajo del cortado. Cuando un cortado cae directo en el agua, haciendo imposible pasar por debajo del cortado a lo largo de la orilla del agua, se omite la línea de bancal o bien los peines se extienden claramente sobre la línea de bancal.</translation>
     </message>
     <message>
         <source>Impassable cliff, no tags, minimum size (from ISSOM)</source>
@@ -6569,7 +6597,8 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
 For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.4 mm).</source>
         <comment>Description of symbol 201.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un cortado infranqueable, cantera o cortado de tierra (ver símbolo Cortado de tierra 104).
+En cortados de piedra verticales se pueden omitir los peines si el espacio es reducido, por ej. pasadizos estrechos entre cortados (el pasadizo debería de dibujarse con una anchura de al menos 0.4 mm).</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size (from ISSOM)</source>
@@ -6582,7 +6611,10 @@ Tags are drawn downwards, showing its full extent from the top line to the foot.
 Minimum height: 1.5 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un cortado infranqueable, cantera o cortado de tierra (ver símbolo Cortado de tierra 104).
+Los peines se dibujan hacia abajo en la pendiente, mostrando su extensión completa desde la línea superior hasta el pie. En cortados de piedra verticales se pueden omitir los peines si el espacio es reducido, por ej. pasadizos estrechos entre cortados (el pasadizo debería de dibujarse con una anchura de al menos 0.4 mm). Los peines se pueden extender sobre un símbolo de tipo área que representa el detalle inmediatamente por debajo del cortado. Cuando un cortado cae directo en el agua, haciendo imposible pasar por debajo del cortado a lo largo de la orilla del agua, se omite la línea de bancal o bien los peines se extienden claramente sobre la línea de bancal. Un cortado infranqueable debería de interactuar con las curvas de nivel. Un cortado infranqueable no se atravesará.
+Altura mínima: 1.5 m.
+Longitud mínima: 0.9 mm (huella de 3.6 m).</translation>
     </message>
     <message>
         <source>Passable rock face, small (rounded ends, no tags)</source>
