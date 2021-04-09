@@ -6627,7 +6627,10 @@ A small vertical rock face may be shown without tags if the direction of fall of
 Minimum height: 0.6 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un cortado o cantera franqueable.
+Un cortado pequeño vertical se puede mostrar sin peines si la dirección de la caída del cortado es apreciable a partir de las curvas de nivel. En cortados franqueables mostrados sin peines, se deben redondear los extremos de la línea para mejorar la legibilidad.
+Altura mínima: 0.6 m.
+Longitud mínima: 0.9 mm (huella de 3.6 m).</translation>
     </message>
     <message>
         <source>Passable rock face</source>
@@ -6640,7 +6643,10 @@ A small vertical rock face may be shown without tags. If the direction of fall o
 Minimum height: 0.6 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un cortado o cantera franqueable.
+Un cortado pequeño vertical se puede mostrar sin peines. Si la dirección de la caída del cortado no es apreciable a partir de las curvas de nivel, o para mejorar la legibilidad, se deberían de dibujar peines en la dirección de la caída. En cortados no verticales, se deberían de dibujar los peines para mostrar la extensión horizontal completa. En cortados franqueables sin peines se deben redondear los extremos de la línea para mejorar la legibilidad.
+Altura mínima: 0.6 m.
+Longitud mínima: 0.9 mm (huella de 3.6 m).</translation>
     </message>
     <message>
         <source>Passable rock face, minimum size</source>
@@ -6653,7 +6659,10 @@ A small vertical rock face may be shown without tags. If the direction of fall o
 Minimum height: 0.6 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un cortado o cantera franqueable.
+Un cortado pequeño vertical se puede mostrar sin peines. Si la dirección de la caída del cortado no es apreciable a partir de las curvas de nivel, o para mejorar la legibilidad, se deberían de dibujar peines en la dirección de la caída. En cortados no verticales, se deberían de dibujar los peines para mostrar la extensión horizontal completa. En cortados franqueables sin peines se deben redondear los extremos de la línea para mejorar la legibilidad.
+Altura mínima: 0.6 m.
+Longitud mínima: 0.9 mm (huella de 3.6 m).</translation>
     </message>
     <message>
         <source>Passable rock face, top line (flat ends)</source>
@@ -6666,7 +6675,10 @@ Short tags must be drawn in the direction of the fall. For non-vertical cliffs, 
 Minimum height: 0.6 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un cortado o cantera franqueable.
+Se deben dibujar peines en la dirección de la caída. En cortados no verticales, se deberían de dibujar los peines para mostrar la extensión horizontal completa.
+Altura mínima: 0.6 m.
+Longitud mínima: 0.9 mm (huella de 3.6 m).</translation>
     </message>
     <message>
         <source>Passable rock face, tag line</source>
@@ -6676,7 +6688,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>If the direction of fall of the rock face is not apparent from the contours, or to improve legibility, short tags should be drawn in the direction of the fall. For non-vertical cliffs, the tags should be drawn to show the full horizontal extent.</source>
         <comment>Description of symbol 202.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Si la dirección de la caída del cortado no es apreciable a partir de las curvas de nivel, o para mejorar la legibilidad, se deberían de dibujar peines en la dirección de la caída. En cortados no verticales, se deberían de dibujar los peines para mostrar la extensión horizontal completa.</translation>
     </message>
     <message>
         <source>Passable rock face, small (rounded ends, no tags; minimum size, from ISSOM)</source>
@@ -6699,7 +6711,10 @@ A small vertical rock face may be shown without tags. If the direction of fall o
 Minimum height: 0.6 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un cortado o cantera franqueable.
+Un cortado pequeño vertical se puede mostrar sin peines. Si la dirección de la caída del cortado no es apreciable a partir de las curvas de nivel, o para mejorar la legibilidad, se deberían de dibujar peines en la dirección de la caída. En cortados no verticales, se deberían de dibujar los peines para mostrar la extensión horizontal completa. En cortados franqueables sin peines se deben redondear los extremos de la línea para mejorar la legibilidad.
+Altura mínima: 0.6 m.
+Longitud mínima: 0.9 mm (huella de 3.6 m).</translation>
     </message>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
@@ -6712,7 +6727,10 @@ Location is the centre of gravity of the symbol.
 Minimum depth: 0.5 m.
 Footprint: 4.4 m x 5.0 m.</source>
         <comment>Description of symbol 203</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un agujero rocoso, hoyo, cueva (sin una entrada distinguible) o pozo minero que puede constituir un peligro para el competidor.
+La localización es el centro de gravedad del símbolo.
+Profundidad mínima: 0.5 m.
+Huella: 4.4 m x 5.0 m.</translation>
     </message>
     <message>
         <source>Cave (with a distinct entrance)</source>
@@ -6725,7 +6743,10 @@ Location is the centre of gravity of the symbol, and the symbol should point int
 Minimum depth: 0.5 m.
 Footprint: 4.4 m x 5.0 m.</source>
         <comment>Description of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una cueva con una entrada distinguible que puede constituir un peligro para el competidor.
+La localización es el centro de gravedad del símbolo, y el símbolo debería de apuntar hacia el interior de la cueva.
+Profundidad mínima: 0.5 m.
+Huella: 4.4 m x 5.0 m.</translation>
     </message>
     <message>
         <source>Cave (with a distinct entrance) (from ISSOM)</source>
@@ -6738,7 +6759,10 @@ Location is the centre of gravity of the symbol, and the symbol should point int
 Minimum depth: 0.5 m.
 Footprint: 4.4 m x 5.0 m.</source>
         <comment>Description of symbol 203.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una cueva con una entrada distinguible que puede constituir un peligro para el competidor.
+La localización es el centro de gravedad del símbolo, y el símbolo debería de apuntar hacia el interior de la cueva.
+Profundidad mínima: 0.5 m.
+Huella: 4.4 m x 5.0 m.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -6750,7 +6774,9 @@ Footprint: 4.4 m x 5.0 m.</source>
 Every boulder marked on the map shall be immediately identifiable on the ground.
 Footprint: 2.4 m in diameter.</source>
         <comment>Description of symbol 204</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una roca pequeña distinguible.
+Toda roca marcada en el mapa será inmediatamente identificable en el terreno.
+Huella: 2.4 m de diámetro.</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -6761,7 +6787,8 @@ Footprint: 2.4 m in diameter.</source>
         <source>A particularly large and distinct boulder.
 Footprint: 3.6 m in diameter.</source>
         <comment>Description of symbol 205</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una roca particularmente grande y distinguible
+Huella: 3.6 m de diámetro.</translation>
     </message>
     <message>
         <source>Gigantic boulder or rock pillar</source>
@@ -6774,7 +6801,10 @@ The gap between gigantic boulders or between gigantic boulders and other impassa
 Minimum width: 0.3 mm.
 Minimum area: 0.75 mm2 (footprint 12 m²)</source>
         <comment>Description of symbol 206</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una roca enorme, pilar rocoso o cortado macizo se representará en planta. Los objetos pueden variar de forma y anchura.
+El espacio entre rocas enormes o entre rocas enormes y otros símbolos de objetos infranqueables debe ser superior a 0.15 mm en el mapa.
+Anchura mínima: 0.3 mm.
+Área mínima: 0.75 mm² (huella de 12 m²)</translation>
     </message>
     <message>
         <source>Boulder cluster</source>
@@ -6786,7 +6816,9 @@ Minimum area: 0.75 mm2 (footprint 12 m²)</source>
 The boulders in the cluster should be higher than 0.5 m. A boulder cluster must be easily identifiable as a group of boulders. To be able to show the distinction between neighbouring (maximum 8 m apart) boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 1.44 mm) for some of the boulder clusters.
 Footprint: 4.8 m x 4.0 m</source>
         <comment>Description of symbol 207</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un grupo distinguible de rocas tan juntos que no se pueden marcar individualmente.
+Las rocas del grupo deberían de ser más altas de 0.5 m. Un grupo de rocas debe ser fácilmente identificable como una agrupación de rocas. Para poder mostrar la distinción entre grupos de rocas vecinas (máximo 8 m de separación) que tienen una diferencia significativa en el tamaño de las rocas, se permite agrandar este símbolo en un 20% (longitud de borde 1.44 mm) en alguno de los grupos de rocas.
+Huella: 4.8 m x 4.0 m</translation>
     </message>
     <message>
         <source>Boulder cluster, large</source>
@@ -6798,7 +6830,9 @@ Footprint: 4.8 m x 4.0 m</source>
 The boulders in the cluster should be higher than 0.5 m. A boulder cluster must be easily identifiable as a group of boulders. To be able to show the distinction between neighbouring (maximum 8 m apart) boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 1.44 mm) for some of the boulder clusters.
 Footprint: 4.8 m x 4.0 m</source>
         <comment>Description of symbol 207.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un grupo distinguible de rocas tan juntos que no se pueden marcar individualmente.
+Las rocas del grupo deberían de ser más altas de 0.5 m. Un grupo de rocas debe ser fácilmente identificable como una agrupación de rocas. Para poder mostrar la distinción entre grupos de rocas vecinas (máximo 8 m de separación) que tienen una diferencia significativa en el tamaño de las rocas, se permite agrandar este símbolo en un 20% (longitud de borde 1.44 mm) en alguno de los grupos de rocas.
+Huella: 4.8 m x 4.0 m</translation>
     </message>
     <message>
         <source>Boulder field</source>
@@ -6810,7 +6844,9 @@ Footprint: 4.8 m x 4.0 m</source>
 A minimum of two triangles shall be used.
 To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
         <comment>Description of symbol 208</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área que está cubierta de tantos bloques de piedra dispersos que no se pueden marcar individualmente se representa con triángulos sólidos orientados y situados aleatoriamente. La velocidad de carrera es más reducida y esto se indica con la densidad de los triángulos.
+Se usará un mínimo de dos triángulos.
+Para poder mostrar diferencias evidentes de altura en un área de rocas, se permite agrandar algunos de los triángulos al 120%.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle</source>
@@ -6822,7 +6858,9 @@ To be able to show obvious height differences within a boulder field, it is perm
 A minimum of two triangles shall be used.
 To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
         <comment>Description of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área que está cubierta de tantos bloques de piedra dispersos que no se pueden marcar individualmente se representa con triángulos sólidos orientados y situados aleatoriamente. La velocidad de carrera es más reducida y esto se indica con la densidad de los triángulos.
+Se usará un mínimo de dos triángulos.
+Para poder mostrar diferencias evidentes de altura en un área de rocas, se permite agrandar algunos de los triángulos al 120%.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle, enlarged</source>
@@ -6834,7 +6872,9 @@ To be able to show obvious height differences within a boulder field, it is perm
 A minimum of two triangles shall be used.
 To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
         <comment>Description of symbol 208.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área que está cubierta de tantos bloques de piedra dispersos que no se pueden marcar individualmente se representa con triángulos sólidos orientados y situados aleatoriamente. La velocidad de carrera es más reducida y esto se indica con la densidad de los triángulos.
+Se usará un mínimo de dos triángulos.
+Para poder mostrar diferencias evidentes de altura en un área de rocas, se permite agrandar algunos de los triángulos al 120%.</translation>
     </message>
     <message>
         <source>Dense boulder field</source>
@@ -6846,7 +6886,9 @@ To be able to show obvious height differences within a boulder field, it is perm
 A minimum of two triangles shall be used.
 To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
         <comment>Description of symbol 208.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área que está cubierta de tantos bloques de piedra dispersos que no se pueden marcar individualmente se representa con triángulos sólidos orientados y situados aleatoriamente. La velocidad de carrera es más reducida y esto se indica con la densidad de los triángulos.
+Se usará un mínimo de dos triángulos.
+Para poder mostrar diferencias evidentes de altura en un área de rocas, se permite agrandar algunos de los triángulos al 120%.</translation>
     </message>
     <message>
         <source>Stony ground</source>
@@ -6858,7 +6900,9 @@ To be able to show obvious height differences within a boulder field, it is perm
 The dots shall be randomly distributed with density according to the amount of rock but not interfere with the representation of important terrain features or objects. A minimum of three dots shall be used. To avoid confusion with symbol Distinct vegetation boundary (416), the dots shall not be arranged to form a line.
 Density: Minimum 3 dots.</source>
         <comment>Description of symbol 210</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de terreno pedregoso o rocoso donde se reduce la velocidad de carrera.
+Los puntos se distribuirán aleatoriamente con una densidad acorde a la cantidad de rocas pero no interferirá con la representación de características u objetos importantes del terreno. Se usará un mínimo de 3 puntos. Para evitar la confusión con el símbolo Límite de vegetación (416), los puntos no se organizarán de manera que formen una línea.
+Densidad: Mínimo 3 puntos.</translation>
     </message>
     <message>
         <source>Stony ground, single dot</source>
@@ -6870,7 +6914,9 @@ Density: Minimum 3 dots.</source>
 The dots shall be randomly distributed with density according to the amount of rock but not interfere with the representation of important terrain features or objects. A minimum of three dots shall be used. To avoid confusion with symbol Distinct vegetation boundary (416), the dots shall not be arranged to form a line.
 Density: Minimum 3 dots.</source>
         <comment>Description of symbol 210.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de terreno pedregoso o rocoso donde se reduce la velocidad de carrera.
+Los puntos se distribuirán aleatoriamente con una densidad acorde a la cantidad de rocas pero no interferirá con la representación de características u objetos importantes del terreno. Se usará un mínimo de 3 puntos. Para evitar la confusión con el símbolo Límite de vegetación (416), los puntos no se organizarán de manera que formen una línea.
+Densidad: Mínimo 3 puntos.</translation>
     </message>
     <message>
         <source>Stony ground, enlarged</source>
@@ -6882,7 +6928,9 @@ Density: Minimum 3 dots.</source>
 The dots shall be randomly distributed with density according to the amount of rock but not interfere with the representation of important terrain features or objects. A minimum of three dots shall be used. To avoid confusion with symbol Distinct vegetation boundary (416), the dots shall not be arranged to form a line.
 Density: Minimum 3 dots.</source>
         <comment>Description of symbol 210.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de terreno pedregoso o rocoso donde se reduce la velocidad de carrera.
+Los puntos se distribuirán aleatoriamente con una densidad acorde a la cantidad de rocas pero no interferirá con la representación de características u objetos importantes del terreno. Se usará un mínimo de 3 puntos. Para evitar la confusión con el símbolo Límite de vegetación (416), los puntos no se organizarán de manera que formen una línea.
+Densidad: Mínimo 3 puntos.</translation>
     </message>
     <message>
         <source>Stony ground, single dot, enlarged</source>
@@ -6894,7 +6942,9 @@ Density: Minimum 3 dots.</source>
 The dots shall be randomly distributed with density according to the amount of rock but not interfere with the representation of important terrain features or objects. A minimum of three dots shall be used. To avoid confusion with symbol Distinct vegetation boundary (416), the dots shall not be arranged to form a line.
 Density: Minimum 3 dots.</source>
         <comment>Description of symbol 210.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de terreno pedregoso o rocoso donde se reduce la velocidad de carrera.
+Los puntos se distribuirán aleatoriamente con una densidad acorde a la cantidad de rocas pero no interferirá con la representación de características u objetos importantes del terreno. Se usará un mínimo de 3 puntos. Para evitar la confusión con el símbolo Límite de vegetación (416), los puntos no se organizarán de manera que formen una línea.
+Densidad: Mínimo 3 puntos.</translation>
     </message>
     <message>
         <source>Open sandy ground</source>
@@ -6908,7 +6958,11 @@ Black dots shall not interfere with black objects.
 Minimum width: 0.3 mm
 Minimum area: 1 mm² (footprint 16 m²).</source>
         <comment>Description of symbol 213</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de terreno arenoso o de gravilla sin vegetación donde se reduce la velocidad de carrera.
+Cuando un área de terreno arenoso es abierta y tiene buena velocidad de carrera, se representa con el símbolo Terreno abierto (401), Terreno abierto con árboles dispersos (402) o Área pavimentada (501).
+Los puntos negros no interferirán con objetos de color negro.
+Anchura mínima: 0.3 mm.
+Área mínima: 1 mm² (huella de 16 m²).</translation>
     </message>
     <message>
         <source>Bare rock</source>
@@ -6921,7 +6975,10 @@ An area of rock covered with grass, moss or other low vegetation shall be repres
 Minimum width: 0.25 mm
 Minimum area: 1 mm² (footprint 16 m²).</source>
         <comment>Description of symbol 214</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de piedra donde se puede correr sin tierra o vegetación.
+Un área de piedra cubierta con tierra, musgo u otra vegetación baja se representará de acuerdo a su nivel de apertura y de velocidad de carrera (401/402/403/404).
+Anchura mínima: 0.25 mm
+Área mínima: 1 mm² (huella de 16 m²).</translation>
     </message>
     <message>
         <source>Uncrossable body of water (full colour)</source>
@@ -6934,12 +6991,15 @@ Dominant areas of water may be shown with 70% colour.
 Minimum width: 0.3 mm
 Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
         <comment>Description of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de agua profunda como un lago, estanque, río o fuente. El color azul oscuro y la línea de borde negra indican que el objeto no se cruzará.
+Áreas predominantemente de agua se pueden mostrar con el color al 70%.
+Anchura mínima: 0.3 mm
+Área mínima (interior): 0.5 mm² (huella de 8 m²)</translation>
     </message>
     <message>
         <source>Uncrossable body of water (full colour), fill</source>
         <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuerpo de agua infranqueable (a todo color), relleno</translation>
     </message>
     <message>
         <source>An area of deep water such as a lake, pond, river or fountain. The dark blue colour and the bordering black line indicate that the feature shall not be crossed.
@@ -6947,7 +7007,10 @@ Dominant areas of water may be shown with 70% colour.
 Minimum width: 0.3 mm
 Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
         <comment>Description of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de agua profunda como un lago, estanque, río o fuente. El color azul oscuro y la línea de borde negra indican que el objeto no se cruzará.
+Áreas predominantemente de agua se pueden mostrar con el color al 70%.
+Anchura mínima: 0.3 mm
+Área mínima (interior): 0.5 mm² (huella de 8 m²)</translation>
     </message>
     <message>
         <source>Uncrossable body of water (dominant)</source>
@@ -6960,12 +7023,15 @@ Dominant areas of water may be shown with 70% colour.
 Minimum width: 0.3 mm
 Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
         <comment>Description of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de agua profunda como un lago, estanque, río o fuente. El color azul oscuro y la línea de borde negra indican que el objeto no se cruzará.
+Áreas predominantemente de agua se pueden mostrar con el color al 70%.
+Anchura mínima: 0.3 mm
+Área mínima (interior): 0.5 mm² (huella de 8 m²)</translation>
     </message>
     <message>
         <source>Uncrossable body of water (dominant), fill</source>
         <comment>Name of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuerpo de agua infranqueable (predominante), relleno</translation>
     </message>
     <message>
         <source>An area of deep water such as a lake, pond, river or fountain. The dark blue colour and the bordering black line indicate that the feature shall not be crossed.
@@ -6973,7 +7039,10 @@ Dominant areas of water may be shown with 70% colour.
 Minimum width: 0.3 mm
 Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
         <comment>Description of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de agua profunda como un lago, estanque, río o fuente. El color azul oscuro y la línea de borde negra indican que el objeto no se cruzará.
+Áreas predominantemente de agua se pueden mostrar con el color al 70%.
+Anchura mínima: 0.3 mm
+Área mínima (interior): 0.5 mm² (huella de 8 m²)</translation>
     </message>
     <message>
         <source>Uncrossable body of water, bank line</source>
@@ -6983,12 +7052,12 @@ Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
     <message>
         <source>The bordering black line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>La línea de borde negra indica que el objeto no se cruzará.</translation>
     </message>
     <message>
         <source>Crossable body of water</source>
         <comment>Name of symbol 302</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuerpo de agua franqueable</translation>
     </message>
     <message>
         <source>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water should be less than 0.5 m deep and runnable.
@@ -6996,12 +7065,15 @@ If the body of water is not runnable it shall be represented with the symbol Unc
 Minimum width: 0.3 mm
 Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
         <comment>Description of symbol 302</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de agua poco profunda como un estanque, río o fuente que se puede atravesar. El cuerpo de agua debería de ser de profundidad inferior a 0.5 m y donde se pueda correr.
+Si no se puede correr en el cuerpo de agua se representará con el símbolo Cuerpo de agua infranqueable (301). Si ningún otro símbolo lineal toca el borde la cuerpo de agua franqueable, el borde se representará con una línea azul.
+Anchura mínima: 0.3 mm
+Área mínima (interior): 0.5 mm² (huella de 8 m²)</translation>
     </message>
     <message>
         <source>Crossable body of water, fill</source>
         <comment>Name of symbol 302.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuerpo de agua franqueable, relleno</translation>
     </message>
     <message>
         <source>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water should be less than 0.5 m deep and runnable.
@@ -7009,17 +7081,20 @@ If the body of water is not runnable it shall be represented with the symbol Unc
 Minimum width: 0.3 mm
 Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
         <comment>Description of symbol 302.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área de agua poco profunda como un estanque, río o fuente que se puede atravesar. El cuerpo de agua debería de ser de profundidad inferior a 0.5 m y donde se pueda correr.
+Si no se puede correr en el cuerpo de agua se representará con el símbolo Cuerpo de agua infranqueable (301). Si ningún otro símbolo lineal toca el borde la cuerpo de agua franqueable, el borde se representará con una línea azul.
+Anchura mínima: 0.3 mm
+Área mínima (interior): 0.5 mm² (huella de 8 m²)</translation>
     </message>
     <message>
         <source>Crossable body of water, border line</source>
         <comment>Name of symbol 302.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuerpo de agua franqueable, línea de borde</translation>
     </message>
     <message>
         <source>If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line.</source>
         <comment>Description of symbol 302.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Si ningún otro símbolo lineal toca el borde del cuerpo de agua franqueable, el borde se representará con una línea azul.</translation>
     </message>
     <message>
         <source>Waterhole</source>
@@ -7031,29 +7106,33 @@ Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
 Location is the centre of gravity of the symbol.
 Footprint: 4.4 m x 5.0 m.</source>
         <comment>Description of symbol 303</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un agujero relleno de agua o un área de agua que es demasiado pequeña para mostrarse a escala.
+La localización es el centro de gravedad del símbolo.
+Huella: 4.4 m x 5.0 m.</translation>
     </message>
     <message>
         <source> Small crossable watercourse</source>
         <comment>Name of symbol 305</comment>
-        <translation type="unfinished"></translation>
+        <translation> Pequeño curso de agua franqueable</translation>
     </message>
     <message>
         <source>A crossable watercourse less than 2 m wide.
 Minimum length: 1 mm (footprint 4 m)</source>
         <comment>Description of symbol 305</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un curso de agua franqueable con una anchura menor de 2 m.
+Longitud mínima: 1 mm (huella de 4 m)</translation>
     </message>
     <message>
         <source> Minor / seasonal watercourse</source>
         <comment>Name of symbol 306</comment>
-        <translation type="unfinished"></translation>
+        <translation> Curso de agua menor / estacional</translation>
     </message>
     <message>
         <source>A natural or man-made minor watercourse which may contain water only intermittently.
 Minimum length (isolated): two dashes (4.11 mm - footprint 16.5 m)</source>
         <comment>Description of symbol 306</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un curso de agua menor natural o realizado por el ser humano que puede contener agua solo intermitentemente.
+Longitud mínima (aislado): dos segmentos lineales (4.11 mm - huella de 16.5 m)</translation>
     </message>
     <message>
         <source>Uncrossable marsh</source>
@@ -7065,19 +7144,23 @@ Minimum length (isolated): two dashes (4.11 mm - footprint 16.5 m)</source>
 At least two blue lines shall be clearly visible.
 Minimum width: 2 lines.</source>
         <comment>Description of symbol 307</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un pantano que es infranqueable o que puede constituir un peligro para el competidor. El objeto no se cruzará.
+Se mostrarán claramente al menos 2 líneas azules.
+Anchura mínima: 2 líneas.</translation>
     </message>
     <message>
         <source>Uncrossable marsh, fill</source>
         <comment>Name of symbol 307.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pantano infranqueable, relleno</translation>
     </message>
     <message>
         <source>A marsh which is uncrossable or which may constitute a danger to the competitor. The feature shall not be crossed.
 At least two blue lines shall be clearly visible.
 Minimum width: 2 lines.</source>
         <comment>Description of symbol 307.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un pantano que no se puede cruzar o que puede constituir un peligro para el competidor. El objeto no se cruzará.
+Serán claramente visibles al menos dos líneas azules.
+Anchura mínima: 2 líneas.</translation>
     </message>
     <message>
         <source>Uncrossable marsh, border line</source>
@@ -7087,7 +7170,7 @@ Minimum width: 2 lines.</source>
     <message>
         <source>The bordering black line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 307.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>La línea de borde negra indica que el objeto no se cruzará.</translation>
     </message>
     <message>
         <source>Marsh</source>
@@ -7100,7 +7183,10 @@ The symbol shall be combined with vegetation symbols to show runnability and ope
 At least two blue lines shall be clearly visible.
 Minimum width: 2 lines.</source>
         <comment>Description of symbol 308</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un pantano franqueable, normalmente con un borde distinguible.
+El símbolo se combinará con símbolos de vegetación para mostrar la velocidad de carrera y apertura.
+Serán claramente visibles al menos 2 líneas azules.
+Anchura mínima: 2 líneas.</translation>
     </message>
     <message>
         <source>Marsh, minimum size</source>
@@ -7113,7 +7199,10 @@ The symbol shall be combined with vegetation symbols to show runnability and ope
 At least two blue lines shall be clearly visible.
 Minimum width: 2 lines.</source>
         <comment>Description of symbol 308.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un pantano franqueable, normalmente con un borde distinguible.
+El símbolo se combinará con símbolos de vegetación para mostrar la velocidad de carrera y apertura.
+Serán claramente visibles al menos 2 líneas azules.
+Anchura mínima: 2 líneas.</translation>
     </message>
     <message>
         <source>Narrow marsh</source>
@@ -7124,7 +7213,8 @@ Minimum width: 2 lines.</source>
         <source>A marsh or trickle of water which is too narrow to be shown with symbol Marsh (310).
 Minimum size (isolated): two dots (1 mm - footprint 4 m).</source>
         <comment>Description of symbol 309</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un pantano o chorrito de agua que es demasiado estrecho para mostrarse con el símbolo Pantano (310).
+Tamaño mínimo (aislado): 2 puntos (1 mm - huella de 4 m).</translation>
     </message>
     <message>
         <source>Indistinct marsh</source>
@@ -7136,7 +7226,9 @@ Minimum size (isolated): two dots (1 mm - footprint 4 m).</source>
 The symbol shall be combined with vegetation symbols to show runnability and openness.
 At least three blue lines shall be clearly visible.</source>
         <comment>Description of symbol 310</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un pantano o área de transición de pantano a terreno firme no distinguible o estacional, que se puede cruzar. El borde es normalmente indistinguible y la vegetación similar a la del terreno adyacente.
+El símbolo se combinará con símbolos de vegetación para mostrar velocidad de carrera y apertura.
+Serán claramente visibles al menos 3 líneas azules.</translation>
     </message>
     <message>
         <source>Indistinct marsh, minimum size</source>
@@ -7153,7 +7245,9 @@ At least three blue lines shall be clearly visible.</source>
 Minimum height: 0.5 m.
 Footprint: 3.6 m x 3.6 m.</source>
         <comment>Description of symbol 311</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fuente o pozo pequeño que tiene al menos 1 m de diámetro.
+Altura mínima: 0.5 m.
+Huella: 3.6 m x 3.6 m.</translation>
     </message>
     <message>
         <source>Spring</source>
@@ -7165,7 +7259,9 @@ Footprint: 3.6 m x 3.6 m.</source>
 The symbol is orientated to open downstream.
 Footprint: 4.8 m x 2.4 m.</source>
         <comment>Description of symbol 312</comment>
-        <translation type="unfinished"></translation>
+        <translation>El surtidor de agua con un flujo de salida distinguible.
+El símbolo se orienta aguas abajo.
+Huella: 4.8 m x 2.4 m.</translation>
     </message>
     <message>
         <source>Prominent water feature</source>
@@ -7177,7 +7273,9 @@ Footprint: 4.8 m x 2.4 m.</source>
 The definition of the symbol must be given on the map.
 Footprint: 4.8 m in diameter.</source>
         <comment>Description of symbol 313</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un objeto de agua pequeño que no es significativo o prominente.
+La definición del símbolo debe darse en el mapa.
+Huella: 4.8 m de diámetro.</translation>
     </message>
     <message>
         <source>Open land</source>
