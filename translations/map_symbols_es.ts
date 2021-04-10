@@ -7287,7 +7287,9 @@ Huella: 4.8 m de diámetro.</translation>
 Minimum width: 0.3 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <comment>Description of symbol 401</comment>
-        <translation type="unfinished"></translation>
+        <translation>Superficie de tierra cultivada, césped, campo, pradera, pastizal, mantillo de corteza, etc., sin árboles, que ofrezca una muy buena transitabilidad.
+Anchura mínima: 0,3 mm.
+Superficie mínima: 0,5 mm² (huella de 8 m²).</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
@@ -7301,7 +7303,11 @@ Minimum width: 2.2 mm
 Minimum area: 6.25 mm² (footprint 100 m²)
 Smaller areas must be left out, exaggerated or shown using the symbol Open land (401).</source>
         <comment>Description of symbol 402</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona de praderas con árboles o arbustos dispersos, con hierba o una cubierta vegetal similar que ofrece muy buena capacidad de carrera.
+Los puntos pueden ser blancos (árboles dispersos) o verdes (arbustos / matorrales dispersos). Pueden añadirse los símbolos Árbol grande prominente (417) y Arbusto o árbol pequeño prominente (418).
+Anchura mínima: 2,2 mm
+Superficie mínima: 6,25 mm² (huella de 100 m²)
+Las zonas más pequeñas deben omitirse, exagerarse o mostrarse con el símbolo de terreno abierto (401).</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
@@ -7315,7 +7321,11 @@ Minimum width: 2.2 mm
 Minimum area: 6.25 mm² (footprint 100 m²)
 Smaller areas must be left out, exaggerated or shown using the symbol Open land (401).</source>
         <comment>Description of symbol 402.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona de praderas con árboles o arbustos dispersos, con hierba o una cubierta vegetal similar que ofrece muy buena capacidad de carrera.
+Los puntos pueden ser blancos (árboles dispersos) o verdes (arbustos / matorrales dispersos). Pueden añadirse los símbolos Árbol grande prominente (417) y Arbusto o árbol pequeño prominente (418).
+Anchura mínima: 2,2 mm
+Superficie mínima: 6,25 mm² (huella de 100 m²)
+Las zonas más pequeñas deben omitirse, exagerarse o mostrarse con el símbolo de terreno abierto (401).</translation>
     </message>
     <message>
         <source>Rough open land</source>
@@ -7327,7 +7337,9 @@ Smaller areas must be left out, exaggerated or shown using the symbol Open land 
 This symbol may be combined with symbols Vegetation: slow running, good visibility (407) and Vegetation: walk, good visibility (409) to show reduced runnability.
 Minimum area: 1 mm² (footprint 16 m²).</source>
         <comment>Description of symbol 403</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una zona de brezo o páramo, una zona talada, una zona recién plantada (árboles de menos de 1 m) u otro terreno generalmente abierto con vegetación de suelo áspero, es decir, brezo o hierba alta.
+Este símbolo puede combinarse con los símbolos Vegetación: marcha lenta, buena visibilidad (407) y Vegetación: marcha, buena visibilidad (409) para mostrar la capacidad de marcha reducida.
+Superficie mínima: 1 mm² (huella de 16 m²).</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
@@ -7341,7 +7353,11 @@ Minimum width: 2.5 mm.
 Minimum area: 6.25 mm² (footprint 100 m²)
 Smaller areas must be left out, exaggerated or shown using either the symbol Rough open land (403) or Forest (405).</source>
         <comment>Description of symbol 404</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una zona de terreno abierto y accidentado con árboles o arbustos dispersos. Los puntos pueden ser blancos (árboles dispersos) o verdes (arbustos / matorrales dispersos).
+Se pueden añadir los símbolos Árbol grande prominente (417) y Arbusto o árbol pequeño prominente (418). Sólo la variante de punto blanco puede combinarse con el símbolo Vegetación: carrera lenta, buena visibilidad (407) o Vegetación: paseo, buena visibilidad (409) para mostrar una capacidad de carrera reducida.
+Anchura mínima: 2,5 mm.
+Superficie mínima: 6,25 mm² (huella de 100 m²)
+Las zonas más pequeñas deben omitirse, exagerarse o mostrarse utilizando el símbolo Terreno abierto accidentado (403) o Bosque (405).</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
@@ -7355,7 +7371,11 @@ Minimum width: 2.5 mm.
 Minimum area: 6.25 mm² (footprint 100 m²)
 Smaller areas must be left out, exaggerated or shown using either the symbol Rough open land (403) or Forest (405).</source>
         <comment>Description of symbol 404.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una zona de terreno abierto y accidentado con árboles o arbustos dispersos. Los puntos pueden ser blancos (árboles dispersos) o verdes (arbustos / matorrales dispersos).
+Se pueden añadir los símbolos Árbol grande prominente (417) y Arbusto o árbol pequeño prominente (418). Sólo la variante de punto blanco puede combinarse con el símbolo Vegetación: carrera lenta, buena visibilidad (407) o Vegetación: paseo, buena visibilidad (409) para mostrar una capacidad de carrera reducida.
+Anchura mínima: 2,5 mm.
+Superficie mínima: 6,25 mm² (huella de 100 m²)
+Las zonas más pequeñas deben omitirse, exagerarse o mostrarse utilizando el símbolo Terreno abierto accidentado (403) o Bosque (405).</translation>
     </message>
     <message>
         <source>Forest</source>
@@ -7530,12 +7550,15 @@ The symbol is combined with symbol Out-of-bounds area (709) to show cultivated l
 Minimum width: 3 mm.
 Minimum area: 9 mm² (144 m²).</source>
         <comment>Description of symbol 412</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tierra cultivada, normalmente utilizada para el cultivo. La transitabilidad puede variar según el tipo de cultivo y la época del año. Dado que la transitabilidad puede variar, estas zonas deben evitarse al establecer los recorridos.
+El símbolo se combina con el símbolo de área fuera de límites (709) para mostrar los terrenos cultivados en los que no se debe entrar.
+Anchura mínima: 3 mm.
+Superficie mínima: 9 mm² (144 m²).</translation>
     </message>
     <message>
         <source>Cultivated land (black pattern)</source>
         <comment>Name of symbol 412.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tierra cultivada (patrón negro)</translation>
     </message>
     <message>
         <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses.
@@ -7543,7 +7566,10 @@ The symbol is combined with symbol Out-of-bounds area (709) to show cultivated l
 Minimum width: 3 mm.
 Minimum area: 9 mm² (144 m²).</source>
         <comment>Description of symbol 412.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tierra cultivada, normalmente utilizada para el cultivo. La transitabilidad puede variar según el tipo de cultivo y la época del año. Dado que la transitabilidad puede variar, estas zonas deben evitarse al establecer los recorridos.
+El símbolo se combina con el símbolo de área fuera de límites (709) para mostrar los terrenos cultivados en los que no se debe entrar.
+Anchura mínima: 3 mm.
+Superficie mínima: 9 mm² (144 m²).</translation>
     </message>
     <message>
         <source>Orchard</source>
@@ -7556,12 +7582,15 @@ The dot lines may be orientated to show the direction of planting. At least four
 Minimum width: 2 mm.
 Minimum area: 4 mm² (64 m²)</source>
         <comment>Description of symbol 413</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terreno plantado con árboles o arbustos frutales, normalmente en un patrón regular.
+Las líneas de puntos pueden estar orientadas para mostrar la dirección de la plantación. Al menos cuatro puntos deberán ser claramente visibles. Debe combinarse con el símbolo Tierra abierta (401) o Tierra abierta rugosa (403).
+Anchura mínima: 2 mm.
+Superficie mínima: 4 mm² (64 m²)</translation>
     </message>
     <message>
         <source>Orchard, rough open land</source>
         <comment>Name of symbol 413.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Huerto, terreno abierto y accidentado</translation>
     </message>
     <message>
         <source>Land planted with fruit trees or bushes, normally in regular pattern.
@@ -7569,12 +7598,15 @@ The dot lines may be orientated to show the direction of planting. At least four
 Minimum width: 2 mm.
 Minimum area: 4 mm² (64 m²)</source>
         <comment>Description of symbol 413.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terreno plantado con árboles o arbustos frutales, normalmente en un patrón regular.
+Las líneas de puntos pueden estar orientadas para mostrar la dirección de la plantación. Al menos cuatro puntos deberán ser claramente visibles. Debe combinarse con el símbolo Tierra abierta (401) o Tierra abierta rugosa (403).
+Anchura mínima: 2 mm.
+Superficie mínima: 4 mm² (64 m²)</translation>
     </message>
     <message>
         <source> Vineyard or similar</source>
         <comment>Name of symbol 414</comment>
-        <translation type="unfinished"></translation>
+        <translation> Viñedo o similar</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting.
@@ -7582,12 +7614,15 @@ The lines shall be orientated to show the direction of planting. At least three 
 Minimum width: 2 mm.
 Minimum area: 4 mm² (64 m²)</source>
         <comment>Description of symbol 414</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un viñedo o terreno cultivado similar que contenga hileras densas de plantas que ofrezcan una capacidad de circulación buena o normal en la dirección de la plantación.
+Las líneas estarán orientadas para mostrar la dirección de la plantación. Al menos tres líneas deberán ser claramente visibles. Debe combinarse con el símbolo Tierra abierta (401) o Tierra abierta rugosa (403).
+Anchura mínima: 2 mm.
+Superficie mínima: 4 mm² (64 m²)</translation>
     </message>
     <message>
         <source> Vineyard or similar, rough open land</source>
         <comment>Name of symbol 414.1</comment>
-        <translation type="unfinished"></translation>
+        <translation> Viñedo o similar, terreno abierto y accidentado</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting.
@@ -7595,7 +7630,10 @@ The lines shall be orientated to show the direction of planting. At least three 
 Minimum width: 2 mm.
 Minimum area: 4 mm² (64 m²)</source>
         <comment>Description of symbol 414.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un viñedo o terreno cultivado similar que contenga hileras densas de plantas que ofrezcan una capacidad de circulación buena o normal en la dirección de la plantación.
+Las líneas estarán orientadas para mostrar la dirección de la plantación. Al menos tres líneas deberán ser claramente visibles. Debe combinarse con el símbolo Tierra abierta (401) o Tierra abierta rugosa (403).
+Anchura mínima: 2 mm.
+Superficie mínima: 4 mm² (64 m²)</translation>
     </message>
     <message>
         <source>Distinct cultivation boundary</source>
@@ -7606,7 +7644,8 @@ Minimum area: 4 mm² (64 m²)</source>
         <source>A boundary of symbol cultivated land vegetation (401, 412, 413, 414) or a permanent boundary between different types of cultivated land, when not shown with other symbols (fence, wall, path, etc.)
 Minimum length: 1 mm (footprint 4 m).</source>
         <comment>Description of symbol 415</comment>
-        <translation type="unfinished"></translation>
+        <translation>Límite de la vegetación de las tierras cultivadas (401, 412, 413, 414) o límite permanente entre diferentes tipos de tierras cultivadas, cuando no se muestra con otros símbolos (valla, muro, camino, etc.)
+Longitud mínima: 1 mm (huella de 4 m).</translation>
     </message>
     <message>
         <source>Distinct vegetation boundary</source>
@@ -7617,7 +7656,8 @@ Minimum length: 1 mm (footprint 4 m).</source>
         <source>A distinct forest edge or very distinct vegetation boundary within the forest. For indistinct boundaries, the area edges are shown only by the change in colour and / or dot screen.
 Minimum length (isolated): five dots (2,65 mm - footprint 10,6 m)</source>
         <comment>Description of symbol 416</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un borde de bosque definido o un límite de vegetación muy definido dentro del bosque. En el caso de los límites indistintos, los bordes de la zona se muestran únicamente mediante el cambio de color y/o la pantalla de puntos.
+Longitud mínima (aislada): cinco puntos (2,65 mm - huella 10,6 m)</translation>
     </message>
     <message>
         <source>Prominent large tree</source>
@@ -7628,18 +7668,20 @@ Minimum length (isolated): five dots (2,65 mm - footprint 10,6 m)</source>
         <source>A prominent large single tree.
 Footprint: 4 m in diameter (OM 4.8 m).</source>
         <comment>Description of symbol 417</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un gran árbol individual prominente.
+Huella: 4 m de diámetro (OM 4,8 m).</translation>
     </message>
     <message>
         <source>Prominent bush or small tree</source>
         <comment>Name of symbol 418</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arbusto prominente o árbol pequeño</translation>
     </message>
     <message>
         <source>A prominent bush or a small single tree.
 Footprint: 3.2 m in diameter.</source>
         <comment>Description of symbol 418</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un arbusto prominente o un pequeño árbol individual.
+Huella: 3,2 m de diámetro.</translation>
     </message>
     <message>
         <source>Prominent vegetation feature</source>
@@ -7651,234 +7693,263 @@ Footprint: 3.2 m in diameter.</source>
 The definition of the symbol must be given on the map.
 Footprint: 4.8 m x 4.8 m (OM 7.1 m x 7.1 m).</source>
         <comment>Description of symbol 419</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una característica de la vegetación que es significativa o prominente.
+La definición del símbolo debe figurar en el mapa.
+Huella: 4,8 m x 4,8 m (OM 7,1 m x 7,1 m).</translation>
     </message>
     <message>
         <source>Paved area, light traffic, with border</source>
         <comment>Name of symbol 501</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona pavimentada, de tráfico ligero, con borde</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área pavimentada es un área con una superficie firme como asfalto, grava dura, baldosas, hormigón o similares. Debe estar delimitada (o enmarcada) por el símbolo Paso o borde de área pavimentada (501.1).
+Las diferencias distintivas dentro de la zona pavimentada pueden representarse con el símbolo Paso o borde de la zona pavimentada (501.1), si sirven para la navegación. La línea de borde negra puede omitirse cuando sea lógico (por ejemplo, transiciones indistintas / graduales de grava a hierba).
+Las diferencias en el color marrón se utilizarán para mostrar las diferencias en el tráfico de vehículos o peatones.</translation>
     </message>
     <message>
         <source>Paved area, light traffic</source>
         <comment>Name of symbol 501.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona pavimentada, tráfico ligero</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área pavimentada es un área con una superficie firme como asfalto, grava dura, baldosas, hormigón o similares. Debe estar delimitada (o enmarcada) por el símbolo Paso o borde de área pavimentada (501.1).
+Las diferencias distintivas dentro de la zona pavimentada pueden representarse con el símbolo Paso o borde de la zona pavimentada (501.1), si sirven para la navegación. La línea de borde negra puede omitirse cuando sea lógico (por ejemplo, transiciones indistintas / graduales de grava a hierba).
+Las diferencias en el color marrón se utilizarán para mostrar las diferencias en el tráfico de vehículos o peatones.</translation>
     </message>
     <message>
         <source> Paved area in multilevel structures, light traffic</source>
         <comment>Name of symbol 501.2</comment>
-        <translation type="unfinished"></translation>
+        <translation> Zona pavimentada en estructuras de varios niveles, tráfico ligero</translation>
     </message>
     <message>
         <source>Part of a multilevel structure which can be passed at two levels. The angle of the pattern is approximately 45° to the direction of the axis of the paved area.</source>
         <comment>Description of symbol 501.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Parte de una estructura multinivel que puede pasar a dos niveles. El ángulo del patrón es de aproximadamente 45° con respecto a la dirección del eje de la zona pavimentada.</translation>
     </message>
     <message>
         <source>Paved area with scattered trees</source>
         <comment>Name of symbol 501.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona pavimentada con árboles dispersos</translation>
     </message>
     <message>
         <source>Area with scattered trees or bushes in a paved area.</source>
         <comment>Description of symbol 501.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona con árboles o arbustos dispersos en un área pavimentada.</translation>
     </message>
     <message>
         <source> Step or edge of paved area</source>
         <comment>Name of symbol 501.1</comment>
-        <translation type="unfinished"></translation>
+        <translation> Escalón o borde de la zona pavimentada</translation>
     </message>
     <message>
         <source>An edge of a paved area.
 Edges within paved areas are generally not represented, unless they serve navigation.</source>
         <comment>Description of symbol 501.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un borde de una zona pavimentada.
+Los bordes dentro de las áreas pavimentadas generalmente no se representan, a menos que sirvan para la navegación.</translation>
     </message>
     <message>
         <source>Paved area, light traffic, footprint: 1.4 m</source>
         <comment>Name of symbol 501.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona pavimentada, tráfico ligero, huella: 1.4 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área pavimentada es un área con una superficie firme como asfalto, grava dura, baldosas, hormigón o similares. Debe estar delimitada (o enmarcada) por el símbolo Paso o borde de área pavimentada (501.1).
+Las diferencias distintivas dentro de la zona pavimentada pueden representarse con el símbolo Paso o borde de la zona pavimentada (501.1), si sirven para la navegación. La línea de borde negra puede omitirse cuando sea lógico (por ejemplo, transiciones indistintas / graduales de grava a hierba).
+Las diferencias en el color marrón se utilizarán para mostrar las diferencias en el tráfico de vehículos o peatones.</translation>
     </message>
     <message>
         <source>Paved area, light traffic, footprint: 2 m</source>
         <comment>Name of symbol 501.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona pavimentada, tráfico ligero, huella: 2 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área pavimentada es un área con una superficie firme como asfalto, grava dura, baldosas, hormigón o similares. Debe estar delimitada (o enmarcada) por el símbolo Paso o borde de área pavimentada (501.1).
+Las diferencias distintivas dentro de la zona pavimentada pueden representarse con el símbolo Paso o borde de la zona pavimentada (501.1), si sirven para la navegación. La línea de borde negra puede omitirse cuando sea lógico (por ejemplo, transiciones indistintas / graduales de grava a hierba).
+Las diferencias en el color marrón se utilizarán para mostrar las diferencias en el tráfico de vehículos o peatones.</translation>
     </message>
     <message>
         <source>Paved area, light traffic, footprint: 3 m</source>
         <comment>Name of symbol 501.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona pavimentada, tráfico ligero, huella: 3 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área pavimentada es un área con una superficie firme como asfalto, grava dura, baldosas, hormigón o similares. Debe estar delimitada (o enmarcada) por el símbolo Paso o borde de área pavimentada (501.1).
+Las diferencias distintivas dentro de la zona pavimentada pueden representarse con el símbolo Paso o borde de la zona pavimentada (501.1), si sirven para la navegación. La línea de borde negra puede omitirse cuando sea lógico (por ejemplo, transiciones indistintas / graduales de grava a hierba).
+Las diferencias en el color marrón se utilizarán para mostrar las diferencias en el tráfico de vehículos o peatones.</translation>
     </message>
     <message>
         <source>Paved area, light traffic, footprint: 4 m</source>
         <comment>Name of symbol 501.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona pavimentada, tráfico ligero, huella: 4 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área pavimentada es un área con una superficie firme como asfalto, grava dura, baldosas, hormigón o similares. Debe estar delimitada (o enmarcada) por el símbolo Paso o borde de área pavimentada (501.1).
+Las diferencias distintivas dentro de la zona pavimentada pueden representarse con el símbolo Paso o borde de la zona pavimentada (501.1), si sirven para la navegación. La línea de borde negra puede omitirse cuando sea lógico (por ejemplo, transiciones indistintas / graduales de grava a hierba).
+Las diferencias en el color marrón se utilizarán para mostrar las diferencias en el tráfico de vehículos o peatones.</translation>
     </message>
     <message>
         <source>Paved area, heavy traffic, with border</source>
         <comment>Name of symbol 501.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona pavimentada, con tráfico pesado, con borde</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área pavimentada es un área con una superficie firme como asfalto, grava dura, baldosas, hormigón o similares. Debe estar delimitada (o enmarcada) por el símbolo Paso o borde de área pavimentada (501.1).
+Las diferencias distintivas dentro de la zona pavimentada pueden representarse con el símbolo Paso o borde de la zona pavimentada (501.1), si sirven para la navegación. La línea de borde negra puede omitirse cuando sea lógico (por ejemplo, transiciones indistintas / graduales de grava a hierba).
+Las diferencias en el color marrón se utilizarán para mostrar las diferencias en el tráfico de vehículos o peatones.</translation>
     </message>
     <message>
         <source>Paved area, heavy traffic</source>
         <comment>Name of symbol 501.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona pavimentada, tráfico intenso</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área pavimentada es un área con una superficie firme como asfalto, grava dura, baldosas, hormigón o similares. Debe estar delimitada (o enmarcada) por el símbolo Paso o borde de área pavimentada (501.1).
+Las diferencias distintivas dentro de la zona pavimentada pueden representarse con el símbolo Paso o borde de la zona pavimentada (501.1), si sirven para la navegación. La línea de borde negra puede omitirse cuando sea lógico (por ejemplo, transiciones indistintas / graduales de grava a hierba).
+Las diferencias en el color marrón se utilizarán para mostrar las diferencias en el tráfico de vehículos o peatones.</translation>
     </message>
     <message>
         <source> Paved area in multilevel structures, heavy traffic</source>
         <comment>Name of symbol 501.12</comment>
-        <translation type="unfinished"></translation>
+        <translation> Zona pavimentada en estructuras de varios niveles, tráfico pesado</translation>
     </message>
     <message>
         <source>Part of a multilevel structure which can be passed at two levels. The angle of the pattern is approximately 45° to the direction of the axis of the paved area.</source>
         <comment>Description of symbol 501.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Parte de una estructura multinivel que puede pasar a dos niveles. El ángulo del patrón es de aproximadamente 45° con respecto a la dirección del eje de la zona pavimentada.</translation>
     </message>
     <message>
         <source>Paved area, heavy traffic, footprint: 1.4 m</source>
         <comment>Name of symbol 501.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona pavimentada, tráfico pesado, huella: 1.4 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área pavimentada es un área con una superficie firme como asfalto, grava dura, baldosas, hormigón o similares. Debe estar delimitada (o enmarcada) por el símbolo Paso o borde de área pavimentada (501.1).
+Las diferencias distintivas dentro de la zona pavimentada pueden representarse con el símbolo Paso o borde de la zona pavimentada (501.1), si sirven para la navegación. La línea de borde negra puede omitirse cuando sea lógico (por ejemplo, transiciones indistintas / graduales de grava a hierba).
+Las diferencias en el color marrón se utilizarán para mostrar las diferencias en el tráfico de vehículos o peatones.</translation>
     </message>
     <message>
         <source>Paved area, heavy traffic, footprint: 2 m</source>
         <comment>Name of symbol 501.17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona pavimentada, tráfico pesado, huella: 2 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área pavimentada es un área con una superficie firme como asfalto, grava dura, baldosas, hormigón o similares. Debe estar delimitada (o enmarcada) por el símbolo Paso o borde de área pavimentada (501.1).
+Las diferencias distintivas dentro de la zona pavimentada pueden representarse con el símbolo Paso o borde de la zona pavimentada (501.1), si sirven para la navegación. La línea de borde negra puede omitirse cuando sea lógico (por ejemplo, transiciones indistintas / graduales de grava a hierba).
+Las diferencias en el color marrón se utilizarán para mostrar las diferencias en el tráfico de vehículos o peatones.</translation>
     </message>
     <message>
         <source>Paved area, heavy traffic, footprint: 3 m</source>
         <comment>Name of symbol 501.18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona pavimentada, tráfico pesado, huella: 3 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área pavimentada es un área con una superficie firme como asfalto, grava dura, baldosas, hormigón o similares. Debe estar delimitada (o enmarcada) por el símbolo Paso o borde de área pavimentada (501.1).
+Las diferencias distintivas dentro de la zona pavimentada pueden representarse con el símbolo Paso o borde de la zona pavimentada (501.1), si sirven para la navegación. La línea de borde negra puede omitirse cuando sea lógico (por ejemplo, transiciones indistintas / graduales de grava a hierba).
+Las diferencias en el color marrón se utilizarán para mostrar las diferencias en el tráfico de vehículos o peatones.</translation>
     </message>
     <message>
         <source>Paved area, heavy traffic, footprint: 4 m</source>
         <comment>Name of symbol 501.19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona pavimentada, tráfico pesado, huella: 4 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área pavimentada es un área con una superficie firme como asfalto, grava dura, baldosas, hormigón o similares. Debe estar delimitada (o enmarcada) por el símbolo Paso o borde de área pavimentada (501.1).
+Las diferencias distintivas dentro de la zona pavimentada pueden representarse con el símbolo Paso o borde de la zona pavimentada (501.1), si sirven para la navegación. La línea de borde negra puede omitirse cuando sea lógico (por ejemplo, transiciones indistintas / graduales de grava a hierba).
+Las diferencias en el color marrón se utilizarán para mostrar las diferencias en el tráfico de vehículos o peatones.</translation>
     </message>
     <message>
         <source>Unpaved footpath or track, footprint: 1.4 m</source>
         <comment>Name of symbol 505.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sendero o pista sin pavimentar, huella: 1.4 m</translation>
     </message>
     <message>
         <source>An unpaved footpath or rough vehicle track is a way for passing mainly by foot, without a smooth, hard surface.</source>
         <comment>Description of symbol 505.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un sendero sin pavimentar o una pista para vehículos sin pavimentar es un camino para pasar principalmente a pie, sin una superficie lisa y dura.</translation>
     </message>
     <message>
         <source>Unpaved footpath or track, footprint: 2 m</source>
         <comment>Name of symbol 505.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sendero o pista sin pavimentar, huella: 2 m</translation>
     </message>
     <message>
         <source>An unpaved footpath or rough vehicle track is a way for passing mainly by foot, without a smooth, hard surface.</source>
         <comment>Description of symbol 505.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un sendero sin pavimentar o una pista para vehículos sin pavimentar es un camino para pasar principalmente a pie, sin una superficie lisa y dura.</translation>
     </message>
     <message>
         <source>Small unpaved footpath or track</source>
         <comment>Name of symbol 506</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pequeño sendero o pista sin pavimentar</translation>
     </message>
     <message>
         <source>A small unpaved footpath or track.
 Minimum length (isolated): two dashes (3.4 mm - footprint 13.6 m).</source>
         <comment>Description of symbol 506</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un pequeño sendero o pista sin pavimentar.
+Longitud mínima (aislada): dos rayas (3,4 mm - huella 13,6 m).</translation>
     </message>
     <message>
         <source>Less distinct small path</source>
         <comment>Name of symbol 507</comment>
-        <translation type="unfinished"></translation>
+        <translation>Camino pequeño menos marcado</translation>
     </message>
     <message>
         <source>A less distinct path or forestry extraction track.
 Minimum length: two sections of double dashes (7.9 mm - footprint 31.6 m).</source>
         <comment>Description of symbol 507</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un sendero o pista de extracción forestal menos marcado.
+Longitud mínima: dos tramos de guiones dobles (7,9 mm - huella 31,6 m).</translation>
     </message>
     <message>
         <source>Narrow ride</source>
@@ -7889,7 +7960,8 @@ Minimum length: two sections of double dashes (7.9 mm - footprint 31.6 m).</sour
         <source>A distinct ride is a linear break in the forest (usually in a plantation), which does not have a distinct path along it. Where there is a path along a ride, the symbol Small unpaved footpath or track (506) shall be used.
 Minimum length: two dashes (9.75 mm - footprint 39 m).</source>
         <comment>Description of symbol 508</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un paseo distinto es una interrupción lineal en el bosque (normalmente en una plantación), que no tiene un sendero distinto a lo largo del mismo. Cuando exista un sendero a lo largo de un paseo, se utilizará el símbolo Sendero o pista pequeña no pavimentada (506).
+Longitud mínima: dos guiones (9,75 mm - huella 39 m).</translation>
     </message>
     <message>
         <source>Railway</source>
@@ -7901,18 +7973,21 @@ Minimum length: two dashes (9.75 mm - footprint 39 m).</source>
 If it is forbidden to cross or run along the railroad, the forbidden area around the railway shall be represented with symbol Area that shall not be entered (520).
 Minimum length (isolated): two dashes (4 mm - footprint 16 m).</source>
         <comment>Description of symbol 509.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una vía férrea es una vía permanente trazada con raíles por la que pueden circular locomotoras, carros o vagones.
+Si está prohibido cruzar o circular por la vía férrea, la zona prohibida alrededor de la misma se representará con el símbolo Zona en la que no se puede entrar (520).
+Longitud mínima (aislada): dos guiones (4 mm - huella 16 m).</translation>
     </message>
     <message>
         <source>Tramway</source>
         <comment>Name of symbol 509.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tranvía</translation>
     </message>
     <message>
         <source>A tramway is a public vehicle running regularly along certain streets, usually on rails. The track can be easily crossed by the competitor.
 Tramways are generally not represented. However, if they serve navigation or orientation, they can be represented.</source>
         <comment>Description of symbol 509.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un tranvía es un vehículo público que circula regularmente por determinadas calles, normalmente sobre raíles. La vía puede ser atravesada fácilmente por el competidor.
+Por lo general, los tranvías no se representan. Sin embargo, si sirven para la navegación o la orientación, pueden representarse.</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift</source>
@@ -7925,7 +8000,10 @@ The bars indicate the exact location of the pylons. If a section of a power line
 
 &lt;b&gt;Note: When drawing this symbol, press space to toggle placing the pylon symbols at new nodes.&lt;/b&gt;</source>
         <comment>Description of symbol 510</comment>
-        <translation type="unfinished"></translation>
+        <translation>Línea eléctrica, teleférico o skilift.
+Las barras indican la ubicación exacta de las torres de alta tensión. Si un tramo de línea eléctrica, teleférico o skilift pasa por una carretera o un camino (y no ofrece un valor adicional significativo para la navegación) debe omitirse.
+
+&lt;b&gt;Nota: Al dibujar este símbolo, pulsa la barra espaciadora para alternar la colocación de los símbolos de los pilones en los nuevos nodos&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Major power line</source>
@@ -7937,46 +8015,52 @@ The bars indicate the exact location of the pylons. If a section of a power line
 
 &lt;b&gt;Note: When drawing this symbol, press space to toggle placing the pylon symbols at new nodes.&lt;/b&gt;</source>
         <comment>Description of symbol 511</comment>
-        <translation type="unfinished"></translation>
+        <translation>Las líneas eléctricas principales deben dibujarse con una línea doble. El espacio entre las líneas puede indicar la extensión de la línea eléctrica. Los mástiles portadores muy grandes se representarán en planta utilizando el símbolo Edificio (521) o Torre alta (524). En este caso, las líneas de cables pueden omitirse (el mapa muestra sólo los pilones).
+
+&lt;b&gt;Nota: Al dibujar este símbolo, pulse la barra espaciadora para alternar la colocación de los símbolos de los pilones en los nuevos nodos&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Major power line with pylons</source>
         <comment>Name of symbol 511.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Línea eléctrica principal con postes</translation>
     </message>
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline. Very large carrying masts shall be represented in plan shape using symbol Building (521) or High tower (524). In this case, the cable lines can be left out (the map shows only the pylons).
 
 &lt;b&gt;Note: When drawing this symbol, press space to toggle placing the pylon symbols at new nodes.&lt;/b&gt;</source>
         <comment>Description of symbol 511.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Las líneas eléctricas principales deben dibujarse con una línea doble. El espacio entre las líneas puede indicar la extensión de la línea eléctrica. Los mástiles portadores muy grandes se representarán en planta utilizando el símbolo Edificio (521) o Torre alta (524). En este caso, las líneas de cables pueden omitirse (el mapa muestra sólo los pilones).
+
+&lt;b&gt;Nota: Al dibujar este símbolo, pulse la barra espaciadora para alternar la colocación de los símbolos de los pilones en los nuevos nodos&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Bridge, one side</source>
         <comment>Name of symbol 512</comment>
-        <translation type="unfinished"></translation>
+        <translation>Puente, un lado</translation>
     </message>
     <message>
         <source>A bridge is a structure spanning and permitting passage over a river, chasm, road or the like.
 &lt;span style=&quot;color: red&quot;&gt;If underpasses under bridges are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
         <comment>Description of symbol 512</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un puente es una estructura que salva y permite el paso sobre un río, abismo, carretera o similar.
+&lt;span style=&quot;color: red&quot;&gt;Si en una competición se van a utilizar pasos subterráneos bajo puentes, se destacarán con el símbolo Punto de cruce (710.1) o Sección de cruce (710.2).&lt;/span&gt;</translation>
     </message>
     <message>
         <source>Bridge, minimum width</source>
         <comment>Name of symbol 512.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Puente, anchura mínima</translation>
     </message>
     <message>
         <source>A bridge is a structure spanning and permitting passage over a river, chasm, road or the like.
 &lt;span style=&quot;color: red&quot;&gt;If underpasses under bridges are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
         <comment>Description of symbol 512.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un puente es una estructura que salva y permite el paso sobre un río, abismo, carretera o similar.
+&lt;span style=&quot;color: red&quot;&gt;Si en una competición se van a utilizar pasos subterráneos bajo puentes, se destacarán con el símbolo Punto de cruce (710.1) o Sección de cruce (710.2).&lt;/span&gt;</translation>
     </message>
     <message>
         <source>Underpass or tunnel</source>
         <comment>Name of symbol 512.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Paso subterráneo o túnel</translation>
     </message>
     <message>
         <source>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles.
@@ -7984,31 +8068,38 @@ Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 &lt;span style=&quot;color: red&quot;&gt;Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
         <comment>Description of symbol 512.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un paso subterráneo o un túnel es un pasaje que pasa por debajo del suelo o de un edificio, especialmente un paso para peatones o vehículos.
+Longitud mínima (de la línea de base): 2 casillas (0,75 mm - huella 3,0 m).
+202]Longitud mínima (de la línea de base): 2 casillas (0,75 mm - huella 3,0 m).
+Si en una competición se van a utilizar pasos subterráneos o túneles, etc., se destacarán con el símbolo Punto de cruce (710.1) o Sección de cruce (710.2).&lt;/span&gt;</translation>
     </message>
     <message>
         <source>Passable wall</source>
         <comment>Name of symbol 513.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Muro transitable</translation>
     </message>
     <message>
         <source>A passable wall is a construction made of stone, brick, concrete etc., which can be passed.
 If such a wall is higher than 1.5 m, it shall be represented with the symbol Impassable wall (515). Wide walls shall be drawn in plan shape using a ground symbol delineated by the passable wall symbol. It should be dotted if possible (minimum length around the dot 0.4 mm each side).
 Minimum length (isolated): 1.4 mm (footprint 5.6 m).</source>
         <comment>Description of symbol 513.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un muro transitable es una construcción de piedra, ladrillo, hormigón, etc., que se puede atravesar.
+Si dicho muro tiene una altura superior a 1,5 m, se representará con el símbolo de muro infranqueable (515). Los muros anchos se dibujarán en planta utilizando un símbolo de suelo delineado por el símbolo de muro transitable. Deberá ser punteado si es posible (longitud mínima alrededor del punto 0,4 mm a cada lado).
+Longitud mínima (aislada): 1,4 mm (huella de 5,6 m).</translation>
     </message>
     <message>
         <source>Passable retained wall</source>
         <comment>Name of symbol 513.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Muro de contención transitable</translation>
     </message>
     <message>
         <source>A passable wall which is seen only from one side. Half dot must point to the lower level.
 Height is 0.6 - 1.5 m. If lower, use symbol Step or edge of paved area (501.1).
 Minimum length (isolated): 2.4 mm (footprint 9.6 m).</source>
         <comment>Description of symbol 513.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un muro transitable que sólo se ve desde un lado. El medio punto debe señalar el nivel inferior.
+La altura es de 0,6 a 1,5 m. Si es inferior, utilice el símbolo Paso o borde de la zona pavimentada (501.1).
+Longitud mínima (aislada): 2,4 mm (huella de 9,6 m).</translation>
     </message>
     <message>
         <source>Impassable wall</source>
@@ -8019,47 +8110,53 @@ Minimum length (isolated): 2.4 mm (footprint 9.6 m).</source>
         <source>An impassable or uncrossable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed.
 Very wide impassable walls shall be drawn in plan shape and represented with the symbol Building (521).</source>
         <comment>Description of symbol 515</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un muro infranqueable o infranqueable o muro de contención es un muro que cumple la función de cerramiento o barrera sólida. No debe ser atravesado.
+Los muros infranqueables muy anchos se dibujarán en planta y se representarán con el símbolo Edificio (521).</translation>
     </message>
     <message>
         <source>Passable fence or railing</source>
         <comment>Name of symbol 516</comment>
-        <translation type="unfinished"></translation>
+        <translation>Valla o barandilla transitable</translation>
     </message>
     <message>
         <source>A passable fence is a barrier enclosing or bordering a field, yard, etc., usually made of posts and wire or wood. It is used to prevent entrance or to confine or mark a boundary. A railing is a fencelike barrier composed of one or more horizontal rails supported by widely spaced upright poles, usually it can be slipped through.
 If a fence or railing is dangerous or very difficult to cross, it shall be represented with the symbol Impassable fence or railing (518).
 Minimum length (isolated): 2.2 mm (footprint 8.8 m).</source>
         <comment>Description of symbol 516</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una valla transitable es una barrera que encierra o bordea un campo, un patio, etc., normalmente hecha de postes y alambre o madera. Se utiliza para impedir la entrada o para confinar o marcar un límite. Una barandilla es una barrera en forma de valla compuesta por uno o varios raíles horizontales sostenidos por postes verticales muy espaciados, por lo general se puede pasar a través de ella.
+Si una valla o barandilla es peligrosa o muy difícil de atravesar, se representará con el símbolo Valla o barandilla infranqueable (518).
+Longitud mínima (aislada): 2,2 mm (huella de 8,8 m).</translation>
     </message>
     <message>
         <source>Impassable fence or railing</source>
         <comment>Name of symbol 518</comment>
-        <translation type="unfinished"></translation>
+        <translation>Valla o barandilla infranqueable</translation>
     </message>
     <message>
         <source>An impassable fence or railing shall not be crossed.
 If the length is shorter than 3 mm, it must be presented with the symbol Impassable wall (515).
 Minimum length (isolated): 3 mm (footprint 12 m).</source>
         <comment>Description of symbol 518</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una valla o barandilla infranqueable no deberá ser cruzada.
+Si la longitud es inferior a 3 mm, deberá presentarse con el símbolo Muro infranqueable (515).
+Longitud mínima (aislada): 3 mm (huella 12 m).</translation>
     </message>
     <message>
         <source>Crossing point (optional)</source>
         <comment>Name of symbol 519</comment>
-        <translation type="unfinished"></translation>
+        <translation>Punto de cruce (opcional)</translation>
     </message>
     <message>
         <source>A crossing point is a gap or an opening in a fence, railing or wall, which can easily be passed through by a competitor.
 Small gaps or openings which cannot easily be passed through by competitors, shall not be represented on the map and shall be closed during the competition.</source>
         <comment>Description of symbol 519</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un punto de paso es un hueco o una abertura en una valla, barandilla o muro, que puede ser fácilmente atravesado por un competidor.
+Los pequeños huecos o aberturas que no puedan ser fácilmente atravesados por los competidores, no deberán ser representados en el mapa y deberán ser cerrados durante la competición.</translation>
     </message>
     <message>
         <source>Area that shall not be entered </source>
         <comment>Name of symbol 520</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona en la que no se puede entrar </translation>
     </message>
     <message>
         <source>An area that shall not be entered such as a private area, a flower bed, a railway area etc.
@@ -8069,12 +8166,17 @@ The area shall always be delineated by a boundary line (at least 0.1 mm in width
 Minimum width: 0.25 mm (footprint 1 m).
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 520</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una zona en la que no se puede entrar, como una zona privada, un parterre, una zona ferroviaria, etc.
+En esta zona no se representará ningún elemento, salvo los más destacados, como las vías férreas, los grandes edificios o los árboles de gran tamaño. Los accesos a las carreteras se representarán con claridad.
+&lt;b&gt;Las zonas que no se introduzcan totalmente dentro de los edificios se representarán como parte del edificio&lt;/b&gt;.
+La zona estará siempre delimitada por una línea de contorno (de al menos 0,1 mm de anchura).
+Anchura mínima: 0,25 mm (huella de 1 m).
+Superficie mínima: 0,25 mm² (huella de 4 m²).</translation>
     </message>
     <message>
         <source>Area that shall not be entered, boundary line</source>
         <comment>Name of symbol 520.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zona en la que no se puede entrar, línea de demarcación</translation>
     </message>
     <message>
         <source>An area that shall not be entered such as a private area, a flower bed, a railway area etc.
@@ -8084,7 +8186,12 @@ The area shall always be delineated by a boundary line (at least 0.1 mm in width
 Minimum width: 0.25 mm (footprint 1 m).
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 520.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una zona en la que no se puede entrar, como una zona privada, un parterre, una zona ferroviaria, etc.
+En esta zona no se representará ningún elemento, salvo los más destacados, como las vías férreas, los grandes edificios o los árboles de gran tamaño. Los accesos a las carreteras se representarán con claridad.
+&lt;b&gt;Las zonas que no se introduzcan totalmente dentro de los edificios se representarán como parte del edificio&lt;/b&gt;.
+La zona estará siempre delimitada por una línea de contorno (de al menos 0,1 mm de anchura).
+Anchura mínima: 0,25 mm (huella de 1 m).
+Superficie mínima: 0,25 mm² (huella de 4 m²).</translation>
     </message>
     <message>
         <source>Building</source>
@@ -8098,7 +8205,11 @@ Buildings within symbol Area that shall not be entered (520) may just be represe
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un edificio es una construcción relativamente permanente que tiene un techo.
+Los edificios que se encuentren dentro del símbolo Área que no se introducirá (520) sólo podrán representarse de forma simplificada. Las áreas totalmente contenidas en un edificio se representarán como parte del mismo. Un edificio no debe ser introducido.
+&lt;b&gt;El espacio mínimo entre los edificios y otros elementos intransitables será de 0,40 mm. No se representarán los límites de los edificios en contacto.&lt;/b&gt;
+Anchura mínima: 0,5 mm.
+Superficie mínima: 0,25 mm² (huella de 4 m²).</translation>
     </message>
     <message>
         <source>Building, minimum size</source>
@@ -8112,12 +8223,16 @@ Buildings within symbol Area that shall not be entered (520) may just be represe
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un edificio es una construcción relativamente permanente que tiene un techo.
+Los edificios que se encuentren dentro del símbolo Área que no se introducirá (520) sólo podrán representarse de forma simplificada. Las áreas totalmente contenidas en un edificio se representarán como parte del mismo. Un edificio no debe ser introducido.
+&lt;b&gt;El espacio mínimo entre los edificios y otros elementos intransitables será de 0,40 mm. No se representarán los límites de los edificios en contacto.&lt;/b&gt;
+Anchura mínima: 0,5 mm.
+Superficie mínima: 0,25 mm² (huella de 4 m²).</translation>
     </message>
     <message>
         <source>Building, fill</source>
         <comment>Name of symbol 521.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Construcción, relleno</translation>
     </message>
     <message>
         <source>A building is a relatively permanent construction having a roof.
@@ -8126,12 +8241,16 @@ Buildings within symbol Area that shall not be entered (520) may just be represe
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un edificio es una construcción relativamente permanente que tiene un techo.
+Los edificios que se encuentren dentro del símbolo Área que no se introducirá (520) sólo podrán representarse de forma simplificada. Las áreas totalmente contenidas en un edificio se representarán como parte del mismo. Un edificio no debe ser introducido.
+&lt;b&gt;El espacio mínimo entre los edificios y otros elementos intransitables será de 0,40 mm. No se representarán los límites de los edificios en contacto.&lt;/b&gt;
+Anchura mínima: 0,5 mm.
+Superficie mínima: 0,25 mm² (huella de 4 m²).</translation>
     </message>
     <message>
         <source>Building, outline</source>
         <comment>Name of symbol 521.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Edificio, esquema</translation>
     </message>
     <message>
         <source>A building is a relatively permanent construction having a roof.
@@ -8140,7 +8259,11 @@ Buildings within symbol Area that shall not be entered (520) may just be represe
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un edificio es una construcción relativamente permanente que tiene un techo.
+Los edificios que se encuentren dentro del símbolo Área que no se introducirá (520) sólo podrán representarse de forma simplificada. Las áreas totalmente contenidas en un edificio se representarán como parte del mismo. Un edificio no debe ser introducido.
+&lt;b&gt;El espacio mínimo entre los edificios y otros elementos intransitables será de 0,40 mm. No se representarán los límites de los edificios en contacto.&lt;/b&gt;
+Anchura mínima: 0,5 mm.
+Superficie mínima: 0,25 mm² (huella de 4 m²).</translation>
     </message>
     <message>
         <source>Canopy</source>
@@ -8153,12 +8276,15 @@ Small passable parts of buildings which cannot easily be crossed by competitors,
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 522</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una marquesina es una construcción de un edificio (con techo), normalmente sostenida por pilares, postes o paredes, como pasajes, pasarelas, canchas, paradas de autobús, gasolineras o garajes.
+Las pequeñas partes transitables de los edificios que no puedan ser atravesadas fácilmente por los competidores, no se representarán en el mapa y se cerrarán durante la competición.
+Anchura mínima: 0,5 mm.
+Superficie mínima: 0,25 mm² (huella de 4 m²).</translation>
     </message>
     <message>
         <source>Canopy, fill</source>
         <comment>Name of symbol 522.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tejadillo, relleno</translation>
     </message>
     <message>
         <source>A canopy is a building construction (with a roof), normally supported by pillars, poles or walls, such as passages, gangways, courts, bus stops, gas stations or garages.
@@ -8166,12 +8292,15 @@ Small passable parts of buildings which cannot easily be crossed by competitors,
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 522.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una marquesina es una construcción de un edificio (con techo), normalmente sostenida por pilares, postes o paredes, como pasajes, pasarelas, canchas, paradas de autobús, gasolineras o garajes.
+Las pequeñas partes transitables de los edificios que no puedan ser atravesadas fácilmente por los competidores, no se representarán en el mapa y se cerrarán durante la competición.
+Anchura mínima: 0,5 mm.
+Superficie mínima: 0,25 mm² (huella de 4 m²).</translation>
     </message>
     <message>
         <source>Canopy, outline</source>
         <comment>Name of symbol 522.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tejadillo, contorno</translation>
     </message>
     <message>
         <source>A canopy is a building construction (with a roof), normally supported by pillars, poles or walls, such as passages, gangways, courts, bus stops, gas stations or garages.
@@ -8179,18 +8308,22 @@ Small passable parts of buildings which cannot easily be crossed by competitors,
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 522.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una marquesina es una construcción de un edificio (con techo), normalmente sostenida por pilares, postes o paredes, como pasajes, pasarelas, canchas, paradas de autobús, gasolineras o garajes.
+Las pequeñas partes transitables de los edificios que no puedan ser atravesadas fácilmente por los competidores, no se representarán en el mapa y se cerrarán durante la competición.
+Anchura mínima: 0,5 mm.
+Superficie mínima: 0,25 mm² (huella de 4 m²).</translation>
     </message>
     <message>
         <source>Pillar</source>
         <comment>Name of symbol 522.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pilar</translation>
     </message>
     <message>
         <source>A pillar is an upright shaft or structure of stone, brick or other material, relatively slender in proportion to its height and any shape in section, used as a building support.
 Pillars smaller than 1 m × 1 m are generally not represented.</source>
         <comment>Description of symbol 522.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un pilar es un fuste o estructura vertical de piedra, ladrillo u otro material, relativamente delgado en proporción a su altura y de cualquier forma en sección, utilizado como soporte de un edificio.
+Los pilares de menos de 1 m × 1 m no suelen estar representados.</translation>
     </message>
     <message>
         <source>High tower</source>
@@ -8202,7 +8335,9 @@ Pillars smaller than 1 m × 1 m are generally not represented.</source>
 Very large towers shall be represented in plan shape with the symbol Building (521).
 Footprint: 8.4 m in diameter.</source>
         <comment>Description of symbol 524</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una torre alta o un gran pilón.
+Las torres muy grandes se representarán en planta con el símbolo Edificio (521).
+Huella: 8,4 m de diámetro.</translation>
     </message>
     <message>
         <source>Small tower</source>
@@ -8213,19 +8348,22 @@ Footprint: 8.4 m in diameter.</source>
         <source>An obvious small tower, platform or seat.
 Footprint: 6 m x 6 m.</source>
         <comment>Description of symbol 525</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una pequeña torre, plataforma o asiento evidente.
+Huella: 6 m x 6 m.</translation>
     </message>
     <message>
         <source>Cairn, memorial, small monument or boundary stone</source>
         <comment>Name of symbol 526</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mojón, monumento, pequeño monumento o mojón</translation>
     </message>
     <message>
         <source>Cairn, memorial, small monument or boundary stone that is obvious.
 Large massive monuments shall be represented in plan shape with the symbol Building (521).
 Footprint: 4 m in diameter.</source>
         <comment>Description of symbol 526</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mojón, monumento conmemorativo, pequeño monumento o mojón que sea evidente.
+Los grandes monumentos macizos se representarán en planta con el símbolo Edificio (521).
+Huella: 4 m de diámetro.</translation>
     </message>
     <message>
         <source>Fodder rack</source>
@@ -8236,24 +8374,27 @@ Footprint: 4 m in diameter.</source>
         <source>A fodder rack, which is free standing or attached to a tree.
 Footprint: 6 m x 6 m.</source>
         <comment>Description of symbol 527</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un estante de forraje, que se encuentra libre o unido a un árbol.
+Huella: 6 m x 6 m.</translation>
     </message>
     <message>
         <source> Prominent line feature</source>
         <comment>Name of symbol 528</comment>
-        <translation type="unfinished"></translation>
+        <translation> Característica de la línea prominente</translation>
     </message>
     <message>
         <source>A prominent man-made line feature. For example, a low pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track that is clearly visible.
 The definition of the symbol must be given on the map.
 Minimum length: 2.2 mm (footprint 8.8 m).</source>
         <comment>Description of symbol 528</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una característica de línea prominente hecha por el hombre. Por ejemplo, una tubería baja (de gas, agua, aceite, calefacción, etc.) o una pista de bobsleigh / skeleton que sea claramente visible.
+La definición del símbolo debe figurar en el mapa.
+Longitud mínima: 2,2 mm (huella de 8,8 m).</translation>
     </message>
     <message>
         <source> Prominent impassable line feature</source>
         <comment>Name of symbol 529</comment>
-        <translation type="unfinished"></translation>
+        <translation> Característica de línea intransitable prominente</translation>
     </message>
     <message>
         <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track.
@@ -8261,7 +8402,10 @@ The definition of the symbol must be given on the map.
 A prominent impassable line feature shall not be crossed.
 Minimum length: 3 mm (footprint 12 m).</source>
         <comment>Description of symbol 529</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una característica de línea intransitable hecha por el hombre. Por ejemplo, una tubería alta (de gas, agua, aceite, calefacción, etc.) o una pista de bobsleigh / skeleton.
+La definición del símbolo debe figurar en el mapa.
+No se debe cruzar una característica de línea intransitable prominente.
+Longitud mínima: 3 mm (huella de 12 m).</translation>
     </message>
     <message>
         <source>Prominent man-made feature – ring</source>
@@ -8273,7 +8417,9 @@ Minimum length: 3 mm (footprint 12 m).</source>
 The definition of the symbol must be given on the map.
 Footprint: 4 m in diameter.</source>
         <comment>Description of symbol 530</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un elemento artificial que es significativo o prominente.
+La definición del símbolo debe figurar en el mapa.
+Huella: 4 m de diámetro.</translation>
     </message>
     <message>
         <source>Prominent man-made feature – x</source>
@@ -8285,55 +8431,65 @@ Footprint: 4 m in diameter.</source>
 The definition of the symbol must be given on the map.
 Footprint: 4.8 m x 4.8 m.</source>
         <comment>Description of symbol 531</comment>
-        <translation type="unfinished"></translation>
+        <translation>La ubicación es en el centro de gravedad del símbolo.
+La definición del símbolo debe figurar en el mapa.
+Huella: 4,8 m x 4,8 m.</translation>
     </message>
     <message>
         <source>Stairway, footprint: 1.6 m</source>
         <comment>Name of symbol 532.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Escalera, huella: 1.6 m</translation>
     </message>
     <message>
         <source>Steps of a stairway shall be represented in a generalized manner.
 Minimum length: 3 (graphical) steps.
 Minimum width: 0.4 mm (IM).</source>
         <comment>Description of symbol 532.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Los peldaños de una escalera se representarán de forma generalizada.
+Longitud mínima: 3 peldaños (gráficos).
+Anchura mínima: 0,4 mm (IM).</translation>
     </message>
     <message>
         <source>Stairway, footprint: 2 m</source>
         <comment>Name of symbol 532.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Escalera, huella: 2 m</translation>
     </message>
     <message>
         <source>Steps of a stairway shall be represented in a generalized manner.
 Minimum length: 3 (graphical) steps.
 Minimum width: 0.4 mm (IM).</source>
         <comment>Description of symbol 532.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Los peldaños de una escalera se representarán de forma generalizada.
+Longitud mínima: 3 peldaños (gráficos).
+Anchura mínima: 0,4 mm (IM).</translation>
     </message>
     <message>
         <source>Stairway, footprint: 3 m</source>
         <comment>Name of symbol 532.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Escalera, huella: 3 m</translation>
     </message>
     <message>
         <source>Steps of a stairway shall be represented in a generalized manner.
 Minimum length: 3 (graphical) steps.
 Minimum width: 0.4 mm (IM).</source>
         <comment>Description of symbol 532.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Los peldaños de una escalera se representarán de forma generalizada.
+Longitud mínima: 3 peldaños (gráficos).
+Anchura mínima: 0,4 mm (IM).</translation>
     </message>
     <message>
         <source>Stairway, footprint: 4 m</source>
         <comment>Name of symbol 532.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Escalera, huella: 4 m</translation>
     </message>
     <message>
         <source>Steps of a stairway shall be represented in a generalized manner.
 Minimum length: 3 (graphical) steps.
 Minimum width: 0.4 mm (IM).</source>
         <comment>Description of symbol 532.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Los peldaños de una escalera se representarán de forma generalizada.
+Longitud mínima: 3 peldaños (gráficos).
+Anchura mínima: 0,4 mm (IM).</translation>
     </message>
     <message>
         <source>North lines pattern</source>
@@ -8344,7 +8500,8 @@ Minimum width: 0.4 mm (IM).</source>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Las líneas del norte magnético son líneas colocadas en el mapa que apuntan al norte magnético. Su espaciado será de 30 mm y representan 120 m sobre el terreno.
+Las líneas del norte pueden romperse cuando oculten pequeños elementos como peñascos, lomas, acantilados, cruces de arroyos, extremos de caminos, etc.</translation>
     </message>
     <message>
         <source>Magnetic north line</source>
@@ -8355,19 +8512,22 @@ North lines may be broken where they obscure small features such as boulders, kn
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601</comment>
-        <translation type="unfinished"></translation>
+        <translation>Las líneas del norte magnético son líneas colocadas en el mapa que apuntan al norte magnético. Su espaciado será de 30 mm y representan 120 m sobre el terreno.
+Las líneas del norte pueden romperse cuando oculten pequeños elementos como peñascos, lomas, acantilados, cruces de arroyos, extremos de caminos, etc.</translation>
     </message>
     <message>
         <source>Magnetic north line, black, with arrow</source>
         <comment>Name of symbol 601.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Línea norte magnética, negra, con flecha</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.
 &lt;b&gt;Note: this is a non-standard addition to the symbol set.&lt;/b&gt;</source>
         <comment>Description of symbol 601.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Las líneas del norte magnético son líneas colocadas en el mapa que apuntan al norte magnético. Su espaciado será de 30 mm y representan 120 m sobre el terreno.
+Las líneas del norte pueden romperse cuando ocultan pequeños elementos como peñascos, lomas, acantilados, cruces de arroyos, finales de caminos, etc.
+&lt;b&gt;Nota: se trata de una adición no estándar al conjunto de símbolos&lt;/b&gt;.</translation>
     </message>
     <message>
         <source>North lines pattern, blue</source>
@@ -8378,7 +8538,8 @@ North lines may be broken where they obscure small features such as boulders, kn
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Las líneas del norte magnético son líneas colocadas en el mapa que apuntan al norte magnético. Su espaciado será de 30 mm y representan 120 m sobre el terreno.
+Las líneas del norte pueden romperse cuando oculten pequeños elementos como peñascos, lomas, acantilados, cruces de arroyos, extremos de caminos, etc.</translation>
     </message>
     <message>
         <source>Magnetic north line, blue</source>
@@ -8389,19 +8550,22 @@ North lines may be broken where they obscure small features such as boulders, kn
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Las líneas del norte magnético son líneas colocadas en el mapa que apuntan al norte magnético. Su espaciado será de 30 mm y representan 120 m sobre el terreno.
+Las líneas del norte pueden romperse cuando oculten pequeños elementos como peñascos, lomas, acantilados, cruces de arroyos, extremos de caminos, etc.</translation>
     </message>
     <message>
         <source>Magnetic north line, blue, with arrow</source>
         <comment>Name of symbol 601.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Línea norte magnética, azul, con flecha</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.
 &lt;b&gt;Note: this is a non-standard addition to the symbol set.&lt;/b&gt;</source>
         <comment>Description of symbol 601.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Las líneas del norte magnético son líneas colocadas en el mapa que apuntan al norte magnético. Su espaciado será de 30 mm y representan 120 m sobre el terreno.
+Las líneas del norte pueden romperse cuando ocultan pequeños elementos como peñascos, lomas, acantilados, cruces de arroyos, finales de caminos, etc.
+&lt;b&gt;Nota: se trata de una adición no estándar al conjunto de símbolos&lt;/b&gt;.</translation>
     </message>
     <message>
         <source>Start</source>
@@ -8412,12 +8576,13 @@ North lines may be broken where they obscure small features such as boulders, kn
         <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control.
 The centre of the triangle shows the precise position of the start point.</source>
         <comment>Description of symbol 701</comment>
-        <translation type="unfinished"></translation>
+        <translation>El punto de salida o de emisión del mapa (si no está en la salida) se muestra con un triángulo equilátero que apunta en la dirección del primer control.
+El centro del triángulo muestra la posición precisa del punto de salida.</translation>
     </message>
     <message>
         <source> Map issue point</source>
         <comment>Name of symbol 702</comment>
-        <translation type="unfinished"></translation>
+        <translation> Punto de emisión del mapa</translation>
     </message>
     <message>
         <source>If there is a marked route to the start point, the map issue point is marked using this symbol.</source>
@@ -8432,7 +8597,7 @@ The centre of the triangle shows the precise position of the start point.</sourc
     <message>
         <source>The control points are shown with circles (footprint 24 m). The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 703</comment>
-        <translation type="unfinished"></translation>
+        <translation>Los puntos de control se muestran con círculos (huella de 24 m). El centro del círculo muestra la posición precisa del elemento. Deben omitirse las secciones de los círculos para dejar a la vista los detalles importantes.</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -8443,18 +8608,20 @@ The centre of the triangle shows the precise position of the start point.</sourc
         <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail.
 An option for heavily building filled map is the possibility to have a white border with 0.1 or 0.15 mm in width.</source>
         <comment>Description of symbol 704</comment>
-        <translation type="unfinished"></translation>
+        <translation>El número del control se coloca cerca del círculo del punto de control de manera que no oculte detalles importantes.
+Una opción para el mapa con mucho relleno es la posibilidad de tener un borde blanco de 0,1 o 0,15 mm de ancho.</translation>
     </message>
     <message>
         <source>Control number, with white border</source>
         <comment>Name of symbol 704.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Número de control, con borde blanco</translation>
     </message>
     <message>
         <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail.
 An option for heavily building filled map is the possibility to have a white border with 0.1 or 0.15 mm in width.</source>
         <comment>Description of symbol 704.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>El número del control se coloca cerca del círculo del punto de control de manera que no oculte detalles importantes.
+Una opción para el mapa con mucho relleno es la posibilidad de tener un borde blanco de 0,1 o 0,15 mm de ancho.</translation>
     </message>
     <message>
         <source>Course line</source>
@@ -8464,7 +8631,7 @@ An option for heavily building filled map is the possibility to have a white bor
     <message>
         <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 705</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cuando los controles deben visitarse en orden, la salida, los puntos de control y la llegada se unen mediante líneas rectas. Deben omitirse los tramos de líneas para dejar a la vista los detalles importantes.</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -8474,7 +8641,7 @@ An option for heavily building filled map is the possibility to have a white bor
     <message>
         <source>The finish is shown by two concentric circles.</source>
         <comment>Description of symbol 706</comment>
-        <translation type="unfinished"></translation>
+        <translation>El acabado se muestra mediante dos círculos concéntricos.</translation>
     </message>
     <message>
         <source>Marked route</source>
@@ -8484,7 +8651,7 @@ An option for heavily building filled map is the possibility to have a white bor
     <message>
         <source>A marked route is shown on the map with a dashed line.</source>
         <comment>Description of symbol 707</comment>
-        <translation type="unfinished"></translation>
+        <translation>En el mapa se muestra una ruta marcada con una línea discontinua.</translation>
     </message>
     <message>
         <source>Out-of-bounds boundary</source>
@@ -8494,7 +8661,7 @@ An option for heavily building filled map is the possibility to have a white bor
     <message>
         <source>An out-of-bounds boundary shall not be crossed. It shall be used for temporary uncrossable boundaries used for the course setting.</source>
         <comment>Description of symbol 708</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un límite fuera de límites no debe ser cruzado. Se utilizará para los límites temporales no cruzables utilizados para la configuración del campo.</translation>
     </message>
     <message>
         <source>Out-of-bounds area</source>
@@ -8510,7 +8677,13 @@ An out-of-bounds area shall not be entered.
 Minimum width: 2 mm.
 Minimum area: 4 mm² (footprint 64 m²).</source>
         <comment>Description of symbol 709</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un área fuera de límites. Se puede dibujar una línea de delimitación si no hay un límite natural de la siguiente manera
+- una línea continua indica que el límite está marcado continuamente (cintas, etc.) en el terreno,
+- una línea discontinua indica que el marcado en el terreno es intermitente,
+- ninguna línea indica que no hay marcas en el terreno.
+No se introducirá una zona fuera de límites.
+Anchura mínima: 2 mm.
+Superficie mínima: 4 mm² (huella de 64 m²).</translation>
     </message>
     <message>
         <source>Out-of-bounds area, solid boundary</source>
@@ -8520,7 +8693,7 @@ Minimum area: 4 mm² (footprint 64 m²).</source>
     <message>
         <source>A solid line indicates that the boundary is marked continuously (tapeetc.) in the terrain.</source>
         <comment>Description of symbol 709.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una línea sólida indica que el límite está marcado de forma continua (tapeetc.) en el terreno.</translation>
     </message>
     <message>
         <source>Out-of-bounds area, dashed boundary</source>
@@ -8530,7 +8703,7 @@ Minimum area: 4 mm² (footprint 64 m²).</source>
     <message>
         <source>A dashed line indicates intermittent marking in the terrain.</source>
         <comment>Description of symbol 709.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>La línea discontinua indica una marca intermitente en el terreno.</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -8541,42 +8714,48 @@ Minimum area: 4 mm² (footprint 64 m²).</source>
         <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.
 &lt;span style=&quot;color: red&quot;&gt;If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
         <comment>Description of symbol 710.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un punto de cruce a través de un muro o una valla, o a través de una carretera o una vía férrea o a través de un túnel o una zona fuera de los límites se dibuja en el mapa con dos líneas que se curvan hacia fuera.
+&lt;span style=&quot;color: red&quot;&gt;Si en una competición se van a utilizar pasos subterráneos o túneles, etc., se destacarán con el símbolo Punto de cruce (710.1) o Sección de cruce (710.2).&lt;/span&gt;</translation>
     </message>
     <message>
         <source>Crossing section, one side</source>
         <comment>Name of symbol 710.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sección de cruce, un lado</translation>
     </message>
     <message>
         <source>A crossing section through or over a building, wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map as a linear object, according to the plan shape.
 &lt;span style=&quot;color: red&quot;&gt;If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
         <comment>Description of symbol 710.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un tramo de cruce que atraviese o sobrepase un edificio, muro o valla, o que atraviese una carretera o una vía férrea, o que atraviese un túnel o una zona fuera de los límites, se dibuja en el mapa como un objeto lineal, de acuerdo con la forma del plano.
+&lt;span style=&quot;color: red&quot;&gt;Si se van a utilizar pasos subterráneos o túneles, etc. en una competición, se destacarán con el símbolo Punto de cruce (710.1) o Tramo de cruce (710.2).&lt;/span&gt;</translation>
     </message>
     <message>
         <source> Temporary construction or closed area</source>
         <comment>Name of symbol 714</comment>
-        <translation type="unfinished"></translation>
+        <translation> Construcción temporal o zona cerrada</translation>
     </message>
     <message>
         <source>Obvious temporary constructions like platforms for spectators and speaker, closed area for spectators, outside restaurant areas, etc. shall be represented in plan shape. A Temporary construction or closed area shall not be entered.
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 714</comment>
-        <translation type="unfinished"></translation>
+        <translation>Las construcciones temporales evidentes, como las plataformas para los espectadores y los oradores, la zona cerrada para los espectadores, las zonas de restauración exteriores, etc., deberán representarse en forma de plano. No se introducirá una construcción temporal o una zona cerrada.
+Anchura mínima: 0,5 mm.
+Superficie mínima: 0,25 mm² (huella de 4 m²).</translation>
     </message>
     <message>
         <source> Temporary construction or closed area, minimum size</source>
         <comment>Name of symbol 714.1</comment>
-        <translation type="unfinished"></translation>
+        <translation> Zona de construcción temporal o cerrada, tamaño mínimo</translation>
     </message>
     <message>
         <source>Obvious temporary constructions like platforms for spectators and speaker, closed area for spectators, outside restaurant areas, etc. shall be represented in plan shape. A Temporary construction or closed area shall not be entered.
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 714.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Las construcciones temporales evidentes, como las plataformas para los espectadores y los oradores, la zona cerrada para los espectadores, las zonas de restauración exteriores, etc., deberán representarse en forma de plano. No se introducirá una construcción temporal o una zona cerrada.
+Anchura mínima: 0,5 mm.
+Superficie mínima: 0,25 mm² (huella de 4 m²).</translation>
     </message>
     <message>
         <source>Simple Orienteering Course</source>
