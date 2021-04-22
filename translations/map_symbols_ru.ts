@@ -6,12 +6,12 @@
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Фиолетовый для наложения курса</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Белый для наложения курса</translation>
     </message>
     <message>
         <source>Black 100%</source>
@@ -41,7 +41,7 @@
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Фиолетовый для символов трека</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
@@ -66,7 +66,7 @@
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Черный под верхним коричневым 50%</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
@@ -76,7 +76,7 @@
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Черный под нижним коричневым 50%</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
