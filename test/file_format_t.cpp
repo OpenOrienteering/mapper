@@ -63,7 +63,6 @@
 #include "core/map_printer.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
-#include "core/symbols/area_symbol.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "fileformats/file_format.h"
@@ -314,15 +313,6 @@ namespace
 	}
 	
 	
-	void fuzzyCompareSymbol(const AreaSymbol& actual, const AreaSymbol& expected)
-	{
-		auto pattern_rotable = false;
-		for (auto i = 0; i < expected.getNumFillPatterns(); ++i)
-			pattern_rotable |= expected.getFillPattern(i).rotatable();
-		for (auto i = 0; i < actual.getNumFillPatterns(); ++i)
-			COMPARE_SYMBOL_PROPERTY(actual.getFillPattern(i).rotatable(), pattern_rotable, expected);
-	}
-	
 	void fuzzyCompareSymbol(const Symbol& actual, const Symbol& expected, const QByteArray& /*format_id*/)
 	{
 		COMPARE_SYMBOL_PROPERTY(actual.isHidden(), expected.isHidden(), expected);
@@ -333,19 +323,6 @@ namespace
 #ifdef EXPORT_PRESERVES_DOMINANT_COLOR
 		COMPARE_SYMBOL_PROPERTY(actual.guessDominantColor()->getName(), expected.guessDominantColor()->getName(), expected);
 #endif
-		if (actual.getType() != expected.getType())
-			return;  // The following tests assume the same type.
-		
-		switch (actual.getType())
-		{
-		case Symbol::Area:
-			fuzzyCompareSymbol(static_cast<AreaSymbol const&>(actual), static_cast<AreaSymbol const&>(expected));
-			break;
-			
-		default:
-			;  /// \todo Extend fuzzy testing
-		}
-		
 	}
 	
 	void fuzzyMatchSymbol(const Map& map, const QByteArray& format_id, const Symbol* expected)
