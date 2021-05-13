@@ -131,6 +131,7 @@ GeoreferencingDialog::GeoreferencingDialog(
  , tool_active(false)
  , declination_query_in_progress(false)
  , grivation_locked(initial_georef->getState() != Georeferencing::Geospatial)
+ , declination_setting(initial_georef->getPreciseDeclination())
  , scale_factor_locked(grivation_locked)
 {
 	setWindowTitle(tr("Map Georeferencing"));
@@ -505,6 +506,7 @@ void GeoreferencingDialog::reset()
 {
 	scale_factor_locked = grivation_locked = ( initial_georef->getState() != Georeferencing::Geospatial );
 	*georef.data() = *initial_georef;
+	declination_setting = georef->getPreciseDeclination();
 	reset_button->setEnabled(false);
 }
 
@@ -517,7 +519,7 @@ void GeoreferencingDialog::accept()
 	
 	if (grivation_locked)
 	{
-		georef->updateGrivation();
+		georef->setDeclination(declination_setting);
 	}
 	else if (!qIsNull(declination_change_degrees)
 	         && (map->getNumObjects() > 0 || map->getNumTemplates() > 0))
@@ -573,7 +575,7 @@ void GeoreferencingDialog::accept()
 			auto const& map_georef = map->getGeoreferencing();
 			Georeferencing local_georef { map_georef };
 			local_georef.setLocalState();
-			local_georef.setDeclination(map_georef.getDeclination());
+			local_georef.setDeclination(map_georef.getPreciseDeclination());
 			local_georef.setAuxiliaryScaleFactor(map_georef.getAuxiliaryScaleFactor());
 			map->setGeoreferencing(local_georef);
 		}
@@ -656,7 +658,11 @@ void GeoreferencingDialog::crsEdited()
 	case Georeferencing::Local:
 		// Local
 		georef_copy.setLocalState();
-		grivation_locked = true;
+		if (!grivation_locked)
+		{
+			grivation_locked = true;
+			declination_setting = georef_copy.getPreciseDeclination();
+		}
 		updateGrivation();
 		scale_factor_locked = true;
 		updateCombinedFactor();
@@ -666,7 +672,7 @@ void GeoreferencingDialog::crsEdited()
 		Q_ASSERT(crs_template);
 		if (spec.isEmpty())
 			spec = QStringLiteral(" ");  // intentionally non-empty: enforce non-local state.
-		georef_copy.setProjectedCRS(crs_template->id(), spec, crs_selector->parameters());
+		georef_copy.setProjectedCRS(crs_template->id(), spec, crs_selector->parameters(), !grivation_locked);
 		Q_ASSERT(georef_copy.getState() != Georeferencing::Local);
 		if (keep_geographic_radio->isChecked())
 			georef_copy.setGeographicRefPoint(georef->getGeographicRefPoint(), !grivation_locked, !scale_factor_locked);
@@ -742,7 +748,7 @@ void GeoreferencingDialog::keepCoordsChanged()
 		{
 			grivation_locked = false;
 			updateGrivation();
-			georef->updateGrivation();
+			georef->setDeclination(declination_setting);
 		}
 		if (scale_factor_locked)
 		{

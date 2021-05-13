@@ -605,24 +605,6 @@ public:
 	 * value.
 	 */
 	void initAuxiliaryScaleFactor();
-	
-	/**
-	 * Updates the grivation. 
-	 * 
-	 * The new value is calculated from the declination and the convergence.
-	 * For a local georeferencing, the convergence is zero, and grivation
-	 * is set to the same value as declination.
-	 */
-	void updateGrivation();
-	
-	/**
-	 * Initializes the declination.
-	 * 
-	 * The new value is calculated from the grivation and the convergence.
-	 * For a local georeferencing, the convergence is zero, and declination
-	 * is set to the same value as grivation.
-	 */
-	void initDeclination();
 
 	/**
 	 * Updates convergence and grid scale factor.

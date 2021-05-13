@@ -342,13 +342,13 @@ void GeoreferencingTest::testGrivationAffected()
 	// Change CRS from UTM 32 to EPSG:3857.
 	// Convergence of the latter is 0, so the change in grivation should equal
 	// the present convergence.
-	georef.setProjectedCRS(QString::fromLatin1(QTest::currentDataTag()), epsg3857_spec);
+	auto const declination_setting = georef.getPreciseDeclination();
+	georef.setProjectedCRS(QString::fromLatin1(QTest::currentDataTag()), epsg3857_spec, std::vector<QString>(), false);
 	georef.setGeographicRefPoint(latlon, true, false); // Fix up scale factor, not grivation.
-	georef.updateGrivation(); // Fix up grivation.
+	georef.setDeclination(declination_setting); // Fix up grivation.
 	QCOMPARE(georef.getState(), Georeferencing::Geospatial);
 	QCOMPARE(georef.getDeclination(), 2.42);
 	auto const expected_grivation2 = Georeferencing::roundGrivation(original_grivation + convergence2);
-	QEXPECT_FAIL("", "Unsupported: Precise effect on grivation when CRS changes", Continue);
 	QCOMPARE(georef.getGrivation(), expected_grivation2);
 }
 

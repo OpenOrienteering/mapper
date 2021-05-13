@@ -1091,16 +1091,6 @@ void Georeferencing::initAuxiliaryScaleFactor()
 	setCombinedScaleFactor(combined_scale_factor);
 }
 
-void Georeferencing::updateGrivation()
-{
-	setDeclination(declination);
-}
-
-void Georeferencing::initDeclination()
-{
-	setGrivation(grivation);
-}
-
 void Georeferencing::setTransformationDirectly(const QTransform& transform)
 {
 	if (transform != to_projected)

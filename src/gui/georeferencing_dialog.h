@@ -263,6 +263,7 @@ private:
 	bool tool_active;
 	bool declination_query_in_progress;
 	bool grivation_locked;
+	double declination_setting;
 	bool scale_factor_locked;
 	
 	/* GUI elements */
