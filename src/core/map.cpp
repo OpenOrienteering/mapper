@@ -581,7 +581,7 @@ void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georefe
 	if (adjust_declination)
 	{
 		auto rotation_degrees = qRadiansToDegrees(rotation);
-		georeferencing->setDeclination(georeferencing->getDeclination() + rotation_degrees);
+		georeferencing->setDeclination(georeferencing->getPreciseDeclination() + rotation_degrees);
 	}
 	if (adjust_templates)
 	{
