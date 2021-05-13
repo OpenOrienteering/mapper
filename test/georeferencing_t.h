@@ -55,6 +55,11 @@ private slots:
 	void testGridScaleFactor_data();
 	
 	/**
+	 * Tests how grivation is affected by CRS and reference point changes.
+	 */
+	void testGrivationAffected();
+	
+	/**
 	 * Tests whether Georeferencing supports particular projected CRS.
 	 */
 	void testCRS();
