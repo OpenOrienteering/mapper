@@ -930,9 +930,10 @@ void Georeferencing::setProjectedRefPoint(const QPointF& point, bool update_griv
 			if (ok && new_geo_ref_point != geographic_ref_point)
 			{
 				geographic_ref_point = new_geo_ref_point;
+				const double declination_setting = getPreciseDeclination();
 				updateGridCompensation();
 				if (update_grivation)
-					updateGrivation();
+					setDeclination(declination_setting);
 				if (update_scale_factor)
 					updateCombinedScaleFactor();
 				emit projectionChanged();
@@ -1046,9 +1047,10 @@ void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation
 		if (ok && new_projected_ref != projected_ref_point)
 		{
 			projected_ref_point = new_projected_ref;
+			const double declination_setting = getPreciseDeclination();
 			updateGridCompensation();
 			if (update_grivation)
-				updateGrivation();
+				setDeclination(declination_setting);
 			if (update_scale_factor)
 				updateCombinedScaleFactor();
 			updateTransformation();
@@ -1165,9 +1167,10 @@ bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vecto
 		}
 		if (getState() == Geospatial)
 		{
+			auto const declination_setting = getPreciseDeclination();
 			updateGridCompensation();
 			if (update_grivation)
-				updateGrivation();
+				setDeclination(declination_setting);
 		}
 		
 		emit projectionChanged();

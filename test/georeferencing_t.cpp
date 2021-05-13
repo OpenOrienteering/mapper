@@ -324,7 +324,6 @@ void GeoreferencingTest::testGrivationAffected()
 	QCOMPARE(georef.getState(), Georeferencing::Geospatial);
 	QCOMPARE(georef.getDeclination(), 2.42);
 	auto const expected_grivation = Georeferencing::roundGrivation(original_grivation + convergence);
-	QEXPECT_FAIL("", "Unsupported: Precise effect on grivation when CRS changes", Continue);
 	QCOMPARE(georef.getGrivation(), expected_grivation);
 
 	// Now do the same, as in GeoreferencingDialog when grivation is locked.
