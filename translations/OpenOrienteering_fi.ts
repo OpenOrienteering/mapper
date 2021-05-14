@@ -3124,12 +3124,12 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="248"/>
         <source>When you select the &quot;OK&quot; button, the editor will ignore touch input.</source>
-        <translation type="unfinished"></translation>
+        <translation>Painamalla &quot;OK&quot; näppäintä, kosketusnäyttö ei ole käytössä kartan muokkaukseen.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="253"/>
         <source>Continue with touch input</source>
-        <translation type="unfinished"></translation>
+        <translation>Jatka käyttäen kosketusnäyttöä</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="381"/>
