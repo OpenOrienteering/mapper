@@ -69,6 +69,7 @@
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
+#include "fileformats/iof_course_export.h"
 #include "fileformats/kml_course_export.h"
 #include "fileformats/ocd_file_export.h"
 #include "fileformats/ocd_file_format.h"
@@ -1048,6 +1049,40 @@ void FileFormatTest::kmlCourseExportTest()
 		QCOMPARE(int(center.longitude()), 9);
 	}
 #endif
+}
+
+
+void FileFormatTest::iofCourseExportTest()
+{
+	QString const map_filepath = QStringLiteral("testdata:/export/single-line.xmap");
+	
+	Map map;
+	QVERIFY(map.loadFrom(map_filepath));
+	
+	SimpleCourseExport simple_export{map};
+	QVERIFY(simple_export.canExport());
+	
+	simple_export.setProperties(map, QStringLiteral("Test event"), QStringLiteral("Test course"), 101);
+	
+	IofCourseExport exporter{{}, &map, nullptr};
+	
+	QBuffer exported;
+	exporter.setDevice(&exported);
+	QVERIFY(exporter.doExport());
+	QVERIFY(!exported.data().isEmpty());
+	
+	QString const expected_filepath = QStringLiteral("testdata:/export/iof-3.0-course.xml");
+	QFile expected_file = {expected_filepath};
+	expected_file.open(QIODevice::ReadOnly);
+	auto const expected_data = expected_file.readAll();
+	QVERIFY(!expected_data.isEmpty());
+	
+	// Ignore creator and timestamp
+	auto stable_exported = exported.data().indexOf("<Event");
+	QVERIFY(stable_exported > 0);
+	auto stable_expected = exported.data().indexOf("<Event");
+	QVERIFY(stable_expected > 0);
+	QCOMPARE(exported.data().mid(stable_exported), expected_data.mid(stable_expected));
 }
 
 
