@@ -1073,7 +1073,7 @@ void FileFormatTest::iofCourseExportTest()
 	
 	QString const expected_filepath = QStringLiteral("testdata:/export/iof-3.0-course.xml");
 	QFile expected_file = {expected_filepath};
-	expected_file.open(QIODevice::ReadOnly);
+	expected_file.open(QIODevice::ReadOnly | QIODevice::Text);
 	auto const expected_data = expected_file.readAll();
 	QVERIFY(!expected_data.isEmpty());
 	
