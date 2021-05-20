@@ -1235,12 +1235,16 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	
 	// TODO: taper fields (tmode and tlast)
 	
-	if (!double_line && !framing_line)
+	auto* secondary_symbol = importSecondarySymbol(ocd_symbol.common, ocd_symbol.begin_of_elements);
+	
+	if (!double_line && !framing_line && !secondary_symbol)
 		return main_line;
 	
 	auto combined_line = new CombinedSymbol();
 	setupBaseSymbol(combined_line, ocd_symbol.base);
 	mergeLineSymbol(combined_line, main_line, framing_line, double_line);
+	if (secondary_symbol)
+		mergeSecondarySymbol(combined_line, main_line, secondary_symbol);
 	return combined_line;
 }
 
@@ -1523,6 +1527,38 @@ void OcdFileImport::setupLineSymbolPointSymbols(OcdFileImport::OcdImportedLineSy
 			addSymbolWarning(line_symbol, tr("Suppressing dash symbol at line ends."));
 		}
 	}
+}
+
+PointSymbol* OcdFileImport::importSecondarySymbol(const Ocd::LineSymbolCommonV8& attributes, const Ocd::PointSymbolElementV8* elements)
+{
+	if (attributes.secondary_data_size == 0)
+		return nullptr;
+	
+	if (attributes.primary_data_size == 0)
+		return nullptr;  // Secondary symbol handled as primary one in setupLineSymbolPointSymbols
+	
+	auto* symbol = new OcdImportedPointSymbol();
+	const Ocd::OcdPoint32* coords = reinterpret_cast<const Ocd::OcdPoint32*>(elements) + attributes.primary_data_size;
+	setupPointSymbolPattern(symbol, attributes.secondary_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords));
+	return symbol;
+}
+
+void OcdFileImport::mergeSecondarySymbol(CombinedSymbol* full_line, LineSymbol* main_line, PointSymbol* secondary_symbol)
+{
+	auto* secondary_line = new OcdImportedLineSymbol();
+	for (auto i = 0u; i < full_line->number_components; ++i)
+		secondary_line->setNumberComponent(i, full_line->getNumberComponent(i));
+	secondary_line->setName(full_line->getName() + tr(" - secondary line"));
+	secondary_line->setMidSymbol(secondary_symbol);
+	secondary_line->setShowAtLeastOneSymbol(false);
+	secondary_line->setMinimumMidSymbolCount(0);
+	secondary_line->setMidSymbolsPerSpot(1);
+	secondary_line->setMidSymbolDistance(main_line->getMidSymbolDistance());
+	secondary_line->setSegmentLength(main_line->getSegmentLength());
+	secondary_line->setEndLength(main_line->getEndLength() + main_line->getSegmentLength() / 2);
+	auto const n = full_line->getNumParts();
+	full_line->setNumParts(n + 1);
+	full_line->setPart(n, secondary_line, true);
 }
 
 void OcdFileImport::mergeLineSymbol(CombinedSymbol* full_line, LineSymbol* main_line, LineSymbol* framing_line, LineSymbol* double_line)
