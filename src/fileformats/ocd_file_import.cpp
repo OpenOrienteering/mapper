@@ -1468,10 +1468,10 @@ void OcdFileImport::setupLineSymbolPointSymbols(OcdFileImport::OcdImportedLineSy
 {
 	const Ocd::OcdPoint32* coords = reinterpret_cast<const Ocd::OcdPoint32*>(elements);
 	
-	// Special case main_gap == 0: swapped in Mapper
-	auto gaps_swapped = attributes.sec_gap && !attributes.main_gap && attributes.main_length;
 	if (attributes.primary_data_size > 0)
 	{
+		// Special case main_gap == 0: swapped in Mapper
+		auto const gaps_swapped = attributes.sec_gap && !attributes.main_gap && attributes.main_length;
 		line_symbol->mid_symbol_placement = gaps_swapped ? LineSymbol::CenterOfDashGroup : LineSymbol::CenterOfGap;
 		line_symbol->mid_symbols_per_spot = attributes.num_prim_sym;
 		line_symbol->mid_symbol_distance = convertLength(attributes.prim_sym_dist);
@@ -1482,17 +1482,10 @@ void OcdFileImport::setupLineSymbolPointSymbols(OcdFileImport::OcdImportedLineSy
 			addSymbolWarning(line_symbol, tr("Skipped secondary point symbol."));
 		coords += attributes.primary_data_size;
 	}
-	else if (attributes.secondary_data_size > 0)
-	{
-		line_symbol->mid_symbol_placement = gaps_swapped ? LineSymbol::CenterOfGap : LineSymbol::CenterOfDashGroup;
-		line_symbol->mid_symbols_per_spot = 1;
-		line_symbol->show_at_least_one_symbol = true;
-		line_symbol->mid_symbol = new OcdImportedPointSymbol();
-		setupPointSymbolPattern(line_symbol->mid_symbol, attributes.secondary_data_size, elements);
-	}
 	// FIXME: not really sure how this translates... need test cases
 	line_symbol->minimum_mid_symbol_count = 0; //1 + ocd_symbol->smin;
 	line_symbol->minimum_mid_symbol_count_when_closed = 0; //1 + ocd_symbol->smin;
+	
 	coords += attributes.secondary_data_size;
 	
 	if (attributes.corner_data_size > 0)
@@ -1533,9 +1526,6 @@ PointSymbol* OcdFileImport::importSecondarySymbol(const Ocd::LineSymbolCommonV8&
 {
 	if (attributes.secondary_data_size == 0)
 		return nullptr;
-	
-	if (attributes.primary_data_size == 0)
-		return nullptr;  // Secondary symbol handled as primary one in setupLineSymbolPointSymbols
 	
 	auto* symbol = new OcdImportedPointSymbol();
 	const Ocd::OcdPoint32* coords = reinterpret_cast<const Ocd::OcdPoint32*>(elements) + attributes.primary_data_size;
