@@ -1080,7 +1080,7 @@ void FileFormatTest::iofCourseExportTest()
 	// Ignore creator and timestamp
 	auto stable_exported = exported.data().indexOf("<Event");
 	QVERIFY(stable_exported > 0);
-	auto stable_expected = exported.data().indexOf("<Event");
+	auto stable_expected = expected_data.indexOf("<Event");
 	QVERIFY(stable_expected > 0);
 	QCOMPARE(exported.data().mid(stable_exported), expected_data.mid(stable_expected));
 }
