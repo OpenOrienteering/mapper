@@ -233,7 +233,7 @@ if(Mapper_AUTORUN_TESTS)
 endif()
 
 
-set(IOF_3_XSD_FILE "" CACHE PATH "Path of the IOF Data Standard 3 XSD file")
+set(IOF_3_XSD_FILE "" CACHE FILEPATH "Path of the IOF Data Standard 3 XSD file")
 if(IOF_3_XSD_FILE)
 	find_program(XMLLINT NAMES xmllint)
 	add_test(NAME validate_iof_course
