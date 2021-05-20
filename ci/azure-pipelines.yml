@@ -147,6 +147,7 @@ jobs:
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=Debug
           -DMapper_CI_ENABLE_COVERAGE=1
+          "-DIOF_3_XSD_FILE=$(IOF_3_XSD_FILE)"
         buildArgs:
     - template: publish-coverage.yml
 

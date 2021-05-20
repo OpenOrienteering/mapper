@@ -58,9 +58,11 @@ steps:
     
     case "${CXXFLAGS}" in
       *coverage*)
-        sudo apt-get install g++ libgcc-5-dev python-pip
+        sudo apt-get install g++ libgcc-5-dev libxml2-utils python-pip
         sudo pip install gcovr
         sed -i -e "/autosave_t/s,MANUAL,," test/CMakeLists.txt
+        wget "https://raw.githubusercontent.com/international-orienteering-federation/datastandard-v3/master/IOF.xsd"
+        echo "##vso[task.setVariable variable=IOF_3_XSD_FILE]${PWD}/IOF.xsd"
         ;;
     esac
     

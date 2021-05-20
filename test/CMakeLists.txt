@@ -231,3 +231,12 @@ if(Mapper_AUTORUN_TESTS)
 	)
 	add_dependencies(AUTORUN_TESTS ${Mapper_AUTORUN_TESTS})
 endif()
+
+
+set(IOF_3_XSD_FILE "" CACHE PATH "Path of the IOF Data Standard 3 XSD file")
+if(IOF_3_XSD_FILE)
+	find_program(XMLLINT NAMES xmllint)
+	add_test(NAME validate_iof_course
+		COMMAND "${XMLLINT}" --schema "${IOF_3_XSD_FILE}" "${CMAKE_CURRENT_SOURCE_DIR}/data/export/iof-3.0-course.xml"
+	)
+endif()
