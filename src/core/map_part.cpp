@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -47,15 +47,17 @@ namespace literal
 	const QLatin1String objects("objects");
 	const QLatin1String object("object");
 	const QLatin1String count("count");
+	const QLatin1String visibility("visibility");
 }
 
 
 
 namespace OpenOrienteering {
 
-MapPart::MapPart(const QString& name, Map* map)
+MapPart::MapPart(const QString& name, Map* map, int visibility)
 : name(name)
 , map(map)
+, visibility(visibility)
 {
 	Q_ASSERT(map);
 	; // nothing else
@@ -75,12 +77,21 @@ void MapPart::setName(const QString& new_name)
 		emit map->mapPartChanged(map->findPartIndex(this), this);
 }
 
-
+void MapPart::setVisibility(int new_visibility)
+{
+	visibility = new_visibility;
+	if (map)
+	{
+		emit map->mapPartChanged(map->findPartIndex(this), this);
+		map->updateAllObjects();
+	}
+}
 
 void MapPart::save(QXmlStreamWriter& xml) const
 {
 	XmlElementWriter part_element(xml, literal::part);
 	part_element.writeAttribute(literal::name, name);
+	part_element.writeAttribute(literal::visibility, visibility);
 	{
 		XmlElementWriter objects_element(xml, literal::objects);
 		objects_element.writeAttribute(literal::count, objects.size());
@@ -98,7 +109,8 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol
 	Q_ASSERT(xml.name() == literal::part);
 	
 	XmlElementReader part_element(xml);
-	auto part = new MapPart(part_element.attribute<QString>(literal::name), &map);
+	int visibility = part_element.hasAttribute(literal::visibility) ? part_element.attribute<int>(literal::visibility) : 100;
+	auto part = new MapPart(part_element.attribute<QString>(literal::name), &map, visibility);
 	
 	while (xml.readNextStartElement())
 	{
