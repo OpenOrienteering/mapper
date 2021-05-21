@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -92,6 +92,7 @@ protected:
 	int index;
 	
 	QString name;
+	int visibility;
 };
 
 
