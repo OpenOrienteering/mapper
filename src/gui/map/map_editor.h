@@ -525,6 +525,8 @@ public slots:
 	void mergeCurrentMapPartTo(int target);
 	/** Merges all map parts into the current one. */
 	void mergeAllMapParts();
+	/** Switches the visibility of the current map part */
+	void switchVisibilityMapPart();
 	
 	/** Updates action enabled states after a template has been added */
 	void templateAdded(int pos, const OpenOrienteering::Template* temp);
@@ -831,6 +833,7 @@ private:
 	QAction* mappart_rename_act = {};
 	QAction* mappart_remove_act = {};
 	QAction* mappart_merge_act = {};
+	QAction* mappart_visibility_act = {};
 	QMenu* mappart_merge_menu;
 	QMenu* mappart_move_menu;
 	
