@@ -1554,25 +1554,17 @@ void OcdFileImport::mergeLineSymbol(CombinedSymbol* full_line, LineSymbol* main_
 	full_line->setNumParts(3); // reserve
 	
 	int part = 0;
-	full_line->setPart(part++, main_line, true);
-	main_line->setHidden(false);
-	main_line->setProtected(false);
-	main_line->setName(main_line->getName() + tr(" - main line"));
-
+	auto const append = [&part, &full_line](auto* element, auto name_suffix) {
+		full_line->setPart(part++, element, true);
+		element->setHidden(false);
+		element->setProtected(false);
+		element->setName(element->getName() + name_suffix);
+	};
+	append(main_line, tr(" - main line"));
 	if (double_line)
-	{
-		full_line->setPart(part++, double_line, true);
-		double_line->setHidden(false);
-		double_line->setProtected(false);
-		double_line->setName(double_line->getName() + tr(" - double line"));
-	}
+		append(double_line, tr(" - double line"));
 	if (framing_line)
-	{
-		full_line->setPart(part++, framing_line, true);
-		framing_line->setHidden(false);
-		framing_line->setProtected(false);
-		framing_line->setName(framing_line->getName() + tr(" - framing"));
-	}
+		append(framing_line, tr(" - framing"));
 	full_line->setNumParts(part);
 }
 
