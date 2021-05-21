@@ -1188,6 +1188,15 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	importLineSymbolBase(main_line, ocd_symbol.common);
 	setupLineSymbolPointSymbols(main_line, ocd_symbol.common, ocd_symbol.begin_of_elements);
 	
+	// Import secondary points?
+	OcdImportedLineSymbol* secondary_points = nullptr;
+	if (hasSecondarySymbol(ocd_symbol.common))
+	{
+		secondary_points = new OcdImportedLineSymbol();
+		setupBaseSymbol(secondary_points, ocd_symbol.base);
+		setupSecondarySymbol(secondary_points, ocd_symbol.common, ocd_symbol.begin_of_elements);
+	}
+	
 	// Import a 'framing' line?
 	OcdImportedLineSymbol* framing_line = nullptr;
 	if (ocd_symbol.common.framing_width > 0 && ocd_version >= 7)
@@ -1235,16 +1244,12 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	
 	// TODO: taper fields (tmode and tlast)
 	
-	auto* secondary_symbol = importSecondarySymbol(ocd_symbol.common, ocd_symbol.begin_of_elements);
-	
-	if (!double_line && !framing_line && !secondary_symbol)
+	if (!double_line && !framing_line && !secondary_points)
 		return main_line;
 	
 	auto combined_line = new CombinedSymbol();
 	setupBaseSymbol(combined_line, ocd_symbol.base);
-	mergeLineSymbol(combined_line, main_line, framing_line, double_line);
-	if (secondary_symbol)
-		mergeSecondarySymbol(combined_line, main_line, secondary_symbol);
+	mergeLineSymbol(combined_line, main_line, framing_line, double_line, secondary_points);
 	return combined_line;
 }
 
@@ -1520,38 +1525,36 @@ void OcdFileImport::setupLineSymbolPointSymbols(OcdFileImport::OcdImportedLineSy
 	}
 }
 
-PointSymbol* OcdFileImport::importSecondarySymbol(const Ocd::LineSymbolCommonV8& attributes, const Ocd::PointSymbolElementV8* elements)
+bool OcdFileImport::hasSecondarySymbol(const Ocd::LineSymbolCommonV8& attributes) const
 {
-	if (attributes.secondary_data_size == 0)
-		return nullptr;
+	return attributes.secondary_data_size > 0;
+}
+
+void OcdFileImport::setupSecondarySymbol(OcdImportedLineSymbol* line_symbol, const Ocd::LineSymbolCommonV8& attributes, const Ocd::PointSymbolElementV8* elements)
+{
+	importLineSymbolBase(line_symbol, attributes);
+	line_symbol->setColor(nullptr);
+	line_symbol->setLineWidth(0);
 	
-	auto* symbol = new OcdImportedPointSymbol();
+	auto* point_symbol = new OcdImportedPointSymbol();
 	const Ocd::OcdPoint32* coords = reinterpret_cast<const Ocd::OcdPoint32*>(elements) + attributes.primary_data_size;
-	setupPointSymbolPattern(symbol, attributes.secondary_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords));
-	return symbol;
+	setupPointSymbolPattern(point_symbol, attributes.secondary_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords));
+	line_symbol->setMidSymbol(point_symbol);
+	line_symbol->setShowAtLeastOneSymbol(false);
+	line_symbol->setMinimumMidSymbolCount(0);
+	line_symbol->setMidSymbolsPerSpot(1);
+	line_symbol->setEndLength(line_symbol->getEndLength() + line_symbol->getSegmentLength() / 2);
 }
 
-void OcdFileImport::mergeSecondarySymbol(CombinedSymbol* full_line, LineSymbol* main_line, PointSymbol* secondary_symbol)
+void OcdFileImport::mergeLineSymbol(
+        CombinedSymbol* full_line,
+        LineSymbol* main_line,
+        LineSymbol* framing_line,
+        LineSymbol* double_line,
+        LineSymbol* secondary_points
+)
 {
-	auto* secondary_line = new OcdImportedLineSymbol();
-	for (auto i = 0u; i < full_line->number_components; ++i)
-		secondary_line->setNumberComponent(i, full_line->getNumberComponent(i));
-	secondary_line->setName(full_line->getName() + tr(" - secondary line"));
-	secondary_line->setMidSymbol(secondary_symbol);
-	secondary_line->setShowAtLeastOneSymbol(false);
-	secondary_line->setMinimumMidSymbolCount(0);
-	secondary_line->setMidSymbolsPerSpot(1);
-	secondary_line->setMidSymbolDistance(main_line->getMidSymbolDistance());
-	secondary_line->setSegmentLength(main_line->getSegmentLength());
-	secondary_line->setEndLength(main_line->getEndLength() + main_line->getSegmentLength() / 2);
-	auto const n = full_line->getNumParts();
-	full_line->setNumParts(n + 1);
-	full_line->setPart(n, secondary_line, true);
-}
-
-void OcdFileImport::mergeLineSymbol(CombinedSymbol* full_line, LineSymbol* main_line, LineSymbol* framing_line, LineSymbol* double_line)
-{
-	full_line->setNumParts(3); // reserve
+	full_line->setNumParts(4); // reserve
 	
 	int part = 0;
 	auto const append = [&part, &full_line](auto* element, auto name_suffix) {
@@ -1565,6 +1568,8 @@ void OcdFileImport::mergeLineSymbol(CombinedSymbol* full_line, LineSymbol* main_
 		append(double_line, tr(" - double line"));
 	if (framing_line)
 		append(framing_line, tr(" - framing"));
+	if (secondary_points)
+		append(secondary_points, tr(" - secondary points"));
 	full_line->setNumParts(part);
 }
 
