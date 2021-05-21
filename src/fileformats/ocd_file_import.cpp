@@ -1478,8 +1478,6 @@ void OcdFileImport::setupLineSymbolPointSymbols(OcdFileImport::OcdImportedLineSy
 		line_symbol->show_at_least_one_symbol = true;
 		line_symbol->mid_symbol = new OcdImportedPointSymbol();
 		setupPointSymbolPattern(line_symbol->mid_symbol, attributes.primary_data_size, elements);
-		if (attributes.secondary_data_size > 0)
-			addSymbolWarning(line_symbol, tr("Skipped secondary point symbol."));
 		coords += attributes.primary_data_size;
 	}
 	// FIXME: not really sure how this translates... need test cases
