@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -62,8 +62,6 @@ using SelectionInfoVector = std::vector<std::pair<int, Object*>> ;
  * a map part for event-specific map objects and parts for course-specific
  * map objects. Then a course can be printed by merging the event-specific part
  * with the part for the course.
- * 
- * Currently, only one map part can be used per map.
  */
 class MapPart
 {
@@ -71,7 +69,7 @@ public:
 	/**
 	 * Creates a new map part with the given name for a map.
 	 */
-	MapPart(const QString& name, Map* map);
+	MapPart(const QString& name, Map* map, int visibility=100);
 	
 	MapPart(const MapPart&) = delete;
 	
@@ -106,6 +104,15 @@ public:
 	 */
 	void setName(const QString& new_name);
 	
+	/**
+	 * Returns the part's visibility.
+	 */
+	int getVisibility() const;
+
+	/**
+	 * Sets the part's visibility.
+	 */
+	void setVisibility(int new_visibility);
 	
 	/**
 	 * Returns the number of objects in the part.
@@ -269,6 +276,7 @@ private:
 	QString name;
 	ObjectList objects;  ///< @todo This could be a spatial representation optimized for quick access
 	Map* const map;
+	int visibility;  // percentage as general approach, first use only values 0 and 100
 };
 
 
@@ -279,6 +287,12 @@ inline
 const QString& MapPart::getName() const
 {
 	return name;
+}
+
+inline
+int MapPart::getVisibility() const
+{
+	return visibility;
 }
 
 inline
