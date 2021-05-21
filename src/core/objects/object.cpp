@@ -491,7 +491,9 @@ bool Object::update() const
 	}
 	
 	output.deleteRenderables();
-	
+	if (map && !map->getTransientVisibility())
+		return true;
+
 	extent = QRectF();
 	
 	updateEvent();

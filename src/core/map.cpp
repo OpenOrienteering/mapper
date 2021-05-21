@@ -741,7 +741,7 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 					if (!dest_part)
 					{
 						// Import as new part
-						dest_part = new MapPart(part_to_import->getName(), this);
+						dest_part = new MapPart(part_to_import->getName(), this, part_to_import->getVisibility());
 						addPart(dest_part, 0);
 						undo_step->push(new MapPartUndoStep(this, MapPartUndoStep::RemoveMapPart, 0));
 					}
@@ -2320,7 +2320,10 @@ void Map::applyOnMatchingObjects(const std::function<void (Object*, MapPart*, in
 void Map::applyOnAllObjects(const std::function<void (Object*)>& operation)
 {
 	for (auto part : parts)
+	{
+		setTransientVisibility(part->getVisibility());
 		part->applyOnAllObjects(operation);
+	}
 }
 
 
@@ -2334,7 +2337,10 @@ void Map::applyOnAllObjects(const std::function<void (const Object*)>& operation
 void Map::applyOnAllObjects(const std::function<void (Object*, MapPart*, int)>& operation)
 {
 	for (auto part : parts)
+	{
+		setTransientVisibility(part->getVisibility());
 		part->applyOnAllObjects(operation);
+	}
 }
 
 

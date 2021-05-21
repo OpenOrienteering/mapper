@@ -258,6 +258,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map, MapView* 
 , template_list_widget(nullptr)
 , mappart_remove_act(nullptr)
 , mappart_merge_act(nullptr)
+, mappart_visibility_act(nullptr)
 , mappart_merge_menu(nullptr)
 , mappart_move_menu(nullptr)
 , mappart_selector_box(nullptr)
@@ -470,6 +471,7 @@ void MapEditorController::setEditingInProgress(bool value)
 		mappart_add_act->setEnabled(!editing_in_progress);
 		mappart_rename_act->setEnabled(!editing_in_progress && num_parts > 0);
 		mappart_remove_act->setEnabled(!editing_in_progress && num_parts > 1);
+		mappart_visibility_act->setEnabled(!editing_in_progress && num_parts > 0);
 		mappart_move_menu->setEnabled(!editing_in_progress && num_parts > 1);
 		mappart_merge_act->setEnabled(!editing_in_progress && num_parts > 1);
 		mappart_merge_menu->setEnabled(!editing_in_progress && num_parts > 1);
@@ -1103,8 +1105,9 @@ void MapEditorController::createActions()
 	mappart_add_act = newAction("addmappart", tr("Add new part..."), this, SLOT(addMapPart()));
 	mappart_rename_act = newAction("renamemappart", tr("Rename current part..."), this, SLOT(renameMapPart()));
 	mappart_remove_act = newAction("removemappart", tr("Remove current part"), this, SLOT(removeMapPart()));
+	mappart_visibility_act = newAction("visibilitymappart", tr("Hide current part"), this, SLOT(switchVisibilityMapPart()));	// exact text doesn't matter since replaced in updateMapPartsUI() below, so use something that is already in use
 	mappart_merge_act = newAction("mergemapparts", tr("Merge all parts"), this, SLOT(mergeAllMapParts()));
-	
+
 	import_act = newAction("import", tr("Import..."), this, SLOT(importClicked()), nullptr, QString{}, "file_menu.html");
 	
 	map_coordinates_act = new QAction(tr("Map coordinates"), this);
@@ -1264,6 +1267,7 @@ void MapEditorController::createMenuAndToolbars()
 	map_menu->addAction(mappart_add_act);
 	map_menu->addAction(mappart_rename_act);
 	map_menu->addAction(mappart_remove_act);
+	map_menu->addAction(mappart_visibility_act);
 	map_menu->addMenu(mappart_move_menu);
 	map_menu->addMenu(mappart_merge_menu);
 	map_menu->addAction(mappart_merge_act);
@@ -3817,6 +3821,11 @@ void MapEditorController::updateMapPartsUI()
 	{
 		toolbar_mapparts->setVisible(have_multiple_parts);
 	}
+	if (mappart_visibility_act && count)
+	{
+		MapPart* const part = map->getCurrentPart();
+		mappart_visibility_act->setText(part->getVisibility() ? tr("Hide current part") : tr("Show current part"));
+	}
 	
 	if (count > 0)
 	{
@@ -3856,7 +3865,7 @@ void MapEditorController::addMapPart()
 	                   &accepted );
 	if (accepted && !name.isEmpty())
 	{
-		auto* part = new MapPart(name, map);
+		auto* part = new MapPart(name, map, 100);
 		map->addPart(part, map->getCurrentPartIndex() + 1);
 		map->setCurrentPart(part);
 		map->push(new MapPartUndoStep(map, MapPartUndoStep::RemoveMapPart, part));
@@ -4017,6 +4026,11 @@ void MapEditorController::mergeAllMapParts()
 	}
 }
 
+void MapEditorController::switchVisibilityMapPart()
+{
+	MapPart* const part = map->getCurrentPart();
+	part->setVisibility(part->getVisibility() ? 0 : 100);
+}
 
 void MapEditorController::templateAdded(int /*pos*/, const Template* /*temp*/)
 {
