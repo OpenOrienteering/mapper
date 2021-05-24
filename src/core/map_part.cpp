@@ -47,7 +47,7 @@ namespace literal
 	const QLatin1String objects("objects");
 	const QLatin1String object("object");
 	const QLatin1String count("count");
-	const QLatin1String visibility("visibility");
+	const QLatin1String hidden("hidden");
 }
 
 
@@ -95,7 +95,7 @@ void MapPart::save(QXmlStreamWriter& xml) const
 {
 	XmlElementWriter part_element(xml, literal::part);
 	part_element.writeAttribute(literal::name, name);
-	part_element.writeAttribute(literal::visibility, visible);
+	part_element.writeAttribute(literal::hidden, !visible);
 	{
 		XmlElementWriter objects_element(xml, literal::objects);
 		objects_element.writeAttribute(literal::count, objects.size());
@@ -114,8 +114,7 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol
 	
 	XmlElementReader part_element(xml);
 	auto part = new MapPart(part_element.attribute<QString>(literal::name), &map);
-	if (part_element.hasAttribute(literal::visibility))
-		part->visible = part_element.attribute<bool>(literal::visibility);
+	part->visible = !part_element.attribute<bool>(literal::hidden);
 	
 	while (xml.readNextStartElement())
 	{
