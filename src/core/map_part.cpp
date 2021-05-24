@@ -54,10 +54,9 @@ namespace literal
 
 namespace OpenOrienteering {
 
-MapPart::MapPart(const QString& name, Map* map, int visibility)
+MapPart::MapPart(const QString& name, Map* map)
 : name(name)
 , map(map)
-, visibility(visibility)
 {
 	Q_ASSERT(map);
 	; // nothing else
@@ -77,17 +76,17 @@ void MapPart::setName(const QString& new_name)
 		emit map->mapPartChanged(map->findPartIndex(this), this);
 }
 
-void MapPart::setVisibility(int new_visibility)
+void MapPart::setVisible(bool visible)
 {
-	if (visibility == new_visibility)
+	if (this->visible == visible)
 		return;
 		
-	visibility = new_visibility;
+	this->visible = visible;
 	if (map)
 	{
 		emit map->mapPartChanged(map->findPartIndex(this), this);
-		applyOnAllObjects([new_visibility](Object* o) {
-			o->setVisible(new_visibility);
+		applyOnAllObjects([visible](Object* o) {
+			o->setVisible(visible);
 		});
 	}
 }
@@ -96,7 +95,7 @@ void MapPart::save(QXmlStreamWriter& xml) const
 {
 	XmlElementWriter part_element(xml, literal::part);
 	part_element.writeAttribute(literal::name, name);
-	part_element.writeAttribute(literal::visibility, visibility);
+	part_element.writeAttribute(literal::visibility, visible);
 	{
 		XmlElementWriter objects_element(xml, literal::objects);
 		objects_element.writeAttribute(literal::count, objects.size());
@@ -114,8 +113,9 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol
 	Q_ASSERT(xml.name() == literal::part);
 	
 	XmlElementReader part_element(xml);
-	int visibility = part_element.hasAttribute(literal::visibility) ? part_element.attribute<int>(literal::visibility) : 100;
-	auto part = new MapPart(part_element.attribute<QString>(literal::name), &map, visibility);
+	auto part = new MapPart(part_element.attribute<QString>(literal::name), &map);
+	if (part_element.hasAttribute(literal::visibility))
+		part->visible = part_element.attribute<bool>(literal::visibility);
 	
 	while (xml.readNextStartElement())
 	{
@@ -132,7 +132,7 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol
 				if (xml.name() == literal::object)
 				{
 					part->objects.push_back(Object::load(xml, &map, symbol_dict));
-					part->objects.back()->setVisible(visibility);
+					part->objects.back()->setVisible(part->visible);
 				}
 				else
 				{
@@ -172,7 +172,7 @@ void MapPart::setObject(Object* object, int pos, bool delete_old)
 		delete objects[pos];
 	
 	objects[pos] = object;
-	object->setVisible(visibility);
+	object->setVisible(visible);
 	object->setMap(map);
 	object->update();
 	map->setObjectsDirty(); // TODO: remove from here, dirty state handling should be separate
@@ -186,7 +186,7 @@ void MapPart::addObject(Object* object)
 void MapPart::addObject(Object* object, int pos)
 {
 	objects.insert(objects.begin() + pos, object);
-	object->setVisible(visibility);
+	object->setVisible(visible);
 	object->setMap(map);
 	object->update();
 	
@@ -251,7 +251,7 @@ std::unique_ptr<UndoStep> MapPart::importPart(const MapPart* other, const QHash<
 		new_object->transform(transform);
 		
 		objects.push_back(new_object);
-		new_object->setVisible(visibility);
+		new_object->setVisible(visible);
 		new_object->setMap(map);
 		new_object->update();
 		
