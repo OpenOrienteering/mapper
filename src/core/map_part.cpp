@@ -79,11 +79,16 @@ void MapPart::setName(const QString& new_name)
 
 void MapPart::setVisibility(int new_visibility)
 {
+	if (visibility == new_visibility)
+		return;
+		
 	visibility = new_visibility;
 	if (map)
 	{
 		emit map->mapPartChanged(map->findPartIndex(this), this);
-		map->updateAllObjects();
+		applyOnAllObjects([new_visibility](Object* o) {
+			o->setVisible(new_visibility);
+		});
 	}
 }
 
@@ -125,9 +130,14 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol
 			while (xml.readNextStartElement())
 			{
 				if (xml.name() == literal::object)
+				{
 					part->objects.push_back(Object::load(xml, &map, symbol_dict));
+					part->objects.back()->setVisible(visibility);
+				}
 				else
+				{
 					xml.skipCurrentElement(); // unknown
+				}
 			}
 		}
 		else
@@ -162,6 +172,7 @@ void MapPart::setObject(Object* object, int pos, bool delete_old)
 		delete objects[pos];
 	
 	objects[pos] = object;
+	object->setVisible(visibility);
 	object->setMap(map);
 	object->update();
 	map->setObjectsDirty(); // TODO: remove from here, dirty state handling should be separate
@@ -175,6 +186,7 @@ void MapPart::addObject(Object* object)
 void MapPart::addObject(Object* object, int pos)
 {
 	objects.insert(objects.begin() + pos, object);
+	object->setVisible(visibility);
 	object->setMap(map);
 	object->update();
 	
@@ -239,6 +251,7 @@ std::unique_ptr<UndoStep> MapPart::importPart(const MapPart* other, const QHash<
 		new_object->transform(transform);
 		
 		objects.push_back(new_object);
+		new_object->setVisible(visibility);
 		new_object->setMap(map);
 		new_object->update();
 		

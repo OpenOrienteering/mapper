@@ -471,6 +471,36 @@ void Object::setRotation(qreal new_rotation)
 }
 
 
+void Object::setVisible(bool visible)
+{
+	if (!map)
+	{
+		this->visible = visible;
+		return;
+	}
+	
+	if (extent.isValid() && isVisible())
+	{
+		map->setObjectAreaDirty(extent);
+	}
+	
+	this->visible = visible;
+	if (!visible)
+	{
+		map->removeRenderablesOfObject(this, true);
+	}
+	else if (output_dirty || !extent.isValid())
+	{
+		forceUpdate();
+	}
+	else
+	{
+		map->insertRenderablesOfObject(this);
+		map->setObjectAreaDirty(extent);
+	}
+}
+
+
 void Object::forceUpdate() const
 {
 	output_dirty = true;
@@ -486,14 +516,12 @@ bool Object::update() const
 	if (map)
 	{
 		options = QFlag(map->renderableOptions());
-		if (extent.isValid())
+		if (extent.isValid() && isVisible())
 			map->setObjectAreaDirty(extent);
 	}
 	
 	output.deleteRenderables();
-	if (map && !map->getTransientVisibility())
-		return true;
-
+	
 	extent = QRectF();
 	
 	updateEvent();
@@ -503,7 +531,7 @@ bool Object::update() const
 	Q_ASSERT(extent.right() < 60000000);	// assert if bogus values are returned
 	output_dirty = false;
 	
-	if (map)
+	if (map && isVisible())
 	{
 		map->insertRenderablesOfObject(this);
 		if (extent.isValid())
