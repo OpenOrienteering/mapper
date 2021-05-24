@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014-2021 Kai Pastor
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -38,7 +38,6 @@ namespace literal
 	const QLatin1String remove("remove");
 	const QLatin1String modify("modify");
 	const QLatin1String name("name");
-	const QLatin1String visibility("visibility");
 }
 
 
@@ -50,7 +49,6 @@ MapPartUndoStep::MapPartUndoStep(Map* map, MapPartChange change, const MapPart* 
 , change(change)
 , index(map->findPartIndex(part))
 , name(part->getName())
-, visibility(part->getVisibility())
 {
 	// nothing else
 }
@@ -60,7 +58,6 @@ MapPartUndoStep::MapPartUndoStep(Map* map, MapPartChange change, int index)
 , change(change)
 , index(index)
 , name(map->getPart(index)->getName())
-, visibility(map->getPart(index)->getVisibility())
 {
 	// nothing else
 }
@@ -70,7 +67,6 @@ MapPartUndoStep::MapPartUndoStep(Map* map)
 , change(UndefinedChange)
 , index(0)
 , name()
-, visibility()
 {
 	// nothing else
 }
@@ -95,7 +91,7 @@ UndoStep* MapPartUndoStep::undo()
 	{
 	case AddMapPart:
 		Q_ASSERT(map->getNumParts()+1 > index);
-		map->addPart(new MapPart(name, map, visibility), index);
+		map->addPart(new MapPart(name, map), index);
 		redo_step = new MapPartUndoStep(map, RemoveMapPart, index);
 	    break;
 	case RemoveMapPart:
@@ -158,7 +154,6 @@ void MapPartUndoStep::saveImpl(QXmlStreamWriter &xml) const
 	case AddMapPart:
 	case ModifyMapPart:
 		change_element.writeAttribute(literal::name, name);
-		change_element.writeAttribute(literal::visibility, visibility);
 		break;
 	case RemoveMapPart:
 	case UndefinedChange:
@@ -178,7 +173,6 @@ void MapPartUndoStep::loadImpl(QXmlStreamReader &xml, SymbolDictionary &)
 			change = (MapPartChange)type;
 		index = change_element.attribute<int>(literal::part);
 		name  = change_element.attribute<QString>(literal::name);
-		visibility = change_element.hasAttribute(literal::visibility) ? change_element.attribute<int>(literal::visibility) : 100;
 	}
 }
 
