@@ -69,7 +69,7 @@ public:
 	/**
 	 * Creates a new map part with the given name for a map.
 	 */
-	MapPart(const QString& name, Map* map, int visibility=100);
+	MapPart(const QString& name, Map* map);
 	
 	MapPart(const MapPart&) = delete;
 	
@@ -107,12 +107,12 @@ public:
 	/**
 	 * Returns the part's visibility.
 	 */
-	int getVisibility() const;
+	bool isVisible() const { return visible; };
 
 	/**
 	 * Sets the part's visibility.
 	 */
-	void setVisibility(int new_visibility);
+	void setVisible(bool visible);
 	
 	/**
 	 * Returns the number of objects in the part.
@@ -276,7 +276,7 @@ private:
 	QString name;
 	ObjectList objects;  ///< @todo This could be a spatial representation optimized for quick access
 	Map* const map;
-	int visibility;  // percentage as general approach, first use only values 0 and 100
+	bool visible = true;  ///< Visibility of the part's objects.
 };
 
 
@@ -287,12 +287,6 @@ inline
 const QString& MapPart::getName() const
 {
 	return name;
-}
-
-inline
-int MapPart::getVisibility() const
-{
-	return visibility;
 }
 
 inline

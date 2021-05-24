@@ -525,8 +525,8 @@ public slots:
 	void mergeCurrentMapPartTo(int target);
 	/** Merges all map parts into the current one. */
 	void mergeAllMapParts();
-	/** Switches the visibility of the current map part */
-	void switchVisibilityMapPart();
+	/** Toggles the visibility of the current map part */
+	void toggleMapPartVisible();
 	
 	/** Updates action enabled states after a template has been added */
 	void templateAdded(int pos, const OpenOrienteering::Template* temp);
