@@ -580,11 +580,6 @@ public:
 	 * The full icon size (width, height) is represented by 1.0.
 	 */
 	qreal symbolIconZoom() const;
-
-	/**
-	 * Returns the visibility of the map part being currently processed in applyOnAllObjects().
-	 */
-	int getTransientVisibility() const;
 	
 public slots:
 	/**
@@ -1580,7 +1575,6 @@ private:
 	void addSelectionRenderables(const Object* object);
 	void updateSelectionRenderables(const Object* object);
 	void removeSelectionRenderables(const Object* object);
-	void setTransientVisibility(int visibility);
 	
 	static void initStatic();
 	
@@ -1608,8 +1602,6 @@ private:
 	MapGrid grid;
 	
 	int renderable_options;
-
-	int transientVisibility;	// temporarily store the visibility of the map part being processed by applyOnAllObjects()
 	
 	QScopedPointer<MapPrinterConfig> printer_config;
 	
@@ -1646,18 +1638,6 @@ private:
 
 
 // ### Map inline code ###
-
-inline
-void Map::setTransientVisibility(int visibility)
-{
-	transientVisibility = visibility;
-}
-
-inline
-int Map::getTransientVisibility() const
-{
-	return transientVisibility;
-}
 
 inline
 int Map::getNumColors() const
