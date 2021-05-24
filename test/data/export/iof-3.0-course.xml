@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CourseData xmlns="http://www.orienteering.org/datastandard/3.0" iofVersion="3.0" creator="OpenOrienteering Mapper Debug 0.9.6" createTime="2021-05-20T09:28:32">
+    <Event>
+        <Name>Test event</Name>
+    </Event>
+    <RaceCourseData>
+        <Control>
+            <Id>S1</Id>
+            <Position lng="8" lat="51"/>
+        </Control>
+        <Control>
+            <Id>101</Id>
+            <Position lng="8.003674" lat="50.9998836"/>
+        </Control>
+        <Control>
+            <Id>F1</Id>
+            <Position lng="8.0071138" lat="50.9997745"/>
+        </Control>
+        <Course>
+            <Name>Test course</Name>
+            <CourseControl type="Start">
+                <Control>S1</Control>
+            </CourseControl>
+            <CourseControl type="Control">
+                <Control>101</Control>
+            </CourseControl>
+            <CourseControl type="Finish">
+                <Control>F1</Control>
+            </CourseControl>
+        </Course>
+    </RaceCourseData>
+</CourseData>

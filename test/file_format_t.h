@@ -94,6 +94,11 @@ private slots:
 	void kmlCourseExportTest();
 	
 	/**
+	 * Tests the export of IOF courses.
+	 */
+	void iofCourseExportTest();
+	
+	/**
 	 * Test the creation of templates.
 	 */
 	void importTemplateTest_data();
