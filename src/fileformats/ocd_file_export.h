@@ -201,10 +201,10 @@ protected:
 	QByteArray exportLineSymbol(const LineSymbol* line_symbol);
 	
 	template< class OcdLineSymbol >
-	QByteArray exportLineSymbol(const LineSymbol* line_symbol, quint32 symbol_number);
+	QByteArray exportLineSymbol(const LineSymbol* line_symbol, const LineSymbol* secondary_points, quint32 symbol_number);
 	
 	template< class OcdLineSymbolCommon >
-	quint32 exportLineSymbolCommon(const LineSymbol* line_symbol, OcdLineSymbolCommon& ocd_line_common);
+	quint32 exportLineSymbolCommon(const LineSymbol* line_symbol, const LineSymbol* secondary_points, OcdLineSymbolCommon& ocd_line_common);
 	
 	template< class OcdLineSymbolCommon >
 	void exportLineSymbolDoubleLine(const LineSymbol* line_symbol, quint32 fill_color, OcdLineSymbolCommon& ocd_line_common);
@@ -227,6 +227,10 @@ protected:
 	template< class OcdTextSymbolFraming >
 	void setupTextSymbolFraming(const TextSymbol* text_symbol, OcdTextSymbolFraming& ocd_text_framing);
 	
+	bool maybeSecondaryPoints(const Symbol* symbol) const;
+	
+	bool validateSecondaryPoints(const LineSymbol* main_line, const LineSymbol* secondary_points) const;
+	
 	int checkCombinedSymbol(const CombinedSymbol* combined_symbol) const;
 	
 	template< class Format >
@@ -248,7 +252,8 @@ protected:
 	        const CombinedSymbol* combined_symbol,
 	        const LineSymbol* main_line,
 	        const LineSymbol* framing,
-	        const LineSymbol* double_line );
+	        const LineSymbol* double_line,
+	        const LineSymbol* secondary_points);
 	
 	
 	template< class Format >
