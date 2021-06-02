@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2021 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -1043,6 +1043,7 @@ void OcdFileImport::importView(const QString& param_string)
 	
 	bool zoom_ok = false;
 	double zoom=1.0, offset_x=0.0, offset_y=0.0;
+	int hatched = 0, keyline =0;
 	
 	int i = param_string.indexOf(QLatin1Char('\t'), 0);
 	; // skip first word for this entry type
@@ -1071,6 +1072,16 @@ void OcdFileImport::importView(const QString& param_string)
 				zoom = param_value.toDouble(&zoom_ok);
 				break;
 			}
+		case 'h':
+			{
+				hatched = param_value.toInt();	// returns 0 for failure which is the default anyway
+				break;
+			}
+		case 'k':
+			{
+				keyline = param_value.toInt();	// returns 0 for failure which is the default anyway
+				break;
+			}
 		default:
 			; // nothing
 		}
@@ -1083,6 +1094,11 @@ void OcdFileImport::importView(const QString& param_string)
 		if (zoom_ok)
 		{
 			view->setZoom(zoom);
+		}
+		if (map)
+		{
+			map->setAreaHatchingEnabled(hatched != 0);
+			map->setBaselineViewEnabled(keyline != 0);
 		}
 	}
 }

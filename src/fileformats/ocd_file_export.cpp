@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2020 Kai Pastor
+ *    Copyright 2016-2021 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -549,6 +549,7 @@ QString stringForViewPar(const MapView& view, const MapCoord& area_offset, quint
 	else
 	{
 		const auto center = view.center() - area_offset;
+		const auto hatched = view.getMap()->isAreaHatchingEnabled() ? 1 : 0;
 		out << qSetRealNumberPrecision(6)
 		    << "\tx" << center.x()
 		    << "\ty" << -center.y()
@@ -558,8 +559,13 @@ QString stringForViewPar(const MapView& view, const MapCoord& area_offset, quint
 		    << "\tt50"
 		    << "\tb50"
 		    << "\tc50"
-		    << "\th0"
+		    << "\th" << hatched
 		    << "\td0";
+	}
+	if (version > 10)
+	{
+		const auto keyline = view.getMap()->isBaselineViewEnabled() ? 1 : 0;
+		out << "\tk" << keyline;
 	}
 	return string_1030;
 }
