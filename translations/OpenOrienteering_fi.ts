@@ -3252,7 +3252,7 @@ Tallennetaanko?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1392"/>
         <source>When you want to have touch input disabled, you must use another pointing device to select the &quot;OK&quot; button.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellet halua käyttää kosketusnäyttä, sinulla tulee olla käytössä jokin muu osoitinlaite painaaksesi &quot;OK&quot; näppäintä.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="519"/>
