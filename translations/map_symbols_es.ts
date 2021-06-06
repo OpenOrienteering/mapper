@@ -570,7 +570,7 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.1</comment>
-        <translation type="unfinished">Un cortado, una cantera o un banco de tierra que es tan alto y empinado que es imposible de pasar/escalar o es peligroso.
+        <translation>Un acantilado, una cantera o un banco de tierra que es tan alto y empinado que es imposible de pasar/escalar o es peligroso.
 En el caso de rocas verticales, las etiquetas pueden omitirse si el espacio es escaso. Los extremos de la línea superior pueden ser redondeados o cuadrados. Se pueden utilizar etiquetas más cortas en los extremos.
 El espacio entre dos acantilados intransitables o entre acantilados intransitables y otros símbolos de rasgos intransitables debe ser superior a 0,25 mm en el mapa.
 Cuando un acantilado infranqueable caiga directamente al agua, haciendo imposible pasar por debajo del acantilado a lo largo del borde del agua, se omitirá la línea de la orilla o las etiquetas se extenderán claramente sobre la línea de la orilla. Un acantilado infranqueable debe interactuar con las curvas de nivel.
@@ -598,10 +598,10 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.3</comment>
-        <translation type="unfinished">Un cortado, una cantera o un banco de tierra que es tan alto y empinado que es imposible de pasar/escalar o es peligroso.
-En el caso de rocas verticales, las líneas de pendiente pueden omitirse si el espacio es escaso. Los extremos de la línea superior pueden ser redondeados o cuadrados. Se pueden utilizar líneas de pendiente más cortas en los extremos.
-El espacio entre dos acantilados infranqueables o entre acantilados infranqueables y otros símbolos de rasgos infranqueables debe ser superior a 0,25 mm en el mapa.
-Cuando un cortado infranqueable caiga directamente al agua, haciendo imposible pasar por debajo del cortado a lo largo del borde del agua, se omitirá la línea de la orilla o las líneas de pendiente se extenderán claramente sobre la línea de la orilla. Un cortado infranqueable debe interactuar con las curvas de nivel.
+        <translation>Un acantilado, una cantera o un banco de tierra que es tan alto y empinado que es imposible de pasar/escalar o es peligroso.
+En el caso de rocas verticales, las etiquetas pueden omitirse si el espacio es escaso. Los extremos de la línea superior pueden ser redondeados o cuadrados. Se pueden utilizar etiquetas más cortas en los extremos.
+El espacio entre dos acantilados intransitables o entre acantilados intransitables y otros símbolos de rasgos intransitables debe ser superior a 0,25 mm en el mapa.
+Cuando un acantilado infranqueable caiga directamente al agua, haciendo imposible pasar por debajo del acantilado a lo largo del borde del agua, se omitirá la línea de la orilla o las etiquetas se extenderán claramente sobre la línea de la orilla. Un acantilado infranqueable debe interactuar con las curvas de nivel.
 Longitud mínima: 0,6 mm (huella 9 m).</translation>
     </message>
     <message>
@@ -636,7 +636,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation type="unfinished">Un acantilado o cantera transitable. Si la dirección de caída del acantilado no es evidente a partir de las curvas de nivel, o para mejorar la legibilidad, se pueden dibujar etiquetas cortas en la dirección de la pendiente descendente.
+        <translation>Un acantilado o cantera transitable. Si la dirección de caída del acantilado no es evidente a partir de las curvas de nivel, o para mejorar la legibilidad, se pueden dibujar etiquetas cortas en la dirección de la pendiente descendente.
 En el caso de los acantilados no verticales, las marcas deben dibujarse para mostrar toda la extensión horizontal. Los extremos de la línea de base deben ser redondeados si no aparecen etiquetas. El paso entre dos acantilados debe ser de al menos 0,2 mm. Un acantilado debe interactuar con las curvas de nivel.
 Cruzar un acantilado normalmente ralentizará el avance.
 Altura mínima: 1 m.
@@ -654,11 +654,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation type="unfinished">Un acantilado o cantera transitable. Si la dirección de caída del acantilado no es evidente a partir de las curvas de nivel, o para mejorar la legibilidad, se pueden dibujar etiquetas cortas en la dirección de la pendiente descendente.
-En el caso de los acantilados no verticales, las marcas deben dibujarse para mostrar toda la extensión horizontal. Los extremos de la línea de base deben ser redondeados si no aparecen etiquetas. El paso entre dos acantilados debe ser de al menos 0,2 mm. Un acantilado debe interactuar con las curvas de nivel.
-Cruzar un acantilado normalmente ralentizará el avance.
+        <translation>Un cortado o cantera franqueable. Si la dirección de caída del cortado no es aparente a partir de las curvas de nivel, o para mejorar la legibilidad, se pueden dibujar pequeños peines en la dirección de caída de la pendiente.
+Se deberían de dibujar los peines en cortados no verticales para mostrar la extensión horizontal completa. Los extremos de la línea de base deben redondearse si no aparecen peines. Un pasadizo entre dos cortados debe tener al menos 0.2 mm. Un cortado debería de interactuar con las curvas de nivel.
+Cruzar un cortado normalmente va a ralentizar la progresión.
 Altura mínima: 1 m.
-Longitud mínima: 0,6 mm (huella 9 m).</translation>
+Longitud mínima: 0.6 mm (huella de 9 m).</translation>
     </message>
     <message>
         <source>Cliff, with tags</source>
@@ -672,7 +672,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation type="unfinished">Un acantilado o cantera transitable. Si la dirección de caída del acantilado no es evidente a partir de las curvas de nivel, o para mejorar la legibilidad, se pueden dibujar etiquetas cortas en la dirección de la pendiente descendente.
+        <translation>Un acantilado o cantera transitable. Si la dirección de caída del acantilado no es evidente a partir de las curvas de nivel, o para mejorar la legibilidad, se pueden dibujar etiquetas cortas en la dirección de la pendiente descendente.
 En el caso de los acantilados no verticales, las marcas deben dibujarse para mostrar toda la extensión horizontal. Los extremos de la línea de base deben ser redondeados si no aparecen etiquetas. El paso entre dos acantilados debe ser de al menos 0,2 mm. Un acantilado debe interactuar con las curvas de nivel.
 Cruzar un acantilado normalmente ralentizará el avance.
 Altura mínima: 1 m.
@@ -690,7 +690,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation type="unfinished">Un acantilado o cantera transitable. Si la dirección de caída del acantilado no es evidente a partir de las curvas de nivel, o para mejorar la legibilidad, se pueden dibujar etiquetas cortas en la dirección de la pendiente descendente.
+        <translation>Un acantilado o cantera transitable. Si la dirección de caída del acantilado no es evidente a partir de las curvas de nivel, o para mejorar la legibilidad, se pueden dibujar etiquetas cortas en la dirección de la pendiente descendente.
 En el caso de los acantilados no verticales, las marcas deben dibujarse para mostrar toda la extensión horizontal. Los extremos de la línea de base deben ser redondeados si no aparecen etiquetas. El paso entre dos acantilados debe ser de al menos 0,2 mm. Un acantilado debe interactuar con las curvas de nivel.
 Cruzar un acantilado normalmente ralentizará el avance.
 Altura mínima: 1 m.
@@ -718,7 +718,7 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
 Minimum depth: 1 m.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 203.1</comment>
-        <translation type="unfinished">Fosos rocosos, agujeros, cuevas o pozos mineros sin una entrada definida que puedan constituir un peligro para el competidor.
+        <translation>Fosos rocosos, agujeros, cuevas o pozos mineros sin una entrada definida que puedan constituir un peligro para el competidor.
 La ubicación es el centro de gravedad del símbolo, y el símbolo deberá estar orientado al norte.
 Las fosas rocosas de más de 5 m de diámetro deben exagerarse y representarse con símbolos de acantilados (201, 202).
 Profundidad mínima: 1 m.
@@ -758,8 +758,8 @@ Hoyos rocosos de más de 5 m de diámetro deberían ser exagerados y representar
 To be able to show the distinction between neighbouring (closer than 30 m apart) boulders with significant difference in size, it is permitted to enlarge the symbol to 0.5 mm for some of the boulders.
 Footprint: 6 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 204</comment>
-        <translation type="unfinished">Un canto rodado distinto (debe tener una altura superior a 1 m), que es inmediatamente identificable en el suelo. Los grupos de cantos rodados se representan con el símbolo de grupo de cantos rodados (207) o con el símbolo de campo de cantos rodados (208, 209).
-Para poder mostrar la distinción entre cantos rodados vecinos (a menos de 30 m de distancia) con una diferencia significativa de tamaño, se permite ampliar el símbolo a 0,5 mm para algunos de los cantos rodados.
+        <translation>Una roca distinta (debe tener una altura superior a 1 m), que es inmediatamente identificable en el suelo. Los grupos de rocas se representan con el símbolo de grupo de rocas (207) o con el símbolo de campo de rocas (208, 209).
+Para poder mostrar la distinción entre rocas vecinas (a menos de 30 m de distancia) con una diferencia significativa de tamaño, se permite ampliar el símbolo a 0,5 mm para algunas de las rocas.
 Huella: 6 m de diámetro (7,5 m de diámetro).</translation>
     </message>
     <message>
@@ -790,14 +790,14 @@ Para poder mostrar la distinción entre peñas (205) vecinas (separadas por meno
 To be able to show the distinction between neighbouring (closer than 30 m apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.
 Footprint: 9 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 205</comment>
-        <translation type="unfinished">Un canto rodado especialmente grande y definido. Un peñasco grande debe tener más de 2 m de altura.
-Para poder mostrar la distinción entre cantos rodados vecinos (a menos de 30 m de distancia) con una diferencia significativa de tamaño, se permite reducir el tamaño del símbolo a 0,5 mm para algunos de los cantos rodados.
+        <translation>Una roca especialmente grande y definida. Una roca grande debe tener más de 2 m de altura.
+Para poder mostrar la distinción entre rocas vecinas (a menos de 30 m de distancia) con una diferencia significativa de tamaño, se permite reducir el tamaño del símbolo a 0,5 mm para algunos de las rocas.
 Huella: 9 m de diámetro (7,5 m de diámetro).</translation>
     </message>
     <message>
         <source>Gigantic boulder</source>
         <comment>Name of symbol 206</comment>
-        <translation>Peñón</translation>
+        <translation>Roca gigante</translation>
     </message>
     <message>
         <source>A gigantic boulder, rock pillar or massive cliff shall be represented in plan shape. The objects can vary in shape and width.
@@ -805,7 +805,7 @@ The gap between gigantic boulders or between gigantic boulders and other impassa
 Minimum width: 0.25 mm (footprint 3.75 m).
 Minimum area: 0.3 mm² (footprint 67 m²).</source>
         <comment>Description of symbol 206</comment>
-        <translation type="unfinished">Un peñasco gigantesco, un pilar de roca o un acantilado macizo se representarán en planta. Los objetos pueden variar en forma y anchura.
+        <translation>Un peñasco gigantesco, un pilar de roca o un acantilado macizo se representarán en planta. Los objetos pueden variar en forma y anchura.
 El espacio entre rocas gigantescas o entre rocas gigantescas y otros símbolos de rasgos intransitables debe superar los 0,15 mm en el mapa.
 Anchura mínima: 0,25 mm (huella de 3,75 m).
 Superficie mínima: 0,3 mm² (huella de 67 m²).</translation>
@@ -813,7 +813,7 @@ Superficie mínima: 0,3 mm² (huella de 67 m²).</translation>
     <message>
         <source>Boulder cluster</source>
         <comment>Name of symbol 207</comment>
-        <translation>Agrupamiento de peñas</translation>
+        <translation>Grupo de Boulder</translation>
     </message>
     <message>
         <source>A distinct group of boulders so closely clustered together that they cannot be marked individually. The boulders in the cluster should be higher than 1 m.
@@ -822,7 +822,7 @@ To be able to show the distinction between neighbouring (maximum 30 m apart) bou
 The symbol is orientated to north.
 Footprint: 12 m x 10 m.</source>
         <comment>Description of symbol 207</comment>
-        <translation type="unfinished">Un grupo de cantos rodados tan agrupados que no pueden ser marcados individualmente. Los cantos rodados del grupo deben tener una altura superior a 1 m.
+        <translation>Un grupo de cantos rodados tan agrupados que no pueden ser marcados individualmente. Los cantos rodados del grupo deben tener una altura superior a 1 m.
 Un grupo de rocas debe ser fácilmente identificable como un grupo de rocas.
 Para poder mostrar la distinción entre grupos de cantos rodados vecinos (separados por un máximo de 30 m) con una diferencia significativa en el tamaño de los cantos rodados, se permite ampliar este símbolo al 120% (longitud del borde 0,96 mm) para algunos de los grupos de cantos rodados.
 El símbolo está orientado al norte.
@@ -831,17 +831,17 @@ Huella: 12 m x 10 m.</translation>
     <message>
         <source>Boulder cluster, large</source>
         <comment>Name of symbol 207.1</comment>
-        <translation>Agrupamiento de peñas, grande</translation>
+        <translation>Grupo de Boulder, grande</translation>
     </message>
     <message>
         <source>To be able to show the distinction between neighbouring (maximum 30 m apart) boulder clusters with significant difference in boulder size, it is permitted to use this symbol instead of regular Boulder cluster (207) for some of the boulder clusters.</source>
         <comment>Description of symbol 207.1</comment>
-        <translation type="unfinished">Para poder mostrar la distinción entre grupos de cantos rodados vecinos (separados por un máximo de 30 m) con una diferencia significativa en el tamaño de los cantos rodados, se permite utilizar este símbolo en lugar del grupo de cantos rodados normal (207) para algunos de los grupos de cantos rodados.</translation>
+        <translation>Para poder mostrar la distinción entre grupos de cantos rodados vecinos (separados por un máximo de 30 m) con una diferencia significativa en el tamaño de los cantos rodados, se permite utilizar este símbolo en lugar del grupo de cantos rodados normal (207) para algunos de los grupos de cantos rodados.</translation>
     </message>
     <message>
         <source>Boulder field</source>
         <comment>Name of symbol 208</comment>
-        <translation>Peñascal</translation>
+        <translation>Campo de Boulder</translation>
     </message>
     <message>
         <source>An area which is covered with so many scattered blocks of stone that they cannot be marked individually, is shown with randomly placed and orientated solid triangles. A boulder field will generally not impact runnability. If the runnability of the boulder field is reduced, symbol 209 (dense boulder field) should be used or the symbol should be combined with a stony ground symbol.
@@ -850,7 +850,7 @@ The maximum centre to centre distance between neighbouring triangles is 1.2 mm. 
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208</comment>
-        <translation type="unfinished">Una zona cubierta por tantos bloques de piedra dispersos que no pueden marcarse individualmente, se muestra con triángulos sólidos colocados y orientados al azar. Por lo general, un campo de piedras no afecta a la transitabilidad. Si la transitabilidad del campo de cantos rodados es reducida, deberá utilizarse el símbolo 209 (campo de cantos rodados densos) o el símbolo deberá combinarse con un símbolo de terreno pedregoso.
+        <translation>Una zona cubierta por tantos bloques de piedra dispersos que no pueden marcarse individualmente, se muestra con triángulos sólidos colocados y orientados al azar. Por lo general, un campo de piedras no afecta a la transitabilidad. Si la transitabilidad del campo de cantos rodados es reducida, deberá utilizarse el símbolo 209 (campo de cantos rodados densos) o el símbolo deberá combinarse con un símbolo de terreno pedregoso.
 Deben utilizarse como mínimo dos triángulos. Se puede utilizar un triángulo si se combina con otros símbolos de roca (por ejemplo, directamente debajo de los símbolos de acantilado (201, 202), adyacentes a los símbolos de roca (204-206) o combinados con símbolos de suelo pedregoso (210-212)).
 La distancia máxima entre centros de triángulos vecinos es de 1,2 mm. La distancia mínima de centro a centro entre triángulos vecinos es de 0,75 mm.
 Densidad: 0,8-1 símbolo / mm². Para poder mostrar diferencias de altura evidentes dentro de un campo de cantos rodados, se permite ampliar algunos de los triángulos hasta el 120%.
@@ -859,7 +859,7 @@ Superficie del triángulo individual: 12 m x 6 m.</translation>
     <message>
         <source>Boulder field, single triangle</source>
         <comment>Name of symbol 208.1</comment>
-        <translation>Peñascal, triángulo único</translation>
+        <translation>Campo de cantos rodados, triángulo simple</translation>
     </message>
     <message>
         <source>An area which is covered with so many scattered blocks of stone that they cannot be marked individually, is shown with randomly placed and orientated solid triangles. A boulder field will generally not impact runnability. If the runnability of the boulder field is reduced, symbol 209 (dense boulder field) should be used or the symbol should be combined with a stony ground symbol.
@@ -868,7 +868,7 @@ The maximum centre to centre distance between neighbouring triangles is 1.2 mm. 
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208.1</comment>
-        <translation type="unfinished">Una zona cubierta por tantos bloques de piedra dispersos que no pueden marcarse individualmente, se muestra con triángulos sólidos colocados y orientados al azar. Por lo general, un campo de piedras no afecta a la transitabilidad. Si la transitabilidad del campo de cantos rodados es reducida, deberá utilizarse el símbolo 209 (campo de cantos rodados densos) o el símbolo deberá combinarse con un símbolo de terreno pedregoso.
+        <translation>Una zona cubierta por tantos bloques de piedra dispersos que no pueden marcarse individualmente, se muestra con triángulos sólidos colocados y orientados al azar. Por lo general, un campo de piedras no afecta a la transitabilidad. Si la transitabilidad del campo de cantos rodados es reducida, deberá utilizarse el símbolo 209 (campo de cantos rodados densos) o el símbolo deberá combinarse con un símbolo de terreno pedregoso.
 Deben utilizarse como mínimo dos triángulos. Se puede utilizar un triángulo si se combina con otros símbolos de roca (por ejemplo, directamente debajo de los símbolos de acantilado (201, 202), adyacentes a los símbolos de roca (204-206) o combinados con símbolos de suelo pedregoso (210-212)).
 La distancia máxima entre centros de triángulos vecinos es de 1,2 mm. La distancia mínima de centro a centro entre triángulos vecinos es de 0,75 mm.
 Densidad: 0,8-1 símbolo / mm². Para poder mostrar diferencias de altura evidentes dentro de un campo de cantos rodados, se permite ampliar algunos de los triángulos hasta el 120%.
@@ -877,17 +877,17 @@ Superficie del triángulo individual: 12 m x 6 m.</translation>
     <message>
         <source>Boulder field, single triangle, enlarged</source>
         <comment>Name of symbol 208.2</comment>
-        <translation>Peñascal, triángulo único, agrandado</translation>
+        <translation>Campo de cantos rodados, triángulo simple, ampliado</translation>
     </message>
     <message>
         <source>To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
         <comment>Description of symbol 208.2</comment>
-        <translation type="unfinished">Para poder mostrar diferencias de altura evidentes dentro de un campo de cantos rodados, se permite ampliar algunos de los triángulos al 120%.</translation>
+        <translation>Para poder mostrar diferencias de altura evidentes dentro de un campo de cantos rodados, se permite ampliar algunos de los triángulos al 120%.</translation>
     </message>
     <message>
         <source>Dense boulder field</source>
         <comment>Name of symbol 209</comment>
-        <translation>Peñascal denso</translation>
+        <translation>Denso campo de rocas</translation>
     </message>
     <message>
         <source>An area which is covered with so many blocks of stone that they cannot be marked individually and the runnability is affected, is shown with randomly placed and orientated solid triangles. A minimum of two triangles must be used.
@@ -895,7 +895,7 @@ The maximum centre to centre distance between neighbouring triangles is 0.6 mm.
 Density: 2-3 symbols / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 209</comment>
-        <translation type="unfinished">Un área que está cubierta por tantos bloques de piedra que no pueden marcarse individualmente y la capacidad de recorrido se ve afectada, se muestra con triángulos sólidos colocados y orientados al azar. Se debe utilizar un mínimo de dos triángulos.
+        <translation>Un área que está cubierta por tantos bloques de piedra que no pueden marcarse individualmente y la capacidad de recorrido se ve afectada, se muestra con triángulos sólidos colocados y orientados al azar. Se debe utilizar un mínimo de dos triángulos.
 La distancia máxima de centro a centro entre triángulos vecinos es de 0,6 mm.
 Densidad: 2-3 símbolos / mm². Para poder mostrar diferencias de altura evidentes dentro de un campo de cantos rodados, se permite ampliar algunos de los triángulos hasta el 120%.
 Superficie del triángulo individual: 12 m x 6 m.</translation>
@@ -903,7 +903,7 @@ Superficie del triángulo individual: 12 m x 6 m.</translation>
     <message>
         <source>Stony ground, slow running</source>
         <comment>Name of symbol 210</comment>
-        <translation>Terreno pedregoso, carrera lenta</translation>
+        <translation>Suelo pedregoso, carrera lenta</translation>
     </message>
     <message>
         <source>Stony or rocky ground which reduces runnability to about 60-80% of normal speed.
@@ -914,7 +914,7 @@ The minimum centre to centre distance between neighbouring dots is 0.45 mm.
 Density: 3-4 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 210</comment>
-        <translation type="unfinished">Terreno pedregoso o rocoso que reduce la capacidad de correr a un 60-80% de la velocidad normal.
+        <translation>Terreno pedregoso o rocoso que reduce la capacidad de correr a un 60-80% de la velocidad normal.
 Los puntos deben estar distribuidos de forma aleatoria, pero sin interferir en la representación de las características del terreno y los objetos importantes. La ilustración sirve como ejemplo de densidad y también se puede utilizar el símbolo del punto (puntos individuales) para dibujar el terreno pedregoso.
 El número mínimo de puntos es de tres (huella de 10 m x 10 m).
 La distancia máxima de centro a centro entre puntos vecinos es de 0,6 mm.
@@ -925,7 +925,7 @@ Para evitar la confusión con el símbolo del límite de vegetación (416), los 
     <message>
         <source>Stony ground, individual dot</source>
         <comment>Name of symbol 210.1</comment>
-        <translation>Terreno pedregoso, punto individual</translation>
+        <translation>Suelo pedregoso, punto individual</translation>
     </message>
     <message>
         <source>Stony or rocky ground which reduces runnability to about 60-80% of normal speed.
@@ -936,7 +936,7 @@ The minimum centre to centre distance between neighbouring dots is 0.45 mm.
 Density: 3-4 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 210.1</comment>
-        <translation type="unfinished">Terreno pedregoso o rocoso que reduce la capacidad de correr a un 60-80% de la velocidad normal.
+        <translation>Terreno pedregoso o rocoso que reduce la capacidad de correr a un 60-80% de la velocidad normal.
 Los puntos deben estar distribuidos de forma aleatoria, pero sin interferir en la representación de las características del terreno y los objetos importantes. La ilustración sirve como ejemplo de densidad y también se puede utilizar el símbolo del punto (puntos individuales) para dibujar el terreno pedregoso.
 El número mínimo de puntos es de tres (huella de 10 m x 10 m).
 La distancia máxima de centro a centro entre puntos vecinos es de 0,6 mm.
@@ -947,7 +947,7 @@ Para evitar la confusión con el símbolo del límite de vegetación (416), los 
     <message>
         <source>Stony ground, walk</source>
         <comment>Name of symbol 211</comment>
-        <translation>Terreno pedregoso, caminar</translation>
+        <translation>Suelo pedregoso, caminar</translation>
     </message>
     <message>
         <source>Stony or rocky ground which reduces the runnability significantly (to about 20-60% of normal speed).
@@ -958,7 +958,7 @@ The minimum centre to centre distance between neighbouring dots is 0.32 mm.
 Density: 6-8 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 211</comment>
-        <translation type="unfinished">Terreno pedregoso o rocoso que reduce significativamente la capacidad de correr (a un 20-60% de la velocidad normal).
+        <translation>Terreno pedregoso o rocoso que reduce significativamente la capacidad de correr (a un 20-60% de la velocidad normal).
 Los puntos deben estar distribuidos de forma aleatoria, pero sin interferir en la representación de las características del terreno y los objetos importantes. La ilustración sirve como ejemplo de densidad y también se puede utilizar el símbolo del punto (puntos individuales) para dibujar el terreno pedregoso.
 El número mínimo de puntos es de tres (huella de 8 m x 8 m).
 La distancia máxima de centro a centro entre puntos vecinos es de 0,4 mm.
@@ -969,7 +969,7 @@ Para evitar la confusión con el símbolo del límite de vegetación (416), los 
     <message>
         <source>Stony ground, fight</source>
         <comment>Name of symbol 212</comment>
-        <translation>Terreno pedregoso, bregar</translation>
+        <translation>Terreno pedregoso, lucha</translation>
     </message>
     <message>
         <source>Stony or rocky ground which is hardly passable (less than 20% of normal speed).
@@ -980,7 +980,7 @@ The minimum centre to centre distance between neighbouring dots is 0.25 mm.
 Density: 10-12 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 212</comment>
-        <translation type="unfinished">Terreno pedregoso o rocoso difícilmente transitable (menos del 20% de la velocidad normal).
+        <translation>Terreno pedregoso o rocoso difícilmente transitable (menos del 20% de la velocidad normal).
 Los puntos deben estar distribuidos aleatoriamente, pero no deben interferir en la representación de las características del terreno y los objetos importantes. La ilustración sirve como ejemplo de densidad y también se puede utilizar el símbolo del punto (puntos individuales) para dibujar el terreno pedregoso.
 El número mínimo de puntos es de tres (huella de 7 m x 7 m).
 La distancia máxima de centro a centro entre puntos vecinos es de 0,32 mm.
@@ -991,7 +991,7 @@ Para evitar la confusión con el símbolo del límite de vegetación (416), los 
     <message>
         <source>Sandy ground</source>
         <comment>Name of symbol 213</comment>
-        <translation>Terreno despejado y arenoso</translation>
+        <translation>Suelo arenoso</translation>
     </message>
     <message>
         <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.
@@ -4435,8 +4435,9 @@ Huella: 7,5 m x 7,5 m.</translation>
 2*0.14 mm – footprint 8.7 m)
 The outer boundary lines may be replaced with other black line symbols, such as symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.</source>
         <comment>Description of symbol 502</comment>
-        <translation>La anchura debería dibujarse a escala, pero no menor que la anchura mínima (0,3 + 2*0,14 - huella 8,7 m)
-Las líneas delimitadoras exteriores pueden remplazarse con otros símbolos de líneas negras, tales como el 516 (valla), 518 (valla infranqueable), 513 (muro) o 515 (muro infranqueable) si el elemento está tan próximo al borde de la carretera que no puede representarse en la práctica como separado.</translation>
+        <translation>La anchura debe dibujarse a escala, pero no inferior a la anchura mínima (0,3 +
+2*0,14 mm - huella 8,7 m)
+Las líneas limítrofes exteriores pueden sustituirse por otros símbolos de líneas negras, como el símbolo 516 (valla), el 518 (valla infranqueable), el 513 (muro) o el 515 (muro infranqueable) si el elemento está tan cerca del borde de la carretera que no puede mostrarse prácticamente como un símbolo independiente.</translation>
     </message>
     <message>
         <source>Wide road, 0.5mm width</source>
@@ -4530,9 +4531,9 @@ Transitabilidad: permite la misma velocidad de carrera que el terreno circundant
 The definition of the symbol must be given on the map.
 Runnability: easy running.</source>
         <comment>Description of symbol 508.1</comment>
-        <translation>Una vereda o una traza prominente (pista de extracción forestal, pista arenosa, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr. La definición del símbolo se debe proporcionar en el mapa.
-La definición del símbolo se debe proporcionar en el mapa.
-Velocidad de carrera: fácil.</translation>
+        <translation>Un paso por el bosque o un rastro prominente (pista de extracción forestal, pista de arena, pista de esquí) a través del terreno que no tiene un sendero transitable y distinguible a lo largo de él. La definición del símbolo debe figurar en el mapa.
+La definición del símbolo debe figurar en el mapa.
+Transitabilidad: fácil de correr.</translation>
     </message>
     <message>
         <source>Narrow ride, green 20% background</source>
@@ -4544,9 +4545,9 @@ Velocidad de carrera: fácil.</translation>
 The definition of the symbol must be given on the map.
 Runnability: slow running.</source>
         <comment>Description of symbol 508.2</comment>
-        <translation>Una vereda o una traza prominente (pista de extracción forestal, pista arenosa, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr. La definición del símbolo se debe proporcionar en el mapa.
-La definición del símbolo se debe proporcionar en el mapa.
-Velocidad de carrera: lenta.</translation>
+        <translation>Un paso por el bosque o un rastro prominente (pista de extracción forestal, pista de arena, pista de esquí) a través del terreno que no tiene un sendero transitable y distinguible a lo largo de él. La definición del símbolo debe figurar en el mapa.
+La definición del símbolo debe figurar en el mapa.
+Transitabilidad: carrera lenta.</translation>
     </message>
     <message>
         <source>Narrow ride, green 50% background</source>
@@ -4572,9 +4573,9 @@ Transitabilidad: caminar.</translation>
 The definition of the symbol must be given on the map.
 Runnability: normal runnability.</source>
         <comment>Description of symbol 508.4</comment>
-        <translation>Una vereda o una traza prominente (pista de extracción forestal, pista arenosa, pista de esquí) a través del terreno que no constituye un camino perceptible por el que correr. La definición del símbolo se debe proporcionar en el mapa.
-La definición del símbolo se debe proporcionar en el mapa.
-Velocidad de carrera: normal.</translation>
+        <translation>Un paso por el bosque o un rastro prominente (pista de extracción forestal, pista de arena, pista de esquí) a través del terreno que no tiene un sendero transitable y distinguible a lo largo de él. La definición del símbolo debe figurar en el mapa.
+La definición del símbolo debe figurar en el mapa.
+Transitabilidad: corredor normal.</translation>
     </message>
     <message>
         <source>Railway</source>
@@ -14558,7 +14559,7 @@ Símbolos del mapa: ISOM 206, 207</translation>
     <message>
         <source>|D| Boulder field</source>
         <comment>Name of symbol 2.5</comment>
-        <translation>| D | Campo de canto rodado</translation>
+        <translation>|D| Campo de piedras grandes</translation>
     </message>
     <message>
         <source>An area covered by so many boulders that they cannot be individually mapped.
