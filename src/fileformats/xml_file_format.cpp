@@ -723,8 +723,8 @@ void XMLFileImporter::validateGeoreferencing()
 	// Check for georeferencings with inconsistent declination/grivation,
 	// e.g. from GH-1206 (georef setup bug)
 	auto valid_georef = Georeferencing(loaded_georef);
-	// Keep grivation, force calculation of declination
-	valid_georef.setGrivation(loaded_georef.getGrivation());
+	// Use grivation, force calculation of consistent declination
+	valid_georef.setDeclination(loaded_georef.getPreciseDeclination());
 	if (!qFuzzyCompare(loaded_georef.getDeclination(), valid_georef.getDeclination()))
 	{
 		map->setGeoreferencing(valid_georef);

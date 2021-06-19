@@ -121,8 +121,8 @@ void commonTestData()
 	        << GeorefCoreData { 15000, 1.72, 2.72, { 495133, 129609 }, QStringLiteral("EPSG"), { QStringLiteral("21781") } }
 	        << 0U;
 	QTest::newRow("Launch Pad 39A - USA, Florida, WGS 84/UTM zone 17")
-	        << OcdGeorefFields { -7.06000000, 15000, 538705, 3164567, 2017, 1 }
-	        << GeorefCoreData { 15000, -6.87, -7.06, { 538705, 3164567 }, QStringLiteral("UTM"), { QStringLiteral("17") } }
+	        << OcdGeorefFields { -7.05960000, 15000, 538705, 3164567, 2017, 1 }
+	        << GeorefCoreData { 15000, -6.87, -7.0596, { 538705, 3164567 }, QStringLiteral("UTM"), { QStringLiteral("17") } }
 	        << 0U;
 	QTest::newRow("Brandenburger Tor - Germany, DHDN/3-degree Gauss-Kruger zone 4")
 	        << OcdGeorefFields { 2.84, 15000, 4571442, 5807888, 8004, 1 }
