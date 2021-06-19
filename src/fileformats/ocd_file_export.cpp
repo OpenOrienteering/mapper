@@ -549,7 +549,7 @@ QString stringForViewPar(const MapView& view, const MapCoord& area_offset, quint
 	else
 	{
 		const auto center = view.center() - area_offset;
-		const auto hatched = view.getMap()->isAreaHatchingEnabled() ? 1 : 0;
+		const auto hatched = view.getMap()->isAreaHatchingEnabled() ? '1' : '0';
 		out << qSetRealNumberPrecision(6)
 		    << "\tx" << center.x()
 		    << "\ty" << -center.y()
@@ -564,7 +564,7 @@ QString stringForViewPar(const MapView& view, const MapCoord& area_offset, quint
 	}
 	if (version > 10)
 	{
-		const auto keyline = view.getMap()->isBaselineViewEnabled() ? 1 : 0;
+		const auto keyline = view.getMap()->isBaselineViewEnabled() ? '1' : '0';
 		out << "\tk" << keyline;
 	}
 	return string_1030;

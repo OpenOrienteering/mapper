@@ -1043,7 +1043,6 @@ void OcdFileImport::importView(const QString& param_string)
 	
 	bool zoom_ok = false;
 	double zoom=1.0, offset_x=0.0, offset_y=0.0;
-	int hatched = 0, keyline =0;
 	
 	int i = param_string.indexOf(QLatin1Char('\t'), 0);
 	; // skip first word for this entry type
@@ -1058,30 +1057,20 @@ void OcdFileImport::importView(const QString& param_string)
 			// empty item
 			break;
 		case 'x':
-			{
-				offset_x = param_value.toDouble();
-				break;
-			}
+			offset_x = param_value.toDouble();
+			break;
 		case 'y':
-			{
-				offset_y = param_value.toDouble();
-				break;
-			}
+			offset_y = param_value.toDouble();
+			break;
 		case 'z':
-			{
-				zoom = param_value.toDouble(&zoom_ok);
-				break;
-			}
+			zoom = param_value.toDouble(&zoom_ok);
+			break;
 		case 'h':
-			{
-				hatched = param_value.toInt();	// returns 0 for failure which is the default anyway
-				break;
-			}
+			map->setAreaHatchingEnabled(param_value.toInt() != 0);
+			break;
 		case 'k':
-			{
-				keyline = param_value.toInt();	// returns 0 for failure which is the default anyway
-				break;
-			}
+			map->setBaselineViewEnabled(param_value.toInt() != 0);
+			break;
 		default:
 			; // nothing
 		}
@@ -1094,11 +1083,6 @@ void OcdFileImport::importView(const QString& param_string)
 		if (zoom_ok)
 		{
 			view->setZoom(zoom);
-		}
-		if (map)
-		{
-			map->setAreaHatchingEnabled(hatched != 0);
-			map->setBaselineViewEnabled(keyline != 0);
 		}
 	}
 }
