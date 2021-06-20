@@ -26,6 +26,7 @@
 #include <iosfwd>
 #include <iterator>
 #include <new>
+#include <stdexcept>
 #include <type_traits>
 #include <utility>
 
@@ -362,15 +363,28 @@ std::unique_ptr<Template> Template::loadTemplateConfiguration(QXmlStreamReader& 
 Q_ASSERT(temp->passpoints.size() == 0);
 			temp->passpoints.reserve(qMin(num_passpoints, 10)); // 10 is not a limit
 			
+			bool other_transform_loaded = false;
 			while (xml.readNextStartElement())
 			{
 				QStringRef role = xml.attributes().value(QLatin1String("role"));
 				if (xml.name() == QLatin1String("transformation"))
 				{
 					if (role == QLatin1String("active"))
+					{
 						temp->transform.load(xml);
+					}
 					else if (xml.attributes().value(QLatin1String("role")) == QLatin1String("other"))
-						temp->other_transform.load(xml);
+					{
+						try {
+							temp->other_transform.load(xml);
+							other_transform_loaded = true;
+						}
+						catch (const std::range_error& e)
+						{
+							// Assuming that ensureBoundsForQint32 failed. Cf. map_coord.cpp and GH-1969.
+							qDebug("Unable to load %s", xml.qualifiedName().toLocal8Bit().constData());
+						}
+					}
 					else
 					{
 						qDebug("%s", xml.qualifiedName().toLocal8Bit().constData());
@@ -400,6 +414,10 @@ Q_ASSERT(temp->passpoints.size() == 0);
 					qDebug("%s", xml.qualifiedName().toLocal8Bit().constData());
 					xml.skipCurrentElement(); // unsupported
 				}
+			}
+			if (!other_transform_loaded)
+			{
+				temp->other_transform = temp->transform;
 			}
 		}
 		else if (!temp->loadTypeSpecificTemplateConfiguration(xml))
