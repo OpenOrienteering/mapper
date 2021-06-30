@@ -450,8 +450,7 @@ Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 112</comment>
         <translation>Gropar och hålor med tydliga, branta sidor som inte kan redovisas skalenligt med symbol 104 (skärning).
 Minsta djup: 1 m. Minsta bredd: 1 m.
-En grop större än 5 x 5 m bör i normalfallet överdrivas och redovisas med symbol 104 (skärning). Gropar utan branta sidor redovisas med symbol 111
-(liten grop).
+En grop större än 5 x 5 m bör i normalfallet överdrivas och redovisas med symbol 104 (skärning). Gropar utan branta sidor redovisas med symbolen Liten grop (111).
 Symbolen får inte vidröra eller överlappa andra bruna symboler. Symbolens tyngdpunkt anger läget. Symbolen orienteras mot norr.
 Utbredning: 10,5 x 12 m.</translation>
     </message>
@@ -469,8 +468,7 @@ The minimum centre to centre distance between neighbouring dots is 0.5 mm.
 Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.</source>
         <comment>Description of symbol 113</comment>
-        <translation>Ett område med små gropar och/eller höjder som är alltför komplicerat för att redovisas i detalj, eller andra typer av ojämn mark som är tydligt
-urskiljbart och har liten inverkan på löpbarheten.
+        <translation>Ett område med små gropar och/eller höjder som är alltför komplicerat för att redovisas i detalj, eller andra typer av ojämn mark som är tydligt urskiljbart och har liten inverkan på löpbarheten.
 Punkterna ska placeras slumpmässigt utan att påverka läsbarheten för viktiga terrängföremål.
 Minst tre punkter (10 x 10 m).
 Största tillåtna avståndet mellan närliggande punkter är 0,6 mm (centrummått).
@@ -516,13 +514,12 @@ The minimum centre to centre distance between neighbouring dots is 0.25 mm.
 Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.</source>
         <comment>Description of symbol 114</comment>
-        <translation>Ett område med små gropar och/eller höjder som är alltför komplicerat för att redovisas i detalj, eller andra typer av ojämn mark som är tydligt
-urskiljbart och påverkar löpbarheten.
+        <translation>Ett område med små gropar och/eller höjder som är alltför komplicerat för att redovisas i detalj, eller andra typer av ojämn mark som är tydligt urskiljbart och påverkar löpbarheten.
 Punkterna ska placeras slumpmässigt utan att påverka läsbarheten för viktiga terrängföremål.
 Minst tre punkter (7 x 7 m).
 Största tillåtna avståndet mellan närliggande punkter är 0,38 mm (centrummått).
 Minsta tillåtna avståndet mellan närliggande punkter är 0,25 mm (centrummått).
-Höjdkurvor ska inte göra upppehåll i småkuperad terräng.
+Höjdkurvor ska inte göra uppehåll i småkuperad terräng.
 Punkterna ska inte arrangeras i raka linjer.</translation>
     </message>
     <message>
@@ -556,11 +553,10 @@ When an impassable cliff drops straight into water, making it impossible to pass
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201</comment>
         <translation>Opasserbar brant, stenbrott eller skärning som är så hög och brant att den inte kan eller är farlig att passera.
-Lutningsstreck kan utelämnas om utrymmet är begränsat. Baslinjens avslutningar kan vara avrundade eller raka. Vid redovisning i plan måste
-baslinjen vara minst 0,35 mm bred. Kortare lutningsstreck kan användas vid linjesluten.
-Avståndet mellan två opasserbara branter eller mellan opasserbar brant och andra opasserbara symboler måste vara mer än 0,3 mm.
+Lutningsstreck kan utelämnas om utrymmet är begränsat vid vertikala branter. Baslinjens avslutningar kan vara avrundade eller raka. Kortare lutningsstreck kan användas vid linjesluten.
+Avståndet mellan två opasserbara branter eller mellan opasserbar brant och andra opasserbara föremål måste vara mer än 0,25 mm på kartan.
 När en brant ligger i anslutning till vatten så att passage längs med stranden nedanför branten inte är möjlig, utelämnas strandkonturen eller ska lutningsstrecken tydligt gå över strandkantlinjen. En opasserbar brant ska ansluta till höjdkurvorna.
-Kortaste längd, rakt linjeslut: 0,6 mm (9 m), runt linjeslut: 0,7 mm (10,5 m).</translation>
+Kortaste längd: 0,6 mm (9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
@@ -641,7 +637,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>En passerbar brant eller gruva. Om fallriktningen inte klart framgår av kurvbilden, eller för att förbättra läsbarheten, kan taggar ritas nedåt i lutningens riktning.
+För icke-vertikala branter så ska taggarna redovisa brantens horisontella utsträckning. Baslinjens avslutningar ska vara rundade om taggar inte ritas. Passager mellan branter ska vara minst 0,2 mm. En brant ska ansluta till höjdkurvorna.
+Att passera en brant påverkar normalt löpbarheten.
+Lägsta höjd: 1 m.
+Minsta längd: 0.6 mm (9 m).</translation>
     </message>
     <message>
         <source>Cliff, minimum size</source>
@@ -655,7 +655,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>En passerbar brant eller gruva. Om fallriktningen inte klart framgår av kurvbilden, eller för att förbättra läsbarheten, kan taggar ritas nedåt i lutningens riktning.
+För icke-vertikala branter så ska taggarna redovisa brantens horisontella utsträckning. Baslinjens avslutningar ska vara rundade om taggar inte ritas. Passager mellan branter ska vara minst 0,2 mm. En brant ska ansluta till höjdkurvorna.
+Att passera en brant påverkar normalt löpbarheten.
+Lägsta höjd: 1 m.
+Minsta längd: 0.6 mm (9 m).</translation>
     </message>
     <message>
         <source>Cliff, with tags</source>
@@ -683,7 +687,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>En passerbar brant eller gruva. Om fallriktningen inte klart framgår av kurvbilden, eller för att förbättra läsbarheten, kan taggar ritas nedåt i lutningens riktning.
+För icke-vertikala branter så ska taggarna redovisa brantens horisontella utsträckning. Baslinjens avslutningar ska vara rundade om taggar inte ritas. Passager mellan branter ska vara minst 0,2 mm. En brant ska ansluta till höjdkurvorna.
+Att passera en brant påverkar normalt löpbarheten.
+Lägsta höjd: 1 m.
+Minsta längd: 0.6 mm (9 m).</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size (from ISOM2000)</source>
@@ -715,7 +723,7 @@ Utbredning: 10,5 x 12 m.</translation>
     <message>
         <source>Cave or rocky pit (with a distinct entrance)</source>
         <comment>Name of symbol 203.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grotta eller gruvhål (med en tydlig ingång)</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
@@ -1055,7 +1063,7 @@ Minsta yta (innermått): 0,55 x 0,55 mm (utbredning 8 x 8 m).</translation>
     <message>
         <source>Uncrossable body of water (dominant), with bank line</source>
         <comment>Name of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opasserbar vattenyta (dominant), med konturlinje</translation>
     </message>
     <message>
         <source>The black bank line emphasises that the feature is uncrossable.
@@ -1071,7 +1079,7 @@ Minsta yta (innermått): 0,55 x 0,55 mm (utbredning 8 x 8 m).</translation>
     <message>
         <source>Uncrossable body of water (dominant)</source>
         <comment>Name of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opasserbar vattenyta (dominant)</translation>
     </message>
     <message>
         <source>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
@@ -1085,12 +1093,12 @@ Minsta yta (innermått): 0,55 x 0,55 mm (utbredning 8 x 8 m).</translation>
     <message>
         <source>Uncrossable body of water, bank line</source>
         <comment>Name of symbol 301.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opasserbar vattenyta, konturlinje</translation>
     </message>
     <message>
         <source>A black bank line indicates that the feature cannot be crossed.</source>
         <comment>Description of symbol 301.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>En svart linje indikerar att föremålet inte kan korsas.</translation>
     </message>
     <message>
         <source>Shallow body of water, with solid outline</source>
@@ -1131,22 +1139,22 @@ Minsta yta (helton): 0,55 x 0,55 mm (utbredning 8 x 8 m).</translation>
     <message>
         <source>Shallow body of water, solid outline</source>
         <comment>Name of symbol 302.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grund vattenyta, solid konturlinje</translation>
     </message>
     <message>
         <source>Use this symbol to represent the outline of a shallow body of water which is not seasonal or periodic.</source>
         <comment>Description of symbol 302.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Använd symbolen till att representera konturen av en grund vattenyta som inte tidvis är uttorkad.</translation>
     </message>
     <message>
         <source>Shallow body of water, dashed outline</source>
         <comment>Name of symbol 302.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grund vattenyta, streckad konturlinje</translation>
     </message>
     <message>
         <source>Use this symbol to represent the outline of a shallow seasonal or periodic body of water.</source>
         <comment>Description of symbol 302.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Använd symbolen till att representera konturen av en grund vattenyta som tidvis är uttorkad.</translation>
     </message>
     <message>
         <source>Small shallow body of water (full colour)</source>
@@ -6108,7 +6116,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Black below light browns</source>
         <comment>Color 15</comment>
-        <translation type="unfinished">Väg sidlinje</translation>
+        <translation>Svart under ljusbrun</translation>
     </message>
     <message>
         <source>Opaque Blue</source>
@@ -7617,7 +7625,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
         <comment>Description of symbol 208</comment>
-        <translation type="unfinished">Ett område täckt av så många stenblock att de inte kan redovisas individuellt, redovisas med slumpmässigt utplacerade fyllda roterade trianglar, sidförhållande 8:6:5. Minst 2 trianglar ska användas. The going is indicated by the density of the triangles. För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120%.</translation>
+        <translation>Ett område täckt av så många stenblock att de inte kan redovisas individuellt, redovisas med slumpmässigt utplacerade fyllda roterade trianglar, sidförhållande 8:6:5. Minst 2 trianglar ska användas. Löpbarheten indikeras av tätheten mellan trianglarna. För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120%.</translation>
     </message>
     <message>
         <source>Boulder field, large</source>
@@ -8276,7 +8284,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
         <comment>Description of symbol 208</comment>
-        <translation type="unfinished">Ett område täckt av så många stenblock att de inte kan redovisas individuellt, redovisas med slumpmässigt utplacerade fyllda roterade trianglar, sidförhållande 8:6:5. Minst 2 trianglar ska användas. The going is indicated by the density of the triangles. För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120%.</translation>
+        <translation>Ett område täckt av så många stenblock att de inte kan redovisas individuellt, redovisas med slumpmässigt utplacerade fyllda roterade trianglar, sidförhållande 8:6:5. Minst 2 trianglar ska användas. Löpbarheten är indikerad av tätheten mellan trianglar. För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120%.</translation>
     </message>
     <message>
         <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
