@@ -132,6 +132,27 @@ void GeoreferencingTest::initTestCase()
 
 void GeoreferencingTest::testEmptyProjectedCRS()
 {
+	{
+		ProjTransform t = {};
+		QVERIFY(!t.isValid());
+	}
+	{
+		ProjTransform t = {QString{}};
+		QVERIFY(!t.isValid());
+	}
+	{
+		ProjTransform t = {Georeferencing::geographic_crs_spec, {}};
+		QVERIFY(!t.isValid());
+	}
+	{
+		ProjTransform t = {{}, Georeferencing::geographic_crs_spec, {50, 8}};
+		QVERIFY(!t.isValid());
+	}
+	{
+		auto const t = ProjTransform::crs({});
+		QVERIFY(!t.isValid());
+	}
+	
 	Georeferencing new_georef;
 	QCOMPARE(new_georef.getState(), Georeferencing::Local);
 	QCOMPARE(new_georef.getScaleDenominator(), 1000u);
@@ -455,8 +476,19 @@ void GeoreferencingTest::testProjection()
 	
 	// geographic to projected
 	LatLon lat_lon(latitude, longitude);
+	
+	auto t = ProjTransform{Georeferencing::geographic_crs_spec, proj, lat_lon};
+	QVERIFY(t.isValid());
+	
 	bool ok;
-	QPointF proj_coord = georef.toProjectedCoords(lat_lon, &ok);
+	QPointF proj_coord = t.transform(QPointF{longitude, latitude}, &ok);
+	QVERIFY(ok);
+	if (std::fabs(proj_coord.x() - easting) > max_dist_error)
+		QCOMPARE(QString::number(proj_coord.x(), 'f'), QString::number(easting, 'f'));
+	if (std::fabs(proj_coord.y() - northing) > max_dist_error)
+		QCOMPARE(QString::number(proj_coord.y(), 'f'), QString::number(northing, 'f'));
+	
+	proj_coord = georef.toProjectedCoords(lat_lon, &ok);
 	QVERIFY(ok);
 	
 	if (std::fabs(proj_coord.x() - easting) > max_dist_error)
@@ -464,8 +496,18 @@ void GeoreferencingTest::testProjection()
 	if (std::fabs(proj_coord.y() - northing) > max_dist_error)
 		QCOMPARE(QString::number(proj_coord.y(), 'f'), QString::number(northing, 'f'));
 	
+	
 	// projected to geographic
 	proj_coord = QPointF(easting, northing);
+	
+	t = ProjTransform{proj, Georeferencing::geographic_crs_spec, lat_lon};
+	QPointF geog_coord = t.transform(proj_coord, &ok);
+	QVERIFY(ok);
+	if (std::fabs(geog_coord.y() - latitude) > max_angl_error)
+		QCOMPARE(QString::number(geog_coord.y(), 'f'), QString::number(latitude, 'f'));
+	if (std::fabs(geog_coord.x() - longitude) > (max_angl_error * std::cos(qDegreesToRadians(latitude))))
+		QCOMPARE(QString::number(geog_coord.x(), 'f'), QString::number(longitude, 'f'));
+	
 	lat_lon = georef.toGeographicCoords(proj_coord, &ok);
 	QVERIFY(ok);
 	if (std::fabs(lat_lon.latitude() - latitude) > max_angl_error)
@@ -514,6 +556,53 @@ void GeoreferencingTest::testProjection()
 	OSRDestroySpatialReference(geo_srs);
 	OSRDestroySpatialReference(map_srs);
 #endif  // MAPPER_TEST_GDAL
+}
+
+
+void GeoreferencingTest::testCrsToCrs()
+{
+	const double max_dist_error = 1.0; // meter
+	
+	QFETCH(QString, crs1);
+	QFETCH(double, x1);
+	QFETCH(double, y1);
+	
+	QFETCH(QString, crs2);
+	QFETCH(double, x2);
+	QFETCH(double, y2);
+	
+	QFETCH(double, latitude);
+	QFETCH(double, longitude);
+	
+	auto t = ProjTransform{crs1, crs2, {latitude, longitude}};
+	bool ok;
+	auto const p2 = t.transform({x1, y1}, &ok);
+	QVERIFY(ok);
+	if (std::fabs(p2.x() - x2) > max_dist_error)
+		QCOMPARE(QString::number(p2.x(), 'f'), QString::number(x2, 'f'));
+	if (std::fabs(p2.y() - y2) > max_dist_error)
+		QCOMPARE(QString::number(p2.y(), 'f'), QString::number(y2, 'f'));
+}
+
+void GeoreferencingTest::testCrsToCrs_data()
+{
+	// Source CRS and coordinates
+	QTest::addColumn<QString>("crs1");
+	QTest::addColumn<double>("x1");
+	QTest::addColumn<double>("y1");
+	// Target CRS and coordinates
+	QTest::addColumn<QString>("crs2");
+	QTest::addColumn<double>("x2");
+	QTest::addColumn<double>("y2");
+	// Center of area of interest
+	QTest::addColumn<double>("latitude");
+	QTest::addColumn<double>("longitude");
+	
+	// Selected from http://www.lvermgeo.rlp.de/index.php?id=5809,
+	// now https://lvermgeo.rlp.de/de/service/gut-zu-wissen/arbeitet-ihr-gps-empfaenger-korrekt/
+	QTest::newRow("LVermGeo RLP Koblenz") << utm32_spec <<  398125.0 << 5579523.0
+	                                      << gk3_spec   << 3398159.0 << 5581315.0
+	                                      << degFromDMS(50, 21, 32.2) << degFromDMS( 7, 34, 4.0);
 }
 
 
