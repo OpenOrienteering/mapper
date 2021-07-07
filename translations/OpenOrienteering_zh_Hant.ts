@@ -497,7 +497,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="90"/>
         <source>Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation>直接複製</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="103"/>
@@ -538,18 +538,18 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="251"/>
         <source> (Duplicate)</source>
-        <translation type="unfinished"></translation>
+        <translation> (直接複製)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="409"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="466"/>
         <source>Double click to define the color</source>
-        <translation type="unfinished"></translation>
+        <translation>點擊兩次以定義顏色</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="417"/>
         <source>Click to select the name and click again to edit.</source>
-        <translation type="unfinished"></translation>
+        <translation>點擊以選擇名稱，再點擊可編輯.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
@@ -562,42 +562,42 @@
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="87"/>
         <source>&amp;Number of parts:</source>
-        <translation type="unfinished"></translation>
+        <translation>部位的數量(&amp;N):</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="95"/>
         <source>- Private line symbol -</source>
-        <translation type="unfinished"></translation>
+        <translation>- 個人的線性圖例 -</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="96"/>
         <source>- Private area symbol -</source>
-        <translation type="unfinished"></translation>
+        <translation>- 個人的區塊圖例 -</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="99"/>
         <source>Edit private symbol...</source>
-        <translation type="unfinished"></translation>
+        <translation>編輯個人圖例 ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="113"/>
         <source>Combination settings</source>
-        <translation type="unfinished"></translation>
+        <translation>組合圖例的設定</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="227"/>
         <source>Change from public to private symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>從公共的圖例變更成個人的</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="228"/>
         <source>Take the old symbol as template for the private symbol?</source>
-        <translation type="unfinished"></translation>
+        <translation>以舊的圖例作為個人圖例的樣本?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="92"/>
         <source>Symbol %1:</source>
-        <translation type="unfinished"></translation>
+        <translation>圖例 %1:</translation>
     </message>
 </context>
 <context>
@@ -605,145 +605,145 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="67"/>
         <source>Configure grid</source>
-        <translation type="unfinished"></translation>
+        <translation>設定格線</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="69"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>顯示格線</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="70"/>
         <source>Snap to grid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">鎖定格線</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="71"/>
         <source>Choose...</source>
-        <translation type="unfinished"></translation>
+        <translation>選擇...</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="74"/>
         <source>All lines</source>
-        <translation type="unfinished"></translation>
+        <translation>所有線段</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="75"/>
         <source>Horizontal lines</source>
-        <translation type="unfinished"></translation>
+        <translation>水平線段</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="76"/>
         <source>Vertical lines</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直線段</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="128"/>
         <source>Alignment</source>
-        <translation type="unfinished"></translation>
+        <translation>對齊方式</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="78"/>
         <source>Align with magnetic north</source>
-        <translation type="unfinished"></translation>
+        <translation>對齊磁北線</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
         <source>Align with grid north</source>
-        <translation type="unfinished"></translation>
+        <translation>對齊方格北</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="80"/>
         <source>Align with true north</source>
-        <translation type="unfinished"></translation>
+        <translation>對齊正北</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="82"/>
         <source>Additional rotation (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation>額外旋轉 (逆時針):</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="135"/>
         <source>Positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>定位</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="88"/>
         <source>meters in terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>實地上距離(公尺)</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="89"/>
         <source>millimeters on map</source>
-        <translation type="unfinished"></translation>
+        <translation>地圖上距離(公釐)</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="91"/>
         <source>Horizontal spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>水平間距:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="93"/>
         <source>Vertical spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直間距:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="97"/>
         <source>Horizontal offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>水平偏差:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="99"/>
         <source>Vertical offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直偏差:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="136"/>
         <source>Unit:</source>
         <comment>measurement unit</comment>
-        <translation type="unfinished"></translation>
+        <translation>單位:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="124"/>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation>線段顏色:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="125"/>
         <source>Display:</source>
-        <translation type="unfinished"></translation>
+        <translation>顯示:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="171"/>
         <source>Choose grid line color</source>
-        <translation type="unfinished"></translation>
+        <translation>選擇格線顏色</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="255"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>公尺</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="255"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>公釐</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="261"/>
         <source>Origin at: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>距離原點: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="263"/>
         <source>paper coordinates origin</source>
-        <translation type="unfinished"></translation>
+        <translation>紙上座標原點</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="265"/>
         <source>projected coordinates origin</source>
-        <translation type="unfinished"></translation>
+        <translation>投影座標原點</translation>
     </message>
 </context>
 <context>
@@ -751,7 +751,7 @@
     <message>
         <location filename="../src/tools/cut_hole_tool.cpp" line="272"/>
         <source>&lt;b&gt;Click or drag&lt;/b&gt;: Start drawing the hole. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;點擊或拖曳&lt;/b&gt;: 開始編輯孔洞. </translation>
     </message>
 </context>
 <context>
