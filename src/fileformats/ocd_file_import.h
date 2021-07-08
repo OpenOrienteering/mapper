@@ -264,7 +264,6 @@ protected:
 	
 	void setupAreaSymbolCommon(
 	        OcdImportedAreaSymbol* symbol,
-	        bool rotatable,
 	        bool fill_on,
 	        const Ocd::AreaSymbolCommonV8& ocd_symbol,
 	        std::size_t data_size,
