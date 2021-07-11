@@ -2241,7 +2241,7 @@ Footprint: 12 m x 12 m.</source>
     <message>
         <source>Stairway</source>
         <comment>Name of symbol 532</comment>
-        <translation type="unfinished"></translation>
+        <translation>Лестница</translation>
     </message>
     <message>
         <source>A distinct stairway through the terrain which helps to climb very steep slopes or to cross over impassable objects. A stairway going through rock passages or between impassable objects may be drawn without border lines.
@@ -7666,7 +7666,7 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
     <message>
         <source>Pillar</source>
         <comment>Name of symbol 522.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Столб</translation>
     </message>
     <message>
         <source>A pillar is an upright shaft or structure of stone, brick or other material, relatively slender in proportion to its height and any shape in section, used as a building support.
@@ -14466,7 +14466,7 @@ Map symbols: ISOM 112, 113</source>
     <message>
         <source>|D| Depression</source>
         <comment>Name of symbol 1.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Депрессия</translation>
     </message>
     <message>
         <source>A depression or hollow from which the ground rises on all sides. Shown on the map with contour lines.
