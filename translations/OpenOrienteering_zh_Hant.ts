@@ -1312,71 +1312,71 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="75"/>
         <source>When selecting an object, automatically select its symbol, too</source>
-        <translation type="unfinished"></translation>
+        <translation>選取一個物件時，同時自動選擇它的圖例.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="78"/>
         <source>Zoom away from cursor when zooming out</source>
-        <translation type="unfinished"></translation>
+        <translation>縮小時以游標位置為準</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="81"/>
         <source>Drawing tools: set last point on finishing with right click</source>
-        <translation type="unfinished"></translation>
+        <translation>編輯工具: 完成時以點擊右鍵設置最後一個節點</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="84"/>
         <source>Templates: keep settings of closed templates</source>
-        <translation type="unfinished"></translation>
+        <translation>背景圖:保持已關閉之背景圖的設定</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="89"/>
         <source>Edit tool:</source>
-        <translation type="unfinished"></translation>
+        <translation>編輯工具:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="92"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="98"/>
         <source>Retain old shape</source>
-        <translation type="unfinished"></translation>
+        <translation>保留之前的形狀</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="93"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="99"/>
         <source>Reset outer curve handles</source>
-        <translation type="unfinished"></translation>
+        <translation>重置曲線調整柄</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="94"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="100"/>
         <source>Keep outer curve handles</source>
-        <translation type="unfinished"></translation>
+        <translation>維持曲線調整柄</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="95"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="101"/>
         <source>Action on deleting a curve point with %1:</source>
-        <translation type="unfinished"></translation>
+        <translation>使用 %1 刪除曲線節點：</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="104"/>
         <source>Rectangle tool:</source>
-        <translation type="unfinished"></translation>
+        <translation>矩形工具:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="107"/>
         <source>Radius of helper cross:</source>
-        <translation type="unfinished"></translation>
+        <translation>十字輔助線長度：</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="109"/>
         <source>Preview the width of lines with helper cross</source>
-        <translation type="unfinished"></translation>
+        <translation>用十字輔助線預覽線段寬度</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="125"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>編輯器</translation>
     </message>
 </context>
 <context>
@@ -1384,7 +1384,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="649"/>
         <source>Could not write file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>無法寫入檔案: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="338"/>
@@ -1392,7 +1392,9 @@
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>無法儲存檔案
+%1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -1400,19 +1402,19 @@
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="156"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="157"/>
         <source>The map area is large. Use of the fill tool may be very slow. Do you want to use it anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>地圖範圍很大。 使用填滿工具可能會非常緩慢。您還是要使用它嗎？</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="142"/>
         <location filename="../src/tools/fill_tool.cpp" line="176"/>
         <location filename="../src/tools/fill_tool.cpp" line="231"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="143"/>
@@ -2797,78 +2799,78 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="332"/>
         <source>Create a new map</source>
-        <translation type="unfinished"></translation>
+        <translation>建立新的地圖</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="336"/>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>開啟(&amp;O)...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="339"/>
         <source>Open an existing file</source>
-        <translation type="unfinished"></translation>
+        <translation>開啟既有的檔案</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="343"/>
         <source>Open &amp;recent</source>
-        <translation type="unfinished"></translation>
+        <translation>最近開啟的檔案(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="355"/>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>儲存(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="361"/>
         <source>Save &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>另存檔案為(&amp;A)...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="364"/>
         <source>Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="370"/>
         <source>Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>設定...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="375"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="171"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>關閉</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="378"/>
         <source>Close this file</source>
-        <translation type="unfinished"></translation>
+        <translation>關閉此檔案</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="382"/>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation>離開(&amp;X)</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="385"/>
         <source>Exit the application</source>
-        <translation type="unfinished"></translation>
+        <translation>離開應用程式</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="391"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>檔案(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="410"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>一般</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="425"/>
         <source>Open &amp;Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>開啟手册(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="427"/>
@@ -2898,7 +2900,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="443"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>線上協助(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="652"/>
@@ -2923,7 +2925,7 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/main_window.cpp" line="1117"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="454"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="779"/>
@@ -2950,27 +2952,27 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1071"/>
         <source>Autosaving...</source>
-        <translation type="unfinished"></translation>
+        <translation>自動儲存中...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1081"/>
         <source>Autosaving failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>自動儲存失敗!</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1170"/>
         <source>All maps</source>
-        <translation type="unfinished"></translation>
+        <translation>所有的地圖</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1174"/>
         <source>All files</source>
-        <translation type="unfinished"></translation>
+        <translation>所有的檔案</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="826"/>
         <source>Open file</source>
-        <translation type="unfinished"></translation>
+        <translation>開啟檔案</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="175"/>
@@ -2991,7 +2993,7 @@ Do you want to scale the symbols to the selected scale?</source>
         <location filename="../src/gui/main_window.cpp" line="1262"/>
         <location filename="../src/gui/map/map_widget.cpp" line="318"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="888"/>
@@ -3010,7 +3012,7 @@ Do you want to discard your changes?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1023"/>
         <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;%1 %2</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1112"/>
@@ -3049,7 +3051,7 @@ Press No to choose a different format.</source>
         <location filename="../src/gui/main_window_controller.cpp" line="63"/>
         <location filename="../src/gui/main_window_controller.cpp" line="71"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window_controller.cpp" line="64"/>
@@ -3084,23 +3086,23 @@ Rescale the imported data?</source>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="203"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="253"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="478"/>
         <source>default part</source>
-        <translation type="unfinished"></translation>
+        <translation>預設部位</translation>
     </message>
     <message>
         <location filename="../src/core/map_color.cpp" line="36"/>
         <location filename="../src/core/map_color.cpp" line="50"/>
         <source>New color</source>
-        <translation type="unfinished"></translation>
+        <translation>新顏色</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4248"/>
         <source>Import...</source>
-        <translation type="unfinished"></translation>
+        <translation>載入...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4249"/>
@@ -4590,7 +4592,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1408"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1413"/>
@@ -4662,7 +4664,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="724"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="906"/>
@@ -5662,52 +5664,52 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="188"/>
         <source>Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation>份數:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="201"/>
         <source>Left:</source>
-        <translation type="unfinished"></translation>
+        <translation>左:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="204"/>
         <source>Top:</source>
-        <translation type="unfinished"></translation>
+        <translation>上:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="207"/>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>寬度:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="210"/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>高度:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="308"/>
         <source>Preview...</source>
-        <translation type="unfinished"></translation>
+        <translation>預覽...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="193"/>
         <source>Single page</source>
-        <translation type="unfinished"></translation>
+        <translation>單頁</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="194"/>
         <source>Custom area</source>
-        <translation type="unfinished"></translation>
+        <translation>自訂範圍</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="195"/>
         <source>Map area:</source>
-        <translation type="unfinished"></translation>
+        <translation>地圖範圍:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="197"/>
         <source>Center print area</source>
-        <translation type="unfinished"></translation>
+        <translation>列印範圍置中</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="165"/>
@@ -5718,27 +5720,27 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="209"/>
         <location filename="../src/gui/print_widget.cpp" line="212"/>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>公釐</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="150"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>選項設定</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="213"/>
         <source>Page overlap:</source>
-        <translation type="unfinished"></translation>
+        <translation>頁面重疊：</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="217"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>選項</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="251"/>
         <source>Resolution:</source>
-        <translation type="unfinished"></translation>
+        <translation>解析度:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="253"/>
@@ -5763,7 +5765,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="243"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>預設</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="244"/>
@@ -5779,39 +5781,39 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="310"/>
         <location filename="../src/gui/print_widget.cpp" line="416"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>列印</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="314"/>
         <source>Export...</source>
-        <translation type="unfinished"></translation>
+        <translation>轉出...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="423"/>
         <source>PDF export</source>
-        <translation type="unfinished"></translation>
+        <translation>轉出PDF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="436"/>
         <source>Image export</source>
-        <translation type="unfinished"></translation>
+        <translation>轉出圖片</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="555"/>
         <source>Save to PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>以PDF儲存</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="249"/>
         <location filename="../src/gui/print_widget.cpp" line="970"/>
         <location filename="../src/gui/print_widget.cpp" line="1020"/>
         <source>dpi</source>
-        <translation type="unfinished"></translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="449"/>
         <source>KMZ export</source>
-        <translation type="unfinished"></translation>
+        <translation>轉出KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="987"/>
@@ -5836,7 +5838,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1187"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1188"/>
@@ -5935,7 +5937,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="1401"/>
         <location filename="../src/gui/print_widget.cpp" line="1449"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="224"/>
@@ -6010,7 +6012,7 @@ separations</source>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="41"/>
         <source>Reopen template</source>
-        <translation type="unfinished"></translation>
+        <translation>重新開啟背景圖</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="43"/>
@@ -6082,28 +6084,28 @@ separations</source>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="75"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="79"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="83"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>選項</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="85"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>調整地理定位參考點</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="92"/>
         <source>Adjust georeferencing declination</source>
-        <translation type="unfinished"></translation>
+        <translation>調整地理定位的磁偏角</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="99"/>
@@ -6202,12 +6204,12 @@ separations</source>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="78"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="81"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>選項</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="83"/>
@@ -6283,7 +6285,7 @@ separations</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="91"/>
         <source>Status:</source>
-        <translation type="unfinished"></translation>
+        <translation>狀態:</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="153"/>
@@ -6319,37 +6321,37 @@ separations</source>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="146"/>
         <source>Default</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>預設</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
         <source>NMEA (Qt)</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (Qt)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"/>
         <source>NMEA (OpenOrienteering)</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (OpenOrienteering)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="123"/>
         <source>Windows</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Windows系統</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="126"/>
         <source>GeoClue</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>GeoClue</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="129"/>
         <source>Core Location</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>核心位置</translation>
     </message>
 </context>
 <context>
@@ -6357,7 +6359,7 @@ separations</source>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="78"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>設定</translation>
     </message>
 </context>
 <context>
@@ -6433,7 +6435,7 @@ separations</source>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="82"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>選項</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="84"/>
@@ -6502,7 +6504,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="224"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1410"/>
@@ -6602,7 +6604,7 @@ separations</source>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="916"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="928"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="902"/>
@@ -6671,7 +6673,7 @@ separations</source>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="99"/>
         <source>F1</source>
         <comment>Shortcut for displaying the symbol&apos;s description</comment>
-        <translation type="unfinished"></translation>
+        <translation>F1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="142"/>
@@ -6887,7 +6889,7 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="250"/>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="259"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="183"/>
@@ -6896,13 +6898,13 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="251"/>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="260"/>
         <source>Cannot load symbol set, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法下載圖例範本，正在中止.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="267"/>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="275"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="268"/>
@@ -7084,7 +7086,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template.cpp" line="525"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="619"/>
@@ -7113,7 +7115,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="145"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="145"/>
@@ -7195,7 +7197,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="220"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="231"/>
@@ -7425,7 +7427,7 @@ to jump over the lazy dog
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="938"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="988"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="918"/>
@@ -7474,12 +7476,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="902"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="902"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>地圖載入時產生的警告.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="915"/>
@@ -7686,7 +7688,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_track.cpp" line="485"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="485"/>
@@ -7952,7 +7954,7 @@ to jump over the lazy dog
         <location filename="../src/undo/undo_manager.cpp" line="140"/>
         <location filename="../src/undo/undo_manager.cpp" line="185"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="140"/>
@@ -7981,31 +7983,31 @@ to jump over the lazy dog
         <location filename="../src/tools/tool_helpers.cpp" line="649"/>
         <source>%1°</source>
         <comment>degree</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="650"/>
         <source>%1 m</source>
         <comment>meter</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 公尺</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="202"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>公釐</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="207"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>公尺</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="212"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
 </context>
 <context>
@@ -8015,7 +8017,7 @@ to jump over the lazy dog
         <location filename="../src/gui/util_gui.cpp" line="142"/>
         <location filename="../src/gui/util_gui.cpp" line="176"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="128"/>
