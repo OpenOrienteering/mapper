@@ -93,6 +93,27 @@ static QTextCodec* codecFromSettings()
 }	
 
 
+// Fixup for OCD area objects that have their hatch/structure "oriented to the
+// north," but they are in fact rotated. Mapper does not have this category, so
+// we remove the rotation lock in this case.
+
+void fixupPatternRotation(OcdFileImport* importer, Object* object)
+{
+	if (object->getSymbol()->getType() != Symbol::Area)
+		return;
+	
+	auto* object_symbol = const_cast<AreaSymbol*>(object->getSymbol()->asArea());
+	if (object_symbol->getNumFillPatterns()
+	    && !object_symbol->hasRotatableFillPattern()
+	    && !qFuzzyIsNull(object->getRotation()))
+	{
+		for (auto n = 0; n < object_symbol->getNumFillPatterns(); ++n)
+			object_symbol->getFillPattern(n).setRotatable(true);
+		importer->addSymbolWarning(object_symbol,
+		                           OcdFileImport::tr("Removing rotation lock due to existence of an object with a rotated pattern."));
+	}
+}
+
 }  // namespace
 
 
@@ -855,8 +876,11 @@ void OcdFileImport::importObjects(const OcdFile<Ocd::FormatV8>& file)
 	{
 		if (ocd_object.entry->symbol)
 		{
-			if (auto object = importObject(*ocd_object.entity, part))
+			if (auto* object = importObject(*ocd_object.entity, part))
+			{
 				part->addObject(object, part->getNumObjects());
+				fixupPatternRotation(this, object);
+			}
 		}
 	}
 }
@@ -873,8 +897,11 @@ void OcdFileImport::importObjects(const OcdFile< F >& file)
 		     && ocd_object.entry->status != Ocd::ObjectDeleted
 		     && ocd_object.entry->status != Ocd::ObjectDeletedForUndo )
 		{
-			if (auto object = importObject(*ocd_object.entity, part))
+			if (auto* object = importObject(*ocd_object.entity, part))
+			{
 				part->addObject(object, part->getNumObjects());
+				fixupPatternRotation(this, object);
+			}
 		}
 	}
 }
