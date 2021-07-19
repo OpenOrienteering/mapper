@@ -5230,28 +5230,28 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2264"/>
         <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="unfinished"></translation>
+        <translation>正在嘗試以未知的座標格式載入文字物件</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2391"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2395"/>
         <source>Invalid data.</source>
-        <translation type="unfinished"></translation>
+        <translation>無效的資料.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2422"/>
         <source>Support for OCD version %1 files is experimental.</source>
-        <translation type="unfinished"></translation>
+        <translation>OCD 版本 %1 檔案的支援是試驗性的.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2428"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished"></translation>
+        <translation>版本 %1的OCD檔案不支援!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="234"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation type="unfinished"></translation>
+        <translation>找不到顏色 ID：% 1, 忽略這個顏色</translation>
     </message>
 </context>
 <context>
@@ -5259,27 +5259,27 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1955"/>
         <source>Failed to create dataset: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>建立資料集失敗: % 1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2000"/>
         <source>Failed to create layer: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>建立圖層失敗: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2138"/>
         <source>The map is not georeferenced. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation>地圖沒有地理定位.僅有區域的定位.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2151"/>
         <source>Failed to properly export the georeferencing info. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法正確轉出地理定位資訊.僅有區域的定位.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2161"/>
         <source>The %1 driver requires valid georefencing info.</source>
-        <translation type="unfinished"></translation>
+        <translation>此驅動程式 %1 需要有效的地理定位資訊.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2236"/>
@@ -5287,17 +5287,17 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2325"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2371"/>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>無法在圖層上建立特徵:% 1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2381"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>無法建立圖層 %1: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2388"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>無法建立名稱欄位: %1</translation>
     </message>
 </context>
 <context>
