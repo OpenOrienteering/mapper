@@ -5356,28 +5356,29 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="911"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法轉換座標.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="916"/>
         <source>Unknown or unsupported geometry type.</source>
-        <translation type="unfinished"></translation>
+        <translation>未知的或不支援的幾何類型.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="921"/>
         <source>Not enough coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>沒有足夠的座標.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="966"/>
         <source>Cannot use this spatial reference:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>無法使用此空間參考:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1029"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation type="unfinished"></translation>
+        <translation>地理空間資料沒有合適的空間參考.</translation>
     </message>
 </context>
 <context>
@@ -5385,7 +5386,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="306"/>
         <source>Template file exists: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>背景圖檔案儲存在: &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -5393,32 +5394,32 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="178"/>
         <source>&lt;b&gt;Click and drag&lt;/b&gt;: Paint. &lt;b&gt;Right click and drag&lt;/b&gt;: Erase. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;點擊並拖曳&lt;/b&gt;: 描繪. &lt;b&gt;點擊右鍵並拖曳&lt;/b&gt;: 清除. </translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="181"/>
         <source>Color selection</source>
-        <translation type="unfinished"></translation>
+        <translation>顏色選擇</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="234"/>
         <source>Erase</source>
-        <translation type="unfinished"></translation>
+        <translation>清除</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="255"/>
         <source>Filled area</source>
-        <translation type="unfinished"></translation>
+        <translation>填滿的區塊</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="277"/>
         <source>Solid</source>
-        <translation type="unfinished"></translation>
+        <translation>實心的</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="278"/>
         <source>Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>圖案</translation>
     </message>
 </context>
 <context>
@@ -5426,7 +5427,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/tools/pan_tool.cpp" line="80"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;拖曳&lt;/b&gt;: 移動此地圖. </translation>
     </message>
 </context>
 <context>
@@ -5435,7 +5436,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/util/item_delegates.cpp" line="155"/>
         <location filename="../src/util/item_delegates.cpp" line="162"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
 </context>
 <context>
@@ -5443,7 +5444,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="987"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;點擊&lt;/b&gt;: 增加一個座標. &lt;b&gt;%1+點擊&lt;/b&gt;: 變更選定的座標. </translation>
     </message>
 </context>
 <context>
@@ -5452,45 +5453,45 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="105"/>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="100"/>
         <source>Always oriented to north (not rotatable)</source>
-        <translation type="unfinished"></translation>
+        <translation>始終向北設置 (不旋轉)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="108"/>
         <source>Elements</source>
-        <translation type="unfinished"></translation>
+        <translation>元件</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="120"/>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="946"/>
         <source>Point</source>
-        <translation type="unfinished"></translation>
+        <translation>點狀</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="121"/>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="948"/>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>線性</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="122"/>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="950"/>
         <source>Area</source>
-        <translation type="unfinished"></translation>
+        <translation>區塊</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="125"/>
         <source>Center all elements</source>
-        <translation type="unfinished"></translation>
+        <translation>置中所有元件</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="127"/>
         <source>Current element</source>
-        <translation type="unfinished"></translation>
+        <translation>目前的元件</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="133"/>
         <source>Diameter &lt;b&gt;a&lt;/b&gt;:</source>
-        <translation type="unfinished"></translation>
+        <translation>直徑 &lt;b&gt;a&lt;/b&gt;:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="134"/>
@@ -5502,108 +5503,108 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="136"/>
         <source>Inner color:</source>
-        <translation type="unfinished"></translation>
+        <translation>內部顏色:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="139"/>
         <source>Outer width &lt;b&gt;b&lt;/b&gt;:</source>
-        <translation type="unfinished"></translation>
+        <translation>外部寬度 &lt;b&gt;b&lt;/b&gt;:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="142"/>
         <source>Outer color:</source>
-        <translation type="unfinished"></translation>
+        <translation>外部顏色:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="167"/>
         <source>Line width:</source>
-        <translation type="unfinished"></translation>
+        <translation>線條寬度:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="170"/>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation>線條顏色:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="173"/>
         <source>Line cap:</source>
-        <translation type="unfinished"></translation>
+        <translation>線段的端點:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="175"/>
         <source>flat</source>
-        <translation type="unfinished"></translation>
+        <translation>齊平的</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="176"/>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="183"/>
         <source>round</source>
-        <translation type="unfinished"></translation>
+        <translation>圓形的</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="177"/>
         <source>square</source>
-        <translation type="unfinished"></translation>
+        <translation>方形的</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="180"/>
         <source>Line join:</source>
-        <translation type="unfinished"></translation>
+        <translation>線段的連接:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="182"/>
         <source>miter</source>
-        <translation type="unfinished"></translation>
+        <translation>斜接</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="184"/>
         <source>bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>斜角</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="186"/>
         <source>Line closed</source>
-        <translation type="unfinished"></translation>
+        <translation>線段閉合</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="206"/>
         <source>Area color:</source>
-        <translation type="unfinished"></translation>
+        <translation>區塊顏色:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="219"/>
         <source>Coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>座標:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="224"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="224"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="224"/>
         <source>Curve start</source>
-        <translation type="unfinished"></translation>
+        <translation>曲線起點</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="235"/>
         <source>Center by coordinate average</source>
-        <translation type="unfinished"></translation>
+        <translation>以坐標平均值置中</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="419"/>
         <source>[Midpoint]</source>
-        <translation type="unfinished"></translation>
+        <translation>[中間點]</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="953"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>未知的</translation>
     </message>
 </context>
 <context>
@@ -5611,7 +5612,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/symbols/point_symbol_settings.cpp" line="60"/>
         <source>Point symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>點狀圖例</translation>
     </message>
 </context>
 <context>
@@ -5620,13 +5621,13 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_progress_dialog.cpp" line="58"/>
         <source>Printing</source>
         <comment>PrintWidget</comment>
-        <translation type="unfinished"></translation>
+        <translation>列印中</translation>
     </message>
     <message>
         <location filename="../src/gui/print_progress_dialog.cpp" line="59"/>
         <source>An error occurred during processing.</source>
         <comment>PrintWidget</comment>
-        <translation type="unfinished"></translation>
+        <translation>在處理過程中發生錯誤.</translation>
     </message>
 </context>
 <context>
@@ -5635,29 +5636,29 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_tool.cpp" line="60"/>
         <location filename="../src/gui/print_tool.cpp" line="372"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area&apos;s borders. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;拖曳&lt;/b&gt;: 移動地圖, 列印範圍或區塊的邊線 . </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="344"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;拖曳&lt;/b&gt;: 移動列印範圍. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="348"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;拖曳&lt;/b&gt;: 移動地圖. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="353"/>
         <location filename="../src/gui/print_tool.cpp" line="358"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s border. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;拖曳&lt;/b&gt;: 移動列印範圍的邊線. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="363"/>
         <location filename="../src/gui/print_tool.cpp" line="368"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s borders. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;拖曳&lt;/b&gt;: 移動列印範圍的邊線. </translation>
     </message>
 </context>
 <context>
@@ -5665,37 +5666,37 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="267"/>
         <source>Show templates</source>
-        <translation type="unfinished"></translation>
+        <translation>顯示背景圖</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="278"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>顯示格線</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="185"/>
         <source>Page orientation:</source>
-        <translation type="unfinished"></translation>
+        <translation>紙張方向:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="145"/>
         <source>Printer:</source>
-        <translation type="unfinished"></translation>
+        <translation>印表機:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="178"/>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>直向</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="180"/>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>橫向</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="159"/>
         <source>Page format:</source>
-        <translation type="unfinished"></translation>
+        <translation>紙張格式:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="188"/>
@@ -5781,22 +5782,22 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="253"/>
         <source>Print in different scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>用不同的比例列印:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="274"/>
         <source>Template appearance may differ.</source>
-        <translation type="unfinished"></translation>
+        <translation>背景圖看起來可能不同.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="281"/>
         <source>Simulate overprinting</source>
-        <translation type="unfinished"></translation>
+        <translation>模擬套印</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="284"/>
         <source>Save world file</source>
-        <translation type="unfinished"></translation>
+        <translation>儲存真實世界檔案</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="243"/>
@@ -5806,12 +5807,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="244"/>
         <source>Device CMYK</source>
-        <translation type="unfinished"></translation>
+        <translation>CMYK設備</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="245"/>
         <source>Color mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>顏色模式:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="310"/>
@@ -5854,22 +5855,22 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="987"/>
         <source>The map contains transparent elements which require the raster mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>地圖包含需要網格模式的透明元件.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1151"/>
         <source>Not supported on Android.</source>
-        <translation type="unfinished"></translation>
+        <translation>在安卓系統上不支援.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1159"/>
         <source>Failed to prepare the preview.</source>
-        <translation type="unfinished"></translation>
+        <translation>準備預覽失敗.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1170"/>
         <source>Print Preview Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>列印預覽進度</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1187"/>
@@ -5879,58 +5880,59 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1188"/>
         <source>A non-standard view mode is activated. Are you sure to print / export the map like this?</source>
-        <translation type="unfinished"></translation>
+        <translation>啟用非標準的檢視模式.您確定要像這樣列印/轉出地圖嗎?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1208"/>
         <source>KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1209"/>
         <source>KML</source>
-        <translation type="unfinished"></translation>
+        <translation>KML</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1236"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>無法儲存此圖片:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1250"/>
         <source>PNG</source>
-        <translation type="unfinished"></translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1251"/>
         <source>BMP</source>
-        <translation type="unfinished"></translation>
+        <translation>BMP</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1252"/>
         <source>TIFF</source>
-        <translation type="unfinished"></translation>
+        <translation>TIFF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1253"/>
         <source>JPEG</source>
-        <translation type="unfinished"></translation>
+        <translation>JPEG</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1325"/>
         <source>Failed to prepare the PDF export.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法準備 PDF 的轉出.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1335"/>
         <source>PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1388"/>
         <source>An error occurred during printing.</source>
-        <translation type="unfinished"></translation>
+        <translation>列印時發生錯誤.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1212"/>
@@ -5940,24 +5942,24 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="1337"/>
         <location filename="../src/gui/print_widget.cpp" line="1349"/>
         <source>Export map ...</source>
-        <translation type="unfinished"></translation>
+        <translation>轉出地圖 ...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1210"/>
         <location filename="../src/gui/print_widget.cpp" line="1254"/>
         <location filename="../src/gui/print_widget.cpp" line="1336"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>所有檔案 (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1374"/>
         <source>Failed to prepare the printing.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法準備列印.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1383"/>
         <source>Printing Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>列印進度</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="986"/>
@@ -5979,68 +5981,71 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="224"/>
         <source>Vector
 graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>向量
+圖形</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="225"/>
         <source>Raster
 graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>網格
+圖形</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="226"/>
         <source>Color
 separations</source>
-        <translation type="unfinished"></translation>
+        <translation>顏色
+專色</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="239"/>
         <source>Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>模式:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1273"/>
         <source>Failed to prepare the image. Not enough memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法準備圖像.記憶體不足.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1294"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation type="unfinished"></translation>
+        <translation>無法儲存此圖像. 檔案路徑是否存在?你有足夠的權限嗎?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1241"/>
         <location filename="../src/gui/print_widget.cpp" line="1298"/>
         <location filename="../src/gui/print_widget.cpp" line="1359"/>
         <source>Exported successfully to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>已成功轉出至 %1</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1355"/>
         <source>Failed to finish the PDF export.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法完成 PDF 的轉出.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1237"/>
         <location filename="../src/gui/print_widget.cpp" line="1365"/>
         <location filename="../src/gui/print_widget.cpp" line="1397"/>
         <source>Canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>已取消.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1401"/>
         <source>The print job could not be stopped.</source>
-        <translation type="unfinished"></translation>
+        <translation>列印作業無法停止.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1392"/>
         <source>Successfully created print job</source>
-        <translation type="unfinished"></translation>
+        <translation>列印作業建立成功</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1449"/>
         <source>The map area is empty. Output canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>地圖區域是空白的.輸出已被取消.</translation>
     </message>
 </context>
 <context>
@@ -6053,27 +6058,27 @@ separations</source>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="43"/>
         <source>Drag items from the left list to the desired spot in the right list to reload them.</source>
-        <translation type="unfinished"></translation>
+        <translation>將項目從左側列表拖動到右側列表中的任意位置,以利重新下載它們.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="45"/>
         <source>Closed templates:</source>
-        <translation type="unfinished"></translation>
+        <translation>已關閉的背景圖:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="48"/>
         <source>Clear list</source>
-        <translation type="unfinished"></translation>
+        <translation>清除列表內容</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="51"/>
         <source>Active templates:</source>
-        <translation type="unfinished"></translation>
+        <translation>使用中的背景圖:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="60"/>
         <source>- Map -</source>
-        <translation type="unfinished"></translation>
+        <translation>- 地圖 -</translation>
     </message>
 </context>
 <context>
@@ -6081,22 +6086,22 @@ separations</source>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="47"/>
         <source>Rotate map</source>
-        <translation type="unfinished"></translation>
+        <translation>旋轉地圖</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="54"/>
         <source>Angle (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation>角度 (逆時針):</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="51"/>
         <source>Rotation parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>旋轉參數</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="56"/>
         <source>Rotate around:</source>
-        <translation type="unfinished"></translation>
+        <translation>旋轉軸:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="59"/>
@@ -6146,7 +6151,7 @@ separations</source>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="99"/>
         <source>Rotate non-georeferenced templates</source>
-        <translation type="unfinished"></translation>
+        <translation>旋轉非地理定位的背景圖</translation>
     </message>
 </context>
 <context>
@@ -6154,12 +6159,12 @@ separations</source>
     <message>
         <location filename="../src/tools/rotate_pattern_tool.cpp" line="81"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;角度:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tools/rotate_pattern_tool.cpp" line="91"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 固定的角度. </translation>
     </message>
     <message>
         <location filename="../src/tools/rotate_pattern_tool.cpp" line="85"/>
@@ -6172,22 +6177,22 @@ separations</source>
     <message>
         <location filename="../src/tools/rotate_tool.cpp" line="195"/>
         <source>&lt;b&gt;Rotation:&lt;/b&gt; %1° </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;旋轉角度:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tools/rotate_tool.cpp" line="207"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;:固定的角度. </translation>
     </message>
     <message>
         <location filename="../src/tools/rotate_tool.cpp" line="201"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the center of rotation. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;點擊&lt;/b&gt;: 設置旋轉的中心. </translation>
     </message>
     <message>
         <location filename="../src/tools/rotate_tool.cpp" line="202"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Rotate the selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;拖曳&lt;/b&gt;: 旋轉選定的物件. </translation>
     </message>
 </context>
 <context>
@@ -6250,17 +6255,17 @@ separations</source>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="83"/>
         <source>Scale symbol sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>縮放圖例大小的比例</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="90"/>
         <source>Scale map object positions</source>
-        <translation type="unfinished"></translation>
+        <translation>縮放地圖物件位置的比例</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="97"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>調整地理定位參考點</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="104"/>
@@ -6278,17 +6283,17 @@ separations</source>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="75"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the scaling center. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;點擊&lt;/b&gt;: 設置縮放的中心. </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="77"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Switch to individual object scaling. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 切換到單一物件的縮放. </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="73"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Scale the selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;拖曳&lt;/b&gt;: 縮放選定的物件. </translation>
     </message>
 </context>
 <context>
@@ -6296,27 +6301,27 @@ separations</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="65"/>
         <source>Select coordinate reference system</source>
-        <translation type="unfinished"></translation>
+        <translation>選擇座標參考系統</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="77"/>
         <source>Same as map</source>
-        <translation type="unfinished"></translation>
+        <translation>與地圖相同</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="71"/>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>當地的</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="76"/>
         <source>From template file</source>
-        <translation type="unfinished"></translation>
+        <translation>來自背景圖檔案</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="78"/>
         <source>Geographic coordinates (WGS84)</source>
-        <translation type="unfinished"></translation>
+        <translation>地理座標 (WGS84)</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="91"/>
@@ -6326,7 +6331,7 @@ separations</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="153"/>
         <source>valid</source>
-        <translation type="unfinished"></translation>
+        <translation>有效的</translation>
     </message>
 </context>
 <context>
@@ -6334,22 +6339,22 @@ separations</source>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="52"/>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>位置:</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="55"/>
         <source>Source:</source>
-        <translation type="unfinished"></translation>
+        <translation>來源:</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="64"/>
         <source>Serial port (NMEA):</source>
-        <translation type="unfinished"></translation>
+        <translation>序列埠 (NMEA):</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="79"/>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>傳感器</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="91"/>
@@ -6403,12 +6408,12 @@ separations</source>
     <message>
         <location filename="../src/core/storage_location.cpp" line="308"/>
         <source>&apos;%1&apos; is located in app storage. The files will be removed when uninstalling the app.</source>
-        <translation type="unfinished"></translation>
+        <translation>“% 1”儲存在應用程式中.當解除安裝應用程式時,此檔案將被移除.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="311"/>
         <source>&apos;%1&apos; is not writable. Changes cannot be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos;無法寫入. 變更不能儲存.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="314"/>
@@ -6849,42 +6854,42 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="143"/>
         <source>Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>圖案</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="155"/>
         <source>Clear replacements</source>
-        <translation type="unfinished"></translation>
+        <translation>清除替換</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="129"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="158"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="225"/>
         <source>Open CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>開啟CRT檔案...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="160"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="240"/>
         <source>Save CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>儲存CRT檔案...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="165"/>
         <source>Symbol mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>對應的圖例</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="127"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="224"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="239"/>
         <source>CRT file</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT 檔案</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="201"/>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>圖例 %1有多個可替換.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="204"/>
@@ -6892,7 +6897,10 @@ separations</source>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>無法開啟檔案:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="254"/>
@@ -6900,13 +6908,17 @@ separations</source>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>無法儲存檔案:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="270"/>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>對照表已經被修改.
+您要儲存此變更嗎?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="430"/>
@@ -7507,7 +7519,7 @@ to jump over the lazy dog
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="892"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="938"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法下載地圖檔案,正在中止.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="902"/>
@@ -7557,12 +7569,12 @@ to jump over the lazy dog
         <location filename="../src/templates/template_map.cpp" line="170"/>
         <location filename="../src/templates/template_map.cpp" line="304"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法轉換座標.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_map.cpp" line="197"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法下載地圖檔案,正在中止.</translation>
     </message>
 </context>
 <context>
@@ -8096,7 +8108,7 @@ Location: %2</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="530"/>
         <source>Unsupported element: %1 (line %2 column %3)</source>
-        <translation type="unfinished"></translation>
+        <translation>不支援的元件: %1 (第 %2行第 %3欄)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="574"/>
