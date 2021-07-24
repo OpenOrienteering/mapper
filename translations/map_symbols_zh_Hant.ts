@@ -6,182 +6,182 @@
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>賽程套印的紫紅色</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>賽程套印的白色</translation>
     </message>
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>100%的黑色</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>100%的綠色</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>鐵道的白色</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>100%的藍色</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>100%的棕色</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>路徑圖例的紫紅色</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>紫紅色軌跡圖例下方的黑色</translation>
     </message>
     <message>
         <source>Black 65%</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>65%的黑色</translation>
     </message>
     <message>
         <source>Black 20%</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>20%的黑色</translation>
     </message>
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>較上層之50%的棕色</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>上層50%的棕色之下方的黑色</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>較下層50%的棕色</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>下層50%的棕色之下方的黑色</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>區塊特徵之100%的藍色</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>70%的藍色</translation>
     </message>
     <message>
         <source>Blue 50%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>50%的藍色</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering的橙色</translation>
     </message>
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>狹窄通道之100%的黃色</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>狹窄通道之60%的綠色</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>狹窄通道之30%的綠色</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>綠色上層的白色</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>100%的黃色/50%的綠色</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>25%的黑色(灰色)</translation>
     </message>
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>100%的綠色/50%的黑色</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>區塊特徵100%的綠色</translation>
     </message>
     <message>
         <source>Green 60%</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>60%的綠色</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 28</comment>
-        <translation type="unfinished"></translation>
+        <translation>30%的綠色</translation>
     </message>
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>底層植被100%的綠色</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>黃色上層的白色</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>開闊地的黑色</translation>
     </message>
     <message>
         <source>Yellow</source>
         <comment>Color 32</comment>
-        <translation type="unfinished"></translation>
+        <translation>黃色</translation>
     </message>
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 33</comment>
-        <translation type="unfinished"></translation>
+        <translation>區塊特徵100%的黃色</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
         <comment>Color 34</comment>
-        <translation type="unfinished"></translation>
+        <translation>50%的黃色</translation>
     </message>
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>等高線</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 m. A contour interval of 2.5 m may be used for flat terrains.
@@ -200,7 +200,7 @@ Contours should be adapted (not broken) in order not to touch symbol Small knoll
     <message>
         <source>Slope line, contour</source>
         <comment>Name of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>示坡線, 等高線</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
@@ -211,7 +211,7 @@ A depression has to have at least one slope line.</source>
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>計曲線</translation>
     </message>
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface.
@@ -223,7 +223,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>等高線高度值</translation>
     </message>
     <message>
         <source>An index contour may have a height value assigned. A height value should only be inserted in an index contour in places where other detail is not obscured. It shall be orientated so that the top of the label is on the higher side of the contour. The index value (label) shall be 1.5 mm high and represented in a sans-serif font.</source>
@@ -233,7 +233,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>輔助等高線</translation>
     </message>
     <message>
         <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones (minimum height / depth should be 1 m). Excessive use of form lines must be avoided as this disturbs the three-dimensional picture of the ground shape and will complicate map reading.
@@ -245,7 +245,7 @@ Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</s
     <message>
         <source>Slope line, formline</source>
         <comment>Name of symbol 103.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>示坡線,輔助等高線</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -255,7 +255,7 @@ Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</s
     <message>
         <source>Earth bank</source>
         <comment>Name of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>土堤</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -268,7 +268,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>土堤,最小尺寸</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -281,7 +281,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Earth bank, top line</source>
         <comment>Name of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>土堤, 主線</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -294,7 +294,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Earth bank, tag line</source>
         <comment>Name of symbol 104.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>土堤,附加直線</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -304,7 +304,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Earth bank, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>土堤,最小尺寸(ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -314,7 +314,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Earth wall</source>
         <comment>Name of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>土牆</translation>
     </message>
     <message>
         <source>Distinct earth wall. Minimum height: 1 m.
@@ -325,7 +325,7 @@ Minimum length: 1.4 mm (footprint 21 m).</source>
     <message>
         <source>Ruined earth wall</source>
         <comment>Name of symbol 106</comment>
-        <translation type="unfinished"></translation>
+        <translation>傾倒的土牆</translation>
     </message>
     <message>
         <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
@@ -336,7 +336,7 @@ Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object mu
     <message>
         <source>Erosion gully</source>
         <comment>Name of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>沖溝</translation>
     </message>
     <message>
         <source>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Minimum depth: 1 m.
@@ -348,7 +348,7 @@ Contour lines should not be broken around this symbol.</source>
     <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>小沖溝</translation>
     </message>
     <message>
         <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
@@ -360,7 +360,7 @@ Contour lines should be broken around this symbol.</source>
     <message>
         <source>Small knoll</source>
         <comment>Name of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>小丘</translation>
     </message>
     <message>
         <source>An obvious mound or knoll which cannot be drawn to scale with a contour.
@@ -373,7 +373,7 @@ Footprint: 7.5 m x 7.5 m.</source>
     <message>
         <source>Small elongated knoll</source>
         <comment>Name of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>長形小丘</translation>
     </message>
     <message>
         <source>An obvious elongated knoll which cannot be drawn to scale with a contour.
@@ -386,7 +386,7 @@ Footprint: 12 m x 6 m.</source>
     <message>
         <source>Small depression</source>
         <comment>Name of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>小窪地</translation>
     </message>
     <message>
         <source>A small depression or hollow without steep sides that is too small to be shown by contours.
@@ -400,7 +400,7 @@ Footprint: 12 m x 6 m.</source>
     <message>
         <source>Pit</source>
         <comment>Name of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>土坑</translation>
     </message>
     <message>
         <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol Earth bank (104).
@@ -414,7 +414,7 @@ Footprint: 10.5 m x 12 m.</source>
     <message>
         <source>Broken ground</source>
         <comment>Name of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>崎嶇地面</translation>
     </message>
     <message>
         <source>An area of pits and / or knolls which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable but has little impact on runnability.
@@ -430,7 +430,7 @@ The dots shall not be arranged to form a single point wide line.</source>
     <message>
         <source>Broken ground, individual dot</source>
         <comment>Name of symbol 113.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>崎嶇地面,單一圓點</translation>
     </message>
     <message>
         <source>An area of pits and / or knolls which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable but has little impact on runnability.
@@ -447,7 +447,7 @@ Density: 3-4 dots / mm².</source>
     <message>
         <source>Very broken ground</source>
         <comment>Name of symbol 114</comment>
-        <translation type="unfinished"></translation>
+        <translation>非常崎嶇的地面</translation>
     </message>
     <message>
         <source>An area of pits and/or knolls, which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable and affects runnability.
@@ -463,7 +463,7 @@ The dots shall not be arranged to form a single point wide line.</source>
     <message>
         <source>Prominent landform feature</source>
         <comment>Name of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>明顯的地貌特徵</translation>
     </message>
     <message>
         <source>The feature must be very clearly distinguishable from its surroundings.
@@ -477,7 +477,7 @@ Footprint: 13.5 m x 11.5 m.</source>
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可跨越的陡壁</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -491,7 +491,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可跨越的陡壁,最小尺寸</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -505,7 +505,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可跨越的陡壁,以平面形狀表示(ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -515,7 +515,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可跨越的陡壁,主線</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -529,7 +529,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可跨越的陡壁,附加直線</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -2530,32 +2530,32 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>賽程套印的紫紅色</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>賽程套印的白色</translation>
     </message>
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>100%的黑色</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>100%的綠色</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>鐵道的白色</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>路徑圖例的紫紅色</translation>
     </message>
     <message>
         <source>Purple 50%</source>
@@ -2565,12 +2565,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Blue 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>100%的藍色</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>100%的棕色</translation>
     </message>
     <message>
         <source>Black 60%</source>
@@ -6671,12 +6671,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>賽程套印的紫紅色</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>賽程套印的白色</translation>
     </message>
     <message>
         <source>Green for SkiO</source>
@@ -6686,57 +6686,57 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>100%的黑色</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>100%的綠色</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>鐵道的白色</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>100%的藍色</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>100%的棕色</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>路徑圖例的紫紅色</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>紫紅色軌跡圖例下方的黑色</translation>
     </message>
     <message>
         <source>Black 65%</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>65%的黑色</translation>
     </message>
     <message>
         <source>Black 20%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>20%的黑色</translation>
     </message>
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>較上層之50%的棕色</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>上層50%的棕色之下方的黑色</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
@@ -10648,7 +10648,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Mandatory crossing point</source>
         <comment>Name of symbol 13.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>強制穿越點</translation>
     </message>
     <message>
         <source>Mandatory crossing points (or points) between two controls. Re-emphasises what is shown on the map.</source>
@@ -10708,7 +10708,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Length of special route</source>
         <comment>Name of symbol 13.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>指定路線的長度</translation>
     </message>
     <message>
         <source>This is used with the special instruction (13.x) to give the distance from the last control to the end of the route (control, map exchange, or finish).</source>
