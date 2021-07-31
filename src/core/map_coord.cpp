@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2019 Kai Pastor
+ *    Copyright 2014-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -398,8 +398,20 @@ MapCoord::MapCoord(QStringRef& text)
 	if (Q_UNLIKELY(len < 2))
 		throw std::invalid_argument("Premature end of data");
 	
-	auto data = text.constData();
+	auto const* data = text.constData();
 	int i = 0;
+	
+	auto const is_whitespace = [](QChar const c) {
+		return c == QChar::Space
+		       || c == QChar::LineFeed
+		       || c == QChar::CarriageReturn;
+	};
+	auto const skip_word_break = [data, len, is_whitespace](int i) -> int {
+		++i;
+		while (i < len && is_whitespace(data[i]))
+			++i;
+		return i;
+	};
 	
 	qint64 x64 = data[0].unicode();
 	if (x64 == '-')
@@ -427,7 +439,7 @@ MapCoord::MapCoord(QStringRef& text)
 		}
 	}
 	
-	++i;
+	i = skip_word_break(i);
 	if (Q_UNLIKELY(i+1 >= len))
 		throw std::invalid_argument("Premature end of data");
 	
@@ -463,9 +475,9 @@ MapCoord::MapCoord(QStringRef& text)
 	xp = static_cast<qint32>(x64);
 	yp = static_cast<qint32>(y64);
 	
-	if (i < len && data[i] == QChar::Space)
+	if (i < len && is_whitespace(data[i]))
 	{
-		++i;
+		i = skip_word_break(i);
 		if (Q_UNLIKELY(i == len))
 			throw std::invalid_argument("Premature end of data");
 		
@@ -484,7 +496,7 @@ MapCoord::MapCoord(QStringRef& text)
 	if (Q_UNLIKELY(i >= len || data[i] != QLatin1Char{';'}))
 		throw std::invalid_argument("Invalid data");
 	
-	++i;
+	i = skip_word_break(i);
 	text = text.mid(i, len-i);
 }
 
