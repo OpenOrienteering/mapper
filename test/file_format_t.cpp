@@ -594,9 +594,6 @@ void FileFormatTest::mapCoordFromString()
 	bool no_exception = true;
 	auto ref = QStringRef{&input};
 	MapCoord coord;
-	QEXPECT_FAIL("multi ' '", "Multiple space is unsupported", Abort); // GH-1982
-	QEXPECT_FAIL("early \\n", "Newline is unsupported", Abort); // GH-1982
-	QEXPECT_FAIL("late \\r", "Newline is unsupported", Abort);  // GH-1982
 	try {
 		coord = MapCoord(ref);
 	}  catch (std::invalid_argument const& e) {
