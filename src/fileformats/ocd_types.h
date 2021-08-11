@@ -281,6 +281,20 @@ namespace Ocd
 	};
 	
 	/**
+	 * Object type values.
+	 */
+	enum ObjectType
+	{
+		ObjectTypePoint = 1,
+		ObjectTypeLine = 2,
+		ObjectTypeArea = 3,
+		ObjectTypeUnformattedText = 4,
+		ObjectTypeFormattedText = 5,
+		ObjectTypeLineText = 6,
+		ObjectTypeRectangle = 7,
+	};
+
+	/**
 	 * Status values for objects.
 	 */
 	enum ObjectStatus
