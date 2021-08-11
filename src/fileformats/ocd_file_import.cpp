@@ -1853,13 +1853,92 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 	}
 }
 
+
+Symbol* OcdFileImport::getGraphicObjectSymbol(const Ocd::ObjectV8& ocd_object)
+{
+	Q_UNUSED(ocd_object);
+	return nullptr;
+}
+
+
+template< class O >
+Symbol* OcdFileImport::getGraphicObjectSymbol(const O& ocd_object)
+{
+	Symbol* symbol = nullptr;
+	auto symbol_setup_common = [](Symbol& symbol) {
+		symbol.setName(QLatin1String("helper symbol for graphic objects"));
+		symbol.setNumberComponent(0, 999);
+		symbol.setNumberComponent(1, -1);
+		symbol.setNumberComponent(2, -1);				
+	};
+	
+	auto get_cached_symbol = [this](const quint64 key) {
+		return graphic_symbol_index.contains(key) ?
+		            graphic_symbol_index[key] : nullptr;
+	};
+
+	auto store_cached_symbol = [this](const quint64 key, Symbol* symbol) {
+		map->addSymbol(symbol, map->getNumSymbols());
+		graphic_symbol_index[key] = symbol;
+	};
+	
+	switch (ocd_object.type)
+	{
+	case Ocd::ObjectTypeLine:
+		{
+			const auto g_key = quint64(ocd_object.color) 
+			                   | quint64(ocd_object.line_width) << 32
+			                   | quint64(Ocd::ObjectTypeLine) << 56;
+			symbol = get_cached_symbol(g_key);
+			if (!symbol)
+			{
+				auto* line_symbol = new OcdImportedLineSymbol();
+				symbol_setup_common(*line_symbol);
+				line_symbol->color = convertColor(ocd_object.color);
+				line_symbol->line_width = convertLength(ocd_object.line_width);
+				symbol = line_symbol;
+				store_cached_symbol(g_key, symbol);
+			}
+		}
+		break;
+	case Ocd::ObjectTypeArea:
+		{
+			const auto g_key = quint64(ocd_object.color)
+			                   | quint64(Ocd::ObjectTypeArea) << 56;
+			symbol = get_cached_symbol(g_key);
+			if (!symbol)
+			{
+				auto* area_symbol = new OcdImportedAreaSymbol();
+				symbol_setup_common(*area_symbol);
+				area_symbol->color = convertColor(ocd_object.color);		
+				symbol = area_symbol;
+				store_cached_symbol(g_key, symbol);
+			}
+		}
+		break;
+	default:
+	         addWarning(tr("Encountered an unsupported type of graphic object (%1). Skipping.").arg(ocd_object.type));
+	         break;
+	}
+
+	return symbol;
+}
+
+
 template< class O >
 Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 {
 	Symbol* symbol = nullptr;
-	if (ocd_object.symbol >= 0)
+	switch (ocd_object.symbol)
 	{
-		symbol = symbol_index[ocd_object.symbol];
+	case -2: // graphic object
+		symbol = getGraphicObjectSymbol(ocd_object);
+		break;
+	default:
+		if (ocd_object.symbol >= 0)
+		{
+			symbol = symbol_index[ocd_object.symbol];
+		}
 	}
 	
 	if (!symbol)

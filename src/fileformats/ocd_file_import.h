@@ -305,6 +305,11 @@ protected:
 	template< class O >
 	Object* importObject(const O& ocd_object, MapPart* part);
 	
+	Symbol* getGraphicObjectSymbol(const Ocd::ObjectV8& ocd_object);
+
+	template< class O >
+	Symbol* getGraphicObjectSymbol(const O& ocd_object);
+	
 	QString getObjectText(const Ocd::ObjectV8& ocd_object) const;
 	
 	template< class O >
@@ -348,6 +353,9 @@ protected:
 	
 	/// maps OCD symbol number to oo-mapper symbol object
 	QHash<unsigned int, Symbol *> symbol_index;
+	
+	/// maps OCD graphic object properties to oo-mapper synthetic symbol object
+	QHash<quint64, Symbol *> graphic_symbol_index;
 	
 	/// maps OO Mapper text symbol pointer to OCD defined horizontal alignment (stored in objects instead of symbols in OO Mapper)
 	QHash<Symbol*, TextObject::HorizontalAlignment> text_halign_map;
