@@ -535,7 +535,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="146"/>
         <source>Double-click a color value to open a dialog.</source>
-        <translation>Подвійний клік по кольору відкриє діалогове вікно.</translation>
+        <translation>Подвійне клацання по кольору відкриє діалогове вікно.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="229"/>
@@ -575,7 +575,7 @@
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="406"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="463"/>
         <source>Double click to define the color</source>
-        <translation>Двічі клікніть щоб задати колір</translation>
+        <translation>Двічі клацніть щоб задати колір</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="414"/>
@@ -820,7 +820,7 @@
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="108"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt; на лінії щоб розділити її на дві частини. &lt;b&gt;Потягніть&lt;/b&gt; вздовж лінії щоб вирізати її ділянку. &lt;b&gt;Клацніть або потягніть&lt;/b&gt; від межі площі щоб розділии її. </translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt; на лінії щоб розділити її на дві частини. &lt;b&gt;Потягніть&lt;/b&gt; вздовж лінії щоб вирізати її ділянку. &lt;b&gt;Клацніть або потягніть&lt;/b&gt; від межі площі щоб розділии її. </translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="373"/>
@@ -839,7 +839,7 @@
         <location filename="../src/tools/cutout_tool.cpp" line="149"/>
         <location filename="../src/tools/cutout_tool.cpp" line="153"/>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation>&lt;b&gt;%1+Клік або потягнути&lt;/b&gt;: Вибрати всі об&apos;єкти, що будуть відсічені. </translation>
+        <translation>&lt;b&gt;%1+Клацання або потягнути&lt;/b&gt;: Вибрати всі об&apos;єкти, що будуть відсічені. </translation>
     </message>
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="154"/>
@@ -922,7 +922,7 @@
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="313"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Почати креслити коло або еліпс. </translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt;: Почати креслити коло або еліпс. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="314"/>
@@ -937,7 +937,7 @@
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="320"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Завершити коло. </translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt;: Завершити коло. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="321"/>
@@ -964,13 +964,13 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1163"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation>&lt;b&gt;%1+Клік&lt;/b&gt;: Прив&apos;язуватись чи чіплятися за існуючі об&apos;єкти. </translation>
+        <translation>&lt;b&gt;%1+Клацання&lt;/b&gt;: Прив&apos;язуватись чи чіплятися за існуючі об&apos;єкти. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1171"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="736"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation>&lt;b&gt;%1+Клік&lt;/b&gt;: Слідувати напрямку існуючих об&apos;єктів. </translation>
+        <translation>&lt;b&gt;%1+Клацання&lt;/b&gt;: Слідувати напрямку існуючих об&apos;єктів. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1172"/>
@@ -983,7 +983,7 @@
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="741"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="765"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1+Клік&lt;/b&gt;: Прив&apos;язуватись до існуючих об&apos;єктів. </translation>
+        <translation>&lt;b&gt;%1+Клацання&lt;/b&gt;: Прив&apos;язуватись до існуючих об&apos;єктів. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1198"/>
@@ -1037,7 +1037,7 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="113"/>
         <source>Undo</source>
-        <translation>Відмінити</translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="114"/>
@@ -1052,7 +1052,7 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1178"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Почати ламану лінію. &lt;b&gt;Потягніть&lt;/b&gt; щоб накреслити криву. </translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt;: Почати ламану лінію. &lt;b&gt;Потягніть&lt;/b&gt; щоб накреслити криву. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1189"/>
@@ -1062,7 +1062,7 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1205"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Почати ламану лінію. &lt;b&gt;Протягніть&lt;/b&gt; щоб накреслити криву. &lt;b&gt;Правий або подвійний клік&lt;/b&gt;: Завершити лінію. &lt;b&gt;%1&lt;/b&gt;: Замкнути лінію. </translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt;: Почати ламану лінію. &lt;b&gt;Протягніть&lt;/b&gt; щоб накреслити криву. &lt;b&gt;Праве або подвійне клацання&lt;/b&gt;: Завершити лінію. &lt;b&gt;%1&lt;/b&gt;: Замкнути лінію. </translation>
     </message>
 </context>
 <context>
@@ -1075,7 +1075,7 @@
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="193"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt; завершить установку об&apos;єкта. </translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt; завершить установку об&apos;єкта. </translation>
     </message>
 </context>
 <context>
@@ -1113,7 +1113,7 @@
         <location filename="../src/tools/draw_point_tool.cpp" line="340"/>
         <location filename="../src/tools/draw_point_tool.cpp" line="354"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Створити точковий об&apos;єкт.</translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt;: Створити точковий об&apos;єкт.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="341"/>
@@ -1154,7 +1154,7 @@
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="96"/>
         <source>Undo</source>
-        <translation>Відмінити</translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="97"/>
@@ -1164,7 +1164,7 @@
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="746"/>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation>&lt;b&gt;Клік або потягніть&lt;/b&gt; щоб накреслити прямокутник. </translation>
+        <translation>&lt;b&gt;Клацання або потягніть&lt;/b&gt; щоб накреслити прямокутник. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="759"/>
@@ -1174,7 +1174,7 @@
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="770"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: щоб поставити кутову точку. &lt;b&gt;Правий або подвійний клік&lt;/b&gt; завершить прямокутник. </translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt;: щоб поставити кутову точку. &lt;b&gt;Правий або подвійне клацання&lt;/b&gt; завершить прямокутник. </translation>
     </message>
 </context>
 <context>
@@ -1198,7 +1198,7 @@
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="482"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Створити текстовий об&apos;єкт з простим якорем. &lt;b&gt;Потягніть&lt;/b&gt; щоб створити текстову область. </translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt;: Створити текстовий об&apos;єкт з простим якорем. &lt;b&gt;Потягніть&lt;/b&gt; щоб створити текстову область. </translation>
     </message>
 </context>
 <context>
@@ -1223,7 +1223,7 @@
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="540"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
-        <translation>&lt;b&gt;%1+Клік&lt;/b&gt; на сегменті: Переключити між прямою та кривою. </translation>
+        <translation>&lt;b&gt;%1+Клацання&lt;/b&gt; на сегменті: Переключити між прямою та кривою. </translation>
     </message>
 </context>
 <context>
@@ -1260,17 +1260,17 @@
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="761"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation>&lt;b&gt;%1+Клік&lt;/b&gt; на точці видалить її; на лінії: Додасть нову штрихову точку; з &lt;b&gt;%2&lt;/b&gt;: Додасть нормальну точку. </translation>
+        <translation>&lt;b&gt;%1+Клацання&lt;/b&gt; на точці видалить її; на лінії: Додасть нову штрихову точку; з &lt;b&gt;%2&lt;/b&gt;: Додасть нормальну точку. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="764"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation>&lt;b&gt;%1+Клік&lt;/b&gt; на точці видалить її; на лінії: Додасть нову точку; з &lt;b&gt;%2&lt;/b&gt;: Додасть нову штрихову точку. </translation>
+        <translation>&lt;b&gt;%1+Клацання&lt;/b&gt; на точці видалить її; на лінії: Додасть нову точку; з &lt;b&gt;%2&lt;/b&gt;: Додасть нову штрихову точку. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="768"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation>&lt;b&gt;%1+Клік&lt;/b&gt; на точці змінює її тип (штрихова точка / нормальна точка). </translation>
+        <translation>&lt;b&gt;%1+Клацання&lt;/b&gt; на точці змінює її тип (штрихова точка / нормальна точка). </translation>
     </message>
 </context>
 <context>
@@ -1297,7 +1297,7 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="750"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="532"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Вибрати об&apos;єкт. &lt;b&gt;Потягніть&lt;/b&gt; щоб вибрати кілька об&apos;єктів. &lt;b&gt;%1+Клік&lt;/b&gt;: Зняти/додати виділення. </translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt;: Вибрати об&apos;єкт. &lt;b&gt;Потягніть&lt;/b&gt; щоб вибрати кілька об&apos;єктів. &lt;b&gt;%1+Клацання&lt;/b&gt;: Зняти/додати виділення. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="753"/>
@@ -1377,7 +1377,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="81"/>
         <source>Drawing tools: set last point on finishing with right click</source>
-        <translation>Інструменти креслення: Правий клік завершує лінію</translation>
+        <translation>Інструменти креслення: Праве клацання завершує лінію</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="84"/>
@@ -1502,7 +1502,7 @@
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="243"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Залити площу активним знаком. Ділянка, що буде залита, має бути обмежена лініями або межами площі; інші знаки не будть взяті до уваги. </translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt;: Залити площу активним знаком. Ділянка, що буде залита, має бути обмежена лініями або межами площі; інші знаки не будть взяті до уваги. </translation>
     </message>
 </context>
 <context>
@@ -2120,7 +2120,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="862"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Установити опорну точку. &lt;b&gt;Правий клік&lt;/b&gt;: Відміна.</translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt;: Установити опорну точку. &lt;b&gt;Праве клацання&lt;/b&gt;: Скасувати.</translation>
     </message>
 </context>
 <context>
@@ -2425,7 +2425,7 @@
         <location filename="../src/fileformats/xml_file_format.cpp" line="1093"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="1113"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
-        <translation>Помилка при загрузці кроків відмінити/повторити у %1:%2:%3</translation>
+        <translation>Помилка під час завантаження кроків скасувати/повторити у %1:%2:%3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="76"/>
@@ -3422,12 +3422,12 @@ Import the data anyway?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="977"/>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="274"/>
         <source>Undo</source>
-        <translation>Відмінити</translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="977"/>
         <source>Undo the last step</source>
-        <translation>Відмінити останній крок</translation>
+        <translation>Скасувати останній крок</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="978"/>
@@ -4721,7 +4721,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3656"/>
         <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
-        <translation>Ви дійсно хочете видалити всі тимчасові мітки GPS? Цю дію неможливо відмінити.</translation>
+        <translation>Ви дійсно хочете видалити всі тимчасові мітки GPS? Цю дію неможливо скасувати.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3771"/>
@@ -4890,7 +4890,7 @@ Rescale the imported data?</source>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="772"/>
         <location filename="../src/tools/draw_freehand_tool.cpp" line="290"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Abort. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Відміна. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Скасувати. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1228"/>
@@ -5073,7 +5073,7 @@ to create one.</source>
         <translation>Знаки відсутні!
 
 Давайте створимо який-небудь знак:
-зробіть правий клік у панелі знаків
+зробіть праве клацання у панелі знаків
 і виберіть &quot;Новий знак&quot;
 щоб створити перший.</translation>
     </message>
@@ -5866,7 +5866,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="178"/>
         <source>&lt;b&gt;Click and drag&lt;/b&gt;: Paint. &lt;b&gt;Right click and drag&lt;/b&gt;: Erase. </source>
-        <translation>&lt;b&gt;Клікніть і тягніть&lt;/b&gt; щоб малювати. &lt;b&gt;Правий клік і тягніть&lt;/b&gt; щоб витерти. </translation>
+        <translation>&lt;b&gt;Клацанняніть і тягніть&lt;/b&gt; щоб малювати. &lt;b&gt;Праве клацання і тягніть&lt;/b&gt; щоб витерти. </translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="181"/>
@@ -5916,7 +5916,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="987"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Додати координату. &lt;b&gt;%1+Клік&lt;/b&gt;: Змінити вибрану координату. </translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt;: Додати координату. &lt;b&gt;%1+Клацання&lt;/b&gt;: Змінити вибрану координату. </translation>
     </message>
 </context>
 <context>
@@ -6703,7 +6703,7 @@ separations</source>
     <message>
         <location filename="../src/tools/rotate_tool.cpp" line="201"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the center of rotation. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Задати центр обертання. </translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt;: Задати центр обертання. </translation>
     </message>
     <message>
         <location filename="../src/tools/rotate_tool.cpp" line="202"/>
@@ -6822,7 +6822,7 @@ separations</source>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="75"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the scaling center. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Задати центр масштабування. </translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt;: Задати центр масштабування. </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="77"/>
@@ -7797,12 +7797,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="593"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Вкажіть характерну точку на підложці. </translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt;: Вкажіть характерну точку на підложці. </translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="618"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the map position of the pass point. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Вкажіть відповідну точку на карті. </translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt;: Вкажіть відповідну точку на карті. </translation>
     </message>
 </context>
 <context>
@@ -7810,7 +7810,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="834"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Видалити точку суміщення. </translation>
+        <translation>&lt;b&gt;Клацання&lt;/b&gt;: Видалити точку суміщення. </translation>
     </message>
 </context>
 <context>
@@ -8706,7 +8706,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="140"/>
         <source>Cannot undo because the last undo step became invalid. This can for example happen if you change the symbol of an object to another and then delete the old symbol.</source>
-        <translation>Неможливо відмінити останній крок, бо він став непридатним. Це могло трапитися якщо ви змінили знак об&apos;єкту на інший, а потім видалили старий знак.</translation>
+        <translation>Неможливо скасувати останній крок, бо він став непридатним. Це могло трапитися якщо ви змінили знак об&apos;єкту на інший, а потім видалили старий знак.</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="147"/>
@@ -8716,12 +8716,12 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="147"/>
         <source>Undoing this step will go beyond the point where the file was loaded. Are you sure?</source>
-        <translation>Відміна цього кроку призведе до стану у якому файл був відкритий. Хочете зробити це?</translation>
+        <translation>Скасування цього кроку призведе до стану у якому файл був відкритий. Хочете зробити це?</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="185"/>
         <source>Cannot redo because the first redo step became invalid. This can for example happen if you delete the symbol of an object you have drawn.</source>
-        <translation>Неможливо відмінити останній крок бо попередній крок став недоступним. Це могло трапитись, наприклад, якщо ви видалили знак щойно створеного об&apos;єкту.</translation>
+        <translation>Неможливо скасувати останній крок, бо попередній крок став недоступним. Це могло трапитись, наприклад, якщо ви видалили знак щойно створеного об&apos;єкта.</translation>
     </message>
 </context>
 <context>
