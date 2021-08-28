@@ -76,12 +76,12 @@
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Чорний під нижнім коричневим 50%</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Синій 100% для майданних об&apos;єктів</translation>
     </message>
     <message>
         <source>Blue 70%</source>
