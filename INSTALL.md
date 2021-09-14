@@ -104,7 +104,7 @@ gcc, mingw-w64, CMake, Ninja, Qt, PROJ, GDAL and Doxygen.
 First of all, you need to install (and update) MSYS2, https://www.msys2.org/.
 The next step is to install all dependencies used by Mapper at build time
 and at run time. This will download more than 1.3 GB and take more than 9 GB
-of disk spaced after installation. In an msys2 terminal window, type:
+of disk space after installation. In an msys2 terminal window, type:
 
 ```
 pacman -S git mingw-w64-x86_64-qt-creator mingw-w64-x86_64-proj mingw-w64-x86_64-gdal mingw-w64-x86_64-ninja mingw-w64-x86_64-cmake mingw-w64-x86_64-doxygen mingw-w64-x86_64-gdb
