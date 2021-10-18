@@ -277,7 +277,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ein Erdwall ist eine abrupte Veränderung des Bodenniveaus, die sich deutlich von der Umgebung abhebt, z. B. Kies- oder Sandgruben, Straßen- und Bahneinschnitte oder Böschungen.
+Mindesthöhe: 1 m. Ein Erdwall kann die Befahrbarkeit beeinträchtigen. Die Schilder stellen die gesamte Ausdehnung des Erdwalls dar.
+Bei langen Erdwällen ist es zulässig, an den Enden Schilder zu verwenden, die kürzer als die Mindestlänge sind. Liegen zwei Erdwälle dicht beieinander, können die Schilder weggelassen werden. Unbegehbare Erdwälle sind mit dem Symbol Unbegehbare Klippe (201) darzustellen.
+Mindestlänge: 0,6 mm (Fußabdruck 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -290,7 +293,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ein Erdwall ist eine abrupte Veränderung des Bodenniveaus, die sich deutlich von der Umgebung abhebt, z. B. Kies- oder Sandgruben, Straßen- und Bahneinschnitte oder Böschungen.
+Mindesthöhe: 1 m. Ein Erdwall kann die Befahrbarkeit beeinträchtigen. Die Schilder stellen die gesamte Ausdehnung des Erdwalls dar.
+Bei langen Erdwällen ist es zulässig, an den Enden Schilder zu verwenden, die kürzer als die Mindestlänge sind. Liegen zwei Erdwälle dicht beieinander, können die Schilder weggelassen werden. Unbegehbare Erdwälle sind mit dem Symbol Unbegehbare Klippe (201) darzustellen.
+Mindestlänge: 0,6 mm (Fußabdruck 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
