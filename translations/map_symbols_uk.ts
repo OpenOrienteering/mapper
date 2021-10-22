@@ -6212,7 +6212,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
         <comment>Description of symbol 537</comment>
-        <translation>Копець, меморіальний чи межовий камінь (або триангуляційний пункт, у деяких країнах) висотою понад 0,5 м.</translation>
+        <translation>Копець, меморіальний чи межовий камінь (або тріангуляційний пункт у деяких країнах) висотою понад 0,5 м.</translation>
     </message>
     <message>
         <source>Fodder rack</source>
