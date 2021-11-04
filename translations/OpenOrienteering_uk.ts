@@ -781,7 +781,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="265"/>
         <source>projected coordinates origin</source>
-        <translation>проекція координатної сітки</translation>
+        <translation>проєкція координатної сітки</translation>
     </message>
 </context>
 <context>
@@ -1781,7 +1781,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="67"/>
         <source>Gauss-Krueger, datum: Potsdam</source>
         <comment>Gauss-Krueger coordinate reference system</comment>
-        <translation>Проекція Гауса-Крюгера, датум: Потсдам</translation>
+        <translation>Проєкція Гауса-Крюгера, датум: Потсдам</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="68"/>
@@ -1877,7 +1877,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="193"/>
         <source>Projected coordinates</source>
-        <translation>Проекційні координати</translation>
+        <translation>Проєкційні координати</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="245"/>
@@ -3758,7 +3758,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1101"/>
         <source>Projected coordinates</source>
-        <translation>Координати на проекції</translation>
+        <translation>Координати на проєкції</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1103"/>
@@ -8387,7 +8387,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_track.cpp" line="301"/>
         <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
-        <translation>Трек є ортогональною проекцією з центром у точці усереднених координат треку. Це дозволить здійснити трансформацію карти і встановити її геоприв&apos;язку підгонкою відносно позиції треку.</translation>
+        <translation>Трек є ортогональною проєкцією з центром у точці усереднених координат треку. Це дозволить здійснити трансформацію карти і встановити її геоприв&apos;язку підгонкою відносно позиції треку.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="485"/>
