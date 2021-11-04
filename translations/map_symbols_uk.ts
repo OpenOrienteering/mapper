@@ -1564,7 +1564,7 @@ Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</
     <message>
         <source>Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 417</comment>
-        <translation>Проекція: 13,5 м × 13,5 м.</translation>
+        <translation>Проєкція: 13,5 м × 13,5 м.</translation>
     </message>
     <message>
         <source>Prominent bush or tree</source>
@@ -2801,7 +2801,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 Minimum length: two dashes (footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol 105 (earth wall).</source>
         <comment>Description of symbol 106</comment>
         <translation>Частково зруйнований земляний вал або нечітко видимий земляний насип. Мінімальна висота: 0,5 м.
-Мінімальна довжина: два штрихи (проекція 55 м). Якщо лінія коротша, вона має бути перебільшена до мінімальної довжини або замінена на знак 105 (земляний вал).</translation>
+Мінімальна довжина: два штрихи (проєкція 55 м). Якщо лінія коротша, вона має бути перебільшена до мінімальної довжини або замінена на знак 105 (земляний вал).</translation>
     </message>
     <message>
         <source>Erosion gully</source>
@@ -2887,7 +2887,7 @@ Density: 3 to 5 dots / mm² (9-16%).</source>
         <comment>Description of symbol 113</comment>
         <translation type="unfinished">Ділянка ям та/чи горбів надто складна для детального зображення, або інші типи нерівного ґрунту, які чітко вирізняються, але мало впливають на прохідність.
 Це площинний знак.
-Мінімальна кількість точок – три (проекція 10 м × 10 м).
+Мінімальна кількість точок – три (проєкція 10 м × 10 м).
 Не слід розрізати горизонталі в області нерівного ґрунту.
 Щільність: 3-4 точки/мм2 (9-13%).</translation>
     </message>
@@ -2915,7 +2915,7 @@ Density: 8 to 10 dots / mm² (25-32%).</source>
         <comment>Description of symbol 114</comment>
         <translation type="unfinished">Ділянка ям та/чи горбів надто складна для детального зображення, або інші типи нерівного ґрунту, які чітко вирізняються та впливають на прохідність.
 Це площинний знак.
-Мінімальна кількість точок – три (проекція 7 м × 7 м).
+Мінімальна кількість точок – три (проєкція 7 м × 7 м).
 Не слід розрізати горизонталі в області нерівного ґрунту.
 Щільність: 7-9 точок/мм2 (22-28%).</translation>
     </message>
@@ -3263,7 +3263,7 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
         <comment>Description of symbol 210</comment>
         <translation>Скельний або кам&apos;янистий ґрунт, що знижує прохідність до 60-80% від нормальної.
 Точки слід розподіляти випадковим чином, але так, щоб вони не заважати сприйняттю важливих форм рельєфу та інших об&apos;єктів.
-Мінімальна кількість точок - три (проекція 10 м × 10 м).
+Мінімальна кількість точок - три (проєкція 10 м × 10 м).
 Щоб уникнути плутанини зі знаком 416 (чіткий контур рослинності), точки не повинні розташовуватися у лінію.</translation>
     </message>
     <message>
@@ -3279,7 +3279,7 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
         <comment>Description of symbol 210.1</comment>
         <translation>Скельний або кам&apos;янистий ґрунт, що знижує прохідність до 60-80% від нормальної.
 Точки слід розподіляти випадковим чином, але так, щоб вони не заважали сприйняттю важливих форм рельєфу та інших об&apos;єктів.
-Мінімальна кількість точок - три (проекція 10 м × 10 м).
+Мінімальна кількість точок - три (проєкція 10 м × 10 м).
 Щоб уникнути плутанини зі знаком 416 (чіткий контур рослинності), точки не слід розташовувати у лінію.</translation>
     </message>
     <message>
@@ -3295,7 +3295,7 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
         <comment>Description of symbol 211</comment>
         <translation>Скельний або кам&apos;янистий ґрунт, який значно знижує прохідність, (приблизно до 20-60% від нормальної швидкості).
 Точки слід розподіляти випадковим чином, але так, щоб вони не заважали сприйняттю важливих деталей рельєфу та інших об&apos;єктів.
-Мінімальна кількість точок - три (проекція 8 м × 8 м).
+Мінімальна кількість точок - три (проєкція 8 м × 8 м).
 Щоб уникнути плутанини зі знаком 416 (чіткий контур рослинності), точки не слід розташовувати у лінію.</translation>
     </message>
     <message>
@@ -3311,7 +3311,7 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
         <comment>Description of symbol 212</comment>
         <translation>Важкопрохідний скельний або кам&apos;янистий ґрунт (менше 20% від нормальної швидкості).
 Точки слід розподіляти випадковим чином, але так, щоб вони не заважали сприйняттю важливих деталей рельєфу та інших об&apos;єктів.
-Мінімальна кількість точок - три (проекція 7 м × 7 м).
+Мінімальна кількість точок - три (проєкція 7 м × 7 м).
 Щоб уникнути плутанини зі знаком 416 (чіткий контур рослинності), точки не слід розташовувати в лінію.</translation>
     </message>
     <message>
@@ -3351,7 +3351,7 @@ Impassable trenches shall be represented using symbol 201 (impassable cliff).
 Collapsed and easily crossable trenches should be mapped as erosion gullies.</source>
         <comment>Description of symbol 215</comment>
         <translation>Скельна тріщина чи штучна траншея у скельному ґрунті. Рекомендована мінімальна глибина: 1 м.
-Мінімальна довжина: 2 мм (проекція 30 м).
+Мінімальна довжина: 2 мм (проєкція 30 м).
 Коротші траншеї можуть бути перебільшені до мінімального графічного розміру.
 Непрохідні траншеї мають бути зображені знаком 201 (непрохідна скеля).
 Траншеї, що зруйновані та легко долаються слід показувати знаком канави.</translation>
@@ -3446,7 +3446,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
 Minimum length (isolated): footprint 15 m.</source>
         <comment>Description of symbol 304</comment>
         <translation>Зазвичай, понад 2 м завширшки.
-Мінімальна довжина (окремого об’єкту): 1 мм (проекція 15 м).</translation>
+Мінімальна довжина (окремого об’єкту): 1 мм (проєкція 15 м).</translation>
     </message>
     <message>
         <source>Small crossable watercourse</source>
@@ -3646,7 +3646,7 @@ Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m). Smaller areas must either be 
         <comment>Description of symbol 403</comment>
         <translation>Трав’яниста рослинність, торфовище, вирубаний ліс, молоді посадки (дерева нижче 1м) або інша здебільшого відкрита місцевість з незручною для бігу землею, рослинністю та високою травою, що має прохідність на рівні з чистим лісом.
 Може поєднуватися зі знаками 407 (рослинність, що сповільнює біг, хороша видимість) і 409 (рослинність, можливо йти, хороша видимість) для показу погіршення прохідності.
-Мінімальна площа: 1 мм × 1 мм (проекція 15 м × 15 м). Менші ділянки мають бути опущені, перебільшені або показані знаком 401 (відкритий простір).</translation>
+Мінімальна площа: 1 мм × 1 мм (проєкція 15 м × 15 м). Менші ділянки мають бути опущені, перебільшені або показані знаком 401 (відкритий простір).</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
@@ -3662,7 +3662,7 @@ Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller ar
         <translation>Ділянки з окремими деревами або кущами на незручному відкритому просторі можуть бути узагальнені використанням регулярного візерунку великих точок на жовтому растрі.
 Точки можуть бути білими (вкраплення дерев) або зеленими (вкраплення чагарників/гущавини). Лише варіант з білими точками поєднується зі знаками 407 (рослинність, що сповільнює біг, хороша видимість) і 409 (рослинність, можливо йти, хороша видимість) для показу погіршення прохідності.
 Знак зорієнтований на північ.
-Мінімальна ширина: 1,5 мм (проекція 22,5 м). Мінімальна площа: 2,5 мм × 2,5 мм (проекція 37,5 м × 37,5 м). Менші ділянки мають бути опущені, перебільшені або показані знаком 403 (грубий відкритий простір).</translation>
+Мінімальна ширина: 1,5 мм (проєкція 22,5 м). Мінімальна площа: 2,5 мм × 2,5 мм (проєкція 37,5 м × 37,5 м). Менші ділянки мають бути опущені, перебільшені або показані знаком 403 (грубий відкритий простір).</translation>
     </message>
     <message>
         <source>Rough open land with scattered bushes</source>
@@ -3678,7 +3678,7 @@ Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller ar
         <translation>Ділянки з окремими деревами або кущами на незручному відкритому просторі можуть бути узагальнені використанням регулярного візерунку великих точок на жовтому растрі.
 Точки можуть бути білими (вкраплення дерев) або зеленими (вкраплення чагарників/гущавини). Лише варіант з білими точками поєднується зі знаками 407 (рослинність, що сповільнює біг, хороша видимість) і 409 (рослинність, можливо йти, хороша видимість) для показу погіршення прохідності.
 Знак зорієнтований на північ.
-Мінімальна ширина: 1,5 мм (проекція 22,5 м). Мінімальна площа: 2,5 мм × 2,5 мм (проекція 37,5 м × 37,5 м). Менші ділянки мають бути опущені, перебільшені або показані знаком 403 (грубий відкритий простір).</translation>
+Мінімальна ширина: 1,5 мм (проєкція 22,5 м). Мінімальна площа: 2,5 мм × 2,5 мм (проєкція 37,5 м × 37,5 м). Менші ділянки мають бути опущені, перебільшені або показані знаком 403 (грубий відкритий простір).</translation>
     </message>
     <message>
         <source>Forest</source>
@@ -3924,7 +3924,7 @@ Minimum length, black dot implementation: 5 dots (2.5 mm – footprint 37 m).</s
         <comment>Description of symbol 416</comment>
         <translation>Чіткий край лісу або контур рослинності всередині лісу.
 Дуже чіткі межі лісу та контури рослинності можуть зображуватися знаком чітка межа культивованих угідь. Лише один з двох знаків (чорна точкова лінія або зелена штрихова лінія) може використовуватись в межах однієї карти.
-Мінімальна довжина, лінія чорних точок: 5 точок (2,5 мм – проекція 37 м).</translation>
+Мінімальна довжина, лінія чорних точок: 5 точок (2,5 мм – проєкція 37 м).</translation>
     </message>
     <message>
         <source>Distinct vegetation boundary, green dashed line</source>
@@ -3938,7 +3938,7 @@ Minimum length, green line implementation: 4 dashes (1.8 mm – footprint 27 m).
         <comment>Description of symbol 416.1</comment>
         <translation>Чіткий край лісу або контур рослинності всередині лісу.
 Недоліком варіанту з зеленими штрихами є те, що його не можна використовувати для контурів  рослинності навколо, або всередині знаків 410 (рослинність, можливо пролізти) та 411 (непрохідна рослинність). Альтернативою для таких ситуацій є використання знаку 415 (чітка межа культивованих угідь).
-Мінімальна довжина, лінія зелених штрихів: 4 штрихи (1.8 мм – проекція 27 м).</translation>
+Мінімальна довжина, лінія зелених штрихів: 4 штрихи (1.8 мм – проєкція 27 м).</translation>
     </message>
     <message>
         <source>Prominent large tree</source>
@@ -3948,7 +3948,7 @@ Minimum length, green line implementation: 4 dashes (1.8 mm – footprint 27 m).
     <message>
         <source>Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 417</comment>
-        <translation>Проекція: 13,5 м × 13,5 м.</translation>
+        <translation>Проєкція: 13,5 м × 13,5 м.</translation>
     </message>
     <message>
         <source>Prominent bush or tree</source>
@@ -3962,7 +3962,7 @@ Footprint: 7.5 m x 7.5 m.</source>
         <comment>Description of symbol 418</comment>
         <translation>Слід застосовувати обмежено, оскільки знак легко переплутати зі знаком 109 (малий пагорб) при порушенні сприйняття кольорів.
 
-Проекція: 7,5 м × 7,5 м.</translation>
+Проєкція: 7,5 м × 7,5 м.</translation>
     </message>
     <message>
         <source>Prominent vegetation feature</source>
@@ -3972,7 +3972,7 @@ Footprint: 7.5 m x 7.5 m.</source>
     <message>
         <source>Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 419</comment>
-        <translation>Проекція: 13,5 м × 13,5 м.</translation>
+        <translation>Проєкція: 13,5 м × 13,5 м.</translation>
     </message>
     <message>
         <source>Paved area, with bounding line</source>
@@ -4014,7 +4014,7 @@ Footprint: 7.5 m x 7.5 m.</source>
 2*0.14 mm – footprint 8.7 m)
 The outer boundary lines may be replaced with other black line symbols, such as symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.</source>
         <comment>Description of symbol 502</comment>
-        <translation>Ширину слід показувати відповідно до масштабу, але з дотриманням мінімальних розмірів (0,3 + 2 × 0,14 мм – проекція 8,7 м).
+        <translation>Ширину слід показувати відповідно до масштабу, але з дотриманням мінімальних розмірів (0,3 + 2 × 0,14 мм – проєкція 8,7 м).
 Бічна лінія може бути замінена іншим лінійним знаком чорного кольору, таким як 516 (огорожа), 518 (непрохідна огорожа), 513 (мур) або 515 (непрохідний мур), якщо цей об&apos;єкт настільки близький до краю дороги, що його практично неможливо зобразити окремим знаком.</translation>
     </message>
     <message>
@@ -4383,8 +4383,8 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).
 Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.</source>
         <comment>Description of symbol 521</comment>
         <translation>Будинок зображується за плановою формою його основи, наскільки це дозволяє масштаб.
-Мінімальна ширина проходу крізь будівлю складає 0,3 мм (проекція 4,5 м). У межах заборонених територій будинки зображуються узагальнено. Простори, що повністю розташовані всередині будівлі, не відображаються на карті (вони мають бути зображені як частина будівлі). Мінімальний проміжок, що вказує на прохід між будівлями чи між будівлями та іншими непрохідними об’єктами становить 0,25 мм.
-Мінімальна площа: 0,5 мм × 0,5 мм (проекція 7,5 м × 7,5 м).
+Мінімальна ширина проходу крізь будівлю складає 0,3 мм (проєкція 4,5 м). У межах заборонених територій будинки зображуються узагальнено. Простори, що повністю розташовані всередині будівлі, не відображаються на карті (вони мають бути зображені як частина будівлі). Мінімальний проміжок, що вказує на прохід між будівлями чи між будівлями та іншими непрохідними об’єктами становить 0,25 мм.
+Мінімальна площа: 0,5 мм × 0,5 мм (проєкція 7,5 м × 7,5 м).
 Будівлі, у межах міської забудови, розмірами понад 75 м × 75 м можуть бути зображені темно сірим кольором.</translation>
     </message>
     <message>
@@ -4398,7 +4398,7 @@ Buildings larger than 75 m x 75 m may be represented with a dark grey infill in 
 Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
         <comment>Description of symbol 521.1</comment>
         <translation>Будинок зображується за плановою формою його основи, наскільки це дозволяє масштаб.
-Мінімальна площа: 0,5 мм × 0,5 мм (проекція 7,5 м × 7,5 м).</translation>
+Мінімальна площа: 0,5 мм × 0,5 мм (проєкція 7,5 м × 7,5 м).</translation>
     </message>
     <message>
         <source>Large building with outline</source>
@@ -4411,7 +4411,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
 Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m). Buildings within forbidden areas are generalised. Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.25 mm.</source>
         <comment>Description of symbol 521.2</comment>
         <translation>Будівлі, у межах міської забудови, розмірами понад 75 м × 75 м можуть бути зображені темно сірим кольором.
-Мінімальна ширина проходу крізь будівлю складає 0,3 мм (проекція 4,5 м). У межах заборонених територій будинки зображуються узагальнено. Простори, що повністю розташовані всередині будівлі, не відображаються на карті (вони мають бути зображені як частина будівлі). Мінімальний проміжок, що вказує на прохід між будівлями чи між будівлями та іншими непрохідними об’єктами становить 0,25 мм.</translation>
+Мінімальна ширина проходу крізь будівлю складає 0,3 мм (проєкція 4,5 м). У межах заборонених територій будинки зображуються узагальнено. Простори, що повністю розташовані всередині будівлі, не відображаються на карті (вони мають бути зображені як частина будівлі). Мінімальний проміжок, що вказує на прохід між будівлями чи між будівлями та іншими непрохідними об’єктами становить 0,25 мм.</translation>
     </message>
     <message>
         <source>Large building</source>
@@ -5005,7 +5005,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
-        <translation>Крутий земляний схил, який чітко відрізняється від інших об’єктів, наприклад, гравійна або піщана яма, насип шосе чи залізниці, дамба. Площа, яка вкрита штрихами, має відповідати проекції обриву в плані. Штрихи можуть бути опущені, якщо бровки урвища близько розташовані одна до одної. Обриви, що не долаються, повинні зображуватися знаком 201 (непрохідна скельна стіна). Для дуже високих обривів товщина бровки збільшується до 0,25 мм.</translation>
+        <translation>Крутий земляний схил, який чітко відрізняється від інших об’єктів, наприклад, гравійна або піщана яма, насип шосе чи залізниці, дамба. Площа, яка вкрита штрихами, має відповідати проєкції обриву в плані. Штрихи можуть бути опущені, якщо бровки урвища близько розташовані одна до одної. Обриви, що не долаються, повинні зображуватися знаком 201 (непрохідна скельна стіна). Для дуже високих обривів товщина бровки збільшується до 0,25 мм.</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -5015,7 +5015,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
-        <translation>Крутий земляний схил, який чітко відрізняється від інших об’єктів, наприклад, гравійна або піщана яма, насип шосе чи залізниці, дамба. Площа, яка вкрита штрихами, має відповідати проекції обриву в плані. Штрихи можуть бути опущені, якщо бровки урвища близько розташовані одна до одної. Обриви, що не долаються, повинні зображуватися знаком 201 (непрохідна скельна стіна). Для дуже високих обривів товщина бровки збільшується до 0,25 мм.</translation>
+        <translation>Крутий земляний схил, який чітко відрізняється від інших об’єктів, наприклад, гравійна або піщана яма, насип шосе чи залізниці, дамба. Площа, яка вкрита штрихами, має відповідати проєкції обриву в плані. Штрихи можуть бути опущені, якщо бровки урвища близько розташовані одна до одної. Обриви, що не долаються, повинні зображуватися знаком 201 (непрохідна скельна стіна). Для дуже високих обривів товщина бровки збільшується до 0,25 мм.</translation>
     </message>
     <message>
         <source>Earth bank, very high</source>
@@ -5165,7 +5165,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
         <comment>Description of symbol 201</comment>
-        <translation>Непрохідна скельна стіна, кар’єр або небезпечне земляне урвище, (дивись знак 106) зображуються лінією товщиною 0,35 мм та штрихами, які спрямовані в напрямку схилу і відображають проекцію в плані від бровки до підошви. Штрихи можуть бути опущені, якщо місця недостатньо, наприклад, у вузькому проході між скелями (прохід має бути накреслений шириною не менше, ніж 0,3мм). Штрихи можуть простягатися на площу знака, який зображує деталі безпосередньо під скельною стіною. Коли скельна стіна входить у воду і неможливо пробігти під обривом уздовж лінії берегу, останню не малюють або ж штрихи повинні ясно простягатися через лінію.</translation>
+        <translation>Непрохідна скельна стіна, кар’єр або небезпечне земляне урвище, (дивись знак 106) зображуються лінією товщиною 0,35 мм та штрихами, які спрямовані в напрямку схилу і відображають проєкцію в плані від бровки до підошви. Штрихи можуть бути опущені, якщо місця недостатньо, наприклад, у вузькому проході між скелями (прохід має бути накреслений шириною не менше, ніж 0,3мм). Штрихи можуть простягатися на площу знака, який зображує деталі безпосередньо під скельною стіною. Коли скельна стіна входить у воду і неможливо пробігти під обривом уздовж лінії берегу, останню не малюють або ж штрихи повинні ясно простягатися через лінію.</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
@@ -5175,7 +5175,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
         <comment>Description of symbol 201.0.1</comment>
-        <translation>Непрохідна скельна стіна, кар’єр або небезпечне земляне урвище, (дивись знак 106) зображуються лінією товщиною 0,35 мм та штрихами, які спрямовані в напрямку схилу і відображають проекцію в плані від бровки до підошви. Штрихи можуть бути опущені, якщо місця недостатньо, наприклад, у вузькому проході між скелями (прохід має бути накреслений шириною не менше, ніж 0,3мм). Штрихи можуть простягатися на площу знака, який зображує деталі безпосередньо під скельною стіною. Коли скельна стіна входить у воду і неможливо пробігти під обривом уздовж лінії берегу, останню не малюють або ж штрихи повинні ясно простягатися через лінію.</translation>
+        <translation>Непрохідна скельна стіна, кар’єр або небезпечне земляне урвище, (дивись знак 106) зображуються лінією товщиною 0,35 мм та штрихами, які спрямовані в напрямку схилу і відображають проєкцію в плані від бровки до підошви. Штрихи можуть бути опущені, якщо місця недостатньо, наприклад, у вузькому проході між скелями (прохід має бути накреслений шириною не менше, ніж 0,3мм). Штрихи можуть простягатися на площу знака, який зображує деталі безпосередньо під скельною стіною. Коли скельна стіна входить у воду і неможливо пробігти під обривом уздовж лінії берегу, останню не малюють або ж штрихи повинні ясно простягатися через лінію.</translation>
     </message>
     <message>
         <source>Impassable cliff, no tags</source>
@@ -9088,7 +9088,7 @@ The relative height difference between neighbouring features must be represented
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks shall be drawn with the symbol impassable cliff (201). The line width of very high earth banks may be 0.37 mm.</source>
         <comment>Description of symbol 106.0</comment>
-        <translation>Крутий перегин поверхні землі, що однозначно виділяється з навколишнього середовища. Гравійні або піщані виробки, дорожні виїмки або залізничні насипи тощо. Вуси повинні показувати повну проекцію схилу, але можуть бути опущені, якщо два обриви розташовуються близько друг від друга. Недолаємі ґрунтові обриви показуються знаком 201. Для дуже високих ґрунтових обривів товщину лінії збільшують до 0,37 мм.</translation>
+        <translation>Крутий перегин поверхні землі, що однозначно виділяється з навколишнього середовища. Гравійні або піщані виробки, дорожні виїмки або залізничні насипи тощо. Вуси повинні показувати повну проєкцію схилу, але можуть бути опущені, якщо два обриви розташовуються близько друг від друга. Недолаємі ґрунтові обриви показуються знаком 201. Для дуже високих ґрунтових обривів товщину лінії збільшують до 0,37 мм.</translation>
     </message>
     <message>
         <source>Earth bank, very high</source>
@@ -9098,7 +9098,7 @@ The relative height difference between neighbouring features must be represented
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks shall be drawn with the symbol impassable cliff (201). The line width of very high earth banks may be 0.37 mm.</source>
         <comment>Description of symbol 106.1</comment>
-        <translation>Крутий перегин поверхні землі, що однозначно виділяється з навколишнього середовища. Гравійні або піщані виробки, дорожні виїмки або залізничні насипи тощо. Вуси повинні показувати повну проекцію схилу, але можуть бути опущені, якщо два обриви розташовуються близько друг від друга. Недолаємі ґрунтові обриви показуються знаком 201. Для дуже високих ґрунтових обривів товщину лінії збільшують до 0,37 мм.</translation>
+        <translation>Крутий перегин поверхні землі, що однозначно виділяється з навколишнього середовища. Гравійні або піщані виробки, дорожні виїмки або залізничні насипи тощо. Вуси повинні показувати повну проєкцію схилу, але можуть бути опущені, якщо два обриви розташовуються близько друг від друга. Недолаємі ґрунтові обриви показуються знаком 201. Для дуже високих ґрунтових обривів товщину лінії збільшують до 0,37 мм.</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
