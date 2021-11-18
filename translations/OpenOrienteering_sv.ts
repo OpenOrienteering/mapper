@@ -2212,7 +2212,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="833"/>
         <source>Online declination lookup</source>
-        <translation>Lutningssökning online</translation>
+        <translation>Kontrollera deklinationen online (magnetisk missvisning)</translation>
     </message>
     <message>
         <source>The magnetic declination for the reference point %1� %2� will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
@@ -2342,7 +2342,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="262"/>
         <source>Grivation:</source>
-        <translation></translation>
+        <translation>Grivation (Meridiankonvergens + Magnetisk missvisning):</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="441"/>
@@ -6385,7 +6385,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="87"/>
         <source>Guacamole Full</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Guacamole full</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="132"/>
@@ -6420,7 +6420,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="193"/>
         <source>Activate preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera förinställning</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="197"/>
@@ -6955,7 +6955,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="256"/>
         <source>No tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Inga tiles (rutor)</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="257"/>
@@ -6970,7 +6970,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="259"/>
         <source>Tiles:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rutor:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="467"/>
@@ -7655,7 +7655,7 @@ separationer</translation>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="54"/>
         <source>First code number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Första kodsiffra:</translation>
     </message>
 </context>
 <context>
@@ -7663,7 +7663,7 @@ separationer</translation>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="35"/>
         <source>Unnamed event</source>
-        <translation>Onamnad tävling</translation>
+        <translation>Icke namngiven tävling</translation>
     </message>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="41"/>
