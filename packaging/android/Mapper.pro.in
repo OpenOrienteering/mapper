@@ -38,7 +38,7 @@ PROJECT_BINARY_DIR = "@PROJECT_BINARY_DIR@"
 # in CPackConfig.cmake when a package version changes.
 CPACK_CONFIG_CLEANUP_TRIGGER = \
   GDAL: @GDAL_VERSION@ \
-  PROJ: @PROJ4_VERSION@ \
+  PROJ: @PROJ_VERSION@ \
   Qt5:  @Qt5Core_VERSION@
 
 # For the generated .pro file to be used in Qt Creator,
