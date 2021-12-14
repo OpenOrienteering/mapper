@@ -93,17 +93,13 @@ jobs:
     - template: publish.yml
 
 
-- job: Linux_clazy
-  displayName: Linux (RelWithDebInfo, clazy)
+- job: Linux_RelWithDebInfo
+  displayName: Linux (RelWithDebInfo)
   dependsOn: Codespell
   condition: succeededOrFailed()
   variables:
     IMAGE_NAME: 'ubuntu-18.04'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
-    CLAZY_VERSION: 1.5
-    CLAZY_CHECKS: 'level0,level1,no-rule-of-two-soft,no-const-signal-or-slot,no-fully-qualified-moc-types'
-    CLAZY_IGNORE_DIRS: '.*printsupport.qt-5.*'
-    CLAZY_NO_WERROR: 1
     ENABLE_PDF_MANUAL: 1
   pool:
     vmImage: '$(IMAGE_NAME)'
