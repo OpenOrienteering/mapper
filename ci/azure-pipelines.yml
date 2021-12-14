@@ -54,7 +54,8 @@ jobs:
   displayName: macOS (Release)
   dependsOn: Release_Notes
   variables:
-    IMAGE_NAME: 'macos-10.14'
+    IMAGE_NAME: 'macos-10.15'
+    SUPBERBUILD_IMAGE_NAME: 'macos-10.14'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     QT_STYLE_OVERRIDE: fusion
   pool:
@@ -99,6 +100,7 @@ jobs:
   condition: succeededOrFailed()
   variables:
     IMAGE_NAME: 'ubuntu-18.04'
+    SUPBERBUILD_IMAGE_NAME: $(IMAGE_NAME)
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     ENABLE_PDF_MANUAL: 1
   pool:
@@ -126,6 +128,7 @@ jobs:
   condition: succeededOrFailed()
   variables:
     IMAGE_NAME: 'ubuntu-18.04'
+    SUPBERBUILD_IMAGE_NAME: $(IMAGE_NAME)
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     CC: gcc
     CFLAGS: -fprofile-arcs -ftest-coverage
@@ -152,7 +155,8 @@ jobs:
   displayName: Android arm-v7 (Release)
   dependsOn: Release_Notes
   variables:
-    IMAGE_NAME: 'macos-10.14'
+    IMAGE_NAME: 'macos-10.15'
+    SUPBERBUILD_IMAGE_NAME: 'macos-10.14'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: armv7a-linux-androideabi
     TARGET_SUFFIX: -$(TARGET)
@@ -187,7 +191,8 @@ jobs:
   displayName: Android arm64 (Release)
   dependsOn: Android_armv7
   variables:
-    IMAGE_NAME: 'macos-10.14'
+    IMAGE_NAME: 'macos-10.15'
+    SUPBERBUILD_IMAGE_NAME: 'macos-10.14'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: aarch64-linux-android
     TARGET_SUFFIX: -$(TARGET)
@@ -222,7 +227,8 @@ jobs:
   displayName: Android x86 (Release)
   dependsOn: Android_x86_64
   variables:
-    IMAGE_NAME: 'macos-10.14'
+    IMAGE_NAME: 'macos-10.15'
+    SUPBERBUILD_IMAGE_NAME: 'macos-10.14'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: i686-linux-android
     TARGET_SUFFIX: -$(TARGET)
@@ -257,7 +263,8 @@ jobs:
   displayName: Android x86_64 (Release)
   dependsOn: Release_Notes
   variables:
-    IMAGE_NAME: 'macos-10.14'
+    IMAGE_NAME: 'macos-10.15'
+    SUPBERBUILD_IMAGE_NAME: 'macos-10.14'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: x86_64-linux-android
     TARGET_SUFFIX: -$(TARGET)
@@ -295,6 +302,7 @@ jobs:
   condition: False
   variables:
     IMAGE_NAME: 'ubuntu-18.04'
+    SUPBERBUILD_IMAGE_NAME: $(IMAGE_NAME)
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: x86_64-w64-mingw32
     TARGET_SUFFIX: -$(TARGET)
@@ -324,6 +332,7 @@ jobs:
   displayName: Windows x32 (Release, MinGW)
   variables:
     IMAGE_NAME: 'windows-2019'
+    SUPBERBUILD_IMAGE_NAME: $(IMAGE_NAME)
     SUPERBUILD_INSTALL_DIR: 'C:/msys2'
     MINGW: mingw32
     OUTPUT_SUFFIX: '-$(MINGW)'
@@ -350,6 +359,7 @@ jobs:
   displayName: Windows x64 (Release, MinGW)
   variables:
     IMAGE_NAME: 'windows-2019'
+    SUPBERBUILD_IMAGE_NAME: $(IMAGE_NAME)
     SUPERBUILD_INSTALL_DIR: 'C:/msys2'
     MINGW: mingw64
     OUTPUT_SUFFIX: '-$(MINGW)'
