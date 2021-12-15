@@ -65,7 +65,7 @@ function(add_test_helper testname autorun)
 	endforeach()
 	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS})
 	target_link_libraries(${testname} PRIVATE
-	  PROJ4::proj
+	  ${PROJ_LIBRARIES}
 	  Qt5::Test
 	  Qt5::Gui
 	  Polyclipping::Polyclipping

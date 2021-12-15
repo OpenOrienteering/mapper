@@ -203,20 +203,27 @@ endif()
 
 # We must not require a minimum version of PROJ via find_package
 # because PROJ config requires the major version to match exactly.
-find_package(PROJ4 REQUIRED)
-if(NOT TARGET PROJ4::proj)
-	include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindPROJ.cmake")
+find_package(PROJ CONFIG)
+if(NOT PROJ_LIBRARIES)
+	find_package(PkgConfig REQUIRED)
+	if(PKG_CONFIG_FOUND)
+		pkg_check_modules(PROJ4_PC IMPORTED_TARGET proj)
+	endif()
+	if(TARGET PkgConfig::PROJ4_PC)
+		set(PROJ_LIBRARIES PkgConfig::PROJ4_PC)
+		set(PROJ_VERSION "${PROJ4_PC_VERSION}")
+	endif()
 endif()
-if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 4.9)
+if(NOT PROJ_VERSION OR PROJ_VERSION VERSION_LESS 4.9)
 	message(FATAL_ERROR "At least PROJ 4.9 is required")
-elseif(PROJ4_VERSION VERSION_LESS 6.1)
+elseif(PROJ_VERSION VERSION_LESS 6.1)
 	# New PROJ API missing or incomplete.
 	# (proj_normalize_for_visualization() came in 6.1.)
-	set_property(TARGET PROJ4::proj APPEND PROPERTY
+	set_property(TARGET "${PROJ_LIBRARIES}" APPEND PROPERTY
 	  INTERFACE_COMPILE_DEFINITIONS ACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
-elseif(PROJ4_VERSION VERSION_LESS 6.2.1)
+elseif(PROJ_VERSION VERSION_LESS 6.2.1)
 	# Datum Potsdam issue, https://github.com/OSGeo/PROJ/pull/1573
-	set_property(TARGET PROJ4::proj APPEND PROPERTY
+	set_property(TARGET "${PROJ_LIBRARIES}" APPEND PROPERTY
 	  INTERFACE_COMPILE_DEFINITIONS PROJ_ISSUE_1573)
 endif()
 

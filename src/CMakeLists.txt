@@ -301,7 +301,7 @@ add_dependencies(Mapper_Common
 )
 target_link_libraries(Mapper_Common
   Polyclipping::Polyclipping
-  PROJ4::proj
+  ${PROJ_LIBRARIES}
   Qt5::Widgets
 )
 foreach(lib
