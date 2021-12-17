@@ -51,6 +51,8 @@
 
 #ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 #  include <proj_api.h>
+#else
+#  include <proj.h>
 #endif
 
 #include "test_config.h"
@@ -444,7 +446,7 @@ private slots:
 		QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 
-#if !defined(ACCEPT_USE_OF_DEPRECATED_PROJ_API_H) || PJ_VERSION >= 600
+#if (!defined(ACCEPT_USE_OF_DEPRECATED_PROJ_API_H) && (PROJ_VERSION_MAJOR)*100+(PROJ_VERSION_MINOR) < 802) || PJ_VERSION >= 600 
 		QEXPECT_FAIL("TemplateTrack from v0.8.4", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
 #else
 		QEXPECT_FAIL("TemplateTrack NAD83", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
@@ -567,7 +569,7 @@ private slots:
 			ogr_template_center = center(temp);
 		}
 		
-#if !defined(ACCEPT_USE_OF_DEPRECATED_PROJ_API_H) || PJ_VERSION >= 600
+#if (!defined(ACCEPT_USE_OF_DEPRECATED_PROJ_API_H) && (PROJ_VERSION_MAJOR)*100+(PROJ_VERSION_MINOR) < 802) || PJ_VERSION >= 600
 		QEXPECT_FAIL("TemplateTrack NAD83", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
 		QEXPECT_FAIL("OgrTemplate NAD83", "Unsupported WGS 84 -> NAD 83 transformation", Continue);
 #endif
