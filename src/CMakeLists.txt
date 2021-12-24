@@ -301,7 +301,7 @@ add_dependencies(Mapper_Common
 )
 target_link_libraries(Mapper_Common
   Polyclipping::Polyclipping
-  PROJ4::proj
+  ${PROJ_LIBRARIES}
   Qt5::Widgets
 )
 foreach(lib
@@ -361,6 +361,14 @@ target_compile_definitions(Mapper PRIVATE
   QT_NO_CAST_TO_ASCII
   QT_USE_QSTRINGBUILDER
 )
+if(APPLE)
+	add_custom_command(
+	  TARGET Mapper
+	  POST_BUILD
+	  COMMAND plutil -replace NSHighResolutionCapable -bool true
+	    $<TARGET_BUNDLE_DIR:Mapper>/Contents/Info.plist
+	)
+endif()
 
 install(TARGETS Mapper
   RUNTIME DESTINATION "${MAPPER_RUNTIME_DESTINATION}"

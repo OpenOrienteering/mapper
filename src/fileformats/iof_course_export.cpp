@@ -87,7 +87,7 @@ void IofCourseExport::writeXml(const PathObject& object)
 	auto const stamp = QDateTime::currentDateTime();
 	xml->writeDefaultNamespace(QLatin1String("http://www.orienteering.org/datastandard/3.0"));
 	
-	XmlElementWriter course_data(*xml, QLatin1String("CourseDate"));
+	XmlElementWriter course_data(*xml, QLatin1String("CourseData"));
 	course_data.writeAttribute(QLatin1String("iofVersion"), QLatin1String("3.0"));
 	course_data.writeAttribute(QLatin1String("creator"), QLatin1String("OpenOrienteering Mapper " APP_VERSION));
 	course_data.writeAttribute(QLatin1String("createTime"), stamp.toString(Qt::ISODate));
@@ -154,7 +154,7 @@ void IofCourseExport::writeCourseControl(const QString& type, const QString& id)
 
 void IofCourseExport::writePosition(const LatLon& latlon)
 {
-	XmlElementWriter position(*xml, QLatin1String("CourseControl"));
+	XmlElementWriter position(*xml, QLatin1String("Position"));
 	position.writeAttribute(QLatin1String("lng"), latlon.longitude(), 7);
 	position.writeAttribute(QLatin1String("lat"), latlon.latitude(), 7);
 }

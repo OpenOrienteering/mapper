@@ -132,6 +132,10 @@ void commonTestData()
 	        << OcdGeorefFields { 5.22000000, 15000, 367205, 5807281, 2033, 1 }
 	        << GeorefCoreData { 15000, 3.67, 5.22, { 367205, 5807281 }, QStringLiteral("UTM"), { QStringLiteral("33") } }
 	        << 0U;
+	QTest::newRow("Kaiserdom St. Bartholomaeus - Germany, ETRS89/UTM zone 32N")
+	        << OcdGeorefFields { 3.26000000, 15000, 477509, 5550982, 8007, 1 }
+	        << GeorefCoreData { 15000, 3.02, 3.26, { 477509, 5550982 }, QStringLiteral("EPSG"), { QStringLiteral("25832") } }
+	        << 0U;
 	QTest::newRow("Nasca airport - Peru, WGS 84/UTM zone 18S")
 	        << OcdGeorefFields { -2.70000000, 15000, 504606, 8358028, -2018, 1 }
 	        << GeorefCoreData { 15000, -2.71, -2.70, { 504606, 8358028 }, QStringLiteral("UTM"), { QStringLiteral("18 S") } }

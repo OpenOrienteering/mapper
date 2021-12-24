@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013-2017 Kai Pastor
- *    Copyright 2018 Libor Pecháček
+ *    Copyright 2021 Libor Pecháček
  *
  *    This file is part of OpenOrienteering.
  *
@@ -150,6 +150,14 @@ constexpr struct
     { OcdGrid::Australia, 10, 28357 }, // GDA94 / MGA zone 57
     { OcdGrid::Australia, 11, 28358 }, // GDA94 / MGA zone 58
     { OcdGrid::Australia, 12, 3112 }, // GDA94 / Geoscience Australia Lambert
+    { OcdGrid::Australia, 16, 7849 }, // GDA2020 / MGA zone 49
+    { OcdGrid::Australia, 17, 7850 }, // GDA2020 / MGA zone 50
+    { OcdGrid::Australia, 18, 7851 }, // GDA2020 / MGA zone 51
+    { OcdGrid::Australia, 19, 7852 }, // GDA2020 / MGA zone 52
+    { OcdGrid::Australia, 20, 7853 }, // GDA2020 / MGA zone 53
+    { OcdGrid::Australia, 21, 7854 }, // GDA2020 / MGA zone 54
+    { OcdGrid::Australia, 22, 7855 }, // GDA2020 / MGA zone 55
+    { OcdGrid::Australia, 23, 7856 }, // GDA2020 / MGA zone 56
     { OcdGrid::Austria, 28, 31257 }, // MGI / Austria GK M28
     { OcdGrid::Austria, 31, 31258 }, // MGI / Austria GK M31
     { OcdGrid::Austria, 34, 31259 }, // MGI / Austria GK M34
@@ -236,10 +244,6 @@ constexpr struct
     { OcdGrid::France, 16, 3948 }, // RGF93 / CC48
     { OcdGrid::France, 17, 3949 }, // RGF93 / CC49
     { OcdGrid::France, 18, 3950 }, // RGF93 / CC50
-    { OcdGrid::Germany, 2, 31466 }, // DHDN, Gauss-Krüger Zone 2
-    { OcdGrid::Germany, 3, 31467 }, // DHDN, Gauss-Krüger Zone 3
-    { OcdGrid::Germany, 4, 31468 }, // DHDN, Gauss-Krüger Zone 4
-    { OcdGrid::Germany, 5, 31469 }, // DHDN, Gauss-Krüger Zone 5
     { OcdGrid::Germany, 6, 25831 }, // ETRS89 / UTM zone 31N
     { OcdGrid::Germany, 7, 25832 }, // ETRS89 / UTM zone 32N
     { OcdGrid::Germany, 8, 25833 }, // ETRS89 / UTM zone 33N
@@ -696,7 +700,7 @@ std::pair<const MapperCrs, const int> fromOcd(const int combined_ocd_grid_zone)
 		// DHDN, Gauss-Krüger, Zone 2-5
 		if (ocd_zone_id >= 2 && ocd_zone_id <= 5)
 			return { MapperCrs::GaussKrueger, ocd_zone_id };
-		break;
+		Q_FALLTHROUGH();
 
 	default:
 		for (const auto& record : grid_zone_epsg_codes)

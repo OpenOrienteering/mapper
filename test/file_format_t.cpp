@@ -24,6 +24,7 @@
 #include <initializer_list>
 #include <limits>
 #include <memory>
+#include <stdexcept>
 // IWYU pragma: no_include <type_traits>
 #include <utility>
 
@@ -48,6 +49,7 @@
 #include <QSize>
 #include <QSizeF>
 #include <QString>
+#include <QStringRef>
 #include <QTemporaryDir>
 #include <QVariant>
 
@@ -69,6 +71,7 @@
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
+#include "fileformats/iof_course_export.h"
 #include "fileformats/kml_course_export.h"
 #include "fileformats/ocd_file_export.h"
 #include "fileformats/ocd_file_format.h"
@@ -564,6 +567,46 @@ void FileFormatTest::mapCoordtoString()
 
 
 
+void FileFormatTest::mapCoordFromString_data()
+{
+	using native_int = decltype(MapCoord().nativeX());
+	using flags_type = decltype(MapCoord().flags());
+	QTest::addColumn<QString>("input");
+	QTest::addColumn<native_int>("x");
+	QTest::addColumn<native_int>("y");
+	QTest::addColumn<flags_type>("flags");
+	
+	QTest::newRow("plain")     << QString::fromLatin1("-12 -23 255;")    << -12 << -23 << flags_type(255);
+	QTest::newRow("multi ' '") << QString::fromLatin1("-12  23    255;") << -12 <<  23 << flags_type(255);
+	QTest::newRow("early \\n") << QString::fromLatin1("-12\n\n 23 255;") << -12 <<  23 << flags_type(255);
+	QTest::newRow("late \\r")  << QString::fromLatin1("12 -23 \r\r255;") <<  12 << -23 << flags_type(255);
+}
+
+void FileFormatTest::mapCoordFromString()
+{
+	using native_int = decltype(MapCoord().nativeX());
+	using flags_type = decltype(MapCoord().flags());
+	QFETCH(QString, input);
+	QFETCH(native_int, x);
+	QFETCH(native_int, y);
+	QFETCH(flags_type, flags);
+	
+	bool no_exception = true;
+	auto ref = QStringRef{&input};
+	MapCoord coord;
+	try {
+		coord = MapCoord(ref);
+	}  catch (std::invalid_argument const& e) {
+		no_exception = false;
+	}
+	QVERIFY(no_exception);
+	QCOMPARE(coord.nativeX(), x);
+	QCOMPARE(coord.nativeY(), y);
+	QCOMPARE(coord.flags(), flags);
+}
+
+
+
 void FileFormatTest::fixupExtensionTest_data()
 {
 	QTest::addColumn<QByteArray>("format_id");
@@ -1048,6 +1091,40 @@ void FileFormatTest::kmlCourseExportTest()
 		QCOMPARE(int(center.longitude()), 9);
 	}
 #endif
+}
+
+
+void FileFormatTest::iofCourseExportTest()
+{
+	QString const map_filepath = QStringLiteral("testdata:/export/single-line.xmap");
+	
+	Map map;
+	QVERIFY(map.loadFrom(map_filepath));
+	
+	SimpleCourseExport simple_export{map};
+	QVERIFY(simple_export.canExport());
+	
+	simple_export.setProperties(map, QStringLiteral("Test event"), QStringLiteral("Test course"), 101);
+	
+	IofCourseExport exporter{{}, &map, nullptr};
+	
+	QBuffer exported;
+	exporter.setDevice(&exported);
+	QVERIFY(exporter.doExport());
+	QVERIFY(!exported.data().isEmpty());
+	
+	QString const expected_filepath = QStringLiteral("testdata:/export/iof-3.0-course.xml");
+	QFile expected_file = {expected_filepath};
+	expected_file.open(QIODevice::ReadOnly | QIODevice::Text);
+	auto const expected_data = expected_file.readAll();
+	QVERIFY(!expected_data.isEmpty());
+	
+	// Ignore creator and timestamp
+	auto stable_exported = exported.data().indexOf("<Event");
+	QVERIFY(stable_exported > 0);
+	auto stable_expected = expected_data.indexOf("<Event");
+	QVERIFY(stable_expected > 0);
+	QCOMPARE(exported.data().mid(stable_exported), expected_data.mid(stable_expected));
 }
 
 

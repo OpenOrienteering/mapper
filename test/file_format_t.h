@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -41,6 +41,12 @@ private slots:
 	 */
 	void mapCoordtoString();
 	void mapCoordtoString_data();
+	
+	/**
+	 * Tests the MapCoord::fromString() implementation which is used for import.
+	 */
+	void mapCoordFromString();
+	void mapCoordFromString_data();
 	
 	/**
 	 * Tests filename extension fixup.
@@ -92,6 +98,11 @@ private slots:
 	 * Tests the export of KML courses.
 	 */
 	void kmlCourseExportTest();
+	
+	/**
+	 * Tests the export of IOF courses.
+	 */
+	void iofCourseExportTest();
 	
 	/**
 	 * Test the creation of templates.

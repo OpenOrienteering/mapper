@@ -59,7 +59,7 @@ steps:
 - task: DownloadPipelineArtifact@0
   inputs:
     pipelineId: $(openorienteering.superbuild.buildId)
-    artifactName: 'superbuild-$(IMAGE_NAME)$(OUTPUT_SUFFIX)'
+    artifactName: 'superbuild-$(SUPBERBUILD_IMAGE_NAME)$(OUTPUT_SUFFIX)'
     targetPath: $(SUPERBUILD_INSTALL_DIR)
   displayName: 'Download superbuild artifacts'
 

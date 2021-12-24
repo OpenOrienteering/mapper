@@ -65,7 +65,7 @@ function(add_test_helper testname autorun)
 	endforeach()
 	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS})
 	target_link_libraries(${testname} PRIVATE
-	  PROJ4::proj
+	  ${PROJ_LIBRARIES}
 	  Qt5::Test
 	  Qt5::Gui
 	  Polyclipping::Polyclipping
@@ -230,4 +230,13 @@ if(Mapper_AUTORUN_TESTS)
 	  COMMENT "Running tests for modified sources"
 	)
 	add_dependencies(AUTORUN_TESTS ${Mapper_AUTORUN_TESTS})
+endif()
+
+
+set(IOF_3_XSD_FILE "" CACHE FILEPATH "Path of the IOF Data Standard 3 XSD file")
+if(IOF_3_XSD_FILE)
+	find_program(XMLLINT NAMES xmllint)
+	add_test(NAME validate_iof_course
+		COMMAND "${XMLLINT}" --schema "${IOF_3_XSD_FILE}" "${CMAKE_CURRENT_SOURCE_DIR}/data/export/iof-3.0-course.xml"
+	)
 endif()

@@ -3447,7 +3447,7 @@ Minimum length: 3 mm (footprint 12 m).</description>
                 <description>A man-made feature which is significant or prominent.
 The definition of the symbol must be given on the map.
 Footprint: 4 m in diameter.</description>
-                <point_symbol inner_radius="380" inner_color="-1" outer_width="220" outer_color="2" elements="0"/>
+                <point_symbol inner_radius="280" inner_color="-1" outer_width="220" outer_color="2" elements="0"/>
             </symbol>
             <symbol type="1" id="156" code="531" name="Prominent man-made feature – x">
                 <description>Location is at the centre of gravity of the symbol.

@@ -470,9 +470,9 @@ public slots:
 	/** Tries to remove points of selected paths while retaining their shape */
 	void simplifyPathClicked();
 	/** Activates the physical cutout tool */
-	void cutoutPhysicalClicked();
+	void clipAreaClicked();
 	/** Activates the physical cutout tool (inversed) */
-	void cutawayPhysicalClicked();
+	void eraseAreaClicked();
 	/** Executes the "distribute points along path" action.
 	 *  The prerequisites for using the tool must be given. */
 	void distributePointsClicked();
@@ -797,8 +797,8 @@ private:
 	QAction* boolean_merge_holes_act = {};
 	QAction* convert_to_curves_act = {};
 	QAction* simplify_path_act = {};
-	QAction* cutout_physical_act = {};
-	QAction* cutaway_physical_act = {};
+	QAction* clip_area_act = {};
+	QAction* erase_area_act = {};
 	QAction* distribute_points_act = {};
 	
 	std::unique_ptr<PaintOnTemplateFeature> paint_feature;

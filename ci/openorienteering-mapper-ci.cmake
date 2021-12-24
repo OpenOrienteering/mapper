@@ -32,11 +32,13 @@ set(Mapper_CI_VERSION_DISPLAY "ci" CACHE STRING "Mapper (CI): Version display st
 set(Mapper_CI_APP_ID "org.openorienteering.mapper.ci" CACHE STRING "Mapper (CI): Android App ID")
 set(Mapper_CI_LICENSING_PROVIDER "OFF" CACHE STRING "Mapper (CI): Provider for 3rd-party licensing information")
 set(Mapper_CI_QT_VERSION "5.12" CACHE STRING "Mapper (CI): Qt version")
+option(Mapper_CI_ENABLE_CODECHECKS "Mapper: Enable iwyu and clang-tidy code checks" OFF)
 option(Mapper_CI_ENABLE_COVERAGE "Mapper: Enable testing coverage analysis" OFF)
 option(Mapper_CI_ENABLE_GDAL "Mapper: Enable GDAL" ON)
 option(Mapper_CI_ENABLE_POSITIONING "Mapper: Enable positioning" ON)
 option(Mapper_CI_MANUAL_PDF "Mapper (git): Provide the manual as PDF file (needs pdflatex)" OFF)
 set(Mapper_CI_GDAL_DATA_DIR "NOTFOUND" CACHE STRING "Mapper (CI): GDAL data directory")
+set(Mapper_CI_IOF_3_XSD_FILE "NOTFOUND" CACHE FILEPATH "Mapper (CI): IOF Data Standard 3.0 XSD file")
 
 # Run the AutosaveTest, too, but not on macOS where it is flaky.
 set(patch_command PATCH_COMMAND sed -e s/autosave_t.MANUAL/autosave_t/ -i -- test/CMakeLists.txt)
@@ -71,11 +73,13 @@ superbuild_package(
     Mapper_CI_VERSION_DISPLAY
     Mapper_CI_APP_ID
     Mapper_CI_LICENSING_PROVIDER
+    Mapper_CI_ENABLE_CODECHECKS
     Mapper_CI_ENABLE_COVERAGE
     Mapper_CI_ENABLE_GDAL
     Mapper_CI_ENABLE_POSITIONING
     Mapper_CI_MANUAL_PDF
     Mapper_CI_GDAL_DATA_DIR
+    Mapper_CI_IOF_3_XSD_FILE
 
   BUILD [[
     CMAKE_ARGS
@@ -92,6 +96,7 @@ superbuild_package(
     $<$<BOOL:@Mapper_CI_ENABLE_GDAL@>:
       "-DGDAL_DATA_DIR=${Mapper_CI_GDAL_DATA_DIR}"
     >
+      "-DIOF_3_XSD_FILE=${Mapper_CI_IOF_3_XSD_FILE}"
     $<$<BOOL:@ANDROID@>:
       "-DCMAKE_DISABLE_FIND_PACKAGE_Qt5PrintSupport=TRUE"
       "-DMAPPER_APP_ID=${Mapper_CI_APP_ID}"
@@ -114,6 +119,10 @@ superbuild_package(
     >
     $<$<BOOL:@Mapper_CI_ENABLE_COVERAGE@>:
       "-DMapper_DEVELOPMENT_BUILD:BOOL=FALSE"
+      "-DCMAKE_DISABLE_FIND_PACKAGE_ClangTidy:BOOL=TRUE"
+      "-DCMAKE_DISABLE_FIND_PACKAGE_IWYU:BOOL=TRUE"
+    >
+    $<$<NOT:$<BOOL:@Mapper_CI_ENABLE_CODECHECKS@>>:
       "-DCMAKE_DISABLE_FIND_PACKAGE_ClangTidy:BOOL=TRUE"
       "-DCMAKE_DISABLE_FIND_PACKAGE_IWYU:BOOL=TRUE"
     >

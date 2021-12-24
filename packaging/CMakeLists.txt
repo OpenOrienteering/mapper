@@ -235,25 +235,22 @@ unset(MAPPER_LIBS)
 
 if(Mapper_PACKAGE_PROJ)
 	if(NOT PROJ_DATA_DIR)
-		unset(PROJ_DATA_DIR CACHE)
-		if(PROJ4_ROOT)
-			set(proj_data_paths "${PROJ4_ROOT}/share/proj")
-		elseif(PROJ4_DIR)
+		if(PROJ_DIR)
 			# Cf. find_package documentation
-			string(REGEX REPLACE "/CMake$|/cmake$" "" proj_data_paths "${PROJ4_DIR}")                 # U
-			string(REGEX REPLACE "/PROJ4[^/]*$|/proj4[^/]*$" "" proj_data_paths "${proj_data_paths}") # U, W
-			string(REGEX REPLACE "/cmake$" "" proj_data_paths "${proj_data_paths}")                   # U
-			string(REGEX REPLACE "/lib/[^/]*$|/lib$|/share$" "" proj_data_paths "${proj_data_paths}") # U, W
-			set(proj_data_paths "${proj_data_paths}/share/proj")
-		elseif(PROJ4_INCLUDE_DIRS)
-			string(REGEX REPLACE "/include$" "/share/proj" proj_data_paths ${PROJ4_INCLUDE_DIRS}) # MSYS2 et al.
+			string(REGEX REPLACE "/CMake$|/cmake$" "" proj_prefix "${PROJ_DIR}")              # U
+			string(REGEX REPLACE "/PROJ[^/]*$|/proj[^/]*$" "" proj_prefix "${proj_prefix}")   # U, W
+			string(REGEX REPLACE "/cmake$" "" proj_prefix "${proj_prefix}")                   # U
+			string(REGEX REPLACE "/lib/[^/]*$|/lib$|/share$" "" proj_prefix "${proj_prefix}") # U, W
+		elseif(PROJ4_PC_PREFIX)
+			set(proj_prefix "${PROJ4_PC_PREFIX}")
 		else()
-			set(proj_data_paths PATHS "${CMAKE_INSTALL_PREFIX}/share/proj")
+			set(proj_prefix "${CMAKE_INSTALL_PREFIX}")
 		endif()
 		find_path(PROJ_DATA_DIR
 		  DOC "The PROJ data files directory"
 		  NAMES epsg proj.db
-		  PATHS ${proj_data_paths}
+		  PATHS ${proj_prefix}
+		  PATH_SUFFIXES "share/proj" "share"
 		  NO_DEFAULT_PATH
 		)
 	endif()
@@ -266,7 +263,7 @@ if(Mapper_PACKAGE_PROJ)
 	install(
 	  DIRECTORY "${PROJ_DATA_DIR}"
 	  DESTINATION "${MAPPER_DATA_DESTINATION}")
-	list(APPEND MAPPER_LIB_HINTS ${PROJ4_ROOT}/bin)
+	list(APPEND MAPPER_LIB_HINTS "${proj_prefix}/bin")
 endif()
 
 if(Mapper_PACKAGE_GDAL)

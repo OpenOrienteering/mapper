@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2021 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -1057,20 +1057,20 @@ void OcdFileImport::importView(const QString& param_string)
 			// empty item
 			break;
 		case 'x':
-			{
-				offset_x = param_value.toDouble();
-				break;
-			}
+			offset_x = param_value.toDouble();
+			break;
 		case 'y':
-			{
-				offset_y = param_value.toDouble();
-				break;
-			}
+			offset_y = param_value.toDouble();
+			break;
 		case 'z':
-			{
-				zoom = param_value.toDouble(&zoom_ok);
-				break;
-			}
+			zoom = param_value.toDouble(&zoom_ok);
+			break;
+		case 'h':
+			map->setAreaHatchingEnabled(param_value.toInt() != 0);
+			break;
+		case 'k':
+			map->setBaselineViewEnabled(param_value.toInt() != 0);
+			break;
 		default:
 			; // nothing
 		}
