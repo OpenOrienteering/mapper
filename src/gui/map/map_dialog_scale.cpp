@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2019-2020 Kai Pastor
+ *    Copyright 2019-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -138,7 +138,7 @@ void ScaleMapDialog::updateWidgets()
 {
 	other_x_edit->setEnabled(center_other_radio->isChecked());
 	other_y_edit->setEnabled(center_other_radio->isChecked());
-	adjust_georeferencing_check->setEnabled(!center_georef_radio->isChecked());
+	adjust_georeferencing_check->setEnabled(center_georef_radio->isEnabled() && !center_georef_radio->isChecked());
 }
 
 void ScaleMapDialog::okClicked()
