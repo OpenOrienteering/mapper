@@ -210,17 +210,17 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation>Elemente zeichnen wenn das Zentrum innerhalb der Begrenzung liegt.</translation>
+        <translation>Elemente zeichnen, wenn der Mittelpunkt innerhalb der Begrenzung liegt.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="233"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation>Elemente zeichnen wenn irgendein Punkt innerhalb der Begrenzung liegt.</translation>
+        <translation>Elemente zeichnen, wenn irgendein Punkt innerhalb der Begrenzung liegt.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="234"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation>Elemente zeichnen wenn alle Punkte innerhalb der Begrenzung liegen.</translation>
+        <translation>Elemente zeichnen, wenn alle Punkte innerhalb der Begrenzung liegen.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="249"/>
@@ -6587,7 +6587,7 @@ rationen</translation>
         <location filename="../src/gui/print_widget.cpp" line="1318"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
         <translatorcomment>Check original.</translatorcomment>
-        <translation>Bild konnte nicht gespeichert werden. Pfad nicht vorhanden oder Berechtigungen unzureichend.</translation>
+        <translation>Bild konnte nicht gespeichert werden. Existiert der Pfad? Haben Sie ausreichende Schreibrechte?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1265"/>
