@@ -1814,9 +1814,9 @@ void OcdFileExport::exportTextSymbol(OcdFile<Format>& file, const TextSymbol* te
 {
 	auto symbol_number = symbol_numbers.at(text_symbol);
 	
-	text_format_mapping.push_back({ text_symbol, TextObject::AlignLeft, 0, symbol_number });
-	text_format_mapping.push_back({ text_symbol, TextObject::AlignHCenter, 0, symbol_number });
-	text_format_mapping.push_back({ text_symbol, TextObject::AlignRight, 0, symbol_number });
+	for (auto alignment : {TextObject::AlignLeft, TextObject::AlignHCenter, TextObject::AlignRight})
+		text_format_mapping.push_back({ text_symbol, alignment, 0, symbol_number });
+
 	auto text_format = text_format_mapping.end() - 3;
 	auto count = [text_format](const auto* object) {
 		auto alignment = static_cast<const TextObject*>(object)->getHorizontalAlignment();
@@ -1838,35 +1838,24 @@ void OcdFileExport::exportTextSymbol(OcdFile<Format>& file, const TextSymbol* te
 	// The most frequent usage is to get the regular number.
 	std::sort(text_format, end(text_format_mapping), [](const auto& a, const auto& b) { return a.count > b.count; });
 	
+	auto export_single_symbol = [&](quint32 symbol_number, int alignment) {
+		auto ocd_symbol = exportTextSymbol<typename Format::TextSymbol>(text_symbol, symbol_number, alignment);
+		FILEFORMAT_ASSERT(!ocd_symbol.isEmpty());
+		file.symbols().insert(ocd_symbol);
+	};
+
 	text_format = text_format_mapping.end() - 3;
 	if (text_format->count == 0)
 		text_format->alignment = TextObject::AlignHCenter;  // default if unused: centered
-	auto ocd_symbol = exportTextSymbol<typename Format::TextSymbol>(text_symbol, text_format->symbol_number, text_format->alignment);
-	FILEFORMAT_ASSERT(!ocd_symbol.isEmpty());
-	file.symbols().insert(ocd_symbol);
-	
+	export_single_symbol(text_format->symbol_number, text_format->alignment);
 	++text_format;
-	if (text_format->count > 0)
+
+	for (;text_format != text_format_mapping.end() && text_format->count > 0; ++text_format)
 	{
 		text_format->symbol_number = makeUniqueSymbolNumber(symbol_number);
 		temporary_symbols.emplace_back(new PointSymbol());
 		symbol_numbers[temporary_symbols.back().get()] = text_format->symbol_number;
-		ocd_symbol = exportTextSymbol<typename Format::TextSymbol>(text_symbol, text_format->symbol_number, text_format->alignment);
-		FILEFORMAT_ASSERT(!ocd_symbol.isEmpty());
-		file.symbols().insert(ocd_symbol);
-		
-		++text_format;
-		if (text_format->count > 0)
-		{
-			text_format->symbol_number = makeUniqueSymbolNumber(symbol_number);
-			temporary_symbols.emplace_back(new PointSymbol());
-			symbol_numbers[temporary_symbols.back().get()] = text_format->symbol_number;
-			ocd_symbol = exportTextSymbol<typename Format::TextSymbol>(text_symbol, text_format->symbol_number, text_format->alignment);
-			FILEFORMAT_ASSERT(!ocd_symbol.isEmpty());
-			file.symbols().insert(ocd_symbol);
-			
-			++text_format;
-		}
+		export_single_symbol(text_format->symbol_number, text_format->alignment);
 	}
 	text_format_mapping.erase(text_format, end(text_format_mapping));
 }
