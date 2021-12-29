@@ -502,7 +502,10 @@ public:
 	/** Returns the number of symbols in this map. */
 	int getNumSymbols() const;
 	
-	/** Returns a pointer to the i-th symbol. */
+	/** Returns a pointer to the i-th symbol.
+	 *  
+	 * \sa findSymbolIndex()
+	 */
 	const Symbol* getSymbol(int i) const;
 	
 	/** Returns a pointer to the i-th symbol. */
@@ -540,6 +543,8 @@ public:
 	 * Loops over all symbols, looking for the given symbol pointer.
 	 * Returns the index of the symbol, or -1 if the symbol is not found.
 	 * For the "undefined" symbols, returns special indices smaller than -1.
+	 * 
+	 * \sa getSymbol()
 	 */
 	int findSymbolIndex(const Symbol* symbol) const;
 	

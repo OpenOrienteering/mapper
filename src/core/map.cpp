@@ -1541,6 +1541,8 @@ const Symbol* Map::getSymbol(int i) const
 		return getUndefinedPoint();
 	else if (i == -3)
 		return getUndefinedLine();
+	else if (i == -4)
+		return getUndefinedText();
 	else
 	{
 		Q_ASSERT(!"Invalid symbol index given");
