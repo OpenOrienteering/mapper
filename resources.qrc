@@ -117,6 +117,7 @@
         <file>images/view-zoom-out.png</file>
         <file>images/window-new.png</file>
         <file>images/mapper-icon/Mapper-128.png</file>
+        <file>images/map-information.png</file>
         <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_en.txt</file>
     </qresource>
     <qresource prefix="/" lang="de">
