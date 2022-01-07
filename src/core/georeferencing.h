@@ -527,6 +527,11 @@ public:
 	 */
 	static QString degToDMS(double val);
 	
+	/**
+	 * Ensure specs using ortho projection are explicitly spheroidal.
+	 */
+	static void ensureOrthoIsSpheroidal(QString &spec);
+
 	
 	/**
 	 * Updates the transformation parameters between map coordinates and 

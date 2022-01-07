@@ -1239,6 +1239,19 @@ QString Georeferencing::degToDMS(double val)
 	return ret;
 }
 
+void Georeferencing::ensureOrthoIsSpheroidal(QString &spec)
+{
+	const QString ortho_proj = QLatin1String("+proj=ortho ");
+	auto flattening_param = QLatin1String(" +f=");
+	auto i = spec.indexOf(ortho_proj);
+	if (i >= 0 && !spec.contains(flattening_param))
+	{
+		auto pos = i + ortho_proj.length() - 1;
+		// Insert to make "+proj=ortho +f=0", no flattening.
+		spec.insert(pos, flattening_param + QLatin1String("0"));
+	}
+}
+
 QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 {
 	auto state = [](auto state) -> const char* {
