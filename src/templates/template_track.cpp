@@ -601,7 +601,7 @@ void TemplateTrack::updateGeoreferencing()
 QString TemplateTrack::calculateLocalGeoreferencing() const
 {
 	LatLon proj_center = track.calcAveragePosition();
-	return QString::fromLatin1("+proj=ortho +datum=WGS84 +lat_0=%1 +lon_0=%2")
+	return QString::fromLatin1("+proj=ortho +f=0 +datum=WGS84 +lat_0=%1 +lon_0=%2")
 	        .arg(proj_center.latitude(), 0, 'f')
 	        .arg(proj_center.longitude(), 0, 'f');
 	

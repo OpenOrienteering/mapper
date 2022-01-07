@@ -201,12 +201,12 @@ std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing(cons
 	/// \todo Use the template's datum etc. instead of WGS84?
 	auto georef = std::make_unique<Georeferencing>();
 	georef->setScaleDenominator(int(map->getGeoreferencing().getScaleDenominator()));
-	georef->setProjectedCRS(QString{}, QStringLiteral("+proj=ortho +datum=WGS84 +ellps=WGS84 +units=m +no_defs"));
+	georef->setProjectedCRS(QString{}, QStringLiteral("+proj=ortho +f=0 +datum=WGS84 +ellps=WGS84 +units=m +no_defs"));
 	if (OgrFileImport::checkGeoreferencing(path, *georef))
 	{
 		auto center = OgrFileImport::calcAverageLatLon(path);
 		georef->setProjectedCRS(QString{},
-		                             QString::fromLatin1("+proj=ortho +datum=WGS84 +ellps=WGS84 +units=m +lat_0=%1 +lon_0=%2 +no_defs")
+		                             QString::fromLatin1("+proj=ortho +f=0 +datum=WGS84 +ellps=WGS84 +units=m +lat_0=%1 +lon_0=%2 +no_defs")
 		                             .arg(center.latitude()).arg(center.longitude()));
 		georef->setProjectedRefPoint({}, false, false);
 		georef->setCombinedScaleFactor(1.0);

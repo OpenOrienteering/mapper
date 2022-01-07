@@ -1007,7 +1007,7 @@ ogr::unique_srs OgrFileImport::importGeoreferencing(OGRDataSourceH data_source)
 		auto ortho_georef = Georeferencing();
 		ortho_georef.setScaleDenominator(int(map->getScaleDenominator()));
 		ortho_georef.setProjectedCRS(QString{},
-		                             QString::fromLatin1("+proj=ortho +datum=WGS84 +ellps=WGS84 +units=m +lat_0=%1 +lon_0=%2 +no_defs")
+		                             QString::fromLatin1("+proj=ortho +f=0 +datum=WGS84 +ellps=WGS84 +units=m +lat_0=%1 +lon_0=%2 +no_defs")
 		                             .arg(latitude, 0, 'f')
 		                             .arg(longitude, 0, 'f') );
 		ortho_georef.setProjectedRefPoint({}, false, false);
