@@ -666,6 +666,7 @@ void GeoreferencingDialog::crsEdited()
 		Q_ASSERT(crs_template);
 		if (spec.isEmpty())
 			spec = QStringLiteral(" ");  // intentionally non-empty: enforce non-local state.
+		Georeferencing::ensureOrthoIsSpheroidal(spec);
 		georef_copy.setProjectedCRS(crs_template->id(), spec, crs_selector->parameters());
 		Q_ASSERT(georef_copy.getState() != Georeferencing::Local);
 		if (keep_geographic_radio->isChecked())
