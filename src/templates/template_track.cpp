@@ -219,6 +219,7 @@ bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	if (xml.name() == QLatin1String("crs_spec"))
 	{
 		track_crs_spec = xml.readElementText();
+		Georeferencing::ensureOrthoIsSpheroidal(track_crs_spec);
 	}
 	else if (xml.name() == QLatin1String("projected_crs_spec"))
 	{

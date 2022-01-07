@@ -573,6 +573,7 @@ bool OgrTemplate::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	else if (xml.name() == literal::crs_spec)
 	{
 		track_crs_spec = xml.readElementText();
+		Georeferencing::ensureOrthoIsSpheroidal(track_crs_spec);
 		template_track_compatibility = true;
 	}
 	else if (xml.name() == literal::projected_crs_spec)

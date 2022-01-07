@@ -193,6 +193,7 @@ bool TemplateImage::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	{
 		/// \todo check specification language
 		available_georef.effective.crs_spec = xml.readElementText();
+		Georeferencing::ensureOrthoIsSpheroidal(available_georef.effective.crs_spec);
 	}
 	else
 		xml.skipCurrentElement(); // unsupported

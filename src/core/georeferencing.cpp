@@ -626,6 +626,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 						if (language != literal::proj_4)
 							throw FileFormatException(tr("Unknown CRS specification language: %1").arg(language));
 						projected_crs_spec = xml.readElementText();
+						ensureOrthoIsSpheroidal(projected_crs_spec);
 					}
 					else if (xml.name() == literal::parameter)
 					{
