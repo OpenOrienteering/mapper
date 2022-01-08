@@ -1773,7 +1773,8 @@ Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <source>An area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 501.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yta med hårt och jämnt underlag som asfalt, grus, betong och liknande. Hårdgjorda ytor bör omges av en tunn svart linje där de har tydliga gränser.
+Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     </message>
     <message>
         <source>Paved area, bounding line</source>
@@ -1788,19 +1789,21 @@ Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
     <message>
         <source>Wide road, minimum width</source>
         <comment>Name of symbol 502</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bred väg, minsta bredd</translation>
     </message>
     <message>
         <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
 The space between the black lines is filled with brown (50%).
 A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
         <comment>Description of symbol 502</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vägen ritas skalriktigt men inte smalare än angivna mått (0,3 + 2*0,14 mm - utbredning 8,7 m). Den yttre kantlinjen kan ersättas med andra svarta linjesymboler, såsom symbol 513 (stenmur), 515 (opasserbar stenmur), 516 (stängsel) eller 518 (opasserbart stängsel) om föremålet ligger så nära vägkanten att separata symboler inte är lämpligt att använda.
+Ytan mellan de svarta linjerna fylls med brunt (50 %).
+En väg med två körbanor kan redovisas med två symboler för bred väg, med enbart en mittlinje.</translation>
     </message>
     <message>
         <source>Wide road, 0.5 mm (from ISOM2000)</source>
         <comment>Name of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bred väg, 0.5 mm (från ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -1810,41 +1813,45 @@ A road with two carriageways can be represented using two wide road symbols side
     <message>
         <source>Road with two carriageways</source>
         <comment>Name of symbol 502.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Väg med två körbanor</translation>
     </message>
     <message>
         <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
 The space between the black lines is filled with brown (50%).
 A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
         <comment>Description of symbol 502.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vägen ritas skalriktigt men inte smalare än angivna mått (0,3 + 2*0,14 mm - utbredning 8,7 m). Den yttre kantlinjen kan ersättas med andra svarta linjesymboler, såsom symbol 513 (stenmur), 515 (opasserbar stenmur), 516 (stängsel) eller 518 (opasserbart stängsel) om föremålet ligger så nära vägkanten att separata symboler inte är lämpligt att använda.
+Ytan mellan de svarta linjerna fylls med brunt (50 %).
+En väg med två körbanor kan redovisas med två symboler för bred väg, med enbart en mittlinje.</translation>
     </message>
     <message>
         <source>Road</source>
         <comment>Name of symbol 503</comment>
-        <translation type="unfinished"></translation>
+        <translation>Väg</translation>
     </message>
     <message>
         <source>A maintained road suitable for motor vehicles in all weather. Width less than 5 m.</source>
         <comment>Description of symbol 503</comment>
-        <translation type="unfinished"></translation>
+        <translation>Underhållen väg farbar med motorfordon i alla väder. Bredd mindre än 5 m.</translation>
     </message>
     <message>
         <source>Vehicle track</source>
         <comment>Name of symbol 504</comment>
-        <translation type="unfinished"></translation>
+        <translation>Körväg</translation>
     </message>
     <message>
         <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. For distinct junctions the dashes of the symbols are joined at the junction.
 For indistinct junctions the dashes of the symbols are not joined.
 Minimum length (isolated): two dashes (6.25 mm - footprint 94 m).</source>
         <comment>Description of symbol 504</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ett körspår eller dåligt underhållen väg, endast långsamt farbar med motorfordon. När en förgrening är tydlig ritas strecken ihop.
+I otydliga förgreningar ritas strecken inte ihop.
+Kortaste längd (friliggande): två streck (6,25 mm - 94 m).</translation>
     </message>
     <message>
         <source>Footpath</source>
         <comment>Name of symbol 505</comment>
-        <translation type="unfinished"></translation>
+        <translation>Stor stig</translation>
     </message>
     <message>
         <source>An easily runnable path, bicycle track or old vehicle track.
@@ -1852,12 +1859,15 @@ For distinct junctions the dashes of the symbols are joined at the junction.
 For indistinct junctions the dashes of the symbols are not joined.
 Minimum length (isolated): two dashes (4.25 mm - footprint 64 m)</source>
         <comment>Description of symbol 505</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lättlöpt stig, cykelspår eller gammalt fordonsspår.
+När en förgrening är tydlig ritas strecken ihop.
+I otydliga förgreningar ritas strecken inte ihop.
+Kortaste längd (friliggande): två streck (4,25 mm - 64 m).</translation>
     </message>
     <message>
         <source>Small footpath</source>
         <comment>Name of symbol 506</comment>
-        <translation type="unfinished"></translation>
+        <translation>Liten stig</translation>
     </message>
     <message>
         <source>A runnable small path or (temporary) forest extraction track which can be followed at competition speed.
@@ -1865,12 +1875,15 @@ For distinct junctions the dashes of the symbols are joined at the junction.
 For indistinct junctions the dashes of the symbols are not joined.
 Minimum length (isolated): two dashes (2.25 mm - footprint 34 m).</source>
         <comment>Description of symbol 506</comment>
-        <translation type="unfinished"></translation>
+        <translation>Löpbar liten stig eller (temporär) drivningsväg som kan följas i tävlingsfart.
+När en förgrening är tydlig ritas strecken ihop.
+I otydliga förgreningar ritas strecken inte ihop.
+Kortaste längd (friliggande): två streck (2,25 mm - 34 m).</translation>
     </message>
     <message>
         <source>Less distinct small footpath</source>
         <comment>Name of symbol 507</comment>
-        <translation type="unfinished"></translation>
+        <translation>Liten otydlig stig</translation>
     </message>
     <message>
         <source>A runnable less distinct / visible small path or forestry extraction track.
@@ -1936,52 +1949,58 @@ Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
         <comment>Description of symbol 508.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>En rågång (smal linjär öppning) eller tydligt spår (drivningsväg, sandspår, skidspår) som inte har en tydlig löpbar stig. Löpbarheten visas med en något tjockare gul, grön eller vit bakgrundslinje.
+Kortaste längd: två streck (3,25 mm - 48 m).</translation>
     </message>
     <message>
         <source>Railway</source>
         <comment>Name of symbol 509</comment>
-        <translation type="unfinished"></translation>
+        <translation>Järnväg</translation>
     </message>
     <message>
         <source>A railway or other kind of railed track.
 If it is forbidden to run along the railway, it shall be combined with symbol Out-of-bounds route (711). If it is forbidden to cross the railway, it must be combined with symbol Area that shall not be entered (520) or Out-of-bounds area (709).
 Minimum length (isolated): two dashes (4 mm - footprint 60 m).</source>
         <comment>Description of symbol 509</comment>
-        <translation type="unfinished"></translation>
+        <translation>Järnväg eller järnvägsliknande spår.
+Om det är förbjudet att springa längs med järnvägen ska symbolen kombineras med 711 (förbjuden väg). Om det är förbjudet att korsa järnvägen, ska symbolen kombineras med 520 (förbjudet område) eller med 709 (förbjudet område).
+Kortaste längd (friliggande): två streck (4 mm - 60 m).</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift</source>
         <comment>Name of symbol 510</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kraftledning, linbana eller skidlift</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift. The bars show the exact location of the pylons. The line may be broken to improve legibility.
 If a section of a power line, cableway or skilift goes along a road or path (and does not offer significant additional navigational value) it should be omitted.
 Minimum length (isolated): 5 mm (footprint: 75 m).</source>
         <comment>Description of symbol 510</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kraftledning, linbana eller skidlift. Tvärstrecken redovisar stolparnas exakta lägen. Uppehåll i linjen kan göras för att förbättra läsbarheten.
+Delar av kraftledningar, linbanor eller skidliftar som går längs med väg eller stig och inte tillför någon kartinformation ska utelämnas.
+Kortaste längd (friliggande): 5 mm (75 m).</translation>
     </message>
     <message>
         <source>Major power line, minimum width</source>
         <comment>Name of symbol 511</comment>
-        <translation type="unfinished"></translation>
+        <translation>Större kraftledning, minsta bredd</translation>
     </message>
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the power line. The lines may be broken to improve legibility.
 Very large carrying masts shall be represented in plan shape using outline of symbol Building (521) or with symbol High tower (524).</source>
         <comment>Description of symbol 511</comment>
-        <translation type="unfinished"></translation>
+        <translation>Större kraftledningar bör ritas med dubbel linje. Linjerna kan ritas skalriktigt, det vill säga vid de yttre trådarna. Tvärstrecken redovisar stolparnas exakta lägen. Uppehåll i linjerna kan göras för att förbättra läsbarheten.
+Mycket stora stolpar ska redovisas ytriktigt med kantlinjen av symbol 521 (byggnad) eller med 524 (högt torn).</translation>
     </message>
     <message>
         <source>Major power line</source>
         <comment>Name of symbol 511.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Större kraftledning</translation>
     </message>
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the power line. The lines may be broken to improve legibility. The bars show the exact location of the pylons. Very large carrying masts shall be represented in plan shape using outline of symbol Building (521) or with symbol High tower (524).</source>
         <comment>Description of symbol 511.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Större kraftledningar bör ritas med dubbel linje. Linjerna kan ritas skalriktigt, det vill säga vid de yttre trådarna. Tvärstrecken redovisar stolparnas exakta lägen. Uppehåll i linjerna kan göras för att förbättra läsbarheten. Mycket stora stolpar ska redovisas ytriktigt med kantlinjen av symbol 521 (byggnad) eller med 524 (högt torn).</translation>
     </message>
     <message>
         <source>Major power line, large carrying masts</source>
