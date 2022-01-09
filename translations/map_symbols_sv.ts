@@ -673,7 +673,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>En passerbar brant eller stenbrott. Om brantens fallriktning inte framgår av konturerna eller för att förbättra läsbarheten kan korta taggar dras i riktning nedför.
+För icke-vertikala branter bör taggarna ritas för att visa hela horisontalområdet. Slut på baslinjen måste avrundas om inga taggar visas. En passage mellan två branter måste vara minst 0,2 mm. En brant bör samverka med konturlinjerna.
+Att passera en brant kommer normalt att sakta ner hastigheten.
+Minsta höjd: 1 m.
+Minsta längd: 0,6 mm (fotavtryck 9 m).</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size</source>
@@ -1298,7 +1302,7 @@ Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</source>
     <message>
         <source>Indistinct marsh, minimum size</source>
         <comment>Name of symbol 310.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Otydlig sankmark, minsta storlek</translation>
     </message>
     <message>
         <source>An indistinct marsh, seasonal marsh or an area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground.
@@ -1306,7 +1310,10 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</source>
         <comment>Description of symbol 310.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Otydlig sankmark, tidvis torrlagd sankmark eller smygande övergång mellan sankmark och fastmark (sumpskog), som är passerbar. Kanten är normalt otydlig och vegetationen liknar den på den omgivande marken.
+Symbolen ska kombineras med andra symboler (vita, gula eller gröna) för att visa löpbarhet och öppenhet.
+Symbolen orienteras mot norr.
+Minsta yta: 2 x 0,7 mm (30 x 10,5 m).</translation>
     </message>
     <message>
         <source>Well, fountain or water tank</source>
@@ -1889,7 +1896,8 @@ Kortaste längd (friliggande): två streck (2,25 mm - 34 m).</translation>
         <source>A runnable less distinct / visible small path or forestry extraction track.
 Minimum length: two sections of double dashes (5.3 mm - footprint 79.5 m).</source>
         <comment>Description of symbol 507</comment>
-        <translation type="unfinished"></translation>
+        <translation>En mindre tydlig / synlig löpbar liten stig eller drivningsväg.
+Kortaste längd: två delar med dubbla streck (5,3 mm - 79,5 m).</translation>
     </message>
     <message>
         <source>Narrow ride</source>
@@ -1905,7 +1913,13 @@ Green 30%: slow running.
 Green 60%: walk.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
         <comment>Description of symbol 508</comment>
-        <translation type="unfinished"></translation>
+        <translation>En rågång (smal linjär öppning) eller tydligt spår (drivningsväg, sandspår, skidspår) som inte har en tydlig löpbar stig. Löpbarheten visas med en något tjockare gul, grön eller vit bakgrundslinje.
+Utan bakgrundslinje: samma löpbarhet som omgivningen
+gul 100%: bättre löpbarhet
+vitt i grönt: normal löpbarhet
+grön 30%: sämre löpbarhet
+grön 60%: gångfart
+Kortaste längd: två streck (3,25 mm - 48 m).</translation>
     </message>
     <message>
         <source>Narrow ride, easy running</source>
@@ -1916,34 +1930,37 @@ Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
         <comment>Description of symbol 508.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>En rågång (smal linjär öppning) eller tydligt spår (drivningsväg, sandspår, skidspår) som inte har en tydlig löpbar stig. Löpbarheten visas med en något tjockare gul, grön eller vit bakgrundslinje.
+Kortaste längd: två streck (3,25 mm - 48 m).</translation>
     </message>
     <message>
         <source>Narrow ride, normal runnability</source>
         <comment>Name of symbol 508.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rågång, normal löpbarhet</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
         <comment>Description of symbol 508.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>En rågång (smal linjär öppning) eller tydligt spår (drivningsväg, sandspår, skidspår) som inte har en tydlig löpbar stig. Löpbarheten visas med en något tjockare gul, grön eller vit bakgrundslinje.
+Kortaste längd: två streck (3,25 mm - 48 m).</translation>
     </message>
     <message>
         <source>Narrow ride, slow running</source>
         <comment>Name of symbol 508.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rågång, sämre löpbarhet</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
         <comment>Description of symbol 508.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>En rågång (smal linjär öppning) eller tydligt spår (drivningsväg, sandspår, skidspår) som inte har en tydlig löpbar stig. Löpbarheten visas med en något tjockare gul, grön eller vit bakgrundslinje.
+Kortaste längd: två streck (3,25 mm - 48 m).</translation>
     </message>
     <message>
         <source>Narrow ride, walk</source>
         <comment>Name of symbol 508.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rågång, gångfart</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
@@ -2015,7 +2032,7 @@ Mycket stora stolpar ska redovisas ytriktigt med kantlinjen av symbol 521 (byggn
     <message>
         <source>Bridge / tunnel</source>
         <comment>Name of symbol 512</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bro/tunnel</translation>
     </message>
     <message>
         <source>Bridges and tunnels are represented using the same basic symbols.
@@ -2023,12 +2040,15 @@ If it is not possible to get through a tunnel (or under a bridge), it shall be o
 Minimum length (of baseline): 0.4 mm (footprint 6 m).
 Small bridges connected to a track/path are shown by centring a track dash on the crossing. Tracks/paths are broken for water course crossings without bridges. A small footbridge with no path leading to it is represented with a single dash.</source>
         <comment>Description of symbol 512</comment>
-        <translation type="unfinished"></translation>
+        <translation>Broar och tunnlar redovisas med samma symbol.
+Opasserbara tunnlar och broar utelämnas.
+Små broar som ansluter till en stig redovisas genom att centrera ett streck på korsningen. Om ingen bro finns, utelämnas streck över vattendraget. En liten bro utan anslutande stig redovisas med ett streck.
+Kortaste längd (baslinjen): 0,4 mm (6 m).</translation>
     </message>
     <message>
         <source>Bridge / tunnel, minimum size</source>
         <comment>Name of symbol 512.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bro / tunnel, minsta storlek</translation>
     </message>
     <message>
         <source>Bridges and tunnels are represented using the same basic symbols.
@@ -2036,102 +2056,115 @@ If it is not possible to get through a tunnel (or under a bridge), it shall be o
 Minimum length (of baseline): 0.4 mm (footprint 6 m).
 Small bridges connected to a track/path are shown by centring a track dash on the crossing. Tracks/paths are broken for water course crossings without bridges. A small footbridge with no path leading to it is represented with a single dash.</source>
         <comment>Description of symbol 512.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Broar och tunnlar redovisas med samma symbol.
+Opasserbara tunnlar och broar utelämnas.
+Små broar som ansluter till en stig redovisas genom att centrera ett streck på korsningen. Om ingen bro finns, utelämnas streck över vattendraget. En liten bro utan anslutande stig redovisas med ett streck.
+Kortaste längd (baslinjen): 0,4 mm (6 m).</translation>
     </message>
     <message>
         <source>Footbridge</source>
         <comment>Name of symbol 512.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gångbro</translation>
     </message>
     <message>
         <source>A small footbridge with no path leading to it is represented with a single dash.
 Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 mm over both sides of the stream!</source>
         <comment>Description of symbol 512.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>En liten bro utan anslutande stig redovisas med ett streck.
+Observera: Om bäcken är bredare än 0,25 mm, justera symbolen så att den sträcker sig 0,5 mm över bäckens båda sidor!</translation>
     </message>
     <message>
         <source>Wall</source>
         <comment>Name of symbol 513</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mur</translation>
     </message>
     <message>
         <source>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 513</comment>
-        <translation type="unfinished"></translation>
+        <translation>En tydlig mur av sten, betong, trä eller annat material.
+Lägsta höjd: 1 m.
+Kortaste längd (friliggande): 1,4 mm (21 m).</translation>
     </message>
     <message>
         <source>Ruined wall</source>
         <comment>Name of symbol 514</comment>
-        <translation type="unfinished"></translation>
+        <translation>Otydlig mur</translation>
     </message>
     <message>
         <source>A ruined or less distinct wall. Minimum height 0.5 m.
 Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Wall (513).</source>
         <comment>Description of symbol 514</comment>
-        <translation type="unfinished"></translation>
+        <translation>Raserad eller mindre tydlig mur. Lägsta höjd: 0,5 m.
+Kortaste längd: två streck (3,65 mm - 55 m). Om kortare, måste symbolen förlängas till kortaste längd eller ändras till symbol 513 (mur).</translation>
     </message>
     <message>
         <source>Impassable wall</source>
         <comment>Name of symbol 515</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opasserbar mur</translation>
     </message>
     <message>
         <source>An impassable or uncrossable wall, normally more than 1.5 m high.
 Minimum length (isolated): 3 mm (footprint 45 m).</source>
         <comment>Description of symbol 515</comment>
-        <translation type="unfinished"></translation>
+        <translation>En mur som är opasserbar eller förbjuden att passera, normalt mer än 1,5 m hög.
+Kortaste längd (friliggande): 3 mm (45 m).</translation>
     </message>
     <message>
         <source>Fence</source>
         <comment>Name of symbol 516</comment>
-        <translation type="unfinished"></translation>
+        <translation>Stängsel</translation>
     </message>
     <message>
         <source>If the fence forms an enclosed area, tags should be placed inside.
 Minimum length (isolated): 1.5 mm (footprint 22.5 m).</source>
         <comment>Description of symbol 516</comment>
-        <translation type="unfinished"></translation>
+        <translation>Om stängslet är slutet bör taggarna ritas på insidan.
+Kortaste längd (friliggande): 1,5 mm (22,5 m).</translation>
     </message>
     <message>
         <source>Ruined fence</source>
         <comment>Name of symbol 517</comment>
-        <translation type="unfinished"></translation>
+        <translation>Raserat stängsel</translation>
     </message>
     <message>
         <source>A ruined or less distinct fence. If the fence forms an enclosed area, tags should be placed inside.
 Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol Fence (516).</source>
         <comment>Description of symbol 517</comment>
-        <translation type="unfinished"></translation>
+        <translation>Raserat eller mindre tydligt stängsel. Om stängslet är slutet bör taggarna ritas på insidan.
+Kortaste längd: två streck (3,65 mm - 55 m). Om kortare, måste symbolen förlängas till kortaste längd eller ändras till symbol 516 (stängsel).</translation>
     </message>
     <message>
         <source>Impassable fence</source>
         <comment>Name of symbol 518</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opasserbart stängsel</translation>
     </message>
     <message>
         <source>An impassable or uncrossable fence, normally more than 1.5 m high.
 If the fence forms an enclosed area, tags should be placed inside.
 Minimum length (isolated): 2 mm (footprint 30 m).</source>
         <comment>Description of symbol 518</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ett stängsel som är opasserbart eller förbjudet att passera, normalt mer än 1,5 m högt.
+Om stängslet är slutet bör taggarna ritas på insidan.
+Kortaste längd (friliggande): 2 mm (30 m).</translation>
     </message>
     <message>
         <source>Crossing point</source>
         <comment>Name of symbol 519</comment>
-        <translation type="unfinished"></translation>
+        <translation>Genomgång</translation>
     </message>
     <message>
         <source>A way through or over a wall, fence or other linear feature, including a gate or stile.
 For impassable features, the line shall be broken at the crossing point. For passable features, the line shall not be broken if passing involves a degree of climb.</source>
         <comment>Description of symbol 519</comment>
-        <translation type="unfinished"></translation>
+        <translation>Passage, grind eller stätta, genom eller över en mur, stängsel eller annat linjeföremål.
+För opasserbara föremål ska uppehåll i linjen göras vid genomgången. För passerbara föremål ska uppehåll i linjen inte göras om passage innebär klättring.</translation>
     </message>
     <message>
         <source>Area that shall not be entered</source>
         <comment>Name of symbol 520</comment>
-        <translation type="unfinished"></translation>
+        <translation>Förbjudet område</translation>
     </message>
     <message>
         <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
@@ -2141,22 +2174,27 @@ The vertical black stripes version of the symbol is orientated to north.
 An out-of-bounds area shall not be entered.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 520</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ett förbjudet område kan vara privata tomter, trädgårdar, fabriker och andra industriområden. Enbart höjdkurvor och framträdande föremål som järnvägar och stora byggnader ska redovisas inne i förbjudna områden. Vertikala svarta streck kan användas för ytor där det är viktigt med en komplett kartbild (exempelvis förbjudna områden i skog). Uppehåll i ytan ska göras om väg eller stig passerar igenom ytan.
+Förbjudna områden med tydliga gränser ska omges av svart konturlinje eller annan svart linjesymbol. Om gränsen är otydlig ska ingen svart kantlinje ritas.
+Banpåtryckssymbol 709 kan användas för temporära förbjudna områden.
+De svarta vertikala linjerna ska orienteras mot norr.
+Förbjudna områden får inte beträdas.
+Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     </message>
     <message>
         <source>Area that shall not be entered, solid colour, bounding line</source>
         <comment>Name of symbol 520.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Förbjudet område, enfärgad, gränslinje</translation>
     </message>
     <message>
         <source>Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.</source>
         <comment>Description of symbol 520.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Förbjudna områden med tydliga gränser ska omges av svart konturlinje eller annan svart linjesymbol. Om gränsen är otydlig ska ingen svart kantlinje ritas.</translation>
     </message>
     <message>
         <source>Area that shall not be entered, stripes</source>
         <comment>Name of symbol 520.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Förbjudet område, ränder</translation>
     </message>
     <message>
         <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
@@ -3785,12 +3823,12 @@ Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 5</comment>
-        <translation>Lila för spår symboler</translation>
+        <translation>Lila för spårsymboler</translation>
     </message>
     <message>
         <source>Purple 50%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lila 50%</translation>
     </message>
     <message>
         <source>Blue 100%</source>
@@ -3805,12 +3843,12 @@ Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     <message>
         <source>Black 60%</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Svart 60%</translation>
     </message>
     <message>
         <source>Black 50%</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Svart 50%</translation>
     </message>
     <message>
         <source>Black 20%</source>
@@ -3820,7 +3858,7 @@ Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     <message>
         <source>White over light brown</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vit över ljusbrun</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
@@ -3830,7 +3868,7 @@ Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     <message>
         <source>Lower brown 30%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lägre brun 30%</translation>
     </message>
     <message>
         <source>Black below lower light brown</source>
@@ -3840,7 +3878,7 @@ Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 16</comment>
-        <translation>Blå 100% för områdes funktioner</translation>
+        <translation>Blå 100% för områdesfunktioner</translation>
     </message>
     <message>
         <source>Blue 70%</source>
@@ -3850,12 +3888,12 @@ Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     <message>
         <source>Blue 30%</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå 30%</translation>
     </message>
     <message>
         <source>OpenOrienteering Blue</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering Blå</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
@@ -3870,17 +3908,17 @@ Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     <message>
         <source>Green 50%/Yellow 100%</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grön 50%/Gul 100%</translation>
     </message>
     <message>
         <source>Black 30% for bare rock</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Svart för berg i dagen</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 24</comment>
-        <translation>Grön 100% för områdes funktioner</translation>
+        <translation>Grön 100% för områdesfunktioner</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -3910,7 +3948,7 @@ Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     <message>
         <source>Yellow 100%</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul 100%</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
