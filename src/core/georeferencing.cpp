@@ -304,7 +304,7 @@ bool ProjTransform::isGeographic() const
 
 QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
 {
-	static auto const geographic_crs = ProjTransform(Georeferencing::geographic_crs_spec);
+	static auto const geographic_crs = ProjTransform(Georeferencing::ballpark_geographic_crs_spec);
 	
 	auto point = isGeographic()
 	             ? QPointF{lat_lon.longitude(), lat_lon.latitude()}
@@ -324,7 +324,7 @@ QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
 
 LatLon ProjTransform::inverse(const QPointF& projected_coords, bool* ok) const
 {
-	static auto const geographic_crs = ProjTransform(Georeferencing::geographic_crs_spec);
+	static auto const geographic_crs = ProjTransform(Georeferencing::ballpark_geographic_crs_spec);
 	
 	double easting = projected_coords.x(), northing = projected_coords.y();
 	if (geographic_crs.isValid())
@@ -376,7 +376,7 @@ ProjTransform::ProjTransform(const QString& crs_spec)
 	if (crs_spec.isEmpty())
 		return;
 	
-	static auto const geographic_crs_spec_utf8 = Georeferencing::geographic_crs_spec.toUtf8();
+	static auto const geographic_crs_spec_utf8 = Georeferencing::ballpark_geographic_crs_spec.toUtf8();
 	
 	auto crs_spec_utf8 = crs_spec.toUtf8();
 #ifdef PROJ_ISSUE_1573
@@ -386,7 +386,7 @@ ProjTransform::ProjTransform(const QString& crs_spec)
 #if defined(ACCEPT_USE_OF_DEPRECATED_PROJ_API_H) || (PROJ_VERSION_MAJOR) < 8
 	pj = proj_create_crs_to_crs(PJ_DEFAULT_CTX, geographic_crs_spec_utf8, crs_spec_utf8, nullptr);
 #else
-	static auto const geographic_crs = crs(Georeferencing::geographic_crs_spec);
+	static auto const geographic_crs = crs(Georeferencing::ballpark_geographic_crs_spec);
 	auto const projected_crs = crs(crs_spec);
 	static const char* const options[] = {"AUTHORITY=any", nullptr};
 	pj = proj_create_crs_to_crs_from_pj(PJ_DEFAULT_CTX, geographic_crs.pj, projected_crs.pj, nullptr, options);
@@ -478,7 +478,8 @@ QString ProjTransform::errorText() const
 
 //### Georeferencing ###
 
-const QString Georeferencing::geographic_crs_spec(QString::fromLatin1("+proj=latlong +datum=WGS84"));
+const QString Georeferencing::ballpark_geographic_crs_spec(QString::fromLatin1("+proj=latlong +datum=WGS84"));
+const QString Georeferencing::gnss_crs_spec(QString::fromLatin1("EPSG:9755"));
 
 Georeferencing::Georeferencing()
 : state(Local),
@@ -660,7 +661,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 						if (language != literal::proj_4)
 							throw FileFormatException(tr("Unknown CRS specification language: %1").arg(language));
 						QString geographic_crs_spec = xml.readElementText();
-						if (Georeferencing::geographic_crs_spec != geographic_crs_spec)
+						if (Georeferencing::ballpark_geographic_crs_spec != geographic_crs_spec)
 							throw FileFormatException(tr("Unsupported geographic CRS specification: %1").arg(geographic_crs_spec));
 					}
 					else if (xml.name() == literal::ref_point)
@@ -770,7 +771,7 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 		{
 			XmlElementWriter spec_element(xml, literal::spec);
 			spec_element.writeAttribute(literal::language, literal::proj_4);
-			xml.writeCharacters(geographic_crs_spec);
+			xml.writeCharacters(ballpark_geographic_crs_spec);
 		}
 		if (XMLFileFormat::active_version < 6)
 		{

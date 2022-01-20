@@ -133,7 +133,12 @@ public:
 	/**
 	 * A shared PROJ specification of a WGS84 geographic CRS.
 	 */
-	static const QString geographic_crs_spec;
+	static const QString ballpark_geographic_crs_spec;
+	
+	/**
+	 * A shared PROJ specification of an accurate realization of the WGS84 geographic CRS.
+	 */
+	static const QString gnss_crs_spec;
 	
 	
 	/**
@@ -480,7 +485,8 @@ public:
 	LatLon toGeographicCoords(const MapCoordF& map_coords, bool* ok = 0) const;
 	
 	/**
-	 * Transforms CRS coordinates to geographic coordinates (lat/lon).
+	 * Transforms CRS coordinates to geographic coordinates (lat/lon)
+	 * using a WGS84 datum.
 	 */
 	LatLon toGeographicCoords(const QPointF& projected_coords, bool* ok = 0) const;
 	
