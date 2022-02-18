@@ -810,11 +810,11 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 		if (!notes.isEmpty())
 		{
 			auto size = notes.size() + 1;
-			if (size > 32768)
+			if (size > 32767)
 			{
 				/// \todo addWarning(...)
-				size = 32768;
-				notes.truncate(23767);
+				size = 32767;
+				notes.truncate(32766);
 			}
 			file.header()->info_pos = quint32(file.byteArray().size());
 			file.header()->info_size = quint32(size);
