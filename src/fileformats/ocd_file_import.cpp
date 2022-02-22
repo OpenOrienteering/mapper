@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2021 Kai Pastor
+ *    Copyright 2013-2022 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -1749,7 +1749,8 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 		
 		rect.inner_line = inner_line;
 		rect.text = text;
-		rect.number_from_bottom = ocd_symbol.grid_flags & 2;
+		rect.numbering_on = ocd_symbol.grid_flags & 2;
+		rect.number_from_bottom = ocd_symbol.grid_flags & 4;
 		rect.cell_width = 0.001 * convertLength(ocd_symbol.cell_width);
 		rect.cell_height = 0.001 * convertLength(ocd_symbol.cell_height);
 		rect.unnumbered_cells = ocd_symbol.unnumbered_cells;
@@ -2104,7 +2105,7 @@ Object* OcdFileImport::importRectangleObject(const Ocd::OcdPoint32* ocd_points, 
 		}
 		
 		// Create grid text
-		if (height >= rect.cell_height / 2)
+		if (rect.numbering_on && height >= rect.cell_height / 2)
 		{
 			for (int y = 0; y < num_cells_y; ++y) 
 			{
@@ -2114,9 +2115,9 @@ Object* OcdFileImport::importRectangleObject(const Ocd::OcdPoint32* ocd_points, 
 					QString cell_text;
 					
 					if (rect.number_from_bottom)
-						cell_num = y * num_cells_x + x + 1;
-					else
 						cell_num = (num_cells_y - 1 - y) * num_cells_x + x + 1;
+					else
+						cell_num = y * num_cells_x + x + 1;
 					
 					if (cell_num > num_cells_x * num_cells_y - rect.unnumbered_cells)
 						cell_text = rect.unnumbered_text;

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2018 Kai Pastor
+ *    Copyright 2013-2022 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -76,6 +76,7 @@ protected:
 		// Only valid if has_grid is true
 		LineSymbol* inner_line;
 		TextSymbol* text;
+		bool numbering_on;
 		bool number_from_bottom;
 		double cell_width;
 		double cell_height;
