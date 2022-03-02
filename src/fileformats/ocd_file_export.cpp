@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2021 Kai Pastor
+ *    Copyright 2016-2022 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -1948,9 +1948,19 @@ void OcdFileExport::setupTextSymbolSpecial(const TextSymbol* text_symbol, OcdTex
 	ocd_text_special.line_below_width = decltype(ocd_text_special.line_below_width)(convertSize(qRound(1000 * text_symbol->getLineBelowWidth())));
 	ocd_text_special.line_below_offset = decltype(ocd_text_special.line_below_offset)(convertSize(qRound(1000 * text_symbol->getLineBelowDistance())));
 	
-	ocd_text_special.num_tabs = text_symbol->getNumCustomTabs();
-	auto last_tab = std::min(ocd_text_special.num_tabs, decltype(ocd_text_special.num_tabs)(std::extent<typename std::remove_pointer<decltype(ocd_text_special.tab_pos)>::type>::value));
-	for (auto i = 0u; i < last_tab; ++i)
+	auto const num_tabs = text_symbol->getNumCustomTabs();
+	auto const max_tabs = int(std::extent<typename std::remove_pointer<decltype(ocd_text_special.tab_pos)>::type>::value);
+	if (num_tabs <= max_tabs)
+	{
+		ocd_text_special.num_tabs = num_tabs;
+	}
+	else
+	{
+		ocd_text_special.num_tabs = max_tabs;
+		addWarning(::OpenOrienteering::OcdFileExport::tr("In text symbol %1: exporting only %2 custom tabulator positions")
+		           .arg(text_symbol->getPlainTextName()).arg(max_tabs));
+	}
+	for (auto i = 0u; i < ocd_text_special.num_tabs; ++i)
 		ocd_text_special.tab_pos[i] = convertSize(text_symbol->getCustomTab(i));
 }
 
