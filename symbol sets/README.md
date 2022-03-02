@@ -17,17 +17,6 @@ For the 1:10000 the factors are SS x1 and CS x1.5. For 1:7500 are SS x 1.33 and 
 For the 1:5000 the factors are SS x 1.5 and CS x 1.5. All enlargement factors are relative 
 to the basic scale symbol set. [4]
 
-As even in the shear enlargement cases we have symbols we do not want to enlarge
-(e.g. the 999 Open Orienteering Mapper Logo) you would create scaled copies of the basic
-scale sets the following way:
-
-- Select all symbols to be enlarged uniformly. right click > Scale (choose enlargment percentage x1.5 = 150%).
-- Repeat for other symbols to be enlarged by another factor.
-- Do not (!!) enlarge the 999 Open Orienteering Mapper Logo.
-- Change the scale of the symbol set Mapper>Map>Change Map scale **unchecking the Scale Symbol Sizes checkbox
-**.
-- Save the file follwing the established naming convention.
-
 [1] ISOM 2019-2 https://1drv.ms/b/s!As4LDA11gDVmgt8CiJdF8MdoLshsLg
 [2] ISSprOM 2019-2 https://1drv.ms/b/s!As4LDA11gDVmgvJrcMQn6mK9JsdRgA
 [3] ISMTBOM 2022 https://1drv.ms/b/s!As4LDA11gDVmgvJnTyKq5MzVljdQMw
