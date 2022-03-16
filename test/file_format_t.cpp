@@ -504,6 +504,7 @@ namespace
 	  "data:/examples/forest sample.omap",
 	  "data:/examples/overprinting.omap",
 	  "testdata:templates/world-file.xmap",
+	  "data:undefined-objects.omap",
 	};
 	
 	auto const xml_test_files = {

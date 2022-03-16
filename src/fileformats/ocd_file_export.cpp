@@ -2507,7 +2507,9 @@ QByteArray OcdFileExport::exportPointObject(const PointObject* point, typename O
 {
 	OcdObject ocd_object = {};
 	ocd_object.type = 1;
-	ocd_object.symbol = entry.symbol = decltype(entry.symbol)(symbol_numbers[point->getSymbol()]);
+	auto const symbol_number_it = symbol_numbers.find(point->getSymbol());
+	decltype(entry.symbol) const symbol_number = symbol_number_it != symbol_numbers.end() ? symbol_number_it->second : -1;
+	ocd_object.symbol = entry.symbol = symbol_number;
 	ocd_object.angle = decltype(ocd_object.angle)(convertRotation(point->getRotation()));
 	return exportObjectCommon(point, ocd_object, entry);
 }
@@ -2543,7 +2545,9 @@ void OcdFileExport::exportPathObject(OcdFile<Format>& file, const PathObject* pa
 	
 	if (!need_split_lines)
 	{
-		ocd_object.symbol = entry.symbol = decltype(entry.symbol)(symbol_numbers[symbol]);
+		auto const symbol_number_it = symbol_numbers.find(symbol);
+		decltype(entry.symbol) const symbol_number = symbol_number_it != symbol_numbers.end() ? symbol_number_it->second : -1;
+		ocd_object.symbol = entry.symbol = symbol_number;
 		auto data = exportObjectCommon(path, ocd_object, entry);
 		FILEFORMAT_ASSERT(!data.isEmpty());
 		
@@ -2619,11 +2623,16 @@ QByteArray OcdFileExport::exportTextObject(const TextObject* text, typename OcdO
 	auto text_format = std::find_if(begin(text_format_mapping), end(text_format_mapping), [symbol, alignment](const auto& m) {
 		return m.symbol == symbol && m.alignment == alignment;
 	});
-	FILEFORMAT_ASSERT(text_format != end(text_format_mapping));
+
+	decltype(entry.symbol) symbol_number = -1;
+	if (text_format != end(text_format_mapping))
+		symbol_number = text_format->symbol_number;
+	else
+		FILEFORMAT_ASSERT(map->findSymbolIndex(symbol) < -1); // -2 and below indicate objects with undefined symbols
 	
 	OcdObject ocd_object = {};
 	ocd_object.type = text->hasSingleAnchor() ? 4 : 5;
-	ocd_object.symbol = entry.symbol = decltype(entry.symbol)(text_format->symbol_number);
+	ocd_object.symbol = entry.symbol = symbol_number;
 	ocd_object.angle = decltype(ocd_object.angle)(convertRotation(text->getRotation()));
 	return exportObjectCommon(text, ocd_object, entry);
 }
