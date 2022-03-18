@@ -1961,7 +1961,7 @@ void OcdFileExport::setupTextSymbolSpecial(const TextSymbol* text_symbol, OcdTex
 		           .arg(text_symbol->getPlainTextName()).arg(max_tabs));
 	}
 	for (auto i = 0u; i < ocd_text_special.num_tabs; ++i)
-		ocd_text_special.tab_pos[i] = convertSize(text_symbol->getCustomTab(i));
+		ocd_text_special.tab_pos[i] = convertSize(qint64(text_symbol->getCustomTab(i)));
 }
 
 
