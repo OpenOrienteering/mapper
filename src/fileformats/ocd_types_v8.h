@@ -331,7 +331,7 @@ namespace Ocd
 		quint16 indent_first_line;
 		quint16 indent_other_lines;
 		quint16 num_tabs;
-		quint32 tab_pos[32];
+		qint32 tab_pos[32];
 		quint16 line_below_on;
 		quint16 line_below_color;
 		quint16 line_below_width;
