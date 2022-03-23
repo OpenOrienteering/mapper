@@ -50,6 +50,7 @@
 #include <QSignalBlocker>
 #include <QSize>
 #include <QSpacerItem>
+#include <QString>
 #include <QStringRef>
 #include <QTimer>
 #include <QUrl>
@@ -237,7 +238,6 @@ GeoreferencingDialog::GeoreferencingDialog(
 	  Qt::Horizontal);
 	reset_button = buttons_box->button(QDialogButtonBox::Reset);
 	reset_button->setEnabled(initial);
-	auto help_button = buttons_box->button(QDialogButtonBox::Help);
 	
 	auto edit_layout = new QFormLayout();
 	
@@ -251,7 +251,6 @@ GeoreferencingDialog::GeoreferencingDialog(
 	edit_layout->addRow(tr("Map coordinates:"), map_ref_layout);
 	edit_layout->addRow(projected_ref_label, projected_ref_layout);
 	edit_layout->addRow(tr("Geographic coordinates:"), geographic_ref_layout);
-	edit_layout->addRow(show_refpoint_label, link_label);
 	edit_layout->addRow(show_refpoint_label, link_label);
 	edit_layout->addRow(tr("On CRS changes, keep:"), keep_projected_radio);
 	edit_layout->addRow({}, keep_geographic_radio);
@@ -301,7 +300,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	connect(buttons_box, &QDialogButtonBox::accepted, this, &GeoreferencingDialog::accept);
 	connect(buttons_box, &QDialogButtonBox::rejected, this, &GeoreferencingDialog::reject);
 	connect(reset_button, &QPushButton::clicked, this, &GeoreferencingDialog::reset);
-	connect(help_button, &QPushButton::clicked, this, &GeoreferencingDialog::showHelp);
+	connect(buttons_box, &QDialogButtonBox::helpRequested, this, &GeoreferencingDialog::showHelp);
 	
 	connect(georef.data(), &Georeferencing::stateChanged, this, &GeoreferencingDialog::georefStateChanged);
 	connect(georef.data(), &Georeferencing::transformationChanged, this, &GeoreferencingDialog::transformationChanged);
@@ -605,7 +604,8 @@ void GeoreferencingDialog::updateWidgets()
 	status_field->setVisible(geographic_coords_enabled);
 	lat_edit->setEnabled(geographic_coords_enabled);
 	lon_edit->setEnabled(geographic_coords_enabled);
-	link_label->setEnabled(geographic_coords_enabled);
+	link_label->setVisible(geographic_coords_enabled);
+	show_refpoint_label->setVisible(geographic_coords_enabled);
 	//keep_geographic_radio->setEnabled(geographic_coords_enabled);
 	
 	updateDeclinationButton();
