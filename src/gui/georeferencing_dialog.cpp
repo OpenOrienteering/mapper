@@ -49,6 +49,7 @@
 #include <QSignalBlocker>
 #include <QSize>
 #include <QSpacerItem>
+#include <QString>
 #include <QStringList>
 #include <QStringRef>
 #include <QTimer>
@@ -607,7 +608,8 @@ void GeoreferencingDialog::updateWidgets()
 	status_field->setVisible(geographic_coords_enabled);
 	lat_edit->setEnabled(geographic_coords_enabled);
 	lon_edit->setEnabled(geographic_coords_enabled);
-	link_label->setEnabled(geographic_coords_enabled);
+	link_label->setVisible(geographic_coords_enabled);
+	show_refpoint_label->setVisible(geographic_coords_enabled);
 	//keep_geographic_radio->setEnabled(geographic_coords_enabled);
 	
 	updateDeclinationButton();
