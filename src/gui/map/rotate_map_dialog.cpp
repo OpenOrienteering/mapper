@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2020 Kai Pastor
+ *    Copyright 2020-2022 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -61,7 +61,7 @@ RotateMapDialog::RotateMapDialog(const Map& map, QWidget* parent, Qt::WindowFlag
 	layout->addRow(center_origin_radio);
 	
 	//: Rotation center point
-	center_georef_radio = new QRadioButton(tr("Georeferencing reference point"));
+	center_georef_radio = new QRadioButton(tr("Map reference point"));
 	if (map.getGeoreferencing().getState() == Georeferencing::Local)
 		center_georef_radio->setEnabled(false);
 	layout->addRow(center_georef_radio);
@@ -82,7 +82,7 @@ RotateMapDialog::RotateMapDialog(const Map& map, QWidget* parent, Qt::WindowFlag
 	layout->addItem(Util::SpacerItem::create(this));
 	layout->addRow(Util::Headline::create(tr("Options")));
 	
-	adjust_georeferencing_check = new QCheckBox(tr("Adjust georeferencing reference point"));
+	adjust_georeferencing_check = new QCheckBox(tr("Adjust map reference point"));
 	if (map.getGeoreferencing().getState() == Georeferencing::Geospatial)
 		adjust_georeferencing_check->setChecked(true);
 	else
