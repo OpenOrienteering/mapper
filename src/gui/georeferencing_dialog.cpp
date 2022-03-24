@@ -88,7 +88,7 @@
 
 namespace OpenOrienteering {
 
-Q_STATIC_ASSERT(Georeferencing::declinationPrecision() == Util::InputProperties<Util::RotationalDegrees>::decimals());
+Q_STATIC_ASSERT(Georeferencing::declinationPrecision() == static_cast<unsigned int>(Util::InputProperties<Util::RotationalDegrees>::decimals()));
 
 
 namespace  {
