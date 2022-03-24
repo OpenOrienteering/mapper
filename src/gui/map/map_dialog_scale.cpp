@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2019-2020 Kai Pastor
+ *    Copyright 2019-2020, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,28 +21,31 @@
 
 #include "map_dialog_scale.h"
 
-#include <QDoubleSpinBox>
+#include <Qt>
+#include <QAbstractButton>
 #include <QCheckBox>
 #include <QDialogButtonBox>
+#include <QDoubleSpinBox>
 #include <QFormLayout>
 #include <QLabel>
 #include <QRadioButton>
-#include <QSpinBox>
 #include <QVBoxLayout>
 
 #include "core/georeferencing.h"
 #include "core/map.h"
-#include "templates/template.h"
 #include "gui/util_gui.h"
+#include "templates/template.h"
 
 
 namespace OpenOrienteering {
 
-ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
+ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map)
+: QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
+, map(map)
 {
 	setWindowTitle(tr("Change map scale"));
 	
-	QFormLayout* layout = new QFormLayout();
+	auto* layout = new QFormLayout();
 	
 	layout->addRow(Util::Headline::create(tr("Scaling parameters")));
 	
@@ -60,7 +63,7 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	layout->addRow(center_origin_radio);
 	
 	//: Scaling center point
-	center_georef_radio = new QRadioButton(tr("Georeferencing reference point"));
+	center_georef_radio = new QRadioButton(tr("Map reference point"));
 	if (map->getGeoreferencing().getState() == Georeferencing::Local)
 		center_georef_radio->setEnabled(false);
 	layout->addRow(center_georef_radio);
@@ -94,7 +97,7 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 		adjust_objects_check->setEnabled(false);
 	layout->addRow(adjust_objects_check);
 	
-	adjust_georeferencing_check = new QCheckBox(tr("Adjust georeferencing reference point"));
+	adjust_georeferencing_check = new QCheckBox(tr("Adjust map reference point"));
 	if (map->getGeoreferencing().getState() == Georeferencing::Geospatial)
 		adjust_georeferencing_check->setChecked(true);
 	else
@@ -114,7 +117,7 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	layout->addRow(adjust_templates_check);
 	
 	
-	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal);
+	auto* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal);
 	ok_button = button_box->button(QDialogButtonBox::Ok);
 	
 	auto* box_layout = new QVBoxLayout();
