@@ -77,7 +77,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="185"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation>Ezt a programot abban a reményben terjesztik, hogy hasznos lesz, de BÁRMILYEN GARANCIA NÉLKÜL beleértve az ELADHATÓSÁGRA vagy BÁRMELY MÁS KÜLÖNÖS CÉLRA vonatkozóan. Lásd a GNU General Public License (GPL), 3. verzióját&amp;nbsp; &lt;a %1&gt;részletek&lt;/a&gt;.</translation>
+        <translation>Ezt a programot abban a reményben terjesztik, hogy hasznos lesz, de BÁRMILYEN GARANCIA NÉLKÜL beleértve az ELADHATÓSÁGRA vagy BÁRMELY MÁS KÜLÖNÖS CÉLRA vonatkozóan. Lásd a GNU General Public License (GPL), 3. verzióját&amp;nbsp; &lt;a %1&gt;részletekért&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="194"/>
