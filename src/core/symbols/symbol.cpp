@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2022 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -956,6 +956,7 @@ Symbol::lessByColor::lessByColor(const Map* map)
 	colors.reserve(std::size_t(map->getNumColors()));
 	for (int i = 0; i < map->getNumColors(); ++i)
 		colors.push_back(QRgb(*map->getColor(i)));
+	sort(begin(colors), end(colors));
 }
 
 
