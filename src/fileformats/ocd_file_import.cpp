@@ -107,6 +107,7 @@ OcdFileImport::OcdImportedPathObject::~OcdImportedPathObject() = default;
 OcdFileImport::OcdFileImport(const QString& path, Map* map, MapView* view)
  : Importer { path, map, view }
  , custom_8bit_encoding { codecFromSettings() }
+ , graphic_objects_hidden(false)
 {
 	if (!custom_8bit_encoding)
 	{
@@ -323,6 +324,7 @@ void OcdFileImport::importImplementation()
 	if (!loadSymbolsOnly())
 	{
 		importExtras(file);
+		importDisplayPar(file);
 		importObjects(file);
 		importTemplates(file);
 		if (view)
@@ -1052,6 +1054,39 @@ void OcdFileImport::importView(const QString& param_string)
 	}
 }
 
+template< class F >
+void OcdFileImport::importDisplayPar(const OcdFile< F >& file)
+{
+	handleStrings(file, { { 1024, &OcdFileImport::importDisplayPar } });
+}
+
+void OcdFileImport::importDisplayPar(const QString& param_string)
+{
+	const QChar* unicode = param_string.unicode();
+	
+	int i = param_string.indexOf(QLatin1Char('\t'), 0);
+	; // skip first word for this entry type
+	while (i >= 0)
+	{
+		int next_i = param_string.indexOf(QLatin1Char('\t'), i+1);
+		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
+		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
+		switch (param_string[i+1].toLatin1())
+		{
+		case '\t':
+			// empty item
+			break;
+		case 'j':
+			{
+				graphic_objects_hidden = param_value.toInt() == 2;
+				break;
+			}
+		default:
+			; // nothing
+		}
+		i = next_i;
+	}
+}
 
 template< class OcdBaseSymbol >
 void OcdFileImport::setupBaseSymbol(Symbol* symbol, const OcdBaseSymbol& ocd_base_symbol)
@@ -1865,11 +1900,12 @@ template< class O >
 Symbol* OcdFileImport::getGraphicObjectSymbol(const O& ocd_object)
 {
 	Symbol* symbol = nullptr;
-	auto symbol_setup_common = [](Symbol& symbol) {
+	auto symbol_setup_common = [this](Symbol& symbol) {
 		symbol.setName(QLatin1String("helper symbol for graphic objects"));
 		symbol.setNumberComponent(0, 999);
 		symbol.setNumberComponent(1, -1);
-		symbol.setNumberComponent(2, -1);				
+		symbol.setNumberComponent(2, -1);
+		symbol.setHidden(graphic_objects_hidden);
 	};
 	
 	auto get_cached_symbol = [this](const quint64 key) {

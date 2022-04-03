@@ -237,6 +237,10 @@ protected:
 	
 	void importView(const QString& param_string);
 	
+	template< class F >
+	void importDisplayPar(const OcdFile< F >& file);
+	
+	void importDisplayPar(const QString& param_string);
 	
 	// Symbol import
 	
@@ -368,6 +372,9 @@ protected:
 	
 	/// The actual format version of the imported file
 	int ocd_version;
+	
+	/// The visibility of graphics objects (true if hidden)
+	bool graphic_objects_hidden;
 };
 
 
