@@ -108,6 +108,7 @@ OcdFileImport::OcdFileImport(const QString& path, Map* map, MapView* view)
  : Importer { path, map, view }
  , custom_8bit_encoding { codecFromSettings() }
  , graphic_objects_hidden(false)
+ , layout_objects_hidden(false)
 {
 	if (!custom_8bit_encoding)
 	{
@@ -325,12 +326,12 @@ void OcdFileImport::importImplementation()
 	{
 		importExtras(file);
 		importDisplayPar(file);
-		importObjects(file);
-		importTemplates(file);
 		if (view)
 		{
 			importView(file);
 		}
+		importObjects(file);
+		importTemplates(file);
 	}
 	
 	// No deep copy during import
@@ -1039,6 +1040,9 @@ void OcdFileImport::importView(const QString& param_string)
 		case 'k':
 			map->setBaselineViewEnabled(param_value.toInt() != 0);
 			break;
+		case 'l':
+			layout_objects_hidden = param_value.toInt() == 1;
+			break;
 		default:
 			; // nothing
 		}
@@ -1079,6 +1083,11 @@ void OcdFileImport::importDisplayPar(const QString& param_string)
 		case 'j':
 			{
 				graphic_objects_hidden = param_value.toInt() == 2;
+				break;
+			}
+		case 'l':
+			{
+				layout_objects_hidden = param_value.toInt() == 2;
 				break;
 			}
 		default:
@@ -1960,6 +1969,108 @@ Symbol* OcdFileImport::getGraphicObjectSymbol(const O& ocd_object)
 	return symbol;
 }
 
+Symbol* OcdFileImport::getLayoutObjectSymbol(const Ocd::ObjectV8& ocd_object)
+{
+	Q_UNUSED(ocd_object);
+	return nullptr;
+}
+
+template< class O >
+Symbol* OcdFileImport::getLayoutObjectSymbol(const O& ocd_object)
+{
+	Symbol* symbol = nullptr;
+	auto symbol_setup_common = [this](Symbol& symbol) {
+		symbol.setName(QLatin1String("helper symbol for layout objects"));
+		symbol.setNumberComponent(0, 998);
+		symbol.setNumberComponent(1, -1);
+		symbol.setNumberComponent(2, -1);
+		symbol.setHidden(layout_objects_hidden);
+	};
+	
+	auto get_cached_symbol = [this](const quint64 key) {
+		return layout_symbol_index.contains(key) ? 
+					layout_symbol_index[key] : nullptr;
+	};
+
+	auto store_cached_symbol = [this](const quint64 key, Symbol* symbol) {
+		map->addSymbol(symbol, map->getNumSymbols());
+		layout_symbol_index[key] = symbol;
+	};
+	
+	auto get_map_color = [this](const quint32 color) {
+		MapColorCmyk cmyk;
+		cmyk.c = quint8(color) / 255.f;
+		cmyk.m = quint8(color >> 8) / 255.f;
+		cmyk.y = quint8(color >> 16) / 255.f;
+		cmyk.k = quint8(color >> 24) / 255.f;
+		int num_colors = map->getNumColors();
+		for (int i = 0; i < num_colors; ++i)
+		{
+			auto map_cymk = map->getColor(i)->getCmyk();
+			if (map_cymk == cmyk)	// actually a fuzzy comparision
+				return const_cast<MapColor*>(map->getColor(i));
+		}
+		auto new_color = new MapColor(tr("Imported layout object"), num_colors);
+		new_color->setCmyk(cmyk);
+		map->addColor(new_color, num_colors);
+		return new_color;
+	};
+	
+	switch (ocd_object.type)
+	{
+	case Ocd::ObjectTypeLine:
+		{
+			const auto g_key = quint64(ocd_object.color) 
+							 | quint64(ocd_object.line_width) << 32
+							 | quint64(Ocd::ObjectTypeLine) << 56;
+			symbol = get_cached_symbol(g_key);
+			if (!symbol)
+			{
+				auto* line_symbol = new OcdImportedLineSymbol();
+				symbol_setup_common(*line_symbol);
+				line_symbol->color = get_map_color(quint32(ocd_object.color));
+				line_symbol->line_width = convertLength(ocd_object.line_width);
+				symbol = line_symbol;
+				store_cached_symbol(g_key, symbol);
+			}
+		}
+		break;
+	case Ocd::ObjectTypeArea:
+		{
+			const auto g_key = quint64(ocd_object.color)
+							 | quint64(Ocd::ObjectTypeArea) << 56;
+			symbol = get_cached_symbol(g_key);
+			if (!symbol)
+			{
+				auto* area_symbol = new OcdImportedAreaSymbol();
+				symbol_setup_common(*area_symbol);
+				area_symbol->color = get_map_color(quint32(ocd_object.color));
+				symbol = area_symbol;
+				store_cached_symbol(g_key, symbol);
+			}
+		}
+		break;
+	case Ocd::ObjectTypeUnformattedText:
+		{
+			const auto g_key = quint64(ocd_object.color)
+							 | quint64(Ocd::ObjectTypeUnformattedText) << 56;
+			symbol = get_cached_symbol(g_key);
+			if (!symbol)
+			{
+				auto* text_symbol = new OcdImportedTextSymbol();
+				symbol_setup_common(*text_symbol);
+				text_symbol->color = get_map_color(quint32(ocd_object.color));
+				symbol = text_symbol;
+				store_cached_symbol(g_key, symbol);
+			}
+		}
+		break;
+	default:
+		addWarning(tr("Encountered an unsupported type of layout object (%1). Skipping.").arg(ocd_object.type));
+		break;
+	}
+	return symbol;
+}
 
 template< class O >
 Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
@@ -1969,6 +2080,9 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 	{
 	case -2: // graphic object
 		symbol = getGraphicObjectSymbol(ocd_object);
+		break;
+	case -4: // layout object
+		symbol = getLayoutObjectSymbol(ocd_object);
 		break;
 	default:
 		if (ocd_object.symbol >= 0)
