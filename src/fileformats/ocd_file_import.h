@@ -314,6 +314,11 @@ protected:
 	template< class O >
 	Symbol* getGraphicObjectSymbol(const O& ocd_object);
 	
+	Symbol* getLayoutObjectSymbol(const Ocd::ObjectV8& ocd_object);
+	
+	template< class O >
+	Symbol* getLayoutObjectSymbol(const O& ocd_object);
+	
 	QString getObjectText(const Ocd::ObjectV8& ocd_object) const;
 	
 	template< class O >
@@ -361,6 +366,9 @@ protected:
 	/// maps OCD graphic object properties to oo-mapper synthetic symbol object
 	QHash<quint64, Symbol *> graphic_symbol_index;
 	
+	/// maps OCD layout object properties to oo-mapper synthetic symbol object
+	QHash<quint64, Symbol *> layout_symbol_index;
+	
 	/// maps OO Mapper text symbol pointer to OCD defined horizontal alignment (stored in objects instead of symbols in OO Mapper)
 	QHash<Symbol*, TextObject::HorizontalAlignment> text_halign_map;
 	
@@ -375,6 +383,9 @@ protected:
 	
 	/// The visibility of graphics objects (true if hidden)
 	bool graphic_objects_hidden;
+	
+	/// The visibility of layout objects (true if hidden)
+	bool layout_objects_hidden;
 };
 
 
