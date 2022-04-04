@@ -8948,7 +8948,7 @@ Lábnyom: 4,8 m x 4,8 m.</translation>
 Minimum length: 3 (graphical) steps.
 Minimum width: 0.4 mm (IM).</source>
         <comment>Description of symbol 532.6</comment>
-        <translation>A lépcső lépcsőfokait általános módon kell ábrázolni.
+        <translation>A lépcső lépcsőfokait egyszerűsítve kell ábrázolni.
 Minimális hossz: 3 (grafikus) lépés.
 Minimális szélesség: 0,4 mm (IM).</translation>
     </message>
@@ -8962,7 +8962,7 @@ Minimális szélesség: 0,4 mm (IM).</translation>
 Minimum length: 3 (graphical) steps.
 Minimum width: 0.4 mm (IM).</source>
         <comment>Description of symbol 532.7</comment>
-        <translation>A lépcső lépcsőfokait általános módon kell ábrázolni.
+        <translation>A lépcső lépcsőfokait egyszerűsítve kell ábrázolni.
 Minimális hossz: 3 (grafikus) lépés.
 Minimális szélesség: 0,4 mm (IM).</translation>
     </message>
@@ -8976,7 +8976,7 @@ Minimális szélesség: 0,4 mm (IM).</translation>
 Minimum length: 3 (graphical) steps.
 Minimum width: 0.4 mm (IM).</source>
         <comment>Description of symbol 532.8</comment>
-        <translation>A lépcső lépcsőfokait általános módon kell ábrázolni.
+        <translation>A lépcső lépcsőfokait egyszerűsítve kell ábrázolni.
 Minimális hossz: 3 (grafikus) lépés.
 Minimális szélesség: 0,4 mm (IM).</translation>
     </message>
@@ -8990,7 +8990,7 @@ Minimális szélesség: 0,4 mm (IM).</translation>
 Minimum length: 3 (graphical) steps.
 Minimum width: 0.4 mm (IM).</source>
         <comment>Description of symbol 532.9</comment>
-        <translation>A lépcső lépcsőfokait általános módon kell ábrázolni.
+        <translation>A lépcső lépcsőfokait egyszerűsítve kell ábrázolni.
 Minimális hossz: 3 (grafikus) lépés.
 Minimális szélesség: 0,4 mm (IM).</translation>
     </message>
@@ -9184,7 +9184,7 @@ Minimum area: 4 mm² (footprint 64 m²).</source>
 - egy folytonos vonal jelzi, hogy a határt folyamatosan jelölik (szalagok stb.) a terepen,
 - szaggatott vonal jelzi a szakaszos jelzéseket a terepen,
 - egyetlen vonal sem jelzi, hogy a terepen nincs jelölés.
-A határon túli területre nem lehet belépni.
+A tiltott területre nem szabad belépni.
 Minimális szélesség: 2 mm.
 Minimális terület: 4 mm² (64 m² alapterület).</translation>
     </message>
@@ -9272,7 +9272,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <comment>Description of symbol 799</comment>
         <translation>Ez a jel lehetővé tesz egy egyszerű gyors utat egy edző pálya készítéséhez.
 
-A lila vonalat pontonként a rajttól a célig halad. Ez az egyszerű megközelítés hiányossága.</translation>
+A lila vonal pontonként a rajttól a célig halad. Ez az egyszerű megközelítés hiányossága.</translation>
     </message>
     <message>
         <source>OpenOrienteering Logo</source>
@@ -9477,7 +9477,7 @@ A lila vonalat pontonként a rajttól a célig halad. Ez az egyszerű megközel�
 
 The relative height difference between neighbouring features must be represented on the map as accurately as possible. Absolute height accuracy is of less importance. It is permissible to alter the height of a contour slightly if this will improve the representation of a feature. This deviation should not exceed 25% of the contour interval and attention must be paid to neighbouring features. The smallest bend in a contour is 0.4 mm from centre to centre of the lines.</source>
         <comment>Description of symbol 101</comment>
-        <translation>Azonos tengerszint feletti magasságú pontokat összekötő vonal. A szomszédos szintvonalak közötti magasságkülönbség (alapszintköz) 2 vagy 2,5 méter. A kontúrvonal kép háromdimenziós hatásának hangsúlyozása érdekében a kontúrvonalakat folyamatos vonalként kell ábrázolni az összes szimbólumon, az épületen (526.1) és a lombkorona (526.2) is. Ha azonban a következő szimbólumokat érintik: kis földfal (108.1), kis kúp (112), kis hosszúkás domb (113), kis mélyedés (115), gödör vagy lyuk (116 ), a kiemelkedő szárazföldi alakzat (118), a betonozott terület (529.1) lépcsője vagy pereme.
+        <translation>Azonos tengerszint feletti magasságú pontokat összekötő vonal. A szomszédos szintvonalak közötti magasságkülönbség (alapszintköz) 2 vagy 2,5 méter. A szintvonal kép háromdimenziós hatásának hangsúlyozása érdekében a szintvonalakat folyamatos vonalként kell ábrázolni az összes szimbólumon, az épületen (526.1) és a lombkorona (526.2) is. Ha azonban a következő szimbólumokat érintik: kis földfal (108.1), kis kúp (112), kis hosszúkás domb (113), kis mélyedés (115), gödör vagy lyuk (116 ), a kiemelkedő szárazföldi alakzat (118), a betonozott terület (529.1) lépcsője vagy pereme.
 
 A szomszédos tulajdonságok közötti viszonylagos magasságkülönbséget a térképen a lehető legpontosabban kell megjeleníteni. Az abszolút magasság pontossága kevésbé fontos. A kontúr magasságának módosítása megengedett, ha ez javíthatja a funkció ábrázolását. Ez az eltérés nem haladhatja meg az alapszintköz 25% -át, és a szomszédos jellemzőket figyelembe kell venni. A legkisebb ív egy kontúrban 0,4 mm-re van a vonalak középpontjától a középpontig.</translation>
     </message>
@@ -9529,7 +9529,7 @@ A szomszédos tulajdonságok közötti viszonylagos magasságkülönbséget a t�
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks shall be drawn with the symbol impassable cliff (201). The line width of very high earth banks may be 0.37 mm.</source>
         <comment>Description of symbol 106.0</comment>
-        <translation>A felszín hirtelen változása, mely környezetétől jól elkülöníthető , pl. kavics- vagy homokgödör, út és vasút bevágása vagy töltése. A fogak a lejt õ teljes kiterjedését mutatják, de el is hagyhatók, ha két szemközti letörés egymáshoz nagyon közel van. Az áthatolhatatlan földletörést a 201-es jellel kell ábrázolni (áthatolhatatlan sziklafal).</translation>
+        <translation>A felszín hirtelen változása, mely környezetétől jól elkülöníthető , pl. kavics- vagy homokgödör, út és vasút bevágása vagy töltése. A fogak a lejtő teljes kiterjedését mutatják, de el is hagyhatók, ha két szemközti letörés egymáshoz nagyon közel van. Az áthatolhatatlan földletörést a 201-es jellel kell ábrázolni (áthatolhatatlan sziklafal).</translation>
     </message>
     <message>
         <source>Earth bank, very high</source>
@@ -9815,7 +9815,7 @@ A szabályt megszegő versenyzőket ki kell zárni.&lt;/span&gt;</translation>
 
 &lt;span style=&quot;color:magenta&quot;&gt;Controls may not be placed inside caves!&lt;/span&gt;</source>
         <comment>Description of symbol 205</comment>
-        <translation>A jele megegyezik a köves gödör jelével. Pontos helye a jel súlypontja, az elforgatott jel a bejárat irányát jelzi.Ez a szimbólum általában nem használható városi területeken. A szimbólum súlypontja jelzi a nyílást.
+        <translation>A jele megegyezik a köves gödör jelével. Pontos helye a jel súlypontja, az elforgatott jel a bejárat irányát jelzi. Ez a szimbólum általában nem használható városi területeken. A szimbólum súlypontja jelzi a nyílást.
 
 &lt;span style=&quot;color:magenta&quot;&gt;Ellenőrző pont nem helyezhető el a barlang belsejében!&lt;/span&gt;</translation>
     </message>
@@ -9837,7 +9837,7 @@ A szabályt megszegő versenyzőket ki kell zárni.&lt;/span&gt;</translation>
     <message>
         <source>A particularly large and distinct boulder. Gigantic boulders shall be represented in plan shape with the symbol gigantic boulder or rock pillar (202).</source>
         <comment>Description of symbol 207</comment>
-        <translation>Különlegesen nagy és jellegzetes sziklatömb. A hatalmas sziklatömböket a 202-es jellel ábrázoljuk alaprajzban .</translation>
+        <translation>Különlegesen nagy és jellegzetes sziklatömb. A hatalmas sziklatömböket a 202-es jellel ábrázoljuk alaprajzban.</translation>
     </message>
     <message>
         <source>Boulder field</source>
@@ -9887,7 +9887,7 @@ A szabályt megszegő versenyzőket ki kell zárni.&lt;/span&gt;</translation>
     <message>
         <source>An area of soft sandy ground or gravel with no vegetation which reduces runnability. Where an area of sandy ground is open and has good runnability, it is represented with symbol open land (401), open land with scattered trees (402) or paved area (529).</source>
         <comment>Description of symbol 211</comment>
-        <translation>A futást nehezítő , növényzet nélküli homokos, kavicsos terület. Ha az adott homokos terület nyílt, de a futhatóság jó, inkább a nyílt terület jele (401/402), esetleg a burkolt terület (529), parkoló jel használható.</translation>
+        <translation>A futást nehezítő, növényzet nélküli homokos, kavicsos terület. Ha az adott homokos terület nyílt, de a futhatóság jó, inkább a nyílt terület jele (401/402), esetleg a burkolt terület (529), parkoló jel használható.</translation>
     </message>
     <message>
         <source>Bare rock</source>
@@ -10417,7 +10417,7 @@ To improve the legibility of this symbol in non-urban parts of the map, the line
 
 Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (min.60lines/cm) (non-urban); the colour and the line width shall be the same as for the symbols paved area (529) and step or edge of paved areas (529.1).</source>
         <comment>Description of symbol 506.1.1</comment>
-        <translation>Egy burkolatlan gyalogút vagy a durva járműnyom főleg gyalogosok közlekedésére mindenféle szilárd burkolat nélkül. A barna kitöltés színe ugyanaz lesz a mint, amit a burkolt terület jelhez (529) használnak.
+        <translation>Egy burkolatlan gyalogút vagy a durva járműnyom főleg gyalogosok közlekedésére mindenféle szilárd burkolat nélkül. A barna kitöltés színe ugyanaz lesz mint, amit a burkolt terület jelhez (529) használnak.
 
 Ennek a jelnek az olvashatóságát javítani lehet, a szaggatott vonal szélességének növelésével, a térkép nem városi részeiben, 0.07 mm-ről 0.14 mm-re növelve, és a barna kitöltés színét a városi részekhez viszonyítva 20%-kal sötétítve a térkép nem városi részeiben.
 
@@ -10435,7 +10435,7 @@ To improve the legibility of this symbol in non-urban parts of the map, the line
 
 Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (min.60lines/cm) (non-urban); the colour and the line width shall be the same as for the symbols paved area (529) and step or edge of paved areas (529.1).</source>
         <comment>Description of symbol 506.1.2</comment>
-        <translation>Egy burkolatlan gyalogút vagy a durva járműnyom főleg gyalogosok közlekedésére mindenféle szilárd burkolat nélkül. A barna kitöltés színe ugyanaz lesz a mint, amit a burkolt terület jelhez (529) használnak.
+        <translation>Egy burkolatlan gyalogút vagy a durva járműnyom főleg gyalogosok közlekedésére mindenféle szilárd burkolat nélkül. A barna kitöltés színe ugyanaz lesz mint, amit a burkolt terület jelhez (529) használnak.
 
 Ennek a jelnek az olvashatóságát javítani lehet, a szaggatott vonal szélesség növelésével, a térkép nem városi részeiben, 0.07 mm-ről 0.14 mm-re növelve, és a barna kitöltés színét a városi részekhez viszonyítva 20%-kal sötétítve a térkép nem városi részeiben.
 
@@ -10453,7 +10453,7 @@ To improve the legibility of this symbol in non-urban parts of the map, the line
 
 Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (min.60lines/cm) (non-urban); the colour and the line width shall be the same as for the symbols paved area (529) and step or edge of paved areas (529.1).</source>
         <comment>Description of symbol 506.1.3</comment>
-        <translation>Egy burkolatlan gyalogút vagy a durva járműnyom főleg gyalogosok közlekedésére mindenféle szilárd burkolat nélkül. A barna kitöltés színe ugyanaz lesz a mint, amit a burkolt terület jelhez (529) használnak.
+        <translation>Egy burkolatlan gyalogút vagy a durva járműnyom főleg gyalogosok közlekedésére mindenféle szilárd burkolat nélkül. A barna kitöltés színe ugyanaz lesz mint, amit a burkolt terület jelhez (529) használnak.
 
 Ennek a jelnek az olvashatóságát javítani lehet, a szaggatott vonal szélességet, a térkép nem városi részeiben, 0.07 mm-ről 0.14 mm-re növelve, és a barna kitöltés színét a városi részekhez viszonyítva 20%-kal sötétítve a térkép nem városi részeiben.
 
@@ -10471,7 +10471,7 @@ To improve the legibility of this symbol in non-urban parts of the map, the line
 
 Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (min.60lines/cm) (non-urban); the colour and the line width shall be the same as for the symbols paved area (529) and step or edge of paved areas (529.1).</source>
         <comment>Description of symbol 506.1.4</comment>
-        <translation>Egy burkolatlan gyalogút vagy a durva járműnyom főleg gyalogosok közlekedésére mindenféle szilárd burkolat nélkül. A barna kitöltés színe ugyanaz lesz a mint, amit a burkolt terület jelhez (529) használnak.
+        <translation>Egy burkolatlan gyalogút vagy a durva járműnyom főleg gyalogosok közlekedésére mindenféle szilárd burkolat nélkül. A barna kitöltés színe ugyanaz lesz mint, amit a burkolt terület jelhez (529) használnak.
 
 Ennek a jelnek az olvashatóságát javítani lehet, a szaggatott vonal szélességet, a térkép nem városi részeiben, 0.07 mm-ről 0.14 mm-re növelve, és a barna kitöltés színét a városi részekhez viszonyítva 20%-kal sötétítve a térkép nem városi részeiben.
 
@@ -10495,7 +10495,7 @@ Szín: fekete, barna 0% (fehér), 10%, 20 százalék vagy 30 százalék (városi
     <message>
         <source>A less distinct path or forestry extraction track. Not to be used in urban areas.</source>
         <comment>Description of symbol 508</comment>
-        <translation>Kevésbé felismerhet õ keskeny ösvény vagy fakihordó út. Nem használható városi terepen.</translation>
+        <translation>Kevésbé felismerhető keskeny ösvény vagy fakihordó út. Nem használható városi terepen.</translation>
     </message>
     <message>
         <source>Narrow ride</source>
@@ -10665,7 +10665,7 @@ A szabályt megszegő versenyzőket ki kell zárni!&lt;/span&gt;</translation>
 
 If a fence or railing is higher than 2 m or very difficult to cross, it shall be represented with the symbol impassable fence or railing (524).</source>
         <comment>Description of symbol 522</comment>
-        <translation>A drótból vagy fából készített áthatolható kerítés általában magánterületek, kertek,telkek,stb. védelmére szolgál. Elsődleges célja a határok jelzése, illetve a behatolás megakadályozása. A korlát hasonló céllal készített építmény, de ez rendszerint könnyebben leküzdhető (át lehet alatta bújni).
+        <translation>A drótból vagy fából készített áthatolható kerítés általában magánterületek, kertek, telkek,stb. védelmére szolgál. Elsődleges célja a határok jelzése, illetve a behatolás megakadályozása. A korlát hasonló céllal készített építmény, de ez rendszerint könnyebben leküzdhető (át lehet alatta bújni).
 
 Ha az áthatolható kerítés 2 méternél magasabb mindenképpen az áthatolhatatlan kerítés jelét (524) kell használni.</translation>
     </message>
@@ -10880,7 +10880,7 @@ Szín: barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %, 50 % (
     <message>
         <source>Paved road, footpath or track, urban, 0.55mm width</source>
         <comment>Name of symbol 529.0.4</comment>
-        <translation>Burkolt út, gyalogút, vagy nyom, városi, 0,55mm széles</translation>
+        <translation>Burkolt út, gyalogút, vagy nyom, városi, 0,55 mm széles</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm level surfaces such as asphalt, hard gravel, tiles, concrete or the like. It shall be bordered (or framed) by the symbol step or edge of paved area (529.1). Distinct differences within the paved area can be represented with the symbol step or edge of paved area (529.1), if they serve navigation.
@@ -10916,7 +10916,7 @@ Szín: fekete, barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %
     <message>
         <source>Paved road, footpath or track, urban, 0.9mm width</source>
         <comment>Name of symbol 529.0.6</comment>
-        <translation>Burkolt út, gyalogút vagy nyom, városi, 0,9mm széles</translation>
+        <translation>Burkolt út, gyalogút vagy nyom, városi, 0,9 mm széles</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm level surfaces such as asphalt, hard gravel, tiles, concrete or the like. It shall be bordered (or framed) by the symbol step or edge of paved area (529.1). Distinct differences within the paved area can be represented with the symbol step or edge of paved area (529.1), if they serve navigation.
@@ -10981,14 +10981,14 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
         <comment>Description of symbol 529.0.9</comment>
         <translation>A burkolt terület aszfalttal, sóderrel, murvával, betonnal vagy más kemény anyaggal borított terület (általában járda, parkoló). Azt határolni vagy (keretezni) kell körvonallal (529.1). A burkolat nyilvánvaló különbségei a burkolt terület széle (529.1) jellel ábrázolhatók, ha segítik a tájékozódást.
 
-Ahol egy kikövezett út, a gyalogút vagy a pálya keresztülmegy egy nem városi területen, a barna kitöltést 20%-kal sötétebbre kell - rajzolni mint a városi térségekben, és a fekete körvonalat 0.07mm-ről 0.14 mm-re kell növelni. A fekete szegélyt kihagyhatják, ahol ez logikus (pl. nem világos/fokozatos átmenet kavicstól a fűig).
+Ahol egy kikövezett út, a gyalogút vagy a pálya keresztülmegy egy nem városi területen, a barna kitöltést 20%-kal sötétebbre kell - rajzolni mint a városi térségekben, és a fekete körvonalat 0.07mm-ről 0.14mm-re kell növelni. A fekete szegélyt kihagyhatják, ahol ez logikus (pl. nem világos/fokozatos átmenet kavicstól a fűig).
 
 Szín: fekete, barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %, 50 % (min.60 vonal/cm) (nem városi); a szín és a vonalvastagság ugyanaz mint a ami a burkolatlan gyalogút vagy pálya (506.1) esetén.</translation>
     </message>
     <message>
         <source>Paved road, footpath or track, non-urban, 0.55mm width</source>
         <comment>Name of symbol 529.0.10</comment>
-        <translation>Burkolt út, gyalogút vagy nyom, nem városi, 0,55mm széles</translation>
+        <translation>Burkolt út, gyalogút vagy nyom, nem városi, 0,55 mm széles</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm level surfaces such as asphalt, hard gravel, tiles, concrete or the like. It shall be bordered (or framed) by the symbol step or edge of paved area (529.1). Distinct differences within the paved area can be represented with the symbol step or edge of paved area (529.1), if they serve navigation.
@@ -10999,7 +10999,7 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
         <comment>Description of symbol 529.0.10</comment>
         <translation>A burkolt terület aszfalttal, sóderrel, murvával, betonnal vagy más kemény anyaggal borított terület (általában járda, parkoló). Azt határolni vagy (keretezni) kell körvonallal (529.1). A burkolat nyilvánvaló különbségei a burkolt terület széle (529.1) jellel ábrázolhatók, ha segítik a tájékozódást.
 
-Ahol egy kikövezett út, a gyalogút vagy a pálya keresztülmegy egy nem városi területen, a barna kitöltést 20%-kal sötétebbre kell - rajzolni mint a városi térségekben, és a fekete körvonalat 0.07mm-ről 0.14 mm-re kell növelni. A fekete szegélyt kihagyhatják, ahol ez logikus (pl. nem világos/fokozatos átmenet kavicstól a fűig).
+Ahol egy kikövezett út, a gyalogút vagy a pálya keresztülmegy egy nem városi területen, a barna kitöltést 20%-kal sötétebbre kell - rajzolni mint a városi térségekben, és a fekete körvonalat 0.07mm-ről 0.14mm-re kell növelni. A fekete szegélyt kihagyhatják, ahol ez logikus (pl. nem világos/fokozatos átmenet kavicstól a fűig).
 
 Szín: fekete, barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %, 50 % (min.60 vonal/cm) (nem városi); a szín és a vonalvastagság ugyanaz mint a ami a burkolatlan gyalogút vagy pálya (506.1) esetén.</translation>
     </message>
@@ -11017,7 +11017,7 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
         <comment>Description of symbol 529.0.11</comment>
         <translation>A burkolt terület aszfalttal, sóderrel, murvával, betonnal vagy más kemény anyaggal borított terület (általában járda, parkoló). Azt határolni vagy (keretezni) kell körvonallal (529.1). A burkolat nyilvánvaló különbségei a burkolt terület széle (529.1) jellel ábrázolhatók, ha segítik a tájékozódást.
 
-Ahol egy kikövezett út, a gyalogút vagy a pálya keresztülmegy egy nem városi területen, a barna kitöltést 20%-kal sötétebbre kell - rajzolni mint a városi térségekben, és a fekete körvonalat 0.07mm-ről 0.14 mm-re kell növelni. A fekete szegélyt kihagyhatják, ahol ez logikus (pl. nem világos/fokozatos átmenet kavicstól a fűig).
+Ahol egy kikövezett út, a gyalogút vagy a pálya keresztülmegy egy nem városi területen, a barna kitöltést 20%-kal sötétebbre kell - rajzolni mint a városi térségekben, és a fekete körvonalat 0.07mm-ről 0.14mm-re kell növelni. A fekete szegélyt kihagyhatják, ahol ez logikus (pl. nem világos/fokozatos átmenet kavicstól a fűig).
 
 Szín: fekete, barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %, 50 % (min.60 vonal/cm) (nem városi); a szín és a vonalvastagság ugyanaz mint a ami a burkolatlan gyalogút vagy pálya (506.1) esetén.</translation>
     </message>
@@ -11035,7 +11035,7 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
         <comment>Description of symbol 529.0.12</comment>
         <translation>A burkolt terület aszfalttal, sóderrel, murvával, betonnal vagy más kemény anyaggal borított terület (általában járda, parkoló). Azt határolni vagy keretezni) kell körvonallal (529.1). A burkolat nyilvánvaló különbségei a burkolt terület széle (529.1) jellel ábrázolhatók, ha segítik a tájékozódást.
 
-Ahol egy kikövezett út, a gyalogút vagy a pálya keresztülmegy egy nem városi területen, a barna kitöltést 20%-kal sötétebbre kell - rajzolni mint a városi térségekben, és a fekete körvonalat 0.07mm-ről 0.14 mm-re kell növelni. A fekete szegélyt kihagyhatják, ahol ez logikus (pl. nem világos/fokozatos átmenet kavicstól a fűig).
+Ahol egy kikövezett út, a gyalogút vagy a pálya keresztülmegy egy nem városi területen, a barna kitöltést 20%-kal sötétebbre kell - rajzolni mint a városi térségekben, és a fekete körvonalat 0.07mm-ről 0.14mm-re kell növelni. A fekete szegélyt kihagyhatják, ahol ez logikus (pl. nem világos/fokozatos átmenet kavicstól a fűig).
 
 Szín: barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %, 50 % (min.60 vonal/cm) (nem városi); a szín és a vonalvastagság ugyanaz mint a ami a burkolatlan gyalogút vagy pálya (506.1) esetén.</translation>
     </message>
@@ -11047,7 +11047,7 @@ Szín: barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %, 50 % (
     <message>
         <source>A step or an edge of a paved area. Steps of a stairway shall be represented in a generalized manner. Edges within paved areas are generally not represented, unless they serve navigation. The thickness of edge of paved areas shall be enlarged to 0.14 mm in non-urban areas to improve legibility. The thickness of step lines shall always be 0.07 mm.</source>
         <comment>Description of symbol 529.1.1</comment>
-        <translation>Lépcső határoló vonala, illetve burkolt terület széle. A lépcsőfokokat csak egyszerűsítve kell ábrázolni. A járdák szélét csak abban az esetben kell ábrázolni, ha azok a versenyző tájékozódását jelentősen segítik. A kikövezett területek élének a vastagságát nem városi területeken fel kell nagyítani 0.14 mm-re, hogy jobb legyen a jel olvashatósága. A lépcső sorozatok vastagsága mindig 0.07 mm.</translation>
+        <translation>Lépcső határoló vonala, illetve burkolt terület széle. A lépcsőfokokat csak egyszerűsítve kell ábrázolni. A járdák szélét csak abban az esetben kell ábrázolni, ha azok a versenyző tájékozódását jelentősen segítik. A kikövezett területek élének a vastagságát nem városi területeken fel kell nagyítani 0.14 mm-re, hogy jobb legyen a jel olvashatósága. A lépcsőfokok vastagsága mindig 0.07mm.</translation>
     </message>
     <message>
         <source>Step or edge of paved area, non-urban</source>
@@ -11057,7 +11057,7 @@ Szín: barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %, 50 % (
     <message>
         <source>A step or an edge of a paved area. Steps of a stairway shall be represented in a generalized manner. Edges within paved areas are generally not represented, unless they serve navigation. The thickness of edge of paved areas shall be enlarged to 0.14 mm in non-urban areas to improve legibility. The thickness of step lines shall always be 0.07 mm.</source>
         <comment>Description of symbol 529.1.2</comment>
-        <translation>Lépcső határoló vonala, illetve burkolt terület széle. A lépcsőfokokat csak egyszerűsítve kell ábrázolni. A járdák szélét csak abban az esetben kell ábrázolni, ha azok a versenyző tájékozódását jelentősen segítik. A kikövezett területek élének a vastagságát nem városi területeken fel kell nagyítani 0.14 mm-re, hogy jobb legyen a jel olvashatósága. A lépcső sorozatok vastagsága mindig 0.07 mm.</translation>
+        <translation>Lépcső határoló vonala, illetve burkolt terület széle. A lépcsőfokokat csak egyszerűsítve kell ábrázolni. A járdák szélét csak abban az esetben kell ábrázolni, ha azok a versenyző tájékozódását jelentősen segítik. A kikövezett területek élének a vastagságát nem városi területeken fel kell nagyítani 0.14 mm-re, hogy jobb legyen a jel olvashatósága. A lépcsőfokok vastagsága mindig 0.07mm.</translation>
     </message>
     <message>
         <source>Step or edge of paved area, narrow stairway</source>
@@ -11067,7 +11067,7 @@ Szín: barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %, 50 % (
     <message>
         <source>A step or an edge of a paved area. Steps of a stairway shall be represented in a generalized manner. Edges within paved areas are generally not represented, unless they serve navigation. The thickness of edge of paved areas shall be enlarged to 0.14 mm in non-urban areas to improve legibility. The thickness of step lines shall always be 0.07 mm.</source>
         <comment>Description of symbol 529.1.3</comment>
-        <translation>Lépcső határoló vonala, illetve burkolt terület széle. A lépcsőfokokat csak egyszerűsítve kell ábrázolni. A járdák szélét csak abban az esetben kell ábrázolni, ha azok a versenyző tájékozódását jelentősen segítik. A kikövezett területek élének a vastagságát nem városi területeken fel kell nagyítani 0.14 mm-re, hogy jobb legyen a jel olvashatósága. A lépcső sorozatok vastagsága mindig 0.07 mm.</translation>
+        <translation>Lépcső határoló vonala, illetve burkolt terület széle. A lépcsőfokokat csak egyszerűsítve kell ábrázolni. A járdák szélét csak abban az esetben kell ábrázolni, ha azok a versenyző tájékozódását jelentősen segítik. A kikövezett területek élének a vastagságát nem városi területeken fel kell nagyítani 0.14 mm-re, hogy jobb legyen a jel olvashatósága. A lépcsőfokok vastagsága mindig 0.07mm.</translation>
     </message>
     <message>
         <source>Step or edge of paved area, wide stairway</source>
@@ -11077,7 +11077,7 @@ Szín: barna 0%(fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30 %, 40 %, 50 % (
     <message>
         <source>A step or an edge of a paved area. Steps of a stairway shall be represented in a generalized manner. Edges within paved areas are generally not represented, unless they serve navigation. The thickness of edge of paved areas shall be enlarged to 0.14 mm in non-urban areas to improve legibility. The thickness of step lines shall always be 0.07 mm.</source>
         <comment>Description of symbol 529.1.4</comment>
-        <translation>Lépcső határoló vonala, illetve burkolt terület széle. A lépcsőfokokat csak egyszerűsítve kell ábrázolni. A járdák szélét csak abban az esetben kell ábrázolni, ha azok a versenyző tájékozódását jelentősen segítik. A kikövezett területek élének a vastagságát nem városi területeken fel kell nagyítani 0.14 mm-re, hogy jobb legyen a jel olvashatósága. A lépcső sorozatok vastagsága mindig 0.07 mm.</translation>
+        <translation>Lépcső határoló vonala, illetve burkolt terület széle. A lépcsőfokokat csak egyszerűsítve kell ábrázolni. A járdák szélét csak abban az esetben kell ábrázolni, ha azok a versenyző tájékozódását jelentősen segítik. A kikövezett területek élének a vastagságát nem városi területeken fel kell nagyítani 0.14 mm-re, hogy jobb legyen a jel olvashatósága. A lépcsőfokok vastagsága mindig 0.07mm.</translation>
     </message>
     <message>
         <source>Passable pipeline</source>
@@ -11671,7 +11671,7 @@ A lila vonal a rajt jeltől tart a cél szimbólum felé. Ez az egyszerű megkö
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
-        <translation>A földletörés egy hirtelen szintváltozás a felszínen, amely tisztán megkülönböztethető a környezetétől, pl. kavicsos vagy homokos árok, közúti és vasúti bevágások vagy töltések. A minimális magasság 1 m. A földletörés befolyásolhatja a futhatóságot. A fogak a letörés teljes terjedelmét ábrázolják. Hosszabb földletöréseknél a végeknél a minimálisnál rövidebb fogak használata is megengedett. Ha két földletörés közel van egymáshoz, akkor a fogak elhagyhatók. Áthatolhatatlan földletöréseket a 201-es jellel kell ábrázolni (áthatolhatatlan sziklafal).A nagyon magas földletörés vonalvastagsága 0,25mm lehet.</translation>
+        <translation>A földletörés egy hirtelen szintváltozás a felszínen, amely tisztán megkülönböztethető a környezetétől, pl. kavicsos vagy homokos árok, közúti és vasúti bevágások vagy töltések. A minimális magasság 1 m. A földletörés befolyásolhatja a futhatóságot. A fogak a letörés teljes terjedelmét ábrázolják. Hosszabb földletöréseknél a végeknél a minimálisnál rövidebb fogak használata is megengedett. Ha két földletörés közel van egymáshoz, akkor a fogak elhagyhatók. Áthatolhatatlan földletöréseket a 201-es jellel kell ábrázolni (áthatolhatatlan sziklafal). A nagyon magas földletörés vonalvastagsága 0,25mm lehet.</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -11841,7 +11841,7 @@ A lila vonal a rajt jeltől tart a cél szimbólum felé. Ez az egyszerű megkö
     <message>
         <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
         <comment>Description of symbol 212</comment>
-        <translation>alaj és növényzet nélküli futható sziklafelszín. A füves, mohás vagy más növényzettel fedett sziklafelszín a nyílt terület jelével (401/402) ábrázolható.</translation>
+        <translation>Talaj és növényzet nélküli futható sziklafelszín. A füves, mohás vagy más növényzettel fedett sziklafelszín a nyílt terület jelével (401/402) ábrázolható.</translation>
     </message>
     <message>
         <source>Lake</source>
