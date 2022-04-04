@@ -382,6 +382,42 @@ private slots:
 		l.cleanupPointSymbols();
 		QVERIFY(clone->equals(&l));
 	}
+	
+	
+	void lessByColorTest_data()
+	{
+		QTest::addColumn<QString>("map_filename");
+		for (auto raw_path : example_files)
+		{
+			QTest::newRow(raw_path) << QString::fromUtf8(raw_path);
+		}
+	}
+	
+	void lessByColorTest()
+	{
+		QFETCH(QString, map_filename);
+		Map map {};
+		QVERIFY(map.loadFrom(map_filename));
+		
+		auto failed_compare = QString{};
+		
+		auto const less_by_color = Symbol::lessByColor(&map);
+		auto const last = map.getNumSymbols();
+		for (int i = 0; i < last; ++i)
+		{
+			const auto* a = map.getSymbol(i);
+			for (int j = 0; j < last; ++j)
+			{
+				const auto* b = map.getSymbol(j);
+				if (less_by_color(a, b) && less_by_color(b, a))
+					failed_compare += a->getNumberAsString() + QLatin1String("<=>") + b->getNumberAsString() + QLatin1String("  ");
+			}
+		}
+		QEXPECT_FAIL("data:/examples/complete map.omap", "Broken lessByColor", Continue);
+		QEXPECT_FAIL("data:/examples/forest sample.omap", "Broken lessByColor", Continue);
+		QEXPECT_FAIL("data:/examples/overprinting.omap", "Broken lessByColor", Continue);
+		QCOMPARE(failed_compare, QString{});
+	}
 };
 
 
