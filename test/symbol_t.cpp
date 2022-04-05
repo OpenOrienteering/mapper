@@ -413,9 +413,6 @@ private slots:
 					failed_compare += a->getNumberAsString() + QLatin1String("<=>") + b->getNumberAsString() + QLatin1String("  ");
 			}
 		}
-		QEXPECT_FAIL("data:/examples/complete map.omap", "Broken lessByColor", Continue);
-		QEXPECT_FAIL("data:/examples/forest sample.omap", "Broken lessByColor", Continue);
-		QEXPECT_FAIL("data:/examples/overprinting.omap", "Broken lessByColor", Continue);
 		QCOMPARE(failed_compare, QString{});
 	}
 };

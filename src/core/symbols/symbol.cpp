@@ -974,14 +974,11 @@ bool Symbol::lessByColor::operator() (const Symbol* s1, const Symbol* s2) const
 	if (rgb_c1 == rgb_c2)
 		return false;
 	
-	const auto last = colors.rend();
-	auto first = std::find_if(colors.rbegin(), last, [rgb_c2](const auto rgb) {
-		return rgb == rgb_c2;
-	});
-	auto second = std::find_if(first, last, [rgb_c1](const auto rgb) {
-		return rgb == rgb_c1;
-	});
-	return second != last;
+	const auto first = colors.begin();
+	const auto last = colors.end();
+	const auto rgb1 = std::find(first, last, rgb_c1);
+	const auto rgb2 = std::find(first, last, rgb_c2);
+	return std::distance(first, rgb1) < std::distance(first, rgb2);
 }
 
 
