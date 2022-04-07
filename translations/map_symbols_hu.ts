@@ -12114,7 +12114,7 @@ Ez az ISOM &quot;302 Tavacska&quot; szimbóluma, de az ISMTBOM &quot;301 Tó&quo
     <message>
         <source>Path: fast riding</source>
         <comment>Name of symbol 832</comment>
-        <translation>út: gyors kerékpározás</translation>
+        <translation>Út: gyors kerékpározás</translation>
     </message>
     <message>
         <source>Well-maintained path narrower than 1.5 m wide. Smooth, clean path with no erosion or obstacles. Speed 75-100 %.</source>
@@ -12334,7 +12334,7 @@ Ez az ISOM &quot;302 Tavacska&quot; szimbóluma, de az ISMTBOM &quot;301 Tó&quo
     <message>
         <source>A distinct grave marked by a stone or shrine. Location is at the centre of gravity of the symbol, which is orientated to north. A cemetery is shown by using grave symbols as space permits.</source>
         <comment>Description of symbol 532</comment>
-        <translation>Egyedülálló, kővel vagy emlékművel jelölt sír. A helyét a jel súlypontja jelöli. A jelet északra kell tájolni.A temető is a sír jelével ábrázolható (felületi jel).</translation>
+        <translation>Egyedülálló, kővel vagy emlékművel jelölt sír. A helyét a jel súlypontja jelöli. A jelet északra kell tájolni. A temető is a sír jelével ábrázolható (felületi jel).</translation>
     </message>
     <message>
         <source>Uncrossable pipeline</source>
@@ -12429,7 +12429,7 @@ Ez az ISOM &quot;302 Tavacska&quot; szimbóluma, de az ISMTBOM &quot;301 Tó&quo
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
         <comment>Description of symbol 603.0</comment>
-        <translation>A tengerszint feletti magassági értékeket magasságkülönbségek durva becsléséhez használhatjuk. A magasságot méterre kerekítve adjuk meg. A számokészakra tájoltak. A vizek szintjét pont nélkül írjuk meg.</translation>
+        <translation>A tengerszint feletti magassági értékeket magasságkülönbségek durva becsléséhez használhatjuk. A magasságot méterre kerekítve adjuk meg. A számok Északra tájoltak. A vizek szintjét pont nélkül írjuk meg.</translation>
     </message>
     <message>
         <source>Spot height, text</source>
@@ -12439,7 +12439,7 @@ Ez az ISOM &quot;302 Tavacska&quot; szimbóluma, de az ISMTBOM &quot;301 Tó&quo
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
         <comment>Description of symbol 603.1</comment>
-        <translation>A tengerszint feletti magassági értékeket magasságkülönbségek durva becsléséhez használhatjuk. A magasságot méterre kerekítve adjuk meg. A számokészakra tájoltak. A vizek szintjét pont nélkül írjuk meg.</translation>
+        <translation>A tengerszint feletti magassági értékeket magasságkülönbségek durva becsléséhez használhatjuk. A magasságot méterre kerekítve adjuk meg. A számok Északra tájoltak. A vizek szintjét pont nélkül írjuk meg.</translation>
     </message>
     <message>
         <source>Start</source>
@@ -12658,7 +12658,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
         <comment>Description of symbol 112</comment>
-        <translation>Szembeötlő halom, köves domb, amely nem ábrázolható mérethelyesen szintvonallal (az átmérő kisebb, mint 5 méter). A kúpnak legalább 1 méterrel ki kell emelkednie környezetéből.Ajel nem érinthet szintvonalat.</translation>
+        <translation>Szembeötlő halom, köves domb, amely nem ábrázolható mérethelyesen szintvonallal (az átmérő kisebb, mint 5 méter). A kúpnak legalább 1 méterrel ki kell emelkednie környezetéből. A jel nem érinthet szintvonalat.</translation>
     </message>
     <message>
         <source>Elongated knoll</source>
@@ -12688,7 +12688,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
         <comment>Description of symbol 116</comment>
-        <translation>A 106-os jellel mérethelyesen már nem ábrázolható meredek falú (minimum 2 méteres átmérőjű) gödör, lyuk jelölésére szolgál.Akörnyezeténél minimum 1 méterrel mélyebbnek kell lennie. Pontos terepi helye a jel súlypontja, a jel északra tájolt.</translation>
+        <translation>A 106-os jellel mérethelyesen már nem ábrázolható meredek falú (minimum 2 méteres átmérőjű) gödör, lyuk jelölésére szolgál. A környezeténél minimum 1 méterrel mélyebbnek kell lennie. Pontos terepi helye a jel súlypontja, a jel északra tájolt.</translation>
     </message>
     <message>
         <source>Broken ground, small</source>
@@ -12788,7 +12788,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>Rocky pits, holes or mineshafts which may constitute a danger to the runner. Location is the centre of gravity of the symbol, which is orientated to north.</source>
         <comment>Description of symbol 204</comment>
-        <translation>A futó számára veszélyt jelentő köves gödör, lyuk, bányaakna. A jel északra tájolt, pontos helye a jel súlypontja.</translation>
+        <translation>A futó számára veszélyt jelentő köves gödör, lyuk, bányaakna. A jel Északra tájolt, pontos helye a jel súlypontja.</translation>
     </message>
     <message>
         <source>Cave</source>
@@ -12858,7 +12858,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
         <comment>Description of symbol 303</comment>
-        <translation>Vizes gödör vagy olyan vízfelület, amely túl kicsi ahhoz, hogy alaprajzban ábrázoljuk.A tereptárgy helye a jel súlypontja, a jelet északra kell tájolni.</translation>
+        <translation>Vizes gödör vagy olyan vízfelület, amely túl kicsi ahhoz, hogy alaprajzban ábrázoljuk. A tereptárgy helye a jel súlypontja, a jelet Északra kell tájolni.</translation>
     </message>
     <message>
         <source>Narrow marsh</source>
@@ -12913,7 +12913,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
         <comment>Description of symbol 407</comment>
-        <translation>Sűrű aljnövényzettel borított, de jól átlátható terület (szeder, alacsony bozót, gallyazás), amelyben a futás sebessége a normál futósebességhez viszonyítva 60–80%-os.A jel a 406-os és 408-as jelekkel nem kombinálható.</translation>
+        <translation>Sűrű aljnövényzettel borított, de jól átlátható terület (szeder, alacsony bozót, gallyazás), amelyben a futás sebessége a normál futósebességhez viszonyítva 60–80%-os. A jel a 406-os és 408-as jelekkel nem kombinálható.</translation>
     </message>
     <message>
         <source>Forest: difficult to run</source>
@@ -12933,7 +12933,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
         <comment>Description of symbol 409</comment>
-        <translation>Sűrű aljnövényzettel borított, egyébként jól átlátható terület (szeder, alacsony bozót, gallyazás), amelyben a futás sebessége a normál futósebességhez viszonyítva 20–60%-os.Ajel nem kombinálható a 406-os és 408-as jelekkel.</translation>
+        <translation>Sűrű aljnövényzettel borított, egyébként jól átlátható terület (szeder, alacsony bozót, gallyazás), amelyben a futás sebessége a normál futósebességhez viszonyítva 20–60%-os. A jel nem kombinálható a 406-os és 408-as jelekkel.</translation>
     </message>
     <message>
         <source>Vegetation: very difficult to run, impassable</source>
@@ -12993,7 +12993,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
         <comment>Description of symbol 414</comment>
-        <translation>Ha a művelt terület határát nem jelöli más jel (kerítés, kőfal, stb.), akkor fekete vonallal ábrázoljuk.Az eltérő művelésű területeket elválasztó, állandónak tekinthető határt ugyanígy jelöljük.</translation>
+        <translation>Ha a művelt terület határát nem jelöli más jel (kerítés, kőfal, stb.), akkor fekete vonallal ábrázoljuk. Az eltérő művelésű területeket elválasztó, állandónak tekinthető határt ugyanígy jelöljük.</translation>
     </message>
     <message>
         <source>Cultivated land</source>
