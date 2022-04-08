@@ -13818,7 +13818,7 @@ Megjegyzés: ha az víz szélesebb 0.25mm-nél akkor mindkét oldalon 0.5 mm-rel
     <message>
         <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
         <comment>Description of symbol 414</comment>
-        <translation>Ha a művelt terület határát nem jelöli más jel (kerítés, kőfal, stb.), akkor fekete vonallal ábrázoljuk.Az eltérő művelésű területeket elválasztó, állandónak tekinthető határt ugyanígy jelöljük.</translation>
+        <translation>Ha a művelt terület határát nem jelöli más jel (kerítés, kőfal, stb.), akkor fekete vonallal ábrázoljuk. Az eltérő művelésű területeket elválasztó, állandónak tekinthető határt ugyanígy jelöljük.</translation>
     </message>
     <message>
         <source>Distinct vegetation boundary</source>
@@ -14173,7 +14173,7 @@ Megjegyzés: ha az víz szélesebb 0.25mm-nél akkor mindkét oldalon 0.5 mm-rel
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
         <comment>Description of symbol 603.0</comment>
-        <translation>A tengerszint feletti magassági értékeket magasságkülönbségek durva becsléséhez használhatjuk. A magasságot méterre kerekítve adjuk meg. A számokészakra tájoltak. A vizek szintjét pont nélkül írjuk meg.</translation>
+        <translation>A tengerszint feletti magassági értékeket magasságkülönbségek durva becsléséhez használhatjuk. A magasságot méterre kerekítve adjuk meg. A számok északra tájoltak. A vizek szintjét pont nélkül írjuk meg.</translation>
     </message>
     <message>
         <source>Spot height, text</source>
@@ -14183,7 +14183,7 @@ Megjegyzés: ha az víz szélesebb 0.25mm-nél akkor mindkét oldalon 0.5 mm-rel
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
         <comment>Description of symbol 603.1</comment>
-        <translation>A tengerszint feletti magassági értékeket magasságkülönbségek durva becsléséhez használhatjuk. A magasságot méterre kerekítve adjuk meg. A számokészakra tájoltak. A vizek szintjét pont nélkül írjuk meg.</translation>
+        <translation>A tengerszint feletti magassági értékeket magasságkülönbségek durva becsléséhez használhatjuk. A magasságot méterre kerekítve adjuk meg. A számok északra tájoltak. A vizek szintjét pont nélkül írjuk meg.</translation>
     </message>
     <message>
         <source>Very fast, wide ski tracks in ski centres, made with a ski trail groomer or a track leveller.</source>
@@ -14331,12 +14331,12 @@ Az előkészített területek határait keskeny zöld vonal (0,13 mm) mutatja, �
     <message>
         <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 702</comment>
-        <translation>Az ellenőrzőpon helyét kör jelöli. A kör középpontja mutatja a tereptárgy pontos helyét. A kör vonalát megszakíthatjuk ha az fontos részleteket takar.</translation>
+        <translation>Az ellenőrzőpont helyét kör jelöli. A kör középpontja mutatja a tereptárgy pontos helyét. A kör vonalát megszakíthatjuk ha az fontos részleteket takar.</translation>
     </message>
     <message>
         <source>Control point and focus point</source>
         <comment>Name of symbol 810</comment>
-        <translation>Ellenőrző pont és fókusz pont</translation>
+        <translation>Ellenőrzőpont és fókuszpont</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -14503,7 +14503,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>Small earth wall</source>
         <comment>Name of symbol 108</comment>
-        <translation>Kis föld fal, kis töltés sánc</translation>
+        <translation>Kis föld fal, kis töltés, sánc</translation>
     </message>
     <message>
         <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
@@ -14528,7 +14528,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
         <comment>Description of symbol 112</comment>
-        <translation>Szembeötlő halom, köves domb, amely nem ábrázolható mérethelyesen szintvonallal (az átmérő kisebb, mint 5 méter). A kúpnak legalább 1 méterrel ki kell emelkednie környezetéből.Ajel nem érinthet szintvonalat.</translation>
+        <translation>Szembeötlő halom, köves domb, amely nem ábrázolható mérethelyesen szintvonallal (az átmérő kisebb, mint 5 méter). A kúpnak legalább 1 méterrel ki kell emelkednie környezetéből. A jel nem érinthet szintvonalat.</translation>
     </message>
     <message>
         <source>Elongated knoll</source>
@@ -14558,7 +14558,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
         <comment>Description of symbol 116</comment>
-        <translation>A 106-os jellel mérethelyesen már nem ábrázolható meredek falú (minimum 2 méteres átmérőjű) gödör, lyuk jelölésére szolgál.Akörnyezeténél minimum 1 méterrel mélyebbnek kell lennie. Pontos terepi helye a jel súlypontja, a jel északra tájolt.</translation>
+        <translation>A 106-os jellel mérethelyesen már nem ábrázolható meredek falú (minimum 2 méteres átmérőjű) gödör, lyuk jelölésére szolgál. Akörnyezeténél minimum 1 méterrel mélyebbnek kell lennie. Pontos terepi helye a jel súlypontja, a jel északra tájolt.</translation>
     </message>
     <message>
         <source>Broken ground, small</source>
