@@ -14648,7 +14648,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
         <comment>Description of symbol 212</comment>
-        <translation>alaj és növényzet nélküli futható sziklafelszín. A füves, mohás vagy más növényzettel fedett sziklafelszín a nyílt terület jelével (401/402) ábrázolható.</translation>
+        <translation>Talaj és növényzet nélküli futható sziklafelszín. A füves, mohás vagy más növényzettel fedett sziklafelszín a nyílt terület jelével (401/402) ábrázolható.</translation>
     </message>
     <message>
         <source>Pond</source>
@@ -14668,7 +14668,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
         <comment>Description of symbol 303</comment>
-        <translation>Vizes gödör vagy olyan vízfelület, amely túl kicsi ahhoz, hogy alaprajzban ábrázoljuk.A tereptárgy helye a jel súlypontja, a jelet északra kell tájolni.</translation>
+        <translation>Vizes gödör vagy olyan vízfelület, amely túl kicsi ahhoz, hogy alaprajzban ábrázoljuk. A tereptárgy helye a jel súlypontja, a jelet északra kell tájolni.</translation>
     </message>
     <message>
         <source>Minor water channel</source>
@@ -14793,7 +14793,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
         <comment>Description of symbol 407</comment>
-        <translation>Sűrű aljnövényzettel borított, de jól átlátható terület (szeder, alacsony bozót, gallyazás), amelyben a futás sebessége a normál futósebességhez viszonyítva 60–80%-os.A jel a 406-os és 408-as jelekkel nem kombinálható.</translation>
+        <translation>Sűrű aljnövényzettel borított, de jól átlátható terület (szeder, alacsony bozót, gallyazás), amelyben a futás sebessége a normál futósebességhez viszonyítva 60–80%-os. A jel a 406-os és 408-as jelekkel nem kombinálható.</translation>
     </message>
     <message>
         <source>Undergrowth: difficult to run</source>
@@ -14803,7 +14803,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
         <comment>Description of symbol 409</comment>
-        <translation>Sűrű aljnövényzettel borított, egyébként jól átlátható terület (szeder, alacsony bozót, gallyazás), amelyben a futás sebessége a normál futósebességhez viszonyítva 20–60%-os.Ajel nem kombinálható a 406-os és 408-as jelekkel.</translation>
+        <translation>Sűrű aljnövényzettel borított, egyébként jól átlátható terület (szeder, alacsony bozót, gallyazás), amelyben a futás sebessége a normál futósebességhez viszonyítva 20–60%-os. A jel nem kombinálható a 406-os és 408-as jelekkel.</translation>
     </message>
     <message>
         <source>Vegetation: very difficult to run, impassable</source>
@@ -15025,7 +15025,7 @@ Megjegyzés: ha az víz szélesebb 0.25mm-nél, akkor mindkét oldalon 0.5 mm-re
     <message>
         <source>A distinct grave marked by a stone or shrine. Location is at the centre of gravity of the symbol, which is orientated to north. A cemetery is shown by using grave symbols as space permits.</source>
         <comment>Description of symbol 532</comment>
-        <translation>Egyedülálló, kővel vagy emlékművel jelölt sír. A helyét a jel súlypontja jelöli. A jelet északra kell tájolni.A temető is a sír jelével ábrázolható (felületi jel).</translation>
+        <translation>Egyedülálló, kővel vagy emlékművel jelölt sír. A helyét a jel súlypontja jelöli. A jelet északra kell tájolni. A temető is a sír jelével ábrázolható (felületi jel).</translation>
     </message>
     <message>
         <source>Crossable pipeline</source>
@@ -15258,14 +15258,14 @@ A depression must accommodate a slope line, so the minimum length is 1.1 mm (foo
 Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
         <translation>Azonos magasságú pontokat összekötő vonal. A szintvonalak közötti különbség 5 m. Sík terepen 2,5 m-es intervallum használható.
-A lejtővonalak a szintvonal alsó oldalára húzhatók, hogy tisztázzuk a lejtő irányát. Használatuk esetén a mélyedésekbe kell helyezni őket.
+A lejtővonalak a szintvonal alsó oldalára húzhatók, hogy tisztázzuk a lejtő irányát. Használatuk esetén a hajlatokba kell elhelyezni őket.
 A zárt szintvonal egy dombot vagy mélyedést jelent. A mélyedésnek legalább egy lejtővonallal kell rendelkeznie. A minimális magasság/mélység 1 m.
-Fontos a szomszédos szintvonalak közötti kapcsolat. A szomszédos szintvonalak formáját és felépítését mutatják. Kerülni kell a szintvonalak apró részleteit, mivel ezek általában elrejtik a terep főbb jellemzőit.
-A feltűnő tulajdonságokat, mint például a mélyedéseket, hajlatokat, kanyarokat, földpartokat és teraszokat el lehet túlozni.
+Fontos a szomszédos szintvonalak közötti kapcsolat. A szomszédos szintvonalak a formát és a felépítést mutatják. Kerülni kell a szintvonalak apró részleteit, mivel ezek általában elrejtik a terep főbb jellemzőit.
+A feltűnő tulajdonságokat, mint például a mélyedéseket, hajlatokat, orrokat, földpartokat és teraszokat el lehet túlozni.
 Az abszolút magassági pontosságnak nincs jelentősége, de a szomszédos elemek közötti relatív magassági különbséget a lehető legpontosabban meg kell jeleníteni a térképen. Megengedett a szintvonal magasságának kismértékű megváltoztatása, ha ez javítja a terepelemek ábrázolását. Ez az eltérés nem haladhatja meg az alapszintköz 25% -át, és figyelmet kell fordítani a szomszédos tulajdonságokra.
-A szintvonal legkisebb íve a vonal közepétől a középpontjáig 0,25 mm (lábnyom 4 m). A hajlat vagy a száj szája legalább 0,5 mm legyen a vonal közepétől a középpontjáig (8 m lábnyom).
+A szintvonal legkisebb íve a vonal közepétől a középpontjáig 0,25 mm (lábnyom 4 m). A hajlat vagy az orr szája legalább 0,5 mm legyen a vonal közepétől a középpontjáig (8 m lábnyom).
 A domb szintvonal minimális hossza 0,9 mm (lábnyom 13,5 m) és a minimális szélessége 0,6 mm (lábnyom 9 m) a mérési távolságon kívül. Kisebb kiemelkedő dombok ábrázolhatók a Kis domb (109) vagy a Kicsi hosszúkás domb (110) szimbólummal, vagy eltúlozhatók a térképen a minimális méret kielégítése érdekében.
-A mélyedésnek meg kell felelnie a lejtő vonalának, tehát a legkisebb hosszúság 1,1 mm (lábnyom 16,5 m) és a minimális szélesség 0,7 mm (10,5 m lábnyom). Kisebb, kiemelkedő mélyedéseket a Lapos mélyedés (111) szimbólummal ábrázolhatunk, vagy eltúlozhatjuk a minimális méret kielégítése érdekében.
+A mélyedésnek meg kell felelnie a lejtő vonalnak (eséstüske), tehát a legkisebb hosszúság 1,1 mm (lábnyom 16,5 m) és a minimális szélesség 0,7 mm (10,5 m lábnyom). Kisebb, kiemelkedő mélyedéseket a Lapos mélyedés (111) szimbólummal ábrázolhatunk, vagy eltúlozhatjuk a minimális méret kielégítése érdekében.
 A szintvonalakat úgy kell beállítani (nem törve), hogy ne érintse meg a Kis domb (109) vagy a Kicsi hosszúkás domb (110) szimbólumot.</translation>
     </message>
     <message>
@@ -15394,7 +15394,7 @@ Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation>Feltéve az ISOM2000-ről történő migráció során. Ennek a szimbólumvariánsnak az használata nem javasolt az új térképeknél.</translation>
+        <translation>Feltéve az ISOM2000-ről történő migrációhoz. Ennek a szimbólumvariánsnak az használata nem javasolt az új térképeknél.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -15420,7 +15420,7 @@ Contour lines should not be broken around this symbol.</source>
         <comment>Description of symbol 107</comment>
         <translation>Egy metsződést, ami már túl kicsi ahhoz, hogy a 104-es szimbólummal (földletörés) jelöljük, egy vonallal kell jelölni. Minimum mélység 1 m.
 Minimális hossz: 1,15 mm (lábnyoma 17 m).
- A környező szintvonalakat nem kell megszakítani.</translation>
+A környező szintvonalakat nem kell megszakítani.</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -15453,7 +15453,7 @@ Footprint: 12 m x 6 m.</source>
         <translation>Egy olyan kis mélyedés vagy üreg meredek oldalak nélkül, ami túl kicsi ahhoz, hogy szintvonallal ábrázoljuk.
 Minimális mélység: 1 m. Minimum szélesség: 2 m.
 A kisebb, meredek oldalú mélyedéseket a 112 (gödör) szimbólummal jelöljük.
-A szimbólum nem lehet érintésben vagy átfedésben más barna szimbólumokkal.A hely a szimbólum súlypontja, és a szimbólumot északnak tájoljuk.
+A szimbólum nem lehet érintésben vagy átfedésben más barna szimbólumokkal. A hely a szimbólum súlypontja, és a szimbólumot északnak tájoljuk.
 Lábnyoma: 12 m x 6 m.</translation>
     </message>
     <message>
@@ -15471,7 +15471,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <translation>Egy olyan magas szikla, kőbánya vagy földletörés, amely olyan magas és meredek, hogy lehetetlen átjutni/mászni, vagy veszélyes.
 Függőleges sziklafelületek esetén a fogazás elhagyható, ha kevés a hely. A felső vonal vége lekerekített vagy négyzet alakú lehet. Rövidebb fogak használhatók a végén.
 Két átjárhatatlan szikla, illetve a járhatatlan sziklák és az egyéb átjárhatatlan jelek közötti távolságnak a térképen meg kell haladnia a 0,25 mm-t.
-Amikor az járhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. Az járhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
+Amikor az járhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. A járhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
 Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     </message>
     <message>
@@ -15489,7 +15489,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <translation>Egy olyan magas szikla, kőbánya vagy földletörés, amely olyan magas és meredek, hogy lehetetlen átjutni/mászni, vagy veszélyes.
 Függőleges sziklafelületek esetén a fogazás elhagyható, ha kevés a hely. A felső vonal vége lekerekített vagy négyzet alakú lehet. Rövidebb fogak használhatók a végén.
 Két átjárhatatlan szikla, illetve a járhatatlan sziklák és az egyéb átjárhatatlan jelek közötti távolságnak a térképen meg kell haladnia a 0,25 mm-t.
-Amikor az járhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. Az járhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
+Amikor az járhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. A járhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
 Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     </message>
     <message>
@@ -15500,7 +15500,7 @@ Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation>Feltéve az ISOM2000-ről történő migráció során. Ennek a szimbólumvariánsnak az használata nem javasolt az új térképeknél.</translation>
+        <translation>Feltéve az ISOM2000-ről történő migrációhoz. Ennek a szimbólumvariánsnak az használata nem javasolt az új térképeknél.</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
@@ -15517,7 +15517,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <translation>Egy olyan magas szikla, kőbánya vagy földletörés, amely olyan magas és meredek, hogy lehetetlen átjutni/mászni, vagy veszélyes.
 Függőleges sziklafelületek esetén a fogazás elhagyható, ha kevés a hely. A felső vonal vége lekerekített vagy négyzet alakú lehet. Rövidebb fogak használhatók a végén.
 Két átjárhatatlan szikla, illetve a járhatatlan sziklák és az egyéb átjárhatatlan jelek közötti távolságnak a térképen meg kell haladnia a 0,25 mm-t.
-Amikor az járhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. Az járhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
+Amikor az járhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. A járhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
 Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     </message>
     <message>
@@ -15538,7 +15538,7 @@ Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.9</comment>
-        <translation>Feltéve az ISOM2000-ről történő migráció során. Ennek a szimbólumvariánsnak az használata nem javasolt az új térképeknél.</translation>
+        <translation>Feltéve az ISOM2000-ről történő migrációhoz. Ennek a szimbólumvariánsnak az használata nem javasolt az új térképeknél.</translation>
     </message>
     <message>
         <source>Cliff</source>
@@ -15620,7 +15620,7 @@ Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 202.9</comment>
-        <translation>Feltéve az ISOM2000-ről történő migráció során. Ennek a szimbólumvariánsnak az használata nem javasolt az új térképeknél.</translation>
+        <translation>Feltéve az ISOM2000-ről történő migrációhoz. Ennek a szimbólumvariánsnak az használata nem javasolt az új térképeknél.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -15679,7 +15679,7 @@ The gap between gigantic boulders or between gigantic boulders and other impassa
 Minimum width: 0.25 mm (footprint 3.75 m).
 Minimum area: 0.3 mm² (footprint 67 m²).</source>
         <comment>Description of symbol 206</comment>
-        <translation>Egy hatalmas sziklát, sziklaoszlopot vagy hatalmas sziklát alaprajzával kell ábrázolni.A tárgyak alakja és szélessége változhat.
+        <translation>Egy hatalmas sziklát, sziklaoszlopot vagy hatalmas sziklát alaprajzával kell ábrázolni. A sziklák alakja és szélessége változhat.
 A hatalmas sziklák, vagy a gigantikus sziklák és az egyéb áthatolhatatlan jelek közötti távolságnak meg kell haladnia a 0,15 mm-t a térképen.
 Minimális szélesség: 0,25 mm (lábnyom 3,75 m).
 Minimális terület: 0,3 mm² (lábnyom 67 m²).</translation>
@@ -17079,7 +17079,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 702</comment>
-        <translation>Az ellenőrzőpon helyét kör jelöli. A kör középpontja mutatja a tereptárgy pontos helyét. A kör vonalát megszakíthatjuk ha az fontos részleteket takar.</translation>
+        <translation>Az ellenőrzőpont helyét kör jelöli. A kör középpontja mutatja a tereptárgy pontos helyét. A kör vonalát megszakíthatjuk ha az fontos részleteket takar.</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -18387,9 +18387,9 @@ Térkép szimbóluma: ISOM 538</translation>
 
 The default line shows a box of 5 mm by 5mm and can be removed from the final symbols.</source>
         <comment>Description of symbol 7</comment>
-        <translation>Általában nem ajánlott a helyi szimbólumok bevezetése. Ha helyi szimbólumokat használnak, akkor azokon az eseményeken, amelyek valószínűleg vonzzák a nemzetközi nevezést, a verseny előtti részletekben a versenyzőknek információkat kell szolgáltatniuk róla.
+        <translation>Általában nem ajánlott a helyi szimbólumok bevezetése. Ha helyi szimbólumokat használnak, akkor azokon az eseményeken, amelyek valószínűleg vonzzák a nemzetközi nevezést, a verseny előtti részletekben a versenyzőknek információkat kell szolgáltatniuk azokról.
 
-Az alapértelmezett sor egy 5 x 5 mm-es négyzetet mutat, és eltávolítható az utolsó szimbólumokból.</translation>
+Az alapértelmezett sor egy 5 x 5 mm-es négyzetet mutat, és eltávolítható a végső szimbólumokból.</translation>
     </message>
     <message>
         <source>|E| Low</source>
@@ -18434,7 +18434,7 @@ Az alapértelmezett sor egy 5 x 5 mm-es négyzetet mutat, és eltávolítható a
     <message>
         <source>|E| Open</source>
         <comment>Name of symbol 8.5</comment>
-        <translation>| E| Nyit</translation>
+        <translation>| E| Nyílt</translation>
     </message>
     <message>
         <source>Where the feature is in an area where the tree cover is less than the surroundings but this is not indicated on the map; e.g. Marsh, open.</source>
@@ -18656,7 +18656,7 @@ A számok elválasztására a 9.3 perjelet kell használni. Pl.
     <message>
         <source>|G| North west Side</source>
         <comment>Name of symbol 11.1.8</comment>
-        <translation>| G| Észak-nyugati oldal</translation>
+        <translation>| G| Északnyugati oldal</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
@@ -18848,7 +18848,7 @@ b) A jellemző egy jelentős területre terjed ki, és az ellenőrzés az adott 
     <message>
         <source>|G| North west Part</source>
         <comment>Name of symbol 11.3.8</comment>
-        <translation>| G| Észak-nyugati rész</translation>
+        <translation>| G| Északnyugati rész</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
@@ -18986,7 +18986,7 @@ A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translatio
     <message>
         <source>|G| North Corner (outside)</source>
         <comment>Name of symbol 11.5.1</comment>
-        <translation>| G | North Corner (kívül)</translation>
+        <translation>| G | Északi sarok (kívül)</translation>
     </message>
     <message>
         <source>Used where:
@@ -18995,7 +18995,7 @@ b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside)
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.1</comment>
         <translation>Ott használják, ahol:
-a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül). 
+a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül).
 b) Egy lineáris jellemző sarkon fordul; például. Kőfal, délnyugati sarok (kívül).
 A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
@@ -19011,7 +19011,7 @@ b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside)
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.2</comment>
         <translation>Ott használják, ahol:
-a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül). 
+a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül).
 b) Egy lineáris jellemző sarkon fordul; például. Kőfal, délnyugati sarok (kívül).
 A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
@@ -19027,7 +19027,7 @@ b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside)
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.3</comment>
         <translation>Ott használják, ahol:
-a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül). 
+a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül).
 b) Egy lineáris jellemző sarkon fordul; például. Kőfal, délnyugati sarok (kívül).
 A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
@@ -19043,7 +19043,7 @@ b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside)
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.4</comment>
         <translation>Ott használják, ahol:
-a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül). 
+a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül).
 b) Egy lineáris jellemző sarkon fordul; például. Kőfal, délnyugati sarok (kívül).
 A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
@@ -19059,7 +19059,7 @@ b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside)
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.5</comment>
         <translation>Ott használják, ahol:
-a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül). 
+a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül).
 b) Egy lineáris jellemző sarkon fordul; például. Kőfal, délnyugati sarok (kívül).
 A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
@@ -19075,7 +19075,7 @@ b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside)
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.6</comment>
         <translation>Ott használják, ahol:
-a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül). 
+a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül).
 b) Egy lineáris jellemző sarkon fordul; például. Kőfal, délnyugati sarok (kívül).
 A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
@@ -19091,7 +19091,7 @@ b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside)
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.7</comment>
         <translation>Ott használják, ahol:
-a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül). 
+a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül).
 b) Egy lineáris jellemző sarkon fordul; például. Kőfal, délnyugati sarok (kívül).
 A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
@@ -19107,7 +19107,7 @@ b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside)
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.8</comment>
         <translation>Ott használják, ahol:
-a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül). 
+a) A jellemző széle 45-135 fokos szögön keresztül fordul; pl. Rom, észak-nyugati sarok (kívül).
 b) Egy lineáris jellemző sarkon fordul; például. Kőfal, délnyugati sarok (kívül).
 A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translation>
     </message>
@@ -19209,7 +19209,7 @@ A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translatio
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.1</comment>
-        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; például. keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
+        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; például keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
     </message>
     <message>
         <source>|G| North east End</source>
@@ -19219,7 +19219,7 @@ A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translatio
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.2</comment>
-        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; pl.: keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
+        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; például keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
     </message>
     <message>
         <source>|G| East End</source>
@@ -19229,7 +19229,7 @@ A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translatio
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.3</comment>
-        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; például. keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
+        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; például keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
     </message>
     <message>
         <source>|G| South east End</source>
@@ -19239,7 +19239,7 @@ A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translatio
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.4</comment>
-        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; pl.: keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
+        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; például keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
     </message>
     <message>
         <source>|G| South End</source>
@@ -19249,7 +19249,7 @@ A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translatio
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.5</comment>
-        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; pl.: keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
+        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; például keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
     </message>
     <message>
         <source>|G| South west End</source>
@@ -19259,7 +19259,7 @@ A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translatio
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.6</comment>
-        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; például. keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
+        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; például keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
     </message>
     <message>
         <source>|G| West End</source>
@@ -19269,7 +19269,7 @@ A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translatio
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.7</comment>
-        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; például. keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
+        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; például keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
     </message>
     <message>
         <source>|G| North west End</source>
@@ -19279,7 +19279,7 @@ A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translatio
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.8</comment>
-        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; pl.: keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
+        <translation>Az a pont, ahol egy lineáris jellemző véget ér vagy elkezdődik; például keskeny nyom, északnyugati vége; Kőfal, déli végén.</translation>
     </message>
     <message>
         <source>|G| Upper Part</source>
@@ -19464,7 +19464,7 @@ A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translatio
     <message>
         <source>Taped Route, away from control</source>
         <comment>Name of symbol 13.1</comment>
-        <translation>Szalagos útvonal, az ellenőrzéstől távol</translation>
+        <translation>Szalagos útvonal, az ellenőrző ponttól távol</translation>
     </message>
     <message>
         <source>A marked route is to be followed away from a particular control. Re-emphasises what is shown on the map.</source>
@@ -19504,12 +19504,12 @@ A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translatio
     <message>
         <source>Taped Route from Control to Map Exchange</source>
         <comment>Name of symbol 13.5</comment>
-        <translation>Ragasztott útvonal a vezérléstől a térkép cseréig</translation>
+        <translation>Szalagozott útvonal az ellenőrző ponttól a térkép cseréig</translation>
     </message>
     <message>
         <source>At a map exchange, or if a marked route is to be followed from a control to a map exchange, this instruction follows the last control description of the first part of the course.</source>
         <comment>Description of symbol 13.5</comment>
-        <translation>Térképcserénél, vagy ha egy kijelölt útvonalat kell követni az ellenőrző ponttól a térképcseréig, ez az utasítás követi a pálya első részének utolsó ellenőrzési leírását.</translation>
+        <translation>Térképcserénél, vagy ha egy kijelölt útvonalat kell követni az ellenőrző ponttól a térképcseréig, ez az utasítás követi a pálya első részének utolsó ellenőrző pontjának leírását.</translation>
     </message>
     <message>
         <source>Taped Route from last control to Finish</source>
@@ -19524,7 +19524,7 @@ A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translatio
     <message>
         <source>Taped Route from finish funnel to Finish</source>
         <comment>Name of symbol 14.2</comment>
-        <translation>Szalagos útvonal a célkordon tölcsölcsértől a célig</translation>
+        <translation>Szalagos útvonal a célkordon tölcsértől a célig</translation>
     </message>
     <message>
         <source>The competitor has to navigate from the last control to finish funnel, and then follow tapes. Gives the distance from the last control to Finish.</source>
@@ -19534,7 +19534,7 @@ A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translatio
     <message>
         <source>Navigation from last control to Finish (no Taped Route)</source>
         <comment>Name of symbol 14.3</comment>
-        <translation>Navigáció az utolsó vezérlőtől a célig (nincs szalagos útvonal)</translation>
+        <translation>Navigáció az utolsó ellenőrző ponttól a célig (nincs szalagos útvonal)</translation>
     </message>
     <message>
         <source>The competitor has to navigate from the last control to finish. No tapes. Gives the distance from the last control to Finish.</source>
