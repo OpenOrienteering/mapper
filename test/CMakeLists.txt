@@ -190,6 +190,7 @@ add_system_test(coord_xml_t MANUAL)
 
 # System tests
 add_system_test(file_format_t)
+add_system_test(ocd_file_import_t)
 add_system_test(duplicate_equals_t)
 add_system_test(map_t)
 add_system_test(map_printer_t)
