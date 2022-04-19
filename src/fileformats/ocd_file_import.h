@@ -118,6 +118,21 @@ protected:
 		OcdImportedPathObject& operator=(OcdImportedPathObject&&) = delete;
 		~OcdImportedPathObject() override;
 	};
+
+public:
+	class OcdParameterStreamReader
+	{
+	public:
+		OcdParameterStreamReader(const QString& param_string);
+		bool readNext();
+		char key() const;
+		QStringRef value() const;
+		bool atEnd() const {return pos >= param_string.length();}
+		
+	private:
+		const QString& param_string;
+		int pos;
+	};
 	
 public:
 	OcdFileImport(const QString& path, Map *map, MapView *view);
