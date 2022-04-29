@@ -129,11 +129,11 @@ private slots:
 		
 		auto reader = OcdFileImport::OcdParameterStreamReader(param_string);
 		
-		for (int i = 0; i < result_pattern.length(); ++i)
+		for (auto expected_key : result_pattern)
 		{
 			QVERIFY(reader.readNext());
-			QCOMPARE(reader.key(), result_pattern.at(i).toLower().toLatin1());
-			if (result_pattern.at(i).isLower())
+			QCOMPARE(reader.key(), expected_key.toLower().toLatin1());
+			if (expected_key.isLower())
 				QVERIFY(reader.value().toInt() == 73);
 			else
 				QVERIFY(reader.value().isEmpty());
