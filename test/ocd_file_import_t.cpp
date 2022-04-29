@@ -119,7 +119,7 @@ private slots:
 		QTest::newRow("Leading tabs") << "\t\t\ta73" << "a";
 		QTest::newRow("Trailing tab") << "\ta73\t" << "a";
 		QTest::newRow("Multiple separating tabs") << "\ta73\t\t\tb73" << "ab";
-		QTest::newRow("Keys without value") << "\ta73\tb\t\tc73\td" << "aBcD";	// uppercase: check for key without parameter
+		QTest::newRow("Keys without value") << "\ta73\tB\t\tc73\tD" << "aBcD";	// uppercase: check for key without parameter
 	}
 	
 	void irregularPatterns()
@@ -132,7 +132,7 @@ private slots:
 		for (auto expected_key : result_pattern)
 		{
 			QVERIFY(reader.readNext());
-			QCOMPARE(reader.key(), expected_key.toLower().toLatin1());
+			QCOMPARE(reader.key(), expected_key.toLatin1());
 			if (expected_key.isLower())
 				QVERIFY(reader.value().toInt() == 73);
 			else
