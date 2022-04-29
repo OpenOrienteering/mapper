@@ -83,7 +83,6 @@ private slots:
 		
 		auto reader = OcdFileImport::OcdParameterStreamReader(param_string);
 		
-		const QChar* unicode = param_string.unicode();
 		int i = param_string.indexOf(QLatin1Char('\t'), 0);
 		if (i > 0)	// 'first' parameter
 		{
@@ -97,12 +96,12 @@ private slots:
 		{
 			int next_i = param_string.indexOf(QLatin1Char('\t'), i+1);
 			int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
-			const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
+			auto param_value = param_string.midRef(i+2, len);
 			char key = param_string[i+1].toLatin1();
 			
 			QVERIFY(reader.readNext());
 			QCOMPARE(reader.key(), key);
-			QCOMPARE(reader.value().toString(), param_value);
+			QCOMPARE(reader.value(), param_value);
 			
 			i = next_i;
 		}

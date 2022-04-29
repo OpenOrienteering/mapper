@@ -2415,9 +2415,8 @@ void OcdFileImport::handleStrings(const OcdFile<F>& file, std::initializer_list<
 
 OcdFileImport::OcdParameterStreamReader::OcdParameterStreamReader(const QString& param_string)
  : param_string(param_string)
-{
-	pos = 0;
-}
+ , pos(0)
+{}
 
 bool OcdFileImport::OcdParameterStreamReader::readNext()
 {
