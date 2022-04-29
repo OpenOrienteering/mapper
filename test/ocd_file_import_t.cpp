@@ -54,10 +54,10 @@ private slots:
 		QFETCH(QString, param_string);
 		QFETCH(QString, first_parameter);
 		
-		auto ocdparstring = new OcdFileImport::OcdParameterStreamReader(param_string);
+		auto ocdparstring = OcdFileImport::OcdParameterStreamReader(param_string);
 		
-		QCOMPARE(ocdparstring->value().toString(), first_parameter);
-		QVERIFY(ocdparstring->key() == '\f');
+		QCOMPARE(ocdparstring.value().toString(), first_parameter);
+		QVERIFY(ocdparstring.key() == '\f');
 	}
 	
 	
@@ -81,7 +81,7 @@ private slots:
 	{
 		QFETCH(QString, param_string);
 		
-		auto ocdparstring = new OcdFileImport::OcdParameterStreamReader(param_string);
+		auto ocdparstring = OcdFileImport::OcdParameterStreamReader(param_string);
 		
 		const QChar* unicode = param_string.unicode();
 		int i = param_string.indexOf(QLatin1Char('\t'), 0);
@@ -89,8 +89,8 @@ private slots:
 		{
 			const QString name = param_string.left(qMax(-1, i)); // copied
 			
-			QCOMPARE(ocdparstring->value().toString(), name);
-			QVERIFY(ocdparstring->key() == '\f');
+			QCOMPARE(ocdparstring.value().toString(), name);
+			QVERIFY(ocdparstring.key() == '\f');
 		}
 		
 		while (i >= 0)
@@ -100,14 +100,14 @@ private slots:
 			const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
 			char key = param_string[i+1].toLatin1();
 			
-			QVERIFY(ocdparstring->readNext());
-			QCOMPARE(ocdparstring->key(), key);
-			QCOMPARE(ocdparstring->value().toString(), param_value);
+			QVERIFY(ocdparstring.readNext());
+			QCOMPARE(ocdparstring.key(), key);
+			QCOMPARE(ocdparstring.value().toString(), param_value);
 			
 			i = next_i;
 		}
-		QVERIFY(!ocdparstring->readNext());		// check that there are no more parameters available
-		QVERIFY(ocdparstring->atEnd());		// test atEnd() function
+		QVERIFY(!ocdparstring.readNext());		// check that there are no more parameters available
+		QVERIFY(ocdparstring.atEnd());		// test atEnd() function
 	}
 	
 	
@@ -127,18 +127,18 @@ private slots:
 		QFETCH(QString, param_string);
 		QFETCH(QString, result_pattern);
 		
-		auto ocdparstring = new OcdFileImport::OcdParameterStreamReader(param_string);
+		auto ocdparstring = OcdFileImport::OcdParameterStreamReader(param_string);
 		
 		for (int i = 0; i < result_pattern.length(); ++i)
 		{
-			QVERIFY(ocdparstring->readNext());
-			QCOMPARE(ocdparstring->key(), result_pattern.at(i).toLower().toLatin1());
+			QVERIFY(ocdparstring.readNext());
+			QCOMPARE(ocdparstring.key(), result_pattern.at(i).toLower().toLatin1());
 			if (result_pattern.at(i).isLower())
-				QVERIFY(ocdparstring->value().toInt() == 73);
+				QVERIFY(ocdparstring.value().toInt() == 73);
 			else
-				QVERIFY(ocdparstring->value().isEmpty());
+				QVERIFY(ocdparstring.value().isEmpty());
 		}
-		QVERIFY(!ocdparstring->readNext());		// check that there are no more parameters available
+		QVERIFY(!ocdparstring.readNext());		// check that there are no more parameters available
 	}
 	
 };  // class OcdFileImportTest
