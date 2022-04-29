@@ -2438,12 +2438,10 @@ bool OcdFileImport::OcdParameterStreamReader::readNext()
 
 char OcdFileImport::OcdParameterStreamReader::key() const
 {
-	if (atEnd())
-		return '\0';	// function needs to return something
-	if (pos)
-		return param_string.at(pos).toLatin1();
-	else
-		return '\f';	// return generic '\f' for 'first' parameter
+	if (!pos || atEnd())
+		return noKey();
+
+	return param_string.at(pos).toLatin1();
 }
 
 QStringRef OcdFileImport::OcdParameterStreamReader::value() const

@@ -57,7 +57,7 @@ private slots:
 		auto reader = OcdFileImport::OcdParameterStreamReader(param_string);
 		
 		QCOMPARE(reader.value().toString(), first_parameter);
-		QVERIFY(reader.key() == '\f');
+		QCOMPARE(reader.key(), OcdFileImport::OcdParameterStreamReader::noKey());
 	}
 	
 	
@@ -90,7 +90,7 @@ private slots:
 			const QString name = param_string.left(qMax(-1, i)); // copied
 			
 			QCOMPARE(reader.value().toString(), name);
-			QVERIFY(reader.key() == '\f');
+			QCOMPARE(reader.key(), OcdFileImport::OcdParameterStreamReader::noKey());
 		}
 		
 		while (i >= 0)

@@ -128,6 +128,7 @@ public:
 		char key() const;
 		QStringRef value() const;
 		bool atEnd() const {return pos >= param_string.length();}
+		static constexpr char noKey() { return 0; }
 		
 	private:
 		const QString& param_string;
