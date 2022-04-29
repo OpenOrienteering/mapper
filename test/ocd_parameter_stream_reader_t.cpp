@@ -115,6 +115,7 @@ private slots:
 		QTest::addColumn<QString>("param_string");
 		QTest::addColumn<QString>("result_pattern");
 		
+		QTest::newRow("Empty string") << "" << "";
 		QTest::newRow("Leading tabs") << "\t\t\ta73" << "a";
 		QTest::newRow("Trailing tab") << "\ta73\t" << "a";
 		QTest::newRow("Multiple separating tabs") << "\ta73\t\t\tb73" << "ab";
@@ -130,6 +131,7 @@ private slots:
 		
 		for (auto expected_key : result_pattern)
 		{
+			QVERIFY(!reader.atEnd());
 			QVERIFY(reader.readNext());
 			QCOMPARE(reader.key(), expected_key.toLatin1());
 			if (expected_key.isLower())
@@ -137,7 +139,8 @@ private slots:
 			else
 				QVERIFY(reader.value().isEmpty());
 		}
-		QVERIFY(!reader.readNext());		// check that there are no more parameters available
+		QVERIFY(!reader.readNext());
+		QVERIFY(reader.atEnd());
 	}
 	
 };  // class OcdFileImportTest
