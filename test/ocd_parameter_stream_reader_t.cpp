@@ -26,7 +26,7 @@
 #include <QString>
 #include <QStringRef>
 
-#include "fileformats/ocd_file_import.h"
+#include "fileformats/ocd_parameter_stream_reader.h"
 
 
 namespace OpenOrienteering
@@ -54,10 +54,10 @@ private slots:
 		QFETCH(QString, param_string);
 		QFETCH(QString, first_parameter);
 		
-		auto reader = OcdFileImport::OcdParameterStreamReader(param_string);
+		auto reader = OcdParameterStreamReader(param_string);
 		
 		QCOMPARE(reader.value().toString(), first_parameter);
-		QCOMPARE(reader.key(), OcdFileImport::OcdParameterStreamReader::noKey());
+		QCOMPARE(reader.key(), OcdParameterStreamReader::noKey());
 	}
 	
 	
@@ -81,7 +81,7 @@ private slots:
 	{
 		QFETCH(QString, param_string);
 		
-		auto reader = OcdFileImport::OcdParameterStreamReader(param_string);
+		auto reader = OcdParameterStreamReader(param_string);
 		
 		int i = param_string.indexOf(QLatin1Char('\t'), 0);
 		if (i > 0)	// 'first' parameter
@@ -89,7 +89,7 @@ private slots:
 			const QString name = param_string.left(qMax(-1, i)); // copied
 			
 			QCOMPARE(reader.value().toString(), name);
-			QCOMPARE(reader.key(), OcdFileImport::OcdParameterStreamReader::noKey());
+			QCOMPARE(reader.key(), OcdParameterStreamReader::noKey());
 		}
 		
 		while (i >= 0)
@@ -126,7 +126,7 @@ private slots:
 		QFETCH(QString, param_string);
 		QFETCH(QString, result_pattern);
 		
-		auto reader = OcdFileImport::OcdParameterStreamReader(param_string);
+		auto reader = OcdParameterStreamReader(param_string);
 		
 		for (auto expected_key : result_pattern)
 		{
@@ -149,4 +149,4 @@ private slots:
 
 QTEST_APPLESS_MAIN(OpenOrienteering::OcdFileImportTest)
 
-#include "ocd_file_import_t.moc"  // IWYU pragma: keep
+#include "ocd_parameter_stream_reader_t.moc"  // IWYU pragma: keep

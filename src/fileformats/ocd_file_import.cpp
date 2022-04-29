@@ -46,6 +46,7 @@
 #include <QLatin1Char>
 #include <QLatin1String>
 #include <QPointF>
+#include <QStringRef>
 #include <QTextCodec>
 #include <QTextDecoder>
 #include <QVariant>
@@ -68,6 +69,7 @@
 #include "fileformats/ocd_file_format.h"
 #include "fileformats/ocd_georef_fields.h"
 #include "fileformats/ocd_icon.h"
+#include "fileformats/ocd_parameter_stream_reader.h"
 #include "fileformats/ocd_types_v8.h"
 #include "fileformats/ocd_types_v9.h"
 #include "fileformats/ocd_types_v10.h"
@@ -2409,57 +2411,6 @@ void OcdFileImport::handleStrings(const OcdFile<F>& file, std::initializer_list<
 			}
 		}
 	}
-}
-
-
-
-OcdFileImport::OcdParameterStreamReader::OcdParameterStreamReader(const QString& param_string)
- : param_string(param_string)
- , pos(0)
-{}
-
-bool OcdFileImport::OcdParameterStreamReader::readNext()
-{
-	while (!atEnd())
-	{
-		pos = param_string.indexOf(QLatin1Char('\t'), pos);
-		if (pos < 0 || pos + 1 >= param_string.length())	// accept \t at end only if there is space for at least the key
-		{
-			pos = param_string.length();
-			return false;
-		}
-		++pos;
-		if (param_string.at(pos).toLatin1() != '\t')	// is the next key \t ? if yes then skip over
-			return true;
-	}
-	return false;
-}
-
-char OcdFileImport::OcdParameterStreamReader::key() const
-{
-	if (!pos || atEnd())
-		return noKey();
-
-	return param_string.at(pos).toLatin1();
-}
-
-QStringRef OcdFileImport::OcdParameterStreamReader::value() const
-{
-	QStringRef ref;
-	
-	if (!atEnd())
-	{
-		int start = pos ? pos + 1 : pos;
-		if (start < param_string.length())
-		{
-			int end = param_string.indexOf(QLatin1Char('\t'), start);
-			if (end < 0)
-				end = param_string.length();
-			if (end > start)
-				ref = param_string.midRef(start, end - start);
-		}
-	}
-	return ref;
 }
 
 

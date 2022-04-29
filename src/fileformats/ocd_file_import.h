@@ -33,7 +33,6 @@
 #include <QHash>
 #include <QLocale>
 #include <QString>
-#include <QStringRef>
 
 #include "core/map_coord.h"
 #include "core/objects/object.h"
@@ -119,24 +118,8 @@ protected:
 		OcdImportedPathObject& operator=(OcdImportedPathObject&&) = delete;
 		~OcdImportedPathObject() override;
 	};
-
+	
 public:
-	class OcdParameterStreamReader
-	{
-	public:
-		explicit OcdParameterStreamReader(const QString& param_string);
-		bool readNext();
-		char key() const;
-		QStringRef value() const;
-		bool atEnd() const { return pos >= param_string.length(); }
-		static constexpr char noKey() { return 0; }
-		
-	private:
-		const QString& param_string;
-		int pos;
-	};
-	
-	
 	OcdFileImport(const QString& path, Map *map, MapView *view);
 	
 	~OcdFileImport() override;
