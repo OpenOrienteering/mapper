@@ -1,5 +1,6 @@
 /*
  *    Copyright 2022 Matthias Kühlewein
+ *    Copyright 2022 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -48,7 +49,7 @@ public:
 	/**
 	 * Returns the current key.
 	 */
-	char key() const;
+	char key() const { return current_key; }
 	
 	/**
 	 * Returns the current value.
@@ -58,7 +59,7 @@ public:
 	/**
 	 * Returns true if there is no more data.
 	 */
-	bool atEnd() const { return pos >= param_string.length(); }
+	bool atEnd() const { return next == -1; }
 	
 	/**
 	 * The value returned by `key()` for the first value, or at the end of input.
@@ -67,7 +68,9 @@ public:
 	
 private:
 	QString param_string;
-	int pos;
+	int pos;  ///< The begin of the current value substring, or param_string.length().
+	int next; ///< The position after the end of the current value substring, or -1 if reaching the end of input.
+	char current_key;
 };
 
 }  // namespace Openorienteering
