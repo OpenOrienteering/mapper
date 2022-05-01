@@ -34,8 +34,7 @@ class OcdParameterStreamReader
 {
 public:
 	/**
-	 * Constructs a new reader object. The given string object must exist as long
-	 * as the reader is used.
+	 * Constructs a new reader object.
 	 */
 	explicit OcdParameterStreamReader(const QString& param_string) noexcept;
 	
@@ -67,7 +66,7 @@ public:
 	static constexpr char noKey() { return 0; }
 	
 private:
-	const QString& param_string;
+	QString param_string;
 	int pos;
 };
 
