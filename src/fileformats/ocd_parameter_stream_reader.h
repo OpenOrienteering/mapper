@@ -27,17 +27,43 @@ namespace OpenOrienteering {
 
 
 /**
- * A class for processing OCD parameter string,
+ * A class for processing OCD parameter strings,
  * loosely modeled after QXmlStreamReader.
  */
 class OcdParameterStreamReader
 {
 public:
+	/**
+	 * Constructs a new reader object. The given string object must exist as long
+	 * as the reader is used.
+	 */
 	explicit OcdParameterStreamReader(const QString& param_string) noexcept;
+	
+	/**
+	 * Reads the input until the next key-value pair.
+	 * 
+	 * @return True if another key-value pair was reached. False for end of input.
+	 */
 	bool readNext();
+	
+	/**
+	 * Returns the current key.
+	 */
 	char key() const;
+	
+	/**
+	 * Returns the current value.
+	 */
 	QStringRef value() const;
+	
+	/**
+	 * Returns true if there is no more data.
+	 */
 	bool atEnd() const { return pos >= param_string.length(); }
+	
+	/**
+	 * The value returned by `key()` for the first value, or at the end of input.
+	 */
 	static constexpr char noKey() { return 0; }
 	
 private:
