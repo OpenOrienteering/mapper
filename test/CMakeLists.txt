@@ -180,6 +180,7 @@ add_unit_test(key_value_container_t ../src/util/key_value_container)
 add_unit_test(locale_t ../src/util/translation_util)
 add_unit_test(map_color_t ../src/core/map_color)
 add_unit_test(ocd_t ../src/fileformats/ocd_types)
+add_unit_test(ocd_parameter_stream_reader_t ../src/fileformats/ocd_parameter_stream_reader)
 add_unit_test(qpainter_t)
 add_unit_test(util_t ../src/util/util
 	../src/settings
