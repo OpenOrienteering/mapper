@@ -20,6 +20,8 @@
 
 #include "ocd_parameter_stream_reader.h"
 
+#include <cmath>
+
 #include <QtGlobal>
 #include <QChar>
 #include <QLatin1Char>
@@ -58,7 +60,7 @@ bool OcdParameterStreamReader::readNext()
 
 QStringRef OcdParameterStreamReader::value() const
 {
-	return param_string.midRef(pos, next - pos);
+	return param_string.midRef(pos, std::max(-1, next - pos));
 }
 
 
