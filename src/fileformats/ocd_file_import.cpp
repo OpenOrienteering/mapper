@@ -1066,34 +1066,22 @@ void OcdFileImport::importDisplayPar(const OcdFile< F >& file)
 
 void OcdFileImport::importDisplayPar(const QString& param_string)
 {
-	const QChar* unicode = param_string.unicode();
+	OcdParameterStreamReader parameters(param_string);
 	
-	int i = param_string.indexOf(QLatin1Char('\t'), 0);
-	; // skip first word for this entry type
-	while (i >= 0)
+	while (parameters.readNext())
 	{
-		int next_i = param_string.indexOf(QLatin1Char('\t'), i+1);
-		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
-		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
-		switch (param_string[i+1].toLatin1())
+		QStringRef param_value = parameters.value();
+		switch (parameters.key())
 		{
-		case '\t':
-			// empty item
-			break;
 		case 'j':
-			{
-				graphic_objects_hidden = param_value.toInt() == 2;
-				break;
-			}
+			graphic_objects_hidden = param_value.toInt() == 2;
+			break;
 		case 'l':
-			{
-				layout_objects_hidden = param_value.toInt() == 2;
-				break;
-			}
+			layout_objects_hidden = param_value.toInt() == 2;
+			break;
 		default:
 			; // nothing
 		}
-		i = next_i;
 	}
 }
 
