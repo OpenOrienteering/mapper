@@ -1,5 +1,6 @@
 /*
  *    Copyright 2022 Matthias Kühlewein
+ *    Copyright 2022 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,6 +20,9 @@
 
 #include "ocd_parameter_stream_reader.h"
 
+#include <cmath>
+
+#include <QtGlobal>
 #include <QChar>
 #include <QLatin1Char>
 
@@ -28,50 +32,35 @@ namespace OpenOrienteering {
 OcdParameterStreamReader::OcdParameterStreamReader(const QString& param_string) noexcept
  : param_string(param_string)
  , pos(0)
+ , next(param_string.indexOf(QLatin1Char('\t')))
+ , current_key(noKey())
 {}
 
 bool OcdParameterStreamReader::readNext()
 {
 	while (!atEnd())
 	{
-		pos = param_string.indexOf(QLatin1Char('\t'), pos);
-		if (pos < 0 || pos + 1 >= param_string.length())	// accept \t at end only if there is space for at least the key
+		pos = next + 1;
+		next = param_string.indexOf(QLatin1Char('\t'), pos);
+		if (pos < param_string.length())
 		{
-			pos = param_string.length();
-			return false;
+			current_key = param_string.at(pos).toLatin1();
+			if (Q_LIKELY(current_key != '\t'))
+			{
+				++pos;
+				return true;
+			}
 		}
-		++pos;
-		if (param_string.at(pos).toLatin1() != '\t')	// is the next key \t ? if yes then skip over
-			return true;
 	}
+	
+	current_key = noKey();
+	pos = param_string.length();
 	return false;
-}
-
-char OcdParameterStreamReader::key() const
-{
-	if (!pos || atEnd())
-		return noKey();
-
-	return param_string.at(pos).toLatin1();
 }
 
 QStringRef OcdParameterStreamReader::value() const
 {
-	QStringRef ref;
-	
-	if (!atEnd())
-	{
-		int start = pos ? pos + 1 : pos;
-		if (start < param_string.length())
-		{
-			int end = param_string.indexOf(QLatin1Char('\t'), start);
-			if (end < 0)
-				end = param_string.length();
-			if (end > start)
-				ref = param_string.midRef(start, end - start);
-		}
-	}
-	return ref;
+	return param_string.midRef(pos, std::max(-1, next - pos));
 }
 
 
