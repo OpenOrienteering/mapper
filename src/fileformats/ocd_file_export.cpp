@@ -1809,55 +1809,62 @@ void OcdFileExport::exportLineSymbolDoubleLine(const LineSymbol* line_symbol, qu
 
 
 
-template< class Format, class OcdTextSymbol >
-void OcdFileExport::exportTextSymbol(OcdFile<Format>& file, const TextSymbol* text_symbol)
+std::vector<OcdFileExport::TextFormatMapping>::iterator OcdFileExport::prepareTextSymbolExport(const TextSymbol* text_symbol)
 {
-	auto symbol_number = symbol_numbers.at(text_symbol);
+	auto const symbol_number = symbol_numbers.at(text_symbol);
 	
-	for (auto alignment : {TextObject::AlignLeft, TextObject::AlignHCenter, TextObject::AlignRight})
-		text_format_mapping.push_back({ text_symbol, alignment, 0, symbol_number });
-
-	auto text_format = text_format_mapping.end() - 3;
-	auto count = [text_format](const auto* object) {
-		auto alignment = static_cast<const TextObject*>(object)->getHorizontalAlignment();
+	// Default (if unused) is center.
+	text_format_mapping.push_back({text_symbol, TextObject::AlignHCenter, 0, symbol_number});
+	text_format_mapping.push_back({text_symbol, TextObject::AlignLeft, 0, symbol_number});
+	text_format_mapping.push_back({text_symbol, TextObject::AlignRight, 0, symbol_number});
+	
+	auto const last = end(text_format_mapping);
+	auto count = [align_center = last - 3, align_left = last - 2, align_right = last - 1](const auto* object) {
+		auto const alignment = static_cast<const TextObject*>(object)->getHorizontalAlignment();
 		switch (alignment)
 		{
 		case TextObject::AlignLeft:
-			text_format->count++;
+			align_left->count++;
 			break;
 		case TextObject::AlignHCenter:
-			(text_format+1)->count++;
+			align_center->count++;
 			break;
 		case TextObject::AlignRight:
-			(text_format+2)->count++;
+			align_right->count++;
 			break;
 		}
 	};
 	map->applyOnMatchingObjects(count, ObjectOp::HasSymbol{text_symbol});
 	
-	// The most frequent usage is to get the regular number.
-	std::sort(text_format, end(text_format_mapping), [](const auto& a, const auto& b) { return a.count > b.count; });
+	// The most frequent alignment variant shall get the regular symbol number,
+	// but "center" shall remain first if no alignment variant is used at all.
+	auto const first = last - 3;
+	std::stable_sort(first, last, [](const auto& a, const auto& b) { return a.count > b.count; });
 	
-	auto export_single_symbol = [&](quint32 symbol_number, int alignment) {
-		auto ocd_symbol = exportTextSymbol<typename Format::TextSymbol>(text_symbol, symbol_number, alignment);
+	// Always keep the first alignment variant (regular symbol number),
+	// but otherwise drop unused alignment variants.
+	auto variant = first + 1;
+	for (; variant != last && variant->count > 0; ++variant)
+	{
+		variant->symbol_number = makeUniqueSymbolNumber(symbol_number);
+		temporary_symbols.emplace_back(new PointSymbol());
+		symbol_numbers[temporary_symbols.back().get()] = variant->symbol_number;
+	}
+	text_format_mapping.erase(variant, last);
+	
+	return first;
+}
+
+
+template< class Format, class OcdTextSymbol >
+void OcdFileExport::exportTextSymbol(OcdFile<Format>& file, const TextSymbol* text_symbol)
+{
+	for (auto text_format = prepareTextSymbolExport(text_symbol); text_format != end(text_format_mapping); ++text_format)
+	{
+		auto ocd_symbol = exportTextSymbol<typename Format::TextSymbol>(text_symbol, text_format->symbol_number, text_format->alignment);
 		FILEFORMAT_ASSERT(!ocd_symbol.isEmpty());
 		file.symbols().insert(ocd_symbol);
-	};
-
-	text_format = text_format_mapping.end() - 3;
-	if (text_format->count == 0)
-		text_format->alignment = TextObject::AlignHCenter;  // default if unused: centered
-	export_single_symbol(text_format->symbol_number, text_format->alignment);
-	++text_format;
-
-	for (;text_format != text_format_mapping.end() && text_format->count > 0; ++text_format)
-	{
-		text_format->symbol_number = makeUniqueSymbolNumber(symbol_number);
-		temporary_symbols.emplace_back(new PointSymbol());
-		symbol_numbers[temporary_symbols.back().get()] = text_format->symbol_number;
-		export_single_symbol(text_format->symbol_number, text_format->alignment);
 	}
-	text_format_mapping.erase(text_format, end(text_format_mapping));
 }
 
 

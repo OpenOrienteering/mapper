@@ -121,6 +121,8 @@ class OcdFileExport : public Exporter
 	
 	using StringAppender = void (qint32, const QString&);
 	
+	struct TextFormatMapping;
+	
 public:
 	/// \todo Add proper API
 	static quint16 default_version;
@@ -214,6 +216,8 @@ protected:
 	
 	template< class OcdTextSymbol >
 	QByteArray exportTextSymbol(const TextSymbol* text_symbol, quint32 symbol_number, int alignment);
+	
+	std::vector<TextFormatMapping>::iterator prepareTextSymbolExport(const TextSymbol* text_symbol);
 	
 	template< class OcdTextSymbol >
 	void setupTextSymbolExtra(const TextSymbol* text_symbol, OcdTextSymbol& ocd_text_symbol);
