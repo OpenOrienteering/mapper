@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2020 Kai Pastor
+ *    Copyright 2016-2022 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -217,7 +217,7 @@ void GdalSettingsPage::cellChange(int row, int column)
 			if (row == last_row)
 			{
 				parameters->item(row, 0)->setText({ });
-				parameters->item(row, 0)->setText({ });
+				parameters->item(row, 1)->setText({ });
 			}
 			else
 			{
