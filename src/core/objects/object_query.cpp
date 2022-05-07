@@ -833,8 +833,7 @@ void ObjectQueryParser::getToken()
 			}
 			else if (current == QLatin1Char('\\'))
 			{
-				if (pos < input.length())
-					++pos;
+				++pos;
 			}
 		}
 	}
