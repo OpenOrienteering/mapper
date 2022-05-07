@@ -80,7 +80,6 @@ QString fromEscaped(QString string)
 		if (c == QLatin1Char('\\'))
 		{
 			string.remove(i, 1);
-			++i;
 		}
 	}
 	return string;
