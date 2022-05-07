@@ -1,6 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
- *    Copyright 2017-2020 Kai Pastor
+ *    Copyright 2017-2022 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -488,6 +488,11 @@ void ObjectQueryTest::testParser()
 	QCOMPARE(p.parse(QStringLiteral("NOT (NOT \"1\") AND \"3\"")), q);
 	QCOMPARE(p.parse(QStringLiteral("(NOT NOT \"1\") AND \"3\"")), q);
 	QCOMPARE(p.parse(QStringLiteral("(NOT (NOT \"1\")) AND \"3\"")), q);
+	
+	q = ObjectQuery(QStringLiteral("A"), ObjectQuery::OperatorIs, QStringLiteral("\"1\""));	// "1"
+	QCOMPARE(p.parse(QStringLiteral("A = \"\\\"1\\\"\"")), q);	// A = "\"1\""
+	q = ObjectQuery(QStringLiteral("A"), ObjectQuery::OperatorIs, QStringLiteral("\"\\1\""));	// "\1"
+	QCOMPARE(p.parse(QStringLiteral("A = \"\\\"\\\\1\\\"\"")), q);	// A = "\"\\1\""
 	
 	Map m;
 	auto* symbol_1 = new PointSymbol();
