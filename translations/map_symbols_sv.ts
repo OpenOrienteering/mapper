@@ -1163,14 +1163,16 @@ Minsta yta (helton): 0,55 x 0,55 mm (utbredning 8 x 8 m).</translation>
     <message>
         <source>Small shallow body of water (full colour)</source>
         <comment>Name of symbol 302.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>grund vattenyta (full färg)</translation>
     </message>
     <message>
         <source>Small shallow water bodies may be represented using this symbol (without an outline).
 Minimum width: 0.3 mm.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 302.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Små grunda vattenytor kan representeras med denna symbol (utan konturlinje)
+Minimibredd: 0,3 mm.
+Minimiyta: 0,55 mm x 0,55 mm (utbredning 8 x 8 m).</translation>
     </message>
     <message>
         <source>Waterhole</source>
@@ -1181,51 +1183,57 @@ Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 303</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ett vattenfyllt hål eller en vattenyta som är för liten för att redovisas skalenligt. Symbolens tyngdpunkt anger föremålets läge och
+symbolen orienteras mot norr.
+Utbredning: 10,5 x 12 m.</translation>
     </message>
     <message>
         <source>Crossable watercourse</source>
         <comment>Name of symbol 304</comment>
-        <translation type="unfinished"></translation>
+        <translation>Passerbart vattendrag</translation>
     </message>
     <message>
         <source>Should be at least 2 m wide.
 Minimum length (isolated): 1 mm (footprint 15 m).</source>
         <comment>Description of symbol 304</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bör vara minst 2 m breda.
+Kortaste längd (friliggande): 1 mm (15 m).</translation>
     </message>
     <message>
         <source>Small crossable watercourse</source>
         <comment>Name of symbol 305</comment>
-        <translation type="unfinished"></translation>
+        <translation>Passerbart litet vattendrag</translation>
     </message>
     <message>
         <source>Minimum length (isolated): 1 mm (footprint 15 m).</source>
         <comment>Description of symbol 305</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kortaste längd (friliggande): 1 mm (15 m).</translation>
     </message>
     <message>
         <source>Minor/seasonal water channel</source>
         <comment>Name of symbol 306</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mindre vattendrag</translation>
     </message>
     <message>
         <source>A natural or man-made minor water channel which may contain water only intermittently.
 Minimum length (isolated): two dashes (2.75 mm - footprint 41 m).</source>
         <comment>Description of symbol 306</comment>
-        <translation type="unfinished"></translation>
+        <translation>Naturligt eller grävt mindre vattendrag, som tidvis kan vara torrlagt.
+Kortaste längd (friliggande): två streck (2,75 mm - 41 m).</translation>
     </message>
     <message>
         <source>Uncrossable marsh, with outline</source>
         <comment>Name of symbol 307</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opasserbar sankmark, med konturlinje</translation>
     </message>
     <message>
         <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol Uncrossable body of water (301). The symbol may be combined with a rough open land symbol (403, 404) to show openness.
 The symbol is orientated to north.
 Minimum width: 0.3 mm (inside). Minimum area: 0.5 mm² (inside).</source>
         <comment>Description of symbol 307</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sankmark som är opasserbar eller farlig för löparen. Den svarta konturlinjen förtydligar att sankmarken är opasserbar. Den svarta konturlinjen utelämnas vid övergångar mellan opasserbar sankmark och symbol 301 (opasserbar vattenyta). Symbolen kan kombineras med symbol för öppen mark (403, 404) för att redovisa öppenhet.
+Symbolen orienteras mot norr. 
+Minsta bredd: 0,3 mm (innermått). MInimiyta: 0,5 mm² (innermått).</translation>
     </message>
     <message>
         <source>Uncrossable marsh</source>
