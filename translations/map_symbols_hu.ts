@@ -18096,14 +18096,14 @@ Térkép szimbólumok: ISOM 505, 506, 507, 508</translation>
     <message>
         <source>|D| Ride</source>
         <comment>Name of symbol 5.3</comment>
-        <translation>|D|Nyom</translation>
+        <translation>|D|Nyiladék, nyom</translation>
     </message>
     <message>
         <source>A clearly visible linear break in the forest which does not have a distinct path along it.
 
 Map symbol: ISOM 509</source>
         <comment>Description of symbol 5.3</comment>
-        <translation>Jól látható lineáris törés az erdőben, amelynek nincs külön útja.
+        <translation>Jól látható lineáris törés (nyiladék) (vágás),nyom az erdőben, amelynek nincs külön útja.
 
 Térkép szimbólum: ISOM 509</translation>
     </message>
@@ -18484,12 +18484,12 @@ Az alapértelmezett sor egy 5 x 5 mm-es négyzetet mutat, és eltávolítható a
     <message>
         <source>|E| Broad leaved</source>
         <comment>Name of symbol 8.10</comment>
-        <translation>| E | Széles levelű</translation>
+        <translation>| E | Széles levelű (lomblevelű)</translation>
     </message>
     <message>
         <source>Where the tree or trees associated with the control feature are broad-leaved; e.g. Copse, broad leaved.</source>
         <comment>Description of symbol 8.10</comment>
-        <translation>Ahol az ellenőrző ponttal társított fa vagy fák széles levelűek; például. Széles levelű csalit.</translation>
+        <translation>Ahol az ellenőrző ponttal társított fa vagy fák széles levelűek, lomblevelű; például. Lombos csalit.</translation>
     </message>
     <message>
         <source>|E| Ruined</source>
@@ -19509,7 +19509,7 @@ A szimbólum tájolása jelzi azt az irányt, amelybe a sarok mutat.</translatio
     <message>
         <source>At a map exchange, or if a marked route is to be followed from a control to a map exchange, this instruction follows the last control description of the first part of the course.</source>
         <comment>Description of symbol 13.5</comment>
-        <translation>Térképcserénél, vagy ha egy kijelölt útvonalat kell követni az ellenőrző ponttól a térképcseréig, ez az utasítás követi a pálya első részének utolsó ellenőrző pontjának leírását.</translation>
+        <translation>Egy térképcserénél, vagy ha egy kijelölt útvonalat kell követni az ellenőrző ponttól a térképcseréig, ez az utasítás a pálya első részének utolsó ellenőrzési leírását követi.</translation>
     </message>
     <message>
         <source>Taped Route from last control to Finish</source>
