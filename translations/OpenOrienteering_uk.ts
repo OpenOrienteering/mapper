@@ -5178,7 +5178,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="132"/>
         <source>Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such.</source>
-        <translation>Зверніть увагу: Довжина межі та площа коректні лише в разі відсутності самоперетинів і якщо отвори використовуються як такі.</translation>
+        <translation>Запримітьте: Довжина межі та площа коректні лише в разі відсутності самоперетинів і якщо отвори використовуються як такі.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="150"/>
