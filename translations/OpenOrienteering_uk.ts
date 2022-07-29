@@ -2499,7 +2499,7 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="226"/>
         <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
-        <translation type="unfinished">Підложка &quot;%1&quot; була завантажена з теки карти, а не з місця її розташування відносно файлу карти, де вона знаходилася раніше.</translation>
+        <translation>Зразок &quot;%1&quot; був завантажений з теки карти, а не з місця його розташування відносно файлу карти, де він знаходився раніше.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="319"/>
