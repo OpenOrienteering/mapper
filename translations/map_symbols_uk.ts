@@ -9118,7 +9118,7 @@ The relative height difference between neighbouring features must be represented
     <message>
         <source>A small distinct earth wall, usually man made. The minimum height is 0.5 m. Larger earth walls should be represented with the symbols contour (101), form line (103) or earth bank (106).</source>
         <comment>Description of symbol 108.1</comment>
-        <translation>Маленький земляний насип штучного походження. Мінімальна висота 0,5 метра. Більш високий земляний насип повинний бути показаний горизонталями. УЗ 101, 103, 106.</translation>
+        <translation>Маленький земляний насип штучного походження. Мінімальна висота 0,5 метра. Вищий земляний насип повинен бути показаний горизонталями. УЗ 101, 103, 106.</translation>
     </message>
     <message>
         <source>Erosion gully or trench</source>
