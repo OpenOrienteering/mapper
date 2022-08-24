@@ -2719,7 +2719,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.</source>
         <comment>Description of symbol 103</comment>
-        <translation>Допоміжні горизонталі використовують у випадках, коли для показу форм рельєфу необхідно передати додаткову інформацію. Допоміжні горизонталі додають тільки там, де зображення форм рельєфу було б неповним при використанні лише горизонталей. Між сусідніми горизонталями може бути проведена лише одна допоміжна горизонталь. Важливо, щоб форма допоміжної горизонталі доречно вписувалася в систему горизонталей, тому її початок і кінець мають бути паралельними суміжним горизонталям. Розриви між штрихами мають бути розміщені на достатньо прямих ділянках лінії допоміжної горизонталі. Допоміжні горизонталі можуть бути використані, щоб відрізяити пологі горби та западини від більш чітких.</translation>
+        <translation>Допоміжні горизонталі використовують у випадках, коли для показу форм рельєфу необхідно передати додаткову інформацію. Допоміжні горизонталі додають тільки там, де зображення форм рельєфу було б неповним при використанні лише горизонталей. Між сусідніми горизонталями може бути проведена лише одна допоміжна горизонталь. Важливо, щоб форма допоміжної горизонталі доречно вписувалася в систему горизонталей, тому її початок і кінець мають бути паралельними суміжним горизонталям. Розриви між штрихами мають бути розміщені на достатньо прямих ділянках лінії допоміжної горизонталі. Допоміжні горизонталі можуть бути використані, щоб відрізняти пологі горби та западини від чіткіших.</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
@@ -4965,7 +4965,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
         <comment>Description of symbol 102</comment>
-        <translation>Кожна п&apos;ята горизонталь має бути показана більш товстою лінією. Це допомагає при швидкій оцінці різниці висот та загальних форм рельєфу. Там, де потовщена горизонталь проходить крізь район з великою кількістю деталей, вона може бути показана звичайною горизонталлю.</translation>
+        <translation>Кожна п&apos;ята горизонталь має бути показана товстішою лінією. Це допомагає при швидкій оцінці різниці висот та загальних форм рельєфу. Там, де потовщена горизонталь проходить крізь район з великою кількістю деталей, вона може бути показана звичайною горизонталлю.</translation>
     </message>
     <message>
         <source>Form line</source>
