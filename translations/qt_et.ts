@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>&amp;Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vali kõik</translation>
     </message>
 </context>
 <context>
@@ -111,11 +111,11 @@ Press ESC to cancel</source>
     <name>QComboBox</name>
     <message>
         <source>True</source>
-        <translation type="unfinished"></translation>
+        <translation>Tõsi</translation>
     </message>
     <message>
         <source>False</source>
-        <translation type="unfinished"></translation>
+        <translation>Väär</translation>
     </message>
     <message>
         <source>Open the combo box selection popup</source>
@@ -126,14 +126,14 @@ Press ESC to cancel</source>
     <name>QDialog</name>
     <message>
         <source>What&apos;s This?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mis see on?</translation>
     </message>
 </context>
 <context>
     <name>QDialogButtonBox</name>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -193,7 +193,7 @@ Press ESC to cancel</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Tühista</translation>
     </message>
     <message>
         <source>Ignore</source>
@@ -651,7 +651,7 @@ Please verify the correct file name was given.</source>
     <name>QMessageBox</name>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Help</source>
@@ -776,7 +776,7 @@ Please verify the correct file name was given.</source>
     <name>QPlatformTheme</name>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Save</source>
@@ -797,7 +797,7 @@ Please verify the correct file name was given.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Tühista</translation>
     </message>
     <message>
         <source>Discard</source>
@@ -896,7 +896,7 @@ Please verify the correct file name was given.</source>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>B10</source>
@@ -1257,7 +1257,7 @@ Please choose a different file name.</source>
     <name>QProgressDialog</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Tühista</translation>
     </message>
 </context>
 <context>
@@ -1657,11 +1657,11 @@ Please choose a different file name.</source>
     <name>QTabBar</name>
     <message>
         <source>Scroll Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Keri vasakule</translation>
     </message>
     <message>
         <source>Scroll Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Keri paremale</translation>
     </message>
 </context>
 <context>
@@ -1713,7 +1713,7 @@ Please choose a different file name.</source>
     <name>QWhatsThisAction</name>
     <message>
         <source>What&apos;s This?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mis see on?</translation>
     </message>
 </context>
 <context>
@@ -1778,7 +1778,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Tühista</translation>
     </message>
     <message>
         <source>Commit</source>
