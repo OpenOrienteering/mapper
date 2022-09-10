@@ -225,6 +225,10 @@ elseif(PROJ_VERSION VERSION_LESS 6.2.1)
 	# Datum Potsdam issue, https://github.com/OSGeo/PROJ/pull/1573
 	set_property(TARGET "${PROJ_LIBRARIES}" APPEND PROPERTY
 	  INTERFACE_COMPILE_DEFINITIONS PROJ_ISSUE_1573)
+elseif(PROJ_VERSION VERSION_GREATER_EQUAL 7.2)
+	# Ellipsoidal ortho change, https://github.com/OSGeo/PROJ/pull/2361
+	set_property(TARGET "${PROJ_LIBRARIES}" APPEND PROPERTY
+	  INTERFACE_COMPILE_DEFINITIONS PROJ_PULL_2361)
 endif()
 
 if(Mapper_USE_GDAL)

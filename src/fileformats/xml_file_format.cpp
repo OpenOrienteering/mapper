@@ -733,6 +733,7 @@ void XMLFileImporter::validateGeoreferencing()
 		           .arg(QLocale().toString(valid_georef.getDeclination()) ) );
 	}
 
+#ifdef PROJ_PULL_2361
 	// Check for georeferencings with inconsistent grid scale factor
 	// due to GH-2106 (PROJ changing 'ortho' to ellipsoidal)
 	if (!loaded_georef.areScaleFactorsConsistent())
@@ -753,6 +754,7 @@ void XMLFileImporter::validateGeoreferencing()
 			}
 		}
 	}
+#endif
 }
 
 
