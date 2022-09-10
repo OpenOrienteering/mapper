@@ -1,5 +1,5 @@
 #
-#    Copyright 2017 Kai Pastor
+#    Copyright 2017-2022 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -24,4 +24,5 @@ include("linux-distribution.cmake")
 set(system_copyright_dir "/usr/share/licenses")
 set(copyright_pattern
   "${system_copyright_dir}/@package@/LICENSE"
+  "${system_copyright_dir}/@package@/LICENSE.TXT" # gdal
 )
