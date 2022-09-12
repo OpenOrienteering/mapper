@@ -732,6 +732,27 @@ void XMLFileImporter::validateGeoreferencing()
 		              "Resolved by automatic adjustment of the declination to %1°.")
 		           .arg(QLocale().toString(valid_georef.getDeclination()) ) );
 	}
+
+	// Check for georeferencings with inconsistent grid scale factor
+	// due to GH-2106 (PROJ changing 'ortho' to ellipsoidal)
+	if (!loaded_georef.areScaleFactorsConsistent())
+	{
+		// Scale factors are inconsistent. Try modifying PROJ spec string.
+		auto mod_georef = Georeferencing(loaded_georef);
+		const auto crs_id = mod_georef.getProjectedCRSId();
+		auto spec = mod_georef.getProjectedCRSSpec();
+		if ((crs_id.isEmpty() || crs_id == QString::fromLatin1("PROJ.4")) && Georeferencing::trySetOrthoSpheroidal(spec))
+		{
+			// CRS can be modified for spheroidal version of 'ortho' projection.
+			if (mod_georef.setProjectedCRS({}, spec) && mod_georef.areScaleFactorsConsistent())
+			{
+				// Scale factors are consistent with the modified CRS spec string.
+				map->setGeoreferencing(mod_georef);
+				addWarning(tr("Georeferencing: obsolete use of 'proj=ortho' detected in CRS. "
+							  "Resolved by automatic adjustment to 'proj=ortho +f=0."));
+			}
+		}
+	}
 }
 
 
