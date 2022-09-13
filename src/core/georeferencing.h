@@ -291,6 +291,12 @@ public:
 	 * \see getAuxiliaryScaleFactor()
 	 */
 	void setAuxiliaryScaleFactor(double value);
+
+	/**
+	 * Returns whether the combined and auxiliary scale factors are
+	 * consistent with the grid scale factor calculated for the CRS.
+	 */
+	bool areScaleFactorsConsistent() const;
 	
 	
 	/**

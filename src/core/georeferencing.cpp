@@ -845,6 +845,20 @@ void Georeferencing::setScaleFactors(double combined_scale_factor, double auxili
 	}
 }
 
+bool Georeferencing::areScaleFactorsConsistent() const
+{
+	// Check for georeferencings with inconsistent grid scale factor
+	Q_ASSERT(auxiliary_scale_factor > 0);
+	double implied_grid_scale_factor = combined_scale_factor / auxiliary_scale_factor;
+	Q_ASSERT(grid_scale_factor > 0);
+	double discrepancy = implied_grid_scale_factor / grid_scale_factor;
+	// Consider scale factors consistent if their discrepancy is
+	// within the margin used when rounding.
+	// Taking the square root effectively doubles the allowed margin.
+	Q_ASSERT(discrepancy >= 0);
+	return roundScaleFactor(sqrt(discrepancy)) == 1.0;
+}
+
 void Georeferencing::setDeclination(double value)
 {
 	double declination = roundDeclination(value);
