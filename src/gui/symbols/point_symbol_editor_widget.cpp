@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2022 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -493,7 +493,7 @@ void PointSymbolEditorWidget::changeElement(int row)
 			point_inner_radius_edit->blockSignals(true);
 			point_inner_color_edit->blockSignals(true);
 			point_outer_width_edit->blockSignals(true);
-			point_outer_width_edit->blockSignals(true);
+			point_outer_color_edit->blockSignals(true);
 			
 			auto point = static_cast<PointSymbol*>(element_symbol);
 			point_inner_radius_edit->setValue(2 * 0.001 * point->getInnerRadius());
@@ -504,7 +504,7 @@ void PointSymbolEditorWidget::changeElement(int row)
 			point_inner_radius_edit->blockSignals(false);
 			point_inner_color_edit->blockSignals(false);
 			point_outer_width_edit->blockSignals(false);
-			point_outer_width_edit->blockSignals(false);
+			point_outer_color_edit->blockSignals(false);
 			
 			element_properties_widget->setCurrentWidget(point_properties);
 			
