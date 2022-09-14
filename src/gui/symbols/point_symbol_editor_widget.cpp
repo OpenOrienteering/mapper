@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2019, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -52,6 +52,7 @@
 #include <QPointF>
 #include <QPushButton>
 #include <QRectF>
+#include <QSignalBlocker>
 #include <QSizePolicy>
 #include <QStackedWidget>
 #include <QStringList>
@@ -73,6 +74,7 @@
 #include "gui/util_gui.h"
 #include "gui/widgets/color_dropdown.h"
 #include "util/backports.h"  // IWYU pragma: keep
+#include "util/scoped_signals_blocker.h"
 
 // IWYU pragma: no_forward_declare QBoxLayout
 // IWYU pragma: no_forward_declare QGridLayout
@@ -446,38 +448,36 @@ void PointSymbolEditorWidget::changeElement(int row)
 			auto path = static_cast<PathObject*>(object);
 			if (element_symbol->getType() == Symbol::Line)
 			{
-				line_width_edit->blockSignals(true);
-				line_color_edit->blockSignals(true);
-				line_cap_edit->blockSignals(true);
-				line_join_edit->blockSignals(true);
-				line_closed_check->blockSignals(true);
-				
-				auto line = static_cast<LineSymbol*>(element_symbol);
-				line_width_edit->setValue(0.001 * line->getLineWidth());
-				line_color_edit->setColor(line->getColor());
-				line_cap_edit->setCurrentIndex(line_cap_edit->findData(QVariant(line->getCapStyle())));
-				line_join_edit->setCurrentIndex(line_join_edit->findData(QVariant(line->getJoinStyle())));
-				
-				const auto& parts = path->parts();
-				line_closed_check->setChecked(!parts.empty() && parts.front().isClosed());
-				line_closed_check->setEnabled(!parts.empty());
-				
-				line_width_edit->blockSignals(false);
-				line_color_edit->blockSignals(false);
-				line_cap_edit->blockSignals(false);
-				line_join_edit->blockSignals(false);
-				line_closed_check->blockSignals(false);
+				{
+					const ScopedMultiSignalsBlocker block(
+					  line_width_edit,
+					  line_color_edit,
+					  line_cap_edit,
+					  line_join_edit,
+					  line_closed_check
+					);
+					
+					auto line = static_cast<LineSymbol*>(element_symbol);
+					line_width_edit->setValue(0.001 * line->getLineWidth());
+					line_color_edit->setColor(line->getColor());
+					line_cap_edit->setCurrentIndex(line_cap_edit->findData(QVariant(line->getCapStyle())));
+					line_join_edit->setCurrentIndex(line_join_edit->findData(QVariant(line->getJoinStyle())));
+					
+					const auto& parts = path->parts();
+					line_closed_check->setChecked(!parts.empty() && parts.front().isClosed());
+					line_closed_check->setEnabled(!parts.empty());
+				}
 				
 				element_properties_widget->setCurrentWidget(line_properties);
 			}
 			else if (element_symbol->getType() == Symbol::Area)
 			{
-				area_color_edit->blockSignals(true);
-				
-				auto area = static_cast<AreaSymbol*>(element_symbol);
-				area_color_edit->setColor(area->getColor());
-				
-				area_color_edit->blockSignals(false);
+				{
+					const QSignalBlocker blocker(area_color_edit);
+					
+					auto area = static_cast<AreaSymbol*>(element_symbol);
+					area_color_edit->setColor(area->getColor());
+				}
 				
 				element_properties_widget->setCurrentWidget(area_properties);
 			}
@@ -490,21 +490,20 @@ void PointSymbolEditorWidget::changeElement(int row)
 		}
 		else
 		{
-			point_inner_radius_edit->blockSignals(true);
-			point_inner_color_edit->blockSignals(true);
-			point_outer_width_edit->blockSignals(true);
-			point_outer_width_edit->blockSignals(true);
-			
-			auto point = static_cast<PointSymbol*>(element_symbol);
-			point_inner_radius_edit->setValue(2 * 0.001 * point->getInnerRadius());
-			point_inner_color_edit->setColor(point->getInnerColor());
-			point_outer_width_edit->setValue(0.001 * point->getOuterWidth());
-			point_outer_color_edit->setColor(point->getOuterColor());
-			
-			point_inner_radius_edit->blockSignals(false);
-			point_inner_color_edit->blockSignals(false);
-			point_outer_width_edit->blockSignals(false);
-			point_outer_width_edit->blockSignals(false);
+			{
+				const ScopedMultiSignalsBlocker block(
+				  point_inner_radius_edit,
+				  point_inner_color_edit,
+				  point_outer_width_edit,
+				  point_outer_color_edit
+				);
+				
+				auto point = static_cast<PointSymbol*>(element_symbol);
+				point_inner_radius_edit->setValue(2 * 0.001 * point->getInnerRadius());
+				point_inner_color_edit->setColor(point->getInnerColor());
+				point_outer_width_edit->setValue(0.001 * point->getOuterWidth());
+				point_outer_color_edit->setColor(point->getOuterColor());
+			}
 			
 			element_properties_widget->setCurrentWidget(point_properties);
 			
@@ -740,9 +739,8 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 		}
 		
 		// Update, needed in cases of rounding and error
-		coords_table->blockSignals(true);
+		const QSignalBlocker blocker(coords_table);
 		coords_table->item(row, column)->setText(locale.toString((column == 0) ? coord.x() : -coord.y(), 'f', 3));
-		coords_table->blockSignals(false);
 	}
 	else
 	{
@@ -853,7 +851,7 @@ void PointSymbolEditorWidget::addCoordsRow(int row)
 {
 	coords_table->setRowHeight(row, coords_table->fontMetrics().height() + 2);
 	
-	coords_table->blockSignals(true);
+	const QSignalBlocker blocker(coords_table);
 	
 	for (int c = 0; c < 3; ++c)
 	{
@@ -869,8 +867,6 @@ void PointSymbolEditorWidget::addCoordsRow(int row)
 		}
 	}
 	updateCoordsRow(row);
-	
-	coords_table->blockSignals(false);
 }
 
 void PointSymbolEditorWidget::updateCoordsRow(int row)
