@@ -96,7 +96,6 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 {
 	map = controller->getMap();
 	
-	midpoint_object = nullptr;
 	if (permanent_preview)
 	{
 		midpoint_object = new PointObject(symbol);
@@ -766,7 +765,13 @@ void PointSymbolEditorWidget::addCoordClicked()
 	if (coords_table->currentRow() < 0)
 		path->addCoordinate(MapCoordVector::size_type(coords_table->rowCount()), MapCoord(0, 0));
 	else
-		path->addCoordinate(MapCoordVector::size_type(coords_table->currentRow()) + 1, path->getCoordinate(MapCoordVector::size_type(coords_table->currentRow())));
+	{
+		auto coord_index = MapCoordVector::size_type(coords_table->currentRow());
+		auto current_coord = path->getCoordinate(coord_index);
+		if (current_coord.isCurveStart())
+			current_coord.setCurveStart(false);
+		path->addCoordinate(coord_index, current_coord);
+	}
 	
 	int row = (coords_table->currentRow() < 0) ? coords_table->rowCount() : (coords_table->currentRow() + 1);
 	updateCoordsTable();	// NOTE: incremental updates (to the curve start boxes) would be possible but mean some implementation effort
