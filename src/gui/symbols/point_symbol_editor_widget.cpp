@@ -847,7 +847,12 @@ void PointSymbolEditorWidget::updateCoordsTable()
 		if (num_rows > 0 && path->parts().front().isClosed())
 			--num_rows;
 		if (path->getSymbol()->getType() == Symbol::Line)
+		{
+			line_closed_check->blockSignals(true);
+			line_closed_check->setChecked(num_rows > 0 && path->parts().front().isClosed());
 			line_closed_check->setEnabled(num_rows > 0);
+			line_closed_check->blockSignals(false);
+		}
 	}
 	
 	coords_table->setRowCount(num_rows);
