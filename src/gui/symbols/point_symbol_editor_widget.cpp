@@ -776,6 +776,8 @@ void PointSymbolEditorWidget::addCoordClicked()
 	int row = (coords_table->currentRow() < 0) ? coords_table->rowCount() : (coords_table->currentRow() + 1);
 	updateCoordsTable();	// NOTE: incremental updates (to the curve start boxes) would be possible but mean some implementation effort
 	coords_table->setCurrentItem(coords_table->item(row, coords_table->currentColumn()));
+	map->updateAllObjectsWithSymbol(symbol);
+	emit symbolEdited();
 }
 
 void PointSymbolEditorWidget::deleteCoordClicked()
