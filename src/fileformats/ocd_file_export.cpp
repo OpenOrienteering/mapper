@@ -953,7 +953,7 @@ void OcdFileExport::exportGeoreferencing()
 	
 	QString string_1039;
 	QTextStream out(&string_1039, QIODevice::Append);
-	out << fixed
+	out << qSetRealNumberPrecision(3)
 	    << "\tm" << fields.m
 	    << qSetRealNumberPrecision(4)
 	    << "\tg" << grid_spacing_map

@@ -387,7 +387,11 @@ void OcdFileImport::importGeoreferencing(const QString& param_string)
 		switch (parameters.key())
 		{
 		case 'm':
-			tryParamConvert(fields.m, param_value);
+			{
+				auto scale_to_grid = param_value.toDouble(&ok);
+				if (ok)
+					fields.m = scale_to_grid;
+			}
 			break;
 		case 'x':
 			tryParamConvert(fields.x, param_value);

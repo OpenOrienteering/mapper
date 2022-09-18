@@ -838,7 +838,7 @@ int toOcd(const MapperCrs crs_unique_id,
 bool operator==(const OcdGeorefFields& lhs, const OcdGeorefFields& rhs)
 {
 	return lhs.i == rhs.i
-	        && lhs.m == rhs.m
+	        && ((qIsNaN(lhs.m) && qIsNaN(rhs.m)) || qAbs(lhs.m - rhs.m) < 5e-9) // 8-digit precision or both NaN's
 	        && lhs.x == rhs.x
 	        && lhs.y == rhs.y
 	        && ((qIsNaN(lhs.a) && qIsNaN(rhs.a)) || qAbs(lhs.a - rhs.a) < 5e-9) // 8-digit precision or both NaN's
@@ -848,8 +848,9 @@ bool operator==(const OcdGeorefFields& lhs, const OcdGeorefFields& rhs)
 void OcdGeorefFields::setupGeoref(Georeferencing& georef,
                                   const std::function<void (const QString&)>& warning_handler) const
 {
-	if (m > 0)
-		georef.setScaleDenominator(m);
+	auto map_scale = qRound(m);
+	if (map_scale > 0)
+		georef.setScaleDenominator(map_scale);
 
 	if (r)
 		applyGridAndZone(georef, i, warning_handler);

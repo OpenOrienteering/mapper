@@ -92,7 +92,7 @@ template<>
 char* toString(const OcdGeorefFields &f) // NOLINT : declared parameter name is 't'
 {
 	auto ret = QString(QStringLiteral("m:%1; x:%2; y:%3; a:%4; i:%5; r:%6"))
-	           .arg(f.m)
+	           .arg(f.m, 0, 'f', 3)
 	           .arg(f.x)
 	           .arg(f.y)
 	           .arg(f.a, 0, 'f', 8)
