@@ -958,6 +958,7 @@ void OcdFileExport::exportGeoreferencing()
 	    << qSetRealNumberPrecision(4)
 	    << "\tg" << grid_spacing_map
 	    << "\tr" << fields.r
+	    << qSetRealNumberPrecision(9)
 	    << "\tx" << fields.x
 	    << "\ty" << fields.y
 	    << qSetRealNumberPrecision(8)

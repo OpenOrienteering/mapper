@@ -40,10 +40,10 @@ class Georeferencing;
 struct OcdGeorefFields
 {
 	double a { 0 },     ///< Real world angle
-	       m { 15000 }; ///< Map scale, relative to grid
-	int x { 0 },        ///< Real world offset easting
-	    y { 0 },        ///< Real world offset northing
-	    i { 1000 },     ///< Grid and zone
+	       m { 15000 }, ///< Map scale, relative to grid
+	       x { 0 },     ///< Real world offset easting
+	       y { 0 };     ///< Real world offset northing
+	int i { 1000 },     ///< Grid and zone
 	    r { 0 };        ///< Real world coord (0 = paper, 1 = real world)
 
 	/**

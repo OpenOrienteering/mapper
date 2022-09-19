@@ -394,10 +394,18 @@ void OcdFileImport::importGeoreferencing(const QString& param_string)
 			}
 			break;
 		case 'x':
-			tryParamConvert(fields.x, param_value);
+			{
+				auto real_offset_x = param_value.toDouble(&ok);
+				if (ok)
+					fields.x = real_offset_x;
+			}
 			break;
 		case 'y':
-			tryParamConvert(fields.y, param_value);
+			{
+				auto real_offset_y = param_value.toDouble(&ok);
+				if (ok)
+					fields.y = real_offset_y;
+			}
 			break;
 		case 'i':
 			tryParamConvert(fields.i, param_value);

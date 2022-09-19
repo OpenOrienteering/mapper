@@ -839,8 +839,8 @@ bool operator==(const OcdGeorefFields& lhs, const OcdGeorefFields& rhs)
 {
 	return lhs.i == rhs.i
 	        && ((qIsNaN(lhs.m) && qIsNaN(rhs.m)) || qAbs(lhs.m - rhs.m) < 5e-9) // 8-digit precision or both NaN's
-	        && lhs.x == rhs.x
-	        && lhs.y == rhs.y
+	        && ((qIsNaN(lhs.x) && qIsNaN(rhs.x)) || qAbs(lhs.x - rhs.x) < 5e-9) // 8-digit precision or both NaN's
+	        && ((qIsNaN(lhs.y) && qIsNaN(rhs.y)) || qAbs(lhs.y - rhs.y) < 5e-9) // 8-digit precision or both NaN's
 	        && ((qIsNaN(lhs.a) && qIsNaN(rhs.a)) || qAbs(lhs.a - rhs.a) < 5e-9) // 8-digit precision or both NaN's
 	        && lhs.r == rhs.r;
 }
@@ -873,8 +873,8 @@ OcdGeorefFields OcdGeorefFields::fromGeoref(const Georeferencing& georef,
 	retval.a = georef.getGrivation();
 	retval.m = georef.getScaleDenominator() * georef.getCombinedScaleFactor();
 	const QPointF offset(georef.toProjectedCoords(MapCoord{}));
-	retval.x = qRound(offset.x()); // OCD easting and northing is integer
-	retval.y = qRound(offset.y());
+	retval.x = offset.x();
+	retval.y = offset.y();
 
 	// attempt translation from Mapper CRS reference into OCD one
 	auto crs_id_string = georef.getProjectedCRSId();
