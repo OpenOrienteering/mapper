@@ -857,7 +857,10 @@ void OcdGeorefFields::setupGeoref(Georeferencing& georef,
 
 	QPointF proj_ref_point(x, y);
 	georef.setProjectedRefPoint(proj_ref_point, false, false);
-	georef.setCombinedScaleFactor(1.0);
+	if (m > 0)
+		georef.setCombinedScaleFactor(m / georef.getScaleDenominator());
+	else
+		georef.setCombinedScaleFactor(1.0);
 	georef.setGrivation(qIsFinite(a) ? a : 0);
 }
 
@@ -868,7 +871,7 @@ OcdGeorefFields OcdGeorefFields::fromGeoref(const Georeferencing& georef,
 
 	// store known values early, they can be useful even if CRS translation fails
 	retval.a = georef.getGrivation();
-	retval.m = georef.getScaleDenominator();
+	retval.m = georef.getScaleDenominator() * georef.getCombinedScaleFactor();
 	const QPointF offset(georef.toProjectedCoords(MapCoord{}));
 	retval.x = qRound(offset.x()); // OCD easting and northing is integer
 	retval.y = qRound(offset.y());

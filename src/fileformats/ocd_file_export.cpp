@@ -943,17 +943,17 @@ void OcdFileExport::exportGeoreferencing()
 	{
 	case MapGrid::MillimetersOnMap:
 		grid_spacing_map = spacing;
-		grid_spacing_real = spacing * georef.getScaleDenominator()  / 1000;
+		grid_spacing_real = spacing * fields.m  / 1000;
 		break;
 	case MapGrid::MetersInTerrain:
-		grid_spacing_map = spacing * 1000 / georef.getScaleDenominator();
+		grid_spacing_map = spacing * 1000 / fields.m;
 		grid_spacing_real = spacing;
 		break;
 	}
 	
 	QString string_1039;
 	QTextStream out(&string_1039, QIODevice::Append);
-	out << qSetRealNumberPrecision(3)
+	out << qSetRealNumberPrecision(6)
 	    << "\tm" << fields.m
 	    << qSetRealNumberPrecision(4)
 	    << "\tg" << grid_spacing_map
