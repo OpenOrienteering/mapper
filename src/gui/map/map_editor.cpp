@@ -820,6 +820,10 @@ void MapEditorController::attach(MainWindow* window)
 		if (mobile_mode)
 		{
 			createSymbolWidget(window);
+
+			// Activate the map view pan tool
+			pan_act->setChecked(true);
+			pan();
 		}
 		else
 		{
@@ -830,11 +834,11 @@ void MapEditorController::attach(MainWindow* window)
 			
 			if (map->getNumColors() == 0)
 				QTimer::singleShot(0, color_dock_widget, &QWidget::show);
+
+			// Activate the edit tool
+			edit_tool_act->setChecked(true);
+			setEditTool();
 		}
-		
-		// Auto-select the edit tool
-		edit_tool_act->setChecked(true);
-		setEditTool();
 		
 		// Set the coordinates display mode
 		coordsDisplayChanged();
