@@ -34,6 +34,7 @@
 #include <QDesktopServices>  // IWYU pragma: keep
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
+#include <QInputDialog>
 #include <QFlags>
 #include <QFormLayout>
 #include <QHBoxLayout>
@@ -435,20 +436,21 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	QUrl service_url(user_url + QLatin1String("calculators/calculateDeclination"));
 	LatLon latlon(georef->getGeographicRefPoint());
 	
+	QString key;
 	if (!no_confirm)
 	{
-		int result = QMessageBox::question(this, tr("Online declination lookup"),
-		  tr("The magnetic declination for the reference point %1° %2° will now be retrieved from <a href=\"%3\">%3</a>. Do you want to continue?").
-		    arg(latlon.latitude()).arg(latlon.longitude()).arg(user_url),
-		  QMessageBox::Yes | QMessageBox::No,
-		  QMessageBox::Yes );
-		if (result != QMessageBox::Yes)
+		bool ok;
+		key = QInputDialog::getText(this, tr("Online declination lookup"),
+									tr("The magnetic declination for the reference point %1° %2°<br>will now be retrieved from <a href=\"%3\">%3</a>.<br><br>Enter access key:").
+									  arg(latlon.latitude()).arg(latlon.longitude()).arg(user_url),
+									QLineEdit::Normal, QString{}, &ok);
+		if (!ok || key.isEmpty())
 			return;
 	}
 	
 	QUrlQuery query;
 	QDate today = QDate::currentDate();
-	query.addQueryItem(QString::fromLatin1("key"), QString::fromLatin1("zNEw7"));
+	query.addQueryItem(QString::fromLatin1("key"), key);
 	query.addQueryItem(QString::fromLatin1("lat1"), QString::number(latlon.latitude()));
 	query.addQueryItem(QString::fromLatin1("lon1"), QString::number(latlon.longitude()));
 	query.addQueryItem(QString::fromLatin1("startYear"), QString::number(today.year()));
@@ -836,7 +838,7 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 		QMessageBox::Retry | QMessageBox::Close,
 		QMessageBox::Close );
 	if (result == QMessageBox::Retry)
-		requestDeclination(true);
+		requestDeclination(false);	//  NOTE: if a wrong key was entered it makes no sense to repeat without having the chance to enter a new one
 #else
 	Q_UNUSED(reply)
 #endif
