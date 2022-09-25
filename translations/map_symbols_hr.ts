@@ -11483,7 +11483,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Length of special route</source>
         <comment>Name of symbol 13.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Duljina posebne rute</translation>
     </message>
     <message>
         <source>This is used with the special instruction (13.x) to give the distance from the last control to the end of the route (control, map exchange, or finish).</source>
