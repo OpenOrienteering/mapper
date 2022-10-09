@@ -8692,7 +8692,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/gui/widgets/crs_param_widgets.cpp" line="77"/>
         <source>Calculate</source>
-        <translation>Обчислення</translation>
+        <translation>Обчислити</translation>
     </message>
 </context>
 <context>
