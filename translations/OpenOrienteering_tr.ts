@@ -309,7 +309,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
         <source>lpi</source>
-        <translation type="unfinished"></translation>
+        <translation>lpi</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
