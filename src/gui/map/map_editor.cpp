@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021 Kai Pastor
+ *    Copyright 2012-2022 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -3850,12 +3850,14 @@ void MapEditorController::addMapPart()
 void MapEditorController::removeMapPart()
 {
 	auto* part = map->getCurrentPart();
+	auto i = part->getNumObjects();
 	
 	QMessageBox::StandardButton button =
 	        QMessageBox::question(
 	            window,
                 tr("Remove current part"),
-                tr("Do you want to remove map part \"%1\" and all its objects?").arg(part->getName()),
+                i ? tr("Do you want to remove map part \"%1\" and its %2 objects?").arg(part->getName()).arg(i) :
+                    tr("Do you want to remove empty map part \"%1\"?").arg(part->getName()),
                 QMessageBox::Yes | QMessageBox::No );
 	
 	if (button == QMessageBox::Yes)
@@ -3863,7 +3865,6 @@ void MapEditorController::removeMapPart()
 		auto index = map->getCurrentPartIndex();
 		UndoStep* undo_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, index);
 		
-		auto i = part->getNumObjects();
 		if (i > 0)
 		{
 			auto* add_step = new AddObjectsUndoStep(map);
@@ -3939,9 +3940,9 @@ void MapEditorController::mergeCurrentMapPartTo(int target)
 	        QMessageBox::question(
 	            window,
                 tr("Merge map parts"),
-                tr("Do you want to move all objects from map part \"%1\" to \"%2\", "
-	               "and to remove \"%1\"?")
-	            .arg(source_part->getName(), target_part->getName()),
+                tr("Do you want to move all %1 objects from map part \"%2\" to \"%3\", "
+	               "and to remove \"%2\"?")
+	            .arg(source_part->getNumObjects()).arg(source_part->getName(), target_part->getName()),
                 QMessageBox::Yes | QMessageBox::No );
 	
 	if (button == QMessageBox::Yes)
