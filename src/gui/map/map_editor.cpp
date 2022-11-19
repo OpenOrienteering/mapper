@@ -3850,42 +3850,39 @@ void MapEditorController::addMapPart()
 void MapEditorController::removeMapPart()
 {
 	auto* part = map->getCurrentPart();
-	auto i = part->getNumObjects();
+	const auto num_objects = part->getNumObjects();
 	
-	QMessageBox::StandardButton button =
-	        QMessageBox::question(
-	            window,
-                tr("Remove current part"),
-                i ? tr("Do you want to remove map part \"%1\" and its %2 objects?").arg(part->getName()).arg(i) :
-                    tr("Do you want to remove empty map part \"%1\"?").arg(part->getName()),
-                QMessageBox::Yes | QMessageBox::No );
-	
-	if (button == QMessageBox::Yes)
+	if (num_objects > 0)
 	{
-		auto index = map->getCurrentPartIndex();
-		UndoStep* undo_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, index);
-		
-		if (i > 0)
+		if (QMessageBox::question(
+                window,
+                tr("Remove current part"),
+                tr("Do you want to remove map part \"%1\" and its %2 objects?").arg(part->getName()).arg(num_objects),
+                QMessageBox::Yes | QMessageBox::No ) == QMessageBox::No)
+		return;
+	}
+	
+	auto index = map->getCurrentPartIndex();
+	UndoStep* undo_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, index);
+	
+	if (num_objects > 0)
+	{
+		auto* add_step = new AddObjectsUndoStep(map);
+		for (auto i = num_objects - 1; i >= 0; --i)
 		{
-			auto* add_step = new AddObjectsUndoStep(map);
-			do
-			{
-				--i;
-				auto* object = part->getObject(i);
-				add_step->addObject(i, object);
-				part->releaseObject(object);
-			}
-			while (i > 0);
-			
-			auto* combined_step = new CombinedUndoStep(map);
-			combined_step->push(add_step);
-			combined_step->push(undo_step);
-			undo_step = combined_step;
+			auto* object = part->getObject(i);
+			add_step->addObject(i, object);
+			part->releaseObject(object);
 		}
 		
-		map->push(undo_step);
-		map->removePart(index);
+		auto* combined_step = new CombinedUndoStep(map);
+		combined_step->push(add_step);
+		combined_step->push(undo_step);
+		undo_step = combined_step;
 	}
+	
+	map->push(undo_step);
+	map->removePart(index);
 }
 
 void MapEditorController::renameMapPart()
@@ -3936,33 +3933,34 @@ void MapEditorController::mergeCurrentMapPartTo(int target)
 {
 	MapPart* const source_part = map->getCurrentPart();
 	MapPart* const target_part = map->getPart(target);
-	const QMessageBox::StandardButton button =
-	        QMessageBox::question(
+	auto num_objects = source_part->getNumObjects();
+	
+	if (num_objects > 0)
+	{
+		if (QMessageBox::question(
 	            window,
                 tr("Merge map parts"),
-                tr("Do you want to move all %1 objects from map part \"%2\" to \"%3\", "
-	               "and to remove \"%2\"?")
-	            .arg(source_part->getNumObjects()).arg(source_part->getName(), target_part->getName()),
-                QMessageBox::Yes | QMessageBox::No );
-	
-	if (button == QMessageBox::Yes)
-	{
-		// Beware that the source part is removed, and
-		// the target part's index might change during merge.
-		auto source = map->getCurrentPartIndex();
-		UndoStep* add_part_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, source);
-		
-		auto first  = map->mergeParts(source, target);
-		
-		auto* switch_part_undo = new SwitchPartUndoStep(map, target, source);
-		for (auto i = target_part->getNumObjects(); i > first; --i)
-			switch_part_undo->addObject(0);
-		
-		auto* undo = new CombinedUndoStep(map);
-		undo->push(switch_part_undo);
-		undo->push(add_part_step);
-		map->push(undo);
+                tr("Do you want to move all %1 objects from map part \"%2\" to \"%3\", and to remove \"%2\"?")
+                  .arg(num_objects).arg(source_part->getName(), target_part->getName()),
+                QMessageBox::Yes | QMessageBox::No ) == QMessageBox::No)
+		return;
 	}
+	
+	// Beware that the source part is removed, and
+	// the target part's index might change during merge.
+	auto source = map->getCurrentPartIndex();
+	UndoStep* add_part_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, source);
+	
+	auto first  = map->mergeParts(source, target);
+	
+	auto* switch_part_undo = new SwitchPartUndoStep(map, target, source);
+	for (num_objects = target_part->getNumObjects(); num_objects > first; --num_objects)
+		switch_part_undo->addObject(0);
+	
+	auto* undo = new CombinedUndoStep(map);
+	undo->push(switch_part_undo);
+	undo->push(add_part_step);
+	map->push(undo);
 }
 
 void MapEditorController::mergeAllMapParts()
