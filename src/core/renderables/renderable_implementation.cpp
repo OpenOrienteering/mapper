@@ -287,7 +287,7 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, QPointF first, QPointF 
 	right.normalize();
 	right *= half_line_width;
 	
-	extent.setTopLeft(first + right);
+	rectIncludeSafe(extent, first + right);
 	rectInclude(extent, first - right);
 	rectInclude(extent, second - right);
 	rectInclude(extent, second + right);
