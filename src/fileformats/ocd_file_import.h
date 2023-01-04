@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2022 Kai Pastor
+ *    Copyright 2013-2023 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -362,12 +362,6 @@ protected:
 	
 	/// maps OCD symbol number to oo-mapper symbol object
 	QHash<unsigned int, Symbol *> symbol_index;
-	
-	/// maps OCD graphic object properties to oo-mapper synthetic symbol object
-	QHash<quint64, Symbol *> graphic_symbol_index;
-	
-	/// maps OCD layout object properties to oo-mapper synthetic symbol object
-	QHash<quint64, Symbol *> layout_symbol_index;
 	
 	/// maps OO Mapper text symbol pointer to OCD defined horizontal alignment (stored in objects instead of symbols in OO Mapper)
 	QHash<Symbol*, TextObject::HorizontalAlignment> text_halign_map;
