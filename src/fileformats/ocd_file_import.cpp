@@ -1,5 +1,7 @@
 /*
  *    Copyright 2013-2022, 2024, 2025 Kai Pastor
+ *    Copyright 2017-2024 Libor Pecháček
+ *    Copyright 2021-2025 Matthias Kühlewein
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -1955,6 +1957,8 @@ template< class O >
 Symbol* OcdFileImport::getLayoutObjectSymbol(const O& ocd_object)
 {
 	Symbol* symbol = nullptr;
+	auto h_alignment = TextObject::AlignHCenter;
+	
 	auto symbol_setup_common = [this](Symbol& symbol) {
 		symbol.setName(QLatin1String("helper symbol for layout objects"));
 		symbol.setNumberComponent(0, 998);
@@ -2006,6 +2010,62 @@ Symbol* OcdFileImport::getLayoutObjectSymbol(const O& ocd_object)
 			auto* text_symbol = new OcdImportedTextSymbol();
 			symbol_setup_common(*text_symbol);
 			text_symbol->color = get_map_color(quint32(ocd_object.color));
+			
+			auto data = QString(reinterpret_cast<const QChar *>(ocd_object.coords + ocd_object.num_items + ocd_object.num_text));
+			OcdParameterStreamReader parameters(data);
+			
+			text_symbol->font_family = parameters.value().toString();
+			
+			while (parameters.readNext())
+			{
+				float f_value;
+				int i_value;
+				bool ok;
+				QStringRef param_value = parameters.value();
+				switch (parameters.key())
+				{
+				case 'a':
+					i_value = param_value.toInt(&ok);
+					if (ok)
+					{
+						switch (i_value)
+						{
+						case Ocd::HAlignLeft:
+							h_alignment = TextObject::AlignLeft;
+							break;
+						case Ocd::HAlignRight:
+							h_alignment = TextObject::AlignRight;
+							break;
+						case Ocd::HAlignJustified:
+							// not yet implemented
+							// issue no warning here
+						default:
+							; // default value is set above
+						}
+					}
+					break;
+				case 'b':
+					i_value = param_value.toInt(&ok);
+					if (ok)
+						text_symbol->bold = i_value != 0;
+					break;
+				case 'i':
+					i_value = param_value.toInt(&ok);
+					if (ok)
+						text_symbol->italic = i_value != 0;
+					break;
+				case 's':
+					f_value = param_value.toFloat(&ok);
+					if (ok)
+						text_symbol->font_size = qRound(1000.0 * f_value / 72.0 * 25.4);
+					break;
+				case 'o':	// probably opacity value
+					break;
+				default:
+					; // nothing
+				}
+			}
+			text_symbol->updateQFont();
 			symbol = text_symbol;
 		}
 		break;
@@ -2022,10 +2082,15 @@ Symbol* OcdFileImport::getLayoutObjectSymbol(const O& ocd_object)
 			if (symbol->equals(map->getSymbol(i)))
 			{
 				delete symbol;
-				return map->getSymbol(i);
+				symbol = map->getSymbol(i);
+				if (ocd_object.type == Ocd::ObjectTypeUnformattedText)
+					text_halign_map[symbol] = h_alignment;
+				return symbol;
 			}
 		}
 		map->addSymbol(symbol, map->getNumSymbols());
+		if (ocd_object.type == Ocd::ObjectTypeUnformattedText)
+			text_halign_map[symbol] = h_alignment;
 	}
 	return symbol;
 }
