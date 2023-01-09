@@ -309,15 +309,10 @@ protected:
 	template< class O >
 	Object* importObject(const O& ocd_object, MapPart* part);
 	
-	Symbol* getGraphicObjectSymbol(const Ocd::ObjectV8& ocd_object);
-
-	template< class O >
-	Symbol* getGraphicObjectSymbol(const O& ocd_object);
-	
-	Symbol* getLayoutObjectSymbol(const Ocd::ObjectV8& ocd_object);
+	Symbol* getSpecialObjectSymbol(const Ocd::ObjectV8& ocd_object);
 	
 	template< class O >
-	Symbol* getLayoutObjectSymbol(const O& ocd_object);
+	Symbol* getSpecialObjectSymbol(const O& ocd_object);
 	
 	QString getObjectText(const Ocd::ObjectV8& ocd_object) const;
 	
@@ -380,6 +375,9 @@ protected:
 	
 	/// The visibility of layout objects (true if hidden)
 	bool layout_objects_hidden;
+	
+	/// The protection and visibility state of image objects (bitfield: 1 = protected, 2 = hidden)
+	int image_objects_displaymode;
 };
 
 
