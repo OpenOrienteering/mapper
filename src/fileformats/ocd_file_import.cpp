@@ -111,6 +111,7 @@ OcdFileImport::OcdFileImport(const QString& path, Map* map, MapView* view)
  , custom_8bit_encoding { codecFromSettings() }
  , graphic_objects_hidden(false)
  , layout_objects_hidden(false)
+ , image_objects_displaymode(0)
 {
 	if (!custom_8bit_encoding)
 	{
@@ -1076,10 +1077,13 @@ void OcdFileImport::importDisplayPar(const QString& param_string)
 		switch (parameters.key())
 		{
 		case 'j':
-			graphic_objects_hidden = param_value.toInt() == 2;
+			graphic_objects_hidden = param_value.toInt() == Ocd::SymbolHidden;
+			break;
+		case 'k':
+			image_objects_displaymode = param_value.toInt();
 			break;
 		case 'l':
-			layout_objects_hidden = param_value.toInt() == 2;
+			layout_objects_hidden = param_value.toInt() == Ocd::SymbolHidden;
 			break;
 		default:
 			; // nothing
@@ -1887,87 +1891,47 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 	}
 }
 
-
-Symbol* OcdFileImport::getGraphicObjectSymbol(const Ocd::ObjectV8& ocd_object)
-{
-	Q_UNUSED(ocd_object);
-	return nullptr;
-}
-
-
-template< class O >
-Symbol* OcdFileImport::getGraphicObjectSymbol(const O& ocd_object)
-{
-	Symbol* symbol = nullptr;
-	auto symbol_setup_common = [this](Symbol& symbol) {
-		symbol.setName(QLatin1String("helper symbol for graphic objects"));
-		symbol.setNumberComponent(0, 999);
-		symbol.setNumberComponent(1, -1);
-		symbol.setNumberComponent(2, -1);
-		symbol.setHidden(graphic_objects_hidden);
-	};
-	
-	switch (ocd_object.type)
-	{
-	case Ocd::ObjectTypeLine:
-		{
-			auto* line_symbol = new OcdImportedLineSymbol();
-			symbol_setup_common(*line_symbol);
-			line_symbol->color = convertColor(ocd_object.color);
-			line_symbol->line_width = convertLength(ocd_object.line_width);
-			symbol = line_symbol;
-		}
-		break;
-	case Ocd::ObjectTypeArea:
-		{
-			auto* area_symbol = new OcdImportedAreaSymbol();
-			symbol_setup_common(*area_symbol);
-			area_symbol->color = convertColor(ocd_object.color);
-			symbol = area_symbol;
-		}
-		break;
-	default:
-		addWarning(tr("Encountered an unsupported type of graphic object (%1). Skipping.").arg(ocd_object.type));
-		break;
-	}
-	
-	if (symbol)
-	{
-		int num_symbols = map->getNumSymbols();
-		for (int i = 0; i < num_symbols; ++i)
-		{
-			if (symbol->equals(map->getSymbol(i)))
-			{
-				delete symbol;
-				return map->getSymbol(i);
-			}
-		}
-		map->addSymbol(symbol, map->getNumSymbols());
-	}
-	return symbol;
-}
-
-Symbol* OcdFileImport::getLayoutObjectSymbol(const Ocd::ObjectV8& ocd_object)
+Symbol* OcdFileImport::getSpecialObjectSymbol(const Ocd::ObjectV8& ocd_object)
 {
 	Q_UNUSED(ocd_object);
 	return nullptr;
 }
 
 template< class O >
-Symbol* OcdFileImport::getLayoutObjectSymbol(const O& ocd_object)
+Symbol* OcdFileImport::getSpecialObjectSymbol(const O& ocd_object)
 {
+	using LineStyle = Ocd::LineSymbolCommonV8;
+	
 	Symbol* symbol = nullptr;
 	auto h_alignment = TextObject::AlignHCenter;
+	float opacity = 1.0f;
 	
-	auto symbol_setup_common = [this](Symbol& symbol) {
-		symbol.setName(QLatin1String("helper symbol for layout objects"));
-		symbol.setNumberComponent(0, 998);
+	auto symbol_setup_common = [this](Symbol& symbol, const O& ocd_object) {
+		if (ocd_object.symbol == Ocd::LayoutObject)
+		{
+			symbol.setName(QLatin1String("Auxiliary symbol for layout objects"));
+			symbol.setNumberComponent(0, 998);
+			symbol.setHidden(layout_objects_hidden);
+		}
+		else if (ocd_object.symbol == Ocd::ImageObject)
+		{
+			symbol.setName(QLatin1String("Auxiliary symbol for image objects"));
+			symbol.setNumberComponent(0, 997);
+			symbol.setProtected(bool(image_objects_displaymode & Ocd::SymbolProtected));
+			symbol.setHidden(bool(image_objects_displaymode & Ocd::SymbolHidden));
+		}
+		else
+		{
+			symbol.setName(QLatin1String("Auxiliary symbol for graphic objects"));
+			symbol.setNumberComponent(0, 999);
+			symbol.setHidden(graphic_objects_hidden);
+		}
 		symbol.setNumberComponent(1, -1);
 		symbol.setNumberComponent(2, -1);
-		symbol.setHidden(layout_objects_hidden);
+		
 	};
 	
-	auto get_map_color = [this](const quint32 color) {
+	auto get_map_color = [this](const quint32 color, const float opacity) {
 		MapColorCmyk cmyk;
 		cmyk.c = quint8(color) / 255.f;
 		cmyk.m = quint8(color >> 8) / 255.f;
@@ -1980,8 +1944,9 @@ Symbol* OcdFileImport::getLayoutObjectSymbol(const O& ocd_object)
 			if (map_cymk == cmyk)	// actually a fuzzy comparision
 				return const_cast<MapColor*>(map->getColor(i));
 		}
-		auto new_color = new MapColor(tr("Imported layout object"), num_colors);
+		auto new_color = new MapColor(tr("Imported layout or image object"), num_colors);
 		new_color->setCmyk(cmyk);
+		new_color->setOpacity(opacity);
 		map->addColor(new_color, num_colors);
 		return new_color;
 	};
@@ -1991,25 +1956,57 @@ Symbol* OcdFileImport::getLayoutObjectSymbol(const O& ocd_object)
 	case Ocd::ObjectTypeLine:
 		{
 			auto* line_symbol = new OcdImportedLineSymbol();
-			symbol_setup_common(*line_symbol);
-			line_symbol->color = get_map_color(quint32(ocd_object.color));
+			symbol_setup_common(*line_symbol, ocd_object);
+			line_symbol->color = ocd_object.symbol == Ocd::GraphicObject ? convertColor(ocd_object.color) : get_map_color(quint32(ocd_object.color), opacity);
 			line_symbol->line_width = convertLength(ocd_object.line_width);
+			// Cap and join styles
+			switch (ocd_object.diam_flags)
+			{
+			case LineStyle::BevelJoin_FlatCap:
+				line_symbol->join_style = LineSymbol::BevelJoin;
+				line_symbol->cap_style = LineSymbol::FlatCap;
+				break;
+			case LineStyle::RoundJoin_RoundCap:
+				line_symbol->join_style = LineSymbol::RoundJoin;
+				line_symbol->cap_style = LineSymbol::RoundCap;
+				break;
+			case LineStyle::BevelJoin_PointedCap:
+				line_symbol->join_style = LineSymbol::BevelJoin;
+				line_symbol->cap_style = LineSymbol::PointedCap;
+				break;
+			case LineStyle::RoundJoin_PointedCap:
+				line_symbol->join_style = LineSymbol::RoundJoin;
+				line_symbol->cap_style = LineSymbol::PointedCap;
+				break;
+			case LineStyle::MiterJoin_FlatCap:
+				line_symbol->join_style = LineSymbol::MiterJoin;
+				line_symbol->cap_style = LineSymbol::FlatCap;
+				break;
+			case LineStyle::MiterJoin_PointedCap:
+				line_symbol->join_style = LineSymbol::MiterJoin;
+				line_symbol->cap_style = LineSymbol::PointedCap;
+				break;
+			default:
+				addSymbolWarning( line_symbol,
+								  tr("Unsupported line style '%1'.").
+								  arg(ocd_object.diam_flags) );
+			}
 			symbol = line_symbol;
 		}
 		break;
 	case Ocd::ObjectTypeArea:
 		{
 			auto* area_symbol = new OcdImportedAreaSymbol();
-			symbol_setup_common(*area_symbol);
-			area_symbol->color = get_map_color(quint32(ocd_object.color));
+			symbol_setup_common(*area_symbol, ocd_object);
+			area_symbol->color = ocd_object.symbol == Ocd::GraphicObject ? convertColor(ocd_object.color) : get_map_color(quint32(ocd_object.color), opacity);
 			symbol = area_symbol;
 		}
 		break;
-	case Ocd::ObjectTypeUnformattedText:
+	case Ocd::ObjectTypeUnformattedText:	// only for layout objects
 		{
 			auto* text_symbol = new OcdImportedTextSymbol();
-			symbol_setup_common(*text_symbol);
-			text_symbol->color = get_map_color(quint32(ocd_object.color));
+			symbol_setup_common(*text_symbol, ocd_object);
+			text_symbol->kerning = false;
 			
 			auto data = QString(reinterpret_cast<const QChar *>(ocd_object.coords + ocd_object.num_items + ocd_object.num_text));
 			OcdParameterStreamReader parameters(data);
@@ -2059,23 +2056,33 @@ Symbol* OcdFileImport::getLayoutObjectSymbol(const O& ocd_object)
 					if (ok)
 						text_symbol->font_size = qRound(1000.0 * f_value / 72.0 * 25.4);
 					break;
-				case 'o':	// probably opacity value
+				case 'o':
+					f_value = param_value.toFloat(&ok);
+					if (ok && f_value >= 0.f && f_value <= 100.f)
+						opacity = 0.01f * f_value;
 					break;
 				default:
 					; // nothing
 				}
 			}
+			text_symbol->color = get_map_color(quint32(ocd_object.color), opacity);
 			text_symbol->updateQFont();
 			symbol = text_symbol;
 		}
 		break;
 	default:
-		addWarning(tr("Encountered an unsupported type of layout object (%1). Skipping.").arg(ocd_object.type));
+		addWarning(tr("Encountered an unsupported type of graphical object (%1). Skipping.").arg(ocd_object.type));
 		break;
 	}
 	
 	if (symbol)
 	{
+		if (ocd_object.symbol == Ocd::LayoutObject)
+			addWarningOnce(tr("Importing layout objects using auxiliary symbols. Export as layout objects is not possible."));
+		else if (ocd_object.symbol == Ocd::ImageObject)
+			addWarningOnce(tr("Importing image objects using auxiliary symbols. Export as image objects is not possible."));
+		else
+			addWarningOnce(tr("Importing graphic objects using auxiliary symbols. Export as graphic objects is not possible."));
 		int num_symbols = map->getNumSymbols();
 		for (int i = 0; i < num_symbols; ++i)
 		{
@@ -2101,11 +2108,10 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 	Symbol* symbol = nullptr;
 	switch (ocd_object.symbol)
 	{
-	case -2: // graphic object
-		symbol = getGraphicObjectSymbol(ocd_object);
-		break;
-	case -4: // layout object
-		symbol = getLayoutObjectSymbol(ocd_object);
+	case Ocd::GraphicObject:
+	case Ocd::ImageObject:
+	case Ocd::LayoutObject:
+		symbol = getSpecialObjectSymbol(ocd_object);
 		break;
 	default:
 		if (ocd_object.symbol >= 0)
@@ -2118,15 +2124,15 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 	{
 		switch (ocd_object.type)
 		{
-		case 1:
+		case Ocd::ObjectTypePoint:
 			symbol = map->getUndefinedPoint();
 			break;
-		case 2:
-		case 3:
+		case Ocd::ObjectTypeLine:
+		case Ocd::ObjectTypeArea:
 			symbol = map->getUndefinedLine();
 			break;
-		case 4:
-		case 5:
+		case Ocd::ObjectTypeUnformattedText:
+		case Ocd::ObjectTypeFormattedText:
 			symbol = map->getUndefinedText();
 			break;
 		default:
