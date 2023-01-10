@@ -31,6 +31,7 @@
 #include <QByteArray>
 #include <QCoreApplication>
 #include <QHash>
+#include <QSet>
 #include <QLocale>
 #include <QString>
 
@@ -242,6 +243,11 @@ protected:
 	
 	void importDisplayPar(const QString& param_string);
 	
+	template< class F >
+	void importLayoutObjects(const OcdFile< F >& file);
+	
+	void importLayoutObjects(const QString& param_string);
+	
 	// Symbol import
 	
 	template< class S >
@@ -376,8 +382,14 @@ protected:
 	/// The visibility of layout objects (true if hidden)
 	bool layout_objects_hidden;
 	
+	/// stores the object numbers of hidden layout objects
+	QSet<int> hidden_layout_objects;
+	
 	/// The protection and visibility state of image objects (bitfield: 1 = protected, 2 = hidden)
 	int image_objects_displaymode;
+	
+	/// counting objects during import
+	int object_index;
 };
 
 
