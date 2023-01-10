@@ -4118,7 +4118,7 @@ selecionados</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2522"/>
         <source>Draw paths free-handedly.</source>
-        <translation>Desenhar linhas a mão livre. Clicar e movimentar o mouse para desenhar a linha, finalizar com duplo clique.</translation>
+        <translation>Desenhar linhas a mão livre. Clicar e movimentar o rato para desenhar a linha, finalizar com duplo clique.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2524"/>
@@ -4752,7 +4752,7 @@ Mapa Base -&gt; Abrir Mapa Base...</translation>
         <location filename="../src/gui/map/map_widget.cpp" line="910"/>
         <source>Hint: Hold the middle mouse button to drag the map,
 zoom using the mouse wheel, if available.</source>
-        <translation>Dica: Segure o botão central do mouse para arrastar o mapa,
+        <translation>Dica: Segure o botão central do rato para arrastar o mapa,
 aproximar e afastar a usar a roda do rato, se disponível.</translation>
     </message>
 </context>
