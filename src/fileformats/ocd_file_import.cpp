@@ -1302,22 +1302,13 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	return combined_line;
 }
 
-void OcdFileImport::importLineSymbolBase(OcdImportedLineSymbol* symbol, const Ocd::LineSymbolCommonV8& attributes)
+bool OcdFileImport::setupLineStyle(OcdImportedLineSymbol* symbol, const quint16 line_style)
 {
 	using LineStyle = Ocd::LineSymbolCommonV8;
 	
-	// Basic line options
-	symbol->line_width = convertLength(attributes.line_width);
-	symbol->color = symbol->line_width ? convertColor(attributes.line_color) : nullptr;
-	
 	// Cap and join styles
-	switch (attributes.line_style)
+	switch (line_style)
 	{
-	default:
-		addSymbolWarning( symbol,
-		                  tr("Unsupported line style '%1'.").
-		                  arg(attributes.line_style) );
-		Q_FALLTHROUGH();
 	case LineStyle::BevelJoin_FlatCap:
 		symbol->join_style = LineSymbol::BevelJoin;
 		symbol->cap_style = LineSymbol::FlatCap;
@@ -1342,7 +1333,23 @@ void OcdFileImport::importLineSymbolBase(OcdImportedLineSymbol* symbol, const Oc
 		symbol->join_style = LineSymbol::MiterJoin;
 		symbol->cap_style = LineSymbol::PointedCap;
 		break;
+	default:
+		return false;
 	}
+	return true;
+}
+
+void OcdFileImport::importLineSymbolBase(OcdImportedLineSymbol* symbol, const Ocd::LineSymbolCommonV8& attributes)
+{
+	// Basic line options
+	symbol->line_width = convertLength(attributes.line_width);
+	symbol->color = symbol->line_width ? convertColor(attributes.line_color) : nullptr;
+	
+	// Cap and join styles
+	if (!setupLineStyle(symbol, attributes.line_style))
+		addSymbolWarning( symbol,
+		                  tr("Unsupported line style '%1'.").
+		                  arg(attributes.line_style) );
 	
 	symbol->start_offset = std::max(0, convertLength(attributes.dist_from_start));
 	symbol->end_offset = std::max(0, convertLength(attributes.dist_from_end));
@@ -1439,32 +1446,15 @@ void OcdFileImport::importLineSymbolBase(OcdImportedLineSymbol* symbol, const Oc
 
 void OcdFileImport::setupLineSymbolFraming(OcdFileImport::OcdImportedLineSymbol* framing_line, const Ocd::LineSymbolCommonV8& attributes, const LineSymbol* main_line)
 {
-	using LineStyle = Ocd::LineSymbolCommonV8;
-	
 	// Basic line options
 	framing_line->line_width = convertLength(attributes.framing_width);
 	framing_line->color = framing_line->line_width ? convertColor(attributes.framing_color) : nullptr;
 	
 	// Cap and join styles
-	switch (attributes.framing_style)
-	{
-	case LineStyle::BevelJoin_FlatCap:
-		framing_line->join_style = LineSymbol::BevelJoin;
-		framing_line->cap_style = LineSymbol::FlatCap;
-		break;
-	case LineStyle::RoundJoin_RoundCap:
-		framing_line->join_style = LineSymbol::RoundJoin;
-		framing_line->cap_style = LineSymbol::RoundCap;
-		break;
-	case LineStyle::MiterJoin_FlatCap:
-		framing_line->join_style = LineSymbol::MiterJoin;
-		framing_line->cap_style = LineSymbol::FlatCap;
-		break;
-	default:
+	if (!setupLineStyle(framing_line, attributes.framing_style))
 		addSymbolWarning( main_line, 
 		                  tr("Unsupported framing line style '%1'.").
 		                  arg(attributes.line_style) );
-	}
 }
 
 void OcdFileImport::setupLineSymbolDoubleBorder(OcdFileImport::OcdImportedLineSymbol* double_line, const Ocd::LineSymbolCommonV8& attributes)
@@ -1955,8 +1945,6 @@ Symbol* OcdFileImport::getSpecialObjectSymbol(const Ocd::ObjectV8& ocd_object)
 template< class O >
 Symbol* OcdFileImport::getSpecialObjectSymbol(const O& ocd_object)
 {
-	using LineStyle = Ocd::LineSymbolCommonV8;
-	
 	Symbol* symbol = nullptr;
 	auto h_alignment = TextObject::AlignHCenter;
 	float opacity = 1.0f;
@@ -2016,37 +2004,10 @@ Symbol* OcdFileImport::getSpecialObjectSymbol(const O& ocd_object)
 			line_symbol->color = ocd_object.symbol == Ocd::GraphicObject ? convertColor(ocd_object.color) : get_map_color(quint32(ocd_object.color), opacity);
 			line_symbol->line_width = convertLength(ocd_object.line_width);
 			// Cap and join styles
-			switch (ocd_object.diam_flags)
-			{
-			case LineStyle::BevelJoin_FlatCap:
-				line_symbol->join_style = LineSymbol::BevelJoin;
-				line_symbol->cap_style = LineSymbol::FlatCap;
-				break;
-			case LineStyle::RoundJoin_RoundCap:
-				line_symbol->join_style = LineSymbol::RoundJoin;
-				line_symbol->cap_style = LineSymbol::RoundCap;
-				break;
-			case LineStyle::BevelJoin_PointedCap:
-				line_symbol->join_style = LineSymbol::BevelJoin;
-				line_symbol->cap_style = LineSymbol::PointedCap;
-				break;
-			case LineStyle::RoundJoin_PointedCap:
-				line_symbol->join_style = LineSymbol::RoundJoin;
-				line_symbol->cap_style = LineSymbol::PointedCap;
-				break;
-			case LineStyle::MiterJoin_FlatCap:
-				line_symbol->join_style = LineSymbol::MiterJoin;
-				line_symbol->cap_style = LineSymbol::FlatCap;
-				break;
-			case LineStyle::MiterJoin_PointedCap:
-				line_symbol->join_style = LineSymbol::MiterJoin;
-				line_symbol->cap_style = LineSymbol::PointedCap;
-				break;
-			default:
+			if (!setupLineStyle(line_symbol, ocd_object.diam_flags))
 				addSymbolWarning( line_symbol,
 								  tr("Unsupported line style '%1'.").
 								  arg(ocd_object.diam_flags) );
-			}
 			symbol = line_symbol;
 		}
 		break;
