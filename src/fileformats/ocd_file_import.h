@@ -258,6 +258,8 @@ protected:
 	
 	void importLineSymbolBase(OcdImportedLineSymbol* symbol, const Ocd::LineSymbolCommonV8& attributes);
 	
+	bool setupLineStyle(OcdImportedLineSymbol* symbol, const quint16 line_style);
+	
 	void setupLineSymbolFraming(OcdImportedLineSymbol* framing_line, const Ocd::LineSymbolCommonV8& attributes, const LineSymbol* main_line);
 	
 	void setupLineSymbolDoubleBorder(OcdImportedLineSymbol* double_line, const Ocd::LineSymbolCommonV8& attributes);
