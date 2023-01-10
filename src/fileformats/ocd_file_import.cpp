@@ -329,6 +329,7 @@ void OcdFileImport::importImplementation()
 	{
 		importExtras(file);
 		importDisplayPar(file);
+		importLayoutObjects(file);
 		if (view)
 		{
 			importView(file);
@@ -853,8 +854,10 @@ void OcdFileImport::importObjects(const OcdFile< F >& file)
 	MapPart* part = map->getCurrentPart();
 	FILEFORMAT_ASSERT(part);
 	
+	object_index = 0;
 	for (auto ocd_object : file.objects())
 	{
+		++object_index;
 		if ( ocd_object.entry->symbol
 		     && ocd_object.entry->status != Ocd::ObjectDeleted
 		     && ocd_object.entry->status != Ocd::ObjectDeletedForUndo )
@@ -1088,6 +1091,58 @@ void OcdFileImport::importDisplayPar(const QString& param_string)
 		default:
 			; // nothing
 		}
+	}
+}
+
+template< class F >
+void OcdFileImport::importLayoutObjects(const OcdFile< F >& file)
+{
+	handleStrings(file, { { 27, &OcdFileImport::importLayoutObjects } });
+}
+
+void OcdFileImport::importLayoutObjects(const QString& param_string)
+{
+	OcdParameterStreamReader parameters(param_string);
+	
+	auto path_or_description = parameters.value().toString();
+	int object_number = -1;
+	int type = -1;
+	int visibility = -1;
+	
+	while (parameters.readNext())
+	{
+		int i_value;
+		bool ok;
+		QStringRef param_value = parameters.value();
+		switch (parameters.key())
+		{
+		case 'r':
+			i_value = param_value.toInt(&ok);
+			if (ok)
+				type = i_value;
+			break;
+		case 's':
+			i_value = param_value.toInt(&ok);
+			if (ok)
+				visibility = i_value;
+			break;
+		case 'n':
+			i_value = param_value.toInt(&ok);
+			if (ok)
+				object_number = i_value;
+			break;
+		default:
+			; // nothing
+		}
+	}
+	
+	if (type == 0 && visibility == 0 && object_number > 0)
+	{
+		hidden_layout_objects.insert(object_number);
+	}
+	else if (type == 1)
+	{
+		addWarning(tr("Layout image object (%1) cannot be imported.").arg(path_or_description));
 	}
 }
 
@@ -1911,7 +1966,8 @@ Symbol* OcdFileImport::getSpecialObjectSymbol(const O& ocd_object)
 		{
 			symbol.setName(QLatin1String("Auxiliary symbol for layout objects"));
 			symbol.setNumberComponent(0, 998);
-			symbol.setHidden(layout_objects_hidden);
+			if (layout_objects_hidden || hidden_layout_objects.contains(object_index))
+				symbol.setHidden(true);
 		}
 		else if (ocd_object.symbol == Ocd::ImageObject)
 		{
@@ -2083,6 +2139,7 @@ Symbol* OcdFileImport::getSpecialObjectSymbol(const O& ocd_object)
 			addWarningOnce(tr("Importing image objects using auxiliary symbols. Export as image objects is not possible."));
 		else
 			addWarningOnce(tr("Importing graphic objects using auxiliary symbols. Export as graphic objects is not possible."));
+		
 		int num_symbols = map->getNumSymbols();
 		for (int i = 0; i < num_symbols; ++i)
 		{
