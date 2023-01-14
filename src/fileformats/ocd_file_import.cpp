@@ -329,13 +329,13 @@ void OcdFileImport::importImplementation()
 	{
 		importExtras(file);
 		importDisplayPar(file);
-		importLayoutObjects(file);
 		if (view)
 		{
 			importView(file);
 		}
-		importObjects(file);
 		importTemplates(file);
+		importLayoutObjects(file);
+		importObjects(file);
 	}
 	
 	// No deep copy during import
@@ -1109,9 +1109,18 @@ void OcdFileImport::importLayoutObjects(const QString& param_string)
 	int type = -1;
 	int visibility = -1;
 	
+	unsigned int num_rotation_params = 0;
+	double rotation = 0.0;
+	double scale_x = 1.0;
+	double scale_y = 1.0;
+	double x_value = 0.0;
+	double y_value = 0.0;
+	int dimming = 0;
+	
 	while (parameters.readNext())
 	{
 		int i_value;
+		double f_value;
 		bool ok;
 		QStringRef param_value = parameters.value();
 		switch (parameters.key())
@@ -1131,6 +1140,39 @@ void OcdFileImport::importLayoutObjects(const QString& param_string)
 			if (ok)
 				object_number = i_value;
 			break;
+		case 'x':
+			f_value = param_value.toDouble(&ok);
+			if (ok)
+				x_value = f_value;
+			break;
+		case 'y':
+			f_value = param_value.toDouble(&ok);
+			if (ok)
+				y_value = f_value;
+			break;
+		case 'a':
+		case 'b':
+			// TODO: use the distinct angles correctly, not just the average
+			f_value = param_value.toDouble(&ok);
+			if (ok)
+			{
+				rotation += f_value;
+				++num_rotation_params;
+			}
+			break;
+		case 'u':
+			f_value = param_value.toDouble(&ok);
+			if (ok && qAbs(f_value) >= 0.0000000001)
+				scale_x = f_value;
+			break;
+		case 'v':
+			f_value = param_value.toDouble(&ok);
+			if (ok && qAbs(f_value) >= 0.0000000001)
+				scale_y = f_value;
+			break;
+		case 'd':
+			dimming = param_value.toInt();
+			break;
 		default:
 			; // nothing
 		}
@@ -1142,7 +1184,29 @@ void OcdFileImport::importLayoutObjects(const QString& param_string)
 	}
 	else if (type == 1)
 	{
-		addWarning(tr("Layout image object (%1) cannot be imported.").arg(path_or_description));
+		addWarning(tr("Layout image object (%1) imported as template.").arg(path_or_description));
+		
+		auto const filename = path_or_description.replace(QLatin1Char('\\'), QLatin1Char('/'));
+		auto const clean_path = QDir::cleanPath(filename);
+		// Leave template type resolution to Importer::validate().
+		auto* templ = new TemplatePlaceholder("", clean_path, map);
+		templ->setTemplateX(qRound64(x_value*1000));
+		templ->setTemplateY(qRound64(-y_value*1000));
+		
+		if (num_rotation_params)
+			templ->setTemplateRotation(Georeferencing::degToRad(rotation / num_rotation_params));
+			
+		templ->setTemplateScaleX(scale_x);
+		templ->setTemplateScaleY(scale_y);
+
+		auto const template_pos = std::min(0, map->getFirstFrontTemplate() - 1);
+		map->addTemplate(template_pos, std::unique_ptr<Template>{templ});
+		
+		if (view)
+		{
+			auto opacity = qMax(0.0, qMin(1.0, 0.01 * (100 - dimming)));
+			view->setTemplateVisibility(templ, { qreal(opacity), visibility == 1 && !layout_objects_hidden});
+		}
 	}
 }
 
