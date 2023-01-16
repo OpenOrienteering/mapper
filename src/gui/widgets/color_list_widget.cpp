@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -58,6 +58,8 @@
 #include "gui/widgets/segmented_button_layout.h"
 #include "util/item_delegates.h"
 #include "util/util.h"
+#include "core/symbols/symbol.h"
+#include "core/objects/object.h"
 
 // IWYU pragma: no_forward_declare QTableWidgetItem
 
@@ -224,9 +226,39 @@ void ColorListWidget::deleteColor()
 	if (row < 0) return; // In release mode
 	
 	// Show a warning if the color is used
-	if (map->isColorUsedByASymbol(map->getColor(row)))
+	const auto map_color = map->getColor(row);
+	if (map->isColorUsedByASymbol(map_color))
 	{
-		if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?"), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+		const auto symbols_num = map->getNumSymbols();
+		auto affected_symbols_num = 0;
+		for (auto i = 0; i < symbols_num; ++i)
+		{
+			auto symbol = map->getSymbol(i);
+			if (symbol->getType() && symbol->containsColor(map_color))
+				++affected_symbols_num;
+		}
+		const auto map_parts_num = map->getNumParts();
+		auto affected_objects_num = 0;
+		for (auto i = 0; i < map_parts_num; ++i)
+		{
+			const auto map_part = map->getPart(i);
+			const auto map_part_objects = map_part->getNumObjects();
+			for (auto j = 0; j < map_part_objects; ++j)
+			{
+				const auto *obj = map_part->getObject(j);
+				if (obj)
+				{
+					auto symbol = obj->getSymbol();
+					if (symbol->getType() && symbol->containsColor(map_color))
+						++affected_objects_num;
+				}
+			}
+		}
+		if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains %n symbol(s) with this color.\n", nullptr, affected_symbols_num)
+								 .append(affected_objects_num ? tr("Deleting it will remove the color from these symbols and %n object(s).\n", nullptr, affected_objects_num) :
+										 tr("Deleting it will remove the color from these symbols.\n"))
+								 .append(tr("Do you really want to do that?")),
+								 QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
 			return;
 	}
 	
