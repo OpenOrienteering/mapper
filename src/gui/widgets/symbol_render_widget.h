@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,6 +23,7 @@
 #define OPENORIENTEERING_SYMBOL_RENDER_WIDGET_H
 
 #include <set>
+#include <vector>
 
 #include <QObject>
 #include <QPoint>
@@ -119,6 +120,14 @@ public:
 	 * Deselects other symbols, if there was a different selection before.
 	 */
 	void selectSingleSymbol(int i);
+	
+	/**
+	 * @brief Selects the list of symbols exclusively.
+	 * 
+	 * Selects the symbols with the given numbers.
+	 * Deselects other symbols, if there was a different selection before.
+	 */
+	void selectMultipleSymbols(std::vector<int> const &symbols);
 	
 	/**
 	 * @brief Returns the recommended size for the widget.

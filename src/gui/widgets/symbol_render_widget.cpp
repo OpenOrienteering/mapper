@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2019 Kai Pastor
+ *    Copyright 2014-2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -311,6 +311,26 @@ void SymbolRenderWidget::selectSingleSymbol(int i)
 	}
 	current_symbol_index = i;
 	
+	emitGuarded_selectedSymbolsChanged();
+}
+
+void SymbolRenderWidget::selectMultipleSymbols(std::vector<int> const &symbols)
+{
+	if (selection_locked)
+		return;
+	
+	updateSelectedIcons();
+	selected_symbols.clear();
+	
+	for (const auto symbol : symbols)
+	{
+		if (symbol >= 0)
+		{
+			selected_symbols.insert(symbol);
+			updateSingleIcon(symbol);
+			current_symbol_index = symbol;
+		}
+	}
 	emitGuarded_selectedSymbolsChanged();
 }
 

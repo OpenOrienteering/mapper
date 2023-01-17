@@ -21,6 +21,8 @@
 
 #include "color_list_widget.h"
 
+#include <vector>
+
 #include <Qt>
 #include <QtGlobal>
 #include <QAbstractButton>
@@ -49,6 +51,7 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 #include <QVariant>
+#include <QPushButton>
 
 #include "core/map.h"
 #include "core/map_color.h"
@@ -60,6 +63,9 @@
 #include "util/util.h"
 #include "core/symbols/symbol.h"
 #include "core/objects/object.h"
+#include "symbol_render_widget.h"
+#include "gui/map/map_editor.h"
+#include "symbol_widget.h"
 
 // IWYU pragma: no_forward_declare QTableWidgetItem
 
@@ -77,10 +83,11 @@ QToolButton* createToolButton(const QIcon& icon, const QString& text)
 }  // anonymous namespace
 
 
-ColorListWidget::ColorListWidget(Map* map, MainWindow* window, QWidget* parent)
+ColorListWidget::ColorListWidget(Map* map, MainWindow* window, QWidget* parent, MapEditorController* map_editor_controller)
 : QWidget(parent)
 , map(map)
 , window(window)
+, map_editor_controller(map_editor_controller)
 {
 	react_to_changes = true;
 	
@@ -230,12 +237,12 @@ void ColorListWidget::deleteColor()
 	if (map->isColorUsedByASymbol(map_color))
 	{
 		const auto symbols_num = map->getNumSymbols();
-		auto affected_symbols_num = 0;
+		std::vector<int> affected_symbols;
 		for (auto i = 0; i < symbols_num; ++i)
 		{
 			auto symbol = map->getSymbol(i);
 			if (symbol->getType() && symbol->containsColor(map_color))
-				++affected_symbols_num;
+				affected_symbols.push_back(i);
 		}
 		const auto map_parts_num = map->getNumParts();
 		auto affected_objects_num = 0;
@@ -254,12 +261,29 @@ void ColorListWidget::deleteColor()
 				}
 			}
 		}
-		if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains %n symbol(s) with this color.\n", nullptr, affected_symbols_num)
-								 .append(affected_objects_num ? tr("Deleting it will remove the color from these symbols and %n object(s).\n", nullptr, affected_objects_num) :
-										 tr("Deleting it will remove the color from these symbols.\n"))
-								 .append(tr("Do you really want to do that?")),
-								 QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+		const auto symbol_widget = map_editor_controller->getSymbolWidget();
+		QMessageBox msgBox;
+		msgBox.setText(tr("The map contains %n symbol(s) with this color.\n", nullptr, affected_symbols.size())
+					   .append(affected_objects_num ? tr("Deleting it will remove the color from these symbols and %n object(s).\n", nullptr, affected_objects_num) :
+							   tr("Deleting it will remove the color from these symbols.\n"))
+					   .append(tr("Do you really want to do that?"))
+						);
+		msgBox.setWindowTitle(tr("Confirmation"));
+		msgBox.setIcon(QMessageBox::Warning);
+		QPushButton *selectButton = nullptr;
+		if (symbol_widget)
+			selectButton = msgBox.addButton(tr("Select affected symbols and abort"), QMessageBox::ActionRole);
+		msgBox.addButton(QMessageBox::Yes);
+		auto *noButton = msgBox.addButton(QMessageBox::No);
+		msgBox.exec();
+		auto clicked_button = msgBox.clickedButton();
+		if (!clicked_button || clicked_button == noButton)
 			return;
+		if (clicked_button == selectButton)
+		{
+			symbol_widget->selectMultipleSymbols(affected_symbols);
+			return;
+		}
 	}
 	
 	map->deleteColor(row);

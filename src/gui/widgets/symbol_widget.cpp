@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -80,6 +80,11 @@ bool SymbolWidget::isSymbolSelected(const Symbol* symbol) const
 void SymbolWidget::selectSingleSymbol(const Symbol* symbol)
 {
     render_widget->selectSingleSymbol(symbol);
+}
+
+void SymbolWidget::selectMultipleSymbols(std::vector<int> const &symbols)
+{
+	render_widget->selectMultipleSymbols(symbols);
 }
 
 void SymbolWidget::contextMenuEvent(QContextMenuEvent* event)

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021 Kai Pastor
+ *    Copyright 2012-2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -2172,7 +2172,7 @@ void MapEditorController::createColorWindow()
 	Q_ASSERT(!color_dock_widget);
 	
 	color_dock_widget = new EditorDockWidget(tr("Colors"), color_window_act, this, window);
-	color_dock_widget->setWidget(new ColorListWidget(map, window, color_dock_widget));
+	color_dock_widget->setWidget(new ColorListWidget(map, window, color_dock_widget, this));
 	color_dock_widget->widget()->setEnabled(!editing_in_progress);
 	color_dock_widget->setObjectName(QString::fromLatin1("Color dock widget"));
 	if (!window->restoreDockWidget(color_dock_widget))
