@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2020 Kai Pastor
+ *    Copyright 2016-2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -355,6 +355,8 @@ private:
 	AreaSymbol* default_area_symbol;
 	QHash<QByteArray, MapColor*> colors;
 	MapColor* default_pen_color;
+	
+	QVariantHash object_properties;
 	
 	MapCoordConstructor to_map_coord;
 	
