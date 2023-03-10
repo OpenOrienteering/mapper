@@ -41,12 +41,12 @@
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Magenta per i simboli delle piste</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nero sotto magenta per simboli delle piste</translation>
     </message>
     <message>
         <source>Black 65%</source>
