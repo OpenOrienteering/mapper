@@ -41,12 +41,16 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
+#include <QFile>
+#include <QFileDevice>
+#include <QFileInfo>
 #include <QFlags>
 #include <QFontMetricsF>
 #include <QIODevice>
 #include <QImage>
 #include <QLatin1Char>
 #include <QLatin1String>
+#include <QMessageBox>
 #include <QPointF>
 #include <QStringRef>
 #include <QTextCodec>
@@ -78,6 +82,7 @@
 #include "fileformats/ocd_types_v11.h"  // IWYU pragma: keep
 #include "fileformats/ocd_types_v12.h"  // IWYU pragma: keep
 #include "fileformats/ocd_types_v2018.h"
+#include "gui/file_dialog.h"
 #include "templates/template.h"
 #include "templates/template_map.h"
 #include "templates/template_placeholder.h"
@@ -1116,6 +1121,7 @@ void OcdFileImport::importLayoutObjects(const QString& param_string)
 	double x_value = 0.0;
 	double y_value = 0.0;
 	int dimming = 0;
+	QByteArray embedded_image;
 	
 	while (parameters.readNext())
 	{
@@ -1173,6 +1179,9 @@ void OcdFileImport::importLayoutObjects(const QString& param_string)
 		case 'd':
 			dimming = param_value.toInt();
 			break;
+		case 'F':
+			embedded_image = QByteArray::fromBase64(param_value.toUtf8());
+			break;
 		default:
 			; // nothing
 		}
@@ -1184,7 +1193,42 @@ void OcdFileImport::importLayoutObjects(const QString& param_string)
 	}
 	else if (type == 1)
 	{
-		addWarning(tr("Layout image object (%1) imported as template.").arg(path_or_description));
+		if (!embedded_image.isEmpty())
+		{
+			QMessageBox msgBox(QMessageBox::Question, tr("Import embedded image"), 
+							   tr("The map contains an embedded image (%1) which cannot be imported directly.\nDo you want to save the image locally and import it as template?").arg(path_or_description),
+							   QMessageBox::Yes | QMessageBox::No, nullptr);
+			if (msgBox.exec() != QMessageBox::Yes)
+				return;
+			
+			auto const filename = path_or_description.replace(QLatin1Char('\\'), QLatin1Char('/'));
+			const QFileInfo proposed_imagefile(QFileInfo(QDir::cleanPath(path)).dir(), QFileInfo(QDir::cleanPath(filename)).fileName());
+			QString imagefilename = FileDialog::getSaveFileName(
+									nullptr,
+									tr("Save embedded image"),
+									proposed_imagefile.filePath(),
+									tr("All files (*.*)"),
+									nullptr);
+			if (imagefilename.isEmpty())
+				return;
+			
+			QFile file(imagefilename);
+			if (file.open(QIODevice::WriteOnly))
+			{
+				file.write(embedded_image);
+				file.close();
+			}
+			if (file.error() != QFileDevice::NoError)
+			{
+				addWarning(tr("Error when trying to save embedded image (%1) locally.").arg(imagefilename));
+				return;
+			}
+			path_or_description = imagefilename;
+		}
+		else
+		{
+			addWarning(tr("Layout image object (%1) imported as template.").arg(path_or_description));
+		}
 		
 		auto const filename = path_or_description.replace(QLatin1Char('\\'), QLatin1Char('/'));
 		auto const clean_path = QDir::cleanPath(filename);
