@@ -31,6 +31,7 @@
 #include <QPointF>
 #include <QRectF>
 #include <QTransform>
+#include <QMetaType>
 
 #include "core/map_coord.h"
 #include "core/objects/object.h"
@@ -393,5 +394,8 @@ const TextObjectLineInfo*TextObject::getLineInfo(int i) const
 
 
 }  // namespace OpenOrienteering
+
+Q_DECLARE_METATYPE(OpenOrienteering::TextObject::HorizontalAlignment)
+Q_DECLARE_METATYPE(OpenOrienteering::TextObject::VerticalAlignment)
 
 #endif
