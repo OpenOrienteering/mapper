@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -32,6 +32,7 @@
 #include <QtGlobal>
 #include <QFlags>
 #include <QHash>
+#include <QVariant>
 #include <QImage>
 #include <QMetaType>
 #include <QRgb>
@@ -499,6 +500,26 @@ public:
 	 */
 	virtual bool hasRotatableFillPattern() const;
 	
+	/**
+	 * Sets an auxiliary property of this symbol.
+	 */
+	void setAuxiliaryProperty(QString key, QVariant value) { auxiliary_properties.insert(key, value); }
+	
+	/**
+	 * Returns an auxiliary property of this symbol.
+	 */
+	QVariant getAuxiliaryProperty(QString key) const { return auxiliary_properties.value(key); }
+	
+	/**
+	 * Returns an auxiliary property of this symbol or a default value.
+	 */
+	QVariant getAuxiliaryProperty(QString key, QVariant default_value) const { return auxiliary_properties.value(key, default_value); }
+	
+	/**
+	 * Returns a reference to the auxiliary property member.
+	 */
+	const QVariantHash& getAuxiliaryPropertyHash() const { return auxiliary_properties; }
+	
 protected:
 	/**
 	 * Sets the rotatability state of the symbol.
@@ -621,6 +642,7 @@ private:
 	bool is_hidden;           /// \see isHidden()
 	bool is_protected;        /// \see isProtected()
 	bool is_rotatable = false;
+	QVariantHash auxiliary_properties;	/// Auxiliary properties for import of objects (e.g., .ocd, .dxf files). Auxiliary properties are not saved in a map file.
 };
 
 
