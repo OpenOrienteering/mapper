@@ -826,7 +826,8 @@ bool Polygons::joinPolygons(path_t*& plist,
 
 	compdists(pointlist, ops, min, max, true, progressObserver, 50, 12);
 
-	sort(ops.begin(), ops.end(), greater_weight());
+	sort(ops.begin(), ops.end(), 
+	     [](const JOINOP& x, const JOINOP& y) { return x.weight > y.weight; });
 
 	nops = ops.size();
 	cntr = 0;

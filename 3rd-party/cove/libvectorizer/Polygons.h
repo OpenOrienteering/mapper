@@ -143,15 +143,6 @@ private:
 
 	typedef std::vector<JOINENDPOINT> JOINENDPOINTLIST;
 
-	struct greater_weight
-		: public std::binary_function<const JOINOP&, const JOINOP&, bool>
-	{
-		bool operator()(const JOINOP& x, const JOINOP& y)
-		{
-			return x.weight > y.weight;
-		}
-	};
-
 	// implementation dependent value...
 	static const int NPOINTS_MAX;
 
