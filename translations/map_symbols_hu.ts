@@ -279,7 +279,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
         <translation>A földletörés egy hirtelen talajszint-változás, amely világosan megkülönböztethető a környezetétől, pl. kavics vagy homok gödrök, közúti és vasúti bevágások vagy töltések.
 Minimális magasság: 1 m. A földletörés befolyásolhatja a futhatóságot. A fogazás a letörésfelület teljes területét reprezentálják.
-A hosszú földletöréseknél a végénél a minimális hosszúságnál rövidebb fogak használhatók. Ha két földletörés közel áll egymáshoz, akkor a fogak elhagyhatók. A átjárhatatlan földletöréseket az áthatolhatatlan szikla (201) szimbólummal kell ábrázolni.
+A hosszú földletöréseknél a végénél a minimális hosszúságnál rövidebb fogak használhatók. Ha két földletörés közel áll egymáshoz, akkor a fogak elhagyhatók. A áthatolhatatlan földletöréseket az áthatolhatatlan szikla (201) szimbólummal kell ábrázolni.
 Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     </message>
     <message>
@@ -295,7 +295,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
         <translation>A földletörés egy hirtelen talajszint-változás, amely világosan megkülönböztethető a környezetétől, pl. kavics vagy homok gödrök, közúti és vasúti bevágások vagy töltések.
 Minimális magasság: 1 m. A földletörés befolyásolhatja a futhatóságot. A fogazás a letörésfelület teljes területét reprezentálják.
-A hosszú földletöréseknél a végénél a minimális hosszúságnál rövidebb fogak használhatók. Ha két földletörés közel áll egymáshoz, akkor a fogak elhagyhatók. Az átjárhatatlan földletöréseket az áthatolhatatlan szikla (201) szimbólummal kell ábrázolni.
+A hosszú földletöréseknél a végénél a minimális hosszúságnál rövidebb fogak használhatók. Ha két földletörés közel áll egymáshoz, akkor a fogak elhagyhatók. Az áthatolhatatlan földletöréseket az áthatolhatatlan szikla (201) szimbólummal kell ábrázolni.
 Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     </message>
     <message>
@@ -311,7 +311,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
         <translation>A földletörés egy hirtelen talajszint-változás, amely világosan megkülönböztethető a környezetétől, pl. kavics vagy homok gödrök, közúti és vasúti bevágások vagy töltések.
 Minimális magasság: 1 m. A földletörés befolyásolhatja a futhatóságot. A fogazás a letörésfelület teljes területét reprezentálják.
-A hosszú földletöréseknél a végénél a minimális hosszúságnál rövidebb fogak használhatók. Ha két földletörés közel áll egymáshoz, akkor a fogak elhagyhatók. Az átjárhatatlan földletöréseket az áthatolhatatlan szikla (201) szimbólummal kell ábrázolni.
+A hosszú földletöréseknél a végénél a minimális hosszúságnál rövidebb fogak használhatók. Ha két földletörés közel áll egymáshoz, akkor a fogak elhagyhatók. Az áthatolhatatlan földletöréseket az áthatolhatatlan szikla (201) szimbólummal kell ábrázolni.
 Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     </message>
     <message>
@@ -554,14 +554,14 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201</comment>
         <translation>Egy olyan magas szikla, kőbánya vagy földletörés, amely olyan magas és meredek, hogy lehetetlen átjutni/mászni, vagy veszélyes.
 Függőleges sziklafelületek esetén a fogazás elhagyható, ha kevés a hely. A felső vonal vége lekerekített vagy négyzet alakú lehet. Rövidebb fogak használhatók a végén.
-Két átjárhatatlan szikla, illetve a járhatatlan sziklák és az egyéb átjárhatatlan jelek közötti távolságnak a térképen meg kell haladnia a 0,25 mm-t.
-Amikor az járhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. Az járhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
+Két áthatolhatatlan szikla, illetve az áthatolhatatlan sziklák és az egyéb áthatolhatatlan jelek közötti távolságnak a térképen meg kell haladnia a 0,25 mm-t.
+Amikor az áthatolhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. Az áthatolhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
 Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation>Járhatatlan sziklafal, szirt, minimális méret</translation>
+        <translation>Áthatolhatatlan sziklafal, szirt, minimális méret</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -572,14 +572,14 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.1</comment>
         <translation>Egy olyan magas szikla, kőbánya vagy földletörés, amely olyan magas és meredek, hogy lehetetlen átjutni/mászni, vagy veszélyes.
 Függőleges sziklafelületek esetén a fogazás elhagyható, ha kevés a hely. A felső vonal vége lekerekített vagy négyzet alakú lehet. Rövidebb fogak használhatók a végén.
-Két átjárhatatlan szikla, illetve a járhatatlan sziklák és az egyéb átjárhatatlan jelek közötti távolságnak a térképen meg kell haladnia a 0,25 mm-t.
-Amikor az járhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. Az járhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
+Két áthatolhatatlan szikla, illetve az áthatolhatatlan sziklák és az egyéb áthatolhatatlan jelek közötti távolságnak a térképen meg kell haladnia a 0,25 mm-t.
+Amikor az áthatolhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. Az áthatolhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
 Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation>Járhatatlan szirt, sziklafal forma ábrázolással (ISOM2000-ből)</translation>
+        <translation>Áthatolhatatlan szirt, sziklafal forma ábrázolással (ISOM2000-ből)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -589,7 +589,7 @@ Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
-        <translation>Járhatatlan sziklafal, felső vonal</translation>
+        <translation>Áthatolhatatlan sziklafal, felső vonal</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -600,14 +600,14 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.3</comment>
         <translation>Egy olyan magas szikla, kőbánya vagy földletörés, amely olyan magas és meredek, hogy lehetetlen átjutni/mászni, vagy veszélyes.
 Függőleges sziklafelületek esetén a fogazás elhagyható, ha kevés a hely. A felső vonal vége lekerekített vagy négyzet alakú lehet. Rövidebb fogak használhatók a végén.
-Két átjárhatatlan szikla, illetve a járhatatlan sziklák és az egyéb átjárhatatlan jelek közötti távolságnak a térképen meg kell haladnia a 0,25 mm-t.
-Amikor az járhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. Az járhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
+Két áthatolhatatlan szikla, illetve az áthatolhatatlan sziklák és az egyéb áthatolhatatlan jelek közötti távolságnak a térképen meg kell haladnia a 0,25 mm-t.
+Amikor az áthatolhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. Az áthatolhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
 Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation>Járhatatlan sziklafa, fogazás</translation>
+        <translation>Áthatolhatatlan sziklafa, fogazás</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -617,7 +617,7 @@ Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     <message>
         <source>Impassable cliff, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation>Járhatatlan sziklafal, minimum méret (ISOM2000-ből)</translation>
+        <translation>Áthatolhatatlan sziklafal, minimum méret (ISOM2000-ből)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -1225,7 +1225,7 @@ Minimális hosszúság (elkülönítve): két vonal (2,75 mm - lábnyom 41 m).</
     <message>
         <source>Uncrossable marsh, with outline</source>
         <comment>Name of symbol 307</comment>
-        <translation>Járhatatlan mocsár, körvonallal</translation>
+        <translation>Áthatolhatatlan mocsár, körvonallal</translation>
     </message>
     <message>
         <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol Uncrossable body of water (301). The symbol may be combined with a rough open land symbol (403, 404) to show openness.
@@ -1253,7 +1253,7 @@ Minimális szélesség: 0,3 mm (belül). Minimális terület: 0,5 mm² (belül).
     <message>
         <source>Uncrossable marsh, outline</source>
         <comment>Name of symbol 307.2</comment>
-        <translation>Járhatatlan mocsár, körvonal</translation>
+        <translation>Áthatolhatatlan mocsár, körvonal</translation>
     </message>
     <message>
         <source>The black outline emphasises that the feature is uncrossable.</source>
@@ -2355,7 +2355,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
 Lakóövezetekben a 75 m x 75 m alapterületet meghaladó épületeket sötétszürke kitöltéssel kell ábrázolni.
 Az épületeken átvezető átjárók esetében a rajzi térköz minimálisan 0.3 mm (terepi méret 4.5 m) kell legyen.
 A tiltott területeken belüli épületeket leegyszerűsítve kell ábrázolni.
-Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más átjárhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
+Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más áthatolhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
 Minimális alapterület: 0.5 mm x 0.5 mm (terepi méret: 7.5 m x 7.5 m).</translation>
     </message>
     <message>
@@ -2375,7 +2375,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
 Lakóövezetekben a 75 m x 75 m alapterületet meghaladó épületeket sötétszürke kitöltéssel kell ábrázolni.
 Az épületeken átvezető átjárók esetében a rajzi térköz minimálisan 0.3 mm (terepi méret 4.5 m) kell legyen.
 A tiltott területeken belüli épületeket leegyszerűsítve kell ábrázolni.
-Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más átjárhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
+Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más áthatolhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
 Minimális alapterület: 0.5 mm x 0.5 mm (terepi méret: 7.5 m x 7.5 m).</translation>
     </message>
     <message>
@@ -2395,7 +2395,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
 Lakóövezetekben a 75 m x 75 m alapterületet meghaladó épületeket sötétszürke kitöltéssel kell ábrázolni.
 Az épületeken átvezető átjárók esetében a rajzi térköz minimálisan 0.3 mm (terepi méret 4.5 m) kell legyen.
 A tiltott területeken belüli épületeket leegyszerűsítve kell ábrázolni.
-Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más átjárhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
+Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más áthatolhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
 Minimális alapterület: 0.5 mm x 0.5 mm (terepi méret: 7.5 m x 7.5 m).</translation>
     </message>
     <message>
@@ -2414,8 +2414,8 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
         <translation>Az épületeket a méretarány adta lehetőségeken belül alaprajz szerint kell ábrázolni.
 Lakóövezetekben a 75 m x 75 m alapterületet meghaladó épületeket sötétszürke kitöltéssel kell ábrázolni.
 Az épületeken átvezető átjárók esetében a rajzi térköz minimálisan 0.3 mm (terepi méret 4.5 m) kell legyen.
-A&#xa0;tiltott területeken belüli épületeket leegyszerűsítve kell ábrázolni.
-Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más átjárhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
+A tiltott területeken belüli épületeket leegyszerűsítve kell ábrázolni.
+Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más áthatolhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
 Minimális alapterület: 0.5 mm x 0.5 mm (terepi méret: 7.5 m x 7.5 m).</translation>
     </message>
     <message>
@@ -2435,7 +2435,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
 Lakóövezetekben a 75 m x 75 m alapterületet meghaladó épületeket sötétszürke kitöltéssel kell ábrázolni.
 Az épületeken átvezető átjárók esetében a rajzi térköz minimálisan 0.3 mm (terepi méret 4.5 m) kell legyen.
 A tiltott területeken belüli épületeket leegyszerűsítve kell ábrázolni.
-Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más átjárhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
+Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más áthatolhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
 Minimális alapterület: 0.5 mm x 0.5 mm (terepi méret: 7.5 m x 7.5 m).</translation>
     </message>
     <message>
@@ -3368,7 +3368,7 @@ Amikor egy áthatolhatatlan szikla leér a vízig, így lehetetlenné téve a sz
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation>Járhatatlan sziklafal, szirt, minimális méret</translation>
+        <translation>Áthatolhatatlan sziklafal, szirt, minimális méret</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -3384,7 +3384,7 @@ Amikor egy áthatolhatatlan szikla egyenesen a vízbe esik, így lehetetlen a sz
     <message>
         <source>Impassable cliff, plan shape representation</source>
         <comment>Name of symbol 201.2</comment>
-        <translation>Járhatatlan szirt, sziklafal forma ábrázolással</translation>
+        <translation>Áthatolhatatlan szirt, sziklafal forma ábrázolással</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -3394,13 +3394,13 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <comment>Description of symbol 201.2</comment>
         <translation>Olyan szikla, kőbánya vagy földletörés, amely olyan magas és meredek, hogy lehetetlen rajta áthaladni vagy mászni vagy veszélyes.
 A függőleges kőzetfelületek esetében a letörés jelek elhagyhatók, ha a rés rövid. &lt;b&gt;A forma alakjának ábrázolásához a legkisebb szélesség 0,35 mm. &lt;/b&gt; A végein rövidebb letörés jelek használhatók.
-Két járhatatlan szikla, illetve az áthatolhatatlan sziklák és más járhatatlan jellemzők közötti hézagnak a térképen meghaladnia kell a 0,3 mm-t.
+Két áthatolhatatlan szikla, illetve az áthatolhatatlan sziklák és más áthatolhatatlan jellemzők közötti hézagnak a térképen meghaladnia kell a 0,3 mm-t.
 Amikor egy áthatolhatatlan szikla egyenesen a vízbe esik, így lehetetlen a szikla mentén haladni a víz szélén, vagy a letörés jelek egyértelműen a partvonal felé terjednek ki, akkor a partvonal elhagyható. Egy áthatolhatatlan szikla összefonódik a kontúrvonalakkal.</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
-        <translation>Járhatatlan sziklafal, felső vonal</translation>
+        <translation>Áthatolhatatlan sziklafal, felső vonal</translation>
     </message>
     <message>
         <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
@@ -3410,7 +3410,7 @@ Amikor egy áthatolhatatlan szikla egyenesen a vízbe esik, így lehetetlen a sz
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation>Járhatatlan sziklafa, fogazás</translation>
+        <translation>Áthatolhatatlan sziklafa, fogazás</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -3420,7 +3420,7 @@ Amikor egy áthatolhatatlan szikla egyenesen a vízbe esik, így lehetetlen a sz
     <message>
         <source>Impassable cliff, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation>Járhatatlan sziklafal, minimum méret (ISOM2000-ből)</translation>
+        <translation>Áthatolhatatlan sziklafal, minimum méret (ISOM2000-ből)</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -4477,7 +4477,7 @@ A jobb olvashatóság érdekében a vonalak megszakíthatóak. A nagyméretű ta
     <message>
         <source>An impassable or uncrossable wall, normally more than 1.5 m high.</source>
         <comment>Description of symbol 515</comment>
-        <translation>Egy járhatatlan vagy átmászhatatlan fal, ami rendszerint 1.5 m-nél magasabb.</translation>
+        <translation>Egy áthatolhatatlan vagy átmászhatatlan fal, ami rendszerint 1.5 m-nél magasabb.</translation>
     </message>
     <message>
         <source>Fence</source>
@@ -4499,7 +4499,7 @@ Ha a kerítés zárt területet képez, a tüskéket belülre kell helyezni.</tr
     <message>
         <source>Impassable fence</source>
         <comment>Name of symbol 518</comment>
-        <translation>Járhatatlan kerítés</translation>
+        <translation>Áthatolhatatlan kerítés</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -6831,7 +6831,7 @@ A jobb olvashatóság érdekében azonban a szintvonalakat ki kell vágni, ha a 
 The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks shall be drawn with the symbol Impassable cliff (201). The line width of very high earth banks may be 0.37 mm.</source>
         <comment>Description of symbol 104</comment>
         <translation>A meredek földletörés a talajszint hirtelen változása, amely világosan megkülönböztethető a környezetétől, pl. kavics vagy homok gödrök, utak és vasúti vágatok vagy töltések.
-A tüskéknek meg kell mutatniuk a meredekség teljes mértékét, de elhagyhatók, ha két part közel van egymáshoz. A járhatatlan letöréseket a Járhatatlan szikla (201) szimbólummal kell megrajzolni. A nagyon magas földletörések vonalszélessége 0,37 mm lehet.</translation>
+A tüskéknek meg kell mutatniuk a meredekség teljes mértékét, de elhagyhatók, ha két part közel van egymáshoz. Az áthatolhatatlan letöréseket a Áthatolhatatlan szikla (201) szimbólummal kell megrajzolni. A nagyon magas földletörések vonalszélessége 0,37 mm lehet.</translation>
     </message>
     <message>
         <source>Earth bank, very high</source>
@@ -6843,7 +6843,7 @@ A tüskéknek meg kell mutatniuk a meredekség teljes mértékét, de elhagyhat�
 The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks shall be drawn with the symbol Impassable cliff (201). The line width of very high earth banks may be 0.37 mm.</source>
         <comment>Description of symbol 104.1</comment>
         <translation>A meredek földletörés a talajszint hirtelen változása, amely világosan megkülönböztethető a környezetétől, pl. kavics vagy homok gödrök, utak és vasúti vágatok vagy töltések.
-A tüskéknek meg kell mutatniuk a meredekség teljes mértékét, de elhagyhatók, ha két part közel van egymáshoz. Az átjárhatatlan letöréseket az járhatatlan sziklafal (201) szimbólummal kell megrajzolni. A nagyon magas földletörések vonalszélessége 0,37 mm lehet.</translation>
+A tüskéknek meg kell mutatniuk a meredekség teljes mértékét, de elhagyhatók, ha két part közel van egymáshoz. Az áthatolhatatlan letöréseket az áthatolhatatlan sziklafal (201) szimbólummal kell megrajzolni. A nagyon magas földletörések vonalszélessége 0,37 mm lehet.</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -7044,15 +7044,15 @@ Tags are drawn downwards, showing its full extent from the top line to the foot.
 Minimum height: 1.5 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 201</comment>
-        <translation>Járhatatlan szikla, kőfejtő vagy földletörés (lásd a 104. földletörés szimbólumát).
-A tüskéket lefelé húzzák, megmutatva annak teljes terjedelmét a felső vonaltól a lábig. A függőleges kőfelületeknél a tüskéket el lehet hagyni, ha kevés a hely, pl. keskeny járatok a sziklák között (az átjárót legalább 0,4 mm szélességgel kell megrajzolni). A tüskék kiterjedhetnek egy olyan terület szimbólumra, amely közvetlenül a sziklafal alatt ábrázolja a részleteket. Amikor egy sziklafal egyenesen a vízbe esik, és lehetetlenné teszi a szikla alatt való áthaladást a víz szélén, a partvonal elmarad, vagy a tüskék egyértelműen a partvonal fölé nyúlnak. Egy járhatatlan sziklának kölcsönhatásba kell lépnie a kontúrvonalakkal. Egy járhatatlan sziklán nem lehet áthaladni.
+        <translation>Áthatolhatatlan szikla, kőfejtő vagy földletörés (lásd a 104. földletörés szimbólumát).
+A tüskéket lefelé húzzák, megmutatva annak teljes terjedelmét a felső vonaltól a lábig. A függőleges kőfelületeknél a tüskéket el lehet hagyni, ha kevés a hely, pl. keskeny járatok a sziklák között (az átjárót legalább 0,4 mm szélességgel kell megrajzolni). A tüskék kiterjedhetnek egy olyan terület szimbólumra, amely közvetlenül a sziklafal alatt ábrázolja a részleteket. Amikor egy sziklafal egyenesen a vízbe esik, és lehetetlenné teszi a szikla alatt való áthaladást a víz szélén, a partvonal elmarad, vagy a tüskék egyértelműen a partvonal fölé nyúlnak. Egy áthatolhatatlan sziklának kölcsönhatásba kell lépnie a kontúrvonalakkal. Egy áthatolhatatlan sziklán nem lehet áthaladni.
 Minimális magasság: 1,5 m.
 Minimális hossz: 0,9 mm (lábnyom 3,6 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation>Járhatatlan sziklafal, szirt, minimális méret</translation>
+        <translation>Áthatolhatatlan sziklafal, szirt, minimális méret</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -7060,15 +7060,15 @@ Tags are drawn downwards, showing its full extent from the top line to the foot.
 Minimum height: 1.5 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 201.1</comment>
-        <translation>Járhatatlan szikla, kőfejtő vagy földletörés (lásd a 104. földletörés szimbólumát).
-A tüskéket lefelé húzzák, megmutatva annak teljes terjedelmét a felső vonaltól a lábig. A függőleges kőfelületeknél a tüskéket el lehet hagyni, ha kevés a hely, pl. keskeny járatok a sziklák között (az átjárót legalább 0,4 mm szélességgel kell megrajzolni). A tüskék kiterjedhetnek egy olyan terület szimbólumra, amely közvetlenül a sziklafal alatt ábrázolja a részleteket. Amikor egy sziklafal egyenesen a vízbe esik, és lehetetlenné teszi a szikla alatt való áthaladást a víz szélén, a partvonal elmarad, vagy a tüskék egyértelműen a partvonal fölé nyúlnak. Egy járhatatlan sziklának kölcsönhatásba kell lépnie a kontúrvonalakkal. Egy járhatatlan sziklán nem lehet áthaladni.
+        <translation>Áthatolhatatlan szikla, kőfejtő vagy földletörés (lásd a 104. földletörés szimbólumát).
+A tüskéket lefelé húzzák, megmutatva annak teljes terjedelmét a felső vonaltól a lábig. A függőleges kőfelületeknél a tüskéket el lehet hagyni, ha kevés a hely, pl. keskeny járatok a sziklák között (az átjárót legalább 0,4 mm szélességgel kell megrajzolni). A tüskék kiterjedhetnek egy olyan terület szimbólumra, amely közvetlenül a sziklafal alatt ábrázolja a részleteket. Amikor egy sziklafal egyenesen a vízbe esik, és lehetetlenné teszi a szikla alatt való áthaladást a víz szélén, a partvonal elmarad, vagy a tüskék egyértelműen a partvonal fölé nyúlnak. Egy áthatolhatatlan sziklának kölcsönhatásba kell lépnie a kontúrvonalakkal. Egy áthatolhatatlan sziklán nem lehet áthaladni.
 Minimális magasság: 1,5 m.
 Minimális hossz: 0,9 mm (lábnyom 3,6 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
-        <translation>Járhatatlan sziklafal, felső vonal</translation>
+        <translation>Áthatolhatatlan sziklafal, felső vonal</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -7076,15 +7076,15 @@ Tags are drawn downwards, showing its full extent from the top line to the foot.
 Minimum height: 1.5 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 201.3</comment>
-        <translation>Járhatatlan szikla, kőfejtő vagy földletörés (lásd a 104. földletörés szimbólumát).
-A tüskéket lefelé húzzák, megmutatva annak teljes terjedelmét a felső vonaltól a lábig. A függőleges kőfelületeknél a tüskéket el lehet hagyni, ha kevés a hely, pl. keskeny járatok a sziklák között (az átjárót legalább 0,4 mm szélességgel kell megrajzolni). A tüskék kiterjedhetnek egy olyan terület szimbólumra, amely közvetlenül a sziklafal alatt ábrázolja a részleteket. Amikor egy sziklafal egyenesen a vízbe esik, és lehetetlenné teszi a szikla alatt való áthaladást a víz szélén, a partvonal elmarad, vagy a tüskék egyértelműen a partvonal fölé nyúlnak. Egy járhatatlan sziklának kölcsönhatásba kell lépnie a kontúrvonalakkal. Egy járhatatlan sziklán nem lehet áthaladni.
+        <translation>Áthatolhatatlan szikla, kőfejtő vagy földletörés (lásd a 104. földletörés szimbólumát).
+A tüskéket lefelé húzzák, megmutatva annak teljes terjedelmét a felső vonaltól a lábig. A függőleges kőfelületeknél a tüskéket el lehet hagyni, ha kevés a hely, pl. keskeny járatok a sziklák között (az átjárót legalább 0,4 mm szélességgel kell megrajzolni). A tüskék kiterjedhetnek egy olyan terület szimbólumra, amely közvetlenül a sziklafal alatt ábrázolja a részleteket. Amikor egy sziklafal egyenesen a vízbe esik, és lehetetlenné teszi a szikla alatt való áthaladást a víz szélén, a partvonal elmarad, vagy a tüskék egyértelműen a partvonal fölé nyúlnak. Egy áthatolhatatlan sziklának kölcsönhatásba kell lépnie a kontúrvonalakkal. Egy áthatolhatatlan sziklán nem lehet áthaladni.
 Minimális magasság: 1,5 m.
 Minimális hossz: 0,9 mm (lábnyom 3,6 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation>Járhatatlan sziklafa, fogazás</translation>
+        <translation>Áthatolhatatlan sziklafa, fogazás</translation>
     </message>
     <message>
         <source>Tags are drawn downwards, showing a cliff&apos;s full extent from the top line to the foot. The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line.</source>
@@ -7094,19 +7094,19 @@ Minimális hossz: 0,9 mm (lábnyom 3,6 m).</translation>
     <message>
         <source>Impassable cliff, no tags, minimum size (from ISSOM)</source>
         <comment>Name of symbol 201.8</comment>
-        <translation>Járhatatlan szikla, nincsenek tüskék, minimális méret (az ISSOM-ból)</translation>
+        <translation>Áthatolhatatlan szikla, nincsenek tüskék, minimális méret (az ISSOM-ból)</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
 For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.4 mm).</source>
         <comment>Description of symbol 201.8</comment>
-        <translation>Járhatatlan szikla, kőfejtő vagy földletörés(lásd a 104. földletörés szimbólumát).
+        <translation>Áthatolhatatlan szikla, kőfejtő vagy földletörés(lásd a 104. földletörés szimbólumát).
 A függőleges kőfelületeknél a tüskéket el lehet hagyni, ha kevés a hely, pl. keskeny járatok a sziklák között (az átjárót legalább 0,4 mm szélességgel kell megrajzolni).</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size (from ISSOM)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation>Járhatatlan szikla, minimális méret (az ISSOM-ból)</translation>
+        <translation>Áthatolhatatlan szikla, minimális méret (az ISSOM-ból)</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -7114,8 +7114,8 @@ Tags are drawn downwards, showing its full extent from the top line to the foot.
 Minimum height: 1.5 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 201.9</comment>
-        <translation>Járhatatlan szikla, kőfejtő vagy földletörés (lásd a 104. földletörés szimbólumát).
-A tüskéket lefelé húzzák, megmutatva annak teljes terjedelmét a felső vonaltól a lábig. A függőleges kőfelületeknél a tüskéket el lehet hagyni, ha kevés a hely, pl. keskeny járatok a sziklák között (az átjárót legalább 0,4 mm szélességgel kell megrajzolni). A tüskék kiterjedhetnek egy olyan terület szimbólumra, amely közvetlenül a sziklafal alatt ábrázolja a részleteket. Amikor egy sziklafal egyenesen a vízbe esik, és lehetetlenné teszi a szikla alatt való áthaladást a víz szélén, a partvonal elmarad, vagy a tüskék egyértelműen a partvonal fölé nyúlnak. Egy járhatatlan sziklának kölcsönhatásba kell lépnie a kontúrvonalakkal. Egy járhatatlan sziklán nem lehet áthaladni.
+        <translation>Áthatolhatatlan szikla, kőfejtő vagy földletörés (lásd a 104. földletörés szimbólumát).
+A tüskéket lefelé húzzák, megmutatva annak teljes terjedelmét a felső vonaltól a lábig. A függőleges kőfelületeknél a tüskéket el lehet hagyni, ha kevés a hely, pl. keskeny járatok a sziklák között (az átjárót legalább 0,4 mm szélességgel kell megrajzolni). A tüskék kiterjedhetnek egy olyan terület szimbólumra, amely közvetlenül a sziklafal alatt ábrázolja a részleteket. Amikor egy sziklafal egyenesen a vízbe esik, és lehetetlenné teszi a szikla alatt való áthaladást a víz szélén, a partvonal elmarad, vagy a tüskék egyértelműen a partvonal fölé nyúlnak. Egy áthatolhatatlan sziklának kölcsönhatásba kell lépnie a kontúrvonalakkal. Egy áthatolhatatlan sziklán nem lehet áthaladni.
 Minimális magasság: 1,5 m.
 Minimális hossz: 0,9 mm (lábnyom 3,6 m).</translation>
     </message>
@@ -8028,7 +8028,7 @@ Minimális szélesség: 2 sor.</translation>
 Minimum area: 0.3 mm² (footprint 5 m²). Impassable vegetation shall not be crossed.
 Minimum width: 0.4 mm.</source>
         <comment>Description of symbol 410</comment>
-        <translation>Sűrű növényzet (fák vagy aljnövényzet) olyan területe, amely járhatatlan. A futási sebesség majdnem 0%.
+        <translation>Sűrű növényzet (fák vagy aljnövényzet) olyan területe, amely áthatolhatatlan. A futási sebesség majdnem 0%.
 Minimális terület: 0,3 mm² (5 m² alapterület). Az áthatolhatatlan növényzetet nem szabad keresztezni.
 Minimális szélesség: 0,4 mm.</translation>
     </message>
@@ -8040,7 +8040,7 @@ Minimális szélesség: 0,4 mm.</translation>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is impassable. Running speed is almost 0%.</source>
         <comment>Description of symbol 410.1</comment>
-        <translation>Sűrű növényzet (fák vagy aljnövényzet) olyan területe, amely járhatatlan. A futási sebesség majdnem 0%.</translation>
+        <translation>Sűrű növényzet (fák vagy aljnövényzet) olyan területe, amely áthatolhatatlan. A futási sebesség majdnem 0%.</translation>
     </message>
     <message>
         <source>Cultivated land</source>
@@ -8587,7 +8587,7 @@ If such a wall is higher than 1.5 m, it shall be represented with the symbol Imp
 Minimum length (isolated): 1.4 mm (footprint 5.6 m).</source>
         <comment>Description of symbol 513.1</comment>
         <translation>Az átjárható fal kőből, téglából, betonból stb. készült szerkezet, amely áthaladhat.
-Ha egy ilyen fal 1,5 m-nél magasabb, akkor azt az (515) Átjárhatatlan fal szimbólummal kell ábrázolni. A széles falakat alaprajzában kell megrajzolni az átjárható falszimbólum által körülhatárolt talajszimbólummal. Lehetőség szerint pontozott legyen (minimális hosszúság a pont körül 0,4 mm mindkét oldalon).
+Ha egy ilyen fal 1,5 m-nél magasabb, akkor azt az (515) Áthatolhatatlan fal szimbólummal kell ábrázolni. A széles falakat alaprajzában kell megrajzolni az átjárható falszimbólum által körülhatárolt talajszimbólummal. Lehetőség szerint pontozott legyen (minimális hosszúság a pont körül 0,4 mm mindkét oldalon).
 Minimális hossz (elszigetelt): 1,4 mm (lábnyom 5,6 m).</translation>
     </message>
     <message>
@@ -8613,8 +8613,8 @@ Minimális hossz (elszigetelt): 2,4 mm (lábnyom 9,6 m).</translation>
         <source>An impassable or uncrossable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed.
 Very wide impassable walls shall be drawn in plan shape and represented with the symbol Building (521).</source>
         <comment>Description of symbol 515</comment>
-        <translation>A járhatatlan vagy keresztezhetetlen fal vagy támfal olyan fal, amely eleget tesz a burkolat vagy a szilárd akadály funkciójának. Nem szabad átlépni.
-A nagyon széles, járhatatlan falakat tervszerűen meg kell rajzolni, és az (521) épület szimbólummal kell ábrázolni.</translation>
+        <translation>A áthatolhatatlan vagy keresztezhetetlen fal vagy támfal olyan fal, amely eleget tesz a burkolat vagy a szilárd akadály funkciójának. Nem szabad átlépni.
+A nagyon széles, áthatolhatatlan falakat tervszerűen meg kell rajzolni, és az (521) épület szimbólummal kell ábrázolni.</translation>
     </message>
     <message>
         <source>Passable fence or railing</source>
@@ -8640,7 +8640,7 @@ Minimális hossz (elszigetelt): 2,2 mm (lábnyom: 8,8 m).</translation>
 If the length is shorter than 3 mm, it must be presented with the symbol Impassable wall (515).
 Minimum length (isolated): 3 mm (footprint 12 m).</source>
         <comment>Description of symbol 518</comment>
-        <translation>A járhatatlan kerítést vagy korlátot nem szabad átlépni.
+        <translation>A áthatolhatatlan kerítést vagy korlátot nem szabad átlépni.
 Ha a hossz rövidebb, mint 3 mm, akkor azt az (515)Áthatolhatatlan fal szimbólummal kell feltüntetni.
 Minimális hossz (elszigetelt): 3 mm (lábnyom 12 m).</translation>
     </message>
@@ -8710,7 +8710,7 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521</comment>
         <translation>Egy épület egy viszonylag állandó építmény, amelynek teteje van.
 Az (520) szimbólumterületen belüli épületek, amelyekbe nem lehet belépni , egyszerűsített módon ábrázolhatók. A teljes épületen belüli területeket az épület részeként kell feltérképezni. Egy épületbe nem lehet belépni.
-&lt;b&gt; Az épületek és az egyéb járhatatlan elemek közötti minimális hézag 0,40 mm.... &lt;/b&gt;
+&lt;b&gt; Az épületek és az egyéb áthatolhatatlan elemek közötti minimális hézag 0,40 mm.... &lt;/b&gt;
 Minimális szélesség: 0,5 mm.
 Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
     </message>
@@ -8728,7 +8728,7 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521.1</comment>
         <translation>Egy épület egy viszonylag állandó építmény, amelynek teteje van.
 Az (520) szimbólumterületen belüli épületek, amelyekbe nem lehet belépni , egyszerűsített módon ábrázolhatók. A teljes épületen belüli területeket az épület részeként kell feltérképezni. Egy épületbe nem lehet belépni.
-&lt;b&gt; Az épületek és az egyéb járhatatlan elemek közötti minimális hézag 0,40 mm.... &lt;/b&gt;
+&lt;b&gt; Az épületek és az egyéb áthatolhatatlan elemek közötti minimális hézag 0,40 mm.... &lt;/b&gt;
 Minimális szélesség: 0,5 mm.
 Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
     </message>
@@ -8746,7 +8746,7 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521.3</comment>
         <translation>Egy épület egy viszonylag állandó építmény, amelynek teteje van.
 Az (520) szimbólumterületen belüli épületek, amelyekbe nem lehet belépni , egyszerűsített módon ábrázolhatók. A teljes épületen belüli területeket az épület részeként kell feltérképezni. Egy épületbe nem lehet belépni.
-&lt;b&gt; Az épületek és az egyéb járhatatlan elemek közötti minimális hézag 0,40 mm.... &lt;/b&gt;
+&lt;b&gt; Az épületek és az egyéb áthatolhatatlan elemek közötti minimális hézag 0,40 mm.... &lt;/b&gt;
 Minimális szélesség: 0,5 mm.
 Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
     </message>
@@ -8764,7 +8764,7 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521.4</comment>
         <translation>Egy épület egy viszonylag állandó építmény, amelynek teteje van.
 Az (520) szimbólumterületen belüli épületek, amelyekbe nem lehet belépni , egyszerűsített módon ábrázolhatók. A teljes épületen belüli területeket az épület részeként kell feltérképezni. Egy épületbe nem lehet belépni.
-&lt;b&gt; Az épületek és az egyéb járhatatlan elemek közötti minimális hézag 0,40 mm.... &lt;/b&gt;
+&lt;b&gt; Az épületek és az egyéb áthatolhatatlan elemek közötti minimális hézag 0,40 mm.... &lt;/b&gt;
 Minimális szélesség: 0,5 mm.
 Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
     </message>
@@ -9668,7 +9668,7 @@ The tags may extend over an area symbol representing detail immediately below th
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 201</comment>
-        <translation>Járhatatlan szikla, kőbánya vagy földpart [lásd a földletörés szimbólumát (106)]. A tüskéket lefelé húzzák, megmutatva annak teljes terjedelmét a felső vonaltól a lábig. A függőleges kőfelületeknél a tüskéket el lehet hagyni, ha kevés a hely, pl. keskeny járatok a sziklák között (az átjárót legalább 0,3 mm szélességgel kell megrajzolni).
+        <translation>Áthatolhatatlan szikla, kőbánya vagy földpart [lásd a földletörés szimbólumát (106)]. A tüskéket lefelé húzzák, megmutatva annak teljes terjedelmét a felső vonaltól a lábig. A függőleges kőfelületeknél a tüskéket el lehet hagyni, ha kevés a hely, pl. keskeny járatok a sziklák között (az átjárót legalább 0,3 mm szélességgel kell megrajzolni).
 
 A tüskék kiterjedhetnek egy olyan terület szimbólumra, amely közvetlenül a sziklafal alatt ábrázolja a részleteket. Amikor egy sziklafal egyenesen a vízbe esik, és lehetetlenné válik a szikla alatt való áthaladás a víz szélén, a partvonalat elhagyják, vagy a tüskéknek egyértelműen a partvonal felett kell lenniük. Minimális magassága 2 méter.
 
@@ -9678,7 +9678,7 @@ A szabályt megszegő versenyzőket ki kell zárni.&lt;/span&gt;</translation>
     <message>
         <source>Impassable cliff, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
         <comment>Name of symbol 201.0.1</comment>
-        <translation>Járhatatlan szikla, minimális méret &lt;span style=&quot;color:magenta&quot;&gt;( tilos keresztezni)&lt;/span&gt;</translation>
+        <translation>Áthatolhatatlan szikla, minimális méret &lt;span style=&quot;color:magenta&quot;&gt;( tilos keresztezni)&lt;/span&gt;</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).
@@ -9688,7 +9688,7 @@ The tags may extend over an area symbol representing detail immediately below th
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 201.0.1</comment>
-        <translation>Járhatatlan szikla, kőbánya vagy földpart [lásd a földletörés szimbólumát (106)]. A tüskéket lefelé húzzák, megmutatva annak teljes terjedelmét a felső vonaltól a lábig. A függőleges kőfelületeknél a tüskéket el lehet hagyni, ha kevés a hely, pl. keskeny járatok a sziklák között (az átjárót legalább 0,3 mm szélességgel kell megrajzolni).
+        <translation>Áthatolhatatlan szikla, kőbánya vagy földpart [lásd a földletörés szimbólumát (106)]. A tüskéket lefelé húzzák, megmutatva annak teljes terjedelmét a felső vonaltól a lábig. A függőleges kőfelületeknél a tüskéket el lehet hagyni, ha kevés a hely, pl. keskeny járatok a sziklák között (az átjárót legalább 0,3 mm szélességgel kell megrajzolni).
 
 A tüskék kiterjedhetnek egy olyan terület szimbólumra, amely közvetlenül a sziklafal alatt ábrázolja a részleteket. Amikor egy sziklafal egyenesen a vízbe esik, és lehetetlenné válik a szikla alatt való áthaladás a víz szélén, a partvonalat elhagyják, vagy a tüskéknek egyértelműen a partvonal felett kell lenniük. Minimális magassága 2 méter.
 
@@ -9698,7 +9698,7 @@ A szabályt megszegő versenyzőket ki kell zárni.&lt;/span&gt;</translation>
     <message>
         <source>Impassable cliff, no tags &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
         <comment>Name of symbol 201.1</comment>
-        <translation>Járhatatlan szikla, fogazás nélkül &lt;span style=&quot;color:magenta&quot;&gt;( tilos keresztezni)&lt;/span&gt;</translation>
+        <translation>Áthatolhatatlan szikla, fogazás nélkül &lt;span style=&quot;color:magenta&quot;&gt;( tilos keresztezni)&lt;/span&gt;</translation>
     </message>
     <message>
         <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
@@ -9708,7 +9708,7 @@ A szabályt megszegő versenyzőket ki kell zárni.&lt;/span&gt;</translation>
     <message>
         <source>Impassable cliff, no tags, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
         <comment>Name of symbol 201.1.1</comment>
-        <translation>Járhatatlan szikla,fogazás nélkül, minimális méret &lt;span style=&quot;color:magenta&quot;&gt;( tilos keresztezni)&lt;/span&gt;</translation>
+        <translation>Áthatolhatatlan szikla,fogazás nélkül, minimális méret &lt;span style=&quot;color:magenta&quot;&gt;( tilos keresztezni)&lt;/span&gt;</translation>
     </message>
     <message>
         <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
@@ -10054,9 +10054,9 @@ A szabályt megszegő versenyzőket ki kell zárni!&lt;/span&gt;</translation>
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable marsh!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 309</comment>
-        <translation>Mocsár, amely járhatatlan, vagy veszélyt jelenthet a versenyzőre. A jellemzőt nem lehet vagy nem szabad átlépni.
+        <translation>Mocsár, amely áthatolhatatlan, vagy veszélyt jelenthet a versenyzőre. A jellemzőt nem lehet vagy nem szabad átlépni.
 
-&lt;span style=&quot;color:magenta&quot;&gt;Az járhatatlan mocsarat tilos keresztezni!
+&lt;span style=&quot;color:magenta&quot;&gt;Az áthatolhatatlan mocsarat tilos keresztezni!
 A szabályt megszegő versenyzőket ki kell zárni!&lt;/span&gt;</translation>
     </message>
     <message>
@@ -10710,7 +10710,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 526.1</comment>
         <translation>Az épület egy viszonylag állandó, tetővel rendelkező építmény. A településen, magánterületen (527.1) belüli épületek egyszerűsítve is ábrázolhatók. Az épületen belüli struktúrák jelölhetők, ha a versenyző számára ez a tájékozódást segítő információt szolgáltat.
 
-A minimális rés épületek között és épületek és másik járhatatlan jellemzők között 0.40 mm. A fekete képernyő százalékot a terep szerint kell választani. Egy sötétebb kitöltési minta nagyobb kontrasztot biztosít a járható területekhez viszonyítva, mint például az utcákkal, lépcsőházakkal és sátrakkal szemben, amíg egy világos háttér jóval olvashatóbbá teszi a körvonalakat és a pálya felülnyomást városi terepen (ami fontos a nagyon sűrűn épített és meredek városi terepen). A fekete kitöltési jelnek egyformának kell lenni egész térképen.
+A minimális rés épületek között és épületek és másik áthatolhatatlan jellemzők között 0.40 mm. A fekete képernyő százalékot a terep szerint kell választani. Egy sötétebb kitöltési minta nagyobb kontrasztot biztosít a járható területekhez viszonyítva, mint például az utcákkal, lépcsőházakkal és sátrakkal szemben, amíg egy világos háttér jóval olvashatóbbá teszi a körvonalakat és a pálya felülnyomást városi terepen (ami fontos a nagyon sűrűn épített és meredek városi terepen). A fekete kitöltési jelnek egyformának kell lenni egész térképen.
 
 &lt;span style=&quot;color:magenta&quot;&gt;Tilos keresztül menni vagy átmászni az épületen!
 A szabályt megszegő versenyzőket ki kell zárni!&lt;/span&gt;</translation>
@@ -10750,7 +10750,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 526.1.3</comment>
         <translation>Az épület egy viszonylag állandó, tetővel rendelkező építmény. A településen, magánterületen (527.1) belüli épületek egyszerűsítve is ábrázolhatók. Az épületen belüli struktúrák jelölhetők, ha a versenyző számára ez a tájékozódást segítő információt szolgáltat.
 
-A minimális rés épületek között és épületek és másik járhatatlan jellemzők között 0.40 mm. A fekete képernyő százalékot a terep szerint kell választani. Egy sötétebb kitöltési minta nagyobb kontrasztot biztosít a járható területekhez viszonyítva, mint például az utcákkal, lépcsőházakkal és sátrakkal szemben, amíg egy világos háttér jóval olvashatóbbá teszi a körvonalakat és a pálya felülnyomást városi terepen (ami fontos a nagyon sűrűn épített és meredek városi terepen). A fekete kitöltési jelnek egyformának kell lenni egész térképen.
+A minimális rés épületek között és épületek és másik áthatolhatatlan jellemzők között 0.40 mm. A fekete képernyő százalékot a terep szerint kell választani. Egy sötétebb kitöltési minta nagyobb kontrasztot biztosít a járható területekhez viszonyítva, mint például az utcákkal, lépcsőházakkal és sátrakkal szemben, amíg egy világos háttér jóval olvashatóbbá teszi a körvonalakat és a pálya felülnyomást városi terepen (ami fontos a nagyon sűrűn épített és meredek városi terepen). A fekete kitöltési jelnek egyformának kell lenni egész térképen.
 
 &lt;span style=&quot;color:magenta&quot;&gt;Tilos keresztül menni vagy átmászni az épületen!
 A szabályt megszegő versenyzőket ki kell zárni!&lt;/span&gt;</translation>
@@ -11746,7 +11746,7 @@ A lila vonal a rajt jeltől tart a cél szimbólum felé. Ez az egyszerű megkö
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.0.1</comment>
-        <translation>Járhatatlan sziklafal, szirt, minimális méret</translation>
+        <translation>Áthatolhatatlan sziklafal, szirt, minimális méret</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -11766,7 +11766,7 @@ A lila vonal a rajt jeltől tart a cél szimbólum felé. Ez az egyszerű megkö
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.2</comment>
-        <translation>Járhatatlan sziklafa, fogazás</translation>
+        <translation>Áthatolhatatlan sziklafa, fogazás</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -12344,7 +12344,7 @@ Ez az ISOM &quot;302 Tavacska&quot; szimbóluma, de az ISMTBOM &quot;301 Tó&quo
     <message>
         <source>A pipeline which cannot be crossed. If an uncrossable pipeline is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 534</comment>
-        <translation>Olyan csővezeték, amelyet nem lehet átlépni. Ha az átjárhatatlan csővezetéken az áthaladás tilos, akkor azt 707-es szimbólummal (tiltott határ) kell megjelölni.</translation>
+        <translation>Olyan csővezeték, amelyet nem lehet átlépni. Ha az áthatolhatatlan csővezetéken az áthaladás tilos, akkor azt 707-es szimbólummal (tiltott határ) kell megjelölni.</translation>
     </message>
     <message>
         <source>High tower</source>
@@ -13533,7 +13533,7 @@ Megjegyzés: ha az víz szélesebb 0.25mm-nél akkor mindkét oldalon 0.5 mm-rel
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.0.1</comment>
-        <translation>Járhatatlan sziklafal, szirt, minimális méret</translation>
+        <translation>Áthatolhatatlan sziklafal, szirt, minimális méret</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -13553,7 +13553,7 @@ Megjegyzés: ha az víz szélesebb 0.25mm-nél akkor mindkét oldalon 0.5 mm-rel
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.2</comment>
-        <translation>Járhatatlan sziklafa, fogazás</translation>
+        <translation>Áthatolhatatlan sziklafa, fogazás</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -15341,7 +15341,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
         <translation>A földletörés egy hirtelen talajszint-változás, amely világosan megkülönböztethető a környezetétől, pl. kavics vagy homok gödrök, közúti és vasúti bevágások vagy töltések.
 Minimális magasság: 1 m. A földletörés befolyásolhatja a futhatóságot. A fogazás a letörésfelület teljes területét reprezentálják.
-A hosszú földletöréseknél a végénél a minimális hosszúságnál rövidebb fogak használhatók. Ha két földletörés közel áll egymáshoz, akkor a fogak elhagyhatók. A járhatatlan földletöréseket az áthatolhatatlan szikla (201) szimbólummal kell ábrázolni.
+A hosszú földletöréseknél a végénél a minimális hosszúságnál rövidebb fogak használhatók. Ha két földletörés közel áll egymáshoz, akkor a fogak elhagyhatók. Az áthatolhatatlan földletöréseket az áthatolhatatlan szikla (201) szimbólummal kell ábrázolni.
 Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     </message>
     <message>
@@ -15357,7 +15357,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
         <translation>A földletörés egy hirtelen talajszint-változás, amely világosan megkülönböztethető a környezetétől, pl. kavics vagy homok gödrök, közúti és vasúti bevágások vagy töltések.
 Minimális magasság: 1 m. A földletörés befolyásolhatja a futhatóságot. A fogazás a letörésfelület teljes területét reprezentálják.
-A hosszú földletöréseknél a végénél a minimális hosszúságnál rövidebb fogak használhatók. Ha két földletörés közel áll egymáshoz, akkor a fogak elhagyhatók. A járhatatlan földletöréseket az áthatolhatatlan szikla (201) szimbólummal kell ábrázolni.
+A hosszú földletöréseknél a végénél a minimális hosszúságnál rövidebb fogak használhatók. Ha két földletörés közel áll egymáshoz, akkor a fogak elhagyhatók. Az áthatolhatatlan földletöréseket az áthatolhatatlan szikla (201) szimbólummal kell ábrázolni.
 Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     </message>
     <message>
@@ -15373,7 +15373,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
         <translation>A földletörés egy hirtelen talajszint-változás, amely világosan megkülönböztethető a környezetétől, pl. kavics vagy homok gödrök, közúti és vasúti bevágások vagy töltések.
 Minimális magasság: 1 m. A földletörés befolyásolhatja a futhatóságot. A fogazás a letörésfelület teljes területét reprezentálják.
-A hosszú földletöréseknél a végénél a minimális hosszúságnál rövidebb fogak használhatók. Ha két földletörés közel áll egymáshoz, akkor a fogak elhagyhatók. A járhatatlan földletöréseket az áthatolhatatlan szikla (201) szimbólummal kell ábrázolni.
+A hosszú földletöréseknél a végénél a minimális hosszúságnál rövidebb fogak használhatók. Ha két földletörés közel áll egymáshoz, akkor a fogak elhagyhatók. Az áthatolhatatlan földletöréseket az áthatolhatatlan szikla (201) szimbólummal kell ábrázolni.
 Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     </message>
     <message>
@@ -15470,14 +15470,14 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201</comment>
         <translation>Egy olyan magas szikla, kőbánya vagy földletörés, amely olyan magas és meredek, hogy lehetetlen átjutni/mászni, vagy veszélyes.
 Függőleges sziklafelületek esetén a fogazás elhagyható, ha kevés a hely. A felső vonal vége lekerekített vagy négyzet alakú lehet. Rövidebb fogak használhatók a végén.
-Két átjárhatatlan szikla, illetve a járhatatlan sziklák és az egyéb átjárhatatlan jelek közötti távolságnak a térképen meg kell haladnia a 0,25 mm-t.
-Amikor az járhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. A járhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
+Két áthatolhatatlan szikla, illetve a áthatolhatatlan sziklák és az egyéb áthatolhatatlan jelek közötti távolságnak a térképen meg kell haladnia a 0,25 mm-t.
+Amikor az áthatolhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. Az áthatolhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
 Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation>Járhatatlan sziklafal, szirt, minimális méret</translation>
+        <translation>Áthatolhatatlan sziklafal, szirt, minimális méret</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -15488,14 +15488,14 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.1</comment>
         <translation>Egy olyan magas szikla, kőbánya vagy földletörés, amely olyan magas és meredek, hogy lehetetlen átjutni/mászni, vagy veszélyes.
 Függőleges sziklafelületek esetén a fogazás elhagyható, ha kevés a hely. A felső vonal vége lekerekített vagy négyzet alakú lehet. Rövidebb fogak használhatók a végén.
-Két átjárhatatlan szikla, illetve a járhatatlan sziklák és az egyéb átjárhatatlan jelek közötti távolságnak a térképen meg kell haladnia a 0,25 mm-t.
-Amikor az járhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. A járhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
+Két áthatolhatatlan szikla, illetve a áthatolhatatlan sziklák és az egyéb áthatolhatatlan jelek közötti távolságnak a térképen meg kell haladnia a 0,25 mm-t.
+Amikor az áthatolhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. Az áthatolhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
 Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation>Járhatatlan szirt, sziklafal forma ábrázolással (ISOM2000-ből)</translation>
+        <translation>Áthatolhatatlan szirt, sziklafal forma ábrázolással (ISOM2000-ből)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -15505,7 +15505,7 @@ Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
-        <translation>Járhatatlan sziklafal, felső vonal</translation>
+        <translation>Áthatolhatatlan sziklafal, felső vonal</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -15516,14 +15516,14 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.3</comment>
         <translation>Egy olyan magas szikla, kőbánya vagy földletörés, amely olyan magas és meredek, hogy lehetetlen átjutni/mászni, vagy veszélyes.
 Függőleges sziklafelületek esetén a fogazás elhagyható, ha kevés a hely. A felső vonal vége lekerekített vagy négyzet alakú lehet. Rövidebb fogak használhatók a végén.
-Két átjárhatatlan szikla, illetve a járhatatlan sziklák és az egyéb átjárhatatlan jelek közötti távolságnak a térképen meg kell haladnia a 0,25 mm-t.
-Amikor az járhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. A járhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
+Két áthatolhatatlan szikla, illetve a áthatolhatatlan sziklák és az egyéb áthatolhatatlan jelek közötti távolságnak a térképen meg kell haladnia a 0,25 mm-t.
+Amikor az áthatolhatatlan szikla egyenesen a vízbe esik, és ez lehetetlenné teszi a szikla alatt a víz szélén való áthaladást, a partvonalat elhagyják, vagy a fogaknak egyértelműen a partvonal felett kell elhelyezkedniük. Az áthatolhatatlan sziklának kölcsönhatásba kell lépnie a szintvonallal.
 Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation>Járhatatlan sziklafa, fogazás</translation>
+        <translation>Áthatolhatatlan sziklafa, fogazás</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -15533,7 +15533,7 @@ Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     <message>
         <source>Impassable cliff, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation>Járhatatlan sziklafal, minimum méret (ISOM2000-ből)</translation>
+        <translation>Áthatolhatatlan sziklafal, minimum méret (ISOM2000-ből)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -16395,7 +16395,7 @@ Minimális hosszúság (elkülönítve): 1.5 mm (terepi méret: 22.5 m).</transl
     <message>
         <source>Impassable fence</source>
         <comment>Name of symbol 518</comment>
-        <translation>Járhatatlan kerítés</translation>
+        <translation>Áthatolhatatlan kerítés</translation>
     </message>
     <message>
         <source>An impassable or uncrossable fence, normally more than 1.5 m high.
@@ -16495,7 +16495,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
 Lakóövezetekben a&#xa0;75 m x 75 m alapterületet meghaladó épületeket sötétszürke kitöltéssel kell ábrázolni.
 Az épületeken átvezető átjárók esetében a&#xa0;rajzi térköz minimálisan 0.3 mm (terepi méret 4.5 m) kell legyen.
 A&#xa0;tiltott területeken belüli épületeket leegyszerűsítve kell ábrázolni.
-Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más átjárhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
+Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más áthatolhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
 Minimális alapterület: 0.5 mm x 0.5 mm (terepi méret: 7.5 m x 7.5 m).</translation>
     </message>
     <message>
@@ -16515,7 +16515,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
 Lakóövezetekben a&#xa0;75 m x 75 m alapterületet meghaladó épületeket sötétszürke kitöltéssel kell ábrázolni.
 Az épületeken átvezető átjárók esetében a&#xa0;rajzi térköz minimálisan 0.3 mm (terepi méret 4.5 m) kell legyen.
 A&#xa0;tiltott területeken belüli épületeket leegyszerűsítve kell ábrázolni.
-Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más átjárhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
+Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más áthatolhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
 Minimális alapterület: 0.5 mm x 0.5 mm (terepi méret: 7.5 m x 7.5 m).</translation>
     </message>
     <message>
@@ -16535,7 +16535,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
 Lakóövezetekben a&#xa0;75 m x 75 m alapterületet meghaladó épületeket sötétszürke kitöltéssel kell ábrázolni.
 Az épületeken átvezető átjárók esetében a&#xa0;rajzi térköz minimálisan 0.3 mm (terepi méret 4.5 m) kell legyen.
 A&#xa0;tiltott területeken belüli épületeket leegyszerűsítve kell ábrázolni.
-Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más átjárhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
+Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más áthatolhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
 Minimális alapterület: 0.5 mm x 0.5 mm (terepi méret: 7.5 m x 7.5 m).</translation>
     </message>
     <message>
@@ -16555,7 +16555,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
 Lakóövezetekben a&#xa0;75 m x 75 m alapterületet meghaladó épületeket sötétszürke kitöltéssel kell ábrázolni.
 Az épületeken átvezető átjárók esetében a&#xa0;rajzi térköz minimálisan 0.3 mm (terepi méret 4.5 m) kell legyen.
 A&#xa0;tiltott területeken belüli épületeket leegyszerűsítve kell ábrázolni.
-Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más átjárhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
+Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más áthatolhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
 Minimális alapterület: 0.5 mm x 0.5 mm (terepi méret: 7.5 m x 7.5 m).</translation>
     </message>
     <message>
@@ -16575,7 +16575,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
 Lakóövezetekben a&#xa0;75 m x 75 m alapterületet meghaladó épületeket sötétszürke kitöltéssel kell ábrázolni.
 Az épületeken átvezető átjárók esetében a&#xa0;rajzi térköz minimálisan 0.3 mm (terepi méret 4.5 m) kell legyen.
 A&#xa0;tiltott területeken belüli épületeket leegyszerűsítve kell ábrázolni.
-Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más átjárhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
+Az épülettel teljesen körbezárt területeket az épület részeként kell feltüntetni, külön nem kell ábrázolni. Az épületek közötti, illetve az épületek és más áthatolhatatlan tereptárgyak közötti rajzi térköz minimális értéke 0.4 mm.
 Minimális alapterület: 0.5 mm x 0.5 mm (terepi méret: 7.5 m x 7.5 m).</translation>
     </message>
     <message>
@@ -17675,7 +17675,7 @@ Térkép szimbólum: ISOM 107</translation>
 
 Map symbols: ISOM 201, 203</source>
         <comment>Description of symbol 2.1</comment>
-        <translation>Szikla vagy sziklafal. Lehet járható vagy járhatatlan.
+        <translation>Szikla vagy sziklafal. Lehet járható vagy áthatolhatatlan.
 
 Térkép szimbólumok: ISOM 201, 203</translation>
     </message>
