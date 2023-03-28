@@ -607,7 +607,7 @@ Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation>Áthatolhatatlan sziklafa, fogazás</translation>
+        <translation>Áthatolhatatlan sziklafal, fogazás</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -3410,7 +3410,7 @@ Amikor egy áthatolhatatlan szikla egyenesen a vízbe esik, így lehetetlen a sz
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation>Áthatolhatatlan sziklafa, fogazás</translation>
+        <translation>Áthatolhatatlan sziklafal, fogazás</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -7084,7 +7084,7 @@ Minimális hossz: 0,9 mm (lábnyom 3,6 m).</translation>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation>Áthatolhatatlan sziklafa, fogazás</translation>
+        <translation>Áthatolhatatlan sziklafal, fogazás</translation>
     </message>
     <message>
         <source>Tags are drawn downwards, showing a cliff&apos;s full extent from the top line to the foot. The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line.</source>
@@ -11766,7 +11766,7 @@ A lila vonal a rajt jeltől tart a cél szimbólum felé. Ez az egyszerű megkö
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.2</comment>
-        <translation>Áthatolhatatlan sziklafa, fogazás</translation>
+        <translation>Áthatolhatatlan sziklafal, fogazás</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -13553,7 +13553,7 @@ Megjegyzés: ha az víz szélesebb 0.25mm-nél akkor mindkét oldalon 0.5 mm-rel
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.2</comment>
-        <translation>Áthatolhatatlan sziklafa, fogazás</translation>
+        <translation>Áthatolhatatlan sziklafal, fogazás</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -15523,7 +15523,7 @@ Minimális hosszúság: 0,6 mm (lábnyom 9 m).</translation>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation>Áthatolhatatlan sziklafa, fogazás</translation>
+        <translation>Áthatolhatatlan sziklafal, fogazás</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
