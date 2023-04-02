@@ -178,6 +178,7 @@ jobs:
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
           -DANDROID_SDK_INSTALL_ROOT=$(HOME)
           -DANDROID_NDK_INSTALL_ROOT=$(HOME)
+          -DANDROID_NDK_ROOT=FALSE
           -DANDROID_BUILD_LIBCXX=1
         buildArgs: -j5
         toolchainTargets:
@@ -214,6 +215,7 @@ jobs:
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
           -DANDROID_SDK_INSTALL_ROOT=$(HOME)
           -DANDROID_NDK_INSTALL_ROOT=$(HOME)
+          -DANDROID_NDK_ROOT=FALSE
           -DANDROID_BUILD_LIBCXX=1
         buildArgs: -j5
         toolchainTargets:
@@ -250,6 +252,7 @@ jobs:
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
           -DANDROID_SDK_INSTALL_ROOT=$(HOME)
           -DANDROID_NDK_INSTALL_ROOT=$(HOME)
+          -DANDROID_NDK_ROOT=FALSE
           -DANDROID_BUILD_LIBCXX=1
         buildArgs: -j5
         toolchainTargets:
@@ -286,6 +289,7 @@ jobs:
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
           -DANDROID_SDK_INSTALL_ROOT=$(HOME)
           -DANDROID_NDK_INSTALL_ROOT=$(HOME)
+          -DANDROID_NDK_ROOT=FALSE
           -DANDROID_BUILD_LIBCXX=1
         buildArgs: -j5
         toolchainTargets:
