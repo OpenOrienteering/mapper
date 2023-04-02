@@ -35,5 +35,6 @@ steps:
     sudo xcode-select -s /Applications/Xcode_11.7.app/Contents/Developer
     xcode-select --print-path
     pip install lxml
+    sdkmanager --uninstall ndk
   displayName: 'Prepare macOS build tools'
 
