@@ -51,6 +51,8 @@ steps:
     if [ -z "${APP_ID_SUFFIX}" -a -n "${VERSION_DISPLAY}" ] ; then
       echo "##vso[task.setVariable variable=APP_ID_SUFFIX].${BUILD_SOURCEBRANCHNAME}"
     fi
+    echo "##vso[task.setVariable variable=ANDROID_NDK]"
+    echo "##vso[task.setVariable variable=ANDROID_NDK_HOME]"
     # Fix Superbuild sdk_host quirk
     echo "##vso[task.setVariable variable=ANDROID_NDK_ROOT]"
     env | sort

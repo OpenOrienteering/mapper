@@ -41,13 +41,12 @@ steps:
     fi
     
     if [ -n "${CLAZY_VERSION}" ] ; then
-      sudo apt-get install clang-tidy-9 clazy # for extra checks
+      ## apt-cache policy clang-tidy-8
+      sudo apt-get remove -y libllvm8   # possibly incompatible
+      sudo apt-get install clang-tidy clazy # for extra checks
       echo "##vso[task.setVariable variable=CXX]clazy"
     fi
     if false ; then
-      ## apt-cache policy clang-tidy-8
-      sudo apt-get remove -y libllvm8   # possibly incompatible
-      sudo apt-get install clang-tidy-8 # for extra checks
       CLAZY_IMAGE=Clazy-x86_64-${CLAZY_VERSION}.AppImage
       curl https://downloads.kdab.com/clazy/${CLAZY_VERSION}/${CLAZY_IMAGE} -O
       curl https://downloads.kdab.com/clazy/${CLAZY_VERSION}/sums.txt -O
