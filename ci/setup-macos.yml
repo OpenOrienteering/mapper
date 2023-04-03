@@ -35,6 +35,7 @@ steps:
     sudo xcode-select -s /Applications/Xcode_11.7.app/Contents/Developer
     xcode-select --print-path
     pip install lxml
-    $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall ndk
+    ${ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-33-ext5"
+    ${ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-33-ext4"
   displayName: 'Prepare macOS build tools'
 
