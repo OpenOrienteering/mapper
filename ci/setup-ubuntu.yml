@@ -41,27 +41,16 @@ steps:
     fi
     
     if [ -n "${CLAZY_VERSION}" ] ; then
-      ## apt-cache policy clang-tidy-8
       sudo apt-get remove -y libllvm8   # possibly incompatible
       sudo apt-get install clang-tidy clazy # for extra checks
-      echo "##vso[task.setVariable variable=CXX]clazy"
-    fi
-    if false ; then
-      CLAZY_IMAGE=Clazy-x86_64-${CLAZY_VERSION}.AppImage
-      curl https://downloads.kdab.com/clazy/${CLAZY_VERSION}/${CLAZY_IMAGE} -O
-      curl https://downloads.kdab.com/clazy/${CLAZY_VERSION}/sums.txt -O
-      grep --no-filename $(sha1sum ${CLAZY_IMAGE}) sums.txt
-      chmod +x ${CLAZY_IMAGE}
-      # Extract the app-image, or paths change on every invocation
-      ./${CLAZY_IMAGE} --appimage-extract
       set +x # https://github.com/microsoft/azure-pipelines-tasks/issues/10331
-      echo "##vso[task.setVariable variable=CXX]${PWD}/squashfs-root/AppRun"
+      echo "##vso[task.setVariable variable=CXX]clazy"
       set -x
     fi
     
     case "${CXXFLAGS}" in
       *coverage*)
-        sudo apt-get install g++ libxml2-utils python3-pip # libgcc-5-dev
+        sudo apt-get install g++ libxml2-utils python3-pip
         sudo pip install gcovr
         sed -i -e "/autosave_t/s,MANUAL,," test/CMakeLists.txt
         wget "https://raw.githubusercontent.com/international-orienteering-federation/datastandard-v3/master/IOF.xsd"

@@ -5,3 +5,6 @@
 				outerPolyNodeToPathObjects(*node.Childs[i]->Childs[j], out_objects, proto, polymap);
             <symbol type="1" id="72" code="3.11" name="|D| Water tank, Water trough">
 | VDV | [VDV-451/VDV-452/INTREST Data Format](https://gdal.org/drv_vdv.html) | txt x10 |
+# doc/man/Mapper.1
+\h'-04'\(bu\h'+03'\c
+.IP \(bu 2.3
