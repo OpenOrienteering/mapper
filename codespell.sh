@@ -29,6 +29,7 @@ codespell -q 7 \
   'translations/future_translations.cpp' \
   -S "$SKIP_LIST" \
   -x codespell-ignore.txt \
+  -L clen \
   "$@"
 
 git log -n 20 | codespell -q 7 - | sed 's/^/git log: /'
