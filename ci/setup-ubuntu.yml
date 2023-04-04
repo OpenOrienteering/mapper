@@ -40,9 +40,8 @@ steps:
       sudo apt-get install g++-mingw-w64-x86-64
     fi
     
-    if [ -n "${CLAZY_VERSION}" ] ; then
-      sudo apt-get remove -y libllvm8   # possibly incompatible
-      sudo apt-get install clang-tidy clazy # for extra checks
+    if [ -n "${ENABLE_CLAZY}" ] ; then
+      sudo apt-get install clazy
       set +x # https://github.com/microsoft/azure-pipelines-tasks/issues/10331
       echo "##vso[task.setVariable variable=CXX]clazy"
       set -x
