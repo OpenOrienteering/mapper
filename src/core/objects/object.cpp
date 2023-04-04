@@ -1929,7 +1929,7 @@ double PathObject::calcBezierPointDeletionRetainingShapeCost(MapCoord p0, MapCoo
 void PathObject::calcBezierPointDeletionRetainingShapeOptimization(MapCoord p0, MapCoord p1, MapCoord p2, MapCoord q0, MapCoord q1, MapCoord q2, MapCoord q3, double& out_pfactor, double& out_qfactor)
 {
 	auto const gradient_abort_threshold_sq = 0.0025;	// if the gradient magnitude is lower than this over num_abort_steps step, the optimization is aborted
-	auto const decrease_abort_threshold = 0.004;	// if the cost descrease if lower than this over num_abort_steps step, the optimization is aborted
+	auto const decrease_abort_threshold = 0.004;	// if the cost decrease is lower than this over num_abort_steps step, the optimization is aborted
 	const int num_abort_steps = 2;
 	auto const derivative_delta = 0.05;
 	const int num_tested_step_sizes = 5;

@@ -97,10 +97,10 @@ public:
 	/** The total dimensions of the page in mm. */
 	QSizeF paper_dimensions;
 	
-	/** The horizontal overlap in mm of pages when the output covers muliple pages. */
+	/** The horizontal overlap in mm of pages when the output covers multiple pages. */
 	qreal h_overlap;
 	
-	/** The vertival overlap in mm of pages when the output covers muliple pages. */
+	/** The vertival overlap in mm of pages when the output covers multiple pages. */
 	qreal v_overlap;
 };
 

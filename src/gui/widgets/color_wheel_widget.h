@@ -50,7 +50,7 @@ namespace OpenOrienteering {
 /**
  * \brief Display an analog widget that allows the selection of a HSV color
  *
- * It has an outer wheel to select the Hue and an intenal square to select
+ * It has an outer wheel to select the Hue and an internal square to select
  * Saturation and Lightness.
  */
 class ColorWheel : public QWidget

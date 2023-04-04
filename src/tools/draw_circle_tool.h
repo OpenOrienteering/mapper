@@ -73,7 +73,7 @@ protected:
 	MapCoordF circle_start_pos_map;
 	QPoint cur_pos;
 	MapCoordF cur_pos_map;
-	MapCoordF opposite_pos_map;		// position on cirlce/ellipse opposite to click_pos_map
+	MapCoordF opposite_pos_map;		// position on circle/ellipse opposite to click_pos_map
 	bool dragging          = false;
 	bool start_from_center = false;
 	bool first_point_set   = false;
