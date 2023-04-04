@@ -49,7 +49,7 @@ namespace OpenOrienteering {
  * MapperProxyStyle customizes the platform's base style.
  * 
  * It supports the implementation of missing UI elements, and 
- * it adjustes the size of some elements to more practical values.
+ * it adjusts the size of some elements to more practical values.
  */
 class MapperProxyStyle : public QProxyStyle
 {

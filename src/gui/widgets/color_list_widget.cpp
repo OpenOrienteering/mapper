@@ -407,7 +407,7 @@ void ColorListWidget::addRow(int row)
 		color_table->setItem(row, col, item);
 	}
 	
-#if 0 // Interfers with translation
+#if 0 // Interferes with translation
 	// Name
 	item = color_table->item(row, 1);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);

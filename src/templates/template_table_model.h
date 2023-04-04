@@ -71,7 +71,7 @@ public:
 	
 	
 	/**
-	 * Sets the header decorator item of the visibility columnn.
+	 * Sets the header decorator item of the visibility column.
 	 */
 	void setCheckBoxDecorator(QVariant decorator);
 	
