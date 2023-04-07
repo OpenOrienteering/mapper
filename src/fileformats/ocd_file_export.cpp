@@ -2489,7 +2489,7 @@ void OcdFileExport::handleObjectExtras(const Object* object, OcdObject& ocd_obje
 	// Extra entry members since V9
 	entry.type = ocd_object.type;
 	entry.status = Ocd::ObjectNormal;
-	entry.color = convertColor(object->getSymbol()->guessDominantColor());
+	entry.color = ocd_object.color = convertColor(object->getSymbol()->guessDominantColor());
 }
 
 
