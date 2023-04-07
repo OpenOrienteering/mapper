@@ -2501,6 +2501,8 @@ void OcdFileExport::fillV12ObjectExtras(const Object* object, OcdObject& ocd_obj
 	Q_UNUSED(entry)
 	
 	// Extra members since V12
+	ocd_object.server_object_id = -1;
+	
 	static auto const dawn_of_time = QDate(1899, 12, 30).startOfDay(Qt::UTC);
 	auto const now = dawn_of_time.msecsTo(QDateTime::currentDateTimeUtc()) / 86400000.0;
 	auto const ctime = QDateTime::fromString(object->getTag(QString::fromLatin1("ctime")), Qt::ISODateWithMs);
