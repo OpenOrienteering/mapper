@@ -1431,12 +1431,30 @@ void OcdFileImport::setupLineSymbolPointSymbols(OcdFileImport::OcdImportedLineSy
 	
 	// Special case main_gap == 0: swapped in Mapper
 	auto gaps_swapped = attributes.sec_gap && !attributes.main_gap && attributes.main_length;
+
+	// Store the OCD number of gaps/symbols on the line. The Mapper notion of the
+	// number of symbols on line differs from the OCD interpretation but we
+	// retain this information for enhanced compatibility.
+	switch (attributes.min_sym)
+	{
+	case 0:
+		line_symbol->show_at_least_one_symbol = true;
+		break;
+	case -1:
+		line_symbol->show_at_least_one_symbol = false;
+		break;
+	default:
+		line_symbol->show_at_least_one_symbol = true;
+		addWarning(OcdFileImport::tr("Cannot represent %1 gaps/symbols on line symbol %2. Replacing with 1 gap/symbol per dash.")
+		           .arg(attributes.min_sym)
+		           .arg(line_symbol->getName()));
+		break;
+	}
 	if (attributes.primary_data_size > 0)
 	{
 		line_symbol->mid_symbol_placement = gaps_swapped ? LineSymbol::CenterOfDashGroup : LineSymbol::CenterOfGap;
 		line_symbol->mid_symbols_per_spot = attributes.num_prim_sym;
 		line_symbol->mid_symbol_distance = convertLength(attributes.prim_sym_dist);
-		line_symbol->show_at_least_one_symbol = true;
 		line_symbol->mid_symbol = new OcdImportedPointSymbol();
 		setupPointSymbolPattern(line_symbol->mid_symbol, attributes.primary_data_size, elements);
 		if (attributes.secondary_data_size > 0)
@@ -1447,7 +1465,6 @@ void OcdFileImport::setupLineSymbolPointSymbols(OcdFileImport::OcdImportedLineSy
 	{
 		line_symbol->mid_symbol_placement = gaps_swapped ? LineSymbol::CenterOfGap : LineSymbol::CenterOfDashGroup;
 		line_symbol->mid_symbols_per_spot = 1;
-		line_symbol->show_at_least_one_symbol = true;
 		line_symbol->mid_symbol = new OcdImportedPointSymbol();
 		setupPointSymbolPattern(line_symbol->mid_symbol, attributes.secondary_data_size, elements);
 	}
