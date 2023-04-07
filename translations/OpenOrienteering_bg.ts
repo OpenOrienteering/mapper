@@ -6,12 +6,12 @@
     <message>
         <location filename="../packaging/translations.cpp" line="10"/>
         <source>Orienteering map</source>
-        <translation type="unfinished"></translation>
+        <translation>Карта за ориентиране</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Софтуер за чертане на карти за ориентиране</translation>
     </message>
 </context>
 <context>
@@ -20,44 +20,44 @@
         <location filename="../src/gui/about_dialog.cpp" line="105"/>
         <location filename="../src/gui/about_dialog.cpp" line="175"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Относно %1</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="190"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a %1&gt;Всичко за лицензи, бележки за авторски права, условия и отказ от отговорност.&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="192"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation type="unfinished"></translation>
+        <translation>Разработчиците на OpenOrienteering по азбучен ред:</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="193"/>
         <source>(project initiator)</source>
-        <translation type="unfinished"></translation>
+        <translation>(инициатор на проекта)</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="14"/>
         <location filename="../src/gui/about_dialog.cpp" line="178"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Безплатен софтуер за изготвяне на карти за ориентиране</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="180"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Тази програма е безплатен софтуер: можете да я разпространявате и/или модифицирате съгласно условията на &lt;a %1&gt;GNU General Public License (GPL), версия&amp;nbsp;3&lt;/a&gt;, както е публикувано от Free Software Foundation.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="185"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Тази програма се разпространява с надеждата, че ще бъде полезна, но БЕЗ НИКАКВИ ГАРАНЦИИ; дори без подразбиращата се гаранция за ПРОДАВАЕМОСТ или ГОДНОСТ ЗА ОПРЕДЕЛЕНА ЦЕЛ. Вижте GNU General Public License (GPL), версия&amp;nbsp;3, за &lt;a %1&gt;повече подробности&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="194"/>
         <source>For contributions, thanks to:</source>
-        <translation type="unfinished"></translation>
+        <translation>За приноса, благодарности на:</translation>
     </message>
 </context>
 <context>
@@ -65,12 +65,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
         <source>Open most recently used file</source>
-        <translation type="unfinished"></translation>
+        <translation>Отваряне на последния използван файл</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="119"/>
         <source>Show tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation>Покажете съвета на деня</translation>
     </message>
 </context>
 <context>
@@ -78,7 +78,7 @@
     <message>
         <location filename="../src/gui/widgets/action_grid_bar.cpp" line="57"/>
         <source>Show remaining items</source>
-        <translation type="unfinished"></translation>
+        <translation>Показване на останалите елементи</translation>
     </message>
 </context>
 <context>
@@ -86,27 +86,27 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="86"/>
         <source>mm²</source>
-        <translation type="unfinished"></translation>
+        <translation>мм²</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="87"/>
         <source>Minimum size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Минимален размер:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="94"/>
         <source>Fills</source>
-        <translation type="unfinished"></translation>
+        <translation>Напълнете</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="107"/>
         <source>Line fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Попълване на линия</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="108"/>
         <source>Pattern fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Запълване на шарка</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="146"/>
@@ -115,132 +115,132 @@
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="183"/>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="188"/>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>мм</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="161"/>
         <source>Single line</source>
-        <translation type="unfinished"></translation>
+        <translation>Единичка линия</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="175"/>
         <source>Parallel lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Паралелни линии</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="177"/>
         <source>Line spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Разстояние между редовете:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="180"/>
         <source>Single row</source>
-        <translation type="unfinished"></translation>
+        <translation>Единичен ред</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="182"/>
         <source>Pattern interval:</source>
-        <translation type="unfinished"></translation>
+        <translation>Интервал на шаблона:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="187"/>
         <source>Pattern offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Отместване на шаблона:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="192"/>
         <source>Row offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Отместване на реда:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="194"/>
         <source>Parallel rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Паралелни редове</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="196"/>
         <source>Row spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Разстояние между редовете:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="202"/>
         <source>Fill rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Завъртане на запълването</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="207"/>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ъгъл:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="209"/>
         <source>adjustable per object</source>
-        <translation type="unfinished"></translation>
+        <translation>регулируеми за обект</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="229"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished"></translation>
+        <translation>Чертеж на елемент на границата</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Защипете елементи на границата.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Начертайте елементи, ако центърът е вътре в границата.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="233"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Начертайте елементи, ако някоя точка е вътре в границата.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="234"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Начертайте елементи, ако всички точки са вътре в границата.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="249"/>
         <source>Area settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки на областа</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="343"/>
         <source>Pattern fill %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Запълване на шаблон %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="352"/>
         <source>Line fill %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Запълване на линията %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="371"/>
         <source>No fill selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Няма избрано запълване</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="84"/>
         <source>Area color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвят на площта:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="173"/>
         <source>Line offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Отместване на линията:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="168"/>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвят на линията:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="163"/>
         <source>Line width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ширина на линията:</translation>
     </message>
 </context>
 <context>
@@ -248,36 +248,36 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="46"/>
         <source>Autosaved file</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматично запазен файл</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/autosave_dialog.cpp" line="48"/>
         <location filename="../src/gui/autosave_dialog.cpp" line="54"/>
         <source>%n bytes</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n байт</numerusform>
+            <numerusform>%n байта</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="52"/>
         <source>File saved by the user</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлът е запазен от потребителя</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="59"/>
         <source>File recovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Възстановяване на файл</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="61"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлът %1 не е затворен правилно. Към момента има две версии:</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="75"/>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation type="unfinished"></translation>
+        <translation>Запазете активния файл, за да премахнете конфликтната версия.</translation>
     </message>
 </context>
 <context>
@@ -285,27 +285,27 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="86"/>
         <source>Edit map color</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактиране на цвета на картата</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="93"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактиране</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
         <source>Spot color printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Точков цветен печат</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="106"/>
         <source>Defines a spot color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Определя точковия цвят:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
         <source>Screen frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Честота на екрана:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
@@ -315,17 +315,17 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
         <source>Undefined</source>
-        <translation type="unfinished"></translation>
+        <translation>Недефиниран</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Screen angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ъгъл на екрана:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="128"/>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation type="unfinished"></translation>
+        <translation>Смес от точкови цветове (екрани и надпечатване):</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="143"/>
@@ -335,113 +335,113 @@
         <location filename="../src/gui/color_dialog.cpp" line="196"/>
         <location filename="../src/gui/color_dialog.cpp" line="440"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="148"/>
         <source>Knockout: erases lower colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Нокаут: изтрива долните цветове</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="161"/>
         <source>CMYK</source>
-        <translation type="unfinished"></translation>
+        <translation>CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="166"/>
         <location filename="../src/gui/color_dialog.cpp" line="223"/>
         <source>Calculate from spot colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Изчислява от точковите цветове</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="171"/>
         <source>Calculate from RGB color</source>
-        <translation type="unfinished"></translation>
+        <translation>Изчисляване от RGB цвят</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="176"/>
         <source>Custom process color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Персонализиран процесен цвят:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="182"/>
         <source>Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Циан</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="187"/>
         <source>Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Магента</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="192"/>
         <source>Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>Жълто</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="197"/>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Черен</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="218"/>
         <source>RGB</source>
-        <translation type="unfinished"></translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="228"/>
         <source>Calculate from CMYK color</source>
-        <translation type="unfinished"></translation>
+        <translation>Изчисляване от CMYK цвят</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="233"/>
         <source>Custom RGB color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Персонализиран RGB цвят:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="239"/>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Червен</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="244"/>
         <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Зелен</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="249"/>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Син</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="254"/>
         <source>#RRGGBB</source>
-        <translation type="unfinished"></translation>
+        <translation>#RRGGBB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="272"/>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Работен плот</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="273"/>
         <source>Professional printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Професионален печат</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="292"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Име</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="346"/>
         <source>- unnamed -</source>
-        <translation type="unfinished"></translation>
+        <translation>- без име -</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="623"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Внимание</translation>
     </message>
 </context>
 <context>
@@ -449,7 +449,7 @@
     <message>
         <location filename="../src/gui/widgets/color_dropdown.cpp" line="42"/>
         <source>- none -</source>
-        <translation type="unfinished"></translation>
+        <translation>- нито един -</translation>
     </message>
 </context>
 <context>
@@ -457,100 +457,100 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="92"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Име</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="92"/>
         <source>Opacity</source>
-        <translation type="unfinished"></translation>
+        <translation>Непрозрачност</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="92"/>
         <source>Spot color</source>
-        <translation type="unfinished"></translation>
+        <translation>Точков цвят</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="92"/>
         <source>CMYK</source>
-        <translation type="unfinished"></translation>
+        <translation>CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="92"/>
         <source>RGB</source>
-        <translation type="unfinished"></translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="92"/>
         <source>K.o.</source>
-        <translation type="unfinished"></translation>
+        <translation>К.о.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="98"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="103"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Нов</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="106"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Изтрий</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="99"/>
         <source>Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation>Дубликат</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="112"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Преместване нагоре</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="114"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Преместване надолу</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="125"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Помощ</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="146"/>
         <source>Double-click a color value to open a dialog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Щракнете двукратно върху стойност на цвят, за да отворите диалогов прозорец.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="229"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Потвърждение</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="229"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation type="unfinished"></translation>
+        <translation>Картата съдържа символи с този цвят. Изтриването му ще премахне цвета от тези обекти! Наистина ли искаш да направиш това?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="247"/>
         <source>%1 (duplicate)</source>
         <extracomment>Future replacement for COLOR_NAME + &quot; (Duplicate)&quot;, for better localization.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 (дубликат)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="248"/>
         <source> (Duplicate)</source>
-        <translation type="unfinished"></translation>
+        <translation> (Дубликат)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="406"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="463"/>
         <source>Double click to define the color</source>
-        <translation type="unfinished"></translation>
+        <translation>Кликнете два пъти, за да определите цвета</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="414"/>
         <source>Click to select the name and click again to edit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Щракнете, за да изберете името и щракнете отново, за да редактирате.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="450"/>
@@ -563,7 +563,7 @@
     <message>
         <location filename="../src/gui/widgets/color_wheel_widget.cpp" line="392"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Изберете</translation>
     </message>
 </context>
 <context>
@@ -571,42 +571,42 @@
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="87"/>
         <source>&amp;Number of parts:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Брой части:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="95"/>
         <source>- Private line symbol -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Символ за лична линия -</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="96"/>
         <source>- Private area symbol -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Символ за частна област -</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="99"/>
         <source>Edit private symbol...</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактиране на личен символ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="113"/>
         <source>Combination settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки на комбинацията</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="227"/>
         <source>Change from public to private symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Промяна от публичен към частен символ</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="228"/>
         <source>Take the old symbol as template for the private symbol?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вземете стария символ като шаблон за частния символ?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="92"/>
         <source>Symbol %1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Символ %1:</translation>
     </message>
 </context>
 <context>
@@ -614,145 +614,145 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="67"/>
         <source>Configure grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Конфигуриране на мрежата</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="69"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Показване на мрежата</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="70"/>
         <source>Snap to grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Прилепване към мрежата</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="71"/>
         <source>Choose...</source>
-        <translation type="unfinished"></translation>
+        <translation>Избери...</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="74"/>
         <source>All lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Всички линии</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="75"/>
         <source>Horizontal lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Хоризонтални линии</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="76"/>
         <source>Vertical lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Вертикални линии</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="128"/>
         <source>Alignment</source>
-        <translation type="unfinished"></translation>
+        <translation>Подравняване</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="78"/>
         <source>Align with magnetic north</source>
-        <translation type="unfinished"></translation>
+        <translation>Подравни с магнитния север</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
         <source>Align with grid north</source>
-        <translation type="unfinished"></translation>
+        <translation>Подравни с мрежата на север</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="80"/>
         <source>Align with true north</source>
-        <translation type="unfinished"></translation>
+        <translation>Подравни с истинския север</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="82"/>
         <source>Additional rotation (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation>Допълнително завъртане (обратно на часовниковата стрелка):</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="135"/>
         <source>Positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>Позициониране</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="88"/>
         <source>meters in terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>метра на терена</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="89"/>
         <source>millimeters on map</source>
-        <translation type="unfinished"></translation>
+        <translation>милиметри на картата</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="91"/>
         <source>Horizontal spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Хоризонтално разстояние:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="93"/>
         <source>Vertical spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Вертикално разстояние:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="97"/>
         <source>Horizontal offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Хоризонтално отместване:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="99"/>
         <source>Vertical offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Вертикално отместване:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="136"/>
         <source>Unit:</source>
         <comment>measurement unit</comment>
-        <translation type="unfinished"></translation>
+        <translation>Мерни единици:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="124"/>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвят на линията:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="125"/>
         <source>Display:</source>
-        <translation type="unfinished"></translation>
+        <translation>Дисплей:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="171"/>
         <source>Choose grid line color</source>
-        <translation type="unfinished"></translation>
+        <translation>Изберете цвят на линията на мрежата</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="255"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>м</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="255"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>мм</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="261"/>
         <source>Origin at: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Произход от: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="263"/>
         <source>paper coordinates origin</source>
-        <translation type="unfinished"></translation>
+        <translation>произход на хартиените координати</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="265"/>
         <source>projected coordinates origin</source>
-        <translation type="unfinished"></translation>
+        <translation>начало на проектираните координати</translation>
     </message>
 </context>
 <context>
@@ -760,7 +760,7 @@
     <message>
         <location filename="../src/tools/cut_hole_tool.cpp" line="272"/>
         <source>&lt;b&gt;Click or drag&lt;/b&gt;: Start drawing the hole. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Щракнете или плъзнете&lt;/b&gt;: Започнете да рисувате дупката. </translation>
     </message>
 </context>
 <context>
@@ -771,32 +771,32 @@
         <location filename="../src/tools/cut_tool.cpp" line="426"/>
         <location filename="../src/tools/cut_tool.cpp" line="433"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Грешка</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="419"/>
         <source>The split line must end on the area boundary!</source>
-        <translation type="unfinished"></translation>
+        <translation>Линията на разделяне трябва да завършва на границата на областа!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="426"/>
         <source>Start and end of the split line are at different parts of the object!</source>
-        <translation type="unfinished"></translation>
+        <translation>Началото и краят на линията на разделяне са в различни части на обекта!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="433"/>
         <source>Start and end of the split line are at the same position!</source>
-        <translation type="unfinished"></translation>
+        <translation>Началото и краят на разделителната линия са на една и съща позиция!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="108"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Щракнете&lt;/b&gt; върху линията: Разделете я на две. &lt;b&gt;Плъзнете&lt;/b&gt; по линия: Премахнете тази част от линията. &lt;b&gt;Щракнете или плъзнете&lt;/b&gt; на границата на област: Започнете разделителна линия. </translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="373"/>
         <source>Splitting holes of area objects is not supported yet!</source>
-        <translation type="unfinished"></translation>
+        <translation>Разделянето на дупки на площни обекти все още не се поддържа!</translation>
     </message>
 </context>
 <context>
@@ -804,18 +804,18 @@
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="148"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the whole map. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Изрежете цялата карта. </translation>
     </message>
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="149"/>
         <location filename="../src/tools/cutout_tool.cpp" line="153"/>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Щракване или плъзгане&lt;/b&gt;: Изберете обектите за изрязване. </translation>
     </message>
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="154"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Изрежете избраните обекти. </translation>
     </message>
 </context>
 <context>
@@ -823,18 +823,18 @@
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="116"/>
         <source>Letter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Писмо:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="118"/>
         <source>A</source>
         <extracomment>&quot;A&quot; is the default letter which is used for determining letter height.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>А</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="124"/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Височина:</translation>
     </message>
 </context>
 <context>
@@ -842,32 +842,32 @@
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="128"/>
         <source>Distribute points evenly along path</source>
-        <translation type="unfinished"></translation>
+        <translation>Разпределете точките равномерно по пътя</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="134"/>
         <source>Number of points per path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Брой точки на път:</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="136"/>
         <source>Also place objects at line end points</source>
-        <translation type="unfinished"></translation>
+        <translation>Също така поставяйте обекти в крайните точки на линията</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="142"/>
         <source>Rotation settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки за въртене</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="145"/>
         <source>Align points with direction of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Подравнете точките с посоката на линията</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="153"/>
         <source>Additional rotation angle (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation>Допълнителен ъгъл на завъртане (обратно на часовниковата стрелка):</translation>
     </message>
 </context>
 <context>
@@ -876,32 +876,32 @@
         <location filename="../src/tools/draw_circle_tool.cpp" line="70"/>
         <source>From center</source>
         <comment>Draw circle starting from center</comment>
-        <translation type="unfinished"></translation>
+        <translation>От центъра</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="313"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Щракване&lt;/b&gt;: Започнете кръг или елипса. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="314"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a circle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Плъзгане&lt;/b&gt;: Начертайте кръг. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="316"/>
         <source>Hold %1 to start drawing from the center.</source>
-        <translation type="unfinished"></translation>
+        <translation>Задръжте %1, за да започнете да рисувате от центъра.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="320"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Щракване&lt;/b&gt;: Завършете кръга. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="321"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Плъзгане&lt;/b&gt;: Начертайте елипса. </translation>
     </message>
 </context>
 <context>
@@ -909,7 +909,7 @@
     <message>
         <location filename="../src/tools/draw_freehand_tool.cpp" line="289"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Плъзгане&lt;/b&gt;: Начертайте път. </translation>
     </message>
 </context>
 <context>
@@ -918,43 +918,43 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1155"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="730"/>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Тиретата са включени.&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1163"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Щракване&lt;/b&gt;: Прилепване или добавяне към съществуващи обекти. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1171"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="736"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Щракване&lt;/b&gt;: Изберете посока от съществуващи обекти. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1172"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1199"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Segment azimuth and length. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Азимут и дължина на сегмента. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1188"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="741"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="765"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Щракване&lt;/b&gt;: Прилепване към съществуващи обекти. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1198"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="755"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Фиксирани ъгли. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1208"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="771"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Отмяна на последната точка. </translation>
     </message>
 </context>
 <context>
@@ -962,66 +962,66 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="103"/>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Край</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="104"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Затвори</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="105"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>Прилепи</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="106"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ъгъл</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="107"/>
         <source>Info</source>
         <comment>Show segment azimuth and length</comment>
-        <translation type="unfinished"></translation>
+        <translation>Инфо</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="110"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation>Тире</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="113"/>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Отмени</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="114"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Прекъсване</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1150"/>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Дължина:&lt;/b&gt; %1 м </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1178"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Щракване&lt;/b&gt;: Започнете права линия. &lt;b&gt;Плъзгане&lt;/b&gt;: Стартирайте крива. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1189"/>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Плъзгане&lt;/b&gt;: Следвайте съществуващи обекти. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1205"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Щракване&lt;/b&gt;: Начертайте права линия. &lt;b&gt;Плъзгане&lt;/b&gt;: Начертайте крива. &lt;b&gt;Щракнете с десен или два пъти&lt;/b&gt;: Завършване на пътя. &lt;b&gt;%1&lt;/b&gt;: Затваряне на пътя. </translation>
     </message>
 </context>
 <context>
@@ -1029,12 +1029,12 @@
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="81"/>
         <source>Touch the map to finish averaging</source>
-        <translation type="unfinished"></translation>
+        <translation>Докоснете картата, за да завършите осредняването</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="193"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Щракване&lt;/b&gt;: Завършете настройването на обекта. </translation>
     </message>
 </context>
 <context>
@@ -1043,46 +1043,46 @@
         <location filename="../src/tools/draw_point_tool.cpp" line="83"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>Прилепи</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="84"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ъгъл</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="85"/>
         <source>Reset</source>
         <comment>Reset rotation</comment>
-        <translation type="unfinished"></translation>
+        <translation>Нулиране</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="334"/>
         <location filename="../src/tools/draw_point_tool.cpp" line="346"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Ъгъл:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="335"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Фиксирани ъгли. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="340"/>
         <location filename="../src/tools/draw_point_tool.cpp" line="354"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Щракване&lt;/b&gt;: Създай точков обект.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="341"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Плъзгане&lt;/b&gt;: Създайте обект и задайте неговата ориентация.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="347"/>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1, 0&lt;/b&gt;: Нулиране на завъртането.</translation>
     </message>
 </context>
 <context>
@@ -1090,50 +1090,50 @@
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="90"/>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Край</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="91"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>Прилепване</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="92"/>
         <source>Line snap</source>
         <comment>Snap to previous lines</comment>
-        <translation type="unfinished"></translation>
+        <translation>Прилепване към линия</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="93"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation>Тире</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="96"/>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Отмяна</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="97"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Прекъсване</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="746"/>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Щракнете или плъзнете&lt;/b&gt;: Започнете да рисувате правоъгълник. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="759"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to previous lines. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Прихващане към предишни линии. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="770"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Щракване&lt;/b&gt;: Задайте ъглова точка. &lt;b&gt;Щракнете с десен или два пъти&lt;/b&gt;: Завършете правоъгълника. </translation>
     </message>
 </context>
 <context>
@@ -1142,22 +1142,22 @@
         <location filename="../src/tools/draw_text_tool.cpp" line="113"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Прилепи</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="476"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Завършете редактирането. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="477"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Отказ от редактирането. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="482"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Щракване&lt;/b&gt;: Създайва текстов обект с една котва. &lt;b&gt;Плъзгане&lt;/b&gt;: Създава текстово поле. </translation>
     </message>
 </context>
 <context>
@@ -1166,23 +1166,23 @@
         <location filename="../src/tools/edit_line_tool.cpp" line="406"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>Прилепване</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="407"/>
         <source>Toggle curve</source>
         <comment>Toggle between curved and flat segment</comment>
-        <translation type="unfinished"></translation>
+        <translation>Превключване на крива</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="524"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Free movement. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Свободно движение. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="540"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Щракнете&lt;/b&gt; върху сегмент: Превключете между прав и извит. </translation>
     </message>
 </context>
 <context>
@@ -1191,13 +1191,13 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="534"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>Прилепи</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="535"/>
         <source>Point / Angle</source>
         <comment>Modify points or use constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>Точка/Ъгъл</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="536"/>
@@ -1208,7 +1208,7 @@
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="721"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Завършете редактирането. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="740"/>
@@ -1229,7 +1229,7 @@
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="768"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Щракнете&lt;/b&gt; върху точка, за да превключите между тире и нормална точка. </translation>
     </message>
 </context>
 <context>
@@ -1238,31 +1238,31 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="726"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="517"/>
         <source>&lt;b&gt;Coordinate offset:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distance:&lt;/b&gt; %3 m </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Координатно отместване:&lt;/b&gt; %1, %2 мм &lt;b&gt;Разстояние:&lt;/b&gt; %3 м </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="733"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Фиксирани ъгли. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="484"/>
         <location filename="../src/tools/edit_point_tool.cpp" line="744"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="526"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Прилепване към съществуващи обекти. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="750"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="532"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Щракване&lt;/b&gt;: Изберете един обект. &lt;b&gt;Плъзгане&lt;/b&gt;: Изберете множество обекти. &lt;b&gt;%1+Щракване&lt;/b&gt;: Превключване на избора. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="753"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="535"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Изтриване на избраните обекти. </translation>
     </message>
 </context>
 <context>
@@ -1270,23 +1270,23 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="56"/>
         <source>High quality map display (antialiasing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Висококачествено показване на картата (антиалиасинг)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="57"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="61"/>
         <source>Antialiasing makes the map look much better, but also slows down the map display</source>
-        <translation type="unfinished"></translation>
+        <translation>Антиалиасинг прави картата да изглежда много по-добре, но също така забавя показването на картата</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="60"/>
         <source>High quality text display in map (antialiasing), slow</source>
-        <translation type="unfinished"></translation>
+        <translation>Висококачествен текст в картата (антиалиасинг), бавен</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="65"/>
         <source>Click tolerance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Толерантност при кликване:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="49"/>
@@ -1296,7 +1296,7 @@
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="109"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>мм</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="68"/>
@@ -1306,22 +1306,22 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="73"/>
         <source>Stepping of fixed angle mode (%1):</source>
-        <translation type="unfinished"></translation>
+        <translation>Стъпка на режим с фиксиран ъгъл (%1):</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="54"/>
         <source>Symbol icon size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер на иконата на символа:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
         <source>Action button size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер на бутона за действие:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="75"/>
         <source>When selecting an object, automatically select its symbol, too</source>
-        <translation type="unfinished"></translation>
+        <translation>Когато избирате обект, избирате автоматично и неговия символ</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="78"/>
@@ -1331,28 +1331,28 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="81"/>
         <source>Drawing tools: set last point on finishing with right click</source>
-        <translation type="unfinished"></translation>
+        <translation>Инструменти за рисуване: задайте последна точка при завършване с десен бутон</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="84"/>
         <source>Templates: keep settings of closed templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Шаблони: запазване на настройките на затворени шаблони</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
         <source>User input: Ignore display touch</source>
-        <translation type="unfinished"></translation>
+        <translation>Въвеждане от потребителя: Игнорира докосването на дисплея</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="92"/>
         <source>Edit tool:</source>
-        <translation type="unfinished"></translation>
+        <translation>Инструмент за редактиране:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="95"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="101"/>
         <source>Retain old shape</source>
-        <translation type="unfinished"></translation>
+        <translation>Запазете старата форма</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="96"/>
@@ -1370,17 +1370,17 @@
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="98"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="104"/>
         <source>Action on deleting a curve point with %1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Действие при изтриване на точка на крива с %1:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="107"/>
         <source>Rectangle tool:</source>
-        <translation type="unfinished"></translation>
+        <translation>Инструмент за правоъгълник:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="110"/>
         <source>Radius of helper cross:</source>
-        <translation type="unfinished"></translation>
+        <translation>Радиус на помощния кръст:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="112"/>
@@ -1464,7 +1464,7 @@
     <message>
         <location filename="../src/sensors/gps_display.cpp" line="174"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Не</translation>
     </message>
 </context>
 <context>
@@ -1473,12 +1473,12 @@
         <location filename="../src/gdal/gdal_image_reader.cpp" line="71"/>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="158"/>
         <source>Failed to read image data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Неуспешно четене на данни за изображение: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="127"/>
         <source>Unsupported raster data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Неподдържани растерни данни: %1</translation>
     </message>
 </context>
 <context>
@@ -1486,77 +1486,77 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"/>
         <source>Import Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Опции за импортиране</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="54"/>
         <source>Import with GDAL/OGR:</source>
-        <translation type="unfinished"></translation>
+        <translation>Импортиране с GDAL/OGR:</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>Clip layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Изрязване слоеве</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="59"/>
         <source>Use GDAL for GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>Използвайте GDAL за GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="60"/>
         <source>GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
         <source>Templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Шаблони</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="67"/>
         <source>Hatch areas</source>
-        <translation type="unfinished"></translation>
+        <translation>Щриховане слоеве</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Baseline view</source>
-        <translation type="unfinished"></translation>
+        <translation>Основен изглед</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="75"/>
         <source>Export Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Опции за експортиране</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="77"/>
         <source>Create a layer for each symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Създайте слой за всеки символ</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="82"/>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Конфигурация</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="90"/>
         <source>Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметър</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="90"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Стойност</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="107"/>
         <source>GDAL</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="108"/>
         <source>GDAL/OGR</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL/OGR</translation>
     </message>
 </context>
 <context>
@@ -1564,69 +1564,69 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="77"/>
         <source>Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Изглед</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="82"/>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Език:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="99"/>
         <source>Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Екран</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="104"/>
         <source>Pixels per inch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Пиксели на инч:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="114"/>
         <source>Program start</source>
-        <translation type="unfinished"></translation>
+        <translation>Старт на програмата</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="123"/>
         <source>Saving files</source>
-        <translation type="unfinished"></translation>
+        <translation>Запазване на файлове</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="125"/>
         <source>Retain compatibility with Mapper %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Запазете съвместимостта с Mapper %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="136"/>
         <source>Save information for automatic recovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Запазете информация за автоматично възстановяване</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="140"/>
         <source>Recovery information saving interval:</source>
-        <translation type="unfinished"></translation>
+        <translation>Интервал за запазване на информация за възстановяване:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
         <source>min</source>
         <comment>unit minutes</comment>
-        <translation type="unfinished"></translation>
+        <translation>мин</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="143"/>
         <source>File import and export</source>
-        <translation type="unfinished"></translation>
+        <translation>Импортиране и експортиране на файлове</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="168"/>
         <source>8-bit encoding:</source>
-        <translation type="unfinished"></translation>
+        <translation>8-битово кодиране:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="161"/>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="306"/>
         <source>More...</source>
-        <translation type="unfinished"></translation>
+        <translation>Още ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="133"/>
@@ -1636,53 +1636,53 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="146"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>По подразбиране</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="186"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Основни</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="210"/>
         <source>Notice</source>
-        <translation type="unfinished"></translation>
+        <translation>Известие</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="210"/>
         <source>The program must be restarted for the language change to take effect!</source>
-        <translation type="unfinished"></translation>
+        <translation>Програмата трябва да се рестартира, за да влезе в сила промяната на езика!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="348"/>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="354"/>
         <source>Open translation</source>
-        <translation type="unfinished"></translation>
+        <translation>Отворен превод</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="348"/>
         <source>Translation files (*.qm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлове за превод (*.qm)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="355"/>
         <source>The selected file is not a valid translation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Избраният файл не е валиден превод.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="385"/>
         <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 x %2</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="386"/>
         <source>Primary screen resolution in pixels:</source>
-        <translation type="unfinished"></translation>
+        <translation>Основна разделителна способност на екрана в пиксели:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="390"/>
         <source>Primary screen size in inches (diagonal):</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер на основния екран в инчове (диагонал):</translation>
     </message>
 </context>
 <context>
@@ -1691,100 +1691,100 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="56"/>
         <source>UTM</source>
         <comment>UTM coordinate reference system</comment>
-        <translation type="unfinished"></translation>
+        <translation>UTM</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="57"/>
         <source>UTM coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>UTM координати</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="60"/>
         <source>UTM Zone (number north/south)</source>
-        <translation type="unfinished"></translation>
+        <translation>UTM зона (номер север/юг)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="67"/>
         <source>Gauss-Krueger, datum: Potsdam</source>
         <comment>Gauss-Krueger coordinate reference system</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gauss-Krueger, дата: Potsdam</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="68"/>
         <source>Gauss-Krueger coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Gauss-Krueger координати</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="71"/>
         <source>Zone number (1 to 119)</source>
         <comment>Zone number for Gauss-Krueger coordinates</comment>
-        <translation type="unfinished"></translation>
+        <translation>Номер на зона (1 до 119)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="79"/>
         <source>by EPSG code</source>
         <comment>as in: The CRS is specified by EPSG code</comment>
-        <translation type="unfinished"></translation>
+        <translation>по EPSG код</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="81"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>EPSG @code@ координати</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="92"/>
         <location filename="../src/core/georeferencing.cpp" line="922"/>
         <source>Local coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Местни координати</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="84"/>
         <source>EPSG code</source>
-        <translation type="unfinished"></translation>
+        <translation>EPSG код</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="91"/>
         <source>Custom PROJ.4</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation>Персонализиран PROJ.4</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="95"/>
         <source>Specification</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation>Спецификация</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="576"/>
         <source>Map scale specification invalid or missing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Спецификацията на мащаба на картата е невалидна или липсва.</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="582"/>
         <source>Invalid grid scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Невалиден мащабен коефициент на мрежата: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="595"/>
         <source>Invalid auxiliary scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Невалиден допълнителен коефициент на мащабиране: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="627"/>
         <location filename="../src/core/georeferencing.cpp" line="654"/>
         <source>Unknown CRS specification language: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Неизвестен език на спецификацията на CRS: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="657"/>
         <source>Unsupported geographic CRS specification: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Неподдържана географска CRS спецификация: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="913"/>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>Местен</translation>
     </message>
 </context>
 <context>
@@ -1792,39 +1792,39 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="136"/>
         <source>Map Georeferencing</source>
-        <translation type="unfinished"></translation>
+        <translation>Георефериране на карта</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="208"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="624"/>
         <source>Lookup...</source>
-        <translation type="unfinished"></translation>
+        <translation>Погледни нагоре...</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="167"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="168"/>
         <source>m</source>
-        <translation type="unfinished"></translation>
+        <translation>м</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="261"/>
         <source>Declination:</source>
-        <translation type="unfinished"></translation>
+        <translation>Деклинация:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="193"/>
         <source>Projected coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Проектирани координати</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="145"/>
         <source>Status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Статус:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="194"/>
         <source>Geographic coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Географски координати</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="189"/>
@@ -2116,22 +2116,22 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="239"/>
         <source>Tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation>Съвет на деня</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="244"/>
         <source>Show tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation>Покажи съвета на деня</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="248"/>
         <source>Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Предишен</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="250"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Следващ</translation>
     </message>
 </context>
 <context>
@@ -2139,17 +2139,17 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="533"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Помощ</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="554"/>
         <source>Examples</source>
-        <translation type="unfinished"></translation>
+        <translation>Примери</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="351"/>
         <source>About Mapper</source>
-        <translation type="unfinished"></translation>
+        <translation>Относно Mapper</translation>
     </message>
 </context>
 <context>
@@ -2157,85 +2157,86 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="48"/>
         <source>PNG</source>
-        <translation type="unfinished"></translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="49"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Всички файлове (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
         <source>Default icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Икона по подразбиране</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="69"/>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="70"/>
         <source>Preview width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ширина на визуализацията:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="86"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="118"/>
         <source>Save...</source>
-        <translation type="unfinished"></translation>
+        <translation>Запази...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="88"/>
         <source>Copy to custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Копиране в персонализирана икона</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="98"/>
         <source>Custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Персонализирана икона</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ширина:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
         <source>Load...</source>
-        <translation type="unfinished"></translation>
+        <translation>Зареди...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="122"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Изчисти</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="169"/>
         <source>%1 px</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="203"/>
         <source>Save symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Запази иконата на символа ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="234"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Грешка</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Неуспешно запазване на изображението:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="226"/>
         <source>Load symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Зареждане иконата на символа ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="235"/>
@@ -2243,7 +2244,10 @@
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлът не може да бъде отворен:
+%1
+
+%2</translation>
     </message>
 </context>
 <context>
@@ -2251,12 +2255,12 @@
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="297"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Грешка при зареждане на символ от тип %1 в ред %2 колона %3.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="312"/>
         <source>Symbol ID &apos;%1&apos; not unique at line %2 column %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>ID на символа „%1“ не е уникален в ред %2 колона %3.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="392"/>
