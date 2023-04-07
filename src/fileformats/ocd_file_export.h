@@ -259,6 +259,12 @@ protected:
 	void exportObjects(OcdFile<Format>& file);
 	
 	template< class OcdObject >
+	void fillV9ObjectExtras(const Object* object, OcdObject& ocd_object, typename OcdObject::IndexEntryType& entry);
+	
+	template< class OcdObject >
+	void fillV12ObjectExtras(const Object* object, OcdObject& ocd_object, typename OcdObject::IndexEntryType& entry);
+	
+	template< class OcdObject >
 	void handleObjectExtras(const Object* object, OcdObject& ocd_object, typename OcdObject::IndexEntryType& entry);
 	
 	template< class OcdObject >

@@ -50,6 +50,7 @@
 #include <QTextCodec>
 #include <QTextDecoder>
 #include <QVariant>
+#include <QDateTime>
 
 #include "settings.h"
 #include "core/georeferencing.h"
@@ -1862,6 +1863,38 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 	}
 }
 
+
+template < class O >
+void setObjectDates(Object* object, const O& ocd_object)
+{
+	// The OCD file format authors decided to store object creation and
+	// modification timestamps but did not specify the time zone.
+	// We will assign UTC time zone to the times to avoid DST and time
+	// zone difference headaches.
+	static auto const dawn_of_time = QDate(1899, 12, 30).startOfDay(Qt::UTC);
+	auto const ctime = dawn_of_time.addMSecs(std::round(ocd_object.creation_date * 86400000)); // will overflow in about 290 Ma
+	auto const mtime = dawn_of_time.addMSecs(std::round(ocd_object.modification_date * 86400000));
+	object->setTag(QString::fromLatin1("ctime"), ctime.toString(Qt::ISODateWithMs));
+	object->setTag(QString::fromLatin1("mtime"), mtime.toString(Qt::ISODateWithMs));
+};
+
+
+template <>
+void setObjectDates(Object* object, const Ocd::ObjectV8& ocd_object)
+{
+	Q_UNUSED(object)
+	Q_UNUSED(ocd_object)
+}
+
+
+template <>
+void setObjectDates(Object* object, const Ocd::ObjectV9& ocd_object)
+{
+	Q_UNUSED(object)
+	Q_UNUSED(ocd_object)
+}
+
+
 template< class O >
 Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 {
@@ -1898,6 +1931,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 		Object* object = importRectangleObject(ocd_object, part, rectangle_info[ocd_object.symbol]);
 		if (!object)
 			addWarning(OcdFileImport::tr("Unable to import rectangle object"));
+		setObjectDates(object, ocd_object);
 		return object;
 	}
 	
@@ -1925,6 +1959,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 		p->setPosition(pos.nativeX(), pos.nativeY());
 		
 		p->setMap(map);
+		setObjectDates(p, ocd_object);		
 		return p;
 	}
 	else if (symbol->getType() == Symbol::Text)
@@ -1944,6 +1979,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 			return nullptr;
 		}
 		t->setMap(map);
+		setObjectDates(t, ocd_object);		
 		return t;
 	}
 	else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined)
@@ -1955,6 +1991,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 		fillPathCoords(p, symbol->getContainedTypes() & Symbol::Area, ocd_object.num_items, reinterpret_cast<const Ocd::OcdPoint32 *>(ocd_object.coords));
 		p->recalculateParts();
 		p->setMap(map);
+		setObjectDates(p, ocd_object);		
 		return p;
 	}
 	
