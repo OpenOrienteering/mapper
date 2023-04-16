@@ -5023,37 +5023,37 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontur indeks</translation>
     </message>
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Setiap kontur kelima harus digambar dengan garis yang lebih tebal. Hal ini membantu penilaian cepat perbedaan ketinggian dan bentuk keseluruhan permukaan medan. Apabila sebuah kontur indeks bertepatan dengan area yang memiliki banyak detail, kontur tersebut dapat ditunjukkan dengan garis kontur normal.</translation>
     </message>
     <message>
         <source>Slope line</source>
         <comment>Name of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Garis kemiringan</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line, e.g. along the line of a re-entrant or in a depression. They are used only where it is necessary to clarify the direction of slope.</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Garis kemiringan dapat digambar pada sisi bawah garis kontur, misalnya di sepanjang garis masuk kembali atau pada depresi. Garis-garis ini hanya digunakan jika diperlukan untuk memperjelas arah kemiringan.</translation>
     </message>
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nilai kontur</translation>
     </message>
     <message>
         <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nilai kontur dapat disertakan untuk membantu penilaian perbedaan ketinggian yang besar. Nilai kontur ini disisipkan pada kontur indeks pada posisi di mana detail lainnya tidak dikaburkan. Gambar harus diorientasikan sedemikian rupa sehingga bagian atas gambar berada pada sisi yang lebih tinggi dari kontur.</translation>
     </message>
     <message>
         <source>Earth bank</source>
         <comment>Name of symbol 106</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tepi bumi</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -5063,22 +5063,22 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 106.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tepian tanah, ukuran minimum</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tepian tanah yang curam adalah perubahan mendadak pada permukaan tanah yang dapat dengan jelas dibedakan dari sekelilingnya, misalnya lubang kerikil atau pasir, potongan jalan dan rel kereta api, atau tanggul. Label harus menunjukkan seluruh bagian lereng, tetapi dapat dihilangkan jika ada dua tepian yang berdekatan. Tepian yang tidak dapat dilewati harus digambar dengan simbol 201 (tebing yang tidak dapat dilewati). Lebar garis pada tepian tanah yang sangat tinggi mungkin 0,25 mm.</translation>
     </message>
     <message>
         <source>Earth bank, very high</source>
         <comment>Name of symbol 106.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tepian tanah, sangat tinggi</translation>
     </message>
     <message>
         <source>The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lebar garis tepi tanah yang sangat tinggi mungkin 0,25 mm.</translation>
     </message>
     <message>
         <source>Earth bank, very high, minimum size</source>
