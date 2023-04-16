@@ -11,7 +11,7 @@
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation type="unfinished">Perangkat lunak untuk penggambaran peta orienteering</translation>
+        <translation>Perangkat lunak untuk menggambar peta orienteering</translation>
     </message>
     <message>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
@@ -39,14 +39,14 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="193"/>
         <source>(project initiator)</source>
-        <translation type="unfinished">(inisiator proyek)</translation>
+        <translation>(inisiator proyek)</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="14"/>
         <location filename="../src/gui/about_dialog.cpp" line="178"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
-        <translation type="unfinished">Perangkat lunak gratis untuk penggambaran peta orienteering</translation>
+        <translation>Perangkat lunak bebas untuk menggambar peta orienteering</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="180"/>
