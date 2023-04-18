@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2022 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -88,7 +88,7 @@
 
 namespace OpenOrienteering {
 
-Q_STATIC_ASSERT(Georeferencing::declinationPrecision() == Util::InputProperties<Util::RotationalDegrees>::decimals());
+Q_STATIC_ASSERT(Georeferencing::declinationPrecision() == static_cast<unsigned int>(Util::InputProperties<Util::RotationalDegrees>::decimals()));
 
 
 namespace  {
@@ -252,7 +252,6 @@ GeoreferencingDialog::GeoreferencingDialog(
 	edit_layout->addRow(projected_ref_label, projected_ref_layout);
 	edit_layout->addRow(tr("Geographic coordinates:"), geographic_ref_layout);
 	edit_layout->addRow(show_refpoint_label, link_label);
-	edit_layout->addRow(show_refpoint_label, link_label);
 	edit_layout->addRow(tr("On CRS changes, keep:"), keep_projected_radio);
 	edit_layout->addRow({}, keep_geographic_radio);
 	edit_layout->addItem(Util::SpacerItem::create(this));
@@ -394,7 +393,7 @@ void GeoreferencingDialog::projectionChanged()
 	setValueIfChanged(lon_edit, longitude);
 	QString osm_link =
 	  QString::fromLatin1("https://www.openstreetmap.org/?mlat=%1&mlon=%2&zoom=18&layers=M").
-	  arg(latitude, 0, 'g', 10).arg(longitude, 0, 'g', 10);
+	  arg(latitude, 0, 'f', 6).arg(longitude, 0, 'f', 6);
 	QString worldofo_link =
 	  QString::fromLatin1("http://maps.worldofo.com/?zoom=15&lat=%1&lng=%2").
 	  arg(latitude).arg(longitude);
@@ -601,7 +600,8 @@ void GeoreferencingDialog::updateWidgets()
 	status_field->setVisible(geographic_coords_enabled);
 	lat_edit->setEnabled(geographic_coords_enabled);
 	lon_edit->setEnabled(geographic_coords_enabled);
-	link_label->setEnabled(geographic_coords_enabled);
+	link_label->setVisible(geographic_coords_enabled);
+	show_refpoint_label->setVisible(geographic_coords_enabled);
 	//keep_geographic_radio->setEnabled(geographic_coords_enabled);
 	
 	updateDeclinationButton();
