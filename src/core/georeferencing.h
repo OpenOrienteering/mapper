@@ -137,7 +137,7 @@ public:
 	
 	
 	/**
-	 * @brief Returns the precision of the grid scale factor.
+	 * @brief Returns the precision of the combined/auxiliary scale factors.
 	 * 
 	 * The precision is given in number of decimal places,
 	 * i.e. digits after the decimal point.
@@ -145,7 +145,7 @@ public:
 	static constexpr unsigned int scaleFactorPrecision();
 	
 	/**
-	 * @brief Rounds according to the defined precision of the grid scale factor.
+	 * @brief Rounds according to the defined precision of the combined/auxiliary scale factors.
 	 * 
 	 * @see scaleFactorPrecision();
 	 */
@@ -153,21 +153,39 @@ public:
 	
 	
 	/**
-	 * @brief Returns the precision of declination/grivation/convergence.
+	 * @brief Returns the precision of declination.
 	 * 
 	 * The precision is given in number of decimal places,
 	 * i.e. digits after the decimal point.
 	 * 
-	 * All values set as declination or grivation will be rounded to this precisison.
+	 * All values set as declination will be rounded to this precision.
 	 */
 	static constexpr unsigned int declinationPrecision();
 	
 	/**
-	 * @brief Rounds according to the defined precision of declination/grivation/convergence.
+	 * @brief Rounds according to the defined precision of declination.
 	 * 
 	 * @see declinationPrecision();
 	 */
 	static double roundDeclination(double);
+	
+	
+	/**
+	 * @brief Returns the precision of grivation.
+	 * 
+	 * The precision is given in number of decimal places,
+	 * i.e. digits after the decimal point.
+	 * 
+	 * All values set as grivation will be rounded to this precision.
+	 */
+	static constexpr unsigned int grivationPrecision();
+	
+	/**
+	 * @brief Rounds according to the defined precision of grivation.
+	 * 
+	 * @see grivationPrecision();
+	 */
+	static double roundGrivation(double);
 	
 	
 	/** 
@@ -233,6 +251,30 @@ protected:
 	 * Sets the georeferencing state.
 	 */
 	void setState(State value);
+	
+	/**
+	 * Returns the constant multiplier used when rounding
+	 * combined/auxiliary scale factor.
+	 *
+	 * @see roundScaleFactor();
+	 */
+	static constexpr unsigned int scaleFactorMultiplier();
+	
+	/**
+	 * Returns the constant multiplier used when rounding
+	 * declination.
+	 *
+	 * @see roundDeclination();
+	 */
+	static constexpr unsigned int declinationMultiplier();
+	
+	/**
+	 * Returns the constant multiplier used when rounding
+	 * grivation.
+	 *
+	 * @see roundGrivation();
+	 */
+	static constexpr unsigned int grivationMultiplier();
 	
 	
 public:
@@ -301,6 +343,14 @@ public:
 	double getDeclination() const;
 	
 	/**
+	 * Returns a declination value reflecting the grivation, such that
+	 * calling 'setDeclination' with this value will restore both
+	 * declination and grivation to their present values.
+	 * The returned value is not rounded, and is as precise as grivation.
+	 */
+	double getPreciseDeclination() const;
+	
+	/**
 	 * Sets the magnetic declination (in degrees).
 	 * 
 	 * Magnetic declination is the angle between magnetic north and true north.
@@ -328,7 +378,7 @@ public:
 	 * 
 	 * Files from Mapper versions before 0.6 may have used any number of decimal
 	 * places for grivation. Since version 0.6, grivation is rounded to the
-	 * number of decimal places defined by declinationPrecision(). When this
+	 * number of decimal places defined by grivationPrecision(). When this
 	 * rounding takes place (i.e. only when opening a file which has not been
 	 * saved by 0.6 or later), the difference between the original value and the
 	 * rounded value is temporarily provided by this function. This value can be
@@ -336,7 +386,7 @@ public:
 	 * grivation will invalidate this value.
 	 * 
 	 * @see getGrivation()
-	 * @see declinationPrecision()
+	 * @see grivationPrecision()
 	 */
 	double getGrivationError() const;
 	
@@ -423,9 +473,11 @@ public:
 	 * @param id  an identifier
 	 * @param spec the PROJ specification of the CRS
 	 * @param params parameter values (ignore for empty spec)
+	 * @param update_grivation  whether to update grivation due to convergence
 	 * @return true if the specification is valid or empty, false otherwise
 	 */
-	bool setProjectedCRS(const QString& id, QString spec, std::vector< QString > params = std::vector<QString>());
+	bool setProjectedCRS(const QString& id, QString spec, std::vector< QString > params = std::vector<QString>(),
+						 bool update_grivation = true);
 	
 	/**
 	 * Calculates the convergence at the reference point.
@@ -553,24 +605,6 @@ public:
 	 * value.
 	 */
 	void initAuxiliaryScaleFactor();
-	
-	/**
-	 * Updates the grivation. 
-	 * 
-	 * The new value is calculated from the declination and the convergence.
-	 * For a local georeferencing, the convergence is zero, and grivation
-	 * is set to the same value as declination.
-	 */
-	void updateGrivation();
-	
-	/**
-	 * Initializes the declination.
-	 * 
-	 * The new value is calculated from the grivation and the convergence.
-	 * For a local georeferencing, the convergence is zero, and declination
-	 * is set to the same value as grivation.
-	 */
-	void initDeclination();
 
 	/**
 	 * Updates convergence and grid scale factor.
@@ -697,24 +731,51 @@ constexpr unsigned int Georeferencing::scaleFactorPrecision()
 }
 
 inline
+constexpr unsigned int Georeferencing::scaleFactorMultiplier()
+{
+	return 1E6;
+}
+
+inline
 double Georeferencing::roundScaleFactor(double value)
 {
-	// This must match the implementation in scaleFactorPrecision().
-	return floor(value*1000000.0+0.5)/1000000.0;
+	return floor(value*scaleFactorMultiplier()+0.5)/scaleFactorMultiplier();
 }
 
 inline
 constexpr unsigned int Georeferencing::declinationPrecision()
 {
-	// This must match the implementation in declinationRound().
 	return 2u;
+}
+
+inline
+constexpr unsigned int Georeferencing::declinationMultiplier()
+{
+	return 1E2;
 }
 
 inline
 double Georeferencing::roundDeclination(double value)
 {
-	// This must match the implementation in declinationPrecision().
-	return floor(value*100.0+0.5)/100.0;
+	return floor(value*declinationMultiplier()+0.5)/declinationMultiplier();
+}
+
+inline
+constexpr unsigned int Georeferencing::grivationPrecision()
+{
+	return 8u;
+}
+
+inline
+constexpr unsigned int Georeferencing::grivationMultiplier()
+{
+	return 1E8;
+}
+
+inline
+double Georeferencing::roundGrivation(double value)
+{
+	return floor(value*grivationMultiplier()+0.5)/grivationMultiplier();
 }
 
 inline

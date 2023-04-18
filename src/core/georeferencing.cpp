@@ -57,6 +57,27 @@
 #endif
 
 
+namespace
+{
+	template<int N> constexpr int power(int base)
+	{
+		return base * power<N - 1>(base);
+	}
+
+	template<> constexpr int power<0>(int /*unused*/)
+	{
+		return 1;
+	}
+
+	class GeoreferencingAssert : public OpenOrienteering::Georeferencing
+	{
+		static_assert(power<scaleFactorPrecision()>(10) == scaleFactorMultiplier(), "scaleFactorPrecision");
+		static_assert(power<declinationPrecision()>(10) == declinationMultiplier(), "declinationPrecision");
+		static_assert(power<grivationPrecision()>(10) == grivationMultiplier(), "grivationPrecision");
+	};
+}
+
+
 // ### A namespace which collects various string constants of type QLatin1String. ###
 
 namespace literal
@@ -607,7 +628,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 			declination = roundDeclination(georef_element.attribute<double>(literal::declination));
 		if (georef_element.hasAttribute(literal::grivation))
 		{
-			grivation = roundDeclination(georef_element.attribute<double>(literal::grivation));
+			grivation = roundGrivation(georef_element.attribute<double>(literal::grivation));
 			grivation_error = georef_element.attribute<double>(literal::grivation) - grivation;
 		}
 		convergence = declination - grivation;
@@ -724,7 +745,7 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 	if (!qIsNull(declination))
 		georef_element.writeAttribute(literal::declination, declination, declinationPrecision());
 	if (!qIsNull(grivation))
-		georef_element.writeAttribute(literal::grivation, grivation, declinationPrecision());
+		georef_element.writeAttribute(literal::grivation, grivation, grivationPrecision());
 		
 	if (!qIsNull(map_ref_point.lengthSquared()))
 	{
@@ -845,16 +866,29 @@ void Georeferencing::setScaleFactors(double combined_scale_factor, double auxili
 	}
 }
 
+double Georeferencing::getPreciseDeclination() const
+{
+	// Re-calculate declination, based on grivation.
+	const auto alternate_declination = grivation + convergence;
+
+	// Return the average of the two declination values,
+	// weighted according to their precision.
+	const auto weighted_declination = declination*declinationMultiplier();
+	const auto weighted_alternate = alternate_declination*grivationMultiplier();
+	constexpr auto total_weighting = declinationMultiplier()+grivationMultiplier();
+	return (weighted_declination+weighted_alternate)/total_weighting;
+}
+
 void Georeferencing::setDeclination(double value)
 {
 	double declination = roundDeclination(value);
-	double grivation = roundDeclination(value - convergence);
+	double grivation = roundGrivation(value - convergence);
 	setDeclinationAndGrivation(declination, grivation);
 }
 
 void Georeferencing::setGrivation(double value)
 {
-	double grivation = roundDeclination(value);
+	double grivation = roundGrivation(value);
 	double declination = roundDeclination(value + convergence);
 	setDeclinationAndGrivation(declination, grivation);
 }
@@ -903,9 +937,10 @@ void Georeferencing::setProjectedRefPoint(const QPointF& point, bool update_griv
 			if (ok && new_geo_ref_point != geographic_ref_point)
 			{
 				geographic_ref_point = new_geo_ref_point;
+				const double declination_setting = getPreciseDeclination();
 				updateGridCompensation();
 				if (update_grivation)
-					updateGrivation();
+					setDeclination(declination_setting);
 				if (update_scale_factor)
 					updateCombinedScaleFactor();
 				emit projectionChanged();
@@ -1019,9 +1054,10 @@ void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation
 		if (ok && new_projected_ref != projected_ref_point)
 		{
 			projected_ref_point = new_projected_ref;
+			const double declination_setting = getPreciseDeclination();
 			updateGridCompensation();
 			if (update_grivation)
-				updateGrivation();
+				setDeclination(declination_setting);
 			if (update_scale_factor)
 				updateCombinedScaleFactor();
 			updateTransformation();
@@ -1062,16 +1098,6 @@ void Georeferencing::initAuxiliaryScaleFactor()
 	setCombinedScaleFactor(combined_scale_factor);
 }
 
-void Georeferencing::updateGrivation()
-{
-	setDeclination(declination);
-}
-
-void Georeferencing::initDeclination()
-{
-	setGrivation(grivation);
-}
-
 void Georeferencing::setTransformationDirectly(const QTransform& transform)
 {
 	if (transform != to_projected)
@@ -1094,7 +1120,8 @@ const QTransform& Georeferencing::projectedToMap() const
 
 
 
-bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vector<QString> params)
+bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vector<QString> params,
+									 bool update_grivation)
 {
 	// Default return value if no change is necessary
 	bool ok = (getState() == Geospatial || projected_crs_spec.isEmpty());
@@ -1136,7 +1163,12 @@ bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vecto
 				setState(BrokenGeospatial);
 		}
 		if (getState() == Geospatial)
+		{
+			auto const declination_setting = getPreciseDeclination();
 			updateGridCompensation();
+			if (update_grivation)
+				setDeclination(declination_setting);
+		}
 		
 		emit projectionChanged();
 	}
