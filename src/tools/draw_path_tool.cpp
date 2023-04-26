@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1119,19 +1119,14 @@ void DrawPathTool::updateDashPointDrawing()
 	if (is_helper_tool)
 		return;
 	
-	Symbol* symbol = editor->activeSymbol();
-	if (symbol && symbol->getType() == Symbol::Line)
+	const Symbol* symbol = editor->activeSymbol();
+	// Auto-activate dash points depending on if the selected symbol has a dash symbol.
+	if (symbolContainsDashSymbol(symbol))
 	{
-		// Auto-activate dash points depending on if the selected symbol has a dash symbol.
-		// TODO: instead of just looking if it is a line symbol with dash points,
-		// could also check for combined symbols containing lines with dash points
-		draw_dash_points = (symbol->asLine()->getDashSymbol());
-		
+		draw_dash_points = true;
 		updateStatusText();
 	}
-	else if (symbol &&
-		(symbol->getType() == Symbol::Area ||
-		 symbol->getType() == Symbol::Combined))
+	else
 	{
 		draw_dash_points = false;
 	}
