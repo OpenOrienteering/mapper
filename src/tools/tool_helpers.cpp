@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -55,6 +55,9 @@
 #include "gui/map/map_widget.h"
 #include "tools/tool.h"
 #include "util/util.h"
+#include "core/symbols/symbol.h"
+#include "core/symbols/line_symbol.h"
+#include "core/symbols/combined_symbol.h"
 
 
 namespace OpenOrienteering {
@@ -745,5 +748,44 @@ void AzimuthInfoHelper::draw(QPainter* painter, const MapWidget* widget, const M
 	painter->restore();
 }
 
+
+/**
+ * Helper function to determine whether a symbol that is either a line symbol
+ * or contains line symbols as part of a combined symbol contains a dash symbol.
+ * Function is used by DrawPathTool::updateDashPointDrawing() and 
+ * EditPointTool::addDashPointDefault() in relation to setting and changing dash points.
+ */
+
+bool symbolContainsDashSymbol(const Symbol* symbol)
+{
+	if (!symbol)
+		return false;
+	
+	if (symbol->getType() == Symbol::Line)
+	{
+		return (symbol->asLine()->getDashSymbol() != nullptr);
+	}
+	else if (symbol->getType() == Symbol::Combined)
+	{
+		for (auto part_num = 0; part_num < symbol->asCombined()->getNumParts(); ++part_num)
+		{
+			auto const* part = symbol->asCombined()->getPart(part_num);
+			if (!part)
+				continue;
+			if (part->getType() == Symbol::Line)
+			{
+				if (part->asLine()->getDashSymbol() != nullptr)
+					return true;
+			}
+			else if (part->getType() == Symbol::Combined)
+			{
+				if (symbolContainsDashSymbol(part))
+					return true;
+			}
+		}
+	}
+	
+	return false;
+}
 
 }  // namespace OpenOrienteering
