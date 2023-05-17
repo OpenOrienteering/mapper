@@ -57,6 +57,9 @@ public:
 	 * 
 	 * The image must be of QImage::Format_ARGB32_Premultiplied.
 	 * It may be null.
+	 *
+	 * This fixup is needed for Qt5 < 5.15.9 and Qt6 < 6.2.4 which are
+	 * affected by https://bugreports.qt.io/browse/QTBUG-100327.
 	 */
 	inline ImageTransparencyFixup(QImage* image)
 	: dest(0), dest_end(0)
@@ -81,11 +84,13 @@ public:
 	 */
 	inline void operator()() const
 	{
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 9) || (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0) && QT_VERSION < QT_VERSION_CHECK(6, 2, 4))
 		for (QRgb* px = dest; px < dest_end; px++)
 		{
 			if (*px == 0x01000000) /* qRgba(0, 0, 0, 1) */
 				*px = 0x00000000;  /* qRgba(0, 0, 0, 0) */
 		}
+#endif
 	}
 	
 protected:
