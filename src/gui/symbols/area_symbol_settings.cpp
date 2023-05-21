@@ -463,10 +463,10 @@ void AreaSymbolSettings::addPattern(AreaSymbol::FillPattern::Type type)
 			insertPropertiesGroup(group_index, temp_name, editor);
 		}
 	}
-	else if (map->getNumColors() > 0)
+	else if (map->getNumColorPrios() > 0)
 	{
 		// Default color for lines
-		active_pattern->line_color = map->getColor(0);
+		active_pattern->line_color = map->getColorByPrio(0);
 	}
 	updatePatternNames();
 	emit propertiesModified();
