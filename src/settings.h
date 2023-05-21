@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012 Thomas Schöps
- *    Copyright 2013, 2014,2017 Thomas Schöps, Kai Pastor
+ *    Copyright 2013, 2014, 2017, 2023 Thomas Schöps, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -77,6 +77,7 @@ public:
 		HomeScreen_TipsVisible,
 		HomeScreen_CurrentTip,
 		PaintOnTemplateTool_Colors,
+		General_JSONConfigurationFile,
 		END_OF_SETTINGSENUM /* Don't add items below this line. */
 	};
 	

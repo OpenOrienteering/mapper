@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Jan Dalheimer
- *    Copyright 2013-2016  Kai Pastor
+ *    Copyright 2013-2023  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -33,9 +33,14 @@ class QDoubleSpinBox;
 class QEvent;
 class QSpinBox;
 class QWidget;
+class QLineEdit;
+class QLabel;
+class QPixmap;
 
 
 namespace OpenOrienteering {
+
+class JSONConfiguration;
 
 class GeneralSettingsPage : public SettingsPage
 {
@@ -60,12 +65,15 @@ protected:
 	
 	void updateWidgets();
 	
+	void updateJSON();
+	
 	/**
 	 * This event filter stops LanguageChange events.
 	 */
 	bool eventFilter(QObject* watched, QEvent* event) override;
 	
 private slots:
+	void openJSONFileDialog();
 	void openTranslationFileDialog();
 	
 	void openPPICalculationDialog();
@@ -76,6 +84,12 @@ private:
 	QString    translation_file;
 	QString    last_encoding_input;
 	QString    last_matching_completition;
+	QString    json_configuration_file;
+	
+	JSONConfiguration& json_config_instance;	// the single instance of the JSONConfiguration object
+	QLineEdit* json_configuration_edit;
+	QLabel* json_status;
+	QPixmap* json_ok_pixmap, *json_error_pixmap;
 	
 	QComboBox* language_box;
 	
