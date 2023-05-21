@@ -101,6 +101,7 @@ MapColor::MapColor(const QString& name, int priority)
 MapColor* MapColor::duplicate() const
 {
 	MapColor* copy = new MapColor(name, priority);
+	copy->color_id = color_id;
 	copy->cmyk = cmyk;
 	copy->rgb = rgb;
 	copy->opacity = opacity;
@@ -114,6 +115,16 @@ MapColor* MapColor::duplicate() const
 	copy->screen_frequency = screen_frequency;
 	copy->components = components;
 	return copy;
+}
+
+int MapColor::getId() const
+{
+	return color_id;
+}
+
+void MapColor::setId(int id)
+{
+	color_id = id;
 }
 
 bool MapColor::isBlack() const
@@ -156,6 +167,7 @@ bool MapColor::equals(const MapColor& other, bool compare_priority) const
 {
 	return (!compare_priority || (priority == other.priority)) &&
 	       (name.compare(other.name, Qt::CaseInsensitive) == 0) &&
+	       (color_id == other.color_id) &&
 	       (spot_color_method == other.spot_color_method) &&
 	       (cmyk_color_method == other.cmyk_color_method) &&
 	       (rgb_color_method == other.rgb_color_method) &&

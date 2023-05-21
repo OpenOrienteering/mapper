@@ -327,6 +327,8 @@ void XMLFileExporter::exportColors()
 		MapColor* color = map->color_set->colors[i];
 		const MapColorCmyk &cmyk = color->getCmyk();
 		XmlElementWriter color_element(xml, literal::color);
+		if (color->getId() >= 0)
+			color_element.writeAttribute(literal::id, color->getId());
 		color_element.writeAttribute(literal::priority, color->getPriority());
 		color_element.writeAttribute(literal::name, color->getName());
 		color_element.writeAttribute(literal::c, cmyk.c, 3);
@@ -769,6 +771,8 @@ void XMLFileImporter::importColors()
 			auto color = std::make_unique<MapColor>(
 			  color_element.attribute<QString>(literal::name),
 			  color_element.attribute<int>(literal::priority) );
+			if (color_element.hasAttribute(literal::id))
+				color->setId(color_element.attribute<int>(literal::id));
 			if (color_element.hasAttribute(literal::opacity))
 				color->setOpacity(color_element.attribute<float>(literal::opacity));
 			
@@ -868,6 +872,34 @@ void XMLFileImporter::importColors()
 			addWarningUnsupportedElement();
 			xml.skipCurrentElement();
 		}
+	}
+	
+	// Given that we access the color vector directly, we got to handle the id
+	// assignment as well.
+	auto& ids(map->color_set->ids);
+	std::vector<MapColor *> colors_to_fix;
+	auto const max_element = std::max_element(begin(colors), end(colors), [](auto a, auto b) { return a->getId() < b->getId(); });
+	auto const max_id = (max_element == end(colors)) ? -1 : (*max_element)->getId();
+	ids.resize(std::max(max_id, static_cast<int>(colors.size())) + 1, nullptr);
+
+	for (auto* color : colors)
+	{
+		if (color->getId() >= 0)
+			ids[color->getId()] = color;
+		else
+			colors_to_fix.push_back(color);
+	}
+
+	for (auto* color : colors_to_fix)
+	{
+		// Assign new ids starting from one.
+		auto free_spot = std::find(begin(ids) + 1, end(ids), nullptr);
+		auto assigned_id = free_spot - begin(ids);
+		color->setId(assigned_id);
+		if (assigned_id < static_cast<int>(ids.size()))
+			ids[assigned_id] = color;
+		else
+			ids.push_back(color);
 	}
 	
 	if (num_colors > 0 && num_colors != colors.size())
