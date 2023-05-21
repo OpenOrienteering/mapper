@@ -12727,6 +12727,161 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>黄色 50%</translation>
     </message>
     <message>
+        <source>White for course overprint</source>
+        <comment>Color 36</comment>
+        <translation>路线叠印白色</translation>
+    </message>
+    <message>
+        <source>Black 100%</source>
+        <comment>Color 37</comment>
+        <translation>黑色 100%</translation>
+    </message>
+    <message>
+        <source>Green 100%</source>
+        <comment>Color 38</comment>
+        <translation>绿色 100%</translation>
+    </message>
+    <message>
+        <source>White for railway</source>
+        <comment>Color 39</comment>
+        <translation>铁路符号的白色</translation>
+    </message>
+    <message>
+        <source>Blue 100%</source>
+        <comment>Color 40</comment>
+        <translation>蓝色 100%</translation>
+    </message>
+    <message>
+        <source>Brown 100%</source>
+        <comment>Color 41</comment>
+        <translation>棕色 100%</translation>
+    </message>
+    <message>
+        <source>Purple for track symbols</source>
+        <comment>Color 42</comment>
+        <translation>轨道符号的紫色</translation>
+    </message>
+    <message>
+        <source>Black below purple for track symbols</source>
+        <comment>Color 43</comment>
+        <translation>轨道符号紫色下面的黑色</translation>
+    </message>
+    <message>
+        <source>Black 65%</source>
+        <comment>Color 44</comment>
+        <translation>黑色 65%</translation>
+    </message>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 45</comment>
+        <translation>黑色 20%</translation>
+    </message>
+    <message>
+        <source>Upper brown 50%</source>
+        <comment>Color 46</comment>
+        <translation>上层棕色 50%</translation>
+    </message>
+    <message>
+        <source>Black below upper brown 50%</source>
+        <comment>Color 47</comment>
+        <translation>上层棕色 50%下的黑色</translation>
+    </message>
+    <message>
+        <source>Lower brown 50%</source>
+        <comment>Color 48</comment>
+        <translation>下层棕色 50%</translation>
+    </message>
+    <message>
+        <source>Black below lower brown 50%</source>
+        <comment>Color 49</comment>
+        <translation>下层棕色 50%下的黑色</translation>
+    </message>
+    <message>
+        <source>Blue 100% for area features</source>
+        <comment>Color 50</comment>
+        <translation>面状符号填充蓝色 100%</translation>
+    </message>
+    <message>
+        <source>Blue 70%</source>
+        <comment>Color 51</comment>
+        <translation>蓝色 70%</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 52</comment>
+        <translation>蓝色 50%</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 53</comment>
+        <translation>OpenOrinenteering橙色</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for narrow ride</source>
+        <comment>Color 54</comment>
+        <translation>狭窄行车道用的黄色 100%</translation>
+    </message>
+    <message>
+        <source>Green 30% for narrow ride</source>
+        <comment>Color 55</comment>
+        <translation>狭窄行车道用的绿色 30%</translation>
+    </message>
+    <message>
+        <source>White over green</source>
+        <comment>Color 56</comment>
+        <translation>绿色上层的白色</translation>
+    </message>
+    <message>
+        <source>Yellow 100%/Green 50%</source>
+        <comment>Color 57</comment>
+        <translation>黄色 100%/绿色 50%</translation>
+    </message>
+    <message>
+        <source>Black 25% (Grey)</source>
+        <comment>Color 58</comment>
+        <translation>黑色 25%（灰色）</translation>
+    </message>
+    <message>
+        <source>Green 100% for area features</source>
+        <comment>Color 59</comment>
+        <translation>面状符号填充绿色 100%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 60</comment>
+        <translation>绿色 30%</translation>
+    </message>
+    <message>
+        <source>Green 100% for undergrowth</source>
+        <comment>Color 61</comment>
+        <translation>低矮植被的绿色 100%</translation>
+    </message>
+    <message>
+        <source>White over yellow</source>
+        <comment>Color 62</comment>
+        <translation>黄色上层的白色</translation>
+    </message>
+    <message>
+        <source>Black for open land</source>
+        <comment>Color 63</comment>
+        <translation>空旷地的黑色</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 64</comment>
+        <translation>黄色</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for area features</source>
+        <comment>Color 65</comment>
+        <translation>面状符号填充黄色 100%</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 66</comment>
+        <translation>黄色 50%</translation>
+    </message>
+    <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
         <translation>首曲线</translation>

@@ -13349,6 +13349,161 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Жовтий 50%</translation>
     </message>
     <message>
+        <source>White for course overprint</source>
+        <comment>Color 36</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Black 100%</source>
+        <comment>Color 37</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Green 100%</source>
+        <comment>Color 38</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>White for railway</source>
+        <comment>Color 39</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue 100%</source>
+        <comment>Color 40</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brown 100%</source>
+        <comment>Color 41</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Purple for track symbols</source>
+        <comment>Color 42</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Black below purple for track symbols</source>
+        <comment>Color 43</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Black 65%</source>
+        <comment>Color 44</comment>
+        <translation>Чорний 65%</translation>
+    </message>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 45</comment>
+        <translation>Чорний 20%</translation>
+    </message>
+    <message>
+        <source>Upper brown 50%</source>
+        <comment>Color 46</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Black below upper brown 50%</source>
+        <comment>Color 47</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lower brown 50%</source>
+        <comment>Color 48</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Black below lower brown 50%</source>
+        <comment>Color 49</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue 100% for area features</source>
+        <comment>Color 50</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue 70%</source>
+        <comment>Color 51</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 52</comment>
+        <translation>Синій 50%</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 53</comment>
+        <translation>Оранжевий OpenOrienteering</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for narrow ride</source>
+        <comment>Color 54</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Green 30% for narrow ride</source>
+        <comment>Color 55</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>White over green</source>
+        <comment>Color 56</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yellow 100%/Green 50%</source>
+        <comment>Color 57</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Black 25% (Grey)</source>
+        <comment>Color 58</comment>
+        <translation>Чорний 25% (Сірий)</translation>
+    </message>
+    <message>
+        <source>Green 100% for area features</source>
+        <comment>Color 59</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 60</comment>
+        <translation>Зелений 30%</translation>
+    </message>
+    <message>
+        <source>Green 100% for undergrowth</source>
+        <comment>Color 61</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>White over yellow</source>
+        <comment>Color 62</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Black for open land</source>
+        <comment>Color 63</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 64</comment>
+        <translation>Жовтий</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for area features</source>
+        <comment>Color 65</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 66</comment>
+        <translation>Жовтий 50%</translation>
+    </message>
+    <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
         <translation>Горизонталь</translation>

@@ -11307,6 +11307,161 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <translation>Amarillo 50%</translation>
     </message>
     <message>
+        <source>White for course overprint</source>
+        <comment>Color 36</comment>
+        <translation>Blanco para superposión del recorrido</translation>
+    </message>
+    <message>
+        <source>Black 100%</source>
+        <comment>Color 37</comment>
+        <translation>Negro 100%</translation>
+    </message>
+    <message>
+        <source>Green 100%</source>
+        <comment>Color 38</comment>
+        <translation>Verde 100%</translation>
+    </message>
+    <message>
+        <source>White for railway</source>
+        <comment>Color 39</comment>
+        <translation>Blanco para ferrocarril</translation>
+    </message>
+    <message>
+        <source>Blue 100%</source>
+        <comment>Color 40</comment>
+        <translation>Azul 100%</translation>
+    </message>
+    <message>
+        <source>Brown 100%</source>
+        <comment>Color 41</comment>
+        <translation>Marrón 100%</translation>
+    </message>
+    <message>
+        <source>Purple for track symbols</source>
+        <comment>Color 42</comment>
+        <translation>Púrpura para símbolos de pista</translation>
+    </message>
+    <message>
+        <source>Black below purple for track symbols</source>
+        <comment>Color 43</comment>
+        <translation>Negro debajo del púrpura para los símbolos de la pista</translation>
+    </message>
+    <message>
+        <source>Black 65%</source>
+        <comment>Color 44</comment>
+        <translation>Negro 65%</translation>
+    </message>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 45</comment>
+        <translation>Negro 20%</translation>
+    </message>
+    <message>
+        <source>Upper brown 50%</source>
+        <comment>Color 46</comment>
+        <translation>Marrón superior 50%</translation>
+    </message>
+    <message>
+        <source>Black below upper brown 50%</source>
+        <comment>Color 47</comment>
+        <translation>Negro por debajo del marrón superior 50%</translation>
+    </message>
+    <message>
+        <source>Lower brown 50%</source>
+        <comment>Color 48</comment>
+        <translation>Marrón inferior 50%</translation>
+    </message>
+    <message>
+        <source>Black below lower brown 50%</source>
+        <comment>Color 49</comment>
+        <translation>Negro por debajo del marrón inferior 50%</translation>
+    </message>
+    <message>
+        <source>Blue 100% for area features</source>
+        <comment>Color 50</comment>
+        <translation>Azul 100% para elementos de área</translation>
+    </message>
+    <message>
+        <source>Blue 70%</source>
+        <comment>Color 51</comment>
+        <translation>Azul 70%</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 52</comment>
+        <translation>Azul 50%</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 53</comment>
+        <translation>Naranja OpenOrienteering</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for narrow ride</source>
+        <comment>Color 54</comment>
+        <translation>Amarillo 100% para pasillos estrechos</translation>
+    </message>
+    <message>
+        <source>Green 30% for narrow ride</source>
+        <comment>Color 55</comment>
+        <translation>Verde 30% para pasillos estrechos</translation>
+    </message>
+    <message>
+        <source>White over green</source>
+        <comment>Color 56</comment>
+        <translation>Blanco sobre verde</translation>
+    </message>
+    <message>
+        <source>Yellow 100%/Green 50%</source>
+        <comment>Color 57</comment>
+        <translation>Amarillo 100%/Verde 50%</translation>
+    </message>
+    <message>
+        <source>Black 25% (Grey)</source>
+        <comment>Color 58</comment>
+        <translation>Negro 25% (Gris)</translation>
+    </message>
+    <message>
+        <source>Green 100% for area features</source>
+        <comment>Color 59</comment>
+        <translation>Verde 100% para elementos de área</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 60</comment>
+        <translation>Verde 30%</translation>
+    </message>
+    <message>
+        <source>Green 100% for undergrowth</source>
+        <comment>Color 61</comment>
+        <translation>Verde 100% para sotobosque</translation>
+    </message>
+    <message>
+        <source>White over yellow</source>
+        <comment>Color 62</comment>
+        <translation>Blanco sobre amarillo</translation>
+    </message>
+    <message>
+        <source>Black for open land</source>
+        <comment>Color 63</comment>
+        <translation>Negro para campo abierto</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 64</comment>
+        <translation>Amarillo</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for area features</source>
+        <comment>Color 65</comment>
+        <translation>Amarillo 100% para elementos de área</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 66</comment>
+        <translation>Amarillo 50%</translation>
+    </message>
+    <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
         <translation>Curva de nivel</translation>

@@ -13768,6 +13768,161 @@ Largeur minimum : 0,4 mm (6 m au sol).</translation>
         <translation>Jaune 50%</translation>
     </message>
     <message>
+        <source>White for course overprint</source>
+        <comment>Color 36</comment>
+        <translation>Blanc pour symbole de surimpression</translation>
+    </message>
+    <message>
+        <source>Black 100%</source>
+        <comment>Color 37</comment>
+        <translation>Noir 100%</translation>
+    </message>
+    <message>
+        <source>Green 100%</source>
+        <comment>Color 38</comment>
+        <translation>Vert 100%</translation>
+    </message>
+    <message>
+        <source>White for railway</source>
+        <comment>Color 39</comment>
+        <translation>Blanc pour voie ferrée</translation>
+    </message>
+    <message>
+        <source>Blue 100%</source>
+        <comment>Color 40</comment>
+        <translation>Bleu 100%</translation>
+    </message>
+    <message>
+        <source>Brown 100%</source>
+        <comment>Color 41</comment>
+        <translation>Brun 100%</translation>
+    </message>
+    <message>
+        <source>Purple for track symbols</source>
+        <comment>Color 42</comment>
+        <translation>Pourpre pour symboles de circuit</translation>
+    </message>
+    <message>
+        <source>Black below purple for track symbols</source>
+        <comment>Color 43</comment>
+        <translation>Noir en dessous du pourpre pour circuits</translation>
+    </message>
+    <message>
+        <source>Black 65%</source>
+        <comment>Color 44</comment>
+        <translation>Noir 65%</translation>
+    </message>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 45</comment>
+        <translation>Noir 20%</translation>
+    </message>
+    <message>
+        <source>Upper brown 50%</source>
+        <comment>Color 46</comment>
+        <translation>Brun supérieur 50%</translation>
+    </message>
+    <message>
+        <source>Black below upper brown 50%</source>
+        <comment>Color 47</comment>
+        <translation>Noir sous brun supérieur 50%</translation>
+    </message>
+    <message>
+        <source>Lower brown 50%</source>
+        <comment>Color 48</comment>
+        <translation>Brun inférieur 50%</translation>
+    </message>
+    <message>
+        <source>Black below lower brown 50%</source>
+        <comment>Color 49</comment>
+        <translation>Noir sous brun inférieur 50%</translation>
+    </message>
+    <message>
+        <source>Blue 100% for area features</source>
+        <comment>Color 50</comment>
+        <translation>Bleu 100% pour surfaces</translation>
+    </message>
+    <message>
+        <source>Blue 70%</source>
+        <comment>Color 51</comment>
+        <translation>Bleu 70%</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 52</comment>
+        <translation>Bleu 50%</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 53</comment>
+        <translation>Orange OpenOrienteering</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for narrow ride</source>
+        <comment>Color 54</comment>
+        <translation>Jaune 100% pour layon étroit</translation>
+    </message>
+    <message>
+        <source>Green 30% for narrow ride</source>
+        <comment>Color 55</comment>
+        <translation>Vert 30% pour layon étroit</translation>
+    </message>
+    <message>
+        <source>White over green</source>
+        <comment>Color 56</comment>
+        <translation>Blanc sur vert</translation>
+    </message>
+    <message>
+        <source>Yellow 100%/Green 50%</source>
+        <comment>Color 57</comment>
+        <translation>Jaune 100%/Vert 50%</translation>
+    </message>
+    <message>
+        <source>Black 25% (Grey)</source>
+        <comment>Color 58</comment>
+        <translation>Noir 25% (gris)</translation>
+    </message>
+    <message>
+        <source>Green 100% for area features</source>
+        <comment>Color 59</comment>
+        <translation>Vert 100% pour surfaces</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 60</comment>
+        <translation>Vert 30%</translation>
+    </message>
+    <message>
+        <source>Green 100% for undergrowth</source>
+        <comment>Color 61</comment>
+        <translation>Vert 100% pour végétation basse</translation>
+    </message>
+    <message>
+        <source>White over yellow</source>
+        <comment>Color 62</comment>
+        <translation>Blanc sur jaune</translation>
+    </message>
+    <message>
+        <source>Black for open land</source>
+        <comment>Color 63</comment>
+        <translation>Noir pour terrain ouvert</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 64</comment>
+        <translation>Jaune</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for area features</source>
+        <comment>Color 65</comment>
+        <translation>Jaune 100% pour surfaces</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 66</comment>
+        <translation>Jaune 50%</translation>
+    </message>
+    <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
         <translation>Courbe de niveau</translation>

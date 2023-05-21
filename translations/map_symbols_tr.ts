@@ -7605,6 +7605,161 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Sarı %50</translation>
     </message>
     <message>
+        <source>White for course overprint</source>
+        <comment>Color 36</comment>
+        <translation>Kursun üst baskısı için beyaz</translation>
+    </message>
+    <message>
+        <source>Black 100%</source>
+        <comment>Color 37</comment>
+        <translation>%100 Siyah</translation>
+    </message>
+    <message>
+        <source>Green 100%</source>
+        <comment>Color 38</comment>
+        <translation>%100 Yeşil</translation>
+    </message>
+    <message>
+        <source>White for railway</source>
+        <comment>Color 39</comment>
+        <translation>Demiryolu için beyaz</translation>
+    </message>
+    <message>
+        <source>Blue 100%</source>
+        <comment>Color 40</comment>
+        <translation>%100 Mavi</translation>
+    </message>
+    <message>
+        <source>Brown 100%</source>
+        <comment>Color 41</comment>
+        <translation>%100 Kahverengi</translation>
+    </message>
+    <message>
+        <source>Purple for track symbols</source>
+        <comment>Color 42</comment>
+        <translation>İz sembolleri için mor</translation>
+    </message>
+    <message>
+        <source>Black below purple for track symbols</source>
+        <comment>Color 43</comment>
+        <translation>İz sembolleri için morun altında siyah</translation>
+    </message>
+    <message>
+        <source>Black 65%</source>
+        <comment>Color 44</comment>
+        <translation>Siyah %65</translation>
+    </message>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 45</comment>
+        <translation>Siyah %20</translation>
+    </message>
+    <message>
+        <source>Upper brown 50%</source>
+        <comment>Color 46</comment>
+        <translation>Üst kahverengi %50</translation>
+    </message>
+    <message>
+        <source>Black below upper brown 50%</source>
+        <comment>Color 47</comment>
+        <translation>Üst kahverenginin altında siyah %50</translation>
+    </message>
+    <message>
+        <source>Lower brown 50%</source>
+        <comment>Color 48</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Black below lower brown 50%</source>
+        <comment>Color 49</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue 100% for area features</source>
+        <comment>Color 50</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue 70%</source>
+        <comment>Color 51</comment>
+        <translation>%70 Mavi</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 52</comment>
+        <translation>Mavi %50</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 53</comment>
+        <translation>Açık orienteering Turuncu</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for narrow ride</source>
+        <comment>Color 54</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Green 30% for narrow ride</source>
+        <comment>Color 55</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>White over green</source>
+        <comment>Color 56</comment>
+        <translation>Yeşil üstü beyaz</translation>
+    </message>
+    <message>
+        <source>Yellow 100%/Green 50%</source>
+        <comment>Color 57</comment>
+        <translation>%100 Sarı/%50 Yeşil</translation>
+    </message>
+    <message>
+        <source>Black 25% (Grey)</source>
+        <comment>Color 58</comment>
+        <translation>Siyah %25 (Gri)</translation>
+    </message>
+    <message>
+        <source>Green 100% for area features</source>
+        <comment>Color 59</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 60</comment>
+        <translation>%30 Yeşil</translation>
+    </message>
+    <message>
+        <source>Green 100% for undergrowth</source>
+        <comment>Color 61</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>White over yellow</source>
+        <comment>Color 62</comment>
+        <translation>Sarı üstü Beyaz</translation>
+    </message>
+    <message>
+        <source>Black for open land</source>
+        <comment>Color 63</comment>
+        <translation>Açık alan için Siyah</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 64</comment>
+        <translation>Sarı</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for area features</source>
+        <comment>Color 65</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 66</comment>
+        <translation>Sarı %50</translation>
+    </message>
+    <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
         <translation>Eşyükselti</translation>
