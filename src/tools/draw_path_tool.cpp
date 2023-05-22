@@ -45,6 +45,7 @@
 #include <QString>
 #include <QToolButton>
 #include <QVarLengthArray>
+#include <QVariant>
 
 #include "core/map.h"
 #include "core/map_part.h"
@@ -63,6 +64,7 @@
 #include "tools/tool_helpers.h"
 #include "util/util.h"
 #include "undo/object_undo.h"
+#include "util/json_config.h"
 
 
 namespace OpenOrienteering {
@@ -1120,8 +1122,8 @@ void DrawPathTool::updateDashPointDrawing()
 		return;
 	
 	const Symbol* symbol = editor->activeSymbol();
-	// Auto-activate dash points depending on if the selected symbol has a dash symbol.
-	if (symbolContainsDashSymbol(symbol))
+	// Auto-activate dash points depending on if the selected symbol has a dash symbol and it is enabled by configuration.
+	if (symbolContainsDashSymbol(symbol) && JSONConfiguration::getConfigValue(QLatin1String("DashPointsAsDefault")).toBool())
 	{
 		draw_dash_points = true;
 		updateStatusText();
