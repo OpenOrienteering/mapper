@@ -471,6 +471,7 @@ void OcdFileImport::importColors(const OcdFile<Ocd::FormatV8>& file)
 		const QString name = convertOcdString(color_info.name);
 		int color_pos = map->getNumColorPrios();
 		auto color = new MapColor(name, color_pos);
+		color->setId(color_info.number);
 		
 		// OC*D stores CMYK values as integers from 0-200.
 		MapColorCmyk cmyk;
@@ -718,6 +719,7 @@ void OcdFileImport::importColor(const QString& param_string)
 	
 	int color_pos = map->getNumColorPrios();
 	auto color = new MapColor(name, color_pos);
+	color->setId(number);
 	color->setCmyk(cmyk);
 	color->setOpacity(opacity);
 	map->addColor(color, color_pos);
