@@ -41,13 +41,12 @@
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QLabel>
-#include <QPixmap>
-#include <QStyle>
 #include <QLatin1String>
 #include <QLineEdit>
 #include <QList>
 #include <QLocale>
 #include <QMessageBox>
+#include <QPixmap>
 #include <QScreen>
 #include <QSettings> // IWYU pragma: keep
 #include <QSignalBlocker>
@@ -55,6 +54,7 @@
 #include <QSpacerItem>
 #include <QSpinBox>
 #include <QStringList>
+#include <QStyle>
 #include <QTextCodec>
 #include <QToolButton>
 #include <QVBoxLayout>

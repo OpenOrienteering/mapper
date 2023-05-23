@@ -18,15 +18,15 @@
  */
 
 #include "json_config.h"
-#include "settings.h"
 
-#include <QString>
+#include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
-#include <QFile>
+#include <QString>
 #include <QVariant>
 
+#include "settings.h"
 
 namespace OpenOrienteering {
 

@@ -52,12 +52,12 @@
 #include "core/map_part.h"
 #include "core/map_view.h"
 #include "core/objects/object.h"
+#include "core/symbols/combined_symbol.h"
+#include "core/symbols/line_symbol.h"
+#include "core/symbols/symbol.h"
 #include "gui/map/map_widget.h"
 #include "tools/tool.h"
 #include "util/util.h"
-#include "core/symbols/symbol.h"
-#include "core/symbols/line_symbol.h"
-#include "core/symbols/combined_symbol.h"
 
 
 namespace OpenOrienteering {

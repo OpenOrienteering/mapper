@@ -20,12 +20,12 @@
 #ifndef JSON_CONFIG_H
 #define JSON_CONFIG_H
 
-#include <QJsonObject>
 #include <QJsonDocument>
+#include <QJsonObject>
 #include <QVariant>
 
-class QString;
 class QJsonParseError;
+class QString;
 
 namespace OpenOrienteering {
 

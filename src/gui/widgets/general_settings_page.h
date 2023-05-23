@@ -31,11 +31,11 @@ class QCheckBox;
 class QComboBox;
 class QDoubleSpinBox;
 class QEvent;
+class QLabel;
+class QLineEdit;
+class QPixmap;
 class QSpinBox;
 class QWidget;
-class QLineEdit;
-class QLabel;
-class QPixmap;
 
 
 namespace OpenOrienteering {

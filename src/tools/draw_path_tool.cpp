@@ -62,9 +62,9 @@
 #include "gui/widgets/key_button_bar.h"
 #include "tools/tool.h"
 #include "tools/tool_helpers.h"
-#include "util/util.h"
 #include "undo/object_undo.h"
 #include "util/json_config.h"
+#include "util/util.h"
 
 
 namespace OpenOrienteering {

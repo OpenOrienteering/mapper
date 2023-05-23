@@ -20,17 +20,16 @@
 #ifndef JSON_CONFIG_WIDGET_H
 #define JSON_CONFIG_WIDGET_H
 
-#include <QObject>
 #include <QDialog>
 #include <QObject>
 
 #include "util/json_config.h"
 
-class QWidget;
-class QPlainTextEdit;
-class QLineEdit;
-class QPushButton;
 class QDialogButtonBox;
+class QLineEdit;
+class QPlainTextEdit;
+class QPushButton;
+class QWidget;
 
 namespace OpenOrienteering {
 

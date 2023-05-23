@@ -20,21 +20,25 @@
 #include "json_config_widget.h"
 
 #include <QAbstractButton>
-#include <QToolButton>
 #include <QDialogButtonBox>
-#include <QFormLayout>
-#include <QVBoxLayout>
-#include <QLineEdit>
-#include <QPushButton>
-#include <QPlainTextEdit>
-#include <QMessageBox>
 #include <QFile>
+#include <QFormLayout>
+#include <QHBoxLayout>
+#include <QIcon>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonParseError>
+#include <QLatin1String>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QPlainTextEdit>
+#include <QPushButton>
+#include <QToolButton>
+#include <QVBoxLayout>
+#include <QWidget>
 
-#include "gui/util_gui.h"
 #include "gui/file_dialog.h"
+#include "gui/util_gui.h"
 #include "util/json_config.h"
 
 namespace OpenOrienteering {
@@ -58,7 +62,7 @@ JSONConfigWidget::JSONConfigWidget(QWidget* parent)
 	auto file_select_button = new QToolButton();
 	/*if (Settings::mobileModeEnforced())
 	{
-		json_file_button->setVisible(false);
+		file_select_button->setVisible(false);
 	}
 	else
 	{*/
