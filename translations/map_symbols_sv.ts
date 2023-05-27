@@ -719,9 +719,10 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
 Minimum depth: 1 m.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 203.1</comment>
-        <translation>Steniga gropar, hålor, grottor eller gruvhål som kan vara farliga för löparen. Minsta djup: 1 m.
+        <translation>Steniga gropar, hålor, grottor eller gruvhål som kan vara farliga för löparen.
 Symbolens tyngdpunkt anger föremålets läge och tecknet orienteras mot norr. För grottor med tydlig ingång ska symbolen orienteras in i grottan.
 En stenig grop med diameter större än 5 m bör överdrivas och redovisas med lämplig brantsymbol (201,202).
+Minsta djup: 1 m.
 Utbredning: 10,5 x 12 m.</translation>
     </message>
     <message>
@@ -774,7 +775,9 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
-        <translation>För att kunna särskilja närliggande stenar av typ 204 &quot;Sten&quot; (närmare än 30 meter) med betydande storleksskillnad, eller att särskilja en mindre sten från typ 205 &quot;Stor sten&quot; så är det tillåtet att endera förstora symbolen 204 till 0,5 mm, eller förminska symbolen 205 till 0,5 mm.</translation>
+        <translation>En sten som är större än närliggande stenar (204), eller en stor sten som är mindre än närliggande stora stenar (205).
+
+För att kunna särskilja närliggande stenar av typ 204 &quot;Sten&quot; (närmare än 30 meter) med betydande storleksskillnad, eller att särskilja en mindre sten från typ 205 &quot;Stor sten&quot; så är det tillåtet att endera förstora symbolen 204 till 0,5 mm, eller förminska symbolen 205 till 0,5 mm.</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -1899,7 +1902,7 @@ Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     <message>
         <source>Paved area, bounding line</source>
         <comment>Name of symbol 501.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hårdgjord yta, med begränsingslinje</translation>
     </message>
     <message>
         <source>Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.</source>
