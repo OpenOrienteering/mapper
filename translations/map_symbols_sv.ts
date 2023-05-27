@@ -1845,7 +1845,8 @@ Kortaste längd för gröna linjer: 4 streck (1,8 mm - 27 m).</translation>
     <message>
         <source>Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 417</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vit mask används under symbolen, för att förbättra läsbarheten i gult och grönt (yttermått 1.1 mm). 
+Utbredning: 13,5 x 13,5 m.</translation>
     </message>
     <message>
         <source>Prominent bush or tree</source>
@@ -1902,7 +1903,7 @@ Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     <message>
         <source>Paved area, bounding line</source>
         <comment>Name of symbol 501.2</comment>
-        <translation>Hårdgjord yta, med begränsingslinje</translation>
+        <translation>Hårdgjord yta med begränsningslinje</translation>
     </message>
     <message>
         <source>Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.</source>
