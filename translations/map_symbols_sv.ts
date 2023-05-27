@@ -673,7 +673,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation>En passerbar brant eller stenbrott. Om brantens fallriktning inte framgår av konturerna eller för att förbättra läsbarheten kan korta taggar dras i riktning nedför.
+        <translation>En passerbar brant eller stenbrott. Om brantens fallriktning inte framgår av konturerna eller för att förbättra läsbarheten kan korta taggar dras i riktning  nedför.
 För icke-vertikala branter bör taggarna ritas för att visa hela horisontalområdet. Slut på baslinjen måste avrundas om inga taggar visas. En passage mellan två branter måste vara minst 0,2 mm. En brant bör samverka med konturlinjerna.
 Att passera en brant kommer normalt att sakta ner hastigheten.
 Minsta höjd: 1 m.
@@ -1163,16 +1163,16 @@ Minsta yta (helton): 0,55 x 0,55 mm (utbredning 8 x 8 m).</translation>
     <message>
         <source>Small shallow body of water (full colour)</source>
         <comment>Name of symbol 302.5</comment>
-        <translation>grund vattenyta (full färg)</translation>
+        <translation>Grund vattenyta (full färg)</translation>
     </message>
     <message>
         <source>Small shallow water bodies may be represented using this symbol (without an outline).
 Minimum width: 0.3 mm.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 302.5</comment>
-        <translation>Små grunda vattenytor kan representeras med denna symbol (utan konturlinje)
-Minimibredd: 0,3 mm.
-Minimiyta: 0,55 mm x 0,55 mm (utbredning 8 x 8 m).</translation>
+        <translation>Mindre, grunda vattenytor kan redovisas med 100% blå (utan konturlinje).
+Minsta bredd (innermått): 0,3 mm.
+Minsta yta (innermått): 0,55 x 0,55 mm (utbredning 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Waterhole</source>
@@ -1183,9 +1183,7 @@ Minimiyta: 0,55 mm x 0,55 mm (utbredning 8 x 8 m).</translation>
         <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 303</comment>
-        <translation>Ett vattenfyllt hål eller en vattenyta som är för liten för att redovisas skalenligt. Symbolens tyngdpunkt anger föremålets läge och
-symbolen orienteras mot norr.
-Utbredning: 10,5 x 12 m.</translation>
+        <translation>Ett vattenfyllt hål eller en vattenyta som är för liten för att redovisas skalenligt. Symbolens tyngdpunkt anger föremålets läge och symbolen orienteras mot norr. Utbredning: 10,5 x 12 m.</translation>
     </message>
     <message>
         <source>Crossable watercourse</source>
@@ -1232,35 +1230,37 @@ The symbol is orientated to north.
 Minimum width: 0.3 mm (inside). Minimum area: 0.5 mm² (inside).</source>
         <comment>Description of symbol 307</comment>
         <translation>Sankmark som är opasserbar eller farlig för löparen. Den svarta konturlinjen förtydligar att sankmarken är opasserbar. Den svarta konturlinjen utelämnas vid övergångar mellan opasserbar sankmark och symbol 301 (opasserbar vattenyta). Symbolen kan kombineras med symbol för öppen mark (403, 404) för att redovisa öppenhet.
-Symbolen orienteras mot norr. 
-Minsta bredd: 0,3 mm (innermått). MInimiyta: 0,5 mm² (innermått).</translation>
+Symbolen orienteras mot norr.
+Minsta bredd: 0,3 mm (innermått). Minsta yta: 0.5 mm2 (innermått).</translation>
     </message>
     <message>
         <source>Uncrossable marsh</source>
         <comment>Name of symbol 307.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opasserbar sankmark</translation>
     </message>
     <message>
         <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol Uncrossable body of water (301). The symbol may be combined with a rough open land symbol (403, 404) to show openness.
 The symbol is orientated to north.
 Minimum width: 0.3 mm (inside). Minimum area: 0.5 mm² (inside).</source>
         <comment>Description of symbol 307.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sankmark som är opasserbar eller farlig för löparen. Den svarta konturlinjen förtydligar att sankmarken är opasserbar. Den svarta konturlinjen utelämnas vid övergångar mellan opasserbar sankmark och symbol 301 (opasserbar vattenyta). Symbolen kan kombineras med symbol för öppen mark (403, 404) för att redovisa öppenhet.
+Symbolen orienteras mot norr.
+Minsta bredd: 0,3 mm (innermått). Minsta yta: 0.5 mm2 (innermått).</translation>
     </message>
     <message>
         <source>Uncrossable marsh, outline</source>
         <comment>Name of symbol 307.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opasserbar sankmark, konturlinje</translation>
     </message>
     <message>
         <source>The black outline emphasises that the feature is uncrossable.</source>
         <comment>Description of symbol 307.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Den svarta konturlinjen förtydligar att sankmarken är opasserbar.</translation>
     </message>
     <message>
         <source>Marsh</source>
         <comment>Name of symbol 308</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sankmark</translation>
     </message>
     <message>
         <source>A crossable marsh, usually with a distinct edge.
@@ -1268,12 +1268,15 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</source>
         <comment>Description of symbol 308</comment>
-        <translation type="unfinished"></translation>
+        <translation>Passerbar sankmark, normalt med tydlig kant.
+Symbolen ska kombineras med andra symboler (vita, gula eller gröna) för att visa löpbarhet och öppenhet.
+Symbolen orienteras mot norr.
+Minsta yta: 0,5 x 0,4 mm (7,5 x 6 m).</translation>
     </message>
     <message>
         <source>Marsh, minimum size</source>
         <comment>Name of symbol 308.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sankmark, minsta storlek</translation>
     </message>
     <message>
         <source>A crossable marsh, usually with a distinct edge.
@@ -1281,23 +1284,27 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</source>
         <comment>Description of symbol 308.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Passerbar sankmark, normalt med tydlig kant.
+Symbolen ska kombineras med andra symboler (vita, gula eller gröna) för att visa löpbarhet och öppenhet.
+Symbolen orienteras mot norr.
+Minsta yta: 0,5 x 0,4 mm (7,5 x 6 m).</translation>
     </message>
     <message>
         <source>Narrow marsh</source>
         <comment>Name of symbol 309</comment>
-        <translation type="unfinished"></translation>
+        <translation>Smal sankmark</translation>
     </message>
     <message>
         <source>A marsh or trickle of water which is too narrow (less than about 5 m wide) to be shown with the marsh symbol.
 Minimum length (isolated): two dots (0.7 mm - footprint 10.5 m).</source>
         <comment>Description of symbol 309</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sankmark eller surdrag som är för smala (smalare än cirka 5 m) för att redovisas som sankmark.
+Kortaste längd (friliggande): två punkter (0,7 mm - 10,5 m).</translation>
     </message>
     <message>
         <source>Indistinct marsh</source>
         <comment>Name of symbol 310</comment>
-        <translation type="unfinished"></translation>
+        <translation>Otydlig sankmark</translation>
     </message>
     <message>
         <source>An indistinct marsh, seasonal marsh or an area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground.
@@ -1305,7 +1312,10 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</source>
         <comment>Description of symbol 310</comment>
-        <translation type="unfinished"></translation>
+        <translation>Otydlig sankmark, tidvis torrlagd sankmark eller smygande övergång mellan sankmark och fastmark (sumpskog), som är passerbar. Kanten är normalt otydlig och vegetationen liknar den på den omgivande marken.
+Symbolen ska kombineras med andra symboler (vita, gula eller gröna) för att visa löpbarhet och öppenhet.
+Symbolen orienteras mot norr.
+Minsta yta: 2 x 0,7 mm (30 x 10,5 m).</translation>
     </message>
     <message>
         <source>Indistinct marsh, minimum size</source>
@@ -1326,18 +1336,19 @@ Minsta yta: 2 x 0,7 mm (30 x 10,5 m).</translation>
     <message>
         <source>Well, fountain or water tank</source>
         <comment>Name of symbol 311</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brunn, fontän eller vattentank</translation>
     </message>
     <message>
         <source>A prominent well, fountain, water tank or captive spring.
 Footprint: 12 m x 12 m.</source>
         <comment>Description of symbol 311</comment>
-        <translation type="unfinished"></translation>
+        <translation>En tydlig brunn, fontän, vattentank eller täckt källa.
+Utbredning: 12 x 12 m.</translation>
     </message>
     <message>
         <source>Spring</source>
         <comment>Name of symbol 312</comment>
-        <translation type="unfinished"></translation>
+        <translation>Källa</translation>
     </message>
     <message>
         <source>A source of water.
@@ -1345,36 +1356,42 @@ Location is the centre of gravity of the symbol.
 The symbol is orientated to open downstream.
 Footprint: 13.5 m x 7 m.</source>
         <comment>Description of symbol 312</comment>
-        <translation type="unfinished"></translation>
+        <translation>En källa med vattenflöde. 
+Symbolens tyngdpunkt anger föremålets läge och symbolen orienteras mot utflödet.
+Utbredning: 13,5 x 7 m.</translation>
     </message>
     <message>
         <source>Prominent water feature</source>
         <comment>Name of symbol 313</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tydligt vattenföremål</translation>
     </message>
     <message>
         <source>The symbol is orientated to north.
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 313</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symbolen orienteras mot norr.
+Tecknets betydelse måste redovisas i teckenförklaringen.
+Utbredning: 13,5 x 13,5 m.</translation>
     </message>
     <message>
         <source>Open land</source>
         <comment>Name of symbol 401</comment>
-        <translation type="unfinished"></translation>
+        <translation>Öppen lättlöpt mark</translation>
     </message>
     <message>
         <source>Open land that has a ground cover (grass, moss or similar) which offers better runnability than typical open forest. If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 Shall not be combined with area symbols other than Broken ground (113), Boulder field (208), Marsh (308) and Indistinct marsh (310).
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 401</comment>
-        <translation type="unfinished"></translation>
+        <translation>Öppen mark med en markyta (gräs, mossa eller liknande) som innebär bättre löpbarhet än typisk öppen skog. Om öppna ytor dominerar kartbilden, kan ett 75 % raster användas istället för gul helton.
+Ska inte kombineras med andra ytsymboler än symbol 113 (småkuperad terräng), 208 (blockterräng) och sankmarker (308, 310).
+Minsta yta: 0,55 x 0,55 mm (8 x 8 m).</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
         <comment>Name of symbol 402</comment>
-        <translation type="unfinished"></translation>
+        <translation>Öppen lättlöpt mark med spridda träd</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes / thickets). Prominent individual trees may be added using symbol Prominent large tree (417). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
@@ -1384,12 +1401,17 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</source>
         <comment>Description of symbol 402</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ytor med spridda träd eller buskar i öppen mark kan generaliseras och redovisas med ett regelbundet mönster av stora punkter i den gula tonen. Punkterna kan vara vita (spridda träd) eller gröna (spridda buskar/buskage). Enstaka tydliga träd kan redovisas med symbol 417 (tydligt stort träd). Om öppna ytor dominerar kartbilden, kan ett 75 % raster användas istället för gul helton. 
+Ska inte kombineras med andra ytsymboler än symbol 113 (småkuperad terräng), 208 (blockterräng) och sankmarker (308, 310).
+Minsta bredd: 1,5 mm (22,5 m).
+Minsta yta: 2 x 2 mm (30 x 30 m).
+Mindre ytor måste utelämnas, överdrivas eller redovisas med symbol 401 (öppen mark).
+Symbolen orienteras mot norr.</translation>
     </message>
     <message>
         <source>Open land with scattered bushes (green dots)</source>
         <comment>Name of symbol 402.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Öppen lättlöpt mark med spridda buskar/buskage (gröna punkter)</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes / thickets). Prominent individual trees may be added using symbol Prominent large tree (417). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
@@ -1399,12 +1421,17 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</source>
         <comment>Description of symbol 402.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ytor med spridda träd eller buskar i öppen mark kan generaliseras och redovisas med ett regelbundet mönster av stora punkter i den gula tonen. Punkterna kan vara vita (spridda träd) eller gröna (spridda buskar/buskage). Enstaka tydliga träd kan redovisas med symbol 417 (tydligt stort träd). Om öppna ytor dominerar kartbilden, kan ett 75 % raster användas istället för gul helton.
+Ska inte kombineras med andra ytsymboler än symbol 113 (småkuperad terräng), 208 (blockterräng) och sankmarker (308, 310).
+Minsta bredd: 1,5 mm (22,5 m).
+Minsta yta: 2 x 2 mm (30 x 30 m).
+Mindre ytor måste utelämnas, överdrivas eller redovisas med symbol 401 (öppen mark).
+Symbolen orienteras mot norr.</translation>
     </message>
     <message>
         <source>Rough open land</source>
         <comment>Name of symbol 403</comment>
-        <translation type="unfinished"></translation>
+        <translation>Öppen mark med normal löpbarhet</translation>
     </message>
     <message>
         <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass offering the same runnability as typical open forest.
@@ -1412,12 +1439,14 @@ May be combined with symbol Vegetation: slow running, good visibility (407) or V
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).</source>
         <comment>Description of symbol 403</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hedmark, avverkade områden, nyligen planterade områden (träd lägre än cirka 1 m) eller andra öppna områden, med lägre vegetation, ljung eller högt gräs, med samma löpbarhet som typisk öppen skog. Kan kombineras med symbol 407 (löphindrande undervegetation) eller 409 (svårlöpt undervegetation) för att redovisa nedsatt löpbarhet.
+Minsta yta: 1 x 1 mm (15 x 15 m).
+Mindre ytor måste utelämnas, överdrivas eller redovisas med symbol 401 (öppen mark).</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
         <comment>Name of symbol 404</comment>
-        <translation type="unfinished"></translation>
+        <translation>Öppen mark med normal löpbarhet och spridda träd</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
@@ -1427,12 +1456,17 @@ Minimum width: 1.5 mm (footprint 22.5 m).
 Minimum area: 2.5 mm x 2.5 mm (footprint 37.5 m x 37.5 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Rough open land (403).</source>
         <comment>Description of symbol 404</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ytor med spridda träd eller buskar i öppen mark med normal löpbarhet kan generaliseras och redovisas med ett regelbundet mönster av stora punkter i den gula tonen.
+Punkterna kan vara vita (spridda träd) eller gröna (spridda buskar/buskage). Ytor med vita punkter kan kombineras med symbol 407 (löphindrande undervegetation) eller 409 (svårlöpt undervegetation) för att redovisa nedsatt löpbarhet.
+Symbolen orienteras mot norr.
+Minsta bredd: 1,5 mm (22,5 m).
+Minsta yta: 2,5 x 2,5 mm (37,5 x 37,5 m).
+Mindre ytor måste utelämnas, överdrivas eller redovisas med symbol 403 (öppen mark med normal löpbarhet).</translation>
     </message>
     <message>
         <source>Rough open land with scattered bushes (green dots)</source>
         <comment>Name of symbol 404.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Öppen mark med normal löpbarhet och spridda buskar/buskage (gröna punkter)</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
@@ -1442,12 +1476,17 @@ Minimum width: 1.5 mm (footprint 22.5 m).
 Minimum area: 2.5 mm x 2.5 mm (footprint 37.5 m x 37.5 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Rough open land (403).</source>
         <comment>Description of symbol 404.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ytor med spridda träd eller buskar i öppen mark med normal löpbarhet kan generaliseras och redovisas med ett regelbundet mönster av stora punkter i den gula tonen.
+Punkterna kan vara vita (spridda träd) eller gröna (spridda buskar/buskage). Ytor med vita punkter kan kombineras med symbol 407 (löphindrande undervegetation) eller 409 (svårlöpt undervegetation) för att redovisa nedsatt löpbarhet.
+Symbolen orienteras mot norr.
+Minsta bredd: 1,5 mm (22,5 m).
+Minsta yta: 2,5 x 2,5 mm (37,5 x 37,5 m).
+Mindre ytor måste utelämnas, överdrivas eller redovisas med symbol 403 (öppen mark med normal löpbarhet).</translation>
     </message>
     <message>
         <source>Forest</source>
         <comment>Name of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skog</translation>
     </message>
     <message>
         <source>Typical open forest for the particular type of terrain. If no part of the forest is easily runnable then no white should appear on the map.
@@ -1456,12 +1495,15 @@ For openings in symbol Open land (401), the minimum area is 0.7 mm x 0.7 mm (foo
 For openings in symbol Vegetation: walk (408), the minimum area is 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 For openings in symbol Vegetation: fight (410) the minimum area is 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>Typisk öppen skog för aktuell terrängtyp. Om ingen del av skogen är lättlöpt ska inte någon del av kartan vara vit.
+Minsta yta: 1 x 1 mm (15 x 15 m) för öppningar i andra ytor, förutom för följande symboler:
+401 (öppen mark) och 408 (svårlöpt skog) minsta yta: 0,7 x 0,7 mm (10,5 x 10,5 m)
+410 (svårframkomlig skog) minsta yta: 0,55 x 0,55 mm (8 x 8 m)</translation>
     </message>
     <message>
         <source>Vegetation: slow running</source>
         <comment>Name of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skog, löphindrande</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
@@ -1469,12 +1511,15 @@ Where runnability is better in one direction, a regular pattern of white stripes
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</source>
         <comment>Description of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med tät vegetation (dålig sikt) som försämrar löpbarheten till cirka 60-80 % av normal löphastighet.
+Om löpbarheten är bättre i en riktning, lämnas vita regelbundna korridorer i ytmarkeringen för att visa den riktning som har bättre löpbarhet.
+Minsta bredd: 0,4 mm (6 m).
+Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, normal running in one direction</source>
         <comment>Name of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skog, löphindrande (men bättre löpbarhet i en riktning)</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
@@ -1482,60 +1527,73 @@ Where runnability is better in one direction, a regular pattern of white stripes
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</source>
         <comment>Description of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med tät vegetation (dålig sikt) som försämrar löpbarheten till cirka 60-80 % av normal löphastighet.
+Om löpbarheten är bättre i en riktning, lämnas vita regelbundna korridorer i ytmarkeringen för att visa den riktning som har bättre löpbarhet.
+Minsta bredd: 0,4 mm (6 m).
+Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, good visibility</source>
         <comment>Name of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation>Undervegetation, löphindrande, god sikt</translation>
     </message>
     <message>
         <source>An area of good visibility and reduced runnability, due to, for instance, undergrowth (brambles, heather, low bushes, cut branches). Running speed is reduced to about 60-80% of normal speed.
 The symbol is orientated to north.
 Minimum area: 1.5 mm x 1 mm (footprint 22.5 m x 15 m).</source>
         <comment>Description of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med god sikt och nedsatt löpbarhet, till exempel på grund av undervegetation (taggbuskar, ljung, låga buskar, avsågat ris). Löphastigheten är nedsatt till cirka 60-80 % av normal hastighet.
+Symbolen orienteras mot norr.
+Minsta yta: 1,5 x 1 mm (22,5 x 15 m).</translation>
     </message>
     <message>
         <source>Vegetation: walk</source>
         <comment>Name of symbol 408</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skog, svårlöpt</translation>
     </message>
     <message>
         <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width: 0.3 mm (footprint 4.5 m).</source>
         <comment>Description of symbol 408</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med tät vegetation (dålig sikt) som försämrar löpbarheten till cirka 20-60 % av normal löphastighet. Om löpbarheten är bättre i en riktning, lämnas vita / gröna 20%
+regelbundna korridorer i ytmarkeringen för att visa den riktning som har bättre löpbarhet.
+Minsta yta: 0,7 x 0,7 mm (10,5 x 10,5 m)
+Minsta bredd: 0,3 mm (4,5 m)</translation>
     </message>
     <message>
         <source>Vegetation: walk, normal running in one direction</source>
         <comment>Name of symbol 408.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skog, svårlöpt (men bättre löpbarhet i en riktning)</translation>
     </message>
     <message>
         <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width: 0.3 mm (footprint 4.5 m).</source>
         <comment>Description of symbol 408.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med tät vegetation (dålig sikt) som försämrar löpbarheten till cirka 20-60 % av normal löphastighet. Om löpbarheten är bättre i en riktning, lämnas vita / gröna 20%
+regelbundna korridorer i ytmarkeringen för att visa den riktning som har bättre löpbarhet.
+Minsta yta: 0,7 x 0,7 mm (10,5 x 10,5 m)
+Minsta bredd: 0,3 mm (4,5 m)</translation>
     </message>
     <message>
         <source>Vegetation: walk, slow running in one direction</source>
         <comment>Name of symbol 408.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skog, svårlöpt (men löphindrande i en riktning)</translation>
     </message>
     <message>
         <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width: 0.3 mm (footprint 4.5 m).</source>
         <comment>Description of symbol 408.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med tät vegetation (dålig sikt) som försämrar löpbarheten till cirka 20-60 % av normal löphastighet. Om löpbarheten är bättre i en riktning, lämnas vita / gröna 20% regelbundna korridorer i ytmarkeringen för att visa den riktning som har bättre löpbarhet.
+Minsta yta: 0,7 x 0,7 mm (10,5 x 10,5 m)
+Minsta bredd: 0,3 mm (4,5 m)</translation>
     </message>
     <message>
         <source>Vegetation: walk, good visibility</source>
         <comment>Name of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>Undervegetation, svårlöpt, god sikt</translation>
     </message>
     <message>
         <source>An area of good visibility that is difficult to run through, due to, for instance, undergrowth (brambles, heather, low bushes, cut branches). Running speed is reduced to about 20-60% of normal speed.
@@ -1543,12 +1601,15 @@ Areas of good visibility that are very difficult to run or impassable are repres
 The symbol is orientated to north.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med god sikt och dålig löpbarhet, till exempel på grund av undervegetation (taggbuskar, ljung, låga buskar, avsågat ris). Löphastigheten är nedsatt till cirka 20-60 % av normal hastighet.
+Ytor med god sikt som är svårframkomlig eller opasserbar redovisas med symbol 410 (skog, svårframkomlig).
+Symbolen orienteras mot norr.
+Minsta yta: 1 x 1 mm (15 x 15 m)</translation>
     </message>
     <message>
         <source>Vegetation: fight</source>
         <comment>Name of symbol 410</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skog, svårframkomlig</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
@@ -1556,12 +1617,15 @@ Where runnability is better in one direction, a regular pattern of white, green 
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</source>
         <comment>Description of symbol 410</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ett område av tät vegetation (träd eller undervegetation) som är knappt passerbart. Löpbarheten är nedsatt till mindre än 20 %.
+Om löpbarheten är bättre i en riktning, lämnas vita / gröna 30 % / gröna 60 % regelbundna korridorer i ytmarkeringen för att visa den riktning som har bättre löpbarhet.
+Minsta yta: 0,55 x 0,55 mm (8 x 8 m)
+Minsta bredd: 0,25 mm (3,8 m)</translation>
     </message>
     <message>
         <source>Vegetation: fight, normal running in one direction</source>
         <comment>Name of symbol 410.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skog, svårframkomlig (men normal framkomlighet i en riktning)</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
@@ -1569,12 +1633,15 @@ Where runnability is better in one direction, a regular pattern of white, green 
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</source>
         <comment>Description of symbol 410.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ett område av tät vegetation (träd eller undervegetation) som är knappt passerbart. Löpbarheten är nedsatt till mindre än 20 %.
+Om löpbarheten är bättre i en riktning, lämnas vita / gröna 30 % / gröna 60 % regelbundna korridorer i ytmarkeringen för att visa den riktning som har bättre löpbarhet.
+Minsta yta: 0,55 x 0,55 mm (8 x 8 m)
+Minsta bredd: 0,25 mm (3,8 m)</translation>
     </message>
     <message>
         <source>Vegetation: fight, slow running in one direction</source>
         <comment>Name of symbol 410.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skog, svårframkomlig (men löphindrande i en riktning)</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
@@ -1582,12 +1649,15 @@ Where runnability is better in one direction, a regular pattern of white, green 
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</source>
         <comment>Description of symbol 410.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ett område av tät vegetation (träd eller undervegetation) som är knappt passerbart. Löpbarheten är nedsatt till mindre än 20 %.
+Om löpbarheten är bättre i en riktning, lämnas vita / gröna 30 % / gröna 60 % regelbundna korridorer i ytmarkeringen för att visa den riktning som har bättre löpbarhet.
+Minsta yta: 0,55 x 0,55 mm (8 x 8 m)
+Minsta bredd: 0,25 mm (3,8 m)</translation>
     </message>
     <message>
         <source>Vegetation: fight, walk in one direction</source>
         <comment>Name of symbol 410.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skog, svårframkomlig (men svårlöpt i en riktning)</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
@@ -1595,33 +1665,37 @@ Where runnability is better in one direction, a regular pattern of white, green 
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</source>
         <comment>Description of symbol 410.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ett område av tät vegetation (träd eller undervegetation) som är knappt passerbart. Löpbarheten är nedsatt till mindre än 20 %.
+Om löpbarheten är bättre i en riktning, lämnas vita / gröna 30 % / gröna 60 % regelbundna korridorer i ytmarkeringen för att visa den riktning som har bättre löpbarhet.
+Minsta yta: 0,55 x 0,55 mm (8 x 8 m)
+Minsta bredd: 0,25 mm (3,8 m)</translation>
     </message>
     <message>
         <source>Vegetation: fight, minimum width</source>
         <comment>Name of symbol 410.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skog, svårframkomlig - minsta bredd</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
 Minimum width: 0.35 mm</source>
         <comment>Description of symbol 410.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ett område av tät vegetation (träd eller undervegetation) som är knappt passerbart.
+Minsta bredd: 0,35 mm</translation>
     </message>
     <message>
         <source>Vegetation, impassable (from ISOM 2017, first edition)</source>
         <comment>Name of symbol 411</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opasserbar vegetation (från ISOM 2017, första versionen)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM 2000. Use either Vegetation: fight (410) or Area that shall not be entered (520) instead.</source>
         <comment>Description of symbol 411</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ingår för ev. konvertering från ISOM 2000. Använd istället 410 (skog, svårframkomlig) eller 520 (förbjudet område).</translation>
     </message>
     <message>
         <source>Cultivated land</source>
         <comment>Name of symbol 412</comment>
-        <translation type="unfinished"></translation>
+        <translation>Odlad mark</translation>
     </message>
     <message>
         <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. For agroforestry, symbol Forest (405) or Open land with scattered trees (402) may be used instead of yellow.
@@ -1630,12 +1704,15 @@ The symbol is combined with symbol Out-of-bounds area (709) to show cultivated l
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <comment>Description of symbol 412</comment>
-        <translation type="unfinished"></translation>
+        <translation>Odlad mark, normalt använd för växande gröda. Löpbarheten kan variera med typ av gröda och växtsäsong. För odlad mark med skog, kan symbol 405 (skog) eller 402 (öppen mark med spridda träd) användas istället för gul helton. Eftersom löpbarheten varierar bör dessa områden undvikas vid banläggning.
+Symbolen kombineras med symbol 709 (förbjudet område) för att redovisa odlad mark som inte ska beträdas.
+Symbolen orienteras mot norr.
+Minsta yta: 3 x 3 mm (45 x 45 m)</translation>
     </message>
     <message>
         <source>Cultivated land (black pattern)</source>
         <comment>Name of symbol 412.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Odlad mark (svart raster)</translation>
     </message>
     <message>
         <source>Cultivated land. This symbol must be used together with another symbol:
@@ -1646,12 +1723,18 @@ Since the runnability may vary, such areas should be avoided when setting course
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <comment>Description of symbol 412.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Odlad mark. Denna symbol måste användas tillsammans med en annan symbol:
+- För mark som används för att odla grödor, kombinera med symbolen Öppen mark (401).
+- För skogsbruk, använd med symbolen Skog (405) eller Öppen mark med spridda träd (402).
+Löpbarheten kan variera beroende på typen av grödor eller träd och tid på året.
+Eftersom löpbarheten kan variera bör sådana områden undvikas vid banläggning.
+Symbolen är orienterad mot norr.
+Minsta yta: 3 mm x 3 mm (45 m x 45 m).</translation>
     </message>
     <message>
         <source>Orchard</source>
         <comment>Name of symbol 413</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fruktodling</translation>
     </message>
     <message>
         <source>Land planted with trees or bushes, normally in a regular pattern. The dot lines may be orientated to show the direction of planting.
@@ -1659,12 +1742,15 @@ Must be combined with either symbol Open land (401) or Rough open land (403).
 May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 413</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område planterat med träd eller buskar, ofta i regelbundna mönster. Punktlinjerna kan roteras för att visa planteringsriktningen.
+Symbolen ska kombineras med symbol 401 (öppen mark) eller 403 (öppen mark med normal löpbarhet).
+Symbolen kan kombineras med symbol 407 (undervegetation, löphindrande) eller 409 (undervegetation, svårlöpt) för att redovisa nedsatt löpbarhet.
+Minsta yta: 2 x 2 mm (30 x 30 m)</translation>
     </message>
     <message>
         <source>Orchard, rough open land</source>
         <comment>Name of symbol 413.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fruktodling, normal löpbarhet</translation>
     </message>
     <message>
         <source>Land planted with trees or bushes, normally in a regular pattern. The dot lines may be orientated to show the direction of planting.
@@ -1672,45 +1758,53 @@ Must be combined with either symbol Open land (401) or Rough open land (403).
 May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 413.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område planterat med träd eller buskar, ofta i regelbundna mönster. Punktlinjerna kan roteras för att visa planteringsriktningen.
+Symbolen ska kombineras med symbol 401 (öppen mark) eller 403 (öppen mark med normal löpbarhet).
+Symbolen kan kombineras med symbol 407 (undervegetation, löphindrande) eller 409 (undervegetation, svårlöpt) för att redovisa nedsatt löpbarhet.
+Minsta yta: 2 x 2 mm (30 x 30 m)</translation>
     </message>
     <message>
         <source>Vineyard or similar</source>
         <comment>Name of symbol 414</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vingård eller liknande</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 414</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vingård eller liknande odlad mark med täta plantrader erbjudande god eller normal löpbarhet i planteringsriktningen. Linjerna ska roteras för att visa planteringsriktning.
+Symbolen ska kombineras med symbol 401 (öppen mark) eller 403 (öppen mark med normal löpbarhet).
+Minsta yta: 2 x 2 mm (30 x 30 m)</translation>
     </message>
     <message>
         <source>Vineyard or similar, rough open land</source>
         <comment>Name of symbol 414.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vingård eller liknande, normal löpbarhet</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 414.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vingård eller liknande odlad mark med täta plantrader erbjudande god eller normal löpbarhet i planteringsriktningen. Linjerna ska roteras för att visa planteringsriktning.
+Symbolen ska kombineras med symbol 401 (öppen mark) eller 403 (öppen mark med normal löpbarhet).
+Minsta yta: 2 x 2 mm (30 x 30 m)</translation>
     </message>
     <message>
         <source>Distinct cultivation boundary</source>
         <comment>Name of symbol 415</comment>
-        <translation type="unfinished"></translation>
+        <translation>Exakt begränsningslinje</translation>
     </message>
     <message>
         <source>A boundary of cultivated land vegetation (symbols 401, 412, 413, 414) or a boundary between areas of cultivated land when not shown with other symbols (fence, wall, path, etc.).
 Minimum length: 2 mm (footprint 30 m).</source>
         <comment>Description of symbol 415</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gräns för odlad mark (401, 412, 413, 414) eller gräns mellan ytor av odlad mark då den inte redovisas med andra symboler (stängsel, stenmur, stig etc.).
+Kortaste längd: 2 mm (30 m)</translation>
     </message>
     <message>
         <source>Distinct vegetation boundary</source>
         <comment>Name of symbol 416</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tydlig beståndsgräns</translation>
     </message>
     <message>
         <source>A distinct forest edge or vegetation boundary within the forest.
@@ -1719,12 +1813,14 @@ A disadvantage with a green line is that it cannot be used to show distinct vege
 Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
 Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
         <comment>Description of symbol 416</comment>
-        <translation type="unfinished"></translation>
+        <translation>En tydlig skogskant eller gräns av vegetation i skog. Mycket tydliga skogskanter och beståndsgränser kan redovisas med symbol 415 (exakt begränsningslinje). Enbart en typ av beståndsgränssymbol (svarta punkter eller streckad grön linje) ska användas på en karta. I stenbundna områden rekommenderas att den streckade gröna linjen används för beståndsgränser. En nackdel med den gröna linjen är att den inte kan användas för att redovisa tydliga beståndsgränser omkring och inne i symbolerna 410 (skog, svårframkomlig). Ett alternativ är då att använda symbol 415 (exakt begränsningslinje).
+Kortaste längd för svarta punkter: 5 punkter (2,5 mm - 37 m).
+Kortaste längd för gröna linjer: 4 streck (1,8 mm - 27 m).</translation>
     </message>
     <message>
         <source>Distinct vegetation boundary, green dashed line</source>
         <comment>Name of symbol 416.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tydlig beståndsgräns, grön streckad linje</translation>
     </message>
     <message>
         <source>A distinct forest edge or vegetation boundary within the forest.
@@ -1733,12 +1829,15 @@ A disadvantage with a green line is that it cannot be used to show distinct vege
 Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
 Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
         <comment>Description of symbol 416.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>En tydlig skogskant eller gräns av vegetation i skog.
+Mycket tydliga skogskanter och beståndsgränser kan redovisas med symbol 415 (exakt begränsningslinje). Enbart en typ av beståndsgränssymbol (svarta punkter eller streckad grön linje) ska användas på en karta. I stenbundna områden rekommenderas att den streckade gröna linjen används för beståndsgränser. En nackdel med den gröna linjen är att den inte kan användas för att redovisa tydliga beståndsgränser omkring och inne i symbolerna 410 (skog, svårframkomlig). Ett alternativ är då att använda symbol 415 (exakt begränsningslinje).
+Kortaste längd för svarta punkter: 5 punkter (2,5 mm - 37 m).
+Kortaste längd för gröna linjer: 4 streck (1,8 mm - 27 m).</translation>
     </message>
     <message>
         <source>Prominent large tree</source>
         <comment>Name of symbol 417</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tydligt stort träd</translation>
     </message>
     <message>
         <source>Footprint: 13.5 m x 13.5 m.</source>
@@ -1748,41 +1847,47 @@ Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</
     <message>
         <source>Prominent bush or tree</source>
         <comment>Name of symbol 418</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tydligt träd eller buske</translation>
     </message>
     <message>
         <source>Use sparingly, as it is easily mistaken for symbol Small knoll (109).
 Footprint: 9.0 m x 9.0 m.</source>
         <comment>Description of symbol 418</comment>
-        <translation type="unfinished"></translation>
+        <translation>Används sparsamt då den lätt kan förväxla med symbol 109 (liten höjd).
+Liten vit punkt i mitten hjälper personer med defekt färgseende.
+Utbredning: 9 x 9 m.</translation>
     </message>
     <message>
         <source>Prominent vegetation feature</source>
         <comment>Name of symbol 419</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tydligt vegetationsföremål</translation>
     </message>
     <message>
         <source>The symbol is orientated to north.
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 419</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vit mask används under symbolen, för att förbättra läsbarheten i gult och grönt (linjebredd 0.36 mm, och linjen ska vara 0.18 mm längre i symboländarna).
+Symbolen orienteras mot norr.
+Tecknets betydelse måste redovisas i teckenförklaringen.
+Utbredning: 13,5 x 13,5 m.</translation>
     </message>
     <message>
         <source>Paved area, with bounding line</source>
         <comment>Name of symbol 501</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hårdgjord yta, med begränsningslinje</translation>
     </message>
     <message>
         <source>An area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 501</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yta med hårt och jämnt underlag som asfalt, grus, betong och liknande. Hårdgjorda ytor bör omges av en tunn svart linje där de har tydliga gränser.
+Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     </message>
     <message>
         <source>Paved area</source>
         <comment>Name of symbol 501.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hårdgjord yta</translation>
     </message>
     <message>
         <source>An area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.
