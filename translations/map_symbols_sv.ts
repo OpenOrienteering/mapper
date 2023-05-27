@@ -1908,7 +1908,7 @@ Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     <message>
         <source>Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.</source>
         <comment>Description of symbol 501.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hårdgjorda ytor bör omges av en tunn svart linje där de har tydliga gränser.</translation>
     </message>
     <message>
         <source>Wide road, minimum width</source>
@@ -2019,7 +2019,7 @@ Kortaste längd: två delar med dubbla streck (5,3 mm - 79,5 m).</translation>
     <message>
         <source>Narrow ride</source>
         <comment>Name of symbol 508</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rågång</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
@@ -2041,7 +2041,7 @@ Kortaste längd: två streck (3,25 mm - 48 m).</translation>
     <message>
         <source>Narrow ride, easy running</source>
         <comment>Name of symbol 508.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rågång, bättre löpbarhet</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
@@ -2139,7 +2139,7 @@ Mycket stora stolpar ska redovisas ytriktigt med kantlinjen av symbol 521 (byggn
     <message>
         <source>Major power line, large carrying masts</source>
         <comment>Name of symbol 511.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Större kraftledning med höga master</translation>
     </message>
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline. The bars show the exact location of the pylons. The lines may be broken to improve legibility. Very large carrying masts shall be represented in plan shape using symbol 521 (building) or with symbol 524 (high tower).</source>
@@ -3990,7 +3990,7 @@ Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     <message>
         <source>Black below lower light brown</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Svart under lägre ljusbrun</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
