@@ -55,6 +55,8 @@
 404    natural = wood AND wood:density = sparse
 408    natural = wood AND wood:density = dense
 
+603.0  natural = peak
+
 304    waterway = canal
 306    waterway = ditch
 305    waterway = drain
@@ -87,6 +89,8 @@
 401    leisure = park
 401    leisure = pitch
 
+531    leisure = picnic_table
+
 503    highway = cycleway
 
 505    highway = footway
@@ -102,8 +106,11 @@
 507    highway = path AND (smoothness = horrible OR smoothness = very_horrible)
 
 502    highway = primary
+502    highway = primary_link
 502    highway = secondary
+502    highway = secondary_link
 502    highway = tertiary
+502    highway = tertiary_link
 
 504    highway = track
 503    highway = track AND (smoothness = good OR smoothness = intermediate)
@@ -118,6 +125,8 @@
 # 503.1  (highway = unclassified OR highway = residential OR highway = service OR highway = living_street) AND (surface = compacted OR surface = gravel)
 503    (highway = unclassified OR highway = residential OR highway = service OR highway = living_street) AND (surface = ground OR surface = sand OR surface = unpaved)
 504    (highway = unclassified OR highway = residential) AND (surface = grass OR surface = dirt)
+
+532    highway = steps
 
 509    railway ~= "" AND railway != "abandoned" AND tunnel != "yes"
 
@@ -165,8 +174,11 @@
 521    tourism = alpine_hut
 531    tourism = artwork
 521    tourism = chalet
+531    tourism = information AND (information = guidepost OR information = map OR information=board)
 
 526    historic = boundary_stone
+526    historic = memorial
+531    historic = wayside_cross
 
 531    pipeline = marker
 
