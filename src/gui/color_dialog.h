@@ -36,6 +36,8 @@ class QDoubleSpinBox;
 class QGridLayout;
 class QLabel;
 class QLineEdit;
+class QListWidget;
+class QListWidgetItem;
 class QPushButton;
 class QRadioButton;
 class QTabWidget;
@@ -144,6 +146,8 @@ protected:
 	QLineEdit* html_edit;
 	
 	QTabWidget* properties_widget;
+	
+	QListWidget* color_usage_list;
 	
 	QAbstractButton* ok_button;
 	QAbstractButton* reset_button;

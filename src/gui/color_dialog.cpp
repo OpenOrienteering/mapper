@@ -51,10 +51,13 @@
 #include <QTabWidget>
 #include <QVariant>
 #include <QWidget>
+#include <QListWidget>
 
 #include "core/map.h"
 #include "core/map_color.h"
+#include "core/symbols/symbol.h"
 #include "gui/util_gui.h"
+#include "gui/symbols/symbol_setting_dialog.h"
 #include "gui/widgets/color_dropdown.h"
 #include "util/backports.h"  // IWYU pragma: keep
 #include "util/util.h"
@@ -268,9 +271,35 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	desktop_color_widget->setObjectName(QString::fromLatin1("desktop"));
 	
 	
+	auto* color_usage_layout = new QVBoxLayout();
+	color_usage_layout->addWidget(Util::Headline::create(tr("Color usage in symbols")));
+
+	color_usage_list = new QListWidget();
+	color_usage_layout->addWidget(color_usage_list);
+
+	auto* color_usage_widget = new QWidget();
+	color_usage_widget->setLayout(color_usage_layout);
+	color_usage_widget->setObjectName(QString::fromLatin1("color_usage"));
+
+	for (auto i = 0; i < map.getNumSymbols(); ++i)
+	{
+		auto* symbol = map.getSymbol(i);
+
+		if (symbol->containsColor(&source_color))
+		{
+			auto symbol_desc = QString::fromLatin1("%1  %2").arg(symbol->getNumberAsString(), symbol->getName());
+			auto symbol_icon = QPixmap::fromImage(symbol->getIcon(&map));
+			auto* list_item = new QListWidgetItem(symbol_icon, symbol_desc);
+			list_item->setData(Qt::UserRole, QVariant::fromValue(static_cast<const Symbol*>(symbol)));
+			color_usage_list->addItem(list_item);
+		}
+	}
+
+
 	properties_widget = new QTabWidget();
 	properties_widget->addTab(desktop_color_widget, tr("Desktop"));
 	properties_widget->addTab(prof_color_widget, tr("Professional printing"));
+	properties_widget->addTab(color_usage_widget, tr("Color usage"));
 	
 	auto button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok | QDialogButtonBox::Reset | QDialogButtonBox::Help);
 	ok_button = button_box->button(QDialogButtonBox::Ok);
