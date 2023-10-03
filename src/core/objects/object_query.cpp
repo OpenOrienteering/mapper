@@ -1,6 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
- *    Copyright 2017-2022 Kai Pastor
+ *    Copyright 2017-2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -416,6 +416,16 @@ bool ObjectQuery::operator()(const Object* object) const
 			return it != container.end() && it->value.contains(tags.value);
 		} (object->tags(), tags);
 	case OperatorSearch:
+		if (tags.value.startsWith(QLatin1String("SYMBOL"), Qt::CaseSensitive))
+		{
+			auto start_number = tags.value.lastIndexOf(QLatin1Char(' ')) + 1;
+			if (start_number > 0 && tags.value.length() > start_number)
+			{
+				if (object->getSymbol() && object->getSymbol()->getNumberAsString() == tags.value.mid(start_number))
+					return true;
+			}
+			return false;
+		}
 		if (object->getSymbol() && object->getSymbol()->getName().contains(tags.value, Qt::CaseInsensitive))
 			return true;
 		for (auto const& current : object->tags())
