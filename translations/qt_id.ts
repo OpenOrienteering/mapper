@@ -51,31 +51,31 @@
     <name>QColorDialog</name>
     <message>
         <source>Hu&amp;e:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hu&amp;e:</translation>
     </message>
     <message>
         <source>&amp;Sat:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sat:</translation>
     </message>
     <message>
         <source>&amp;Val:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Val:</translation>
     </message>
     <message>
         <source>&amp;Red:</source>
-        <translation></translation>
+        <translation>&amp;Merah:</translation>
     </message>
     <message>
         <source>&amp;Green:</source>
-        <translation></translation>
+        <translation>&amp;Hijau:</translation>
     </message>
     <message>
         <source>Bl&amp;ue:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir&amp;u:</translation>
     </message>
     <message>
         <source>A&amp;lpha channel:</source>
-        <translation type="unfinished"></translation>
+        <translation>Chanel A&amp;lfa:</translation>
     </message>
     <message>
         <source>&amp;HTML:</source>
