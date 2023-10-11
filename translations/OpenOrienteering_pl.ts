@@ -2187,7 +2187,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="227"/>
         <source>Auxiliary scale factor:</source>
         <extracomment>The auxiliary scale factor is the ratio between a length in the curved earth model and the corresponding length on the ground. It is applied as a factor to ground distances to get curved earth model distances.</extracomment>
-        <translation type="unfinished">Pomocniczy współczynnik skali:</translation>
+        <translation>Pomocniczy współczynnik skali:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="245"/>
@@ -4961,7 +4961,7 @@ Przeskalować importowane dane?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="960"/>
         <source>Simple &amp;course</source>
-        <translation type="unfinished">Prosty &amp;kurs</translation>
+        <translation>Prosty &amp;kurs</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1060"/>
@@ -7151,7 +7151,7 @@ kolorów</translation>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="51"/>
         <source>Course name:</source>
-        <translation type="unfinished">Nazwa kursu:</translation>
+        <translation>Nazwa kursu:</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="54"/>
@@ -7169,7 +7169,7 @@ kolorów</translation>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="41"/>
         <source>Unnamed course</source>
-        <translation type="unfinished">Nienazwany kurs</translation>
+        <translation>Nienazwany kurs</translation>
     </message>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="60"/>
