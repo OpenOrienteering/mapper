@@ -3108,7 +3108,7 @@ because saving as %2 (.%3) is not supported.</source>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation>İçe aktarılan verilerin ölçeği, bu haritanın 1:% 2 ölçeğinden farklı olan 1:% 1&apos;dir.
+        <translation>İçe aktarılan verilerin ölçeği, bu haritanın 1:%2 ölçeğinden farklı olan 1:%1&apos;dir.
 
 İçe aktarılan veriler yeniden ölçeklendirilsin mi?</translation>
     </message>
