@@ -2455,7 +2455,7 @@
         <source>Failed to save the image:
 %1</source>
         <translation>Kuvan tallentaminen epäonnistui:
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="226"/>
@@ -6584,7 +6584,7 @@ zoomaa hiiren rullalla.</translation>
         <source>Failed to save the image:
 %1</source>
         <translation>Kuvan tallentaminen epäonnistui:
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1274"/>
