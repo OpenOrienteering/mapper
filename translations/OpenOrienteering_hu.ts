@@ -1004,7 +1004,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1172"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1199"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Segment azimuth and length. </source>
-        <translation>&lt;b&gt; %1 + % 2 &lt;/b&gt;: Irány és a rész hossza. </translation>
+        <translation>&lt;b&gt; %1 + %2 &lt;/b&gt;: Irány és a rész hossza. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1188"/>
@@ -1893,7 +1893,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="595"/>
         <source>Invalid auxiliary scale factor: %1</source>
-        <translation>Érvénytelen kiegészítő méretezési tényező: % 1</translation>
+        <translation>Érvénytelen kiegészítő méretezési tényező: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="627"/>
@@ -2464,7 +2464,7 @@
         <location filename="../src/core/symbols/symbol.cpp" line="318"/>
         <location filename="../src/undo/object_undo.cpp" line="616"/>
         <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
-        <translation>Rosszul formázott ID &apos;% 1&apos; szimbólum a % 2 sor % 3 oszlopán.</translation>
+        <translation>Rosszul formázott ID &apos;%1&apos; szimbólum a %2 sor %3 oszlopán.</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="393"/>
@@ -2548,7 +2548,7 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1942"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1782"/>
         <source>Cannot find a vector data export driver named &apos;%1&apos;</source>
-        <translation>Nem található a (z) &quot;% 1&quot; vektoradat-exportáló illesztőprogram</translation>
+        <translation>Nem található a (z) &quot;%1&quot; vektoradat-exportáló illesztőprogram</translation>
     </message>
     <message>
         <source>Cannot save file
@@ -2726,7 +2726,7 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="220"/>
         <source>%1 already exists.</source>
-        <translation>% 1 már létezik.</translation>
+        <translation>%1 már létezik.</translation>
     </message>
 </context>
 <context>
@@ -3377,8 +3377,8 @@ mert a formátum ismeretlen.</translation>
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
         <translation>Nem lehet exportálni a térképet mint
-&quot;% 1&quot;
-mert a% 2 (.% 3) mentés nem támogatott.</translation>
+&quot;%1&quot;
+mert a%2 (.%3) mentés nem támogatott.</translation>
     </message>
 </context>
 <context>
@@ -4037,8 +4037,8 @@ Az adatokat mégis importálja?</translation>
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
         <translation>Nem lehet exportálni a térképet mint
-&quot;% 1&quot;
-mert a % 2 (.% 3) mentés nem támogatott.</translation>
+&quot;%1&quot;
+mert a %2 (.%3) mentés nem támogatott.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="622"/>
@@ -5434,12 +5434,12 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="621"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation>A (z) &apos;% 1&apos; kódolása nem érhető el. Ellenőrizze a beállításokat.</translation>
+        <translation>A (z) &apos;%1&apos; kódolása nem érhető el. Ellenőrizze a beállításokat.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="650"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation>A (z)% 1 verziójú OCD fájlok nem támogatottak!</translation>
+        <translation>A (z)%1 verziójú OCD fájlok nem támogatottak!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="734"/>
@@ -5487,7 +5487,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1598"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2404"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation>A vonalvég és a csatlakozástípus kombinációja nem fogadható el a &quot;% 1&quot; vonal szimbólumban.</translation>
+        <translation>A vonalvég és a csatlakozástípus kombinációja nem fogadható el a &quot;%1&quot; vonal szimbólumban.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1620"/>
@@ -5497,32 +5497,32 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1632"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation>A &quot;% 1&quot; vonal szimbólumban a kötőjelek száma egy csoportban 2-re csökken.</translation>
+        <translation>A &quot;%1&quot; vonal szimbólumban a kötőjelek száma egy csoportban 2-re csökken.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1727"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation>A szegélyeket nem lehet megfelelően exportálni a &quot;% 1&quot; sor szimbólumában.</translation>
+        <translation>A szegélyeket nem lehet megfelelően exportálni a &quot;%1&quot; sor szimbólumában.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1918"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation>A(z) % 1 szöveges szimbólumban az egyedi karakterköz eltérhet az OCAD-ben alkalmazottól</translation>
+        <translation>A(z) %1 szöveges szimbólumban az egyedi karakterköz eltérhet az OCAD-ben alkalmazottól</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1934"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation>A(z) % 1 szöveges szimbólumban: az aláhúzás figyelmen kívül hagyása</translation>
+        <translation>A(z) %1 szöveges szimbólumban: az aláhúzás figyelmen kívül hagyása</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1937"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation>A % 1 szöveges szimbólumban: figyelmen kívül hagyja a betű alávágást</translation>
+        <translation>A %1 szöveges szimbólumban: figyelmen kívül hagyja a betű alávágást</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2322"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation>A(z) % 1 kombinált szimbólumban: Nem támogatott alszimbólum a % 2 helyen.</translation>
+        <translation>A(z) %1 kombinált szimbólumban: Nem támogatott alszimbólum a %2 helyen.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2528"/>
@@ -5542,7 +5542,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2778"/>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation>Nem menthető a(z) &apos;% 1&apos; sablon egyéni pozicionálása.</translation>
+        <translation>Nem menthető a(z) &apos;%1&apos; sablon egyéni pozicionálása.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="3108"/>
@@ -5689,7 +5689,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="518"/>
         <source>Color &quot;%1&quot; is imported as special color &quot;Registration black&quot;.</source>
-        <translation>A (z) „% 1” szín különleges színű, „Registration black” színként lett importálva.</translation>
+        <translation>A (z) „%1” szín különleges színű, „Registration black” színként lett importálva.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1536"/>
@@ -5766,7 +5766,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1955"/>
         <source>Failed to create dataset: %1</source>
-        <translation>Nem sikerült létrehozni az adathalmazt:% 1</translation>
+        <translation>Nem sikerült létrehozni az adathalmazt: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2000"/>
@@ -5794,17 +5794,17 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2325"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2371"/>
         <source>Failed to create feature in layer: %1</source>
-        <translation>Nem sikerült létrehozni egy objektumot a rétegben:% 1</translation>
+        <translation>Nem sikerült létrehozni egy objektumot a rétegben: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2381"/>
         <source>Failed to create layer %1: %2</source>
-        <translation>Nem sikerült létrehozni a(z)% 1 réteget:% 2</translation>
+        <translation>Nem sikerült létrehozni a(z) %1 réteget: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2388"/>
         <source>Failed to create name field: %1</source>
-        <translation>A név mező létrehozása nem sikerült:% 1</translation>
+        <translation>A név mező létrehozása nem sikerült: %1</translation>
     </message>
 </context>
 <context>
@@ -6982,7 +6982,7 @@ bontás</translation>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="77"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Switch to individual object scaling. </source>
-        <translation>&lt;b&gt;% 1 &lt;/b&gt;: Váltás az egyes objektumok méretezésére. </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: Váltás az egyes objektumok méretezésére. </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="73"/>
@@ -7181,7 +7181,7 @@ bontás</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="314"/>
         <source>Extra permissions are required to access &apos;%1&apos;.</source>
-        <translation>A&apos;&apos;% 1-hez való hozzáféréshez további engedélyekre van szükség.</translation>
+        <translation>A&apos;&apos;%1-hez való hozzáféréshez további engedélyekre van szükség.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="317"/>
@@ -9105,8 +9105,8 @@ A legnagyobb támogatott verzió a %2.</translation>
 Version: %1
 Location: %2</source>
         <translation>Belső hibát detektált! Kérjük, jelezze ezt a problémát.
-Verzió:% 1
-Hely:% 2</translation>
+Verzió: %1
+Hely: %2</translation>
     </message>
 </context>
 <context>
