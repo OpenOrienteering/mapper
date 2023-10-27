@@ -2807,7 +2807,7 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="220"/>
         <source>%1 already exists.</source>
-        <translation>% 1 ya existe.</translation>
+        <translation>%1 ya existe.</translation>
     </message>
 </context>
 <context>
@@ -5599,7 +5599,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1427"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1467"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation>En el símbolo de área &quot;% 1&quot;, se omite un patrón de relleno.</translation>
+        <translation>En el símbolo de área &quot;%1&quot;, se omite un patrón de relleno.</translation>
     </message>
     <message>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
@@ -5609,17 +5609,17 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1598"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2404"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation>En el símbolo lineal &quot;% 1&quot;, no se puede representar una combinación de límite/unión.</translation>
+        <translation>En el símbolo lineal &quot;%1&quot;, no se puede representar una combinación de límite/unión.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1620"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation>En el símbolo lineal &quot;% 1&quot;, se ignora la agrupación de guiones.</translation>
+        <translation>En el símbolo lineal &quot;%1&quot;, se ignora la agrupación de guiones.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1632"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation>En el símbolo lineal &quot;% 1&quot;, el número de guiones en un grupo se reduce a 2.</translation>
+        <translation>En el símbolo lineal &quot;%1&quot;, el número de guiones en un grupo se reduce a 2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1727"/>
@@ -5664,7 +5664,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2778"/>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation>No se puede guardar la posición personalizada de la plantilla &apos;% 1&apos;.</translation>
+        <translation>No se puede guardar la posición personalizada de la plantilla &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="3108"/>
