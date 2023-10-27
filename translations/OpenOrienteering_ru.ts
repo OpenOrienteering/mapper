@@ -5448,7 +5448,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2778"/>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation>Невозможно сохранить пользовательское расположение шаблона &apos;% 1&apos;.</translation>
+        <translation>Невозможно сохранить пользовательское расположение шаблона &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="3108"/>
