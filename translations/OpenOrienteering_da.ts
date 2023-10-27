@@ -822,7 +822,7 @@
         <location filename="../src/tools/cutout_tool.cpp" line="149"/>
         <location filename="../src/tools/cutout_tool.cpp" line="153"/>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation>&lt;b&gt;% 1 + klik eller træk&lt;/b&gt;: Vælg objekterne, der klippes. </translation>
+        <translation>&lt;b&gt;%1 + klik eller træk&lt;/b&gt;: Vælg objekterne, der klippes. </translation>
     </message>
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="154"/>
@@ -1199,7 +1199,7 @@
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="540"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
-        <translation>&lt;b&gt;% 1 + Klik&lt;/b&gt; på segment: Skift mellem lige og buede. </translation>
+        <translation>&lt;b&gt;%1 + Klik&lt;/b&gt; på segment: Skift mellem lige og buede. </translation>
     </message>
 </context>
 <context>
@@ -1241,7 +1241,7 @@
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="764"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation>&lt;b&gt;% 1 + Klik&lt;/b&gt; på punkt: slet det; på vej: tilføj et nyt punkt. med &lt;b&gt;%2&lt;/b&gt;: tilføj et dash punkt. </translation>
+        <translation>&lt;b&gt;%1 + Klik&lt;/b&gt; på punkt: slet det; på vej: tilføj et nyt punkt. med &lt;b&gt;%2&lt;/b&gt;: tilføj et dash punkt. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="768"/>
@@ -1273,7 +1273,7 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="750"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="532"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
-        <translation>&lt;b&gt;Klik&lt;/b&gt;: Vælg et enkelt objekt. &lt;b&gt;Træk&lt;/b&gt;: Vælg flere objekter. &lt;b&gt;% 1 + Klik&lt;/b&gt;: Skift valg. </translation>
+        <translation>&lt;b&gt;Klik&lt;/b&gt;: Vælg et enkelt objekt. &lt;b&gt;Træk&lt;/b&gt;: Vælg flere objekter. &lt;b&gt;%1 + Klik&lt;/b&gt;: Skift valg. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="753"/>
@@ -5338,7 +5338,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1958"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation>Tekstsymbol ikke importeret: kunne ikke bestemme sti (npts =%1): % 2</translation>
+        <translation>Tekstsymbol ikke importeret: kunne ikke bestemme sti (npts =%1): %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2264"/>
