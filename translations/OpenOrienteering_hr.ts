@@ -277,7 +277,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="61"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation>Datoteka% 1 nije pravilno zatvorena. Trenutno postoje dvije verzije:</translation>
+        <translation>Datoteka %1 nije pravilno zatvorena. Trenutno postoje dvije verzije:</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="75"/>
