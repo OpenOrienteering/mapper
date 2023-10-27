@@ -1398,7 +1398,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="649"/>
         <source>Could not write file: %1</source>
-        <translation>Ezin izan da fitxategia idatzi:% 1</translation>
+        <translation>Ezin izan da fitxategia idatzi:%1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="338"/>
