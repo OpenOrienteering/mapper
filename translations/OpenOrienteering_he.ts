@@ -944,13 +944,13 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1163"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation type="unfinished">&lt;b&gt;% 1 + לחיצה&lt;/b&gt;: הצמד או הוסף לאובייקטים קיימים. </translation>
+        <translation>&lt;b&gt;%1 + לחיצה&lt;/b&gt;: הצמד או הוסף לאובייקטים קיימים. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1171"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="736"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation type="unfinished">&lt;b&gt;% 1 + לחיצה&lt;/b&gt;: לבחור כיוון מאובייקטים קיימים. </translation>
+        <translation>&lt;b&gt;%1 + לחיצה&lt;/b&gt;: לבחור כיוון מאובייקטים קיימים. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1172"/>
@@ -963,7 +963,7 @@
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="741"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="765"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;% 1 + לחיצה&lt;/b&gt;: הצמד לאובייקטים הקיים. </translation>
+        <translation>&lt;b&gt;%1 + לחיצה&lt;/b&gt;: הצמד לאובייקטים הקיים. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1198"/>
