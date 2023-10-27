@@ -1002,7 +1002,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1172"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1199"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Segment azimuth and length. </source>
-        <translation>&lt;b&gt;% 1 + % 2&lt;/b&gt;: segmenta azimuts un garums. </translation>
+        <translation>&lt;b&gt;%1 + %2&lt;/b&gt;: segmenta azimuts un garums. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1188"/>
