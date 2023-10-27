@@ -2621,7 +2621,7 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="220"/>
         <source>%1 already exists.</source>
-        <translation>% 1 вже існує.</translation>
+        <translation>%1 вже існує.</translation>
     </message>
 </context>
 <context>
@@ -5395,7 +5395,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1918"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation>У текстовому знаку % 1: встановлено спеціальний інтервал між символами, його реалізація ще не відповідає поведінці в OCAD</translation>
+        <translation>У текстовому знаку %1: встановлено спеціальний інтервал між символами, його реалізація ще не відповідає поведінці в OCAD</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1934"/>
