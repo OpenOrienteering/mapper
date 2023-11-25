@@ -3225,7 +3225,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="485"/>
         <source>About &amp;Qt</source>
-        <translation>Tetoja &amp;Qt:stä</translation>
+        <translation>Tietoja &amp;Qt:stä</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="487"/>
