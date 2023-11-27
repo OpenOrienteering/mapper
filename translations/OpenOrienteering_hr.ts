@@ -1546,42 +1546,42 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Baseline view</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Osnovni prikaz</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="75"/>
         <source>Export Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Mogućnosti izvoza</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="77"/>
         <source>Create a layer for each symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Stvori sloj za svaki simbol</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="82"/>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Konfiguracija</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="90"/>
         <source>Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametar</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="90"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrijednost</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="107"/>
         <source>GDAL</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="108"/>
         <source>GDAL/OGR</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL/OGR</translation>
     </message>
 </context>
 <context>
@@ -1589,125 +1589,125 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="77"/>
         <source>Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgled</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="82"/>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Jezik:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="99"/>
         <source>Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaslon</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="104"/>
         <source>Pixels per inch:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Piksela po inču:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="114"/>
         <source>Program start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pri pokretanju programa</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="123"/>
         <source>Saving files</source>
-        <translation type="unfinished"></translation>
+        <translation>Spremanje datoteka</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="125"/>
         <source>Retain compatibility with Mapper %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadrži kompatibilnost s Mapperom %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="136"/>
         <source>Save information for automatic recovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Spremite podatke za automatski oporavak</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="140"/>
         <source>Recovery information saving interval:</source>
-        <translation type="unfinished"></translation>
+        <translation>Interval spremanja informacija o oporavku:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
         <source>min</source>
         <comment>unit minutes</comment>
-        <translation type="unfinished"></translation>
+        <translation>min</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="143"/>
         <source>File import and export</source>
-        <translation type="unfinished"></translation>
+        <translation>Uvoz i izvoz datoteka</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="168"/>
         <source>8-bit encoding:</source>
-        <translation type="unfinished"></translation>
+        <translation>8-bitno kodiranje:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="161"/>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="306"/>
         <source>More...</source>
-        <translation type="unfinished"></translation>
+        <translation>Više...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="133"/>
         <source>Save undo/redo history</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spremi povijest vraćanja/ponavljanja</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="146"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zadano</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="186"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opće</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="210"/>
         <source>Notice</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Obavijest</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="210"/>
         <source>The program must be restarted for the language change to take effect!</source>
-        <translation type="unfinished"></translation>
+        <translation>Program se mora ponovno pokrenuti kako bi promjena jezika stupila na snagu!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="348"/>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="354"/>
         <source>Open translation</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvori prijevod</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="348"/>
         <source>Translation files (*.qm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteke prijevoda (*.qm)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="355"/>
         <source>The selected file is not a valid translation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Odabrana datoteka nije ispravan prijevod.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="385"/>
         <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 x %2</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="386"/>
         <source>Primary screen resolution in pixels:</source>
-        <translation type="unfinished"></translation>
+        <translation>Razlučivost primarnog zaslona u pikselima:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="390"/>
         <source>Primary screen size in inches (diagonal):</source>
-        <translation type="unfinished"></translation>
+        <translation>Veličina primarnog zaslona u inčima (dijagonala):</translation>
     </message>
 </context>
 <context>
@@ -1716,95 +1716,95 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="56"/>
         <source>UTM</source>
         <comment>UTM coordinate reference system</comment>
-        <translation type="unfinished"></translation>
+        <translation>UTM</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="57"/>
         <source>UTM coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>UTM koordinate</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="60"/>
         <source>UTM Zone (number north/south)</source>
-        <translation type="unfinished"></translation>
+        <translation>UTM zona (broj sjever/jug)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="67"/>
         <source>Gauss-Krueger, datum: Potsdam</source>
         <comment>Gauss-Krueger coordinate reference system</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gauss-Krueger, datum: Potsdam</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="68"/>
         <source>Gauss-Krueger coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Gauss-Krueger koordinate</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="71"/>
         <source>Zone number (1 to 119)</source>
         <comment>Zone number for Gauss-Krueger coordinates</comment>
-        <translation type="unfinished"></translation>
+        <translation>Broj zone (1-119)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="79"/>
         <source>by EPSG code</source>
         <comment>as in: The CRS is specified by EPSG code</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">po EPSG kodu</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="81"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>EPSG @code@ koordinate</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="92"/>
         <location filename="../src/core/georeferencing.cpp" line="922"/>
         <source>Local coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokalne koordinate</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="84"/>
         <source>EPSG code</source>
-        <translation type="unfinished"></translation>
+        <translation>EPSG kod</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="91"/>
         <source>Custom PROJ.4</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prilagođeni PROJ.4</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="95"/>
         <source>Specification</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Specifikacija</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="576"/>
         <source>Map scale specification invalid or missing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Specifikacija mjerila karte nije važeća ili nedostaje.</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="582"/>
         <source>Invalid grid scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nevažeći faktor skaliranja mreže: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="595"/>
         <source>Invalid auxiliary scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nevažeći pomoćni faktor skaliranja: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="627"/>
         <location filename="../src/core/georeferencing.cpp" line="654"/>
         <source>Unknown CRS specification language: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nepoznati jezik specifikacije CRS-a: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="657"/>
         <source>Unsupported geographic CRS specification: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodržana geografska CRS specifikacija: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="913"/>
@@ -1817,13 +1817,13 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="136"/>
         <source>Map Georeferencing</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferenciranje karte</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="208"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="624"/>
         <source>Lookup...</source>
-        <translation type="unfinished"></translation>
+        <translation>Traži...</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="167"/>
@@ -1834,68 +1834,68 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="261"/>
         <source>Declination:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Magnetska deklinacija:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="193"/>
         <source>Projected coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Projicirane koordinate</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="145"/>
         <source>Status:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Status:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="194"/>
         <source>Geographic coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Geografske koordinate</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="189"/>
         <source>Show reference point in:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prikaži referentnu točku u:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="408"/>
         <source>valid</source>
-        <translation type="unfinished"></translation>
+        <translation>valjan</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="402"/>
         <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="833"/>
         <source>Online declination lookup</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mrežno traženje deklinacije</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="140"/>
         <source>Map coordinate reference system</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Referentni sustav koordinata karte</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="143"/>
         <source>- local -</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">- lokalno -</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="148"/>
         <source>Reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Referentna točka</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="150"/>
         <source>&amp;Pick on map</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Odaberi na karti</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="152"/>
         <source>(Datum: WGS84)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Datum: WGS84)</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="155"/>
@@ -1907,25 +1907,25 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="160"/>
         <source>X</source>
         <comment>x coordinate</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">X</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="162"/>
         <source>Y</source>
         <comment>y coordinate</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Y</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="171"/>
         <source>E</source>
         <comment>west / east</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">I</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="173"/>
         <source>N</source>
         <comment>north / south</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">S</translation>
     </message>
     <message>
         <source>°</source>
@@ -1935,23 +1935,23 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="182"/>
         <source>N</source>
         <comment>north</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">S</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="184"/>
         <source>E</source>
         <comment>east</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">I</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="205"/>
         <source>Map north</source>
-        <translation type="unfinished"></translation>
+        <translation>Sjever karte</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="215"/>
         <source>Show scale factors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prikaži faktore skaliranja</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="216"/>
@@ -2173,12 +2173,12 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="554"/>
         <source>Examples</source>
-        <translation type="unfinished"></translation>
+        <translation>Primjeri</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="351"/>
         <source>About Mapper</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">O Mapperu</translation>
     </message>
 </context>
 <context>
@@ -2186,7 +2186,7 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="48"/>
         <source>PNG</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PNG</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="49"/>
