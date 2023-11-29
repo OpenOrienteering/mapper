@@ -1979,12 +1979,12 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="251"/>
         <source>Map coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Koordinate na karti:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="253"/>
         <source>Geographic coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Geografske koordinate:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="256"/>
@@ -1994,76 +1994,77 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="262"/>
         <source>Grivation:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kut magnetskog sjevera:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="441"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Magnetska deklinacija za referentnu točku %1° %2° sada će se dohvatiti s &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Želite li nastaviti?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="525"/>
         <source>Declination change</source>
-        <translation type="unfinished"></translation>
+        <translation>Promjena deklinacije</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="525"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Deklinacija je promijenjena. Želite li zakrenuti sadržaj karte u skladu s tim?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="550"/>
         <source>Scale factor change</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Promjena mjerila</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="550"/>
         <source>The scale factor has been changed. Do you want to stretch/shrink the map content accordingly, too?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mjerilo je promijenjeno. Želite li i sadržaj karte povećati/smanjiti u skladu s tim?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="597"/>
         <source>Local coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokalne koordinate:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="624"/>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Učitavam...</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="629"/>
         <source>%1</source>
         <comment>scale factor value</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="631"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="639"/>
         <source>locked</source>
-        <translation type="unfinished"></translation>
+        <translation>zaključano</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="804"/>
         <source>Could not parse data.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nije moguće raščlaniti podatke.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="829"/>
         <source>Declination value not found.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vrijednost deklinacije nije pronađena.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="834"/>
         <source>The online declination lookup failed:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Internetska pretraga deklinacije nije uspjela:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="637"/>
         <source>%1 °</source>
         <comment>degree value</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 °</translation>
     </message>
 </context>
 <context>
@@ -2071,7 +2072,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="862"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klik&lt;/b&gt;: Postavite referentnu točku. &lt;b&gt;Desni klik&lt;/b&gt;: Odustani.</translation>
     </message>
 </context>
 <context>
@@ -2079,7 +2080,7 @@
     <message>
         <location filename="../src/gui/home_screen_controller.cpp" line="149"/>
         <source>Welcome to OpenOrienteering Mapper!</source>
-        <translation type="unfinished"></translation>
+        <translation>Dobrodošli u OpenOrienteering Mapper!</translation>
     </message>
 </context>
 <context>
@@ -2087,28 +2088,28 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="146"/>
         <source>Activities</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivnosti</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="149"/>
         <source>Create a new map ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Stvori novu kartu ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="152"/>
         <source>Open map ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvori kartu ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="157"/>
         <source>Touch mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Način rada na dodir</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="162"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="347"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Postavke</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="165"/>
@@ -2125,27 +2126,27 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="171"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Izlaz</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="192"/>
         <source>Recent maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Nedavne karte</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="217"/>
         <source>Open most recently used file on start</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvorite posljednju korištenu datoteku pri pokretanju</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="220"/>
         <source>Clear list</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Obriši popis</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="239"/>
         <source>Tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation>Savjet dana</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="244"/>
@@ -2155,12 +2156,12 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="248"/>
         <source>Previous</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prethodni</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="250"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Sljedeći</translation>
     </message>
 </context>
 <context>
@@ -2191,63 +2192,63 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="49"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sve datoteke (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
         <source>Default icon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zadana ikona</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="69"/>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="70"/>
         <source>Preview width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Širina pregleda:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="86"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="118"/>
         <source>Save...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spremi...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="88"/>
         <source>Copy to custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kopiraj u prilagođenu ikonu</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="98"/>
         <source>Custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prilagođena ikona</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Širina:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
         <source>Load...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Učitaj...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="122"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Očisti</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="169"/>
         <source>%1 px</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="203"/>
         <source>Save symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spremi ikonu simbola...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
@@ -2259,12 +2260,13 @@
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nije uspjelo spremanje slike:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="226"/>
         <source>Load symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Učitaj ikonu simbola ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="235"/>
@@ -2272,7 +2274,10 @@
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne mogu otvoriti datoteku:
+%1
+
+%2</translation>
     </message>
 </context>
 <context>
@@ -2280,7 +2285,7 @@
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="297"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pogreška prilikom učitavanja simbola tipa %1 u retku, %2 stupcu %3.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="312"/>
