@@ -2156,12 +2156,12 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="248"/>
         <source>Previous</source>
-        <translation type="unfinished">Prethodni</translation>
+        <translation>Prethodno</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="250"/>
         <source>Next</source>
-        <translation>Sljedeći</translation>
+        <translation>Sljedeće</translation>
     </message>
 </context>
 <context>
