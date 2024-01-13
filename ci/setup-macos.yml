@@ -35,7 +35,17 @@ steps:
     sudo xcode-select -s /Applications/Xcode_11.7.app/Contents/Developer
     xcode-select --print-path
     pip install lxml
-    $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-33-ext5"
-    $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-33-ext4"
+
+    # Cf. SDK platforms in https://github.com/actions/runner-images/releases
+    # - We target android-28 at the moment.
+    # - androiddeployqt 5.12 can't handle the ext suffixes.
+    $(ANDROID_HOME)/tools/bin/sdkmanager --install "platforms;android-28"
+    $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-34-ext10"
+    $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-34-ext8"
+    $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-34"
+    $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-33-ext5" || true
+    $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-33-ext4" || true
+    $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-32" || true
+    $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-31" || true
   displayName: 'Prepare macOS build tools'
 
