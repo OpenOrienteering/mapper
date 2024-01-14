@@ -133,7 +133,7 @@ public:
 	 * with covariant return types when duplicating instances of the
 	 * polymorphic type Symbol.
 	 * 
-	 * For convenient use outside of (child class) method implementatations,
+	 * For convenient use outside of (child class) method implementations,
 	 * there is a free template function duplicate(const Derived& d).
 	 */
 	template<class S>

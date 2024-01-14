@@ -283,7 +283,7 @@ public:
 	 * 
 	 *  1. The relative path with regard to the map directory, if both are valid.
 	 *     This alternative has precedence because it should always work,
-	 *     especially after coyping or moving a whole working directory on the
+	 *     especially after copying or moving a whole working directory on the
 	 *     same computer or to another one.
 	 * 
 	 *  2. The absolute path of the template.

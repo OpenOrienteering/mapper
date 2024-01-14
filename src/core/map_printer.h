@@ -316,8 +316,8 @@ public:
 	 * 
 	 * Drawing non-opaque data might cause rasterization with some Qt print
 	 * engines. This function is used to detect configurations where such
-	 * rasterization may happen. The result can be comined with tests for the
-	 * data actually having alpha.
+	 * rasterization may happen. The result can be combined with tests for
+	 * the data actually having alpha.
 	 */
 	bool engineMayRasterize() const;
 	
