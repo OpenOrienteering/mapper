@@ -484,7 +484,7 @@ if(UNIX AND NOT APPLE AND NOT ANDROID)
 	endforeach()
 endif()
 
-# By exanding all @VAR, custom_install.cmake makes the install more traceable.
+# By expanding all @VAR, custom_install.cmake makes the install more traceable.
 configure_file("custom_install.cmake.in" "custom_install.cmake" @ONLY)
 install(CODE "include(\"${CMAKE_CURRENT_BINARY_DIR}/custom_install.cmake\")")
 

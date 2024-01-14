@@ -147,7 +147,7 @@ private:
 class VirtualPath
 {
 public:
-	/** A reaonably sized unsigned integer type for coord vector sizes and indexes. */
+	/** A reasonably sized unsigned integer type for coord vector sizes and indexes. */
 	using size_type = VirtualCoordVector::size_type;
 	
 	/** The underlying coordinates and flags. */

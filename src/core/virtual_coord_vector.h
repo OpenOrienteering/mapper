@@ -49,7 +49,7 @@ private:
 	
 public:
 	/**
-	 * A reaonably sized unsigned integer type for map coord vector sizes and indexes.
+	 * A reasonably sized unsigned integer type for map coord vector sizes and indexes.
 	 */
 	using size_type = quint32;
 	
@@ -93,7 +93,7 @@ class VirtualCoordVector
 {
 public:
 	/**
-	 * A reaonably sized unsigned integer type for map coord vector sizes and indexes.
+	 * A reasonably sized unsigned integer type for map coord vector sizes and indexes.
 	 */
 	using size_type = VirtualFlagsVector::size_type;
 	
