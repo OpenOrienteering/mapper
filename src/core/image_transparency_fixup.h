@@ -51,6 +51,7 @@ namespace OpenOrienteering {
  */
 class ImageTransparencyFixup
 {
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 9) || (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0) && QT_VERSION < QT_VERSION_CHECK(6, 2, 4))
 public:
 	/**
 	 * Create a fixup functor for the given image.
@@ -84,18 +85,24 @@ public:
 	 */
 	inline void operator()() const
 	{
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 9) || (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0) && QT_VERSION < QT_VERSION_CHECK(6, 2, 4))
 		for (QRgb* px = dest; px < dest_end; px++)
 		{
 			if (*px == 0x01000000) /* qRgba(0, 0, 0, 1) */
 				*px = 0x00000000;  /* qRgba(0, 0, 0, 0) */
 		}
-#endif
 	}
 	
 protected:
 	QRgb* dest;
 	QRgb* dest_end;
+
+#else // ^^^ fixup / no-op vvv
+
+public:
+	inline ImageTransparencyFixup(QImage*) {}
+	inline void operator()() const {}
+
+#endif
 };
 
 
