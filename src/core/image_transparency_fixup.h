@@ -26,8 +26,12 @@ namespace OpenOrienteering {
 
 
 /**
+ * Repairs a pixel composing issue aka QTBUG-100327.
+ * 
  * ImageTransparencyFixup repairs a particular issue with composing
- * transparent pixels.
+ * transparent pixels with Qt5 < 5.15.9 and Qt6 < 6.2.4, tracked
+ * upstream as https://bugreports.qt.io/browse/QTBUG-100327, and
+ * does nothing otherwise.
  * 
  * QPainter::CompositionMode_Multiply and QPainter::CompositionMode_Darken
  * on a QImage of Format_ARGB32_Premultiplied calculate the resulting alpha
@@ -58,12 +62,8 @@ public:
 	 * 
 	 * The image must be of QImage::Format_ARGB32_Premultiplied.
 	 * It may be null.
-	 *
-	 * This fixup is needed for Qt5 < 5.15.9 and Qt6 < 6.2.4 which are
-	 * affected by https://bugreports.qt.io/browse/QTBUG-100327.
 	 */
-	inline ImageTransparencyFixup(QImage* image)
-	: dest(0), dest_end(0)
+	inline explicit ImageTransparencyFixup(QImage* image)
 	{
 		// NOTE: Here we may add a check for a setting which disables the 
 		//       fixup (for better application performance)
@@ -85,7 +85,7 @@ public:
 	 */
 	inline void operator()() const
 	{
-		for (QRgb* px = dest; px < dest_end; px++)
+		for (QRgb* px = dest; px != dest_end; px++)
 		{
 			if (*px == 0x01000000) /* qRgba(0, 0, 0, 1) */
 				*px = 0x00000000;  /* qRgba(0, 0, 0, 0) */
@@ -93,13 +93,13 @@ public:
 	}
 	
 protected:
-	QRgb* dest;
-	QRgb* dest_end;
+	QRgb* dest = nullptr;
+	QRgb* dest_end = nullptr;
 
 #else // ^^^ fixup / no-op vvv
 
 public:
-	inline ImageTransparencyFixup(QImage*) {}
+	inline explicit ImageTransparencyFixup(QImage*) {}
 	inline void operator()() const {}
 
 #endif
