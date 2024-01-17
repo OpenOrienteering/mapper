@@ -65,7 +65,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
         <source>Open most recently used file</source>
-        <translation type="unfinished">Otvorite nedavno korištenu datoteku</translation>
+        <translation>Otvori zadnju korištenu datoteku</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="119"/>
