@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2022 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -488,7 +488,7 @@ void TextSymbolSettings::addCustomTabClicked()
 	double position = QInputDialog::getDouble(dialog, 
 	                                          tr("Add custom tabulator"),
 	                                          QStringLiteral("%1 (%2)").arg(tr("Position:"), tr("mm")),
-	                                          0, 0, 999999, 3, &ok);
+	                                          0, 0, 500, 2, &ok);
 	if (ok)
 	{
 		int int_position = qRound(1000 * position);
@@ -505,7 +505,7 @@ void TextSymbolSettings::addCustomTabClicked()
 			}
 		}
 		
-		custom_tab_list->insertItem(row, locale().toString(position, 'g', 3) + QLatin1Char(' ') + tr("mm"));
+		custom_tab_list->insertItem(row, locale().toString(position, 'f', 2) + QLatin1Char(' ') + tr("mm"));
 		custom_tab_list->setCurrentRow(row);
 		symbol->custom_tabs.insert(symbol->custom_tabs.begin() + row, int_position);
 		emit propertiesModified();
@@ -598,8 +598,8 @@ void TextSymbolSettings::updateCompatibilityContents()
 	line_below_distance_edit->setEnabled(symbol->line_below);
 
 	custom_tab_list->clear();
-	for (int i = 0; i < symbol->getNumCustomTabs(); ++i)
-		custom_tab_list->addItem(locale().toString(0.001 * symbol->getCustomTab(i), 'g', 3) + QLatin1Char(' ') + tr("mm"));
+	for (auto it : symbol->custom_tabs)
+		custom_tab_list->addItem(locale().toString(0.001 * it, 'f', 2) + QLatin1Char(' ') + tr("mm"));
 	
 	react_to_changes = true;
 }
