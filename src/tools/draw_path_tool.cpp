@@ -51,6 +51,7 @@
 #include "core/path_coord.h"
 #include "core/virtual_coord_vector.h"
 #include "core/virtual_path.h"
+#include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/symbol.h"
 #include "core/objects/object.h"
@@ -73,9 +74,29 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_action, bo
 , angle_helper(new ConstrainAngleToolHelper())
 , azimuth_helper(new AzimuthInfoHelper(cur_map_widget, active_color))
 , snap_helper(new SnappingToolHelper(this))
+, covering_white_line(duplicate<LineSymbol>(*Map::getCoveringWhiteLine()))
+, covering_red_line(duplicate<LineSymbol>(*Map::getCoveringRedLine()))
+, follow_highlight_symbol(std::make_unique<CombinedSymbol>())
 , follow_helper(new FollowPathToolHelper())
 , allow_closing_paths(allow_closing_paths)
 {
+	auto const dash_length = 90;
+	auto const break_length = 60;
+	
+	covering_white_line->setDashed(true);
+	covering_white_line->setDashesInGroup(1);
+	covering_white_line->setDashLength(dash_length);
+	covering_white_line->setBreakLength(break_length);
+	
+	covering_red_line->setDashed(true);
+	covering_red_line->setDashesInGroup(1);
+	covering_red_line->setDashLength(dash_length);
+	covering_red_line->setBreakLength(break_length);
+	
+	follow_highlight_symbol->setNumParts(2);
+	follow_highlight_symbol->setPart(0, covering_white_line.get(), false);
+	follow_highlight_symbol->setPart(1, covering_red_line.get(), false);
+	
 	angle_helper->setActive(false);
 	connect(angle_helper.get(), &ConstrainAngleToolHelper::displayChanged, this, &DrawPathTool::updateDirtyRect);
 	
@@ -938,7 +959,10 @@ void DrawPathTool::updateDirtyRect()
 	}
 	if (shift_pressed || (!editingInProgress() && ctrl_pressed))
 		snap_helper->includeDirtyRect(rect);
+
 	includePreviewRects(rect);
+	if (followed_path)
+		rectInclude(rect, followed_path->getExtent());
 	
 	if (is_helper_tool)
 		emit dirtyRectChanged(rect);
@@ -1056,6 +1080,15 @@ void DrawPathTool::startFollowing(SnappingToolHelperSnapInfo& snap_info, const M
 	previous_point_is_curve_point = false;
 	updatePreviewPath();
 	follow_start_index = preview_path->getCoordinateCount() - 1;
+	
+	const auto* followed_object = follow_helper->followedObject();
+	const auto& part = followed_object->parts()[follow_helper->partIndex()];
+	followed_path = std::make_unique<PathObject>(follow_highlight_symbol.get());
+	for (auto i = part.first_index; i <= part.last_index; ++i)
+		followed_path->addCoordinate(followed_object->getCoordinate(i));
+	followed_path->update();
+	renderables->insertRenderablesOfObject(followed_path.get());
+	updateDirtyRect();
 }
 
 void DrawPathTool::updateFollowing()
@@ -1089,6 +1122,9 @@ void DrawPathTool::updateFollowing()
 void DrawPathTool::finishFollowing()
 {
 	following = false;
+	
+	renderables->removeRenderablesOfObject(followed_path.get(), false);
+	followed_path.reset();
 	
 	auto last = preview_path->getCoordinateCount() - 1;
 	
