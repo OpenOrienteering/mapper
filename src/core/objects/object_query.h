@@ -1,6 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
- *    Copyright 2017-2020 Kai Pastor
+ *    Copyright 2017-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -246,6 +246,9 @@ bool operator!=(const ObjectQuery::StringOperands& lhs, const ObjectQuery::Strin
 class ObjectQueryParser
 {
 public:
+	ObjectQueryParser() = default;
+	explicit ObjectQueryParser(const Map* map);
+	
 	/**
 	 * Sets the map for looking up symbols.
 	 */
@@ -290,7 +293,7 @@ private:
 	QStringRef input;
 	QStringRef token_text;
 	TokenType token;
-	int token_start;
+	int token_start = -1;
 	int pos;
 };
 
