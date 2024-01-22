@@ -83,6 +83,8 @@
 401    leisure = park
 401    leisure = pitch
 
+531    leisure = picnic_table
+
 501.8  highway = cycleway
 
 505.1  highway = footway
@@ -90,8 +92,11 @@
 526    highway = milestone
 
 501.19 highway = primary
+501.18 highway = primary_link
 501.19 highway = secondary
+501.18 highway = secondary_link
 501.9  highway = tertiary
+501.8  highway = tertiary_link
 
 506    highway = path
 505.1  highway = path AND (smoothness = good OR smoothness = intermediate)
@@ -110,6 +115,8 @@
 # 503.1  (highway = unclassified OR highway = residential OR highway = service OR highway = living_street) AND (surface = compacted OR surface = gravel)
 501.8  (highway = unclassified OR highway = residential OR highway = service OR highway = living_street) AND (surface = ground OR surface = sand OR surface = unpaved)
 505.2  (highway = unclassified OR highway = residential) AND (surface = grass OR surface = dirt)
+
+532.6  highway = steps
 
 509.1  railway ~= "" AND railway != "abandoned" AND tunnel != "yes"
 
@@ -152,8 +159,11 @@
 521    tourism = alpine_hut
 531    tourism = artwork
 521    tourism = chalet
+531    tourism = information AND (information = guidepost OR information = map OR information=board)
 
 526    historic = boundary_stone
+526    historic = memorial
+526    historic = wayside_cross
 
 531    pipeline = marker
 
