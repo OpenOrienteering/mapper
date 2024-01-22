@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2022 Kai Pastor
+ *    Copyright 2013-2023 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -2153,6 +2153,17 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 		size_t start = 0;
 		for (size_t i = 0; i < object->coords.size(); ++i)
 		{
+			// There are .ocd files that erroneously contain an empty area hole, i.e., there are two subsequent points 
+			// with the Ocd::OcdPoint32::FlagHole property. To fix this, the first of these points needs to be ignored.
+			// Since setPointFlags() applies the HolePoint property to the last point instead of the first point of the next part,
+			// the consequence is that instead of removing the first point of these two .ocd points,
+			// the second point of the two Mapper points with the HolePoint property needs to be removed.
+			// Using a loop ensures that multiple subsequent empty area holes are removed.
+			while (is_area && i < object->coords.size() - 1 && object->coords[i].isHolePoint() && object->coords[i+1].isHolePoint())
+			{
+				object->coords.erase(begin(object->coords) + i + 1);
+			}
+			
 			if (!object->coords[i].isHolePoint() && i < object->coords.size() - 1)
 				continue;
 			
