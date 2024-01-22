@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Jan Dalheimer
- *    Copyright 2012-2017  Kai Pastor
+ *    Copyright 2012-2023  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -46,6 +46,7 @@
 #include <QList>
 #include <QLocale>
 #include <QMessageBox>
+#include <QPixmap>
 #include <QScreen>
 #include <QSettings> // IWYU pragma: keep
 #include <QSignalBlocker>
@@ -53,6 +54,7 @@
 #include <QSpacerItem>
 #include <QSpinBox>
 #include <QStringList>
+#include <QStyle>
 #include <QTextCodec>
 #include <QToolButton>
 #include <QVBoxLayout>
@@ -64,6 +66,8 @@
 #include "gui/widgets/home_screen_widget.h"
 #include "gui/widgets/settings_page.h"
 #include "util/translation_util.h"
+#include "gui/widgets/json_config_widget.h"
+#include "util/json_config.h"
 
 
 namespace OpenOrienteering {
@@ -71,6 +75,7 @@ namespace OpenOrienteering {
 GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 : SettingsPage(parent)
 , translation_file(getSetting(Settings::General_TranslationFile).toString())
+, json_config_instance(JSONConfiguration::getInstance())
 {
 	auto layout = new QFormLayout(this);
 	
@@ -167,6 +172,38 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	encoding_box->setCompleter(completer);
 	layout->addRow(tr("8-bit encoding:"), encoding_box);
 	
+	layout->addItem(Util::SpacerItem::create(this));
+	layout->addRow(Util::Headline::create(tr("JSON configuration")));
+	
+	auto json_widget = new QWidget();
+	auto json_layout = new QHBoxLayout(json_widget);
+	json_layout->setContentsMargins({});
+	layout->addRow(tr("JSON file:"), json_widget);
+	
+	json_configuration_edit = new QLineEdit();
+	json_configuration_edit->setEnabled(false);
+	json_layout->addWidget(json_configuration_edit);
+	
+	auto json_file_button = new QToolButton();
+	if (Settings::mobileModeEnforced())
+	{
+		json_file_button->setVisible(false);
+	}
+	else
+	{
+		json_file_button->setIcon(QIcon(QLatin1String(":/images/settings.png")));
+	}
+	
+	json_status = new QLabel();
+	json_layout->addWidget(json_status);
+	
+	QIcon icon = style()->standardIcon(QStyle::SP_DialogOkButton);
+	json_ok_pixmap = new QPixmap(icon.pixmap(json_file_button->iconSize()));
+	icon = style()->standardIcon(QStyle::SP_MessageBoxWarning);
+	json_error_pixmap = new QPixmap(icon.pixmap(json_file_button->iconSize()));
+	
+	json_layout->addWidget(json_file_button);
+	
 	updateWidgets();
 	
 	connect(language_file_button, &QAbstractButton::clicked, this, &GeneralSettingsPage::openTranslationFileDialog);
@@ -174,7 +211,7 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	connect(encoding_box, &QComboBox::currentTextChanged, this, &GeneralSettingsPage::encodingChanged);
 	connect(autosave_check, &QAbstractButton::toggled, autosave_interval_edit, &QWidget::setEnabled);
 	connect(autosave_check, &QAbstractButton::toggled, layout->labelForField(autosave_interval_edit), &QWidget::setEnabled);
-	
+	connect(json_file_button, &QAbstractButton::clicked, this, &GeneralSettingsPage::openJSONFileDialog);
 }
 
 GeneralSettingsPage::~GeneralSettingsPage() = default;
@@ -241,6 +278,8 @@ void GeneralSettingsPage::apply()
 	if (!autosave_check->isChecked())
 		interval = -interval;
 	setSetting(Settings::General_AutosaveInterval, interval);
+	
+	setSetting(Settings::General_JSONConfigurationFile, json_configuration_edit->text());
 }
 
 void GeneralSettingsPage::reset()
@@ -298,6 +337,24 @@ void GeneralSettingsPage::updateWidgets()
 	{
 		encoding_box->setCurrentText(QString::fromLatin1(encoding));
 	}
+	json_configuration_edit->setText(getSetting(Settings::General_JSONConfigurationFile).toString());
+	updateJSON();
+}
+
+void GeneralSettingsPage::updateJSON()
+{
+	const auto json_edit_filename = json_configuration_edit->text();
+	if (!json_edit_filename.isEmpty())
+	{
+		if (json_config_instance.getJSONFilename() != json_edit_filename)
+		{
+			json_config_instance.loadConfig(json_edit_filename);
+		}
+		json_status->setVisible(true);
+		json_status->setPixmap(json_config_instance.isLoadedConfigValid() ? *json_ok_pixmap : *json_error_pixmap);
+	}
+	else
+		json_status->setVisible(false);
 }
 
 // slot
@@ -335,6 +392,18 @@ void GeneralSettingsPage::encodingChanged(const QString& input)
 		}
 		last_encoding_input = input;
 	}
+}
+
+// slot
+void GeneralSettingsPage::openJSONFileDialog()
+{
+	JSONConfigWidget dialog(this);
+	dialog.setWindowModality(Qt::WindowModal);
+	dialog.exec();
+	const auto json_filename = json_config_instance.getJSONFilename();
+	if (!json_filename.isEmpty())
+		json_configuration_edit->setText(json_filename);
+	updateJSON();
 }
 
 // slot

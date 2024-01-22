@@ -1,6 +1,6 @@
 #
 #    Copyright 2012-2014 Thomas Schöps
-#    Copyright 2012-2018 Kai Pastor
+#    Copyright 2012-2023 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -204,6 +204,7 @@ set(Mapper_Common_SRCS
   gui/widgets/template_list_widget.cpp
   gui/widgets/text_browser.cpp
   gui/widgets/toast.cpp
+  gui/widgets/json_config_widget.cpp
   
   templates/paint_on_template_feature.cpp
   templates/paint_on_template_tool.cpp
@@ -266,6 +267,7 @@ set(Mapper_Common_SRCS
   util/translation_util.cpp
   util/util.cpp
   util/xml_stream_util.cpp
+  util/json_config.cpp
 )
 
 # Extra header to be shown in the IDE or to be translated
