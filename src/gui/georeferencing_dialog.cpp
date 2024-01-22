@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2022 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -448,6 +448,7 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	
 	QUrlQuery query;
 	QDate today = QDate::currentDate();
+	query.addQueryItem(QString::fromLatin1("key"), QString::fromLatin1("zNEw7"));
 	query.addQueryItem(QString::fromLatin1("lat1"), QString::number(latlon.latitude()));
 	query.addQueryItem(QString::fromLatin1("lon1"), QString::number(latlon.longitude()));
 	query.addQueryItem(QString::fromLatin1("startYear"), QString::number(today.year()));
