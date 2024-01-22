@@ -83,7 +83,7 @@ ColorListWidget::ColorListWidget(Map* map, MainWindow* window, QWidget* parent)
 	react_to_changes = true;
 	
 	// Color table
-	color_table = new QTableWidget(map->getNumColors(), 7);
+	color_table = new QTableWidget(map->getNumColorPrios(), 7);
 	color_table->setEditTriggers(QAbstractItemView::SelectedClicked | QAbstractItemView::AnyKeyPressed);
 	color_table->setSelectionMode(QAbstractItemView::SingleSelection);
 	color_table->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -152,7 +152,7 @@ ColorListWidget::ColorListWidget(Map* map, MainWindow* window, QWidget* parent)
 	layout->addLayout(bottom_layout);
 	setLayout(layout);
 	
-	for (int i = 0; i < map->getNumColors(); ++i)
+	for (int i = 0; i < map->getNumColorPrios(); ++i)
 		addRow(i);
 	
 	auto header_view = color_table->horizontalHeader();
@@ -197,7 +197,7 @@ void ColorListWidget::showEvent(QShowEvent* event)
 		// Update name, because translation may be changed with new symbol set 
 		for (int i = 0, count = color_table->rowCount(); i < count; ++i)
 		{
-			auto color = map->getColor(i);
+			auto color = map->getColorByPrio(i);
 			auto item = color_table->item(i, 1);
 			item->setText(map->translate(color->getName()));
 		}
@@ -224,7 +224,7 @@ void ColorListWidget::deleteColor()
 	if (row < 0) return; // In release mode
 	
 	// Show a warning if the color is used
-	if (map->isColorUsedByASymbol(map->getColor(row)))
+	if (map->isColorUsedByASymbol(map->getColorByPrio(row)))
 	{
 		if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?"), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
 			return;
@@ -242,7 +242,7 @@ void ColorListWidget::duplicateColor()
 	Q_ASSERT(row >= 0);
 	if (row < 0) return; // In release mode
 	
-	auto new_color = new MapColor(*map->getColor(row));
+	auto new_color = new MapColor(*map->getColorByPrio(row));
 	//: Future replacement for COLOR_NAME + " (Duplicate)", for better localization.
 	void(tr("%1 (duplicate)")); /// \todo Switch translation
 	new_color->setName(map->translate(new_color->getName()) + tr(" (Duplicate)"));
@@ -259,8 +259,8 @@ void ColorListWidget::moveColorUp()
 	Q_ASSERT(row >= 1);
 	if (row < 1) return; // In release mode
 	
-	auto above_color = map->getMapColor(row - 1);
-	auto cur_color = map->getMapColor(row);
+	auto above_color = map->getMapColorByPrio(row - 1);
+	auto cur_color = map->getMapColorByPrio(row);
 	map->setColor(cur_color, row - 1);
 	map->setColor(above_color, row);
 	updateRow(row - 1);
@@ -278,8 +278,8 @@ void ColorListWidget::moveColorDown()
 	Q_ASSERT(row < color_table->rowCount() - 1);
 	if (row >= color_table->rowCount() - 1) return; // In release mode
 	
-	auto below_color = map->getMapColor(row + 1);
-	auto cur_color = map->getMapColor(row);
+	auto below_color = map->getMapColorByPrio(row + 1);
+	auto cur_color = map->getMapColorByPrio(row);
 	map->setColor(cur_color, row + 1);
 	map->setColor(below_color, row);
 	updateRow(row + 1);
@@ -297,7 +297,7 @@ void ColorListWidget::editCurrentColor()
 	int row = color_table->currentRow();
 	if (row >= 0)
 	{
-		auto color = map->getMapColor(row);
+		auto color = map->getMapColorByPrio(row);
 		ColorDialog dialog(*map, *color, this);
 		dialog.setWindowModality(Qt::WindowModal);
 		int result = dialog.exec();
@@ -323,7 +323,7 @@ void ColorListWidget::cellChange(int row, int column)
 	
 	react_to_changes = false;
 	
-	auto color = map->getMapColor(row);
+	auto color = map->getMapColorByPrio(row);
 	auto text = color_table->item(row, column)->text().trimmed();
 	
 	if (column == 1)
@@ -427,7 +427,7 @@ void ColorListWidget::updateRow(int row)
 {
 	react_to_changes = false;
 	
-	const auto* color = map->getColor(row);
+	const auto* color = map->getColorByPrio(row);
 	auto color_with_opacity = colorWithOpacity(*color);
 	
 	// Color preview

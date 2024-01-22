@@ -110,6 +110,12 @@ private slots:
 	void importTemplateTest_data();
 	void importTemplateTest();
 	
+	/**
+	 * Test color traits persistence and the link to symbols.
+	 */
+	void colorTest_data();
+	void colorTest();
+
 };
 
 #endif // OPENORIENTEERING_FILE_FORMAT_T_H

@@ -353,7 +353,7 @@ void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*font*/);
 	
 	xml.writeStartElement(QStringLiteral("text"));
-	xml.writeAttribute(QStringLiteral("color"), QString::number(map.findColorIndex(color)));
+	xml.writeAttribute(QStringLiteral("color"), QString::number(map.findColorPrio(color)));
 	xml.writeAttribute(QStringLiteral("line_spacing"), QString::number(line_spacing));
 	xml.writeAttribute(QStringLiteral("paragraph_spacing"), QString::number(paragraph_spacing));
 	xml.writeAttribute(QStringLiteral("character_spacing"), QString::number(character_spacing));
@@ -364,7 +364,7 @@ void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	if (framing)
 	{
 		xml.writeStartElement(QStringLiteral("framing"));
-		xml.writeAttribute(QStringLiteral("color"), QString::number(map.findColorIndex(framing_color)));
+		xml.writeAttribute(QStringLiteral("color"), QString::number(map.findColorPrio(framing_color)));
 		xml.writeAttribute(QStringLiteral("mode"), QString::number(framing_mode));
 		xml.writeAttribute(QStringLiteral("line_half_width"), QString::number(framing_line_half_width));
 		xml.writeAttribute(QStringLiteral("shadow_x_offset"), QString::number(framing_shadow_x_offset));
@@ -375,7 +375,7 @@ void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	if (line_below)
 	{
 		xml.writeStartElement(QStringLiteral("line_below"));
-		xml.writeAttribute(QStringLiteral("color"), QString::number(map.findColorIndex(line_below_color)));
+		xml.writeAttribute(QStringLiteral("color"), QString::number(map.findColorPrio(line_below_color)));
 		xml.writeAttribute(QStringLiteral("width"), QString::number(line_below_width));
 		xml.writeAttribute(QStringLiteral("distance"), QString::number(line_below_distance));
 		xml.writeEndElement(/*line_below*/);
@@ -423,7 +423,7 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 		else if (xml.name() == QLatin1String("text"))
 		{
 			int temp = attributes.value(QLatin1String("color")).toInt();
-			color = map.getColor(temp);
+			color = map.getColorByPrio(temp);
 			line_spacing = attributes.value(QLatin1String("line_spacing")).toFloat();
 			paragraph_spacing = attributes.value(QLatin1String("paragraph_spacing")).toInt();
 			character_spacing = attributes.value(QLatin1String("character_spacing")).toFloat();
@@ -434,7 +434,7 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 		{
 			framing = true;
 			int temp = attributes.value(QLatin1String("color")).toInt();
-			framing_color = map.getColor(temp);
+			framing_color = map.getColorByPrio(temp);
 			framing_mode = attributes.value(QLatin1String("mode")).toInt();
 			framing_line_half_width = attributes.value(QLatin1String("line_half_width")).toInt();
 			framing_shadow_x_offset = attributes.value(QLatin1String("shadow_x_offset")).toInt();
@@ -445,7 +445,7 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 		{
 			line_below = true;
 			int temp = attributes.value(QLatin1String("color")).toInt();
-			line_below_color = map.getColor(temp);
+			line_below_color = map.getColorByPrio(temp);
 			line_below_width = attributes.value(QLatin1String("width")).toInt();
 			line_below_distance = attributes.value(QLatin1String("distance")).toInt();
 			xml.skipCurrentElement();
