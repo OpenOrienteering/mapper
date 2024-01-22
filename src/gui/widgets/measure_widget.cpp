@@ -1,6 +1,7 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
  *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2022 Libor Pecháček
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +22,8 @@
 
 #include "measure_widget.h"
 
+#include <queue>
+
 #include <QLocale>
 #include <QScroller>
 
@@ -28,6 +31,7 @@
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/area_symbol.h"
+#include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 
 
@@ -115,15 +119,46 @@ void MeasureWidget::objectSelectionChanged()
 				                          paper_area_text, tr("mm²", "square millimeters"),
 				                          real_area_text , tr("m²", "square meters")));
 				
-				auto minimum_area = 0.0;
+				auto minimum_area = std::numeric_limits<double>::infinity();
 				auto minimum_area_text = QString{ };
 				if (symbol->getType() == Symbol::Area)
 				{
 					minimum_area      = 0.001 * static_cast<const AreaSymbol*>(symbol)->getMinimumArea();
 					minimum_area_text = locale().toString(minimum_area, 'f', 2);
 				}
+				else if (symbol->getType() == Symbol::Combined)
+				{
+					auto to_be_examined = std::queue<CombinedSymbol const*> {};
+					to_be_examined.push(symbol->asCombined());
+					do
+					{
+						auto const* symbol = to_be_examined.front();
+						to_be_examined.pop();
+						for (auto part_num = 0; part_num < symbol->getNumParts(); ++part_num)
+						{
+							auto const* part = symbol->getPart(part_num);
+							
+							if (!part)
+								continue;
+							
+							if (part->getType() == Symbol::Area)
+							{
+								auto symbol_min_area = 0.001 * part->asArea()->getMinimumArea();
+								if (symbol_min_area < minimum_area)
+									minimum_area = symbol_min_area;
+							}
+							else if (part->getType() == Symbol::Combined)
+							{
+								to_be_examined.push(part->asCombined());
+							}
+						}
+					}
+					while (!to_be_examined.empty());
+					minimum_area_text = locale().toString(minimum_area, 'f', 2);
+				}
 				
-				if (paper_area < minimum_area && paper_area_text != minimum_area_text)
+				if (std::isfinite(minimum_area) && paper_area < minimum_area
+				    && paper_area_text != minimum_area_text)
 				{
 					extra_text = QLatin1String("<b>") + tr("This object is too small.") + QLatin1String("</b><br/>")
 					             + tr("The minimimum area is %1 %2.").arg(minimum_area_text, tr("mm²"))
