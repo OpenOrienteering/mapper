@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,6 +20,8 @@
 
 
 #include "color_list_widget.h"
+
+#include <vector>
 
 #include <Qt>
 #include <QtGlobal>
@@ -49,6 +51,7 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 #include <QVariant>
+#include <QPushButton>
 
 #include "core/map.h"
 #include "core/map_color.h"
@@ -58,6 +61,11 @@
 #include "gui/widgets/segmented_button_layout.h"
 #include "util/item_delegates.h"
 #include "util/util.h"
+#include "core/symbols/symbol.h"
+#include "core/objects/object.h"
+#include "symbol_render_widget.h"
+#include "gui/map/map_editor.h"
+#include "symbol_widget.h"
 
 // IWYU pragma: no_forward_declare QTableWidgetItem
 
@@ -75,10 +83,11 @@ QToolButton* createToolButton(const QIcon& icon, const QString& text)
 }  // anonymous namespace
 
 
-ColorListWidget::ColorListWidget(Map* map, MainWindow* window, QWidget* parent)
+ColorListWidget::ColorListWidget(Map* map, MainWindow* window, QWidget* parent, MapEditorController* map_editor_controller)
 : QWidget(parent)
 , map(map)
 , window(window)
+, map_editor_controller(map_editor_controller)
 {
 	react_to_changes = true;
 	
@@ -224,10 +233,57 @@ void ColorListWidget::deleteColor()
 	if (row < 0) return; // In release mode
 	
 	// Show a warning if the color is used
-	if (map->isColorUsedByASymbol(map->getColor(row)))
+	const auto map_color = map->getColor(row);
+	if (map->isColorUsedByASymbol(map_color))
 	{
-		if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?"), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+		const auto symbols_num = map->getNumSymbols();
+		std::vector<int> affected_symbols;
+		for (auto i = 0; i < symbols_num; ++i)
+		{
+			auto symbol = map->getSymbol(i);
+			if (symbol->getType() && symbol->containsColor(map_color))
+				affected_symbols.push_back(i);
+		}
+		const auto map_parts_num = map->getNumParts();
+		auto affected_objects_num = 0;
+		for (auto i = 0; i < map_parts_num; ++i)
+		{
+			const auto map_part = map->getPart(i);
+			const auto map_part_objects = map_part->getNumObjects();
+			for (auto j = 0; j < map_part_objects; ++j)
+			{
+				const auto *obj = map_part->getObject(j);
+				if (obj)
+				{
+					auto symbol = obj->getSymbol();
+					if (symbol->getType() && symbol->containsColor(map_color))
+						++affected_objects_num;
+				}
+			}
+		}
+		const auto symbol_widget = map_editor_controller->getSymbolWidget();
+		QMessageBox msgBox;
+		msgBox.setText(tr("The map contains %n symbol(s) with this color.\n", nullptr, affected_symbols.size())
+					   .append(affected_objects_num ? tr("Deleting it will remove the color from these symbols and %n object(s).\n", nullptr, affected_objects_num) :
+							   tr("Deleting it will remove the color from these symbols.\n"))
+					   .append(tr("Do you really want to do that?"))
+						);
+		msgBox.setWindowTitle(tr("Confirmation"));
+		msgBox.setIcon(QMessageBox::Warning);
+		QPushButton *selectButton = nullptr;
+		if (symbol_widget)
+			selectButton = msgBox.addButton(tr("Select affected symbols and abort"), QMessageBox::ActionRole);
+		msgBox.addButton(QMessageBox::Yes);
+		auto *noButton = msgBox.addButton(QMessageBox::No);
+		msgBox.exec();
+		auto clicked_button = msgBox.clickedButton();
+		if (!clicked_button || clicked_button == noButton)
 			return;
+		if (clicked_button == selectButton)
+		{
+			symbol_widget->selectMultipleSymbols(affected_symbols);
+			return;
+		}
 	}
 	
 	map->deleteColor(row);

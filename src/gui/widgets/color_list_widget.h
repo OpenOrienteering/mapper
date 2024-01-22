@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014, 2017 Kai Pastor
+ *    Copyright 2012-2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -37,6 +37,7 @@ namespace OpenOrienteering {
 class MainWindow;
 class Map;
 class MapColor;
+class MapEditorController;
 
 
 /**
@@ -49,7 +50,7 @@ class ColorListWidget : public QWidget
 Q_OBJECT
 public:
 	/** Creates a new ColorWidget for a given map and MainWindow. */
-	ColorListWidget(Map* map, MainWindow* window, QWidget* parent = nullptr);
+	ColorListWidget(Map* map, MainWindow* window, QWidget* parent = nullptr, MapEditorController* map_edditor_controller = nullptr);
 	
 	/** Destroys the ColorWidget. */
 	~ColorListWidget() override;
@@ -90,6 +91,7 @@ private:
 	
 	Map* const map;
 	MainWindow* const window;
+	MapEditorController* const map_editor_controller;
 	bool react_to_changes;
 };
 

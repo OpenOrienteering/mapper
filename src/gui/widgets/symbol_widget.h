@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,8 @@
 
 #ifndef OPENORIENTEERING_SYMBOL_WIDGET_H
 #define OPENORIENTEERING_SYMBOL_WIDGET_H
+
+#include <vector>
 
 #include <QObject>
 #include <QScrollArea>
@@ -89,6 +91,11 @@ public:
 	 * @brief Selects the symbol exclusively, deselecting all other symbols.
 	 */
 	void selectSingleSymbol(const Symbol* symbol);
+	
+	/**
+	 * @brief Selects the list of symbols exclusively, deselecting all other symbols.
+	 */
+	void selectMultipleSymbols(std::vector<int> const &symbols);
 	
 signals:
 	/**
