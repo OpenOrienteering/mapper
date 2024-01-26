@@ -16598,7 +16598,7 @@ Map symbol: ISOM 703</source>
     <message>
         <source>|C| Northern</source>
         <comment>Name of symbol 0.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Nördlich</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
@@ -16618,7 +16618,7 @@ Map symbol: ISOM 703</source>
     <message>
         <source>|C| Eastern</source>
         <comment>Name of symbol 0.1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Östlich</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
@@ -16638,7 +16638,7 @@ Map symbol: ISOM 703</source>
     <message>
         <source>|C| Southern</source>
         <comment>Name of symbol 0.1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Südlich</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
@@ -16658,7 +16658,7 @@ Map symbol: ISOM 703</source>
     <message>
         <source>|C| Western</source>
         <comment>Name of symbol 0.1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Westlich</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
@@ -16688,7 +16688,7 @@ Map symbol: ISOM 703</source>
     <message>
         <source>|C| Lower</source>
         <comment>Name of symbol 0.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Tiefer</translation>
     </message>
     <message>
         <source>Where the control feature is the middle one of a number of similar features.</source>
@@ -16698,7 +16698,7 @@ Map symbol: ISOM 703</source>
     <message>
         <source>|C| Middle</source>
         <comment>Name of symbol 0.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Mitte</translation>
     </message>
     <message>
         <source>Where the control feature is the middle one of a number of similar features.</source>
