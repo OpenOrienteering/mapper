@@ -51,6 +51,7 @@
 #include "core/path_coord.h"
 #include "core/virtual_coord_vector.h"
 #include "core/virtual_path.h"
+#include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/symbol.h"
 #include "core/objects/object.h"
@@ -64,6 +65,8 @@
 #include "util/util.h"
 #include "undo/object_undo.h"
 
+#include <core/symbols/point_symbol.h>
+
 
 namespace OpenOrienteering {
 
@@ -73,9 +76,38 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_action, bo
 , angle_helper(new ConstrainAngleToolHelper())
 , azimuth_helper(new AzimuthInfoHelper(cur_map_widget, active_color))
 , snap_helper(new SnappingToolHelper(this))
+, covering_white_dot(std::make_unique<LineSymbol>())
+, covering_red_dot(std::make_unique<LineSymbol>())
+, follow_highlight_symbol(std::make_unique<CombinedSymbol>())
 , follow_helper(new FollowPathToolHelper())
 , allow_closing_paths(allow_closing_paths)
 {
+	auto const dot_distance = 270;
+	
+	covering_red_dot->setSegmentLength(dot_distance);
+	covering_red_dot->setMidSymbolsPerSpot(1);
+	auto* red_dot = new PointSymbol(); // yeah, we are leaking objects here and below -> FIXME
+	auto* red_color = new MapColor(MapColor::CoveringRed);
+	red_dot->setInnerColor(red_color);
+	red_dot->setInnerRadius(30);
+	covering_red_dot->setMidSymbol(red_dot);
+
+	// We cannot use the outer width dot parameter due to the scaling hack for
+	// helper colors (PainterConfig::activate() / if (color_priority < 0 &&
+	// color_priority != MapColor::Registration) ...). So we combine two dotted
+	// lines to get the red dots with white outline.	        
+	covering_white_dot->setSegmentLength(dot_distance);
+	covering_white_dot->setMidSymbolsPerSpot(1);
+	auto* white_dot = new PointSymbol();
+	auto* white_color = new MapColor(MapColor::CoveringWhite);
+	white_dot->setInnerColor(white_color);
+	white_dot->setInnerRadius(55);
+	covering_white_dot->setMidSymbol(white_dot);
+	
+	follow_highlight_symbol->setNumParts(2);
+	follow_highlight_symbol->setPart(0, covering_white_dot.get(), false);
+	follow_highlight_symbol->setPart(1, covering_red_dot.get(), false);
+	
 	angle_helper->setActive(false);
 	connect(angle_helper.get(), &ConstrainAngleToolHelper::displayChanged, this, &DrawPathTool::updateDirtyRect);
 	
@@ -884,7 +916,7 @@ void DrawPathTool::finishDrawing()
 	}
 	
 	dragging = false;
-	following = false;
+	finishFollowing();
 	setEditingInProgress(false);
 	if (!ctrl_pressed)
 		angle_helper->setActive(false);
@@ -900,7 +932,7 @@ void DrawPathTool::finishDrawing()
 void DrawPathTool::abortDrawing()
 {
 	dragging = false;
-	following = false;
+	finishFollowing();
 	setEditingInProgress(false);
 	if (!ctrl_pressed)
 		angle_helper->setActive(false);
@@ -938,7 +970,10 @@ void DrawPathTool::updateDirtyRect()
 	}
 	if (shift_pressed || (!editingInProgress() && ctrl_pressed))
 		snap_helper->includeDirtyRect(rect);
+
 	includePreviewRects(rect);
+	if (followed_path)
+		rectInclude(rect, followed_path->getExtent());
 	
 	if (is_helper_tool)
 		emit dirtyRectChanged(rect);
@@ -1056,6 +1091,15 @@ void DrawPathTool::startFollowing(SnappingToolHelperSnapInfo& snap_info, const M
 	previous_point_is_curve_point = false;
 	updatePreviewPath();
 	follow_start_index = preview_path->getCoordinateCount() - 1;
+	
+	const auto* followed_object = follow_helper->followedObject();
+	const auto& part = followed_object->parts()[follow_helper->partIndex()];
+	followed_path = std::make_unique<PathObject>(follow_highlight_symbol.get());
+	for (auto i = part.first_index; i <= part.last_index; ++i)
+		followed_path->addCoordinate(followed_object->getCoordinate(i));
+	followed_path->update();
+	renderables->insertRenderablesOfObject(followed_path.get());
+	updateDirtyRect();
 }
 
 void DrawPathTool::updateFollowing()
@@ -1089,6 +1133,9 @@ void DrawPathTool::updateFollowing()
 void DrawPathTool::finishFollowing()
 {
 	following = false;
+	
+	renderables->removeRenderablesOfObject(followed_path.get(), false);
+	followed_path.reset();
 	
 	auto last = preview_path->getCoordinateCount() - 1;
 	
