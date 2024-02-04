@@ -916,7 +916,7 @@ void DrawPathTool::finishDrawing()
 	}
 	
 	dragging = false;
-	following = false;
+	finishFollowing();
 	setEditingInProgress(false);
 	if (!ctrl_pressed)
 		angle_helper->setActive(false);
@@ -932,7 +932,7 @@ void DrawPathTool::finishDrawing()
 void DrawPathTool::abortDrawing()
 {
 	dragging = false;
-	following = false;
+	finishFollowing();
 	setEditingInProgress(false);
 	if (!ctrl_pressed)
 		angle_helper->setActive(false);
