@@ -19,15 +19,15 @@
     </message>
     <message>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="vanished">Impossible de créer la fonction dans la couche : %1</translation>
+        <translation type="vanished">Impossible de créer la fonction dans la couche&#x202f;: %1</translation>
     </message>
     <message>
         <source>Failed to create layer %1: %2</source>
-        <translation type="vanished">Impossible de créer la couche %1 : %2</translation>
+        <translation type="vanished">Impossible de créer la couche %1&#x202f;: %2</translation>
     </message>
     <message>
         <source>Failed to create name field: %1</source>
-        <translation type="vanished">Impossible de créer le nom du champ : %1</translation>
+        <translation type="vanished">Impossible de créer le nom du champ&#x202f;: %1</translation>
     </message>
 </context>
 <context>
@@ -1581,12 +1581,12 @@
         <location filename="../src/gdal/gdal_image_reader.cpp" line="71"/>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="158"/>
         <source>Failed to read image data: %1</source>
-        <translation>Échec de lecture des données d&apos;image : %1</translation>
+        <translation>Échec de lecture des données d&apos;image&#x202f;: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="127"/>
         <source>Unsupported raster data: %1</source>
-        <translation>Données raster non supportées : %1</translation>
+        <translation>Données raster non supportées&#x202f;: %1</translation>
     </message>
 </context>
 <context>
@@ -2090,7 +2090,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="221"/>
         <source>Combined scale factor:</source>
         <extracomment>The combined scale factor is the ratio between a length on the ground and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Facteur d&apos;échelle combiné&#x202f;:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="227"/>
@@ -2498,7 +2498,7 @@
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="312"/>
         <source>Symbol ID &apos;%1&apos; not unique at line %2 column %3.</source>
-        <translation>L&apos;identifiant du symbole « %1 »n&apos;est pas unique à la ligne %2 colonne %3.</translation>
+        <translation>L&apos;identifiant du symbole «&#x202f;%1&#x202f;»n&apos;est pas unique à la ligne %2 colonne %3.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="392"/>
@@ -2519,7 +2519,7 @@
         <location filename="../src/core/symbols/symbol.cpp" line="318"/>
         <location filename="../src/undo/object_undo.cpp" line="616"/>
         <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
-        <translation>Malformation du symbole ID « %1 », ligne %2 colonne %3.</translation>
+        <translation>Malformation du symbole ID «&#x202f;%1&#x202f;», ligne %2 colonne %3.</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="393"/>
@@ -2612,12 +2612,12 @@
     <message>
         <location filename="../src/fileformats/iof_course_export.cpp" line="43"/>
         <source>IOF Data Standard 3.0</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard de donnée IOF 3.0</translation>
     </message>
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="43"/>
         <source>KML</source>
-        <translation type="unfinished"></translation>
+        <translation>KML</translation>
     </message>
 </context>
 <context>
@@ -2630,7 +2630,7 @@
 %1:
 %2</source>
         <translation>Ne peut pas ouvrir le fichier
-%1 :
+%1&#x202f;:
 %2</translation>
     </message>
     <message>
@@ -2654,12 +2654,12 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="226"/>
         <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
-        <translation>Le modèle « %1 » a été chargé depuis le répertoire de la carte au lieu de l&apos;emplacement relatif au fichier de la carte où il se trouvait précédemment.</translation>
+        <translation>Le modèle «&#x202f;%1&#x202f;» a été chargé depuis le répertoire de la carte au lieu de l&apos;emplacement relatif au fichier de la carte où il se trouvait précédemment.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="319"/>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
-        <translation>Fichier modèle « %1 » ne peut pas être chargé, raison : %2</translation>
+        <translation>Fichier modèle «&#x202f;%1&#x202f;» ne peut pas être chargé, raison&#x202f;: %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="155"/>
@@ -2670,7 +2670,7 @@
         <location filename="../src/fileformats/file_import_export.cpp" line="250"/>
         <source>Warnings when loading template &apos;%1&apos;:
 %2</source>
-        <translation>Alertes durant le chagement du modèle « %1 » :
+        <translation>Alertes durant le chagement du modèle «&#x202f;%1&#x202f;»&#x202f;:
 %2</translation>
     </message>
     <message>
@@ -2763,7 +2763,7 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="195"/>
         <source>For KML/KMZ export, the map must be georeferenced.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pour exporter au format KML/KMZ, la carte doit être géoréférencée.</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="202"/>
@@ -2773,7 +2773,7 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="220"/>
         <source>%1 already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 existe déjà.</translation>
     </message>
 </context>
 <context>
@@ -3125,17 +3125,17 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="247"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Information</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="248"/>
         <source>When you select the &quot;OK&quot; button, the editor will ignore touch input.</source>
-        <translation type="unfinished"></translation>
+        <translation>Après avoir cliqué sur &quot;OK&quot;, l&apos;éditeur ignorera l&apos;entrée tactile.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="253"/>
         <source>Continue with touch input</source>
-        <translation type="unfinished"></translation>
+        <translation>Continuer avec l&apos;entrée tactile</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="381"/>
@@ -3258,7 +3258,7 @@ Voulez-vous enregistrer vos modifications ?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1392"/>
         <source>When you want to have touch input disabled, you must use another pointing device to select the &quot;OK&quot; button.</source>
-        <translation type="unfinished"></translation>
+        <translation>Si vous désactivez l&apos;entrée tactile, un autre périphérique de pointage doit être utilisé pour cliquer sur &quot;OK&quot;.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="519"/>
@@ -4478,7 +4478,7 @@ car enregistrer en %2 (.%3) n&apos;est pas supporté.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="999"/>
         <source>Keep my location on screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Conserver ma position à l&apos;écran</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1013"/>
@@ -5043,7 +5043,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="237"/>
         <source>Background drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrière plan</translation>
     </message>
 </context>
 <context>
@@ -5581,7 +5581,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2733"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation>Impossible d&apos;enregistrer la position correcte du modèle manquant : &quot;%1&quot;</translation>
+        <translation>Impossible d&apos;enregistrer la position correcte du modèle manquant&#x202f;: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2718"/>
@@ -5591,12 +5591,12 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2778"/>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;enregistrer le positionnement personnalisé du modèle &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="3108"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
-        <translation>Texte tronqué à &apos;|&apos;) : %1</translation>
+        <translation>Texte tronqué à &apos;|&apos;)&#x202f;: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_georef_fields.cpp" line="878"/>
@@ -5848,12 +5848,12 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2381"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished">Impossible de créer la couche %1 : %2</translation>
+        <translation type="unfinished">Impossible de créer la couche %1&#x202f;: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2388"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished">Impossible de créer le nom du champ : %1</translation>
+        <translation type="unfinished">Impossible de créer le nom du champ&#x202f;: %1</translation>
     </message>
 </context>
 <context>
@@ -5947,7 +5947,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gdal/ogr_template.cpp" line="354"/>
         <source>Invalid template configuration.</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuration de modèle invalide.</translation>
     </message>
 </context>
 <context>
@@ -5964,7 +5964,7 @@ utiliser la molette de la souris pour zoomer.</translation>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="77"/>
         <source>Traditional</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Traditionel</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="82"/>
@@ -5981,7 +5981,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="132"/>
         <source>Add color...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter une couleur...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="133"/>
