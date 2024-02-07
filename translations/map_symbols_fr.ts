@@ -1376,7 +1376,7 @@ Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 313</comment>
         <translation>Le symbole est orienté au Nord.
 La définition du symbole doit être donnée sur la carte.
-Emprise au sol : 13,5 × 13,5 m.</translation>
+Emprise au sol&#x202f;: 13,5 × 13,5&#x202f;m.</translation>
     </message>
     <message>
         <source>Open land</source>
@@ -1388,9 +1388,9 @@ Emprise au sol : 13,5 × 13,5 m.</translation>
 Shall not be combined with area symbols other than Broken ground (113), Boulder field (208), Marsh (308) and Indistinct marsh (310).
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 401</comment>
-        <translation>Terrain découvert dont la couverture au sol (herbe, mousse ou similaire) offre une possibilité de courir plus vite que dans la forêt ouverte. Si ce type de surface jaune devient dominant il est possible d&apos;utiliser une trame (75 % au lieu du jaune plein).
+        <translation>Terrain découvert dont la couverture au sol (herbe, mousse ou similaire) offre une possibilité de courir plus vite que dans la forêt ouverte. Si ce type de surface jaune devient dominant il est possible d&apos;utiliser une trame (75&#x202f;% au lieu du jaune plein).
 Ne doit pas être combiné avec d&apos;autres symboles de surface à l&apos;exception des symboles Terrain accidenté (113), Zone de blocs rocheux (208), Marais (308) ou Marais peu visible (310).
-Surface minimum : 0,55 mm × 0,55 mm (emprise au sol 8 m × 8 m).</translation>
+Surface minimum : 0,55&#x202f;mm × 0,55&#x202f;mm (emprise au sol 8&#x202f;m × 8&#x202f;m).</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
@@ -1407,8 +1407,8 @@ The symbol is orientated to north.</source>
         <comment>Description of symbol 402</comment>
         <translation>Une zone d&apos;arbres ou de buissons dispersés dans un terrain découvert peut être généralisée en utilisant un motif régulier de gros points dans la trame jaune. Les points peuvent être blancs (arbres dispersés) ou verts (buissons dispersés). Les arbres remarquables individualisés peuvent être rajoutés en utilisant le symbole Gros arbre remarquable (417). Si ce type de surface jaune devient dominant il est possible d&apos;utiliser une trame au lieu du jaune plein).
 Ne doit pas être combiné avec d&apos;autres symboles de surface à l&apos;exception des symboles Terrain accidenté (113), Zone de blocs rocheux (208), ou des symboles de marais (308, 310).
-Largeur minimale : 1,5 mm (emprise au sol 22,5 m).
-Surface minimum : 2 mm × 2 mm (emprise au sol 30 m × 30 m)
+Largeur minimale : 1,5&#x202f;mm (emprise au sol 22,5&#x202f;m).
+Surface minimum&#x202f;: 2&#x202f;mm × 2&#x202f;mm (emprise au sol 30&#x202f;m × 30&#x202f;m)
 Des surfaces plus petites doivent être omises, exagérées ou dessinées en utilisant le symbole Terrain découvert (401).
 Le symbole est orienté vers le Nord.</translation>
     </message>
@@ -1427,8 +1427,8 @@ The symbol is orientated to north.</source>
         <comment>Description of symbol 402.1</comment>
         <translation>Une zone d&apos;arbres ou de buissons dispersés dans un terrain découvert peut être généralisée en utilisant un motif régulier de gros points dans la trame jaune. Les points peuvent être blancs (arbres dispersés) ou verts (buissons dispersés). Les arbres remarquables individualisés peuvent être rajoutés en utilisant le symbole Gros arbre remarquable (417). Si ce type de surface jaune devient dominant il est possible d&apos;utiliser une trame au lieu du jaune plein).
 Ne doit pas être combiné avec d&apos;autres symboles de surface à l&apos;exception des symboles Terrain accidenté (113), Zone de blocs rocheux (208), ou des symboles de marais (308, 310).
-Largeur minimale : 1,5 mm (emprise au sol 22,5 m).
-Surface minimum : 2 mm × 2 mm (emprise au sol 30 m × 30 m)
+Largeur minimale : 1,5&#x202f;mm (emprise au sol 22,5&#x202f;m).
+Surface minimum : 2&#x202f;mm × 2&#x202f;mm (emprise au sol 30&#x202f;m × 30&#x202f;m)
 Des surfaces plus petites doivent être omises, exagérées ou dessinées en utilisant le symbole Terrain découvert (401).
 Le symbole est orienté vers le Nord.</translation>
     </message>
@@ -1466,7 +1466,7 @@ Smaller areas must either be left out, exaggerated or shown using symbol Rough o
     <message>
         <source>Rough open land with scattered bushes (green dots)</source>
         <comment>Name of symbol 404.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terrain accidenté avec des buissons épars (points verts)</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
@@ -6254,12 +6254,12 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation>Noir 100 %</translation>
+        <translation>Noir 100&#x202f;%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation>Vert 100 %</translation>
+        <translation>Vert 100&#x202f;%</translation>
     </message>
     <message>
         <source>White for railway</source>
@@ -6274,32 +6274,32 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
     <message>
         <source>Purple 50%</source>
         <comment>Color 6</comment>
-        <translation>Violine 50 %</translation>
+        <translation>Violine 50&#x202f;%</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 7</comment>
-        <translation>Bleu 100 %</translation>
+        <translation>Bleu 100&#x202f;%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 8</comment>
-        <translation>Brun 100 %</translation>
+        <translation>Brun 100&#x202f;%</translation>
     </message>
     <message>
         <source>Black 60%</source>
         <comment>Color 9</comment>
-        <translation>Noir 60 %</translation>
+        <translation>Noir 60&#x202f;%</translation>
     </message>
     <message>
         <source>Black 50%</source>
         <comment>Color 10</comment>
-        <translation>Noir 50 %</translation>
+        <translation>Noir 50&#x202f;%</translation>
     </message>
     <message>
         <source>Black 20%</source>
         <comment>Color 11</comment>
-        <translation>Noir 20 %</translation>
+        <translation>Noir 20&#x202f;%</translation>
     </message>
     <message>
         <source>White over light brown</source>
@@ -6309,12 +6309,12 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 13</comment>
-        <translation>Brun inférieur 50 %</translation>
+        <translation>Brun inférieur 50&#x202f;%</translation>
     </message>
     <message>
         <source>Lower brown 30%</source>
         <comment>Color 14</comment>
-        <translation>Brun inférieur 30 %</translation>
+        <translation>Brun inférieur 30&#x202f;%</translation>
     </message>
     <message>
         <source>Black below lower light brown</source>
@@ -6324,17 +6324,17 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 16</comment>
-        <translation>Bleu 100 % pour surfaces</translation>
+        <translation>Bleu 100&#x202f;% pour surfaces</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 17</comment>
-        <translation>Bleu 70 %</translation>
+        <translation>Bleu 70&#x202f;%</translation>
     </message>
     <message>
         <source>Blue 30%</source>
         <comment>Color 18</comment>
-        <translation>Bleu 30 %</translation>
+        <translation>Bleu 30&#x202f;%</translation>
     </message>
     <message>
         <source>OpenOrienteering Blue</source>
@@ -6364,22 +6364,22 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 24</comment>
-        <translation>Vert 100 % pour surfaces</translation>
+        <translation>Vert 100&#x202f;% pour surfaces</translation>
     </message>
     <message>
         <source>Green 60%</source>
         <comment>Color 25</comment>
-        <translation>Vert 60 %</translation>
+        <translation>Vert 60&#x202f;%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 26</comment>
-        <translation>Vert 30 %</translation>
+        <translation>Vert 30&#x202f;%</translation>
     </message>
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 27</comment>
-        <translation>Vert 100 % pour végétation basse</translation>
+        <translation>Vert 100&#x202f;% pour végétation basse</translation>
     </message>
     <message>
         <source>White over yellow</source>
@@ -6399,7 +6399,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
     <message>
         <source>Yellow 50%</source>
         <comment>Color 31</comment>
-        <translation>Jaune 50 %</translation>
+        <translation>Jaune 50&#x202f;%</translation>
     </message>
     <message>
         <source>Contour</source>
@@ -6425,7 +6425,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
         <translation>Ce symbole est un complément du symbole de courbe de niveau (101.0).
 Les tirets de pentes peuvent être ajoutés du côté aval d&apos;une courbe de niveau, afin de clarifier le sens de la pente.
 Ils doivent être positionnés au niveau des rentrants.
-Une dépression doit comprendre un tiret de pente. Sa longueur minimale est de 1,1 mm (16,5 m au sol) et sa largeur minimale de 0,7 mm mesurée depuis les bords extérieurs de la
+Une dépression doit comprendre un tiret de pente. Sa longueur minimale est de 1,1&#x202f;mm (16,5&#x202f;m au sol) et sa largeur minimale de 0,7&#x202f;mm mesurée depuis les bords extérieurs de la
 ligne. Des dépressions remarquables plus petites peuvent être représentées par le symbole 111 (petite dépression) ou bien elles peuvent être exagérées pour respecter les dimensions minimum.</translation>
     </message>
     <message>
