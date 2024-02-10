@@ -1338,6 +1338,21 @@ bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
 	if (srs && data_srs != srs)
 	{
 		// New SRS, indeed.
+		if (OSRIsGeographic(srs))
+		{
+			auto ballpark_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
+			OSRSetWellKnownGeogCS(ballpark_srs.get(), "WGS84");
+
+			if (!strcmp(OSRGetAuthorityName(srs, nullptr), OSRGetAuthorityName(ballpark_srs.get(), nullptr))
+				&& !strcmp(OSRGetAuthorityCode(srs, nullptr), OSRGetAuthorityCode(ballpark_srs.get(), nullptr)))
+			{
+				// Substitute an accurate, recent realization of WGS84.
+				auto gnss_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
+				OSRSetWellKnownGeogCS(gnss_srs.get(), Georeferencing::gnss_crs_spec.toUtf8());
+				OSRCopyGeogCSFrom(srs, gnss_srs.get());
+			}
+		}
+
 		auto transformation = ogr::unique_transformation{ OCTNewCoordinateTransformation(srs, map_srs.get()) };
 		if (!transformation)
 		{
