@@ -304,7 +304,7 @@ bool ProjTransform::isGeographic() const
 
 QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
 {
-	static auto const geographic_crs = ProjTransform(Georeferencing::ballpark_geographic_crs_spec);
+	static auto const geographic_crs = ProjTransform(Georeferencing::gnss_crs_spec);
 	
 	auto point = isGeographic()
 	             ? QPointF{lat_lon.longitude(), lat_lon.latitude()}
@@ -324,7 +324,7 @@ QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
 
 LatLon ProjTransform::inverse(const QPointF& projected_coords, bool* ok) const
 {
-	static auto const geographic_crs = ProjTransform(Georeferencing::ballpark_geographic_crs_spec);
+	static auto const geographic_crs = ProjTransform(Georeferencing::gnss_crs_spec);
 	
 	double easting = projected_coords.x(), northing = projected_coords.y();
 	if (geographic_crs.isValid())
@@ -376,7 +376,7 @@ ProjTransform::ProjTransform(const QString& crs_spec)
 	if (crs_spec.isEmpty())
 		return;
 	
-	static auto const geographic_crs_spec_utf8 = Georeferencing::ballpark_geographic_crs_spec.toUtf8();
+	static auto const geographic_crs_spec_utf8 = Georeferencing::gnss_crs_spec.toUtf8();
 	
 	auto crs_spec_utf8 = crs_spec.toUtf8();
 #ifdef PROJ_ISSUE_1573
@@ -386,7 +386,7 @@ ProjTransform::ProjTransform(const QString& crs_spec)
 #if defined(ACCEPT_USE_OF_DEPRECATED_PROJ_API_H) || (PROJ_VERSION_MAJOR) < 8
 	pj = proj_create_crs_to_crs(PJ_DEFAULT_CTX, geographic_crs_spec_utf8, crs_spec_utf8, nullptr);
 #else
-	static auto const geographic_crs = crs(Georeferencing::ballpark_geographic_crs_spec);
+	static auto const geographic_crs = crs(Georeferencing::gnss_crs_spec);
 	auto const projected_crs = crs(crs_spec);
 	static const char* const options[] = {"AUTHORITY=any", nullptr};
 	pj = proj_create_crs_to_crs_from_pj(PJ_DEFAULT_CTX, geographic_crs.pj, projected_crs.pj, nullptr, options);

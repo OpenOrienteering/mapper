@@ -130,7 +130,7 @@ QString SelectCRSDialog::currentCRSSpec() const
 		// nothing
 		break;
 	case SpecialCRS::Geographic:
-		spec = Georeferencing::ballpark_geographic_crs_spec;
+		spec = Georeferencing::gnss_crs_spec;
 		break;
 	case SpecialCRS::TemplateFile:
 		spec = options.template_file.crs_spec;
