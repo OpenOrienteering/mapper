@@ -479,7 +479,7 @@ QString ProjTransform::errorText() const
 //### Georeferencing ###
 
 const QString Georeferencing::ballpark_geographic_crs_spec(QString::fromLatin1("+proj=latlong +datum=WGS84"));
-const QString Georeferencing::gnss_crs_spec(QString::fromLatin1("EPSG:9755"));
+const QString Georeferencing::gnss_crs_spec(QString::fromLatin1("EPSG:9057"));
 
 Georeferencing::Georeferencing()
 : state(Local),
