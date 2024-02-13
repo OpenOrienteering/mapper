@@ -47,24 +47,38 @@ namespace OpenOrienteering {
 
 
 /**
- * A utility which encapsulates PROJ API variants and resource management.
+ * Utilities which encapsulate PROJ API variants and resource management.
  */
+struct ProjCRS
+{
+	ProjCRS(const ProjCRS&) = delete;
+	ProjCRS(ProjCRS&& other) noexcept;
+	ProjCRS(const QString& crs_spec);
+	~ProjCRS();
+
+	ProjCRS& operator=(const ProjCRS& other) = delete;
+	ProjCRS& operator=(ProjCRS&& other) noexcept;
+
+	bool isValid() const noexcept;
+	bool isGeographic() const;
+private:
+	ProjTransformData* pj = nullptr;
+
+	friend struct ProjTransform;
+};
+
 struct ProjTransform
 {
-	ProjTransform() noexcept = default;
+	ProjTransform() noexcept;
 	ProjTransform(const ProjTransform&) = delete;
 	ProjTransform(ProjTransform&& other) noexcept;
-	ProjTransform(const QString& crs_spec);
+	ProjTransform(const QString& crs_spec, const QString& geographic_crs_spec);
 	~ProjTransform();
 	
 	ProjTransform& operator=(const ProjTransform& other) = delete;
 	ProjTransform& operator=(ProjTransform&& other) noexcept;
 	
-	/// Create a PROJ CRS object.
-	static ProjTransform crs(const QString& crs_spec);
-	
 	bool isValid() const noexcept;
-	bool isGeographic() const;
 	
 	QPointF forward(const LatLon& lat_lon, bool* ok) const;
 	LatLon inverse(const QPointF& projected, bool* ok) const;
@@ -72,10 +86,8 @@ struct ProjTransform
 	QString errorText() const;
 	
 private:
-	ProjTransform(ProjTransformData* pj) noexcept;
-	
 	ProjTransformData* pj = nullptr;
-	
+	ProjCRS geographic_crs;
 };
 
 

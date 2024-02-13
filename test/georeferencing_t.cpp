@@ -357,7 +357,7 @@ void GeoreferencingTest::testCRS()
 #ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 	// Test with IDs
 	{
-		auto t = ProjTransform::crs(id);
+		ProjCRS t(id);
 		QVERIFY(t.isValid());
 		QCOMPARE(t.isGeographic(), is_geographic);
 		
@@ -369,7 +369,7 @@ void GeoreferencingTest::testCRS()
 	
 	// Test with specs.
 	{
-		auto t = ProjTransform::crs(spec);
+		ProjCRS t(spec);
 		QVERIFY(t.isValid());
 		QCOMPARE(t.isGeographic(), is_geographic);
 		

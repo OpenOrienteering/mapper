@@ -600,7 +600,7 @@ bool OgrTemplate::finishTypeSpecificTemplateConfiguration()
 			// Data is to be transformed to the map CRS directly.
 			Q_ASSERT(projected_crs_spec.isEmpty());
 		}
-		else if (!ProjTransform::crs(track_crs_spec).isGeographic())
+		else if (!ProjCRS(track_crs_spec).isGeographic())
 		{
 			// Nothing to do with this configuration
 			Q_ASSERT(projected_crs_spec.isEmpty());
