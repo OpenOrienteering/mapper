@@ -147,11 +147,6 @@ public:
 	 */
 	static const QString ballpark_geographic_crs_spec;
 	
-	/**
-	 * A shared PROJ specification of an accurate realization of the WGS84 geographic CRS.
-	 */
-	static const QString gnss_crs_spec;
-	
 	
 	/**
 	 * @brief Returns the precision of the grid scale factor.
@@ -444,6 +439,15 @@ public:
 	 */
 	bool setProjectedCRS(const QString& id, QString spec, std::vector< QString > params = std::vector<QString>());
 	
+	/** 
+	 * Returns the specification of the WGS84-based geographic coordinate
+	 * reference system (CRS) used by Georeferencing.
+	 * This is the target CRS of the toGeographicCoords methods,
+	 * and also the source CRS when applicable.
+	 * @return a PROJ specification of the geographic CRS
+	 */
+	const QString& getGeographicCRSSpec() const { return gnss_crs_spec; }
+	
 	/**
 	 * Calculates the convergence at the reference point.
 	 * 
@@ -649,6 +653,11 @@ signals:
 private:
 	void setScaleFactors(double combined_scale_factor, double auxiliary_scale_factor);
 	void setDeclinationAndGrivation(double declination, double grivation);
+	
+	/**
+	 * PROJ specification of an accurate realization of the WGS84 geographic CRS.
+	 */
+	static const QString gnss_crs_spec;
 	
 	State state;
 	

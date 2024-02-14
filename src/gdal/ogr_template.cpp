@@ -296,7 +296,7 @@ try
 		{
 			is_georeferenced = true;
 			// Data is to be transformed to the map CRS directly.
-			track_crs_spec = Georeferencing::gnss_crs_spec;
+			track_crs_spec = georef.getGeographicCRSSpec();
 			return true;
 		}
 	}
@@ -318,7 +318,7 @@ try
 			preserveRefPoints(*data_georef, initial_georef);
 		explicit_georef = std::move(data_georef);
 		// Data is to be transformed to the projected CRS.
-		track_crs_spec = Georeferencing::gnss_crs_spec;
+		track_crs_spec = explicit_georef->getGeographicCRSSpec();
 		projected_crs_spec = explicit_georef->getProjectedCRSSpec();
 	}
 	

@@ -1338,6 +1338,7 @@ bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
 	if (srs && data_srs != srs)
 	{
 		// New SRS, indeed.
+		auto& georef = map->getGeoreferencing();
 		if (OSRIsGeographic(srs))
 		{
 			auto ballpark_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
@@ -1348,7 +1349,7 @@ bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
 			{
 				// Substitute an accurate, recent realization of WGS84.
 				auto gnss_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
-				OSRSetWellKnownGeogCS(gnss_srs.get(), Georeferencing::gnss_crs_spec.toUtf8());
+				OSRSetWellKnownGeogCS(gnss_srs.get(), georef.getGeographicCRSSpec().toUtf8());
 				OSRCopyGeogCSFrom(srs, gnss_srs.get());
 			}
 		}
