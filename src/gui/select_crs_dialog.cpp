@@ -101,7 +101,7 @@ SelectCRSDialog::SelectCRSDialog(
 		crs_selector->setCurrentIndex(crs_selector->findData(SpecialCRS::TemplateFile));
 	else if (crs_spec == georef.getProjectedCRSSpec())
 		crs_selector->setCurrentIndex(crs_selector->findData(SpecialCRS::SameAsMap));
-	else if (crs_spec == Georeferencing::ballpark_geographic_crs_spec)
+	else if (crs_spec == Georeferencing::gnss_crs_spec)
 		crs_selector->setCurrentIndex(crs_selector->findData(SpecialCRS::Geographic));
 	else
 		crs_selector->setCurrentCRS(CRSTemplateRegistry().find(QString::fromLatin1("PROJ.4")), { crs_spec });
