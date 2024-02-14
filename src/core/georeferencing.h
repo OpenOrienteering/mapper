@@ -447,6 +447,13 @@ public:
 	 * @return a PROJ specification of the geographic CRS
 	 */
 	const QString& getGeographicCRSSpec() const { return gnss_crs_spec; }
+
+	/** 
+	 * Returns whether transformations use loose accuracy around the
+	 * WGS84 datum for compatibility with older releases of Mapper.
+	 * @return true if transformations are compatible, false otherwise
+	 */
+	bool isDatumBallpark() const { return false; }
 	
 	/**
 	 * Calculates the convergence at the reference point.

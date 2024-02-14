@@ -1339,7 +1339,7 @@ bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
 	{
 		// New SRS, indeed.
 		auto& georef = map->getGeoreferencing();
-		if (OSRIsGeographic(srs))
+		if (OSRIsGeographic(srs) && !georef.isDatumBallpark())
 		{
 			auto ballpark_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
 			OSRSetWellKnownGeogCS(ballpark_srs.get(), "WGS84");
