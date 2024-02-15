@@ -73,6 +73,7 @@ namespace literal
 	static const QLatin1String ref_point_deg("ref_point_deg");
 	static const QLatin1String projected_crs("projected_crs");
 	static const QLatin1String geographic_crs("geographic_crs");
+	static const QLatin1String is_realization("is_realization");
 	static const QLatin1String spec("spec");
 	static const QLatin1String parameter("parameter");
 	
@@ -87,6 +88,8 @@ namespace literal
 	
 	static const QLatin1String proj_4("PROJ.4");
 	static const QLatin1String geographic_coordinates("Geographic coordinates");
+	static const QLatin1String f("false");
+	static const QLatin1String t("true");
 }
 
 
@@ -517,7 +520,9 @@ Georeferencing::Georeferencing()
   grivation_error(0.0),
   convergence(0.0),
   map_ref_point(0, 0),
-  projected_ref_point(0, 0)
+  projected_ref_point(0, 0),
+  is_realization(true),
+  explicit_realization(false)
 {
 	static ProjSetup run_once;
 	
@@ -542,6 +547,8 @@ Georeferencing::Georeferencing(const Georeferencing& other)
   projected_crs_id(other.projected_crs_id),
   projected_crs_spec(other.projected_crs_spec),
   projected_crs_parameters(other.projected_crs_parameters),
+  is_realization(other.is_realization),
+  explicit_realization(other.explicit_realization),
   proj_transform(projected_crs_spec, gnss_crs_spec),
   geographic_ref_point(other.geographic_ref_point)
 {
@@ -572,6 +579,8 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	projected_crs_id         = other.projected_crs_id;
 	projected_crs_spec       = other.projected_crs_spec;
 	projected_crs_parameters = other.projected_crs_parameters;
+	is_realization           = other.is_realization;
+	explicit_realization     = other.explicit_realization;
 	proj_transform           = ProjTransform(other.projected_crs_spec, gnss_crs_spec);
 	geographic_ref_point     = other.geographic_ref_point;
 	
@@ -621,6 +630,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	}
 	else
 	{
+		explicit_realization = false;
 		if (georef_element.hasAttribute(literal::auxiliary_scale_factor))
 		{
 			auxiliary_scale_factor = roundScaleFactor(georef_element.attribute<double>(literal::auxiliary_scale_factor));
@@ -677,6 +687,9 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 			}
 			else if (xml.name() == literal::geographic_crs)
 			{
+				XmlElementReader crs_element(xml);
+				explicit_realization = crs_element.hasAttribute(literal::is_realization);
+				is_realization = explicit_realization && crs_element.attribute<bool>(literal::is_realization);
 				while (xml.readNextStartElement())
 				{
 					XmlElementReader current_element(xml);
@@ -721,7 +734,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	emit declinationChanged();
 	if (!projected_crs_spec.isEmpty())
 	{
-		proj_transform = ProjTransform(projected_crs_spec, gnss_crs_spec);
+		proj_transform = ProjTransform(projected_crs_spec, getGeographicCRSSpec());
 		state = proj_transform.isValid() ? Geospatial : BrokenGeospatial;
 		updateGridCompensation();
 		if (!georef_element.hasAttribute(literal::auxiliary_scale_factor))
@@ -793,6 +806,8 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 	{
 		XmlElementWriter crs_element(xml, literal::geographic_crs);
 		crs_element.writeAttribute(literal::id, literal::geographic_coordinates);
+		if (explicit_realization)
+			crs_element.writeAttribute(literal::is_realization, is_realization ? literal::t : literal::f);
 		{
 			XmlElementWriter spec_element(xml, literal::spec);
 			spec_element.writeAttribute(literal::language, literal::proj_4);
@@ -1161,6 +1176,31 @@ bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vecto
 			else
 				setState(BrokenGeospatial);
 		}
+		if (getState() == Geospatial)
+			updateGridCompensation();
+		
+		emit projectionChanged();
+	}
+	
+	return ok;
+}
+
+bool Georeferencing::setDatumBallpark(bool ballpark)
+{
+	explicit_realization = true;
+
+	// Default return value if no change is necessary
+	bool ok = (getState() == Geospatial);
+	
+	if (is_realization != !ballpark)
+	{
+		is_realization = !ballpark;
+		proj_transform = ProjTransform(projected_crs_spec, getGeographicCRSSpec());
+		ok = proj_transform.isValid();
+		if (ok)
+			setState(Geospatial);
+		else
+			setState(BrokenGeospatial);
 		if (getState() == Geospatial)
 			updateGridCompensation();
 		
