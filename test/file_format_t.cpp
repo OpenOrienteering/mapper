@@ -227,6 +227,7 @@ namespace
 		QCOMPARE(actual_georef.getProjectedCRSName(), expected_georef.getProjectedCRSName());
 		QCOMPARE(actual_georef.getProjectedCoordinatesName(), expected_georef.getProjectedCoordinatesName());
 		QCOMPARE(actual_georef.getProjectedCRSSpec(), expected_georef.getProjectedCRSSpec());
+		QCOMPARE(actual_georef.getGeographicCRSSpec(), expected_georef.getGeographicCRSSpec());
 		QVERIFY(qAbs(actual_georef.getGeographicRefPoint().latitude() - expected_georef.getGeographicRefPoint().latitude()) < 0.5e-8);
 		QVERIFY(qAbs(actual_georef.getGeographicRefPoint().longitude() - expected_georef.getGeographicRefPoint().longitude()) < 0.5e-8);
 		

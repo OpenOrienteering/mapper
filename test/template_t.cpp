@@ -474,6 +474,7 @@ private slots:
 		QTest::newRow("OgrTemplate NAD83")            << QStringLiteral("testdata:templates/template-track-NA.xmap") << 1;
 		QTest::newRow("TemplateTrack from v0.8.4")    << QStringLiteral("testdata:templates/template-track-NA-084.xmap") << 0;
 		QTest::newRow("OGRTemplate from v0.9.3")      << QStringLiteral("testdata:templates/template-track-NA-093-GDAL.xmap") << 0;
+		QTest::newRow("OGRTemplate NAD83 ballpark")   << QStringLiteral("testdata:templates/template-track-NA-ballpark-GDAL.xmap") << 0;
 	}
 	
 	void ogrTemplateTest()
