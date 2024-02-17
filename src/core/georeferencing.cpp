@@ -73,7 +73,7 @@ namespace literal
 	static const QLatin1String ref_point_deg("ref_point_deg");
 	static const QLatin1String projected_crs("projected_crs");
 	static const QLatin1String geographic_crs("geographic_crs");
-	static const QLatin1String is_realization("is_realization");
+	static const QLatin1String realization_spec("realization_spec");
 	static const QLatin1String spec("spec");
 	static const QLatin1String parameter("parameter");
 	
@@ -88,8 +88,6 @@ namespace literal
 	
 	static const QLatin1String proj_4("PROJ.4");
 	static const QLatin1String geographic_coordinates("Geographic coordinates");
-	static const QLatin1String f("false");
-	static const QLatin1String t("true");
 }
 
 
@@ -521,7 +519,7 @@ Georeferencing::Georeferencing()
   convergence(0.0),
   map_ref_point(0, 0),
   projected_ref_point(0, 0),
-  is_realization(true),
+  realization_crs_spec(gnss_crs_spec),
   explicit_realization(false)
 {
 	static ProjSetup run_once;
@@ -547,7 +545,7 @@ Georeferencing::Georeferencing(const Georeferencing& other)
   projected_crs_id(other.projected_crs_id),
   projected_crs_spec(other.projected_crs_spec),
   projected_crs_parameters(other.projected_crs_parameters),
-  is_realization(other.is_realization),
+  realization_crs_spec(other.realization_crs_spec),
   explicit_realization(other.explicit_realization),
   proj_transform(projected_crs_spec, gnss_crs_spec),
   geographic_ref_point(other.geographic_ref_point)
@@ -579,7 +577,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	projected_crs_id         = other.projected_crs_id;
 	projected_crs_spec       = other.projected_crs_spec;
 	projected_crs_parameters = other.projected_crs_parameters;
-	is_realization           = other.is_realization;
+	realization_crs_spec     = other.realization_crs_spec;
 	explicit_realization     = other.explicit_realization;
 	proj_transform           = ProjTransform(other.projected_crs_spec, gnss_crs_spec);
 	geographic_ref_point     = other.geographic_ref_point;
@@ -688,8 +686,8 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 			else if (xml.name() == literal::geographic_crs)
 			{
 				XmlElementReader crs_element(xml);
-				explicit_realization = crs_element.hasAttribute(literal::is_realization);
-				is_realization = explicit_realization && crs_element.attribute<bool>(literal::is_realization);
+				explicit_realization = false;
+				realization_crs_spec = QString();
 				while (xml.readNextStartElement())
 				{
 					XmlElementReader current_element(xml);
@@ -701,6 +699,16 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 						QString geographic_crs_spec = xml.readElementText();
 						if (Georeferencing::ballpark_geographic_crs_spec != geographic_crs_spec)
 							throw FileFormatException(tr("Unsupported geographic CRS specification: %1").arg(geographic_crs_spec));
+					}
+					else if (xml.name() == literal::realization_spec)
+					{
+						explicit_realization = true;
+						QString language{};
+						if (current_element.hasAttribute(literal::language))
+							language = current_element.attribute<QString>(literal::language);
+						realization_crs_spec = xml.readElementText();
+						if (!realization_crs_spec.isEmpty() && language != literal::proj_4)
+							throw FileFormatException(tr("Unknown realization CRS specification language: %1").arg(language));
 					}
 					else if (xml.name() == literal::ref_point)
 					{
@@ -806,12 +814,19 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 	{
 		XmlElementWriter crs_element(xml, literal::geographic_crs);
 		crs_element.writeAttribute(literal::id, literal::geographic_coordinates);
-		if (explicit_realization)
-			crs_element.writeAttribute(literal::is_realization, is_realization ? literal::t : literal::f);
 		{
 			XmlElementWriter spec_element(xml, literal::spec);
 			spec_element.writeAttribute(literal::language, literal::proj_4);
 			xml.writeCharacters(ballpark_geographic_crs_spec);
+		}
+		if (explicit_realization)
+		{
+			XmlElementWriter realization_element(xml, literal::realization_spec);
+			if (!realization_crs_spec.isEmpty())
+			{
+				realization_element.writeAttribute(literal::language, literal::proj_4);
+				xml.writeCharacters(realization_crs_spec);
+			}
 		}
 		if (XMLFileFormat::active_version < 6)
 		{
@@ -1192,9 +1207,9 @@ bool Georeferencing::setDatumBallpark(bool ballpark)
 	// Default return value if no change is necessary
 	bool ok = (getState() == Geospatial);
 	
-	if (is_realization != !ballpark)
+	if (realization_crs_spec.isEmpty() != ballpark)
 	{
-		is_realization = !ballpark;
+		realization_crs_spec = ballpark ? QString() : gnss_crs_spec;
 		proj_transform = ProjTransform(projected_crs_spec, getGeographicCRSSpec());
 		ok = proj_transform.isValid();
 		if (ok)

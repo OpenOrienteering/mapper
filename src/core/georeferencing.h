@@ -446,14 +446,16 @@ public:
 	 * and also the source CRS when applicable.
 	 * @return a PROJ specification of the geographic CRS
 	 */
-	const QString& getGeographicCRSSpec() const { return is_realization ? gnss_crs_spec : ballpark_geographic_crs_spec; }
+	const QString& getGeographicCRSSpec() const { return realization_crs_spec.isEmpty()
+	                                                     ? ballpark_geographic_crs_spec
+	                                                     : realization_crs_spec; }
 
 	/** 
 	 * Returns whether transformations use loose accuracy around the WGS84
 	 * datum for explicitly requested compatibility with older releases of Mapper.
 	 * @return true if transformations are set compatible, false otherwise
 	 */
-	bool isDatumBallpark() const { return explicit_realization && !is_realization; }
+	bool isDatumBallpark() const { return explicit_realization && realization_crs_spec.isEmpty(); }
 	
 	/**
 	 * Sets the coordinate reference system (CRS) of the geographical coordinates,
@@ -721,7 +723,7 @@ private:
 	QString projected_crs_spec;
 	std::vector< QString > projected_crs_parameters;
 
-	bool is_realization;
+	QString realization_crs_spec;
 	bool explicit_realization;
 	
 	ProjTransform proj_transform;
