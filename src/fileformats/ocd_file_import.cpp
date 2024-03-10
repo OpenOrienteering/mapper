@@ -1978,9 +1978,16 @@ template< class O >
 QString OcdFileImport::getObjectText(const O& ocd_object) const
 {
 	auto data = reinterpret_cast<const QChar *>(ocd_object.coords + ocd_object.num_items);
+	auto maxlen = int(sizeof(Ocd::OcdPoint32) * ocd_object.num_text / 2);
 	if (data[0] == QLatin1Char{'\r'} && data[1] == QLatin1Char{'\n'})
+	{
 		data += 2;
-	return QString(data);
+		maxlen -= 2;
+	}
+	auto object_text = QString(data, maxlen);	// limit in case of faulty strings without terminating null character
+	if (object_text.indexOf(QLatin1Char{'\0'}) != -1)
+		maxlen = object_text.indexOf(QLatin1Char{'\0'});
+	return object_text.left(maxlen);
 }
 
 
