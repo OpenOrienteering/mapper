@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2022 Kai Pastor
+ *    Copyright 2013-2024 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -1971,9 +1971,16 @@ template< class O >
 QString OcdFileImport::getObjectText(const O& ocd_object) const
 {
 	auto data = reinterpret_cast<const QChar *>(ocd_object.coords + ocd_object.num_items);
+	int length = ocd_object.num_text * 4;
 	if (data[0] == QLatin1Char{'\r'} && data[1] == QLatin1Char{'\n'})
+	{
 		data += 2;
-	return QString(data);
+		length -= 2;
+	}
+	auto temp = QString(data, length);	// limit in case of (faulty) strings without terminating null character
+	if (temp.indexOf(QLatin1Char{'\0'}) != -1)
+		length = temp.indexOf(QLatin1Char{'\0'});
+	return temp.left(length);
 }
 
 
