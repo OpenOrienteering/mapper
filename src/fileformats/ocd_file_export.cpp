@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2022 Kai Pastor
+ *    Copyright 2016-2024 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -3093,6 +3093,7 @@ QByteArray OcdFileExport::exportTextData(const TextObject* object, int chunk_siz
 	if (text.startsWith(QLatin1Char('\n')))
 		text.prepend(QLatin1Char('\n'));
 	text.replace(QLatin1Char('\n'), QLatin1String("\r\n"));
+	text.append(QLatin1Char('\0'));
 	
 	// Suppress byte order mark by using QTextCodec::IgnoreHeader.
 	static auto encoding_2byte = QTextCodec::codecForName("UTF-16LE");
