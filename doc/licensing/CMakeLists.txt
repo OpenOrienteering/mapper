@@ -37,10 +37,17 @@ if(ANDROID OR APPLE OR WIN32)
 	set(default_provider OFF)
 elseif(UNIX)
 	execute_process(
-	  COMMAND sh -c ". /etc/os-release; echo $ID"
-	  OUTPUT_VARIABLE system
+	  COMMAND sh -c ". /etc/os-release; echo \"$ID $ID_LIKE\""
+	  OUTPUT_VARIABLE system_candidates
 	  OUTPUT_STRIP_TRAILING_WHITESPACE 
 	)
+	string(REPLACE " " ";" system_candidates "${system_candidates}")
+	foreach(system_candidate ${system_candidates})
+		if(system_candidate IN_LIST known_providers)
+			set(system "${system_candidate}")
+			break()
+		endif()
+	endforeach()
 	if(system)
 		set(default_provider "${system}")
 	else()
