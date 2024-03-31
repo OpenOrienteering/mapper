@@ -1663,7 +1663,9 @@ TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol)
 	if (ocd_version >= 10)
 	{
 		if (ocd_symbol.framing.point_symbol_on_V10)
-			addSymbolWarning(symbol, OcdFileImport::tr("Additional point symbol '%1.%2' is ignored.").arg(ocd_symbol.framing.point_symbol_number_V10 / 1000).arg(ocd_symbol.framing.point_symbol_number_V10 % 1000));
+			addSymbolWarning(symbol, OcdFileImport::tr("Not importing unsupported reference to point symbol '%1.%2'.") .
+			                         arg(ocd_symbol.framing.point_symbol_number_V10 / S::BaseSymbol::symbol_number_factor) .
+			                         arg(ocd_symbol.framing.point_symbol_number_V10 % S::BaseSymbol::symbol_number_factor));
 	}
 	symbol->setRotatable(ocd_symbol.base.flags & Ocd::SymbolRotatable);
 	return symbol;
