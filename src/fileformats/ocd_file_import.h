@@ -349,12 +349,6 @@ protected:
 	/// maps OCD symbol number to oo-mapper symbol object
 	QHash<unsigned int, Symbol *> symbol_index;
 	
-	/// maps OO Mapper text symbol pointer to OCD defined horizontal alignment (stored in objects instead of symbols in OO Mapper)
-	QHash<Symbol*, TextObject::HorizontalAlignment> text_halign_map;
-	
-	/// maps OO Mapper text symbol pointer to OCD defined vertical alignment (stored in objects instead of symbols in OO Mapper)
-	QHash<Symbol*, TextObject::VerticalAlignment> text_valign_map;
-	
 	/// maps OCD symbol number to rectangle information struct
 	QHash<int, RectangleInfo> rectangle_info;
 	

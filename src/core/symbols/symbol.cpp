@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -88,6 +88,7 @@ Symbol::Symbol(const Symbol& proto)
 , is_hidden { proto.is_hidden }
 , is_protected { proto.is_protected }
 , is_rotatable { proto.is_rotatable }
+, auxiliary_properties ( proto.auxiliary_properties )
 {
 	// nothing else
 }
