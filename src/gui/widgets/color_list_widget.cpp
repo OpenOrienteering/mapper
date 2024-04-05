@@ -224,10 +224,26 @@ void ColorListWidget::deleteColor()
 	if (row < 0) return; // In release mode
 	
 	// Show a warning if the color is used
-	if (map->isColorUsedByASymbol(map->getColor(row)))
+	auto const* color_to_be_removed = map->getColor(row);
+	if (map->isColorUsedByASymbol(color_to_be_removed))
 	{
 		if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?"), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
 			return;
+	}
+	
+	if (color_to_be_removed->getSpotColorMethod() == MapColor::SpotColor)
+	{
+		if (auto color_in_use = map->countSpotColorUsage(color_to_be_removed))
+		{
+			if (QMessageBox::warning(this, tr("Confirmation"),
+			                         tr("%n map color(s) use spot color \"%1\"."
+			                            " Deleting it will remove the spot color from these map colors."
+			                            " Do you really want to do that?",
+			                            nullptr,
+			                            color_in_use).arg(color_to_be_removed->getName()),
+			                         QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+				return;
+		}
 	}
 	
 	map->deleteColor(row);
