@@ -256,7 +256,17 @@ protected:
 	
 	void setupLineSymbolPointSymbols(OcdImportedLineSymbol* line_symbol, const Ocd::LineSymbolCommonV8& attributes, const Ocd::PointSymbolElementV8* elements);
 	
-	void mergeLineSymbol(CombinedSymbol* full_line, LineSymbol* main_line, LineSymbol* framing_line, LineSymbol* double_line);
+	bool hasSecondarySymbol(const Ocd::LineSymbolCommonV8& attributes) const;
+	
+	void setupSecondarySymbol(OcdImportedLineSymbol* line_symbol, const Ocd::LineSymbolCommonV8& attributes, const Ocd::PointSymbolElementV8* elements);
+	
+	void mergeLineSymbol(
+	        CombinedSymbol* full_line,
+	        LineSymbol* main_line,
+	        LineSymbol* framing_line,
+	        LineSymbol* double_line,
+	        LineSymbol* secondary_points
+	);
 	
 	Symbol* importAreaSymbol(const Ocd::AreaSymbolV8& ocd_symbol);
 	
