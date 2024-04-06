@@ -150,8 +150,6 @@ void copySymbolHead(const Symbol& source, Symbol& symbol)
 	symbol.setName(source.getName());
 	symbol.setHidden(source.isHidden());
 	symbol.setProtected(source.isProtected());
-	symbol.setHidden(source.isHidden());
-	symbol.setProtected(source.isProtected());
 }
 
 
