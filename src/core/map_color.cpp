@@ -209,7 +209,7 @@ void MapColor::setSpotColorComposition(const SpotColorComponents& components)
 bool MapColor::removeSpotColorComponent(const MapColor* color)
 {
 	auto size_before = components.size();
-	auto match = [this, color](const SpotColorComponent& scc) { return scc.spot_color == color; };
+	auto match = [color](const SpotColorComponent& scc) { return scc.spot_color == color; };
 	components.erase(std::remove_if(begin(components), end(components), match), end(components));
 	bool changed = components.size() != size_before;
 	if (changed)
@@ -228,12 +228,9 @@ void MapColor::setKnockout(bool flag)
 	if (spot_color_method != MapColor::UndefinedMethod)
 	{
 		if (flag)
-		{
-			if (!getKnockout())
-				flags += MapColor::Knockout;
-		}
-		else if (getKnockout())
-			flags -= MapColor::Knockout;
+			flags |= MapColor::Knockout;
+		else
+			flags &= ~MapColor::Knockout;
 		
 		Q_ASSERT(getKnockout() == flag);
 	}
