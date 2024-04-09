@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021 Kai Pastor
+ *    Copyright 2012-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1160,6 +1160,56 @@ void FileFormatTest::importTemplateTest()
 		temp->loadTemplateFile();
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 	}
+}
+
+
+struct TestOcdFileExport : public OcdFileExport
+{
+	explicit TestOcdFileExport(const QString& path)
+	: OcdFileExport(path, nullptr, nullptr, 12)
+	{}
+
+	using OcdFileExport::exportTextData;
+};
+
+void FileFormatTest::ocdTextExportTest_data()
+{
+	QTest::addColumn<QString>("input");
+	QTest::addColumn<int>("expected_len");
+	QTest::addColumn<int>("first_null");
+	
+	// Between two chunks (size: 8)
+	QTest::newRow("0 chars") << ""                            <<  8 <<  0;
+	QTest::newRow("3 chars") << "123"                         <<  8 <<  6;
+	QTest::newRow("4 chars") << "1234"                        << 16 <<  8;
+	
+	// End of last chunk (max chunks: 2)
+	QTest::newRow("7 chars") << "1234567"                     << 16 << 14;
+	QTest::newRow("8 chars") << "12345678"                    << 16 << 14;
+	
+	// Trailing surrogate pair at end of last chunk
+	QTest::newRow("5+Yee")   << QString::fromUtf8("12345𐐷")   << 16 << 14;
+	QTest::newRow("6+Yee")   << QString::fromUtf8("123456𐐷")  << 16 << 12;
+	QTest::newRow("7+Yee")   << QString::fromUtf8("1234567𐐷") << 16 << 14;
+}
+
+void FileFormatTest::ocdTextExportTest()
+{
+	QFETCH(QString, input);
+	QFETCH(int, expected_len);
+	QFETCH(int, first_null);
+
+	TestOcdFileExport ocd_export{{}};
+
+	TextObject object;
+	object.setText(input);
+	auto exported = ocd_export.exportTextData(&object, /* chunk_size */ 8, /* max_chunks */ 2);
+	QCOMPARE(exported.length(), expected_len);
+	QCOMPARE(exported[first_null], '\0');
+	QCOMPARE(exported[first_null+1], '\0');
+	if(first_null > 0)
+		QVERIFY(exported[first_null-2] != '\0');
+	QCOMPARE(exported.back(), '\0');
 }
 
 
