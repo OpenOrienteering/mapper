@@ -20,8 +20,7 @@
 
 #include "file_format_t.h"
 
-#include <array>
-#include <initializer_list>
+#include <algorithm>
 #include <limits>
 #include <memory>
 #include <stdexcept>
@@ -74,7 +73,10 @@
 #include "fileformats/iof_course_export.h"
 #include "fileformats/kml_course_export.h"
 #include "fileformats/ocd_file_export.h"
+#include "fileformats/ocd_file_import.h"
 #include "fileformats/ocd_file_format.h"
+#include "fileformats/ocd_types_v8.h"
+#include "fileformats/ocd_types_v12.h"
 #include "fileformats/simple_course_export.h"
 #include "fileformats/xml_file_format.h"
 #include "templates/template.h"
@@ -1210,6 +1212,89 @@ void FileFormatTest::ocdTextExportTest()
 	if(first_null > 0)
 		QVERIFY(exported[first_null-2] != '\0');
 	QCOMPARE(exported.back(), '\0');
+}
+
+
+struct TestOcdFileImport : public OcdFileImport
+{
+	explicit TestOcdFileImport(int ocd_version)
+		: OcdFileImport({}, nullptr, nullptr)
+	{
+		this->ocd_version = ocd_version;
+	}
+	
+	using OcdFileImport::getObjectText;
+};
+
+void FileFormatTest::ocdTextImportTest_data()
+{
+	QTest::addColumn<QString>("string");
+	QTest::addColumn<int>("num_chars");
+	QTest::addColumn<QString>("expected");
+	
+	const QString string1 = QLatin1String("123456789abcdef") + QChar::Null + QLatin1String("789ABCDEF");
+	QTest::newRow("0 from 0")   << string1.left(0)  <<  0 << string1.left(0);
+	QTest::newRow("0 from 5")   << string1.left(5)  <<  0 << string1.left(0);
+	QTest::newRow("13 from 13") << string1.left(13) << 13 << string1.left(13);
+	QTest::newRow("15 from 20") << string1.left(20) << 15 << string1.left(15);
+	QTest::newRow("16 from 20") << string1.left(20) << 16 << string1.left(15);
+	QTest::newRow("20 from 20") << string1.left(20) << 20 << string1.left(15);
+	
+	const QString string2 = QLatin1String("\r\n123");
+	QTest::newRow("\\r\\n")     << string2.left(2)  <<  0 <<  string2.mid(2, 0);
+	QTest::newRow("\\r\\n123")  << string2.left(5)  <<  5 <<  string2.mid(2, 3);
+}
+
+void FileFormatTest::ocdTextImportTest()
+{
+	QFETCH(QString, string);
+	QFETCH(int, num_chars);
+	QFETCH(QString, expected);
+	
+	{
+		TestOcdFileImport ocd_v8_import{8};
+		Ocd::FormatV8::Object buffer[8];
+		auto& ocd_object = buffer[0];
+		ocd_object.num_items = 4; // arbitrary offset, here: 32 bytes
+		ocd_object.num_text = (num_chars * sizeof(QChar) + sizeof(Ocd::OcdPoint32) - 1) / sizeof(Ocd::OcdPoint32);
+		ocd_object.unicode = 1;
+		
+		auto* first = reinterpret_cast<QChar*>(reinterpret_cast<Ocd::OcdPoint32*>(ocd_object.coords) + ocd_object.num_items);
+		auto* tail = std::copy(string.begin(), string.end(), first);
+		
+		auto num_chars = int(ocd_object.num_text * sizeof(Ocd::OcdPoint32) / sizeof(QChar));
+		if (string.length() <= num_chars)
+			std::fill(tail, first + num_chars + 1, QChar::Space);
+		QVERIFY(ocd_v8_import.getObjectText(ocd_object).length() <= num_chars);
+		
+		*tail = QChar::Null;
+		QVERIFY(ocd_v8_import.getObjectText(ocd_object).startsWith(expected));
+		
+		*(first + num_chars) = QChar::Null;
+		QCOMPARE(ocd_v8_import.getObjectText(ocd_object), expected);
+	}
+	
+	{
+		TestOcdFileImport ocd_v12_import{12};
+		Ocd::FormatV12::Object buffer[8];
+		auto& ocd_object = buffer[0];
+		ocd_object.num_items = 4; // arbitrary offset, here: 32 bytes
+		ocd_object.num_text = (num_chars * sizeof(QChar) + sizeof(Ocd::OcdPoint32) - 1) / sizeof(Ocd::OcdPoint32);
+		
+		auto* first = reinterpret_cast<QChar*>(reinterpret_cast<Ocd::OcdPoint32*>(ocd_object.coords) + ocd_object.num_items);
+		auto* tail = std::copy(string.begin(), string.end(), first);
+		
+		auto num_chars = int(ocd_object.num_text * sizeof(Ocd::OcdPoint32) / sizeof(QChar));
+		if (string.length() <= num_chars)
+			std::fill(tail, first + num_chars + 1, QChar::Space);
+		QVERIFY(ocd_v12_import.getObjectText(ocd_object).length() <= num_chars);
+		
+		*tail = QChar::Null;
+		QVERIFY(ocd_v12_import.getObjectText(ocd_object).startsWith(expected));
+		
+		*(first + num_chars) = QChar::Null;
+		QCOMPARE(ocd_v12_import.getObjectText(ocd_object), expected);
+	}
 }
 
 

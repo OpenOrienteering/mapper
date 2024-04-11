@@ -115,6 +115,12 @@ private slots:
 	 */
 	void ocdTextExportTest_data();
 	void ocdTextExportTest();
+	
+	/**
+	 * Test text import from OCD.
+	 */
+	void ocdTextImportTest_data();
+	void ocdTextImportTest();
 };
 
 #endif // OPENORIENTEERING_FILE_FORMAT_T_H

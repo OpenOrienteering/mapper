@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2022 Kai Pastor
+ *    Copyright 2013-2024 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -2412,6 +2412,10 @@ void OcdFileImport::handleStrings(const OcdFile<F>& file, std::initializer_list<
 		}
 	}
 }
+
+
+// explicit instantiation for tests
+template QString OcdFileImport::getObjectText(const Ocd::FormatV12::Object& ocd_object) const;
 
 
 }  // namespace OpenOrienteering
