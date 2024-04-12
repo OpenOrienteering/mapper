@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -223,16 +223,16 @@ bool MapColor::removeSpotColorComponent(const MapColor* color)
 	return changed;
 }
 
-void MapColor::setKnockout(bool flag)
+void MapColor::setKnockout(bool enabled)
 {
 	if (spot_color_method != MapColor::UndefinedMethod)
 	{
-		if (flag)
+		if (enabled)
 			flags |= MapColor::Knockout;
 		else
 			flags &= ~MapColor::Knockout;
 		
-		Q_ASSERT(getKnockout() == flag);
+		Q_ASSERT(getKnockout() == enabled);
 	}
 }
 

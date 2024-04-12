@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -325,9 +325,9 @@ public:
 	/**
 	 * Sets the value of knockout flag for spot color printing.
 	 * 
-	 * The color must have a spot color definition, or no change will be done.
+	 * This function has no effect if the color does not have a spot color definition.
 	 */
-	void setKnockout(bool flag);
+	void setKnockout(bool enabled);
 	
 	/**
 	 * Returns the value of the knockout flag.
