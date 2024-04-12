@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -84,6 +84,12 @@ private slots:
 	void testProjContextSetFileFinder();
 #endif
 	
+	/**
+	 * Tests the determination of the UTM zone from the given latitude and longitude.
+	 */
+	void testUTMZoneCalculation();
+	
+	void testUTMZoneCalculation_data();
 };
 
 #endif
