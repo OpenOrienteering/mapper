@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -209,7 +209,7 @@ void MapColor::setSpotColorComposition(const SpotColorComponents& components)
 bool MapColor::removeSpotColorComponent(const MapColor* color)
 {
 	auto size_before = components.size();
-	auto match = [this, color](const SpotColorComponent& scc) { return scc.spot_color == color; };
+	auto match = [color](const SpotColorComponent& scc) { return scc.spot_color == color; };
 	components.erase(std::remove_if(begin(components), end(components), match), end(components));
 	bool changed = components.size() != size_before;
 	if (changed)
@@ -223,19 +223,16 @@ bool MapColor::removeSpotColorComponent(const MapColor* color)
 	return changed;
 }
 
-void MapColor::setKnockout(bool flag)
+void MapColor::setKnockout(bool enabled)
 {
 	if (spot_color_method != MapColor::UndefinedMethod)
 	{
-		if (flag)
-		{
-			if (!getKnockout())
-				flags += MapColor::Knockout;
-		}
-		else if (getKnockout())
-			flags -= MapColor::Knockout;
+		if (enabled)
+			flags |= MapColor::Knockout;
+		else
+			flags &= ~MapColor::Knockout;
 		
-		Q_ASSERT(getKnockout() == flag);
+		Q_ASSERT(getKnockout() == enabled);
 	}
 }
 
