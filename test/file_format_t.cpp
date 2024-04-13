@@ -1253,7 +1253,7 @@ void FileFormatTest::ocdTextImportTest()
 	
 	{
 		TestOcdFileImport ocd_v8_import{8};
-		Ocd::FormatV8::Object buffer[8];
+		Ocd::FormatV8::Object buffer[8]; // large enough to hold more than the string
 		auto& ocd_object = buffer[0];
 		ocd_object.num_items = 4; // arbitrary offset, here: 32 bytes
 		ocd_object.num_text = (num_chars * sizeof(QChar) + sizeof(Ocd::OcdPoint32) - 1) / sizeof(Ocd::OcdPoint32);
@@ -1262,21 +1262,23 @@ void FileFormatTest::ocdTextImportTest()
 		auto* first = reinterpret_cast<QChar*>(reinterpret_cast<Ocd::OcdPoint32*>(ocd_object.coords) + ocd_object.num_items);
 		auto* tail = std::copy(string.begin(), string.end(), first);
 		
-		auto num_chars = int(ocd_object.num_text * sizeof(Ocd::OcdPoint32) / sizeof(QChar));
-		if (string.length() <= num_chars)
-			std::fill(tail, first + num_chars + 1, QChar::Space);
-		QVERIFY(ocd_v8_import.getObjectText(ocd_object).length() <= num_chars);
+		// Must not read behind the reserved space.
+		auto num_reserved = int(ocd_object.num_text * sizeof(Ocd::OcdPoint32) / sizeof(QChar));
+		std::fill(tail, first + std::max(num_reserved, string.length()) + 1, QChar::Space);
+		QVERIFY(ocd_v8_import.getObjectText(ocd_object).length() <= num_reserved);
 		
-		*tail = QChar::Null;
+		// With zero at the end of the reserved space, the output must begin with the expected text.
+		*(first + num_reserved - 1) = QChar::Null;
 		QVERIFY(ocd_v8_import.getObjectText(ocd_object).startsWith(expected));
 		
-		*(first + num_chars) = QChar::Null;
+		// With zero at the end of the input text, the output must match the expected text.
+		*tail = QChar::Null;
 		QCOMPARE(ocd_v8_import.getObjectText(ocd_object), expected);
 	}
 	
 	{
 		TestOcdFileImport ocd_v12_import{12};
-		Ocd::FormatV12::Object buffer[8];
+		Ocd::FormatV12::Object buffer[8]; // large enough to hold more than the string
 		auto& ocd_object = buffer[0];
 		ocd_object.num_items = 4; // arbitrary offset, here: 32 bytes
 		ocd_object.num_text = (num_chars * sizeof(QChar) + sizeof(Ocd::OcdPoint32) - 1) / sizeof(Ocd::OcdPoint32);
@@ -1284,15 +1286,17 @@ void FileFormatTest::ocdTextImportTest()
 		auto* first = reinterpret_cast<QChar*>(reinterpret_cast<Ocd::OcdPoint32*>(ocd_object.coords) + ocd_object.num_items);
 		auto* tail = std::copy(string.begin(), string.end(), first);
 		
-		auto num_chars = int(ocd_object.num_text * sizeof(Ocd::OcdPoint32) / sizeof(QChar));
-		if (string.length() <= num_chars)
-			std::fill(tail, first + num_chars + 1, QChar::Space);
-		QVERIFY(ocd_v12_import.getObjectText(ocd_object).length() <= num_chars);
+		// Must not read behind the reserved space.
+		auto num_reserved = int(ocd_object.num_text * sizeof(Ocd::OcdPoint32) / sizeof(QChar));
+		std::fill(tail, first + std::max(num_reserved, string.length()) + 1, QChar::Space);
+		QVERIFY(ocd_v12_import.getObjectText(ocd_object).length() <= num_reserved);
 		
-		*tail = QChar::Null;
+		// With zero at the end of the reserved space, the output must begin with the expected text.
+		*(first + num_reserved - 1) = QChar::Null;
 		QVERIFY(ocd_v12_import.getObjectText(ocd_object).startsWith(expected));
 		
-		*(first + num_chars) = QChar::Null;
+		// With zero at the end of the input text, the output must match the expected text.
+		*tail = QChar::Null;
 		QCOMPARE(ocd_v12_import.getObjectText(ocd_object), expected);
 	}
 }
