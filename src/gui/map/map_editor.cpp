@@ -2002,7 +2002,8 @@ void MapEditorController::spotColorPresenceChanged(bool has_spot_colors)
 		}
 		else
 		{
-			overprinting_simulation_act->setChecked(false);
+			if(overprinting_simulation_act->isChecked())
+				overprinting_simulation_act->trigger();
 			overprinting_simulation_act->setEnabled(false);
 		}
 	}
