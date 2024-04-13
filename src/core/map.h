@@ -470,6 +470,11 @@ public:
 	bool isColorUsedByASymbol(const MapColor* color) const;
 	
 	/**
+	 * Returns the number of map colors which use the given spot color.
+	 */
+	int countSpotColorUsage(const MapColor* spot_color) const;
+	
+	/**
 	 * Checks which colors are in use by the symbols in this map.
 	 * 
 	 * WARNING (FIXME): returns an empty list if the map does not contain symbols!
