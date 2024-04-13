@@ -159,7 +159,7 @@
 521    tourism = alpine_hut
 531    tourism = artwork
 521    tourism = chalet
-531    tourism = information AND (information = guidepost OR information = map OR information=board)
+531    tourism = information AND (information = guidepost OR information = map OR information = board)
 
 526    historic = boundary_stone
 526    historic = memorial
