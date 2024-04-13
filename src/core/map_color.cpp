@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2024 Kai Pastor
+ *    Copyright 2013-2020, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -204,6 +204,13 @@ void MapColor::setSpotColorComposition(const SpotColorComponents& components)
 	removeSpotColorComponent(this);
 	updateCompositionName();
 	updateCalculatedColors();
+}
+
+bool MapColor::hasSpotColorComponent(const MapColor* color) const
+{
+	return std::any_of(components.begin(), components.end(), [color](const auto& component) {
+		return component.spot_color == color;
+	});
 }
 
 bool MapColor::removeSpotColorComponent(const MapColor* color)

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2024 Kai Pastor
+ *    Copyright 2012-2018, 2021, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -41,6 +41,7 @@
 #include <QMessageBox>
 #include <QPalette>
 #include <QShowEvent>
+#include <QString>
 #include <QStringList>
 #include <QStyle>
 #include <QStyleOption>
@@ -52,12 +53,12 @@
 
 #include "core/map.h"
 #include "core/map_color.h"
+#include "core/symbols/symbol.h"
 #include "gui/color_dialog.h"
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/segmented_button_layout.h"
 #include "util/item_delegates.h"
-#include "util/util.h"
 
 // IWYU pragma: no_forward_declare QTableWidgetItem
 
@@ -222,6 +223,85 @@ void ColorListWidget::newColor()
 	editCurrentColor();
 }
 
+bool ColorListWidget::confirmColorDeletion(const MapColor* color_to_be_removed) const
+{
+	QString detailed_text;
+	
+	std::vector<const Symbol*> remaining_symbols;
+	remaining_symbols.reserve(std::size_t(map->getNumSymbols()));
+	{
+		// First: direct usage in symbols
+		QString direct_usage;
+		map->applyOnAllSymbols(
+			[&direct_usage, &remaining_symbols, color_to_be_removed](const Symbol* symbol) {
+				if (symbol->getType() == Symbol::NoSymbol)
+					return;
+				if (symbol->containsColor(color_to_be_removed))
+					direct_usage += symbol->getNumberAsString() + QChar::Space + symbol->getPlainTextName() + QChar::LineFeed;
+				else
+					remaining_symbols.push_back(symbol);
+			}
+		);
+		if (!direct_usage.isEmpty())
+		{
+			detailed_text += tr("This color is used by the following symbols:") + QChar::LineFeed
+							 + direct_usage + QChar::LineFeed;
+		}
+	}
+	
+	if (color_to_be_removed->getSpotColorMethod() == MapColor::SpotColor)
+	{
+		// Second: usage as spot color
+		QString spotcolor_usage;
+		std::vector<const MapColor*> affected_colors;
+		affected_colors.reserve(std::size_t(map->getNumColors()));
+		map->applyOnMatchingColors(
+			[&spotcolor_usage, &affected_colors](const auto* color) {
+				spotcolor_usage += color->getName() + QChar::LineFeed;
+				affected_colors.push_back(color);
+			},
+			[&color_to_be_removed](const auto* color) {
+				return color->hasSpotColorComponent(color_to_be_removed);
+			}
+		);
+		if (!affected_colors.empty())
+		{
+			detailed_text += tr("This color is used as a spot color by the following map colors:") + QChar::LineFeed
+							 + spotcolor_usage + QChar::LineFeed;
+			
+			// Third: Additional transitive usage via spot color composition
+			QString transitive_usage;
+			for (const auto* symbol : remaining_symbols)
+			{
+				for (const auto* color : affected_colors)
+				{
+					if (symbol->containsColor(color))
+					{
+						transitive_usage += symbol->getNumberAsString() + QChar::Space + symbol->getPlainTextName() + QChar::LineFeed;
+						break;
+					}
+				}
+			}
+			if (!transitive_usage.isEmpty())
+			{
+				detailed_text += tr("This spot color is used by the following symbols:") + QChar::LineFeed
+								 + transitive_usage;
+			}
+		}
+	}
+		
+	if (detailed_text.isEmpty())
+		return true;
+	
+	QMessageBox msgBox;
+	msgBox.setWindowTitle(tr("Confirmation"));
+	msgBox.setIcon(QMessageBox::Warning);
+	msgBox.setText(tr("Color \"%1\" is used by other elements. Removing the color will change the appearance of these elements. Do you really want to remove it?").arg(color_to_be_removed->getName()));
+	msgBox.setDetailedText(detailed_text);
+	msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+	return msgBox.exec() == QMessageBox::Yes;
+}
+
 void ColorListWidget::deleteColor()
 {
 	int row = color_table->currentRow();
@@ -229,11 +309,8 @@ void ColorListWidget::deleteColor()
 	if (row < 0) return; // In release mode
 	
 	// Show a warning if the color is used
-	if (map->isColorUsedByASymbol(map->getColor(row)))
-	{
-		if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?"), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
-			return;
-	}
+	if (!confirmColorDeletion(map->getColor(row)))
+		return;
 	
 	map->deleteColor(row);
 	

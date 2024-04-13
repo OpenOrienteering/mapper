@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2024 Kai Pastor
+ *    Copyright 2013-2020, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -313,6 +313,11 @@ public:
 	 * Returns an empty list if the spot color method is not CustomColor.
 	 */
 	const SpotColorComponents& getComponents() const;
+	
+	/**
+	 * Test if another color is part of the spot color composition.
+	 */
+	bool hasSpotColorComponent(const MapColor* color) const;
 	
 	/**
 	 * Removes a component color.
