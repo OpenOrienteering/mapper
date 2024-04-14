@@ -2129,7 +2129,7 @@ Object* OcdFileImport::importRectangleObject(const Ocd::OcdPoint32* ocd_points, 
 
 /** Translates the OC*D path given in the last two arguments into an Object.
  */
-void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, quint32 num_points, const Ocd::OcdPoint32* ocd_points)
+void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, quint32 num_points, const Ocd::OcdPoint32* ocd_points) const
 {
 	object->coords.resize(num_points);
 	for (auto i = 0u; i < num_points; i++)
@@ -2146,18 +2146,15 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 			// CurveStart needs to be applied to the start point
 			object->coords[i-1].setCurveStart(true);
 		}
-		
-		if (ocd_point.y & Ocd::OcdPoint32::FlagHole && is_area && i > 1)
+		else if (ocd_point.y & Ocd::OcdPoint32::FlagHole && is_area && i > 1)
 		{
 			// Look for curve start points before the current point and apply hole point only if no such point is there.
 			// This prevents hole points in the middle of a curve caused by incorrect map objects.
-			if (i >= 2 && object->coords[i-1].isCurveStart())
-				; //object->coords[i-1].setHolePoint(true);
-			else if (i >= 3 && object->coords[i-2].isCurveStart())
+			if (i >= 3 && object->coords[i-2].isCurveStart())
 				; //object->coords[i-2].setHolePoint(true);
 			else if (i >= 4 && object->coords[i-3].isCurveStart())
 				; //object->coords[i-3].setHolePoint(true);
-			else if (i > 1) // Don't start with hole point.
+			else
 				object->coords[i-1].setHolePoint(true);
 		}
 	};
