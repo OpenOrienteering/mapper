@@ -2144,13 +2144,23 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 			else if (ocd_point.y & Ocd::OcdPoint32::FlagHole)
 			{
 				Q_ASSERT(i >= 2); // implied by initialization of ignore_hole_points
-				// HolePoint needs to be applied to the last point of a part
-				object->coords[i-1].setHolePoint(true);
+				if (object->coords[i-2].isHolePoint())
+				{
+					// overwrite current part start (i.e. drop last point from input)
+					object->coords[i-1] = object->coords[i];
+					--i;
+				}
+				else
+				{
+					// HolePoint needs to be applied to the last point of a part
+					object->coords[i-1].setHolePoint(true);
+				}
 			}
 		}
 		return ++i;
 	});
-	Q_ASSERT(object->coords.size() == count);
+	Q_ASSERT(object->coords.size() >= count);
+	object->coords.resize(count);
 	
 	// For path objects, create closed parts where the position of the last point is equal to that of the first point
 	if (object->getType() == Object::Path)
