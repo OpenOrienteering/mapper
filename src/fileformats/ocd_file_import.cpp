@@ -2132,6 +2132,7 @@ Object* OcdFileImport::importRectangleObject(const Ocd::OcdPoint32* ocd_points, 
 void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, quint32 num_points, const Ocd::OcdPoint32* ocd_points) const
 {
 	object->coords.resize(num_points);
+	int ignore_flag_hole = 2;
 	for (auto i = 0u; i < num_points; i++)
 	{
 		const auto& ocd_point = ocd_points[i];
@@ -2145,17 +2146,20 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 		{
 			// CurveStart needs to be applied to the start point
 			object->coords[i-1].setCurveStart(true);
+			ignore_flag_hole = 2;  // 2nd control point + end point
 		}
-		else if (ocd_point.y & Ocd::OcdPoint32::FlagHole && is_area && i > 1)
+		else if (is_area)
 		{
-			// Look for curve start points before the current point and apply hole point only if no such point is there.
-			// This prevents hole points in the middle of a curve caused by incorrect map objects.
-			if (i >= 3 && object->coords[i-2].isCurveStart())
-				; //object->coords[i-2].setHolePoint(true);
-			else if (i >= 4 && object->coords[i-3].isCurveStart())
-				; //object->coords[i-3].setHolePoint(true);
-			else
+			if (ignore_flag_hole)
+			{
+				--ignore_flag_hole;
+			}
+			else if (ocd_point.y & Ocd::OcdPoint32::FlagHole)
+			{
+				Q_ASSERT(i >= 2); // implied by initialization of ignore_hole_points
+				// HolePoint needs to be applied to the last point of a part
 				object->coords[i-1].setHolePoint(true);
+			}
 		}
 	};
 	
