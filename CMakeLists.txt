@@ -19,6 +19,13 @@
  
 cmake_minimum_required(VERSION 3.7 FATAL_ERROR)
 
+if(POLICY CMP0115)
+    cmake_policy(SET CMP0115 NEW)
+endif()
+if(POLICY CMP0135)
+    cmake_policy(SET CMP0135 NEW)
+endif()
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(FeatureSummary)

@@ -1,7 +1,3 @@
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
-
-# project(CoveTests)
-
 find_package(Qt5Core ${Qt5Core_VERSION} REQUIRED)
 find_package(Qt5Gui ${Qt5Core_VERSION} REQUIRED)
 find_package(Qt5Test ${Qt5Core_VERSION} REQUIRED)
