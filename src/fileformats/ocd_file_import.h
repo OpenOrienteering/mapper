@@ -317,7 +317,7 @@ protected:
 	
 	// Some helper functions that are used in multiple places
 	
-	void fillPathCoords(OcdFileImport::OcdImportedPathObject* object, bool is_area, quint32 num_points, const Ocd::OcdPoint32* ocd_points);
+	void fillPathCoords(OcdFileImport::OcdImportedPathObject* object, bool is_area, quint32 num_points, const Ocd::OcdPoint32* ocd_points) const;
 	
 	bool fillTextPathCoords(TextObject* object, TextSymbol* symbol, quint32 npts, const Ocd::OcdPoint32* ocd_points);
 	
