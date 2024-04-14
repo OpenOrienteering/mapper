@@ -2132,20 +2132,20 @@ Object* OcdFileImport::importRectangleObject(const Ocd::OcdPoint32* ocd_points, 
 void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, quint32 num_points, const Ocd::OcdPoint32* ocd_points) const
 {
 	object->coords.resize(num_points);
+	
+	auto const out_first = object->coords.begin();
+	auto out_coord = out_first;
 	int ignore_flag_hole = 2;
-	for (auto i = 0u; i < num_points; i++)
-	{
-		const auto& ocd_point = ocd_points[i];
-		object->coords[i] = convertOcdPoint(ocd_point);
+	std::for_each(ocd_points, ocd_points + num_points, [&](auto& ocd_point) {
+		*out_coord = convertOcdPoint(ocd_point);
 		if ((ocd_point.y & Ocd::OcdPoint32::FlagDash) || (ocd_point.y & Ocd::OcdPoint32::FlagCorner))
 		{
-			object->coords[i].setDashPoint(true);
+			out_coord->setDashPoint(true);
 		}
-		
-		if (ocd_point.x & Ocd::OcdPoint32::FlagCtl1 && i > 0)
+		if ((ocd_point.x & Ocd::OcdPoint32::FlagCtl1) && out_coord != out_first)
 		{
 			// CurveStart needs to be applied to the start point
-			object->coords[i-1].setCurveStart(true);
+			(out_coord-1)->setCurveStart(true);
 			ignore_flag_hole = 2;  // 2nd control point + end point
 		}
 		else if (is_area)
@@ -2156,12 +2156,13 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 			}
 			else if (ocd_point.y & Ocd::OcdPoint32::FlagHole)
 			{
-				Q_ASSERT(i >= 2); // implied by initialization of ignore_hole_points
+				Q_ASSERT(std::distance(out_first, out_coord) >= 2); // implied by initialization of ignore_flag_hole
 				// HolePoint needs to be applied to the last point of a part
-				object->coords[i-1].setHolePoint(true);
+				(out_coord-1)->setHolePoint(true);
 			}
 		}
-	};
+		++out_coord;
+	});
 	
 	// For path objects, create closed parts where the position of the last point is equal to that of the first point
 	if (object->getType() == Object::Path)
