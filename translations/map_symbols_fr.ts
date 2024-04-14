@@ -1466,7 +1466,7 @@ Smaller areas must either be left out, exaggerated or shown using symbol Rough o
     <message>
         <source>Rough open land with scattered bushes (green dots)</source>
         <comment>Name of symbol 404.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terrain accidenté avec des buissons épars (points verts)</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
