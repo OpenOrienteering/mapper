@@ -2122,9 +2122,7 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 {
 	object->coords.resize(num_points);
 	quint32 ignore_hole_points = 2;
-	for (auto i = 0u; i < num_points; i++)
-	{
-		const auto& ocd_point = ocd_points[i];
+	auto count = std::accumulate(ocd_points, ocd_points + num_points, 0, [this, object, is_area, &ignore_hole_points](auto i, auto& ocd_point) {
 		object->coords[i] = convertOcdPoint(ocd_point);
 		if ((ocd_point.y & Ocd::OcdPoint32::FlagDash) || (ocd_point.y & Ocd::OcdPoint32::FlagCorner))
 		{
@@ -2150,7 +2148,9 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 				object->coords[i-1].setHolePoint(true);
 			}
 		}
-	};
+		return ++i;
+	});
+	Q_ASSERT(object->coords.size() == count);
 	
 	// For path objects, create closed parts where the position of the last point is equal to that of the first point
 	if (object->getType() == Object::Path)
