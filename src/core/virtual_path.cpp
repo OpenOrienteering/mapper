@@ -94,6 +94,8 @@ VirtualCoordVector::size_type PathCoordVector::update(VirtualCoordVector::size_t
 			auto pos = virtual_coords[0];
 			qWarning("PathCoordVector at %g %g (mm) has an invalid hole at index %d.",
 			         pos.x(), -pos.y(), part_start);
+			clear();
+			return part_start;
 		}
 		
 		clear();
