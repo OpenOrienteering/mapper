@@ -5733,12 +5733,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Фиолетовый для наложения курса</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Белый для наложения курса</translation>
     </message>
     <message>
         <source>Black 100%</source>
@@ -5758,7 +5758,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Фиолетовый для символов трека</translation>
     </message>
     <message>
         <source>Purple 50%</source>
@@ -8596,6 +8596,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Canopy</source>
         <comment>Name of symbol 526.2</comment>
         <translation>Навес</translation>
+    </message>
+    <message>
+        <source>Pillar</source>
+        <comment>Name of symbol 526.3</comment>
+        <translation>Столб</translation>
     </message>
     <message>
         <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
@@ -12189,12 +12194,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Фиолетовый для наложения курса</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Белый для наложения курса</translation>
     </message>
     <message>
         <source>Green for SkiO</source>
@@ -12229,7 +12234,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Фиолетовый для символов трека</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
@@ -12254,7 +12259,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Черный под верхним коричневым 50%</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
@@ -12264,7 +12269,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Черный под нижним коричневым 50%</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>

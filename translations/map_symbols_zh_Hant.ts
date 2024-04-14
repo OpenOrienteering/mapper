@@ -2521,9 +2521,289 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 </context>
 <context>
     <name>ISOM2017</name>
+    <message>
+        <source>Black 65%</source>
+        <comment>Color 3</comment>
+        <translation>65%的黑色</translation>
+    </message>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 4</comment>
+        <translation>20%的黑色</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 9</comment>
+        <translation>50%的藍色</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 11</comment>
+        <translation>OpenOrienteering的橙色</translation>
+    </message>
+    <message>
+        <source>Black 25% (Grey)</source>
+        <comment>Color 12</comment>
+        <translation>25%的黑色(灰色)</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 26</comment>
+        <translation>黃色</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 27</comment>
+        <translation>50%的黃色</translation>
+    </message>
+    <message>
+        <source>Contour</source>
+        <comment>Name of symbol 101</comment>
+        <translation>等高線</translation>
+    </message>
+    <message>
+        <source>Slope line, contour</source>
+        <comment>Name of symbol 101.1</comment>
+        <translation>示坡線, 等高線</translation>
+    </message>
+    <message>
+        <source>Index contour</source>
+        <comment>Name of symbol 102</comment>
+        <translation>計曲線</translation>
+    </message>
+    <message>
+        <source>Contour value</source>
+        <comment>Name of symbol 102.1</comment>
+        <translation>等高線高度值</translation>
+    </message>
+    <message>
+        <source>Form line</source>
+        <comment>Name of symbol 103</comment>
+        <translation>輔助等高線</translation>
+    </message>
+    <message>
+        <source>Slope line, formline</source>
+        <comment>Name of symbol 103.1</comment>
+        <translation>示坡線,輔助等高線</translation>
+    </message>
+    <message>
+        <source>Earth bank</source>
+        <comment>Name of symbol 104</comment>
+        <translation>土堤</translation>
+    </message>
+    <message>
+        <source>Earth bank, minimum size</source>
+        <comment>Name of symbol 104.1</comment>
+        <translation>土堤,最小尺寸</translation>
+    </message>
+    <message>
+        <source>Earth bank, top line</source>
+        <comment>Name of symbol 104.2</comment>
+        <translation>土堤, 主線</translation>
+    </message>
+    <message>
+        <source>Earth bank, tag line</source>
+        <comment>Name of symbol 104.3</comment>
+        <translation>土堤,附加直線</translation>
+    </message>
+    <message>
+        <source>Earth bank, minimum size (from ISOM2000)</source>
+        <comment>Name of symbol 104.9</comment>
+        <translation>土堤,最小尺寸(ISOM2000)</translation>
+    </message>
+    <message>
+        <source>Earth wall</source>
+        <comment>Name of symbol 105</comment>
+        <translation>土牆</translation>
+    </message>
+    <message>
+        <source>Ruined earth wall</source>
+        <comment>Name of symbol 106</comment>
+        <translation>傾倒的土牆</translation>
+    </message>
+    <message>
+        <source>Erosion gully</source>
+        <comment>Name of symbol 107</comment>
+        <translation>沖溝</translation>
+    </message>
+    <message>
+        <source>Small erosion gully</source>
+        <comment>Name of symbol 108</comment>
+        <translation>小沖溝</translation>
+    </message>
+    <message>
+        <source>Small knoll</source>
+        <comment>Name of symbol 109</comment>
+        <translation>小丘</translation>
+    </message>
+    <message>
+        <source>Small elongated knoll</source>
+        <comment>Name of symbol 110</comment>
+        <translation>長形小丘</translation>
+    </message>
+    <message>
+        <source>Small depression</source>
+        <comment>Name of symbol 111</comment>
+        <translation>小窪地</translation>
+    </message>
+    <message>
+        <source>Pit</source>
+        <comment>Name of symbol 112</comment>
+        <translation>土坑</translation>
+    </message>
+    <message>
+        <source>Broken ground</source>
+        <comment>Name of symbol 113</comment>
+        <translation>崎嶇地面</translation>
+    </message>
+    <message>
+        <source>Broken ground, individual dot</source>
+        <comment>Name of symbol 113.1</comment>
+        <translation>崎嶇地面,單一圓點</translation>
+    </message>
+    <message>
+        <source>Very broken ground</source>
+        <comment>Name of symbol 114</comment>
+        <translation>非常崎嶇的地面</translation>
+    </message>
+    <message>
+        <source>Prominent landform feature</source>
+        <comment>Name of symbol 115</comment>
+        <translation>明顯的地貌特徵</translation>
+    </message>
+    <message>
+        <source>Impassable cliff</source>
+        <comment>Name of symbol 201</comment>
+        <translation>不可跨越的陡壁</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, minimum size</source>
+        <comment>Name of symbol 201.1</comment>
+        <translation>不可跨越的陡壁,最小尺寸</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, top line</source>
+        <comment>Name of symbol 201.3</comment>
+        <translation>不可跨越的陡壁,主線</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, tag line</source>
+        <comment>Name of symbol 201.4</comment>
+        <translation>不可跨越的陡壁,附加直線</translation>
+    </message>
 </context>
 <context>
     <name>ISOM2000</name>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 6</comment>
+        <translation>50%的藍色</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 8</comment>
+        <translation>OpenOrienteering的橙色</translation>
+    </message>
+    <message>
+        <source>Green 60%</source>
+        <comment>Color 15</comment>
+        <translation>60%的綠色</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 16</comment>
+        <translation>30%的綠色</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 18</comment>
+        <translation>黃色</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 19</comment>
+        <translation>50%的黃色</translation>
+    </message>
+    <message>
+        <source>Contour</source>
+        <comment>Name of symbol 101</comment>
+        <translation>等高線</translation>
+    </message>
+    <message>
+        <source>Index contour</source>
+        <comment>Name of symbol 102</comment>
+        <translation>計曲線</translation>
+    </message>
+    <message>
+        <source>Form line</source>
+        <comment>Name of symbol 103</comment>
+        <translation>輔助等高線</translation>
+    </message>
+    <message>
+        <source>Contour value</source>
+        <comment>Name of symbol 105</comment>
+        <translation>等高線高度值</translation>
+    </message>
+    <message>
+        <source>Earth bank</source>
+        <comment>Name of symbol 106</comment>
+        <translation>土堤</translation>
+    </message>
+    <message>
+        <source>Earth bank, minimum size</source>
+        <comment>Name of symbol 106.0.1</comment>
+        <translation>土堤,最小尺寸</translation>
+    </message>
+    <message>
+        <source>Earth bank, tag line</source>
+        <comment>Name of symbol 106.2</comment>
+        <translation>土堤,附加直線</translation>
+    </message>
+    <message>
+        <source>Earth wall</source>
+        <comment>Name of symbol 107</comment>
+        <translation>土牆</translation>
+    </message>
+    <message>
+        <source>Erosion gully</source>
+        <comment>Name of symbol 109</comment>
+        <translation>沖溝</translation>
+    </message>
+    <message>
+        <source>Small erosion gully</source>
+        <comment>Name of symbol 110</comment>
+        <translation>小沖溝</translation>
+    </message>
+    <message>
+        <source>Small knoll</source>
+        <comment>Name of symbol 112</comment>
+        <translation>小丘</translation>
+    </message>
+    <message>
+        <source>Small depression</source>
+        <comment>Name of symbol 115</comment>
+        <translation>小窪地</translation>
+    </message>
+    <message>
+        <source>Pit</source>
+        <comment>Name of symbol 116</comment>
+        <translation>土坑</translation>
+    </message>
+    <message>
+        <source>Impassable cliff</source>
+        <comment>Name of symbol 201</comment>
+        <translation>不可跨越的陡壁</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, minimum size</source>
+        <comment>Name of symbol 201.0.1</comment>
+        <translation>不可跨越的陡壁,最小尺寸</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, tag line</source>
+        <comment>Name of symbol 201.2</comment>
+        <translation>不可跨越的陡壁,附加直線</translation>
+    </message>
 </context>
 <context>
     <name>ISSprOM 2019</name>
@@ -2585,7 +2865,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Black 20%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>20%的黑色</translation>
     </message>
     <message>
         <source>White over light brown</source>
@@ -2595,7 +2875,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>較下層50%的棕色</translation>
     </message>
     <message>
         <source>Lower brown 30%</source>
@@ -2610,12 +2890,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>區塊特徵之100%的藍色</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>70%的藍色</translation>
     </message>
     <message>
         <source>Blue 30%</source>
@@ -2630,12 +2910,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering的橙色</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>綠色上層的白色</translation>
     </message>
     <message>
         <source>Green 50%/Yellow 100%</source>
@@ -2650,32 +2930,32 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>區塊特徵100%的綠色</translation>
     </message>
     <message>
         <source>Green 60%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>60%的綠色</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>30%的綠色</translation>
     </message>
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>底層植被100%的綠色</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 28</comment>
-        <translation type="unfinished"></translation>
+        <translation>黃色上層的白色</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>開闊地的黑色</translation>
     </message>
     <message>
         <source>Yellow 100%</source>
@@ -2685,12 +2965,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Yellow 50%</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>50%的黃色</translation>
     </message>
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>等高線</translation>
     </message>
     <message>
         <source>A line joining points of equal height.
@@ -2703,7 +2983,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Slope line, contour</source>
         <comment>Name of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>示坡線, 等高線</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -2713,7 +2993,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>計曲線</translation>
     </message>
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with symbol Contour (101).</source>
@@ -2733,7 +3013,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 102.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>等高線高度值</translation>
     </message>
     <message>
         <source>Contour values may be included to aid assessment of large height differences. The labels shall be orientated so that the top of the label is on the higher side of the contour. They are inserted in the index contours in positions where other detail is not obscured.</source>
@@ -2743,7 +3023,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>輔助等高線</translation>
     </message>
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -2763,7 +3043,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Earth bank</source>
         <comment>Name of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>土堤</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments.
@@ -2785,7 +3065,7 @@ The tags should show the full extent of the slope, but may be omitted if two ban
     <message>
         <source>Earth bank, tag line</source>
         <comment>Name of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>土堤,附加直線</translation>
     </message>
     <message>
         <source>The tags should show the full extent of the slope, but may be omitted if two banks are close together.</source>
@@ -2820,7 +3100,7 @@ Minimum length: 2.0 mm (footprint 8 m).</source>
     <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>小沖溝</translation>
     </message>
     <message>
         <source>A small erosion gully or trench.
@@ -2833,7 +3113,7 @@ Minimum length (isolated): three dots (1.6 mm - footprint 6.4 m).</source>
     <message>
         <source>Small knoll</source>
         <comment>Name of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>小丘</translation>
     </message>
     <message>
         <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a Contour (101), Index contour (102) or Form line (103). The symbol shall not touch or overlap contours.
@@ -2845,7 +3125,7 @@ Footprint: 3 m in diameter.</source>
     <message>
         <source>Small elongated knoll</source>
         <comment>Name of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>長形小丘</translation>
     </message>
     <message>
         <source>A small obvious elongated knoll which cannot be drawn to scale with a Contour (101), Index contour (102) or Form line (103). The maximum length should be 6 m and the maximum width 2 m. Knolls larger than this shall be shown by contours. The symbol shall not be drawn in free form or such that two elongated knoll symbols touch or overlap. The symbol shall not touch or overlap contours.
@@ -2857,7 +3137,7 @@ Footprint: 4.8 m x 2.4 m.</source>
     <message>
         <source>Small depression</source>
         <comment>Name of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>小窪地</translation>
     </message>
     <message>
         <source>A small shallow natural depression or hollow which cannot be represented by the symbol Contour (101) or Form line (103) is represented by a semicircle. The symbol shall not touch or overlap other brown symbols.
@@ -2883,7 +3163,7 @@ Footprint: 4.4 m x 5.0 m.</source>
     <message>
         <source>Broken ground</source>
         <comment>Name of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>崎嶇地面</translation>
     </message>
     <message>
         <source>An area of pits or knolls, which is too complex to be represented in detail.
@@ -2931,7 +3211,7 @@ The minimum number of dots is three.</source>
     <message>
         <source>Prominent landform feature</source>
         <comment>Name of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>明顯的地貌特徵</translation>
     </message>
     <message>
         <source>A small landform feature which is significant or prominent.
@@ -2944,7 +3224,7 @@ Footprint: 5.4 m x 4.6 m.</source>
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可跨越的陡壁</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -2957,7 +3237,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可跨越的陡壁,最小尺寸</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -2970,7 +3250,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可跨越的陡壁,主線</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -2983,7 +3263,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可跨越的陡壁,附加直線</translation>
     </message>
     <message>
         <source>Tags are drawn downwards, showing a cliff&apos;s full extent from the top line to the foot. The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line.</source>
@@ -4882,6 +5162,101 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 </context>
 <context>
     <name>ISSOM</name>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 8</comment>
+        <translation>20%的黑色</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 22</comment>
+        <translation>OpenOrienteering的橙色</translation>
+    </message>
+    <message>
+        <source>Green 60%</source>
+        <comment>Color 29</comment>
+        <translation>60%的綠色</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 30</comment>
+        <translation>30%的綠色</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 32</comment>
+        <translation>黃色</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 33</comment>
+        <translation>50%的黃色</translation>
+    </message>
+    <message>
+        <source>Contour</source>
+        <comment>Name of symbol 101</comment>
+        <translation>等高線</translation>
+    </message>
+    <message>
+        <source>Index contour</source>
+        <comment>Name of symbol 102</comment>
+        <translation>計曲線</translation>
+    </message>
+    <message>
+        <source>Form line</source>
+        <comment>Name of symbol 103</comment>
+        <translation>輔助等高線</translation>
+    </message>
+    <message>
+        <source>Contour value</source>
+        <comment>Name of symbol 105</comment>
+        <translation>等高線高度值</translation>
+    </message>
+    <message>
+        <source>Earth bank</source>
+        <comment>Name of symbol 106.0</comment>
+        <translation>土堤</translation>
+    </message>
+    <message>
+        <source>Earth bank, tag line</source>
+        <comment>Name of symbol 106.2</comment>
+        <translation>土堤,附加直線</translation>
+    </message>
+    <message>
+        <source>Small erosion gully</source>
+        <comment>Name of symbol 110</comment>
+        <translation>小沖溝</translation>
+    </message>
+    <message>
+        <source>Small knoll</source>
+        <comment>Name of symbol 112</comment>
+        <translation>小丘</translation>
+    </message>
+    <message>
+        <source>Small depression</source>
+        <comment>Name of symbol 115</comment>
+        <translation>小窪地</translation>
+    </message>
+    <message>
+        <source>Pit</source>
+        <comment>Name of symbol 116</comment>
+        <translation>土坑</translation>
+    </message>
+    <message>
+        <source>Broken ground</source>
+        <comment>Name of symbol 117.2</comment>
+        <translation>崎嶇地面</translation>
+    </message>
+    <message>
+        <source>Prominent landform feature</source>
+        <comment>Name of symbol 118</comment>
+        <translation>明顯的地貌特徵</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, tag line</source>
+        <comment>Name of symbol 201.2</comment>
+        <translation>不可跨越的陡壁,附加直線</translation>
+    </message>
 </context>
 <context>
     <name>ISMTBOM</name>
@@ -4923,7 +5298,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering的橙色</translation>
     </message>
     <message>
         <source>Opaque Blue</source>
@@ -4938,7 +5313,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Blue 50%</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>50%的藍色</translation>
     </message>
     <message>
         <source>Black 30%</source>
@@ -4978,12 +5353,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green 60%</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>60%的綠色</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>30%的綠色</translation>
     </message>
     <message>
         <source>Green below light greens</source>
@@ -4993,12 +5368,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Yellow</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>黃色</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>50%的黃色</translation>
     </message>
     <message>
         <source>White over Yellow 70%</source>
@@ -5013,7 +5388,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>等高線</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
@@ -5023,7 +5398,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>計曲線</translation>
     </message>
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
@@ -5043,7 +5418,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>等高線高度值</translation>
     </message>
     <message>
         <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
@@ -5053,7 +5428,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Earth bank</source>
         <comment>Name of symbol 106</comment>
-        <translation type="unfinished"></translation>
+        <translation>土堤</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -5063,7 +5438,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 106.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>土堤,最小尺寸</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -5093,7 +5468,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Earth bank, tag line</source>
         <comment>Name of symbol 106.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>土堤,附加直線</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -5103,7 +5478,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Earth wall</source>
         <comment>Name of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>土牆</translation>
     </message>
     <message>
         <source>Distinct earth wall. Minimum height is 1 m.</source>
@@ -5113,7 +5488,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Erosion gully</source>
         <comment>Name of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>沖溝</translation>
     </message>
     <message>
         <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
@@ -5123,7 +5498,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可跨越的陡壁</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -5133,7 +5508,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可跨越的陡壁,最小尺寸</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -5153,7 +5528,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可跨越的陡壁,附加直線</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -6004,7 +6379,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>輔助等高線</translation>
     </message>
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -6024,7 +6399,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>小沖溝</translation>
     </message>
     <message>
         <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
@@ -6034,7 +6409,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Small knoll</source>
         <comment>Name of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>小丘</translation>
     </message>
     <message>
         <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
@@ -6054,7 +6429,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Small depression</source>
         <comment>Name of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>小窪地</translation>
     </message>
     <message>
         <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
@@ -6064,7 +6439,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Pit</source>
         <comment>Name of symbol 116</comment>
-        <translation type="unfinished"></translation>
+        <translation>土坑</translation>
     </message>
     <message>
         <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
@@ -6665,6 +7040,116 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
 </context>
 <context>
     <name>ISSkiOM</name>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 7</comment>
+        <translation>OpenOrienteering的橙色</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 10</comment>
+        <translation>50%的藍色</translation>
+    </message>
+    <message>
+        <source>Green 60%</source>
+        <comment>Color 17</comment>
+        <translation>60%的綠色</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 18</comment>
+        <translation>30%的綠色</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 20</comment>
+        <translation>黃色</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 21</comment>
+        <translation>50%的黃色</translation>
+    </message>
+    <message>
+        <source>Contour</source>
+        <comment>Name of symbol 101</comment>
+        <translation>等高線</translation>
+    </message>
+    <message>
+        <source>Index contour</source>
+        <comment>Name of symbol 102</comment>
+        <translation>計曲線</translation>
+    </message>
+    <message>
+        <source>Form line</source>
+        <comment>Name of symbol 103</comment>
+        <translation>輔助等高線</translation>
+    </message>
+    <message>
+        <source>Contour value</source>
+        <comment>Name of symbol 105</comment>
+        <translation>等高線高度值</translation>
+    </message>
+    <message>
+        <source>Earth bank</source>
+        <comment>Name of symbol 106</comment>
+        <translation>土堤</translation>
+    </message>
+    <message>
+        <source>Earth bank, minimum size</source>
+        <comment>Name of symbol 106.0.1</comment>
+        <translation>土堤,最小尺寸</translation>
+    </message>
+    <message>
+        <source>Earth bank, tag line</source>
+        <comment>Name of symbol 106.2</comment>
+        <translation>土堤,附加直線</translation>
+    </message>
+    <message>
+        <source>Earth wall</source>
+        <comment>Name of symbol 107</comment>
+        <translation>土牆</translation>
+    </message>
+    <message>
+        <source>Erosion gully</source>
+        <comment>Name of symbol 109</comment>
+        <translation>沖溝</translation>
+    </message>
+    <message>
+        <source>Impassable cliff</source>
+        <comment>Name of symbol 201</comment>
+        <translation>不可跨越的陡壁</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, minimum size</source>
+        <comment>Name of symbol 201.0.1</comment>
+        <translation>不可跨越的陡壁,最小尺寸</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, tag line</source>
+        <comment>Name of symbol 201.2</comment>
+        <translation>不可跨越的陡壁,附加直線</translation>
+    </message>
+    <message>
+        <source>Small erosion gully</source>
+        <comment>Name of symbol 110</comment>
+        <translation>小沖溝</translation>
+    </message>
+    <message>
+        <source>Small knoll</source>
+        <comment>Name of symbol 112</comment>
+        <translation>小丘</translation>
+    </message>
+    <message>
+        <source>Small depression</source>
+        <comment>Name of symbol 115</comment>
+        <translation>小窪地</translation>
+    </message>
+    <message>
+        <source>Pit</source>
+        <comment>Name of symbol 116</comment>
+        <translation>土坑</translation>
+    </message>
 </context>
 <context>
     <name>ISSkiOM 2019</name>
@@ -6741,117 +7226,117 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>較下層50%的棕色</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>下層50%的棕色之下方的黑色</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>區塊特徵之100%的藍色</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>70%的藍色</translation>
     </message>
     <message>
         <source>Blue 50%</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>50%的藍色</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering的橙色</translation>
     </message>
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>狹窄通道之100%的黃色</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>狹窄通道之60%的綠色</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>狹窄通道之30%的綠色</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>綠色上層的白色</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>100%的黃色/50%的綠色</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>25%的黑色(灰色)</translation>
     </message>
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>100%的綠色/50%的黑色</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>區塊特徵100%的綠色</translation>
     </message>
     <message>
         <source>Green 60%</source>
         <comment>Color 28</comment>
-        <translation type="unfinished"></translation>
+        <translation>60%的綠色</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>30%的綠色</translation>
     </message>
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>底層植被100%的綠色</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>黃色上層的白色</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 32</comment>
-        <translation type="unfinished"></translation>
+        <translation>開闊地的黑色</translation>
     </message>
     <message>
         <source>Yellow</source>
         <comment>Color 33</comment>
-        <translation type="unfinished"></translation>
+        <translation>黃色</translation>
     </message>
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 34</comment>
-        <translation type="unfinished"></translation>
+        <translation>區塊特徵100%的黃色</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
         <comment>Color 35</comment>
-        <translation type="unfinished"></translation>
+        <translation>50%的黃色</translation>
     </message>
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>等高線</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 m. A contour interval of 2.5 m may be used for flat terrains.
@@ -6870,7 +7355,7 @@ Contours should be adapted (not broken) in order not to touch symbol Small knoll
     <message>
         <source>Slope line, contour</source>
         <comment>Name of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>示坡線, 等高線</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
@@ -6881,7 +7366,7 @@ A depression has to have at least one slope line.</source>
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>計曲線</translation>
     </message>
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface.
@@ -6893,7 +7378,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>等高線高度值</translation>
     </message>
     <message>
         <source>An index contour may have a height value assigned. A height value should only be inserted in an index contour in places where other detail is not obscured. It shall be orientated so that the top of the label is on the higher side of the contour. The index value (label) shall be 1.5 mm high and represented in a sans-serif font.</source>
@@ -6903,7 +7388,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>輔助等高線</translation>
     </message>
     <message>
         <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones (minimum height / depth should be 1 m). Excessive use of form lines must be avoided as this disturbs the three-dimensional picture of the ground shape and will complicate map reading.
@@ -6915,7 +7400,7 @@ Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</s
     <message>
         <source>Slope line, formline</source>
         <comment>Name of symbol 103.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>示坡線,輔助等高線</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -6925,7 +7410,7 @@ Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</s
     <message>
         <source>Earth bank</source>
         <comment>Name of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>土堤</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -6938,7 +7423,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>土堤,最小尺寸</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -6951,7 +7436,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Earth bank, top line</source>
         <comment>Name of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>土堤, 主線</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -6964,7 +7449,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Earth bank, tag line</source>
         <comment>Name of symbol 104.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>土堤,附加直線</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -6974,7 +7459,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Earth bank, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>土堤,最小尺寸(ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -6984,7 +7469,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Earth wall</source>
         <comment>Name of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>土牆</translation>
     </message>
     <message>
         <source>Distinct earth wall. Minimum height: 1 m.
@@ -6995,7 +7480,7 @@ Minimum length: 1.4 mm (footprint 21 m).</source>
     <message>
         <source>Erosion gully</source>
         <comment>Name of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>沖溝</translation>
     </message>
     <message>
         <source>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Minimum depth: 1 m.
@@ -7007,7 +7492,7 @@ Contour lines should not be broken around this symbol.</source>
     <message>
         <source>Small knoll</source>
         <comment>Name of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>小丘</translation>
     </message>
     <message>
         <source>An obvious mound or knoll which cannot be drawn to scale with a contour.
@@ -7020,7 +7505,7 @@ Footprint: 7.5 m x 7.5 m.</source>
     <message>
         <source>Small depression</source>
         <comment>Name of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>小窪地</translation>
     </message>
     <message>
         <source>A small depression or hollow without steep sides that is too small to be shown by contours.
@@ -7034,7 +7519,7 @@ Footprint: 12 m x 6 m.</source>
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可跨越的陡壁</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -7048,7 +7533,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可跨越的陡壁,最小尺寸</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -7062,7 +7547,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可跨越的陡壁,以平面形狀表示(ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -7072,7 +7557,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可跨越的陡壁,主線</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -7086,7 +7571,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可跨越的陡壁,附加直線</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>

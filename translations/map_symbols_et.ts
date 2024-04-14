@@ -2521,9 +2521,64 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 </context>
 <context>
     <name>ISOM2017</name>
+    <message>
+        <source>Black 65%</source>
+        <comment>Color 3</comment>
+        <translation>Must 65%</translation>
+    </message>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 4</comment>
+        <translation>Must 20%</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 9</comment>
+        <translation>Sinine 50%</translation>
+    </message>
+    <message>
+        <source>Black 25% (Grey)</source>
+        <comment>Color 12</comment>
+        <translation>Must 25% (Hall)</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 26</comment>
+        <translation>Kollane</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 27</comment>
+        <translation>Kollane 50%</translation>
+    </message>
 </context>
 <context>
     <name>ISOM2000</name>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 6</comment>
+        <translation>Sinine 50%</translation>
+    </message>
+    <message>
+        <source>Green 60%</source>
+        <comment>Color 15</comment>
+        <translation>Roheline 60%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 16</comment>
+        <translation>Roheline 30%</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 18</comment>
+        <translation>Kollane</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 19</comment>
+        <translation>Kollane 50%</translation>
+    </message>
 </context>
 <context>
     <name>ISSprOM 2019</name>
@@ -2540,12 +2595,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Must 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Roheline 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
@@ -2565,12 +2620,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Blue 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sinine 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pruun 100%</translation>
     </message>
     <message>
         <source>Black 60%</source>
@@ -2585,7 +2640,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Black 20%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Must 20%</translation>
     </message>
     <message>
         <source>White over light brown</source>
@@ -2615,7 +2670,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Blue 70%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sinine 70%</translation>
     </message>
     <message>
         <source>Blue 30%</source>
@@ -2655,12 +2710,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green 60%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Roheline 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Roheline 30%</translation>
     </message>
     <message>
         <source>Green 100% for undergrowth</source>
@@ -2685,7 +2740,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Yellow 50%</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kollane 50%</translation>
     </message>
     <message>
         <source>Contour</source>
@@ -4882,6 +4937,31 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 </context>
 <context>
     <name>ISSOM</name>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 8</comment>
+        <translation>Must 20%</translation>
+    </message>
+    <message>
+        <source>Green 60%</source>
+        <comment>Color 29</comment>
+        <translation>Roheline 60%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 30</comment>
+        <translation>Roheline 30%</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 32</comment>
+        <translation>Kollane</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 33</comment>
+        <translation>Kollane 50%</translation>
+    </message>
 </context>
 <context>
     <name>ISMTBOM</name>
@@ -4938,7 +5018,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Blue 50%</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sinine 50%</translation>
     </message>
     <message>
         <source>Black 30%</source>
@@ -4978,12 +5058,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green 60%</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Roheline 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Roheline 30%</translation>
     </message>
     <message>
         <source>Green below light greens</source>
@@ -4993,12 +5073,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Yellow</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kollane</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kollane 50%</translation>
     </message>
     <message>
         <source>White over Yellow 70%</source>
@@ -6665,6 +6745,31 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
 </context>
 <context>
     <name>ISSkiOM</name>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 10</comment>
+        <translation>Sinine 50%</translation>
+    </message>
+    <message>
+        <source>Green 60%</source>
+        <comment>Color 17</comment>
+        <translation>Roheline 60%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 18</comment>
+        <translation>Roheline 30%</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 20</comment>
+        <translation>Kollane</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 21</comment>
+        <translation>Kollane 50%</translation>
+    </message>
 </context>
 <context>
     <name>ISSkiOM 2019</name>
@@ -6686,12 +6791,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Must 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Roheline 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
@@ -6701,12 +6806,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Blue 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sinine 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pruun 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
@@ -6721,12 +6826,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black 65%</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Must 65%</translation>
     </message>
     <message>
         <source>Black 20%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Must 20%</translation>
     </message>
     <message>
         <source>Upper brown 50%</source>
@@ -6756,12 +6861,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Blue 70%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sinine 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sinine 50%</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
@@ -6791,17 +6896,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kollane 100%/Roheline 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Must 25% (Hall)</translation>
     </message>
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Roheline 100%/Must 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -6811,12 +6916,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Green 60%</source>
         <comment>Color 28</comment>
-        <translation type="unfinished"></translation>
+        <translation>Roheline 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Roheline 30%</translation>
     </message>
     <message>
         <source>Green 100% for undergrowth</source>
@@ -6836,7 +6941,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Yellow</source>
         <comment>Color 33</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kollane</translation>
     </message>
     <message>
         <source>Yellow 100% for area features</source>
@@ -6846,7 +6951,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Yellow 50%</source>
         <comment>Color 35</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kollane 50%</translation>
     </message>
     <message>
         <source>Contour</source>

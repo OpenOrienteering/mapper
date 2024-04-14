@@ -2521,6 +2521,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 </context>
 <context>
     <name>ISOM2017</name>
+    <message>
+        <source>Black 65%</source>
+        <comment>Color 3</comment>
+        <translation>Preto 65%</translation>
+    </message>
 </context>
 <context>
     <name>ISOM2000</name>
@@ -2540,22 +2545,22 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Preto 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Branco para caminhos-de-ferro</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Roxo para símbolos de trajeto</translation>
     </message>
     <message>
         <source>Purple 50%</source>
@@ -2565,12 +2570,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Blue 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Azul 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Castanho 100%</translation>
     </message>
     <message>
         <source>Black 60%</source>
@@ -2610,7 +2615,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Azul 100% para elementos de área</translation>
     </message>
     <message>
         <source>Blue 70%</source>
@@ -6686,42 +6691,42 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Preto 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Branco para caminhos-de-ferro</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Azul 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Castanho 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Roxo para símbolos de trajeto</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Preto por baixo do roxo para símbolos de trajeto</translation>
     </message>
     <message>
         <source>Black 65%</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Preto 65%</translation>
     </message>
     <message>
         <source>Black 20%</source>
@@ -6751,7 +6756,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Azul 100% para elementos de área</translation>
     </message>
     <message>
         <source>Blue 70%</source>

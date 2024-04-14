@@ -309,7 +309,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ein Erdwall ist eine abrupte Veränderung des Bodenniveaus, die sich deutlich von der Umgebung abhebt, z. B. Kies- oder Sandgruben, Straßen- und Bahneinschnitte oder Böschungen.
+Mindesthöhe: 1 m. Ein Erdwall kann die Befahrbarkeit beeinträchtigen. Die Schilder stellen die gesamte Ausdehnung des Erdwalls dar.
+Bei langen Erdwällen ist es zulässig, an den Enden Schilder zu verwenden, die kürzer als die Mindestlänge sind. Liegen zwei Erdwälle dicht beieinander, können die Schilder weggelassen werden. Unbegehbare Erdwälle sind mit dem Symbol Unbegehbare Klippe (201) darzustellen.
+Mindestlänge: 0,6 mm (Fußabdruck 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -329,7 +332,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bereitgestellt für die Migration von ISOM2000. Von der Verwendung dieser Symbolvariante für neue Karten wird abgeraten.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -564,7 +567,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bereitgestellt für die Migration von ISOM2000. Von der Verwendung dieser Symbolvariante für neue Karten wird abgeraten.</translation>
     </message>
     <message>
         <source>Cliff</source>
@@ -668,7 +671,7 @@ Felslöcher mit mehr als 5 m Durchmesser sollten vergrößert und mit den Felssy
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 203.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bereitgestellt für die Migration von ISOM2000. Von der Verwendung dieser Symbolvariante für neue Karten wird abgeraten.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -1661,7 +1664,7 @@ A road with two carriageways can be represented using two wide road symbols side
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bereitgestellt für die Migration von ISOM2000. Von der Verwendung dieser Symbolvariante für neue Karten wird abgeraten.</translation>
     </message>
     <message>
         <source>Road with two carriageways</source>
@@ -7097,7 +7100,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
         <comment>Name of symbol 203</comment>
-        <translation type="unfinished"></translation>
+        <translation>Felsiges Loch oder Höhle (ohne eindeutigen Eingang)</translation>
     </message>
     <message>
         <source>A rocky pit, hole, cave (without a distinct entrance) or mineshaft which may constitute a danger to the competitor.
@@ -7319,7 +7322,7 @@ Minimum area: 1 mm² (footprint 16 m²).</source>
     <message>
         <source>Uncrossable body of water (full colour)</source>
         <comment>Name of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>Unüberquerbares Gewässer (Vollfarbe)</translation>
     </message>
     <message>
         <source>An area of deep water such as a lake, pond, river or fountain. The dark blue colour and the bordering black line indicate that the feature shall not be crossed.
@@ -9260,7 +9263,7 @@ The tags may extend over an area symbol representing detail immediately below th
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 201</comment>
-        <translation>Eine unpassierbare Felswand, Steinbruch oder Erdböschung [siehe Signatur Erdböschung (106)] wird mit Fallstrichen gezeichnet, welche die volle Ausdehnung von der Oberkante bis zum Fuß angeben. Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden, z.&#xa0;B. bei schmalen Durchgängen zwischen Felswänden (der Durchgang soll mindestens mit einer Breite von 0,3 mm gezeichnet werden).
+        <translation>Eine unpassierbare Felswand, Steinbruch oder Erdböschung [siehe Signatur Erdböschung (106)] wird mit Fallstrichen gezeichnet, welche die volle Ausdehnung von der Oberkante bis zum Fuß angeben. Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden, z. B. bei schmalen Durchgängen zwischen Felswänden (der Durchgang soll mindestens mit einer Breite von 0,3 mm gezeichnet werden).
 
 Die Fallstriche können sich über die Flächensignatur von unmittelbar unter der Felswand liegendem Gelände erstrecken. Befindet sich eine Felswand direkt am Wasser, so dass eine Passage unter der Felswand am Ufer entlang nicht möglich ist, wird die Uferlinie weggelassen oder werden die Fallstriche deutlich über die Uferlinie gezeichnet. Die Mindesthöhe ist 2 m.
 
@@ -14815,7 +14818,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ein Erdwall ist eine abrupte Veränderung des Bodenniveaus, die sich deutlich von der Umgebung abhebt, z. B. Kies- oder Sandgruben, Straßen- und Bahneinschnitte oder Böschungen.
+Mindesthöhe: 1 m. Ein Erdwall kann die Befahrbarkeit beeinträchtigen. Die Schilder stellen die gesamte Ausdehnung des Erdwalls dar.
+Bei langen Erdwällen ist es zulässig, an den Enden Schilder zu verwenden, die kürzer als die Mindestlänge sind. Liegen zwei Erdwälle dicht beieinander, können die Schilder weggelassen werden. Unbegehbare Erdwälle sind mit dem Symbol Unbegehbare Klippe (201) darzustellen.
+Mindestlänge: 0,6 mm (Fußabdruck 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -14828,7 +14834,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ein Erdwall ist eine abrupte Veränderung des Bodenniveaus, die sich deutlich von der Umgebung abhebt, z. B. Kies- oder Sandgruben, Straßen- und Bahneinschnitte oder Böschungen.
+Mindesthöhe: 1 m. Ein Erdwall kann die Befahrbarkeit beeinträchtigen. Die Schilder stellen die gesamte Ausdehnung des Erdwalls dar.
+Bei langen Erdwällen ist es zulässig, an den Enden Schilder zu verwenden, die kürzer als die Mindestlänge sind. Liegen zwei Erdwälle dicht beieinander, können die Schilder weggelassen werden. Unbegehbare Erdwälle sind mit dem Symbol Unbegehbare Klippe (201) darzustellen.
+Mindestlänge: 0,6 mm (Fußabdruck 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
@@ -14841,7 +14850,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ein Erdwall ist eine abrupte Veränderung des Bodenniveaus, die sich deutlich von der Umgebung abhebt, z. B. Kies- oder Sandgruben, Straßen- und Bahneinschnitte oder Böschungen.
+Mindesthöhe: 1 m. Ein Erdwall kann die Befahrbarkeit beeinträchtigen. Die Schilder stellen die gesamte Ausdehnung des Erdwalls dar.
+Bei langen Erdwällen ist es zulässig, an den Enden Schilder zu verwenden, die kürzer als die Mindestlänge sind. Liegen zwei Erdwälle dicht beieinander, können die Schilder weggelassen werden. Unbegehbare Erdwälle sind mit dem Symbol Unbegehbare Klippe (201) darzustellen.
+Mindestlänge: 0,6 mm (Fußabdruck 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -14861,7 +14873,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bereitgestellt für die Migration von ISOM2000. Von der Verwendung dieser Symbolvariante für neue Karten wird abgeraten.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -14949,7 +14961,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bereitgestellt für die Migration von ISOM2000. Von der Verwendung dieser Symbolvariante für neue Karten wird abgeraten.</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
@@ -14983,7 +14995,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bereitgestellt für die Migration von ISOM2000. Von der Verwendung dieser Symbolvariante für neue Karten wird abgeraten.</translation>
     </message>
     <message>
         <source>Cliff</source>
@@ -15049,7 +15061,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bereitgestellt für die Migration von ISOM2000. Von der Verwendung dieser Symbolvariante für neue Karten wird abgeraten.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -15514,7 +15526,7 @@ A road with two carriageways can be represented using two wide road symbols side
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bereitgestellt für die Migration von ISOM2000. Von der Verwendung dieser Symbolvariante für neue Karten wird abgeraten.</translation>
     </message>
     <message>
         <source>Road with two carriageways</source>
