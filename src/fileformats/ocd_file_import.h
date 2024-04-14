@@ -317,9 +317,7 @@ protected:
 	
 	// Some helper functions that are used in multiple places
 	
-	void setPointFlags(OcdImportedPathObject* object, quint32 pos, bool is_area, const Ocd::OcdPoint32& ocd_point);
-	
-	void setPathHolePoint(OcdFileImport::OcdImportedPathObject* object, quint32 pos);
+	void setPathHolePoint(OcdImportedPathObject *object, quint32 pos);
 	
 	void fillPathCoords(OcdFileImport::OcdImportedPathObject* object, bool is_area, quint32 num_points, const Ocd::OcdPoint32* ocd_points);
 	

@@ -2141,19 +2141,6 @@ void OcdFileImport::setPathHolePoint(OcdImportedPathObject *object, quint32 pos)
 		object->coords[pos].setHolePoint(true);
 }
 
-void OcdFileImport::setPointFlags(OcdImportedPathObject* object, quint32 pos, bool is_area, const Ocd::OcdPoint32& ocd_point)
-{
-	// We can support CurveStart, HolePoint, DashPoint.
-	// CurveStart needs to be applied to the main point though, not the control point, and
-	// hole points need to bet set as the last point of a part of an area object instead of the first point of the next part
-	if (ocd_point.x & Ocd::OcdPoint32::FlagCtl1 && pos > 0)
-		object->coords[pos-1].setCurveStart(true);
-	if ((ocd_point.y & Ocd::OcdPoint32::FlagDash) || (ocd_point.y & Ocd::OcdPoint32::FlagCorner))
-		object->coords[pos].setDashPoint(true);
-	if (ocd_point.y & Ocd::OcdPoint32::FlagHole && pos > 1 && is_area)
-		setPathHolePoint(object, pos - 1);
-}
-
 /** Translates the OC*D path given in the last two arguments into an Object.
  */
 void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, quint32 num_points, const Ocd::OcdPoint32* ocd_points)
@@ -2161,9 +2148,24 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 	object->coords.resize(num_points);
 	for (auto i = 0u; i < num_points; i++)
 	{
-		object->coords[i] = convertOcdPoint(ocd_points[i]);
-		setPointFlags(object, i, is_area, ocd_points[i]);
-	}
+		const auto& ocd_point = ocd_points[i];
+		object->coords[i] = convertOcdPoint(ocd_point);
+		if ((ocd_point.y & Ocd::OcdPoint32::FlagDash) || (ocd_point.y & Ocd::OcdPoint32::FlagCorner))
+		{
+			object->coords[i].setDashPoint(true);
+		}
+		
+		if (ocd_point.x & Ocd::OcdPoint32::FlagCtl1 && i > 0)
+		{
+			// CurveStart needs to be applied to the start point
+			object->coords[i-1].setCurveStart(true);
+		}
+		
+		if (ocd_point.y & Ocd::OcdPoint32::FlagHole && is_area && i > 1)
+		{
+			setPathHolePoint(object, i - 1);
+		}
+	};
 	
 	// For path objects, create closed parts where the position of the last point is equal to that of the first point
 	if (object->getType() == Object::Path)
