@@ -277,7 +277,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ein Erdwall ist eine abrupte Veränderung des Bodenniveaus, die sich deutlich von der Umgebung abhebt, z. B. Kies- oder Sandgruben, Straßen- und Bahneinschnitte oder Böschungen.
+Mindesthöhe: 1 m. Ein Erdwall kann die Befahrbarkeit beeinträchtigen. Die Schilder stellen die gesamte Ausdehnung des Erdwalls dar.
+Bei langen Erdwällen ist es zulässig, an den Enden Schilder zu verwenden, die kürzer als die Mindestlänge sind. Liegen zwei Erdwälle dicht beieinander, können die Schilder weggelassen werden. Unbegehbare Erdwälle sind mit dem Symbol Unbegehbare Klippe (201) darzustellen.
+Mindestlänge: 0,6 mm (Fußabdruck 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -290,7 +293,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ein Erdwall ist eine abrupte Veränderung des Bodenniveaus, die sich deutlich von der Umgebung abhebt, z. B. Kies- oder Sandgruben, Straßen- und Bahneinschnitte oder Böschungen.
+Mindesthöhe: 1 m. Ein Erdwall kann die Befahrbarkeit beeinträchtigen. Die Schilder stellen die gesamte Ausdehnung des Erdwalls dar.
+Bei langen Erdwällen ist es zulässig, an den Enden Schilder zu verwenden, die kürzer als die Mindestlänge sind. Liegen zwei Erdwälle dicht beieinander, können die Schilder weggelassen werden. Unbegehbare Erdwälle sind mit dem Symbol Unbegehbare Klippe (201) darzustellen.
+Mindestlänge: 0,6 mm (Fußabdruck 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
@@ -524,7 +530,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bereitgestellt für die Migration von ISOM2000. Von der Verwendung dieser Symbolvariante für neue Karten wird abgeraten.</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
@@ -624,12 +630,12 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bereitgestellt für die Migration von ISOM2000. Von der Verwendung dieser Symbolvariante für neue Karten wird abgeraten.</translation>
     </message>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
         <comment>Name of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Felsiges Loch oder Höhle (ohne eindeutigen Eingang)</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts without a distinct entrance which may constitute a danger to the competitor.
@@ -643,7 +649,7 @@ Footprint: 10.5 m x 12 m.</source>
     <message>
         <source>Cave or rocky pit (with a distinct entrance)</source>
         <comment>Name of symbol 203.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Höhle oder felsiges Loch (mit eindeutigem Eingang)</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
@@ -900,7 +906,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
     <message>
         <source>Uncrossable body of water (full colour), with bank line</source>
         <comment>Name of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>Unüberquerbares Gewässer (Vollfarbe), mit Uferlinie</translation>
     </message>
     <message>
         <source>The black bank line emphasises that the feature is uncrossable.
@@ -913,7 +919,7 @@ Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
     <message>
         <source>Uncrossable body of water (full colour)</source>
         <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Unüberquerbares Gewässer (Vollfarbe)</translation>
     </message>
     <message>
         <source>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
@@ -993,7 +999,7 @@ Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
     <message>
         <source>Use this symbol to represent the outline of a shallow body of water which is not seasonal or periodic.</source>
         <comment>Description of symbol 302.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verwenden Sie dieses Symbol, um den Umriss eines flachen Gewässers darzustellen, das nicht saisonal oder periodisch ist.</translation>
     </message>
     <message>
         <source>Shallow body of water, dashed outline</source>
@@ -1003,7 +1009,7 @@ Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
     <message>
         <source>Use this symbol to represent the outline of a shallow seasonal or periodic body of water.</source>
         <comment>Description of symbol 302.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verwenden Sie dieses Symbol, um den Umriss eines flachen Gewässers darzustellen, das nicht saisonal oder periodisch ist.</translation>
     </message>
     <message>
         <source>Small shallow body of water (full colour)</source>
@@ -1223,7 +1229,7 @@ The symbol is orientated to north.</source>
     <message>
         <source>Open land with scattered bushes (green dots)</source>
         <comment>Name of symbol 402.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Offenes Gebiet mit einzelnen Büschen (grüne Punkte)</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes / thickets). Prominent individual trees may be added using symbol Prominent large tree (417). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
@@ -2528,7 +2534,9 @@ Minimum length: 2 symbols (6 mm – footprint 90 m).</source>
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
         <comment>Description of symbol 799</comment>
-        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.</translation>
+        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.
+
+Die violette Linie ragt ein bisschen in das Zielsymbol hinein. Dies ist ein Manko dieses einfachen Ansatzes.</translation>
     </message>
     <message>
         <source>OpenOrienteering Logo</source>
@@ -4027,7 +4035,8 @@ Größe in Wirklichkeit: 7,5 m x 7,5 m.</translation>
 2*0.14 mm – footprint 8.7 m)
 The outer boundary lines may be replaced with other black line symbols, such as symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.</source>
         <comment>Description of symbol 502</comment>
-        <translation>Die Breite sollte maßstabsgetreu dargestellt werden, jedoch nicht schmaler als die minimale Ausdehnung (0,3 mm + 2 x 0,14 mm - Wirklichkeit 8,7 m).
+        <translation>Die Breite sollte maßstabsgetreu dargestellt werden, jedoch nicht schmaler als die MIndetbreite (0,3 +
+2 x 0,14 mm - Wirklichkeit 8,7 m).
 Die äußeren Begrenzungslinien können durch andere schwarze Liniensymbole wie 516 (Zaun), 518 (unpassierbarer Zaun), 513 (Mauer), 515 (unpassierbare Mauer) ersetzt werden, wenn diese so nahe am Straßenrand stehen, dass sie praktisch nicht als separate Symbole gezeichnet werden können.</translation>
     </message>
     <message>
@@ -4739,7 +4748,8 @@ Der Kreis sollte unterbrochen werden, wo er wichtige Details verdecken würde.</
         <source>A boundary which it is not permitted to cross.
 An out-of-bounds boundary shall not be crossed.</source>
         <comment>Description of symbol 708</comment>
-        <translation>Eine Begrenzung, die nicht überquert werden darf.</translation>
+        <translation>Eine Grenze, die nicht überquert werden darf.
+Eine Bereichsgrenze soll nicht übertreten werden.</translation>
     </message>
     <message>
         <source>Out-of-bounds area</source>
@@ -4843,7 +4853,9 @@ Eine verbotene Strecke sollte nicht verwendet werden.</translation>
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
         <comment>Description of symbol 799</comment>
-        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.</translation>
+        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.
+
+Die violette Linie ragt ein bisschen in das Zielsymbol hinein. Dies ist ein Manko dieses einfachen Ansatzes.</translation>
     </message>
     <message>
         <source>OpenOrienteering Logo</source>
@@ -5938,7 +5950,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm over both sides of the stream!</source>
         <comment>Description of symbol 512</comment>
         <translation>Ein Steg ohne abgehenden Weg.
-Hinweis: Wenn das Bachsymbol breiter als 0,25 mm ist, muss das Stegsymbol angepasst werden, so dass es 0,5 mm über beide Seiten des Baches hinausreicht.</translation>
+Hinweis: Wenn das Bachsymbol breiter als 0,25 mm ist, muss das Stegsymbol angepasst werden, so dass es 0,5 mm über beide Seiten des Baches hinausreicht!</translation>
     </message>
     <message>
         <source>Railway</source>
@@ -6493,7 +6505,9 @@ Falls es keine natürliche Begrenzung gibt, kann eine Randlinie wie folgt gezeic
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
         <comment>Description of symbol 799</comment>
-        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.</translation>
+        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.
+
+Die violette Linie ragt ein bisschen in das Zielsymbol hinein. Dies ist ein Manko dieses einfachen Ansatzes.</translation>
     </message>
     <message>
         <source>OpenOrienteering Logo</source>
@@ -8848,7 +8862,9 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
         <comment>Description of symbol 799</comment>
-        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.</translation>
+        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.
+
+Die violette Linie ragt ein bisschen in das Zielsymbol hinein. Dies ist ein Manko dieses einfachen Ansatzes.</translation>
     </message>
     <message>
         <source>OpenOrienteering Logo</source>
@@ -9244,11 +9260,12 @@ The tags may extend over an area symbol representing detail immediately below th
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 201</comment>
-        <translation>Eine unpassierbare Felswand, Steinbruch oder Erdböschung (siehe Signatur Erdböschung 106) wird mit Fallstrichen gezeichnet, welche die volle Ausdehnung von der Oberkante bis zum Fuß angeben. Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden, z.B. bei schmalen Durchgängen zwischen Felswänden (der Durchgang soll mindestens mit einer Breite von 0,3 mm gezeichnet werden).
+        <translation>Eine unpassierbare Felswand, Steinbruch oder Erdböschung [siehe Signatur Erdböschung (106)] wird mit Fallstrichen gezeichnet, welche die volle Ausdehnung von der Oberkante bis zum Fuß angeben. Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden, z.&#xa0;B. bei schmalen Durchgängen zwischen Felswänden (der Durchgang soll mindestens mit einer Breite von 0,3 mm gezeichnet werden).
 
 Die Fallstriche können sich über die Flächensignatur von unmittelbar unter der Felswand liegendem Gelände erstrecken. Befindet sich eine Felswand direkt am Wasser, so dass eine Passage unter der Felswand am Ufer entlang nicht möglich ist, wird die Uferlinie weggelassen oder werden die Fallstriche deutlich über die Uferlinie gezeichnet. Die Mindesthöhe ist 2 m.
 
-&lt;span style=&quot;color:magenta&quot;&gt;Es ist verboten, ein mit dieser Signatur gezeichnetes Objekt zu überqueren. Missachtung im Wettkampf führt zur Disqualifikation des Wettkämpfers.&lt;/span&gt;</translation>
+&lt;span style=&quot;color:magenta&quot;&gt;Es ist verboten, ein mit dieser Signatur gezeichnetes Objekt zu überqueren. 
+Missachtung im Wettkampf führt zur Disqualifikation des Wettkämpfers.&lt;/span&gt;</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
@@ -9267,7 +9284,8 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
 
 Die Fallstriche können sich über die Flächensignatur von unmittelbar unter der Felswand liegendem Gelände erstrecken. Befindet sich eine Felswand direkt am Wasser, so dass eine Passage unter der Felswand am Ufer entlang nicht möglich ist, wird die Uferlinie weggelassen oder werden die Fallstriche deutlich über die Uferlinie gezeichnet. Die Mindesthöhe ist 2 m.
 
-&lt;span style=&quot;color:magenta&quot;&gt;Es ist verboten, ein mit dieser Signatur gezeichnetes Objekt zu überqueren. Missachtung im Wettkampf führt zur Disqualifikation des Wettkämpfers.&lt;/span&gt;</translation>
+&lt;span style=&quot;color:magenta&quot;&gt;Es ist verboten, ein mit dieser Signatur gezeichnetes Objekt zu überqueren. 
+Missachtung im Wettkampf führt zur Disqualifikation des Wettkämpfers.&lt;/span&gt;</translation>
     </message>
     <message>
         <source>Impassable cliff, no tags &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
@@ -11047,7 +11065,9 @@ Missachtung im Wettkampf führt zur Disqualifikation des Wettkämpfers.&lt;/span
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
         <comment>Description of symbol 799</comment>
-        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.</translation>
+        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.
+
+Die violette Linie ragt ein bisschen in das Zielsymbol hinein. Dies ist ein Manko dieses einfachen Ansatzes.</translation>
     </message>
     <message>
         <source>OpenOrienteering Logo</source>
@@ -12170,7 +12190,9 @@ Dies ist Symbol &quot;302 Pond&quot; in ISOM, aber eine Variante von &quot;301 L
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
         <comment>Description of symbol 799</comment>
-        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.</translation>
+        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.
+
+Die violette Linie ragt ein bisschen in das Zielsymbol hinein. Dies ist ein Manko dieses einfachen Ansatzes.</translation>
     </message>
     <message>
         <source>OpenOrienteering Logo</source>
@@ -13940,7 +13962,9 @@ Falls es keine natürliche Begrenzung gibt, kann eine Randlinie wie folgt gezeic
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
         <comment>Description of symbol 799</comment>
-        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.</translation>
+        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.
+
+Die violette Linie ragt ein bisschen in das Zielsymbol hinein. Dies ist ein Manko dieses einfachen Ansatzes.</translation>
     </message>
     <message>
         <source>OpenOrienteering Logo</source>
@@ -14417,7 +14441,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm over both sides of the stream!</source>
         <comment>Description of symbol 512</comment>
         <translation>Ein Steg ohne abgehenden Weg.
-Hinweis: Wenn das Bachsymbol breiter als 0,25 mm ist, muss das Stegsymbol angepasst werden, so dass es 0,5 mm über beide Seiten des Baches hinausreicht.</translation>
+Hinweis: Wenn das Bachsymbol breiter als 0,25 mm ist, muss das Stegsymbol angepasst werden, so dass es 0,5 mm über beide Seiten des Baches hinausreicht!</translation>
     </message>
     <message>
         <source>Ruined stone wall</source>
@@ -16082,7 +16106,9 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
         <comment>Description of symbol 799</comment>
-        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.</translation>
+        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.
+
+Die violette Linie ragt ein bisschen in das Zielsymbol hinein. Dies ist ein Manko dieses einfachen Ansatzes.</translation>
     </message>
     <message>
         <source>Very wide track &gt; 3.0 m</source>
@@ -16296,7 +16322,9 @@ A route which is out-of-bounds and forbidden to cross is shown with a zigzag. Th
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
         <comment>Description of symbol 799</comment>
-        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.</translation>
+        <translation>Dieses Symbol stellt eine einfache Möglichkeit zum Erstellen von Trainingsbahnen dar.
+
+Die violette Linie ragt ein bisschen in das Zielsymbol hinein. Dies ist ein Manko dieses einfachen Ansatzes.</translation>
     </message>
     <message>
         <source>Start</source>
@@ -16570,7 +16598,7 @@ Map symbol: ISOM 703</source>
     <message>
         <source>|C| Northern</source>
         <comment>Name of symbol 0.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Nördlich</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
@@ -16590,7 +16618,7 @@ Map symbol: ISOM 703</source>
     <message>
         <source>|C| Eastern</source>
         <comment>Name of symbol 0.1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Östlich</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
@@ -16610,7 +16638,7 @@ Map symbol: ISOM 703</source>
     <message>
         <source>|C| Southern</source>
         <comment>Name of symbol 0.1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Südlich</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
@@ -16630,7 +16658,7 @@ Map symbol: ISOM 703</source>
     <message>
         <source>|C| Western</source>
         <comment>Name of symbol 0.1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Westlich</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
@@ -16660,7 +16688,7 @@ Map symbol: ISOM 703</source>
     <message>
         <source>|C| Lower</source>
         <comment>Name of symbol 0.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Tiefer</translation>
     </message>
     <message>
         <source>Where the control feature is the middle one of a number of similar features.</source>
@@ -16670,7 +16698,7 @@ Map symbol: ISOM 703</source>
     <message>
         <source>|C| Middle</source>
         <comment>Name of symbol 0.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Mitte</translation>
     </message>
     <message>
         <source>Where the control feature is the middle one of a number of similar features.</source>

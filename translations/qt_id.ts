@@ -5,31 +5,31 @@
     <name>MAC_APPLICATION_MENU</name>
     <message>
         <source>Services</source>
-        <translation type="unfinished"></translation>
+        <translation>Layanan</translation>
     </message>
     <message>
         <source>Hide %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembunyikan %1</translation>
     </message>
     <message>
         <source>Hide Others</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembunyikan Lainnya</translation>
     </message>
     <message>
         <source>Show All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan Semua</translation>
     </message>
     <message>
         <source>Preferences...</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferensi...</translation>
     </message>
     <message>
         <source>Quit %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Keluar %1</translation>
     </message>
     <message>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tentang %1</translation>
     </message>
 </context>
 <context>
@@ -51,60 +51,61 @@
     <name>QColorDialog</name>
     <message>
         <source>Hu&amp;e:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hu&amp;e:</translation>
     </message>
     <message>
         <source>&amp;Sat:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sat:</translation>
     </message>
     <message>
         <source>&amp;Val:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Val:</translation>
     </message>
     <message>
         <source>&amp;Red:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Merah:</translation>
     </message>
     <message>
         <source>&amp;Green:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hijau:</translation>
     </message>
     <message>
         <source>Bl&amp;ue:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir&amp;u:</translation>
     </message>
     <message>
         <source>A&amp;lpha channel:</source>
-        <translation type="unfinished"></translation>
+        <translation>Chanel A&amp;lfa:</translation>
     </message>
     <message>
         <source>&amp;HTML:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;HTML:</translation>
     </message>
     <message>
         <source>Cursor at %1, %2
 Press ESC to cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kursor di %1, %2
+Tekan ESC untuk membatalkan</translation>
     </message>
     <message>
         <source>&amp;Pick Screen Color</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pilih Warna Layar</translation>
     </message>
     <message>
         <source>Select Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilih Warna</translation>
     </message>
     <message>
         <source>&amp;Basic colors</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Warna dasar</translation>
     </message>
     <message>
         <source>&amp;Custom colors</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Warna kustom</translation>
     </message>
     <message>
         <source>&amp;Add to Custom Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tambahkan ke Warna Kustom</translation>
     </message>
 </context>
 <context>
@@ -141,7 +142,7 @@ Press ESC to cancel</source>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation>&amp;No</translation>
+        <translation>&amp;Tidak</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
@@ -149,7 +150,7 @@ Press ESC to cancel</source>
     </message>
     <message>
         <source>Help</source>
-        <translation>Tolong</translation>
+        <translation>Bantuan</translation>
     </message>
     <message>
         <source>Open</source>

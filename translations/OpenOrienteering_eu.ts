@@ -6,12 +6,12 @@
     <message>
         <location filename="../packaging/translations.cpp" line="10"/>
         <source>Orienteering map</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientazio mapa</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientazio mapak marrazteko aplikazioa</translation>
     </message>
 </context>
 <context>
@@ -20,7 +20,7 @@
         <location filename="../src/gui/about_dialog.cpp" line="105"/>
         <location filename="../src/gui/about_dialog.cpp" line="175"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 inguru</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="190"/>
@@ -42,7 +42,7 @@
         <location filename="../src/gui/about_dialog.cpp" line="178"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Orientazio mapak marrazteko software librea</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="180"/>
@@ -1398,7 +1398,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="649"/>
         <source>Could not write file: %1</source>
-        <translation>Ezin izan da fitxategia idatzi:% 1</translation>
+        <translation>Ezin izan da fitxategia idatzi:%1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="338"/>

@@ -586,7 +586,7 @@
     <message>
         <location filename="../src/gui/widgets/color_wheel_widget.cpp" line="392"/>
         <source>Select</source>
-        <translation type="unfinished">选择</translation>
+        <translation>选择</translation>
     </message>
 </context>
 <context>
@@ -1378,7 +1378,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
         <source>User input: Ignore display touch</source>
-        <translation type="unfinished"></translation>
+        <translation>用户输入：忽略触屏显示</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="92"/>
@@ -2439,12 +2439,12 @@
     <message>
         <location filename="../src/fileformats/iof_course_export.cpp" line="43"/>
         <source>IOF Data Standard 3.0</source>
-        <translation type="unfinished"></translation>
+        <translation>IOF数据标准3.0</translation>
     </message>
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="43"/>
         <source>KML</source>
-        <translation type="unfinished">KML</translation>
+        <translation>KML</translation>
     </message>
 </context>
 <context>
@@ -2950,17 +2950,17 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="247"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>信息</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="248"/>
         <source>When you select the &quot;OK&quot; button, the editor will ignore touch input.</source>
-        <translation type="unfinished"></translation>
+        <translation>选中“确定”按钮时，编辑器将忽略触屏输入。</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="253"/>
         <source>Continue with touch input</source>
-        <translation type="unfinished"></translation>
+        <translation>继续触屏输入</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="381"/>
@@ -3083,7 +3083,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1392"/>
         <source>When you want to have touch input disabled, you must use another pointing device to select the &quot;OK&quot; button.</source>
-        <translation type="unfinished"></translation>
+        <translation>当你想禁用触屏输入时，必须使用另一个定位输入设备来选择“确定”按钮。</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="519"/>
@@ -3721,7 +3721,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="960"/>
         <source>Simple &amp;course</source>
-        <translation type="unfinished"></translation>
+        <translation>简单线路(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="994"/>
@@ -5723,7 +5723,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_template.cpp" line="354"/>
         <source>Invalid template configuration.</source>
-        <translation type="unfinished"></translation>
+        <translation>无效的底图配置。</translation>
     </message>
 </context>
 <context>
@@ -5740,69 +5740,69 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="77"/>
         <source>Traditional</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>传统的</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="82"/>
         <source>Confetti Hybrid</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>五彩混合色</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="87"/>
         <source>Guacamole Full</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>牛油果酱色</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="132"/>
         <source>Add color...</source>
-        <translation type="unfinished"></translation>
+        <translation>添加颜色</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="133"/>
         <source>Remove</source>
-        <translation type="unfinished">删除</translation>
+        <translation>删除</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="140"/>
         <source>Move Up</source>
-        <translation type="unfinished">向上移动</translation>
+        <translation>上移</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="143"/>
         <source>Move Down</source>
-        <translation type="unfinished">向下移动</translation>
+        <translation>下移</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="175"/>
         <source>Available palette presets</source>
-        <translation type="unfinished"></translation>
+        <translation>可用的调色板预设</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="187"/>
         <source>Custom string</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义字符串</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="193"/>
         <source>Activate preset</source>
-        <translation type="unfinished"></translation>
+        <translation>激活预设</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="197"/>
         <source>Copy</source>
-        <translation type="unfinished">复制</translation>
+        <translation>复制</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="199"/>
         <source>Paste</source>
-        <translation type="unfinished">粘贴</translation>
+        <translation>粘贴</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="233"/>
         <source>Paint on template</source>
-        <translation type="unfinished">在底图上绘制</translation>
+        <translation>在底图上绘制</translation>
     </message>
 </context>
 <context>
@@ -6266,22 +6266,22 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="256"/>
         <source>No tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>没有瓦片</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="257"/>
         <source>256x256 pixel</source>
-        <translation type="unfinished"></translation>
+        <translation>256x256 像素</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="258"/>
         <source>512x512 pixel</source>
-        <translation type="unfinished"></translation>
+        <translation>512x512 像素</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="259"/>
         <source>Tiles:</source>
-        <translation type="unfinished"></translation>
+        <translation>瓦片：</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="467"/>
@@ -6916,22 +6916,22 @@ separations</source>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="43"/>
         <source>Event and course details</source>
-        <translation type="unfinished"></translation>
+        <translation>赛事和线路详细信息</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="48"/>
         <source>Event name:</source>
-        <translation type="unfinished"></translation>
+        <translation>赛事名称：</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="51"/>
         <source>Course name:</source>
-        <translation type="unfinished"></translation>
+        <translation>线路名称：</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="54"/>
         <source>First code number:</source>
-        <translation type="unfinished"></translation>
+        <translation>第一个检查点编号：</translation>
     </message>
 </context>
 <context>
@@ -6939,17 +6939,17 @@ separations</source>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="35"/>
         <source>Unnamed event</source>
-        <translation type="unfinished"></translation>
+        <translation>未命名的赛事</translation>
     </message>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="41"/>
         <source>Unnamed course</source>
-        <translation type="unfinished"></translation>
+        <translation>未命名的线路</translation>
     </message>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="60"/>
         <source>For this course export, a single line object must be selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>线路导出时，必须选中单个线路对象。</translation>
     </message>
 </context>
 <context>

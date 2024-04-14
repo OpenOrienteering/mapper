@@ -2483,7 +2483,7 @@
         <source>Failed to save the image:
 %1</source>
         <translation>Nepodařilo se uložit obrázek:
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="226"/>
@@ -2714,7 +2714,7 @@
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="548"/>
         <source>Unsupported obsolete file format version. Please use program version v%1 or older to load and update the file.</source>
-        <translation>Nepodporovaná zastaralá verze formátu souboru. Prosím použijte verzi programu v% 1 nebo starší k načtení a aktualizaci souboru.</translation>
+        <translation>Nepodporovaná zastaralá verze formátu souboru. Prosím použijte verzi programu v%1 nebo starší k načtení a aktualizaci souboru.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="560"/>
@@ -5673,7 +5673,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2778"/>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation>Nelze uložit vlastní umístění šablony &apos;% 1&apos;.</translation>
+        <translation>Nelze uložit vlastní umístění šablony &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="3108"/>
@@ -6082,13 +6082,13 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="82"/>
         <source>Confetti Hybrid</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Confetti Hybrid</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="87"/>
         <source>Guacamole Full</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Guacamole Full</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="132"/>
@@ -6711,7 +6711,7 @@ barev</translation>
         <source>Failed to save the image:
 %1</source>
         <translation>Nepodařilo se uložit obrázek:
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1274"/>

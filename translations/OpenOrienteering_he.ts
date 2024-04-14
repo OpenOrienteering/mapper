@@ -24,7 +24,7 @@
         <location filename="../src/gui/about_dialog.cpp" line="105"/>
         <location filename="../src/gui/about_dialog.cpp" line="175"/>
         <source>About %1</source>
-        <translation type="unfinished">על %1</translation>
+        <translation>בערך 1%</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="190"/>
@@ -46,7 +46,7 @@
         <location filename="../src/gui/about_dialog.cpp" line="178"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
-        <translation type="unfinished">תוכנה לשרטוט מפות ניווט</translation>
+        <translation>תוכנה חינמית לשרטוט מפות ניווט</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="180"/>
@@ -575,7 +575,7 @@
     <message>
         <location filename="../src/gui/widgets/color_wheel_widget.cpp" line="392"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>בחר</translation>
     </message>
 </context>
 <context>
@@ -944,13 +944,13 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1163"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation type="unfinished">&lt;b&gt;% 1 + לחיצה&lt;/b&gt;: הצמד או הוסף לאובייקטים קיימים. </translation>
+        <translation>&lt;b&gt;%1 + לחיצה&lt;/b&gt;: הצמד או הוסף לאובייקטים קיימים. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1171"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="736"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation type="unfinished">&lt;b&gt;% 1 + לחיצה&lt;/b&gt;: לבחור כיוון מאובייקטים קיימים. </translation>
+        <translation>&lt;b&gt;%1 + לחיצה&lt;/b&gt;: לבחור כיוון מאובייקטים קיימים. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1172"/>
@@ -963,7 +963,7 @@
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="741"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="765"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;% 1 + לחיצה&lt;/b&gt;: הצמד לאובייקטים הקיים. </translation>
+        <translation>&lt;b&gt;%1 + לחיצה&lt;/b&gt;: הצמד לאובייקטים הקיים. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1198"/>

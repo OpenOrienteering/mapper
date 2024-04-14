@@ -328,7 +328,7 @@
         <source>%n bytes</source>
         <translation>
             <numerusform>%n byte</numerusform>
-            <numerusform>%n byte</numerusform>
+            <numerusform>%n bytes</numerusform>
         </translation>
     </message>
     <message>
@@ -651,7 +651,7 @@
     <message>
         <location filename="../src/gui/widgets/color_wheel_widget.cpp" line="392"/>
         <source>Select</source>
-        <translation type="unfinished">Välj</translation>
+        <translation>Välj</translation>
     </message>
 </context>
 <context>
@@ -1555,7 +1555,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
         <source>User input: Ignore display touch</source>
-        <translation type="unfinished"></translation>
+        <translation>Användarinmatning: Ignorera beröring av displayen</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="92"/>
@@ -2212,7 +2212,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="833"/>
         <source>Online declination lookup</source>
-        <translation>Lutningssökning online</translation>
+        <translation>Kontrollera deklinationen online (magnetisk missvisning)</translation>
     </message>
     <message>
         <source>The magnetic declination for the reference point %1� %2� will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
@@ -2342,7 +2342,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="262"/>
         <source>Grivation:</source>
-        <translation></translation>
+        <translation>Grivation (Meridiankonvergens + Magnetisk missvisning):</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="441"/>
@@ -2742,7 +2742,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="203"/>
         <source>Save symbol icon ...</source>
-        <translation>Spara symbolikon</translation>
+        <translation>Spara symbolikon ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
@@ -2902,12 +2902,12 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/fileformats/iof_course_export.cpp" line="43"/>
         <source>IOF Data Standard 3.0</source>
-        <translation type="unfinished"></translation>
+        <translation>IOF Data Standard 3.0</translation>
     </message>
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="43"/>
         <source>KML</source>
-        <translation type="unfinished">KML</translation>
+        <translation>KML</translation>
     </message>
 </context>
 <context>
@@ -3423,17 +3423,17 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/main_window.cpp" line="247"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Information</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="248"/>
         <source>When you select the &quot;OK&quot; button, the editor will ignore touch input.</source>
-        <translation type="unfinished"></translation>
+        <translation>När du väljer &quot;OK&quot;-knappen ignorerar redigeraren beröringsinmatning.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="253"/>
         <source>Continue with touch input</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortsätt med pekinmatning</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="381"/>
@@ -3556,7 +3556,7 @@ Vill du spara dina ändringar?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1392"/>
         <source>When you want to have touch input disabled, you must use another pointing device to select the &quot;OK&quot; button.</source>
-        <translation type="unfinished"></translation>
+        <translation>När du vill ha pekinmatning inaktiverad måste du använda en annan pekdon för att välja &quot;OK&quot; -knappen.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="519"/>
@@ -3934,7 +3934,7 @@ Importera data ändå?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="960"/>
         <source>Simple &amp;course</source>
-        <translation type="unfinished"></translation>
+        <translation>Enkel &amp;bana</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="977"/>
@@ -6356,7 +6356,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gdal/ogr_template.cpp" line="354"/>
         <source>Invalid template configuration.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltig mallkonfiguration.</translation>
     </message>
 </context>
 <context>
@@ -6373,69 +6373,69 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="77"/>
         <source>Traditional</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Traditionell</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="82"/>
         <source>Confetti Hybrid</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Konfetti Hybrid</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="87"/>
         <source>Guacamole Full</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Guacamole full</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="132"/>
         <source>Add color...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till färg...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="133"/>
         <source>Remove</source>
-        <translation type="unfinished">Ta bort</translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="140"/>
         <source>Move Up</source>
-        <translation type="unfinished">Flytta upp</translation>
+        <translation>Flytta upp</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="143"/>
         <source>Move Down</source>
-        <translation type="unfinished">Flytta ner</translation>
+        <translation>Flytta ner</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="175"/>
         <source>Available palette presets</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillgängliga palettförinställningar</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="187"/>
         <source>Custom string</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassad sträng</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="193"/>
         <source>Activate preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera förinställning</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="197"/>
         <source>Copy</source>
-        <translation type="unfinished">Kopiera</translation>
+        <translation>Kopiera</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="199"/>
         <source>Paste</source>
-        <translation type="unfinished">Klistra in</translation>
+        <translation>Klistra in</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="233"/>
         <source>Paint on template</source>
-        <translation type="unfinished">Måla på bakgrundsbild</translation>
+        <translation>Måla på bakgrundsbild</translation>
     </message>
 </context>
 <context>
@@ -6955,22 +6955,22 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="256"/>
         <source>No tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Inga tiles (rutor)</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="257"/>
         <source>256x256 pixel</source>
-        <translation type="unfinished"></translation>
+        <translation>256x256 pixlar</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="258"/>
         <source>512x512 pixel</source>
-        <translation type="unfinished"></translation>
+        <translation>512x512 pixlar</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="259"/>
         <source>Tiles:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rutor:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="467"/>
@@ -7106,13 +7106,15 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <location filename="../src/gui/print_widget.cpp" line="225"/>
         <source>Vector
 graphics</source>
-        <translation>Vektorgrafik</translation>
+        <translation>Vektor-
+grafik</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="226"/>
         <source>Raster
 graphics</source>
-        <translation>Rastergrafik</translation>
+        <translation>Raster-
+grafik</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="227"/>
@@ -7638,22 +7640,22 @@ separationer</translation>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="43"/>
         <source>Event and course details</source>
-        <translation type="unfinished"></translation>
+        <translation>Tävlings- och bandetaljer</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="48"/>
         <source>Event name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tävlingsnamn:</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="51"/>
         <source>Course name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bannamn:</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="54"/>
         <source>First code number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Första kodsiffra:</translation>
     </message>
 </context>
 <context>
@@ -7661,17 +7663,17 @@ separationer</translation>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="35"/>
         <source>Unnamed event</source>
-        <translation type="unfinished"></translation>
+        <translation>Icke namngiven tävling</translation>
     </message>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="41"/>
         <source>Unnamed course</source>
-        <translation type="unfinished"></translation>
+        <translation>Onamnad bana</translation>
     </message>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="60"/>
         <source>For this course export, a single line object must be selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>För denna banexport så behöver ett linjeobjekt vara vald.</translation>
     </message>
 </context>
 <context>
@@ -9211,7 +9213,7 @@ Tänker du inte rita på bakgrunden är det inget problem.</translation>
     <message>
         <location filename="../src/templates/template_track.cpp" line="109"/>
         <source>Waypoint</source>
-        <translation>Waypoint</translation>
+        <translation>Vägpunkt</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="294"/>

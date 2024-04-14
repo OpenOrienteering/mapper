@@ -1446,7 +1446,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
         <source>User input: Ignore display touch</source>
-        <translation type="unfinished"></translation>
+        <translation>Brukervalg: Ignorer skjermberøring</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="92"/>
@@ -1519,7 +1519,7 @@
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Kan ikke lagre fil
+        <translation>Kan ikke lagre fil
 %1:
 %2</translation>
     </message>
@@ -2175,7 +2175,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="629"/>
         <source>%1</source>
         <comment>scale factor value</comment>
-        <translation type="unfinished">%1° {1?}</translation>
+        <translation type="unfinished">%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="631"/>
@@ -2426,7 +2426,7 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="69"/>
         <source>px</source>
-        <translation type="unfinished">piksler</translation>
+        <translation>punkter</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="70"/>
@@ -2619,7 +2619,7 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1942"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1782"/>
         <source>Cannot find a vector data export driver named &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke finne vektordata i eksportfilen &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Cannot save file
@@ -2632,12 +2632,12 @@
     <message>
         <location filename="../src/fileformats/iof_course_export.cpp" line="43"/>
         <source>IOF Data Standard 3.0</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">IOF Data Standard 3.0</translation>
     </message>
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="43"/>
         <source>KML</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">KML</translation>
     </message>
 </context>
 <context>
@@ -2684,7 +2684,7 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="155"/>
         <source>Georeferencing mismatch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferanseavvik:</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="250"/>

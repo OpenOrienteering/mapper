@@ -39,29 +39,29 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="193"/>
         <source>(project initiator)</source>
-        <translation>(proyek inisiator)</translation>
+        <translation>(inisiator proyek)</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="14"/>
         <location filename="../src/gui/about_dialog.cpp" line="178"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
-        <translation>Perangkat lunak gratis untuk menggambar peta orienteering</translation>
+        <translation>Perangkat lunak bebas untuk menggambar peta orienteering</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="180"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation>Program ini adalah perangkat lunak bebas: Anda dapat mendistribusikan dan memodifikasi di bawah &lt;a %1&gt;GNU General Public License (GPL), versi&amp;nbsp;3&lt;/a&gt;, seperti dipublikasikan oleh Free Software Foundation.</translation>
+        <translation type="unfinished">Program ini adalah perangkat lunak terbuka: Anda dapat mendistribusikan dan memodifikasi di bawah &lt;a %1&gt;GNU General Public License (GPL), versi&amp;nbsp;3&lt;/a&gt;, seperti dipublikasikan oleh Free Software Foundation.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="185"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation>Program ini didistribusikan dalam harapan bahwa itu akan berguna, tetapi TANPA ADANYA JAMINAN; tanpa bahkan jaminan tersirat dapat DIPERJUALBELIKAN atau KESESUAIAN untuk TUJUAN TERTENTU. Lihat GNU General Public License (GPL), versi&amp;nbsp;3, untuk &lt;a %1&gt;lebih jelasnya&lt;/a&gt;.</translation>
+        <translation type="unfinished">Program ini didistribusikan dengan harapan akan berguna, tetapi TANPA JAMINAN; termasuk jaminan untuk LAYAK DIPERJUALBELIKAN atau KESESUAIAN TUJUAN TERTENTU. Lihat GNU General Public License (GPL), versi&amp;nbsp;3, untuk &lt;a %1&gt;lebih jelasnya&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="194"/>
         <source>For contributions, thanks to:</source>
-        <translation>Untuk kontribusi, terima kasih kepada:</translation>
+        <translation type="unfinished">Atas kontribusinya, terima kasih kepada:</translation>
     </message>
 </context>
 <context>
@@ -74,7 +74,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="119"/>
         <source>Show tip of the day</source>
-        <translation>Tampilkan tips</translation>
+        <translation type="unfinished">Tampilkan tips harian</translation>
     </message>
 </context>
 <context>
@@ -297,7 +297,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="93"/>
         <source>Edit</source>
-        <translation type="unfinished">Mengedit</translation>
+        <translation>Ubah</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
@@ -447,12 +447,12 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="346"/>
         <source>- unnamed -</source>
-        <translation type="unfinished">- tidak disebutkan namanya -</translation>
+        <translation type="unfinished">- tanpa nama -</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="623"/>
         <source>Warning</source>
-        <translation type="unfinished">Peringatan</translation>
+        <translation>Peringatan</translation>
     </message>
 </context>
 <context>
@@ -1162,7 +1162,7 @@
         <location filename="../src/tools/draw_text_tool.cpp" line="113"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished">Klik</translation>
+        <translation>Tangkap</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="476"/>
@@ -1439,7 +1439,7 @@
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Tidak dapat menyimpan file
+        <translation>Tidak dapat menyimpan file
 %1:
 %2</translation>
     </message>
@@ -1546,17 +1546,17 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
         <source>Templates</source>
-        <translation type="unfinished">Template</translation>
+        <translation>Template</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="67"/>
         <source>Hatch areas</source>
-        <translation type="unfinished">Merencanakan area</translation>
+        <translation type="unfinished">Area perencanaan</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Baseline view</source>
-        <translation type="unfinished">Pandangan dasar</translation>
+        <translation type="unfinished">Tampilan latar garis</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="75"/>
@@ -2054,7 +2054,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="629"/>
         <source>%1</source>
         <comment>scale factor value</comment>
-        <translation type="unfinished">%1x {1?}</translation>
+        <translation type="unfinished">%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="631"/>
@@ -2188,7 +2188,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="533"/>
         <source>Help</source>
-        <translation type="unfinished">Tolong</translation>
+        <translation type="unfinished">Bantuan</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="554"/>
@@ -2914,7 +2914,7 @@
         <location filename="../src/gui/main_window.cpp" line="916"/>
         <location filename="../src/gui/map/map_editor.cpp" line="661"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">Jenis file yang falid.</translation>
+        <translation type="unfinished">Tipe file tidak valid.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="378"/>
@@ -3224,7 +3224,7 @@ karena format yang tidak diketahui.</translation>
 because saving as %2 (.%3) is not supported.</source>
         <translation type="unfinished">Tidak dapat mengekspor peta sebagai
 &quot;%1&quot;
-karena penyimpan sebagai %2 (.%3) tidak didukung.</translation>
+dikarenakan penyimpanan dalam %2 (.%3) tidak didukung.</translation>
     </message>
 </context>
 <context>
@@ -3239,9 +3239,9 @@ karena penyimpan sebagai %2 (.%3) tidak didukung.</translation>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">Skala data yang diimpor adalah 1:%1 yang berbeda dari peta ini skala 1:%2.
+        <translation type="unfinished">Skala data yang diimpor adalah 1:%1 berbeda dari peta yang berskala skala 1:%2.
 
-Rescale data yang diimpor?</translation>
+Ubah skala data yang diimpor?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="203"/>
@@ -3874,7 +3874,7 @@ Import the data anyway?</source>
 because saving as %2 (.%3) is not supported.</source>
         <translation type="unfinished">Tidak dapat mengekspor peta sebagai
 &quot;%1&quot;
-karena penyimpan sebagai %2 (.%3) tidak didukung.</translation>
+dikarenakan penyimpanan dalam %2 (.%3) tidak didukung.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="622"/>
@@ -3897,13 +3897,13 @@ karena penyimpan sebagai %2 (.%3) tidak didukung.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="632"/>
         <source>The map export generated warnings.</source>
-        <translation type="unfinished">Peta ekspor dihasilkan peringatan.</translation>
+        <translation type="unfinished">Ekspor peta menyebabkan peringatan.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="694"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4199"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">Peringatan Impor peta dihasilkan.</translation>
+        <translation type="unfinished">Impor peta menyebabkan peringatan.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="904"/>
@@ -4150,7 +4150,7 @@ karena penyimpan sebagai %2 (.%3) tidak didukung.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4271"/>
         <source>Nothing to import.</source>
-        <translation type="unfinished">Tidak ada untuk mengimpor.</translation>
+        <translation type="unfinished">Tidak ada yang diimpor.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4283"/>
@@ -5239,7 +5239,7 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="621"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">Pengodean &apos;%1&apos; tidak tersedia. Periksa pengaturan.</translation>
+        <translation type="unfinished">Pengkodean &apos;%1&apos; tidak tersedia. Periksa pengaturan.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="650"/>

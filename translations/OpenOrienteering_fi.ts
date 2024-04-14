@@ -1423,7 +1423,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
         <source>User input: Ignore display touch</source>
-        <translation type="unfinished"></translation>
+        <translation>Osoitinlaite: älä huomioi näytön kosketusta</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="92"/>
@@ -2455,7 +2455,7 @@
         <source>Failed to save the image:
 %1</source>
         <translation>Kuvan tallentaminen epäonnistui:
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="226"/>
@@ -2598,7 +2598,7 @@
     <message>
         <location filename="../src/fileformats/iof_course_export.cpp" line="43"/>
         <source>IOF Data Standard 3.0</source>
-        <translation type="unfinished"></translation>
+        <translation>IOF Data Standard 3.0</translation>
     </message>
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="43"/>
@@ -3124,12 +3124,12 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="248"/>
         <source>When you select the &quot;OK&quot; button, the editor will ignore touch input.</source>
-        <translation type="unfinished"></translation>
+        <translation>Painamalla &quot;OK&quot; näppäintä, kosketusnäyttö ei ole käytössä kartan muokkaukseen.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="253"/>
         <source>Continue with touch input</source>
-        <translation type="unfinished"></translation>
+        <translation>Jatka käyttäen kosketusnäyttöä</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="381"/>
@@ -3252,7 +3252,7 @@ Tallennetaanko?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1392"/>
         <source>When you want to have touch input disabled, you must use another pointing device to select the &quot;OK&quot; button.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellet halua käyttää kosketusnäyttä, sinulla tulee olla käytössä jokin muu osoitinlaite painaaksesi &quot;OK&quot; näppäintä.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="519"/>
@@ -3857,7 +3857,7 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="960"/>
         <source>Simple &amp;course</source>
-        <translation type="unfinished"></translation>
+        <translation>Yksinkertainen &amp;course</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="994"/>
@@ -5962,7 +5962,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_template.cpp" line="354"/>
         <source>Invalid template configuration.</source>
-        <translation type="unfinished"></translation>
+        <translation>Virheellinen taustakartan määritys.</translation>
     </message>
 </context>
 <context>
@@ -5990,13 +5990,13 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="82"/>
         <source>Confetti Hybrid</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Konfettihybridi</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="87"/>
         <source>Guacamole Full</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Täysguacamole</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="132"/>
@@ -6021,17 +6021,17 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="175"/>
         <source>Available palette presets</source>
-        <translation type="unfinished"></translation>
+        <translation>Käytettävissä olevat paletin esiasetukset</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="187"/>
         <source>Custom string</source>
-        <translation type="unfinished"></translation>
+        <translation>Mukautettu teksti</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="193"/>
         <source>Activate preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivoi esiasetus</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="197"/>
@@ -6512,7 +6512,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="256"/>
         <source>No tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei ruutuja</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="257"/>
@@ -6527,7 +6527,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="259"/>
         <source>Tiles:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruudut:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="299"/>
@@ -6584,7 +6584,7 @@ zoomaa hiiren rullalla.</translation>
         <source>Failed to save the image:
 %1</source>
         <translation>Kuvan tallentaminen epäonnistui:
-% 1</translation>
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1274"/>
@@ -7214,7 +7214,7 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="54"/>
         <source>First code number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensimmäinen koodinumero:</translation>
     </message>
 </context>
 <context>
@@ -7232,7 +7232,7 @@ erottelut</translation>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="60"/>
         <source>For this course export, a single line object must be selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tämän kurssin vientiä varten on valittava yksi viivaobjekti.</translation>
     </message>
 </context>
 <context>

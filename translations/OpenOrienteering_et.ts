@@ -11,7 +11,7 @@
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarkvara orienteerumiskaartide joonistamiseks</translation>
     </message>
 </context>
 <context>
@@ -27,12 +27,12 @@
         <location filename="../src/gui/about_dialog.cpp" line="178"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tasuta tarkvara orienteerumiskaartide joonistamiseks</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="180"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation type="unfinished"></translation>
+        <translation>See programm on tasuta tarkvara: seda võib jagada ja/või muuta Free Software Foundation sihtasutuse avaldatud &lt;a %1&gt;GNU General Public License (GPL), versioon&amp;nbsp;3&lt;/a&gt; litsentsitingimuste järgi.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="185"/>
@@ -47,17 +47,17 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="192"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering tarkvara arendajad tähestikulises järjekorras:</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="193"/>
         <source>(project initiator)</source>
-        <translation type="unfinished"></translation>
+        <translation>(projekti alustaja)</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="194"/>
         <source>For contributions, thanks to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Täname panuste eest:</translation>
     </message>
 </context>
 <context>
@@ -65,12 +65,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
         <source>Open most recently used file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ava viimati kasutatud fail</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="119"/>
         <source>Show tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation>Näita päeva näpunäidet</translation>
     </message>
 </context>
 <context>
@@ -86,7 +86,7 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="84"/>
         <source>Area color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ala värv:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="86"/>
@@ -96,7 +96,7 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="87"/>
         <source>Minimum size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Miinimumsuurus:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="94"/>
@@ -125,37 +125,37 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="161"/>
         <source>Single line</source>
-        <translation type="unfinished"></translation>
+        <translation>Üksik joon</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="163"/>
         <source>Line width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Joone laius:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="168"/>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Joone värv:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="173"/>
         <source>Line offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Joone nihe:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="175"/>
         <source>Parallel lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Paralleelsed jooned</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="177"/>
         <source>Line spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Joonte vahe:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="180"/>
         <source>Single row</source>
-        <translation type="unfinished"></translation>
+        <translation>Üksik rida</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="182"/>
@@ -229,7 +229,7 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="249"/>
         <source>Area settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ala seaded</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="343"/>
@@ -259,8 +259,8 @@
         <location filename="../src/gui/autosave_dialog.cpp" line="54"/>
         <source>%n bytes</source>
         <translation>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n bait</numerusform>
+            <numerusform>%n baiti</numerusform>
         </translation>
     </message>
     <message>
@@ -783,7 +783,7 @@
         <location filename="../src/tools/cut_tool.cpp" line="426"/>
         <location filename="../src/tools/cut_tool.cpp" line="433"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="419"/>
@@ -1438,7 +1438,7 @@
         <location filename="../src/tools/fill_tool.cpp" line="176"/>
         <location filename="../src/tools/fill_tool.cpp" line="231"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="143"/>
@@ -2032,7 +2032,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="629"/>
         <source>%1</source>
         <comment>scale factor value</comment>
-        <translation type="unfinished">%1x {1?}</translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="637"/>
@@ -2250,7 +2250,7 @@
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="234"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
@@ -3021,7 +3021,7 @@ Do you want to scale the symbols to the selected scale?</source>
         <location filename="../src/gui/main_window.cpp" line="1319"/>
         <location filename="../src/gui/map/map_widget.cpp" line="318"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="942"/>
@@ -3099,7 +3099,7 @@ Press No to choose a different format.</source>
         <location filename="../src/gui/main_window_controller.cpp" line="63"/>
         <location filename="../src/gui/main_window_controller.cpp" line="71"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window_controller.cpp" line="64"/>
@@ -3145,7 +3145,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="203"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="253"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3248,32 +3248,32 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="908"/>
         <source>G</source>
-        <translation type="unfinished"></translation>
+        <translation>G</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="921"/>
         <source>E</source>
-        <translation type="unfinished"></translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="922"/>
         <source>L</source>
-        <translation type="unfinished"></translation>
+        <translation>L</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="923"/>
         <source>S</source>
-        <translation type="unfinished"></translation>
+        <translation>S</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="924"/>
         <source>P</source>
-        <translation type="unfinished"></translation>
+        <translation>P</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="925"/>
         <source>O</source>
-        <translation type="unfinished"></translation>
+        <translation>O</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="926"/>
@@ -3283,17 +3283,17 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="927"/>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation>F</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="928"/>
         <source>T</source>
-        <translation type="unfinished"></translation>
+        <translation>T</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="930"/>
         <source>D</source>
-        <translation type="unfinished"></translation>
+        <translation>D</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="931"/>
@@ -3313,42 +3313,42 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="934"/>
         <source>C</source>
-        <translation type="unfinished"></translation>
+        <translation>C</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="935"/>
         <source>R</source>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="936"/>
         <source>Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Z</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="937"/>
         <source>K</source>
-        <translation type="unfinished"></translation>
+        <translation>K</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="938"/>
         <source>H</source>
-        <translation type="unfinished"></translation>
+        <translation>H</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="939"/>
         <source>M</source>
-        <translation type="unfinished"></translation>
+        <translation>M</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="940"/>
         <source>U</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="941"/>
         <source>N</source>
-        <translation type="unfinished"></translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="942"/>
@@ -3358,7 +3358,7 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="951"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Trüki...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="953"/>
@@ -3415,7 +3415,7 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="985"/>
         <source>Delete</source>
-        <translation type="unfinished">Kustuta</translation>
+        <translation>Kustuta</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="986"/>
@@ -4038,7 +4038,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="4194"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4271"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1767"/>
@@ -4114,12 +4114,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2248"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Tühista</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2249"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2288"/>
@@ -4625,7 +4625,7 @@ selected</source>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1408"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1413"/>
@@ -4697,7 +4697,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="724"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="906"/>
@@ -5984,7 +5984,7 @@ separations</source>
         <location filename="../src/gui/print_widget.cpp" line="1425"/>
         <location filename="../src/gui/print_widget.cpp" line="1473"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1005"/>
@@ -6764,7 +6764,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="119"/>
         <source>Delete</source>
-        <translation type="unfinished">Kustuta</translation>
+        <translation>Kustuta</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="120"/>
@@ -6851,7 +6851,7 @@ separations</source>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="916"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="928"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="902"/>
@@ -7074,7 +7074,7 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="250"/>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="259"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="183"/>
@@ -7271,7 +7271,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template.cpp" line="525"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="619"/>
@@ -7300,7 +7300,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="145"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="145"/>
@@ -7357,7 +7357,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="213"/>
         <source>Delete</source>
-        <translation type="unfinished">Kustuta</translation>
+        <translation>Kustuta</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="220"/>
@@ -7382,7 +7382,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="220"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="231"/>
@@ -7466,7 +7466,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="70"/>
         <source>GeoTIFF</source>
-        <translation type="unfinished"></translation>
+        <translation>GeoTIFF</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="71"/>
@@ -7501,7 +7501,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="114"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Tühista</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="115"/>
@@ -7634,7 +7634,7 @@ to jump over the lazy dog
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="930"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="980"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="656"/>
@@ -7878,7 +7878,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_track.cpp" line="485"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="485"/>
@@ -8144,7 +8144,7 @@ to jump over the lazy dog
         <location filename="../src/undo/undo_manager.cpp" line="140"/>
         <location filename="../src/undo/undo_manager.cpp" line="185"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="140"/>
@@ -8207,7 +8207,7 @@ to jump over the lazy dog
         <location filename="../src/gui/util_gui.cpp" line="144"/>
         <location filename="../src/gui/util_gui.cpp" line="178"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="130"/>

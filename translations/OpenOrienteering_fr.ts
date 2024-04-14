@@ -623,7 +623,7 @@
     <message>
         <location filename="../src/gui/widgets/color_wheel_widget.cpp" line="392"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>sélectionner</translation>
     </message>
 </context>
 <context>
@@ -2090,7 +2090,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="221"/>
         <source>Combined scale factor:</source>
         <extracomment>The combined scale factor is the ratio between a length on the ground and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Facteur d&apos;échelle combiné&#x202f;:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="227"/>
@@ -2122,7 +2122,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="262"/>
         <source>Grivation:</source>
-        <translation type="unfinished">Déclinaison du quadrillage :</translation>
+        <translation>Grivation : (Déclinaison magnétique + convergence)</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="441"/>
@@ -2612,12 +2612,12 @@
     <message>
         <location filename="../src/fileformats/iof_course_export.cpp" line="43"/>
         <source>IOF Data Standard 3.0</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard de donnée IOF 3.0</translation>
     </message>
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="43"/>
         <source>KML</source>
-        <translation type="unfinished"></translation>
+        <translation>KML</translation>
     </message>
 </context>
 <context>
@@ -2763,7 +2763,7 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="195"/>
         <source>For KML/KMZ export, the map must be georeferenced.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pour exporter au format KML/KMZ, la carte doit être géoréférencée.</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="202"/>
@@ -2773,7 +2773,7 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="220"/>
         <source>%1 already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 existe déjà.</translation>
     </message>
 </context>
 <context>
@@ -3125,17 +3125,17 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="247"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Information</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="248"/>
         <source>When you select the &quot;OK&quot; button, the editor will ignore touch input.</source>
-        <translation type="unfinished"></translation>
+        <translation>Après avoir cliqué sur &quot;OK&quot;, l&apos;éditeur ignorera l&apos;entrée tactile.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="253"/>
         <source>Continue with touch input</source>
-        <translation type="unfinished"></translation>
+        <translation>Continuer avec l&apos;entrée tactile</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="381"/>
@@ -3258,7 +3258,7 @@ Voulez-vous enregistrer vos modifications ?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1392"/>
         <source>When you want to have touch input disabled, you must use another pointing device to select the &quot;OK&quot; button.</source>
-        <translation type="unfinished"></translation>
+        <translation>Si vous désactivez l&apos;entrée tactile, un autre périphérique de pointage doit être utilisé pour cliquer sur &quot;OK&quot;.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="519"/>
@@ -4478,7 +4478,7 @@ car enregistrer en %2 (.%3) n&apos;est pas supporté.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="999"/>
         <source>Keep my location on screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Conserver ma position à l&apos;écran</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1013"/>
@@ -5043,7 +5043,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="237"/>
         <source>Background drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrière plan</translation>
     </message>
 </context>
 <context>
@@ -5483,7 +5483,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="621"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;encodage &apos;%1&apos; n&apos;est pas disponible. Vérifiez vos réglages.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="650"/>
@@ -5591,7 +5591,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2778"/>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;enregistrer le positionnement personnalisé du modèle &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="3108"/>
@@ -5947,7 +5947,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gdal/ogr_template.cpp" line="354"/>
         <source>Invalid template configuration.</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuration de modèle invalide.</translation>
     </message>
 </context>
 <context>
@@ -5964,7 +5964,7 @@ utiliser la molette de la souris pour zoomer.</translation>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="77"/>
         <source>Traditional</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Traditionel</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="82"/>
@@ -5981,7 +5981,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="132"/>
         <source>Add color...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter une couleur...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="133"/>
