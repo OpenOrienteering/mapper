@@ -81,7 +81,7 @@ public:
 	
 	
 	/**
-	 * Returns true iff valid undo steps are available.
+	 * Returns true if valid undo steps are available.
 	 */
 	bool canUndo() const;
 	
@@ -99,7 +99,7 @@ public:
 	
 	
 	/**
-	 * Returns true iff valid redo steps are available.
+	 * Returns true if valid redo steps are available.
 	 */
 	bool canRedo() const;
 	
@@ -110,7 +110,7 @@ public:
 	
 	
 	/**
-	 * Returns true iff the current state is the clean state.
+	 * Returns true if the current state is the clean state.
 	 */
 	bool isClean() const;
 	
@@ -128,7 +128,7 @@ public:
 	
 	
 	/**
-	 * Returns true iff the current state is the loaded state.
+	 * Returns true if the current state is the loaded state.
 	 */
 	bool isLoaded() const;
 	

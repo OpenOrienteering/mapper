@@ -302,7 +302,7 @@ class FollowPathToolHelper
 {
 public:
 	/**
-	 * Returns true iff following can be started from the given snapping information.
+	 * Returns true if following can be started from the given snapping information.
 	 */
 	bool canStartFollowing(const SnappingToolHelperSnapInfo& snap_info) const noexcept;
 	

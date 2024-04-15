@@ -645,7 +645,7 @@ void SymbolSetTool::TranslationEntry::write(QXmlStreamWriter& xml) const
 
 
 /**
- * Saves the map to the given path iff this changes the file's content.
+ * Saves the map to the given path if this changes the file's content.
  */
 void saveIfDifferent(const QString& path, Map* map, MapView* view = nullptr)
 {

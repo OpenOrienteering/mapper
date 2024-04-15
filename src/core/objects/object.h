@@ -599,7 +599,7 @@ public:
 	/**
 	 * Assigns the given prototype's coordinates subset to this object's coordinates.
 	 *
-	 * The range must be within one part. Last may be smaller than first iff
+	 * The range must be within one part. Last may be smaller than first if
 	 * the path is closed.
 	 */
 	void assignCoordinates(const PathObject& proto, MapCoordVector::size_type first, MapCoordVector::size_type last);
@@ -1090,7 +1090,7 @@ struct ObjectPathCoord : public PathCoord
 	ObjectPathCoord(PathObject* object, MapCoordVector::size_type index);
 	
 	/**
-	 * Returns true iff the object is not null.
+	 * Returns true if the object is not null.
 	 */
 	constexpr operator bool() const;
 	

@@ -78,10 +78,10 @@ struct MapColorCmyk
 	bool isWhite() const;
 };
 
-/** Returns true iff the MapColorCmyk are equal in all components. */
+/** Returns true if the MapColorCmyk are equal in all components. */
 bool operator==(const MapColorCmyk& lhs, const MapColorCmyk& rhs);
 
-/** Returns true iff the MapColorCmyk differ in at least one components. */
+/** Returns true if the MapColorCmyk differ in at least one components. */
 bool operator!=(const MapColorCmyk& lhs, const MapColorCmyk& rhs);
 
 
@@ -128,7 +128,7 @@ struct MapColorRgb
 /** Returns true if both MapColorRgb are equal in all components. */
 bool operator==(const MapColorRgb& lhs, const MapColorRgb& rhs);
 
-/** Returns true iff the MapColorRgb differ in at least one components. */
+/** Returns true if the MapColorRgb differ in at least one components. */
 bool operator!=(const MapColorRgb& lhs, const MapColorRgb& rhs);
 
 
@@ -151,7 +151,7 @@ struct SpotColorComponent
 	/** Constructs a component for the given spot color and halftoning. */
 	SpotColorComponent(const MapColor* spot_color, float factor);
 	
-	/** Returns true iff the spot color is defined. */
+	/** Returns true if the spot color is defined. */
 	bool isValid() const;
 };
 
@@ -486,7 +486,7 @@ protected:
 /** Returns true if both MapColor are equal in all components. */
 bool operator==(const MapColor& lhs, const MapColor& rhs);
 
-/** Returns true iff the MapColor differ in at least one components. */
+/** Returns true if the MapColor differ in at least one components. */
 bool operator!=(const MapColor& lhs, const MapColor& rhs);
 
 

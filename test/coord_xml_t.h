@@ -101,7 +101,7 @@ private:
 	void writeCompressed_implementation(MapCoordVector& coords, QXmlStreamWriter& xml);
 	
 	/** Compares all coords members to the expected MapCoord.
-	 *  Returns true iff all match, false otherwise. */
+	 *  Returns true if all match, false otherwise. */
 	bool compare_all(MapCoordVector& coords, MapCoord& expected) const;
 	
 	MapCoord proto_coord;

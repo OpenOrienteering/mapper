@@ -104,10 +104,10 @@ public:
 	qreal v_overlap;
 };
 
-/** Returns true iff the MapPrinterPageFormat values are equal. */
+/** Returns true if the MapPrinterPageFormat values are equal. */
 bool operator==(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs);
 
-/** Returns true iff the MapPrinterPageFormat values are not equal. */
+/** Returns true if the MapPrinterPageFormat values are not equal. */
 bool operator!=(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs);
 
 
@@ -510,10 +510,10 @@ bool operator!=(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs
 
 //### Free functions for MapPrinterOptions ###
 
-/** Returns true iff the MapPrinterOptions values are equal. */
+/** Returns true if the MapPrinterOptions values are equal. */
 bool operator==(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs);
 
-/** Returns true iff the MapPrinterOptions values are not equal. */
+/** Returns true if the MapPrinterOptions values are not equal. */
 inline
 bool operator!=(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs)
 {
@@ -524,10 +524,10 @@ bool operator!=(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs)
 
 // ### Free functions for MapPrinterConfig ###
 
-/** Returns true iff the MapPrinterConfig values are equal. */
+/** Returns true if the MapPrinterConfig values are equal. */
 bool operator==(const MapPrinterConfig& lhs, const MapPrinterConfig& rhs);
 
-/** Returns true iff the MapPrinterConfig values are not equal. */
+/** Returns true if the MapPrinterConfig values are not equal. */
 inline
 bool operator!=(const MapPrinterConfig& lhs, const MapPrinterConfig& rhs)
 {

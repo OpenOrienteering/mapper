@@ -186,7 +186,7 @@ protected:
 	 * 
 	 * Must be called in a batch edit context.
 	 * 
-	 * @return True iff there actually was a change.
+	 * @return True if there actually was a change.
 	 */
 	bool setSelection(int anchor, int cursor);
 	
@@ -196,7 +196,7 @@ protected:
 	 * 
 	 * Must be called in a batch edit context.
 	 * 
-	 * @return True iff there actually was a change.
+	 * @return True if there actually was a change.
 	 */
 	bool setSelection(int anchor, int cursor, int line_position);
 	

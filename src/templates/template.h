@@ -578,7 +578,7 @@ public:
 	 * an error occurred, and true if the change was successful or if it was
 	 * explicitly cancelled by the user.
 	 * 
-	 * The default implementation returns true iff the state matches the value.
+	 * The default implementation returns true if the state matches the value.
 	 */
 	virtual bool trySetTemplateGeoreferenced(bool value, QWidget* dialog_parent);
 	

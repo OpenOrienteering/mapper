@@ -51,7 +51,7 @@ namespace PlatformPrinterProperties
 	void restore(QPrinter* printer, const std::shared_ptr<void>& buffer);
 	
 	/**
-	 * Returns true iff the platform supports execDialog().
+	 * Returns true if the platform supports execDialog().
 	 * 
 	 * The default implementation returns false.
 	 */

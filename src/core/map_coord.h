@@ -285,7 +285,7 @@ public:
 	
 	
 	/**
-	 * Returns true iff the coordinates are within "regular" bounds.
+	 * Returns true if the coordinates are within "regular" bounds.
 	 */
 	bool isRegular() const;
 	
