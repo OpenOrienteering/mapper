@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2016 Kai Pastor
+ *    Copyright 2016, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,7 +27,7 @@
 #include <QPushButton>
 
 #include "core/map.h"
-#include "template.h"
+#include "templates/template.h"
 #include "gui/util_gui.h"
 
 
