@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -160,8 +160,6 @@ ColorListWidget::ColorListWidget(Map* map, MainWindow* window, QWidget* parent)
 	header_view->resizeSections(QHeaderView::ResizeToContents);
 	header_view->setSectionResizeMode(0, QHeaderView::Fixed); // Color
 	header_view->resizeSection(0, 32);
-	header_view->setSectionResizeMode(1, QHeaderView::Stretch); // Name
-	header_view->setSectionResizeMode(1, QHeaderView::Interactive); // Spot colors
 	header_view->setSectionResizeMode(5, QHeaderView::Fixed); // Knockout
 	header_view->resizeSection(5, 32);
 	header_view->setSectionsClickable(false);
