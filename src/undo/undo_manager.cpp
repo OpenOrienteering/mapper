@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2018 Kai Pastor
+ *    Copyright 2014-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -41,7 +41,7 @@
 
 namespace OpenOrienteering {
 
-Q_STATIC_ASSERT(UndoManager::max_undo_steps < std::numeric_limits<int>::max());
+Q_STATIC_ASSERT(static_cast<int>(UndoManager::max_undo_steps) < std::numeric_limits<int>::max());
 
 
 // ### UndoManager::State ###

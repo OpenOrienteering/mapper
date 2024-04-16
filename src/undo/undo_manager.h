@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014, 2017, 2018 Kai Pastor
+ *    Copyright 2014-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,7 +28,6 @@
 #include <vector>
 
 #include <QObject>
-#include <QString>
 
 #include "core/symbols/symbol.h"
 
