@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -78,6 +78,7 @@
 #include "gui/widgets/crs_selector.h"
 #include "gui/util_gui.h"
 #include "util/backports.h"  // IWYU pragma: keep
+#include "util/json_config.h"
 #include "util/scoped_signals_blocker.h"
 
 
@@ -448,6 +449,7 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	
 	QUrlQuery query;
 	QDate today = QDate::currentDate();
+	query.addQueryItem(QString::fromLatin1("key"), JSONConfiguration::getConfigValue(QLatin1String("DeclLookupKey")).toString());
 	query.addQueryItem(QString::fromLatin1("lat1"), QString::number(latlon.latitude()));
 	query.addQueryItem(QString::fromLatin1("lon1"), QString::number(latlon.longitude()));
 	query.addQueryItem(QString::fromLatin1("startYear"), QString::number(today.year()));

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -50,6 +50,7 @@ class MapEditorTool;
 class MapWidget;
 class Object;
 class PathObject;
+class Symbol;
 
 
 /**
@@ -376,6 +377,14 @@ public:
 
 };
 
+/**
+ * Helper function to determine whether a symbol that is either a line symbol
+ * or contains line symbols as part of a combined symbol contains a dash symbol.
+ * Function is used by DrawPathTool::updateDashPointDrawing() and 
+ * EditPointTool::addDashPointDefault() in relation to setting and changing dash points.
+ */
+
+bool symbolContainsDashSymbol(const Symbol* symbol);
 
 }  // namespace OpenOrienteering
 
