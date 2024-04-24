@@ -274,16 +274,18 @@ void ColorListWidget::deleteColor()
 	
 	if (affected_colors_num || affected_symbols_num)
 	{
+		QString spot_color_text = tr("Map color \"%1\" defines spot color \"%2\"."
+									" %n other map color(s) use this spot color."
+									" Deleting the map color will remove the spot color from these map colors.",
+									nullptr,
+									affected_colors_num).arg(color_to_be_removed->getName(), color_to_be_removed->getSpotColorName());
+		
 		if (!affected_symbols_num)
 		{
-		if (QMessageBox::warning(this, tr("Confirmation"),
-								 tr("%n map color(s) use spot color \"%1\"."
-									" Deleting it will remove the spot color from these map colors."
-									" Do you really want to do that?",
-									nullptr,
-									affected_colors_num).arg(color_to_be_removed->getSpotColorName()),
-								 QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
-			return;
+			if (QMessageBox::warning(this, tr("Confirmation"),
+									 spot_color_text + tr("\nDo you really want to do that?"),
+									 QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+				return;
 		}
 		else
 		{
@@ -293,25 +295,18 @@ void ColorListWidget::deleteColor()
 				if (affected_colors_num)
 					warning_text += tr(", %n object(s)", nullptr, affected_objects_num);
 				else
-					warning_text += tr("and %n object(s)", nullptr, affected_objects_num);
+					warning_text += tr(" and %n object(s)", nullptr, affected_objects_num);
 			}
 			if (affected_colors_num)
 				warning_text += tr(" and %n other map color(s)", nullptr, affected_colors_num);
-			warning_text +=  tr(" with this color. Deleting it will remove the color from them! Do you really want to do that?");
+			warning_text +=  tr(" with this color. Deleting it will remove the color from them!") + tr("\nDo you really want to do that?");
 			
 			QMessageBox msgBox;
 			msgBox.setWindowTitle(tr("Confirmation"));
 			msgBox.setIcon(QMessageBox::Warning);
 			msgBox.setText(warning_text);
 			if (affected_colors_num)
-			{
-				QString detailed_text = tr("Map color \"%1\" defines spot color \"%2\"."
-										" %n other map color(s) use this spot color."
-										" Deleting the map color will remove the spot color from these map colors.",
-										nullptr,
-										affected_colors_num).arg(color_to_be_removed->getName(), color_to_be_removed->getSpotColorName());
-				msgBox.setDetailedText(detailed_text);
-			}
+				msgBox.setDetailedText(spot_color_text);
 			msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
 			if (msgBox.exec() == QMessageBox::No)
 				return;
