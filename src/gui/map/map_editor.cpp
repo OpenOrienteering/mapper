@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021 Kai Pastor
+ *    Copyright 2012-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -2002,7 +2002,7 @@ void MapEditorController::spotColorPresenceChanged(bool has_spot_colors)
 		}
 		else
 		{
-			if(overprinting_simulation_act->isChecked())
+			if (overprinting_simulation_act->isChecked())
 				overprinting_simulation_act->trigger();
 			overprinting_simulation_act->setEnabled(false);
 		}

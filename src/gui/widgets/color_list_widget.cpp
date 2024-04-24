@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -52,6 +52,8 @@
 
 #include "core/map.h"
 #include "core/map_color.h"
+#include "core/symbols/symbol.h"
+#include "core/objects/object.h"
 #include "gui/color_dialog.h"
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
@@ -224,24 +226,94 @@ void ColorListWidget::deleteColor()
 	if (row < 0) return; // In release mode
 	
 	// Show a warning if the color is used
+	// First evaluate which other colors, symbols and objects are affected
 	auto const* color_to_be_removed = map->getColor(row);
-	if (map->isColorUsedByASymbol(color_to_be_removed))
-	{
-		if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?"), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
-			return;
-	}
-	
+	std::vector<const MapColor*> affected_colors;
 	if (color_to_be_removed->getSpotColorMethod() == MapColor::SpotColor)
 	{
-		if (auto color_in_use = map->countSpotColorUsage(color_to_be_removed))
+		map->determineSpotColorUsage(color_to_be_removed, affected_colors);
+	}
+	int affected_colors_num = affected_colors.size();	// number of affected colors when deleting this spot color
+	affected_colors.push_back(color_to_be_removed);		// add color to be deleted to list of affected colors
+	
+	auto count_symbols = [&affected_colors] (const Symbol* symbol) {
+		auto affected_symbols_num = 0;
+		if (symbol->getType())
 		{
-			if (QMessageBox::warning(this, tr("Confirmation"),
-			                         tr("%n map color(s) use spot color \"%1\"."
-			                            " Deleting it will remove the spot color from these map colors."
-			                            " Do you really want to do that?",
-			                            nullptr,
-			                            color_in_use).arg(color_to_be_removed->getName()),
-			                         QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+			for (const auto color : affected_colors)
+			{
+				if (symbol->containsColor(color))
+				{
+					++affected_symbols_num;
+					break;
+				}
+			}
+		}
+		return affected_symbols_num;
+	};
+	
+	const auto symbols_num = map->getNumSymbols();
+	auto affected_symbols_num = 0;
+	for (auto i = 0; i < symbols_num; ++i)
+	{
+		affected_symbols_num += count_symbols(map->getSymbol(i));
+	}
+	const auto map_parts_num = map->getNumParts();
+	auto affected_objects_num = 0;
+	for (auto i = 0; i < map_parts_num; ++i)
+	{
+		const auto map_part = map->getPart(i);
+		const auto map_part_objects = map_part->getNumObjects();
+		for (auto j = 0; j < map_part_objects; ++j)
+		{
+			const auto *obj = map_part->getObject(j);
+			if (obj)
+				affected_objects_num += count_symbols(obj->getSymbol());
+		}
+	}
+	
+	if (affected_colors_num || affected_symbols_num)
+	{
+		if (!affected_symbols_num)
+		{
+		if (QMessageBox::warning(this, tr("Confirmation"),
+								 tr("%n map color(s) use spot color \"%1\"."
+									" Deleting it will remove the spot color from these map colors."
+									" Do you really want to do that?",
+									nullptr,
+									affected_colors_num).arg(color_to_be_removed->getSpotColorName()),
+								 QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+			return;
+		}
+		else
+		{
+			QString warning_text = tr("The map contains %n symbol(s)", nullptr, affected_symbols_num);
+			if (affected_objects_num)
+			{
+				if (affected_colors_num)
+					warning_text += tr(", %n object(s)", nullptr, affected_objects_num);
+				else
+					warning_text += tr("and %n object(s)", nullptr, affected_objects_num);
+			}
+			if (affected_colors_num)
+				warning_text += tr(" and %n other map color(s)", nullptr, affected_colors_num);
+			warning_text +=  tr(" with this color. Deleting it will remove the color from them! Do you really want to do that?");
+			
+			QMessageBox msgBox;
+			msgBox.setWindowTitle(tr("Confirmation"));
+			msgBox.setIcon(QMessageBox::Warning);
+			msgBox.setText(warning_text);
+			if (affected_colors_num)
+			{
+				QString detailed_text = tr("Map color \"%1\" defines spot color \"%2\"."
+										" %n other map color(s) use this spot color."
+										" Deleting the map color will remove the spot color from these map colors.",
+										nullptr,
+										affected_colors_num).arg(color_to_be_removed->getName(), color_to_be_removed->getSpotColorName());
+				msgBox.setDetailedText(detailed_text);
+			}
+			msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+			if (msgBox.exec() == QMessageBox::No)
 				return;
 		}
 	}
