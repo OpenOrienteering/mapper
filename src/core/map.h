@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -470,9 +470,9 @@ public:
 	bool isColorUsedByASymbol(const MapColor* color) const;
 	
 	/**
-	 * Returns the number of map colors which use the given spot color.
+	 * Returns the map colors which use the given spot color.
 	 */
-	int countSpotColorUsage(const MapColor* spot_color) const;
+	void determineSpotColorUsage(const MapColor* spot_color, std::vector< const MapColor* >& out) const;
 	
 	/**
 	 * Checks which colors are in use by the symbols in this map.

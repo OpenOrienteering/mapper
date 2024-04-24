@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1308,17 +1308,20 @@ bool Map::isColorUsedByASymbol(const MapColor* color) const
 	return false;
 }
 
-int Map::countSpotColorUsage(const MapColor* spot_color) const
+void Map::determineSpotColorUsage(const MapColor* spot_color, std::vector< const MapColor* >& out) const
 {
-	auto is_match = [spot_color](const SpotColorComponent& component) {
-		return component.spot_color == spot_color;
-	};
-	return std::accumulate(begin(color_set->colors), end(color_set->colors), 0, [is_match](int count, const MapColor* c) {
-		const auto& composition = c->getComponents();
-		if (std::any_of(begin(composition), end(composition), is_match))
-			++count;
-		return count;
-	});
+	for (auto color : color_set->colors)
+	{
+		const auto& composition = color->getComponents();
+		for (auto component : composition)
+		{
+			if (component.spot_color == spot_color)
+			{
+				out.push_back(color);
+				break;
+			}
+		}
+	}
 }
 
 void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out) const
