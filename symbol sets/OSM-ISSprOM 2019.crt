@@ -79,30 +79,30 @@
 213    landuse = quarry AND resource = sand
 520    landuse = residential
 414    landuse = vineyard
+402    landuse = village_green
 
 401    leisure = park
 401    leisure = pitch
-
-531    leisure = picnic_table
+401    leisure = playground AND playground != sandpit
+213    playground = sandpit
+520    leisure = garden AND access = private
 
 501.8  highway = cycleway
 
-505.1  highway = footway
+501.6  highway = footway
+501    (highway = footway OR highway = pedestrian) AND area = yes
 
 526    highway = milestone
 
 501.19 highway = primary
-501.18 highway = primary_link
 501.19 highway = secondary
-501.18 highway = secondary_link
 501.9  highway = tertiary
-501.8  highway = tertiary_link
 
-506    highway = path
-505.1  highway = path AND (smoothness = good OR smoothness = intermediate)
-506    highway = path AND (smoothness = bad OR smoothness = very_bad)
-507    highway = path AND (smoothness = horrible OR smoothness = very_horrible)
+505.1  highway = path
+501.6  highway = path AND (surface = paved OR surface = asphalt OR surface = paving_stones OR surface = sett OR surface = chipseal)
+506    highway = path AND (informal = yes OR surface = grass OR surface = mud OR surface = ground OR surface = earth OR surface = dirt)
 
+532.7  highway = steps
 
 505.2  highway = track
 501.8  highway = track AND (smoothness = good OR smoothness = intermediate)
