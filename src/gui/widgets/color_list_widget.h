@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014, 2017 Kai Pastor
+ *    Copyright 2012-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,7 +23,6 @@
 #define OPENORIENTEERING_COLOR_LIST_WIDGET_H
 
 #include <QObject>
-#include <QString>
 #include <QWidget>
 
 class QAction;
@@ -76,6 +75,7 @@ protected:
 private:
 	void addRow(int row);
 	void updateRow(int row);
+	bool confirmColorDeletion(const OpenOrienteering::MapColor* color_to_be_removed) const;
 	
 	// Color list
 	QTableWidget* color_table;
