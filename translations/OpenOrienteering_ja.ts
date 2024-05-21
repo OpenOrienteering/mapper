@@ -11,7 +11,7 @@
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation>オリエンテーリングの地図を描画するためのソフトウェア</translation>
+        <translation>オリエンテーリング地図作成のためのソフトウェア</translation>
     </message>
     <message>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
@@ -56,12 +56,12 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="192"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation>アルファベット順の OpenOrienteering 開発者:</translation>
+        <translation>OpenOrienteering 開発者 (アルファベット順) :</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="193"/>
         <source>(project initiator)</source>
-        <translation>(プロジェクト開始)</translation>
+        <translation>(プロジェクト創始者)</translation>
     </message>
     <message>
         <source>License (%1)</source>
@@ -4113,7 +4113,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1040"/>
         <source>Draw paths</source>
-        <translation>コースを描画</translation>
+        <translation>パスを描画</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1041"/>
@@ -4667,7 +4667,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2527"/>
         <source>Draw paths free-handedly.</source>
-        <translation>フリーハンドでコースを描画します。</translation>
+        <translation>フリーハンドでパスを描画します。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2529"/>
@@ -4696,7 +4696,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2642"/>
         <source>Select at least two area or path objects activate this tool.</source>
-        <translation>少なくとも 2 つのエリアまたはパスオブジェクトを選択して、このツールを有効にします。</translation>
+        <translation>このツールを有効にするには、少なくとも 2 つのエリアまたはパスオブジェクトを選択してください。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2644"/>
@@ -5090,7 +5090,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2617"/>
         <source>Connect endpoints of paths which are close together.</source>
-        <translation>近接しているコースの終点を接続します。</translation>
+        <translation>近接するパスの終点を接続します。</translation>
     </message>
     <message>
         <source>Cut the selected object(s) into smaller parts.</source>
@@ -5146,7 +5146,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2623"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
-        <translation>直線のパスをスムーズなベジエ曲線に変えます。</translation>
+        <translation>直線セグメントからなるパスを滑らかなベジェスプラインに変換します。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2623"/>
@@ -5157,7 +5157,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2625"/>
         <source>Reduce the number of points in path objects while trying to retain their shape.</source>
-        <translation>パスオブジェクト内のポイントを(パスの形が変わらない範囲で)減らします。</translation>
+        <translation>パスオブジェクトの形状を維持しながら、ポイントの数を減らします。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2659"/>
@@ -9325,7 +9325,7 @@ Failed to load template. Does the file exist and is it valid?</source>
         <location filename="../src/templates/template_track.cpp" line="573"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
-            <numerusform>%n コース オブジェクトをインポートできませんでした (理由: 座標が見つかりません)。</numerusform>
+            <numerusform>%n パス オブジェクトをインポートできませんでした (理由: 座標が見つかりません)。</numerusform>
         </translation>
     </message>
     <message>
