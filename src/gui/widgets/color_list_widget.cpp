@@ -163,6 +163,13 @@ ColorListWidget::ColorListWidget(Map* map, MainWindow* window, QWidget* parent)
 	header_view->setSectionResizeMode(5, QHeaderView::Fixed); // Knockout
 	header_view->resizeSection(5, 32);
 	header_view->setSectionsClickable(false);
+	if (map->getNumColors() == 0)
+	{
+		header_view->resizeSection(1, 160); // Name
+		header_view->resizeSection(2, 128); // Spot colors
+		header_view->resizeSection(3, 96);  // CMYK
+		header_view->resizeSection(4, 64);  // RGB
+	}
 	
 	currentCellChange(color_table->currentRow(), 0, 0, 0);	// enable / disable move color buttons
 	
