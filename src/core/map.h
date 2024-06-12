@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2020, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -489,6 +489,16 @@ public:
 	 */
 	bool hasAlpha() const;
 	
+	/**
+	 * Applies a const operation on all colors which match a particular condition.
+	 */
+	void applyOnMatchingColors(const std::function<void (const MapColor*)>& operation, const std::function<bool (const MapColor*)>& condition) const;
+	
+	/**
+	 * Applies a const operation on all colors.
+	 */
+	void applyOnAllColors(const std::function<void (const MapColor*)>& operation) const;
+	
 	
 	// Symbols
 	
@@ -578,6 +588,16 @@ public:
 	 * display the symbols indicated by the bitfield because of symbol dependencies.
 	 */
 	void determineSymbolUseClosure(std::vector< bool >& symbol_bitfield) const;
+	
+	/**
+	 * Applies a const operation on all symbols which match a particular condition.
+	 */
+	void applyOnMatchingSymbols(const std::function<void (const Symbol*)>& operation, const std::function<bool (const Symbol*)>& condition) const;
+	
+	/**
+	 * Applies a const operation on all symbols.
+	 */
+	void applyOnAllSymbols(const std::function<void (const Symbol*)>& operation) const;
 	
 	/**
 	 * Returns the scale factor to be used for default symbol icons.
