@@ -719,6 +719,15 @@ void XMLFileImporter::validateGeoreferencing()
 	auto const& loaded_georef = map->getGeoreferencing();
 	if (loaded_georef.getState() != Georeferencing::Geospatial)
 		return;
+
+	// Check for 'is_realization' not set.
+	if (!loaded_georef.isDatumBallpark()
+		&& Georeferencing::ballpark_geographic_crs_spec == loaded_georef.getGeographicCRSSpec())
+	{
+		addWarning(tr("This map was saved by an older version of Mapper, "
+					  "with less accurate template alignment.\n\n"
+					  "Adjust Georeferencing to confirm or change."));
+	}
 	
 	// Check for georeferencings with inconsistent declination/grivation,
 	// e.g. from GH-1206 (georef setup bug)
