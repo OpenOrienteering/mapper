@@ -114,6 +114,7 @@ set(Mapper_Common_SRCS
   
   core/symbols/area_symbol.cpp
   core/symbols/combined_symbol.cpp
+  core/symbols/html_symbol_report.cpp
   core/symbols/line_symbol.cpp
   core/symbols/point_symbol.cpp
   core/symbols/symbol.cpp
@@ -175,6 +176,7 @@ set(Mapper_Common_SRCS
   gui/symbols/symbol_properties_widget.cpp
   gui/symbols/symbol_replacement.cpp
   gui/symbols/symbol_replacement_dialog.cpp
+  gui/symbols/symbol_report_feature.cpp
   gui/symbols/symbol_setting_dialog.cpp
   gui/symbols/text_symbol_settings.cpp
   
