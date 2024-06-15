@@ -47,6 +47,7 @@
 #include <QDir>
 #include <QDockWidget>
 #include <QEvent>
+#include <QFileDialog>
 #include <QFileInfo>
 #include <QFlags>
 #include <QFont>
@@ -78,6 +79,7 @@
 #include <QPushButton>
 #include <QRect>
 #include <QRectF>
+#include <QSaveFile>
 #include <QSettings>
 #include <QSignalBlocker>
 #include <QSignalMapper>
@@ -127,6 +129,7 @@
 #include "gui/map/map_widget.h"
 #include "gui/map/rotate_map_dialog.h"
 #include "gui/symbols/symbol_replacement.h"
+#include "gui/symbols/symbol_report_feature.h"
 #include "gui/widgets/action_grid_bar.h"
 #include "gui/widgets/color_list_widget.h"
 #include "gui/widgets/compass_display.h"
@@ -477,6 +480,7 @@ void MapEditorController::setEditingInProgress(bool value)
 		scale_all_symbols_act->setEnabled(!editing_in_progress);
 		load_symbols_from_act->setEnabled(!editing_in_progress);
 		load_crt_act->setEnabled(!editing_in_progress);
+		symbol_report_feature->setEnabled(!editing_in_progress);
 		
 		// Templates menu
 		paint_feature->setEnabled(!editing_in_progress);
@@ -1019,6 +1023,7 @@ void MapEditorController::createActions()
 	load_symbols_from_act = newAction("loadsymbols", tr("Replace symbol set..."), this, SLOT(loadSymbolsFromClicked()), nullptr, tr("Replace the symbols with those from another map file"), "symbol_replace_dialog.html");
 	load_crt_act = newAction("loadcrt", tr("Load CRT file..."), this, SLOT(loadCrtClicked()), nullptr, tr("Assign new symbols by cross-reference table"), "symbol_replace_dialog.html");
 	/*QAction* load_colors_from_act = newAction("loadcolors", tr("Load colors from..."), this, SLOT(loadColorsFromClicked()), nullptr, tr("Replace the colors with those from another map file"));*/
+	symbol_report_feature = std::make_unique<SymbolReportFeature>(*this);
 	
 	scale_all_symbols_act = newAction("scaleall", tr("Scale all symbols..."), this, SLOT(scaleAllSymbolsClicked()), nullptr, tr("Scale the whole symbol set"), "map_menu.html");
 	georeferencing_act = newAction("georef", tr("Georeferencing..."), this, SLOT(editGeoreferencing()), nullptr, QString{}, "georeferencing.html");
@@ -1271,6 +1276,8 @@ void MapEditorController::createMenuAndToolbars()
 	symbols_menu->addAction(load_symbols_from_act);
 	symbols_menu->addAction(load_crt_act);
 	/*symbols_menu->addAction(load_colors_from_act);*/
+	symbols_menu->addSeparator();
+	symbols_menu->addAction(symbol_report_feature->showDialogAction());
 	
 	// Templates menu
 	QMenu* template_menu = window->menuBar()->addMenu(tr("&Templates"));
