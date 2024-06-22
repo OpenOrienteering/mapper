@@ -22,12 +22,13 @@
 
 #include <QtTest>
 
-#include "global.h"
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
 
 using namespace OpenOrienteering;
+
+Q_DECLARE_METATYPE(MapCoord*)
 
 
 namespace QTest
@@ -1145,6 +1146,63 @@ void PathObjectTest::atypicalPathTest()
 		QCOMPARE(std::size_t(split.path_coord_index), i);
 		auto tangent = split.tangentVector();
 		QVERIFY(qIsNull(tangent.lengthSquared()));
+	}
+}
+
+
+
+void PathObjectTest::recalculatePartsTest_data()
+{
+	static MapCoord coords[] = {
+		{ 0.0, 0.0 }, { 1.0, 0.0 }, { 1.0, 1.0 }, { 0.0, 1.0 }, { 0.0, 0.0, MapCoord::HolePoint },
+		{ 2.0, 2.0 }, { 2.0, 3.0 }, { 3.0, 3.0, MapCoord::HolePoint },
+		{ 4.0, 4.0, MapCoord::HolePoint },
+		{ 6.0, 6.0 }, { 6.0, 5.0 },
+	};
+	QTest::addColumn<MapCoord*>("first");
+	QTest::addColumn<MapCoord*>("last");  // STL sense
+	QTest::addColumn<int>("expected_size");
+	
+	QTest::newRow("0.") << coords+0 << coords+0 << 0;
+	QTest::newRow("1.") << coords+0 << coords+1 << 1;  // maybe not desired
+	QTest::newRow("2.") << coords+0 << coords+2 << 1;  // maybe not desired for areas
+	QTest::newRow("3.") << coords+0 << coords+3 << 1;
+	QTest::newRow("4.") << coords+0 << coords+4 << 1;
+	QTest::newRow("5.") << coords+0 << coords+5 << 1;
+	QTest::newRow("5;1.") << coords+0 << coords+6 << 2;  // maybe not desired
+	QTest::newRow("5;2.") << coords+0 << coords+7 << 2;  // maybe not desired for areas
+	QTest::newRow("5;3.") << coords+0 << coords+8 << 2;
+	QTest::newRow("5;3;1.") << coords+0 << coords+9 << 3;  // maybe not desired
+	QTest::newRow("5;3;1;1.") << coords+0 << coords+10 << 4;  // maybe not desired
+}
+
+void PathObjectTest::recalculatePartsTest()
+{
+	QFETCH(MapCoord*, first);
+	QFETCH(MapCoord*, last);
+	QFETCH(int, expected_size);
+	
+	// The constructor calls PathObject::recalculateParts().
+	PathObject path { nullptr, MapCoordVector(first, last), nullptr };
+	{
+		auto& initial_parts = path.parts();
+		QCOMPARE(initial_parts.size(), expected_size);
+		
+		for (auto& initial_part : initial_parts)
+		{
+			QVERIFY(initial_part.first_index <= initial_part.last_index);
+		}
+	}
+	
+	path.updatePathCoords();
+	{
+		auto& updated_parts = path.parts();
+		QCOMPARE(updated_parts.size(), expected_size);
+		
+		for (auto& updated_part : updated_parts)
+		{
+			QVERIFY(updated_part.first_index <= updated_part.last_index);
+		}
 	}
 }
 

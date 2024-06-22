@@ -89,18 +89,17 @@ VirtualCoordVector::size_type PathCoordVector::update(VirtualCoordVector::size_t
 	{	
 		Q_ASSERT(virtual_coords.size() == flags.size());
 		
+		clear();
+		
 		if (flags[part_start].isHolePoint())
 		{
 			auto pos = virtual_coords[0];
 			qWarning("PathCoordVector at %g %g (mm) has an invalid hole at index %d.",
 			         pos.x(), -pos.y(), part_start);
+			return part_start;
 		}
 		
-		clear();
-		if (empty() || (part_start > 0 && flags[part_start-1].isHolePoint()))
-		{
-			emplace_back(virtual_coords[part_start], part_start, 0.0, 0.0);
-		}
+		emplace_back(virtual_coords[part_start], part_start, 0.0, 0.0);
 		
 		for (auto index = part_start + 1; index <= part_end; ++index)
 		{

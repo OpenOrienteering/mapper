@@ -1660,6 +1660,13 @@ TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol)
 	setBasicAttributes(symbol, convertOcdString(ocd_symbol.font_name), ocd_symbol.basic);
 	setSpecialAttributes(symbol, ocd_symbol.special);
 	setFraming(symbol, ocd_symbol.framing);
+	if (ocd_version >= 10)
+	{
+		if (ocd_symbol.framing.point_symbol_on_V10)
+			addSymbolWarning(symbol, OcdFileImport::tr("Skipping unsupported reference to point symbol '%1.%2'.") .
+			                         arg(ocd_symbol.framing.point_symbol_number_V10 / S::BaseSymbol::symbol_number_factor) .
+			                         arg(ocd_symbol.framing.point_symbol_number_V10 % S::BaseSymbol::symbol_number_factor));
+	}
 	symbol->setRotatable(ocd_symbol.base.flags & Ocd::SymbolRotatable);
 	return symbol;
 }

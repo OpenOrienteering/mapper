@@ -77,17 +77,19 @@
 401    leisure = park
 401    leisure = pitch
 
+531    leisure = picnic_table
+
 503    highway = cycleway
-
-
 
 502.2  highway = motorway
 502    highway = motorway_link
 
-
 502    highway = primary
+502    highway = primary_link
 502    highway = secondary
+502    highway = secondary_link
 502    highway = tertiary
+502    highway = tertiary_link
 
 504    highway = track
 503    highway = track AND (smoothness = good OR smoothness = intermediate)
@@ -134,7 +136,10 @@
 521    tourism = alpine_hut
 531    tourism = artwork
 521    tourism = chalet
+531    tourism = information AND (information = guidepost OR information = map OR information = board)
 
+531    historic = memorial
+531    historic = wayside_cross
 
 531    pipeline = marker
 

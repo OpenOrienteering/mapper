@@ -1,5 +1,5 @@
 /*
- *    Copyright 2018 Kai Pastor
+ *    Copyright 2018, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -117,7 +117,7 @@ private slots:
 		QVERIFY(actual_track.saveTo(filename_tmp));
 		
 		auto readAll = [](QFile&& file) -> QByteArray {
-			file.open(QIODevice::ReadOnly);
+			file.open(QIODevice::ReadOnly | QIODevice::Text);
 			return file.readAll();
 		};
 		const auto raw_tmp = readAll(QFile(filename_tmp));

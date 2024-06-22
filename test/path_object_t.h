@@ -75,6 +75,9 @@ private slots:
 	/** Tests PathCoord and SplitPathCoord for a non-trivial zero-length path. */
 	void atypicalPathTest();
 	
+	/** Tests recalculation of path parts from input coords. */
+	void recalculatePartsTest();
+	void recalculatePartsTest_data();
 };
 
 #endif

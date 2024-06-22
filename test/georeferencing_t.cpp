@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2021 Kai Pastor
+ *    Copyright 2012-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -42,6 +42,7 @@
 #endif
 
 #include "core/crs_template.h"
+#include "core/crs_template_implementation.h"
 #include "core/georeferencing.h"
 #include "core/latlon.h"
 #include "core/map_coord.h"
@@ -547,6 +548,44 @@ void GeoreferencingTest::testProjContextSetFileFinder()
 }
 
 #endif
+
+
+void GeoreferencingTest::testUTMZoneCalculation_data()
+{
+	// https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system
+	QTest::addColumn<double>("latitude");
+	QTest::addColumn<double>("longitude");
+	QTest::addColumn<QString>("zone");
+	
+	QTest::newRow("Tuebingen") << degFromDMS(48, 31, 0) << degFromDMS( 9, 3, 0) << QStringLiteral("32 N");
+	QTest::newRow("Anchorage") << 61.217 << -149.885 << QStringLiteral("06 N");
+	QTest::newRow("Sydney") << -33.857 << 151.215 << QStringLiteral("56 S");
+	// South Norway: Zone 32 is extended 3° further west
+	QTest::newRow("South Norway") << 59.3068 << 4.871 << QStringLiteral("32 N");
+	// Svalbard: zones 32, 34 and 36 are not used, while zones 31 (9° wide), 33 (12° wide), 35 (12° wide), and 37 (9° wide) 
+	// are extended to cover the gaps
+	QTest::newRow("Svalbard1") << 72.0 << 3.0 << QStringLiteral("31 N");
+	QTest::newRow("Svalbard2") << 72.0 << 8.99 << QStringLiteral("31 N");
+	QTest::newRow("Svalbard3") << 72.0 << 9.0 << QStringLiteral("33 N");
+	QTest::newRow("Svalbard4") << 72.0 << 20.99 << QStringLiteral("33 N");
+	QTest::newRow("Svalbard5") << 72.0 << 21.0 << QStringLiteral("35 N");
+	QTest::newRow("Svalbard6") << 72.0 << 32.99 << QStringLiteral("35 N");
+	QTest::newRow("Svalbard7") << 72.0 << 33.0 << QStringLiteral("37 N");
+	QTest::newRow("Svalbard8") << 72.0 << 39.0 << QStringLiteral("37 N");
+}
+
+void GeoreferencingTest::testUTMZoneCalculation()
+{
+	QFETCH(double, latitude);
+	QFETCH(double, longitude);
+	
+	const auto latlon = LatLon{latitude, longitude};
+	auto calculated_zone = CRSTemplates::UTMZoneParameter::calculateUTMZone(latlon);
+	QVERIFY(!calculated_zone.isNull());
+	
+	QFETCH(QString, zone);
+	QCOMPARE(calculated_zone.toString(), zone);
+}
 
 
 

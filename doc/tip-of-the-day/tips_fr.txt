@@ -6,11 +6,8 @@ Les objets inutiles pour les compétiteurs dans une course d'orientation de spri
 L'objectif du cartographe est de produire une carte précise et lisible en appliquant les principes spécifiques et généraux suivant : sélection, simplification et exagération.
 Cartographier des structures multi-niveaux (pont, passages souterrains ou batîments souterrains) est source de confusion. En général, seul le "niveau principal de course" doit apparaître. Cependant les passages souterrains, tunnel éclairés ou les passages aériens comme les ponts qui sont utiles pour les orienteurs doivent être cartographiés.
 Toutes les largeurs de lignes et les tailles des symboles doivent conserver leur valeur spécifiée. Certaines dimensions minimales doivent être respectées pour apparaître correctement à l'impression et permettre une bonne lisibilité de la carte.
-Écart minimum entre deux symboles de ligne de la même couleur :<br/>en brun ou noir : 0,15 mm<br/>en bleu : 0,25 mm
-Écart minimum entre deux symboles de surface de la même couleur : en noir : 0,15 mm
 Pour les lignes en pointillés : au moins deux pointillés doivent apparaître
 Pour les lignes en tirets : au moins deux tirets doivent apparaître
-Les surfaces délimitées par des lignes tirets doivent avoir un diamètre au moins égal à 1,5 mm et être composées d'au moins 5 tirets
-Les surfaces de couleurs doivent avoir un diamètre minimum :<br/>Bleu, vert, gris ou jaune en plein : 0,5 mm²; <br/>Pointillés noirs : 0,5 mm²; <br/>Bleu, marron, vert ou jaune en pointillés : 1,0 mm²
+Les surfaces délimitées par des lignes tirets doivent avoir un diamètre au moins égal à 2,0 mm et être composées d'au moins 5 tirets
 Tous les objets plus petits que les dimensions minimums doivent être exagérées (agrandies sur la carte) ou ne pas apparaître, en fonction de leur utilité ou non pour les orienteurs.
-La taille d'une carte de sprint ne doit pas dépasser le format A4.
+La taille d'une carte de sprint ne doit pas dépasser le format A3.

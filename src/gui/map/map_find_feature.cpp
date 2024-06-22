@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017-2020 Kai Pastor
+ *    Copyright 2017-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -153,7 +153,7 @@ ObjectQuery MapFindFeature::makeQuery() const
 			auto text = text_edit->toPlainText().trimmed();
 			if (!text.isEmpty())
 			{
-				query = ObjectQueryParser().parse(text);
+				query = ObjectQueryParser(controller.getMap()).parse(text);
 				if (!query || query.getOperator() == ObjectQuery::OperatorSearch)
 					query = ObjectQuery{ ObjectQuery(ObjectQuery::OperatorSearch, text),
 					        ObjectQuery::OperatorOr,

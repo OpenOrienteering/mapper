@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2021 Kai Pastor
+#    Copyright 2012-2024 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -19,6 +19,13 @@
  
 cmake_minimum_required(VERSION 3.7 FATAL_ERROR)
 
+if(POLICY CMP0115)
+    cmake_policy(SET CMP0115 NEW)
+endif()
+if(POLICY CMP0135)
+    cmake_policy(SET CMP0135 NEW)
+endif()
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(FeatureSummary)
@@ -32,7 +39,7 @@ option(CMAKE_FIND_PACKAGE_PREFER_CONFIG "Lookup package config files before usin
 # Project declaration
 
 project(Mapper VERSION 0.9.6 LANGUAGES CXX C)
-set(Mapper_COPYRIGHT "(C) 2021 The OpenOrienteering developers")
+set(Mapper_COPYRIGHT "(C) 2024 The OpenOrienteering developers")
 
 math(EXPR Mapper_VERSION_CODE "${Mapper_VERSION_MAJOR} * 10000 + ${Mapper_VERSION_MINOR} * 100 + ${Mapper_VERSION_PATCH} * 2 + ${CMAKE_SIZEOF_VOID_P} / 4 - 1")
 

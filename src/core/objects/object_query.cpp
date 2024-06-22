@@ -1,6 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
- *    Copyright 2017-2022 Kai Pastor
+ *    Copyright 2017-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -637,6 +637,11 @@ bool operator==(const ObjectQuery& lhs, const ObjectQuery& rhs)
 
 
 // ### ObjectQueryParser ###
+
+ObjectQueryParser::ObjectQueryParser(const Map* map)
+: map{map}
+{}
+
 
 void ObjectQueryParser::setMap(const Map* map)
 {

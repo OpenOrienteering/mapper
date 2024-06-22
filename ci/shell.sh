@@ -6,7 +6,10 @@ if [ -n "${MINGW}" ] ; then
 fi
 
 unset UNBUFFER
-if [ -f /usr/bin/stdbuf ] ; then
+if [ -n "${MINGW}" ] ; then
+  : # msys stdbuf breaking msys binaries?
+  : # C:\msys2\usr\bin\make.exe: *** fatal error - error while loading shared libraries: C: cannot open shared object file: No such file or directory
+elif [ -f /usr/bin/stdbuf ] ; then
   UNBUFFER="/usr/bin/stdbuf -oL"
 elif [ -f /usr/bin/unbuffer ] ; then
   UNBUFFER="/usr/bin/unbuffer"
