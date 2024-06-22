@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021 Kai Pastor
+ *    Copyright 2012-2021, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,8 +20,7 @@
 
 #include "file_format_t.h"
 
-#include <array>
-#include <initializer_list>
+#include <algorithm>
 #include <limits>
 #include <memory>
 #include <stdexcept>
@@ -74,7 +73,10 @@
 #include "fileformats/iof_course_export.h"
 #include "fileformats/kml_course_export.h"
 #include "fileformats/ocd_file_export.h"
+#include "fileformats/ocd_file_import.h"
 #include "fileformats/ocd_file_format.h"
+#include "fileformats/ocd_types_v8.h"
+#include "fileformats/ocd_types_v12.h"
 #include "fileformats/simple_course_export.h"
 #include "fileformats/xml_file_format.h"
 #include "templates/template.h"
@@ -1159,6 +1161,143 @@ void FileFormatTest::importTemplateTest()
 		auto* temp = map.getTemplate(0);
 		temp->loadTemplateFile();
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
+	}
+}
+
+
+struct TestOcdFileExport : public OcdFileExport
+{
+	explicit TestOcdFileExport(const QString& path)
+	: OcdFileExport(path, nullptr, nullptr, 12)
+	{}
+
+	using OcdFileExport::exportTextData;
+};
+
+void FileFormatTest::ocdTextExportTest_data()
+{
+	QTest::addColumn<QString>("input");
+	QTest::addColumn<int>("expected_len");
+	QTest::addColumn<int>("first_null");
+	
+	// Between two chunks (size: 8)
+	QTest::newRow("0 chars") << ""                            <<  8 <<  0;
+	QTest::newRow("3 chars") << "123"                         <<  8 <<  6;
+	QTest::newRow("4 chars") << "1234"                        << 16 <<  8;
+	
+	// End of last chunk (max chunks: 2)
+	QTest::newRow("7 chars") << "1234567"                     << 16 << 14;
+	QTest::newRow("8 chars") << "12345678"                    << 16 << 14;
+	
+	// Trailing surrogate pair at end of last chunk
+	QTest::newRow("5+Yee")   << QString::fromUtf8("12345𐐷")   << 16 << 14;
+	QTest::newRow("6+Yee")   << QString::fromUtf8("123456𐐷")  << 16 << 12;
+	QTest::newRow("7+Yee")   << QString::fromUtf8("1234567𐐷") << 16 << 14;
+}
+
+void FileFormatTest::ocdTextExportTest()
+{
+	QFETCH(QString, input);
+	QFETCH(int, expected_len);
+	QFETCH(int, first_null);
+
+	TestOcdFileExport ocd_export{{}};
+
+	TextObject object;
+	object.setText(input);
+	auto exported = ocd_export.exportTextData(&object, /* chunk_size */ 8, /* max_chunks */ 2);
+	QCOMPARE(exported.length(), expected_len);
+	QCOMPARE(exported[first_null], '\0');
+	QCOMPARE(exported[first_null+1], '\0');
+	if(first_null > 0)
+		QVERIFY(exported[first_null-2] != '\0');
+	QCOMPARE(exported.back(), '\0');
+}
+
+
+struct TestOcdFileImport : public OcdFileImport
+{
+	explicit TestOcdFileImport(int ocd_version)
+		: OcdFileImport({}, nullptr, nullptr)
+	{
+		this->ocd_version = ocd_version;
+	}
+	
+	using OcdFileImport::getObjectText;
+};
+
+void FileFormatTest::ocdTextImportTest_data()
+{
+	QTest::addColumn<QString>("string");
+	QTest::addColumn<int>("num_chars");
+	QTest::addColumn<QString>("expected");
+	
+	const QString string1 = QLatin1String("123456789abcdef") + QChar::Null + QLatin1String("789ABCDEF");
+	QTest::newRow("0 from 0")   << string1.left(0)  <<  0 << string1.left(0);
+	QTest::newRow("0 from 5")   << string1.left(5)  <<  0 << string1.left(0);
+	QTest::newRow("13 from 13") << string1.left(13) << 13 << string1.left(13);
+	QTest::newRow("15 from 20") << string1.left(20) << 15 << string1.left(15);
+	QTest::newRow("16 from 20") << string1.left(20) << 16 << string1.left(15);
+	QTest::newRow("20 from 20") << string1.left(20) << 20 << string1.left(15);
+	
+	const QString string2 = QLatin1String("\r\n123");
+	QTest::newRow("\\r\\n")     << string2.left(2)  <<  0 <<  string2.mid(2, 0);
+	QTest::newRow("\\r\\n123")  << string2.left(5)  <<  5 <<  string2.mid(2, 3);
+}
+
+void FileFormatTest::ocdTextImportTest()
+{
+	QFETCH(QString, string);
+	QFETCH(int, num_chars);
+	QFETCH(QString, expected);
+	
+	{
+		TestOcdFileImport ocd_v8_import{8};
+		Ocd::FormatV8::Object buffer[8]; // large enough to hold more than the string
+		auto& ocd_object = buffer[0];
+		ocd_object.num_items = 4; // arbitrary offset, here: 32 bytes
+		ocd_object.num_text = (num_chars * sizeof(QChar) + sizeof(Ocd::OcdPoint32) - 1) / sizeof(Ocd::OcdPoint32);
+		ocd_object.unicode = 1;
+		
+		auto* first = reinterpret_cast<QChar*>(reinterpret_cast<Ocd::OcdPoint32*>(ocd_object.coords) + ocd_object.num_items);
+		auto* tail = std::copy(string.begin(), string.end(), first);
+		
+		// Must not read behind the reserved space.
+		auto num_reserved = int(ocd_object.num_text * sizeof(Ocd::OcdPoint32) / sizeof(QChar));
+		std::fill(tail, first + std::max(num_reserved, string.length()) + 1, QChar::Space);
+		QVERIFY(ocd_v8_import.getObjectText(ocd_object).length() <= num_reserved);
+		
+		// With zero at the end of the reserved space, the output must begin with the expected text.
+		*(first + num_reserved - 1) = QChar::Null;
+		QVERIFY(ocd_v8_import.getObjectText(ocd_object).startsWith(expected));
+		
+		// With zero at the end of the input text, the output must match the expected text.
+		*tail = QChar::Null;
+		QCOMPARE(ocd_v8_import.getObjectText(ocd_object), expected);
+	}
+	
+	{
+		TestOcdFileImport ocd_v12_import{12};
+		Ocd::FormatV12::Object buffer[8]; // large enough to hold more than the string
+		auto& ocd_object = buffer[0];
+		ocd_object.num_items = 4; // arbitrary offset, here: 32 bytes
+		ocd_object.num_text = (num_chars * sizeof(QChar) + sizeof(Ocd::OcdPoint32) - 1) / sizeof(Ocd::OcdPoint32);
+		
+		auto* first = reinterpret_cast<QChar*>(reinterpret_cast<Ocd::OcdPoint32*>(ocd_object.coords) + ocd_object.num_items);
+		auto* tail = std::copy(string.begin(), string.end(), first);
+		
+		// Must not read behind the reserved space.
+		auto num_reserved = int(ocd_object.num_text * sizeof(Ocd::OcdPoint32) / sizeof(QChar));
+		std::fill(tail, first + std::max(num_reserved, string.length()) + 1, QChar::Space);
+		QVERIFY(ocd_v12_import.getObjectText(ocd_object).length() <= num_reserved);
+		
+		// With zero at the end of the reserved space, the output must begin with the expected text.
+		*(first + num_reserved - 1) = QChar::Null;
+		QVERIFY(ocd_v12_import.getObjectText(ocd_object).startsWith(expected));
+		
+		// With zero at the end of the input text, the output must match the expected text.
+		*tail = QChar::Null;
+		QCOMPARE(ocd_v12_import.getObjectText(ocd_object), expected);
 	}
 }
 

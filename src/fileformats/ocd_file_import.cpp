@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2024 Kai Pastor
+ *    Copyright 2013-2022, 2024 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -1974,13 +1974,24 @@ QString OcdFileImport::getObjectText(const Ocd::ObjectV8& ocd_object) const
 	return object_text;
 }
 
+namespace {
+	
+QString fromRawOcdChars(const QChar* first, const QChar* last)
+{
+	if (first != last && first + 1 != last && first[0] == QChar::CarriageReturn && first[1] == QChar::LineFeed)
+		first += 2;
+	last = std::find(first, last, QChar::Null);
+	return QString(first, std::distance(first, last));
+}
+
+}
+
 template< class O >
 QString OcdFileImport::getObjectText(const O& ocd_object) const
 {
-	auto data = reinterpret_cast<const QChar *>(ocd_object.coords + ocd_object.num_items);
-	if (data[0] == QLatin1Char{'\r'} && data[1] == QLatin1Char{'\n'})
-		data += 2;
-	return QString(data);
+	auto* first = reinterpret_cast<const Ocd::OcdPoint32*>(ocd_object.coords) + ocd_object.num_items;
+	auto* last = first + ocd_object.num_text;
+	return fromRawOcdChars(reinterpret_cast<const QChar*>(first), reinterpret_cast<const QChar*>(last));
 }
 
 
@@ -2419,6 +2430,10 @@ void OcdFileImport::handleStrings(const OcdFile<F>& file, std::initializer_list<
 		}
 	}
 }
+
+
+// explicit instantiation for tests
+template QString OcdFileImport::getObjectText(const Ocd::FormatV12::Object& ocd_object) const;
 
 
 }  // namespace OpenOrienteering

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021 Kai Pastor
+ *    Copyright 2012-2021, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -110,6 +110,17 @@ private slots:
 	void importTemplateTest_data();
 	void importTemplateTest();
 	
+	/**
+	 * Test text export to OCD.
+	 */
+	void ocdTextExportTest_data();
+	void ocdTextExportTest();
+	
+	/**
+	 * Test text import from OCD.
+	 */
+	void ocdTextImportTest_data();
+	void ocdTextImportTest();
 };
 
 #endif // OPENORIENTEERING_FILE_FORMAT_T_H
