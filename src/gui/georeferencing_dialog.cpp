@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -88,7 +88,7 @@
 
 namespace OpenOrienteering {
 
-Q_STATIC_ASSERT(Georeferencing::declinationPrecision() == Util::InputProperties<Util::RotationalDegrees>::decimals());
+Q_STATIC_ASSERT(static_cast<int>(Georeferencing::declinationPrecision()) == Util::InputProperties<Util::RotationalDegrees>::decimals());
 
 
 namespace  {

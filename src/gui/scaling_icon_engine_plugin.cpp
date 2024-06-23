@@ -1,5 +1,5 @@
 /*
- *    Copyright 2020 Kai Pastor
+ *    Copyright 2020-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,7 +22,7 @@
 
 #include <QIconEnginePlugin>
 
-#include "scaling_icon_engine.h"
+#include "gui/scaling_icon_engine.h"
 
 namespace OpenOrienteering {
 
