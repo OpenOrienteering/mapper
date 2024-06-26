@@ -172,7 +172,7 @@ public:
 	
 protected:	
 	/**
-	 * Saves undo properties to the the xml stream.
+	 * Saves undo properties to the xml stream.
 	 * 
 	 * Implementations in derived classes shall first call the parent class'
 	 * implementation, and then start a new element for additional properties.
@@ -180,7 +180,7 @@ protected:
 	virtual void saveImpl(QXmlStreamWriter& xml) const;
 	
 	/**
-	 * Loads undo properties from the the xml stream.
+	 * Loads undo properties from the xml stream.
 	 * 
 	 * Implementations in derived classes shall first check the element's name
 	 * for one of their own elements, and otherwise call the parent class'

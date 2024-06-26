@@ -92,7 +92,7 @@ public:
 	
 	
 	/**
-	 * Adds the the step's modified part to the container provided by out.
+	 * Adds the step's modified part to the container provided by out.
 	 * 
 	 * @return True if there are objects modified by this undo step, false otherwise.
 	 */
@@ -108,7 +108,7 @@ public:
 	
 protected:
 	/**
-	 * Saves undo properties to the the xml stream.
+	 * Saves undo properties to the xml stream.
 	 * 
 	 * Implementations in derived classes shall first call the parent class'
 	 * implementation, and then start a new element for additional properties.
@@ -116,14 +116,14 @@ protected:
 	void saveImpl(QXmlStreamWriter& xml) const override;
 	
 	/**
-	 * Saves object details to the the xml stream.
+	 * Saves object details to the xml stream.
 	 * 
 	 * The default implemenentation does nothing.
 	 */
 	virtual void saveObject(XmlElementWriter& xml, int index) const;
 	
 	/**
-	 * Loads undo properties from the the xml stream.
+	 * Loads undo properties from the xml stream.
 	 * 
 	 * Implementations in derived classes shall first check the element's name
 	 * for one of their own elements, and otherwise call the parent class'
@@ -132,7 +132,7 @@ protected:
 	void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict) override;
 	
 	/**
-	 * Loads object details from the the xml stream.
+	 * Loads object details from the xml stream.
 	 * 
 	 * The default implemenentation does nothing.
 	 */

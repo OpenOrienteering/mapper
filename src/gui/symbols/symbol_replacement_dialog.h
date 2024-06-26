@@ -52,7 +52,7 @@ class SymbolReplacementDialog : public QDialog
 public:
 	enum Mode
 	{
-		ReplaceSymbolSet,  ///< Replace all current current symbols
+		ReplaceSymbolSet,  ///< Replace all current symbols
 		AssignByPattern,   ///< Assign new symbols based on patterns
 	};
 	

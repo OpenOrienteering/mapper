@@ -2530,7 +2530,7 @@ void OcdFileExport::exportPathObject(OcdFile<Format>& file, const PathObject* pa
 	if (symbol && symbol->getContainedTypes() & Symbol::Area)
 	{
 		ocd_object.type = 3;  // Area symbol
-		// We we may get away with an object with holes,
+		// We may get away with an object with holes,
 		// but need to check the breakdown.
 		if (symbol->getType() == Symbol::Area)
 		{

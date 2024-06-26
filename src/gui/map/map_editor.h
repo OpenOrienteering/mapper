@@ -182,7 +182,7 @@ public:
 	bool isEditingInProgress() const override;
 	
 	/**
-	 * Adds a a floating dock widget to the main window.
+	 * Adds a floating dock widget to the main window.
 	 * Adjusts some geometric properties.
 	 */
 	void addFloatingDockWidget(QDockWidget* dock_widget);
@@ -305,7 +305,7 @@ public slots:
 	void followPositionClicked(bool enable);
 	/** Follow-position mode update handler. */
 	void followPositionUpdate(OpenOrienteering::MapCoordF position);
-	/** Zooms in in the current map widget. */
+	/** Zooms in the current map widget. */
 	void zoomIn();
 	/** Zooms out in the current map widget. */
 	void zoomOut();
