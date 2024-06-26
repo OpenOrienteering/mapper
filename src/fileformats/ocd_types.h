@@ -561,7 +561,7 @@ public:
 	/**
 	 * Constructs a new empty file.
 	 * 
-	 * The internal byte array is initialized with headers and and the
+	 * The internal byte array is initialized with headers and the
 	 * first index blocks for parameter strings, symbols and objects.
 	 */
 	OcdFile();

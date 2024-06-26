@@ -71,7 +71,7 @@ public slots:
 	 *  the most recently used file on startup. */
 	virtual void setOpenMRUFileChecked(bool state) = 0;
 	
-	/** Sets the text of the the tip-of-the-day. */
+	/** Sets the text of the tip-of-the-day. */
 	virtual void setTipOfTheDay(const QString& text) = 0;
 	
 	/** Sets the visibility of the tip-of-the-day, and
@@ -119,7 +119,7 @@ public slots:
 	 *  the most recently used file on startup. */
 	void setOpenMRUFileChecked(bool state) override;
 	
-	/** Sets the text of the the tip-of-the-day. */
+	/** Sets the text of the tip-of-the-day. */
 	void setTipOfTheDay(const QString& text) override;
 	
 	/** Sets the visibility of the tip-of-the-day, and
@@ -127,7 +127,7 @@ public slots:
 	void setTipsVisible(bool state) override;
 	
 protected slots:
-	/** Opens a file when its is list item is clicked. */
+	/** Opens a file when its list item is clicked. */
 	void recentFileClicked(QListWidgetItem* item);
 	
 protected:
@@ -173,7 +173,7 @@ public slots:
 	 *  the most recently used file on startup. */
 	void setOpenMRUFileChecked(bool state) override;
 	
-	/** Sets the text of the the tip-of-the-day. */
+	/** Sets the text of the tip-of-the-day. */
 	void setTipOfTheDay(const QString& text) override;
 	
 	/** Sets the visibility of the tip-of-the-day, and
@@ -184,7 +184,7 @@ public slots:
 	void showSettings();
 	
 protected:
-	/** Opens a file when its is list item is clicked. */
+	/** Opens a file when its list item is clicked. */
 	void itemClicked(QListWidgetItem* item);
 	
 	/** Rechecks the current selected item. */

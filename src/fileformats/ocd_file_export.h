@@ -73,7 +73,7 @@ class TextSymbol;
  *   We specialize the template function (as done in 
  *   `template<> void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)`).
  * - If the same algorithm can be used for multiple formats:
- *   - If the differences are completely represented by the the exporter's state
+ *   - If the differences are completely represented by the exporter's state
  *     (which captures version and parameter string handler), then we may just
  *     call into a non-template function (as done in
  *     `template<class Format> void OcdFileExport::exportSetup(OcdFile<Format>&)`.
