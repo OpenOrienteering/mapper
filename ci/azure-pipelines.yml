@@ -54,8 +54,8 @@ jobs:
   displayName: macOS (Release)
   dependsOn: Release_Notes
   variables:
-    IMAGE_NAME: 'macos-11'
-    SUPBERBUILD_IMAGE_NAME: 'macos-11'
+    IMAGE_NAME: 'macos-12'
+    SUPBERBUILD_IMAGE_NAME: 'macos-12'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     QT_STYLE_OVERRIDE: fusion
   pool:
@@ -155,8 +155,8 @@ jobs:
   displayName: Android arm-v7 (Release)
   dependsOn: Release_Notes
   variables:
-    IMAGE_NAME: 'macos-11'
-    SUPBERBUILD_IMAGE_NAME: 'macos-11'
+    IMAGE_NAME: 'macos-12'
+    SUPBERBUILD_IMAGE_NAME: 'macos-12'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: armv7a-linux-androideabi
     TARGET_SUFFIX: -$(TARGET)
@@ -192,8 +192,8 @@ jobs:
   displayName: Android arm64 (Release)
   dependsOn: Android_armv7
   variables:
-    IMAGE_NAME: 'macos-11'
-    SUPBERBUILD_IMAGE_NAME: 'macos-11'
+    IMAGE_NAME: 'macos-12'
+    SUPBERBUILD_IMAGE_NAME: 'macos-12'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: aarch64-linux-android
     TARGET_SUFFIX: -$(TARGET)
@@ -229,8 +229,8 @@ jobs:
   displayName: Android x86 (Release)
   dependsOn: Android_x86_64
   variables:
-    IMAGE_NAME: 'macos-11'
-    SUPBERBUILD_IMAGE_NAME: 'macos-11'
+    IMAGE_NAME: 'macos-12'
+    SUPBERBUILD_IMAGE_NAME: 'macos-12'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: i686-linux-android
     TARGET_SUFFIX: -$(TARGET)
@@ -266,8 +266,8 @@ jobs:
   displayName: Android x86_64 (Release)
   dependsOn: Release_Notes
   variables:
-    IMAGE_NAME: 'macos-11'
-    SUPBERBUILD_IMAGE_NAME: 'macos-11'
+    IMAGE_NAME: 'macos-12'
+    SUPBERBUILD_IMAGE_NAME: 'macos-12'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: x86_64-linux-android
     TARGET_SUFFIX: -$(TARGET)
