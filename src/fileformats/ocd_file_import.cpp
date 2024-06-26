@@ -2127,43 +2127,51 @@ Object* OcdFileImport::importRectangleObject(const Ocd::OcdPoint32* ocd_points, 
 	return border_path;
 }
 
-void OcdFileImport::setPathHolePoint(OcdImportedPathObject *object, quint32 pos)
-{
-	// Look for curve start points before the current point and apply hole point only if no such point is there.
-	// This prevents hole points in the middle of a curve caused by incorrect map objects.
-	if (pos >= 1 && object->coords[pos].isCurveStart())
-		; //object->coords[i-1].setHolePoint(true);
-	else if (pos >= 2 && object->coords[pos-1].isCurveStart())
-		; //object->coords[i-2].setHolePoint(true);
-	else if (pos >= 3 && object->coords[pos-2].isCurveStart())
-		; //object->coords[i-3].setHolePoint(true);
-	else if (pos > 0) // Don't start with hole point.
-		object->coords[pos].setHolePoint(true);
-}
-
-void OcdFileImport::setPointFlags(OcdImportedPathObject* object, quint32 pos, bool is_area, const Ocd::OcdPoint32& ocd_point)
-{
-	// We can support CurveStart, HolePoint, DashPoint.
-	// CurveStart needs to be applied to the main point though, not the control point, and
-	// hole points need to bet set as the last point of a part of an area object instead of the first point of the next part
-	if (ocd_point.x & Ocd::OcdPoint32::FlagCtl1 && pos > 0)
-		object->coords[pos-1].setCurveStart(true);
-	if ((ocd_point.y & Ocd::OcdPoint32::FlagDash) || (ocd_point.y & Ocd::OcdPoint32::FlagCorner))
-		object->coords[pos].setDashPoint(true);
-	if (ocd_point.y & Ocd::OcdPoint32::FlagHole && pos > 1 && is_area)
-		setPathHolePoint(object, pos - 1);
-}
-
 /** Translates the OC*D path given in the last two arguments into an Object.
  */
-void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, quint32 num_points, const Ocd::OcdPoint32* ocd_points)
+void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, quint32 num_points, const Ocd::OcdPoint32* ocd_points) const
 {
 	object->coords.resize(num_points);
-	for (auto i = 0u; i < num_points; i++)
-	{
-		object->coords[i] = convertOcdPoint(ocd_points[i]);
-		setPointFlags(object, i, is_area, ocd_points[i]);
-	}
+	quint32 ignore_hole_points = 2;
+	auto count = std::accumulate(ocd_points, ocd_points + num_points, 0, [this, object, is_area, &ignore_hole_points](auto i, auto& ocd_point) {
+		object->coords[i] = convertOcdPoint(ocd_point);
+		if ((ocd_point.y & Ocd::OcdPoint32::FlagDash) || (ocd_point.y & Ocd::OcdPoint32::FlagCorner))
+		{
+			object->coords[i].setDashPoint(true);
+		}
+		
+		if (ocd_point.x & Ocd::OcdPoint32::FlagCtl1 && i > 0)
+		{
+			// CurveStart needs to be applied to the start point
+			object->coords[i-1].setCurveStart(true);
+			ignore_hole_points = 2;  // 2nd control point + end point
+		}
+		else if (is_area)
+		{
+			if (ignore_hole_points)
+			{
+				--ignore_hole_points;
+			}
+			else if (ocd_point.y & Ocd::OcdPoint32::FlagHole)
+			{
+				Q_ASSERT(i >= 2); // implied by initialization of ignore_hole_points
+				if (object->coords[i-2].isHolePoint())
+				{
+					// overwrite current part start (i.e. drop last point from input)
+					object->coords[i-1] = object->coords[i];
+					--i;
+				}
+				else
+				{
+					// HolePoint needs to be applied to the last point of a part
+					object->coords[i-1].setHolePoint(true);
+				}
+			}
+		}
+		return ++i;
+	});
+	Q_ASSERT(object->coords.size() >= count);
+	object->coords.resize(count);
 	
 	// For path objects, create closed parts where the position of the last point is equal to that of the first point
 	if (object->getType() == Object::Path)
