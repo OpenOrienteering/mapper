@@ -87,8 +87,8 @@ private:
 	 * Creates a new main window.
 	 * 
 	 * The flag as_main_window is a contradiction to the general intent of this
-	 * class. The value fals is used only once, in SymbolSettingDialog. For this
-	 * case, it disables some features such as the main menu.
+	 * class. The value false is used only once, in SymbolSettingDialog.
+	 * For this case, it disables some features such as the main menu.
 	 * 
 	 * \todo Refactor to remove the flag as_main_window.
 	 */

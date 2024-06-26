@@ -301,7 +301,7 @@ void Vectorizer::setInitColors(const std::vector<QRgb>& initColors)
 	}
 }
 
-/*! Runs classfication.  The progress observer is called during work if set.
+/*! Runs classification.  The progress observer is called during work if set.
  * \param[in] progressObserver Pointer to class implementing ProgressObserver.
  * In case it is null pointer no calls take place.
  */
