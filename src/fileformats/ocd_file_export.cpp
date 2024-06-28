@@ -111,12 +111,12 @@ static QTextCodec* codecFromSettings()
  */
 int beginOfSpotColors(const Map* map)
 {
-	const auto num_colors = map->getNumColors();
+	const auto num_colors = map->getNumColorPrios();
 	auto first_pure_spot_color = num_colors;
 	for (auto i = num_colors; i > 0; )
 	{
 		--i;
-		const auto color = map->getColor(i);
+		const auto color = map->getColorByPrio(i);
 		if (color->getSpotColorMethod() != MapColor::SpotColor
 		    || map->isColorUsedByASymbol(color))
 			break;
@@ -823,13 +823,13 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 	{
 		auto& symbol_header = file.header()->symbol_header;
 		
-		auto num_colors = map->getNumColors();
+		auto num_colors = map->getNumColorPrios();
 		
 		auto spotColorNumber = [this, num_colors](const MapColor* color)->quint16 {
 			quint16 number = 0;
 			for (auto i = 0; i < num_colors; ++i)
 			{
-				const auto* current = map->getColor(i);
+				const auto* current = map->getColorByPrio(i);
 				if (current == color)
 					break;
 				if (current->getSpotColorMethod() == MapColor::SpotColor)
@@ -866,7 +866,7 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 		
 		for (int i = 0; i < num_colors; ++i)
 		{
-			const auto* color = map->getColor(i);
+			const auto* color = map->getColorByPrio(i);
 			const auto& cmyk = color->getCmyk();
 			// OC*D stores CMYK values as integers from 0-200.
 			auto ocd_cmyk = Ocd::CmykV8 {
@@ -999,7 +999,7 @@ void OcdFileExport::exportSetup()
 	}
 	
 	// Map colors
-	auto num_colors = map->getNumColors();
+	auto num_colors = map->getNumColorPrios();
 	auto begin_of_spot_colors = beginOfSpotColors(map);
 	auto ocd_number = 0;
 	auto spot_number = 0;
@@ -1008,7 +1008,7 @@ void OcdFileExport::exportSetup()
 		SpotColorComponents all_spot_colors;
 		for (int i = 0; i < num_colors; ++i)
 		{
-			const auto* color = map->getColor(i);
+			const auto* color = map->getColorByPrio(i);
 			if (color->getSpotColorMethod() == MapColor::SpotColor)
 			{
 				all_spot_colors.push_back({color, 1});
@@ -1023,7 +1023,7 @@ void OcdFileExport::exportSetup()
 	
 	for (int i = 0; i < num_colors; ++i)
 	{
-		const auto* color = map->getColor(i);
+		const auto* color = map->getColorByPrio(i);
 		if (color->getSpotColorMethod() == MapColor::SpotColor)
 		{
 			addParameterString(10, stringForSpotColor(spot_number++, *color));
@@ -1136,9 +1136,9 @@ void OcdFileExport::setupSymbolColors<Ocd::BaseSymbolV8>(const Symbol* symbol, O
 			*bitpos |= bitmask;
 		bitmask <<= 1;
 	}
-	for (int c = 0; c < map->getNumColors(); ++c)
+	for (int c = 0; c < map->getNumColorPrios(); ++c)
 	{
-		if (symbol->containsColor(map->getColor(c)))
+		if (symbol->containsColor(map->getColorByPrio(c)))
 			*bitpos |= bitmask;
 		
 		if (bitmask == 0x80u) 
@@ -1182,9 +1182,9 @@ void OcdFileExport::setupSymbolColors(const Symbol* symbol, Counter& num_colors,
 		}
 	}
 	
-	for (int c = 0; c < map->getNumColors(); ++c)
+	for (int c = 0; c < map->getNumColorPrios(); ++c)
 	{
-		if (!symbol->containsColor(map->getColor(c)))
+		if (!symbol->containsColor(map->getColorByPrio(c)))
 			continue;
 		
 		++num_colors;
@@ -2898,7 +2898,7 @@ void OcdFileExport::exportExtras()
 
 quint16 OcdFileExport::convertColor(const MapColor* color) const
 {
-	auto index = map->findColorIndex(color);
+	auto index = map->findColorPrio(color);
 	if (index >= 0)
 	{
 		return quint16(uses_registration_color ? (index + 1) : index);

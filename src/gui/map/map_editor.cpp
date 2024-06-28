@@ -832,7 +832,7 @@ void MapEditorController::attach(MainWindow* window)
 			createTemplateWindow();
 			createTagEditor();
 			
-			if (map->getNumColors() == 0)
+			if (map->getNumColorPrios() == 0)
 				QTimer::singleShot(0, color_dock_widget, &QWidget::show);
 
 			// Activate the edit tool
@@ -4270,7 +4270,7 @@ QHash<const Symbol*, Symbol*> MapEditorController::importMap(
         bool merge_duplicate_symbols)
 {
 	// Check if there is something to import
-	if (other.getNumColors() == 0
+	if (other.getNumColorPrios() == 0
 	    && other.getNumSymbols() == 0
 	    && other.getNumObjects() == 0)
 	{

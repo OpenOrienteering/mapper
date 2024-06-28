@@ -237,13 +237,13 @@ namespace
 		QCOMPARE(actual.isBaselineViewEnabled(), expected.isBaselineViewEnabled());
 		
 		// Colors
-		if (actual.getNumColors() != expected.getNumColors())
+		if (actual.getNumColorPrios() != expected.getNumColorPrios())
 		{
-			QCOMPARE(actual.getNumColors(), expected.getNumColors());
+			QCOMPARE(actual.getNumColorPrios(), expected.getNumColorPrios());
 		}
-		else for (int i = 0; i < actual.getNumColors(); ++i)
+		else for (int i = 0; i < actual.getNumColorPrios(); ++i)
 		{
-			QCOMPARE(*actual.getColor(i), *expected.getColor(i));
+			QCOMPARE(*actual.getColorByPrio(i), *expected.getColorByPrio(i));
 		}
 		
 		// Symbols
@@ -448,8 +448,8 @@ namespace
 			QCOMPARE(actual_georef.toGeographicCoords(actual_point), expected_georef.toGeographicCoords(actual_point));
 		
 		// Colors
-		QVERIFY2(actual.getNumColors() >= expected.getNumColors(), qPrintable(test_label.arg(actual.getNumColors()).arg(expected.getNumColors())));
-		QVERIFY2(actual.getNumColors() <= 2 * expected.getNumColors(), qPrintable(test_label.arg(actual.getNumColors()).arg(expected.getNumColors())));
+		QVERIFY2(actual.getNumColorPrios() >= expected.getNumColorPrios(), qPrintable(test_label.arg(actual.getNumColorPrios()).arg(expected.getNumColorPrios())));
+		QVERIFY2(actual.getNumColorPrios() <= 2 * expected.getNumColorPrios(), qPrintable(test_label.arg(actual.getNumColorPrios()).arg(expected.getNumColorPrios())));
 		
 		// Symbols
 		// Combined symbols may be dropped (split) on export.

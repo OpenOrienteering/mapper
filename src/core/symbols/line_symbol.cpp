@@ -62,7 +62,7 @@ using length_type = PathCoord::length_type;
 void LineSymbolBorder::save(QXmlStreamWriter& xml, const Map& map) const
 {
 	XmlElementWriter element(xml, QLatin1String("border"));
-	element.writeAttribute(QLatin1String("color"), map.findColorIndex(color));
+	element.writeAttribute(QLatin1String("color"), map.findColorPrio(color));
 	element.writeAttribute(QLatin1String("width"), width);
 	element.writeAttribute(QLatin1String("shift"), shift);
 	if (dashed)
@@ -77,7 +77,7 @@ bool LineSymbolBorder::load(QXmlStreamReader& xml, const Map& map)
 {
 	Q_ASSERT(xml.name() == QLatin1String("border"));
 	XmlElementReader element(xml);
-	color = map.getColor(element.attribute<int>(QLatin1String("color")));
+	color = map.getColorByPrio(element.attribute<int>(QLatin1String("color")));
 	width = element.attribute<int>(QLatin1String("width"));
 	shift = element.attribute<int>(QLatin1String("shift"));
 	dashed = element.attribute<bool>(QLatin1String("dashed"));
@@ -1804,7 +1804,7 @@ void LineSymbol::replaceSymbol(PointSymbol*& old_symbol, PointSymbol* replace_wi
 void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {
 	xml.writeStartElement(QString::fromLatin1("line_symbol"));
-	xml.writeAttribute(QString::fromLatin1("color"), QString::number(map.findColorIndex(color)));
+	xml.writeAttribute(QString::fromLatin1("color"), QString::number(map.findColorPrio(color)));
 	xml.writeAttribute(QString::fromLatin1("line_width"), QString::number(line_width));
 	xml.writeAttribute(QString::fromLatin1("minimum_length"), QString::number(minimum_length));
 	xml.writeAttribute(QString::fromLatin1("join_style"), QString::number(join_style));
@@ -1891,7 +1891,7 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 	
 	QXmlStreamAttributes attributes = xml.attributes();
 	int temp = attributes.value(QLatin1String("color")).toInt();
-	color = map.getColor(temp);
+	color = map.getColorByPrio(temp);
 	line_width = attributes.value(QLatin1String("line_width")).toInt();
 	minimum_length = attributes.value(QLatin1String("minimum_length")).toInt();
 	join_style = static_cast<LineSymbol::JoinStyle>(attributes.value(QLatin1String("join_style")).toInt());

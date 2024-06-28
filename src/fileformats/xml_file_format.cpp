@@ -884,7 +884,7 @@ void XMLFileImporter::importColors()
 		SpotColorComponents out_components;
 		for (auto&& in_component : item.components)
 		{
-			const MapColor* out_color = map->getColor(in_component.spot_color->getPriority());
+			const MapColor* out_color = map->getColorByPrio(in_component.spot_color->getPriority());
 			if (!out_color || out_color->getSpotColorMethod() != MapColor::SpotColor)
 			{
 				addWarning(tr("Spot color %1 not found while processing %2 (%3).").

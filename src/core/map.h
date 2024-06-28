@@ -400,22 +400,25 @@ public:
 	
 	// Colors
 	
-	/** Returns the number of map colors defined in this map.*/
-	int getNumColors() const;
+	/** Returns the number of map color priorities defined in this map. The
+	 *  count does not include special colors returned by getColorByPrio().
+	 *  The priorities are guaranteed to be a continuous series starting at
+	 *  zero. */
+	int getNumColorPrios() const;
 	
 	/** Returns a pointer to the MapColor identified by the non-negative priority i.
 	 * 
 	 *  Returns nullptr if the color is not defined, or if it is a special color (i.e i<0),
 	 *  i.e. only actual map colors are returned.
 	 */
-	const MapColor* getMapColor(int i) const;
+	const MapColor* getMapColorByPrio(int i) const;
 	
 	/** Returns a pointer to the MapColor identified by the non-negative priority i.
 	 * 
 	 *  Returns nullptr if the color is not defined, or if it is a special color (i.e i<0),
 	 *  i.e. only actual map colors are returned.
 	 */
-	MapColor* getMapColor(int i);
+	MapColor* getMapColorByPrio(int i);
 	
 	/** Returns a pointer to the const MapColor identified by the priority i.
 	 * 
@@ -424,33 +427,33 @@ public:
 	 * 
 	 *  Returns nullptr if the color is not defined.
 	 */
-	const MapColor* getColor(int i) const;
+	const MapColor* getColorByPrio(int i) const;
 	
 	/**
-	 * Replaces the color at index pos with the given color, updates dependent
-	 * colors and symbol icons.
+	 * Replaces the color with priority prio with the given color, and updates
+	 * dependent colors and symbol icons.
 	 * 
 	 * Emits colorChanged(). Does not delete the replaced color.
 	 */
-	void setColor(MapColor* color, int pos);
+	void setColor(MapColor* color, int prio);
 	
 	/**
 	 * Adds the given color as a new color at the given index.
 	 * Emits colorAdded().
 	 */
-	void addColor(MapColor* color, int pos);
+	void addColor(MapColor* color, int prio);
 	
 	/**
-	 * Deletes the color at the given index.
+	 * Deletes the color with the given priority.
 	 * Emits colorDeleted().
 	 */
-	void deleteColor(int pos);
+	void deleteColor(int prio);
 	
 	/**
 	 * Loops through the color list, looking for the given color pointer.
 	 * Returns the index of the color, or -1 if it is not found.
 	 */
-	int findColorIndex(const MapColor* color) const;
+	int findColorPrio(const MapColor* color) const;
 	
 	/**
 	 * Marks the colors as "dirty", i.e. as having unsaved changes.
@@ -1665,19 +1668,19 @@ private:
 // ### Map inline code ###
 
 inline
-int Map::getNumColors() const
+int Map::getNumColorPrios() const
 {
 	return (int)color_set->colors.size();
 }
 
 inline
-MapColor* Map::getMapColor(int i)
+MapColor* Map::getMapColorByPrio(int i)
 {
-	return const_cast<MapColor*>(static_cast<const Map*>(this)->getMapColor(i));
+	return const_cast<MapColor*>(static_cast<const Map*>(this)->getMapColorByPrio(i));
 }
 
 inline
-const MapColor* Map::getMapColor(int i) const
+const MapColor* Map::getMapColorByPrio(int i) const
 {
 	if (0 <= i && i < (int)color_set->colors.size())
 	{
@@ -1687,7 +1690,7 @@ const MapColor* Map::getMapColor(int i) const
 }
 
 inline
-const MapColor* Map::getColor(int i) const
+const MapColor* Map::getColorByPrio(int i) const
 {
 	if (0 <= i && i < (int)color_set->colors.size())
 	{
