@@ -881,6 +881,9 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 		for (int i = 0; i < num_colors; ++i)
 		{
 			const auto* color = map->getColorByPrio(i);
+			if (color->getOpacity() < 1)
+				addWarning(::OpenOrienteering::OcdFileExport::tr("Variable color opacity in \"%1\" is not supported by OCD version 8. Exporting as a fully opaque color.")
+				           .arg(color->getName()));
 			const auto& cmyk = color->getCmyk();
 			// OC*D stores CMYK values as integers from 0-200.
 			auto ocd_cmyk = Ocd::CmykV8 {
