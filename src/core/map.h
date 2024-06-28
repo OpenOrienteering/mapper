@@ -428,6 +428,15 @@ public:
 	 *  Returns nullptr if the color is not defined.
 	 */
 	const MapColor* getColorByPrio(int i) const;
+
+	/** Returns a pointer to the const MapColor with id id.
+	 *  
+	 *  Mind that the id's are not guaranteed to be contigous and cannot be
+	 *  used for iteration over colors.
+	 *  
+	 *  \return nullptr in case the id is not present in the set.
+	 */
+	const MapColor* getMapColorById(int id) const;
 	
 	/**
 	 * Replaces the color with priority prio with the given color, and updates
@@ -1549,7 +1558,8 @@ private:
 	class MapColorSet : public QSharedData
 	{
 	public:
-		ColorVector colors;
+		ColorVector colors; ///< Colors ordered by priority. Compact vector.
+		ColorVector ids;    ///< Colors indexed by their id. Sparse with nullptrs.
 		
 		MapColorSet();
 		
@@ -1711,6 +1721,11 @@ const MapColor* Map::getColorByPrio(int i) const
 	}
 }
 
+inline
+const MapColor* Map::getMapColorById(int id) const
+{
+	return (id >= 0 && id < static_cast<int>(color_set->ids.size())) ? color_set->ids[id] : nullptr;
+}
 
 
 inline

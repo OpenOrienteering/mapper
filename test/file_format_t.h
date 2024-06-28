@@ -121,6 +121,13 @@ private slots:
 	 */
 	void ocdTextImportTest_data();
 	void ocdTextImportTest();
+
+	/**
+	 * Test color traits persistence and the link to symbols.
+	 */
+	void colorTest_data();
+	void colorTest();
+
 };
 
 #endif // OPENORIENTEERING_FILE_FORMAT_T_H

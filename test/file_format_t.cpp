@@ -1302,6 +1302,112 @@ void FileFormatTest::ocdTextImportTest()
 }
 
 
+void FileFormatTest::colorTest_data()
+{
+	QTest::addColumn<QString>("filepath");
+	QTest::addColumn<QByteArray>("format_id");
+
+	QTest::newRow(QByteArray {"Load color table - XML"})
+	        << QStringLiteral("data:colors/color-id.omap")
+	        << QByteArray {"XML"};
+}
+
+
+namespace QTest {
+	// Helper for textual MapColor output in QCOMPARE().
+	template<>
+    char *toString(const MapColor& color)
+    {
+		auto color_method_name = [](MapColor::ColorMethod m) {
+			auto value = static_cast<int>(m);
+			if (!value)
+				return QString::fromLatin1("UndefinedMethod");
+
+			QStringList flag_names;
+			for (auto& method_name : { "CustomColor", "SpotColor",
+			     "CmykColor", "RgbColor", "Knockout" })
+			{
+				if (value & 1)
+					flag_names.push_back(QString::fromLatin1(method_name));
+				value >>= 1;
+			}
+			return flag_names.join(QChar::fromLatin1('|'));
+		};
+		
+		auto ret = QString::fromLatin1("n:'%1' id:%2 p:%3 scm:%4 ccm:%5 rcm:%6 ko:%7 cmyk:(%8,%9,%10,%11) rgb:%12 scn:'%13' sf:%14 sa:%15 o:%16 sep:[")
+		           .arg(color.getName())
+		           .arg(color.getId())
+		           .arg(color.getPriority())
+		           .arg(color_method_name(color.getSpotColorMethod()),
+		                color_method_name(color.getCmykColorMethod()),
+		                color_method_name(color.getRgbColorMethod()))
+		           .arg(color.getKnockout())
+		           .arg(color.getCmyk().c)
+		           .arg(color.getCmyk().m)
+		           .arg(color.getCmyk().y)
+		           .arg(color.getCmyk().k)
+		           .arg(QColor(color.getRgb()).name(),
+		                color.getSpotColorName())
+		           .arg(color.getScreenFrequency())
+		           .arg(color.getScreenAngle())
+		           .arg(color.getOpacity());
+		QStringList component_descs;
+		for (auto const& component : color.getComponents())
+			component_descs.push_back(QString::fromLatin1("%1/%2")
+			                          .arg(component.spot_color->getName())
+			                          .arg(component.factor));
+		ret.append(component_descs.join(QString::fromLatin1(", ")));
+		ret.append(QLatin1String("]"));
+        return QTest::toString(ret);
+    }
+}  // namespace QTest
+
+
+void FileFormatTest::colorTest()
+{
+	QFETCH(QString, filepath);
+	QFETCH(QByteArray, format_id);
+	QVERIFY(QFileInfo::exists(filepath));
+
+	{
+		auto original = std::make_unique<Map>();
+
+		QVERIFY(original->loadFrom(filepath));
+
+		// Save the sample to the format identified by format_id and load it
+		// again to see if the target format maintains the color number as
+		// well.
+		std::unique_ptr<Map> copy;
+		auto const* format = FileFormats.findFormat(format_id);
+		QVERIFY(format);
+		copy = saveAndLoadMap(*original, format);
+		QVERIFY(copy);
+
+		// Failure here means that we failed to persist the color properties in
+		// the target file format.
+		for (auto i = 0; i < original->getNumColorPrios(); ++i)
+			QCOMPARE(*original->getColorByPrio(i), *copy->getColorByPrio(i));
+
+		// Failure here means that we failed to persist the link between
+		// symbols and colors.
+		for (auto i = 0; i < original->getNumSymbols(); ++i)
+		{
+			auto* symbol_in_original = original->getSymbol(i);
+			for (auto color_prio = 0; color_prio < original->getNumColorPrios(); ++color_prio)
+			{
+				auto const* color_in_original = original->getColorByPrio(color_prio);
+				if (symbol_in_original->containsColor(color_in_original))
+				{
+					auto const* symbol_in_copy = copy->getSymbol(i);
+					auto const* color_in_copy = copy->getColorByPrio(color_prio);
+					QVERIFY(symbol_in_copy->containsColor(color_in_copy));
+					QCOMPARE(*color_in_original, *color_in_copy);
+				}
+			}
+		}
+	}
+}
+
 
 /*
  * We don't need a real GUI window.
