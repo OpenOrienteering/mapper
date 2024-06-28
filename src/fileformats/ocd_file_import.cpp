@@ -501,6 +501,7 @@ void OcdFileImport::importColors(const OcdFile<Ocd::FormatV8>& file)
 				// The color's CMYK was customized.
 				color->setCmyk(cmyk);
 		}
+		color->setKnockout(color_info.overprint != 0);		
 		
 		if ((i == 0 && color->isBlack() && color->getName() == QLatin1String("Registration black"))
 		    || (!components.empty() && components.size() == num_separations

@@ -924,6 +924,7 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 			
 			color_info->number = color->getId();
 			color_info->name = toOcdString(color->getName());
+			color_info->overprint = color->getKnockout() ? -1 : 0;
 			color_info->cmyk = ocd_cmyk;
 			++color_info;
 		}

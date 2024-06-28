@@ -1413,8 +1413,6 @@ void FileFormatTest::colorTest()
 		for (auto i = 0; i < original->getNumColorPrios(); ++i)
 		{
 			// >>>>>>>>> Temporary handling of OCD defects
-			if (*format_id == 'O' && original->getColorByPrio(i)->getKnockout() != copy->getColorByPrio(i)->getKnockout())
-				QEXPECT_FAIL("", "Overprint is not yet reliably maintained in OCD format", Continue);
 			if (*format_id == 'O' && i == 0 && original->getColorByPrio(0)->getName() != copy->getColorByPrio(0)->getName())
 				QEXPECT_FAIL("", "Registration black is not properly detected in absence of spot colors", Continue);
 			// <<<<<<<<< Temporary handling of OCD defects
