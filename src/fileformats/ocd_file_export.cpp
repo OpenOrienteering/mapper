@@ -491,10 +491,10 @@ QString stringForColor(int i, const MapColor& color)
 	QTextStream out(&string_9, QIODevice::Append);
 	out << color.getName()
 	    << "\tn" << i
-	    << "\tc" << qRound(cmyk.c * 100)
-	    << "\tm" << qRound(cmyk.m * 100)
-	    << "\ty" << qRound(cmyk.y * 100)
-	    << "\tk" << qRound(cmyk.k * 100)
+	    << "\tc" << qRound(cmyk.c * 1000)/10.0
+	    << "\tm" << qRound(cmyk.m * 1000)/10.0
+	    << "\ty" << qRound(cmyk.y * 1000)/10.0
+	    << "\tk" << qRound(cmyk.k * 1000)/10.0
 	    << "\to" << (color.getKnockout() ? '0' : '1')
 	    << "\tt" << qRound(color.getOpacity() * 100);
 	if (color.getSpotColorMethod() == MapColor::CustomColor)

@@ -1413,10 +1413,6 @@ void FileFormatTest::colorTest()
 		for (auto i = 0; i < original->getNumColorPrios(); ++i)
 		{
 			// >>>>>>>>> Temporary handling of OCD defects
-			auto const orig_cmyk = original->getColorByPrio(i)->getCmyk();
-			auto const components_sum = orig_cmyk.c + orig_cmyk.m + orig_cmyk.y + orig_cmyk.k;
-			if (*format_id == 'O' && format_id[3] != '8' && components_sum * 100 != std::floor(components_sum * 100))
-				QEXPECT_FAIL("", "Fractional CMYK values are not yet handled in OCD format", Continue);
 			if (*format_id == 'O' && original->getColorByPrio(i)->getKnockout() != copy->getColorByPrio(i)->getKnockout())
 				QEXPECT_FAIL("", "Overprint is not yet reliably maintained in OCD format", Continue);
 			if (*format_id == 'O' && i == 0 && original->getColorByPrio(0)->getName() != copy->getColorByPrio(0)->getName())
