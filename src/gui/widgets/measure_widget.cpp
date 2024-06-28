@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2015, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,8 +21,10 @@
 
 #include "measure_widget.h"
 
+#include <QBuffer>
 #include <QLocale>
 #include <QScroller>
+#include <QStyle>
 
 #include "core/map.h"
 #include "core/objects/object.h"
@@ -37,6 +39,15 @@ MeasureWidget::MeasureWidget(Map* map, QWidget* parent)
 : QTextBrowser(parent)
 , map(map)
 {
+	auto const std_icon = style()->standardIcon(QStyle::SP_MessageBoxWarning);
+	auto const pixmap = std_icon.pixmap(QSize {22, 22});
+	QBuffer buffer;
+	buffer.open(QIODevice::WriteOnly);
+	pixmap.save(&buffer, "PNG");
+	warning_icon = QLatin1String("<img align=\"right\" src=\"data:image/png;base64,")
+	               + QString::fromLatin1(buffer.data().toBase64())
+	               + QLatin1String("\"/>");
+	
 	QScroller::grabGesture(viewport(), QScroller::TouchGesture);
 	
 	connect(map, &Map::objectSelectionChanged, this, &MeasureWidget::objectSelectionChanged);
@@ -54,6 +65,7 @@ void MeasureWidget::objectSelectionChanged()
 	QString headline;   // inline HTML
 	QString body;       // HTML blocks
 	QString extra_text; // inline HTML
+	bool show_warning = false;
 	
 	auto& selected_objects = map->selectedObjects();
 	if (selected_objects.empty())
@@ -128,6 +140,7 @@ void MeasureWidget::objectSelectionChanged()
 					extra_text = QLatin1String("<b>") + tr("This object is too small.") + QLatin1String("</b><br/>")
 					             + tr("The minimimum area is %1 %2.").arg(minimum_area_text, tr("mm²"))
 					             + QLatin1String("<br/>");
+					show_warning = true;
 				}
 				extra_text.append(tr("Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such."));
 			}
@@ -149,6 +162,7 @@ void MeasureWidget::objectSelectionChanged()
 				{
 					extra_text = QLatin1String("<b>") + tr("This line is too short.") + QLatin1String("</b><br/>")
 					             + tr("The minimum length is %1 %2.").arg(minimum_length_text, tr("mm"));
+					show_warning = true;
 				}
 			}
 			
@@ -158,7 +172,7 @@ void MeasureWidget::objectSelectionChanged()
 	
 	if (!extra_text.isEmpty())
 		body.append(QLatin1String("<p>") + extra_text + QLatin1String("</p>"));
-	setHtml(QLatin1String("<p><b>") + headline + QLatin1String("</b></p>") + body);
+	setHtml(QLatin1String("<p><b>") + (show_warning ? warning_icon : QLatin1String()) + headline + QLatin1String("</b></p>") + body);
 }
 
 
