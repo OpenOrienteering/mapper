@@ -1412,11 +1412,6 @@ void FileFormatTest::colorTest()
 		// the target file format.
 		for (auto i = 0; i < original->getNumColorPrios(); ++i)
 		{
-			// >>>>>>>>> Temporary handling of OCD defects
-			if (*format_id == 'O' && i == 0 && original->getColorByPrio(0)->getName() != copy->getColorByPrio(0)->getName())
-				QEXPECT_FAIL("", "Registration black is not properly detected in absence of spot colors", Continue);
-			// <<<<<<<<< Temporary handling of OCD defects
-
 			// Gratiously handle missing v8 features (opacity, limited name
 			// length, CMYK color resolution).
 			auto* color_in_original = original->getColorByPrio(i);
