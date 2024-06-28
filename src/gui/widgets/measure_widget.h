@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2015 Kai Pastor
+ *    Copyright 2015, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,6 +23,7 @@
 #define OPENORIENTEERING_MEASURE_WIDGET_H
 
 #include <QObject>
+#include <QString>
 #include <QTextBrowser>
 
 class QWidget;
@@ -55,6 +56,7 @@ protected slots:
 	
 private:
 	Map* map;
+	QString warning_icon;
 };
 
 
