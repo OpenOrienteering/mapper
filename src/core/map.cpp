@@ -139,9 +139,16 @@ Map::MapColorSet::~MapColorSet()
 void Map::MapColorSet::insert(int pos, MapColor* color)
 {
 	colors.insert(colors.begin() + pos, color);
-	if (color->getId() >= 0 && !ids[color->getId()])
+	auto const color_id = color->getId();
+	if (color_id >= 0)
 	{
-		ids[color->getId()] = color;
+		// Current Mapper symbol sets have about 36 colors. Make room for
+		// at least 48 items and reallocate the vector in 16-item increments
+		// to keep the reallocation count low.
+		if (color_id >= static_cast<int>(ids.size()))
+			ids.resize(std::max((color_id | 0xF) + 1, 48), nullptr);
+		Q_ASSERT(!ids[color_id]);
+		ids[color_id] = color;
 	}
 	else
 	{
@@ -348,6 +355,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 			
 			// Solve selected conflict item
 			auto new_color = new MapColor(*selected_item->dest_color);
+			new_color->setId(-1); // Force assignment of a new id
 			selected_item->dest_color = new_color;
 			out_pointermap[selected_item->src_color] = new_color;
 			std::size_t insertion_index = (selected_item->lower_errors == 0) ? selected_item->upper_bound : (selected_item->lower_bound+1);
@@ -395,6 +403,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 			MapColor* new_color = it->dest_color;
 			if (new_color)
 			{
+				new_color->setId(-1); // Invalidate the color id so that the color gets a new one.
 				if (new_color->getSpotColorMethod() == MapColor::CustomColor)
 				{
 					SpotColorComponents components = new_color->getComponents();

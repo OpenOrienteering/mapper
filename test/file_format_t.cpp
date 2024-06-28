@@ -24,6 +24,7 @@
 #include <limits>
 #include <memory>
 #include <stdexcept>
+#include <tuple>
 // IWYU pragma: no_include <type_traits>
 #include <utility>
 
@@ -1307,9 +1308,33 @@ void FileFormatTest::colorTest_data()
 	QTest::addColumn<QString>("filepath");
 	QTest::addColumn<QByteArray>("format_id");
 
-	QTest::newRow(QByteArray {"Load color table - XML"})
-	        << QStringLiteral("data:colors/color-id.omap")
-	        << QByteArray {"XML"};
+	std::vector<const char*> format_ids_list;
+	format_ids_list.reserve(5);
+	format_ids_list.push_back("XML");
+
+#ifndef MAPPER_BIG_ENDIAN
+	// In attempt to be future-proof, we shamelessly rip out all OCD-like
+	// formats from the registry.
+	FileFormats.findFormat([&format_ids_list](auto format) {
+		if (qstrlen(format->id()) > 3 && !qstrncmp(format->id(), "OCD", 3))
+			format_ids_list.push_back(format->id());
+		return false;
+	});
+#endif
+
+	for (auto& format_id : format_ids_list)
+		for (auto* test_file : { "data:colors/color-id.omap",
+		                         "data:colors/fractional-cmyk.omap",
+		                         "data:colors/semi-opaque-color.omap",
+		                         "data:colors/spot-color-overprint.omap",
+		                         "data:colors/no-spot-colors.omap",
+                                                                            })
+		{
+			QTest::newRow(QByteArray {"Load color table - "}.append(format_id)
+			              .append(" - ").append(test_file))
+			        << QString::fromUtf8(test_file)
+			        << QByteArray {format_id};
+		}
 }
 
 
@@ -1386,7 +1411,62 @@ void FileFormatTest::colorTest()
 		// Failure here means that we failed to persist the color properties in
 		// the target file format.
 		for (auto i = 0; i < original->getNumColorPrios(); ++i)
-			QCOMPARE(*original->getColorByPrio(i), *copy->getColorByPrio(i));
+		{
+			// >>>>>>>>> Temporary handling of OCD defects
+			auto const orig_cmyk = original->getColorByPrio(i)->getCmyk();
+			auto const components_sum = orig_cmyk.c + orig_cmyk.m + orig_cmyk.y + orig_cmyk.k;
+			if (*format_id == 'O' && format_id[3] != '8' && components_sum * 100 != std::floor(components_sum * 100))
+				QEXPECT_FAIL("", "Fractional CMYK values are not yet handled in OCD format", Continue);
+			if (*format_id == 'O' && original->getColorByPrio(i)->getKnockout() != copy->getColorByPrio(i)->getKnockout())
+				QEXPECT_FAIL("", "Overprint is not yet reliably maintained in OCD format", Continue);
+			if (*format_id == 'O' && i == 0 && original->getColorByPrio(0)->getName() != copy->getColorByPrio(0)->getName())
+				QEXPECT_FAIL("", "Registration black is not properly detected in absence of spot colors", Continue);
+			// <<<<<<<<< Temporary handling of OCD defects
+
+			// Gratiously handle missing v8 features (opacity, limited name
+			// length, CMYK color resolution).
+			auto* color_in_original = original->getColorByPrio(i);
+			auto color_in_copy = std::unique_ptr<MapColor>(copy->getColorByPrio(i)->duplicate());
+			if(!qstrcmp(format_id, "OCD8"))
+			{
+				// No opacity in v8 format.
+				if (color_in_original->getOpacity() != color_in_copy->getOpacity())
+					color_in_copy->setOpacity(color_in_original->getOpacity());
+				// Shorter color names.
+				if (color_in_original->getName().startsWith(color_in_copy->getName()))
+					color_in_copy->setName(color_in_original->getName());
+				// Shorter spot color names.
+				if (color_in_original->getSpotColorMethod() == MapColor::SpotColor
+				    && color_in_original->getSpotColorName().startsWith(color_in_copy->getSpotColorName()))
+					color_in_copy->setSpotColorName(color_in_original->getSpotColorName());
+				// Lower resolution of CMYK component values.
+				auto const orig_cmyk = original->getColorByPrio(i)->getCmyk();
+				auto copy_cmyk = MapColorCmyk { color_in_copy->getCmyk() };
+				bool do_set_color = false;
+				for (auto f : { std::make_tuple<const float*, float*>(&orig_cmyk.c, &copy_cmyk.c),
+				                std::make_tuple<const float*, float*>(&orig_cmyk.m, &copy_cmyk.m),
+				                std::make_tuple<const float*, float*>(&orig_cmyk.y, &copy_cmyk.y),
+				                std::make_tuple<const float*, float*>(&orig_cmyk.k, &copy_cmyk.k) })
+				{
+					if (qFuzzyCompare(*std::get<0>(f), *std::get<1>(f)))
+						continue;
+					if (qFuzzyCompare(std::floor(*std::get<0>(f) * 200), std::floor(*std::get<1>(f) * 200)))
+					{
+						*std::get<1>(f) = *std::get<0>(f);
+						do_set_color = true;
+					}
+					else
+					{
+						do_set_color = false;
+						break;
+					}
+				}
+				if (do_set_color)
+					color_in_copy->setCmyk(copy_cmyk);
+			}
+
+			QCOMPARE(*color_in_copy, *color_in_original);
+		}
 
 		// Failure here means that we failed to persist the link between
 		// symbols and colors.
@@ -1398,10 +1478,15 @@ void FileFormatTest::colorTest()
 				auto const* color_in_original = original->getColorByPrio(color_prio);
 				if (symbol_in_original->containsColor(color_in_original))
 				{
+					// v8 does not have combined symbols.
+					if (symbol_in_original->getType() == Symbol::Combined
+					    && !qstrcmp(format_id, "OCD8"))
+						continue;
+
 					auto const* symbol_in_copy = copy->getSymbol(i);
 					auto const* color_in_copy = copy->getColorByPrio(color_prio);
 					QVERIFY(symbol_in_copy->containsColor(color_in_copy));
-					QCOMPARE(*color_in_original, *color_in_copy);
+					QCOMPARE(color_in_copy->getId(), color_in_original->getId());
 				}
 			}
 		}
