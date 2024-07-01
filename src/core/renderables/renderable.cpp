@@ -249,14 +249,14 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 	painter->save();
 	auto end_of_colors = rend();
 	auto color = rbegin();
-	while (color != end_of_colors && color->first >= map->getNumColors())
+	while (color != end_of_colors && color->first >= map->getNumColorPrios())
 	{
 		++color;
 	}
 	for (; color != end_of_colors; ++color)
 	{
 		if ( config.testFlag(RenderConfig::RequireSpotColor) &&
-		     (color->first < 0 || map->getColor(color->first)->getSpotColorMethod() == MapColor::UndefinedMethod) )
+		     (color->first < 0 || map->getColorByPrio(color->first)->getSpotColorMethod() == MapColor::UndefinedMethod) )
 		{
 			continue;
 		}
@@ -277,7 +277,7 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 			{
 				// Render the renderables
 				const PainterConfig& state = renderables.first;
-				const MapColor* map_color = map->getColor(state.color_priority);
+				const MapColor* map_color = map->getColorByPrio(state.color_priority);
 				if (!map_color)
 				{
 					Q_ASSERT(state.color_priority == MapColor::Reserved);
@@ -429,13 +429,13 @@ void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& 
 	// For each pair of color priority and its renderables collection...
 	auto end_of_colors = rend();
 	auto color = rbegin();
-	while (color != end_of_colors && color->first >= map->getNumColors())
+	while (color != end_of_colors && color->first >= map->getNumColorPrios())
 	{
 		++color;
 	}
 	for (; color != end_of_colors; ++color)
 	{
-		SpotColorComponent drawing_color(map->getColor(color->first), 1.0f);
+		SpotColorComponent drawing_color(map->getColorByPrio(color->first), 1.0f);
 		
 		// Check whether the current color [priority] applies to the current separation.
 		if (color->first > MapColor::Reserved)

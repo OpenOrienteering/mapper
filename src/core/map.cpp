@@ -139,11 +139,39 @@ Map::MapColorSet::~MapColorSet()
 void Map::MapColorSet::insert(int pos, MapColor* color)
 {
 	colors.insert(colors.begin() + pos, color);
+	auto const color_id = color->getId();
+	if (color_id >= 0)
+	{
+		// Current Mapper symbol sets have about 36 colors. Make room for
+		// at least 48 items and reallocate the vector in 16-item increments
+		// to keep the reallocation count low.
+		if (color_id >= static_cast<int>(ids.size()))
+			ids.resize(std::max((color_id | 0xF) + 1, 48), nullptr);
+		Q_ASSERT(!ids[color_id]);
+		ids[color_id] = color;
+	}
+	else
+	{
+		// Prefer ids starting at one.
+		auto free_spot = std::find(begin(ids) + 1, end(ids), nullptr);
+		if (free_spot == end(ids))
+		{
+			color->setId(ids.size());
+			ids.push_back(color);
+		}
+		else
+		{
+			auto const n = free_spot - begin(ids);
+			color->setId(n);
+			ids[n] = color;
+		}
+	}
 	adjustColorPriorities(pos + 1, colors.size());
 }
 
 void Map::MapColorSet::erase(int pos)
 {
+	ids[colors[pos]->getId()] = nullptr;
 	colors.erase(colors.begin() + pos);
 	adjustColorPriorities(pos, colors.size());	
 }
@@ -327,6 +355,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 			
 			// Solve selected conflict item
 			auto new_color = new MapColor(*selected_item->dest_color);
+			new_color->setId(-1); // Force assignment of a new id
 			selected_item->dest_color = new_color;
 			out_pointermap[selected_item->src_color] = new_color;
 			std::size_t insertion_index = (selected_item->lower_errors == 0) ? selected_item->upper_bound : (selected_item->lower_bound+1);
@@ -374,6 +403,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 			MapColor* new_color = it->dest_color;
 			if (new_color)
 			{
+				new_color->setId(-1); // Invalidate the color id so that the color gets a new one.
 				if (new_color->getSpotColorMethod() == MapColor::CustomColor)
 				{
 					SpotColorComponents components = new_color->getComponents();
@@ -673,7 +703,7 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 		qWarning("Map::importMap() called with GeorefImport flag set");
 	
 	// Determine which symbols and colors to import
-	std::vector<bool> color_filter(std::size_t(imported_map.getNumColors()), true);
+	std::vector<bool> color_filter(std::size_t(imported_map.getNumColorPrios()), true);
 	std::vector<bool> symbol_filter(std::size_t(imported_map.getNumSymbols()), true);
 	if (mode.testFlag(MinimalImport))
 	{
@@ -1182,12 +1212,12 @@ QString Map::raw_translation(const QString& symbol_text) const
 
 
 
-void Map::setColor(MapColor* color, int pos)
+void Map::setColor(MapColor* color, int prio)
 {
 	// MapColor* old_color = color_set->colors[pos];
 	
-	color_set->colors[pos] = color;
-	color->setPriority(pos);
+	color_set->colors[prio] = color;
+	color->setPriority(prio);
 	
 	if (color->getSpotColorMethod() == MapColor::SpotColor)
 	{
@@ -1227,20 +1257,20 @@ void Map::setColor(MapColor* color, int pos)
 	}
 	
 	updateSymbolIcons(color);
-	emit colorChanged(pos, color);
+	emit colorChanged(prio, color);
 }
 
-void Map::addColor(MapColor* color, int pos)
+void Map::addColor(MapColor* color, int prio)
 {
-	color_set->insert(pos, color);
+	color_set->insert(prio, color);
 	setColorsDirty();
-	emit colorAdded(pos, color);
-	color->setPriority(pos);
+	emit colorAdded(prio, color);
+	color->setPriority(prio);
 }
 
-void Map::deleteColor(int pos)
+void Map::deleteColor(int prio)
 {
-	MapColor* color = color_set->colors[pos];
+	MapColor* color = color_set->colors[prio];
 	if (color->getSpotColorMethod() == MapColor::SpotColor)
 	{
 		// Update dependent colors
@@ -1254,7 +1284,7 @@ void Map::deleteColor(int pos)
 		}
 	}
 	
-	color_set->erase(pos);
+	color_set->erase(prio);
 	
 	// Treat combined symbols first before their parts
 	for (Symbol* symbol : symbols)
@@ -1267,12 +1297,12 @@ void Map::deleteColor(int pos)
 		if (symbol->getType() != Symbol::Combined)
 			symbol->colorDeletedEvent(color);
 	}
-	emit colorDeleted(pos, color);
+	emit colorDeleted(prio, color);
 	
 	delete color;
 }
 
-int Map::findColorIndex(const MapColor* color) const
+int Map::findColorPrio(const MapColor* color) const
 {
 	std::size_t size = color_set->colors.size();
 	for (std::size_t i = 0; i < size; ++i)
@@ -1317,12 +1347,12 @@ void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std:
 	}
 	
 	Q_ASSERT(int(by_which_symbols.size()) == getNumSymbols());
-	out.assign(std::size_t(getNumColors()), false);
-	for (std::size_t c = 0, last = std::size_t(getNumColors()); c != last; ++c)
+	out.assign(std::size_t(getNumColorPrios()), false);
+	for (std::size_t c = 0, last = std::size_t(getNumColorPrios()); c != last; ++c)
 	{
 		for (std::size_t s = 0, last_s = std::size_t(getNumSymbols()); s != last_s; ++s)
 		{
-			if (by_which_symbols[s] && getSymbol(int(s))->containsColor(getColor(int(c))))
+			if (by_which_symbols[s] && getSymbol(int(s))->containsColor(getColorByPrio(int(c))))
 			{
 				out[c] = true;
 				break;
@@ -1331,21 +1361,21 @@ void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std:
 	}
 	
 	// Include required spot colors, too
-	for (std::size_t c = 0, last_c = std::size_t(getNumColors()); c != last_c; ++c)
+	for (std::size_t c = 0, last_c = std::size_t(getNumColorPrios()); c != last_c; ++c)
 	{
 		if (out[c])
 			continue;
 		
-		const auto* color = getColor(int(c));
+		const auto* color = getColorByPrio(int(c));
 		if (color->getSpotColorMethod() != MapColor::SpotColor)
 			continue;
 		
-		for (std::size_t o = 0, last_o = std::size_t(getNumColors()); o != last_o; ++o)
+		for (std::size_t o = 0, last_o = std::size_t(getNumColorPrios()); o != last_o; ++o)
 		{
 			if (!out[o])
 				continue;
 			
-			const auto* other = getColor(int(o));
+			const auto* other = getColorByPrio(int(o));
 			if (other->getSpotColorMethod() != MapColor::CustomColor)
 				continue;
 			

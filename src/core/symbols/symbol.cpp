@@ -953,9 +953,9 @@ bool Symbol::lessByColorPriority(const Symbol* s1, const Symbol* s2)
 
 Symbol::lessByColor::lessByColor(const Map* map)
 {
-	colors.reserve(std::size_t(map->getNumColors()));
-	for (int i = 0; i < map->getNumColors(); ++i)
-		colors.push_back(QRgb(*map->getColor(i)));
+	colors.reserve(std::size_t(map->getNumColorPrios()));
+	for (int i = 0; i < map->getNumColorPrios(); ++i)
+		colors.push_back(QRgb(*map->getColorByPrio(i)));
 }
 
 
