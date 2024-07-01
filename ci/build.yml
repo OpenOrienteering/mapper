@@ -91,6 +91,7 @@ steps:
       --build .
       --target openorienteering-mapper-ci$(TARGET_SUFFIX)
       -- ${{ parameters.buildArgs }}
+  timeoutInMinutes: 90
   displayName: 'Build openorienteering-mapper-ci'
 
 - bash: |
