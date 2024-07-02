@@ -46,7 +46,7 @@ private:
 	 * Efficiently produce PNG data from QImage.
 	 * 
 	 * An object of this class holds a buffer which is reused in multiple calls
-	 * to write(). So the number of actual memory allocations can kept small.
+	 * to write(). So the number of actual memory allocations can be kept small.
 	 */
 	class PNGImageWriter
 	{
