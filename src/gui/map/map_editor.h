@@ -71,6 +71,7 @@ class PaintOnTemplateFeature;
 class PrintWidget;
 class ReopenTemplateDialog;
 class Symbol;
+class SymbolReportFeature;
 class SymbolWidget;
 class Template;
 class TemplateListWidget;
@@ -746,6 +747,8 @@ private:
 	QAction* rotate_map_act = {};
 	QAction* map_notes_act = {};
 	QAction* symbol_set_id_act = {};
+	std::unique_ptr<SymbolReportFeature> symbol_report_feature;
+	
 	
 	QAction* color_window_act = {};
 	QPointer<EditorDockWidget> color_dock_widget;
