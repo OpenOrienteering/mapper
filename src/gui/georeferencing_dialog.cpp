@@ -452,6 +452,7 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	
 	QUrlQuery query;
 	QDate today = QDate::currentDate();
+	query.addQueryItem(QString::fromLatin1("key"), QString::fromLatin1("zNEw7"));
 	query.addQueryItem(QString::fromLatin1("lat1"), QString::number(latlon.latitude()));
 	query.addQueryItem(QString::fromLatin1("lon1"), QString::number(latlon.longitude()));
 	query.addQueryItem(QString::fromLatin1("startYear"), QString::number(today.year()));
