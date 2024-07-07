@@ -334,6 +334,7 @@ jobs:
 
 - job: Windows_mingw32_Release
   displayName: Windows x32 (Release, MinGW)
+  timeoutInMinutes: 90
   variables:
     IMAGE_NAME: 'windows-2019'
     SUPBERBUILD_IMAGE_NAME: $(IMAGE_NAME)
@@ -361,6 +362,7 @@ jobs:
 
 - job: Windows_mingw64_Release
   displayName: Windows x64 (Release, MinGW)
+  timeoutInMinutes: 90
   variables:
     IMAGE_NAME: 'windows-2019'
     SUPBERBUILD_IMAGE_NAME: $(IMAGE_NAME)
