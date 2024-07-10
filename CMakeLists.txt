@@ -267,21 +267,28 @@ endif()
 
 # Build-time code checks
 
-if(NOT CMAKE_CXX_CLANG_TIDY)
+if(Mapper_DEVELOPMENT_BUILD AND NOT DEFINED CMAKE_CXX_CLANG_TIDY)
 	set(min_version 8)
 	find_package(ClangTidy ${min_version})
 	if(ClangTidy_FOUND)
-		set(CMAKE_CXX_CLANG_TIDY "${PROJECT_SOURCE_DIR}/code-check-wrapper.sh;${ClangTidy_EXECUTABLE}")
+		set(CMAKE_CXX_CLANG_TIDY "${ClangTidy_EXECUTABLE}")
 	else()
 		message(AUTHOR_WARNING "Install clang-tidy >= ${min_version} for code checks during build")
 	endif()
 endif()
 
-if(NOT CMAKE_CXX_INCLUDE_WHAT_YOU_USE)
+if(Mapper_DEVELOPMENT_BUILD AND NOT DEFINED CMAKE_CXX_INCLUDE_WHAT_YOU_USE)
 	set(min_version 0.12)
 	find_package(IWYU ${min_version})
 	if(IWYU_FOUND)
-		set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "${PROJECT_SOURCE_DIR}/code-check-wrapper.sh;${IWYU_EXECUTABLE}")
+		set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE
+			"${IWYU_EXECUTABLE}"
+			-Xiwyu --mapping_file=${CMAKE_CURRENT_SOURCE_DIR}/iwyu-mapper.imp
+			-Xiwyu --check_also=*_p.h
+			-Xiwyu --max_line_length=160
+			"-DqPrintable(...)=(void(__VA_ARGS__), \"\")"
+			"-DqUtf8Printable(...)=(void(__VA_ARGS__), \"\")"
+		)
 	else()
 		message(AUTHOR_WARNING "Install include-what-you-use >= ${min_version} for code checks during build")
 	endif()
