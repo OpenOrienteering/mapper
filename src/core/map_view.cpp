@@ -1,6 +1,7 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
  *    Copyright 2014-2020, 2025 Kai Pastor
+ *    Copyright 2025 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -54,6 +55,9 @@ namespace literal
 	static const QLatin1String hidden("hidden");
 	static const QLatin1String ref("ref");
 	static const QLatin1String template_string("template");
+	static const QLatin1String template_sets("template_sets");
+	static const QLatin1String template_set("template_set");
+	static const QLatin1String active_template_set("active_template_set");
 }
 
 
@@ -73,14 +77,11 @@ bool TemplateVisibility::hasAlpha() const
 const double MapView::zoom_in_limit = 512;
 const double MapView::zoom_out_limit = 1 / 16.0;
 
-
 MapView::MapView(QObject* parent, Map* map)
 : QObject  { parent }
 , map      { map }
 , zoom     { 1.0 }
 , rotation { 0.0 }
-, map_visibility{ 1.0f, true }
-, all_templates_hidden{ false }
 , grid_visible{ false }
 , overprinting_simulation_enabled{ false }
 {
@@ -114,21 +115,40 @@ void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, boo
 	mapview_element.writeAttribute(literal::grid, grid_visible);
 	mapview_element.writeAttribute(literal::overprinting_simulation_enabled, overprinting_simulation_enabled);
 	
+	// maintain legacy format:
+	saveTemplateSet(xml, template_details, template_visibility_sets.getVisibility(0));
+	
+	if (getNumberOfVisibilitySets() < 2)
+		return;		// don't duplicate first and only set
+	
+	XmlElementWriter template_sets_element(xml, literal::template_sets);
+	template_sets_element.writeAttribute(XmlStreamLiteral::count, getNumberOfVisibilitySets());
+	template_sets_element.writeAttribute(literal::active_template_set, getActiveVisibilityIndex());
+	
+	for (int i = 1; i < getNumberOfVisibilitySets(); ++i)
+	{
+		XmlElementWriter template_set_element(xml, literal::template_set);
+		saveTemplateSet(xml, template_details, template_visibility_sets.getVisibility(i));
+	}
+}
+
+void MapView::saveTemplateSet(QXmlStreamWriter& xml, bool template_details, const TemplateVisibilitySet& template_set) const
+{
 	{
 		XmlElementWriter map_element(xml, literal::map);
-		map_element.writeAttribute(literal::opacity, map_visibility.opacity);
-		map_element.writeAttribute(literal::visible, map_visibility.visible);
+		map_element.writeAttribute(literal::opacity, template_set.map_visibility.opacity);
+		map_element.writeAttribute(literal::visible, template_set.map_visibility.visible);
 	}
 	
 	{
 		XmlElementWriter templates_element(xml, literal::templates);
-		templates_element.writeAttribute(literal::hidden, all_templates_hidden);
+		templates_element.writeAttribute(literal::hidden, template_set.all_templates_hidden);
 		if (template_details)
 		{
-			templates_element.writeAttribute(XmlStreamLiteral::count, template_visibilities.size());
-			for (auto entry : template_visibilities)
+			templates_element.writeAttribute(XmlStreamLiteral::count, template_set.template_visibilities.size());
+			for (const auto& entry : template_set.template_visibilities)
 			{
-				auto const index = map->findTemplateIndex(entry.temp);
+				auto const index = map->findTemplateIndex(entry.templ);
 				if (index < 0)
 				{
 					qWarning("Template visibility found for unknown template");
@@ -167,51 +187,94 @@ void MapView::load(QXmlStreamReader& xml, int version)
 	grid_visible = mapview_element.attribute<bool>(literal::grid);
 	overprinting_simulation_enabled = mapview_element.attribute<bool>(literal::overprinting_simulation_enabled);
 	
+	int current_template_set = 0;
+	int active_visibility_index = 0;
+	auto& template_set = template_visibility_sets.accessVisibility(0);
+	
 	while (xml.readNextStartElement())
 	{
-		if (xml.name() == literal::map)
+		if (xml.name() == literal::template_sets)
 		{
-			XmlElementReader map_element(xml);
-			map_visibility.opacity = map_element.attribute<qreal>(literal::opacity);
-			// Some old maps before version 6 lack visible="true".
-			if (version >= 6)
-				map_visibility.visible = map_element.attribute<bool>(literal::visible);
-			else
-				map_visibility.visible = true;
-		}
-		else if (xml.name() == literal::templates)
-		{
-			XmlElementReader templates_element(xml);
-			auto num_template_visibilities = templates_element.attribute<unsigned int>(XmlStreamLiteral::count);
-			template_visibilities.reserve(qBound(20u, num_template_visibilities, 1000u));
-			all_templates_hidden = templates_element.attribute<bool>(literal::hidden);
-			
+			XmlElementReader template_sets_element(xml);
+			auto visibility_sets_num = template_sets_element.attribute<int>(XmlStreamLiteral::count);
+			template_visibility_sets.template_visibility_sets.reserve(visibility_sets_num);
+			active_visibility_index = template_sets_element.attribute<int>(literal::active_template_set);	// stored for later usage
 			while (xml.readNextStartElement())
 			{
-				if (xml.name() == literal::ref)
+				if (xml.name() == literal::template_set)
 				{
-					XmlElementReader ref_element(xml);
-					int pos = ref_element.attribute<int>(literal::template_string);
-					if (pos >= 0 && pos < map->getNumTemplates())
+					XmlElementReader template_set_element(xml);
+					template_visibility_sets.template_visibility_sets.push_back(TemplateVisibilitySet());
+					auto& template_set = template_visibility_sets.accessVisibility(++current_template_set);
+					template_visibility_sets.setActiveVisibilityIndex(current_template_set);
+					while (xml.readNextStartElement())
 					{
-						TemplateVisibility vis { 
-						  qBound(0.0f, ref_element.attribute<float>(literal::opacity), 1.0f),
-						  ref_element.attribute<bool>(literal::visible)
-						};
-						setTemplateVisibilityHelper(map->getTemplate(pos), vis);
+						loadMapAndTemplates(xml, template_set, version);
 					}
 				}
 				else
+				{
 					xml.skipCurrentElement();
+				}
 			}
 		}
 		else
-			xml.skipCurrentElement(); // unsupported
+		{
+			loadMapAndTemplates(xml, template_set, version);
+		}
 	}
+	if (active_visibility_index >= getNumberOfVisibilitySets())
+		active_visibility_index = 0;
+	template_visibility_sets.setActiveVisibilityIndex(active_visibility_index);
 	
 	emit viewChanged(CenterChange | ZoomChange | RotationChange);
 	emit visibilityChanged(MultipleFeatures, true);
 }
+
+void MapView::loadMapAndTemplates(QXmlStreamReader& xml, TemplateVisibilitySet& template_set, int version)
+{
+	if (xml.name() == literal::map)
+	{
+		XmlElementReader map_element(xml);
+		TemplateVisibility map_visibility;
+		map_visibility.opacity = map_element.attribute<qreal>(literal::opacity);
+		// Some old maps before version 6 lack visible="true".
+		if (version >= 6)
+			map_visibility.visible = map_element.attribute<bool>(literal::visible);
+		else
+			map_visibility.visible = true;
+		template_set.map_visibility = map_visibility;
+	}
+	else if (xml.name() == literal::templates)
+	{
+		XmlElementReader templates_element(xml);
+		auto num_template_visibilities = templates_element.attribute<unsigned int>(XmlStreamLiteral::count);
+		template_set.template_visibilities.reserve(qBound(20u, num_template_visibilities, 1000u));
+		template_set.all_templates_hidden = templates_element.attribute<bool>(literal::hidden);
+		
+		while (xml.readNextStartElement())
+		{
+			if (xml.name() == literal::ref)
+			{
+				XmlElementReader ref_element(xml);
+				int pos = ref_element.attribute<int>(literal::template_string);
+				if (pos >= 0 && pos < map->getNumTemplates())
+				{
+					TemplateVisibility vis { 
+					  qBound(0.0f, ref_element.attribute<float>(literal::opacity), 1.0f),
+					  ref_element.attribute<bool>(literal::visible)
+					};
+					setTemplateVisibilityHelper(map->getTemplate(pos), vis);
+				}
+			}
+			else
+				xml.skipCurrentElement();
+		}
+	}
+	else
+		xml.skipCurrentElement(); // unsupported
+}
+
 
 void MapView::updateAllMapWidgets(VisibilityFeature change)
 {
@@ -360,104 +423,97 @@ void MapView::updateTransform()
 
 TemplateVisibility MapView::effectiveMapVisibility() const
 {
-	if (all_templates_hidden)
+	if (template_visibility_sets.getCurrentVisibility().all_templates_hidden)
 		return { 1.0f, true };
-	else if (map_visibility.opacity < 0.005)
+	else if (template_visibility_sets.getCurrentVisibility().map_visibility.opacity < 0.005)
 		return { 0.0f, false };
 	else
-		return map_visibility;
+		return template_visibility_sets.getCurrentVisibility().map_visibility;
 }
 
 void MapView::setMapVisibility(TemplateVisibility vis)
 {
-	if (map_visibility != vis)
+	if (template_visibility_sets.getCurrentVisibility().map_visibility != vis)
 	{
-		map_visibility = vis;
+		template_visibility_sets.accessCurrentVisibility().map_visibility = vis;
 		emit visibilityChanged(VisibilityFeature::MapVisible, vis.visible && vis.opacity > 0, nullptr);
 	}
 }
 
-MapView::TemplateVisibilityVector::const_iterator MapView::findVisibility(const Template* temp) const
+bool MapView::isTemplateVisible(const Template* templ) const
 {
-	return std::find_if(begin(template_visibilities), end(template_visibilities), [temp](const TemplateVisibilityEntry& entry)
+	if (template_visibility_sets.existsCurrentTemplateVisibility(templ))
 	{
-		return entry.temp == temp;
-	} );
+		auto current_visibility = template_visibility_sets.getCurrentTemplateVisibility(templ);
+		return current_visibility.visible && current_visibility.opacity > 0;
+	}
+	return false;
 }
 
-MapView::TemplateVisibilityVector::iterator MapView::findVisibility(const Template* temp)
+TemplateVisibility MapView::getTemplateVisibility(const Template* templ) const
 {
-	return std::find_if(begin(template_visibilities), end(template_visibilities), [temp](const TemplateVisibilityEntry& entry)
-	{
-		return entry.temp == temp;
-	} );
-}
-
-bool MapView::isTemplateVisible(const Template* temp) const
-{
-	auto entry = findVisibility(temp);
-	return entry != end(template_visibilities)
-	       && entry->visible
-	       && entry->opacity > 0;
-}
-
-TemplateVisibility MapView::getTemplateVisibility(const Template* temp) const
-{
-	auto entry = findVisibility(temp);
-	if (entry != end(template_visibilities)) 
-		return *entry;
+	if (template_visibility_sets.existsCurrentTemplateVisibility(templ))
+		return template_visibility_sets.getCurrentTemplateVisibility(templ);
 	else
 		return { 1.0f, false };
 }
 
-void MapView::setTemplateVisibility(Template* temp, TemplateVisibility vis)
+void MapView::setTemplateVisibility(Template* templ, TemplateVisibility vis)
 {
-	if (setTemplateVisibilityHelper(temp, vis))
+	if (setTemplateVisibilityHelper(templ, vis))
 	{
 		auto const visible = vis.visible && vis.opacity > 0;
-		emit visibilityChanged(VisibilityFeature::TemplateVisible, visible, temp);
+		emit visibilityChanged(VisibilityFeature::TemplateVisible, visible, templ);
 	}
 }
 
-bool MapView::setTemplateVisibilityHelper(const Template *temp, TemplateVisibility vis)
+bool MapView::setTemplateVisibilityHelper(const Template *templ, TemplateVisibility vis)
 {
-	auto stored = findVisibility(temp);
-	if (stored == end(template_visibilities)) 
+	if (!template_visibility_sets.existsCurrentTemplateVisibility(templ))
 	{
-		template_visibilities.emplace_back(temp, vis);
+		template_visibility_sets.addTemplate(templ, vis);
 		return true;
 	}
-	if (*stored != vis)
+	if (template_visibility_sets.getCurrentTemplateVisibility(templ) != vis)	// can this condition ever be false?
 	{
-		stored->opacity = vis.opacity;
-		stored->visible = vis.visible;
+		template_visibility_sets.setCurrentTemplateVisibility(templ, vis);
 		return true;
 	}
 	return false;
 }
 
-void MapView::onAboutToAddTemplate(int, Template* temp)
+TemplateVisibility MapView::getMapVisibility() const
 {
-	setTemplateVisibilityHelper(temp, { 1.0f, false });
+	return template_visibility_sets.getCurrentVisibility().map_visibility;
 }
 
-void MapView::onTemplateAdded(int, Template* temp)
+bool MapView::areAllTemplatesHidden() const
 {
-	setTemplateVisibility(temp, { 1.0f, true });
+	return template_visibility_sets.getCurrentVisibility().all_templates_hidden;
 }
 
-void MapView::onTemplateDeleted(int, const Template* temp)
+void MapView::onAboutToAddTemplate(int, Template* templ)
 {
-	template_visibilities.erase(findVisibility(temp));
+	setTemplateVisibilityHelper(templ, { 1.0f, false });
+}
+
+void MapView::onTemplateAdded(int, Template* templ)
+{
+	setTemplateVisibility(templ, { 1.0f, true });
+}
+
+void MapView::onTemplateDeleted(int, const Template* templ)
+{
+	template_visibility_sets.deleteTemplate(templ);
 }
 
 
 void MapView::setAllTemplatesHidden(bool value)
 {
-	if (all_templates_hidden != value)
+	if (template_visibility_sets.getCurrentVisibility().all_templates_hidden != value)
 	{
-		all_templates_hidden = value;
-		emit visibilityChanged(VisibilityFeature::AllTemplatesHidden, value);
+		template_visibility_sets.accessCurrentVisibility().all_templates_hidden = value;
+		emit visibilityChanged(VisibilityFeature::AllTemplatesHidden, value);	// paramter 'value' is not used for VisibilityFeature::AllTemplatesHidden
 	}
 }
 
@@ -466,7 +522,7 @@ void MapView::setGridVisible(bool visible)
 	if (grid_visible != visible)
 	{
 		grid_visible = visible;
-		emit visibilityChanged(VisibilityFeature::GridVisible, visible);
+		emit visibilityChanged(VisibilityFeature::GridVisible, visible);	// paramter 'visible' is not used for VisibilityFeature::GridVisible
 	}
 }
 
@@ -475,7 +531,7 @@ void MapView::setOverprintingSimulationEnabled(bool enabled)
 	if (overprinting_simulation_enabled != enabled)
 	{
 		overprinting_simulation_enabled = enabled;
-		emit visibilityChanged(VisibilityFeature::OverprintingEnabled, enabled);
+		emit visibilityChanged(VisibilityFeature::OverprintingEnabled, enabled);	// paramter 'enabled' is not used for VisibilityFeature::OverprintingEnabled
 	}
 }
 
@@ -492,14 +548,161 @@ bool MapView::hasAlpha() const
 		
 	for (int i = 0; i < map->getNumTemplates(); ++i)
 	{
-		auto temp = map->getTemplate(i);
-		auto visibility = getTemplateVisibility(temp);
-		if (visibility.hasAlpha() || temp->hasAlpha())
+		auto templ = map->getTemplate(i);
+		auto visibility = getTemplateVisibility(templ);
+		if (visibility.hasAlpha() || templ->hasAlpha())
 			return true;
 	}
 	
 	return false;
 }
 
+bool MapView::applyVisibilitySet(int new_visibility_set)
+{
+	Q_ASSERT(new_visibility_set < getNumberOfVisibilitySets());
+	Q_ASSERT(template_visibility_sets.getVisibility(new_visibility_set).template_visibilities.size() == template_visibility_sets.getCurrentVisibility().template_visibilities.size());
+	
+	if (new_visibility_set != getActiveVisibilityIndex())
+	{
+		auto number_of_templates = (int)template_visibility_sets.getVisibility(new_visibility_set).template_visibilities.size();
+		for (int i = 0; i < number_of_templates; ++i)
+		{
+			auto new_template_visibility = template_visibility_sets.getTemplateVisibility(new_visibility_set, i);
+			if (new_template_visibility != template_visibility_sets.getTemplateVisibility(getActiveVisibilityIndex(), i))
+			{
+				auto const visible = new_template_visibility.visible && new_template_visibility.opacity > 0;
+				emit visibilityChanged(VisibilityFeature::TemplateVisible, visible, const_cast<Template*>(new_template_visibility.templ));
+			}
+		}
+
+		auto new_map_visibility = template_visibility_sets.getVisibility(new_visibility_set).map_visibility;
+		if (template_visibility_sets.getCurrentVisibility().map_visibility != new_map_visibility)
+		{
+			emit visibilityChanged(VisibilityFeature::MapVisible, new_map_visibility.visible && new_map_visibility.opacity > 0, nullptr);	// actual visibility is not used for VisibilityFeature::MapVisible
+		}
+		
+		if (template_visibility_sets.getCurrentVisibility().all_templates_hidden != template_visibility_sets.getVisibility(new_visibility_set).all_templates_hidden)
+			return true;
+	}
+	
+	return false;
+}
+
+void MapView::setVisibilitySet(int new_visibility_set)
+{
+	auto emit_change = applyVisibilitySet(new_visibility_set);
+	template_visibility_sets.setActiveVisibilityIndex(new_visibility_set);
+	if (emit_change)
+		emit visibilityChanged(VisibilityFeature::AllTemplatesHidden, true);	// 'true' is not used for VisibilityFeature::AllTemplatesHidden
+}
+
+void MapView::addVisibilitySet()
+{
+	template_visibility_sets.duplicateVisibility();
+}
+
+void MapView::deleteVisibilitySet()
+{
+	auto new_visibility_set = getActiveVisibilityIndex();
+	if (new_visibility_set < getNumberOfVisibilitySets() - 1)
+		++new_visibility_set;	// deleting not the last set => the following set will be applied
+	else
+		--new_visibility_set;	// deleting the last set => the previous set will be applied
+	auto emit_change = applyVisibilitySet(new_visibility_set);
+	template_visibility_sets.deleteVisibility();
+	if (emit_change)
+		emit visibilityChanged(VisibilityFeature::AllTemplatesHidden, true);	// 'true' is not used for VisibilityFeature::AllTemplatesHidden
+}
+
+// ### TemplateVisibilitySet ###
+
+TemplateVisibilitySet::TemplateVisibilitySet()
+{
+	map_visibility = {1.0f, true};
+}
+
+TemplateVisibilitySets::TemplateVisibilitySets()
+{
+	template_visibility_sets.push_back(TemplateVisibilitySet());
+	active_visibility_index = 0;
+}
+
+void TemplateVisibilitySets::duplicateVisibility()
+{
+	template_visibility_sets.insert(template_visibility_sets.begin() + active_visibility_index + 1, getCurrentVisibility());
+}
+
+void TemplateVisibilitySets::deleteVisibility()
+{
+	Q_ASSERT(getNumberOfVisibilitySets() > 1);
+	Q_ASSERT(active_visibility_index < getNumberOfVisibilitySets());
+	
+	template_visibility_sets.erase(template_visibility_sets.begin() + active_visibility_index);
+	if (active_visibility_index >= getNumberOfVisibilitySets())
+		--active_visibility_index;
+}
+
+void TemplateVisibilitySets::deleteTemplate(const Template* templ)
+{
+	for (auto& template_set : template_visibility_sets)
+	{
+		template_set.template_visibilities.erase(template_set.findVisibility(templ));
+	}
+}
+
+void TemplateVisibilitySets::addTemplate(const Template *templ, TemplateVisibility vis)
+{
+	for (auto& template_set : template_visibility_sets)
+	{
+		// another check is needed to differentiate between adding a template during loading vs. adding a template by the user
+		if (!template_set.existsVisibility(templ))
+			template_set.template_visibilities.emplace_back(templ, vis);
+	}
+}
+
+TemplateVisibilityEntry TemplateVisibilitySets::getCurrentTemplateVisibility(const Template* templ) const
+{
+	return *(template_visibility_sets.at(active_visibility_index).findVisibility(templ));
+}
+
+TemplateVisibilityEntry TemplateVisibilitySets::getTemplateVisibility(int template_set, int index) const
+{
+	return template_visibility_sets.at(template_set).template_visibilities.at(index);
+}
+
+void TemplateVisibilitySets::setCurrentTemplateVisibility(const Template* templ, TemplateVisibility vis)
+{
+	template_visibility_sets.at(active_visibility_index).findVisibility(templ)->opacity = vis.opacity;
+	template_visibility_sets.at(active_visibility_index).findVisibility(templ)->visible = vis.visible;
+}
+
+bool TemplateVisibilitySets::existsCurrentTemplateVisibility(const Template* templ) const
+{
+	return getCurrentVisibility().existsVisibility(templ);
+}
+
+TemplateVisibilitySet::TemplateVisibilityVector::const_iterator TemplateVisibilitySet::findVisibility(const Template* templ) const
+{
+	return std::find_if(begin(template_visibilities), end(template_visibilities), [templ](const TemplateVisibilityEntry& entry)
+	{
+		return entry.templ == templ;
+	} );
+}
+
+TemplateVisibilitySet::TemplateVisibilityVector::iterator TemplateVisibilitySet::findVisibility(const Template* templ)
+{
+	return std::find_if(begin(template_visibilities), end(template_visibilities), [templ](const TemplateVisibilityEntry& entry)
+	{
+		return entry.templ == templ;
+	} );
+}
+
+bool TemplateVisibilitySet::existsVisibility(const Template* templ) const
+{
+	return end(template_visibilities) != std::find_if(begin(template_visibilities), end(template_visibilities), [templ](const TemplateVisibilityEntry& entry)
+	{
+		return entry.templ == templ;
+	} );
+}
 
 }  // namespace OpenOrienteering
