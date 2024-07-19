@@ -454,7 +454,6 @@ void MapEditorController::setEditingInProgress(bool value)
 		select_all_act->setEnabled(!editing_in_progress);
 		select_nothing_act->setEnabled(!editing_in_progress);
 		invert_selection_act->setEnabled(!editing_in_progress);
-		select_by_current_symbol_act->setEnabled(!editing_in_progress);
 		find_feature->setEnabled(!editing_in_progress);
 		
 		// Map menu
@@ -2514,6 +2513,8 @@ void MapEditorController::updateSymbolDependentActions()
 {
 	const Symbol* symbol = activeSymbol();
 	const Symbol::Type type = (symbol && !editing_in_progress) ? symbol->getType() : Symbol::NoSymbol;
+	
+	select_by_current_symbol_act->setEnabled(!editing_in_progress && symbol_widget && symbol_widget->selectedSymbolsCount());
 	
 	updateDrawPointGPSAvailability();
 	draw_point_act->setEnabled(type == Symbol::Point && !symbol->isHidden());
