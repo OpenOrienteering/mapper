@@ -46,9 +46,13 @@ steps:
       --print-summary
   displayName: 'Process test coverage results'
 
-- task: PublishCodeCoverageResults@1
+- task: UseDotNet@2
+  displayName: 'Use .NET Core sdk 7.0.x'
   inputs:
-    codeCoverageTool: 'Cobertura'
+    version: 7.0.x
+
+- task: PublishCodeCoverageResults@2
+  inputs:
     summaryFileLocation: '$(Build.SourcesDirectory)/coverage/coverage.xml'
   displayName: 'Publish test coverage results'
 
