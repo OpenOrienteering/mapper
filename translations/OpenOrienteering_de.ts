@@ -4189,12 +4189,12 @@ exportieren, weil das Speichern als %2 (.%3) nicht unterstützt wird.</translati
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="945"/>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="946"/>
         <source>N</source>
-        <translation>NN</translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="947"/>
