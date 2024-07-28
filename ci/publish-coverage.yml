@@ -51,8 +51,10 @@ steps:
   inputs:
     version: 7.0.x
 
-- task: PublishCodeCoverageResults@2
+- task: reportgenerator@5
+  displayName: 'ReportGenerator'
   inputs:
-    summaryFileLocation: '$(Build.SourcesDirectory)/coverage/coverage.xml'
-  displayName: 'Publish test coverage results'
+    reports: '$(Build.SourcesDirectory)/coverage/coverage.xml'
+    targetdir: '$(Build.SourcesDirectory)/coverage'
+    publishCodeCoverageResults: true
 
