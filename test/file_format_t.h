@@ -24,7 +24,6 @@
 #include <QObject>
 #include <QString>
 
-
 /**
  * @test Tests concerning the file formats, registry, import and export.
  * 
@@ -121,6 +120,13 @@ private slots:
 	 */
 	void ocdTextImportTest_data();
 	void ocdTextImportTest();
+	
+	/**
+	 * Test path import from OCD.
+	 */
+	void ocdPathImportTest_data();
+	void ocdPathImportTest();
+
 };
 
 #endif // OPENORIENTEERING_FILE_FORMAT_T_H
