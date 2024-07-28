@@ -21,6 +21,8 @@
 #include "file_format_t.h"
 
 #include <algorithm>
+// IWYU pragma: no_include <array>
+// IWYU pragma: no_include <initializer_list>
 #include <limits>
 #include <memory>
 #include <stdexcept>
@@ -32,6 +34,7 @@
 #include <QtTest>
 #include <QBuffer>
 #include <QByteArray>
+#include <QByteRef>
 #include <QChar>
 #include <QCoreApplication>
 #include <QDir>
@@ -75,6 +78,7 @@
 #include "fileformats/ocd_file_export.h"
 #include "fileformats/ocd_file_import.h"
 #include "fileformats/ocd_file_format.h"
+#include "fileformats/ocd_types.h"
 #include "fileformats/ocd_types_v8.h"
 #include "fileformats/ocd_types_v12.h"
 #include "fileformats/simple_course_export.h"

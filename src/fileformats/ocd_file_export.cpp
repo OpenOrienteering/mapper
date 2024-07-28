@@ -35,6 +35,8 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
+#include <QChar>
+#include <QCharRef>
 #include <QDir>
 #include <QFileInfo>
 #include <QFlags>
