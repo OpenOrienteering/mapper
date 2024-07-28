@@ -25,9 +25,8 @@
 #include <cmath>
 #include <cstdlib>
 #include <cstring>
-#include <iosfwd>
 #include <limits>
-#include <memory>
+// IWYU pragma: no_include <memory>
 #include <stdexcept>
 #include <utility>
 
@@ -50,7 +49,6 @@ do                                       \
 	if (JOIN_DEBUG) qDebug(__VA_ARGS__); \
 } while (0)
 
-using namespace std;
 
 namespace cove {
 const int Polygons::NPOINTS_MAX = 350;
@@ -418,7 +416,7 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 		p = path_new();
 		if (!p || !pt)
 		{
-			throw runtime_error("memory allocation failed");
+			throw std::runtime_error("memory allocation failed");
 		}
 		privpath_t* pp = p->priv;
 		pp->pt = pt;
@@ -656,21 +654,19 @@ bool Polygons::splitlist(JOINENDPOINTLIST& pl, JOINOPLIST& ops,
 	if (vertical)
 	{
 		double x1bound = max1.x + maxdist / 2, x2bound = min2.x - maxdist / 2;
-		for (JOINENDPOINTLIST::const_iterator i = pl.begin(); i != pl.end();
-			 ++i)
+		for (const auto& p : pl)
 		{
-			if (i->coords.x <= x1bound) pl1.push_back(*i);
-			if (i->coords.x >= x2bound) pl2.push_back(*i);
+			if (p.coords.x <= x1bound) pl1.push_back(p);
+			if (p.coords.x >= x2bound) pl2.push_back(p);
 		}
 	}
 	else
 	{
 		double y1bound = max1.y + maxdist / 2, y2bound = min2.y - maxdist / 2;
-		for (JOINENDPOINTLIST::const_iterator i = pl.begin(); i != pl.end();
-			 ++i)
+		for (const auto& p : pl)
 		{
-			if (i->coords.y <= y1bound) pl1.push_back(*i);
-			if (i->coords.y >= y2bound) pl2.push_back(*i);
+			if (p.coords.y <= y1bound) pl1.push_back(p);
+			if (p.coords.y >= y2bound) pl2.push_back(p);
 		}
 	}
 
@@ -707,8 +703,8 @@ bool Polygons::compdists(JOINENDPOINTLIST& pl, JOINOPLIST& ops,
 	else
 	{
 		double maxDistSqr = maxdist * maxdist;
-		vector<bool> alreadyUsed(npoints, false);
-		vector<bool>::iterator ai = alreadyUsed.begin(), aj;
+		std::vector<bool> alreadyUsed(npoints, false);
+		std::vector<bool>::iterator ai = alreadyUsed.begin(), aj;
 
 		JOIN_DEBUG_PRINT("computing set of %d points", npoints);
 		for (JOINENDPOINTLIST::const_iterator i = pl.begin();
@@ -745,7 +741,7 @@ bool Polygons::compdists(JOINENDPOINTLIST& pl, JOINOPLIST& ops,
 						a = b - 1;
 						break;
 					default:
-						throw logic_error("NOEND in JOINENDPOINT list");
+						throw std::logic_error("NOEND in JOINENDPOINT list");
 					}
 					switch (j->end)
 					{
@@ -758,7 +754,7 @@ bool Polygons::compdists(JOINENDPOINTLIST& pl, JOINOPLIST& ops,
 						d = c - 1;
 						break;
 					default:
-						throw logic_error("NOEND in JOINENDPOINT list");
+						throw std::logic_error("NOEND in JOINENDPOINT list");
 					}
 
 					ops.push_back(JOINOP(float(dstfun(a, b, c, d)
@@ -1006,9 +1002,9 @@ bool Polygons::joinPolygons(path_t*& plist,
 				newcurve.vertex[d] = a_curve->vertex[d];
 			break;
 		case NOJOIN:
-			throw logic_error("NOJOIN operation in JOINOP list");
+			throw std::logic_error("NOJOIN operation in JOINOP list");
 		default:
-			throw logic_error("invalid JOINOP");
+			throw std::logic_error("invalid JOINOP");
 		}
 
 		privcurve_free_members(a_curve);
@@ -1016,7 +1012,7 @@ bool Polygons::joinPolygons(path_t*& plist,
 
 		path_t* ib = currOp.b;
 		list_unlink(path_t, plist, ib);
-		if (!ib) throw logic_error("unlinked ib not in list");
+		if (!ib) throw std::logic_error("unlinked ib not in list");
 		path_free(ib);
 	}
 

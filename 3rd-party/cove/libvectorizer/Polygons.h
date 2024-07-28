@@ -21,8 +21,6 @@
 #ifndef COVE_POLYGONS_H
 #define COVE_POLYGONS_H
 
-#include <algorithm>
-#include <functional>
 #include <limits>
 #include <vector>
 

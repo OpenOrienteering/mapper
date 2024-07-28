@@ -28,6 +28,7 @@
 #include <QLineF>
 #include <QPoint>
 #include <QPointF>
+#include <QVariant>
 
 #include <geodesic.h>
 #ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
