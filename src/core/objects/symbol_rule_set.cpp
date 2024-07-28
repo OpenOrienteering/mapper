@@ -508,9 +508,9 @@ void SymbolRuleSet::apply(Map& object_map, const Map& symbol_set, Options option
 		std::vector<bool> colors_in_use;
 		object_map.determineColorsInUse(all_symbols, colors_in_use);
 		if (colors_in_use.empty())
-			colors_in_use.assign(std::size_t(object_map.getNumColors()), false);
+			colors_in_use.assign(std::size_t(object_map.getNumColorPrios()), false);
 		
-		for (int i = object_map.getNumColors() - 1; i >= 0; --i)
+		for (int i = object_map.getNumColorPrios() - 1; i >= 0; --i)
 		{
 			if (!colors_in_use[std::size_t(i)])
 				object_map.deleteColor(i);

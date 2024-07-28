@@ -100,10 +100,10 @@ void processTranslation(const Map& map, TranslationEntries& translation_entries)
 {
 	auto const id = map.symbolSetId();
 	
-	auto num_colors = map.getNumColors();
+	auto num_colors = map.getNumColorPrios();
 	for (int i = 0; i < num_colors; ++i)
 	{
-		auto* color = map.getColor(i);
+		auto* color = map.getColorByPrio(i);
 		auto const& source = color->getName();
 		auto comment = QString{QLatin1String("Color ") + QString::number(color->getPriority())};
 		addSource(translation_entries, id, source, comment);
@@ -435,11 +435,11 @@ void mergeISOM(Map& target, const QDir& symbol_set_dir)
 	
 	// Delete some colors, and mark the symbols which use these colors
 	auto num_colors_deleted = 0;
-	auto const num_colors = map.getNumColors();
+	auto const num_colors = map.getNumColorPrios();
 	for (auto i = num_colors; i > 0; --i)
 	{
 		auto const index = i - 1;
-		auto* const color = map.getColor(index);
+		auto* const color = map.getColorByPrio(index);
 		if (color->getSpotColorName() == QStringLiteral("GREEN 100, BLACK 50")
 		    || color->getSpotColorName() == QStringLiteral("GREEN 60") )
 		{
@@ -818,9 +818,9 @@ void SymbolSetTool::processSymbolSet()
 	
 	map.resetPrinterConfig();
 	map.undoManager().clear();
-	for (int i = 0; i < map.getNumColors(); ++i)
+	for (int i = 0; i < map.getNumColorPrios(); ++i)
 	{
-		auto color = map.getMapColor(i);
+		auto color = map.getMapColorByPrio(i);
 		if (color->getSpotColorMethod() == MapColor::CustomColor)
 		{
 			color->setCmykFromSpotColors();

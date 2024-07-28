@@ -26,6 +26,7 @@
 #include <limits>
 #include <memory>
 #include <stdexcept>
+#include <tuple>
 // IWYU pragma: no_include <type_traits>
 #include <utility>
 
@@ -241,13 +242,13 @@ namespace
 		QCOMPARE(actual.isBaselineViewEnabled(), expected.isBaselineViewEnabled());
 		
 		// Colors
-		if (actual.getNumColors() != expected.getNumColors())
+		if (actual.getNumColorPrios() != expected.getNumColorPrios())
 		{
-			QCOMPARE(actual.getNumColors(), expected.getNumColors());
+			QCOMPARE(actual.getNumColorPrios(), expected.getNumColorPrios());
 		}
-		else for (int i = 0; i < actual.getNumColors(); ++i)
+		else for (int i = 0; i < actual.getNumColorPrios(); ++i)
 		{
-			QCOMPARE(*actual.getColor(i), *expected.getColor(i));
+			QCOMPARE(*actual.getColorByPrio(i), *expected.getColorByPrio(i));
 		}
 		
 		// Symbols
@@ -452,8 +453,8 @@ namespace
 			QCOMPARE(actual_georef.toGeographicCoords(actual_point), expected_georef.toGeographicCoords(actual_point));
 		
 		// Colors
-		QVERIFY2(actual.getNumColors() >= expected.getNumColors(), qPrintable(test_label.arg(actual.getNumColors()).arg(expected.getNumColors())));
-		QVERIFY2(actual.getNumColors() <= 2 * expected.getNumColors(), qPrintable(test_label.arg(actual.getNumColors()).arg(expected.getNumColors())));
+		QVERIFY2(actual.getNumColorPrios() >= expected.getNumColorPrios(), qPrintable(test_label.arg(actual.getNumColorPrios()).arg(expected.getNumColorPrios())));
+		QVERIFY2(actual.getNumColorPrios() <= 2 * expected.getNumColorPrios(), qPrintable(test_label.arg(actual.getNumColorPrios()).arg(expected.getNumColorPrios())));
 		
 		// Symbols
 		// Combined symbols may be dropped (split) on export.
@@ -1305,6 +1306,185 @@ void FileFormatTest::ocdTextImportTest()
 	}
 }
 
+
+void FileFormatTest::colorTest_data()
+{
+	QTest::addColumn<QString>("filepath");
+	QTest::addColumn<QByteArray>("format_id");
+
+	std::vector<const char*> format_ids_list;
+	format_ids_list.reserve(5);
+	format_ids_list.push_back("XML");
+
+#ifndef MAPPER_BIG_ENDIAN
+	// In attempt to be future-proof, we shamelessly rip out all OCD-like
+	// formats from the registry.
+	FileFormats.findFormat([&format_ids_list](auto format) {
+		if (qstrlen(format->id()) > 3 && !qstrncmp(format->id(), "OCD", 3))
+			format_ids_list.push_back(format->id());
+		return false;
+	});
+#endif
+
+	for (auto& format_id : format_ids_list)
+		for (auto* test_file : { "data:colors/color-id.omap",
+		                         "data:colors/fractional-cmyk.omap",
+		                         "data:colors/semi-opaque-color.omap",
+		                         "data:colors/spot-color-overprint.omap",
+		                         "data:colors/no-spot-colors.omap",
+                                                                            })
+		{
+			QTest::newRow(QByteArray {"Load color table - "}.append(format_id)
+			              .append(" - ").append(test_file))
+			        << QString::fromUtf8(test_file)
+			        << QByteArray {format_id};
+		}
+}
+
+
+namespace QTest {
+	// Helper for textual MapColor output in QCOMPARE().
+	template<>
+    char *toString(const MapColor& color)
+    {
+		auto color_method_name = [](MapColor::ColorMethod m) {
+			auto value = static_cast<int>(m);
+			if (!value)
+				return QString::fromLatin1("UndefinedMethod");
+
+			QStringList flag_names;
+			for (auto& method_name : { "CustomColor", "SpotColor",
+			     "CmykColor", "RgbColor", "Knockout" })
+			{
+				if (value & 1)
+					flag_names.push_back(QString::fromLatin1(method_name));
+				value >>= 1;
+			}
+			return flag_names.join(QChar::fromLatin1('|'));
+		};
+		
+		auto ret = QString::fromLatin1("n:'%1' id:%2 p:%3 scm:%4 ccm:%5 rcm:%6 ko:%7 cmyk:(%8,%9,%10,%11) rgb:%12 scn:'%13' sf:%14 sa:%15 o:%16 sep:[")
+		           .arg(color.getName())
+		           .arg(color.getId())
+		           .arg(color.getPriority())
+		           .arg(color_method_name(color.getSpotColorMethod()),
+		                color_method_name(color.getCmykColorMethod()),
+		                color_method_name(color.getRgbColorMethod()))
+		           .arg(color.getKnockout())
+		           .arg(color.getCmyk().c)
+		           .arg(color.getCmyk().m)
+		           .arg(color.getCmyk().y)
+		           .arg(color.getCmyk().k)
+		           .arg(QColor(color.getRgb()).name(),
+		                color.getSpotColorName())
+		           .arg(color.getScreenFrequency())
+		           .arg(color.getScreenAngle())
+		           .arg(color.getOpacity());
+		QStringList component_descs;
+		for (auto const& component : color.getComponents())
+			component_descs.push_back(QString::fromLatin1("%1/%2")
+			                          .arg(component.spot_color->getName())
+			                          .arg(component.factor));
+		ret.append(component_descs.join(QString::fromLatin1(", ")));
+		ret.append(QLatin1String("]"));
+        return QTest::toString(ret);
+    }
+}  // namespace QTest
+
+
+void FileFormatTest::colorTest()
+{
+	QFETCH(QString, filepath);
+	QFETCH(QByteArray, format_id);
+	QVERIFY(QFileInfo::exists(filepath));
+
+	{
+		auto original = std::make_unique<Map>();
+
+		QVERIFY(original->loadFrom(filepath));
+
+		// Save the sample to the format identified by format_id and load it
+		// again to see if the target format maintains the color number as
+		// well.
+		std::unique_ptr<Map> copy;
+		auto const* format = FileFormats.findFormat(format_id);
+		QVERIFY(format);
+		copy = saveAndLoadMap(*original, format);
+		QVERIFY(copy);
+
+		// Failure here means that we failed to persist the color properties in
+		// the target file format.
+		for (auto i = 0; i < original->getNumColorPrios(); ++i)
+		{
+			// Gratiously handle missing v8 features (opacity, limited name
+			// length, CMYK color resolution).
+			auto* color_in_original = original->getColorByPrio(i);
+			auto color_in_copy = std::unique_ptr<MapColor>(copy->getColorByPrio(i)->duplicate());
+			if(!qstrcmp(format_id, "OCD8"))
+			{
+				// No opacity in v8 format.
+				if (color_in_original->getOpacity() != color_in_copy->getOpacity())
+					color_in_copy->setOpacity(color_in_original->getOpacity());
+				// Shorter color names.
+				if (color_in_original->getName().startsWith(color_in_copy->getName()))
+					color_in_copy->setName(color_in_original->getName());
+				// Shorter spot color names.
+				if (color_in_original->getSpotColorMethod() == MapColor::SpotColor
+				    && color_in_original->getSpotColorName().startsWith(color_in_copy->getSpotColorName()))
+					color_in_copy->setSpotColorName(color_in_original->getSpotColorName());
+				// Lower resolution of CMYK component values.
+				auto const orig_cmyk = original->getColorByPrio(i)->getCmyk();
+				auto copy_cmyk = MapColorCmyk { color_in_copy->getCmyk() };
+				bool do_set_color = false;
+				for (auto f : { std::make_tuple<const float*, float*>(&orig_cmyk.c, &copy_cmyk.c),
+				                std::make_tuple<const float*, float*>(&orig_cmyk.m, &copy_cmyk.m),
+				                std::make_tuple<const float*, float*>(&orig_cmyk.y, &copy_cmyk.y),
+				                std::make_tuple<const float*, float*>(&orig_cmyk.k, &copy_cmyk.k) })
+				{
+					if (qFuzzyCompare(*std::get<0>(f), *std::get<1>(f)))
+						continue;
+					if (qFuzzyCompare(std::floor(*std::get<0>(f) * 200), std::floor(*std::get<1>(f) * 200)))
+					{
+						*std::get<1>(f) = *std::get<0>(f);
+						do_set_color = true;
+					}
+					else
+					{
+						do_set_color = false;
+						break;
+					}
+				}
+				if (do_set_color)
+					color_in_copy->setCmyk(copy_cmyk);
+			}
+
+			QCOMPARE(*color_in_copy, *color_in_original);
+		}
+
+		// Failure here means that we failed to persist the link between
+		// symbols and colors.
+		for (auto i = 0; i < original->getNumSymbols(); ++i)
+		{
+			auto* symbol_in_original = original->getSymbol(i);
+			for (auto color_prio = 0; color_prio < original->getNumColorPrios(); ++color_prio)
+			{
+				auto const* color_in_original = original->getColorByPrio(color_prio);
+				if (symbol_in_original->containsColor(color_in_original))
+				{
+					// v8 does not have combined symbols.
+					if (symbol_in_original->getType() == Symbol::Combined
+					    && !qstrcmp(format_id, "OCD8"))
+						continue;
+
+					auto const* symbol_in_copy = copy->getSymbol(i);
+					auto const* color_in_copy = copy->getColorByPrio(color_prio);
+					QVERIFY(symbol_in_copy->containsColor(color_in_copy));
+					QCOMPARE(color_in_copy->getId(), color_in_original->getId());
+				}
+			}
+		}
+	}
+}
 
 
 /*

@@ -1415,10 +1415,10 @@ MapColor* OgrFileImport::makeColor(OGRStyleToolH tool, const char* color_string)
 		}
 		else if (a > 0)
 		{
-			color = new MapColor(QString::fromUtf8(color_string), map->getNumColors());
+			color = new MapColor(QString::fromUtf8(color_string), map->getNumColorPrios());
 			color->setRgb(QColor{ r, g, b });
 			color->setCmykFromRgb();
-			map->addColor(color, map->getNumColors());
+			map->addColor(color, map->getNumColorPrios());
 		}
 		
 		key.detach();

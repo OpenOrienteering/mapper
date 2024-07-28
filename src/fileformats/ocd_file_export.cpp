@@ -113,12 +113,12 @@ static QTextCodec* codecFromSettings()
  */
 int beginOfSpotColors(const Map* map)
 {
-	const auto num_colors = map->getNumColors();
+	const auto num_colors = map->getNumColorPrios();
 	auto first_pure_spot_color = num_colors;
 	for (auto i = num_colors; i > 0; )
 	{
 		--i;
-		const auto color = map->getColor(i);
+		const auto color = map->getColorByPrio(i);
 		if (color->getSpotColorMethod() != MapColor::SpotColor
 		    || map->isColorUsedByASymbol(color))
 			break;
@@ -493,10 +493,10 @@ QString stringForColor(int i, const MapColor& color)
 	QTextStream out(&string_9, QIODevice::Append);
 	out << color.getName()
 	    << "\tn" << i
-	    << "\tc" << qRound(cmyk.c * 100)
-	    << "\tm" << qRound(cmyk.m * 100)
-	    << "\ty" << qRound(cmyk.y * 100)
-	    << "\tk" << qRound(cmyk.k * 100)
+	    << "\tc" << qRound(cmyk.c * 1000)/10.0
+	    << "\tm" << qRound(cmyk.m * 1000)/10.0
+	    << "\ty" << qRound(cmyk.y * 1000)/10.0
+	    << "\tk" << qRound(cmyk.k * 1000)/10.0
 	    << "\to" << (color.getKnockout() ? '0' : '1')
 	    << "\tt" << qRound(color.getOpacity() * 100);
 	if (color.getSpotColorMethod() == MapColor::CustomColor)
@@ -710,7 +710,25 @@ bool OcdFileExport::exportImplementation()
 	
 	// Check for a necessary offset (and add related warnings early).
 	area_offset = calculateAreaOffset();
-	uses_registration_color = map->isColorUsedByASymbol(map->getRegistrationColor());
+	
+	if (map->isColorUsedByASymbol(map->getRegistrationColor()))
+	{
+		// A heuristic to find *some* free id for the Registration black color.
+		// Imported OCD maps usually have number 1 as the All color separations
+		// but this color gets dropped during import in favor of the built-in
+		// Mapper Registration black. Chances are that the original id is still
+		// free. If that id is in use, blindly search beyond the maximum number
+		// of colors.
+		if (!map->getMapColorById(1))
+			registration_color_id = 1;
+		else
+			for (auto id = map->getNumColorPrios(); ; ++id)
+				if (!map->getMapColorById(id))
+				{
+					registration_color_id = id;
+					break;
+				}
+	}
 	
 	setupFileHeaderGeneric(ocd_version, *file.header());
 	exportSetup(file);   // includes colors
@@ -825,13 +843,13 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 	{
 		auto& symbol_header = file.header()->symbol_header;
 		
-		auto num_colors = map->getNumColors();
+		auto num_colors = map->getNumColorPrios();
 		
 		auto spotColorNumber = [this, num_colors](const MapColor* color)->quint16 {
 			quint16 number = 0;
 			for (auto i = 0; i < num_colors; ++i)
 			{
-				const auto* current = map->getColor(i);
+				const auto* current = map->getColorByPrio(i);
 				if (current == color)
 					break;
 				if (current->getSpotColorMethod() == MapColor::SpotColor)
@@ -845,30 +863,29 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 			throw FileFormatException(::OpenOrienteering::OcdFileExport::tr("The map contains more than 24 spot colors which is not supported by OCD version 8."));
 		
 		auto begin_of_spot_colors = beginOfSpotColors(map);
-		if (uses_registration_color)
-			++begin_of_spot_colors;  // in ocd output (ocd_number below)
 		if (begin_of_spot_colors > 256)
 			throw FileFormatException(::OpenOrienteering::OcdFileExport::tr("The map contains more than 256 colors which is not supported by OCD version 8."));
 		
 		using std::begin; using std::end;
 		auto separation_info = symbol_header.separation_info;
 		auto color_info = symbol_header.color_info;
-		quint16 ocd_number = 0;
 		
-		if (uses_registration_color)
+		if (registration_color_id >= 0)
 		{
-			color_info->number = 0;
+			color_info->number = registration_color_id;
 			color_info->name = toOcdString(Map::getRegistrationColor()->getName());
 			color_info->cmyk = { 200, 200, 200, 200 };  // OC*D stores CMYK values as integers from 0-200.
 			std::fill(begin(color_info->separations), begin(color_info->separations) + symbol_header.num_separations, 200);
 			std::fill(begin(color_info->separations) + symbol_header.num_separations, end(color_info->separations), 255);
 			++color_info;
-			++ocd_number;
 		}
 		
 		for (int i = 0; i < num_colors; ++i)
 		{
-			const auto* color = map->getColor(i);
+			const auto* color = map->getColorByPrio(i);
+			if (color->getOpacity() < 1)
+				addWarning(::OpenOrienteering::OcdFileExport::tr("Variable color opacity in \"%1\" is not supported by OCD version 8. Exporting as a fully opaque color.")
+				           .arg(color->getName()));
 			const auto& cmyk = color->getCmyk();
 			// OC*D stores CMYK values as integers from 0-200.
 			auto ocd_cmyk = Ocd::CmykV8 {
@@ -886,7 +903,7 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 				separation_info->raster_angle = quint16(qRound(10 * color->getScreenAngle()));
 				++separation_info;
 				
-				if (ocd_number >= begin_of_spot_colors)
+				if (i >= begin_of_spot_colors)
 					continue;  // Just a spot color, not a regular map color.
 				
 				std::fill(begin(color_info->separations), end(color_info->separations), 255);
@@ -910,13 +927,13 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 				}
 			}
 			
-			color_info->number = ocd_number;
+			color_info->number = color->getId();
 			color_info->name = toOcdString(color->getName());
+			color_info->overprint = color->getKnockout() ? -1 : 0;
 			color_info->cmyk = ocd_cmyk;
 			++color_info;
-			++ocd_number;
 		}
-		symbol_header.num_colors = ocd_number;
+		symbol_header.num_colors = color_info - symbol_header.color_info;
 	}
 }
 
@@ -1001,16 +1018,16 @@ void OcdFileExport::exportSetup()
 	}
 	
 	// Map colors
-	auto num_colors = map->getNumColors();
+	auto num_colors = map->getNumColorPrios();
 	auto begin_of_spot_colors = beginOfSpotColors(map);
-	auto ocd_number = 0;
 	auto spot_number = 0;
-	if (uses_registration_color)
+	
+	if (registration_color_id >= 0)
 	{
 		SpotColorComponents all_spot_colors;
 		for (int i = 0; i < num_colors; ++i)
 		{
-			const auto* color = map->getColor(i);
+			const auto* color = map->getColorByPrio(i);
 			if (color->getSpotColorMethod() == MapColor::SpotColor)
 			{
 				all_spot_colors.push_back({color, 1});
@@ -1020,19 +1037,24 @@ void OcdFileExport::exportSetup()
 		MapColor registration_color{*Map::getRegistrationColor()};
 		registration_color.setSpotColorComposition(all_spot_colors);
 		registration_color.setCmyk(all_cmyk);
-		addParameterString(9, stringForColor(ocd_number++, registration_color));
+		addParameterString(9, stringForColor(registration_color_id, registration_color));
 	}
 	
 	for (int i = 0; i < num_colors; ++i)
 	{
-		const auto* color = map->getColor(i);
+		const auto* color = map->getColorByPrio(i);
 		if (color->getSpotColorMethod() == MapColor::SpotColor)
 		{
 			addParameterString(10, stringForSpotColor(spot_number++, *color));
-			if (ocd_number >= begin_of_spot_colors)
+			if (i >= begin_of_spot_colors)
 				continue;  // Just a spot color, not a regular map color.
 		}
-		addParameterString(9, stringForColor(ocd_number++, *color));
+
+		auto ocd_number = color->getId();
+		if (ocd_number < 0)
+			addWarning(tr("Color %1 lacks an id in OCD export. Please report this incident to the developers.")
+			           .arg(color->getName()));		
+		addParameterString(9, stringForColor(ocd_number, *color));
 	}
 }
 
@@ -1132,15 +1154,14 @@ void OcdFileExport::setupSymbolColors<Ocd::BaseSymbolV8>(const Symbol* symbol, O
 	
 	auto bitpos = std::begin(ocd_base_symbol.colors);
 	auto last = std::end(ocd_base_symbol.colors);
-	if (uses_registration_color)
+	if (registration_color_id >= 0)
 	{
 		if (symbol->containsColor(map->getRegistrationColor()))
-			*bitpos |= bitmask;
-		bitmask <<= 1;
+			ocd_base_symbol.colors[registration_color_id / 8] |= 1 << (registration_color_id % 8);
 	}
-	for (int c = 0; c < map->getNumColors(); ++c)
+	for (int c = 0; c < map->getNumColorPrios(); ++c)
 	{
-		if (symbol->containsColor(map->getColor(c)))
+		if (symbol->containsColor(map->getColorByPrio(c)))
 			*bitpos |= bitmask;
 		
 		if (bitmask == 0x80u) 
@@ -1171,26 +1192,25 @@ void OcdFileExport::setupSymbolColors(const Symbol* symbol, Counter& num_colors,
 	
 	num_colors = 0;
 	auto it = first;
-	auto registration_offset = 0;
 	
-	if (uses_registration_color)
+	if (registration_color_id >= 0)
 	{
-		registration_offset = 1;
 		if (symbol->containsColor(map->getRegistrationColor()))
 		{
 			++num_colors;
-			*it = IndexType(0);
+			*it = IndexType(registration_color_id);
 			++it;
 		}
 	}
 	
-	for (int c = 0; c < map->getNumColors(); ++c)
+	for (int c = 0; c < map->getNumColorPrios(); ++c)
 	{
-		if (!symbol->containsColor(map->getColor(c)))
+		auto const* color = map->getColorByPrio(c);
+		if (!symbol->containsColor(color))
 			continue;
 		
 		++num_colors;
-		*it = IndexType(c + registration_offset);
+		*it = IndexType(color->getId());
 		
 		if (++it == last)
 		{
@@ -2900,12 +2920,10 @@ void OcdFileExport::exportExtras()
 
 quint16 OcdFileExport::convertColor(const MapColor* color) const
 {
-	auto index = map->findColorIndex(color);
-	if (index >= 0)
-	{
-		return quint16(uses_registration_color ? (index + 1) : index);
-	}
-	return 0;
+	if (color == map->getRegistrationColor())
+		return registration_color_id;
+	else
+		return color ? color->getId() : 0;
 }
 
 
