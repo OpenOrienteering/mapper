@@ -34,6 +34,9 @@ add_test(
 add_executable(cove-PolygonBenchmark EXCLUDE_FROM_ALL
   PolygonTest.cpp
 )
+target_link_libraries(cove-PolygonBenchmark
+  PRIVATE cove-test-config
+)
 target_compile_definitions(cove-PolygonBenchmark
   PRIVATE
     COVE_BENCHMARK=QBENCHMARK
