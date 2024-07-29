@@ -46,11 +46,6 @@ steps:
       --print-summary
   displayName: 'Process test coverage results'
 
-- task: UseDotNet@2
-  displayName: 'Use .NET Core sdk 7.0.x'
-  inputs:
-    version: 7.0.x
-
 - task: reportgenerator@5
   displayName: 'ReportGenerator'
   inputs:
