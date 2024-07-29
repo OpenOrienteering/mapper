@@ -18,8 +18,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OPENORIENTEERING_IMPORT_EXPORT_H
-#define OPENORIENTEERING_IMPORT_EXPORT_H
+#ifndef OPENORIENTEERING_FILE_IMPORT_EXPORT_H
+#define OPENORIENTEERING_FILE_IMPORT_EXPORT_H
 
 #include <vector>
 
@@ -334,4 +334,4 @@ protected:
 
 }  // namespace OpenOrienteering
 
-#endif // OPENORIENTEERING_IMPORT_EXPORT_H
+#endif // OPENORIENTEERING_FILE_IMPORT_EXPORT_H

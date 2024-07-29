@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OPENORIENTEERING_KML_EXPORT_EXPORT_H
-#define OPENORIENTEERING_KML_EXPORT_EXPORT_H
+#ifndef OPENORIENTEERING_KML_COURSE_EXPORT_H
+#define OPENORIENTEERING_KML_COURSE_EXPORT_H
 
 #include <vector>
 
@@ -74,4 +74,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif // OPENORIENTEERING_KML_EXPORT_EXPORT_H
+#endif // OPENORIENTEERING_KML_COURSE_EXPORT_H

@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OPENORIENTEERING_OCD_FILE_FORMAT
-#define OPENORIENTEERING_OCD_FILE_FORMAT
+#ifndef OPENORIENTEERING_OCD_FILE_FORMAT_H
+#define OPENORIENTEERING_OCD_FILE_FORMAT_H
 
 #include <memory>
 #include <vector>
@@ -95,4 +95,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif // OPENORIENTEERING_OCD_FILE_FORMAT
+#endif // OPENORIENTEERING_OCD_FILE_FORMAT_H

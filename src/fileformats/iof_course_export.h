@@ -78,4 +78,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif // OPENORIENTEERING_KML_COURSE_EXPORT_H
+#endif // OPENORIENTEERING_IOF_COURSE_EXPORT_H
