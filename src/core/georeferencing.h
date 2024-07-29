@@ -160,7 +160,7 @@ public:
 	 * 
 	 * All values set as declination or grivation will be rounded to this precisison.
 	 */
-	static constexpr unsigned int declinationPrecision();
+	static constexpr int declinationPrecision();
 	
 	/**
 	 * @brief Rounds according to the defined precision of declination/grivation/convergence.
@@ -704,10 +704,10 @@ double Georeferencing::roundScaleFactor(double value)
 }
 
 inline
-constexpr unsigned int Georeferencing::declinationPrecision()
+constexpr int Georeferencing::declinationPrecision()
 {
-	// This must match the implementation in declinationRound().
-	return 2u;
+	// This must match the implementation in roundDeclination().
+	return 2;
 }
 
 inline

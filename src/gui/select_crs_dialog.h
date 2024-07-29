@@ -23,7 +23,6 @@
 #define OPENORIENTEERING_SELECT_CRS_DIALOG_H
 
 #include <QDialog>
-#include <QFlags>
 #include <QObject>
 #include <QString>
 
