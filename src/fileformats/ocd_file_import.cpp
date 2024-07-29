@@ -2163,6 +2163,11 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 	{
 		object->coords[i] = convertOcdPoint(ocd_points[i]);
 		setPointFlags(object, i, is_area, ocd_points[i]);
+		if (ocd_points[i].x & Ocd::OcdPoint32::FlagGap)
+		{
+			// Virtual gaps are not supported
+			addWarningOnce(tr("Virtual gaps in line objects are not supported."));
+		}
 	}
 	
 	// For path objects, create closed parts where the position of the last point is equal to that of the first point
