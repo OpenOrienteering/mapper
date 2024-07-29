@@ -64,12 +64,6 @@ void setParameterKey(QWidget* w, const QString& value)
 	w->setProperty(crsParameterKeyProperty, QVariant(value));
 }
 
-inline
-QString ParameterKey(const QWidget* w)
-{
-	return w->property(crsParameterKeyProperty).toString();
-}
-
 }  // namespace
 
 
@@ -81,7 +75,8 @@ CRSSelector::CRSSelector(const Georeferencing& georef, QWidget* parent)
  , num_custom_items(0)
  , configured_crs(nullptr)
 {
-	for (auto&& crs : CRSTemplateRegistry().list())
+	CRSTemplateRegistry const crs_registry;
+	for (const auto& crs : crs_registry.list())
 	{
 		addItem(crs->name(), QVariant(crs->id()));
 	}

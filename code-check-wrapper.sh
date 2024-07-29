@@ -53,17 +53,13 @@ for I in \
   combined_symbol.cpp \
   configure_grid_dialog.cpp \
   course_file_format.cpp \
-  crs_param_widgets.cpp \
-  crs_template.cpp \
-  crs_template_implementation.cpp \
+  crs_ \
   duplicate_equals_t.cpp \
   file_dialog.cpp \
   /file_format.cpp \
   file_format_t.cpp \
   file_import_export.cpp \
-  georeferencing.cpp \
-  georeferencing_dialog.cpp \
-  georeferencing_t.cpp \
+  georeferencing \
   icon_engine \
   iof_course_export \
   key_button_bar.cpp \
