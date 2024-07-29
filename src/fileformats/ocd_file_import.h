@@ -20,8 +20,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OPENORIENTEERING_OCD_FILE_IMPORT
-#define OPENORIENTEERING_OCD_FILE_IMPORT
+#ifndef OPENORIENTEERING_OCD_FILE_IMPORT_H
+#define OPENORIENTEERING_OCD_FILE_IMPORT_H
 
 #include <cstddef>
 #include <initializer_list>
@@ -365,4 +365,4 @@ protected:
 
 }  // namespace OpenOrienteering
 
-#endif // OPENORIENTEERING_OCD_FILE_IMPORT
+#endif // OPENORIENTEERING_OCD_FILE_IMPORT_H

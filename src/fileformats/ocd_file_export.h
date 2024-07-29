@@ -351,4 +351,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_OCD_FILE_EXPORT_H
