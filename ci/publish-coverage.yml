@@ -52,4 +52,5 @@ steps:
     reports: '$(Build.SourcesDirectory)/coverage/coverage.xml'
     targetdir: '$(Build.SourcesDirectory)/coverage'
     publishCodeCoverageResults: true
+  displayName: 'Publish test coverage results'
 
