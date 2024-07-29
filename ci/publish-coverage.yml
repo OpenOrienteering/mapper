@@ -47,7 +47,6 @@ steps:
   displayName: 'Process test coverage results'
 
 - task: reportgenerator@5
-  displayName: 'ReportGenerator'
   inputs:
     reports: '$(Build.SourcesDirectory)/coverage/coverage.xml'
     targetdir: '$(Build.SourcesDirectory)/coverage'
