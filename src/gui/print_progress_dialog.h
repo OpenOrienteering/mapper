@@ -20,8 +20,8 @@
 
 #ifdef QT_PRINTSUPPORT_LIB
 
-#ifndef OPENORIENTEERING_PRINT_WIDGET_P_H
-#define OPENORIENTEERING_PRINT_WIDGET_P_H
+#ifndef OPENORIENTEERING_PRINT_PROGRESS_DIALOG_H
+#define OPENORIENTEERING_PRINT_PROGRESS_DIALOG_H
 
 #include <Qt>
 #include <QObject>
@@ -86,9 +86,9 @@ private:
 	MapPrinter* const map_printer;
 };
 
-#endif
-
 
 }  // namespace OpenOrienteering
+
+#endif // OPENORIENTEERING_PRINT_PROGRESS_DIALOG_H
 
 #endif // QT_PRINTSUPPORT_LIB
