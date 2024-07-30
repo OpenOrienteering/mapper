@@ -377,9 +377,12 @@ Polygons::decomposeImageIntoPaths(const QImage& sourceImage,
 	bool cancel = false;
 	while (!cancel && findNextPixel(image, x, y))
 	{
-		Path pathFound = recordPath(image, x, y);
-		removePathFromImage(image, pathFound);
-		if (pathFound.size() > specklesize) pathList.push_back(pathFound);
+		{
+			auto pathFound = recordPath(image, x, y);
+			removePathFromImage(image, pathFound);
+			if (pathFound.size() > specklesize)
+				pathList.push_back(std::move(pathFound));
+		}
 		if (progressObserver && !(y % progressHowOften))
 		{
 			// FIXME hardcoded value 25!!!
@@ -388,7 +391,10 @@ Polygons::decomposeImageIntoPaths(const QImage& sourceImage,
 		}
 	}
 
-	return !cancel ? pathList : PathList();
+	if (cancel)
+		pathList.clear();
+
+	return pathList;
 }
 
 /*! Identifies straight segments of path and returns them as list of vertices
