@@ -1369,8 +1369,8 @@ void FileFormatTest::ocdPathImportTest()
 			// the code below provides more details when failing
 			if (path_object.getCoordinate(i).flags() != static_cast<unsigned int>(*expected_flags))
 			{
-				QString err = QLatin1String("failing at %1: expected %2, actual %3").arg(QString::number(i)).arg(QString::number(*expected_flags)).arg(QString::number(path_object.getCoordinate(i).flags()));
-				QFAIL(err.toLocal8Bit().constData());
+				auto err = QString::fromLatin1("failing at %1: expected %2, actual %3").arg(QString::number(i), QString::number(*expected_flags), QString::number(path_object.getCoordinate(i).flags()));
+				QFAIL(qPrintable(err));
 			}
 			++expected_flags;
 		}
