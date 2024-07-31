@@ -1366,10 +1366,11 @@ void FileFormatTest::ocdPathImportTest()
 		for (int i = 0; i < expected_coordinates; ++i)
 		{
 			// QCOMPARE(path_object.getCoordinate(i).flags(), *expected_flags);
-			// the code below provides more details when failing
+			// Provide the current index when failing.
 			if (path_object.getCoordinate(i).flags() != static_cast<unsigned int>(*expected_flags))
 			{
-				auto err = QString::fromLatin1("failing at %1: expected %2, actual %3").arg(QString::number(i), QString::number(*expected_flags), QString::number(path_object.getCoordinate(i).flags()));
+				auto err = QString::fromLatin1("Compared flags are not the same at index %1\n   Actual  : %2\n   Expected: %3")
+				               .arg(QString::number(i), QString::number(path_object.getCoordinate(i).flags()), QString::number(*expected_flags));
 				QFAIL(qPrintable(err));
 			}
 			++expected_flags;
