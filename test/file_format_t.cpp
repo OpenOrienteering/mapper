@@ -40,10 +40,12 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QFlags>
 #include <QIODevice>
 #include <QLatin1Char>
 #include <QLatin1String>
 #include <QMetaObject>
+#include <QMetaType>
 #include <QPageSize>
 #include <QPoint>
 #include <QPointF>
@@ -1311,47 +1313,84 @@ void FileFormatTest::ocdTextImportTest()
 
 void FileFormatTest::ocdPathImportTest_data()
 {
-#define C(x) ((int)((unsigned int)(x)<<8))
-	// TODO: replace | 8 by Ocd::OcdPoint32::FlagGap
+	#define C(x) ((int)((unsigned int)(x)<<8))
+	constexpr auto ocd_flag_gap = 8;  // TODO: implement as Ocd::OcdPoint32::FlagGap
 	static Ocd::OcdPoint32 coords[] = {
-		{ C(-1109), C(212) }, { C(-1035) | Ocd::OcdPoint32::FlagCtl1, C(302) }, { C(-1008) | Ocd::OcdPoint32::FlagCtl2, C(519) }, { C(-926), C(437) },	// area is not closed
-		{ C(-589), C(432) }, { C(-269), C(845) | Ocd::OcdPoint32::FlagCorner }, { C(267), C(279) },	// area is not closed
-		{ C(-972), C(-264) }, { C(-836) | Ocd::OcdPoint32::FlagLeft | 8, C(-151) | Ocd::OcdPoint32::FlagRight }, { C(-677), C(-19) }, { C(-518), C(112) }, 	// area is not closed
-		{ C(100), C(-250) }, { C(150), C(-260) }, { C(100), C(-250) }, { C(200), C(-350) | Ocd::OcdPoint32::FlagHole }, { C(220), C(-400) }, { C(200), C(-350) },	// area is closed
-		{ C(100), C(-250) }, { C(150), C(-260) }, { C(100), C(-250) }, { C(120), C(-200) | Ocd::OcdPoint32::FlagHole }, { C(200), C(-350) | Ocd::OcdPoint32::FlagHole }, { C(220), C(-400) }, { C(200), C(-350) },
-		{ C(100), C(-250) }, { C(150), C(-260) }, { C(100), C(-250) }, { C(120), C(-200) | Ocd::OcdPoint32::FlagHole }, { C(140), C(-300) | Ocd::OcdPoint32::FlagHole }, { C(200), C(-350) | Ocd::OcdPoint32::FlagHole }, { C(220), C(-400) }, { C(200), C(-350) },
-		{ C(100), C(-250) }, { C(150), C(-260) }, { C(200), C(-350) | Ocd::OcdPoint32::FlagHole }, { C(220), C(-400) }, // areas are not closed
+		// +0,  bezier
+	    { C(-1109), C(212) },
+	    { C(-1035) | Ocd::OcdPoint32::FlagCtl1, C(302) },
+	    { C(-1008) | Ocd::OcdPoint32::FlagCtl2, C(519) },
+	    { C(-926), C(437) },  // area is not closed
+	    // +4,  straight
+		{ C(-589), C(432) },
+	    { C(-269), C(845) | Ocd::OcdPoint32::FlagCorner },
+	    { C(267), C(279) },  // area is not closed
+	    // +7,  straight with virtual gap
+		{ C(-972), C(-264) },
+	    { C(-836) | Ocd::OcdPoint32::FlagLeft | ocd_flag_gap, C(-151) | Ocd::OcdPoint32::FlagRight },
+	    { C(-677), C(-19) },
+	    { C(-518), C(112) }, 	// area is not closed
+	    // +11, straight with hole
+		{ C(100), C(-250) },
+	    { C(150), C(-260) },
+	    { C(100), C(-250) },
+	    { C(200), C(-350) | Ocd::OcdPoint32::FlagHole },
+	    { C(220), C(-400) },
+	    { C(200), C(-350) },	// area is closed
+	    // +17, straight with empty hole
+	    { C(100), C(-250) },
+	    { C(150), C(-260) },
+	    { C(100), C(-250) },
+	    { C(120), C(-200) | Ocd::OcdPoint32::FlagHole },
+	    { C(200), C(-350) | Ocd::OcdPoint32::FlagHole },
+	    { C(220), C(-400) },
+	    { C(200), C(-350) },
+	    // +24, straight with two empty holes
+	    { C(100), C(-250) },
+	    { C(150), C(-260) },
+	    { C(100), C(-250) },
+	    { C(120), C(-200) | Ocd::OcdPoint32::FlagHole },
+	    { C(140), C(-300) | Ocd::OcdPoint32::FlagHole },
+	    { C(200), C(-350) | Ocd::OcdPoint32::FlagHole },
+	    { C(220), C(-400) },
+	    { C(200), C(-350) },
+	    // +32, open areas with hole
+	    { C(100), C(-250) },
+	    { C(150), C(-260) },
+	    { C(200), C(-350) | Ocd::OcdPoint32::FlagHole },
+	    { C(220), C(-400) }, // areas are not closed
 	};
 	
 	static int resulting_flags[] = {
-		MapCoord::CurveStart, 0, 0, 0, MapCoord::ClosePoint,
-		0, MapCoord::DashPoint, 0, MapCoord::ClosePoint,
-		0, 0, 0, 0, MapCoord::ClosePoint,
-		0, 0, MapCoord::ClosePoint | MapCoord::HolePoint, 0, 0, MapCoord::ClosePoint,
-		// same as above
-		// same as above
-		// same as above
+	    // +0
+	    MapCoord::CurveStart, 0, 0, 0, MapCoord::ClosePoint,
+	    // +5
+	    0, MapCoord::DashPoint, 0, MapCoord::ClosePoint,
+	    // +9
+	    0, 0, 0, 0, MapCoord::ClosePoint,
+	    // +14
+	    0, 0, MapCoord::ClosePoint | MapCoord::HolePoint, 0, 0, MapCoord::ClosePoint,
 	};
 	
 	QTest::addColumn<Ocd::OcdPoint32*>("first");
 	QTest::addColumn<quint32>("num");
-	QTest::addColumn<int>("expected_coordinates");
+	QTest::addColumn<int>("expected_size");
 	QTest::addColumn<int*>("expected_flags");
 	
-	QTest::newRow("bezier curve") << coords+0 << 4u << 5 << resulting_flags+0;
-	QTest::newRow("straight curve") << coords+4 << 3u << 4 << resulting_flags+5;
-	QTest::newRow("straight curve with virtual gap") << coords+7 << 4u << 5 << resulting_flags+9;
-	QTest::newRow("straight curve with hole") << coords+11 << 6u << 6 << resulting_flags+14;
-	QTest::newRow("straight curve with empty hole") << coords+17 << 7u << 6 << resulting_flags+14;
-	QTest::newRow("straight curve with two empty holes") << coords+24 << 8u << 6 << resulting_flags+14;
-	QTest::newRow("unclosed areas with hole") << coords+32 << 4u << 6 << resulting_flags+14;
+	QTest::newRow("bezier") << coords+0 << 4u << 5 << resulting_flags+0;
+	QTest::newRow("straight") << coords+4 << 3u << 4 << resulting_flags+5;
+	QTest::newRow("straight with virtual gap") << coords+7 << 4u << 5 << resulting_flags+9;
+	QTest::newRow("straight with hole") << coords+11 << 6u << 6 << resulting_flags+14;
+	QTest::newRow("straight with empty hole") << coords+17 << 7u << 6 << resulting_flags+14;
+	QTest::newRow("straight with two empty holes") << coords+24 << 8u << 6 << resulting_flags+14;
+	QTest::newRow("open areas with hole") << coords+32 << 4u << 6 << resulting_flags+14;
 }
 
 void FileFormatTest::ocdPathImportTest()
 {
 	QFETCH(Ocd::OcdPoint32*, first);
 	QFETCH(quint32, num);
-	QFETCH(int, expected_coordinates);
+	QFETCH(int, expected_size);
 	QFETCH(int*, expected_flags);
 	
 	TestOcdFileImport ocd_v12_import{12};
@@ -1359,11 +1398,11 @@ void FileFormatTest::ocdPathImportTest()
 	TestOcdFileImport::OcdImportedPathObject path_object;
 	ocd_v12_import.fillPathCoords(&path_object, true, num, first);
 	
-	QCOMPARE(path_object.getRawCoordinateVector().size(), expected_coordinates);
+	QCOMPARE(path_object.getRawCoordinateVector().size(), expected_size);
 
 	if (expected_flags)
 	{
-		for (int i = 0; i < expected_coordinates; ++i)
+		for (int i = 0; i < expected_size; ++i, ++expected_flags)
 		{
 			// QCOMPARE(path_object.getCoordinate(i).flags(), *expected_flags);
 			// Provide the current index when failing.
@@ -1373,7 +1412,6 @@ void FileFormatTest::ocdPathImportTest()
 				               .arg(QString::number(i), QString::number(path_object.getCoordinate(i).flags()), QString::number(*expected_flags));
 				QFAIL(qPrintable(err));
 			}
-			++expected_flags;
 		}
 	}
 }
