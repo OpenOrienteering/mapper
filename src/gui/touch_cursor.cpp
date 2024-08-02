@@ -21,8 +21,13 @@
 
 #include "touch_cursor.h"
 
+#include <Qt>
+#include <QEvent>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QPen>
+#include <QPixmap>
+#include <QRectF>
 
 #include "gui/map/map_widget.h"
 #include "gui/util_gui.h"
