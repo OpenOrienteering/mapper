@@ -24,10 +24,10 @@
 #include <QDialog>
 #include <QObject>
 #include <QSize>
-#include <QString>
 
 class QWidget;
 
+class QString;
 class QTextBrowser;
 class QUrl;
 
@@ -68,7 +68,7 @@ protected slots:
 	virtual void updateWindowTitle();
 	
 	/**
-	 * @brief Displays a tooltip showing the link if is an external document.
+	 * @brief Displays a tooltip showing the link if it's an external document.
 	 */
 	void highlighted(const QString& link);
 	
@@ -87,4 +87,4 @@ protected:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_TEXT_BROWSER_DIALOG_H

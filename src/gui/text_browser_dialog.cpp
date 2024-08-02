@@ -20,10 +20,14 @@
 
 #include "text_browser_dialog.h"
 
+#include <Qt>
 #include <QApplication>
+#include <QHBoxLayout>
+#include <QIcon>
 #include <QPushButton>
 #include <QScrollBar>
 #include <QScroller>  // IWYU pragma: keep
+#include <QString>
 #include <QTextBrowser>
 #include <QToolTip>
 #include <QVBoxLayout>
