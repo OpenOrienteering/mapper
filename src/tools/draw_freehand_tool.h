@@ -28,7 +28,6 @@
 #include <QtGlobal>
 #include <QObject>
 #include <QPoint>
-#include <QString>
 
 #include "core/map_coord.h"
 #include "tools/draw_line_and_area_tool.h"
@@ -86,4 +85,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_DRAW_FREEHAND_TOOL_H
