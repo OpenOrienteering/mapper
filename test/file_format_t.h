@@ -121,6 +121,13 @@ private slots:
 	 */
 	void ocdTextImportTest_data();
 	void ocdTextImportTest();
+	
+	/**
+	 * Test path import from OCD.
+	 */
+	void ocdPathImportTest_data();
+	void ocdPathImportTest();
+
 };
 
 #endif // OPENORIENTEERING_FILE_FORMAT_T_H
