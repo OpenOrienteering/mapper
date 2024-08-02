@@ -1524,17 +1524,19 @@ void FileFormatTest::ocdPathImportTest()
 	ocd_v12_import.fillPathCoords(&path_object, personality == Area, points.size, points.data);
 	QVERIFY(path_object.getRawCoordinateVector().size() > 0);
 	
-//	QEXPECT_FAIL("empty hole, area", "", Abort);
 	QCOMPARE(path_object.getRawCoordinateVector().size(), expected.size);
-	
 	for (int i = 0; i < expected.size; ++i)
 	{
-		// QCOMPARE(path_object.getCoordinate(i).flags(), *expected);
 		// Provide the current index when failing.
-		if (path_object.getCoordinate(i).flags() != static_cast<MapCoord::Flags>(expected.data[i]))
+		if (path_object.getCoordinate(i).flags() != MapCoord::Flags(expected.data[i]))
 		{
-			auto err = QString::fromLatin1("Compared flags are not the same at index %1\n   Actual  : %2\n   Expected: %3")
-			.arg(QString::number(i), QString::number(path_object.getCoordinate(i).flags()), QString::number(expected.data[i]));
+			auto err = QString::fromLatin1("Compared flags are not the same at index %1\n"
+			                               "   Actual  : %2\n"
+			                               "   Expected: %3"
+			                               ).arg(QString::number(i),
+			                                     QString::number(path_object.getCoordinate(i).flags()),
+			                                     QString::number(expected.data[i])
+			                               );
 			QFAIL(qPrintable(err));
 		}
 	}

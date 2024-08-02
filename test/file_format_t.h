@@ -24,6 +24,7 @@
 #include <QObject>
 #include <QString>
 
+
 /**
  * @test Tests concerning the file formats, registry, import and export.
  * 
