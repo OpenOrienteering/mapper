@@ -1491,7 +1491,7 @@ void FileFormatTest::ocdPathImportTest_data()
 	}
 	
 	{
-		// straight segments, one hole, not actual ares
+		// straight segments, one hole, not actual areas
 		static Ocd::OcdPoint32 ocd_points[] = {
 		    { C(100), C(-250) },
 		    { C(150), C(-260) },
@@ -1509,6 +1509,84 @@ void FileFormatTest::ocdPathImportTest_data()
 		QTest::newRow("open areas with hole, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags_area);
 		static int expected_flags_line[4] = {};
 		QTest::newRow("open areas with hole, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags_line);
+	}
+	
+	{
+		// area with hole in hole
+		static Ocd::OcdPoint32 ocd_points[] = {
+			{ C(-405), C(-167) },
+		    { C(-348) | Ocd::OcdPoint32::FlagCtl1, C(22) },
+		    { C(-113) | Ocd::OcdPoint32::FlagCtl2, C(667) },
+		    { C(54), C(687) },
+		    { C(184) | Ocd::OcdPoint32::FlagCtl1, C(702) },
+		    { C(836) | Ocd::OcdPoint32::FlagCtl2, C(418) },
+		    { C(889), C(298) },
+		    { C(599), C(117) },
+		    { C(137), C(93) | Ocd::OcdPoint32::FlagDash},  // different from first point
+		    { C(-25), C(79) | Ocd::OcdPoint32::FlagHole},
+		    { C(-208) | Ocd::OcdPoint32::FlagCtl1, C(259) },
+		    { C(90) | Ocd::OcdPoint32::FlagCtl2, C(652) },
+		    { C(559), C(322) },  // different from first point of hole
+		    { C(78), C(326) | Ocd::OcdPoint32::FlagHole},
+		    { C(100) | Ocd::OcdPoint32::FlagCtl1, C(341) },
+		    { C(157) | Ocd::OcdPoint32::FlagCtl2, C(354) },
+		    { C(198), C(339) | Ocd::OcdPoint32::FlagCorner },
+		    { C(227) | Ocd::OcdPoint32::FlagCtl1, C(329) },
+		    { C(247) | Ocd::OcdPoint32::FlagCtl2, C(304) },
+		    { C(242), C(256) },
+		    { C(144), C(243) },  // different from first point of hole
+		};
+		static int expected_flags_area[] = {
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    0,
+		    MapCoord::DashPoint,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,  // injected by Mapper
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,  // injected by Mapper
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    MapCoord::DashPoint | MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    0,
+		    MapCoord::ClosePoint  // injected by Mapper
+		};
+		QTest::newRow("area with nested holes, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags_area);
+		static int expected_flags_line[] = {
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    0,
+		    MapCoord::DashPoint,
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    MapCoord::DashPoint | MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    0
+		};
+		QTest::newRow("area with nested holes, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags_line);
 	}
 }
 
