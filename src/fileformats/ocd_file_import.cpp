@@ -2158,11 +2158,22 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 			{
 				Q_ASSERT(std::distance(out_first, out_coord) >= 2); // implied by initialization of ignore_flag_hole
 				// HolePoint needs to be applied to the last point of a part
-				(out_coord-1)->setHolePoint(true);
+				if ((out_coord-2)->isHolePoint())
+				{
+					// overwrite current part start (i.e. drop last point from input)
+					*(out_coord-1) = *out_coord;
+					--out_coord;
+				}
+				else
+				{
+					// HolePoint needs to be applied to the last point of a part
+					(out_coord-1)->setHolePoint(true);
+				}
 			}
 		}
 		++out_coord;
 	});
+	object->coords.resize(std::distance(out_first, out_coord));
 	
 	// For path objects, create closed parts where the position of the last point is equal to that of the first point
 	if (object->getType() == Object::Path)
