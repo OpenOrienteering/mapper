@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -98,11 +98,7 @@ EditPointTool::~EditPointTool()
 bool EditPointTool::addDashPointDefault() const
 {
 	// Toggle dash points depending on if the selected symbol has a dash symbol.
-	// TODO: instead of just looking if it is a line symbol with dash points,
-	// could also check for combined symbols containing lines with dash points
-	return ( hover_object &&
-	         hover_object->getSymbol()->getType() == Symbol::Line &&
-	         hover_object->getSymbol()->asLine()->getDashSymbol() != nullptr );
+	return (hover_object && symbolContainsDashSymbol(hover_object->getSymbol()));
 }
 
 bool EditPointTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
@@ -185,7 +181,7 @@ void EditPointTool::clickPress()
 			startDragging();
 			hover_state = OverObjectNode;
 			hover_point = path->subdivide(closest.path_coord);
-			if (addDashPointDefault() ^ switch_dash_points)
+			if (addDashPointDefault() != switch_dash_points)
 			{
 				auto point = path->getCoordinate(hover_point);
 				point.setDashPoint(true);
