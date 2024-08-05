@@ -52,6 +52,7 @@
 #include <QFont>
 #include <QFontMetrics>
 #include <QFrame>
+#include <QGuiApplication>
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QImage> // IWYU pragma: keep
@@ -78,6 +79,7 @@
 #include <QPushButton>
 #include <QRect>
 #include <QRectF>
+#include <QScreen>
 #include <QSettings>
 #include <QSignalBlocker>
 #include <QSignalMapper>
@@ -2269,6 +2271,15 @@ void MapEditorController::mapNotesClicked()
 	layout->addWidget(text_edit);
 	layout->addLayout(buttons_layout);
 	dialog.setLayout(layout);
+	
+	const auto size = QGuiApplication::primaryScreen()->size();
+	const QFontMetrics text_font_metrics(text_edit->currentFont());
+	auto width = qRound(size.width() * 0.7);
+	auto height = qRound(size.height() * 0.65);
+	const auto bounding_rect = text_font_metrics.boundingRect(0, 0, width, height, Qt::TextWordWrap, map->getMapNotes());
+	width = qMax(300, qMin(width, bounding_rect.width() + 60));
+	height = qMax(200, qMin(height, bounding_rect.height() + 80));
+	dialog.resize(width, height);
 	
 	connect(cancel_button, &QAbstractButton::clicked, &dialog, &QDialog::reject);
 	connect(ok_button, &QAbstractButton::clicked, &dialog, &QDialog::accept);
