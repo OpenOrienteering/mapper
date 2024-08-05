@@ -2345,7 +2345,7 @@
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="86"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="118"/>
         <source>Save...</source>
-        <translation>Speicher...</translation>
+        <translation>Speichern...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="88"/>
@@ -2443,7 +2443,7 @@
         <location filename="../src/core/symbols/symbol.cpp" line="318"/>
         <location filename="../src/undo/object_undo.cpp" line="616"/>
         <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
-        <translation>Unzulässig Symbol-ID &apos;%1&apos; bei Zeile %2 Zeichen %3.</translation>
+        <translation>Unzulässige Symbol-ID &apos;%1&apos; bei Zeile %2 Zeichen %3.</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="393"/>
