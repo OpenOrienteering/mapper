@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2013-2021 Kai Pastor
+ *    Copyright 2013-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -348,6 +348,8 @@ public slots:
 	void rotateMapClicked();
 	/** Shows the dialog to enter map notes. */
 	void mapNotesClicked();
+	/** Shows the map information. */
+	void mapInfoClicked();
 	
 	/** Shows or hides the template setup dock widget. */
 	void showTemplateWindow(bool show);
@@ -746,6 +748,7 @@ private:
 	QAction* scale_map_act = {};
 	QAction* rotate_map_act = {};
 	QAction* map_notes_act = {};
+	QAction* map_info_act = {};
 	QAction* symbol_set_id_act = {};
 	std::unique_ptr<SymbolReportFeature> symbol_report_feature;
 	
