@@ -1,6 +1,6 @@
 # This file is part of OpenOrienteering.
 
-# Copyright 2019-2021 Kai Pastor
+# Copyright 2019-2021, 2024 Kai Pastor
 #
 # Redistribution and use is allowed according to the terms of the BSD license:
 #
@@ -57,9 +57,13 @@ steps:
     env | sort
   displayName: 'Update environment'
 
-- task: DownloadPipelineArtifact@0
+- task: DownloadPipelineArtifact@2
   inputs:
-    pipelineId: $(openorienteering.superbuild.buildId)
+    buildType: 'specific'
+    project: $(System.TeamProjectId)
+    buildVersionToDownload: 'latest'
+#    pipelineId: $(openorienteering.superbuild.buildId)
+    definition: 1
     artifactName: 'superbuild-$(SUPBERBUILD_IMAGE_NAME)$(OUTPUT_SUFFIX)'
     targetPath: $(SUPERBUILD_INSTALL_DIR)
   displayName: 'Download superbuild artifacts'
