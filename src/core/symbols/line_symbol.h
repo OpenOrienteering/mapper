@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -185,7 +185,7 @@ public:
 	
 	
 	/**
-	 * Returns the dimension which shall considered when scaling the icon.
+	 * Returns the dimension which shall be considered when scaling the icon.
 	 */
 	qreal dimensionForIcon() const override;
 	
@@ -282,6 +282,8 @@ public:
 	inline const LineSymbolBorder& getRightBorder() const {return right_border;}
 	
 	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
+	
+	bool containsDashSymbol() const override { return dash_symbol != nullptr; }
 	
 protected:
 	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
@@ -481,4 +483,4 @@ protected:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_LINE_SYMBOL_H

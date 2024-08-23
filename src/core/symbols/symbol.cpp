@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020, 2024 Kai Pastor
+ *    Copyright 2012-2020, 2022, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -984,6 +984,13 @@ bool Symbol::lessByColor::operator() (const Symbol* s1, const Symbol* s2) const
 	const auto rgb1 = std::find(first, last, rgb_c1);
 	const auto rgb2 = std::find(first, last, rgb_c2);
 	return std::distance(first, rgb1) < std::distance(first, rgb2);
+}
+
+
+// virtual function, derived classes LineSymbol and CombinedSymbol override default behaviour below.
+bool Symbol::containsDashSymbol() const
+{
+	return false;
 }
 
 
