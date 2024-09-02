@@ -9509,7 +9509,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="170"/>
         <source>OCAD compatibility settings</source>
-        <translation>Kompabilitetsinställningar för OCAD</translation>
+        <translation>Kompatibilitetsinställningar för OCAD</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="181"/>
@@ -9539,7 +9539,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="200"/>
         <source>OCAD compatibility</source>
-        <translation>OCAD-kompabilitet</translation>
+        <translation>OCAD-kompatibilitet</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="207"/>
