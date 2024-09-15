@@ -49,9 +49,9 @@
         <translation>Fialová pod černou pro zákres tratí</translation>
     </message>
     <message>
-        <source>Black 65%</source>
+        <source>Black 50%</source>
         <comment>Color 9</comment>
-        <translation>Černá 65%</translation>
+        <translation>Černá 50%</translation>
     </message>
     <message>
         <source>Black 20%</source>
@@ -124,14 +124,14 @@
         <translation>Žlutá 100%/Zelená 50%</translation>
     </message>
     <message>
-        <source>Black 25% (Grey)</source>
+        <source>Black 35% (Grey)</source>
         <comment>Color 24</comment>
-        <translation>Černá 25% (šedá)</translation>
+        <translation type="unfinished">Černá 25% (šedá)</translation>
     </message>
     <message>
-        <source>Green 100%/Black 50%</source>
+        <source>Dark green line symbols </source>
         <comment>Color 25</comment>
-        <translation>Zelená 100%/Černá 50%</translation>
+        <translation type="unfinished">Zelená 100%/Černá 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -192,10 +192,10 @@ Prominent features such as depressions, re-entrants, spurs, earth banks and terr
 Absolute height accuracy is of little importance, but the relative height difference between neighbouring features should be represented on the map as accurately as possible. It is permissible to alter the height of a contour slightly if this improves the representation of a feature. This deviation should not exceed 25% of the contour interval, and attention must be paid to neighbouring features.
 The smallest bend in a contour line is 0.25 mm from centre to centre of the line (footprint 4 m). The mouth of a re-entrant or a spur must be wider than 0.5 mm from centre to centre of the line (footprint 8 m).
 The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minimum width is 0.6 mm (footprint 9 m) outside measure. Smaller prominent knolls can be represented using symbol Small knoll (109) or Small elongated knoll (110) or they can be exaggerated on the map to satisfy the minimum dimension.
-A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
-Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
+A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
+Contours shall be adapted or broken in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation>{Vrstevnice je} čára spojující body stejné {nadmořské} výšky. Základní výškový interval mezi vrstevnicemi je 5 metrů. Interval vrstevnic 2.5 metru může být použit v plochých terénech.
+        <translation type="unfinished">{Vrstevnice je} čára spojující body stejné {nadmořské} výšky. Základní výškový interval mezi vrstevnicemi je 5 metrů. Interval vrstevnic 2.5 metru může být použit v plochých terénech.
 Spádovky se mohou kreslit na nižší straně vrstevnice k ujasnění směru spádu. Pokud jsou použity, měly by být umístěny v údolích.
 Uzavřené vrstevnice zobrazují kupky nebo prohlubně. Prohlubně musí mít nejméně jednu spádovku. Minimální výška / hloubka by měla být 1 m.
 Vztahy mezi sousedními vrstevnicemi jsou důležité. Sousední vrstevnice ukazují tvar a strukturu. Malé detaily na vrstevnicích by měly být vynechány, protože mají tendenci skrývat hlavní rysy terénu.
@@ -336,15 +336,26 @@ Minimální délka: 0.6 mm (stopa 9 m).</translation>
     </message>
     <message>
         <source>Earth wall</source>
-        <comment>Name of symbol 105</comment>
+        <comment>Name of symbol 105.1</comment>
         <translation>Zemní val</translation>
     </message>
     <message>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
-        <comment>Description of symbol 105</comment>
+        <comment>Description of symbol 105.1</comment>
         <translation>Zřetelný zemní val. Minimální výška: 1 m.
 Minimální délka: 1.4 mm (stopa 21 m).</translation>
+    </message>
+    <message>
+        <source>Retaining earth wall</source>
+        <comment>Name of symbol 105.2</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A retaining earth wall is an abrupt change in ground level which can be clearly distinguished from its surroundings used for minor peat edges and cultivation terraces. If such a feature is higher than 1 m, it should be drawn with the symbol Earth bank (104).
+Minimum height: 0.5 m, minimum length (isolated): 1.4 mm.</source>
+        <comment>Description of symbol 105.2</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ruined earth wall</source>
@@ -364,11 +375,11 @@ Minimální délka: dvě čárky (3.65 mm – stopa 55 m). Je-li kratší, znač
         <translation>Rýha</translation>
     </message>
     <message>
-        <source>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Minimum depth: 1 m.
-Minimum length: 1.15 mm (footprint 17 m).
-Contour lines should not be broken around this symbol.</source>
+        <source>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Contour lines may be broken around this symbol for better readability.
+Minimum depth: 1 m.
+Minimum length: 1.15 mm (footprint 17.25 m).</source>
         <comment>Description of symbol 107</comment>
-        <translation>Erozní rýha, která je příliš malá pro zobrazení užitím značky Zemní sráz (104), je zobrazena jednou čarou. Minimální hloubka: 1 m.
+        <translation type="unfinished">Erozní rýha, která je příliš malá pro zobrazení užitím značky Zemní sráz (104), je zobrazena jednou čarou. Minimální hloubka: 1 m.
 Minimální délka: 1.15 mm (stopa 17 m).
 Vrstevnice kolem této značky se nepřerušují.</translation>
     </message>
@@ -378,11 +389,11 @@ Vrstevnice kolem této značky se nepřerušují.</translation>
         <translation>Malá rýha</translation>
     </message>
     <message>
-        <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
-Minimum length (isolated): three dots (1.15 mm - footprint 17 m).
-Contour lines should be broken around this symbol.</source>
+        <source>A small erosion gully or dry ditch. Minimum depth: 0.5 m.
+Minimum length (isolated): two dots (0.7 mm - footprint 10.5 m).
+Contour lines shall be broken around this symbol.</source>
         <comment>Description of symbol 108</comment>
-        <translation>Malá erozní rýha, suchý příkop nebo výkop. Minimální hloubka 0.5 m.
+        <translation type="unfinished">Malá erozní rýha, suchý příkop nebo výkop. Minimální hloubka 0.5 m.
 Minimální délka (izolovaná {značka}): tři tečky (1.15 mm – stopa 17 m).
 Vrstevnice by měly být přerušeny kolem této značky.</translation>
     </message>
@@ -631,12 +642,12 @@ Minimální délka: 0.6 mm (stopa 9 m).</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
-For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.15 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation>Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
+        <translation type="unfinished">Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
 Není-li sráz svislý, měly by spádové šrafy být kresleny tak, aby vyjádřily plný vodorovný rozsah. Konce horní linie mohou být kulaté nebo hranaté. Mezera mezi dvěma srázy musí být nejméně 0.2 mm. Sráz by měl být v souladu s vrstevnicemi.
 Překonávání srázu bude obvykle zpomalovat postup.
 Minimální výška: 1 m.
@@ -649,12 +660,12 @@ Minimální délka: 0.6 mm (stopa 9 m).</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
-For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.15 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation>Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
+        <translation type="unfinished">Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
 Není-li sráz svislý, měly by spádové šrafy být kresleny tak, aby vyjádřily plný vodorovný rozsah. Konce horní linie mohou být kulaté nebo hranaté. Mezera mezi dvěma srázy musí být nejméně 0.2 mm. Sráz by měl být v souladu s vrstevnicemi.
 Překonávání srázu bude obvykle zpomalovat postup.
 Minimální výška: 1 m.
@@ -667,12 +678,12 @@ Minimální délka: 0.6 mm (stopa 9 m).</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
-For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.5 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation>Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
+        <translation type="unfinished">Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
 Není-li sráz svislý, měly by spádové šrafy být kresleny tak, aby vyjádřily plný vodorovný rozsah. Konce horní linie mohou být kulaté nebo hranaté. Mezera mezi dvěma srázy musí být nejméně 0.2 mm. Sráz by měl být v souladu s vrstevnicemi.
 Překonávání srázu bude obvykle zpomalovat postup.
 Minimální výška: 1 m.
@@ -685,12 +696,12 @@ Minimální délka: 0.6 mm (stopa 9 m).</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
-For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.15 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation>Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
+        <translation type="unfinished">Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
 Není-li sráz svislý, měly by spádové šrafy být kresleny tak, aby vyjádřily plný vodorovný rozsah. Konce horní linie mohou být kulaté nebo hranaté. Mezera mezi dvěma srázy musí být nejméně 0.2 mm. Sráz by měl být v souladu s vrstevnicemi.
 Překonávání srázu bude obvykle zpomalovat postup.
 Minimální výška: 1 m.
@@ -726,15 +737,28 @@ Stopa: 10.5 m × 12 m.</translation>
     </message>
     <message>
         <source>Cave or rocky pit (with a distinct entrance)</source>
-        <comment>Name of symbol 203.2</comment>
+        <comment>Name of symbol 203.1.1</comment>
         <translation>Jeskyně nebo kamenná jáma (s výrazným vstupem)</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
 Location is the centre of gravity of the symbol, and the symbol should point into the cave.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
-        <comment>Description of symbol 203.2</comment>
+        <comment>Description of symbol 203.1.1</comment>
         <translation>Kamenné jámy, díry, jeskyně nebo důlní šachty, které mohou představovat nebezpečí pro závodníka. Minimální hloubka: 1 m.
+Umístění je v těžišti značky a značka musí být orientována k severu s výjimkou jeskyní s výrazným vstupem, kdy značka by měla směřovat do jeskyně.
+Kamenné jámy větší než 5 m v průměru by měly být zveličeny a zobrazeny užitím značky srázu (201, 202).</translation>
+    </message>
+    <message>
+        <source>Dangerous pit</source>
+        <comment>Name of symbol 203.2</comment>
+        <translation type="unfinished">Jeskyně nebo kamenná jáma (s výrazným vstupem)</translation>
+    </message>
+    <message>
+        <source>A highly dangerous pit, vertical shaft or abyss where a fall into the pit could cause severe injury or death. It is strongly recommended not to use such a feature as a control point. If this object is part of a possible route choice, it should be marked in the terrain with tape.
+Footprint: 13.5 m diameter.</source>
+        <comment>Description of symbol 203.2</comment>
+        <translation type="unfinished">Kamenné jámy, díry, jeskyně nebo důlní šachty, které mohou představovat nebezpečí pro závodníka. Minimální hloubka: 1 m.
 Umístění je v těžišti značky a značka musí být orientována k severu s výjimkou jeskyní s výrazným vstupem, kdy značka by měla směřovat do jeskyně.
 Kamenné jámy větší než 5 m v průměru by měly být zveličeny a zobrazeny užitím značky srázu (201, 202).</translation>
     </message>
@@ -1042,12 +1066,11 @@ Zhroucené a snadno překonatelné příkopy by měly být mapovány jako erozn�
         <translation>Nepřekonatelné vodní těleso (plná barva) s břehovou čárou</translation>
     </message>
     <message>
-        <source>The black bank line emphasises that the feature is uncrossable.
-Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
+        <source>An area of deep water such as a lake, pond or river which may constitute a danger to the competitor. The black bank line emphasises that the feature is uncrossable. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301</comment>
-        <translation>Černá břehová čára zdůrazňuje, že objekt je nepřekonatelný.
+        <translation type="unfinished">Černá břehová čára zdůrazňuje, že objekt je nepřekonatelný.
 Dominantní vodní plochy mohou být znázorněny 70% barvou. Malé vodní plochy a vodní tělesa mající úzké části budou vždy zobrazeny plnou barvou. {Břehové čáry jsou přerušeny v místě brodu.}
 Minimální šířka (vnitřek): 0.3 mm.
 Minimální plocha (vnitřek): 0.55 mm × 0.55 mm (stopa 8 m × 8 m).</translation>
@@ -1058,11 +1081,11 @@ Minimální plocha (vnitřek): 0.55 mm × 0.55 mm (stopa 8 m × 8 m).</translati
         <translation>Nepřekonatelné vodní těleso (plná barva)</translation>
     </message>
     <message>
-        <source>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
+        <source>An area of deep water such as a lake, pond or river which may constitute a danger to the competitor. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301.1</comment>
-        <translation>Dominantní vodní plochy mohou být znázorněny 70% barvou. Malé vodní plochy a vodní tělesa mající úzké části budou vždy zobrazeny plnou barvou. {Břehové čáry jsou přerušeny v místě brodu.}
+        <translation type="unfinished">Dominantní vodní plochy mohou být znázorněny 70% barvou. Malé vodní plochy a vodní tělesa mající úzké části budou vždy zobrazeny plnou barvou. {Břehové čáry jsou přerušeny v místě brodu.}
 Minimální šířka (vnitřek): 0.3 mm.
 Minimální plocha (vnitřek): 0.55 mm × 0.55 mm (stopa 8 m × 8 m).</translation>
     </message>
@@ -1072,12 +1095,11 @@ Minimální plocha (vnitřek): 0.55 mm × 0.55 mm (stopa 8 m × 8 m).</translati
         <translation>Nepřekonatelné vodní těleso (dominantní) s břehovou čarou</translation>
     </message>
     <message>
-        <source>The black bank line emphasises that the feature is uncrossable.
-Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
+        <source>An area of deep water such as a lake, pond or river which may constitute a danger to the competitor. The black bank line emphasises that the feature is uncrossable. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301.2</comment>
-        <translation>Černá břehová čára zdůrazňuje, že objekt je nepřekonatelný.
+        <translation type="unfinished">Černá břehová čára zdůrazňuje, že objekt je nepřekonatelný.
 Dominantní vodní plochy mohou být znázorněny 70% barvou. Malé vodní plochy a vodní tělesa mající úzké části budou vždy zobrazeny plnou barvou. {Břehové čáry jsou přerušeny v místě brodu.}
 Minimální šířka (vnitřek): 0.3 mm.
 Minimální plocha (vnitřek): 0.55 mm × 0.55 mm (stopa 8 m × 8 m).</translation>
@@ -1088,11 +1110,11 @@ Minimální plocha (vnitřek): 0.55 mm × 0.55 mm (stopa 8 m × 8 m).</translati
         <translation>Nepřekonatelné vodní těleso (dominantní)</translation>
     </message>
     <message>
-        <source>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
+        <source>An area of deep water such as a lake, pond or river which may constitute a danger to the competitor. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301.3</comment>
-        <translation>Dominantní vodní plochy mohou být znázorněny 70% barvou. Malé vodní plochy a vodní tělesa mající úzké části budou vždy zobrazeny plnou barvou. {Břehové čáry jsou přerušeny v místě brodu.}
+        <translation type="unfinished">Dominantní vodní plochy mohou být znázorněny 70% barvou. Malé vodní plochy a vodní tělesa mající úzké části budou vždy zobrazeny plnou barvou. {Břehové čáry jsou přerušeny v místě brodu.}
 Minimální šířka (vnitřek): 0.3 mm.
 Minimální plocha (vnitřek): 0.55 mm × 0.55 mm (stopa 8 m × 8 m).</translation>
     </message>
@@ -1102,9 +1124,9 @@ Minimální plocha (vnitřek): 0.55 mm × 0.55 mm (stopa 8 m × 8 m).</translati
         <translation>Nepřekonatelné vodní těleso, břehová čára</translation>
     </message>
     <message>
-        <source>A black bank line indicates that the feature cannot be crossed.</source>
+        <source>The black bank line emphasises that the feature is uncrossable.</source>
         <comment>Description of symbol 301.4</comment>
-        <translation>{Oblast hluboké vody jako je jezero, rybník, řeka nebo nádrž, která může představovat nebezpečí pro závodníka, nebo je do ní zakázán vstup.} Černá břehová čára zdůrazňuje, že objekt je nepřekonatelný.</translation>
+        <translation type="unfinished">{Oblast hluboké vody jako je jezero, rybník, řeka nebo nádrž, která může představovat nebezpečí pro závodníka, nebo je do ní zakázán vstup.} Černá břehová čára zdůrazňuje, že objekt je nepřekonatelný.</translation>
     </message>
     <message>
         <source>Shallow body of water, with solid outline</source>
@@ -1194,10 +1216,10 @@ Stopa: 10.5 m × 12 m.</translation>
         <translation>Překonatelný vodní tok</translation>
     </message>
     <message>
-        <source>Should be at least 2 m wide.
+        <source>A crossable watercourse more than 2 m wide.
 Minimum length (isolated): 1 mm (footprint 15 m).</source>
         <comment>Description of symbol 304</comment>
-        <translation>Měl by být nejméně 2 m široký.
+        <translation type="unfinished">Měl by být nejméně 2 m široký.
 Minimální délka (izolovaná {značka}): 1 mm (stopa 15 m).</translation>
     </message>
     <message>
@@ -1206,9 +1228,10 @@ Minimální délka (izolovaná {značka}): 1 mm (stopa 15 m).</translation>
         <translation>Malý překonatelný vodní tok</translation>
     </message>
     <message>
-        <source>Minimum length (isolated): 1 mm (footprint 15 m).</source>
+        <source>A crossable watercourse less than 2 m wide.
+Minimum length (isolated): 1 mm (footprint 15 m)</source>
         <comment>Description of symbol 305</comment>
-        <translation>Minimální délka (izolovaná {značka}): 1 mm (stopa 15 m).</translation>
+        <translation type="unfinished">Minimální délka (izolovaná {značka}): 1 mm (stopa 15 m).</translation>
     </message>
     <message>
         <source>Minor/seasonal water channel</source>
@@ -1810,13 +1833,12 @@ Minimální délka: 2 mm (stopa 30 m).</translation>
         <translation>Zřetelná hranice vegetace</translation>
     </message>
     <message>
-        <source>A distinct forest edge or vegetation boundary within the forest.
-Very distinct forest edges and vegetation boundaries may be represented using the cultivation boundary symbol. Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map. For areas with a lot of rock features, it is recommended to use the green dashed line for vegetation boundaries.
-A disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbol Vegetation: fight (410). An alternative for these situations is to use symbol Distinct cultivation boundary (415).
-Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
-Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
+        <source>A vegetation boundary within the forest, or a distinct forest edge.
+Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map. For areas with a lot of rock features, it is recommended to use the green dashed line for vegetation boundaries.
+The disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbol Vegetation: fight (410). An alternative for these situations is to use symbol Distinct cultivation boundary (415).
+Minimum length, black dot implementation: 5 dots (2.0 mm - footprint 30 m).</source>
         <comment>Description of symbol 416</comment>
-        <translation>Zřetelný okraj lesa nebo hranice vegetace uvnitř lesa.
+        <translation type="unfinished">Zřetelný okraj lesa nebo hranice vegetace uvnitř lesa.
 Velmi zřetelné hranice lesa a hranice vegetace mohou být znázorněny užitím značky {Zřetelná} hranice obdělávané půdy {(415)}. V mapě může být použita jen jedna značka hranice vegetace (černá tečkovaná čára nebo zelená čárkovaná čára). V oblastech s množstvím skalních útvarů je doporučeno používat pro hranice vegetace zelenou čárkovanou čáru.
 Nevýhodou zelené čáry je to, že nemůže být použita k zobrazení zřetelné hranice vegetace kolem a uvnitř značky Vegetace, prodírání (410). Alternativou pro tyto situace je použití značky Zřetelná hranice obdělávané půdy (415).
 Minimální délka provedení černé tečky: 5 teček (2.5 mm – stopa 37{.5} m).
@@ -1828,13 +1850,12 @@ Minimální délka provedení zelené čárky: 4 čárky (1.8 mm – stopa 27 m)
         <translation>Zřetelná hranice vegetace, zelená čárkovaná čára</translation>
     </message>
     <message>
-        <source>A distinct forest edge or vegetation boundary within the forest.
-Very distinct forest edges and vegetation boundaries may be represented using the cultivation boundary symbol. Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map. For areas with a lot of rock features, it is recommended to use the green dashed line for vegetation boundaries.
-A disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbol Vegetation: fight (410). An alternative for these situations is to use symbol Distinct cultivation boundary (415).
-Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
+        <source>A vegetation boundary within the forest, or a distinct forest edge.
+Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map. For areas with a lot of rock features, it is recommended to use the green dashed line for vegetation boundaries.
+The disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbol Vegetation: fight (410). An alternative for these situations is to use symbol Distinct cultivation boundary (415).
 Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
         <comment>Description of symbol 416.1</comment>
-        <translation>Zřetelný okraj lesa nebo hranice vegetace uvnitř lesa.
+        <translation type="unfinished">Zřetelný okraj lesa nebo hranice vegetace uvnitř lesa.
 Velmi zřetelné hranice lesa a hranice vegetace mohou být znázorněny užitím značky {Zřetelná} hranice obdělávané půdy {(415)}. V mapě může být použita jen jedna značka hranice vegetace (černá tečkovaná čára nebo zelená čárkovaná čára). V oblastech s množstvím skalních útvarů je doporučeno používat pro hranice vegetace zelenou čárkovanou čáru.
 Nevýhodou zelené čáry je to, že nemůže být použita k zobrazení zřetelné hranice vegetace kolem a uvnitř značky Vegetace, prodírání (410). Alternativou pro tyto situace je použití značky Zřetelná hranice obdělávané půdy (415).
 Minimální délka provedení černé tečky: 5 teček (2.5 mm – stopa 37{.5} m).
@@ -1846,9 +1867,11 @@ Minimální délka provedení zelené čárky: 4 čárky (1.8 mm – stopa 27 m)
         <translation>Výrazný velký strom</translation>
     </message>
     <message>
-        <source>Footprint: 13.5 m x 13.5 m.</source>
+        <source>A very large single tree which clearly stands out from the surrounding vegetation.
+White mask is used under the green circle, to improve readability in yellow and green (OM 1.1 mm).
+Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 417</comment>
-        <translation>Stopa: 13.5 m × 13.5 m.</translation>
+        <translation type="unfinished">Stopa: 13.5 m × 13.5 m.</translation>
     </message>
     <message>
         <source>Prominent bush or tree</source>
@@ -1856,10 +1879,11 @@ Minimální délka provedení zelené čárky: 4 čárky (1.8 mm – stopa 27 m)
         <translation>Výrazný keř nebo strom</translation>
     </message>
     <message>
-        <source>Use sparingly, as it is easily mistaken for symbol Small knoll (109).
+        <source>A bush or small single tree which clearly stands out from the surrounding vegetation.
+Use sparingly, as it is easily mistaken for symbol Small knoll (109). Small white dot inside is used to aid the colour vision impaired.
 Footprint: 9.0 m x 9.0 m.</source>
         <comment>Description of symbol 418</comment>
-        <translation>Užívat střídmě, protože se snadno zaměňuje za symbol Malá kupka (109). Malá bílá tečka uvnitř slouží ke zlepšení barevného vidění.
+        <translation type="unfinished">Užívat střídmě, protože se snadno zaměňuje za symbol Malá kupka (109). Malá bílá tečka uvnitř slouží ke zlepšení barevného vidění.
 Stopa: 9.0 m × 9.0 m.</translation>
     </message>
     <message>
@@ -1868,11 +1892,13 @@ Stopa: 9.0 m × 9.0 m.</translation>
         <translation>Výrazný vegetační objekt</translation>
     </message>
     <message>
-        <source>The symbol is orientated to north.
+        <source>A vegetation feature which is significant or prominent.
+White mask is used under the green cross, to improve readability in yellow and green (line width of white mask 0.36 mm, and it shall be 0.18 mm longer in the ends of the symbol).
+The symbol is orientated to north.
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 419</comment>
-        <translation>Značka je orientována k severu.
+        <translation type="unfinished">Značka je orientována k severu.
 Definice značky musí být uvedena v legendě mapy.
 Stopa: 13.5 m × 13.5 m.</translation>
     </message>
@@ -1916,11 +1942,12 @@ Minimální plocha: 1 mm × 1 mm (stopa 15 m × 15 m).</translation>
         <translation>Široká silnice, minimální šířka</translation>
     </message>
     <message>
-        <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
+        <source>A maintained road wider than 5 m wide suitable for vehicles in all weather.
+The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
 The space between the black lines is filled with brown (50%).
 A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
         <comment>Description of symbol 502</comment>
-        <translation>Šířka by měla být kreslená v měřítku, ale nesmí být menší než minimální šířka (0.3 + 2 × 0.14 mm – stopa 8.7 m). Vnější hraniční čáry mohou být nahrazeny jinými černými liniovými značkami, jako jsou Plot (516), Nepřekonatelný plot (518), Zeď (513) nebo Nepřekonatelná zeď (515), pokud je objekt tak blízko hraně silnice, že prakticky nemůže být znázorněn jako oddělená značka.
+        <translation type="unfinished">Šířka by měla být kreslená v měřítku, ale nesmí být menší než minimální šířka (0.3 + 2 × 0.14 mm – stopa 8.7 m). Vnější hraniční čáry mohou být nahrazeny jinými černými liniovými značkami, jako jsou Plot (516), Nepřekonatelný plot (518), Zeď (513) nebo Nepřekonatelná zeď (515), pokud je objekt tak blízko hraně silnice, že prakticky nemůže být znázorněn jako oddělená značka.
 Prostor mezi černými čarami je vyplněn hnědou (50%).
 Silnice se dvěma vozovkami může být zobrazena pomocí dvou značek široké silnice v těsném dotyku s ponecháním jediné hrany silnice ve středu.</translation>
     </message>
@@ -1940,11 +1967,12 @@ Silnice se dvěma vozovkami může být zobrazena pomocí dvou značek široké 
         <translation>Silnice se dvěma vozovkami</translation>
     </message>
     <message>
-        <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
+        <source>A maintained road wider than 5 m wide suitable for vehicles in all weather.
+The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
 The space between the black lines is filled with brown (50%).
 A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
         <comment>Description of symbol 502.2</comment>
-        <translation>Šířka by měla být kreslená v měřítku, ale nesmí být menší než minimální šířka (0.3 + 2 × 0.14 mm – stopa 8.7 m). Vnější hraniční čáry mohou být nahrazeny jinými černými liniovými značkami, jako jsou Plot (516), Nepřekonatelný plot (518), Zeď (513) nebo Nepřekonatelná zeď (515), pokud je objekt tak blízko hraně silnice, že prakticky nemůže být znázorněn jako oddělená značka.
+        <translation type="unfinished">Šířka by měla být kreslená v měřítku, ale nesmí být menší než minimální šířka (0.3 + 2 × 0.14 mm – stopa 8.7 m). Vnější hraniční čáry mohou být nahrazeny jinými černými liniovými značkami, jako jsou Plot (516), Nepřekonatelný plot (518), Zeď (513) nebo Nepřekonatelná zeď (515), pokud je objekt tak blízko hraně silnice, že prakticky nemůže být znázorněn jako oddělená značka.
 Prostor mezi černými čarami je vyplněn hnědou (50%).
 Silnice se dvěma vozovkami může být zobrazena pomocí dvou značek široké silnice v těsném dotyku s ponecháním jediné hrany silnice ve středu.</translation>
     </message>
@@ -1954,9 +1982,9 @@ Silnice se dvěma vozovkami může být zobrazena pomocí dvou značek široké 
         <translation>Silnice</translation>
     </message>
     <message>
-        <source>A maintained road suitable for motor vehicles in all weather. Width less than 5 m.</source>
+        <source>A maintained road less than 5 m wide suitable for vehicles in all weather.</source>
         <comment>Description of symbol 503</comment>
-        <translation>Udržovaná silnice {silnička, lesní asfaltka} vhodná pro motorová vozidla za každého počasí. Šířka menší než 5 m.</translation>
+        <translation type="unfinished">Udržovaná silnice {silnička, lesní asfaltka} vhodná pro motorová vozidla za každého počasí. Šířka menší než 5 m.</translation>
     </message>
     <message>
         <source>Vehicle track</source>
@@ -2094,9 +2122,9 @@ Minimální délka {(izolovaná značka}): dvě čárky (3.25 mm – stopa 48 m)
     <message>
         <source>A railway or other kind of railed track.
 If it is forbidden to run along the railway, it shall be combined with symbol Out-of-bounds route (711). If it is forbidden to cross the railway, it must be combined with symbol Area that shall not be entered (520) or Out-of-bounds area (709).
-Minimum length (isolated): two dashes (4 mm - footprint 60 m).</source>
+Minimum length (isolated): two black dashes (4 mm - footprint 60 m).</source>
         <comment>Description of symbol 509</comment>
-        <translation>Železnice nebo jiný druh kolejové dráhy.
+        <translation type="unfinished">Železnice nebo jiný druh kolejové dráhy.
 Pokud je zakázáno běžet podél železnice, musí být kombinována se značkou Nepřístupná trasa (711). Je-li zakázáno křížit železnici, musí být kombinována se značkou Oblast se zákazem vstupu (520) nebo Nepřístupná oblast (709).
 Minimální délka (izolovaná {značka}): dvě čárky (4 mm – stopa 60 m).</translation>
     </message>
@@ -2192,17 +2220,29 @@ Poznámka: Pokud je potok širší než 0,25 mm v mapě, upravte tuto značku ta
     </message>
     <message>
         <source>Wall</source>
-        <comment>Name of symbol 513</comment>
+        <comment>Name of symbol 513.1</comment>
         <translation>Zeď</translation>
     </message>
     <message>
         <source>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
-        <comment>Description of symbol 513</comment>
+        <comment>Description of symbol 513.1</comment>
         <translation>Významná zeď z kamene, betonu, dřeva nebo jiných materiálů.
 Minimální výška 1 m.
 Minimální délka (izolovaná {značka}): 1.4 mm (stopa 21 m).</translation>
+    </message>
+    <message>
+        <source>Retaining wall</source>
+        <comment>Name of symbol 513.2</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A significant wall of stone, concrete, wood or other materials which is seen only from one side. Half dot must point to the lower level.
+Minimum height: 0.5 m.
+Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
+        <comment>Description of symbol 513.2</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ruined wall</source>
@@ -2234,10 +2274,11 @@ Minimální délka (izolovaná {značka}): 3 mm (stopa 45 m).</translation>
         <translation>Plot</translation>
     </message>
     <message>
-        <source>If the fence forms an enclosed area, tags should be placed inside.
+        <source>A passable or crossable fence, normally less than 1.5 m high.
+If the fence forms an enclosed area, tags should be placed inside.
 Minimum length (isolated): 1.5 mm (footprint 22.5 m).</source>
         <comment>Description of symbol 516</comment>
-        <translation>Pokud plot tvoří uzavřenou oblast, čárky by měly směřovat dovnitř.
+        <translation type="unfinished">Pokud plot tvoří uzavřenou oblast, čárky by měly směřovat dovnitř.
 Minimální délka (izolovaná {značka}): 1.5 mm (stopa 22.5 m).</translation>
     </message>
     <message>
@@ -2284,14 +2325,13 @@ Pro neprůchodné objekty musí být čára přerušena v místě bodu křížen
         <translation>Oblast se zákazem vstupu</translation>
     </message>
     <message>
-        <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
-Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.
+        <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. The area shall be discontinued where a path goes through and white colour is used as background with overlap 0.15 mm on both sides.
+Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line, if the border is unclear no black line shall occur.
 Course planning symbol 709 can be used for temporary out-of bounds areas.
-The vertical black stripes version of the symbol is orientated to north.
 An out-of-bounds area shall not be entered.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 520</comment>
-        <translation>Nepřístupná oblast je objekt jako je soukromý dům, zahrada, továrna nebo jiný průmyslový prostor. Pouze vrstevnice a výrazné objekty jako jsou železnice a velké budovy musí být znázorněny uvnitř nepřístupné oblasti. Svislé černé čáry mohou být použity v oblastech, kde není důležité zobrazit úplnou reprezentaci terénu (například když část lesa je nepřístupná). Oblast musí být přerušena, pokud jí prochází pěšina nebo cesta.
+        <translation type="unfinished">Nepřístupná oblast je objekt jako je soukromý dům, zahrada, továrna nebo jiný průmyslový prostor. Pouze vrstevnice a výrazné objekty jako jsou železnice a velké budovy musí být znázorněny uvnitř nepřístupné oblasti. Svislé černé čáry mohou být použity v oblastech, kde není důležité zobrazit úplnou reprezentaci terénu (například když část lesa je nepřístupná). Oblast musí být přerušena, pokud jí prochází pěšina nebo cesta.
 Nepřístupné oblasti s jasnou hranicí by měly být ohraničeny černou hraniční čarou nebo jinou černou liniovou značkou {(například plot)}; není-li hranice jasná, zůstanou bez ohraničení.
 Značka pro dotisk 709 může být užita pro dočasné nepřístupné oblasti.
 Verze značky se svislými černými čarami je orientována k severu.
@@ -2309,19 +2349,14 @@ Minimální plocha: 1 mm × 1 mm (stopa 15 m × 15 m).</translation>
         <translation>Nepřístupné oblasti s jasnou hranicí by měly být ohraničeny černou hraniční čarou nebo jinou černou liniovou značkou {(například plot)}; není-li hranice jasná, zůstanou bez ohraničení.</translation>
     </message>
     <message>
-        <source>Area that shall not be entered, stripes</source>
+        <source>Area that shall not be entered, stripes (deprecated)</source>
         <comment>Name of symbol 520.2</comment>
-        <translation>Oblast se zákazem vstupu, šrafy</translation>
+        <translation type="unfinished">Oblast se zákazem vstupu, šrafy</translation>
     </message>
     <message>
-        <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
-Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.
-Course planning symbol 709 can be used for temporary out-of bounds areas.
-The vertical black stripes version of the symbol is orientated to north.
-An out-of-bounds area shall not be entered.
-Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
+        <source>Deprecated in revision 6 of the ISOM 2017-2 document.</source>
         <comment>Description of symbol 520.2</comment>
-        <translation>Nepřístupná oblast je objekt jako je soukromý dům, zahrada, továrna nebo jiný průmyslový prostor. Pouze vrstevnice a výrazné objekty jako jsou železnice a velké budovy musí být znázorněny uvnitř nepřístupné oblasti. Svislé černé čáry mohou být použity v oblastech, kde není důležité zobrazit úplnou reprezentaci terénu (například když část lesa je nepřístupná). Oblast musí být přerušena, pokud jí prochází pěšina nebo cesta.
+        <translation type="unfinished">Nepřístupná oblast je objekt jako je soukromý dům, zahrada, továrna nebo jiný průmyslový prostor. Pouze vrstevnice a výrazné objekty jako jsou železnice a velké budovy musí být znázorněny uvnitř nepřístupné oblasti. Svislé černé čáry mohou být použity v oblastech, kde není důležité zobrazit úplnou reprezentaci terénu (například když část lesa je nepřístupná). Oblast musí být přerušena, pokud jí prochází pěšina nebo cesta.
 Nepřístupné oblasti s jasnou hranicí by měly být ohraničeny černou hraniční čarou nebo jinou černou liniovou značkou {(například plot)}; není-li hranice jasná, zůstanou bez ohraničení.
 Značka pro dotisk 709 může být užita pro dočasné nepřístupné oblasti.
 Verze značky se svislými černými čarami je orientována k severu.
@@ -2329,14 +2364,14 @@ Do nepřístupné oblasti se nesmí vstupovat.
 Minimální plocha: 1 mm × 1 mm (stopa 15 m × 15 m).</translation>
     </message>
     <message>
-        <source>Area that shall not be entered, stripes, bounding line</source>
+        <source>Area that shall not be entered, stripes, bounding line (deprecated)</source>
         <comment>Name of symbol 520.3</comment>
-        <translation>Oblast se zákazem vstupu, šrafy, hraniční čára</translation>
+        <translation type="unfinished">Oblast se zákazem vstupu, šrafy, hraniční čára</translation>
     </message>
     <message>
-        <source>Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.</source>
+        <source>Deprecated in revision 6 of the ISOM 2017-2 document.</source>
         <comment>Description of symbol 520.3</comment>
-        <translation>Nepřístupné oblasti s jasnou hranicí by měly být ohraničeny černou hraniční čarou nebo jinou černou liniovou značkou {(například plot)}; není-li hranice jasná, zůstanou bez ohraničení.</translation>
+        <translation type="unfinished">Nepřístupné oblasti s jasnou hranicí by měly být ohraničeny černou hraniční čarou nebo jinou černou liniovou značkou {(například plot)}; není-li hranice jasná, zůstanou bez ohraničení.</translation>
     </message>
     <message>
         <source>Building</source>
@@ -2346,12 +2381,12 @@ Minimální plocha: 1 mm × 1 mm (stopa 15 m × 15 m).</translation>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.
 Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
-Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Passages through buildings must have a minimum width of 0.4 mm (footprint 6.0 m).
 Buildings within forbidden areas are generalised.
 Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
 Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
         <comment>Description of symbol 521</comment>
-        <translation>Budova je zobrazena svým půdorysem, pokud to měřítko dovoluje.
+        <translation type="unfinished">Budova je zobrazena svým půdorysem, pokud to měřítko dovoluje.
 Budovy větší než 75 m × 75 m mohou být v urbanizovaných oblastech reprezentovány tmavě šedou výplní.
 Pasáže procházející budovami musí mít minimální šířku 0.3 mm (stopa 4.5 m).
 Budovy uvnitř zakázaných oblastí jsou generalizovány.
@@ -2386,12 +2421,12 @@ Minimální plocha: 0.5 mm × 0.5 mm (stopa 7.5 m × 7.5 m).</translation>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.
 Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
-Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Passages through buildings must have a minimum width of 0.4 mm (footprint 6.0 m).
 Buildings within forbidden areas are generalised.
 Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
 Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
         <comment>Description of symbol 521.2</comment>
-        <translation>Budova je zobrazena svým půdorysem, pokud to měřítko dovoluje.
+        <translation type="unfinished">Budova je zobrazena svým půdorysem, pokud to měřítko dovoluje.
 Budovy větší než 75 m × 75 m mohou být v urbanizovaných oblastech reprezentovány tmavě šedou výplní.
 Pasáže procházející budovami musí mít minimální šířku 0.3 mm (stopa 4.5 m).
 Budovy uvnitř zakázaných oblastí jsou generalizovány.
@@ -2406,12 +2441,12 @@ Minimální plocha: 0.5 mm × 0.5 mm (stopa 7.5 m × 7.5 m).</translation>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.
 Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
-Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Passages through buildings must have a minimum width of 0.4 mm (footprin 6.0 m).
 Buildings within forbidden areas are generalised.
 Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
 Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
         <comment>Description of symbol 521.3</comment>
-        <translation>Budova je zobrazena svým půdorysem, pokud to měřítko dovoluje.
+        <translation type="unfinished">Budova je zobrazena svým půdorysem, pokud to měřítko dovoluje.
 Budovy větší než 75 m × 75 m mohou být v urbanizovaných oblastech reprezentovány tmavě šedou výplní.
 Pasáže procházející budovami musí mít minimální šířku 0.3 mm (stopa 4.5 m).
 Budovy uvnitř zakázaných oblastí jsou generalizovány.
@@ -2446,9 +2481,9 @@ Minimální plocha: 0.5 mm × 0.5 mm (stopa 7.5 m × 7.5 m).</translation>
     <message>
         <source>An accessible and runnable area with roof.
 Minimum area (isolated): 0.6 mm x 0.6 mm (footprint 9 m x 9 m).
-Minimum (inside) width: 0.3 mm (footprint 4.5 m).</source>
+Minimum (inside) width: 0.4 mm (footprint 6.0 m).</source>
         <comment>Description of symbol 522</comment>
-        <translation>Přístupná a průběžná zastřešená oblast.
+        <translation type="unfinished">Přístupná a průběžná zastřešená oblast.
 Minimální plocha (izolovaná {značka}): 0.6 mm × 0.6 mm (stopa 9 m × 9 m).
 Minimální (vnitřní) šířka: 0.3 mm (stopa 4.5 m).</translation>
     </message>
@@ -2460,9 +2495,9 @@ Minimální (vnitřní) šířka: 0.3 mm (stopa 4.5 m).</translation>
     <message>
         <source>An accessible and runnable area with roof.
 Minimum area (isolated): 0.6 mm x 0.6 mm (footprint 9 m x 9 m).
-Minimum (inside) width: 0.3 mm (footprint 4.5 m).</source>
+Minimum (inside) width: 0.4 mm (footprint 6.0 m).</source>
         <comment>Description of symbol 522.1</comment>
-        <translation>Přístupná a průběžná zastřešená oblast.
+        <translation type="unfinished">Přístupná a průběžná zastřešená oblast.
 Minimální plocha (izolovaná {značka}): 0.6 mm × 0.6 mm (stopa 9 m × 9 m).
 Minimální (vnitřní) šířka: 0.3 mm (stopa 4.5 m).</translation>
     </message>
@@ -2524,12 +2559,11 @@ Stopa: 21 m v průměru.</translation>
         <translation>Malá věž</translation>
     </message>
     <message>
-        <source>An obvious small tower, platform or seat.
-Location is at the centre of gravity of the symbol.
+        <source>An obvious small tower or elevated platform or seat. The object shall be with elevation above the ground. Location is at the centre of gravity of the symbol.
 The symbol is orientated to north.
 Footprint: 15 m x 15 m.</source>
         <comment>Description of symbol 525</comment>
-        <translation>Nápadná malá věž, posed či sedátko.
+        <translation type="unfinished">Nápadná malá věž, posed či sedátko.
 Umístění je v těžišti značky.
 Značka je orientována k severu.
 Stopa: 15 m × 15 m.</translation>
@@ -2837,9 +2871,10 @@ Minimální délka: 1 mm (stopa: 15 m).</translation>
 – a dashed line indicates intermittent marking in the terrain,
 – no line indicates no marking in the terrain.
 An out-of-bounds area shall not be entered.
-Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
+Minimum width: 3 mm.
+Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <comment>Description of symbol 709</comment>
-        <translation>Nepřístupná oblast. Hraniční čára může být kreslena, není-li žádná přirozená hranice, takto:
+        <translation type="unfinished">Nepřístupná oblast. Hraniční čára může být kreslena, není-li žádná přirozená hranice, takto:
 - plná čára značí spojitě vyznačenou hranici v terénu (páska apod.),
 - přerušovaná čára značí nesouvislé značení v terénu,
 - žádná čára značí nevyznačenou hranici v terénu.
@@ -2925,6 +2960,16 @@ Minimální délka: 2 značky (6 mm – stopa 90 m).</translation>
         <translation>Umístění občerstvovací stanice, která není na kontrole. {Umístění je v těžišti značky. Značka je orientována k severu.}.</translation>
     </message>
     <message>
+        <source>Continuing point after map exchange</source>
+        <comment>Name of symbol 715</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Symbol marking the continuation of the course after the map flip or the map exchange. The triangle points in the direction of the following control.</source>
+        <comment>Description of symbol 715</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Simple Orienteering Course</source>
         <comment>Name of symbol 799</comment>
         <translation>Jednoduchá trať orientačního běhu</translation>
@@ -2947,6 +2992,431 @@ Fialová čára se trochu rozšíří do značky pro cíl. To je nedostatek toho
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
         <translation>Logo OpenOrienteering.</translation>
+    </message>
+    <message>
+        <source>Black 65%</source>
+        <comment>Color 9</comment>
+        <translation type="obsolete">Černá 65%</translation>
+    </message>
+    <message>
+        <source>Black 25% (Grey)</source>
+        <comment>Color 24</comment>
+        <translation type="obsolete">Černá 25% (šedá)</translation>
+    </message>
+    <message>
+        <source>Green 100%/Black 50%</source>
+        <comment>Color 25</comment>
+        <translation type="obsolete">Zelená 100%/Černá 50%</translation>
+    </message>
+    <message>
+        <source>A line joining points of equal height. The standard vertical interval between contours is 5 m. A contour interval of 2.5 m may be used for flat terrains.
+Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
+A closed contour represents a knoll or a depression. A depression has to have at least one slope line. Minimum height/depth should be 1 m.
+Relationships between adjacent contour lines are important. Adjacent contour lines show form and structure. Small details on contours should be avoided because they tend to hide the main features of the terrain.
+Prominent features such as depressions, re-entrants, spurs, earth banks and terraces may have to be exaggerated.
+Absolute height accuracy is of little importance, but the relative height difference between neighbouring features should be represented on the map as accurately as possible. It is permissible to alter the height of a contour slightly if this improves the representation of a feature. This deviation should not exceed 25% of the contour interval, and attention must be paid to neighbouring features.
+The smallest bend in a contour line is 0.25 mm from centre to centre of the line (footprint 4 m). The mouth of a re-entrant or a spur must be wider than 0.5 mm from centre to centre of the line (footprint 8 m).
+The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minimum width is 0.6 mm (footprint 9 m) outside measure. Smaller prominent knolls can be represented using symbol Small knoll (109) or Small elongated knoll (110) or they can be exaggerated on the map to satisfy the minimum dimension.
+A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
+Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
+        <comment>Description of symbol 101</comment>
+        <translation type="obsolete">{Vrstevnice je} čára spojující body stejné {nadmořské} výšky. Základní výškový interval mezi vrstevnicemi je 5 metrů. Interval vrstevnic 2.5 metru může být použit v plochých terénech.
+Spádovky se mohou kreslit na nižší straně vrstevnice k ujasnění směru spádu. Pokud jsou použity, měly by být umístěny v údolích.
+Uzavřené vrstevnice zobrazují kupky nebo prohlubně. Prohlubně musí mít nejméně jednu spádovku. Minimální výška / hloubka by měla být 1 m.
+Vztahy mezi sousedními vrstevnicemi jsou důležité. Sousední vrstevnice ukazují tvar a strukturu. Malé detaily na vrstevnicích by měly být vynechány, protože mají tendenci skrývat hlavní rysy terénu.
+Nápadné objekty, jako jsou prohlubně, údolí, výběžky, zemní srázy a terasy, mohou být zveličeny.
+Absolutní výšková přesnost je méně důležitá, ale relativní výškové rozdíly mezi sousedními objekty by měly být zobrazeny v mapě tak přesně, jak jen to je možné. Je přípustné mírně změnit výšku vrstevnice, pokud to zlepší vyjádření objektu. Tato odchylka by neměla překročit 25 % intervalu vrstevnic a je třeba věnovat pozornost sousedním objektům.
+Nejmenší ohyb vrstevnice je 0.25 mm od středu ke středu linie (stopa 4 m). Ústí údolí nebo hřbetu musí být širší než 0.5 mm od středu ke středu linie (stopa 8 m).
+Minimální délka vrstevnicové kupky je 0.9 mm (stopa 13.5 m) a minimální šířka je 0.6 mm (stopa 9 m) vnějšího rozměru. Menší nápadné kupky mohou být zobrazeny užitím značky Malá kupka (109) nebo značky Malá protáhlá kupka (110), nebo mohou být zveličeny tak, aby v mapě dosáhly minimálního rozměru.
+Prohlubně musí být doplněny spádovkou, jejich minimální délka je 1.1 mm (stopa 16.5 m) a minimální šíře je 0.7 mm (stopa 10.5 m) vnějšího rozměru. Menší nápadné prohlubně mohou být zobrazeny užitím značky Malá prohlubeň (111) nebo mohou být zveličeny tak, aby splnily minimální rozměr.
+Vrstevnice by měly být upraveny (nikoli přerušeny) tak, aby se nedotýkaly značek Malá kupka (109) nebo Malá protáhlá kupka (110).</translation>
+    </message>
+    <message>
+        <source>Earth wall</source>
+        <comment>Name of symbol 105</comment>
+        <translation type="obsolete">Zemní val</translation>
+    </message>
+    <message>
+        <source>Distinct earth wall. Minimum height: 1 m.
+Minimum length: 1.4 mm (footprint 21 m).</source>
+        <comment>Description of symbol 105</comment>
+        <translation type="obsolete">Zřetelný zemní val. Minimální výška: 1 m.
+Minimální délka: 1.4 mm (stopa 21 m).</translation>
+    </message>
+    <message>
+        <source>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Minimum depth: 1 m.
+Minimum length: 1.15 mm (footprint 17 m).
+Contour lines should not be broken around this symbol.</source>
+        <comment>Description of symbol 107</comment>
+        <translation type="obsolete">Erozní rýha, která je příliš malá pro zobrazení užitím značky Zemní sráz (104), je zobrazena jednou čarou. Minimální hloubka: 1 m.
+Minimální délka: 1.15 mm (stopa 17 m).
+Vrstevnice kolem této značky se nepřerušují.</translation>
+    </message>
+    <message>
+        <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
+Minimum length (isolated): three dots (1.15 mm - footprint 17 m).
+Contour lines should be broken around this symbol.</source>
+        <comment>Description of symbol 108</comment>
+        <translation type="obsolete">Malá erozní rýha, suchý příkop nebo výkop. Minimální hloubka 0.5 m.
+Minimální délka (izolovaná {značka}): tři tečky (1.15 mm – stopa 17 m).
+Vrstevnice by měly být přerušeny kolem této značky.</translation>
+    </message>
+    <message>
+        <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+Crossing a cliff will normally slow progress.
+Minimum height: 1 m.
+Minimum length: 0.6 mm (footprint 9 m).</source>
+        <comment>Description of symbol 202</comment>
+        <translation type="obsolete">Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
+Není-li sráz svislý, měly by spádové šrafy být kresleny tak, aby vyjádřily plný vodorovný rozsah. Konce horní linie mohou být kulaté nebo hranaté. Mezera mezi dvěma srázy musí být nejméně 0.2 mm. Sráz by měl být v souladu s vrstevnicemi.
+Překonávání srázu bude obvykle zpomalovat postup.
+Minimální výška: 1 m.
+Minimální délka: 0.6 mm (stopa 9 m).</translation>
+    </message>
+    <message>
+        <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+Crossing a cliff will normally slow progress.
+Minimum height: 1 m.
+Minimum length: 0.6 mm (footprint 9 m).</source>
+        <comment>Description of symbol 202.1</comment>
+        <translation type="obsolete">Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
+Není-li sráz svislý, měly by spádové šrafy být kresleny tak, aby vyjádřily plný vodorovný rozsah. Konce horní linie mohou být kulaté nebo hranaté. Mezera mezi dvěma srázy musí být nejméně 0.2 mm. Sráz by měl být v souladu s vrstevnicemi.
+Překonávání srázu bude obvykle zpomalovat postup.
+Minimální výška: 1 m.
+Minimální délka: 0.6 mm (stopa 9 m).</translation>
+    </message>
+    <message>
+        <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+Crossing a cliff will normally slow progress.
+Minimum height: 1 m.
+Minimum length: 0.6 mm (footprint 9 m).</source>
+        <comment>Description of symbol 202.2</comment>
+        <translation type="obsolete">Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
+Není-li sráz svislý, měly by spádové šrafy být kresleny tak, aby vyjádřily plný vodorovný rozsah. Konce horní linie mohou být kulaté nebo hranaté. Mezera mezi dvěma srázy musí být nejméně 0.2 mm. Sráz by měl být v souladu s vrstevnicemi.
+Překonávání srázu bude obvykle zpomalovat postup.
+Minimální výška: 1 m.
+Minimální délka: 0.6 mm (stopa 9 m).</translation>
+    </message>
+    <message>
+        <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+Crossing a cliff will normally slow progress.
+Minimum height: 1 m.
+Minimum length: 0.6 mm (footprint 9 m).</source>
+        <comment>Description of symbol 202.3</comment>
+        <translation type="obsolete">Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
+Není-li sráz svislý, měly by spádové šrafy být kresleny tak, aby vyjádřily plný vodorovný rozsah. Konce horní linie mohou být kulaté nebo hranaté. Mezera mezi dvěma srázy musí být nejméně 0.2 mm. Sráz by měl být v souladu s vrstevnicemi.
+Překonávání srázu bude obvykle zpomalovat postup.
+Minimální výška: 1 m.
+Minimální délka: 0.6 mm (stopa 9 m).</translation>
+    </message>
+    <message>
+        <source>Cave or rocky pit (with a distinct entrance)</source>
+        <comment>Name of symbol 203.2</comment>
+        <translation type="obsolete">Jeskyně nebo kamenná jáma (s výrazným vstupem)</translation>
+    </message>
+    <message>
+        <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
+Location is the centre of gravity of the symbol, and the symbol should point into the cave.
+Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
+        <comment>Description of symbol 203.2</comment>
+        <translation type="obsolete">Kamenné jámy, díry, jeskyně nebo důlní šachty, které mohou představovat nebezpečí pro závodníka. Minimální hloubka: 1 m.
+Umístění je v těžišti značky a značka musí být orientována k severu s výjimkou jeskyní s výrazným vstupem, kdy značka by měla směřovat do jeskyně.
+Kamenné jámy větší než 5 m v průměru by měly být zveličeny a zobrazeny užitím značky srázu (201, 202).</translation>
+    </message>
+    <message>
+        <source>The black bank line emphasises that the feature is uncrossable.
+Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
+Minimum width (inside): 0.3 mm.
+Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
+        <comment>Description of symbol 301</comment>
+        <translation type="obsolete">Černá břehová čára zdůrazňuje, že objekt je nepřekonatelný.
+Dominantní vodní plochy mohou být znázorněny 70% barvou. Malé vodní plochy a vodní tělesa mající úzké části budou vždy zobrazeny plnou barvou. {Břehové čáry jsou přerušeny v místě brodu.}
+Minimální šířka (vnitřek): 0.3 mm.
+Minimální plocha (vnitřek): 0.55 mm × 0.55 mm (stopa 8 m × 8 m).</translation>
+    </message>
+    <message>
+        <source>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
+Minimum width (inside): 0.3 mm.
+Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
+        <comment>Description of symbol 301.1</comment>
+        <translation type="obsolete">Dominantní vodní plochy mohou být znázorněny 70% barvou. Malé vodní plochy a vodní tělesa mající úzké části budou vždy zobrazeny plnou barvou. {Břehové čáry jsou přerušeny v místě brodu.}
+Minimální šířka (vnitřek): 0.3 mm.
+Minimální plocha (vnitřek): 0.55 mm × 0.55 mm (stopa 8 m × 8 m).</translation>
+    </message>
+    <message>
+        <source>The black bank line emphasises that the feature is uncrossable.
+Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
+Minimum width (inside): 0.3 mm.
+Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
+        <comment>Description of symbol 301.2</comment>
+        <translation type="obsolete">Černá břehová čára zdůrazňuje, že objekt je nepřekonatelný.
+Dominantní vodní plochy mohou být znázorněny 70% barvou. Malé vodní plochy a vodní tělesa mající úzké části budou vždy zobrazeny plnou barvou. {Břehové čáry jsou přerušeny v místě brodu.}
+Minimální šířka (vnitřek): 0.3 mm.
+Minimální plocha (vnitřek): 0.55 mm × 0.55 mm (stopa 8 m × 8 m).</translation>
+    </message>
+    <message>
+        <source>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
+Minimum width (inside): 0.3 mm.
+Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
+        <comment>Description of symbol 301.3</comment>
+        <translation type="obsolete">Dominantní vodní plochy mohou být znázorněny 70% barvou. Malé vodní plochy a vodní tělesa mající úzké části budou vždy zobrazeny plnou barvou. {Břehové čáry jsou přerušeny v místě brodu.}
+Minimální šířka (vnitřek): 0.3 mm.
+Minimální plocha (vnitřek): 0.55 mm × 0.55 mm (stopa 8 m × 8 m).</translation>
+    </message>
+    <message>
+        <source>A black bank line indicates that the feature cannot be crossed.</source>
+        <comment>Description of symbol 301.4</comment>
+        <translation type="obsolete">{Oblast hluboké vody jako je jezero, rybník, řeka nebo nádrž, která může představovat nebezpečí pro závodníka, nebo je do ní zakázán vstup.} Černá břehová čára zdůrazňuje, že objekt je nepřekonatelný.</translation>
+    </message>
+    <message>
+        <source>Should be at least 2 m wide.
+Minimum length (isolated): 1 mm (footprint 15 m).</source>
+        <comment>Description of symbol 304</comment>
+        <translation type="obsolete">Měl by být nejméně 2 m široký.
+Minimální délka (izolovaná {značka}): 1 mm (stopa 15 m).</translation>
+    </message>
+    <message>
+        <source>Minimum length (isolated): 1 mm (footprint 15 m).</source>
+        <comment>Description of symbol 305</comment>
+        <translation type="obsolete">Minimální délka (izolovaná {značka}): 1 mm (stopa 15 m).</translation>
+    </message>
+    <message>
+        <source>A distinct forest edge or vegetation boundary within the forest.
+Very distinct forest edges and vegetation boundaries may be represented using the cultivation boundary symbol. Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map. For areas with a lot of rock features, it is recommended to use the green dashed line for vegetation boundaries.
+A disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbol Vegetation: fight (410). An alternative for these situations is to use symbol Distinct cultivation boundary (415).
+Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
+Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
+        <comment>Description of symbol 416</comment>
+        <translation type="obsolete">Zřetelný okraj lesa nebo hranice vegetace uvnitř lesa.
+Velmi zřetelné hranice lesa a hranice vegetace mohou být znázorněny užitím značky {Zřetelná} hranice obdělávané půdy {(415)}. V mapě může být použita jen jedna značka hranice vegetace (černá tečkovaná čára nebo zelená čárkovaná čára). V oblastech s množstvím skalních útvarů je doporučeno používat pro hranice vegetace zelenou čárkovanou čáru.
+Nevýhodou zelené čáry je to, že nemůže být použita k zobrazení zřetelné hranice vegetace kolem a uvnitř značky Vegetace, prodírání (410). Alternativou pro tyto situace je použití značky Zřetelná hranice obdělávané půdy (415).
+Minimální délka provedení černé tečky: 5 teček (2.5 mm – stopa 37{.5} m).
+Minimální délka provedení zelené čárky: 4 čárky (1.8 mm – stopa 27 m).</translation>
+    </message>
+    <message>
+        <source>A distinct forest edge or vegetation boundary within the forest.
+Very distinct forest edges and vegetation boundaries may be represented using the cultivation boundary symbol. Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map. For areas with a lot of rock features, it is recommended to use the green dashed line for vegetation boundaries.
+A disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbol Vegetation: fight (410). An alternative for these situations is to use symbol Distinct cultivation boundary (415).
+Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
+Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
+        <comment>Description of symbol 416.1</comment>
+        <translation type="obsolete">Zřetelný okraj lesa nebo hranice vegetace uvnitř lesa.
+Velmi zřetelné hranice lesa a hranice vegetace mohou být znázorněny užitím značky {Zřetelná} hranice obdělávané půdy {(415)}. V mapě může být použita jen jedna značka hranice vegetace (černá tečkovaná čára nebo zelená čárkovaná čára). V oblastech s množstvím skalních útvarů je doporučeno používat pro hranice vegetace zelenou čárkovanou čáru.
+Nevýhodou zelené čáry je to, že nemůže být použita k zobrazení zřetelné hranice vegetace kolem a uvnitř značky Vegetace, prodírání (410). Alternativou pro tyto situace je použití značky Zřetelná hranice obdělávané půdy (415).
+Minimální délka provedení černé tečky: 5 teček (2.5 mm – stopa 37{.5} m).
+Minimální délka provedení zelené čárky: 4 čárky (1.8 mm – stopa 27 m).</translation>
+    </message>
+    <message>
+        <source>Footprint: 13.5 m x 13.5 m.</source>
+        <comment>Description of symbol 417</comment>
+        <translation type="obsolete">Stopa: 13.5 m × 13.5 m.</translation>
+    </message>
+    <message>
+        <source>Use sparingly, as it is easily mistaken for symbol Small knoll (109).
+Footprint: 9.0 m x 9.0 m.</source>
+        <comment>Description of symbol 418</comment>
+        <translation type="obsolete">Užívat střídmě, protože se snadno zaměňuje za symbol Malá kupka (109). Malá bílá tečka uvnitř slouží ke zlepšení barevného vidění.
+Stopa: 9.0 m × 9.0 m.</translation>
+    </message>
+    <message>
+        <source>The symbol is orientated to north.
+The definition of the symbol must be given on the map.
+Footprint: 13.5 m x 13.5 m.</source>
+        <comment>Description of symbol 419</comment>
+        <translation type="obsolete">Značka je orientována k severu.
+Definice značky musí být uvedena v legendě mapy.
+Stopa: 13.5 m × 13.5 m.</translation>
+    </message>
+    <message>
+        <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
+The space between the black lines is filled with brown (50%).
+A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
+        <comment>Description of symbol 502</comment>
+        <translation type="obsolete">Šířka by měla být kreslená v měřítku, ale nesmí být menší než minimální šířka (0.3 + 2 × 0.14 mm – stopa 8.7 m). Vnější hraniční čáry mohou být nahrazeny jinými černými liniovými značkami, jako jsou Plot (516), Nepřekonatelný plot (518), Zeď (513) nebo Nepřekonatelná zeď (515), pokud je objekt tak blízko hraně silnice, že prakticky nemůže být znázorněn jako oddělená značka.
+Prostor mezi černými čarami je vyplněn hnědou (50%).
+Silnice se dvěma vozovkami může být zobrazena pomocí dvou značek široké silnice v těsném dotyku s ponecháním jediné hrany silnice ve středu.</translation>
+    </message>
+    <message>
+        <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
+The space between the black lines is filled with brown (50%).
+A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
+        <comment>Description of symbol 502.2</comment>
+        <translation type="obsolete">Šířka by měla být kreslená v měřítku, ale nesmí být menší než minimální šířka (0.3 + 2 × 0.14 mm – stopa 8.7 m). Vnější hraniční čáry mohou být nahrazeny jinými černými liniovými značkami, jako jsou Plot (516), Nepřekonatelný plot (518), Zeď (513) nebo Nepřekonatelná zeď (515), pokud je objekt tak blízko hraně silnice, že prakticky nemůže být znázorněn jako oddělená značka.
+Prostor mezi černými čarami je vyplněn hnědou (50%).
+Silnice se dvěma vozovkami může být zobrazena pomocí dvou značek široké silnice v těsném dotyku s ponecháním jediné hrany silnice ve středu.</translation>
+    </message>
+    <message>
+        <source>A maintained road suitable for motor vehicles in all weather. Width less than 5 m.</source>
+        <comment>Description of symbol 503</comment>
+        <translation type="obsolete">Udržovaná silnice {silnička, lesní asfaltka} vhodná pro motorová vozidla za každého počasí. Šířka menší než 5 m.</translation>
+    </message>
+    <message>
+        <source>A railway or other kind of railed track.
+If it is forbidden to run along the railway, it shall be combined with symbol Out-of-bounds route (711). If it is forbidden to cross the railway, it must be combined with symbol Area that shall not be entered (520) or Out-of-bounds area (709).
+Minimum length (isolated): two dashes (4 mm - footprint 60 m).</source>
+        <comment>Description of symbol 509</comment>
+        <translation type="obsolete">Železnice nebo jiný druh kolejové dráhy.
+Pokud je zakázáno běžet podél železnice, musí být kombinována se značkou Nepřístupná trasa (711). Je-li zakázáno křížit železnici, musí být kombinována se značkou Oblast se zákazem vstupu (520) nebo Nepřístupná oblast (709).
+Minimální délka (izolovaná {značka}): dvě čárky (4 mm – stopa 60 m).</translation>
+    </message>
+    <message>
+        <source>Wall</source>
+        <comment>Name of symbol 513</comment>
+        <translation type="obsolete">Zeď</translation>
+    </message>
+    <message>
+        <source>A significant wall of stone, concrete, wood or other materials.
+Minimum height: 1 m.
+Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
+        <comment>Description of symbol 513</comment>
+        <translation type="obsolete">Významná zeď z kamene, betonu, dřeva nebo jiných materiálů.
+Minimální výška 1 m.
+Minimální délka (izolovaná {značka}): 1.4 mm (stopa 21 m).</translation>
+    </message>
+    <message>
+        <source>If the fence forms an enclosed area, tags should be placed inside.
+Minimum length (isolated): 1.5 mm (footprint 22.5 m).</source>
+        <comment>Description of symbol 516</comment>
+        <translation type="obsolete">Pokud plot tvoří uzavřenou oblast, čárky by měly směřovat dovnitř.
+Minimální délka (izolovaná {značka}): 1.5 mm (stopa 22.5 m).</translation>
+    </message>
+    <message>
+        <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
+Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.
+Course planning symbol 709 can be used for temporary out-of bounds areas.
+The vertical black stripes version of the symbol is orientated to north.
+An out-of-bounds area shall not be entered.
+Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
+        <comment>Description of symbol 520</comment>
+        <translation type="obsolete">Nepřístupná oblast je objekt jako je soukromý dům, zahrada, továrna nebo jiný průmyslový prostor. Pouze vrstevnice a výrazné objekty jako jsou železnice a velké budovy musí být znázorněny uvnitř nepřístupné oblasti. Svislé černé čáry mohou být použity v oblastech, kde není důležité zobrazit úplnou reprezentaci terénu (například když část lesa je nepřístupná). Oblast musí být přerušena, pokud jí prochází pěšina nebo cesta.
+Nepřístupné oblasti s jasnou hranicí by měly být ohraničeny černou hraniční čarou nebo jinou černou liniovou značkou {(například plot)}; není-li hranice jasná, zůstanou bez ohraničení.
+Značka pro dotisk 709 může být užita pro dočasné nepřístupné oblasti.
+Verze značky se svislými černými čarami je orientována k severu.
+Do nepřístupné oblasti se nesmí vstupovat.
+Minimální plocha: 1 mm × 1 mm (stopa 15 m × 15 m).</translation>
+    </message>
+    <message>
+        <source>Area that shall not be entered, stripes</source>
+        <comment>Name of symbol 520.2</comment>
+        <translation type="obsolete">Oblast se zákazem vstupu, šrafy</translation>
+    </message>
+    <message>
+        <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
+Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.
+Course planning symbol 709 can be used for temporary out-of bounds areas.
+The vertical black stripes version of the symbol is orientated to north.
+An out-of-bounds area shall not be entered.
+Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
+        <comment>Description of symbol 520.2</comment>
+        <translation type="obsolete">Nepřístupná oblast je objekt jako je soukromý dům, zahrada, továrna nebo jiný průmyslový prostor. Pouze vrstevnice a výrazné objekty jako jsou železnice a velké budovy musí být znázorněny uvnitř nepřístupné oblasti. Svislé černé čáry mohou být použity v oblastech, kde není důležité zobrazit úplnou reprezentaci terénu (například když část lesa je nepřístupná). Oblast musí být přerušena, pokud jí prochází pěšina nebo cesta.
+Nepřístupné oblasti s jasnou hranicí by měly být ohraničeny černou hraniční čarou nebo jinou černou liniovou značkou {(například plot)}; není-li hranice jasná, zůstanou bez ohraničení.
+Značka pro dotisk 709 může být užita pro dočasné nepřístupné oblasti.
+Verze značky se svislými černými čarami je orientována k severu.
+Do nepřístupné oblasti se nesmí vstupovat.
+Minimální plocha: 1 mm × 1 mm (stopa 15 m × 15 m).</translation>
+    </message>
+    <message>
+        <source>Area that shall not be entered, stripes, bounding line</source>
+        <comment>Name of symbol 520.3</comment>
+        <translation type="obsolete">Oblast se zákazem vstupu, šrafy, hraniční čára</translation>
+    </message>
+    <message>
+        <source>Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.</source>
+        <comment>Description of symbol 520.3</comment>
+        <translation type="obsolete">Nepřístupné oblasti s jasnou hranicí by měly být ohraničeny černou hraniční čarou nebo jinou černou liniovou značkou {(například plot)}; není-li hranice jasná, zůstanou bez ohraničení.</translation>
+    </message>
+    <message>
+        <source>A building is shown with its ground plan so far as the scale permits.
+Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
+Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Buildings within forbidden areas are generalised.
+Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
+Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
+        <comment>Description of symbol 521</comment>
+        <translation type="obsolete">Budova je zobrazena svým půdorysem, pokud to měřítko dovoluje.
+Budovy větší než 75 m × 75 m mohou být v urbanizovaných oblastech reprezentovány tmavě šedou výplní.
+Pasáže procházející budovami musí mít minimální šířku 0.3 mm (stopa 4.5 m).
+Budovy uvnitř zakázaných oblastí jsou generalizovány.
+Oblasti zcela uzavřené uvnitř budov nebudou mapovány (musí být zobrazeny jako součást budovy). Minimální mezera označující průchod mezi budovami a mezi budovami a jinými neprůchodnými objekty by měla být 0.4 mm.
+Minimální plocha: 0.5 mm × 0.5 mm (stopa 7.5 m × 7.5 m).</translation>
+    </message>
+    <message>
+        <source>A building is shown with its ground plan so far as the scale permits.
+Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
+Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Buildings within forbidden areas are generalised.
+Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
+Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
+        <comment>Description of symbol 521.2</comment>
+        <translation type="obsolete">Budova je zobrazena svým půdorysem, pokud to měřítko dovoluje.
+Budovy větší než 75 m × 75 m mohou být v urbanizovaných oblastech reprezentovány tmavě šedou výplní.
+Pasáže procházející budovami musí mít minimální šířku 0.3 mm (stopa 4.5 m).
+Budovy uvnitř zakázaných oblastí jsou generalizovány.
+Oblasti zcela uzavřené uvnitř budov nebudou mapovány (musí být zobrazeny jako součást budovy). Minimální mezera označující průchod mezi budovami a mezi budovami a jinými neprůchodnými objekty by měla být 0.4 mm.
+Minimální plocha: 0.5 mm × 0.5 mm (stopa 7.5 m × 7.5 m).</translation>
+    </message>
+    <message>
+        <source>A building is shown with its ground plan so far as the scale permits.
+Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
+Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Buildings within forbidden areas are generalised.
+Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
+Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
+        <comment>Description of symbol 521.3</comment>
+        <translation type="obsolete">Budova je zobrazena svým půdorysem, pokud to měřítko dovoluje.
+Budovy větší než 75 m × 75 m mohou být v urbanizovaných oblastech reprezentovány tmavě šedou výplní.
+Pasáže procházející budovami musí mít minimální šířku 0.3 mm (stopa 4.5 m).
+Budovy uvnitř zakázaných oblastí jsou generalizovány.
+Oblasti zcela uzavřené uvnitř budov nebudou mapovány (musí být zobrazeny jako součást budovy). Minimální mezera označující průchod mezi budovami a mezi budovami a jinými neprůchodnými objekty by měla být 0.4 mm.
+Minimální plocha: 0.5 mm × 0.5 mm (stopa 7.5 m × 7.5 m).</translation>
+    </message>
+    <message>
+        <source>An accessible and runnable area with roof.
+Minimum area (isolated): 0.6 mm x 0.6 mm (footprint 9 m x 9 m).
+Minimum (inside) width: 0.3 mm (footprint 4.5 m).</source>
+        <comment>Description of symbol 522</comment>
+        <translation type="obsolete">Přístupná a průběžná zastřešená oblast.
+Minimální plocha (izolovaná {značka}): 0.6 mm × 0.6 mm (stopa 9 m × 9 m).
+Minimální (vnitřní) šířka: 0.3 mm (stopa 4.5 m).</translation>
+    </message>
+    <message>
+        <source>An accessible and runnable area with roof.
+Minimum area (isolated): 0.6 mm x 0.6 mm (footprint 9 m x 9 m).
+Minimum (inside) width: 0.3 mm (footprint 4.5 m).</source>
+        <comment>Description of symbol 522.1</comment>
+        <translation type="obsolete">Přístupná a průběžná zastřešená oblast.
+Minimální plocha (izolovaná {značka}): 0.6 mm × 0.6 mm (stopa 9 m × 9 m).
+Minimální (vnitřní) šířka: 0.3 mm (stopa 4.5 m).</translation>
+    </message>
+    <message>
+        <source>An obvious small tower, platform or seat.
+Location is at the centre of gravity of the symbol.
+The symbol is orientated to north.
+Footprint: 15 m x 15 m.</source>
+        <comment>Description of symbol 525</comment>
+        <translation type="obsolete">Nápadná malá věž, posed či sedátko.
+Umístění je v těžišti značky.
+Značka je orientována k severu.
+Stopa: 15 m × 15 m.</translation>
+    </message>
+    <message>
+        <source>An out-of-bounds area. A bounding line may be drawn if there is no natural boundary, as follows:
+– a solid line indicates that the boundary is marked continuously (tapes, etc.) in the terrain,
+– a dashed line indicates intermittent marking in the terrain,
+– no line indicates no marking in the terrain.
+An out-of-bounds area shall not be entered.
+Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
+        <comment>Description of symbol 709</comment>
+        <translation type="obsolete">Nepřístupná oblast. Hraniční čára může být kreslena, není-li žádná přirozená hranice, takto:
+- plná čára značí spojitě vyznačenou hranici v terénu (páska apod.),
+- přerušovaná čára značí nesouvislé značení v terénu,
+- žádná čára značí nevyznačenou hranici v terénu.
+Do nepřístupné oblasti se nesmí vstupovat.
+Minimální plocha: 2 mm × 2 mm (stopa 30 m × 30 m).</translation>
     </message>
 </context>
 <context>
@@ -15520,7 +15990,7 @@ Poznámka: Je-li tok širší než 0.25 mm, upravte tuto značku tak, aby přesa
     <message>
         <source>Green for SkiO</source>
         <comment>Color 2</comment>
-        <translation>Zelená pro SkiO</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Black 100%</source>
@@ -15560,131 +16030,141 @@ Poznámka: Je-li tok širší než 0.25 mm, upravte tuto značku tak, aby přesa
     <message>
         <source>Black 65%</source>
         <comment>Color 10</comment>
-        <translation>Černá 65%</translation>
+        <translation type="unfinished">Černá 65%</translation>
+    </message>
+    <message>
+        <source>Black 50%</source>
+        <comment>Color 11</comment>
+        <translation>Černá 50%</translation>
     </message>
     <message>
         <source>Black 20%</source>
-        <comment>Color 11</comment>
+        <comment>Color 12</comment>
         <translation>Černá 20%</translation>
     </message>
     <message>
         <source>Upper brown 50%</source>
-        <comment>Color 12</comment>
+        <comment>Color 13</comment>
         <translation>Horní hnědá 50%</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
-        <comment>Color 13</comment>
+        <comment>Color 14</comment>
         <translation>Černá pod horní hnědou 50%</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
-        <comment>Color 14</comment>
+        <comment>Color 15</comment>
         <translation>Spodní hnědá 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
-        <comment>Color 15</comment>
+        <comment>Color 16</comment>
         <translation>Černá pod spodní hnědou 50%</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
-        <comment>Color 16</comment>
+        <comment>Color 17</comment>
         <translation>Modrá 100% pro plošné prvky</translation>
     </message>
     <message>
         <source>Blue 70%</source>
-        <comment>Color 17</comment>
+        <comment>Color 18</comment>
         <translation>Modrá 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
-        <comment>Color 18</comment>
+        <comment>Color 19</comment>
         <translation>Modrá 50%</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
-        <comment>Color 19</comment>
+        <comment>Color 20</comment>
         <translation>Oranžová OpenOrienteering</translation>
     </message>
     <message>
         <source>Yellow 100% for narrow ride</source>
-        <comment>Color 20</comment>
+        <comment>Color 21</comment>
         <translation>Žlutá 100% pro průsek</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
-        <comment>Color 21</comment>
+        <comment>Color 22</comment>
         <translation>Zelená 60% pro průsek</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
-        <comment>Color 22</comment>
+        <comment>Color 23</comment>
         <translation>Zelená 30% pro průsek</translation>
     </message>
     <message>
         <source>White over green</source>
-        <comment>Color 23</comment>
+        <comment>Color 24</comment>
         <translation>Bílá přes zelenou</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
-        <comment>Color 24</comment>
+        <comment>Color 25</comment>
         <translation>Žlutá 100%/Zelená 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
-        <comment>Color 25</comment>
-        <translation>Černá 25% (šedá)</translation>
+        <comment>Color 26</comment>
+        <translation type="unfinished">Černá 25% (šedá)</translation>
     </message>
     <message>
         <source>Green 100%/Black 50%</source>
-        <comment>Color 26</comment>
-        <translation>Zelená 100%/Černá 50%</translation>
+        <comment>Color 27</comment>
+        <translation type="unfinished">Zelená 100%/Černá 50%</translation>
+    </message>
+    <message>
+        <source>Black 35% (Grey)</source>
+        <comment>Color 28</comment>
+        <translation type="unfinished">Černá 25% (šedá)</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
-        <comment>Color 27</comment>
+        <comment>Color 29</comment>
         <translation>Zelená 100% pro plošné prvky</translation>
     </message>
     <message>
         <source>Green 60%</source>
-        <comment>Color 28</comment>
+        <comment>Color 30</comment>
         <translation>Zelená 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
-        <comment>Color 29</comment>
+        <comment>Color 31</comment>
         <translation>Zelená 30%</translation>
     </message>
     <message>
         <source>Green 100% for undergrowth</source>
-        <comment>Color 30</comment>
+        <comment>Color 32</comment>
         <translation>Zelená 100% pro podrost</translation>
     </message>
     <message>
         <source>White over yellow</source>
-        <comment>Color 31</comment>
+        <comment>Color 33</comment>
         <translation>Bílá přes žlutou</translation>
     </message>
     <message>
         <source>Black for open land</source>
-        <comment>Color 32</comment>
+        <comment>Color 34</comment>
         <translation>Černá pro otevřenou krajinu</translation>
     </message>
     <message>
         <source>Yellow</source>
-        <comment>Color 33</comment>
+        <comment>Color 35</comment>
         <translation>Žlutá</translation>
     </message>
     <message>
         <source>Yellow 100% for area features</source>
-        <comment>Color 34</comment>
+        <comment>Color 36</comment>
         <translation>Žlutá 100% pro plošné prvky</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
-        <comment>Color 35</comment>
+        <comment>Color 37</comment>
         <translation>Žlutá 50%</translation>
     </message>
     <message>
@@ -15701,12 +16181,12 @@ Prominent features such as depressions, re-entrants, spurs, earth banks and terr
 Absolute height accuracy is of little importance, but the relative height difference between neighbouring features should be represented on the map as accurately as possible. It is permissible to alter the height of a contour slightly if this improves the representation of a feature. This deviation should not exceed 25% of the contour interval, and attention must be paid to neighbouring features.
 The smallest bend in a contour line is 0.25 mm from centre to centre of the line (footprint 4 m). The mouth of a re-entrant or a spur must be wider than 0.5 mm from centre to centre of the line (footprint 8 m).
 The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minimum width is 0.6 mm (footprint 9 m) outside measure. Smaller prominent knolls can be represented using symbol Small knoll (109) or Small elongated knoll (110) or they can be exaggerated on the map to satisfy the minimum dimension.
-A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
-Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
+A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
+Contours shall be adapted or broken in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation>{Vrstevnice je} čára spojující body stejné {nadmořské} výšky. Základní výškový interval mezi vrstevnicemi je 5 metrů. Interval vrstevnic 2.5 metru může být použit v plochých terénech.
+        <translation type="unfinished">{Vrstevnice je} čára spojující body stejné {nadmořské} výšky. Základní výškový interval mezi vrstevnicemi je 5 metrů. Interval vrstevnic 2.5 metru může být použit v plochých terénech.
 Spádovky se mohou kreslit na nižší straně vrstevnice k ujasnění směru spádu. Pokud jsou použity, měly by být umístěny v údolích.
-Uzavřené vrstevnice zobrazují kupky nebo prohlubně. Prohlub-ně musí mít nejméně jednu spádovku. Minimální výška / hloubka by měla být 1 m.
+Uzavřené vrstevnice zobrazují kupky nebo prohlubně. Prohlubně musí mít nejméně jednu spádovku. Minimální výška / hloubka by měla být 1 m.
 Vztahy mezi sousedními vrstevnicemi jsou důležité. Sousední vrstevnice ukazují tvar a strukturu. Malé detaily na vrstevnicích by měly být vynechány, protože mají tendenci skrývat hlavní rysy terénu.
 Nápadné objekty, jako jsou prohlubně, údolí, výběžky, zemní srázy a terasy, mohou být zveličeny.
 Absolutní výšková přesnost je méně důležitá, ale relativní výškové rozdíly mezi sousedními objekty by měly být zobrazeny v mapě tak přesně, jak jen to je možné. Je přípustné mírně změnit výšku vrstevnice, pokud to zlepší vyjádření objektu. Tato odchylka by neměla překročit 25 % intervalu vrstevnic a je třeba věnovat pozornost sousedním objektům.
@@ -15718,7 +16198,7 @@ Vrstevnice by měly být upraveny (nikoli přerušeny) tak, aby se nedotýkaly z
     <message>
         <source>Slope line, contour</source>
         <comment>Name of symbol 101.1</comment>
-        <translation>Spádnice</translation>
+        <translation>Spádovka</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
@@ -15845,15 +16325,26 @@ Minimální délka: 0.6 mm (stopa 9 m).</translation>
     </message>
     <message>
         <source>Earth wall</source>
-        <comment>Name of symbol 105</comment>
+        <comment>Name of symbol 105.1</comment>
         <translation>Zemní val</translation>
     </message>
     <message>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
-        <comment>Description of symbol 105</comment>
+        <comment>Description of symbol 105.1</comment>
         <translation>Zřetelný zemní val. Minimální výška: 1 m.
 Minimální délka: 1.4 mm (stopa 21 m).</translation>
+    </message>
+    <message>
+        <source>Retaining earth wall</source>
+        <comment>Name of symbol 105.2</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A retaining earth wall is an abrupt change in ground level which can be clearly distinguished from its surroundings used for minor peat edges and cultivation terraces. If such a feature is higher than 1 m, it should be drawn with the symbol Earth bank (104).
+Minimum height: 0.5 m, minimum length (isolated): 1.4 mm.</source>
+        <comment>Description of symbol 105.2</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Erosion gully</source>
@@ -15861,11 +16352,11 @@ Minimální délka: 1.4 mm (stopa 21 m).</translation>
         <translation>Rýha</translation>
     </message>
     <message>
-        <source>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Minimum depth: 1 m.
-Minimum length: 1.15 mm (footprint 17 m).
-Contour lines should not be broken around this symbol.</source>
+        <source>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Contour lines may be broken around this symbol for better readability.
+Minimum depth: 1 m.
+Minimum length: 1.15 mm (footprint 17.25 m).</source>
         <comment>Description of symbol 107</comment>
-        <translation>Erozní rýha, která je příliš malá pro zobrazení užitím značky Zemní sráz (104), je zobrazena jednou čarou. Minimální hloubka: 1 m.
+        <translation type="unfinished">Erozní rýha, která je příliš malá pro zobrazení užitím značky Zemní sráz (104), je zobrazena jednou čarou. Minimální hloubka: 1 m.
 Minimální délka: 1.15 mm (stopa 17 m).
 Vrstevnice kolem této značky se nepřerušují.</translation>
     </message>
@@ -15994,12 +16485,12 @@ Minimální délka: 0.6 mm (stopa 9 m).</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
-For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.15 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation>Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
+        <translation type="unfinished">Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
 Není-li sráz svislý, měly by spádové šrafy být kresleny tak, aby vyjádřily plný vodorovný rozsah. Konce horní linie mohou být kulaté nebo hranaté. Mezera mezi dvěma srázy musí být nejméně 0.2 mm. Sráz by měl být v souladu s vrstevnicemi.
 Překonávání srázu bude obvykle zpomalovat postup.
 Minimální výška: 1 m.
@@ -16012,12 +16503,12 @@ Minimální délka: 0.6 mm (stopa 9 m).</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
-For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.15 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation>Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
+        <translation type="unfinished">Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
 Není-li sráz svislý, měly by spádové šrafy být kresleny tak, aby vyjádřily plný vodorovný rozsah. Konce horní linie mohou být kulaté nebo hranaté. Mezera mezi dvěma srázy musí být nejméně 0.2 mm. Sráz by měl být v souladu s vrstevnicemi.
 Překonávání srázu bude obvykle zpomalovat postup.
 Minimální výška: 1 m.
@@ -16030,12 +16521,12 @@ Minimální délka: 0.6 mm (stopa 9 m).</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
-For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.5 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation>Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
+        <translation type="unfinished">Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
 Není-li sráz svislý, měly by spádové šrafy být kresleny tak, aby vyjádřily plný vodorovný rozsah. Konce horní linie mohou být kulaté nebo hranaté. Mezera mezi dvěma srázy musí být nejméně 0.2 mm. Sráz by měl být v souladu s vrstevnicemi.
 Překonávání srázu bude obvykle zpomalovat postup.
 Minimální výška: 1 m.
@@ -16048,12 +16539,12 @@ Minimální délka: 0.6 mm (stopa 9 m).</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
-For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.15 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation>Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
+        <translation type="unfinished">Překonatelný sráz nebo lom. Není-li směr spádu zřejmý z vrstevnic, nebo je-li třeba zvýšit čitelnost, mohou být kresleny krátké šrafy ve směru spádu.
 Není-li sráz svislý, měly by spádové šrafy být kresleny tak, aby vyjádřily plný vodorovný rozsah. Konce horní linie mohou být kulaté nebo hranaté. Mezera mezi dvěma srázy musí být nejméně 0.2 mm. Sráz by měl být v souladu s vrstevnicemi.
 Překonávání srázu bude obvykle zpomalovat postup.
 Minimální výška: 1 m.
@@ -16224,42 +16715,42 @@ Stopa jednotlivého trojúhelníku: 12 m × 6 m {(14.4 m × 7.2 m)}.</translatio
     <message>
         <source>Body of water that shall not be crossed, with bank line</source>
         <comment>Name of symbol 301.2</comment>
-        <translation>Vodní těleso, které nesmí být překonáváno s obrysovou čárou</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>When a body of water is not covered with ice or shall not be crossed, the colour of the area shall be 100% blue. A black bank line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.2</comment>
-        <translation>Pokud není vodní plocha pokryta ledem nebo nesmí být překonána, musí být plocha oblasti 100% modrá. Černá obrysová čára vyjadřuje, že objekt nesmí být překonán.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Body of water that shall not be crossed</source>
         <comment>Name of symbol 301.3</comment>
-        <translation>Vodní těleso, které nesmí být překonáváno</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>When a body of water is not covered with ice or shall not be crossed, the colour of the area shall be 100% blue. A black bank line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.3</comment>
-        <translation>Pokud není vodní plocha pokryta ledem nebo nesmí být překonána, musí být plocha oblasti 100% modrá. Černá obrysová čára vyjadřuje, že objekt nesmí být překonán.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Body of water that shall not be crossed, bank line</source>
         <comment>Name of symbol 301.4</comment>
-        <translation>Vodní těleso, které nesmí být překonáváno , obrysová čára</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A black bank line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.4</comment>
-        <translation>Černá obrysová čára indikující, že objekt nesmí být překonáván.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Crossable body of water, with bank line</source>
         <comment>Name of symbol 301.1</comment>
-        <translation>Překonatelné vodní těleso s obrysovou čárou</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
         <comment>Description of symbol 301.1</comment>
-        <translation>Je-li dovoleno překonat vodní těleso, musí být barva 50% modrá. Obrysová čára překonatelného vodního tělesa je na mapě lyžařského orientačního běhu zobrazena jako v ISOM Mělké vodní těleso (302).</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Crossable body of water</source>
@@ -16269,17 +16760,17 @@ Stopa jednotlivého trojúhelníku: 12 m × 6 m {(14.4 m × 7.2 m)}.</translatio
     <message>
         <source>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
         <comment>Description of symbol 302.1</comment>
-        <translation>Je-li dovoleno překonat vodní těleso, musí být barva 50% modrá. Obrysová čára překonatelného vodního tělesa je na mapě lyžařského orientačního běhu zobrazena jako v ISOM Mělké vodní těleso (302).</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Crossable body of water, bank line</source>
         <comment>Name of symbol 302.2</comment>
-        <translation>Překonatelné vodní těleso, obrysová čára</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
         <comment>Description of symbol 302.2</comment>
-        <translation>Obrysová čára překonatelného vodního tělesa je na mapě lyžařského orientačního běhu zobrazena jako v ISOM Mělké vodní těleso (302).</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Crossable watercourse</source>
@@ -16287,10 +16778,10 @@ Stopa jednotlivého trojúhelníku: 12 m × 6 m {(14.4 m × 7.2 m)}.</translatio
         <translation>Překonatelný vodní tok</translation>
     </message>
     <message>
-        <source>Should be at least 2 m wide.
+        <source>A crossable watercourse more than 2 m wide.
 Minimum length (isolated): 1 mm (footprint 15 m).</source>
         <comment>Description of symbol 304</comment>
-        <translation>Měl by být nejméně 2 m široký.
+        <translation type="unfinished">Měl by být nejméně 2 m široký.
 Minimální délka (izolovaná {značka}): 1 mm (stopa 15 m).</translation>
     </message>
     <message>
@@ -16299,9 +16790,10 @@ Minimální délka (izolovaná {značka}): 1 mm (stopa 15 m).</translation>
         <translation>Malý překonatelný vodní tok</translation>
     </message>
     <message>
-        <source>Minimum length (isolated): 1 mm (footprint 15 m).</source>
+        <source>A crossable watercourse less than 2 m wide.
+Minimum length (isolated): 1 mm (footprint 15 m)</source>
         <comment>Description of symbol 305</comment>
-        <translation>Minimální délka (izolovaná {značka}): 1 mm (stopa 15 m).</translation>
+        <translation type="unfinished">Minimální délka (izolovaná {značka}): 1 mm (stopa 15 m).</translation>
     </message>
     <message>
         <source>Marsh (in ski orienteering map)</source>
@@ -16311,7 +16803,7 @@ Minimální délka (izolovaná {značka}): 1 mm (stopa 15 m).</translation>
     <message>
         <source>The marshes shall be shown with the same symbol as Indistinct marsh (310) in the orienteering map specification, so that the track symbols drawn can be read more clearly.</source>
         <comment>Description of symbol 310.1</comment>
-        <translation>Bažiny musí být zobrazeny stejnou značkou jako Nezřetelná bažina (310) ve specifikaci map orientačního běhu, takže nakreslené značky stop mohou být čteny jasněji.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open land</source>
@@ -16441,7 +16933,7 @@ Minimální šířka: 0.4 mm (stopa 6 m).</translation>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running speed.</source>
         <comment>Description of symbol 406.4</comment>
-        <translation>Oblast s hustou vegetací (špatná viditelnost), která snižuje rychlost běhu.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Orchard</source>
@@ -16517,13 +17009,12 @@ Minimální délka: 2 mm (stopa 30 m).</translation>
         <translation>Zřetelná hranice vegetace</translation>
     </message>
     <message>
-        <source>A distinct forest edge or vegetation boundary within the forest.
-Very distinct forest edges and vegetation boundaries may be represented using the cultivation boundary symbol. Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map. For areas with a lot of rock features, it is recommended to use the green dashed line for vegetation boundaries.
-A disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbol Vegetation: fight (410). An alternative for these situations is to use symbol Distinct cultivation boundary (415).
-Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
-Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
+        <source>A vegetation boundary within the forest, or a distinct forest edge.
+Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map. For areas with a lot of rock features, it is recommended to use the green dashed line for vegetation boundaries.
+The disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbol Vegetation: fight (410). An alternative for these situations is to use symbol Distinct cultivation boundary (415).
+Minimum length, black dot implementation: 5 dots (2.0 mm - footprint 30 m).</source>
         <comment>Description of symbol 416</comment>
-        <translation>Zřetelný okraj lesa nebo hranice vegetace uvnitř lesa.
+        <translation type="unfinished">Zřetelný okraj lesa nebo hranice vegetace uvnitř lesa.
 Velmi zřetelné hranice lesa a hranice vegetace mohou být znázorněny užitím značky {Zřetelná} hranice obdělávané půdy {(415)}. V mapě může být použita jen jedna značka hranice vegetace (černá tečkovaná čára nebo zelená čárkovaná čára). V oblastech s množstvím skalních útvarů je doporučeno používat pro hranice vegetace zelenou čárkovanou čáru.
 Nevýhodou zelené čáry je to, že nemůže být použita k zobrazení zřetelné hranice vegetace kolem a uvnitř značky Vegetace, prodírání (410). Alternativou pro tyto situace je použití značky Zřetelná hranice obdělávané půdy (415).
 Minimální délka provedení černé tečky: 5 teček (2.5 mm – stopa 37{.5} m).
@@ -16535,11 +17026,13 @@ Minimální délka provedení zelené čárky: 4 čárky (1.8 mm – stopa 27 m)
         <translation>Výrazný vegetační objekt</translation>
     </message>
     <message>
-        <source>The symbol is orientated to north.
+        <source>A vegetation feature which is significant or prominent.
+White mask is used under the green cross, to improve readability in yellow and green (line width of white mask 0.36 mm, and it shall be 0.18 mm longer in the ends of the symbol).
+The symbol is orientated to north.
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 419</comment>
-        <translation>Značka je orientována k severu.
+        <translation type="unfinished">Značka je orientována k severu.
 Definice značky musí být uvedena v legendě mapy.
 Stopa: 13.5 m × 13.5 m.</translation>
     </message>
@@ -16583,11 +17076,12 @@ Minimální plocha: 1 mm × 1 mm (stopa 15 m × 15 m).</translation>
         <translation>Široká silnice, minimální šířka</translation>
     </message>
     <message>
-        <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
+        <source>A maintained road wider than 5 m wide suitable for vehicles in all weather.
+The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
 The space between the black lines is filled with brown (50%).
 A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
         <comment>Description of symbol 502</comment>
-        <translation>Šířka by měla být kreslená v měřítku, ale nesmí být menší než minimální šířka (0.3 + 2 × 0.14 mm – stopa 8.7 m). Vnější hraniční čáry mohou být nahrazeny jinými černými liniovými značkami, jako jsou Plot (516), Nepřekonatelný plot (518), Zeď (513) nebo Nepřekonatelná zeď (515), pokud je objekt tak blízko hraně silnice, že prakticky nemůže být znázorněn jako oddělená značka.
+        <translation type="unfinished">Šířka by měla být kreslená v měřítku, ale nesmí být menší než minimální šířka (0.3 + 2 × 0.14 mm – stopa 8.7 m). Vnější hraniční čáry mohou být nahrazeny jinými černými liniovými značkami, jako jsou Plot (516), Nepřekonatelný plot (518), Zeď (513) nebo Nepřekonatelná zeď (515), pokud je objekt tak blízko hraně silnice, že prakticky nemůže být znázorněn jako oddělená značka.
 Prostor mezi černými čarami je vyplněn hnědou (50%).
 Silnice se dvěma vozovkami může být zobrazena pomocí dvou značek široké silnice v těsném dotyku s ponecháním jediné hrany silnice ve středu.</translation>
     </message>
@@ -16607,11 +17101,12 @@ Silnice se dvěma vozovkami může být zobrazena pomocí dvou značek široké 
         <translation>Silnice se dvěma vozovkami</translation>
     </message>
     <message>
-        <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
+        <source>A maintained road wider than 5 m wide suitable for vehicles in all weather.
+The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
 The space between the black lines is filled with brown (50%).
 A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
         <comment>Description of symbol 502.2</comment>
-        <translation>Šířka by měla být kreslená v měřítku, ale nesmí být menší než minimální šířka (0.3 + 2 × 0.14 mm – stopa 8.7 m). Vnější hraniční čáry mohou být nahrazeny jinými černými liniovými značkami, jako jsou Plot (516), Nepřekonatelný plot (518), Zeď (513) nebo Nepřekonatelná zeď (515), pokud je objekt tak blízko hraně silnice, že prakticky nemůže být znázorněn jako oddělená značka.
+        <translation type="unfinished">Šířka by měla být kreslená v měřítku, ale nesmí být menší než minimální šířka (0.3 + 2 × 0.14 mm – stopa 8.7 m). Vnější hraniční čáry mohou být nahrazeny jinými černými liniovými značkami, jako jsou Plot (516), Nepřekonatelný plot (518), Zeď (513) nebo Nepřekonatelná zeď (515), pokud je objekt tak blízko hraně silnice, že prakticky nemůže být znázorněn jako oddělená značka.
 Prostor mezi černými čarami je vyplněn hnědou (50%).
 Silnice se dvěma vozovkami může být zobrazena pomocí dvou značek široké silnice v těsném dotyku s ponecháním jediné hrany silnice ve středu.</translation>
     </message>
@@ -16621,9 +17116,9 @@ Silnice se dvěma vozovkami může být zobrazena pomocí dvou značek široké 
         <translation>Silnice</translation>
     </message>
     <message>
-        <source>A maintained road suitable for motor vehicles in all weather. Width less than 5 m.</source>
+        <source>A maintained road less than 5 m wide suitable for vehicles in all weather.</source>
         <comment>Description of symbol 503</comment>
-        <translation>Udržovaná silnice {silnička, lesní asfaltka} vhodná pro motorová vozidla za každého počasí. Šířka menší než 5 m.</translation>
+        <translation type="unfinished">Udržovaná silnice {silnička, lesní asfaltka} vhodná pro motorová vozidla za každého počasí. Šířka menší než 5 m.</translation>
     </message>
     <message>
         <source>Vehicle track</source>
@@ -16705,9 +17200,9 @@ Minimální délka {(izolovaná značka}): dvě čárky (3.25 mm – stopa 48 m)
     <message>
         <source>A railway or other kind of railed track.
 If it is forbidden to run along the railway, it shall be combined with symbol Out-of-bounds route (711). If it is forbidden to cross the railway, it must be combined with symbol Area that shall not be entered (520) or Out-of-bounds area (709).
-Minimum length (isolated): two dashes (4 mm - footprint 60 m).</source>
+Minimum length (isolated): two black dashes (4 mm - footprint 60 m).</source>
         <comment>Description of symbol 509</comment>
-        <translation>Železnice nebo jiný druh kolejové dráhy.
+        <translation type="unfinished">Železnice nebo jiný druh kolejové dráhy.
 Pokud je zakázáno běžet podél železnice, musí být kombinována se značkou Nepřístupná trasa (711). Je-li zakázáno křížit železnici, musí být kombinována se značkou Oblast se zákazem vstupu (520) nebo Nepřístupná oblast (709).
 Minimální délka (izolovaná {značka}): dvě čárky (4 mm – stopa 60 m).</translation>
     </message>
@@ -16803,17 +17298,29 @@ Poznámka: Pokud je potok širší než 0,25 mm v mapě, upravte tuto značku ta
     </message>
     <message>
         <source>Wall</source>
-        <comment>Name of symbol 513</comment>
+        <comment>Name of symbol 513.1</comment>
         <translation>Zeď</translation>
     </message>
     <message>
         <source>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
-        <comment>Description of symbol 513</comment>
+        <comment>Description of symbol 513.1</comment>
         <translation>Významná zeď z kamene, betonu, dřeva nebo jiných materiálů.
 Minimální výška 1 m.
 Minimální délka (izolovaná {značka}): 1.4 mm (stopa 21 m).</translation>
+    </message>
+    <message>
+        <source>Retaining wall</source>
+        <comment>Name of symbol 513.2</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A significant wall of stone, concrete, wood or other materials which is seen only from one side. Half dot must point to the lower level.
+Minimum height: 0.5 m.
+Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
+        <comment>Description of symbol 513.2</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Impassable wall</source>
@@ -16833,10 +17340,11 @@ Minimální délka (izolovaná {značka}): 3 mm (stopa 45 m).</translation>
         <translation>Plot</translation>
     </message>
     <message>
-        <source>If the fence forms an enclosed area, tags should be placed inside.
+        <source>A passable or crossable fence, normally less than 1.5 m high.
+If the fence forms an enclosed area, tags should be placed inside.
 Minimum length (isolated): 1.5 mm (footprint 22.5 m).</source>
         <comment>Description of symbol 516</comment>
-        <translation>Pokud plot tvoří uzavřenou oblast, čárky by měly směřovat dovnitř.
+        <translation type="unfinished">Pokud plot tvoří uzavřenou oblast, čárky by měly směřovat dovnitř.
 Minimální délka (izolovaná {značka}): 1.5 mm (stopa 22.5 m).</translation>
     </message>
     <message>
@@ -16871,14 +17379,13 @@ Pro neprůchodné objekty musí být čára přerušena v místě bodu křížen
         <translation>Oblast se zákazem vstupu</translation>
     </message>
     <message>
-        <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
-Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.
+        <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. The area shall be discontinued where a path goes through and white colour is used as background with overlap 0.15 mm on both sides.
+Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line, if the border is unclear no black line shall occur.
 Course planning symbol 709 can be used for temporary out-of bounds areas.
-The vertical black stripes version of the symbol is orientated to north.
 An out-of-bounds area shall not be entered.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 520</comment>
-        <translation>Nepřístupná oblast je objekt jako je soukromý dům, zahrada, továrna nebo jiný průmyslový prostor. Pouze vrstevnice a výrazné objekty jako jsou železnice a velké budovy musí být znázorněny uvnitř nepřístupné oblasti. Svislé černé čáry mohou být použity v oblastech, kde není důležité zobrazit úplnou reprezentaci terénu (například když část lesa je nepřístupná). Oblast musí být přerušena, pokud jí prochází pěšina nebo cesta.
+        <translation type="unfinished">Nepřístupná oblast je objekt jako je soukromý dům, zahrada, továrna nebo jiný průmyslový prostor. Pouze vrstevnice a výrazné objekty jako jsou železnice a velké budovy musí být znázorněny uvnitř nepřístupné oblasti. Svislé černé čáry mohou být použity v oblastech, kde není důležité zobrazit úplnou reprezentaci terénu (například když část lesa je nepřístupná). Oblast musí být přerušena, pokud jí prochází pěšina nebo cesta.
 Nepřístupné oblasti s jasnou hranicí by měly být ohraničeny černou hraniční čarou nebo jinou černou liniovou značkou {(například plot)}; není-li hranice jasná, zůstanou bez ohraničení.
 Značka pro dotisk 709 může být užita pro dočasné nepřístupné oblasti.
 Verze značky se svislými černými čarami je orientována k severu.
@@ -16896,19 +17403,14 @@ Minimální plocha: 1 mm × 1 mm (stopa 15 m × 15 m).</translation>
         <translation>Nepřístupné oblasti s jasnou hranicí by měly být ohraničeny černou hraniční čarou nebo jinou černou liniovou značkou {(například plot)}; není-li hranice jasná, zůstanou bez ohraničení.</translation>
     </message>
     <message>
-        <source>Area that shall not be entered, stripes</source>
+        <source>Area that shall not be entered, stripes (deprecated)</source>
         <comment>Name of symbol 520.2</comment>
-        <translation>Oblast se zákazem vstupu, šrafy</translation>
+        <translation type="unfinished">Oblast se zákazem vstupu, šrafy</translation>
     </message>
     <message>
-        <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
-Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.
-Course planning symbol 709 can be used for temporary out-of bounds areas.
-The vertical black stripes version of the symbol is orientated to north.
-An out-of-bounds area shall not be entered.
-Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
+        <source>Deprecated in revision 6 of the ISOM 2017-2 document.</source>
         <comment>Description of symbol 520.2</comment>
-        <translation>Nepřístupná oblast je objekt jako je soukromý dům, zahrada, továrna nebo jiný průmyslový prostor. Pouze vrstevnice a výrazné objekty jako jsou železnice a velké budovy musí být znázorněny uvnitř nepřístupné oblasti. Svislé černé čáry mohou být použity v oblastech, kde není důležité zobrazit úplnou reprezentaci terénu (například když část lesa je nepřístupná). Oblast musí být přerušena, pokud jí prochází pěšina nebo cesta.
+        <translation type="unfinished">Nepřístupná oblast je objekt jako je soukromý dům, zahrada, továrna nebo jiný průmyslový prostor. Pouze vrstevnice a výrazné objekty jako jsou železnice a velké budovy musí být znázorněny uvnitř nepřístupné oblasti. Svislé černé čáry mohou být použity v oblastech, kde není důležité zobrazit úplnou reprezentaci terénu (například když část lesa je nepřístupná). Oblast musí být přerušena, pokud jí prochází pěšina nebo cesta.
 Nepřístupné oblasti s jasnou hranicí by měly být ohraničeny černou hraniční čarou nebo jinou černou liniovou značkou {(například plot)}; není-li hranice jasná, zůstanou bez ohraničení.
 Značka pro dotisk 709 může být užita pro dočasné nepřístupné oblasti.
 Verze značky se svislými černými čarami je orientována k severu.
@@ -16916,14 +17418,19 @@ Do nepřístupné oblasti se nesmí vstupovat.
 Minimální plocha: 1 mm × 1 mm (stopa 15 m × 15 m).</translation>
     </message>
     <message>
-        <source>Area that shall not be entered, stripes, bounding line</source>
+        <source>Area that shall not be entered, stripes, bounding line (deprecated)</source>
         <comment>Name of symbol 520.3</comment>
-        <translation>Oblast se zákazem vstupu, šrafy, hraniční čára</translation>
+        <translation type="unfinished">Oblast se zákazem vstupu, šrafy, hraniční čára</translation>
     </message>
     <message>
-        <source>Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.</source>
+        <source>Deprecated in revision 6 of the ISOM 2017-2 document.</source>
         <comment>Description of symbol 520.3</comment>
-        <translation>Nepřístupné oblasti s jasnou hranicí by měly být ohraničeny černou hraniční čarou nebo jinou černou liniovou značkou {(například plot)}; není-li hranice jasná, zůstanou bez ohraničení.</translation>
+        <translation type="unfinished">Nepřístupná oblast je objekt jako je soukromý dům, zahrada, továrna nebo jiný průmyslový prostor. Pouze vrstevnice a výrazné objekty jako jsou železnice a velké budovy musí být znázorněny uvnitř nepřístupné oblasti. Svislé černé čáry mohou být použity v oblastech, kde není důležité zobrazit úplnou reprezentaci terénu (například když část lesa je nepřístupná). Oblast musí být přerušena, pokud jí prochází pěšina nebo cesta.
+Nepřístupné oblasti s jasnou hranicí by měly být ohraničeny černou hraniční čarou nebo jinou černou liniovou značkou {(například plot)}; není-li hranice jasná, zůstanou bez ohraničení.
+Značka pro dotisk 709 může být užita pro dočasné nepřístupné oblasti.
+Verze značky se svislými černými čarami je orientována k severu.
+Do nepřístupné oblasti se nesmí vstupovat.
+Minimální plocha: 1 mm × 1 mm (stopa 15 m × 15 m).</translation>
     </message>
     <message>
         <source>Building</source>
@@ -16933,12 +17440,12 @@ Minimální plocha: 1 mm × 1 mm (stopa 15 m × 15 m).</translation>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.
 Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
-Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Passages through buildings must have a minimum width of 0.4 mm (footprint 6.0 m).
 Buildings within forbidden areas are generalised.
 Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
 Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
         <comment>Description of symbol 521</comment>
-        <translation>Budova je zobrazena svým půdorysem, pokud to měřítko dovoluje.
+        <translation type="unfinished">Budova je zobrazena svým půdorysem, pokud to měřítko dovoluje.
 Budovy větší než 75 m × 75 m mohou být v urbanizovaných oblastech reprezentovány tmavě šedou výplní.
 Pasáže procházející budovami musí mít minimální šířku 0.3 mm (stopa 4.5 m).
 Budovy uvnitř zakázaných oblastí jsou generalizovány.
@@ -16973,12 +17480,12 @@ Minimální plocha: 0.5 mm × 0.5 mm (stopa 7.5 m × 7.5 m).</translation>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.
 Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
-Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Passages through buildings must have a minimum width of 0.4 mm (footprint 6.0 m).
 Buildings within forbidden areas are generalised.
 Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
 Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
         <comment>Description of symbol 521.2</comment>
-        <translation>Budova je zobrazena svým půdorysem, pokud to měřítko dovoluje.
+        <translation type="unfinished">Budova je zobrazena svým půdorysem, pokud to měřítko dovoluje.
 Budovy větší než 75 m × 75 m mohou být v urbanizovaných oblastech reprezentovány tmavě šedou výplní.
 Pasáže procházející budovami musí mít minimální šířku 0.3 mm (stopa 4.5 m).
 Budovy uvnitř zakázaných oblastí jsou generalizovány.
@@ -16993,12 +17500,12 @@ Minimální plocha: 0.5 mm × 0.5 mm (stopa 7.5 m × 7.5 m).</translation>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.
 Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
-Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Passages through buildings must have a minimum width of 0.4 mm (footprin 6.0 m).
 Buildings within forbidden areas are generalised.
 Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
 Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
         <comment>Description of symbol 521.3</comment>
-        <translation>Budova je zobrazena svým půdorysem, pokud to měřítko dovoluje.
+        <translation type="unfinished">Budova je zobrazena svým půdorysem, pokud to měřítko dovoluje.
 Budovy větší než 75 m × 75 m mohou být v urbanizovaných oblastech reprezentovány tmavě šedou výplní.
 Pasáže procházející budovami musí mít minimální šířku 0.3 mm (stopa 4.5 m).
 Budovy uvnitř zakázaných oblastí jsou generalizovány.
@@ -17045,12 +17552,11 @@ Stopa: 21 m v průměru.</translation>
         <translation>Malá věž</translation>
     </message>
     <message>
-        <source>An obvious small tower, platform or seat.
-Location is at the centre of gravity of the symbol.
+        <source>An obvious small tower or elevated platform or seat. The object shall be with elevation above the ground. Location is at the centre of gravity of the symbol.
 The symbol is orientated to north.
 Footprint: 15 m x 15 m.</source>
         <comment>Description of symbol 525</comment>
-        <translation>Nápadná malá věž, posed či sedátko.
+        <translation type="unfinished">Nápadná malá věž, posed či sedátko.
 Umístění je v těžišti značky.
 Značka je orientována k severu.
 Stopa: 15 m × 15 m.</translation>
@@ -17173,7 +17679,7 @@ Magnetické poledníky musí být přerušeny ke zvýšení čitelnosti mapy, na
     <message>
         <source>The focus point (i.e. the point in the centre of a control circle) shall be used to clarify the exact position of a control.</source>
         <comment>Description of symbol 703</comment>
-        <translation>Bod umístění kontroly (tj. bod ve středu kruhu kontroly) se používá k vyjasnění přesného umístění kontroly.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Control number</source>
@@ -17232,7 +17738,7 @@ Minimální délka: 2 čárky (4.5 mm – stopa: 67.5 m).</translation>
 An out-of-bounds area shall not be entered.
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 709</comment>
-        <translation>Nepřístupná oblast. Hraniční čára může být kreslena, není-li žádná přirozená hranice, takto:
+        <translation type="unfinished">Nepřístupná oblast. Hraniční čára může být kreslena, není-li žádná přirozená hranice, takto:
 - plná čára značí spojitě vyznačenou hranici v terénu (páska apod.),
 - přerušovaná čára značí nesouvislé značení v terénu,
 - žádná čára značí nevyznačenou hranici v terénu.
@@ -17272,7 +17778,7 @@ Minimální plocha: 2 mm × 2 mm (stopa 30 m × 30 m).</translation>
     <message>
         <source>Simple SkiO Course</source>
         <comment>Name of symbol 799</comment>
-        <translation>Jednoduchá SkiO trať</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>This symbol provides a simple and quick way to make training courses.
@@ -17286,7 +17792,7 @@ Fialová čára se trochu rozšíří do značky pro cíl. To je nedostatek toho
     <message>
         <source>Very wide track &gt; 3.0 m</source>
         <comment>Name of symbol 801</comment>
-        <translation>Velmi široká stopa &gt; 3.0 m</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Very fast, wide ski tracks in ski centres, made with a ski trail groomer or a track leveller.</source>
@@ -17296,27 +17802,27 @@ Fialová čára se trochu rozšíří do značky pro cíl. To je nedostatek toho
     <message>
         <source>Wide track 1.5 - 3.0 m</source>
         <comment>Name of symbol 802</comment>
-        <translation>Široká stopa 1.5-3.0 m</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks rougher and softer than the wide skateable tracks in the area.</source>
         <comment>Description of symbol 802</comment>
-        <translation>Rychlá stopa umožňující bruslení upravená sněžným vozidlem široká obvykle 2–3 m. Stopa umožňující bruslení hrubší a měkčí než široké stopy umožňující bruslení v prostoru závodu.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Track 1.0 - 1.5 m</source>
         <comment>Name of symbol 803</comment>
-        <translation>Stopa 1.0-1.5 m</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may be made wider to reduce widening during competition.</source>
         <comment>Description of symbol 803</comment>
-        <translation>Dobrá stopa vytvořená sněžným vozidlem, obvykle 1–1,5 m široká. Ve strmých svazích může být širší pro omezení rozšiřování v průběhu závodu.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Track, slow 0.8 - 1.0 m</source>
         <comment>Name of symbol 804</comment>
-        <translation>Stopa, pomalá 0.8-1.0 m</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing technique for slowing and stopping.
@@ -17324,7 +17830,6 @@ Fialová čára se trochu rozšíří do značky pro cíl. To je nedostatek toho
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
         <translation>Hrubá, pomalá stopa s malým množstvím sněhu nebo větvičkami {či jehličím}. Tato značka se neužívá ve strmých svazích, jestliže šířka stopy umožňuje užití techniky stromečku pro stoupání nebo plužení pro zpomalení a zastavení.
-
 Pro zvýšení čitelnosti rozdvojení je začátek pomalé stopy kreslen krátkou čarou.</translation>
     </message>
     <message>
@@ -17411,9 +17916,7 @@ Hranice upravené plochy je zobrazena plnou zelenou čarou (0,13 mm) tak, že ka
 At least two symbols must be used to mark a forbidden route.
 The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809</comment>
-        <translation>Liniové objekty označené značkou zakázaná trasa mohou být překonány křížením, ale ne využity pro postup.
-Nejméně dvě značky musí být použity k vyznačení zakázané trasy.
-Značka Nepřípustná trasa (711) je kreslena na mapách pro lyžařský orientační běh ve větší velikosti, aby byla jasně viditelná v síti stop.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Forbidden route, crossable, single symbol</source>
@@ -17425,9 +17928,7 @@ Značka Nepřípustná trasa (711) je kreslena na mapách pro lyžařský orient
 At least two symbols must be used to mark a forbidden route.
 The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809.1</comment>
-        <translation>Liniové objekty označené značkou zakázaná trasa mohou být překonány křížením, ale ne využity pro postup.
-Nejméně dvě značky musí být použity k vyznačení zakázané trasy.
-Značka Nepřípustná trasa (711) je kreslena na mapách pro lyžařský orientační běh ve větší velikosti, aby byla jasně viditelná v síti stop.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Public snow mobile route</source>
@@ -17448,8 +17949,7 @@ Značka Nepřípustná trasa (711) je kreslena na mapách pro lyžařský orient
         <source>Linear features marked with the forbidden route symbol can not be followed, and can not be crossed except at specially marked crossing points. Do not enter road regardless of whether the road is badly plowed, ice-covered, no traffic etc.
 A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
         <comment>Description of symbol 814</comment>
-        <translation>Lineární objekty označené symbolem nepřípustné trasy nemohou být sledovány a nemohou být překonány, s výjimkou speciálně označených přechodových bodů. Nevstupujte na silnici bez ohledu na to, zda je silnice špatně pluhovaná, pokrytá ledem, bez provozu atd.
-Trasa, která je nepřípustná a je zakázáno ji překonat, je znázorněna klikatou čarou. Klikatá čára by měla být, pokud možno, spojitá. Je-li na zakázané trase možnost křížení, musí být zobrazena jako brána dvěma kolmými čarami přes zakázanou trasu. Rovněž delší sekce křížení musí být na mapě jasně znázorněna pomocí kolmých čar na konci klikatých čar.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>OpenOrienteering Logo</source>
@@ -17460,32 +17960,6 @@ Trasa, která je nepřípustná a je zakázáno ji překonat, je znázorněna kl
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
         <translation>Logo OpenOrienteering.</translation>
-    </message>
-    <message>
-        <source>Prepared area, fill pattern</source>
-        <comment>Name of symbol 808.0.1</comment>
-        <translation type="obsolete">Upravená plocha, výplň</translation>
-    </message>
-    <message>
-        <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
-The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
-        <comment>Description of symbol 808.0.1</comment>
-        <translation type="obsolete">Slalomové svahy (svahy pro alpské lyžování) a ostatní plochy, které jsou široké, pevné a umožňují lyžování. Hranice upravené plochy je zobrazena plnou zelenou čarou (0,13 mm) tak, že každá hrana může být jasně čitelná.</translation>
-    </message>
-    <message>
-        <source>Prepared area, boundary</source>
-        <comment>Name of symbol 808.0.2</comment>
-        <translation type="obsolete">Upravená plocha, hranice</translation>
-    </message>
-    <message>
-        <source>The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
-        <comment>Description of symbol 808.0.2</comment>
-        <translation type="obsolete">Hranice upravené plochy jsou zobrazeny plnou zelenou čárou (0.13 mm) tak, že každý okraj je jasně čitelný.</translation>
-    </message>
-    <message>
-        <source>Forbidden route, crossable, single symbol</source>
-        <comment>Name of symbol 809.0.1</comment>
-        <translation type="obsolete">Zakázaná trasa, překonatelná, samotná značka</translation>
     </message>
 </context>
 <context>

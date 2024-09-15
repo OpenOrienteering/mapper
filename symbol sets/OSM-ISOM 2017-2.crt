@@ -67,7 +67,7 @@
 306    waterway = stream AND intermittent = yes
 
 520    landuse = allotments
-520.2  landuse = cemetery
+520    landuse = cemetery
 520    landuse = commercial
 # 710    landuse = construction
 412    landuse = farmland
@@ -78,7 +78,7 @@
 # 710    landuse = landfill
 403    landuse = logging
 401    landuse = meadow
-520.2  landuse = military
+520    landuse = military
 413    landuse = orchard
 301    landuse = reservoir
 # 710    landuse = quarry

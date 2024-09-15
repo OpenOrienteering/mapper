@@ -68,12 +68,12 @@
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0" g="0" b="0"/>
         </color>
-        <color priority="9" name="Black 65%" c="0" m="0" y="0" k="0.65" opacity="1">
+        <color priority="9" name="Black 50%" c="0" m="0" y="0" k="0.5" opacity="1">
             <spotcolors knockout="true">
-                <component factor="0.65" spotcolor="2"/>
+                <component factor="0.5" spotcolor="2"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.35" g="0.35" b="0.35"/>
+            <rgb method="spotcolor" r="0.5" g="0.5" b="0.5"/>
         </color>
         <color priority="10" name="Black 20%" c="0" m="0" y="0" k="0.2" opacity="1">
             <spotcolors knockout="true">
@@ -175,20 +175,21 @@
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.62" g="0.73" b="0.114"/>
         </color>
-        <color priority="24" name="Black 25% (Grey)" c="0" m="0" y="0" k="0.25" opacity="1">
+        <color priority="24" name="Black 35% (Grey)" c="0" m="0" y="0" k="0.35" opacity="1">
             <spotcolors knockout="true">
-                <component factor="0.25" spotcolor="2"/>
+                <component factor="0.35" spotcolor="2"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.75" g="0.75" b="0.75"/>
+            <rgb method="spotcolor" r="0.65" g="0.65" b="0.65"/>
         </color>
-        <color priority="25" name="Green 100%/Black 50%" c="0.76" m="0" y="0.91" k="0.5" opacity="1">
+        <color priority="25" name="Dark green line symbols " c="1" m="0" y="0.8" k="0.3" opacity="1">
             <spotcolors knockout="true">
-                <component factor="1" spotcolor="3"/>
-                <component factor="0.5" spotcolor="2"/>
+                <component factor="0.879" spotcolor="3"/>
+                <component factor="0.3" spotcolor="2"/>
+                <component factor="1" spotcolor="5"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.12" g="0.5" b="0.045"/>
+            <rgb method="spotcolor" r="0" g="0.7" b="0.14"/>
         </color>
         <color priority="26" name="Green 100% for area features" c="0.76" m="0" y="0.91" k="0" opacity="1">
             <spotcolors knockout="true">
@@ -255,7 +256,7 @@
         </color>
     </colors>
     <barrier version="6" required="0.6.0">
-        <symbols count="191" id="ISOM 2017-2">
+        <symbols count="195" id="ISOM 2017-2">
             <symbol type="2" id="0" code="101" name="Contour">
                 <description>A line joining points of equal height. The standard vertical interval between contours is 5 m. A contour interval of 2.5 m may be used for flat terrains.
 Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
@@ -265,8 +266,8 @@ Prominent features such as depressions, re-entrants, spurs, earth banks and terr
 Absolute height accuracy is of little importance, but the relative height difference between neighbouring features should be represented on the map as accurately as possible. It is permissible to alter the height of a contour slightly if this improves the representation of a feature. This deviation should not exceed 25% of the contour interval, and attention must be paid to neighbouring features.
 The smallest bend in a contour line is 0.25 mm from centre to centre of the line (footprint 4 m). The mouth of a re-entrant or a spur must be wider than 0.5 mm from centre to centre of the line (footprint 8 m).
 The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minimum width is 0.6 mm (footprint 9 m) outside measure. Smaller prominent knolls can be represented using symbol Small knoll (109) or Small elongated knoll (110) or they can be exaggerated on the map to satisfy the minimum dimension.
-A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
-Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</description>
+A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
+Contours shall be adapted or broken in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</description>
                 <line_symbol color="6" line_width="140" minimum_length="0" join_style="2" cap_style="1" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="1" id="1" code="101.1" name="Slope line, contour">
@@ -332,7 +333,7 @@ Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</d
 Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank.
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</description>
-                <line_symbol color="6" line_width="180" minimum_length="600" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="500" end_length="570" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+                <line_symbol color="6" line_width="250" minimum_length="600" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="500" end_length="570" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <start_symbol>
                         <symbol type="1" code="" name="Start symbol">
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -450,7 +451,7 @@ Minimum length: 0.6 mm (footprint 9 m).</description>
 Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank.
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</description>
-                <line_symbol color="6" line_width="180" minimum_length="600" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="500" end_length="570" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                <line_symbol color="6" line_width="250" minimum_length="600" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="500" end_length="570" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="2" id="9" code="104.3" name="Earth bank, tag line">
                 <description>Use this symbol to display the full extent of wide earth banks.</description>
@@ -503,7 +504,7 @@ Minimum length: 0.6 mm (footprint 9 m).</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="2" id="11" code="105" name="Earth wall">
+            <symbol type="2" id="11" code="105.1" name="Earth wall">
                 <description>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</description>
                 <line_symbol color="6" line_width="180" minimum_length="0" join_style="2" cap_style="0" start_offset="0" end_offset="0" segment_length="2000" end_length="1000" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
@@ -514,7 +515,38 @@ Minimum length: 1.4 mm (footprint 21 m).</description>
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="2" id="12" code="106" name="Ruined earth wall">
+            <symbol type="2" id="12" code="105.2" name="Retaining earth wall">
+                <description>A retaining earth wall is an abrupt change in ground level which can be clearly distinguished from its surroundings used for minor peat edges and cultivation terraces. If such a feature is higher than 1 m, it should be drawn with the symbol Earth bank (104).
+Minimum height: 0.5 m, minimum length (isolated): 1.4 mm.</description>
+                <line_symbol color="6" line_width="180" minimum_length="1400" join_style="2" cap_style="0" start_offset="0" end_offset="0" segment_length="1000" end_length="800" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+                    <mid_symbol>
+                        <symbol type="1" code="" name="Mid symbol">
+                            <point_symbol rotatable="true" inner_radius="0" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
+                                <element>
+                                    <symbol type="4" code="">
+                                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
+                                    </symbol>
+                                    <object type="1">
+                                        <coords count="7">
+                                            <coord x="225" y="70" flags="1"/>
+                                            <coord x="225" y="195"/>
+                                            <coord x="124" y="295"/>
+                                            <coord x="0" y="295" flags="1"/>
+                                            <coord x="-124" y="295"/>
+                                            <coord x="-225" y="195"/>
+                                            <coord x="-225" y="70" flags="16"/>
+                                        </coords>
+                                        <pattern rotation="0">
+                                            <coord x="0" y="0"/>
+                                        </pattern>
+                                    </object>
+                                </element>
+                            </point_symbol>
+                        </symbol>
+                    </mid_symbol>
+                </line_symbol>
+            </symbol>
+            <symbol type="2" id="13" code="106" name="Ruined earth wall">
                 <description>A ruined or less distinct earth wall. Minimum height: 0.5 m.
 Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Earth wall (105).</description>
                 <line_symbol color="6" line_width="180" minimum_length="3650" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="350" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
@@ -525,17 +557,17 @@ Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object mu
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="2" id="13" code="107" name="Erosion gully">
-                <description>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Minimum depth: 1 m.
-Minimum length: 1.15 mm (footprint 17 m).
-Contour lines should not be broken around this symbol.</description>
-                <line_symbol color="6" line_width="250" minimum_length="1600" join_style="2" cap_style="3" pointed_cap_length="747" start_offset="747" end_offset="747" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <symbol type="2" id="14" code="107" name="Erosion gully">
+                <description>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Contour lines may be broken around this symbol for better readability.
+Minimum depth: 1 m.
+Minimum length: 1.15 mm (footprint 17.25 m).</description>
+                <line_symbol color="6" line_width="250" minimum_length="1150" join_style="2" cap_style="3" pointed_cap_length="747" start_offset="747" end_offset="747" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="14" code="108" name="Small erosion gully">
-                <description>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
-Minimum length (isolated): three dots (1.15 mm - footprint 17 m).
-Contour lines should be broken around this symbol.</description>
-                <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="450" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <symbol type="2" id="15" code="108" name="Small erosion gully">
+                <description>A small erosion gully or dry ditch. Minimum depth: 0.5 m.
+Minimum length (isolated): two dots (0.7 mm - footprint 10.5 m).
+Contour lines shall be broken around this symbol.</description>
+                <line_symbol color="-1" line_width="0" minimum_length="700" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="450" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <mid_symbol>
                         <symbol type="1" code="" name="Mid symbol">
                             <point_symbol rotatable="true" inner_radius="125" inner_color="6" outer_width="0" outer_color="-1" elements="0"/>
@@ -543,14 +575,14 @@ Contour lines should be broken around this symbol.</description>
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="1" id="15" code="109" name="Small knoll">
+            <symbol type="1" id="16" code="109" name="Small knoll">
                 <description>An obvious mound or knoll which cannot be drawn to scale with a contour.
 Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 7.5 m x 7.5 m.</description>
                 <point_symbol inner_radius="250" inner_color="6" outer_width="0" outer_color="-1" elements="0"/>
             </symbol>
-            <symbol type="1" id="16" code="110" name="Small elongated knoll">
+            <symbol type="1" id="17" code="110" name="Small elongated knoll">
                 <description>An obvious elongated knoll which cannot be drawn to scale with a contour.
 Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
@@ -583,7 +615,7 @@ Footprint: 12 m x 6 m.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="17" code="111" name="Small depression">
+            <symbol type="1" id="18" code="111" name="Small depression">
                 <description>A small depression or hollow without steep sides that is too small to be shown by contours.
 Minimum depth: 1 m, minimum width: 2 m.
 Small depressions with steep sides are represented with symbol Pit (112).
@@ -611,7 +643,7 @@ Footprint: 12 m x 6 m.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="18" code="112" name="Pit">
+            <symbol type="1" id="19" code="112" name="Pit">
                 <description>Pits and holes with distinct steep sides which cannot be shown to scale using symbol Earth bank (104).
 Minimum depth: 1 m, minimum width: 1 m.
 A pit larger than 5 m x 5 m should normally be exaggerated and drawn using Earth bank (104). Pits without steep sides are represented with symbol Small depression (111).
@@ -639,7 +671,7 @@ Footprint: 10.5 m x 12 m.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="4" id="19" code="113" name="Broken ground">
+            <symbol type="4" id="20" code="113" name="Broken ground">
                 <description>An area of pits and / or knolls which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable but has little impact on runnability.
 The dots should be randomly distributed but not interfere with the representation of important terrain features and objects.
 The minimum number of dots is three (footprint 10 m x 10 m).
@@ -696,7 +728,7 @@ The dots shall not be arranged to form a single point wide line.</description>
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="1" id="20" code="113.1" name="Broken ground, individual dot">
+            <symbol type="1" id="21" code="113.1" name="Broken ground, individual dot">
                 <description>An area of pits and / or knolls which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable but has little impact on runnability.
 The dots should be randomly distributed but not interfere with the representation of important terrain features and objects.
 The minimum number of dots is three (footprint 10 m x 10 m).
@@ -707,7 +739,7 @@ The dots shall not be arranged to form a single point wide line.
 Density: 3-4 dots / mm².</description>
                 <point_symbol inner_radius="100" inner_color="6" outer_width="0" outer_color="-1" elements="0"/>
             </symbol>
-            <symbol type="4" id="21" code="114" name="Very broken ground">
+            <symbol type="4" id="22" code="114" name="Very broken ground">
                 <description>An area of pits and/or knolls, which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable and affects runnability.
 The dots should be randomly distributed but not interfere with the representation of important terrain features and objects.
 The minimum number of dots is three (footprint 7 m x 7 m).
@@ -814,7 +846,7 @@ The dots shall not be arranged to form a single point wide line.</description>
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="1" id="22" code="115" name="Prominent landform feature">
+            <symbol type="1" id="23" code="115" name="Prominent landform feature">
                 <description>The feature must be very clearly distinguishable from its surroundings.
 Location is the centre of gravity of the symbol, which is orientated to north.
 The symbol shall not touch or overlap other brown symbols.
@@ -839,7 +871,7 @@ Footprint: 13.5 m x 11.5 m.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="2" id="23" code="201" name="Impassable cliff">
+            <symbol type="2" id="24" code="201" name="Impassable cliff">
                 <description>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 For vertical rock faces the tags may be omitted if space is short. Ends of the top line may be rounded or square. Shorter tags may be used at the ends.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.25 mm on the map.
@@ -908,7 +940,7 @@ Minimum length: 0.6 mm (footprint 9 m).</description>
                     </end_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="1" id="24" code="201.1" name="Impassable cliff, minimum size">
+            <symbol type="1" id="25" code="201.1" name="Impassable cliff, minimum size">
                 <description>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 For vertical rock faces the tags may be omitted if space is short. Ends of the top line may be rounded or square. Shorter tags may be used at the ends.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.25 mm on the map.
@@ -959,11 +991,11 @@ Minimum length: 0.6 mm (footprint 9 m).</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="4" id="25" code="201.2" name="Impassable cliff, plan shape representation (from ISOM2000)" is_hidden="true">
+            <symbol type="4" id="26" code="201.2" name="Impassable cliff, plan shape representation (from ISOM2000)" is_hidden="true">
                 <description>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</description>
                 <area_symbol inner_color="2" min_area="0" patterns="0"/>
             </symbol>
-            <symbol type="2" id="26" code="201.3" name="Impassable cliff, top line">
+            <symbol type="2" id="27" code="201.3" name="Impassable cliff, top line">
                 <description>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 For vertical rock faces the tags may be omitted if space is short. Ends of the top line may be rounded or square. Shorter tags may be used at the ends.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.25 mm on the map.
@@ -971,11 +1003,11 @@ When an impassable cliff drops straight into water, making it impossible to pass
 Minimum length: 0.6 mm (footprint 9 m).</description>
                 <line_symbol color="2" line_width="350" minimum_length="600" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="27" code="201.4" name="Impassable cliff, tag line">
+            <symbol type="2" id="28" code="201.4" name="Impassable cliff, tag line">
                 <description>Use this symbol to display the full extent of a wide cliff.</description>
                 <line_symbol color="2" line_width="120" minimum_length="500" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="1" id="28" code="201.9" name="Impassable cliff, minimum size (from ISOM2000)" is_hidden="true">
+            <symbol type="1" id="29" code="201.9" name="Impassable cliff, minimum size (from ISOM2000)" is_hidden="true">
                 <description>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</description>
                 <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                     <element>
@@ -1022,17 +1054,17 @@ Minimum length: 0.6 mm (footprint 9 m).</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="2" id="29" code="202" name="Cliff">
+            <symbol type="2" id="30" code="202" name="Cliff">
                 <description>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
-For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.15 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</description>
                 <line_symbol color="2" line_width="250" minimum_length="600" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="1" id="30" code="202.1" name="Cliff, minimum size">
+            <symbol type="1" id="31" code="202.1" name="Cliff, minimum size">
                 <description>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
-For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.15 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</description>
@@ -1053,9 +1085,9 @@ Minimum length: 0.6 mm (footprint 9 m).</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="2" id="31" code="202.2" name="Cliff, with tags">
+            <symbol type="2" id="32" code="202.2" name="Cliff, with tags">
                 <description>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
-For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.5 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</description>
@@ -1122,9 +1154,9 @@ Minimum length: 0.6 mm (footprint 9 m).</description>
                     </end_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="1" id="32" code="202.3" name="Cliff, with tags, minimum size">
+            <symbol type="1" id="33" code="202.3" name="Cliff, with tags, minimum size">
                 <description>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
-For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.15 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</description>
@@ -1173,7 +1205,7 @@ Minimum length: 0.6 mm (footprint 9 m).</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="33" code="202.9" name="Cliff, with tags, minimum size (from ISOM2000)" is_hidden="true">
+            <symbol type="1" id="34" code="202.9" name="Cliff, with tags, minimum size (from ISOM2000)" is_hidden="true">
                 <description>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</description>
                 <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                     <element>
@@ -1220,7 +1252,7 @@ Minimum length: 0.6 mm (footprint 9 m).</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="34" code="203.1" name="Rocky pit or cave (without a distinct entrance)">
+            <symbol type="1" id="35" code="203.1" name="Rocky pit or cave (without a distinct entrance)">
                 <description>Rocky pits, holes, caves or mineshafts without a distinct entrance which may constitute a danger to the competitor.
 Location is the centre of gravity of the symbol, and the symbol shall be orientated to north.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).
@@ -1248,7 +1280,7 @@ Footprint: 10.5 m x 12 m.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="35" code="203.2" name="Cave or rocky pit (with a distinct entrance)">
+            <symbol type="1" id="36" code="203.1.1" name="Cave or rocky pit (with a distinct entrance)">
                 <description>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
 Location is the centre of gravity of the symbol, and the symbol should point into the cave.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</description>
@@ -1274,7 +1306,12 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="36" code="203.9" name="Rocky pit or cave with distinct entrance (from ISOM2000)" is_hidden="true">
+            <symbol type="1" id="37" code="203.2" name="Dangerous pit">
+                <description>A highly dangerous pit, vertical shaft or abyss where a fall into the pit could cause severe injury or death. It is strongly recommended not to use such a feature as a control point. If this object is part of a possible route choice, it should be marked in the terrain with tape.
+Footprint: 13.5 m diameter.</description>
+                <point_symbol inner_radius="175" inner_color="-1" outer_width="280" outer_color="2" elements="0"/>
+            </symbol>
+            <symbol type="1" id="38" code="203.9" name="Rocky pit or cave with distinct entrance (from ISOM2000)" is_hidden="true">
                 <description>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</description>
                 <point_symbol rotatable="true" inner_radius="900" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                     <element>
@@ -1298,13 +1335,13 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="37" code="204" name="Boulder">
+            <symbol type="1" id="39" code="204" name="Boulder">
                 <description>A distinct boulder (should be higher than 1 m), which is immediately identifiable on the ground. Groups of boulders are represented using symbol Boulder cluster (207) or a boulder field symbol (208, 209).
 To be able to show the distinction between neighbouring (closer than 30 m apart) boulders with significant difference in size, it is permitted to enlarge the symbol to 0.5 mm for some of the boulders.
 Footprint: 6 m diameter (7.5 m diameter).</description>
                 <point_symbol inner_radius="200" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
             </symbol>
-            <symbol type="1" id="38" code="204.5" name="Boulder or large boulder, different size">
+            <symbol type="1" id="40" code="204.5" name="Boulder or large boulder, different size">
                 <description>A boulder which is larger than neighboring boulders (204), or a large boulder which is smaller than neighboring large boulders (205).
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
@@ -1312,20 +1349,20 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
 To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</description>
                 <point_symbol inner_radius="250" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
             </symbol>
-            <symbol type="1" id="39" code="205" name="Large boulder">
+            <symbol type="1" id="41" code="205" name="Large boulder">
                 <description>A particularly large and distinct boulder. A large boulder should be more than 2 m high.
 To be able to show the distinction between neighbouring (closer than 30 m apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.
 Footprint: 9 m diameter (7.5 m diameter).</description>
                 <point_symbol inner_radius="300" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
             </symbol>
-            <symbol type="4" id="40" code="206" name="Gigantic boulder">
+            <symbol type="4" id="42" code="206" name="Gigantic boulder">
                 <description>A gigantic boulder, rock pillar or massive cliff shall be represented in plan shape. The objects can vary in shape and width.
 The gap between gigantic boulders or between gigantic boulders and other impassable feature symbols must exceed 0.15 mm on the map.
 Minimum width: 0.25 mm (footprint 3.75 m).
 Minimum area: 0.3 mm² (footprint 67 m²).</description>
                 <area_symbol inner_color="2" min_area="0" patterns="0"/>
             </symbol>
-            <symbol type="1" id="41" code="207" name="Boulder cluster">
+            <symbol type="1" id="43" code="207" name="Boulder cluster">
                 <description>A distinct group of boulders so closely clustered together that they cannot be marked individually. The boulders in the cluster should be higher than 1 m.
 A boulder cluster must be easily identifiable as a group of boulders.
 To be able to show the distinction between neighbouring (maximum 30 m apart) boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol to 120% (edge length 0.96 mm) for some of the boulder clusters.
@@ -1350,7 +1387,7 @@ Footprint: 12 m x 10 m.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="42" code="207.1" name="Boulder cluster, large">
+            <symbol type="1" id="44" code="207.1" name="Boulder cluster, large">
                 <description>To be able to show the distinction between neighbouring (maximum 30 m apart) boulder clusters with significant difference in boulder size, it is permitted to use this symbol instead of regular Boulder cluster (207) for some of the boulder clusters.</description>
                 <point_symbol inner_radius="1250" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                     <element>
@@ -1371,7 +1408,7 @@ Footprint: 12 m x 10 m.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="4" id="43" code="208" name="Boulder field">
+            <symbol type="4" id="45" code="208" name="Boulder field">
                 <description>An area which is covered with so many scattered blocks of stone that they cannot be marked individually, is shown with randomly placed and orientated solid triangles. A boulder field will generally not impact runnability. If the runnability of the boulder field is reduced, symbol 209 (dense boulder field) should be used or the symbol should be combined with a stony ground symbol.
 A minimum of two triangles should be used. One triangle may be used if it is combined with other rock symbols (for instance directly below cliff symbols (201, 202), adjacent to boulder symbols (204-206) or combined with stony ground symbols (210-212)).
 The maximum centre to centre distance between neighbouring triangles is 1.2 mm. The minimum centre to centre distance between neighbouring triangles is 0.75 mm.
@@ -1521,7 +1558,7 @@ Footprint of individual triangle: 12 m x 6 m.</description>
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="1" id="44" code="208.1" name="Boulder field, single triangle">
+            <symbol type="1" id="46" code="208.1" name="Boulder field, single triangle">
                 <description>An area which is covered with so many scattered blocks of stone that they cannot be marked individually, is shown with randomly placed and orientated solid triangles. A boulder field will generally not impact runnability. If the runnability of the boulder field is reduced, symbol 209 (dense boulder field) should be used or the symbol should be combined with a stony ground symbol.
 A minimum of two triangles should be used. One triangle may be used if it is combined with other rock symbols (for instance directly below cliff symbols (201, 202), adjacent to boulder symbols (204-206) or combined with stony ground symbols (210-212)).
 The maximum centre to centre distance between neighbouring triangles is 1.2 mm. The minimum centre to centre distance between neighbouring triangles is 0.75 mm.
@@ -1546,7 +1583,7 @@ Footprint of individual triangle: 12 m x 6 m.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="45" code="208.2" name="Boulder field, single triangle, enlarged">
+            <symbol type="1" id="47" code="208.2" name="Boulder field, single triangle, enlarged">
                 <description>To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</description>
                 <point_symbol rotatable="true" inner_radius="768" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                     <element>
@@ -1567,7 +1604,7 @@ Footprint of individual triangle: 12 m x 6 m.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="4" id="46" code="209" name="Dense boulder field">
+            <symbol type="4" id="48" code="209" name="Dense boulder field">
                 <description>An area which is covered with so many blocks of stone that they cannot be marked individually and the runnability is affected, is shown with randomly placed and orientated solid triangles. A minimum of two triangles must be used.
 The maximum centre to centre distance between neighbouring triangles is 0.6 mm.
 Density: 2-3 symbols / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
@@ -1731,7 +1768,7 @@ Footprint of individual triangle: 12 m x 6 m.</description>
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="47" code="210" name="Stony ground, slow running">
+            <symbol type="4" id="49" code="210" name="Stony ground, slow running">
                 <description>Stony or rocky ground which reduces runnability to about 60-80% of normal speed.
 The dots should be randomly distributed but not interfere with the representation of important terrain features and objects. Illustration serves as an example of density and also point symbol (single dots) can be used to draw stony ground.
 The minimum number of dots is three (footprint 10 m x 10 m).
@@ -1818,7 +1855,7 @@ To avoid confusion with symbol Distinct vegetation boundary (416), the dots shou
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="1" id="48" code="210.1" name="Stony ground, individual dot">
+            <symbol type="1" id="50" code="210.1" name="Stony ground, individual dot">
                 <description>Stony or rocky ground which reduces runnability to about 60-80% of normal speed.
 The dots should be randomly distributed but not interfere with the representation of important terrain features and objects. Illustration serves as an example of density and also point symbol (single dots) can be used to draw stony ground.
 The minimum number of dots is three (footprint 10 m x 10 m).
@@ -1828,7 +1865,7 @@ Density: 3-4 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</description>
                 <point_symbol inner_radius="100" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
             </symbol>
-            <symbol type="4" id="49" code="211" name="Stony ground, walk">
+            <symbol type="4" id="51" code="211" name="Stony ground, walk">
                 <description>Stony or rocky ground which reduces the runnability significantly (to about 20-60% of normal speed).
 The dots should be randomly distributed but not interfere with the representation of important terrain features and objects. Illustration serves as an example of density and also point symbol (single dots) can be used to draw stony ground.
 The minimum number of dots is three (footprint 8 m x 8 m).
@@ -1915,7 +1952,7 @@ To avoid confusion with symbol Distinct vegetation boundary (416), the dots shou
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="50" code="212" name="Stony ground, fight">
+            <symbol type="4" id="52" code="212" name="Stony ground, fight">
                 <description>Stony or rocky ground which is hardly passable (less than 20% of normal speed).
 The dots should be randomly distributed but not interfere with the representation of important terrain features and objects. Illustration serves as an example of density and also point symbol (single dots) can be used to draw stony ground.
 The minimum number of dots is three (footprint 7 m x 7 m).
@@ -2052,7 +2089,7 @@ To avoid confusion with symbol Distinct vegetation boundary (416), the dots shou
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="51" code="213" name="Sandy ground">
+            <symbol type="4" id="53" code="213" name="Sandy ground">
                 <description>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.
 The symbol is orientated to north.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</description>
@@ -2064,14 +2101,14 @@ Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</description>
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="52" code="214" name="Bare rock">
+            <symbol type="4" id="54" code="214" name="Bare rock">
                 <description>A runnable area of rock without earth or vegetation should be shown as bare rock.
 An area of rock covered with grass, moss or other low vegetation, shall not be shown using the bare rock symbol.
 An area of less runnable bare rock should be shown using a stony ground symbol (210-212).
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</description>
-                <area_symbol inner_color="24" min_area="500" patterns="0"/>
+                <area_symbol inner_color="24" min_area="1000" patterns="0"/>
             </symbol>
-            <symbol type="2" id="53" code="215" name="Trench">
+            <symbol type="2" id="55" code="215" name="Trench">
                 <description>Rocky or artificial trench. Minimum depth should be 1 m.
 Minimum length: 1 mm (footprint 15 m).
 Shorter trenches may be exaggerated to the minimum graphical dimension.
@@ -2083,59 +2120,57 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</de
                     </borders>
                 </line_symbol>
             </symbol>
-            <symbol type="16" id="54" code="301" name="Uncrossable body of water (full colour), with bank line">
-                <description>The black bank line emphasises that the feature is uncrossable.
-Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
+            <symbol type="16" id="56" code="301" name="Uncrossable body of water (full colour), with bank line">
+                <description>An area of deep water such as a lake, pond or river which may constitute a danger to the competitor. The black bank line emphasises that the feature is uncrossable. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
                 <combined_symbol parts="2">
-                    <part symbol="55"/>
-                    <part symbol="58"/>
+                    <part symbol="57"/>
+                    <part symbol="60"/>
                 </combined_symbol>
 <icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAUUlEQVQ4jWNgYGbexMDA8J+qmJl5EyOUw8AQHM5AFbB2JQMDAwMDC9zQ+SuoYzDUcCbqmYYKRg0eNXjU4FGDRw0eHAZDahBodUIVADeLRpUpAOkUM9bNALKgAAAAAElFTkSuQmCC"/>
             </symbol>
-            <symbol type="4" id="55" code="301.1" name="Uncrossable body of water (full colour)">
-                <description>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
+            <symbol type="4" id="57" code="301.1" name="Uncrossable body of water (full colour)">
+                <description>An area of deep water such as a lake, pond or river which may constitute a danger to the competitor. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
                 <area_symbol inner_color="15" min_area="1000" patterns="0"/>
 <icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAIAAABL1vtsAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAH0lEQVQ4jWNk+PSfgTLARKH+USNGjRg1YtSIUSPIAgCt1AIdbYPnGQAAAABJRU5ErkJggg=="/>
             </symbol>
-            <symbol type="16" id="56" code="301.2" name="Uncrossable body of water (dominant), with bank line">
-                <description>The black bank line emphasises that the feature is uncrossable.
-Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
+            <symbol type="16" id="58" code="301.2" name="Uncrossable body of water (dominant), with bank line">
+                <description>An area of deep water such as a lake, pond or river which may constitute a danger to the competitor. The black bank line emphasises that the feature is uncrossable. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
                 <combined_symbol parts="2">
-                    <part symbol="57"/>
-                    <part symbol="58"/>
+                    <part symbol="59"/>
+                    <part symbol="60"/>
                 </combined_symbol>
 <icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAVUlEQVQ4jWNgZGbexMDA8J+amJGZeRMjlMOgHRrOQA1wdfVKBgYGBgYWmKEhS1ZQxWCY4UxUMw0NjBo8avCowaMGjxo8OAxmYWBAVCfUAHCzaFWZAgD1WTfZnhO2PAAAAABJRU5ErkJggg=="/>
             </symbol>
-            <symbol type="4" id="57" code="301.3" name="Uncrossable body of water (dominant)">
-                <description>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
+            <symbol type="4" id="59" code="301.3" name="Uncrossable body of water (dominant)">
+                <description>An area of deep water such as a lake, pond or river which may constitute a danger to the competitor. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
                 <area_symbol inner_color="16" min_area="1000" patterns="0"/>
 <icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAIAAABL1vtsAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAH0lEQVQ4jWOs//mfgTLARKH+USNGjRg1YtSIUSPIAgCxAAKjIU52AgAAAABJRU5ErkJggg=="/>
             </symbol>
-            <symbol type="2" id="58" code="301.4" name="Uncrossable body of water, bank line">
-                <description>A black bank line indicates that the feature cannot be crossed.</description>
-                <line_symbol color="2" line_width="180" minimum_length="0" join_style="0" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <symbol type="2" id="60" code="301.4" name="Uncrossable body of water, bank line">
+                <description>The black bank line emphasises that the feature is uncrossable.</description>
+                <line_symbol color="2" line_width="120" minimum_length="0" join_style="0" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="16" id="59" code="302" name="Shallow body of water, with solid outline">
+            <symbol type="16" id="61" code="302" name="Shallow body of water, with solid outline">
                 <description>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width (full colour): 0.3 mm.
 Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
                 <combined_symbol parts="2">
-                    <part symbol="61"/>
-                    <part symbol="60"/>
+                    <part symbol="63"/>
+                    <part symbol="62"/>
                 </combined_symbol>
 <icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAATklEQVQ4jWMU/PL/3Pf/DOoMVATcDAw3GTk+//+6nZOBi5oGe3xj+MFETQORwajBowaPGjxq8KjBowaTBxiFv/w/9+UfgyY1DeVhZLgGAAAKEb4RXJ9FAAAAAElFTkSuQmCC"/>
             </symbol>
-            <symbol type="4" id="60" code="302.1" name="Shallow body of water">
+            <symbol type="4" id="62" code="302.1" name="Shallow body of water">
                 <description>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
@@ -2144,22 +2179,22 @@ Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</descriptio
                 <area_symbol inner_color="17" min_area="500" patterns="0"/>
 <icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAIAAABL1vtsAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAH0lEQVQ4jWPc/+c/A2WAiUL9o0aMGjFqxKgRo0aQBQAyngLmdBowpwAAAABJRU5ErkJggg=="/>
             </symbol>
-            <symbol type="2" id="61" code="302.2" name="Shallow body of water, solid outline">
+            <symbol type="2" id="63" code="302.2" name="Shallow body of water, solid outline">
                 <description>Use this symbol to represent the outline of a shallow body of water which is not seasonal or periodic.</description>
                 <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="62" code="302.3" name="Shallow body of water, dashed outline">
+            <symbol type="2" id="64" code="302.3" name="Shallow body of water, dashed outline">
                 <description>Use this symbol to represent the outline of a shallow seasonal or periodic body of water.</description>
                 <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="4" id="63" code="302.5" name="Small shallow body of water (full colour)">
+            <symbol type="4" id="65" code="302.5" name="Small shallow body of water (full colour)">
                 <description>Small shallow water bodies may be represented using this symbol (without an outline).
 Minimum width: 0.3 mm.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
                 <area_symbol inner_color="15" min_area="500" patterns="0"/>
 <icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAIAAABL1vtsAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAH0lEQVQ4jWNk+PSfgTLARKH+USNGjRg1YtSIUSPIAgCt1AIdbYPnGQAAAABJRU5ErkJggg=="/>
             </symbol>
-            <symbol type="1" id="64" code="303" name="Waterhole">
+            <symbol type="1" id="66" code="303" name="Waterhole">
                 <description>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 10.5 m x 12 m.</description>
                 <point_symbol inner_radius="900" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2184,51 +2219,52 @@ Footprint: 10.5 m x 12 m.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="2" id="65" code="304" name="Crossable watercourse">
-                <description>Should be at least 2 m wide.
+            <symbol type="2" id="67" code="304" name="Crossable watercourse">
+                <description>A crossable watercourse more than 2 m wide.
 Minimum length (isolated): 1 mm (footprint 15 m).</description>
                 <line_symbol color="5" line_width="300" minimum_length="1000" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="66" code="305" name="Small crossable watercourse">
-                <description>Minimum length (isolated): 1 mm (footprint 15 m).</description>
+            <symbol type="2" id="68" code="305" name="Small crossable watercourse">
+                <description>A crossable watercourse less than 2 m wide.
+Minimum length (isolated): 1 mm (footprint 15 m)</description>
                 <line_symbol color="5" line_width="180" minimum_length="1000" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="67" code="306" name="Minor/seasonal water channel">
+            <symbol type="2" id="69" code="306" name="Minor/seasonal water channel">
                 <description>A natural or man-made minor water channel which may contain water only intermittently.
 Minimum length (isolated): two dashes (2.75 mm - footprint 41 m).</description>
                 <line_symbol color="5" line_width="180" minimum_length="2750" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="16" id="68" code="307" name="Uncrossable marsh, with outline">
+            <symbol type="16" id="70" code="307" name="Uncrossable marsh, with outline">
                 <description>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol Uncrossable body of water (301). The symbol may be combined with a rough open land symbol (403, 404) to show openness.
 The symbol is orientated to north.
 Minimum width: 0.3 mm (inside). Minimum area: 0.5 mm² (inside).</description>
                 <combined_symbol parts="2">
-                    <part symbol="69"/>
-                    <part symbol="70"/>
+                    <part symbol="71"/>
+                    <part symbol="72"/>
                 </combined_symbol>
             </symbol>
-            <symbol type="4" id="69" code="307.1" name="Uncrossable marsh">
+            <symbol type="4" id="71" code="307.1" name="Uncrossable marsh">
                 <description>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol Uncrossable body of water (301). The symbol may be combined with a rough open land symbol (403, 404) to show openness.
 The symbol is orientated to north.
 Minimum width: 0.3 mm (inside). Minimum area: 0.5 mm² (inside).</description>
-                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <area_symbol inner_color="-1" min_area="2300" patterns="1">
                     <pattern type="1" angle="0" line_spacing="500" line_offset="0" offset_along_line="0" color="15" line_width="250"/>
                 </area_symbol>
             </symbol>
-            <symbol type="2" id="70" code="307.2" name="Uncrossable marsh, outline">
+            <symbol type="2" id="72" code="307.2" name="Uncrossable marsh, outline">
                 <description>The black outline emphasises that the feature is uncrossable.</description>
-                <line_symbol color="2" line_width="180" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                <line_symbol color="2" line_width="120" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="4" id="71" code="308" name="Marsh">
+            <symbol type="4" id="73" code="308" name="Marsh">
                 <description>A crossable marsh, usually with a distinct edge.
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.
 Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</description>
-                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <area_symbol inner_color="-1" min_area="200" patterns="1">
                     <pattern type="1" angle="0" line_spacing="300" line_offset="0" offset_along_line="0" color="15" line_width="100"/>
                 </area_symbol>
             </symbol>
-            <symbol type="1" id="72" code="308.1" name="Marsh, minimum size">
+            <symbol type="1" id="74" code="308.1" name="Marsh, minimum size">
                 <description>A crossable marsh, usually with a distinct edge.
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.
@@ -2236,7 +2272,7 @@ Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</description>
                 <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                     <element>
                         <symbol type="2" code="">
-                            <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="5" line_width="120" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="2">
@@ -2250,7 +2286,7 @@ Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</description>
                     </element>
                     <element>
                         <symbol type="2" code="">
-                            <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="5" line_width="120" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="2">
@@ -2264,7 +2300,7 @@ Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="2" id="73" code="309" name="Narrow marsh">
+            <symbol type="2" id="75" code="309" name="Narrow marsh">
                 <description>A marsh or trickle of water which is too narrow (less than about 5 m wide) to be shown with the marsh symbol.
 Minimum length (isolated): two dots (0.7 mm - footprint 10.5 m).</description>
                 <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="450" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="2" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
@@ -2275,7 +2311,7 @@ Minimum length (isolated): two dots (0.7 mm - footprint 10.5 m).</description>
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="4" id="74" code="310" name="Indistinct marsh">
+            <symbol type="4" id="76" code="310" name="Indistinct marsh">
                 <description>An indistinct marsh, seasonal marsh or an area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground.
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.
@@ -2323,7 +2359,7 @@ Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</description>
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="1" id="75" code="310.1" name="Indistinct marsh, minimum size">
+            <symbol type="1" id="77" code="310.1" name="Indistinct marsh, minimum size">
                 <description>An indistinct marsh, seasonal marsh or an area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground.
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.
@@ -2387,7 +2423,7 @@ Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="76" code="311" name="Well, fountain or water tank">
+            <symbol type="1" id="78" code="311" name="Well, fountain or water tank">
                 <description>A prominent well, fountain, water tank or captive spring.
 Footprint: 12 m x 12 m.</description>
                 <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2410,7 +2446,7 @@ Footprint: 12 m x 12 m.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="77" code="312" name="Spring">
+            <symbol type="1" id="79" code="312" name="Spring">
                 <description>A source of water.
 Location is the centre of gravity of the symbol.
 The symbol is orientated to open downstream.
@@ -2437,7 +2473,7 @@ Footprint: 13.5 m x 7 m.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="78" code="313" name="Prominent water feature">
+            <symbol type="1" id="80" code="313" name="Prominent water feature">
                 <description>The symbol is orientated to north.
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</description>
@@ -2514,13 +2550,13 @@ Footprint: 13.5 m x 13.5 m.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="4" id="79" code="401" name="Open land">
+            <symbol type="4" id="81" code="401" name="Open land">
                 <description>Open land that has a ground cover (grass, moss or similar) which offers better runnability than typical open forest. If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 Shall not be combined with area symbols other than Broken ground (113), Boulder field (208), Marsh (308) and Indistinct marsh (310).
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
                 <area_symbol inner_color="33" min_area="500" patterns="0"/>
             </symbol>
-            <symbol type="4" id="80" code="402" name="Open land with scattered trees">
+            <symbol type="4" id="82" code="402" name="Open land with scattered trees">
                 <description>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes / thickets). Prominent individual trees may be added using symbol Prominent large tree (417). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 Shall not be combined with area symbols other than symbol Broken ground (113), symbol Boulder field (208) or marsh symbols (308, 310).
 Minimum width: 1.5 mm (footprint 22.5 m).
@@ -2535,7 +2571,7 @@ The symbol is orientated to north.</description>
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="81" code="402.1" name="Open land with scattered bushes (green dots)">
+            <symbol type="4" id="83" code="402.1" name="Open land with scattered bushes (green dots)">
                 <description>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes / thickets). Prominent individual trees may be added using symbol Prominent large tree (417). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 Shall not be combined with area symbols other than symbol Broken ground (113), symbol Boulder field (208) or marsh symbols (308, 310).
 Minimum width: 1.5 mm (footprint 22.5 m).
@@ -2550,14 +2586,14 @@ The symbol is orientated to north.</description>
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="82" code="403" name="Rough open land">
+            <symbol type="4" id="84" code="403" name="Rough open land">
                 <description>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass offering the same runnability as typical open forest.
 May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).</description>
                 <area_symbol inner_color="34" min_area="1000" patterns="0"/>
             </symbol>
-            <symbol type="4" id="83" code="404" name="Rough open land with scattered trees">
+            <symbol type="4" id="85" code="404" name="Rough open land with scattered trees">
                 <description>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
 The dots may be white (scattered trees) or green (scattered bushes / thickets). Only the white dot variant can be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
 The symbol is orientated to north.
@@ -2572,7 +2608,7 @@ Smaller areas must either be left out, exaggerated or shown using symbol Rough o
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="84" code="404.1" name="Rough open land with scattered bushes (green dots)">
+            <symbol type="4" id="86" code="404.1" name="Rough open land with scattered bushes (green dots)">
                 <description>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
 The dots may be white (scattered trees) or green (scattered bushes / thickets). Only the white dot variant can be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
 The symbol is orientated to north.
@@ -2587,7 +2623,7 @@ Smaller areas must either be left out, exaggerated or shown using symbol Rough o
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="85" code="405" name="Forest">
+            <symbol type="4" id="87" code="405" name="Forest">
                 <description>Typical open forest for the particular type of terrain. If no part of the forest is easily runnable then no white should appear on the map.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m) for openings in screens of other colours, except for the following:
 For openings in symbol Open land (401), the minimum area is 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
@@ -2595,14 +2631,14 @@ For openings in symbol Vegetation: walk (408), the minimum area is 0.7 mm x 0.7 
 For openings in symbol Vegetation: fight (410) the minimum area is 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
                 <area_symbol inner_color="22" min_area="500" patterns="0"/>
             </symbol>
-            <symbol type="4" id="86" code="406" name="Vegetation: slow running">
+            <symbol type="4" id="88" code="406" name="Vegetation: slow running">
                 <description>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
 Where runnability is better in one direction, a regular pattern of white stripes is left in the screen to show the direction of better running.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</description>
                 <area_symbol inner_color="28" min_area="1000" patterns="0"/>
             </symbol>
-            <symbol type="4" id="87" code="406.1" name="Vegetation: slow running, normal running in one direction">
+            <symbol type="4" id="89" code="406.1" name="Vegetation: slow running, normal running in one direction">
                 <description>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
 Where runnability is better in one direction, a regular pattern of white stripes is left in the screen to show the direction of better running.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
@@ -2611,7 +2647,7 @@ Minimum width: 0.4 mm (footprint 6 m).</description>
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="22" line_width="400"/>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="88" code="407" name="Vegetation: slow running, good visibility">
+            <symbol type="4" id="90" code="407" name="Vegetation: slow running, good visibility">
                 <description>An area of good visibility and reduced runnability, due to, for instance, undergrowth (brambles, heather, low bushes, cut branches). Running speed is reduced to about 60-80% of normal speed.
 The symbol is orientated to north.
 Minimum area: 1.5 mm x 1 mm (footprint 22.5 m x 15 m).</description>
@@ -2619,13 +2655,13 @@ Minimum area: 1.5 mm x 1 mm (footprint 22.5 m x 15 m).</description>
                     <pattern type="1" angle="1.5708" line_spacing="840" line_offset="0" offset_along_line="0" color="29" line_width="120"/>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="89" code="408" name="Vegetation: walk">
+            <symbol type="4" id="91" code="408" name="Vegetation: walk">
                 <description>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width: 0.3 mm (footprint 4.5 m).</description>
                 <area_symbol inner_color="27" min_area="500" patterns="0"/>
             </symbol>
-            <symbol type="4" id="90" code="408.1" name="Vegetation: walk, normal running in one direction">
+            <symbol type="4" id="92" code="408.1" name="Vegetation: walk, normal running in one direction">
                 <description>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width: 0.3 mm (footprint 4.5 m).</description>
@@ -2633,7 +2669,7 @@ Minimum width: 0.3 mm (footprint 4.5 m).</description>
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="22" line_width="400"/>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="91" code="408.2" name="Vegetation: walk, slow running in one direction">
+            <symbol type="4" id="93" code="408.2" name="Vegetation: walk, slow running in one direction">
                 <description>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width: 0.3 mm (footprint 4.5 m).</description>
@@ -2641,7 +2677,7 @@ Minimum width: 0.3 mm (footprint 4.5 m).</description>
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="750" offset_along_line="0" color="27" line_width="1100"/>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="92" code="409" name="Vegetation: walk, good visibility">
+            <symbol type="4" id="94" code="409" name="Vegetation: walk, good visibility">
                 <description>An area of good visibility that is difficult to run through, due to, for instance, undergrowth (brambles, heather, low bushes, cut branches). Running speed is reduced to about 20-60% of normal speed.
 Areas of good visibility that are very difficult to run or impassable are represented using symbol Vegetation: fight (410).
 The symbol is orientated to north.
@@ -2650,14 +2686,14 @@ Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</description>
                     <pattern type="1" angle="1.5708" line_spacing="420" line_offset="0" offset_along_line="0" color="29" line_width="140"/>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="93" code="410" name="Vegetation: fight">
+            <symbol type="4" id="95" code="410" name="Vegetation: fight">
                 <description>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
 Where runnability is better in one direction, a regular pattern of white, green 30% or green 60% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</description>
                 <area_symbol inner_color="26" min_area="300" patterns="0"/>
             </symbol>
-            <symbol type="4" id="94" code="410.1" name="Vegetation: fight, normal running in one direction">
+            <symbol type="4" id="96" code="410.1" name="Vegetation: fight, normal running in one direction">
                 <description>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
 Where runnability is better in one direction, a regular pattern of white, green 30% or green 60% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
@@ -2666,7 +2702,7 @@ Minimum width: 0.25 mm (footprint 3.8 m).</description>
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="22" line_width="400"/>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="95" code="410.2" name="Vegetation: fight, slow running in one direction">
+            <symbol type="4" id="97" code="410.2" name="Vegetation: fight, slow running in one direction">
                 <description>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
 Where runnability is better in one direction, a regular pattern of white, green 30% or green 60% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
@@ -2675,7 +2711,7 @@ Minimum width: 0.25 mm (footprint 3.8 m).</description>
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="750" offset_along_line="0" color="26" line_width="1100"/>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="96" code="410.3" name="Vegetation: fight, walk in one direction">
+            <symbol type="4" id="98" code="410.3" name="Vegetation: fight, walk in one direction">
                 <description>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
 Where runnability is better in one direction, a regular pattern of white, green 30% or green 60% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
@@ -2684,12 +2720,12 @@ Minimum width: 0.25 mm (footprint 3.8 m).</description>
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="750" offset_along_line="0" color="26" line_width="1100"/>
                 </area_symbol>
             </symbol>
-            <symbol type="2" id="97" code="410.4" name="Vegetation: fight, minimum width">
+            <symbol type="2" id="99" code="410.4" name="Vegetation: fight, minimum width">
                 <description>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
 Minimum width: 0.35 mm</description>
                 <line_symbol color="26" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="4" id="98" code="411" name="Vegetation, impassable (from ISOM 2017, first edition)" is_hidden="true">
+            <symbol type="4" id="100" code="411" name="Vegetation, impassable (from ISOM 2017, first edition)" is_hidden="true">
                 <description>Provided for migration from ISOM 2000. Use either Vegetation: fight (410) or Area that shall not be entered (520) instead.</description>
                 <area_symbol inner_color="26" min_area="300" patterns="1">
                     <pattern type="2" angle="0" line_spacing="200" line_offset="0" offset_along_line="0" point_distance="200">
@@ -2699,18 +2735,18 @@ Minimum width: 0.35 mm</description>
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="16" id="99" code="412" name="Cultivated land">
+            <symbol type="16" id="101" code="412" name="Cultivated land">
                 <description>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. For agroforestry, symbol Forest (405) or Open land with scattered trees (402) may be used instead of yellow.
 Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is combined with symbol Out-of-bounds area (709) to show cultivated land that shall not be entered.
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</description>
                 <combined_symbol parts="2">
-                    <part symbol="79"/>
-                    <part symbol="100"/>
+                    <part symbol="81"/>
+                    <part symbol="102"/>
                 </combined_symbol>
             </symbol>
-            <symbol type="4" id="100" code="412.1" name="Cultivated land (black pattern)">
+            <symbol type="4" id="102" code="412.1" name="Cultivated land (black pattern)">
                 <description>Cultivated land. This symbol must be used together with another symbol:
 - For land used for growing crops, combine with symbol Open land (401).
 - For agroforrestry, use with symbol Forest (405) or Open land with scattered trees (402).
@@ -2726,7 +2762,7 @@ Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</description>
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="101" code="413" name="Orchard">
+            <symbol type="4" id="103" code="413" name="Orchard">
                 <description>Land planted with trees or bushes, normally in a regular pattern. The dot lines may be orientated to show the direction of planting.
 Must be combined with either symbol Open land (401) or Rough open land (403).
 May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
@@ -2739,7 +2775,7 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="102" code="413.1" name="Orchard, rough open land">
+            <symbol type="4" id="104" code="413.1" name="Orchard, rough open land">
                 <description>Land planted with trees or bushes, normally in a regular pattern. The dot lines may be orientated to show the direction of planting.
 Must be combined with either symbol Open land (401) or Rough open land (403).
 May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
@@ -2752,7 +2788,7 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="103" code="414" name="Vineyard or similar">
+            <symbol type="4" id="105" code="414" name="Vineyard or similar">
                 <description>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
                 <area_symbol inner_color="33" min_area="4000" patterns="2">
@@ -2798,7 +2834,7 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="104" code="414.1" name="Vineyard or similar, rough open land">
+            <symbol type="4" id="106" code="414.1" name="Vineyard or similar, rough open land">
                 <description>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
                 <area_symbol inner_color="34" min_area="500" patterns="2">
@@ -2844,18 +2880,17 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="2" id="105" code="415" name="Distinct cultivation boundary">
+            <symbol type="2" id="107" code="415" name="Distinct cultivation boundary">
                 <description>A boundary of cultivated land vegetation (symbols 401, 412, 413, 414) or a boundary between areas of cultivated land when not shown with other symbols (fence, wall, path, etc.).
 Minimum length: 2 mm (footprint 30 m).</description>
-                <line_symbol color="2" line_width="140" minimum_length="2000" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                <line_symbol color="2" line_width="100" minimum_length="2000" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="106" code="416" name="Distinct vegetation boundary">
-                <description>A distinct forest edge or vegetation boundary within the forest.
-Very distinct forest edges and vegetation boundaries may be represented using the cultivation boundary symbol. Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map. For areas with a lot of rock features, it is recommended to use the green dashed line for vegetation boundaries.
-A disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbol Vegetation: fight (410). An alternative for these situations is to use symbol Distinct cultivation boundary (415).
-Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
-Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</description>
-                <line_symbol color="-1" line_width="0" minimum_length="220" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="450" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="5" minimum_mid_symbol_count_when_closed="5" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <symbol type="2" id="108" code="416" name="Distinct vegetation boundary">
+                <description>A vegetation boundary within the forest, or a distinct forest edge.
+Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map. For areas with a lot of rock features, it is recommended to use the green dashed line for vegetation boundaries.
+The disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbol Vegetation: fight (410). An alternative for these situations is to use symbol Distinct cultivation boundary (415).
+Minimum length, black dot implementation: 5 dots (2.0 mm - footprint 30 m).</description>
+                <line_symbol color="-1" line_width="0" minimum_length="2000" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="450" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="5" minimum_mid_symbol_count_when_closed="5" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <mid_symbol>
                         <symbol type="1" code="" name="Mid symbol">
                             <point_symbol rotatable="true" inner_radius="110" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
@@ -2863,16 +2898,17 @@ Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="2" id="107" code="416.1" name="Distinct vegetation boundary, green dashed line">
-                <description>A distinct forest edge or vegetation boundary within the forest.
-Very distinct forest edges and vegetation boundaries may be represented using the cultivation boundary symbol. Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map. For areas with a lot of rock features, it is recommended to use the green dashed line for vegetation boundaries.
-A disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbol Vegetation: fight (410). An alternative for these situations is to use symbol Distinct cultivation boundary (415).
-Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
+            <symbol type="2" id="109" code="416.1" name="Distinct vegetation boundary, green dashed line">
+                <description>A vegetation boundary within the forest, or a distinct forest edge.
+Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map. For areas with a lot of rock features, it is recommended to use the green dashed line for vegetation boundaries.
+The disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbol Vegetation: fight (410). An alternative for these situations is to use symbol Distinct cultivation boundary (415).
 Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</description>
                 <line_symbol color="25" line_width="140" minimum_length="1800" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="300" break_length="200" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="1" id="108" code="417" name="Prominent large tree">
-                <description>Footprint: 13.5 m x 13.5 m.</description>
+            <symbol type="1" id="110" code="417" name="Prominent large tree">
+                <description>A very large single tree which clearly stands out from the surrounding vegetation.
+White mask is used under the green circle, to improve readability in yellow and green (OM 1.1 mm).
+Footprint: 13.5 m x 13.5 m.</description>
                 <point_symbol inner_radius="270" inner_color="-1" outer_width="180" outer_color="3" elements="1">
                     <element>
                         <symbol type="1" code="">
@@ -2886,13 +2922,16 @@ Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="109" code="418" name="Prominent bush or tree">
-                <description>Use sparingly, as it is easily mistaken for symbol Small knoll (109).
+            <symbol type="1" id="111" code="418" name="Prominent bush or tree">
+                <description>A bush or small single tree which clearly stands out from the surrounding vegetation.
+Use sparingly, as it is easily mistaken for symbol Small knoll (109). Small white dot inside is used to aid the colour vision impaired.
 Footprint: 9.0 m x 9.0 m.</description>
-                <point_symbol inner_radius="50" inner_color="22" outer_width="200" outer_color="3" elements="0"/>
+                <point_symbol inner_radius="100" inner_color="22" outer_width="200" outer_color="3" elements="0"/>
             </symbol>
-            <symbol type="1" id="110" code="419" name="Prominent vegetation feature">
-                <description>The symbol is orientated to north.
+            <symbol type="1" id="112" code="419" name="Prominent vegetation feature">
+                <description>A vegetation feature which is significant or prominent.
+White mask is used under the green cross, to improve readability in yellow and green (line width of white mask 0.36 mm, and it shall be 0.18 mm longer in the ends of the symbol).
+The symbol is orientated to north.
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</description>
                 <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="4">
@@ -2954,7 +2993,7 @@ Footprint: 13.5 m x 13.5 m.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="16" id="111" code="501" name="Paved area, with bounding line">
+            <symbol type="16" id="113" code="501" name="Paved area, with bounding line">
                 <description>An area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</description>
                 <combined_symbol parts="2">
@@ -2971,17 +3010,18 @@ Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</description>
                     </part>
                 </combined_symbol>
             </symbol>
-            <symbol type="4" id="112" code="501.1" name="Paved area">
+            <symbol type="4" id="114" code="501.1" name="Paved area">
                 <description>An area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</description>
                 <area_symbol inner_color="11" min_area="500" patterns="0"/>
             </symbol>
-            <symbol type="2" id="113" code="501.2" name="Paved area, bounding line">
+            <symbol type="2" id="115" code="501.2" name="Paved area, bounding line">
                 <description>Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.</description>
                 <line_symbol color="8" line_width="140" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="114" code="502" name="Wide road, minimum width">
-                <description>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
+            <symbol type="2" id="116" code="502" name="Wide road, minimum width">
+                <description>A maintained road wider than 5 m wide suitable for vehicles in all weather.
+The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
 The space between the black lines is filled with brown (50%).
 A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</description>
                 <line_symbol color="11" line_width="300" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
@@ -2990,7 +3030,7 @@ A road with two carriageways can be represented using two wide road symbols side
                     </borders>
                 </line_symbol>
             </symbol>
-            <symbol type="2" id="115" code="502.1" name="Wide road, 0.5 mm (from ISOM2000)" is_hidden="true">
+            <symbol type="2" id="117" code="502.1" name="Wide road, 0.5 mm (from ISOM2000)" is_hidden="true">
                 <description>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</description>
                 <line_symbol color="11" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <borders>
@@ -2998,8 +3038,9 @@ A road with two carriageways can be represented using two wide road symbols side
                     </borders>
                 </line_symbol>
             </symbol>
-            <symbol type="16" id="116" code="502.2" name="Road with two carriageways">
-                <description>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
+            <symbol type="16" id="118" code="502.2" name="Road with two carriageways">
+                <description>A maintained road wider than 5 m wide suitable for vehicles in all weather.
+The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
 The space between the black lines is filled with brown (50%).
 A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</description>
                 <combined_symbol parts="2">
@@ -3023,36 +3064,36 @@ A road with two carriageways can be represented using two wide road symbols side
                     </part>
                 </combined_symbol>
             </symbol>
-            <symbol type="2" id="117" code="503" name="Road">
-                <description>A maintained road suitable for motor vehicles in all weather. Width less than 5 m.</description>
+            <symbol type="2" id="119" code="503" name="Road">
+                <description>A maintained road less than 5 m wide suitable for vehicles in all weather.</description>
                 <line_symbol color="2" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="118" code="504" name="Vehicle track">
+            <symbol type="2" id="120" code="504" name="Vehicle track">
                 <description>A track or poorly maintained road suitable for vehicles only when travelling slowly. For distinct junctions the dashes of the symbols are joined at the junction.
 For indistinct junctions the dashes of the symbols are not joined.
 Minimum length (isolated): two dashes (6.25 mm - footprint 94 m).</description>
                 <line_symbol color="2" line_width="350" minimum_length="6250" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="119" code="505" name="Footpath">
+            <symbol type="2" id="121" code="505" name="Footpath">
                 <description>An easily runnable path, bicycle track or old vehicle track.
 For distinct junctions the dashes of the symbols are joined at the junction.
 For indistinct junctions the dashes of the symbols are not joined.
 Minimum length (isolated): two dashes (4.25 mm - footprint 64 m)</description>
                 <line_symbol color="2" line_width="250" minimum_length="4250" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="120" code="506" name="Small footpath">
+            <symbol type="2" id="122" code="506" name="Small footpath">
                 <description>A runnable small path or (temporary) forest extraction track which can be followed at competition speed.
 For distinct junctions the dashes of the symbols are joined at the junction.
 For indistinct junctions the dashes of the symbols are not joined.
 Minimum length (isolated): two dashes (2.25 mm - footprint 34 m).</description>
                 <line_symbol color="2" line_width="180" minimum_length="2250" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="121" code="507" name="Less distinct small footpath">
+            <symbol type="2" id="123" code="507" name="Less distinct small footpath">
                 <description>A runnable less distinct / visible small path or forestry extraction track.
 Minimum length: two sections of double dashes (5.3 mm - footprint 79.5 m).</description>
                 <line_symbol color="2" line_width="180" minimum_length="5300" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="800" dashes_in_group="2" in_group_break_length="250" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="122" code="508" name="Narrow ride">
+            <symbol type="2" id="124" code="508" name="Narrow ride">
                 <description>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
 Without background: the same runnability as the surroundings.
 Yellow 100%: easy running.
@@ -3062,11 +3103,11 @@ Green 60%: walk.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</description>
                 <line_symbol color="2" line_width="140" minimum_length="3250" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="16" id="123" code="508.1" name="Narrow ride, easy running">
+            <symbol type="16" id="125" code="508.1" name="Narrow ride, easy running">
                 <description>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</description>
                 <combined_symbol parts="2">
-                    <part symbol="122"/>
+                    <part symbol="124"/>
                     <part private="true">
                         <symbol type="2" code="508.1.1" name="Yellow background">
                             <line_symbol color="19" line_width="450" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
@@ -3074,11 +3115,11 @@ Minimum length: two dashes (3.25 mm - footprint 48 m).</description>
                     </part>
                 </combined_symbol>
             </symbol>
-            <symbol type="16" id="124" code="508.2" name="Narrow ride, normal runnability">
+            <symbol type="16" id="126" code="508.2" name="Narrow ride, normal runnability">
                 <description>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</description>
                 <combined_symbol parts="2">
-                    <part symbol="122"/>
+                    <part symbol="124"/>
                     <part private="true">
                         <symbol type="2" code="508.4.1" name="White background">
                             <line_symbol color="22" line_width="450" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
@@ -3086,11 +3127,11 @@ Minimum length: two dashes (3.25 mm - footprint 48 m).</description>
                     </part>
                 </combined_symbol>
             </symbol>
-            <symbol type="16" id="125" code="508.3" name="Narrow ride, slow running">
+            <symbol type="16" id="127" code="508.3" name="Narrow ride, slow running">
                 <description>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</description>
                 <combined_symbol parts="2">
-                    <part symbol="122"/>
+                    <part symbol="124"/>
                     <part private="true">
                         <symbol type="2" code="508.2.1" name="Green 20% background">
                             <line_symbol color="21" line_width="450" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
@@ -3098,11 +3139,11 @@ Minimum length: two dashes (3.25 mm - footprint 48 m).</description>
                     </part>
                 </combined_symbol>
             </symbol>
-            <symbol type="16" id="126" code="508.4" name="Narrow ride, walk">
+            <symbol type="16" id="128" code="508.4" name="Narrow ride, walk">
                 <description>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</description>
                 <combined_symbol parts="2">
-                    <part symbol="122"/>
+                    <part symbol="124"/>
                     <part private="true">
                         <symbol type="2" code="508.3.1" name="Green 50% background">
                             <line_symbol color="20" line_width="450" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
@@ -3110,10 +3151,10 @@ Minimum length: two dashes (3.25 mm - footprint 48 m).</description>
                     </part>
                 </combined_symbol>
             </symbol>
-            <symbol type="16" id="127" code="509" name="Railway">
+            <symbol type="16" id="129" code="509" name="Railway">
                 <description>A railway or other kind of railed track.
 If it is forbidden to run along the railway, it shall be combined with symbol Out-of-bounds route (711). If it is forbidden to cross the railway, it must be combined with symbol Area that shall not be entered (520) or Out-of-bounds area (709).
-Minimum length (isolated): two dashes (4 mm - footprint 60 m).</description>
+Minimum length (isolated): two black dashes (4 mm - footprint 60 m).</description>
                 <combined_symbol parts="2">
                     <part private="true">
                         <symbol type="2" code="509.0.1" name="Railway helper: inner black dashes">
@@ -3131,7 +3172,7 @@ Minimum length (isolated): two dashes (4 mm - footprint 60 m).</description>
                     </part>
                 </combined_symbol>
             </symbol>
-            <symbol type="2" id="128" code="510" name="Power line, cableway or skilift">
+            <symbol type="2" id="130" code="510" name="Power line, cableway or skilift">
                 <description>Power line, cableway or skilift. The bars show the exact location of the pylons. The line may be broken to improve legibility.
 If a section of a power line, cableway or skilift goes along a road or path (and does not offer significant additional navigational value) it should be omitted.
 Minimum length (isolated): 5 mm (footprint: 75 m).</description>
@@ -3158,7 +3199,7 @@ Minimum length (isolated): 5 mm (footprint: 75 m).</description>
                     </dash_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="2" id="129" code="511" name="Major power line, minimum width">
+            <symbol type="2" id="131" code="511" name="Major power line, minimum width">
                 <description>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the power line. The lines may be broken to improve legibility.
 Very large carrying masts shall be represented in plan shape using outline of symbol Building (521) or with symbol High tower (524).</description>
                 <line_symbol color="-1" line_width="400" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
@@ -3187,7 +3228,7 @@ Very large carrying masts shall be represented in plan shape using outline of sy
                     </borders>
                 </line_symbol>
             </symbol>
-            <symbol type="2" id="130" code="511.1" name="Major power line">
+            <symbol type="2" id="132" code="511.1" name="Major power line">
                 <description>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the power line. The lines may be broken to improve legibility. The bars show the exact location of the pylons. Very large carrying masts shall be represented in plan shape using outline of symbol Building (521) or with symbol High tower (524).</description>
                 <line_symbol color="-1" line_width="1340" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <dash_symbol>
@@ -3215,10 +3256,10 @@ Very large carrying masts shall be represented in plan shape using outline of sy
                     </borders>
                 </line_symbol>
             </symbol>
-            <symbol type="16" id="131" code="511.2" name="Major power line, large carrying masts">
+            <symbol type="16" id="133" code="511.2" name="Major power line, large carrying masts">
                 <description>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline. The bars show the exact location of the pylons. The lines may be broken to improve legibility. Very large carrying masts shall be represented in plan shape using symbol 521 (building) or with symbol 524 (high tower).</description>
                 <combined_symbol parts="2">
-                    <part symbol="130"/>
+                    <part symbol="132"/>
                     <part private="true">
                         <symbol type="2" code="511.9" name="Large carrying masts">
                             <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0" scale_dash_symbol="false">
@@ -3250,7 +3291,7 @@ Very large carrying masts shall be represented in plan shape using outline of sy
                     </part>
                 </combined_symbol>
             </symbol>
-            <symbol type="2" id="132" code="512" name="Bridge / tunnel">
+            <symbol type="2" id="134" code="512" name="Bridge / tunnel">
                 <description>Bridges and tunnels are represented using the same basic symbols.
 If it is not possible to get through a tunnel (or under a bridge), it shall be omitted.
 Minimum length (of baseline): 0.4 mm (footprint 6 m).
@@ -3300,7 +3341,7 @@ Small bridges connected to a track/path are shown by centring a track dash on th
                     </end_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="1" id="133" code="512.1" name="Bridge / tunnel, minimum size">
+            <symbol type="1" id="135" code="512.1" name="Bridge / tunnel, minimum size">
                 <description>Bridges and tunnels are represented using the same basic symbols.
 If it is not possible to get through a tunnel (or under a bridge), it shall be omitted.
 Minimum length (of baseline): 0.4 mm (footprint 6 m).
@@ -3324,7 +3365,7 @@ Small bridges connected to a track/path are shown by centring a track dash on th
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="134" code="512.2" name="Footbridge">
+            <symbol type="1" id="136" code="512.2" name="Footbridge">
                 <description>A small footbridge with no path leading to it is represented with a single dash.
 Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 mm over both sides of the stream!</description>
                 <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -3344,7 +3385,7 @@ Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="2" id="135" code="513" name="Wall">
+            <symbol type="2" id="137" code="513.1" name="Wall">
                 <description>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</description>
@@ -3356,7 +3397,39 @@ Minimum length (isolated): 1.4 mm (footprint 21 m).</description>
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="2" id="136" code="514" name="Ruined wall">
+            <symbol type="2" id="138" code="513.2" name="Retaining wall">
+                <description>A significant wall of stone, concrete, wood or other materials which is seen only from one side. Half dot must point to the lower level.
+Minimum height: 0.5 m.
+Minimum length (isolated): 1.4 mm (footprint 21 m).</description>
+                <line_symbol color="2" line_width="160" minimum_length="1400" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="1000" end_length="800" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3556" break_length="889" dashes_in_group="1" in_group_break_length="444" mid_symbols_per_spot="1" mid_symbol_distance="0">
+                    <mid_symbol>
+                        <symbol type="1" code="" name="Mid symbol">
+                            <point_symbol rotatable="true" inner_radius="0" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
+                                <element>
+                                    <symbol type="4" code="">
+                                        <area_symbol inner_color="2" min_area="0" patterns="0"/>
+                                    </symbol>
+                                    <object type="1">
+                                        <coords count="7">
+                                            <coord x="200" y="50" flags="1"/>
+                                            <coord x="200" y="161"/>
+                                            <coord x="110" y="251"/>
+                                            <coord x="0" y="251" flags="1"/>
+                                            <coord x="-111" y="251"/>
+                                            <coord x="-201" y="161"/>
+                                            <coord x="-201" y="51" flags="16"/>
+                                        </coords>
+                                        <pattern rotation="0">
+                                            <coord x="0" y="0"/>
+                                        </pattern>
+                                    </object>
+                                </element>
+                            </point_symbol>
+                        </symbol>
+                    </mid_symbol>
+                </line_symbol>
+            </symbol>
+            <symbol type="2" id="139" code="514" name="Ruined wall">
                 <description>A ruined or less distinct wall. Minimum height 0.5 m.
 Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Wall (513).</description>
                 <line_symbol color="2" line_width="140" minimum_length="3650" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="350" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
@@ -3367,7 +3440,7 @@ Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object mu
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="2" id="137" code="515" name="Impassable wall">
+            <symbol type="2" id="140" code="515" name="Impassable wall">
                 <description>An impassable or uncrossable wall, normally more than 1.5 m high.
 Minimum length (isolated): 3 mm (footprint 45 m).</description>
                 <line_symbol color="2" line_width="250" minimum_length="3000" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="3000" end_length="1500" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="2" mid_symbol_distance="800">
@@ -3378,8 +3451,9 @@ Minimum length (isolated): 3 mm (footprint 45 m).</description>
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="2" id="138" code="516" name="Fence">
-                <description>If the fence forms an enclosed area, tags should be placed inside.
+            <symbol type="2" id="141" code="516" name="Fence">
+                <description>A passable or crossable fence, normally less than 1.5 m high.
+If the fence forms an enclosed area, tags should be placed inside.
 Minimum length (isolated): 1.5 mm (footprint 22.5 m).</description>
                 <line_symbol color="2" line_width="140" minimum_length="1500" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="2000" end_length="1000" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <mid_symbol>
@@ -3404,7 +3478,7 @@ Minimum length (isolated): 1.5 mm (footprint 22.5 m).</description>
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="2" id="139" code="517" name="Ruined fence">
+            <symbol type="2" id="142" code="517" name="Ruined fence">
                 <description>A ruined or less distinct fence. If the fence forms an enclosed area, tags should be placed inside.
 Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol Fence (516).</description>
                 <line_symbol color="2" line_width="140" minimum_length="3650" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="350" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
@@ -3430,7 +3504,7 @@ Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the symbol mu
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="2" id="140" code="518" name="Impassable fence">
+            <symbol type="2" id="143" code="518" name="Impassable fence">
                 <description>An impassable or uncrossable fence, normally more than 1.5 m high.
 If the fence forms an enclosed area, tags should be placed inside.
 Minimum length (isolated): 2 mm (footprint 30 m).</description>
@@ -3471,7 +3545,7 @@ Minimum length (isolated): 2 mm (footprint 30 m).</description>
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="1" id="141" code="519" name="Crossing point">
+            <symbol type="1" id="144" code="519" name="Crossing point">
                 <description>A way through or over a wall, fence or other linear feature, including a gate or stile.
 For impassable features, the line shall be broken at the crossing point. For passable features, the line shall not be broken if passing involves a degree of climb.</description>
                 <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
@@ -3505,44 +3579,38 @@ For impassable features, the line shall be broken at the crossing point. For pas
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="4" id="142" code="520" name="Area that shall not be entered">
-                <description>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
-Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.
+            <symbol type="4" id="145" code="520" name="Area that shall not be entered">
+                <description>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. The area shall be discontinued where a path goes through and white colour is used as background with overlap 0.15 mm on both sides.
+Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line, if the border is unclear no black line shall occur.
 Course planning symbol 709 can be used for temporary out-of bounds areas.
-The vertical black stripes version of the symbol is orientated to north.
 An out-of-bounds area shall not be entered.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</description>
                 <area_symbol inner_color="23" min_area="1000" patterns="0"/>
             </symbol>
-            <symbol type="2" id="143" code="520.1" name="Area that shall not be entered, solid colour, bounding line">
+            <symbol type="2" id="146" code="520.1" name="Area that shall not be entered, solid colour, bounding line">
                 <description>Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.</description>
                 <line_symbol color="2" line_width="180" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="4" id="144" code="520.2" name="Area that shall not be entered, stripes">
-                <description>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
-Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.
-Course planning symbol 709 can be used for temporary out-of bounds areas.
-The vertical black stripes version of the symbol is orientated to north.
-An out-of-bounds area shall not be entered.
-Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</description>
+            <symbol type="4" id="147" code="520.2" name="Area that shall not be entered, stripes (deprecated)" is_hidden="true">
+                <description>Deprecated in revision 6 of the ISOM 2017-2 document.</description>
                 <area_symbol inner_color="-1" min_area="1000" patterns="1">
                     <pattern type="1" angle="1.5708" line_spacing="750" line_offset="0" offset_along_line="0" color="2" line_width="250"/>
                 </area_symbol>
             </symbol>
-            <symbol type="2" id="145" code="520.3" name="Area that shall not be entered, stripes, bounding line">
-                <description>Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.</description>
+            <symbol type="2" id="148" code="520.3" name="Area that shall not be entered, stripes, bounding line (deprecated)" is_hidden="true">
+                <description>Deprecated in revision 6 of the ISOM 2017-2 document.</description>
                 <line_symbol color="2" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="4" id="146" code="521" name="Building">
+            <symbol type="4" id="149" code="521" name="Building">
                 <description>A building is shown with its ground plan so far as the scale permits.
 Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
-Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Passages through buildings must have a minimum width of 0.4 mm (footprint 6.0 m).
 Buildings within forbidden areas are generalised.
 Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
 Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</description>
                 <area_symbol inner_color="8" min_area="300" patterns="0"/>
             </symbol>
-            <symbol type="1" id="147" code="521.1" name="Building, minimum size">
+            <symbol type="1" id="150" code="521.1" name="Building, minimum size">
                 <description>A building is shown with its ground plan so far as the scale permits.
 Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
 Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
@@ -3569,28 +3637,28 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="16" id="148" code="521.2" name="Large building with outline">
+            <symbol type="16" id="151" code="521.2" name="Large building with outline">
                 <description>A building is shown with its ground plan so far as the scale permits.
 Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
-Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Passages through buildings must have a minimum width of 0.4 mm (footprint 6.0 m).
 Buildings within forbidden areas are generalised.
 Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
 Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</description>
                 <combined_symbol parts="2">
-                    <part symbol="149"/>
-                    <part symbol="150"/>
+                    <part symbol="152"/>
+                    <part symbol="153"/>
                 </combined_symbol>
             </symbol>
-            <symbol type="4" id="149" code="521.3" name="Large building">
+            <symbol type="4" id="152" code="521.3" name="Large building">
                 <description>A building is shown with its ground plan so far as the scale permits.
 Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
-Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Passages through buildings must have a minimum width of 0.4 mm (footprin 6.0 m).
 Buildings within forbidden areas are generalised.
 Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
 Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</description>
                 <area_symbol inner_color="9" min_area="0" patterns="0"/>
             </symbol>
-            <symbol type="2" id="150" code="521.4" name="Large building, outline">
+            <symbol type="2" id="153" code="521.4" name="Large building, outline">
                 <description>A building is shown with its ground plan so far as the scale permits.
 Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
 Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
@@ -3599,33 +3667,33 @@ Areas totally contained within a building shall not be mapped (they shall be rep
 Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</description>
                 <line_symbol color="2" line_width="200" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="16" id="151" code="522" name="Canopy with outline">
+            <symbol type="16" id="154" code="522" name="Canopy with outline">
                 <description>An accessible and runnable area with roof.
 Minimum area (isolated): 0.6 mm x 0.6 mm (footprint 9 m x 9 m).
-Minimum (inside) width: 0.3 mm (footprint 4.5 m).</description>
+Minimum (inside) width: 0.4 mm (footprint 6.0 m).</description>
                 <combined_symbol parts="2">
-                    <part symbol="152"/>
-                    <part symbol="153"/>
+                    <part symbol="155"/>
+                    <part symbol="156"/>
                 </combined_symbol>
             </symbol>
-            <symbol type="4" id="152" code="522.1" name="Canopy">
+            <symbol type="4" id="155" code="522.1" name="Canopy">
                 <description>An accessible and runnable area with roof.
 Minimum area (isolated): 0.6 mm x 0.6 mm (footprint 9 m x 9 m).
-Minimum (inside) width: 0.3 mm (footprint 4.5 m).</description>
+Minimum (inside) width: 0.4 mm (footprint 6.0 m).</description>
                 <area_symbol inner_color="10" min_area="400" patterns="0"/>
             </symbol>
-            <symbol type="2" id="153" code="522.2" name="Canopy, outline">
+            <symbol type="2" id="156" code="522.2" name="Canopy, outline">
                 <description>An accessible and runnable area with roof.
 Minimum area (isolated): 0.6 mm x 0.6 mm (footprint 9 m x 9 m).
 Minimum (inside) width: 0.3 mm (footprint 4.5 m).</description>
                 <line_symbol color="2" line_width="100" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="154" code="523" name="Ruin">
+            <symbol type="2" id="157" code="523" name="Ruin">
                 <description>A ruined building. The ground plan of a ruin is shown to scale, down to the minimum size. Ruins that are so small that they cannot be drawn to scale may be represented using a solid line.
 Minimum area (outside measures): 0.8 mm x 0.8 mm (footprint 12 m x 12 m).</description>
                 <line_symbol color="2" line_width="160" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="500" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="1" id="155" code="523.1" name="Ruin, minimum size">
+            <symbol type="1" id="158" code="523.1" name="Ruin, minimum size">
                 <description>A ruined building. The ground plan of a ruin is shown to scale, down to the minimum size. Ruins that are so small that they cannot be drawn to scale may be represented using a solid line.
 Minimum area (outside measures): 0.8 mm x 0.8 mm (footprint 12 m x 12 m).</description>
                 <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -3648,7 +3716,7 @@ Minimum area (outside measures): 0.8 mm x 0.8 mm (footprint 12 m x 12 m).</descr
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="156" code="524" name="High tower">
+            <symbol type="1" id="159" code="524" name="High tower">
                 <description>A high tower or large pylon. If it is in a forest, it must be visible above the level of the surrounding forest.Towers with a larger footprint must be represented using symbol Building (521).
 The symbol is orientated to north.
 Footprint: 21 m in diameter.</description>
@@ -3683,9 +3751,8 @@ Footprint: 21 m in diameter.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="157" code="525" name="Small tower">
-                <description>An obvious small tower, platform or seat.
-Location is at the centre of gravity of the symbol.
+            <symbol type="1" id="160" code="525" name="Small tower">
+                <description>An obvious small tower or elevated platform or seat. The object shall be with elevation above the ground. Location is at the centre of gravity of the symbol.
 The symbol is orientated to north.
 Footprint: 15 m x 15 m.</description>
                 <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
@@ -3719,7 +3786,7 @@ Footprint: 15 m x 15 m.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="158" code="526" name="Cairn">
+            <symbol type="1" id="161" code="526" name="Cairn">
                 <description>A prominent cairn, memorial stone, boundary stone or trigonometric point.
 Minimum height: 0.5 m.
 Footprint: 12 m in diameter.</description>
@@ -3736,7 +3803,7 @@ Footprint: 12 m in diameter.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="159" code="527" name="Fodder rack">
+            <symbol type="1" id="162" code="527" name="Fodder rack">
                 <description>A fodder rack, which is free standing or attached to a tree.
 Location is at the centre of gravity of the symbol.
 The symbol is orientated to north.
@@ -3773,7 +3840,7 @@ Footprint: 13.5 m x 13.5 m.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="2" id="160" code="528" name="Prominent line feature">
+            <symbol type="2" id="163" code="528" name="Prominent line feature">
                 <description>A prominent man-made line feature. For example, a low pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track that is clearly visible. The definition of the symbol must be given on the map.
 Minimum length: 1.5 mm (footprint 22.5 m).</description>
                 <line_symbol color="2" line_width="140" minimum_length="1500" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="2000" end_length="1000" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
@@ -3813,7 +3880,7 @@ Minimum length: 1.5 mm (footprint 22.5 m).</description>
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="2" id="161" code="529" name="Prominent impassable line feature">
+            <symbol type="2" id="164" code="529" name="Prominent impassable line feature">
                 <description>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track. The definition of the symbol must be given on the map.
 Minimum length: 2 mm (footprint 30 m).</description>
                 <line_symbol color="2" line_width="250" minimum_length="2000" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="2000" end_length="1000" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="2" mid_symbol_distance="600">
@@ -3853,13 +3920,13 @@ Minimum length: 2 mm (footprint 30 m).</description>
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="1" id="162" code="530" name="Prominent man-made feature – ring">
+            <symbol type="1" id="165" code="530" name="Prominent man-made feature – ring">
                 <description>Location is at the centre of gravity of the symbol.
 The definition of the symbol must be given on the map.
 Footprint: 12 m in diameter.</description>
                 <point_symbol inner_radius="240" inner_color="-1" outer_width="160" outer_color="2" elements="0"/>
             </symbol>
-            <symbol type="1" id="163" code="531" name="Prominent man-made feature – x">
+            <symbol type="1" id="166" code="531" name="Prominent man-made feature – x">
                 <description>Location is at the centre of gravity of the symbol.
 The symbol is orientated to north.
 The definition of the symbol must be given on the map.
@@ -3895,7 +3962,7 @@ Footprint: 12 m x 12 m.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="2" id="164" code="532" name="Stairway">
+            <symbol type="2" id="167" code="532" name="Stairway">
                 <description>A distinct stairway through the terrain which helps to climb very steep slopes or to cross over impassable objects. A stairway going through rock passages or between impassable objects may be drawn without border lines.
 An easily runnable stairway or indistinct stairway should be drawn as a footpath. Steps of a stairway shall be represented in a generalized manner.
 Minimum length: 3 (graphical) steps.
@@ -3926,7 +3993,7 @@ Minimum width: 0.4 mm (IM).</description>
                     </borders>
                 </line_symbol>
             </symbol>
-            <symbol type="2" id="165" code="532.1" name="Stairway, without border lines">
+            <symbol type="2" id="168" code="532.1" name="Stairway, without border lines">
                 <description>A distinct stairway through the terrain which helps to climb very steep slopes or to cross over impassable objects. A stairway going through rock passages or between impassable objects may be drawn without border lines.
 An easily runnable stairway or indistinct stairway should be drawn as a footpath. Steps of a stairway shall be represented in a generalized manner.
 </description>
@@ -3953,31 +4020,31 @@ An easily runnable stairway or indistinct stairway should be drawn as a footpath
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="2" id="166" code="601.1" name="Magnetic north line">
+            <symbol type="2" id="169" code="601.1" name="Magnetic north line">
                 <description>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</description>
                 <line_symbol color="2" line_width="100" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="4" id="167" code="601.2" name="North lines pattern">
+            <symbol type="4" id="170" code="601.2" name="North lines pattern">
                 <description>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</description>
                 <area_symbol inner_color="-1" min_area="0" patterns="1">
                     <pattern type="1" angle="1.5708" line_spacing="20000" line_offset="0" offset_along_line="0" color="2" line_width="100"/>
                 </area_symbol>
             </symbol>
-            <symbol type="2" id="168" code="601.3" name="Magnetic north line, blue">
+            <symbol type="2" id="171" code="601.3" name="Magnetic north line, blue">
                 <description>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</description>
-                <line_symbol color="5" line_width="180" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                <line_symbol color="5" line_width="120" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="4" id="169" code="601.4" name="North lines pattern, blue">
+            <symbol type="4" id="172" code="601.4" name="North lines pattern, blue">
                 <description>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</description>
                 <area_symbol inner_color="-1" min_area="0" patterns="1">
-                    <pattern type="1" angle="1.5708" line_spacing="20000" line_offset="0" offset_along_line="0" color="5" line_width="180"/>
+                    <pattern type="1" angle="1.5708" line_spacing="20000" line_offset="0" offset_along_line="0" color="5" line_width="120"/>
                 </area_symbol>
             </symbol>
-            <symbol type="1" id="170" code="602" name="Registration mark">
+            <symbol type="1" id="173" code="602" name="Registration mark">
                 <description>At least three registration marks may be placed in the corners of the map. These can be used for printing courses on already printed maps. In addition, it allows a check of colour registration when printing colours separately.</description>
                 <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                     <element>
@@ -4010,13 +4077,13 @@ North lines shall be broken to improve the legibility of the map, for instance w
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="171" code="603.0" name="Spot height, dot">
+            <symbol type="1" id="174" code="603.0" name="Spot height, dot">
                 <description>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
 Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</description>
                 <point_symbol inner_radius="150" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
             </symbol>
-            <symbol type="8" id="172" code="603.1" name="Spot height, text">
+            <symbol type="8" id="175" code="603.1" name="Spot height, text">
                 <description>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
 Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</description>
@@ -4025,7 +4092,7 @@ Spot heights must only be used where they do not conflict with other symbols.</d
                     <text color="2" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
                 </text_symbol>
             </symbol>
-            <symbol type="1" id="173" code="701" name="Start" is_hidden="true">
+            <symbol type="1" id="176" code="701" name="Start" is_hidden="true">
                 <description>The place where the orienteering starts. The centre of the triangle shows the precise position where the orienteering course starts. The start must be on a clearly identifiable point on the map. The triangle points in the direction of the first control.</description>
                 <point_symbol rotatable="true" inner_radius="857" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                     <element>
@@ -4046,7 +4113,7 @@ Spot heights must only be used where they do not conflict with other symbols.</d
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="174" code="702" name="Map issue point" is_hidden="true">
+            <symbol type="1" id="177" code="702" name="Map issue point" is_hidden="true">
                 <description>If there is a marked route to the start point, the map issue point is marked using this symbol.</description>
                 <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                     <element>
@@ -4065,25 +4132,25 @@ Spot heights must only be used where they do not conflict with other symbols.</d
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="175" code="703" name="Control point" is_hidden="true">
+            <symbol type="1" id="178" code="703" name="Control point" is_hidden="true">
                 <description>For point features, the centre of the circle shall be the centre of the symbol. For line and area features, the centre of the circle shows the precise position of the control marker. Controls shall only be placed on points that are clearly identifiable on the map.
 Sections of the circle should be omitted to leave important detail showing.
 Footprint 75 m</description>
                 <point_symbol inner_radius="2325" inner_color="-1" outer_width="350" outer_color="7" elements="0"/>
             </symbol>
-            <symbol type="8" id="176" code="704" name="Control number">
+            <symbol type="8" id="179" code="704" name="Control number" is_hidden="true">
                 <description>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail.
 The numbers are orientated to north.</description>
                 <text_symbol icon_text="5">
                     <font family="Sans Serif" size="5588"/>
-                    <text color="0" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
+                    <text color="7" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
                 </text_symbol>
             </symbol>
-            <symbol type="2" id="177" code="705" name="Course line" is_hidden="true">
+            <symbol type="2" id="180" code="705" name="Course line" is_hidden="true">
                 <description>Where controls are to be visited in order, the sequence is shown using straight lines from the start to the first control and then from each control to the next one. Sections of lines should be omitted to leave important detail showing. The line should be drawn via mandatory crossing points. There should be gaps between the line and the control circle in order to increase the readability of the underlying detail close to the control.</description>
                 <line_symbol color="7" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="1" id="178" code="706" name="Finish" is_hidden="true">
+            <symbol type="1" id="181" code="706" name="Finish" is_hidden="true">
                 <description>The end of the course.</description>
                 <point_symbol inner_radius="1825" inner_color="-1" outer_width="350" outer_color="7" elements="1">
                     <element>
@@ -4098,38 +4165,39 @@ The numbers are orientated to north.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="2" id="179" code="707" name="Marked route" is_hidden="true">
+            <symbol type="2" id="182" code="707" name="Marked route" is_hidden="true">
                 <description>A marked route that is a part of the course. It is mandatory to follow the marked route.
 Minimum length: 2 dashes (4.5 mm – footprint: 67.5 m).</description>
                 <line_symbol color="0" line_width="350" minimum_length="4500" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="180" code="708" name="Out-of-bounds boundary" is_hidden="true">
+            <symbol type="2" id="183" code="708" name="Out-of-bounds boundary" is_hidden="true">
                 <description>A boundary which it is not permitted to cross.
 An out-of-bounds boundary shall not be crossed.
 Minimum length: 1 mm (footprint: 15 m).</description>
                 <line_symbol color="7" line_width="700" minimum_length="1000" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="4" id="181" code="709" name="Out-of-bounds area" is_hidden="true">
+            <symbol type="4" id="184" code="709" name="Out-of-bounds area" is_hidden="true">
                 <description>An out-of-bounds area. A bounding line may be drawn if there is no natural boundary, as follows:
 – a solid line indicates that the boundary is marked continuously (tapes, etc.) in the terrain,
 – a dashed line indicates intermittent marking in the terrain,
 – no line indicates no marking in the terrain.
 An out-of-bounds area shall not be entered.
-Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
-                <area_symbol inner_color="-1" min_area="4000" patterns="2">
-                    <pattern type="1" angle="0.785398" line_spacing="800" line_offset="0" offset_along_line="0" color="0" line_width="250"/>
-                    <pattern type="1" angle="5.49779" line_spacing="800" line_offset="0" offset_along_line="0" color="0" line_width="250"/>
+Minimum width: 3 mm.
+Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</description>
+                <area_symbol inner_color="-1" min_area="9000" patterns="2">
+                    <pattern type="1" angle="0.785398" line_spacing="1200" line_offset="0" offset_along_line="0" color="0" line_width="200"/>
+                    <pattern type="1" angle="5.49779" line_spacing="1200" line_offset="0" offset_along_line="0" color="0" line_width="200"/>
                 </area_symbol>
             </symbol>
-            <symbol type="2" id="182" code="709.1" name="Out-of-bounds area, solid boundary" is_hidden="true">
+            <symbol type="2" id="185" code="709.1" name="Out-of-bounds area, solid boundary" is_hidden="true">
                 <description>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</description>
                 <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="183" code="709.2" name="Out-of-bounds area, dashed boundary" is_hidden="true">
+            <symbol type="2" id="186" code="709.2" name="Out-of-bounds area, dashed boundary" is_hidden="true">
                 <description>A dashed line indicates intermittent marking on the ground.</description>
                 <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="1" id="184" code="710" name="Crossing point" is_hidden="true">
+            <symbol type="1" id="187" code="710" name="Crossing point" is_hidden="true">
                 <description>A crossing point, for instance through or over a wall or fence, across a road or railway, through a tunnel or out-of-bounds area, or over an uncrossable boundary is drawn on the map with two lines curving outwards. The lines shall reflect the length of the crossing.</description>
                 <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                     <element>
@@ -4166,7 +4234,7 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="2" id="185" code="711" name="Out-of-bounds route" is_hidden="true">
+            <symbol type="2" id="188" code="711" name="Out-of-bounds route" is_hidden="true">
                 <description>A route which is out-of-bounds. Competitors are allowed to cross directly over a forbidden route, but it is forbidden to go along it.
 An out-of-bounds route shall not be used.
 Minimum length: 2 symbols (6 mm – footprint 90 m).</description>
@@ -4207,7 +4275,7 @@ Minimum length: 2 symbols (6 mm – footprint 90 m).</description>
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="1" id="186" code="711.1" name="Out-of-bounds route, single cross" is_hidden="true">
+            <symbol type="1" id="189" code="711.1" name="Out-of-bounds route, single cross" is_hidden="true">
                 <description>A route which is out-of-bounds. Competitors are allowed to cross directly over a forbidden route, but it is forbidden to go along it.
 An out-of-bounds route shall not be used.
 Minimum length: 2 symbols (6 mm – footprint 90 m).</description>
@@ -4242,12 +4310,12 @@ Minimum length: 2 symbols (6 mm – footprint 90 m).</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="187" code="712" name="First aid post" is_hidden="true">
+            <symbol type="1" id="190" code="712" name="First aid post" is_hidden="true">
                 <description>The location of a first aid post.</description>
                 <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                     <element>
                         <symbol type="2" code="">
-                            <line_symbol color="0" line_width="1330" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="7" line_width="1330" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="2">
@@ -4261,7 +4329,7 @@ Minimum length: 2 symbols (6 mm – footprint 90 m).</description>
                     </element>
                     <element>
                         <symbol type="2" code="">
-                            <line_symbol color="0" line_width="1330" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="7" line_width="1330" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="2">
@@ -4275,12 +4343,12 @@ Minimum length: 2 symbols (6 mm – footprint 90 m).</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="188" code="713" name="Refreshment point" is_hidden="true">
+            <symbol type="1" id="191" code="713" name="Refreshment point" is_hidden="true">
                 <description>The location of a refreshment point which is not at a control.</description>
                 <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="4">
                     <element>
                         <symbol type="2" code="">
-                            <line_symbol color="0" line_width="400" minimum_length="0" join_style="1" cap_style="1" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="7" line_width="400" minimum_length="0" join_style="1" cap_style="1" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="2">
@@ -4294,7 +4362,7 @@ Minimum length: 2 symbols (6 mm – footprint 90 m).</description>
                     </element>
                     <element>
                         <symbol type="2" code="">
-                            <line_symbol color="0" line_width="400" minimum_length="0" join_style="1" cap_style="1" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="7" line_width="400" minimum_length="0" join_style="1" cap_style="1" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="2">
@@ -4308,7 +4376,7 @@ Minimum length: 2 symbols (6 mm – footprint 90 m).</description>
                     </element>
                     <element>
                         <symbol type="2" code="">
-                            <line_symbol color="0" line_width="400" minimum_length="0" join_style="2" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="7" line_width="400" minimum_length="0" join_style="2" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="13">
@@ -4333,7 +4401,7 @@ Minimum length: 2 symbols (6 mm – footprint 90 m).</description>
                     </element>
                     <element>
                         <symbol type="2" code="">
-                            <line_symbol color="0" line_width="400" minimum_length="0" join_style="2" cap_style="1" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="7" line_width="400" minimum_length="0" join_style="2" cap_style="1" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="4">
@@ -4349,7 +4417,28 @@ Minimum length: 2 symbols (6 mm – footprint 90 m).</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="2" id="189" code="799" name="Simple Orienteering Course">
+            <symbol type="1" id="192" code="715" name="Continuing point after map exchange" is_hidden="true">
+                <description>Symbol marking the continuation of the course after the map flip or the map exchange. The triangle points in the direction of the following control.</description>
+                <point_symbol rotatable="true" inner_radius="2325" inner_color="-1" outer_width="350" outer_color="7" elements="1">
+                    <element>
+                        <symbol type="2" code="">
+                            <line_symbol color="7" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="2545" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2545" break_length="638" dashes_in_group="1" in_group_break_length="319" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        </symbol>
+                        <object type="1">
+                            <coords count="4">
+                                <coord x="-2003" y="1155"/>
+                                <coord x="0" y="-2311"/>
+                                <coord x="2003" y="1155"/>
+                                <coord x="-2003" y="1155" flags="18"/>
+                            </coords>
+                            <pattern rotation="0">
+                                <coord x="0" y="0"/>
+                            </pattern>
+                        </object>
+                    </element>
+                </point_symbol>
+            </symbol>
+            <symbol type="2" id="193" code="799" name="Simple Orienteering Course">
                 <description>This symbol provides a simple and quick way to make training courses.
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</description>
@@ -4433,7 +4522,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </dash_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="1" id="190" code="999" name="OpenOrienteering Logo">
+            <symbol type="1" id="194" code="999" name="OpenOrienteering Logo">
                 <description>The OpenOrienteering Logo.</description>
                 <point_symbol inner_radius="250" inner_color="-1" outer_width="0" outer_color="-1" elements="30">
                     <element>
@@ -8374,7 +8463,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <parts count="1" current="0">
             <part name="default layer">
                 <objects count="35">
-                    <object type="1" symbol="90">
+                    <object type="1" symbol="92">
                         <coords count="5">
                             <coord x="-12148" y="-34717"/>
                             <coord x="-10325" y="-35275"/>
@@ -8386,7 +8475,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="93">
+                    <object type="1" symbol="95">
                         <coords count="13">
                             <coord x="-4122" y="-32241" flags="1"/>
                             <coord x="-3549" y="-32169"/>
@@ -8406,7 +8495,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="52">
+                    <object type="1" symbol="54">
                         <coords count="13">
                             <coord x="-5907" y="-30556" flags="1"/>
                             <coord x="-6149" y="-30883"/>
@@ -8459,12 +8548,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="0" symbol="39">
+                    <object type="0" symbol="41">
                         <coords count="1">
                             <coord x="-11057" y="-29929"/>
                         </coords>
                     </object>
-                    <object type="1" symbol="82">
+                    <object type="1" symbol="84">
                         <coords count="13">
                             <coord x="-6251" y="-31654" flags="1"/>
                             <coord x="-5973" y="-31181"/>
@@ -8508,7 +8597,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="93">
+                    <object type="1" symbol="95">
                         <coords count="9">
                             <coord x="-7841" y="-28945" flags="1"/>
                             <coord x="-8577" y="-28172"/>
@@ -8538,7 +8627,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="82">
+                    <object type="1" symbol="84">
                         <coords count="13">
                             <coord x="-9627" y="-33434" flags="1"/>
                             <coord x="-8651" y="-33149"/>
@@ -8558,7 +8647,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="89">
+                    <object type="1" symbol="91">
                         <coords count="13">
                             <coord x="-4627" y="-32516" flags="1"/>
                             <coord x="-4217" y="-32891"/>
@@ -8578,7 +8667,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="79">
+                    <object type="1" symbol="81">
                         <coords count="13">
                             <coord x="-3497" y="-31298" flags="1"/>
                             <coord x="-3020" y="-31581"/>
@@ -8598,7 +8687,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="55">
+                    <object type="1" symbol="57">
                         <coords count="13">
                             <coord x="-3103" y="-34915" flags="1"/>
                             <coord x="-3401" y="-35395"/>
@@ -8618,7 +8707,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="60">
+                    <object type="1" symbol="62">
                         <coords count="13">
                             <coord x="-6305" y="-35033" flags="1"/>
                             <coord x="-6629" y="-34607"/>
@@ -8652,12 +8741,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="0" symbol="38">
+                    <object type="0" symbol="40">
                         <coords count="1">
                             <coord x="-11507" y="-30414"/>
                         </coords>
                     </object>
-                    <object type="1" symbol="89">
+                    <object type="1" symbol="91">
                         <coords count="28">
                             <coord x="-13079" y="-32763" flags="1"/>
                             <coord x="-11281" y="-31121"/>
@@ -8692,7 +8781,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="142">
+                    <object type="1" symbol="145">
                         <coords count="13">
                             <coord x="-7716" y="-35085" flags="1"/>
                             <coord x="-8039" y="-34658"/>
@@ -8712,7 +8801,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="114">
+                    <object type="1" symbol="116">
                         <coords count="2">
                             <coord x="-13197" y="-34711"/>
                             <coord x="-13216" y="-25002"/>
@@ -8721,7 +8810,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="114">
+                    <object type="1" symbol="116">
                         <coords count="2">
                             <coord x="-14964" y="-26565"/>
                             <coord x="-1665" y="-26490"/>
@@ -8730,7 +8819,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="106">
+                    <object type="1" symbol="108">
                         <coords count="7">
                             <coord x="-6587" y="-30111" flags="1"/>
                             <coord x="-6805" y="-30813"/>
@@ -8768,7 +8857,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="67">
+                    <object type="1" symbol="69">
                         <coords count="8">
                             <coord x="-8827" y="-33831" flags="1"/>
                             <coord x="-8816" y="-33324"/>
@@ -8783,7 +8872,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="83">
+                    <object type="1" symbol="85">
                         <coords count="14">
                             <coord x="-12899" y="-26915"/>
                             <coord x="-9575" y="-26880"/>
@@ -8804,7 +8893,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="92">
+                    <object type="1" symbol="94">
                         <coords count="11">
                             <coord x="-12846" y="-28206"/>
                             <coord x="-9814" y="-27569"/>
@@ -8822,7 +8911,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="97">
+                    <object type="1" symbol="99">
                         <coords count="2">
                             <coord x="-9807" y="-27306"/>
                             <coord x="-10815" y="-27306"/>
@@ -8831,7 +8920,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="1" symbol="97">
+                    <object type="1" symbol="99">
                         <coords count="2">
                             <coord x="-12840" y="-27325"/>
                             <coord x="-11568" y="-27325"/>
@@ -8840,42 +8929,42 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="0" symbol="108">
+                    <object type="0" symbol="110">
                         <coords count="1">
                             <coord x="-4862" y="-32369"/>
                         </coords>
                     </object>
-                    <object type="0" symbol="175">
+                    <object type="0" symbol="178">
                         <coords count="1">
                             <coord x="-11051" y="-29936"/>
                         </coords>
                     </object>
-                    <object type="0" symbol="170">
+                    <object type="0" symbol="173">
                         <coords count="1">
                             <coord x="-3723" y="-27231"/>
                         </coords>
                     </object>
-                    <object type="0" symbol="175">
+                    <object type="0" symbol="178">
                         <coords count="1">
                             <coord x="-11039" y="-29914"/>
                         </coords>
                     </object>
-                    <object type="0" symbol="109">
+                    <object type="0" symbol="111">
                         <coords count="1">
                             <coord x="-7733" y="-31439"/>
                         </coords>
                     </object>
-                    <object type="0" symbol="15">
+                    <object type="0" symbol="16">
                         <coords count="1">
                             <coord x="-8238" y="-32213"/>
                         </coords>
                     </object>
-                    <object type="0" symbol="110">
+                    <object type="0" symbol="112">
                         <coords count="1">
                             <coord x="-10560" y="-32179"/>
                         </coords>
                     </object>
-                    <object type="1" symbol="107">
+                    <object type="1" symbol="109">
                         <coords count="11">
                             <coord x="-3185" y="-31090" flags="32"/>
                             <coord x="-3185" y="-31090" flags="1"/>
