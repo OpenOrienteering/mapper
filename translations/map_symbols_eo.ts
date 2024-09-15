@@ -4,14 +4,14 @@
 <context>
     <name>ISOM 2017-2</name>
     <message>
-        <source>Purple for course overprint</source>
+        <source>Upper purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nigra 100%</translation>
     </message>
     <message>
-        <source>White for course overprint</source>
+        <source>White for railroad</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verda 100%</translation>
     </message>
     <message>
         <source>Black 100%</source>
@@ -19,164 +19,159 @@
         <translation>Nigra 100%</translation>
     </message>
     <message>
-        <source>Green 100%</source>
+        <source>Blue 100% point symbols</source>
         <comment>Color 3</comment>
-        <translation>Verda 100%</translation>
+        <translation type="unfinished">Verda 100%</translation>
     </message>
     <message>
-        <source>White for railway</source>
+        <source>Brown 100% point symbols </source>
         <comment>Color 4</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Blue 100%</source>
+        <source>Green 100% point symbols</source>
         <comment>Color 5</comment>
-        <translation>Blua 100%</translation>
+        <translation type="unfinished">Blua 100%</translation>
     </message>
     <message>
-        <source>Brown 100%</source>
+        <source>Blue 100% line symbols</source>
         <comment>Color 6</comment>
-        <translation>Bruna 100%</translation>
+        <translation type="unfinished">Bruna 100%</translation>
     </message>
     <message>
-        <source>Purple for track symbols</source>
+        <source>Dark green line symbols </source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verda 100%/Nigra 50%</translation>
     </message>
     <message>
-        <source>Black below purple for track symbols</source>
+        <source>Brown 100% line symbols </source>
         <comment>Color 8</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Black 50%</source>
+        <source>Lower purple for course overprint</source>
         <comment>Color 9</comment>
-        <translation>Nigra 50%</translation>
+        <translation type="unfinished">Nigra 50%</translation>
     </message>
     <message>
-        <source>Black 20%</source>
+        <source>Brown 50% for road infill</source>
         <comment>Color 10</comment>
-        <translation>Nigra 20%</translation>
+        <translation type="unfinished">Nigra 20%</translation>
     </message>
     <message>
-        <source>Upper brown 50%</source>
+        <source>Black 100% for road outline</source>
         <comment>Color 11</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Black below upper brown 50%</source>
+        <source>Black 50% for large buildings and tramway</source>
         <comment>Color 12</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Lower brown 50%</source>
+        <source>Black 20% for canopy</source>
         <comment>Color 13</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Black below lower brown 50%</source>
+        <source>Blue 100% area symbols</source>
         <comment>Color 14</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Blue 100% for area features</source>
+        <source>Blue 70% area symbols</source>
         <comment>Color 15</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Blue 70%</source>
+        <source>Blue 50% area symbols</source>
         <comment>Color 16</comment>
-        <translation>Blua 70%</translation>
+        <translation type="unfinished">Blua 70%</translation>
     </message>
     <message>
-        <source>Blue 50%</source>
+        <source>White over green and brown</source>
         <comment>Color 17</comment>
-        <translation>Blua 50%</translation>
+        <translation type="unfinished">Blua 50%</translation>
     </message>
     <message>
-        <source>OpenOrienteering Orange</source>
+        <source>Brown 50% for paved area</source>
         <comment>Color 18</comment>
-        <translation>OpenOrienteering oranĝkolora</translation>
+        <translation type="unfinished">OpenOrienteering oranĝkolora</translation>
     </message>
     <message>
-        <source>Yellow 100% for narrow ride</source>
+        <source>Yellow 100% for narrow ride (extra)</source>
         <comment>Color 19</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Green 60% for narrow ride</source>
+        <source>Green 60% for narrow ride (extra)</source>
         <comment>Color 20</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Green 30% for narrow ride</source>
+        <source>Green 30% for narrow ride (extra)</source>
         <comment>Color 21</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>White over green</source>
+        <source>Yellow 100% + Green 50% </source>
         <comment>Color 22</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Yellow 100%/Green 50%</source>
+        <source>Green 100% area symbols</source>
         <comment>Color 23</comment>
-        <translation>Flava 100%/Verda 50%</translation>
+        <translation type="unfinished">Flava 100%/Verda 50%</translation>
     </message>
     <message>
-        <source>Black 35% (Grey)</source>
+        <source>Green 60% area symbols</source>
         <comment>Color 24</comment>
         <translation type="unfinished">Nigra 25% (griza)</translation>
     </message>
     <message>
-        <source>Dark green line symbols </source>
+        <source>Green 30% area symbols</source>
         <comment>Color 25</comment>
         <translation type="unfinished">Verda 100%/Nigra 50%</translation>
     </message>
     <message>
-        <source>Green 100% for area features</source>
+        <source>Black 35% area symbols</source>
         <comment>Color 26</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Green 60%</source>
+        <source>Green 100% below green areas (extra)</source>
         <comment>Color 27</comment>
-        <translation>Verda 60%</translation>
+        <translation type="unfinished">Verda 60%</translation>
     </message>
     <message>
-        <source>Green 30%</source>
+        <source>White over yellow</source>
         <comment>Color 28</comment>
-        <translation>Verda 30%</translation>
+        <translation type="unfinished">Verda 30%</translation>
     </message>
     <message>
-        <source>Green 100% for undergrowth</source>
+        <source>Black for cultivated land and sandy ground </source>
         <comment>Color 29</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>White over yellow</source>
+        <source>Yellow 100% area symbols</source>
         <comment>Color 30</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Black for open land</source>
+        <source>Yellow 75% area symbols</source>
         <comment>Color 31</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Yellow</source>
+        <source>Yellow 50%</source>
         <comment>Color 32</comment>
-        <translation>Flava</translation>
+        <translation>Flava 50%</translation>
     </message>
     <message>
-        <source>Yellow 100% for area features</source>
+        <source>OpenOrienteering Orange (extra)</source>
         <comment>Color 33</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Yellow 50%</source>
-        <comment>Color 34</comment>
-        <translation>Flava 50%</translation>
     </message>
     <message>
         <source>Contour</source>
@@ -2562,6 +2557,86 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Markemblemo de la OpenOrienteering.</translation>
     </message>
     <message>
+        <source>Green 100% bellow green areas (extra)</source>
+        <comment>Color 27</comment>
+        <translation type="obsolete">Verda 60%</translation>
+    </message>
+    <message>
+        <source>Green 100%</source>
+        <comment>Color 3</comment>
+        <translation type="obsolete">Verda 100%</translation>
+    </message>
+    <message>
+        <source>Blue 100%</source>
+        <comment>Color 5</comment>
+        <translation type="obsolete">Blua 100%</translation>
+    </message>
+    <message>
+        <source>Brown 100%</source>
+        <comment>Color 6</comment>
+        <translation type="obsolete">Bruna 100%</translation>
+    </message>
+    <message>
+        <source>Black 50%</source>
+        <comment>Color 9</comment>
+        <translation type="obsolete">Nigra 50%</translation>
+    </message>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 10</comment>
+        <translation type="obsolete">Nigra 20%</translation>
+    </message>
+    <message>
+        <source>Blue 70%</source>
+        <comment>Color 16</comment>
+        <translation type="obsolete">Blua 70%</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 17</comment>
+        <translation type="obsolete">Blua 50%</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 18</comment>
+        <translation type="obsolete">OpenOrienteering oranĝkolora</translation>
+    </message>
+    <message>
+        <source>Yellow 100%/Green 50%</source>
+        <comment>Color 23</comment>
+        <translation type="obsolete">Flava 100%/Verda 50%</translation>
+    </message>
+    <message>
+        <source>Black 35% (Grey)</source>
+        <comment>Color 24</comment>
+        <translation type="obsolete">Nigra 25% (griza)</translation>
+    </message>
+    <message>
+        <source>Dark green line symbols </source>
+        <comment>Color 25</comment>
+        <translation type="obsolete">Verda 100%/Nigra 50%</translation>
+    </message>
+    <message>
+        <source>Green 60%</source>
+        <comment>Color 27</comment>
+        <translation type="obsolete">Verda 60%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 28</comment>
+        <translation type="obsolete">Verda 30%</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 32</comment>
+        <translation type="obsolete">Flava</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 34</comment>
+        <translation type="obsolete">Flava 50%</translation>
+    </message>
+    <message>
         <source>Black 65%</source>
         <comment>Color 9</comment>
         <translation type="obsolete">Nigra 65%</translation>
@@ -3413,12 +3488,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bruna 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nigra 65%</translation>
     </message>
     <message>
         <source>Purple 50%</source>
@@ -3473,7 +3548,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Blua 70%</translation>
     </message>
     <message>
         <source>Blue 70%</source>
@@ -3498,7 +3573,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>White over green</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Flava 100%/Verda 50%</translation>
     </message>
     <message>
         <source>Green 50%/Yellow 100%</source>
@@ -3533,7 +3608,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>White over yellow</source>
         <comment>Color 28</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verda 30%</translation>
     </message>
     <message>
         <source>Black for open land</source>
@@ -8177,134 +8252,134 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Black 100%</source>
+        <source>Upper purple for course overprint</source>
         <comment>Color 3</comment>
+        <translation type="unfinished">Nigra 100%</translation>
+    </message>
+    <message>
+        <source>White for railroad</source>
+        <comment>Color 4</comment>
+        <translation type="unfinished">Verda 100%</translation>
+    </message>
+    <message>
+        <source>Black 100%</source>
+        <comment>Color 5</comment>
         <translation>Nigra 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
-        <comment>Color 4</comment>
+        <comment>Color 6</comment>
         <translation>Verda 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
-        <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <comment>Color 7</comment>
+        <translation type="unfinished">Bruna 100%</translation>
     </message>
     <message>
         <source>Blue 100%</source>
-        <comment>Color 6</comment>
+        <comment>Color 8</comment>
         <translation>Blua 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
-        <comment>Color 7</comment>
+        <comment>Color 9</comment>
         <translation>Bruna 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
-        <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Black below purple for track symbols</source>
-        <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Black 65%</source>
         <comment>Color 10</comment>
         <translation type="unfinished">Nigra 65%</translation>
     </message>
     <message>
-        <source>Black 50%</source>
+        <source>Black below purple for track symbols</source>
         <comment>Color 11</comment>
-        <translation>Nigra 50%</translation>
+        <translation type="unfinished">Nigra 50%</translation>
+    </message>
+    <message>
+        <source>Black 65%</source>
+        <comment>Color 12</comment>
+        <translation type="unfinished">Nigra 65%</translation>
     </message>
     <message>
         <source>Black 20%</source>
-        <comment>Color 12</comment>
+        <comment>Color 13</comment>
         <translation>Nigra 20%</translation>
     </message>
     <message>
         <source>Upper brown 50%</source>
-        <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Black below upper brown 50%</source>
         <comment>Color 14</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Lower brown 50%</source>
+        <source>Black below upper brown 50%</source>
         <comment>Color 15</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Black below lower brown 50%</source>
+        <source>Lower brown 50%</source>
         <comment>Color 16</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Blue 100% for area features</source>
+        <source>Black below lower brown 50%</source>
         <comment>Color 17</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Blue 70%</source>
+        <source>Blue 100% for area features</source>
         <comment>Color 18</comment>
+        <translation type="unfinished">Blua 70%</translation>
+    </message>
+    <message>
+        <source>Blue 70%</source>
+        <comment>Color 19</comment>
         <translation>Blua 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
-        <comment>Color 19</comment>
+        <comment>Color 20</comment>
         <translation>Blua 50%</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
-        <comment>Color 20</comment>
+        <comment>Color 21</comment>
         <translation>OpenOrienteering oranĝkolora</translation>
     </message>
     <message>
         <source>Yellow 100% for narrow ride</source>
-        <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Green 60% for narrow ride</source>
         <comment>Color 22</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Green 30% for narrow ride</source>
+        <source>Green 60% for narrow ride</source>
         <comment>Color 23</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>White over green</source>
+        <source>Green 30% for narrow ride</source>
         <comment>Color 24</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Yellow 100%/Green 50%</source>
+        <source>White over green</source>
         <comment>Color 25</comment>
+        <translation type="unfinished">Flava 100%/Verda 50%</translation>
+    </message>
+    <message>
+        <source>Yellow 100%/Green 50%</source>
+        <comment>Color 26</comment>
         <translation>Flava 100%/Verda 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
-        <comment>Color 26</comment>
+        <comment>Color 27</comment>
         <translation type="unfinished">Nigra 25% (griza)</translation>
     </message>
     <message>
         <source>Green 100%/Black 50%</source>
-        <comment>Color 27</comment>
-        <translation type="unfinished">Verda 100%/Nigra 50%</translation>
-    </message>
-    <message>
-        <source>Black 35% (Grey)</source>
         <comment>Color 28</comment>
-        <translation type="unfinished">Nigra 25% (griza)</translation>
+        <translation type="unfinished">Verda 100%/Nigra 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -8329,7 +8404,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>White over yellow</source>
         <comment>Color 33</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verda 30%</translation>
     </message>
     <message>
         <source>Black for open land</source>
@@ -8350,6 +8425,146 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <source>Yellow 50%</source>
         <comment>Color 37</comment>
         <translation>Flava 50%</translation>
+    </message>
+    <message>
+        <source>Blue 100% point symbols</source>
+        <comment>Color 38</comment>
+        <translation type="unfinished">Verda 100%</translation>
+    </message>
+    <message>
+        <source>Brown 100% point symbols </source>
+        <comment>Color 39</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Green 100% point symbols</source>
+        <comment>Color 40</comment>
+        <translation type="unfinished">Blua 100%</translation>
+    </message>
+    <message>
+        <source>Blue 100% line symbols</source>
+        <comment>Color 41</comment>
+        <translation type="unfinished">Bruna 100%</translation>
+    </message>
+    <message>
+        <source>Brown 100% line symbols </source>
+        <comment>Color 42</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lower purple for course overprint</source>
+        <comment>Color 43</comment>
+        <translation type="unfinished">Nigra 50%</translation>
+    </message>
+    <message>
+        <source>Brown 50% for road infill</source>
+        <comment>Color 44</comment>
+        <translation type="unfinished">Nigra 20%</translation>
+    </message>
+    <message>
+        <source>Black 100% for road outline</source>
+        <comment>Color 45</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Black 50% for large buildings and tramway</source>
+        <comment>Color 46</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Black 20% for canopy</source>
+        <comment>Color 47</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue 100% area symbols</source>
+        <comment>Color 48</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue 70% area symbols</source>
+        <comment>Color 49</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blue 50% area symbols</source>
+        <comment>Color 50</comment>
+        <translation type="unfinished">Blua 70%</translation>
+    </message>
+    <message>
+        <source>White over green and brown</source>
+        <comment>Color 51</comment>
+        <translation type="unfinished">Blua 50%</translation>
+    </message>
+    <message>
+        <source>Brown 50% for paved area</source>
+        <comment>Color 52</comment>
+        <translation type="unfinished">OpenOrienteering oranĝkolora</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for narrow ride (extra)</source>
+        <comment>Color 53</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Green 30% for narrow ride (extra)</source>
+        <comment>Color 54</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yellow 100% + Green 50% </source>
+        <comment>Color 55</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Green 100% area symbols</source>
+        <comment>Color 56</comment>
+        <translation type="unfinished">Flava 100%/Verda 50%</translation>
+    </message>
+    <message>
+        <source>Green 30% area symbols</source>
+        <comment>Color 57</comment>
+        <translation type="unfinished">Verda 100%/Nigra 50%</translation>
+    </message>
+    <message>
+        <source>Black 35% area symbols</source>
+        <comment>Color 58</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Green 100% below green areas (extra)</source>
+        <comment>Color 59</comment>
+        <translation type="unfinished">Verda 60%</translation>
+    </message>
+    <message>
+        <source>White over yellow</source>
+        <comment>Color 60</comment>
+        <translation type="unfinished">Verda 30%</translation>
+    </message>
+    <message>
+        <source>Black for cultivated land and sandy ground </source>
+        <comment>Color 61</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yellow 100% area symbols</source>
+        <comment>Color 62</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yellow 75% area symbols</source>
+        <comment>Color 63</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 64</comment>
+        <translation>Flava 50%</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange (extra)</source>
+        <comment>Color 65</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Contour</source>
@@ -9913,6 +10128,81 @@ A route which is out-of-bounds and forbidden to cross is shown with a zigzag. Th
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
         <translation>Markemblemo de la OpenOrienteering.</translation>
+    </message>
+    <message>
+        <source>Green 100% bellow green areas (extra)</source>
+        <comment>Color 59</comment>
+        <translation type="obsolete">Verda 60%</translation>
+    </message>
+    <message>
+        <source>Black 100%</source>
+        <comment>Color 3</comment>
+        <translation type="obsolete">Nigra 100%</translation>
+    </message>
+    <message>
+        <source>Green 100%</source>
+        <comment>Color 4</comment>
+        <translation type="obsolete">Verda 100%</translation>
+    </message>
+    <message>
+        <source>Blue 100%</source>
+        <comment>Color 6</comment>
+        <translation type="obsolete">Blua 100%</translation>
+    </message>
+    <message>
+        <source>Brown 100%</source>
+        <comment>Color 7</comment>
+        <translation type="obsolete">Bruna 100%</translation>
+    </message>
+    <message>
+        <source>Black 65%</source>
+        <comment>Color 10</comment>
+        <translation type="obsolete">Nigra 65%</translation>
+    </message>
+    <message>
+        <source>Black 50%</source>
+        <comment>Color 11</comment>
+        <translation type="obsolete">Nigra 50%</translation>
+    </message>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 12</comment>
+        <translation type="obsolete">Nigra 20%</translation>
+    </message>
+    <message>
+        <source>Blue 70%</source>
+        <comment>Color 18</comment>
+        <translation type="obsolete">Blua 70%</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 19</comment>
+        <translation type="obsolete">Blua 50%</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 20</comment>
+        <translation type="obsolete">OpenOrienteering oranĝkolora</translation>
+    </message>
+    <message>
+        <source>Yellow 100%/Green 50%</source>
+        <comment>Color 25</comment>
+        <translation type="obsolete">Flava 100%/Verda 50%</translation>
+    </message>
+    <message>
+        <source>Black 25% (Grey)</source>
+        <comment>Color 26</comment>
+        <translation type="obsolete">Nigra 25% (griza)</translation>
+    </message>
+    <message>
+        <source>Green 100%/Black 50%</source>
+        <comment>Color 27</comment>
+        <translation type="obsolete">Verda 100%/Nigra 50%</translation>
+    </message>
+    <message>
+        <source>Black 35% (Grey)</source>
+        <comment>Color 28</comment>
+        <translation type="obsolete">Nigra 25% (griza)</translation>
     </message>
 </context>
 <context>
