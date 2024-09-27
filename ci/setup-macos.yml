@@ -42,10 +42,13 @@ steps:
     $(ANDROID_HOME)/tools/bin/sdkmanager --install "platforms;android-28"
     $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-35" || true
     $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-34-ext12" || true
+    $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-34-ext11" || true
+    $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-34-ext10" || true
     $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-34-ext8" || true
     $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-34" || true
     $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-33-ext5" || true
     $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-33-ext4" || true
+    $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-33" || true
     $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-32" || true
     $(ANDROID_HOME)/tools/bin/sdkmanager --uninstall "platforms;android-31" || true
   displayName: 'Prepare macOS build tools'
