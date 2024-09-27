@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2022 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -252,6 +252,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	mid_symbol_widget_list = {
 	    mid_symbol_placement_label, mid_symbol_placement_combo,
 	    mid_symbol_per_spot_label, mid_symbol_per_spot_edit,
+	    mid_symbol_distance_label, mid_symbol_distance_edit,
 	    show_at_least_one_symbol_check,
 	};
 	
@@ -717,8 +718,9 @@ void LineSymbolSettings::updateStates()
 	{
 		mid_symbol_widget->setEnabled(!symbol->mid_symbol->isEmpty());
 	}
-	mid_symbol_distance_label->setEnabled(mid_symbol_distance_label->isEnabled() && symbol->mid_symbols_per_spot > 1);
-	mid_symbol_distance_edit->setEnabled(mid_symbol_distance_edit->isEnabled() && symbol->mid_symbols_per_spot > 1);
+	const bool mid_symbol_distance_enabled = !symbol->mid_symbol->isEmpty() && symbol->mid_symbols_per_spot > 1;
+	mid_symbol_distance_label->setEnabled(mid_symbol_distance_enabled);
+	mid_symbol_distance_edit->setEnabled(mid_symbol_distance_enabled);
 	
 	const bool border_active = symbol_active && symbol->have_border_lines;
 	for (auto border_widget : border_widget_list)
