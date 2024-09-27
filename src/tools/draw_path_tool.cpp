@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2020, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -30,8 +30,8 @@
 #include <QColor>
 #include <QCursor>
 #include <QFlags>
-#include <QLatin1String>
 #include <QKeyEvent>
+#include <QLatin1String>
 #include <QLineF>
 #include <QLocale>
 #include <QMouseEvent>
@@ -51,10 +51,9 @@
 #include "core/path_coord.h"
 #include "core/virtual_coord_vector.h"
 #include "core/virtual_path.h"
-#include "core/symbols/line_symbol.h"
-#include "core/symbols/symbol.h"
 #include "core/objects/object.h"
 #include "core/renderables/renderable.h"
+#include "core/symbols/symbol.h"
 #include "gui/modifier_key.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
@@ -1119,19 +1118,13 @@ void DrawPathTool::updateDashPointDrawing()
 	if (is_helper_tool)
 		return;
 	
-	Symbol* symbol = editor->activeSymbol();
-	if (symbol && symbol->getType() == Symbol::Line)
+	// Auto-activate dash points depending on if the selected symbol has a dash symbol.
+	if (editor->activeSymbol()->containsDashSymbol())
 	{
-		// Auto-activate dash points depending on if the selected symbol has a dash symbol.
-		// TODO: instead of just looking if it is a line symbol with dash points,
-		// could also check for combined symbols containing lines with dash points
-		draw_dash_points = (symbol->asLine()->getDashSymbol());
-		
+		draw_dash_points = true;
 		updateStatusText();
 	}
-	else if (symbol &&
-		(symbol->getType() == Symbol::Area ||
-		 symbol->getType() == Symbol::Combined))
+	else
 	{
 		draw_dash_points = false;
 	}

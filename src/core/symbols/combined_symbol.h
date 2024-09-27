@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -116,6 +116,8 @@ public:
 	
 	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	
+	bool containsDashSymbol() const override;
+	
 protected:
 	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
 	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version) override;
@@ -131,4 +133,4 @@ protected:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif  // OPENORIENTEERING_COMBINED_SYMBOL_H

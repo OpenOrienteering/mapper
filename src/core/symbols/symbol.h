@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -495,9 +495,14 @@ public:
 	bool isRotatable() const { return is_rotatable; }
 	
 	/**
-	 * Returns if the objects has fill patterns which can be rotated in arbitrary directions.
+	 * Returns if objects with this symbol have fill patterns which can be rotated in arbitrary directions.
 	 */
 	virtual bool hasRotatableFillPattern() const;
+	
+	/**
+	 * Returns if this symbol contains a dash symbol.
+	 */
+	virtual bool containsDashSymbol() const;
 	
 protected:
 	/**
@@ -656,4 +661,4 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Symbol::TypeCombination)
 Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Symbol::RenderableOptions)
 
 
-#endif
+#endif  // OPENORIENTEERING_SYMBOL_H
