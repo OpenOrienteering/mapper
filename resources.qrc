@@ -26,6 +26,7 @@
         <file>images/cursor-georeferencing-move.png</file>
         <file>images/cursor-hollow.png</file>
         <file>images/cursor-invisible.png</file>
+        <file>images/cursor-move-parallel.png</file>
         <file>images/cursor-rotate.png</file>
         <file>images/cursor-scale.png</file>
         <file>images/cut.png</file>
@@ -102,6 +103,7 @@
         <file>images/tool-fill-border.png</file>
         <file>images/tool-gps-display.png</file>
         <file>images/tool-measure.png</file>
+        <file>images/tool-move-parallel.png</file>
         <file>images/tool-rotate.png</file>
         <file>images/tool-rotate-pattern.png</file>
         <file>images/tool-scale.png</file>
