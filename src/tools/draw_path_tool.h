@@ -152,6 +152,10 @@ protected:
 	std::unique_ptr<SnappingToolHelper> snap_helper;
 	
 	PathObject* append_to_object;
+	std::unique_ptr<PathObject> followed_path;
+	std::unique_ptr<LineSymbol> covering_white_line;
+	std::unique_ptr<LineSymbol> covering_red_line;
+	std::unique_ptr<CombinedSymbol> follow_highlight_symbol;
 	
 	std::unique_ptr<FollowPathToolHelper> follow_helper;
 	MapCoordVector::size_type follow_start_index;
