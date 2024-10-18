@@ -64,7 +64,8 @@ steps:
     buildVersionToDownload: 'specific'
     pipelineId: 2865
 #    pipelineId: $(openorienteering.superbuild.buildId)
-    definition: 1
+    definition: $(openorienteering.superbuild.definitionId)
+#    definition: 1
     artifactName: 'superbuild-$(SUPBERBUILD_IMAGE_NAME)$(OUTPUT_SUFFIX)'
     targetPath: $(SUPERBUILD_INSTALL_DIR)
   displayName: 'Download superbuild artifacts'
