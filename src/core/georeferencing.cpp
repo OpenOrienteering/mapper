@@ -542,7 +542,6 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	projected_ref_point      = other.projected_ref_point;
 	from_projected           = other.from_projected;
 	to_projected             = other.to_projected;
-	projected_ref_point      = other.projected_ref_point;
 	projected_crs_id         = other.projected_crs_id;
 	projected_crs_spec       = other.projected_crs_spec;
 	projected_crs_parameters = other.projected_crs_parameters;
