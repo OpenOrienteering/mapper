@@ -55,6 +55,7 @@ jobs:
   dependsOn: Release_Notes
   variables:
     IMAGE_NAME: 'macos-13'
+    MACOSX_DEPLOYMENT_TARGET: '11.7'
     SUPBERBUILD_IMAGE_NAME: 'macos-13'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     QT_STYLE_OVERRIDE: fusion
