@@ -56,7 +56,7 @@ jobs:
   variables:
     IMAGE_NAME: 'macos-13'
     MACOSX_DEPLOYMENT_TARGET: '11.7'
-    SUPBERBUILD_IMAGE_NAME: 'macos-13'
+    SUPERBUILD_IMAGE_NAME: 'macos-13'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     QT_STYLE_OVERRIDE: fusion
   pool:
@@ -101,7 +101,7 @@ jobs:
   condition: succeededOrFailed()
   variables:
     IMAGE_NAME: 'ubuntu-20.04'
-    SUPBERBUILD_IMAGE_NAME: $(IMAGE_NAME)
+    SUPERBUILD_IMAGE_NAME: $(IMAGE_NAME)
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     ENABLE_PDF_MANUAL: 1
   pool:
@@ -129,7 +129,7 @@ jobs:
   condition: succeededOrFailed()
   variables:
     IMAGE_NAME: 'ubuntu-20.04'
-    SUPBERBUILD_IMAGE_NAME: $(IMAGE_NAME)
+    SUPERBUILD_IMAGE_NAME: $(IMAGE_NAME)
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     CC: gcc
     CFLAGS: -fprofile-arcs -ftest-coverage
@@ -157,7 +157,7 @@ jobs:
   dependsOn: Release_Notes
   variables:
     IMAGE_NAME: 'macos-13'
-    SUPBERBUILD_IMAGE_NAME: 'macos-13'
+    SUPERBUILD_IMAGE_NAME: 'macos-13'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: armv7a-linux-androideabi
     TARGET_SUFFIX: -$(TARGET)
@@ -195,7 +195,7 @@ jobs:
   dependsOn: Android_armv7
   variables:
     IMAGE_NAME: 'macos-13'
-    SUPBERBUILD_IMAGE_NAME: 'macos-13'
+    SUPERBUILD_IMAGE_NAME: 'macos-13'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: aarch64-linux-android
     TARGET_SUFFIX: -$(TARGET)
@@ -233,7 +233,7 @@ jobs:
   dependsOn: Android_x86_64
   variables:
     IMAGE_NAME: 'macos-13'
-    SUPBERBUILD_IMAGE_NAME: 'macos-13'
+    SUPERBUILD_IMAGE_NAME: 'macos-13'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: i686-linux-android
     TARGET_SUFFIX: -$(TARGET)
@@ -271,7 +271,7 @@ jobs:
   dependsOn: Release_Notes
   variables:
     IMAGE_NAME: 'macos-13'
-    SUPBERBUILD_IMAGE_NAME: 'macos-13'
+    SUPERBUILD_IMAGE_NAME: 'macos-13'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: x86_64-linux-android
     TARGET_SUFFIX: -$(TARGET)
@@ -311,7 +311,7 @@ jobs:
   condition: False
   variables:
     IMAGE_NAME: 'ubuntu-20.04'
-    SUPBERBUILD_IMAGE_NAME: $(IMAGE_NAME)
+    SUPERBUILD_IMAGE_NAME: $(IMAGE_NAME)
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: x86_64-w64-mingw32
     TARGET_SUFFIX: -$(TARGET)
@@ -342,7 +342,7 @@ jobs:
   timeoutInMinutes: 90
   variables:
     IMAGE_NAME: 'windows-2019'
-    SUPBERBUILD_IMAGE_NAME: $(IMAGE_NAME)
+    SUPERBUILD_IMAGE_NAME: $(IMAGE_NAME)
     SUPERBUILD_INSTALL_DIR: 'C:/msys2'
     MINGW: mingw32
     OUTPUT_SUFFIX: '-$(MINGW)'
@@ -370,7 +370,7 @@ jobs:
   timeoutInMinutes: 90
   variables:
     IMAGE_NAME: 'windows-2019'
-    SUPBERBUILD_IMAGE_NAME: $(IMAGE_NAME)
+    SUPERBUILD_IMAGE_NAME: $(IMAGE_NAME)
     SUPERBUILD_INSTALL_DIR: 'C:/msys2'
     MINGW: mingw64
     OUTPUT_SUFFIX: '-$(MINGW)'
