@@ -1,6 +1,6 @@
 # This file is part of OpenOrienteering.
 
-# Copyright 2019 Kai Pastor
+# Copyright 2019-2021, 2023, 2024 Kai Pastor
 #
 # Redistribution and use is allowed according to the terms of the BSD license:
 #
@@ -54,8 +54,8 @@ jobs:
   displayName: macOS (Release)
   dependsOn: Release_Notes
   variables:
-    IMAGE_NAME: 'macos-12'
-    SUPBERBUILD_IMAGE_NAME: 'macos-12'
+    IMAGE_NAME: 'macos-13'
+    SUPBERBUILD_IMAGE_NAME: 'macos-13'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     QT_STYLE_OVERRIDE: fusion
   pool:
@@ -155,11 +155,12 @@ jobs:
   displayName: Android arm-v7 (Release)
   dependsOn: Release_Notes
   variables:
-    IMAGE_NAME: 'macos-12'
-    SUPBERBUILD_IMAGE_NAME: 'macos-12'
+    IMAGE_NAME: 'macos-13'
+    SUPBERBUILD_IMAGE_NAME: 'macos-13'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: armv7a-linux-androideabi
     TARGET_SUFFIX: -$(TARGET)
+    ANDROID_API_VERSION: android-29
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
@@ -192,11 +193,12 @@ jobs:
   displayName: Android arm64 (Release)
   dependsOn: Android_armv7
   variables:
-    IMAGE_NAME: 'macos-12'
-    SUPBERBUILD_IMAGE_NAME: 'macos-12'
+    IMAGE_NAME: 'macos-13'
+    SUPBERBUILD_IMAGE_NAME: 'macos-13'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: aarch64-linux-android
     TARGET_SUFFIX: -$(TARGET)
+    ANDROID_API_VERSION: android-29
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
@@ -229,11 +231,12 @@ jobs:
   displayName: Android x86 (Release)
   dependsOn: Android_x86_64
   variables:
-    IMAGE_NAME: 'macos-12'
-    SUPBERBUILD_IMAGE_NAME: 'macos-12'
+    IMAGE_NAME: 'macos-13'
+    SUPBERBUILD_IMAGE_NAME: 'macos-13'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: i686-linux-android
     TARGET_SUFFIX: -$(TARGET)
+    ANDROID_API_VERSION: android-29
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
@@ -266,11 +269,12 @@ jobs:
   displayName: Android x86_64 (Release)
   dependsOn: Release_Notes
   variables:
-    IMAGE_NAME: 'macos-12'
-    SUPBERBUILD_IMAGE_NAME: 'macos-12'
+    IMAGE_NAME: 'macos-13'
+    SUPBERBUILD_IMAGE_NAME: 'macos-13'
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: x86_64-linux-android
     TARGET_SUFFIX: -$(TARGET)
+    ANDROID_API_VERSION: android-29
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
