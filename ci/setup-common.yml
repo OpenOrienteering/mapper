@@ -54,8 +54,12 @@ steps:
     env | sort
   displayName: 'Update environment'
 
-- task: DownloadPipelineArtifact@0
+- task: DownloadPipelineArtifact@2
   inputs:
+    buildType: 'specific'
+    project: $(System.TeamProject)
+    definition: $(openorienteering.superbuild.definitionId)
+    buildVersionToDownload: 'specific'
     pipelineId: $(openorienteering.superbuild.buildId)
     artifactName: 'superbuild-$(SUPBERBUILD_IMAGE_NAME)$(OUTPUT_SUFFIX)'
     targetPath: $(SUPERBUILD_INSTALL_DIR)
