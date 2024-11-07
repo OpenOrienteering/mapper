@@ -156,16 +156,12 @@ private:
 	 */
 	QString makeTextReport() const;
 	
-	/**
-	 * Takes a pointer to a symbol and returns a string consisting of the symbol's number and name.
-	 */
-	const QString getFullSymbolName(const Symbol* symbol) const;
 	
 	const Map* map;
 	const MainWindow* main_window;
 	
 	std::vector<TreeItem> tree_items;
-	QTreeWidget* map_info_tree;
+	QTreeWidget* map_info_tree = nullptr;
 	std::vector<QTreeWidgetItem*> tree_item_hierarchy;
 	
 	int max_item_length;

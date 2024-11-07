@@ -133,7 +133,7 @@ void MapInformationDialog::retrieveInformation()
 				{
 					if (symbol->containsColor(map_color))
 					{
-						color.symbols.push_back({getFullSymbolName(symbol)});
+						color.symbols.push_back({symbol->getNumberAndPlainTextName()});
 					}
 				}
 			}
@@ -209,7 +209,7 @@ void MapInformationDialog::addSymbol(const Symbol* symbol)
 				colors.push_back({map_color->getName()});
 			}
 		}
-		objects_vector.push_back({symbol, undefined_object ? tr("<undefined>") : getFullSymbolName(symbol), 1, colors});
+		objects_vector.push_back({symbol, undefined_object ? tr("<undefined>") : symbol->getNumberAndPlainTextName(), 1, colors});
 	}
 	++object_category.category.num;
 }
@@ -329,13 +329,9 @@ void MapInformationDialog::setupTreeWidget()
 		for (; tree_depth > tree_item.level; --tree_depth)
 			tree_item_hierarchy.pop_back();
 	
-		QTreeWidgetItem* tree_widget_item;
-		if (tree_depth)
-			tree_widget_item = new QTreeWidgetItem(tree_item_hierarchy.back());
-		else
-			tree_widget_item = new QTreeWidgetItem(map_info_tree);
+		auto* tree_widget_item = new QTreeWidgetItem (tree_depth ? tree_item_hierarchy.back() : map_info_tree->invisibleRootItem());
 		tree_widget_item->setText(0, tree_item.item);
-		tree_widget_item->setText(1, tree_item.value);	
+		tree_widget_item->setText(1, tree_item.value);
 		tree_item_hierarchy.emplace_back(tree_widget_item);	// always store last tree item
 	}
 }
@@ -386,10 +382,5 @@ void MapInformationDialog::save()
 	                     .arg(filepath, file.errorString()) );
 }
 
-inline
-const QString MapInformationDialog::getFullSymbolName(const Symbol* symbol) const
-{
-	return (symbol->getNumberAsString() + QStringLiteral("  ") + symbol->getPlainTextName());
-}
 
 }  // namespace OpenOrienteering
