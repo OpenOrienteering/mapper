@@ -2431,7 +2431,7 @@ void MapEditorController::selectedSymbolsChanged()
 			symbol_button->setMenu(mobile_symbol_button_menu);
 			const auto actions = mobile_symbol_button_menu->actions();
 			int i = 0;
-			actions[i]->setText(symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getPlainTextName());
+			actions[i]->setText(symbol->getNumberAndPlainTextName());
 			actions[++i]->setVisible(!symbol->getDescription().isEmpty());
 			++i;  // separator
 			actions[++i]->setChecked(symbol->isHidden());
@@ -2456,7 +2456,7 @@ void MapEditorController::selectedSymbolsChanged()
 		}
 		
 		if (symbol)
-			window->showStatusBarMessage(symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getPlainTextName(), 1000);
+			window->showStatusBarMessage(symbol->getNumberAndPlainTextName(), 1000);
 	}
 	
 	// Even when the symbol (pointer) hasn't changed,
@@ -2630,7 +2630,7 @@ void MapEditorController::updateObjectDependentActions()
 	bool const boolean_prerequisite = first_selected_is_path && num_selected_paths >= 2;
 	QString const extra_status_tip = QLatin1Char(' ') +
 	                                 ( boolean_prerequisite
-	                                 ? tr("Resulting symbol: %1 %2.").arg(first_selected_symbol->getNumberAsString(), first_selected_symbol->getPlainTextName())
+	                                 ? tr("Resulting symbol: %1.").arg(first_selected_symbol->getNumberAndPlainTextName())
 	                                 : tr("Select at least two area or path objects activate this tool.") );
 	boolean_union_act->setEnabled(boolean_prerequisite);
 	boolean_union_act->setStatusTip(tr("Unify overlapping objects.") + extra_status_tip);

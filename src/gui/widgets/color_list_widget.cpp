@@ -237,7 +237,7 @@ bool ColorListWidget::confirmColorDeletion(const MapColor* color_to_be_removed) 
 				if (symbol->getType() == Symbol::NoSymbol)
 					return;
 				if (symbol->containsColor(color_to_be_removed))
-					direct_usage += symbol->getNumberAsString() + QChar::Space + symbol->getPlainTextName() + QChar::LineFeed;
+					direct_usage += symbol->getNumberAndPlainTextName() + QChar::LineFeed;
 				else
 					remaining_symbols.push_back(symbol);
 			}
@@ -277,7 +277,7 @@ bool ColorListWidget::confirmColorDeletion(const MapColor* color_to_be_removed) 
 				{
 					if (symbol->containsColor(color))
 					{
-						transitive_usage += symbol->getNumberAsString() + QChar::Space + symbol->getPlainTextName() + QChar::LineFeed;
+						transitive_usage += symbol->getNumberAndPlainTextName() + QChar::LineFeed;
 						break;
 					}
 				}
