@@ -336,6 +336,7 @@ MapEditorController::~MapEditorController()
 	delete gps_display;
 	delete gps_track_recorder;
 	delete compass_display;
+	delete gps_marker_display;
 	delete map;
 }
 
