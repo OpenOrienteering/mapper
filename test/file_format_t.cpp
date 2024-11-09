@@ -164,8 +164,8 @@ namespace
 		auto const fill_a = QString().fill(QChar::Space, +diff); \
 		auto const fill_b = QString().fill(QChar::Space, -diff); \
 		QFAIL(QString::fromLatin1( \
-		       "Compared values are not the same (%1 %2)\n   Actual   (%3)%4: %7\n   Expected (%5)%6: %8") \
-		      .arg((symbol).getNumberAsString(), (symbol).getPlainTextName(), \
+		       "Compared values are not the same (%1)\n   Actual   (%2)%3: %6\n   Expected (%4)%5: %7") \
+		      .arg((symbol).getNumberAndPlainTextName(), \
 		           QString::fromUtf8(#a), fill_a, \
 		           QString::fromUtf8(#b), fill_b) \
 		      .arg(a).arg(b) \
@@ -185,8 +185,7 @@ namespace
 	#define VERIFY_SYMBOL_PROPERTY(cond, symbol) \
 	if (cond) \
 	{ \
-		QVERIFY2(cond, QByteArray((symbol).getNumberAsString().toUtf8() + ' ' \
-		                          + (symbol).getPlainTextName().toUtf8())); \
+		QVERIFY2(cond, QByteArray((symbol).getNumberAndPlainTextName().toUtf8())); \
 	} \
 	else \
 	{ \
@@ -411,7 +410,7 @@ namespace
 		if (actual)
 			fuzzyCompareSymbol(*actual, *expected, format_id);
 		else
-			QFAIL(qPrintable(QString::fromLatin1("Missing symbol: %1 %2").arg(expected->getNumberAsString(), expected->getPlainTextName())));
+			QFAIL(qPrintable(QString::fromLatin1("Missing symbol: %1").arg(expected->getNumberAndPlainTextName())));
 	}
 	
 	/**
