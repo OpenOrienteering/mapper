@@ -1,7 +1,7 @@
 /*
  *    Copyright 2013-2022, 2024, 2025 Kai Pastor
- *    Copyright 2017-2024 Libor Pecháček
- *    Copyright 2021-2025 Matthias Kühlewein
+ *    Copyright 2017-2020 Libor Pecháček
+ *    Copyright 2021-2022, 2024, 2025 Matthias Kühlewein
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -114,9 +114,9 @@ OcdFileImport::OcdImportedPathObject::~OcdImportedPathObject() = default;
 OcdFileImport::OcdFileImport(const QString& path, Map* map, MapView* view)
  : Importer { path, map, view }
  , custom_8bit_encoding { codecFromSettings() }
- , graphic_objects_hidden(false)
- , layout_objects_hidden(false)
- , image_objects_displaymode(0)
+ , graphic_objects_hidden { false }
+ , layout_objects_hidden { false }
+ , image_objects_displaymode { 0 }
 {
 	if (!custom_8bit_encoding)
 	{
@@ -2092,9 +2092,9 @@ Symbol* OcdFileImport::getSpecialObjectSymbol(const O& ocd_object)
 		int num_colors = map->getNumColors();
 		for (int i = 0; i < num_colors; ++i)
 		{
-			auto map_cymk = map->getColor(i)->getCmyk();
-			if (map_cymk == cmyk)	// actually a fuzzy comparision
-				return const_cast<MapColor*>(map->getColor(i));
+			const auto* map_color = map->getColor(i);
+			if (map_color->getCmyk() == cmyk)	// actually a fuzzy comparision
+				return const_cast<MapColor*>(map_color);
 		}
 		auto new_color = new MapColor(tr("Imported layout or image object"), num_colors);
 		new_color->setCmyk(cmyk);
