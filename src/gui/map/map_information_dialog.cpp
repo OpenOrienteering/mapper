@@ -29,6 +29,7 @@
 #include <QDialogButtonBox>
 #include <QFileInfo>
 #include <QFontInfo>
+#include <QGuiApplication>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QIcon>
@@ -64,14 +65,14 @@ MapInformationDialog::MapInformationDialog(MainWindow* parent, Map* map)
 {
 	setWindowTitle(tr("Map information"));
 	
-	auto* save_button = new QPushButton(QIcon(QLatin1String(":/images/save.png")), tr("Save"));
-	auto* ok_button = new QPushButton(QIcon(QLatin1String(":/images/arrow-right.png")), tr("OK"));
-	ok_button->setDefault(true);
+	auto* save_button = new QPushButton(QIcon(QLatin1String(":/images/save.png")), tr("Save as..."));
+	auto* close_button = new QPushButton(QGuiApplication::translate("QPlatformTheme", "Close"));
+	close_button->setDefault(true);
 	
 	auto* buttons_layout = new QHBoxLayout();
 	buttons_layout->addWidget(save_button);
 	buttons_layout->addStretch(1);
-	buttons_layout->addWidget(ok_button);
+	buttons_layout->addWidget(close_button);
 	
 	map_info_tree = new QTreeWidget();
 	map_info_tree->setColumnCount(2);
@@ -90,7 +91,7 @@ MapInformationDialog::MapInformationDialog(MainWindow* parent, Map* map)
 	resize(650, 600);
 	
 	connect(save_button, &QAbstractButton::clicked, this, &MapInformationDialog::save);
-	connect(ok_button, &QAbstractButton::clicked, this, &QDialog::accept);
+	connect(close_button, &QAbstractButton::clicked, this, &QDialog::accept);
 }
 
 MapInformationDialog::~MapInformationDialog() = default;
