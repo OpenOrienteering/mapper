@@ -21,13 +21,17 @@
 
 #include <algorithm>
 #include <array>
+#include <initializer_list>
+#include <iterator>
+// IWYU pragma: no_include <memory>
 #include <vector>
 
 #include <Qt>
 #include <QtGlobal>
+#include <QAbstractButton>
 #include <QChar>
-#include <QDialogButtonBox>
 #include <QFileInfo>
+#include <QFlags>
 #include <QFontInfo>
 #include <QGuiApplication>
 #include <QHBoxLayout>
@@ -42,16 +46,16 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QVBoxLayout>
-#include <QWidget>
 
 #include "core/georeferencing.h"
 #include "core/map.h"
+#include "core/map_color.h"
+#include "core/map_part.h"
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
 #include "gui/file_dialog.h"
 #include "gui/main_window.h"
-#include "gui/map/map_editor.h"
 #include "undo/undo_manager.h"
 
 

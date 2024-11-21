@@ -29,7 +29,6 @@
 
 class QTreeWidget;
 class QTreeWidgetItem;
-class QWidget;
 
 namespace OpenOrienteering {
 
