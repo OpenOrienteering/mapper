@@ -45,6 +45,7 @@
 #include <QSaveFile>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
+#include <QVarLengthArray>
 #include <QVBoxLayout>
 
 #include "core/georeferencing.h"
@@ -239,7 +240,6 @@ void MapInformationDialog::addFont(const Symbol* symbol)
 // create textual information and put it in the tree widget
 void MapInformationDialog::buildTree()
 {
-	tree_item_hierarchy.reserve(4);
 	max_item_length = 0;
 	
 	addTreeItem(0, tr("Map"), tr("%n object(s)", nullptr, map_information.map_objects_num));
@@ -326,18 +326,19 @@ void MapInformationDialog::addTreeItem(const int level, const QString& item, con
 
 void MapInformationDialog::setupTreeWidget()
 {
+	QVarLengthArray<QTreeWidgetItem*, 5> tree_item_hierarchy;
+	tree_item_hierarchy.push_back(map_info_tree->invisibleRootItem());
+	
 	for (const auto &tree_item : tree_items)
 	{
-		auto tree_depth = static_cast<int>(tree_item_hierarchy.size());
-		Q_ASSERT(tree_item.level <= tree_depth);
+		auto const level = qMax(1, tree_item.level + 1);
+		if (tree_item_hierarchy.size() > tree_item.level)
+			tree_item_hierarchy.resize(level);
 	
-		for (; tree_depth > tree_item.level; --tree_depth)
-			tree_item_hierarchy.pop_back();
-	
-		auto* tree_widget_item = new QTreeWidgetItem (tree_depth ? tree_item_hierarchy.back() : map_info_tree->invisibleRootItem());
+		auto* tree_widget_item = new QTreeWidgetItem(tree_item_hierarchy.back());
 		tree_widget_item->setText(0, tree_item.item);
 		tree_widget_item->setText(1, tree_item.value);
-		tree_item_hierarchy.emplace_back(tree_widget_item);	// always store last tree item
+		tree_item_hierarchy.push_back(tree_widget_item);
 	}
 }
 

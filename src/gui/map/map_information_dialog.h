@@ -28,7 +28,6 @@
 #include <QString>
 
 class QTreeWidget;
-class QTreeWidgetItem;
 
 namespace OpenOrienteering {
 
@@ -161,7 +160,6 @@ private:
 	
 	std::vector<TreeItem> tree_items;
 	QTreeWidget* map_info_tree = nullptr;
-	std::vector<QTreeWidgetItem*> tree_item_hierarchy;
 	
 	int max_item_length;
 	const int text_report_indent;
