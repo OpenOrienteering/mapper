@@ -134,7 +134,7 @@ set(Mapper_Common_SRCS
   fileformats/ocd_icon.cpp
   fileformats/ocd_parameter_stream_reader.cpp
   fileformats/ocd_types.cpp
-  fileformats/simple_course_export.cpp
+  fileformats/course_export.cpp
   fileformats/xml_file_format.cpp
   
   gui/about_dialog.cpp
@@ -152,7 +152,7 @@ set(Mapper_Common_SRCS
   gui/print_widget.cpp
   gui/select_crs_dialog.cpp
   gui/settings_dialog.cpp
-  gui/simple_course_dialog.cpp
+  gui/course_dialog.cpp
   gui/task_dialog.cpp
   gui/text_browser_dialog.cpp
   gui/touch_cursor.cpp

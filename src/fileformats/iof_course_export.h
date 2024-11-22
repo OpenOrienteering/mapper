@@ -32,9 +32,10 @@ namespace OpenOrienteering {
 class LatLon;
 class Map;
 class MapView;
-class MapCoord;
+class MapCoordF;
+class ControlPoint;
 class PathObject;
-class SimpleCourseExport;
+class CourseExport;
 
 
 /**
@@ -58,13 +59,16 @@ public:
 protected:
 	bool exportImplementation() override;
 	
-	void writeXml(const PathObject& object);
+	//void writeXml(const PathObject& object);
+	void writeXml(const std::vector<ControlPoint>& controls);
 	
-	void writeControls(const std::vector<MapCoord>& coords);
+	//void writeControls(const std::vector<MapCoord>& coords);
+	void writeControls(const std::vector<ControlPoint>& controls);
 	
-	void writeCourse(const std::vector<MapCoord>& coords);
+	//void writeCourse(const std::vector<MapCoord>& coords);
+	void writeCourse(const std::vector<ControlPoint>& controls);
 	
-	void writeControl(const MapCoord& coord, const QString& id);
+	void writeControl(const MapCoordF& coord, const QString& id);
 	
 	void writeCourseControl(const QString& type, const QString& id);
 	
@@ -72,7 +76,7 @@ protected:
 	
 private:
 	QXmlStreamWriter* xml = nullptr;
-	SimpleCourseExport* simple_course = nullptr;
+	CourseExport* course = nullptr;
 };
 
 

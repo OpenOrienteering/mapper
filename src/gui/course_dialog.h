@@ -18,8 +18,8 @@
  */
 
 
-#ifndef OPENORIENTEERING_SIMPLE_COURSE_DIALOG_H
-#define OPENORIENTEERING_SIMPLE_COURSE_DIALOG_H
+#ifndef OPENORIENTEERING_COURSE_DIALOG_H
+#define OPENORIENTEERING_COURSE_DIALOG_H
 
 #include <QtGlobal>
 #include <QDialog>
@@ -33,23 +33,27 @@ class QWidget;
 
 namespace OpenOrienteering {
 
-class SimpleCourseExport;
+class CourseExport;
 
 
 /**
- * A dialog to provide extra information for simple course export.
+ * A dialog to provide extra information for course export.
  */
-class SimpleCourseDialog : public QDialog
+class CourseDialog : public QDialog
 {
 Q_OBJECT
 public:
-	~SimpleCourseDialog() override;
+	~CourseDialog() override;
 	
-	SimpleCourseDialog(const SimpleCourseExport& simple_course, QWidget* parent);
+	CourseDialog(const CourseExport& course, QWidget* parent);
 	
 	QString eventName() const;
 	
 	QString courseName() const;
+
+    QString startSymbolCode() const;
+
+    QString finishSymbolCode() const;
 	
 	int firstCodeNumber() const;
 	
@@ -57,16 +61,18 @@ protected:
 	void updateWidgets();
 	
 private:
-	const SimpleCourseExport& simple_course;
+	const CourseExport& course;
 	QLineEdit* event_name_edit;
 	QLineEdit* course_name_edit;
 	QSpinBox*  first_code_spinbox;
+    QLineEdit* start_symbol_code_edit;
+    QLineEdit* finish_symbol_code_edit;
 	QDialogButtonBox* button_box;
 	
-	Q_DISABLE_COPY(SimpleCourseDialog)
+	Q_DISABLE_COPY(CourseDialog)
 };
 
 
 }  // namespace OpenOrienteering
 
-#endif  // OPENORIENTEERING_SIMPLE_COURSE_DIALOG_H
+#endif  // OPENORIENTEERING_COURSE_DIALOG_H

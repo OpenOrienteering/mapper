@@ -112,13 +112,13 @@
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
-#include "fileformats/simple_course_export.h"
+#include "fileformats/course_export.h"
 #include "gui/configure_grid_dialog.h"
 #include "gui/file_dialog.h"
 #include "gui/georeferencing_dialog.h"
 #include "gui/main_window.h"
 #include "gui/print_widget.h"
-#include "gui/simple_course_dialog.h"
+#include "gui/course_dialog.h"
 #include "gui/text_browser_dialog.h"
 #include "gui/util_gui.h"
 #include "gui/map/map_dialog_scale.h"
@@ -963,7 +963,7 @@ void MapEditorController::createActions()
 #ifndef MAPPER_USE_GDAL
 	export_kmz_act->setVisible(false);
 #endif
-	export_simple_course_act = newAction("export-simple-course", tr("Simple &course"), this, SLOT(exportSimpleCourse()), nullptr, QString{}, "file_menu.html");
+	export_course_act = newAction("export-course", tr("Course"), this, SLOT(exportCourse()), nullptr, QString{}, "file_menu.html");
 	export_pdf_act = newAction("export-pdf", tr("&PDF"), print_act_mapper, SLOT(map()), nullptr, QString{}, "file_menu.html");
 	print_act_mapper->setMapping(export_pdf_act, PrintWidget::EXPORT_PDF_TASK);
 #ifdef MAPPER_USE_GDAL
@@ -976,7 +976,7 @@ void MapEditorController::createActions()
 	print_act = nullptr;
 	export_image_act = nullptr;
 	export_kmz_act = nullptr;
-	export_simple_course_act = nullptr;
+	export_course_act = nullptr;
 	export_pdf_act = nullptr;
 #endif
 	
@@ -1150,7 +1150,7 @@ void MapEditorController::createMenuAndToolbars()
 	export_menu->addAction(export_image_act);
 	export_menu->addAction(export_pdf_act);
 	export_menu->addAction(export_kmz_act);
-	export_menu->addAction(export_simple_course_act);
+	export_menu->addAction(export_course_act);
 	if (export_vector_act)
 		export_menu->addAction(export_vector_act);
 	file_menu->insertMenu(insertion_act, export_menu);
@@ -1799,18 +1799,17 @@ void MapEditorController::exportVectorData(int file_types, const QString& format
 }
 
 
-
-// slot
-void MapEditorController::exportSimpleCourse()
+//slot
+void MapEditorController::exportCourse()
 {
-	auto simple_export = SimpleCourseExport(*map);
-	if (!simple_export.canExport())
-	{
-		QMessageBox::warning(window, tr("Error"), simple_export.errorString());
-		return;
-	}
-	
-	SimpleCourseDialog course_dialog(simple_export, window);
+    auto course_export = CourseExport(*map);
+    if (!course_export.canExport())
+    {
+        QMessageBox::warning(window, tr("Error"), course_export.errorString());
+        return;
+    }
+
+	CourseDialog course_dialog(course_export, window);
 	if (course_dialog.exec() != QDialog::Accepted)
 		return;
 	
@@ -1819,10 +1818,13 @@ void MapEditorController::exportSimpleCourse()
 	// discover the supported options nor set them directly. We would have to pass
 	// them through the call stack as parameter. Instead of this intrusive approach,
 	// we rely on transient map properties handled by SimpleCourseExport.
-	simple_export.setProperties(*map,
+	course_export.setProperties(*map,
 	                            course_dialog.eventName(),
 	                            course_dialog.courseName(),
-	                            course_dialog.firstCodeNumber());
+	                            course_dialog.startSymbolCode(),
+	                            course_dialog.finishSymbolCode()
+	                            /*course_dialog.firstCodeNumber()*/);
+
 	exportVectorData(FileFormat::SimpleCourseFile, QStringLiteral("Export/lastSimpleCourseFormat"));
 }
 

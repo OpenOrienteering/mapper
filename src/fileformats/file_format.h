@@ -139,6 +139,7 @@ public:
 		MapFile     = 0x01,
 		OgrFile     = 0x02,     ///< Geospatial vector data supported by OGR
 		SimpleCourseFile = 0x04,///< Course interchange formats
+		CourseFile = 0x08,
 		
 		AllFiles    = MapFile,  ///< All types which can be handled by an editor.
 		

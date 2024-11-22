@@ -30,8 +30,7 @@
 #include "core/latlon.h"
 #include "core/map.h"
 #include "core/map_coord.h"
-#include "core/objects/object.h"
-#include "fileformats/simple_course_export.h"
+#include "fileformats/course_export.h"
 #include "util/xml_stream_util.h"
 
 
@@ -60,29 +59,30 @@ KmlCourseExport::KmlCourseExport(const QString& path, const Map* map, const MapV
 // override
 bool KmlCourseExport::exportImplementation()
 {
-	auto course_export = SimpleCourseExport(*map);
-	auto const* const object = course_export.findObjectForExport();
-	if (!course_export.canExport(object))
+	auto course_export = CourseExport(*map);
+	std::vector<ControlPoint> controls = course_export.getControlsForExport();
+
+	if (controls.empty())
 	{
 		addWarning(course_export.errorString());
 		return false;
 	}
 	
-	simple_course = &course_export;
+	course = &course_export;
 	
 	QXmlStreamWriter writer(device());
 	writer.setAutoFormatting(true);
 	xml = &writer;
 	xml->writeStartDocument();
-	writeKml(*object);
+	writeKml(controls);
 	xml = nullptr;
 	
-	simple_course = nullptr;
+	course = nullptr;
 	return true;
 }
 
 
-void KmlCourseExport::writeKml(const PathObject& object)
+void KmlCourseExport::writeKml(const std::vector<ControlPoint>& controls)
 {
 	auto const stamp = QDateTime::currentDateTime();
 	xml->writeDefaultNamespace(QLatin1String("http://www.opengis.net/kml/2.2"));
@@ -92,41 +92,41 @@ void KmlCourseExport::writeKml(const PathObject& object)
 	XmlElementWriter kml(*xml, QLatin1String("kml"));
 	{
 		XmlElementWriter document(*xml, QLatin1String("Document"));
-		xml->writeTextElement(QLatin1String("name"), simple_course->eventName());
+		xml->writeTextElement(QLatin1String("name"), course->eventName());
 		{
 			XmlElementWriter folder(*xml, QLatin1String("Folder"));
-			xml->writeTextElement(QLatin1String("name"), simple_course->courseName());
+			xml->writeTextElement(QLatin1String("name"), course->courseName());
 			xml->writeTextElement(QLatin1String("open"), QLatin1String("1"));
-			writeKmlPlacemarks(object.getRawCoordinateVector());
+			writeKmlPlacemarks(controls);
 		}
 	}
 }
 
-void KmlCourseExport::writeKmlPlacemarks(const std::vector<MapCoord>& coords)
+void KmlCourseExport::writeKmlPlacemarks(const std::vector<ControlPoint>& controls)
 {
-	auto next = [](auto current) {
-		return current + (current->isCurveStart() ? 3 : 1);
-	};
-	
-	writeKmlPlacemark(coords.front(), QLatin1String("S1"), QLatin1String("Start"));
-	auto code_number = simple_course->firstCode();
-	for (auto current = next(coords.begin()); current != coords.end() - 1; current = next(current))
-	{
-		auto const name = QString::number(code_number);
-		writeKmlPlacemark(*current, name, QLatin1String("Control ") + name);
-		++code_number;
-	}
-	writeKmlPlacemark(coords.back(), QLatin1String("F1"), QLatin1String("Finish"));
+    for (auto& control : controls)
+    {
+        QString description;
+        if (control.isStart())
+        {
+            description = QLatin1String("Start");
+        }
+        else if (control.isFinish())
+        {
+            description = QLatin1String("Finish");
+        }
+        writeKmlPlacemark(control.coord(), control.code(), description);
+    }
 }
 
-void KmlCourseExport::writeKmlPlacemark(const MapCoord& coord, const QString& name, const QString& description)
+void KmlCourseExport::writeKmlPlacemark(const MapCoordF& coord, const QString& name, const QString& description)
 {
 	XmlElementWriter placemark(*xml, QLatin1String("Placemark"));
 	xml->writeTextElement(QLatin1String("name"), name);
 	xml->writeTextElement(QLatin1String("description"), description);
 	{
 		XmlElementWriter point(*xml, QLatin1String("Point"));
-		writeCoordinates(map->getGeoreferencing().toGeographicCoords(MapCoordF(coord)));
+		writeCoordinates(map->getGeoreferencing().toGeographicCoords(coord));
 	}
 }
 
