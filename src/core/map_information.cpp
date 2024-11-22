@@ -150,8 +150,13 @@ MapInformationBuilder::MapInformationBuilder(const Map& map)
 	templates_count = map.getNumTemplates();
 	
 	colors.reserve(map.getNumColors());
-	map.applyOnAllColors([this](const auto* color){
+	map.applyOnAllColors([this, &map](const auto* color){
 		colors.push_back({color->getName()});
+		
+		map.applyOnMatchingSymbols(
+		    [this](const Symbol* symbol) { colors.back().symbols.push_back(symbol->getNumberAndPlainTextName()); },
+		    [color](const Symbol* symbol) { return symbol->containsColor(color); }
+		    );
 	});
 	
 	getSymbolTypeUsage(Symbol::Point).name    = QCoreApplication::translate("OpenOrienteering::MapInformation", "Point symbols");
