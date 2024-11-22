@@ -18,6 +18,9 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef OPENORIENTEERING_MAP_INFORMATION_H
+#define OPENORIENTEERING_MAP_INFORMATION_H
+
 #include <vector>
 
 #include <QString>
@@ -52,7 +55,9 @@ public:
 	QString makeTextReport(int indent = 2) const;
 	
 private:
-	std::vector<TreeItem> tree_items;	
+	std::vector<TreeItem> tree_items;
 };
 
 }  // namespace OpenOrienteering
+
+#endif // OPENORIENTEERING_MAP_INFORMATION_H
