@@ -93,6 +93,7 @@ set(Mapper_Common_SRCS
   core/map_color.cpp
   core/map_coord.cpp
   core/map_grid.cpp
+  core/map_information.cpp
   core/map_part.cpp
   core/map_printer.cpp
   core/map_view.cpp
