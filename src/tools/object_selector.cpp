@@ -50,15 +50,6 @@ bool ObjectSelector::selectAt(const MapCoordF& position, qreal tolerance, bool t
 	if (objects.empty())
 		map->findObjectsAt(position, 0.0015 * tolerance, false, true, false, false, objects);
 	
-	auto compareTypeAndExtent = [](const std::pair<int, Object*>& a, const std::pair<int, Object*>& b) {
-		if (a.first != b.first)
-			return a.first < b.first;
-		
-		auto a_area = a.second->getExtent().width() * a.second->getExtent().height();
-		auto b_area = b.second->getExtent().width() * b.second->getExtent().height();
-		return a_area < b_area;
-	};
-	
 	// Selection logic, trying to select the most relevant object(s)
 	if (!toggle || map->getNumSelectedObjects() == 0)
 	{
@@ -160,6 +151,18 @@ bool ObjectSelector::selectBox(const MapCoordF& corner1, const MapCoordF& corner
 	}
 	
 	return selection_changed;
+}
+
+
+// static
+bool ObjectSelector::compareTypeAndExtent(const std::pair<int, Object*>& a, const std::pair<int, Object*>& b)
+{
+	if (a.first != b.first)
+		return a.first < b.first;
+	
+	auto a_area = a.second->getExtent().width() * a.second->getExtent().height();
+	auto b_area = b.second->getExtent().width() * b.second->getExtent().height();
+	return a_area < b_area;
 }
 
 

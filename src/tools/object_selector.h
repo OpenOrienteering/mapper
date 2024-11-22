@@ -63,6 +63,7 @@ public:
 	bool selectBox(const MapCoordF& corner1, const MapCoordF& corner2, bool toggle);
 	
 private:
+	static bool compareTypeAndExtent(const std::pair<int, Object*>& a, const std::pair<int, Object*>& b);
 	static bool selectionInfosEqual(const SelectionInfoVector& a, const SelectionInfoVector& b);
 	
 	// Information about the last click
