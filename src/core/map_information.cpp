@@ -254,6 +254,8 @@ void MapInformationBuilder::buildTree(std::vector<MapInformation::TreeItem>& tre
 	tree_items.push_back({0, QCoreApplication::translate("OpenOrienteering::MapInformation", "Symbols"), QCoreApplication::translate("OpenOrienteering::MapInformation", "%n symbol(s)", nullptr, symbols_count)});
 	for (const auto& map_object : symbol_types)
 	{
+		if (map_object.object_count == 0 && map_object.name == QCoreApplication::translate("OpenOrienteering::MapInformation", "Undefined symbols"))
+			continue;
 		tree_items.push_back({1, map_object.name, QCoreApplication::translate("OpenOrienteering::MapInformation", "%n object(s)", nullptr, map_object.object_count)});
 		for (const auto& symbol : map_object.symbols)
 		{
