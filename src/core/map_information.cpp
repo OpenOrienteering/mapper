@@ -137,7 +137,11 @@ MapInformationBuilder::MapInformationBuilder(const Map& map)
 	
 	const auto& map_crs = map.getGeoreferencing().getProjectedCRSId();
 	crs = map.getGeoreferencing().getProjectedCRSName();
-	if (map_crs != QLatin1String("Local") && map_crs != QLatin1String("PROJ.4"))
+	if (crs == QLatin1String("Local") && map_crs.isEmpty() && map.getGeoreferencing().getState() == Georeferencing::State::Geospatial)
+	{
+		crs = ::OpenOrienteering::Georeferencing::tr("Custom PROJ.4");
+	}
+	else if (map_crs != QLatin1String("Local") && map_crs != QLatin1String("PROJ.4"))
 	{
 		const auto& projected_crs_parameters = map.getGeoreferencing().getProjectedCRSParameters();
 		if (!projected_crs_parameters.empty())
