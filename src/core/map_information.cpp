@@ -180,7 +180,7 @@ MapInformationBuilder::MapInformationBuilder(const Map& map)
 	});
 	
 	auto category_text = getSymbolTypeUsage(Symbol::Text);
-	fonts.reserve(category_text.object_count);
+	fonts.reserve(category_text.symbols.size());
 	for (const auto& item : category_text.symbols)
 	{
 		Q_ASSERT(item.symbol->getType() == Symbol::Text);
@@ -205,22 +205,14 @@ MapInformationBuilder::MapInformationBuilder(const Map& map)
 		objects_count += map_part_objects;
 		map_parts.push_back({map_part->getName(), map_part_objects});
 		
-		map_part->applyOnAllObjects([this, &map](const Object* object) {
+		map_part->applyOnAllObjects([this](const Object* object) {
 			const auto* const symbol = object->getSymbol();
 			auto& object_category = getSymbolTypeUsage(symbol ? symbol->getType() : Symbol::NoSymbol);
 			object_category.object_count++;
-			if (map.findSymbolIndex(symbol) >= 0)
-			{
-				auto s = std::find_if(object_category.symbols.begin(), object_category.symbols.end(), [symbol](const auto& s) { return symbol == s.symbol; } );
-				if (s != object_category.symbols.end())
-					s->object_count++;
-			}
-			else	// default type-specific symbol
-			{
-				if (object_category.symbols.back().symbol != symbol)
-					object_category.symbols.push_back({symbol, QCoreApplication::translate("OpenOrienteering::MapInformation", "<undefined>")});
-				++object_category.symbols.back().object_count;
-			}
+			auto s = std::find_if(object_category.symbols.begin(), object_category.symbols.end(), [symbol](const auto& s) { return symbol == s.symbol; } );
+			if (s == object_category.symbols.end())
+				s = object_category.symbols.insert(object_category.symbols.end(), {symbol, QCoreApplication::translate("OpenOrienteering::MapInformation", "<undefined>")});
+			s->object_count++;
 		});
 	}
 	
@@ -307,7 +299,7 @@ QString MapInformation::makeTextReport(int indent) const
 	{
 		if (!text_report.isEmpty() && !tree_item.level)	// separate items on topmost level
 			text_report += QChar::LineFeed;
-		auto item_value = QString(tree_item.level * indent, QChar::Space);
+		auto item_value = QString(actual_indent(tree_item.level), QChar::Space);
 		item_value.append(tree_item.label);
 		if (!tree_item.value.isEmpty())
 		{
