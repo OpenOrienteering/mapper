@@ -44,6 +44,7 @@
 #include <QComboBox>
 #include <QDate>
 #include <QDialog>
+#include <QDialogButtonBox>
 #include <QDir>
 #include <QDockWidget>
 #include <QEvent>
@@ -2258,18 +2259,11 @@ void MapEditorController::mapNotesClicked()
 	
 	auto* text_edit = new QTextEdit();
 	text_edit->setPlainText(map->getMapNotes());
-	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	QPushButton* ok_button = new QPushButton(QIcon(QString::fromLatin1(":/images/arrow-right.png")), tr("OK"));
-	ok_button->setDefault(true);
-	
-	auto* buttons_layout = new QHBoxLayout();
-	buttons_layout->addWidget(cancel_button);
-	buttons_layout->addStretch(1);
-	buttons_layout->addWidget(ok_button);
+	auto* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 	
 	auto* layout = new QVBoxLayout();
 	layout->addWidget(text_edit);
-	layout->addLayout(buttons_layout);
+	layout->addWidget(button_box);
 	dialog.setLayout(layout);
 	
 	const auto size = QGuiApplication::primaryScreen()->size();
@@ -2281,8 +2275,8 @@ void MapEditorController::mapNotesClicked()
 	height = qMax(200, qMin(height, bounding_rect.height() + 80));
 	dialog.resize(width, height);
 	
-	connect(cancel_button, &QAbstractButton::clicked, &dialog, &QDialog::reject);
-	connect(ok_button, &QAbstractButton::clicked, &dialog, &QDialog::accept);
+	connect(button_box, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+	connect(button_box, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
 	
 	if (dialog.exec() == QDialog::Accepted)
 	{
