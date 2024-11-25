@@ -44,7 +44,6 @@
 #include <QComboBox>
 #include <QDate>
 #include <QDialog>
-#include <QDialogButtonBox>
 #include <QDir>
 #include <QDockWidget>
 #include <QEvent>
@@ -53,7 +52,6 @@
 #include <QFont>
 #include <QFontMetrics>
 #include <QFrame>
-#include <QGuiApplication>
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QImage> // IWYU pragma: keep
@@ -80,7 +78,6 @@
 #include <QPushButton>
 #include <QRect>
 #include <QRectF>
-#include <QScreen>
 #include <QSettings>
 #include <QSignalBlocker>
 #include <QSignalMapper>
@@ -127,6 +124,7 @@
 #include "gui/map/map_dialog_scale.h"
 #include "gui/map/map_editor_activity.h"
 #include "gui/map/map_find_feature.h"
+#include "gui/map/map_notes.h"
 #include "gui/map/map_widget.h"
 #include "gui/map/rotate_map_dialog.h"
 #include "gui/symbols/symbol_replacement.h"
@@ -2253,39 +2251,9 @@ void MapEditorController::rotateMapClicked()
 
 void MapEditorController::mapNotesClicked()
 {
-	QDialog dialog(window, Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
-	dialog.setWindowTitle(tr("Map notes"));
+	MapNotesDialog dialog(window, map);
 	dialog.setWindowModality(Qt::WindowModal);
-	
-	auto* text_edit = new QTextEdit();
-	text_edit->setPlainText(map->getMapNotes());
-	auto* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-	
-	auto* layout = new QVBoxLayout();
-	layout->addWidget(text_edit);
-	layout->addWidget(button_box);
-	dialog.setLayout(layout);
-	
-	const auto size = QGuiApplication::primaryScreen()->size();
-	const QFontMetrics text_font_metrics(text_edit->currentFont());
-	auto width = qRound(size.width() * 0.7);
-	auto height = qRound(size.height() * 0.65);
-	const auto bounding_rect = text_font_metrics.boundingRect(0, 0, width, height, Qt::TextWordWrap, map->getMapNotes());
-	width = qMax(300, qMin(width, bounding_rect.width() + 60));
-	height = qMax(200, qMin(height, bounding_rect.height() + 80));
-	dialog.resize(width, height);
-	
-	connect(button_box, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
-	connect(button_box, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
-	
-	if (dialog.exec() == QDialog::Accepted)
-	{
-		if (text_edit->toPlainText() != map->getMapNotes())
-		{
-			map->setMapNotes(text_edit->toPlainText());
-			map->setHasUnsavedChanges(true);
-		}
-	}
+	dialog.exec();
 }
 
 void MapEditorController::createTemplateWindow()
