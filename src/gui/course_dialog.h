@@ -45,7 +45,7 @@ Q_OBJECT
 public:
 	~CourseDialog() override;
 	
-	CourseDialog(const CourseExport& course, QWidget* parent);
+	CourseDialog(const CourseExport& course_export, QWidget* parent);
 	
 	QString eventName() const;
 	
@@ -61,7 +61,7 @@ protected:
 	void updateWidgets();
 	
 private:
-	const CourseExport& course;
+	const CourseExport& course_export;
 	QLineEdit* event_name_edit;
 	QLineEdit* course_name_edit;
 	QSpinBox*  first_code_spinbox;

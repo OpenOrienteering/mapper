@@ -59,7 +59,7 @@ public:
 protected:
 	bool exportImplementation() override;
 	
-    void writeKml(const std::vector<ControlPoint>& controls);
+	void writeKml(const std::vector<ControlPoint>& controls);
 	
 	void writeKmlPlacemarks(const std::vector<ControlPoint>& controls);
 	

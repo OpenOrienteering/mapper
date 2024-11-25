@@ -66,16 +66,16 @@ bool IofCourseExport::exportImplementation()
 		addWarning(course_export.errorString());
 		return false;
 	}
-	
+
 	course = &course_export;
-	
+
 	QXmlStreamWriter writer(device());
 	writer.setAutoFormatting(true);
 	xml = &writer;
 	xml->writeStartDocument();
 	writeXml(controls);
 	xml = nullptr;
-	
+
 	course = nullptr;
 	return true;
 }
@@ -85,7 +85,7 @@ void IofCourseExport::writeXml(const std::vector<ControlPoint>& controls)
 {
 	auto const stamp = QDateTime::currentDateTime();
 	xml->writeDefaultNamespace(QLatin1String("http://www.orienteering.org/datastandard/3.0"));
-	
+
 	XmlElementWriter course_data(*xml, QLatin1String("CourseData"));
 	course_data.writeAttribute(QLatin1String("iofVersion"), QLatin1String("3.0"));
 	course_data.writeAttribute(QLatin1String("creator"), QLatin1String("OpenOrienteering Mapper " APP_VERSION));

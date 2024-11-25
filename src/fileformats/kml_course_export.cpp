@@ -104,19 +104,19 @@ void KmlCourseExport::writeKml(const std::vector<ControlPoint>& controls)
 
 void KmlCourseExport::writeKmlPlacemarks(const std::vector<ControlPoint>& controls)
 {
-    for (auto& control : controls)
-    {
-        QString description;
-        if (control.isStart())
-        {
-            description = QLatin1String("Start");
-        }
-        else if (control.isFinish())
-        {
-            description = QLatin1String("Finish");
-        }
-        writeKmlPlacemark(control.coord(), control.code(), description);
-    }
+	for (auto& control : controls)
+	{
+		QString description;
+		if (control.isStart())
+		{
+			description = QLatin1String("Start");
+		}
+		else if (control.isFinish())
+		{
+			description = QLatin1String("Finish");
+		}
+		writeKmlPlacemark(control.coord(), control.code(), description);
+	}
 }
 
 void KmlCourseExport::writeKmlPlacemark(const MapCoordF& coord, const QString& name, const QString& description)

@@ -44,7 +44,7 @@ class CourseExport;
  * This export handles a single path object and outputs placemarks for start
  * (S1), finish (F1), and controls in between. Event name, course name, and
  * the code number of the first control are taken from transient map properties
- * in collaboration with the SimpleCourseExport class.
+ * in collaboration with the CourseExport class.
  */
 class IofCourseExport : public Exporter
 {

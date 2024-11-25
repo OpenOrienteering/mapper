@@ -1817,15 +1817,15 @@ void MapEditorController::exportCourse()
 	// However, the exporter is created only much later. So here, we can neither
 	// discover the supported options nor set them directly. We would have to pass
 	// them through the call stack as parameter. Instead of this intrusive approach,
-	// we rely on transient map properties handled by SimpleCourseExport.
+	// we rely on transient map properties handled by CourseExport.
 	course_export.setProperties(*map,
 	                            course_dialog.eventName(),
 	                            course_dialog.courseName(),
 	                            course_dialog.startSymbolCode(),
-	                            course_dialog.finishSymbolCode()
-	                            /*course_dialog.firstCodeNumber()*/);
+	                            course_dialog.finishSymbolCode(),
+	                            course_dialog.firstCodeNumber());
 
-	exportVectorData(FileFormat::SimpleCourseFile, QStringLiteral("Export/lastSimpleCourseFormat"));
+	exportVectorData(FileFormat::CourseFile, QStringLiteral("Export/lastCourseFormat"));
 }
 
 
