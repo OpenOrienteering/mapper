@@ -23,7 +23,6 @@
 
 #include <Qt>
 #include <QtGlobal>
-#include <QCoreApplication>
 #include <QDialogButtonBox>
 #include <QFontMetrics>
 #include <QGuiApplication>
@@ -43,8 +42,8 @@ MapNotesDialog::MapNotesDialog(QWidget* parent, Map* map)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint)
 , map { map }
 {
-	setWindowTitle(QCoreApplication::translate("OpenOrienteering::MapNotes", "Map notes"));
-
+	setWindowTitle(tr("Map notes"));
+	
 	text_edit = new QTextEdit();
 	text_edit->setPlainText(map->getMapNotes());
 	auto* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
@@ -59,8 +58,8 @@ MapNotesDialog::MapNotesDialog(QWidget* parent, Map* map)
 	auto width = qRound(size.width() * 0.7);
 	auto height = qRound(size.height() * 0.65);
 	const auto bounding_rect = text_font_metrics.boundingRect(0, 0, width, height, Qt::TextWordWrap, map->getMapNotes());
-	width = qMax(300, qMin(width, bounding_rect.width() + 60));
-	height = qMax(200, qMin(height, bounding_rect.height() + 80));
+	width = qBound(300, width, bounding_rect.width() + 60);
+	height = qBound(200, height, bounding_rect.height() + 80);
 	resize(width, height);
 	
 	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
