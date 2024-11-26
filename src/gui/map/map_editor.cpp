@@ -2251,9 +2251,12 @@ void MapEditorController::rotateMapClicked()
 
 void MapEditorController::mapNotesClicked()
 {
-	MapNotesDialog dialog(window, map);
-	dialog.setWindowModality(Qt::WindowModal);
-	dialog.exec();
+	if (map)
+	{
+		MapNotesDialog dialog(window, map);
+		dialog.setWindowModality(Qt::WindowModal);
+		dialog.exec();
+	}
 }
 
 void MapEditorController::createTemplateWindow()
