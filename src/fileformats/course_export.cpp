@@ -50,9 +50,13 @@ int CourseExport::defaultFirstCode() noexcept
 
 bool CourseExport::canExport()
 {
-	if (map.getNumSelectedObjects() < 1)
+	std::vector<ControlPoint> controls = getControlsForExport();
+	if (controls.empty())
 	{
-		error_string = tr("No control points or path object selected.");
+		if (error_string.isEmpty())
+		{
+			error_string = tr("No control points or path object selected.");
+		}
 		return false;
 	}
 	return true;
@@ -137,6 +141,14 @@ const std::vector<ControlPoint> CourseExport::getControlsForExport()
 		error_string = tr("No control codes selected.");
 		return {};
 	}
+	std::size_t control_objects_num = control_objects.size();
+	std::size_t control_codes_num = control_code_objects.size();
+	if (control_objects_num < control_codes_num
+	    || control_objects_num > control_codes_num + 2)  // controls + start + finish
+	{
+		error_string = tr("Number of control points and control codes does not match.");
+		return {};
+	}
 	qDebug() << "Found control points:" << control_objects.size() << "control codes:" << control_code_objects.size();
 	auto controls = addControlsWithCodes(control_objects, control_code_objects);
 	sortControls(controls);
@@ -170,19 +182,33 @@ const std::vector<ControlPoint> CourseExport::addControlsWithCodes(const std::ve
 	std::vector<ControlPoint> controls;
 	QString start_symbol = removeTrailingZerosAndDots(startSymbol());
 	QString finish_symbol = removeTrailingZerosAndDots(finishSymbol());
+	bool start_found = false;
+	bool finish_found = false;
 	for (auto* object : control_objects)
 	{
 		QString symbol = removeTrailingZerosAndDots(object->getSymbol()->getNumberAsString());
 		if (symbol == start_symbol)
 		{
+			if (start_found)
+			{
+				error_string = tr("Select only one start point.");
+				return {};
+			}
 			qDebug() << "Found start:" << object->asPoint()->getCoordF();
 			addControl(controls, object, QStringLiteral("S1"));
+			start_found = true;
 			continue;
 		}
 		else if (symbol == finish_symbol)
 		{
+			if (finish_found)
+			{
+				error_string = tr("Select only one finish point.");
+				return {};
+			}
 			qDebug() << "Found finish:" << object->asPoint()->getCoordF();
 			addControl(controls, object, QStringLiteral("F1"));
+			finish_found = true;
 			continue;
 		}
 		auto* control_code_object = getNearestObject(object, control_code_objects);

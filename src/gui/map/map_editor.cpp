@@ -1811,7 +1811,14 @@ void MapEditorController::exportCourse()
 
 	CourseDialog course_dialog(course_export, window);
 	if (course_dialog.exec() != QDialog::Accepted)
+    {
 		return;
+    }
+    if (course_dialog.startSymbolCode() == course_dialog.finishSymbolCode())
+    {
+        QMessageBox::warning(window, tr("Error"), tr("Start and finish symbols cannot be have the same code."));
+        return;
+    }
 	
 	// Ideally, the dialog results should be passed to the exporter via options.
 	// However, the exporter is created only much later. So here, we can neither
