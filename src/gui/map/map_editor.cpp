@@ -1453,10 +1453,10 @@ void MapEditorController::createMobileGUI()
 	});
 	
 	QAction* hide_top_bar_action = new QAction(QIcon(QString::fromLatin1(":/images/arrow-thin-upleft.png")), tr("Hide top bar"), this);
- 	connect(hide_top_bar_action, &QAction::triggered, this, &MapEditorController::hideTopActionBar);
+	connect(hide_top_bar_action, &QAction::triggered, this, &MapEditorController::hideTopActionBar);
 	
 	QAction* show_top_bar_action = new QAction(QIcon(QString::fromLatin1(":/images/arrow-thin-downright.png")), tr("Show top bar"), this);
- 	connect(show_top_bar_action, &QAction::triggered, this, &MapEditorController::showTopActionBar);
+	connect(show_top_bar_action, &QAction::triggered, this, &MapEditorController::showTopActionBar);
 	
 	QAction* mappart_action = new QAction(QIcon(QString::fromLatin1(":/images/map-parts.png")), tr("Map parts"), this);
 	auto* mappart_group = new QActionGroup(window);
@@ -1802,23 +1802,23 @@ void MapEditorController::exportVectorData(int file_types, const QString& format
 //slot
 void MapEditorController::exportCourse()
 {
-    auto course_export = CourseExport(*map);
-    if (!course_export.canExport())
-    {
-        QMessageBox::warning(window, tr("Error"), course_export.errorString());
-        return;
-    }
+	auto course_export = CourseExport(*map);
+	if (!course_export.canExport())
+	{
+		QMessageBox::warning(window, tr("Error"), course_export.errorString());
+		return;
+	}
 
 	CourseDialog course_dialog(course_export, window);
 	if (course_dialog.exec() != QDialog::Accepted)
-    {
+	{
 		return;
-    }
-    if (course_dialog.startSymbolCode() == course_dialog.finishSymbolCode())
-    {
-        QMessageBox::warning(window, tr("Error"), tr("Start and finish symbols cannot be have the same code."));
-        return;
-    }
+	}
+	if (course_dialog.startSymbolCode() == course_dialog.finishSymbolCode())
+	{
+		QMessageBox::warning(window, tr("Error"), tr("Start and finish symbols cannot be have the same code."));
+		return;
+	}
 	
 	// Ideally, the dialog results should be passed to the exporter via options.
 	// However, the exporter is created only much later. So here, we can neither
