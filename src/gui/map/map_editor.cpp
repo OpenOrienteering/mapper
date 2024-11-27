@@ -963,7 +963,7 @@ void MapEditorController::createActions()
 #ifndef MAPPER_USE_GDAL
 	export_kmz_act->setVisible(false);
 #endif
-	export_course_act = newAction("export-course", tr("Course"), this, SLOT(exportCourse()), nullptr, QString{}, "file_menu.html");
+	export_course_act = newAction("export-course", tr("&Course"), this, SLOT(exportCourse()), nullptr, QString{}, "file_menu.html");
 	export_pdf_act = newAction("export-pdf", tr("&PDF"), print_act_mapper, SLOT(map()), nullptr, QString{}, "file_menu.html");
 	print_act_mapper->setMapping(export_pdf_act, PrintWidget::EXPORT_PDF_TASK);
 #ifdef MAPPER_USE_GDAL
