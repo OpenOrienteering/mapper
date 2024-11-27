@@ -1,4 +1,5 @@
 /*
+ *    Copyright 2021 Kai Pastor
  *    Copyright 2024 Semyon Yakimov
  *
  *    This file is part of OpenOrienteering.
@@ -46,6 +47,18 @@ QString CourseExport::defaultCourseName()
 int CourseExport::defaultFirstCode() noexcept
 {
 	return 31;
+}
+
+// static
+QString CourseExport::defaultStartSymbol()
+{
+	return QStringLiteral("701");
+}
+
+// static
+QString CourseExport::defaultFinishSymbol()
+{
+	return QStringLiteral("706");
 }
 
 bool CourseExport::canExport()
@@ -282,7 +295,9 @@ QString CourseExport::eventName() const
 {
 	auto name = map.property("course-export-event-name").toString();
 	if (name.isEmpty())
+	{
 		name = defaultEventName();
+	}
 	return name;
 }
 
@@ -290,18 +305,30 @@ QString CourseExport::courseName() const
 {
 	auto name = map.property("course-export-course-name").toString();
 	if (name.isEmpty())
+	{
 		name = defaultCourseName();
+	}
 	return name;
 }
 
 QString CourseExport::startSymbol() const
 {
-	return map.property("course-export-start-symbol").toString();
+	auto symbol = map.property("course-export-start-symbol").toString();
+	if (symbol.isEmpty())
+	{
+		symbol = defaultStartSymbol();
+	}
+	return symbol;
 }
 
 QString CourseExport::finishSymbol() const
 {
-	return map.property("course-export-finish-symbol").toString();
+	auto symbol = map.property("course-export-finish-symbol").toString();
+	if (symbol.isEmpty())
+	{
+		symbol = defaultFinishSymbol();
+	}
+	return symbol;
 }
 
 int CourseExport::firstCode() const

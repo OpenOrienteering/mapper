@@ -1,4 +1,5 @@
 /*
+ *    Copyright 2021 Kai Pastor
  *    Copyright 2024 Semyon Yakimov
  *
  *    This file is part of OpenOrienteering.
@@ -51,6 +52,12 @@ private:
 /**
  * This class provides utility functions for exporting course files.
  * 
+ * This export handles a single path object and outputs ControlPoint objects
+ * for start (S1), finish (F1), and controls in between
+ * or handles selected point objects as controls and nearest text objects as control codes.
+ * Event name, course name, and the code number of the first control
+ * are taken from transient map properties.
+ *
  */
 class CourseExport
 {
@@ -60,6 +67,8 @@ public:
 	static QString defaultEventName();
 	static QString defaultCourseName();
 	static int defaultFirstCode() noexcept;
+    static QString defaultStartSymbol();
+    static QString defaultFinishSymbol();
 	
 	~CourseExport() = default;
 	

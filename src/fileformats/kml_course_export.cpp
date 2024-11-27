@@ -1,5 +1,6 @@
 /*
  *    Copyright 2020-2021 Kai Pastor
+ *    Copyright 2024 Semyon Yakimov
  *
  *    This file is part of OpenOrienteering.
  *

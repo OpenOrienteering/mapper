@@ -1,5 +1,6 @@
 /*
  *    Copyright 2020-2021 Kai Pastor
+ *    Copyright 2024 Semyon Yakimov
  *
  *    This file is part of OpenOrienteering.
  *
@@ -39,11 +40,7 @@ class ControlPoint;
 
 
 /**
- * This class generates KML course files for MapRunF.
- * 
- * This export handles a single path object and outputs placemarks for start
- * (S1), finish (F1), and controls in between. Event name, course name, and
- * the code number of the first control are taken from transient map properties
+ * This class generates KML course files
  * in collaboration with the CourseExport class.
  */
 class KmlCourseExport : public Exporter
