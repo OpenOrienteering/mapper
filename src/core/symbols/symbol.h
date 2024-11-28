@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -428,9 +428,15 @@ public:
 	
 	
 	/**
-	 * Returns the symbol number as string
+	 * Returns the symbol number as string.
 	 */
 	QString getNumberAsString() const;
+	
+	/**
+	 * Returns the concatenation of symbol number and symbol name.
+	 */
+	QString getNumberAndPlainTextName() const;
+	
 	
 	/**
 	 * Returns the i-th component of the symbol number as int.
@@ -656,4 +662,4 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Symbol::TypeCombination)
 Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Symbol::RenderableOptions)
 
 
-#endif
+#endif // OPENORIENTEERING_SYMBOL_H
