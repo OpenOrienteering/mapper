@@ -23,6 +23,7 @@
 #include <QDialog>
 #include <QObject>
 
+// IWYU pragma: no_include <QString>
 class QTextEdit;
 class QWidget;
 

@@ -24,10 +24,10 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QDialogButtonBox>
+#include <QFlags>
 #include <QFontMetrics>
-#include <QGuiApplication>
+#include <QLatin1Char>
 #include <QRect>
-#include <QScreen>
 #include <QSize>
 #include <QTextEdit>
 #include <QVBoxLayout>
@@ -53,13 +53,12 @@ MapNotesDialog::MapNotesDialog(QWidget* parent, Map& map)
 	layout->addWidget(button_box);
 	setLayout(layout);
 	
-	const auto size = QGuiApplication::primaryScreen()->size();
+	const auto max_size = parent ? parent->window()->size() : QSize{800, 600};
 	const QFontMetrics text_font_metrics(text_edit->currentFont());
-	auto width = qRound(size.width() * 0.7);
-	auto height = qRound(size.height() * 0.65);
-	const auto bounding_rect = text_font_metrics.boundingRect(0, 0, width, height, Qt::TextWordWrap, map.getMapNotes());
-	width = qBound(300, width, bounding_rect.width() + 60);
-	height = qBound(200, height, bounding_rect.height() + 80);
+	auto preferred_width = text_font_metrics.boundingRect(QString(60, QLatin1Char('m'))).width();
+	const auto bounding_rect = text_font_metrics.boundingRect(0, 0, preferred_width, max_size.height(), Qt::TextWordWrap, map.getMapNotes());
+	auto width = qBound(300, bounding_rect.width() + 60, max_size.width());
+	auto height = qBound(200, bounding_rect.height() + 80, max_size.height());
 	resize(width, height);
 	
 	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
