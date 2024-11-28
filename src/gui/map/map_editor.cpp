@@ -35,7 +35,6 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
-#include <QAbstractButton>
 #include <QAction>
 #include <QActionGroup>
 #include <QApplication>
@@ -75,7 +74,6 @@
 #include <QPoint>
 #include <QPointer>
 #include <QPointF>
-#include <QPushButton>
 #include <QRect>
 #include <QRectF>
 #include <QSettings>
@@ -87,7 +85,6 @@
 #include <QSplitter>
 #include <QStatusBar>
 #include <QStringList>
-#include <QTextEdit>
 #include <QToolBar>
 #include <QToolButton>
 #include <QVariant>
