@@ -2250,7 +2250,7 @@ void MapEditorController::mapNotesClicked()
 {
 	if (map)
 	{
-		MapNotesDialog dialog(window, map);
+		MapNotesDialog dialog(window, *map);
 		dialog.setWindowModality(Qt::WindowModal);
 		dialog.exec();
 	}

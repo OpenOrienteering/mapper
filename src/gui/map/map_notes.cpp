@@ -38,14 +38,14 @@
 
 namespace OpenOrienteering {
 
-MapNotesDialog::MapNotesDialog(QWidget* parent, Map* map)
+MapNotesDialog::MapNotesDialog(QWidget* parent, Map& map)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint)
 , map { map }
 {
 	setWindowTitle(tr("Map notes"));
 	
 	text_edit = new QTextEdit();
-	text_edit->setPlainText(map->getMapNotes());
+	text_edit->setPlainText(map.getMapNotes());
 	auto* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 	
 	auto* layout = new QVBoxLayout();
@@ -57,7 +57,7 @@ MapNotesDialog::MapNotesDialog(QWidget* parent, Map* map)
 	const QFontMetrics text_font_metrics(text_edit->currentFont());
 	auto width = qRound(size.width() * 0.7);
 	auto height = qRound(size.height() * 0.65);
-	const auto bounding_rect = text_font_metrics.boundingRect(0, 0, width, height, Qt::TextWordWrap, map->getMapNotes());
+	const auto bounding_rect = text_font_metrics.boundingRect(0, 0, width, height, Qt::TextWordWrap, map.getMapNotes());
 	width = qBound(300, width, bounding_rect.width() + 60);
 	height = qBound(200, height, bounding_rect.height() + 80);
 	resize(width, height);
@@ -68,13 +68,14 @@ MapNotesDialog::MapNotesDialog(QWidget* parent, Map* map)
 
 MapNotesDialog::~MapNotesDialog() = default;
 
-//slot
+// slot
 void MapNotesDialog::okClicked()
 {
-	if (text_edit->toPlainText() != map->getMapNotes())
+	auto text = text_edit->toPlainText();
+	if (text != map.getMapNotes())
 	{
-		map->setMapNotes(text_edit->toPlainText());
-		map->setHasUnsavedChanges(true);
+		map.setMapNotes(text);
+		map.setHasUnsavedChanges(true);
 	}
 	
 	accept();

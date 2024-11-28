@@ -38,7 +38,7 @@ public:
 	/**
 	 * Creates a new MapNotesDialog object.
 	 */
-	MapNotesDialog(QWidget* parent, Map* map);
+	MapNotesDialog(QWidget* parent, Map& map);
 	
 	~MapNotesDialog() override;
 	
@@ -48,7 +48,7 @@ private slots:
 private:
 	QTextEdit* text_edit;
 	
-	Map* map;
+	Map& map;
 };
 
 
