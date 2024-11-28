@@ -121,6 +121,7 @@
 #include "gui/map/map_dialog_scale.h"
 #include "gui/map/map_editor_activity.h"
 #include "gui/map/map_find_feature.h"
+#include "gui/map/map_information_dialog.h"
 #include "gui/map/map_notes.h"
 #include "gui/map/map_widget.h"
 #include "gui/map/rotate_map_dialog.h"
@@ -461,6 +462,7 @@ void MapEditorController::setEditingInProgress(bool value)
 		scale_map_act->setEnabled(!editing_in_progress);
 		rotate_map_act->setEnabled(!editing_in_progress);
 		map_notes_act->setEnabled(!editing_in_progress);
+		map_info_act->setEnabled(!editing_in_progress);
 		
 		// Map menu, continued
 		const int num_parts = map->getNumParts();
@@ -1026,6 +1028,7 @@ void MapEditorController::createActions()
 	scale_map_act = newAction("scalemap", tr("Change map scale..."), this, SLOT(scaleMapClicked()), "tool-scale.png", tr("Change the map scale and adjust map objects and symbol sizes"), "map_menu.html");
 	rotate_map_act = newAction("rotatemap", tr("Rotate map..."), this, SLOT(rotateMapClicked()), "tool-rotate.png", tr("Rotate the whole map"), "map_menu.html");
 	map_notes_act = newAction("mapnotes", tr("Map notes..."), this, SLOT(mapNotesClicked()), nullptr, QString{}, "map_menu.html");
+	map_info_act = newAction("mapinfo", tr("Map information..."), this, SLOT(mapInfoClicked()), "map-information.png", QString{}, "map_menu.html");
 	
 	template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "templates.png", tr("Show/Hide the template window"), "templates_menu.html");
 	//QAction* template_config_window_act = newCheckAction("templateconfigwindow", tr("Template configurations window"), this, SLOT(showTemplateConfigurationsWindow(bool)), "window-new", tr("Show/Hide the template configurations window"));
@@ -1252,6 +1255,7 @@ void MapEditorController::createMenuAndToolbars()
 	map_menu->addAction(scale_map_act);
 	map_menu->addAction(rotate_map_act);
 	map_menu->addAction(map_notes_act);
+	map_menu->addAction(map_info_act);
 	map_menu->addSeparator();
 	updateMapPartsUI();
 	map_menu->addAction(mappart_add_act);
@@ -2254,6 +2258,13 @@ void MapEditorController::mapNotesClicked()
 		dialog.setWindowModality(Qt::WindowModal);
 		dialog.exec();
 	}
+}
+
+void MapEditorController::mapInfoClicked()
+{
+	MapInformationDialog dialog(window, map);
+	dialog.setWindowModality(Qt::WindowModal);
+	dialog.exec();
 }
 
 void MapEditorController::createTemplateWindow()

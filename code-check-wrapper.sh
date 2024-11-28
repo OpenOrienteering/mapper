@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-#    Copyright 2017, 2018 Kai Pastor
+#    Copyright 2017, 2018, 2024 Kai Pastor
 #
 #    This file is part of OpenOrienteering.
 #    
@@ -71,6 +71,8 @@ for I in \
   map_coord.cpp \
   map_editor.cpp \
   map_find_feature.cpp \
+  map_information.cpp \
+  map_information_dialog.cpp \
   map_notes.cpp \
   map_printer \
   map_widget.cpp \

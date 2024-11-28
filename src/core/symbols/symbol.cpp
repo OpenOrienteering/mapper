@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -30,6 +30,7 @@
 #include <QtGlobal>
 #include <QBuffer>
 #include <QByteArray>
+#include <QChar>
 #include <QImageReader>
 #include <QImageWriter>
 #include <QLatin1Char>
@@ -868,6 +869,11 @@ QString Symbol::getNumberAsString() const
 	return string;
 }
 
+QString Symbol::getNumberAndPlainTextName() const
+{
+	return getNumberAsString() + QChar::Space + getPlainTextName();
+}
+
 
 // virtual
 bool Symbol::hasRotatableFillPattern() const
@@ -879,7 +885,6 @@ void Symbol::setRotatable(bool value)
 {
 	is_rotatable = value;
 }
-
 
 
 std::unique_ptr<Symbol> Symbol::makeSymbolForType(Symbol::Type type)
