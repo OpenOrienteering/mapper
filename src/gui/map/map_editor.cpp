@@ -35,7 +35,6 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
-#include <QAbstractButton>
 #include <QAction>
 #include <QActionGroup>
 #include <QApplication>
@@ -75,7 +74,6 @@
 #include <QPoint>
 #include <QPointer>
 #include <QPointF>
-#include <QPushButton>
 #include <QRect>
 #include <QRectF>
 #include <QSettings>
@@ -87,7 +85,6 @@
 #include <QSplitter>
 #include <QStatusBar>
 #include <QStringList>
-#include <QTextEdit>
 #include <QToolBar>
 #include <QToolButton>
 #include <QVariant>
@@ -125,6 +122,7 @@
 #include "gui/map/map_editor_activity.h"
 #include "gui/map/map_find_feature.h"
 #include "gui/map/map_information_dialog.h"
+#include "gui/map/map_notes.h"
 #include "gui/map/map_widget.h"
 #include "gui/map/rotate_map_dialog.h"
 #include "gui/symbols/symbol_replacement.h"
@@ -2254,36 +2252,11 @@ void MapEditorController::rotateMapClicked()
 
 void MapEditorController::mapNotesClicked()
 {
-	QDialog dialog(window, Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
-	dialog.setWindowTitle(tr("Map notes"));
-	dialog.setWindowModality(Qt::WindowModal);
-	
-	auto* text_edit = new QTextEdit();
-	text_edit->setPlainText(map->getMapNotes());
-	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	QPushButton* ok_button = new QPushButton(QIcon(QString::fromLatin1(":/images/arrow-right.png")), tr("OK"));
-	ok_button->setDefault(true);
-	
-	auto* buttons_layout = new QHBoxLayout();
-	buttons_layout->addWidget(cancel_button);
-	buttons_layout->addStretch(1);
-	buttons_layout->addWidget(ok_button);
-	
-	auto* layout = new QVBoxLayout();
-	layout->addWidget(text_edit);
-	layout->addLayout(buttons_layout);
-	dialog.setLayout(layout);
-	
-	connect(cancel_button, &QAbstractButton::clicked, &dialog, &QDialog::reject);
-	connect(ok_button, &QAbstractButton::clicked, &dialog, &QDialog::accept);
-	
-	if (dialog.exec() == QDialog::Accepted)
+	if (map)
 	{
-		if (text_edit->toPlainText() != map->getMapNotes())
-		{
-			map->setMapNotes(text_edit->toPlainText());
-			map->setHasUnsavedChanges(true);
-		}
+		MapNotesDialog dialog(window, *map);
+		dialog.setWindowModality(Qt::WindowModal);
+		dialog.exec();
 	}
 }
 
