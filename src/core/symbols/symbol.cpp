@@ -89,6 +89,7 @@ Symbol::Symbol(const Symbol& proto)
 , is_hidden { proto.is_hidden }
 , is_protected { proto.is_protected }
 , is_rotatable { proto.is_rotatable }
+, auxiliary_properties ( proto.auxiliary_properties )
 {
 	// nothing else
 }
