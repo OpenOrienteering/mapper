@@ -457,7 +457,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="275"/>
         <source>Color usage in symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Värien käyttö symboleissa</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="300"/>
@@ -472,7 +472,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="302"/>
         <source>Color usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Värien käyttö</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="321"/>
@@ -1433,7 +1433,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
         <source>User input: Ignore display touch</source>
-        <translation>Osoitinlaite: älä huomioi näytön kosketusta</translation>
+        <translation>Käyttäjän syöttö: Ohita näytön kosketus</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="92"/>
@@ -1981,7 +1981,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="833"/>
         <source>Online declination lookup</source>
-        <translation>Etsi deklinaatio netistä</translation>
+        <translation>Deklinaatiohaku verkossa</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="140"/>
@@ -4362,12 +4362,12 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1074"/>
         <source>Clip area</source>
-        <translation type="unfinished"></translation>
+        <translation>Leikealue</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1075"/>
         <source>Erase area</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyhjennä alue</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1146"/>
@@ -6054,7 +6054,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="175"/>
         <source>Available palette presets</source>
-        <translation>Käytettävissä olevat paletin esiasetukset</translation>
+        <translation>Saatavilla paletin esiasetukset</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="187"/>
