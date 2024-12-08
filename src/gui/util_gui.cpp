@@ -32,9 +32,10 @@
 #include <QDoubleSpinBox>
 #include <QFileInfo>
 #include <QGuiApplication>
+#include <QIcon>
+#include <QLabel>
 #include <QLatin1Char>
 #include <QLatin1String>
-#include <QLabel>
 #include <QLocale>
 #include <QMessageBox>
 #include <QPainter>
@@ -48,10 +49,12 @@
 #include <QStringList>
 #include <QStyle>
 #include <QTextDocumentFragment>
+#include <QToolButton>
+#if defined(Q_OS_ANDROID)
+#include <QUrl>
+#endif
 #include <QVariant>
 #include <QWidget>
-#include <QToolButton>
-#include <QIcon>
 
 #include "mapper_config.h"
 #include "settings.h"
