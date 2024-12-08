@@ -2708,8 +2708,15 @@ QByteArray OcdFileExport::exportObjectCommon(const Object* object, OcdObject& oc
 	// However, in contrast to OCD format 9...12 documentation, size seems to be
 	// in bytes again since version 9, and doing as documented would make files
 	// unusable (due to "damaged objects") in OCD 9 and 10 software.
+	// The number of OCD format 8 coordinates is limited to the short int maximum
+	// because the object num_items is indeed a signed integer.
 	if (ocd_version == 8)
-		entry.size = (entry.size - decltype(entry.size)(header_size)) / sizeof(Ocd::OcdPoint32);
+	{
+		auto const entry_size = (data.size() - header_size) / sizeof(Ocd::OcdPoint32);
+		if (entry_size > 32767)
+			throw FileFormatException(::OpenOrienteering::OcdFileExport::tr("The map contains an object with more than 32767 coordinates which is not supported by OCD version 8."));
+		entry.size = entry_size;
+	}
 	
 	return data;
 }

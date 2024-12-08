@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2017-2020 Kai Pastor
+ *    Copyright 2017-2020, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -35,7 +35,6 @@
 #include <QComboBox>
 #include <QColor>
 #include <QDialogButtonBox>
-#include <QFile>
 #include <QFlags>
 #include <QFormLayout>
 #include <QGuiApplication>
@@ -50,6 +49,7 @@
 #include <QMenu>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QSaveFile>
 #include <QSpacerItem>
 #include <QString>
 #include <QStringList>
@@ -230,29 +230,28 @@ void SymbolReplacementDialog::openCrtFile()
 		updateMappingTable();
 	}
 }
-	
+
 
 bool SymbolReplacementDialog::saveCrtFile()
 {
 	/// \todo Choose user-writable directory.
-	auto dir = QLatin1String{"data:/symbol sets"};
-	auto filter = QString{tr("CRT file") + QLatin1String{" (*.crt)"}};
-	QString path = FileDialog::getSaveFileName(this, tr("Save CRT file..."), dir, filter);
-	if (!path.isEmpty())
+	auto const dir = QLatin1String{"data:/symbol sets"};
+	auto const filter = QString{tr("CRT file") + QLatin1String{" (*.crt)"}};
+	auto const filepath = FileDialog::getSaveFileName(this, tr("Save CRT file..."), dir, filter);
+	if (!filepath.isEmpty())
 	{
 		updateMappingFromTable();
-		QFile crt_file{path};
-		crt_file.open(QIODevice::WriteOnly);
+		QSaveFile crt_file(filepath);
+		crt_file.open(QIODevice::WriteOnly | QIODevice::Text);
 		QTextStream stream{ &crt_file };
 		symbol_rules.writeCrt(stream);
-		if (stream.pos() != -1)
-		{
+		if (crt_file.commit())
 			return true;
-		}
+		
 		/// \todo Reused translation, consider generalized context
 		QMessageBox::warning(this, ::OpenOrienteering::Map::tr("Error"),
 		                     tr("Cannot save file:\n%1\n\n%2")
-		                     .arg(path, crt_file.errorString()) );
+		                     .arg(filepath, crt_file.errorString()) );
 	}
 	return false;
 }

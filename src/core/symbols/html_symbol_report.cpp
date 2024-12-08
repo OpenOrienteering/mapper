@@ -29,11 +29,11 @@
 #include <QLatin1String>
 #include <QLocale>
 #include <QString>
-#include <QTextDocumentFragment>
 
 #include "core/map.h"
 #include "core/map_color.h"
 #include "core/symbols/symbol.h"
+#include "gui/util_gui.h"
 
 namespace OpenOrienteering {
 
@@ -117,7 +117,7 @@ private:
 			                  c.getKnockout() ? QString::fromLatin1("[X]") : QString{} );
 		}
 		
-		auto name = QTextDocumentFragment::fromHtml(c.getName()).toPlainText();
+		auto name = Util::plainText(c.getName());
 		return QString::fromLatin1(
 		           "<tr>"
 		           "<td>%1</td>" // level
@@ -198,9 +198,7 @@ private:
 	
 	QString makeSymbolRow(const Symbol& s)
 	{
-		auto label = QString { s.getNumberAsString()
-		                       + QChar::Space
-		                       + QTextDocumentFragment::fromHtml(s.getName()).toPlainText() };
+		auto label = s.getNumberAndPlainTextName();
 		auto extra_text = QString{};
 		if (s.isRotatable())
 			extra_text += QCoreApplication::translate("OpenOrienteering::SymbolReport", "[X] %1")

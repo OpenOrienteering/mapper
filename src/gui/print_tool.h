@@ -123,9 +123,9 @@ protected:
 	MapCoordF click_pos_map;
 };
 
-#endif // QT_PRINTSUPPORT_LIB
-
 
 }  // namespace OpenOrienteering
+
+#endif // QT_PRINTSUPPORT_LIB
 
 #endif // OPENORIENTEERING_PRINT_TOOL_H

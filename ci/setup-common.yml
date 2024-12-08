@@ -1,6 +1,6 @@
 # This file is part of OpenOrienteering.
 
-# Copyright 2019-2021 Kai Pastor
+# Copyright 2019, 2021, 2023, 2024 Kai Pastor
 #
 # Redistribution and use is allowed according to the terms of the BSD license:
 #
@@ -51,16 +51,17 @@ steps:
     if [ -z "${APP_ID_SUFFIX}" -a -n "${VERSION_DISPLAY}" ] ; then
       echo "##vso[task.setVariable variable=APP_ID_SUFFIX].${BUILD_SOURCEBRANCHNAME}"
     fi
-    echo "##vso[task.setVariable variable=ANDROID_NDK]$(HOME)/android-ndk-r19c"
-    echo "##vso[task.setVariable variable=ANDROID_NDK_HOME]$(HOME)/android-ndk-r19c"
-    echo "##vso[task.setVariable variable=ANDROID_NDK_ROOT]$(HOME)/android-ndk-r19c"
     env | sort
   displayName: 'Update environment'
 
-- task: DownloadPipelineArtifact@0
+- task: DownloadPipelineArtifact@2
   inputs:
+    buildType: 'specific'
+    project: $(System.TeamProject)
+    definition: $(openorienteering.superbuild.definitionId)
+    buildVersionToDownload: 'specific'
     pipelineId: $(openorienteering.superbuild.buildId)
-    artifactName: 'superbuild-$(SUPBERBUILD_IMAGE_NAME)$(OUTPUT_SUFFIX)'
+    artifactName: 'superbuild-$(SUPERBUILD_IMAGE_NAME)$(OUTPUT_SUFFIX)'
     targetPath: $(SUPERBUILD_INSTALL_DIR)
   displayName: 'Download superbuild artifacts'
 

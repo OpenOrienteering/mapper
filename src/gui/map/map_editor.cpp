@@ -35,7 +35,6 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
-#include <QAbstractButton>
 #include <QAction>
 #include <QActionGroup>
 #include <QApplication>
@@ -75,7 +74,6 @@
 #include <QPoint>
 #include <QPointer>
 #include <QPointF>
-#include <QPushButton>
 #include <QRect>
 #include <QRectF>
 #include <QSettings>
@@ -87,7 +85,6 @@
 #include <QSplitter>
 #include <QStatusBar>
 #include <QStringList>
-#include <QTextEdit>
 #include <QToolBar>
 #include <QToolButton>
 #include <QVariant>
@@ -124,6 +121,8 @@
 #include "gui/map/map_dialog_scale.h"
 #include "gui/map/map_editor_activity.h"
 #include "gui/map/map_find_feature.h"
+#include "gui/map/map_information_dialog.h"
+#include "gui/map/map_notes.h"
 #include "gui/map/map_widget.h"
 #include "gui/map/rotate_map_dialog.h"
 #include "gui/symbols/symbol_replacement.h"
@@ -336,6 +335,7 @@ MapEditorController::~MapEditorController()
 	delete gps_display;
 	delete gps_track_recorder;
 	delete compass_display;
+	delete gps_marker_display;
 	delete map;
 }
 
@@ -462,6 +462,7 @@ void MapEditorController::setEditingInProgress(bool value)
 		scale_map_act->setEnabled(!editing_in_progress);
 		rotate_map_act->setEnabled(!editing_in_progress);
 		map_notes_act->setEnabled(!editing_in_progress);
+		map_info_act->setEnabled(!editing_in_progress);
 		
 		// Map menu, continued
 		const int num_parts = map->getNumParts();
@@ -1027,6 +1028,7 @@ void MapEditorController::createActions()
 	scale_map_act = newAction("scalemap", tr("Change map scale..."), this, SLOT(scaleMapClicked()), "tool-scale.png", tr("Change the map scale and adjust map objects and symbol sizes"), "map_menu.html");
 	rotate_map_act = newAction("rotatemap", tr("Rotate map..."), this, SLOT(rotateMapClicked()), "tool-rotate.png", tr("Rotate the whole map"), "map_menu.html");
 	map_notes_act = newAction("mapnotes", tr("Map notes..."), this, SLOT(mapNotesClicked()), nullptr, QString{}, "map_menu.html");
+	map_info_act = newAction("mapinfo", tr("Map information..."), this, SLOT(mapInfoClicked()), "map-information.png", QString{}, "map_menu.html");
 	
 	template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "templates.png", tr("Show/Hide the template window"), "templates_menu.html");
 	//QAction* template_config_window_act = newCheckAction("templateconfigwindow", tr("Template configurations window"), this, SLOT(showTemplateConfigurationsWindow(bool)), "window-new", tr("Show/Hide the template configurations window"));
@@ -1253,6 +1255,7 @@ void MapEditorController::createMenuAndToolbars()
 	map_menu->addAction(scale_map_act);
 	map_menu->addAction(rotate_map_act);
 	map_menu->addAction(map_notes_act);
+	map_menu->addAction(map_info_act);
 	map_menu->addSeparator();
 	updateMapPartsUI();
 	map_menu->addAction(mappart_add_act);
@@ -2249,37 +2252,19 @@ void MapEditorController::rotateMapClicked()
 
 void MapEditorController::mapNotesClicked()
 {
-	QDialog dialog(window, Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
-	dialog.setWindowTitle(tr("Map notes"));
-	dialog.setWindowModality(Qt::WindowModal);
-	
-	auto* text_edit = new QTextEdit();
-	text_edit->setPlainText(map->getMapNotes());
-	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	QPushButton* ok_button = new QPushButton(QIcon(QString::fromLatin1(":/images/arrow-right.png")), tr("OK"));
-	ok_button->setDefault(true);
-	
-	auto* buttons_layout = new QHBoxLayout();
-	buttons_layout->addWidget(cancel_button);
-	buttons_layout->addStretch(1);
-	buttons_layout->addWidget(ok_button);
-	
-	auto* layout = new QVBoxLayout();
-	layout->addWidget(text_edit);
-	layout->addLayout(buttons_layout);
-	dialog.setLayout(layout);
-	
-	connect(cancel_button, &QAbstractButton::clicked, &dialog, &QDialog::reject);
-	connect(ok_button, &QAbstractButton::clicked, &dialog, &QDialog::accept);
-	
-	if (dialog.exec() == QDialog::Accepted)
+	if (map)
 	{
-		if (text_edit->toPlainText() != map->getMapNotes())
-		{
-			map->setMapNotes(text_edit->toPlainText());
-			map->setHasUnsavedChanges(true);
-		}
+		MapNotesDialog dialog(window, *map);
+		dialog.setWindowModality(Qt::WindowModal);
+		dialog.exec();
 	}
+}
+
+void MapEditorController::mapInfoClicked()
+{
+	MapInformationDialog dialog(window, map);
+	dialog.setWindowModality(Qt::WindowModal);
+	dialog.exec();
 }
 
 void MapEditorController::createTemplateWindow()
@@ -2446,7 +2431,7 @@ void MapEditorController::selectedSymbolsChanged()
 			symbol_button->setMenu(mobile_symbol_button_menu);
 			const auto actions = mobile_symbol_button_menu->actions();
 			int i = 0;
-			actions[i]->setText(symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getPlainTextName());
+			actions[i]->setText(symbol->getNumberAndPlainTextName());
 			actions[++i]->setVisible(!symbol->getDescription().isEmpty());
 			++i;  // separator
 			actions[++i]->setChecked(symbol->isHidden());
@@ -2471,7 +2456,7 @@ void MapEditorController::selectedSymbolsChanged()
 		}
 		
 		if (symbol)
-			window->showStatusBarMessage(symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getPlainTextName(), 1000);
+			window->showStatusBarMessage(symbol->getNumberAndPlainTextName(), 1000);
 	}
 	
 	// Even when the symbol (pointer) hasn't changed,
@@ -2645,7 +2630,7 @@ void MapEditorController::updateObjectDependentActions()
 	bool const boolean_prerequisite = first_selected_is_path && num_selected_paths >= 2;
 	QString const extra_status_tip = QLatin1Char(' ') +
 	                                 ( boolean_prerequisite
-	                                 ? tr("Resulting symbol: %1 %2.").arg(first_selected_symbol->getNumberAsString(), first_selected_symbol->getPlainTextName())
+	                                 ? tr("Resulting symbol: %1.").arg(first_selected_symbol->getNumberAndPlainTextName())
 	                                 : tr("Select at least two area or path objects activate this tool.") );
 	boolean_union_act->setEnabled(boolean_prerequisite);
 	boolean_union_act->setStatusTip(tr("Unify overlapping objects.") + extra_status_tip);

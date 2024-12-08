@@ -1,5 +1,5 @@
 /*
- *    Copyright 2018 Kai Pastor
+ *    Copyright 2018-2020, 2022, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -414,6 +414,28 @@ private slots:
 			}
 		}
 		QCOMPARE(failed_compare, QString{});
+	}
+	
+	
+	void getNumberAndPlainTextName_data()
+	{
+		QTest::addColumn<QString>("input");
+		QTest::addColumn<QString>("number_and_name");
+		QTest::newRow("simple") << QString::fromLatin1("Symbol 1") << QString::fromLatin1("1 Symbol 1");
+		QTest::newRow("html tag") << QString::fromLatin1("<b>Symbol</b> 2") << QString::fromLatin1("1 Symbol 2");
+		QTest::newRow("invalid html") << QString::fromLatin1("<b>Symbol 3") << QString::fromLatin1("1 Symbol 3");
+		QTest::newRow("html entity")  << QString::fromLatin1("Symbol &nbsp; 4") << QString::fromLatin1("1 Symbol < 4");
+	}
+	
+	void getNumberAndPlainTextName()
+	{
+		QFETCH(QString, input);
+		QFETCH(QString, number_and_name);
+		PointSymbol s;
+		s.setNumberComponent(0, 1);
+		s.setName(input);
+		QEXPECT_FAIL("html entity", "HTML entities are not converted", Continue);
+		QCOMPARE(s.getNumberAndPlainTextName(), number_and_name);
 	}
 };
 

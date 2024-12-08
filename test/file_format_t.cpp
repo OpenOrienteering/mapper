@@ -22,6 +22,7 @@
 
 #include <algorithm>
 // IWYU pragma: no_include <array>
+#include <cstddef>
 // IWYU pragma: no_include <initializer_list>
 #include <limits>
 #include <memory>
@@ -40,10 +41,12 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QFlags>
 #include <QIODevice>
 #include <QLatin1Char>
 #include <QLatin1String>
 #include <QMetaObject>
+#include <QMetaType>
 #include <QPageSize>
 #include <QPoint>
 #include <QPointF>
@@ -161,8 +164,8 @@ namespace
 		auto const fill_a = QString().fill(QChar::Space, +diff); \
 		auto const fill_b = QString().fill(QChar::Space, -diff); \
 		QFAIL(QString::fromLatin1( \
-		       "Compared values are not the same (%1 %2)\n   Actual   (%3)%4: %7\n   Expected (%5)%6: %8") \
-		      .arg((symbol).getNumberAsString(), (symbol).getPlainTextName(), \
+		       "Compared values are not the same (%1)\n   Actual   (%2)%3: %6\n   Expected (%4)%5: %7") \
+		      .arg((symbol).getNumberAndPlainTextName(), \
 		           QString::fromUtf8(#a), fill_a, \
 		           QString::fromUtf8(#b), fill_b) \
 		      .arg(a).arg(b) \
@@ -182,8 +185,7 @@ namespace
 	#define VERIFY_SYMBOL_PROPERTY(cond, symbol) \
 	if (cond) \
 	{ \
-		QVERIFY2(cond, QByteArray((symbol).getNumberAsString().toUtf8() + ' ' \
-		                          + (symbol).getPlainTextName().toUtf8())); \
+		QVERIFY2(cond, QByteArray((symbol).getNumberAndPlainTextName().toUtf8())); \
 	} \
 	else \
 	{ \
@@ -408,7 +410,7 @@ namespace
 		if (actual)
 			fuzzyCompareSymbol(*actual, *expected, format_id);
 		else
-			QFAIL(qPrintable(QString::fromLatin1("Missing symbol: %1 %2").arg(expected->getNumberAsString(), expected->getPlainTextName())));
+			QFAIL(qPrintable(QString::fromLatin1("Missing symbol: %1").arg(expected->getNumberAndPlainTextName())));
 	}
 	
 	/**
@@ -1228,6 +1230,8 @@ struct TestOcdFileImport : public OcdFileImport
 	}
 	
 	using OcdFileImport::getObjectText;
+	using OcdFileImport::fillPathCoords;
+	using OcdFileImport::OcdImportedPathObject;
 };
 
 void FileFormatTest::ocdTextImportTest_data()
@@ -1306,6 +1310,314 @@ void FileFormatTest::ocdTextImportTest()
 }
 
 
+struct OcdPointsView {
+	const Ocd::OcdPoint32* data = nullptr;
+	int size = 0;
+	
+	OcdPointsView() = default;
+	
+	template <class T, std::size_t n>
+	explicit OcdPointsView(T(& t)[n])
+	: data { t }
+	, size { int(n) }
+	{}
+};
+Q_DECLARE_METATYPE(OcdPointsView)
+
+struct FlagsView {
+	const int* data = nullptr;
+	int size = 0;
+	
+	FlagsView() = default;
+	
+	template <class T, std::size_t n>
+	explicit FlagsView(T(& t)[n], int size)
+	: data { t }
+	, size { size }
+	{}
+	
+	template <class T, std::size_t n>
+	explicit FlagsView(T(& t)[n])
+	: data { t }
+	, size { int(n) }
+	{}
+};
+Q_DECLARE_METATYPE(FlagsView)
+
+enum OcdPathPersonality {
+	Line = 0,
+	Area = 1
+};
+Q_DECLARE_METATYPE(OcdPathPersonality)
+
+void FileFormatTest::ocdPathImportTest_data()
+{
+	#define C(x) ((int)((unsigned int)(x)<<8))  // FIXME: Not the same as in export
+	constexpr auto ocd_flag_gap = 8;  // TODO: implement as Ocd::OcdPoint32::FlagGap
+	
+	QTest::addColumn<OcdPointsView>("points");
+	QTest::addColumn<OcdPathPersonality>("personality");
+	QTest::addColumn<FlagsView>("expected");
+	
+	{
+		// bezier curve
+		static Ocd::OcdPoint32 ocd_points[] = {
+		    { C(-1109), C(212) },
+		    { C(-1035) | Ocd::OcdPoint32::FlagCtl1, C(302) },
+		    { C(-1008) | Ocd::OcdPoint32::FlagCtl2, C(519) },
+		    { C(-926), C(437) }  // different from first point
+		};
+		static int expected_flags[] = {
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    MapCoord::ClosePoint  // injected by Mapper
+		};
+		QTest::newRow("bezier, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags);
+		QTest::newRow("bezier, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags, 4);
+	}
+	
+	{
+		// straight segments, corner flag
+		static Ocd::OcdPoint32 ocd_points[] = {
+		    { C(-589), C(432) },
+		    { C(-269), C(845) | Ocd::OcdPoint32::FlagCorner },
+		    { C(267), C(279) },  // different from first point
+		};
+		static int expected_flags[] = {
+		    0,
+		    MapCoord::DashPoint,
+		    0,
+		    MapCoord::ClosePoint  // injected by Mapper
+		};
+		QTest::newRow("straight, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags);
+		QTest::newRow("straight, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags, 3);
+	}
+	
+	{
+		// straight segments, virtual gap
+		static Ocd::OcdPoint32 ocd_points[] = {
+		    { C(-972), C(-264) },
+		    { C(-836) | Ocd::OcdPoint32::FlagLeft | ocd_flag_gap, C(-151) | Ocd::OcdPoint32::FlagRight },
+		    { C(-677), C(-19) },
+		    { C(-518), C(112) }  // different from first point
+		};
+		static int expected_flags[] = {
+		    0,
+		    0,
+		    0,
+		    0,
+		    MapCoord::ClosePoint  // injected by Mapper
+		};
+		QTest::newRow("virtual gap, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags);
+		QTest::newRow("virtual gap, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags, 4);
+	}
+	
+	{
+		// straight segments, one hole
+		static Ocd::OcdPoint32 ocd_points[] = {
+		    { C(100), C(-250) },
+		    { C(150), C(-260) },
+		    { C(100), C(-250) },  // same as first point
+		    { C(200), C(-350) | Ocd::OcdPoint32::FlagHole },
+		    { C(220), C(-400) },
+		    { C(200), C(-350) }  // same as first point of hole
+		};
+		static int expected_flags_area[] = {
+		    0,
+		    0,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,
+		    0,
+		    0,
+		    MapCoord::ClosePoint
+		};
+		QTest::newRow("hole, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags_area);
+		static int expected_flags_line[6] = {};
+		QTest::newRow("hole, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags_line);
+	}
+	
+	{
+		// straight segments, with an "empty" hole
+		static Ocd::OcdPoint32 ocd_points[] = {
+		    { C(100), C(-250) },
+		    { C(150), C(-260) },
+		    { C(100), C(-250) },  // same as first point
+		    { C(120), C(-200) | Ocd::OcdPoint32::FlagHole },
+		    { C(200), C(-350) | Ocd::OcdPoint32::FlagHole },
+		    { C(220), C(-400) },
+		    { C(200), C(-350) }  // same as second FlagHole point
+		};
+		static int expected_flags_area[] = {
+		    0,
+		    0,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,
+		    0,
+		    0,
+		    MapCoord::ClosePoint
+		};
+		QTest::newRow("empty hole, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags_area);
+		static int expected_flags_line[7] = {};
+		QTest::newRow("empty hole, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags_line);
+	}
+	
+	{
+		// straight segments, with two "empty" holes
+		static Ocd::OcdPoint32 ocd_points[] = {
+		    { C(100), C(-250) },
+		    { C(150), C(-260) },
+		    { C(100), C(-250) },  // same as first point
+		    { C(120), C(-200) | Ocd::OcdPoint32::FlagHole },
+		    { C(140), C(-300) | Ocd::OcdPoint32::FlagHole },
+		    { C(200), C(-350) | Ocd::OcdPoint32::FlagHole },
+		    { C(220), C(-400) },
+		    { C(200), C(-350) },  // same as third FlagHole point
+		};
+		static int expected_flags_area[] = {
+		    0,
+		    0,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,
+		    0,
+		    0,
+		    MapCoord::ClosePoint
+		};
+		QTest::newRow("two empty holes, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags_area);
+		static int expected_flags_line[8] = {};
+		QTest::newRow("two empty holes, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags_line);
+	}
+	
+	{
+		// straight segments, one hole, not actual areas
+		static Ocd::OcdPoint32 ocd_points[] = {
+		    { C(100), C(-250) },
+		    { C(150), C(-260) },
+		    { C(200), C(-350) | Ocd::OcdPoint32::FlagHole },
+		    { C(220), C(-400) }
+		};
+		static int expected_flags_area[] = {
+		    0,
+		    0,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,  // injected by Mapper
+		    0,
+		    0,
+		    MapCoord::ClosePoint  // injected by Mapper
+		};
+		QTest::newRow("open areas with hole, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags_area);
+		static int expected_flags_line[4] = {};
+		QTest::newRow("open areas with hole, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags_line);
+	}
+	
+	{
+		// area with hole in hole
+		static Ocd::OcdPoint32 ocd_points[] = {
+			{ C(-405), C(-167) },
+		    { C(-348) | Ocd::OcdPoint32::FlagCtl1, C(22) },
+		    { C(-113) | Ocd::OcdPoint32::FlagCtl2, C(667) },
+		    { C(54), C(687) },
+		    { C(184) | Ocd::OcdPoint32::FlagCtl1, C(702) },
+		    { C(836) | Ocd::OcdPoint32::FlagCtl2, C(418) },
+		    { C(889), C(298) },
+		    { C(599), C(117) },
+		    { C(137), C(93) | Ocd::OcdPoint32::FlagDash},  // different from first point
+		    { C(-25), C(79) | Ocd::OcdPoint32::FlagHole},
+		    { C(-208) | Ocd::OcdPoint32::FlagCtl1, C(259) },
+		    { C(90) | Ocd::OcdPoint32::FlagCtl2, C(652) },
+		    { C(559), C(322) },  // different from first point of hole
+		    { C(78), C(326) | Ocd::OcdPoint32::FlagHole},
+		    { C(100) | Ocd::OcdPoint32::FlagCtl1, C(341) },
+		    { C(157) | Ocd::OcdPoint32::FlagCtl2, C(354) },
+		    { C(198), C(339) | Ocd::OcdPoint32::FlagCorner },
+		    { C(227) | Ocd::OcdPoint32::FlagCtl1, C(329) },
+		    { C(247) | Ocd::OcdPoint32::FlagCtl2, C(304) },
+		    { C(242), C(256) },
+		    { C(144), C(243) },  // different from first point of hole
+		};
+		static int expected_flags_area[] = {
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    0,
+		    MapCoord::DashPoint,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,  // injected by Mapper
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,  // injected by Mapper
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    MapCoord::DashPoint | MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    0,
+		    MapCoord::ClosePoint  // injected by Mapper
+		};
+		QTest::newRow("area with nested holes, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags_area);
+		static int expected_flags_line[] = {
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    0,
+		    MapCoord::DashPoint,
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    MapCoord::DashPoint | MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    0
+		};
+		QTest::newRow("area with nested holes, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags_line);
+	}
+}
+
+void FileFormatTest::ocdPathImportTest()
+{
+	QFETCH(OcdPointsView, points);
+	QFETCH(OcdPathPersonality, personality);
+	QFETCH(FlagsView, expected);
+	
+	TestOcdFileImport ocd_v12_import{12};
+	
+	TestOcdFileImport::OcdImportedPathObject path_object;
+	ocd_v12_import.fillPathCoords(&path_object, personality == Area, points.size, points.data);
+	QVERIFY(path_object.getRawCoordinateVector().size() > 0);
+	
+	QCOMPARE(path_object.getRawCoordinateVector().size(), expected.size);
+	for (int i = 0; i < expected.size; ++i)
+	{
+		// Provide the current index when failing.
+		if (path_object.getCoordinate(i).flags() != MapCoord::Flags(expected.data[i]))
+		{
+			auto err = QString::fromLatin1("Compared flags are not the same at index %1\n"
+			                               "   Actual  : %2\n"
+			                               "   Expected: %3"
+			                               ).arg(QString::number(i),
+			                                     QString::number(path_object.getCoordinate(i).flags()),
+			                                     QString::number(expected.data[i])
+			                               );
+			QFAIL(qPrintable(err));
+		}
+	}
+}
 
 /*
  * We don't need a real GUI window.

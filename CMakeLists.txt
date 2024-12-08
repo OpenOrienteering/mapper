@@ -65,11 +65,6 @@ if(NOT CMAKE_BUILD_TYPE)
 	  FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
-if(APPLE)
-	SET(Mapper_MACOSX_VERSION "10.7" CACHE STRING
-	  "Minimum Mac OS X version to build for, recommended: 10.7")
-endif()
-
 option(Mapper_DEBUG_TRANSLATIONS "Debug missing translations" OFF)
 
 # To improve developer experience, build clipper if it is not found
@@ -168,12 +163,6 @@ include(CTest)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
-
-if(APPLE AND Mapper_MACOSX_VERSION)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -mmacosx-version-min=${Mapper_MACOSX_VERSION}")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mmacosx-version-min=${Mapper_MACOSX_VERSION}")
-	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mmacosx-version-min=${Mapper_MACOSX_VERSION}")
-endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wpedantic -Wextra")
