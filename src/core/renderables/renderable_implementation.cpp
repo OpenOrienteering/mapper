@@ -283,14 +283,13 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, QPointF first, QPointF 
 {
 	qreal half_line_width = (color_priority < 0) ? 0 : line_width/2;
 	
-	auto right = MapCoordF(second - first).perpRight();
-	right.normalize();
-	right *= half_line_width;
-	
-	rectIncludeSafe(extent, first + right);
-	rectInclude(extent, first - right);
-	rectInclude(extent, second - right);
-	rectInclude(extent, second + right);
+	auto margin = MapCoordF(second - first).perpRight();
+	margin.normalize();
+	margin.rx() = qAbs(margin.x()) * half_line_width;
+	margin.ry() = qAbs(margin.y()) * half_line_width;
+	extent = QRectF(first, second)
+	             .normalized()
+	             .adjusted(-margin.x(), -margin.y(), margin.x(), margin.y());
 	
 	path.moveTo(first);
 	path.lineTo(second);
