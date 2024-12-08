@@ -254,7 +254,6 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	mid_symbol_widget_list = {
 	    mid_symbol_placement_label, mid_symbol_placement_combo,
 	    mid_symbol_per_spot_label, mid_symbol_per_spot_edit,
-	    mid_symbol_distance_label, mid_symbol_distance_edit,
 	    show_at_least_one_symbol_check,
 	};
 	
