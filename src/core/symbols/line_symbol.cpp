@@ -1768,6 +1768,12 @@ const Symbol::BorderHints* LineSymbol::borderHints() const
 }
 
 
+// virtual
+bool LineSymbol::containsDashSymbol() const {
+	return dash_symbol != nullptr;
+}
+
+
 
 void LineSymbol::setStartSymbol(PointSymbol* symbol)
 {
