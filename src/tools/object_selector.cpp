@@ -21,8 +21,14 @@
 #include "object_selector.h"
 
 #include <algorithm>
+#include <cstddef>
+// IWYU pragma: no_include <map>
+// IWYU pragma: no_include <memory>
+
+#include <QRectF>
 
 #include "core/map.h"
+// IWYU pragma: no_include "core/map_part.h"
 #include "core/objects/object.h"
 
 
