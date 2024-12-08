@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2015-2017 Kai Pastor
+ *    Copyright 2015-2017, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -62,11 +62,9 @@ public:
 	 */
 	bool selectBox(const MapCoordF& corner1, const MapCoordF& corner2, bool toggle);
 	
-	// TODO: move to other place? util.h/cpp or object.h/cpp
-	static bool sortObjects(const std::pair<int, Object*>& a, const std::pair<int, Object*>& b);
-	
 private:
-	bool selectionInfosEqual(const SelectionInfoVector& a, const SelectionInfoVector& b);
+	static bool compareTypeAndExtent(const std::pair<int, Object*>& a, const std::pair<int, Object*>& b);
+	static bool selectionInfosEqual(const SelectionInfoVector& a, const SelectionInfoVector& b);
 	
 	// Information about the last click
 	SelectionInfoVector last_results;
@@ -79,4 +77,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_OBJECT_SELECTOR_H
