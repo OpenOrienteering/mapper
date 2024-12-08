@@ -200,6 +200,9 @@ public:
 	const BorderHints* borderHints() const override;
 	
 	
+	bool containsDashSymbol() const override;
+	
+	
 	/**
 	 * Returns the limit for miter joins in units of the line width.
 	 * See the Qt docs for QPainter::setMiterJoin().
@@ -282,8 +285,6 @@ public:
 	inline const LineSymbolBorder& getRightBorder() const {return right_border;}
 	
 	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
-	
-	bool containsDashSymbol() const override { return dash_symbol != nullptr; }
 	
 protected:
 	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
