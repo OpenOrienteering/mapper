@@ -766,11 +766,19 @@ void PointSymbolEditorWidget::addCoordClicked()
 	if (coords_table->currentRow() < 0)
 		path->addCoordinate(MapCoordVector::size_type(coords_table->rowCount()), MapCoord(0, 0));
 	else
-		path->addCoordinate(MapCoordVector::size_type(coords_table->currentRow()) + 1, path->getCoordinate(MapCoordVector::size_type(coords_table->currentRow())));
+	{
+		auto coord_index = MapCoordVector::size_type(coords_table->currentRow());
+		path->addCoordinate(coord_index + 1, path->getCoordinate(coord_index));
+		auto coord = path->getCoordinate(coord_index);	// NOTE: getCoordinate() returns coord which is different from the one read above
+		coord.setCurveStart(false);
+		path->setCoordinate(coord_index, coord);
+	}
 	
 	int row = (coords_table->currentRow() < 0) ? coords_table->rowCount() : (coords_table->currentRow() + 1);
 	updateCoordsTable();	// NOTE: incremental updates (to the curve start boxes) would be possible but mean some implementation effort
 	coords_table->setCurrentItem(coords_table->item(row, coords_table->currentColumn()));
+	map->updateAllObjectsWithSymbol(symbol);
+	emit symbolEdited();
 }
 
 void PointSymbolEditorWidget::deleteCoordClicked()
@@ -837,7 +845,11 @@ void PointSymbolEditorWidget::updateCoordsTable()
 		if (num_rows > 0 && path->parts().front().isClosed())
 			--num_rows;
 		if (path->getSymbol()->getType() == Symbol::Line)
+		{
+			const QSignalBlocker blocker(line_closed_check);
+			line_closed_check->setChecked(num_rows > 0 && path->parts().front().isClosed());
 			line_closed_check->setEnabled(num_rows > 0);
+		}
 	}
 	
 	coords_table->setRowCount(num_rows);
