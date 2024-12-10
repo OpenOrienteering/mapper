@@ -1077,7 +1077,7 @@ void MapEditorController::createActions()
 	simplify_path_act = newAction("simplify", tr("Simplify path"), this, SLOT(simplifyPathClicked()), "tool-simplify-path.png", QString{}, "toolbars.html#simplify_path");
 	clip_area_act = newToolAction("cliparea", tr("Clip area"), this, SLOT(clipAreaClicked()), "tool-clip.png", QString{}, "toolbars.html#clip_area");
 	erase_area_act = newToolAction("erasearea", tr("Erase area"), this, SLOT(eraseAreaClicked()), "tool-erase.png", QString{}, "toolbars.html#erase_area");
-	distribute_points_act = newAction("distributepoints", tr("Distribute points along path"), this, SLOT(distributePointsClicked()), "tool-distribute-points.png", QString{}, "toolbars.html#distribute_points"); // TODO: write documentation
+	distribute_points_act = newAction("distributepoints", tr("Distribute points along path..."), this, SLOT(distributePointsClicked()), "tool-distribute-points.png", QString{}, "toolbars.html#distribute_points"); // TODO: write documentation
 	
 	paint_feature = std::make_unique<PaintOnTemplateFeature>(*this);
 	
@@ -3475,38 +3475,11 @@ void MapEditorController::eraseAreaClicked()
 void MapEditorController::distributePointsClicked()
 {
 	Q_ASSERT(activeSymbol()->getType() == Symbol::Point);
-	PointSymbol* point = activeSymbol()->asPoint();
+	const auto point = activeSymbol()->asPoint();
 	
-	DistributePointsTool::Settings settings;
-	if (!DistributePointsTool::showSettingsDialog(window, point, settings))
-		return;
-	
-	// Create points along paths
-	std::vector<PointObject*> created_objects;
-	for (const auto* object : map->selectedObjects())
-	{
-		if (object->getType() == Object::Path)
-			DistributePointsTool::execute(object->asPath(), point, settings, created_objects);
-	}
-	if (created_objects.empty())
-		return;
-	
-	// Add points to map
-	for (auto* o : created_objects)
-		map->addObject(o);
-	
-	// Create undo step and select new objects
-	map->clearObjectSelection(false);
-	MapPart* part = map->getCurrentPart();
-	auto* delete_step = new DeleteObjectsUndoStep(map);
-	for (std::size_t i = 0; i < created_objects.size(); ++i)
-	{
-		Object* object = created_objects[i];
-		delete_step->addObject(part->findObjectIndex(object));
-		map->addObjectToSelection(object, i == created_objects.size() - 1);
-	}
-	map->push(delete_step);
-	map->setObjectsDirty();
+	DistributePointsDialog dialog(window, map, point);
+	dialog.setWindowModality(Qt::WindowModal);
+	dialog.exec();
 }
 
 void MapEditorController::addFloatingDockWidget(QDockWidget* dock_widget)
