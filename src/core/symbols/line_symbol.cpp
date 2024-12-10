@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -803,23 +803,19 @@ void LineSymbol::processContinuousLine(
 	{
 		auto mid_position = (split.clen + effective_end_length - mid_symbols_length) / 2;
 		auto next_split = SplitPathCoord::at(mid_position, split);
-		path.copy(split, next_split, processed_flags, processed_coords);
-		split = next_split;
 		
 		auto orientation = qreal(0);
-		bool mid_symbol_rotatable = bool(mid_symbol) && mid_symbol->isRotatable();
+		const auto mid_symbol_rotatable = mid_symbol->isRotatable();
 		for (auto i = mid_symbols_per_spot; i > 0; --i)
 		{
 			if (mid_symbol_rotatable)
-				orientation = split.tangentVector().angle();
-			mid_symbol->createRenderablesScaled(split.pos, orientation, output);
+				orientation = next_split.tangentVector().angle();
+			mid_symbol->createRenderablesScaled(next_split.pos, orientation, output);
 			
 			if (i > 1)
 			{
 				mid_position += mid_symbol_distance_f;
-				next_split = SplitPathCoord::at(mid_position, split);
-				path.copy(split, next_split, processed_flags, processed_coords);
-				split = next_split;
+				next_split = SplitPathCoord::at(mid_position, next_split);
 			}
 		}
 	}
@@ -1201,7 +1197,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 				bool is_first_dash = is_first_dashgroup && dash == 1;
 				bool is_last_dash  = is_last_dashgroup  && dash == dashes_in_group;
 				
-				// The dash has an start if it is not the first dash in a half first group.
+				// The dash has a start if it is not the first dash in a half first group.
 				bool has_start = !(is_first_dash && half_first_group);
 				// The dash has an end if it is not the last dash in a half last group.
 				bool has_end   = !(is_last_dash && half_last_group);
