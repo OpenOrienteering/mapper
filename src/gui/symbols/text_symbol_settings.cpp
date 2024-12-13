@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2019, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -39,14 +39,13 @@
 #include <QLatin1Char>
 #include <QLineEdit>
 #include <QListWidget>
-#include <QListWidgetItem>
 #include <QLocale>
 #include <QPainterPath>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QRectF>
 #include <QSignalBlocker>
-#include <QSpacerItem>
+// IWYU pragma: no_include <QTabWidget>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -84,9 +83,9 @@ SymbolPropertiesWidget* TextSymbol::createPropertiesWidget(SymbolSettingDialog* 
 // ### TextSymbolSettings ###
 
 TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* dialog)
-: SymbolPropertiesWidget(symbol, dialog), 
-  symbol(symbol), 
-  dialog(dialog)
+: SymbolPropertiesWidget(symbol, dialog)
+, symbol(symbol)
+, dialog(dialog)
 {
 	auto map = dialog->getPreviewMap();
 	react_to_changes = true;
@@ -543,10 +542,10 @@ void TextSymbolSettings::updateGeneralContents()
 	kerning_check->setChecked(symbol->kerning);
 	icon_text_edit->setText(symbol->getIconText());
 	framing_check->setChecked(symbol->framing);
+	setTabEnabled(indexOf(framing_widget), symbol->framing);
 	ocad_compat_check->setChecked(symbol->line_below || symbol->getNumCustomTabs() > 0);
 	react_to_changes = true;
 	
-	framingCheckClicked(framing_check->isChecked());
 	ocadCompatibilityButtonClicked(ocad_compat_check->isChecked());
 }
 
