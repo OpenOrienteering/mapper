@@ -768,10 +768,10 @@ void PointSymbolEditorWidget::addCoordClicked()
 	else
 	{
 		auto coord_index = MapCoordVector::size_type(coords_table->currentRow());
-		path->addCoordinate(coord_index + 1, path->getCoordinate(coord_index));
-		auto coord = path->getCoordinate(coord_index);	// NOTE: getCoordinate() returns coord which is different from the one read above
-		coord.setCurveStart(false);
-		path->setCoordinate(coord_index, coord);
+		auto current_coord = path->getCoordinate(coord_index);
+		if (current_coord.isCurveStart())
+			current_coord.setCurveStart(false);
+		path->addCoordinate(coord_index, current_coord);
 	}
 	
 	int row = (coords_table->currentRow() < 0) ? coords_table->rowCount() : (coords_table->currentRow() + 1);
