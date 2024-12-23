@@ -4582,7 +4582,7 @@ tallentaminen %2 (.%3) ei ole tuettu.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="945"/>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="946"/>
@@ -5609,7 +5609,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1954"/>
         <source>In text symbol %1: exporting only %2 custom tabulator positions</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tekstisymbolissa %1: vain vienti %2 kustom tabulaattorin sijainti</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2332"/>
@@ -5806,7 +5806,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1666"/>
         <source>Skipping unsupported reference to point symbol &apos;%1.%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ei tuetun referenssi pistesymbolin skippaus &apos;%1.%2&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1880"/>
