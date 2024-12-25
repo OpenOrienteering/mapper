@@ -749,6 +749,7 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 		auto coord = path->getCoordinate(coord_index);
 		coord.setCurveStart(coords_table->item(row, column)->checkState() == Qt::Checked);
 		path->setCoordinate(coord_index, coord);
+		updateDeleteCoordButton();
 		
 		updateCoordsTable();
 		map->updateAllObjectsWithSymbol(symbol);
