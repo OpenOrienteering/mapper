@@ -554,6 +554,7 @@ void PointSymbolEditorWidget::deleteCurrentElement()
 	Q_ASSERT(row > 0);
 	delete element_list->item(row);
 	symbol->deleteElement(row - 1);
+	center_all_elements_button->setEnabled(symbol->getNumElements() > 0);
 	map->updateAllObjectsWithSymbol(symbol);
 	emit symbolEdited();
 }
