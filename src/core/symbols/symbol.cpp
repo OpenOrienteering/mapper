@@ -25,6 +25,7 @@
 #include <cmath>
 #include <cstddef>
 #include <iterator>
+#include <limits>
 #include <memory>
 
 #include <QtGlobal>
@@ -991,6 +992,13 @@ bool Symbol::lessByColor::operator() (const Symbol* s1, const Symbol* s2) const
 bool Symbol::containsDashSymbol() const
 {
 	return false;
+}
+
+
+// virtual function, derived classes AreaSymbol and CombinedSymbol override default behaviour below.
+int Symbol::getMinimumArea() const
+{
+	return std::numeric_limits<int>::max();
 }
 
 
