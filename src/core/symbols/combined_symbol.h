@@ -120,6 +120,8 @@ public:
 	
 	int getMinimumArea() const override;
 	
+	int getMinimumLength() const override;
+	
 protected:
 	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
 	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version) override;

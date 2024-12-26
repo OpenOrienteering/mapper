@@ -1002,4 +1002,11 @@ int Symbol::getMinimumArea() const
 }
 
 
+// virtual function, derived classes LineSymbol and CombinedSymbol override default behaviour below.
+int Symbol::getMinimumLength() const
+{
+	return std::numeric_limits<int>::max();
+}
+
+
 }  // namespace OpenOrienteering

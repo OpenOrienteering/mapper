@@ -35,7 +35,6 @@
 
 #include "core/map.h"
 #include "core/objects/object.h"
-#include "core/symbols/line_symbol.h"
 #include "core/symbols/symbol.h"
 
 
@@ -152,13 +151,9 @@ void MeasureWidget::objectSelectionChanged()
 				                          paper_length_text, tr("mm", "millimeters"),
 				                          real_length_text, tr("m", "meters")));
 				
-				auto minimum_length  = 0.0;
-				auto minimum_length_text = QString{ };
-				if (symbol->getType() == Symbol::Line)
-				{
-					minimum_length      = 0.001 * static_cast<const LineSymbol*>(symbol)->getMinimumLength();
-					minimum_length_text = locale().toString(minimum_length, 'f', 2);
-				}
+				auto minimum_length_int = symbol->getMinimumLength();
+				auto minimum_length = 0.001 * (minimum_length_int == std::numeric_limits<int>::max() ? 0 : minimum_length_int);
+				auto minimum_length_text = locale().toString(minimum_length, 'f', 2);
 				
 				if (paper_length < minimum_length && paper_length_text != minimum_length_text)
 				{

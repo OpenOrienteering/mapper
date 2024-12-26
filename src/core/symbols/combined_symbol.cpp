@@ -439,4 +439,17 @@ int CombinedSymbol::getMinimumArea() const
 }
 
 
+// override
+int CombinedSymbol::getMinimumLength() const
+{
+	auto minimum_length = std::numeric_limits<int>::max();
+	for (auto const* part : parts)
+	{
+		if (part)
+			minimum_length = qMin(minimum_length, part->getMinimumLength());
+	}
+	return minimum_length;
+}
+
+
 }  // namespace OpenOrienteering
