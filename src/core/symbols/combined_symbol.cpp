@@ -426,4 +426,30 @@ bool CombinedSymbol::containsDashSymbol() const
 }
 
 
+// override
+int CombinedSymbol::getMinimumArea() const
+{
+	auto minimum_area = std::numeric_limits<int>::max();
+	for (auto const* part : parts)
+	{
+		if (part)
+			minimum_area = qMin(minimum_area, part->getMinimumArea());
+	}
+	return minimum_area;
+}
+
+
+// override
+int CombinedSymbol::getMinimumLength() const
+{
+	auto minimum_length = std::numeric_limits<int>::max();
+	for (auto const* part : parts)
+	{
+		if (part)
+			minimum_length = qMin(minimum_length, part->getMinimumLength());
+	}
+	return minimum_length;
+}
+
+
 }  // namespace OpenOrienteering

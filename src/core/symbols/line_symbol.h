@@ -216,7 +216,7 @@ public:
 	inline void setLineWidth(double width) {line_width = qRound(1000 * width);}
 	inline const MapColor* getColor() const {return color;}
 	inline void setColor(const MapColor* color) {this->color = color;}
-	inline int getMinimumLength() const {return minimum_length;}
+	inline int getMinimumLength() const override {return minimum_length;}
 	inline void setMinimumLength(int length) {this->minimum_length = length;}
 	inline CapStyle getCapStyle() const {return cap_style;}
 	inline void setCapStyle(CapStyle style) {cap_style = style;}

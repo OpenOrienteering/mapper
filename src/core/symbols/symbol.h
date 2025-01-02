@@ -510,6 +510,16 @@ public:
 	 */
 	virtual bool containsDashSymbol() const;
 	
+	/**
+	 * Returns the specified minimum area of this symbol otherwise the maximum int value.
+	 */
+	virtual int getMinimumArea() const;
+	
+	/**
+	 * Returns the specified minimum length of this symbol otherwise the maximum int value.
+	 */
+	virtual int getMinimumLength() const;
+	
 protected:
 	/**
 	 * Sets the rotatability state of the symbol.
