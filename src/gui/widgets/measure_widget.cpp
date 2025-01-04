@@ -132,8 +132,7 @@ void MeasureWidget::objectSelectionChanged()
 				                          paper_area_text, tr("mm²", "square millimeters"),
 				                          real_area_text , tr("m²", "square meters")));
 				
-				auto minimum_area_int = symbol->getMinimumArea();
-				auto minimum_area = 0.001 * (minimum_area_int == std::numeric_limits<int>::max() ? 0 : minimum_area_int);
+				auto minimum_area = 0.001 * symbol->getMinimumArea();
 				auto minimum_area_text = locale().toString(minimum_area, 'f', 2);
 				
 				if (paper_area < minimum_area && paper_area_text != minimum_area_text)
@@ -151,8 +150,7 @@ void MeasureWidget::objectSelectionChanged()
 				                          paper_length_text, tr("mm", "millimeters"),
 				                          real_length_text, tr("m", "meters")));
 				
-				auto minimum_length_int = symbol->getMinimumLength();
-				auto minimum_length = 0.001 * (minimum_length_int == std::numeric_limits<int>::max() ? 0 : minimum_length_int);
+				auto minimum_length = 0.001 * symbol->getMinimumLength();
 				auto minimum_length_text = locale().toString(minimum_length, 'f', 2);
 				
 				if (paper_length < minimum_length && paper_length_text != minimum_length_text)
