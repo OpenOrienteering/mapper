@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020, 2024 Kai Pastor
+ *    Copyright 2012-2020, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -429,26 +429,18 @@ bool CombinedSymbol::containsDashSymbol() const
 // override
 int CombinedSymbol::getMinimumArea() const
 {
-	auto minimum_area = std::numeric_limits<int>::max();
-	for (auto const* part : parts)
-	{
-		if (part)
-			minimum_area = qMin(minimum_area, part->getMinimumArea());
-	}
-	return minimum_area;
+	return std::accumulate(parts.begin(), parts.end(), 0, [](int acc, auto part) {
+		return part ? qMax(acc, part->getMinimumArea()) : acc;
+	});
 }
 
 
 // override
 int CombinedSymbol::getMinimumLength() const
 {
-	auto minimum_length = std::numeric_limits<int>::max();
-	for (auto const* part : parts)
-	{
-		if (part)
-			minimum_length = qMin(minimum_length, part->getMinimumLength());
-	}
-	return minimum_length;
+	return std::accumulate(parts.begin(), parts.end(), 0, [](int acc, auto part) {
+		return part ? qMax(acc, part->getMinimumLength()) : acc;
+	});
 }
 
 

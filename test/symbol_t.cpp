@@ -1,5 +1,5 @@
 /*
- *    Copyright 2018-2020, 2022, 2024 Kai Pastor
+ *    Copyright 2018-2020, 2022, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -390,6 +390,10 @@ private slots:
 		CombinedSymbol c;
 		c.setNumParts(10);
 		
+		Symbol& s = c;
+		QCOMPARE(s.getMinimumLength(), 0);
+		QCOMPARE(s.getMinimumArea(), 0);
+		
 		auto make_line_symbol = [](int len) {
 			auto* l = new LineSymbol();
 			l->setMinimumLength(len);
@@ -408,7 +412,6 @@ private slots:
 		c.setPart(6, make_area_symbol(30), true);
 		c.setPart(7, make_area_symbol(29), true);
 		
-		Symbol& s = c;
 		QCOMPARE(s.getMinimumLength(), 20);
 		QCOMPARE(s.getMinimumArea(), 30);
 	}

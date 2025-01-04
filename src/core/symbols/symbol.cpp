@@ -25,7 +25,6 @@
 #include <cmath>
 #include <cstddef>
 #include <iterator>
-#include <limits>
 #include <memory>
 
 #include <QtGlobal>
@@ -998,14 +997,14 @@ bool Symbol::containsDashSymbol() const
 // virtual function, derived classes AreaSymbol and CombinedSymbol override default behaviour below.
 int Symbol::getMinimumArea() const
 {
-	return std::numeric_limits<int>::max();
+	return 0;
 }
 
 
 // virtual function, derived classes LineSymbol and CombinedSymbol override default behaviour below.
 int Symbol::getMinimumLength() const
 {
-	return std::numeric_limits<int>::max();
+	return 0;
 }
 
 
