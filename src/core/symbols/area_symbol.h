@@ -278,6 +278,7 @@ public:
 	inline const MapColor* getColor() const {return color;}
 	inline void setColor(const MapColor* color) {this->color = color;}
 	inline int getMinimumArea() const override {return minimum_area; }
+	void setMinimumArea(int area) { this->minimum_area = area; }
 	inline int getNumFillPatterns() const {return int(patterns.size());}
 	inline void setNumFillPatterns(int count) {patterns.resize(std::size_t(count));}
 	inline FillPattern& getFillPattern(int i) {return patterns[std::size_t(i)];}
