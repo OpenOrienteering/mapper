@@ -44,6 +44,8 @@
 #include "core/map.h"
 #include "core/map_color.h"
 #include "core/renderables/renderable.h"
+#include "core/symbols/area_symbol.h"
+#include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/symbol.h"
@@ -383,6 +385,33 @@ private slots:
 		QVERIFY(clone->equals(&l));
 	}
 	
+	void CombinedSymbolTest()
+	{
+		CombinedSymbol c;
+		c.setNumParts(10);
+		
+		auto make_line_symbol = [](int len) {
+			auto* l = new LineSymbol();
+			l->setMinimumLength(len);
+			return l;
+		};
+		c.setPart(1, make_line_symbol(18), true);
+		c.setPart(2, make_line_symbol(20), true);
+		c.setPart(3, make_line_symbol(19), true);
+		
+		auto make_area_symbol = [](int area) {
+			auto* a = new AreaSymbol();
+			a->setMinimumArea(area);
+			return a;
+		};
+		c.setPart(5, make_area_symbol(28), true);
+		c.setPart(6, make_area_symbol(30), true);
+		c.setPart(7, make_area_symbol(29), true);
+		
+		Symbol& s = c;
+		QCOMPARE(s.getMinimumLength(), 20);
+		QCOMPARE(s.getMinimumArea(), 30);
+	}
 	
 	void lessByColorTest_data()
 	{
