@@ -511,12 +511,12 @@ public:
 	virtual bool containsDashSymbol() const;
 	
 	/**
-	 * Returns the specified minimum area of this symbol otherwise the maximum int value.
+	 * Returns the specified minimum area of this symbol otherwise 0.
 	 */
 	virtual int getMinimumArea() const;
 	
 	/**
-	 * Returns the specified minimum length of this symbol otherwise the maximum int value.
+	 * Returns the specified minimum length of this symbol otherwise 0.
 	 */
 	virtual int getMinimumLength() const;
 	
