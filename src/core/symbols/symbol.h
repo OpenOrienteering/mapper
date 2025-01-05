@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020, 2024 Kai Pastor
+ *    Copyright 2012-2020, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -511,12 +511,20 @@ public:
 	virtual bool containsDashSymbol() const;
 	
 	/**
-	 * Returns the specified minimum area of this symbol otherwise 0.
+	 * Returns the specified minimum area of this symbol.
+	 * 
+	 * This function shall be overriden by symbol types with area personality.
+	 * The default implementation returns zero, representing the absence of
+	 * a minimum required area.
 	 */
 	virtual int getMinimumArea() const;
 	
 	/**
-	 * Returns the specified minimum length of this symbol otherwise 0.
+	 * Returns the specified minimum length of this symbol.
+	 * 
+	 * This function shall be overriden by symbol types with line personality.
+	 * The default implementation returns zero, representing the absence of
+	 * a minimum required length.
 	 */
 	virtual int getMinimumLength() const;
 	
