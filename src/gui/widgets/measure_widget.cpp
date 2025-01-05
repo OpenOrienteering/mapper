@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015, 2024 Kai Pastor
+ *    Copyright 2012-2018, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,16 +21,28 @@
 
 #include "measure_widget.h"
 
+#include <iterator>
+#include <set>
+// IWYU pragma: no_include <memory>
+
+#include <QtGlobal>
 #include <QBuffer>
+#include <QByteArray>
+#include <QFlags>
+#include <QIODevice>
+#include <QIcon>
+#include <QLatin1Char>
+#include <QLatin1String>
 #include <QLocale>
+#include <QPixmap>
 #include <QScroller>
+#include <QSize>
 #include <QStyle>
+#include <QWidget>
 
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
-#include "core/symbols/area_symbol.h"
-#include "core/symbols/line_symbol.h"
 
 
 namespace OpenOrienteering {
@@ -78,8 +90,8 @@ void MeasureWidget::objectSelectionChanged()
 	}
 	else
 	{
-		const Object* object = *begin(selected_objects);
-		const Symbol* symbol = object->getSymbol();
+		const auto* object = *begin(selected_objects);
+		const auto* symbol = object->getSymbol();
 		headline = symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getName();
 		
 		if (object->getType() != Object::Path)
@@ -127,13 +139,8 @@ void MeasureWidget::objectSelectionChanged()
 				                          paper_area_text, tr("mm²", "square millimeters"),
 				                          real_area_text , tr("m²", "square meters")));
 				
-				auto minimum_area = 0.0;
-				auto minimum_area_text = QString{ };
-				if (symbol->getType() == Symbol::Area)
-				{
-					minimum_area      = 0.001 * static_cast<const AreaSymbol*>(symbol)->getMinimumArea();
-					minimum_area_text = locale().toString(minimum_area, 'f', 2);
-				}
+				auto minimum_area = 0.001 * symbol->getMinimumArea();
+				auto minimum_area_text = locale().toString(minimum_area, 'f', 2);
 				
 				if (paper_area < minimum_area && paper_area_text != minimum_area_text)
 				{
@@ -150,13 +157,8 @@ void MeasureWidget::objectSelectionChanged()
 				                          paper_length_text, tr("mm", "millimeters"),
 				                          real_length_text, tr("m", "meters")));
 				
-				auto minimum_length  = 0.0;
-				auto minimum_length_text = QString{ };
-				if (symbol->getType() == Symbol::Line)
-				{
-					minimum_length      = 0.001 * static_cast<const LineSymbol*>(symbol)->getMinimumLength();
-					minimum_length_text = locale().toString(minimum_length, 'f', 2);
-				}
+				auto minimum_length = 0.001 * symbol->getMinimumLength();
+				auto minimum_length_text = locale().toString(minimum_length, 'f', 2);
 				
 				if (paper_length < minimum_length && paper_length_text != minimum_length_text)
 				{

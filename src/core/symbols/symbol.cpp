@@ -994,4 +994,18 @@ bool Symbol::containsDashSymbol() const
 }
 
 
+// virtual function, derived classes AreaSymbol and CombinedSymbol override default behaviour below.
+int Symbol::getMinimumArea() const
+{
+	return 0;
+}
+
+
+// virtual function, derived classes LineSymbol and CombinedSymbol override default behaviour below.
+int Symbol::getMinimumLength() const
+{
+	return 0;
+}
+
+
 }  // namespace OpenOrienteering

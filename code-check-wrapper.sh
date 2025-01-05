@@ -77,6 +77,7 @@ for I in \
   map_printer \
   map_widget.cpp \
   mapper_proxystyle.cpp \
+  measure_widget.cpp \
   /object.cpp \
   object_mover.cpp \
   object_query.cpp \
