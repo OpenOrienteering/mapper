@@ -21,15 +21,24 @@
 
 #include "measure_widget.h"
 
+#include <iterator>
+#include <set>
+// IWYU pragma: no_include <memory>
+
+#include <QtGlobal>
 #include <QBuffer>
-#include <QIcon>
+#include <QByteArray>
+#include <QFlags>
 #include <QIODevice>
+#include <QIcon>
+#include <QLatin1Char>
 #include <QLatin1String>
 #include <QLocale>
 #include <QPixmap>
 #include <QScroller>
 #include <QSize>
 #include <QStyle>
+#include <QWidget>
 
 #include "core/map.h"
 #include "core/objects/object.h"
