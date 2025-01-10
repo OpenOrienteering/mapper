@@ -21,16 +21,23 @@
 #include "text_browser_dialog.h"
 
 #include <Qt>
+#include <QtGlobal>
+#include <QAbstractButton>
 #include <QApplication>
 #include <QHBoxLayout>
 #include <QIcon>
+#include <QPoint>
 #include <QPushButton>
 #include <QScrollBar>
 #include <QScroller>  // IWYU pragma: keep
+#include <QSizeF>
 #include <QString>
 #include <QTextBrowser>
+#include <QTextDocument>
+#include <QTextEdit>
 #include <QToolTip>
 #include <QVBoxLayout>
+#include <QWidget>
 
 #include "gui/widgets/text_browser.h"
 #include "util/backports.h"  // IWYU pragma: keep
@@ -47,7 +54,7 @@ TextBrowserDialog::TextBrowserDialog(QWidget* parent)
 		setWindowModality(Qt::WindowModal);
 	}
 	
-	QVBoxLayout* layout = new QVBoxLayout();
+	auto* layout = new QVBoxLayout();
 	setLayout(layout);
 	
 	int left, top, right, bottom;
@@ -58,7 +65,7 @@ TextBrowserDialog::TextBrowserDialog(QWidget* parent)
 	text_browser->setOpenExternalLinks(true);
 	layout->addWidget(text_browser);
 	
-	QHBoxLayout* buttons_layout = new QHBoxLayout();
+	auto* buttons_layout = new QHBoxLayout();
 	buttons_layout->setContentsMargins(left, top, right, bottom);
 	
 	QPushButton* back_button  = new QPushButton(QIcon(QStringLiteral(":/images/arrow-left.png")), QApplication::translate("QFileDialog", "Back"));
@@ -122,7 +129,7 @@ QSize TextBrowserDialog::sizeHint() const
 	return size;
 }
 
-void TextBrowserDialog::sourceChanged(const QUrl&)
+void TextBrowserDialog::sourceChanged(const QUrl& /* unused */)
 {
 	; // Nothing, to be overridden in subclasses
 }
