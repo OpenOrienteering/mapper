@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019, 2024 Kai Pastor
+ *    Copyright 2012-2019, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,7 +21,7 @@
 
 #include "text_symbol_settings.h"
 
-#include <algorithm>
+// IWYU pragma: no_include <algorithm>
 #include <vector>
 
 #include <QAbstractButton>
@@ -39,13 +39,15 @@
 #include <QLatin1Char>
 #include <QLineEdit>
 #include <QListWidget>
+#include <QListWidgetItem>
 #include <QLocale>
 #include <QPainterPath>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QRectF>
 #include <QSignalBlocker>
-// IWYU pragma: no_include <QTabWidget>
+// IWYU pragma: no_include <QSpacerItem>
+#include <QTabWidget>  // IWYU pragma: keep
 #include <QVBoxLayout>
 #include <QWidget>
 
