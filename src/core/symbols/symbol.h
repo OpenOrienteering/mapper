@@ -174,25 +174,25 @@ public:
 	Type getType() const { return type; }
 	
 	// Convenience casts with type checking
-	/** Case to PointSymbol with type checking */
+	/** Cast to PointSymbol with type checking */
 	const PointSymbol* asPoint() const;
-	/** Case to PointSymbol with type checking */
+	/** Cast to PointSymbol with type checking */
 	PointSymbol* asPoint();
-	/** Case to LineSymbol with type checking */
+	/** Cast to LineSymbol with type checking */
 	const LineSymbol* asLine() const;
-	/** Case to LineSymbol with type checking */
+	/** Cast to LineSymbol with type checking */
 	LineSymbol* asLine();
-	/** Case to AreaSymbol with type checking */
+	/** Cast to AreaSymbol with type checking */
 	const AreaSymbol* asArea() const;
-	/** Case to AreaSymbol with type checking */
+	/** Cast to AreaSymbol with type checking */
 	AreaSymbol* asArea();
-	/** Case to TextSymbol with type checking */
+	/** Cast to TextSymbol with type checking */
 	const TextSymbol* asText() const;
-	/** Case to TextSymbol with type checking */
+	/** Cast to TextSymbol with type checking */
 	TextSymbol* asText();
-	/** Case to CombinedSymbol with type checking */
+	/** Cast to CombinedSymbol with type checking */
 	const CombinedSymbol* asCombined() const;
-	/** Case to CombinedSymbol with type checking */
+	/** Cast to CombinedSymbol with type checking */
 	CombinedSymbol* asCombined();
 	
 	/**
@@ -322,7 +322,7 @@ public:
 	/**
 	 * Called when a symbol was changed, replaced, or removed.
 	 * 
-	 * Symbol need top update or remove references to the given old_symbol.
+	 * Symbol need to update or remove references to the given old_symbol.
 	 * If new_symbol is nullptr, the symbol is about to be deleted.
 	 * 
 	 * Returns true if this symbol contained the deleted symbol.
@@ -513,7 +513,7 @@ public:
 	/**
 	 * Returns the specified minimum area of this symbol.
 	 * 
-	 * This function shall be overriden by symbol types with area personality.
+	 * This function shall be overridden by symbol types with area personality.
 	 * The default implementation returns zero, representing the absence of
 	 * a minimum required area.
 	 */
@@ -522,7 +522,7 @@ public:
 	/**
 	 * Returns the specified minimum length of this symbol.
 	 * 
-	 * This function shall be overriden by symbol types with line personality.
+	 * This function shall be overridden by symbol types with line personality.
 	 * The default implementation returns zero, representing the absence of
 	 * a minimum required length.
 	 */
