@@ -157,7 +157,7 @@ public:
 	/**
 	 * Attempts to load the map from the specified path. Returns true on success.
 	 * 
-	 * This is a convenience function used by tests. Normally, a importer should be
+	 * This is a convenience function used by tests. Normally, an importer should be
 	 * used explicitly.
 	 * 
 	 * @param path The file path to load the map from.
@@ -454,7 +454,7 @@ public:
 	
 	/**
 	 * Marks the colors as "dirty", i.e. as having unsaved changes.
-	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changes before.
 	 */
 	void setColorsDirty();
 	
@@ -560,7 +560,7 @@ public:
 	
 	/**
 	 * Marks the symbols as "dirty", i.e. as having unsaved changes.
-	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changes before.
 	 */
 	void setSymbolsDirty();
 	
@@ -611,7 +611,7 @@ public slots:
 	 * Updates the symbol icon zoom from the current set of symbols.
 	 * 
 	 * The symbol icon zoom is chosen so that most symbols fit into the full
-	 * icon space, and the number of symbol below 10% size is kept low.
+	 * icon space, and the number of symbols below 10% size is kept low.
 	 * For a map without symbols, this returns 1.0.
 	 */
 	void updateSymbolIconZoom();
@@ -713,7 +713,7 @@ public:
 	/**
 	 * Marks the template settings as "dirty", i.e. as having unsaved changes.
 	 * 
-	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changes before.
 	 */
 	void setTemplatesDirty();
 	
@@ -910,7 +910,7 @@ public:
 	
 	/**
 	 * Marks the objects as "dirty", i.e. as having unsaved changes.
-	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changes before.
 	 */
 	void setObjectsDirty();
 	
@@ -1151,7 +1151,7 @@ public:
 	 * @param object The object to add.
 	 * @param emit_selection_changed Set to true if objectSelectionChanged()
 	 *     should be emitted. Do this only for the last in a
-	 *     sequence of selection change oparations to prevent bad performance!
+	 *     sequence of selection change operations to prevent bad performance!
 	 */
 	void addObjectToSelection(Object* object, bool emit_selection_changed);
 	
@@ -1345,7 +1345,7 @@ public:
 	 */
 	bool hasUnsavedChanges() const;
 	
-	/** Do not use this in usual cases, see hasUnsavedChanged(). */
+	/** Do not use this in usual cases, see hasUnsavedChanges(). */
 	void setHasUnsavedChanges(bool has_unsaved_changes);
 	
 	/** Returns if there are unsaved changes to the colors. */
@@ -1365,7 +1365,7 @@ public:
 	
 	/**
 	 * Marks something unspecific in the map as "dirty", i.e. as having unsaved changes.
-	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changes before.
 	 * 
 	 * Use setColorsDirty(), setSymbolsDirty(), setTemplatesDirty() or
 	 * setObjectsDirty() if you know more specifically what has changed.
@@ -1408,7 +1408,7 @@ public:
 	
 signals:
 	/**
-	 * Emitted when a the map enters or leaves the state which is saved on map.
+	 * Emitted when the map enters or leaves the state which is saved on map.
 	 */
 	void hasUnsavedChanged(bool is_clean);
 	
@@ -1946,4 +1946,4 @@ Q_DECLARE_METATYPE(const OpenOrienteering::Map*)
 Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Map::ImportMode)
 
 
-#endif
+#endif // OPENORIENTEERING_MAP_H
