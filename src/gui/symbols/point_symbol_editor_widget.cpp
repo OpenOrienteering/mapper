@@ -857,12 +857,10 @@ void PointSymbolEditorWidget::centerCoordsClicked()
 void PointSymbolEditorWidget::updateCoordsTable()
 {
 	auto* object = getCurrentElementObject();
-	int num_rows;
-	if (object->getType() == Object::Point)
-		num_rows = 1;
-	else
+	int num_rows = 1;
+	if (object->getType() == Object::Path)
 	{
-		auto* path = static_cast<PathObject*>(object);
+		auto* path = static_cast<const PathObject*>(object);
 		num_rows = int(path->getCoordinateCount());
 		if (num_rows > 0 && path->parts().front().isClosed())
 			--num_rows;
