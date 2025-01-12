@@ -672,7 +672,7 @@ void PointSymbolEditorWidget::lineClosedClicked(bool checked)
 		path->getCoordinateRef(path->getCoordinateCount() - 4).setCurveStart(false);
 	
 	Q_ASSERT(!path->parts().empty());
-	path->parts().front().setClosed(checked, true);
+	path->parts().front().setClosed(checked, path->getCoordinateCount() > 2);
 	if (!checked)
 		path->deleteCoordinate(path->getCoordinateCount() - 1, false);
 	
@@ -868,7 +868,7 @@ void PointSymbolEditorWidget::updateCoordsTable()
 		{
 			const QSignalBlocker blocker(line_closed_check);
 			line_closed_check->setChecked(num_rows > 0 && path->parts().front().isClosed());
-			line_closed_check->setEnabled(num_rows > 0);
+			line_closed_check->setEnabled(num_rows > 2 || line_closed_check->isChecked());
 		}
 	}
 	
