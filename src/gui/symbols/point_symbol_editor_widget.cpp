@@ -677,6 +677,7 @@ void PointSymbolEditorWidget::lineClosedClicked(bool checked)
 		path->deleteCoordinate(path->getCoordinateCount() - 1, false);
 	
 	updateCoordsTable();
+	updateDeleteCoordButton();
 	map->updateAllObjectsWithSymbol(symbol);
 	emit symbolEdited();
 }
@@ -765,13 +766,15 @@ void PointSymbolEditorWidget::addCoordClicked()
 	auto* path = static_cast<PathObject*>(object);
 	
 	if (coords_table->currentRow() < 0)
+	{
 		path->addCoordinate(MapCoordVector::size_type(coords_table->rowCount()), MapCoord(0, 0));
+	}
 	else
 	{
 		auto coord_index = MapCoordVector::size_type(coords_table->currentRow());
 		auto current_coord = path->getCoordinate(coord_index);
-		if (current_coord.isCurveStart())
-			current_coord.setCurveStart(false);
+		current_coord.setCurveStart(false);
+		current_coord.setHolePoint(false);
 		path->addCoordinate(coord_index, current_coord);
 	}
 	
@@ -784,18 +787,36 @@ void PointSymbolEditorWidget::addCoordClicked()
 
 void PointSymbolEditorWidget::deleteCoordClicked()
 {
-	auto* object = getCurrentElementObject();
-	Q_ASSERT(object->getType() == Object::Path);
-	auto* path = static_cast<PathObject*>(object);
-	
 	int row = coords_table->currentRow();
 	if (row < 0)
 		return;
 	
-	path->deleteCoordinate(MapCoordVector::size_type(row), false);
+	auto* object = getCurrentElementObject();
+	Q_ASSERT(object->getType() == Object::Path);
+	auto* path = static_cast<PathObject*>(object);
+	
+	// To maintain a table-like UX, avoid high-level behavior of deleteCoordinate().
+	// (1) Deleting inside a curve: Turn off curve start to retain table UX.
+	for (int i = qMax(0, row - 2); i <= row; ++i)
+	{
+		path->getCoordinateRef(MapCoordVector::size_type(i)).setCurveStart(false);
+	}
+	// (2) Deleting first row: Avoid removal of curve start at second row.
+	if (row == 0)
+	{
+		// Avoid special behavior of deleteCoordinate()
+		auto is_curve_start = path->getCoordinate(1).isCurveStart();
+		path->getCoordinateRef(1).setCurveStart(false);
+		path->deleteCoordinate(0, false);
+		path->getCoordinateRef(0).setCurveStart(is_curve_start);
+	}
+	else
+	{
+		path->deleteCoordinate(MapCoordVector::size_type(row), false);
+	}
 	
 	updateCoordsTable();	// NOTE: incremental updates (to the curve start boxes) would be possible but mean some implementation effort
-	center_coords_button->setEnabled(path->getCoordinateCount() > 0);
+	coords_table->selectRow(qMax(0, row - 1));
 	updateDeleteCoordButton();
 	map->updateAllObjectsWithSymbol(symbol);
 	emit symbolEdited();
@@ -858,6 +879,7 @@ void PointSymbolEditorWidget::updateCoordsTable()
 		addCoordsRow(i);
 	
 	center_coords_button->setEnabled(num_rows > 0);
+	updateDeleteCoordButton();
 }
 
 void PointSymbolEditorWidget::addCoordsRow(int row)
@@ -920,22 +942,23 @@ void PointSymbolEditorWidget::updateCoordsRow(int row)
 
 void PointSymbolEditorWidget::updateDeleteCoordButton()
 {
-	const bool has_coords = coords_table->rowCount() > 0;
-	const bool is_point = getCurrentElementObject()->getType() == Object::Point;
-	bool part_of_curve = false;
-	
-	if (!is_point)
+	auto enabled = false;
+	switch (getCurrentElementObject()->getSymbol()->getType())
 	{
-		auto* path = static_cast<const PathObject*>(getCurrentElementObject());
-		for (int i = 1; i < 4; i++)
+	case Symbol::Line:
+		if (!line_closed_check->isChecked())
 		{
-			int row = coords_table->currentRow() - i;
-			if (row >= 0 && path->getCoordinate(MapCoordVector::size_type(row)).isCurveStart())
-				part_of_curve = true;
+			enabled = coords_table->rowCount() > 2;
+			break;
 		}
+		Q_FALLTHROUGH();
+	case Symbol::Area:
+		enabled = coords_table->rowCount() > 3;
+		break;
+	default:
+		;
 	}
-
-	delete_coord_button->setEnabled(has_coords && !is_point && !part_of_curve);
+	delete_coord_button->setEnabled(enabled);
 }
 
 void PointSymbolEditorWidget::insertElement(Object* object, Symbol* element_symbol)
