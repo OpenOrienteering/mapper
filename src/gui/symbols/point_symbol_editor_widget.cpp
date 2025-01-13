@@ -34,6 +34,7 @@
 #include <QCursor>
 #include <QDoubleSpinBox>
 #include <QFlags>
+#include <QFont>
 #include <QFontMetrics>
 #include <QGridLayout>
 #include <QHBoxLayout>
