@@ -931,6 +931,21 @@ void PointSymbolEditorWidget::updateCoordsRow(int row)
 		                           && (!path->getCoordinate(coord_index+1).isCurveStart() && !path->getCoordinate(coord_index+2).isCurveStart())
 		                           && (row <= 0 || !path->getCoordinate(coord_index-1).isCurveStart())
 		                           && (row <= 1 || !path->getCoordinate(coord_index-2).isCurveStart());
+		auto is_curve_part = false;
+		for (unsigned int i = 0; i <= coord_index && i < 3 && !is_curve_part; ++i)
+		{
+			if (path->getCoordinate(coord_index - i).isCurveStart())
+				is_curve_part = true;
+		}
+		for (auto col = 0; col < 2; ++col)
+		{
+			auto font = coords_table->item(row, col)->font();
+			if (font.italic() != is_curve_part)
+			{
+				font.setItalic(is_curve_part);
+				coords_table->item(row, col)->setFont(font);
+			}
+		}
 		if (has_curve_start_box)
 		{
 			coords_table->item(row, 2)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable);
