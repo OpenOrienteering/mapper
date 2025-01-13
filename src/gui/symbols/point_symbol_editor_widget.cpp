@@ -766,6 +766,7 @@ void PointSymbolEditorWidget::addCoordClicked()
 	auto* path = static_cast<PathObject*>(object);
 	
 	int row = (coords_table->currentRow() < 0) ? coords_table->rowCount() : (coords_table->currentRow() + 1);
+	int col = qMax(0, coords_table->currentColumn());
 	do
 	{
 		if (coords_table->currentRow() < 0)
@@ -784,7 +785,7 @@ void PointSymbolEditorWidget::addCoordClicked()
 	while (path->getCoordinateCount() < (path->getSymbol()->getType() == Symbol::Area ? 3 : 2));
 	
 	updateCoordsTable();	// NOTE: incremental updates (to the curve start boxes) would be possible but mean some implementation effort
-	coords_table->setCurrentItem(coords_table->item(row, coords_table->currentColumn()));
+	coords_table->setCurrentItem(coords_table->item(row, col));
 	map->updateAllObjectsWithSymbol(symbol);
 	emit symbolEdited();
 }
