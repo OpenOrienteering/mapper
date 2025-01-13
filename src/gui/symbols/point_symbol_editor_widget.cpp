@@ -765,20 +765,24 @@ void PointSymbolEditorWidget::addCoordClicked()
 	Q_ASSERT(object->getType() == Object::Path);
 	auto* path = static_cast<PathObject*>(object);
 	
-	if (coords_table->currentRow() < 0)
-	{
-		path->addCoordinate(MapCoordVector::size_type(coords_table->rowCount()), MapCoord(0, 0));
-	}
-	else
-	{
-		auto coord_index = MapCoordVector::size_type(coords_table->currentRow());
-		auto current_coord = path->getCoordinate(coord_index);
-		current_coord.setCurveStart(false);
-		current_coord.setHolePoint(false);
-		path->addCoordinate(coord_index, current_coord);
-	}
-	
 	int row = (coords_table->currentRow() < 0) ? coords_table->rowCount() : (coords_table->currentRow() + 1);
+	do
+	{
+		if (coords_table->currentRow() < 0)
+		{
+			path->addCoordinate(MapCoordVector::size_type(coords_table->rowCount()), MapCoord(0, 0));
+		}
+		else
+		{
+			auto coord_index = MapCoordVector::size_type(coords_table->currentRow());
+			auto current_coord = path->getCoordinate(coord_index);
+			current_coord.setCurveStart(false);
+			current_coord.setHolePoint(false);
+			path->addCoordinate(coord_index, current_coord);
+		}
+	}
+	while (path->getCoordinateCount() < (path->getSymbol()->getType() == Symbol::Area ? 3 : 2));
+	
 	updateCoordsTable();	// NOTE: incremental updates (to the curve start boxes) would be possible but mean some implementation effort
 	coords_table->setCurrentItem(coords_table->item(row, coords_table->currentColumn()));
 	map->updateAllObjectsWithSymbol(symbol);
