@@ -797,7 +797,8 @@ void PointSymbolEditorWidget::deleteCoordClicked()
 	
 	// To maintain a table-like UX, avoid high-level behavior of deleteCoordinate().
 	// (1) Deleting inside a curve: Turn off curve start to retain table UX.
-	for (int i = qMax(0, row - 2); i <= row; ++i)
+	auto look_back_distance = path->parts().front().isClosed() ? 2 : 3;
+	for (int i = qMax(int(path->parts().front().first_index), row - look_back_distance); i <= row; ++i)
 	{
 		path->getCoordinateRef(MapCoordVector::size_type(i)).setCurveStart(false);
 	}
