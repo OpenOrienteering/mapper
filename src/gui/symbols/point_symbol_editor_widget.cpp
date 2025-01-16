@@ -898,10 +898,15 @@ void PointSymbolEditorWidget::addCoordsRow(int row)
 		if (!coords_table->item(row, c))
 		{
 			auto* item = new QTableWidgetItem();
-			if (c < 2)
+			switch (c)
 			{
-				item->setFlags(Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+			case 0:
+			case 1:
+				item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable);
 				item->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+				break;
+			default:
+				item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 			}
 			coords_table->setItem(row, c, item);
 		}
@@ -929,26 +934,30 @@ void PointSymbolEditorWidget::updateCoordsRow(int row)
 	{
 		auto* path = static_cast<const PathObject*>(object);
 		bool has_curve_start_box = coord_index+3 < path->getCoordinateCount()
-		                           && (!path->getCoordinate(coord_index+1).isCurveStart() && !path->getCoordinate(coord_index+2).isCurveStart())
-		                           && (row <= 0 || !path->getCoordinate(coord_index-1).isCurveStart())
-		                           && (row <= 1 || !path->getCoordinate(coord_index-2).isCurveStart());
+		                           && (!path->getCoordinate(coord_index+1).isCurveStart() && !path->getCoordinate(coord_index+2).isCurveStart());
 		auto is_curve_part = false;
-		for (unsigned int i = 0; i <= coord_index && i < 3 && !is_curve_part; ++i)
+		if ( (row > 1 && path->getCoordinate(coord_index-2).isCurveStart())
+		     || (row > 0 && path->getCoordinate(coord_index-1).isCurveStart()) )
 		{
-			if (path->getCoordinate(coord_index - i).isCurveStart())
-				is_curve_part = true;
+			has_curve_start_box = false;
+			is_curve_part = true;
 		}
+		auto* item = coords_table->item(row, 2);
 		if (has_curve_start_box)
 		{
-			coords_table->item(row, 2)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable);
-			coords_table->item(row, 2)->setCheckState(path->getCoordinate(coord_index).isCurveStart() ? Qt::Checked : Qt::Unchecked);
-			return;
+			item->setFlags(item->flags().setFlag(Qt::ItemIsUserCheckable, true));
+			item->setCheckState(path->getCoordinate(coord_index).isCurveStart() ? Qt::Checked : Qt::Unchecked);
+		}
+		else if (is_curve_part)
+		{
+			item->setFlags(item->flags().setFlag(Qt::ItemIsUserCheckable, false));
+			item->setCheckState(Qt::PartiallyChecked);
+		}
+		else
+		{
+			item->setData(Qt::CheckStateRole, {});
 		}
 	}
-
-	if (coords_table->item(row, 2)->flags() & Qt::ItemIsUserCheckable)
-		coords_table->setItem(row, 2, new QTableWidgetItem());	// remove checkbox by replacing the item with a new one - is there a better way?
-	coords_table->item(row, 2)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 }
 
 void PointSymbolEditorWidget::updateDeleteCoordButton()
