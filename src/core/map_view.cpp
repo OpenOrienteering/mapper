@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2020 Kai Pastor
+ *    Copyright 2014-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,8 +25,6 @@
 #include <cmath>
 #include <iterator>
 #include <stdexcept>
-
-#include <QRectF>
 
 #include <Qt>
 #include <QLatin1String>
@@ -176,10 +174,7 @@ void MapView::load(QXmlStreamReader& xml)
 		{
 			XmlElementReader map_element(xml);
 			map_visibility.opacity = map_element.attribute<qreal>(literal::opacity);
-			if (map_element.hasAttribute(literal::visible))
-				map_visibility.visible = map_element.attribute<bool>(literal::visible);
-			else
-				map_visibility.visible = true;
+			map_visibility.visible = map_element.attribute<bool>(literal::visible);
 		}
 		else if (xml.name() == literal::templates)
 		{
