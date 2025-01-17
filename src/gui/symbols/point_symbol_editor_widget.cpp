@@ -23,18 +23,16 @@
 
 #include <algorithm>
 #include <limits>
-#include <memory>
-// IWYU pragma: no_include <ext/alloc_traits.h>
+// IWYU pragma: no_include <memory>
 
 #include <Qt>
+#include <QAbstractButton>
 #include <QAbstractItemView>
-#include <QBoxLayout>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QCursor>
 #include <QDoubleSpinBox>
 #include <QFlags>
-#include <QFont>
 #include <QFontMetrics>
 #include <QGridLayout>
 #include <QHBoxLayout>
@@ -76,13 +74,6 @@
 #include "gui/widgets/color_dropdown.h"
 #include "util/backports.h"  // IWYU pragma: keep
 #include "util/scoped_signals_blocker.h"
-
-// IWYU pragma: no_forward_declare QBoxLayout
-// IWYU pragma: no_forward_declare QGridLayout
-// IWYU pragma: no_forward_declare QHBoxLayout
-// IWYU pragma: no_forward_declare QMenu
-// IWYU pragma: no_forward_declare QTableWidgetItem
-// IWYU pragma: no_forward_declare QVBoxLayout
 
 
 namespace OpenOrienteering {
