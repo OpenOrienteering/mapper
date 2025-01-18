@@ -86,6 +86,7 @@ for I in \
   overriding_shortcut.cpp \
   paint_on_template \
   point_symbol.cpp \
+  point_symbol_editor_widget.cpp \
   print_widget.cpp \
   renderable.cpp \
   renderable_implementation.cpp \
