@@ -175,6 +175,7 @@ elseif(APPLE)
 	set(MAPPER_MACOS_SUBDIR "/Mapper.app/Contents/MacOS")
 	set(CPACK_GENERATOR_DEFAULT "DragNDrop")
 	set(CPACK_PACKAGE_ICON "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper.icns")
+	set(CPACK_COMMAND_HDIUTIL "${CMAKE_CURRENT_LIST_DIR}/macos/hdiutil.sh")
 	set_target_properties(Mapper PROPERTIES
 	  MACOSX_BUNDLE_INFO_STRING          "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}"
 	  MACOSX_BUNDLE_ICON_FILE            "Mapper.icns"
