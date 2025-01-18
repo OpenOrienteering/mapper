@@ -1,7 +1,7 @@
 /*
  *    Copyright 2012 Pete Curtis
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,8 +26,8 @@
 #include <cstddef>
 #include <functional>
 #include <memory>
-#include <vector>
 #include <utility>
+#include <vector>
 
 #include <QtGlobal>
 #include <QByteArray>
@@ -74,7 +74,7 @@ constexpr int XMLFileFormat::current_version = 9;
 
 int XMLFileFormat::active_version = 5; // updated by XMLFileExporter::doExport()
 
-
+int XMLFileFormat::active_version_read = -1; // updated by XMLFileImporter::importImplementation()
 
 namespace {
 
@@ -556,6 +556,7 @@ bool XMLFileImporter::importImplementation()
 	
 	XmlElementReader map_element(xml);
 	version = map_element.attribute<int>(literal::version);
+	XMLFileFormat::active_version_read = version;
 	if (version < 1)
 		xml.raiseError(::OpenOrienteering::Importer::tr("Invalid file format version."));
 	else if (version < XMLFileFormat::minimum_version)

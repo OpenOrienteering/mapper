@@ -34,6 +34,7 @@
 
 #include "core/map.h"
 #include "core/map_coord.h"
+#include "fileformats/xml_file_format.h"
 #include "gui/util_gui.h"
 #include "templates/template.h" // IWYU pragma: keep
 #include "util/util.h"
@@ -43,7 +44,7 @@
 namespace literal
 {
 	static const QLatin1String zoom("zoom");
-	static const QLatin1String rotation("rotation");
+	//static const QLatin1String rotation("rotation");
 	static const QLatin1String position_x("position_x");
 	static const QLatin1String position_y("position_y");
 	static const QLatin1String grid("grid");
@@ -174,7 +175,10 @@ void MapView::load(QXmlStreamReader& xml)
 		{
 			XmlElementReader map_element(xml);
 			map_visibility.opacity = map_element.attribute<qreal>(literal::opacity);
-			map_visibility.visible = map_element.attribute<bool>(literal::visible);
+			if (XMLFileFormat::active_version_read > 5)
+				map_visibility.visible = map_element.attribute<bool>(literal::visible);
+			else
+				map_visibility.visible = true;
 		}
 		else if (xml.name() == literal::templates)
 		{
