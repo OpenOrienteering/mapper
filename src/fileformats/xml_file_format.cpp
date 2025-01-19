@@ -1,7 +1,7 @@
 /*
  *    Copyright 2012 Pete Curtis
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,8 +26,8 @@
 #include <cstddef>
 #include <functional>
 #include <memory>
-#include <vector>
 #include <utility>
+#include <vector>
 
 #include <QtGlobal>
 #include <QByteArray>
@@ -1050,7 +1050,7 @@ void XMLFileImporter::importView()
 		else if (xml.name() == literal::map_view)
 		{
 			if (view)
-				view->load(xml);
+				view->load(xml, version);
 			else
 				xml.skipCurrentElement();
 		}

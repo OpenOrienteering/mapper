@@ -86,6 +86,7 @@
 #include "core/map_coord.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
+#include "fileformats/xml_file_format.h"
 #include "gui/file_dialog.h"
 #include "gui/main_window.h"
 #include "gui/print_progress_dialog.h"
@@ -547,7 +548,7 @@ void PrintWidget::setActive(bool active)
 			// Restore view
 			QXmlStreamReader reader(saved_view_state);
 			reader.readNextStartElement();
-			main_view->load(reader);
+			main_view->load(reader, XMLFileFormat::current_version);
 			
 			editor->setViewOptionsEnabled(true);
 		}
