@@ -127,7 +127,7 @@ public:
 	void save(QXmlStreamWriter& xml, const QLatin1String& element_name, bool template_details = true) const;
 	
 	/** Loads the map view state from the current element of an xml stream. */
-	void load(QXmlStreamReader& xml, int version = -1);
+	void load(QXmlStreamReader& xml, int version);
 	
 	/**
 	 * Redraws all map widgets completely.
