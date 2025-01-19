@@ -34,7 +34,6 @@
 
 #include "core/map.h"
 #include "core/map_coord.h"
-#include "fileformats/xml_file_format.h"
 #include "gui/util_gui.h"
 #include "templates/template.h" // IWYU pragma: keep
 #include "util/util.h"
@@ -44,7 +43,6 @@
 namespace literal
 {
 	static const QLatin1String zoom("zoom");
-	//static const QLatin1String rotation("rotation");
 	static const QLatin1String position_x("position_x");
 	static const QLatin1String position_y("position_y");
 	static const QLatin1String grid("grid");
@@ -146,7 +144,7 @@ void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, boo
 	}
 }
 
-void MapView::load(QXmlStreamReader& xml)
+void MapView::load(QXmlStreamReader& xml, int version)
 {
 	// We do not load transient attributes such as rotation (for compass) or pan offset.
 	XmlElementReader mapview_element(xml);
@@ -175,7 +173,8 @@ void MapView::load(QXmlStreamReader& xml)
 		{
 			XmlElementReader map_element(xml);
 			map_visibility.opacity = map_element.attribute<qreal>(literal::opacity);
-			if (XMLFileFormat::active_version_read > 5)
+			// Some old maps before version 6 lack visible="true".
+			if (version >= 6)
 				map_visibility.visible = map_element.attribute<bool>(literal::visible);
 			else
 				map_visibility.visible = true;

@@ -71,10 +71,6 @@ public:
 	 */
 	static int active_version;
 	
-	/** @brief The actual XML file format version read from the map file.
-	 */
-	static int active_version_read;
-	
 };
 
 
