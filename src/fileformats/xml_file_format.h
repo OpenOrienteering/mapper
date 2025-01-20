@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Pete Curtis
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2019, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,14 +18,12 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OPENORIENTEERING_FILE_FORMAT_XML_H
-#define OPENORIENTEERING_FILE_FORMAT_XML_H
-
-#include <memory>
-
-#include <QString>
+#ifndef OPENORIENTEERING_XML_FILE_FORMAT_H
+#define OPENORIENTEERING_XML_FILE_FORMAT_H
 
 #include "fileformats/file_format.h"
+
+class QString;
 
 namespace OpenOrienteering {
 
@@ -126,4 +124,4 @@ public:
 
 */
 
-#endif // OPENORIENTEERING_FILE_FORMAT_XML_H
+#endif // OPENORIENTEERING_XML_FILE_FORMAT_H
