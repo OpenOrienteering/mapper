@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2020, 2024 Kai Pastor
+ *    Copyright 2013-2020, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -943,7 +943,6 @@ void Map::deleteSelectedObjects()
 			if (index >= 0)
 			{
 				undo_step->addObject(index, *obj);
-				part->releaseObject(index);
 			}
 			else
 			{
@@ -951,8 +950,7 @@ void Map::deleteSelectedObjects()
 			}
 		}
 		
-		setObjectsDirty();
-		clearObjectSelection(true);
+		undo_step->removeContainedObjects(true);
 		push(undo_step);
 	}
 }
