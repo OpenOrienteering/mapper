@@ -792,6 +792,10 @@ void LineSymbol::processContinuousLine(
         MapCoordVectorF& processed_coords,
         ObjectRenderables& output ) const
 {
+	path.copy(start, end, processed_flags, processed_coords);
+	processed_flags.back().setGapPoint(true);
+	Q_ASSERT(!processed_flags[processed_flags.size()-2].isCurveStart());
+	
 	const auto mid_symbol_distance_f = length_type(0.001) * mid_symbol_distance;
 	const auto mid_symbols_length = (qMax(1, mid_symbols_per_spot) - 1) * mid_symbol_distance_f;
 	
@@ -818,11 +822,6 @@ void LineSymbol::processContinuousLine(
 			}
 		}
 	}
-	
-	path.copy(split, end, processed_flags, processed_coords);
-	
-	processed_flags.back().setGapPoint(true);
-	Q_ASSERT(!processed_flags[processed_flags.size()-2].isCurveStart());
 }
 
 void LineSymbol::createPointedLineCap(
