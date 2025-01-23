@@ -792,19 +792,19 @@ void LineSymbol::processContinuousLine(
         MapCoordVectorF& processed_coords,
         ObjectRenderables& output ) const
 {
-	auto mid_symbol_distance_f = length_type(0.001) * mid_symbol_distance;
-	auto mid_symbols_length   = (qMax(1, mid_symbols_per_spot) - 1) * mid_symbol_distance_f;
+	const auto mid_symbol_distance_f = length_type(0.001) * mid_symbol_distance;
+	const auto mid_symbols_length = (qMax(1, mid_symbols_per_spot) - 1) * mid_symbol_distance_f;
 	
 	auto split = start;
 	
 	set_mid_symbols = set_mid_symbols && mid_symbol && !mid_symbol->isEmpty() && mid_symbols_per_spot;
 	if (set_mid_symbols && mid_symbols_length <= end.clen - start.clen)
 	{
+		const auto mid_symbol_rotatable = mid_symbol->isRotatable();
+		
 		auto mid_position = (split.clen + end.clen - mid_symbols_length) / 2;
 		auto next_split = SplitPathCoord::at(mid_position, split);
-		
 		auto orientation = qreal(0);
-		const auto mid_symbol_rotatable = mid_symbol->isRotatable();
 		for (auto i = mid_symbols_per_spot; i > 0; --i)
 		{
 			if (mid_symbol_rotatable)
