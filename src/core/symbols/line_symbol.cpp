@@ -796,11 +796,13 @@ void LineSymbol::processContinuousLine(
 	processed_flags.back().setGapPoint(true);
 	Q_ASSERT(!processed_flags[processed_flags.size()-2].isCurveStart());
 	
+	set_mid_symbols = set_mid_symbols && mid_symbol && !mid_symbol->isEmpty() && mid_symbols_per_spot;
+	if (!set_mid_symbols)
+		return;
+	
 	const auto mid_symbol_distance_f = length_type(0.001) * mid_symbol_distance;
 	const auto mid_symbols_length = (qMax(1, mid_symbols_per_spot) - 1) * mid_symbol_distance_f;
-	
-	set_mid_symbols = set_mid_symbols && mid_symbol && !mid_symbol->isEmpty() && mid_symbols_per_spot;
-	if (set_mid_symbols && mid_symbols_length <= end.clen - start.clen)
+	if (mid_symbols_length <= end.clen - start.clen)
 	{
 		const auto mid_symbol_rotatable = mid_symbol->isRotatable();
 		
