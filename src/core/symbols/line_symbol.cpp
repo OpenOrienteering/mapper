@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020, 2024 Kai Pastor
+ *    Copyright 2012-2020, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -809,17 +809,16 @@ void LineSymbol::processContinuousLine(
 		auto mid_position = (start.clen + end.clen - mid_symbols_length) / 2;
 		auto next_split = SplitPathCoord::at(mid_position, start);
 		auto orientation = qreal(0);
-		for (auto i = mid_symbols_per_spot; i > 0; --i)
+		if (mid_symbol_rotatable)
+			orientation = next_split.tangentVector().angle();
+		mid_symbol->createRenderablesScaled(next_split.pos, orientation, output);
+		for (auto i = 2; i <= mid_symbols_per_spot; ++i)
 		{
+			mid_position += mid_symbol_distance_f;
+			next_split = SplitPathCoord::at(mid_position, next_split);
 			if (mid_symbol_rotatable)
 				orientation = next_split.tangentVector().angle();
 			mid_symbol->createRenderablesScaled(next_split.pos, orientation, output);
-			
-			if (i > 1)
-			{
-				mid_position += mid_symbol_distance_f;
-				next_split = SplitPathCoord::at(mid_position, next_split);
-			}
 		}
 	}
 }
