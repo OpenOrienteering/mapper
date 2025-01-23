@@ -794,14 +794,13 @@ void LineSymbol::processContinuousLine(
 {
 	auto mid_symbol_distance_f = length_type(0.001) * mid_symbol_distance;
 	auto mid_symbols_length   = (qMax(1, mid_symbols_per_spot) - 1) * mid_symbol_distance_f;
-	auto effective_end_length = end.clen;
 	
 	auto split = start;
 	
 	set_mid_symbols = set_mid_symbols && mid_symbol && !mid_symbol->isEmpty() && mid_symbols_per_spot;
-	if (set_mid_symbols && mid_symbols_length <= effective_end_length - split.clen)
+	if (set_mid_symbols && mid_symbols_length <= end.clen - start.clen)
 	{
-		auto mid_position = (split.clen + effective_end_length - mid_symbols_length) / 2;
+		auto mid_position = (split.clen + end.clen - mid_symbols_length) / 2;
 		auto next_split = SplitPathCoord::at(mid_position, split);
 		
 		auto orientation = qreal(0);
