@@ -383,9 +383,9 @@ SplitPathCoord SplitPathCoord::at(
         length_type length,
         const SplitPathCoord& first )
 {
-	auto& path_coords = *first.path_coords;
-	auto& coords = path_coords.coords();
-	auto& flags  = path_coords.flags();
+	const auto& path_coords = *first.path_coords;
+	const auto& coords = path_coords.coords();
+	const auto& flags  = path_coords.flags();
 	
 	SplitPathCoord split = first;
 	split.path_coord_index = path_coords.upperBound(length, first.path_coord_index, first.path_coords->size()-1);
