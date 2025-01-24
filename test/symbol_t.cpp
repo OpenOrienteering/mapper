@@ -236,6 +236,7 @@ private slots:
 		    { "testdata:symbols/line-symbol-cap-variants.omap", 50 },
 		    { "testdata:symbols/line-symbol-start-end-symbol.omap", 50 },
 		    { "testdata:symbols/line-symbol-mid-symbol-variants.omap", 50 },
+		    { "testdata:symbols/dashed-line-with-mid-symbols.omap", 80 },
 #ifdef ENABLE_VOLATILE_RENDER_TESTS
 		    { "data:examples/complete map.omap", 5 },
 		    { "data:examples/forest sample.omap", 10 },
