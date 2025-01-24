@@ -889,17 +889,17 @@ std::size_t Map::deleteIrregularObjects()
 	std::set<Object*> unhandled;
 	for (auto object : irregular_objects)
 	{
-		for (auto part : parts)
+		if (std::none_of(begin(parts), end(parts), [&result, object](MapPart* const part) {
+						if (part->deleteObject(object))
+						{
+							++result;
+							return true;
+						}
+						return false;
+		}))
 		{
-			if (part->deleteObject(object))
-			{
-				++result;
-				goto next_object;
-			}
+			unhandled.insert(object);
 		}
-		unhandled.insert(object);
-next_object:
-		; // nothing else
 	}
 	
 	irregular_objects.swap(unhandled);
