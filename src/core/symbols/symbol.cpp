@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020, 2022, 2024 Kai Pastor
+ *    Copyright 2012-2020, 2022, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -40,7 +40,6 @@
 #include <QPointF>
 #include <QRectF>
 #include <QStringRef>
-#include <QVariant>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -1006,21 +1005,6 @@ int Symbol::getMinimumArea() const
 int Symbol::getMinimumLength() const
 {
 	return 0;
-}
-
-
-QVariant Symbol::consumeAuxiliaryProperty(QString key)
-{
-	auto value = auxiliary_properties.value(key);
-	auxiliary_properties.remove(key);
-	return value;
-}
-
-QVariant Symbol::consumeAuxiliaryProperty(QString key, QVariant default_value)
-{
-	auto value = auxiliary_properties.value(key, default_value);
-	auxiliary_properties.remove(key);
-	return value;
 }
 
 
