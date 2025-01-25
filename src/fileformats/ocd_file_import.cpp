@@ -97,7 +97,18 @@ static QTextCodec* codecFromSettings()
 
 }  // namespace
 
+namespace {
 
+	/**
+	 * For using the auxiliary properties
+	 */
+	enum OcdFileImportProperties
+	{
+		HAlign = 0,
+		VAlign = 1
+	};
+	
+}  // namespace
 
 
 OcdFileImport::OcdImportedPathObject::~OcdImportedPathObject() = default;
@@ -1922,7 +1933,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 		auto t = new TextObject(symbol);
 		t->setText(getObjectText(ocd_object));
 		t->setRotation(convertAngle(ocd_object.angle));
-		t->setHorizontalAlignment((symbol->getAuxiliaryProperty(QLatin1String("HAlign")).value<TextObject::HorizontalAlignment>()));
+		t->setHorizontalAlignment((symbol->getAuxiliaryProperty(OcdFileImportProperties::HAlign).value<TextObject::HorizontalAlignment>()));
 		// Vertical alignment is set in fillTextPathCoords().
 		
 		// Text objects need special path translation
@@ -2250,7 +2261,7 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 		// anchor point
 		MapCoord coord = convertOcdPoint(ocd_points[0]);
 		object->setAnchorPosition(coord.nativeX(), coord.nativeY());
-		object->setVerticalAlignment((symbol->getAuxiliaryProperty(QLatin1String("VAlign")).value<TextObject::VerticalAlignment>()));
+		object->setVerticalAlignment((symbol->getAuxiliaryProperty(OcdFileImportProperties::VAlign).value<TextObject::VerticalAlignment>()));
 	}
 	
 	return true;
@@ -2276,32 +2287,32 @@ void OcdFileImport::setBasicAttributes(OcdFileImport::OcdImportedTextSymbol* sym
 	switch (attributes.alignment & Ocd::HAlignMask)
 	{
 	case Ocd::HAlignLeft:
-		symbol->setAuxiliaryProperty(QLatin1String("HAlign"), QVariant(TextObject::AlignLeft));
+		symbol->setAuxiliaryProperty(OcdFileImportProperties::HAlign, QVariant(TextObject::AlignLeft));
 		break;
 	case Ocd::HAlignRight:
-		symbol->setAuxiliaryProperty(QLatin1String("HAlign"), QVariant(TextObject::AlignRight));
+		symbol->setAuxiliaryProperty(OcdFileImportProperties::HAlign, QVariant(TextObject::AlignRight));
 		break;
 	case Ocd::HAlignJustified:
 		/// \todo Implement justified alignment
 		addSymbolWarning(symbol, tr("Justified alignment is not supported."));
 		Q_FALLTHROUGH();
 	default:
-		symbol->setAuxiliaryProperty(QLatin1String("HAlign"), QVariant(TextObject::AlignHCenter));
+		symbol->setAuxiliaryProperty(OcdFileImportProperties::HAlign, QVariant(TextObject::AlignHCenter));
 	}
 	
 	switch (attributes.alignment & Ocd::VAlignMask)
 	{
 	case Ocd::VAlignTop:
-		symbol->setAuxiliaryProperty(QLatin1String("VAlign"), QVariant(TextObject::AlignTop));
+		symbol->setAuxiliaryProperty(OcdFileImportProperties::VAlign, QVariant(TextObject::AlignTop));
 		break;
 	case Ocd::VAlignMiddle:
-		symbol->setAuxiliaryProperty(QLatin1String("VAlign"), QVariant(TextObject::AlignVCenter));
+		symbol->setAuxiliaryProperty(OcdFileImportProperties::VAlign, QVariant(TextObject::AlignVCenter));
 		break;
 	default:
 		addSymbolWarning(symbol, tr("Vertical alignment '%1' is not supported.").arg(attributes.alignment & Ocd::VAlignMask));
 		Q_FALLTHROUGH();
 	case Ocd::VAlignBottom:
-		symbol->setAuxiliaryProperty(QLatin1String("VAlign"), QVariant(TextObject::AlignBaseline));
+		symbol->setAuxiliaryProperty(OcdFileImportProperties::VAlign, QVariant(TextObject::AlignBaseline));
 	}
 	
 	if (attributes.char_spacing != 0)

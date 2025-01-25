@@ -25,7 +25,6 @@
 #include <cstddef>
 #include <functional>
 #include <iterator>
-#include <memory>
 #include <utility>
 #include <vector>
 
@@ -607,6 +606,19 @@ namespace {
 	
 }  // namespace
 
+namespace {
+
+	/**
+	 * For using the auxiliary properties
+	 */
+	enum OgrFileImportProperties
+	{
+		label = 0,
+		angle = 1,
+		anchor = 2
+	};
+	
+}  // namespace
 
 
 // ### OgrFileImportFormat ###
@@ -1176,9 +1188,9 @@ Object* OgrFileImport::importPointGeometry(OGRFeatureH feature, OGRGeometryH geo
 		return object;
 	}
 	
-	if (symbol->getType() == Symbol::Text && !symbol->getAuxiliaryProperty(QLatin1String("label")).isNull())
+	if (symbol->getType() == Symbol::Text && !symbol->getAuxiliaryProperty(OgrFileImportProperties::label).isNull())
 	{
-		auto label = symbol->consumeAuxiliaryProperty(QLatin1String("label")).toString();
+		auto label = symbol->consumeAuxiliaryProperty(OgrFileImportProperties::label).toString();
 		if (label.startsWith(QLatin1Char{'{'}) && label.endsWith(QLatin1Char{'}'}))
 		{
 			label.remove(0, 1);
@@ -1199,13 +1211,13 @@ Object* OgrFileImport::importPointGeometry(OGRFeatureH feature, OGRGeometryH geo
 			object->setText(label);
 			
 			bool ok;
-			auto anchor = symbol->consumeAuxiliaryProperty(QLatin1String("anchor"), 1).toInt(&ok);
+			auto anchor = symbol->consumeAuxiliaryProperty(OgrFileImportProperties::anchor, 1).toInt(&ok);
 			if (ok)
 			{
 				applyLabelAnchor(anchor, object);
 			}
 			
-			auto angle = symbol->consumeAuxiliaryProperty(QLatin1String("angle"), 0.0).toDouble(&ok);
+			auto angle = symbol->consumeAuxiliaryProperty(OgrFileImportProperties::angle, 0.0).toDouble(&ok);
 			if (ok)
 			{
 				object->setRotation(qDegreesToRadians(angle));
@@ -1671,15 +1683,15 @@ TextSymbol* OgrFileImport::getSymbolForLabel(OGRStyleToolH tool, const QByteArra
 		map->addSymbol(copy.release(), map->getNumSymbols());
 	}
 	
-	text_symbol->setAuxiliaryProperty(QLatin1String("label"), QVariant(QString::fromUtf8(label_string)));
+	text_symbol->setAuxiliaryProperty(OgrFileImportProperties::label, QVariant(QString::fromUtf8(label_string)));
 	
 	auto anchor = qBound(1, OGR_ST_GetParamNum(tool, OGRSTLabelAnchor, &is_null), 12);
 	if (!is_null)
-		text_symbol->setAuxiliaryProperty(QLatin1String("anchor"), QVariant(anchor));
+		text_symbol->setAuxiliaryProperty(OgrFileImportProperties::anchor, QVariant(anchor));
 	
 	auto angle = OGR_ST_GetParamDbl(tool, OGRSTLabelAngle, &is_null);
 	if (!is_null)
-		text_symbol->setAuxiliaryProperty(QLatin1String("angle"), QVariant(angle));
+		text_symbol->setAuxiliaryProperty(OgrFileImportProperties::angle, QVariant(angle));
 	
 	return text_symbol;
 }

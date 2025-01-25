@@ -532,27 +532,27 @@ public:
 	/**
 	 * Sets an auxiliary property of this symbol.
 	 */
-	void setAuxiliaryProperty(QString key, QVariant value) { auxiliary_properties.insert(key, value); }
+	void setAuxiliaryProperty(int key, QVariant value) { auxiliary_properties.insert(key, value); }
 	
 	/**
 	 * Returns an auxiliary property of this symbol.
 	 */
-	QVariant getAuxiliaryProperty(QString key) const { return auxiliary_properties.value(key); }
+	QVariant getAuxiliaryProperty(int key) const { return auxiliary_properties.value(key); }
 	
 	/**
 	 * Returns an auxiliary property of this symbol or a default value.
 	 */
-	QVariant getAuxiliaryProperty(QString key, QVariant default_value) const { return auxiliary_properties.value(key, default_value); }
+	QVariant getAuxiliaryProperty(int key, QVariant default_value) const { return auxiliary_properties.value(key, default_value); }
 	
 	/**
 	 * Returns and then removes an auxiliary property of this symbol.
 	 */
-	QVariant consumeAuxiliaryProperty(QString key);
+	QVariant consumeAuxiliaryProperty(int key);
 	
 	/**
 	 * Returns and then removes an auxiliary property of this symbol or returns a default value.
 	 */
-	QVariant consumeAuxiliaryProperty(QString key, QVariant default_value);
+	QVariant consumeAuxiliaryProperty(int key, QVariant default_value);
 	
 protected:
 	/**
@@ -676,7 +676,7 @@ private:
 	bool is_hidden;           /// \see isHidden()
 	bool is_protected;        /// \see isProtected()
 	bool is_rotatable = false;
-	QVariantHash auxiliary_properties;	/// Auxiliary properties for import of objects (e.g., .ocd, .dxf files). Auxiliary properties are not saved in a map file.
+	QHash<int,QVariant> auxiliary_properties;	/// For temporary use during import. Not to be saved on export.
 };
 
 

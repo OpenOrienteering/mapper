@@ -40,7 +40,6 @@
 #include <QPointF>
 #include <QRectF>
 #include <QStringRef>
-#include <QVariant>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -1009,14 +1008,14 @@ int Symbol::getMinimumLength() const
 }
 
 
-QVariant Symbol::consumeAuxiliaryProperty(QString key)
+QVariant Symbol::consumeAuxiliaryProperty(int key)
 {
 	auto value = auxiliary_properties.value(key);
 	auxiliary_properties.remove(key);
 	return value;
 }
 
-QVariant Symbol::consumeAuxiliaryProperty(QString key, QVariant default_value)
+QVariant Symbol::consumeAuxiliaryProperty(int key, QVariant default_value)
 {
 	auto value = auxiliary_properties.value(key, default_value);
 	auxiliary_properties.remove(key);
