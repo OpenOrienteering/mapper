@@ -467,10 +467,11 @@ void XMLFileExporter::exportTemplates()
 	{
 		writeLineBreak(xml);
 		XmlElementWriter defaults_element(xml, literal::defaults);
-		defaults_element.writeAttribute(literal::use_meters_per_pixel, map->image_template_use_meters_per_pixel);
-		defaults_element.writeAttribute(literal::meters_per_pixel, map->image_template_meters_per_pixel);
-		defaults_element.writeAttribute(literal::dpi, map->image_template_dpi);
-		defaults_element.writeAttribute(literal::scale, map->image_template_scale);
+		const auto image_template_defaults = map->getImageTemplateDefaults();
+		defaults_element.writeAttribute(literal::use_meters_per_pixel, image_template_defaults.use_meters_per_pixel);
+		defaults_element.writeAttribute(literal::meters_per_pixel, image_template_defaults.meters_per_pixel);
+		defaults_element.writeAttribute(literal::dpi, image_template_defaults.dpi);
+		defaults_element.writeAttribute(literal::scale, image_template_defaults.scale);
 	}
 	writeLineBreak(xml);
 }
@@ -1016,10 +1017,11 @@ void XMLFileImporter::importTemplates()
 		else if (xml.name() == literal::defaults)
 		{
 			XmlElementReader defaults_element(xml);
-			map->image_template_use_meters_per_pixel = defaults_element.attribute<bool>(literal::use_meters_per_pixel);
-			map->image_template_meters_per_pixel = defaults_element.attribute<double>(literal::meters_per_pixel);
-			map->image_template_dpi = defaults_element.attribute<double>(literal::dpi);
-			map->image_template_scale = defaults_element.attribute<double>(literal::scale);
+			Map::ImageTemplateDefaults image_template_defaults = { defaults_element.attribute<bool>(literal::use_meters_per_pixel),
+			                                                       defaults_element.attribute<double>(literal::meters_per_pixel),
+			                                                       defaults_element.attribute<double>(literal::dpi),
+			                                                       defaults_element.attribute<double>(literal::scale) };
+			map->setImageTemplateDefaults(image_template_defaults);
 		}
 		else
 		{

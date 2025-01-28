@@ -486,10 +486,7 @@ void Map::init()
 	
 	printer_config.reset();
 	
-	image_template_use_meters_per_pixel = true;
-	image_template_meters_per_pixel = 0;
-	image_template_dpi = 0;
-	image_template_scale = 0;
+	image_template_defaults = {true, 0.0, 0.0, 0.0};
 	
 	colors_dirty = false;
 	symbols_dirty = false;
@@ -2472,21 +2469,6 @@ void Map::resetPrinterConfig()
 	}
 }
 
-void Map::setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale)
-{
-	image_template_use_meters_per_pixel = use_meters_per_pixel;
-	image_template_meters_per_pixel = meters_per_pixel;
-	image_template_dpi = dpi;
-	image_template_scale = scale;
-}
-
-void Map::getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel, double& dpi, double& scale)
-{
-	use_meters_per_pixel = image_template_use_meters_per_pixel;
-	meters_per_pixel = image_template_meters_per_pixel;
-	dpi = image_template_dpi;
-	scale = image_template_scale;
-}
 
 void Map::setHasUnsavedChanges(bool has_unsaved_changes)
 {
