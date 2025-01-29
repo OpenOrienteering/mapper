@@ -1,6 +1,6 @@
 # This file is part of OpenOrienteering.
 
-# Copyright 2019-2021, 2023, 2024 Kai Pastor
+# Copyright 2019-2021, 2023-2025 Kai Pastor
 #
 # Redistribution and use is allowed according to the terms of the BSD license:
 #
@@ -33,7 +33,7 @@ variables:
 jobs:
 - job: Codespell
   pool:
-    vmImage: 'ubuntu-20.04'
+    vmImage: 'ubuntu-22.04'
   steps:
     - checkout: self
       fetchDepth: 1
@@ -43,7 +43,7 @@ jobs:
 - job: Release_Notes
   displayName: Release Notes
   pool:
-    vmImage: 'ubuntu-20.04'
+    vmImage: 'ubuntu-22.04'
   steps:
     - checkout: self
       fetchDepth: 1
@@ -100,7 +100,7 @@ jobs:
   dependsOn: Codespell
   condition: succeededOrFailed()
   variables:
-    IMAGE_NAME: 'ubuntu-20.04'
+    IMAGE_NAME: 'ubuntu-22.04'
     SUPERBUILD_IMAGE_NAME: $(IMAGE_NAME)
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     ENABLE_PDF_MANUAL: 1
@@ -128,7 +128,7 @@ jobs:
   dependsOn: macOS
   condition: succeededOrFailed()
   variables:
-    IMAGE_NAME: 'ubuntu-20.04'
+    IMAGE_NAME: 'ubuntu-22.04'
     SUPERBUILD_IMAGE_NAME: $(IMAGE_NAME)
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     CC: gcc
@@ -310,7 +310,7 @@ jobs:
   #condition: succeededOrFailed()
   condition: False
   variables:
-    IMAGE_NAME: 'ubuntu-20.04'
+    IMAGE_NAME: 'ubuntu-22.04'
     SUPERBUILD_IMAGE_NAME: $(IMAGE_NAME)
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: x86_64-w64-mingw32
