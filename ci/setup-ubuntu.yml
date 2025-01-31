@@ -34,7 +34,7 @@ steps:
     set -e
     
     sudo apt-get update
-    sudo apt-get install doxygen graphviz libegl-dev libgl-dev ninja-build python-lxml
+    sudo apt-get install doxygen graphviz libegl-dev libgl-dev ninja-build python3-lxml
     
     if [ "${TARGET}" = "x86_64-w64-mingw32" ] ; then
       sudo apt-get install g++-mingw-w64-x86-64
