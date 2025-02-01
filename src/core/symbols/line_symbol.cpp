@@ -1231,7 +1231,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 			
 			if (dashgroup < num_dashgroups)
 			{
-				if (Q_UNLIKELY(mid_symbols == CenterOfGap))
+				if (mid_symbols == CenterOfGap)
 				{
 					auto position = cur_length
 					                + (break_length_f
