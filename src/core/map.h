@@ -127,10 +127,10 @@ public:
 	/** Default parameters for loading of image templates. */
 	struct ImageTemplateDefaults
 	{
-		bool use_meters_per_pixel;
-		double meters_per_pixel;
-		double dpi;
-		double scale;
+		bool use_meters_per_pixel = true;
+		double meters_per_pixel   = 0.0;
+		double dpi                = 0.0;
+		double scale              = 0.0;
 	};
 	
 	/** Creates a new, empty map. */

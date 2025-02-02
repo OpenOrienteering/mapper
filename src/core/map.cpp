@@ -486,7 +486,7 @@ void Map::init()
 	
 	printer_config.reset();
 	
-	image_template_defaults = {true, 0.0, 0.0, 0.0};
+	image_template_defaults = {};
 	
 	colors_dirty = false;
 	symbols_dirty = false;
