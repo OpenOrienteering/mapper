@@ -55,7 +55,7 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* 
 	                                + QString::number(templ->getImage().height()));
 	auto* desc_label = new QLabel(tr("Specify how to position or scale the image:"));
 	
-	const auto image_template_defaults = templ->getMap()->getImageTemplateDefaults();
+	const auto& defaults = templ->getMap()->getImageTemplateDefaults();
 	
 	auto georef_source = templ->availableGeoreferencing().effective.transform.source;
 	auto const georef_radio_enabled = !georef_source.isEmpty();
@@ -74,21 +74,21 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* 
 	georef_radio->setEnabled(georef_radio_enabled);
 	
 	mpp_radio = new QRadioButton(tr("Meters per pixel:"));
-	mpp_edit = new QLineEdit((image_template_defaults.meters_per_pixel > 0) ? QString::number(image_template_defaults.meters_per_pixel) : QString{});
+	mpp_edit = new QLineEdit((defaults.meters_per_pixel > 0) ? QString::number(defaults.meters_per_pixel) : QString{});
 	mpp_edit->setValidator(new DoubleValidator(0, 999999, mpp_edit));
 	
 	dpi_radio = new QRadioButton(tr("Scanned with"));
-	dpi_edit = new QLineEdit((image_template_defaults.dpi > 0) ? QString::number(image_template_defaults.dpi) : QString{});
+	dpi_edit = new QLineEdit((defaults.dpi > 0) ? QString::number(defaults.dpi) : QString{});
 	dpi_edit->setValidator(new DoubleValidator(1, 999999, dpi_edit));
 	auto* dpi_label = new QLabel(tr("dpi"));
 	
 	auto* scale_label = new QLabel(tr("Template scale:  1 :"));
-	scale_edit = new QLineEdit((image_template_defaults.scale > 0) ? QString::number(image_template_defaults.scale) : QString{});
+	scale_edit = new QLineEdit((defaults.scale > 0) ? QString::number(defaults.scale) : QString{});
 	scale_edit->setValidator(new QIntValidator(1, 999999, scale_edit));
 	
 	if (georef_radio->isEnabled())
 		georef_radio->setChecked(true);
-	else if (image_template_defaults.use_meters_per_pixel)
+	else if (defaults.use_meters_per_pixel)
 		mpp_radio->setChecked(true);
 	else
 		dpi_radio->setChecked(true);

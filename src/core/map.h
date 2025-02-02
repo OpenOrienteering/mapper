@@ -1334,7 +1334,7 @@ public:
 	const ImageTemplateDefaults& getImageTemplateDefaults() const { return image_template_defaults; };
 	
 	/** Sets default parameters for loading of image templates. */
-	void setImageTemplateDefaults(const ImageTemplateDefaults& image_template_defaults) { this->image_template_defaults = image_template_defaults; };
+	void setImageTemplateDefaults(const ImageTemplateDefaults& defaults) { image_template_defaults = defaults; };
 	
 	
 	/**
