@@ -1241,18 +1241,7 @@ void PathObjectTest::splitPathCoordAtTest()
 		{
 			const auto requested_clen = *it;
 			const auto clen = SplitPathCoord::at(requested_clen, split).clen;
-			if (qFuzzyCompare(requested_clen, 1.2f))
-			{
-				const auto non_monotone = QString::fromLatin1("requested clen (%1) yields %2, previous clen is %3").arg(requested_clen).arg(clen).arg(prev_clen).toLocal8Bit();
-				QEXPECT_FAIL("", non_monotone.constData(), Continue);
-			}
 			QVERIFY(clen >= prev_clen);          // monotone
-			
-			if (requested_clen > max_clen)
-			{
-				const auto upper_bound = QString::fromLatin1("requested clen (%1) yields %2, max clen is %3").arg(requested_clen).arg(clen).arg(max_clen).toLocal8Bit();
-				QEXPECT_FAIL("", upper_bound.constData(), Continue);
-			}
 			if (requested_clen >= max_clen)
 				QCOMPARE(clen, max_clen);        // upper bound			
 			else if (requested_clen >= split.clen)
@@ -1286,18 +1275,8 @@ void PathObjectTest::splitPathCoordAtTest()
 		for (auto it = begin(lengths_to_check)+1, last = end(lengths_to_check); it != last; ++it)
 		{
 			const auto requested_clen = *it;
-#ifndef NDEBUG
-			if (requested_clen > path_coords[split.path_coord_index].clen && requested_clen < split.clen)
-				continue;  // triggers assert()
-#endif
 			const auto clen = SplitPathCoord::at(requested_clen, split).clen;
 			QVERIFY(clen >= prev_clen);          // monotone
-			
-			if (requested_clen > max_clen)
-			{
-				const auto upper_bound = QString::fromLatin1("requested clen (%1) yields %2, max clen is %3").arg(requested_clen).arg(clen).arg(max_clen).toLocal8Bit();
-				QEXPECT_FAIL("", upper_bound.constData(), Continue);
-			}
 			if (requested_clen >= max_clen)
 				QCOMPARE(clen, max_clen);        // upper bound
 			else if (requested_clen >= split.clen)
