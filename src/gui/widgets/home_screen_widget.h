@@ -215,6 +215,7 @@ private:
 	QPixmap title_pixmap;
 	QLabel* title_label;
 	QListWidget* file_list_widget;
+	std::vector<StorageLocation> custom_locations;
 	std::vector<StorageLocation> history;
 };
 
