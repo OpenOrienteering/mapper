@@ -410,7 +410,11 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 	
 	connect(new_template_set_button, &QAbstractButton::clicked, this, &TemplateListWidget::addTemplateSet);
 	connect(delete_template_set_button, &QAbstractButton::clicked, this, &TemplateListWidget::deleteTemplateSet);
+#if QT_VERSION < 0x051500
+	connect(group, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &TemplateListWidget::onGroupButtonClicked);
+#else
 	connect(group, &QButtonGroup::idClicked, this, &TemplateListWidget::onGroupButtonClicked);
+#endif
 	
 	//connect(group_button, SIGNAL(clicked(bool)), this, &TemplateListWidget::groupClicked);
 	//connect(more_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(moreActionClicked(QAction*)));
