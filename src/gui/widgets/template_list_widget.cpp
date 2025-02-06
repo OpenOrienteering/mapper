@@ -36,11 +36,13 @@
 #include <QByteArray>
 #include <QButtonGroup>
 #include <QCheckBox>
+#include <QColor>
 #include <QCoreApplication>
 #include <QDialog>
 #include <QDir>
 #include <QEvent>
 #include <QFileInfo>
+#include <QFontMetrics>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QIcon>
@@ -56,6 +58,7 @@
 #include <QMessageBox>
 #include <QModelIndex>
 #include <QPainter>
+#include <QPalette>
 #include <QPixmap>
 #include <QPushButton>
 #include <QRect>
@@ -333,14 +336,13 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 	
 	
 	// Template set layout
-	auto* template_set_layout = new SegmentedButtonLayout();
-
+	auto* set_change_layout = new SegmentedButtonLayout();
 	new_template_set_button = createToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("Add"));
-	template_set_layout->addWidget(new_template_set_button);
+	set_change_layout->addWidget(new_template_set_button);
 	delete_template_set_button = createToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Remove"));
-	template_set_layout->addWidget(delete_template_set_button);
-	template_set_layout->addWidget(new QLabel(QString::fromLatin1(" ")), 1);
+	set_change_layout->addWidget(delete_template_set_button);
 	
+	auto* set_selection_layout = new SegmentedButtonLayout();
 	auto* group = new QButtonGroup(this);
 	template_set_buttons.reserve(max_template_sets);
 	for (int i = 0; i < max_template_sets; ++i)
@@ -351,9 +353,10 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 		opt.initFrom(template_set_button);
 		opt.rect.setSize(textSize);
 		template_set_button->setMinimumSize(template_set_button->style()->sizeFromContents(QStyle::CT_PushButton, &opt, textSize, template_set_button));
+		template_set_button->setAutoFillBackground(true);
 		template_set_buttons.push_back(template_set_button);
 		group->addButton(template_set_button, i);
-		template_set_layout->addWidget(template_set_button);
+		set_selection_layout->addWidget(template_set_button);
 	}
 	updateTemplateSetButtons();
 	
@@ -366,14 +369,14 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 		style()->pixelMetric(QStyle::PM_LayoutRightMargin, &style_option) / 2,
 		style()->pixelMetric(QStyle::PM_LayoutBottomMargin, &style_option) / 2
 	);
-	template_set_buttons_layout->addLayout(template_set_layout);
+	template_set_buttons_layout->addLayout(set_change_layout);
+	template_set_buttons_layout->addLayout(set_selection_layout);
 	template_set_buttons_layout->addStretch();
 	
 	auto* two_rows_layout = new QVBoxLayout();
 	two_rows_layout->addLayout(all_buttons_layout);
 	two_rows_layout->addLayout(template_set_buttons_layout);
 	
-	//all_templates_layout->addLayout(all_buttons_layout);
 	all_templates_layout->addLayout(two_rows_layout);
 	
 	setLayout(all_templates_layout);
@@ -751,7 +754,12 @@ void TemplateListWidget::updateTemplateSetButtons()
 	for (int i = 0; i < max_template_sets; ++i)
 	{
 		template_set_buttons.at(i)->setVisible(template_sets > i);
-		template_set_buttons.at(i)->setStyleSheet(current_template_set == i ? QLatin1String("background-color:green;") : QLatin1String("background-color:lightGray;"));
+		if (i < template_sets)
+		{
+			auto pal = template_set_buttons.at(i)->palette();
+			pal.setColor(QPalette::Button, i == current_template_set ? QColor(Qt::green) : QColor(Qt::lightGray));
+			template_set_buttons.at(i)->setPalette(pal);
+		}
 	}
 }
 
