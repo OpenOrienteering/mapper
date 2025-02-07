@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021 Kai Pastor
+ *    Copyright 2012-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,8 +25,8 @@
 #include <cstddef>
 #include <functional>
 #include <memory>
-#include <vector>
 #include <utility>
+#include <vector>
 
 #include <QHash>
 #include <QRectF>
@@ -162,12 +162,12 @@ public:
 	void addObject(Object* object, int pos);
 	
 	/**
-	 * Deleted the object from the given index.
+	 * Deletes the object from the given index.
 	 */
 	void deleteObject(int pos);
 	
 	/**
-	 * Deleted the object from the given index.
+	 * Deletes the object from the given index.
 	 * 
 	 * Returns if the object was found in this part.
 	 */
@@ -310,4 +310,4 @@ const Object* MapPart::getObject(int i) const
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_MAP_PART_H

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2021 Kai Pastor
+ *    Copyright 2013-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,8 +23,8 @@
 #define OPENORIENTEERING_OBJECT_H
 
 #include <limits>
-#include <vector>
 #include <utility>
+#include <vector>
 
 #include <QtGlobal>
 #include <QRectF>
@@ -1311,4 +1311,4 @@ constexpr ObjectPathCoord::operator bool() const
 }  // namespace OpenOrienteering
 
 
-#endif
+#endif // OPENORIENTEERING_OBJECT_H
