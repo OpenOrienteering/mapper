@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2013-2024 Kai Pastor
+ *    Copyright 2013-2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -282,7 +282,7 @@ public slots:
 	
 	/** Undoes the last object edit step. */
 	void undo();
-	/** Redoes the last object edit step */
+	/** Redoes the last object edit step. */
 	void redo();
 	/** Cuts the selected object(s). */
 	void cut();
@@ -388,8 +388,8 @@ public slots:
 	void updatePasteAvailability();
 	
 	/**
-	 * Checks the presence of spot colors,
-	 * and to disables overprinting simulation if there are no spot colors.
+	 * Checks the presence of spot colors
+	 * and disables overprinting simulation if there are no spot colors.
 	 */
 	void spotColorPresenceChanged(bool has_spot_colors);
 	
@@ -438,7 +438,7 @@ public slots:
 	void selectByCurrentSymbols();
 	
 	/**
-	 * Reverses the selected object(s) direcction(s),
+	 * Reverses the selected object(s) direction(s),
 	 * thus switching dash directions for lines.
 	 */
 	void switchDashesClicked();
@@ -878,4 +878,4 @@ Symbol* MapEditorController::activeSymbol() const
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_MAP_EDITOR_H
