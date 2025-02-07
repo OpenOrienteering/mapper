@@ -2626,7 +2626,7 @@ void MapEditorController::updateObjectDependentActions()
 	scale_act->setStatusTip(tr("Scale the selected objects.") + (scale_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object to activate this tool."))));
 	mappart_move_menu->setEnabled(have_selection && have_multiple_parts);
 	
-	// have_rotatable_pattern || have_rotatable_point
+	// have_rotatable_pattern || have_rotatable_object
 	rotate_pattern_act->setEnabled(have_rotatable_pattern || have_rotatable_object);
 	rotate_pattern_act->setStatusTip(tr("Set the direction of area fill patterns or point objects.") + (rotate_pattern_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select an area object with rotatable fill pattern or a rotatable point object to activate this tool."))));
 	
@@ -2636,7 +2636,7 @@ void MapEditorController::updateObjectDependentActions()
 	connect_paths_act->setEnabled(have_line);
 	connect_paths_act->setStatusTip(tr("Connect endpoints of paths which are close together.") + (connect_paths_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one line object to activate this tool."))));
 	
-	// have_are || have_line
+	// have_area || have_line
 	cut_tool_act->setEnabled(have_area || have_line);
 	cut_tool_act->setStatusTip(tr("Cut the selected objects into smaller parts.") + (cut_tool_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one line or area object to activate this tool."))));
 	convert_to_curves_act->setEnabled(have_area || have_line);
