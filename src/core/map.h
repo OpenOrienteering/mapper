@@ -122,8 +122,16 @@ public:
 		FullVisibility,
 		PartialVisibility,
 		IgnoreVisibilty
-	};	
+	};
 	
+	/** Default parameters for loading of image templates. */
+	struct ImageTemplateDefaults
+	{
+		bool use_meters_per_pixel = true;
+		double meters_per_pixel   = 0.0;
+		double dpi                = 0.0;
+		double scale              = 0.0;
+	};
 	
 	/** Creates a new, empty map. */
 	Map();
@@ -1323,15 +1331,10 @@ public:
 	
 	
 	/** Returns the default parameters for loading of image templates. */
-	void getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel,
-		double& dpi, double& scale);
+	const ImageTemplateDefaults& getImageTemplateDefaults() const { return image_template_defaults; };
 	
-	/**
-	 * Sets default parameters for loading of image templates.
-	 * TODO: put these into a struct.
-	 */
-	void setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel,
-		double dpi, double scale);
+	/** Sets default parameters for loading of image templates. */
+	void setImageTemplateDefaults(const ImageTemplateDefaults& defaults) { image_template_defaults = defaults; };
 	
 	
 	/**
@@ -1630,10 +1633,7 @@ private:
 	
 	QScopedPointer<MapPrinterConfig> printer_config;
 	
-	bool image_template_use_meters_per_pixel;
-	double image_template_meters_per_pixel;
-	double image_template_dpi;
-	double image_template_scale;
+	ImageTemplateDefaults image_template_defaults;
 	
 	bool colors_dirty;				// are there unsaved changes for the colors?
 	bool symbols_dirty;				//    ... for the symbols?
