@@ -337,9 +337,9 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 	
 	// Template set layout
 	auto* set_change_layout = new SegmentedButtonLayout();
-	new_template_set_button = createToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("Add"));
+	new_template_set_button = createToolButton(QIcon(QString::fromLatin1(":/images/template-set-add.png")), tr("Add"));
 	set_change_layout->addWidget(new_template_set_button);
-	delete_template_set_button = createToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Remove"));
+	delete_template_set_button = createToolButton(QIcon(QString::fromLatin1(":/images/template-set-delete.png")), tr("Remove"));
 	set_change_layout->addWidget(delete_template_set_button);
 	
 	auto* set_selection_layout = new SegmentedButtonLayout();
