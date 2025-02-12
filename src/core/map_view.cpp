@@ -630,6 +630,7 @@ TemplateVisibilitySets::TemplateVisibilitySets()
 void TemplateVisibilitySets::duplicateVisibility()
 {
 	template_visibility_sets.insert(template_visibility_sets.begin() + active_visibility_index + 1, getCurrentVisibility());
+	++active_visibility_index;
 }
 
 void TemplateVisibilitySets::deleteVisibility()
