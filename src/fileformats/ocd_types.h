@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2015-2019 Kai Pastor
+ *    Copyright 2013, 2015-2019, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -231,7 +231,8 @@ namespace Ocd
 		{
 			FlagCtl1 = 0x01,
 			FlagCtl2 = 0x02,
-			FlagLeft = 0x04
+			FlagLeft = 0x04,
+			FlagGap  = 0x08
 		};
 		
 		// Flags in Y coordinate
