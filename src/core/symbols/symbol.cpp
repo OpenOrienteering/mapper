@@ -40,7 +40,6 @@
 #include <QPointF>
 #include <QRectF>
 #include <QStringRef>
-#include <QVariant>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -89,6 +88,7 @@ Symbol::Symbol(const Symbol& proto)
 , is_hidden { proto.is_hidden }
 , is_protected { proto.is_protected }
 , is_rotatable { proto.is_rotatable }
+, auxiliary_properties ( proto.auxiliary_properties )
 {
 	// nothing else
 }
@@ -1005,6 +1005,21 @@ int Symbol::getMinimumArea() const
 int Symbol::getMinimumLength() const
 {
 	return 0;
+}
+
+
+QVariant Symbol::consumeAuxiliaryProperty(int key)
+{
+	auto value = auxiliary_properties.value(key);
+	auxiliary_properties.remove(key);
+	return value;
+}
+
+QVariant Symbol::consumeAuxiliaryProperty(int key, QVariant default_value)
+{
+	auto value = auxiliary_properties.value(key, default_value);
+	auxiliary_properties.remove(key);
+	return value;
 }
 
 
