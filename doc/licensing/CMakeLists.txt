@@ -36,23 +36,19 @@ endforeach()
 if(ANDROID OR APPLE OR WIN32)
 	set(default_provider OFF)
 elseif(UNIX)
+	set(default_provider NOTFOUND)
 	execute_process(
 	  COMMAND sh -c ". /etc/os-release; echo \"$ID $ID_LIKE\""
-	  OUTPUT_VARIABLE system_candidates
+	  OUTPUT_VARIABLE system_ids
 	  OUTPUT_STRIP_TRAILING_WHITESPACE 
 	)
-	string(REPLACE " " ";" system_candidates "${system_candidates}")
-	foreach(system_candidate ${system_candidates})
-		if(system_candidate IN_LIST known_providers)
-			set(system "${system_candidate}")
+	string(REPLACE " " ";" system_ids "${system_ids}")
+	foreach(system IN LISTS system_ids)
+		if(system IN_LIST known_providers)
+			set(default_provider "${system}")
 			break()
 		endif()
 	endforeach()
-	if(system)
-		set(default_provider "${system}")
-	else()
-		set(default_provider NOTFOUND)
-	endif()
 endif()
 
 set(LICENSING_PROVIDER "${default_provider}" CACHE STRING
