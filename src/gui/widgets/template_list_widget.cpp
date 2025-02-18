@@ -334,8 +334,7 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 		connect(help_button, &QAbstractButton::clicked, this, &TemplateListWidget::showHelp);
 	}
 	
-	
-	// Template set layout
+	// Template sets layout
 	auto* set_change_layout = new SegmentedButtonLayout();
 	new_template_set_button = createToolButton(QIcon(QString::fromLatin1(":/images/template-set-add.png")), tr("Add"));
 	set_change_layout->addWidget(new_template_set_button);
@@ -775,6 +774,15 @@ void TemplateListWidget::deleteTemplateSet()
 	main_view.deleteVisibilitySet();
 	updateTemplateSetButtons();
 	template_table->viewport()->update();
+}
+
+void TemplateListWidget::switchTemplateSet()
+{
+	auto template_set = main_view.getActiveVisibilityIndex() + 1;
+	if (template_set >= main_view.getNumberOfVisibilitySets())
+		template_set = 0;
+	
+	onGroupButtonClicked(template_set);
 }
 
 void TemplateListWidget::onGroupButtonClicked(int val)

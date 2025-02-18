@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021, 2024 Kai Pastor
+ *    Copyright 2012-2021, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -77,6 +77,7 @@
 #include <QRect>
 #include <QRectF>
 #include <QSettings>
+#include <QShortcut>
 #include <QSignalBlocker>
 #include <QSignalMapper>
 #include <QSize>
@@ -917,7 +918,6 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("hatchareasview")->setShortcut(QKeySequence(Qt::Key_F2));
 	findAction("baselineview")->setShortcut(QKeySequence(Qt::Key_F3));
 	findAction("hidealltemplates")->setShortcut(QKeySequence(Qt::Key_F10));
-	findAction("overprintsimulation")->setShortcut(QKeySequence(Qt::Key_F4));
 	findAction("fullscreen")->setShortcut(QKeySequence(Qt::Key_F11));
 	tags_window_act->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_6));
 	color_window_act->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_7));
@@ -2288,6 +2288,9 @@ void MapEditorController::createTemplateWindow()
 		dock_widget->setVisible(false);
 		
 		template_dock_widget = dock_widget;
+		
+		auto* switch_template_shortcut = new QShortcut(QKeySequence(Qt::Key_F4), window);
+		connect(switch_template_shortcut, &QShortcut::activated, template_list_widget, &TemplateListWidget::switchTemplateSet);
 	}
 }
 

@@ -78,6 +78,9 @@ signals:
 	void closePositionDockWidget();
 	void closeClicked();
 	
+public slots:
+	void switchTemplateSet();
+	
 protected:
 	TemplateTableModel* model();
 	const TemplateTableModel* model() const { return static_cast<const TemplateTableModel*>(const_cast<TemplateListWidget*>(this)->model()); }
