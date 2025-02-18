@@ -1,5 +1,6 @@
 /*
  *    Copyright 2021 Kai Pastor
+ *    Copyright 2024 Semyon Yakimov
  *
  *    This file is part of OpenOrienteering.
  *
@@ -32,18 +33,15 @@ namespace OpenOrienteering {
 class LatLon;
 class Map;
 class MapView;
-class MapCoord;
+class MapCoordF;
+class ControlPoint;
 class PathObject;
-class SimpleCourseExport;
+class CourseExport;
 
 
 /**
- * This class generates IOF Interface Standard 3.0 course files.
- * 
- * This export handles a single path object and outputs placemarks for start
- * (S1), finish (F1), and controls in between. Event name, course name, and
- * the code number of the first control are taken from transient map properties
- * in collaboration with the SimpleCourseExport class.
+ * This class generates IOF Interface Standard 3.0 course files
+ * in collaboration with the CourseExport class.
  */
 class IofCourseExport : public Exporter
 {
@@ -58,13 +56,13 @@ public:
 protected:
 	bool exportImplementation() override;
 	
-	void writeXml(const PathObject& object);
+	void writeXml(const std::vector<ControlPoint>& controls);
 	
-	void writeControls(const std::vector<MapCoord>& coords);
+	void writeControls(const std::vector<ControlPoint>& controls);
 	
-	void writeCourse(const std::vector<MapCoord>& coords);
+	void writeCourse(const std::vector<ControlPoint>& controls);
 	
-	void writeControl(const MapCoord& coord, const QString& id);
+	void writeControl(const MapCoordF& coord, const QString& id);
 	
 	void writeCourseControl(const QString& type, const QString& id);
 	
@@ -72,7 +70,7 @@ protected:
 	
 private:
 	QXmlStreamWriter* xml = nullptr;
-	SimpleCourseExport* simple_course = nullptr;
+	CourseExport* course = nullptr;
 };
 
 
