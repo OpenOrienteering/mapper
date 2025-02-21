@@ -41,10 +41,13 @@ namespace Concurrency {
 /**
  * A class for the exchange of progress state during concurrent processing.
  * 
- * In order to allow copies to be made as needed by QtConcurrent,
- * the actual data is held via a std::shared_ptr. This std::shared_ptr object
- * is const in order to ensure thread safety also in accessing this object
+ * Copies of a Progress object share the same progress state.
+ * The actual data is held via a const std::shared_ptr, enabling
+ * shared ownership and safe concurrent access from multiple threads
  * (cf. std::shared_ptr documentation).
+ * 
+ * Assignment is not supported. It would require extra synchronization
+ * for concurrent access to the same object.
  */
 class Progress final : public ProgressObserver
 {
@@ -59,7 +62,7 @@ private:
 public:
 	Progress() : data(std::make_shared<Data>()) {}
 	Progress(const Progress&) = default;
-	Progress(Progress&& p) = delete;
+	Progress(Progress&& p) noexcept : Progress(static_cast<const Progress&>(p)) {};  // copy from const
 	Progress& operator=(const Progress&) = delete;
 	Progress& operator=(Progress&& p) = delete;
 	~Progress() override = default;
@@ -102,6 +105,8 @@ struct TransformedProgress : public ProgressObserver
  * 
  * It features the `QFuture` which signals the thread's total state and result,
  * and `Progress` information which is shared with the worker activity.
+ * 
+ * Assignment is not supported, following the choice made for Progress.
  */
 template <typename ResultType>
 struct Job
@@ -113,11 +118,11 @@ struct Job
 	char padding[64 - (sizeof(future) - sizeof(progress)) % 64] = {};  // NOLINT
 	
 	Job() = delete;
-	Job(Job const&) = delete;
-	Job(Job&& cj) noexcept : future(std::move(cj.future)), progress(cj.progress) {}
+	Job(Job const&) = default;
+	Job(Job&& j) noexcept : Job(std::move(j.future), j.progress) {};
 	Job(QFuture<ResultType>&& f, const Progress& p) noexcept : future(std::move(f)), progress(p) {}
 	Job& operator=(Job const&) = delete;
-	Job& operator=(Job&& job) noexcept { future = std::move(job.future); progress = job.progress; }
+	Job& operator=(Job&& job) = delete;
 	~Job() = default;
 };
 
