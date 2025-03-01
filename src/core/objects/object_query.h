@@ -1,6 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
- *    Copyright 2017-2024 Kai Pastor
+ *    Copyright 2017-2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,6 +27,7 @@
 #include <QMetaType>
 #include <QString>
 #include <QStringRef>
+#include <QVariant>
 
 namespace OpenOrienteering {
 
@@ -201,6 +202,10 @@ private:
 	 */
 	void consume(ObjectQuery&& other);
 	
+	//QVariant getObjectProperty(const Object* object, const StringOperands& tags) const;
+	bool getBooleanObjectProperty(const Object* object, const StringOperands& tags, bool& value) const;
+	bool isObjectProperty(const Object* object, const QString& tag_value) const;
+	
 	using SymbolOperand = const Symbol*;
 	
 	Operator op;
@@ -208,7 +213,7 @@ private:
 	union
 	{
 		LogicalOperands subqueries;
-		StringOperands     tags;
+		StringOperands  tags;
 		SymbolOperand   symbol;
 	};
 	
@@ -317,4 +322,4 @@ bool operator!=(const ObjectQuery::StringOperands& lhs, const ObjectQuery::Strin
 Q_DECLARE_METATYPE(OpenOrienteering::ObjectQuery::Operator)
 
 
-#endif
+#endif // OPENORIENTEERING_OBJECT_QUERY_H
