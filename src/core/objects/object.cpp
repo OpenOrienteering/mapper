@@ -65,6 +65,7 @@ class QRectF;
 
 namespace literal
 {
+	// map file
 	static const QLatin1String object("object");
 	static const QLatin1String symbol("symbol");
 	static const QLatin1String type("type");
@@ -76,8 +77,16 @@ namespace literal
 	static const QLatin1String rotation("rotation");
 	static const QLatin1String size("size");
 	static const QLatin1String tags("tags");
+	
+	// object properties
+	static const QLatin1String UndefinedSymbol("UndefinedSymbol");
+	static const QLatin1String AreaTooSmall("AreaTooSmall");
+	static const QLatin1String LineTooShort("LineTooShort");
+	static const QLatin1String PaperArea("PaperArea");
+	static const QLatin1String RealArea("RealArea");
+	static const QLatin1String PaperLength("PaperLength");
+	static const QLatin1String RealLength("RealLength");
 }
-
 
 
 namespace OpenOrienteering {
@@ -755,6 +764,24 @@ void Object::includeControlPointsRect(QRectF& rect) const
 }
 
 
+QVariant Object::getObjectProperty(const QString& property) const
+{
+	if (property == literal::UndefinedSymbol)
+	{
+		if (map && symbol)
+			return QVariant(map->findSymbolIndex(symbol) < 0);
+	}
+	
+	return QVariant();
+}
+
+bool Object::isObjectProperty(const QString& property) const
+{
+	if (property == literal::UndefinedSymbol)
+		return true;
+	
+	return false;
+}
 
 // ### PathPart ###
 
@@ -3217,6 +3244,46 @@ bool PathObject::isLineTooShort() const
 {
 	int minimum_length = symbol ? symbol->getMinimumLength() : 0;
 	return getPaperLength() < 0.001 * minimum_length;
+}
+
+
+// override
+QVariant PathObject::getObjectProperty(const QString& property) const
+{
+	if (property == literal::AreaTooSmall)
+		return QVariant(isAreaTooSmall());
+
+	if (property == literal::LineTooShort)
+		return QVariant(isLineTooShort());
+	
+	if (property == literal::PaperArea)
+		return QVariant(calculatePaperArea());
+	
+	if (property == literal::RealArea)
+		return QVariant(calculateRealArea());
+	
+	if (property == literal::PaperLength)
+		return QVariant(getPaperLength());
+	
+	if (property == literal::RealLength)
+		return QVariant(getRealLength());
+	
+	return Object::getObjectProperty(property);	// pass to base class function
+}
+
+// override
+bool PathObject::isObjectProperty(const QString& property) const
+{
+	if (property == literal::AreaTooSmall
+		|| property == literal::LineTooShort
+		|| property == literal::PaperArea
+		|| property == literal::RealArea
+		|| property == literal::PaperLength
+		|| property == literal::RealLength
+		)
+		return true;
+	
+	return Object::isObjectProperty(property);	// pass to base class function
 }
 
 
