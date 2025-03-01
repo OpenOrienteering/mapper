@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,8 +23,8 @@
 #define OPENORIENTEERING_OBJECT_H
 
 #include <limits>
-#include <vector>
 #include <utility>
+#include <vector>
 
 #include <QtGlobal>
 #include <QRectF>
@@ -98,7 +98,7 @@ public:
 	
 protected:
 	/**
-	 * Constructs a Object, initialized from the given prototype.
+	 * Constructs an Object, initialized from the given prototype.
 	 * 
 	 * Note that the object is NOT added to a map, and consequently,
 	 * the map pointer is initialized to nullptr.
@@ -171,7 +171,7 @@ public:
 	/**
 	 * Sets the object's rotation (in radians).
 	 * 
-	 * The interpretation of this value depends the object's symbol.
+	 * The interpretation of this value depends on the object's symbol.
 	 * It may have no effect at all.
 	 * The value must not be NaN.
 	 */
@@ -265,11 +265,11 @@ public:
 	
 	/** Sets the object output's dirty state. */
 	void setOutputDirty(bool dirty = true);
-	/** Returns if the object's output must be regenerated. */
+	/** Returns true if the object's output must be regenerated. */
 	bool isOutputDirty() const;
 	
 	/**
-	 * Changes the object's symbol, returns if successful.
+	 * Changes the object's symbol, returns true if successful.
 	 * 
 	 * Some conversions are impossible, for example point to line. Normally,
 	 * this method checks if the types of the old and the new symbol are
@@ -896,6 +896,25 @@ public:
 	/** Called by Object::load() */
 	void recalculateParts();
 	
+	/** Calculates 'paper' length of path objects in mm. */
+	double getPaperLength() const;
+	
+	/** Calculates 'real' length of path objects in m. */
+	double getRealLength() const;
+	
+	/** Calculates 'paper' area of area objects in sq mm. */
+	double getPaperArea() const;
+	
+	/** Calculates 'real' area of area objects in sq m. */
+	double getRealArea() const;
+	
+	/** Returns true if 'paper' area of an area object is smaller than the minimum area as specified by the object's symbol. */
+	bool isAreaTooSmall() const;
+	
+	/** Returns true if 'paper' length of a path object is shorter than the minimum length as specified by the object's symbol. */
+	bool isLineTooShort() const;
+	
+	
 protected:
 	/**
 	 * Adjusts the end index of the given part and the start/end indexes of the following parts.
@@ -1298,4 +1317,4 @@ constexpr ObjectPathCoord::operator bool() const
 }  // namespace OpenOrienteering
 
 
-#endif
+#endif // OPENORIENTEERING_OBJECT_H
