@@ -317,6 +317,21 @@ public:
 	 */
 	void includeControlPointsRect(QRectF& rect) const;
 	
+	
+	/**
+	 * Returns dynamic object properties that are common for all objects.
+	 * Derived object classes (i.e., PathObject) override this function to return class specific object properties.
+	 * If derived object classes don't provide a requested property, they invoke the base class function.
+	 */
+	virtual QVariant getObjectProperty(const QString& property) const;
+	
+	/**
+	 * Returns true if property is a dynamic object property that is provided for all objects.
+	 * Derived object classes (i.e., PathObject) override this function to test for class specific object properties.
+	 * If derived object classes don't provide a requested property, they invoke the base class function.
+	 */
+	virtual bool isObjectProperty(const QString& property) const;
+	
 protected:
 	virtual void updateEvent() const;
 	
@@ -924,6 +939,20 @@ public:
 	/** Returns true if the object is shorter than the minimum length required by its symbol. */
 	bool isLineTooShort() const;
 	
+	
+	/**
+	 * Returns dynamic object properties that are specific for the PathObject class.
+	 * Note: Overrides the base class function that returns dynamic object properties that are common for all objects.
+	 * If a requested property is not provided by PathObject, the base class function is invoked.
+	 */
+	QVariant getObjectProperty(const QString& property) const override;
+	
+	/**
+	 * Returns true if property is a dynamic object property that is provided by the PathObject class.
+	 * Note: Overrides the base class function that returns true for dynamic object properties that are common for all objects.
+	 * If a requested property is not provided by PathObject, the base class function is invoked.
+	 */
+	bool isObjectProperty(const QString& property) const override;
 	
 protected:
 	/**

@@ -1,6 +1,7 @@
 /*
  *    Copyright 2016 Mitchell Krome
- *    Copyright 2017-2024 Kai Pastor
+ *    Copyright 2017-2025 Kai Pastor
+ *    Copyright 2025 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -32,7 +33,6 @@
 #include <QChar>
 #include <QLatin1Char>
 #include <QLatin1String>
-#include <QString>
 #include <QVarLengthArray>
 
 #include "core/map.h"
@@ -393,6 +393,72 @@ QString ObjectQuery::labelFor(ObjectQuery::Operator op)
 	Q_UNREACHABLE();
 }
 
+/*
+QVariant ObjectQuery::getObjectProperty(const Object* object, const StringOperands& tags) const
+{
+	auto property = QVariant();
+	
+	// check if tag refers to object properties
+	if (tags.key.startsWith(QLatin1Char('.')))
+	{
+		const auto internal_tag = tags.key.mid(1);
+		if (object->getType() == Object::Path)
+		{
+			const auto& path_object = static_cast<const PathObject*>(object);
+			property = path_object->getObjectProperty(internal_tag);
+		}
+		else
+		{
+			property = object->getObjectProperty(internal_tag);
+		}
+	}
+	return property;
+}*/
+
+bool ObjectQuery::getBooleanObjectProperty(const Object* object, const StringOperands& tags, bool& value) const
+{
+	auto property = QVariant();
+	
+	// check if tag refers to object properties
+	if (tags.value.startsWith(QLatin1Char('.')))
+	{
+		const auto internal_tag = tags.value.mid(1);
+		if (object->getType() == Object::Path)
+		{
+			const auto& path_object = static_cast<const PathObject*>(object);
+			property = path_object->getObjectProperty(internal_tag);
+		}
+		else
+		{
+			property = object->getObjectProperty(internal_tag);
+		}
+	}
+	if (property.isValid() && static_cast<QMetaType::Type>(property.type()) == QMetaType::Bool)
+	{
+		value = property.toBool();
+		return true;
+	}
+	return false;
+}
+
+bool ObjectQuery::isObjectProperty(const Object* object, const QString& tag_value) const
+{
+	// check if tags_value refers to object properties
+	if (tag_value.startsWith(QLatin1Char('.')))
+	{
+		const auto internal_tag = tag_value.mid(1);
+		if (object->getType() == Object::Path)
+		{
+			const auto& path_object = static_cast<const PathObject*>(object);
+			return path_object->isObjectProperty(internal_tag);
+		}
+		else
+		{
+			return object->isObjectProperty(internal_tag);
+		}
+	}
+	return false;
+}
 
 
 bool ObjectQuery::operator()(const Object* object) const
@@ -400,11 +466,21 @@ bool ObjectQuery::operator()(const Object* object) const
 	switch(op)
 	{
 	case OperatorIs:
+		/*{
+		auto property = getObjectProperty(object, tags);
+		if (property.isValid())
+			return static_cast<QMetaType::Type>(property.type()) == QMetaType::Bool && property.toBool();
+		}*/
 		return [](auto const& container,  auto const& tags) {
 			auto const it = container.find(tags.key);
 			return it != container.end() && it->value == tags.value;
 		} (object->tags(), tags);
 	case OperatorIsNot:
+		/*{
+		auto property = getObjectProperty(object, tags);
+		if (property.isValid())
+			return static_cast<QMetaType::Type>(property.type()) != QMetaType::Bool || !property.toBool();
+		}*/
 		// If the object does have the tag, not is true
 		return [](auto const& container,  auto const& tags) {
 			auto const it = container.find(tags.key);
@@ -416,6 +492,10 @@ bool ObjectQuery::operator()(const Object* object) const
 			return it != container.end() && it->value.contains(tags.value);
 		} (object->tags(), tags);
 	case OperatorSearch:
+		qDebug("\nOperatorSearch");
+		bool value;
+		if (getBooleanObjectProperty(object, tags, value))
+			return value;
 		if (object->getSymbol() && object->getSymbol()->getName().contains(tags.value, Qt::CaseInsensitive))
 			return true;
 		for (auto const& current : object->tags())
@@ -426,8 +506,11 @@ bool ObjectQuery::operator()(const Object* object) const
 		}
 		return false;
 	case OperatorObjectText:
+		if (isObjectProperty(object, tags.value))	// don't search for object properties keywords
+			return false;
+		qDebug("\nOperatorObjectText");
 		if (object->getType() == Object::Text)
-		    return static_cast<const TextObject*>(object)->getText().contains(tags.value, Qt::CaseInsensitive);
+			return static_cast<const TextObject*>(object)->getText().contains(tags.value, Qt::CaseInsensitive);
 		return false;
 		
 	case OperatorAnd:
