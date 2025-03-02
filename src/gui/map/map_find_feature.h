@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017-2019, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,6 +27,7 @@
 
 class QAction;
 class QDialog;
+class QPushButton;
 class QStackedLayout;
 class QTextEdit;
 class QWidget;
@@ -34,6 +35,7 @@ class QWidget;
 namespace OpenOrienteering {
 
 class MapEditorController;
+class Object;
 class ObjectQuery;
 class TagSelectWidget;
 
@@ -56,22 +58,28 @@ public:
 	
 	void setEnabled(bool enabled);
 	
-	QAction* showDialogAction() { return show_action; }
+	QAction* showDialogAction() const { return show_action; }
 	
-	QAction* findNextAction() { return find_next_action; }
+	QAction* findNextAction() const { return find_next_action; }
+	
+private slots:
+	void findNext();
+	
+	void deleteAndFindNext();
+	
+	void findAll();
+	
+	void objectSelectionChanged();
+	
+	void showHelp() const;
+	
+	void tagSelectorToggled(bool active);
 	
 private:
 	void showDialog();
 	
 	ObjectQuery makeQuery() const;
 	
-	void findNext();
-	
-	void findAll();
-	
-	void showHelp() const;
-	
-	void tagSelectorToggled(bool active);
 	
 	MapEditorController& controller;
 	QPointer<QDialog> find_dialog;           // child of controller's window
@@ -79,8 +87,11 @@ private:
 	QTextEdit* text_edit = nullptr;          // child of find_dialog
 	TagSelectWidget* tag_selector = nullptr; // child of find_dialog
 	QWidget* tag_selector_buttons = nullptr; // child of find_dialog
+	QPushButton* delete_find_next = nullptr; // child of find_dialog
 	QAction* show_action = nullptr;          // child of this
 	QAction* find_next_action = nullptr;     // child of this
+	
+	Object* previous_object = nullptr;
 	
 	Q_DISABLE_COPY(MapFindFeature)
 };
@@ -88,4 +99,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_MAP_FIND_FEATURE_H

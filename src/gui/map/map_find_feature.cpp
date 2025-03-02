@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017-2024 Kai Pastor
+ *    Copyright 2017-2020, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -103,11 +103,16 @@ void MapFindFeature::showDialog()
 		
 		tag_selector = new TagSelectWidget;
 		
+		auto find_all = new QPushButton(tr("Find &all"));
+		connect(find_all, &QPushButton::clicked, this, &MapFindFeature::findAll);
+		
 		auto find_next = new QPushButton(tr("&Find next"));
 		connect(find_next, &QPushButton::clicked, this, &MapFindFeature::findNext);
 		
-		auto find_all = new QPushButton(tr("Find &all"));
-		connect(find_all, &QPushButton::clicked, this, &MapFindFeature::findAll);
+		delete_find_next = new QPushButton(tr("Delete && Find next"));
+		connect(delete_find_next, &QPushButton::clicked, this, &MapFindFeature::deleteAndFindNext);
+		connect(controller.getMap(), &Map::objectSelectionChanged, this, &MapFindFeature::objectSelectionChanged);
+		objectSelectionChanged();
 		
 		auto tags_button = new QPushButton(tr("Query editor"));
 		tags_button->setCheckable(true);
@@ -117,7 +122,7 @@ void MapFindFeature::showDialog()
 		
 		auto button_box = new QDialogButtonBox(QDialogButtonBox::Close | QDialogButtonBox::Help);
 		connect(button_box, &QDialogButtonBox::rejected, &*find_dialog, &QDialog::hide);
-		connect(button_box->button(QDialogButtonBox::Help), &QPushButton::clicked, this, &MapFindFeature::showHelp);
+		connect(button_box, &QDialogButtonBox::helpRequested, this, &MapFindFeature::showHelp);
 		
 		editor_stack = new QStackedLayout();
 		editor_stack->addWidget(text_edit);
@@ -126,12 +131,13 @@ void MapFindFeature::showDialog()
 		connect(tags_button, &QAbstractButton::toggled, this, &MapFindFeature::tagSelectorToggled);
 		
 		auto layout = new QGridLayout;
-		layout->addLayout(editor_stack, 0, 0, 6, 1);
-		layout->addWidget(find_next, 0, 1, 1, 1);
-		layout->addWidget(find_all, 1, 1, 1, 1);
-		layout->addWidget(tags_button, 3, 1, 1, 1);
-		layout->addWidget(tag_selector_buttons, 5, 1, 1, 1);
-		layout->addWidget(button_box, 6, 0, 1, 2);
+		layout->addLayout(editor_stack, 0, 0, 7, 1);
+		layout->addWidget(find_all, 0, 1, 1, 1);
+		layout->addWidget(find_next, 1, 1, 1, 1);
+		layout->addWidget(delete_find_next, 2, 1, 1, 1);
+		layout->addWidget(tags_button, 4, 1, 1, 1);
+		layout->addWidget(tag_selector_buttons, 6, 1, 1, 1);
+		layout->addWidget(button_box, 7, 0, 1, 2);
 		
 		find_dialog->setLayout(layout);
 	}
@@ -140,7 +146,6 @@ void MapFindFeature::showDialog()
 	find_dialog->raise();
 	find_dialog->activateWindow();
 }
-
 
 
 ObjectQuery MapFindFeature::makeQuery() const
@@ -170,10 +175,14 @@ ObjectQuery MapFindFeature::makeQuery() const
 }
 
 
+// slot
 void MapFindFeature::findNext()
 {
 	auto map = controller.getMap();
 	auto first_object = map->getFirstSelectedObject();
+	// remember current selected object as start point in case next object found is deleted by 'Delete & Find Next'
+	if (first_object)
+		previous_object = first_object;
 	map->clearObjectSelection(false);
 	
 	Object* next_object = nullptr;
@@ -220,6 +229,21 @@ void MapFindFeature::findNext()
 }
 
 
+// slot
+void MapFindFeature::deleteAndFindNext()
+{
+	auto map = controller.getMap();
+	map->deleteSelectedObjects();
+	// restore start point for search in findNext() but only if the object still exists.
+	if (previous_object && map->getCurrentPart()->contains(previous_object))
+	{
+		map->addObjectToSelection(previous_object, false);
+	}
+	findNext();
+}
+
+
+// slot
 void MapFindFeature::findAll()
 {
 	auto map = controller.getMap();
@@ -244,12 +268,19 @@ void MapFindFeature::findAll()
 }
 
 
+// slot
+void MapFindFeature::objectSelectionChanged()
+{
+	auto map = controller.getMap();
+	delete_find_next->setEnabled(map->getNumSelectedObjects() == 1);
+}
 
+
+// slot
 void MapFindFeature::showHelp() const
 {
 	Util::showHelp(controller.getWindow(), "find_objects.html");
 }
-
 
 
 // slot
