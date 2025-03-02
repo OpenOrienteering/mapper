@@ -53,6 +53,7 @@ class ObjectQuery
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::ObjectQuery)
 	
 public:
+	// Important: When adding operators update the Is... functions below
 	enum Operator {
 		// Operators 1 .. 15 operate on other queries
 		OperatorAnd      = 1,  ///< And-chains two object queries
@@ -63,6 +64,7 @@ public:
 		OperatorIs       = 16, ///< Tests an existing tag for equality with the given value (case-sensitive)
 		OperatorIsNot    = 17, ///< Tests an existing tag for inequality with the given value (case-sensitive)
 		OperatorContains = 18, ///< Tests an existing tag for containing the given value (case-sensitive)
+		
 		OperatorSearch   = 19, ///< Tests if the symbol name, a tag key or a tag value contains the given value (case-insensitive)
 		OperatorObjectText = 20, ///< Text object content (case-insensitive)
 		
@@ -205,6 +207,11 @@ private:
 	//QVariant getObjectProperty(const Object* object, const StringOperands& tags) const;
 	bool getBooleanObjectProperty(const Object* object, const StringOperands& tags, bool& value) const;
 	bool isObjectProperty(const Object* object, const QString& tag_value) const;
+	
+	bool IsLogicalOperator(Operator op) const { return op >= 1 && op <= 3; }
+	bool IsTagOperator(Operator op) const { return op >= 16 && op <= 18; }
+	bool IsValueOperator(Operator op) const { return op >= 19 && op <= 20; }
+	bool IsStringOperator(Operator op) const { return op >= 16 && op <= 20; }
 	
 	using SymbolOperand = const Symbol*;
 	

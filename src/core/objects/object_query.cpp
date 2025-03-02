@@ -210,7 +210,7 @@ ObjectQuery::ObjectQuery(const ObjectQuery& query)
 	{
 		; // nothing
 	}
-	else if (op < 16)
+	else if (IsLogicalOperator(op))
 	{
 		new (&subqueries) LogicalOperands(query.subqueries);
 	}
@@ -266,10 +266,8 @@ ObjectQuery::ObjectQuery(const QString& key, ObjectQuery::Operator op, const QSt
 {
 	// Can't have an empty key (but can have empty value)
 	// Must be a key/value operator
-	Q_ASSERT(op >= 16);
-	Q_ASSERT(op <= 18);
-	if (op < 16 || op > 18
-	    || key.length() == 0)
+	Q_ASSERT(IsTagOperator(op));	// 16..18
+	if (!IsTagOperator(op) || key.length() == 0)
 	{
 		reset();
 	}
@@ -280,12 +278,10 @@ ObjectQuery::ObjectQuery(ObjectQuery::Operator op, const QString& value)
 : op { op }
 , tags { {}, value }
 {
-	// Can't have an empty key (but can have empty value)
-	// Must be a key/value operator
-	Q_ASSERT(op >= 19);
-	Q_ASSERT(op <= 20);
-	if (op < 19 || op > 20
-	    || value.length() == 0)
+	// Can't have an empty value (but can have empty key)
+	// Must be a value operator
+	Q_ASSERT(IsValueOperator(op));	// 19..20
+	if (!IsValueOperator(op) || value.length() == 0)
 	{
 		reset();
 	}
@@ -298,10 +294,8 @@ ObjectQuery::ObjectQuery(const ObjectQuery& first, ObjectQuery::Operator op, con
 {
 	// Both sub-queries must be valid.
 	// Must be a logical operator
-	Q_ASSERT(op >= 1);
-	Q_ASSERT(op <= 3);
-	if (op < 1 || op > 3
-	    || !first || !second)
+	Q_ASSERT(IsLogicalOperator(op));	// 1..3
+	if (!IsLogicalOperator(op) || !first || !second)
 	{
 		reset();
 	}
@@ -319,10 +313,8 @@ ObjectQuery::ObjectQuery(ObjectQuery&& first, ObjectQuery::Operator op, ObjectQu
 {
 	// Both sub-queries must be valid.
 	// Must be a logical operator
-	Q_ASSERT(op >= 1);
-	Q_ASSERT(op <= 3);
-	if (op < 1 || op > 3
-	    || !first || !second)
+	Q_ASSERT(IsLogicalOperator(op));	// 1..3
+	if (!IsLogicalOperator(op) || !first || !second)
 	{
 		reset();
 	}
@@ -535,14 +527,13 @@ bool ObjectQuery::operator()(const Object* object) const
 const ObjectQuery::LogicalOperands* ObjectQuery::logicalOperands() const
 {
 	const LogicalOperands* result = nullptr;
-	if (op >= 1 && op <= 3)
+	if (IsLogicalOperator(op))
 	{
 		result = &subqueries;
 	}
 	else
 	{
-		Q_ASSERT(op >= 1);
-		Q_ASSERT(op <= 3);
+		Q_ASSERT(IsLogicalOperator(op));
 	}
 	return result;
 }
@@ -551,14 +542,13 @@ const ObjectQuery::LogicalOperands* ObjectQuery::logicalOperands() const
 const ObjectQuery::StringOperands* ObjectQuery::tagOperands() const
 {
 	const StringOperands* result = nullptr;
-	if (op >= 16 && op <= 20)
+	if (IsStringOperator(op))	// 16..20
 	{
 		result = &tags;
 	}
 	else
 	{
-		Q_ASSERT(op >= 16);
-		Q_ASSERT(op <= 20);
+		Q_ASSERT(IsStringOperator(op));
 	}
 	return result;
 }
@@ -637,7 +627,7 @@ void ObjectQuery::reset()
 	{
 		; // nothing
 	}
-	else if (op < 16)
+	else if (IsLogicalOperator(op))
 	{
 		subqueries.~LogicalOperands();
 		op = ObjectQuery::OperatorInvalid;
@@ -662,7 +652,7 @@ void ObjectQuery::consume(ObjectQuery&& other)
 	{
 		; // nothing else
 	}
-	else if (op < 16)
+	else if (IsLogicalOperator(op))
 	{
 		new (&subqueries) ObjectQuery::LogicalOperands(std::move(other.subqueries));
 		other.subqueries.~LogicalOperands();
