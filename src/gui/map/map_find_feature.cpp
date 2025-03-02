@@ -115,11 +115,16 @@ void MapFindFeature::showDialog()
 		
 		tag_selector = new TagSelectWidget;
 		
+		auto find_all = new QPushButton(tr("Find &all"));
+		connect(find_all, &QPushButton::clicked, this, &MapFindFeature::findAll);
+		
 		auto find_next = new QPushButton(tr("&Find next"));
 		connect(find_next, &QPushButton::clicked, this, &MapFindFeature::findNext);
 		
-		auto find_all = new QPushButton(tr("Find &all"));
-		connect(find_all, &QPushButton::clicked, this, &MapFindFeature::findAll);
+		delete_find_next = new QPushButton(tr("Delete && Find next"));
+		connect(delete_find_next, &QPushButton::clicked, this, &MapFindFeature::deleteAndFindNext);
+		connect(controller.getMap(), &Map::objectSelectionChanged, this, &MapFindFeature::objectSelectionChanged);
+		objectSelectionChanged();
 		
 		auto tags_button = new QPushButton(tr("Query editor"));
 		tags_button->setCheckable(true);
@@ -138,12 +143,13 @@ void MapFindFeature::showDialog()
 		connect(tags_button, &QAbstractButton::toggled, this, &MapFindFeature::tagSelectorToggled);
 		
 		auto layout = new QGridLayout;
-		layout->addLayout(editor_stack, 0, 0, 6, 1);
-		layout->addWidget(find_next, 0, 1, 1, 1);
-		layout->addWidget(find_all, 1, 1, 1, 1);
-		layout->addWidget(tags_button, 3, 1, 1, 1);
-		layout->addWidget(tag_selector_buttons, 5, 1, 1, 1);
-		layout->addWidget(button_box, 6, 0, 1, 2);
+		layout->addLayout(editor_stack, 0, 0, 7, 1);
+		layout->addWidget(find_all, 0, 1, 1, 1);
+		layout->addWidget(find_next, 1, 1, 1, 1);
+		layout->addWidget(delete_find_next, 2, 1, 1, 1);
+		layout->addWidget(tags_button, 4, 1, 1, 1);
+		layout->addWidget(tag_selector_buttons, 6, 1, 1, 1);
+		layout->addWidget(button_box, 7, 0, 1, 2);
 		
 		find_dialog->setLayout(layout);
 	}
@@ -152,7 +158,6 @@ void MapFindFeature::showDialog()
 	find_dialog->raise();
 	find_dialog->activateWindow();
 }
-
 
 
 ObjectQuery MapFindFeature::makeQuery() const
@@ -187,6 +192,7 @@ ObjectQuery MapFindFeature::makeQuery() const
 }
 
 
+// slot
 void MapFindFeature::findNext()
 {
 	if (auto query = makeQuery())
@@ -201,6 +207,7 @@ void MapFindFeature::findNextMatchingObject(MapEditorController& controller, con
 	Object* first_match = nullptr;  // the first match in all objects
 	Object* pivot_object = map->getFirstSelectedObject();
 	Object* next_match = nullptr;   // the next match after pivot_object
+	
 	map->clearObjectSelection(false);
 	
 	auto search = [&](Object* object) {
@@ -234,6 +241,21 @@ void MapFindFeature::findNextMatchingObject(MapEditorController& controller, con
 }
 
 
+// slot
+void MapFindFeature::deleteAndFindNext()
+{
+	auto map = controller.getMap();
+	map->deleteSelectedObjects();
+	// restore start point for search in findNext() but only if the object still exists.
+	if (previous_object && map->getCurrentPart()->contains(previous_object))
+	{
+		map->addObjectToSelection(previous_object, false);
+	}
+	findNext();
+}
+
+
+// slot
 void MapFindFeature::findAll()
 {
 	if (auto query = makeQuery())
@@ -260,12 +282,22 @@ void MapFindFeature::findAllMatchingObjects(MapEditorController& controller, con
 }
 
 
+// slot
+void MapFindFeature::objectSelectionChanged()
+{
+	auto map = controller.getMap();
+	delete_find_next->setEnabled(map->getNumSelectedObjects() == 1);
+}
+
+
+// slot
 void MapFindFeature::showHelp() const
 {
 	Util::showHelp(controller.getWindow(), "find_objects.html");
 }
 
 
+// slot
 void MapFindFeature::tagSelectorToggled(bool active)
 {
 	editor_stack->setCurrentIndex(active ? 1 : 0);
