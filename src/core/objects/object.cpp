@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2021, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -3173,6 +3173,51 @@ void PathObject::updateEvent() const
 void PathObject::createRenderables(ObjectRenderables& output, Symbol::RenderableOptions options) const
 {
 	symbol->createRenderables(this, path_parts, output, options);
+}
+
+
+double PathObject::getPaperLength() const
+{
+	const PathPartVector& parts = this->parts();
+	return parts.empty() ? 0.0 : parts.front().length();
+}
+
+double PathObject::getRealLength() const
+{
+	return map ? getPaperLength() * (0.001 * map->getScaleDenominator()) : 0.0;
+}
+
+double PathObject::getPaperArea() const
+{
+	const PathPartVector& parts = this->parts();
+	if (parts.empty())
+		return 0.0;
+	auto paper_area = parts.front().calculateArea();
+	if (parts.size() > 1)
+	{
+		paper_area *= 2;
+		for (const auto& part : parts)
+			paper_area -= part.calculateArea();
+	}
+	return paper_area;
+}
+
+double PathObject::getRealArea() const
+{
+	double paper_to_real = map ? 0.001 * map->getScaleDenominator() : 0.0;
+	return getPaperArea() * paper_to_real * paper_to_real;
+}
+
+bool PathObject::isAreaTooSmall() const
+{
+	int minimum_area = symbol ? symbol->getMinimumArea() : 0;
+	return getPaperArea() < 0.001 * minimum_area;
+}
+
+bool PathObject::isLineTooShort() const
+{
+	int minimum_length = symbol ? symbol->getMinimumLength() : 0;
+	return getPaperLength() < 0.001 * minimum_length;
 }
 
 
