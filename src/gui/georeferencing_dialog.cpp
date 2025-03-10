@@ -432,8 +432,8 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 		return;
 	
 	/// \todo Move URL (template) to settings.
-	QString user_url(QString::fromLatin1("https://www.ngdc.noaa.gov/geomag-web/"));
-	QUrl service_url(user_url + QLatin1String("calculators/calculateDeclination"));
+	QString user_url(QString::fromLatin1("https://geomag.bgs.ac.uk"));
+	QUrl service_url(user_url + QLatin1String("/web_service/GMModels/wmm/2025"));
 	LatLon latlon(georef->getGeographicRefPoint());
 	
 	if (!no_confirm)
@@ -448,21 +448,20 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	}
 	
 	QUrlQuery query;
-	QDate today = QDate::currentDate();
-	query.addQueryItem(QString::fromLatin1("lat1"), QString::number(latlon.latitude()));
-	query.addQueryItem(QString::fromLatin1("lon1"), QString::number(latlon.longitude()));
-	query.addQueryItem(QString::fromLatin1("startYear"), QString::number(today.year()));
-	query.addQueryItem(QString::fromLatin1("startMonth"), QString::number(today.month()));
-	query.addQueryItem(QString::fromLatin1("startDay"), QString::number(today.day()));
+	const auto today = QDate::currentDate().toString(Qt::ISODate);
+	query.addQueryItem(QString::fromLatin1("latitude"), QString::number(latlon.latitude()));
+	query.addQueryItem(QString::fromLatin1("longitude"), QString::number(latlon.longitude()));
+	query.addQueryItem(QString::fromLatin1("altitude"), QString::number(0.0f));
+	query.addQueryItem(QString::fromLatin1("date"), today);
 	
 #if defined(Q_OS_WIN) || defined(Q_OS_MACOS) || defined(Q_OS_ANDROID) || !defined(QT_NETWORK_LIB)
 	// No QtNetwork or no OpenSSL: open result in system browser.
-	query.addQueryItem(QString::fromLatin1("resultFormat"), QString::fromLatin1("html"));
+	query.addQueryItem(QString::fromLatin1("format"), QString::fromLatin1("html"));
 	service_url.setQuery(query);
 	QDesktopServices::openUrl(service_url);
 #else
 	// Use result directly
-	query.addQueryItem(QString::fromLatin1("resultFormat"), QString::fromLatin1("xml"));
+	query.addQueryItem(QString::fromLatin1("format"), QString::fromLatin1("xml"));
 	service_url.setQuery(query);
 	
 	declination_query_in_progress = true;
@@ -782,11 +781,11 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 		QXmlStreamReader xml(reply);
 		while (xml.readNextStartElement())
 		{
-			if (xml.name() == QLatin1String("maggridresult"))
+			if (xml.name() == QLatin1String("geomagnetic-field-model-result"))
 			{
 				while(xml.readNextStartElement())
 				{
-					if (xml.name() == QLatin1String("result"))
+					if (xml.name() == QLatin1String("field-value"))
 					{
 						while (xml.readNextStartElement())
 						{
@@ -806,16 +805,12 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 								}
 							}
 							
-							xml.skipCurrentElement(); // child of result
+							xml.skipCurrentElement(); // child of field-value
 						}
 					}
 					
-					xml.skipCurrentElement(); // child of mapgridresult
+					xml.skipCurrentElement(); // child of geomagnetic-field-model-result
 				}
-			}
-			else if (xml.name() == QLatin1String("errors"))
-			{
-				error_string.append(xml.readElementText(QXmlStreamReader::IncludeChildElements) + QLatin1Char(' '));
 			}
 			
 			xml.skipCurrentElement(); // child of root
