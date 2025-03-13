@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,8 +23,8 @@
 #define OPENORIENTEERING_OBJECT_H
 
 #include <limits>
-#include <vector>
 #include <utility>
+#include <vector>
 
 #include <QtGlobal>
 #include <QRectF>
@@ -176,6 +176,18 @@ public:
 	 * The value must not be NaN.
 	 */
 	void setRotation(qreal new_rotation);
+	
+	
+	/**
+	 * Changes the visibility of an object.
+	 * 
+	 * Even when linked to a map, an object may be invisible when it is in a
+	 * hidden map part.
+	 */
+	void setVisible(bool visible);
+	
+	/** Returns the object's visibility. */
+	bool isVisible() const noexcept { return visible; }
 	
 	
 	/**
@@ -331,6 +343,7 @@ protected:
 private:
 	qreal rotation = 0;               ///< The object's rotation (in radians).
 	mutable bool output_dirty = true; // does the output have to be re-generated because of changes?
+	bool visible = true;              ///< The object's renderables are in a visible map part.
 	mutable QRectF extent;            // only valid after calling update()
 	mutable ObjectRenderables output; // only valid after calling update()
 };
@@ -1298,4 +1311,4 @@ constexpr ObjectPathCoord::operator bool() const
 }  // namespace OpenOrienteering
 
 
-#endif
+#endif // OPENORIENTEERING_OBJECT_H
