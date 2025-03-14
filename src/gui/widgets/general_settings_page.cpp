@@ -136,7 +136,7 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	autosave_check = new QCheckBox(tr("Save information for automatic recovery"));
 	layout->addRow(autosave_check);
 	
-	autosave_interval_edit = Util::SpinBox::create(1, 120, tr("min", "unit minutes"), 1);
+	autosave_interval_edit = Util::SpinBox::create(1, 120, QLatin1Char(' ') + tr("min", "unit minutes"), 1);
 	layout->addRow(tr("Recovery information saving interval:"), autosave_interval_edit);
 	
 	layout->addItem(Util::SpacerItem::create(this));
