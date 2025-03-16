@@ -165,16 +165,6 @@ void TagSelectWidget::showEvent(QShowEvent* event)
 
 void TagSelectWidget::addRowItems(int row)
 {
-	auto* item = new QTableWidgetItem();
-	setItem(row, 1, item);
-	item = new QTableWidgetItem();
-	setItem(row, 3, item);
-
-	auto* compare_op = new QComboBox();
-	for (auto op : { ObjectQuery::OperatorIs, ObjectQuery::OperatorIsNot, ObjectQuery::OperatorContains })
-		compare_op->addItem(ObjectQuery::labelFor(op), QVariant::fromValue(op));
-	setCellWidget(row, 2, compare_op);
-	
 	auto* logical_op = new QComboBox();
 	auto and_label = QString { QLatin1String("  ") + ObjectQuery::labelFor(ObjectQuery::OperatorAnd) };
 	logical_op->addItem(and_label, QVariant::fromValue(ObjectQuery::OperatorAnd));
@@ -188,6 +178,15 @@ void TagSelectWidget::addRowItems(int row)
 		setItem(row, 0, createPlaceholderItemFor(logical_op));
 		delete logical_op;
 	}
+	
+	setItem(row, 1, new QTableWidgetItem());  // key
+	
+	auto* compare_op = new QComboBox();
+	for (auto op : { ObjectQuery::OperatorIs, ObjectQuery::OperatorIsNot, ObjectQuery::OperatorContains })
+		compare_op->addItem(ObjectQuery::labelFor(op), QVariant::fromValue(op));
+	setCellWidget(row, 2, compare_op);
+	
+	setItem(row, 3, new QTableWidgetItem());  // value
 }
 
 
