@@ -52,7 +52,7 @@ namespace OpenOrienteering {
 
 namespace {
 
-QTableWidgetItem* createPlaceholderItemFor(QWidget* widget)
+QTableWidgetItem* createPlaceholderItemFor(const QWidget* widget = nullptr)
 {
 	auto* item = new QTableWidgetItem();
 	item->setFlags(Qt::NoItemFlags);
