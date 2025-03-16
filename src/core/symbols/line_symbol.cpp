@@ -1231,15 +1231,25 @@ SplitPathCoord LineSymbol::createDashGroups(
 			
 			if (dashgroup < num_dashgroups)
 			{
-				if (Q_UNLIKELY(mid_symbols == CenterOfGap))
+				if (mid_symbols == CenterOfGap)
 				{
 					auto position = cur_length
 					                + (break_length_f
 					                   - mid_symbol_distance_f * (mid_symbols_per_spot - 1)) / 2;
-					auto split = dash_start;
+					// 'dash_start' is now the begin of the gap.
+					// 'CenterOfGap' is meant for symbols placed in the gap only.
+					// But actual required length can be longer. Output symbols
+					// from 'start' to 'end' and omit everything outside this range.
+					auto split = (position >= dash_start.clen) ? dash_start : start;
 					for (int i = 0; i < mid_symbols_per_spot; ++i, position += mid_symbol_distance_f)
 					{
+						if (position < start.clen)
+							continue;
+						
 						split = SplitPathCoord::at(position, split);
+						if (position > end.clen)
+							break;
+						
 						if (mid_symbol_rotatable)
 							orientation = split.tangentVector().angle();
 						mid_symbol->createRenderablesScaled(split.pos, orientation, output);
