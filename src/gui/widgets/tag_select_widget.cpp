@@ -52,6 +52,16 @@ namespace OpenOrienteering {
 
 namespace {
 
+QTableWidgetItem* createPlaceholderItemFor(QWidget* widget)
+{
+	auto* item = new QTableWidgetItem();
+	item->setFlags(Qt::NoItemFlags);
+	item->setBackground(QBrush(QGuiApplication::palette().window()));
+	if (widget)
+		item->setSizeHint(widget->sizeHint());
+	return item;
+}
+
 /// Local wrapper for Util::ToolButton::create() adding the What's This bit.
 QToolButton* createToolButton(const QIcon& icon, const QString& text)
 {
@@ -88,6 +98,8 @@ TagSelectWidget::TagSelectWidget(QWidget* parent)
 	                + header_view->sectionSize(3));
 	
 	addRowItems(0);
+	resizeColumnToContents(0);
+	resizeColumnToContents(2);
 
 	connect(this, &QTableWidget::cellChanged, this, &TagSelectWidget::onCellChanged);
 	connect(this, &QTableWidget::currentCellChanged, this, &TagSelectWidget::updateRowButtons, Qt::QueuedConnection);
@@ -162,22 +174,19 @@ void TagSelectWidget::addRowItems(int row)
 	for (auto op : { ObjectQuery::OperatorIs, ObjectQuery::OperatorIsNot, ObjectQuery::OperatorContains })
 		compare_op->addItem(ObjectQuery::labelFor(op), QVariant::fromValue(op));
 	setCellWidget(row, 2, compare_op);
-
-	if (row == 0)
+	
+	auto* logical_op = new QComboBox();
+	auto and_label = QString { QLatin1String("  ") + ObjectQuery::labelFor(ObjectQuery::OperatorAnd) };
+	logical_op->addItem(and_label, QVariant::fromValue(ObjectQuery::OperatorAnd));
+	logical_op->addItem(ObjectQuery::labelFor(ObjectQuery::OperatorOr), QVariant::fromValue(ObjectQuery::OperatorOr));
+	if (row > 0)
 	{
-		// The first row doesn't use a logical operator
-		item = new QTableWidgetItem();
-		item->setFlags(Qt::NoItemFlags);
-		item->setBackground(QBrush(QGuiApplication::palette().window()));
-		setItem(row, 0, item);
+		setCellWidget(row, 0, logical_op);
 	}
 	else
 	{
-		auto* logical_op = new QComboBox();
-		auto and_label = QString { QLatin1String("  ") + ObjectQuery::labelFor(ObjectQuery::OperatorAnd) };
-		logical_op->addItem(and_label, QVariant::fromValue(ObjectQuery::OperatorAnd));
-		logical_op->addItem(ObjectQuery::labelFor(ObjectQuery::OperatorOr), QVariant::fromValue(ObjectQuery::OperatorOr));
-		setCellWidget(row, 0, logical_op);
+		setItem(row, 0, createPlaceholderItemFor(logical_op));
+		delete logical_op;
 	}
 }
 
@@ -222,8 +231,6 @@ void TagSelectWidget::addRow()
 	// Move the selection to the new row
 	int col = currentColumn();
 	setCurrentCell(row, col);
-	resizeColumnToContents(0);
-	resizeColumnToContents(2);
 }
 
 
@@ -245,11 +252,8 @@ void TagSelectWidget::deleteRow()
 	// If we delete first row, need to fix logical operator
 	if (row == 0)
 	{
+		setItem(row, 0, createPlaceholderItemFor(cellWidget(row, 0)));
 		removeCellWidget(row, 0);
-		auto* item = new QTableWidgetItem();
-		item->setFlags(Qt::NoItemFlags);
-		item->setBackground(QBrush(QGuiApplication::palette().window()));
-		setItem(row, 0, item);
 	}
 }
 
