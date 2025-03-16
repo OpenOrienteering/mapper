@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -45,20 +45,17 @@
 namespace OpenOrienteering {
 
 TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* parent)
- : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), templ(templ)
+: QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
+, templ(templ)
 {
 	setWindowTitle(tr("Opening %1").arg(templ->getTemplateFilename()));
 	
-	QLabel* size_label = new QLabel(QLatin1String("<b>") + tr("Image size:") + QLatin1String("</b> ")
+	auto* size_label = new QLabel(QLatin1String("<b>") + tr("Image size:") + QLatin1String("</b> ")
 	                                + QString::number(templ->getImage().width()) + QLatin1String(" x ")
 	                                + QString::number(templ->getImage().height()));
-	QLabel* desc_label = new QLabel(tr("Specify how to position or scale the image:"));
+	auto* desc_label = new QLabel(tr("Specify how to position or scale the image:"));
 	
-	bool use_meters_per_pixel;
-	double meters_per_pixel;
-	double dpi;
-	double scale;
-	templ->getMap()->getImageTemplateDefaults(use_meters_per_pixel, meters_per_pixel, dpi, scale);
+	const auto& defaults = templ->getMap()->getImageTemplateDefaults();
 	
 	auto georef_source = templ->availableGeoreferencing().effective.transform.source;
 	auto const georef_radio_enabled = !georef_source.isEmpty();
@@ -77,50 +74,50 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* 
 	georef_radio->setEnabled(georef_radio_enabled);
 	
 	mpp_radio = new QRadioButton(tr("Meters per pixel:"));
-	mpp_edit = new QLineEdit((meters_per_pixel > 0) ? QString::number(meters_per_pixel) : QString{});
+	mpp_edit = new QLineEdit((defaults.meters_per_pixel > 0) ? QString::number(defaults.meters_per_pixel) : QString{});
 	mpp_edit->setValidator(new DoubleValidator(0, 999999, mpp_edit));
 	
 	dpi_radio = new QRadioButton(tr("Scanned with"));
-	dpi_edit = new QLineEdit((dpi > 0) ? QString::number(dpi) : QString{});
+	dpi_edit = new QLineEdit((defaults.dpi > 0) ? QString::number(defaults.dpi) : QString{});
 	dpi_edit->setValidator(new DoubleValidator(1, 999999, dpi_edit));
-	QLabel* dpi_label = new QLabel(tr("dpi"));
+	auto* dpi_label = new QLabel(tr("dpi"));
 	
-	QLabel* scale_label = new QLabel(tr("Template scale:  1 :"));
-	scale_edit = new QLineEdit((scale > 0) ? QString::number(scale) : QString{});
+	auto* scale_label = new QLabel(tr("Template scale:  1 :"));
+	scale_edit = new QLineEdit((defaults.scale > 0) ? QString::number(defaults.scale) : QString{});
 	scale_edit->setValidator(new QIntValidator(1, 999999, scale_edit));
 	
 	if (georef_radio->isEnabled())
 		georef_radio->setChecked(true);
-	else if (use_meters_per_pixel)
+	else if (defaults.use_meters_per_pixel)
 		mpp_radio->setChecked(true);
 	else
 		dpi_radio->setChecked(true);
 	
-	auto mpp_layout = new QHBoxLayout();
+	auto* mpp_layout = new QHBoxLayout();
 	mpp_layout->addWidget(mpp_radio);
 	mpp_layout->addWidget(mpp_edit);
 	mpp_layout->addStretch(1);
-	auto dpi_layout = new QHBoxLayout();
+	auto* dpi_layout = new QHBoxLayout();
 	dpi_layout->addWidget(dpi_radio);
 	dpi_layout->addWidget(dpi_edit);
 	dpi_layout->addWidget(dpi_label);
 	dpi_layout->addStretch(1);
-	auto scale_layout = new QHBoxLayout();
+	auto* scale_layout = new QHBoxLayout();
 	scale_layout->addSpacing(16);
 	scale_layout->addWidget(scale_label);
 	scale_layout->addWidget(scale_edit);
 	scale_layout->addStretch(1);
 	
-	auto cancel_button = new QPushButton(tr("Cancel"));
+	auto* cancel_button = new QPushButton(tr("Cancel"));
 	open_button = new QPushButton(QIcon(QString::fromLatin1(":/images/arrow-right.png")), tr("Open"));
 	open_button->setDefault(true);
 	
-	auto buttons_layout = new QHBoxLayout();
+	auto* buttons_layout = new QHBoxLayout();
 	buttons_layout->addWidget(cancel_button);
 	buttons_layout->addStretch(1);
 	buttons_layout->addWidget(open_button);
 	
-	auto layout = new QVBoxLayout();
+	auto* layout = new QVBoxLayout();
 	layout->addWidget(size_label);
 	layout->addSpacing(16);
 	layout->addWidget(desc_label);
@@ -183,7 +180,11 @@ void TemplateImageOpenDialog::setOpenEnabled()
 
 void TemplateImageOpenDialog::doAccept()
 {
-	templ->getMap()->setImageTemplateDefaults(mpp_radio->isChecked(), mpp_edit->text().toDouble(), dpi_edit->text().toDouble(), scale_edit->text().toDouble());
+	Map::ImageTemplateDefaults image_template_defaults = { mpp_radio->isChecked(),
+	                                                       mpp_edit->text().toDouble(),
+	                                                       dpi_edit->text().toDouble(),
+	                                                       scale_edit->text().toDouble() };
+	templ->getMap()->setImageTemplateDefaults(image_template_defaults);
 	accept();
 }
 
