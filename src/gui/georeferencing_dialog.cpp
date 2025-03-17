@@ -394,17 +394,7 @@ void GeoreferencingDialog::projectionChanged()
 	QString osm_link =
 	  QString::fromLatin1("https://www.openstreetmap.org/?mlat=%1&mlon=%2&zoom=18&layers=M").
 	  arg(latitude, 0, 'f', 6).arg(longitude, 0, 'f', 6);
-#ifdef MAPPER_WITH_WORLDOFO_LINK
-	QString worldofo_link =
-	  QString::fromLatin1("http://maps.worldofo.com/?zoom=15&lat=%1&lng=%2").
-	  arg(latitude).arg(longitude);
-	link_label->setText(
-	  tr("<a href=\"%1\">OpenStreetMap</a> | <a href=\"%2\">World of O Maps</a>").
-	  arg(osm_link, worldofo_link)
-	);
-#else
 	link_label->setText(tr("<a href=\"%1\">OpenStreetMap</a>").arg(osm_link));
-#endif
 	
 	QString error = georef->getErrorText();
 	if (error.length() == 0)
