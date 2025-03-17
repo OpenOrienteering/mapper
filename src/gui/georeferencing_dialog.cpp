@@ -391,10 +391,18 @@ void GeoreferencingDialog::projectionChanged()
 	double longitude = latlon.longitude();
 	setValueIfChanged(lat_edit, latitude);
 	setValueIfChanged(lon_edit, longitude);
-	QString osm_link =
-	  QString::fromLatin1("https://www.openstreetmap.org/?mlat=%1&mlon=%2&zoom=18&layers=M").
-	  arg(latitude, 0, 'f', 6).arg(longitude, 0, 'f', 6);
-	link_label->setText(tr("<a href=\"%1\">OpenStreetMap</a>").arg(osm_link));
+	
+	if (georef->getState() == Georeferencing::Geospatial)
+	{
+		QString osm_link =
+		  QString::fromLatin1("https://www.openstreetmap.org/?mlat=%1&mlon=%2&zoom=18&layers=M").
+		  arg(latitude, 0, 'f', 6).arg(longitude, 0, 'f', 6);
+		link_label->setText(tr("<a href=\"%1\">OpenStreetMap</a>").arg(osm_link));
+	}
+	else
+	{
+		link_label->setText(QLatin1String("-"));
+	}
 	
 	QString error = georef->getErrorText();
 	if (error.length() == 0)
@@ -598,8 +606,7 @@ void GeoreferencingDialog::updateWidgets()
 	status_field->setVisible(geographic_coords_enabled);
 	lat_edit->setEnabled(geographic_coords_enabled);
 	lon_edit->setEnabled(geographic_coords_enabled);
-	link_label->setVisible(geographic_coords_enabled);
-	show_refpoint_label->setVisible(geographic_coords_enabled);
+	show_refpoint_label->setEnabled(geographic_coords_enabled);
 	//keep_geographic_radio->setEnabled(geographic_coords_enabled);
 	
 	updateDeclinationButton();
