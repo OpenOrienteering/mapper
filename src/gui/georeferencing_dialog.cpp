@@ -188,7 +188,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	geographic_ref_layout->addWidget(geographic_datum_label, 0);
 	
 	show_refpoint_label = new QLabel(tr("Show reference point in:"));
-	link_label = new QLabel();
+	link_label = new QLabel(QLatin1String("-"));
 	link_label->setOpenExternalLinks(true);
 	
 	keep_projected_radio = new QRadioButton(tr("Projected coordinates"));
