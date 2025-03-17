@@ -49,6 +49,7 @@
 #include <QSignalBlocker>
 #include <QSize>
 #include <QSpacerItem>
+#include <QString>
 #include <QStringList>
 #include <QStringRef>
 #include <QTimer>
@@ -187,7 +188,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	geographic_ref_layout->addWidget(geographic_datum_label, 0);
 	
 	show_refpoint_label = new QLabel(tr("Show reference point in:"));
-	link_label = new QLabel();
+	link_label = new QLabel(QLatin1String("-"));
 	link_label->setOpenExternalLinks(true);
 	
 	keep_projected_radio = new QRadioButton(tr("Projected coordinates"));
@@ -390,20 +391,18 @@ void GeoreferencingDialog::projectionChanged()
 	double longitude = latlon.longitude();
 	setValueIfChanged(lat_edit, latitude);
 	setValueIfChanged(lon_edit, longitude);
-	QString osm_link =
-	  QString::fromLatin1("https://www.openstreetmap.org/?mlat=%1&mlon=%2&zoom=18&layers=M").
-	  arg(latitude, 0, 'g', 10).arg(longitude, 0, 'g', 10);
-#ifdef MAPPER_WITH_WORLDOFO_LINK
-	QString worldofo_link =
-	  QString::fromLatin1("http://maps.worldofo.com/?zoom=15&lat=%1&lng=%2").
-	  arg(latitude).arg(longitude);
-	link_label->setText(
-	  tr("<a href=\"%1\">OpenStreetMap</a> | <a href=\"%2\">World of O Maps</a>").
-	  arg(osm_link, worldofo_link)
-	);
-#else
-	link_label->setText(tr("<a href=\"%1\">OpenStreetMap</a>").arg(osm_link));
-#endif
+	
+	if (georef->getState() == Georeferencing::Geospatial)
+	{
+		QString osm_link =
+		  QString::fromLatin1("https://www.openstreetmap.org/?mlat=%1&mlon=%2&zoom=18&layers=M").
+		  arg(latitude, 0, 'f', 6).arg(longitude, 0, 'f', 6);
+		link_label->setText(tr("<a href=\"%1\">OpenStreetMap</a>").arg(osm_link));
+	}
+	else
+	{
+		link_label->setText(QLatin1String("-"));
+	}
 	
 	QString error = georef->getErrorText();
 	if (error.length() == 0)
@@ -607,7 +606,7 @@ void GeoreferencingDialog::updateWidgets()
 	status_field->setVisible(geographic_coords_enabled);
 	lat_edit->setEnabled(geographic_coords_enabled);
 	lon_edit->setEnabled(geographic_coords_enabled);
-	link_label->setEnabled(geographic_coords_enabled);
+	show_refpoint_label->setEnabled(geographic_coords_enabled);
 	//keep_geographic_radio->setEnabled(geographic_coords_enabled);
 	
 	updateDeclinationButton();
