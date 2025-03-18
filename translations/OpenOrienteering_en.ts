@@ -27,7 +27,7 @@
 <context>
     <name>OpenOrienteering::MapEditorController</name>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1893"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1900"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
         <translation>
@@ -36,7 +36,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1945"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1952"/>
         <source>Copied %n object(s)</source>
         <translation>
             <numerusform>Copied one object</numerusform>
@@ -44,7 +44,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1985"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1992"/>
         <source>Pasted %n object(s)</source>
         <translation>
             <numerusform>Pasted one object</numerusform>
@@ -52,7 +52,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="2796"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2788"/>
         <source>Duplicated %n object(s)</source>
         <translation>
             <numerusform>Duplicated one object</numerusform>
@@ -61,13 +61,77 @@
     </message>
 </context>
 <context>
+    <name>OpenOrienteering::MapInformation</name>
+    <message numerus="yes">
+        <location filename="../src/core/map_information.cpp" line="232"/>
+        <location filename="../src/core/map_information.cpp" line="247"/>
+        <location filename="../src/core/map_information.cpp" line="255"/>
+        <location filename="../src/core/map_information.cpp" line="258"/>
+        <source>%n object(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/core/map_information.cpp" line="237"/>
+        <location filename="../src/core/map_information.cpp" line="239"/>
+        <source>%n step(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/core/map_information.cpp" line="242"/>
+        <source>%n template(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/core/map_information.cpp" line="244"/>
+        <source>%n part(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/core/map_information.cpp" line="250"/>
+        <location filename="../src/core/map_information.cpp" line="280"/>
+        <source>%n symbol(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/core/map_information.cpp" line="266"/>
+        <source>%n color(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/core/map_information.cpp" line="274"/>
+        <source>%n font(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>OpenOrienteering::OgrFileImport</name>
     <message numerus="yes">
-        <location filename="../src/gdal/ogr_file_format.cpp" line="900"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="905"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="910"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="915"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="920"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="901"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="906"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="911"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="916"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="921"/>
         <source>Unable to load %n objects, reason: %1</source>
         <translation>
             <numerusform>Unable to load one object, reason: %1</numerusform>
