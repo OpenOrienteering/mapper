@@ -86,7 +86,7 @@ private slots:
 		QVERIFY(rectangle.isLineTooShort() == true);
 		
 		QCOMPARE(rectangle.calculatePaperArea(), paper_area);
-		QCOMPARE(rectangle.calcuateRealArea(), paper_area*(map_scale/1000.0f)*(map_scale/1000.0f));
+		QCOMPARE(rectangle.calculateRealArea(), paper_area*(map_scale/1000.0f)*(map_scale/1000.0f));
 	}
 	
 	
@@ -137,7 +137,7 @@ private slots:
 		QCOMPARE(rectangle_area.getRealLength(), paper_length*map_scale/1000.0f);
 		
 		QCOMPARE(rectangle_area.calculatePaperArea(), paper_area);
-		QCOMPARE(rectangle_area.calcuateRealArea(), paper_area*(map_scale/1000.0f)*(map_scale/1000.0f));
+		QCOMPARE(rectangle_area.calculateRealArea(), paper_area*(map_scale/1000.0f)*(map_scale/1000.0f));
 		
 		area_symbol->setMinimumArea(paper_area*1000 - 1);
 		QVERIFY(rectangle_area.isAreaTooSmall() == false);
