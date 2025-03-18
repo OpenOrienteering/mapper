@@ -39,6 +39,7 @@ set(Mapper_translations
   OpenOrienteering_id.ts
   OpenOrienteering_it.ts
   OpenOrienteering_ja.ts
+  OpenOrienteering_ko.ts
   OpenOrienteering_lv.ts
   OpenOrienteering_nb.ts
   OpenOrienteering_nl.ts
@@ -47,6 +48,7 @@ set(Mapper_translations
   OpenOrienteering_pt_BR.ts
   OpenOrienteering_ru.ts
   OpenOrienteering_sv.ts
+  OpenOrienteering_ta.ts
   OpenOrienteering_tr.ts
   OpenOrienteering_uk.ts
   OpenOrienteering_zh_CN.ts
