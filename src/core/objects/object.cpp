@@ -3190,14 +3190,13 @@ double PathObject::getRealLength() const
 double PathObject::calculatePaperArea() const
 {
 	const PathPartVector& parts = this->parts();
-	if (parts.empty())
-		return 0.0;
-	auto paper_area = parts.front().calculateArea();
-	if (parts.size() > 1)
+	auto first = parts.begin(), last = parts.end();
+	auto paper_area = 0.0;
+	if (first != last)
 	{
-		paper_area *= 2;
-		for (const auto& part : parts)
-			paper_area -= part.calculateArea();
+		paper_area = std::accumulate(first + 1, last, first->calculateArea(), [](auto acc, const auto& cur) {
+			return acc - cur.calculateArea();
+		});
 	}
 	return paper_area;
 }
