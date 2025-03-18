@@ -105,14 +105,10 @@ void MeasureWidget::objectSelectionChanged()
 			  "<tr><td>%1</td><td align=\"center\">%2 %3</td><td align=\"center\">(%4 %5)</td></tr>" 
 			} };
 			
-			double paper_to_real = 0.001 * map->getScaleDenominator();
-			
 			object->update();
-			const PathPartVector& parts = static_cast<const PathObject*>(object)->parts();
-			Q_ASSERT(!parts.empty());
 			
-			auto paper_length = parts.front().length();
-			auto real_length  = paper_length * paper_to_real;
+			auto paper_length = object->asPath()->getPaperLength();
+			auto real_length  = object->asPath()->getRealLength();
 			
 			auto paper_length_text = locale().toString(paper_length, 'f', 2);
 			auto real_length_text  = locale().toString(real_length, 'f', 0);
@@ -123,14 +119,8 @@ void MeasureWidget::objectSelectionChanged()
 				                          paper_length_text, tr("mm", "millimeters"),
 				                          real_length_text, tr("m", "meters")));
 				
-				auto paper_area = parts.front().calculateArea();
-				if (parts.size() > 1)
-				{
-					paper_area *= 2;
-					for (const auto& part : parts)
-						paper_area -= part.calculateArea();
-				}
-				double real_area = paper_area * paper_to_real * paper_to_real;
+				auto paper_area = object->asPath()->calculatePaperArea();
+				auto real_area = object->asPath()->calcuateRealArea();
 				
 				auto paper_area_text = locale().toString(paper_area, 'f', 2);
 				auto real_area_text   = locale().toString(real_area, 'f', 0);
