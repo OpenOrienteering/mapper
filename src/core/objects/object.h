@@ -903,10 +903,10 @@ public:
 	double getRealLength() const;
 	
 	/** Calculates 'paper' area of area objects in sq mm. */
-	double getPaperArea() const;
+	double calculatePaperArea() const;
 	
 	/** Calculates 'real' area of area objects in sq m. */
-	double getRealArea() const;
+	double calcuateRealArea() const;
 	
 	/** Returns true if 'paper' area of an area object is smaller than the minimum area as specified by the object's symbol. */
 	bool isAreaTooSmall() const;

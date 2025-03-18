@@ -3187,7 +3187,7 @@ double PathObject::getRealLength() const
 	return map ? getPaperLength() * (0.001 * map->getScaleDenominator()) : 0.0;
 }
 
-double PathObject::getPaperArea() const
+double PathObject::calculatePaperArea() const
 {
 	const PathPartVector& parts = this->parts();
 	if (parts.empty())
@@ -3202,16 +3202,16 @@ double PathObject::getPaperArea() const
 	return paper_area;
 }
 
-double PathObject::getRealArea() const
+double PathObject::calcuateRealArea() const
 {
 	double paper_to_real = map ? 0.001 * map->getScaleDenominator() : 0.0;
-	return getPaperArea() * paper_to_real * paper_to_real;
+	return calculatePaperArea() * paper_to_real * paper_to_real;
 }
 
 bool PathObject::isAreaTooSmall() const
 {
 	int minimum_area = symbol ? symbol->getMinimumArea() : 0;
-	return getPaperArea() < 0.001 * minimum_area;
+	return calculatePaperArea() < 0.001 * minimum_area;
 }
 
 bool PathObject::isLineTooShort() const

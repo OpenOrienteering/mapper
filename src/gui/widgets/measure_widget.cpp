@@ -119,8 +119,8 @@ void MeasureWidget::objectSelectionChanged()
 				                          paper_length_text, tr("mm", "millimeters"),
 				                          real_length_text, tr("m", "meters")));
 				
-				auto paper_area = object->asPath()->getPaperArea();
-				auto real_area = object->asPath()->getRealArea();
+				auto paper_area = object->asPath()->calculatePaperArea();
+				auto real_area = object->asPath()->calcuateRealArea();
 				
 				auto paper_area_text = locale().toString(paper_area, 'f', 2);
 				auto real_area_text   = locale().toString(real_area, 'f', 0);

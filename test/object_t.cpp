@@ -67,7 +67,7 @@ private slots:
 		
 		PathObject obj;
 		QCOMPARE(obj.getPaperLength(), 0.0f);
-		QCOMPARE(obj.getPaperArea(), 0.0f);
+		QCOMPARE(obj.calculatePaperArea(), 0.0f);
 		QVERIFY(obj.isAreaTooSmall() == false);
 		QVERIFY(obj.isLineTooShort() == false);
 		
@@ -85,8 +85,8 @@ private slots:
 		line_symbol->setMinimumLength(paper_length*1000 + 1);
 		QVERIFY(rectangle.isLineTooShort() == true);
 		
-		QCOMPARE(rectangle.getPaperArea(), paper_area);
-		QCOMPARE(rectangle.getRealArea(), paper_area*(map_scale/1000.0f)*(map_scale/1000.0f));
+		QCOMPARE(rectangle.calculatePaperArea(), paper_area);
+		QCOMPARE(rectangle.calcuateRealArea(), paper_area*(map_scale/1000.0f)*(map_scale/1000.0f));
 	}
 	
 	
@@ -124,7 +124,7 @@ private slots:
 		
 		PathObject obj;
 		QCOMPARE(obj.getPaperLength(), 0.0f);
-		QCOMPARE(obj.getPaperArea(), 0.0f);
+		QCOMPARE(obj.calculatePaperArea(), 0.0f);
 		QVERIFY(obj.isAreaTooSmall() == false);
 		QVERIFY(obj.isLineTooShort() == false);
 		
@@ -136,8 +136,8 @@ private slots:
 		QCOMPARE(rectangle_area.getPaperLength(), paper_length);
 		QCOMPARE(rectangle_area.getRealLength(), paper_length*map_scale/1000.0f);
 		
-		QCOMPARE(rectangle_area.getPaperArea(), paper_area);
-		QCOMPARE(rectangle_area.getRealArea(), paper_area*(map_scale/1000.0f)*(map_scale/1000.0f));
+		QCOMPARE(rectangle_area.calculatePaperArea(), paper_area);
+		QCOMPARE(rectangle_area.calcuateRealArea(), paper_area*(map_scale/1000.0f)*(map_scale/1000.0f));
 		
 		area_symbol->setMinimumArea(paper_area*1000 - 1);
 		QVERIFY(rectangle_area.isAreaTooSmall() == false);
