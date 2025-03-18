@@ -3201,7 +3201,7 @@ double PathObject::calculatePaperArea() const
 	return paper_area;
 }
 
-double PathObject::calcuateRealArea() const
+double PathObject::calculateRealArea() const
 {
 	double paper_to_real = map ? 0.001 * map->getScaleDenominator() : 0.0;
 	return calculatePaperArea() * paper_to_real * paper_to_real;

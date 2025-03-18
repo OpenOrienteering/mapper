@@ -916,7 +916,7 @@ public:
 	 * This is the area of the first part (outline) minus the area of other
 	 * parts (holes). The calculation is agnostic to overlap of parts.
 	 */
-	double calcuateRealArea() const;
+	double calculateRealArea() const;
 	
 	/** Returns true if the object is smaller than the minimum area required by its symbol. */
 	bool isAreaTooSmall() const;
