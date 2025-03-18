@@ -896,22 +896,32 @@ public:
 	/** Called by Object::load() */
 	void recalculateParts();
 	
-	/** Calculates 'paper' length of path objects in mm. */
+	/** Returns the 'paper' length of path objects in mm. */
 	double getPaperLength() const;
 	
-	/** Calculates 'real' length of path objects in m. */
+	/** Returns the 'real' length of path objects in m. */
 	double getRealLength() const;
 	
-	/** Calculates 'paper' area of area objects in sq mm. */
+	/**
+	 * Calculates the 'paper' area of area objects in sq mm.
+	 * 
+	 * This is the area of the first part (outline) minus the area of other
+	 * parts (holes). The calculation is agnostic to overlap of parts.
+	 */
 	double calculatePaperArea() const;
 	
-	/** Calculates 'real' area of area objects in sq m. */
+	/**
+	 * Calculates 'real' area of area objects in sq m.
+	 * 
+	 * This is the area of the first part (outline) minus the area of other
+	 * parts (holes). The calculation is agnostic to overlap of parts.
+	 */
 	double calcuateRealArea() const;
 	
-	/** Returns true if 'paper' area of an area object is smaller than the minimum area as specified by the object's symbol. */
+	/** Returns true if the object is smaller than the minimum area required by its symbol. */
 	bool isAreaTooSmall() const;
 	
-	/** Returns true if 'paper' length of a path object is shorter than the minimum length as specified by the object's symbol. */
+	/** Returns true if the object is shorter than the minimum length required by its symbol. */
 	bool isLineTooShort() const;
 	
 	
