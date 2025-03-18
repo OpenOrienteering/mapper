@@ -1727,7 +1727,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="125"/>
         <source>Retain compatibility with Mapper %1</source>
-        <translation>Bevare kompabilitet med Mapper %1</translation>
+        <translation>Behold kompatibilitet med Mapper %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="133"/>
@@ -8997,7 +8997,7 @@ Høyeste støttede versjon er %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="170"/>
         <source>OCAD compatibility settings</source>
-        <translation>Innstillinger for OCAD-kompabilitet</translation>
+        <translation>Innstillinger for OCAD-kompatibilitet</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="181"/>
@@ -9032,7 +9032,7 @@ Høyeste støttede versjon er %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="200"/>
         <source>OCAD compatibility</source>
-        <translation>OCAD-kompabilitet</translation>
+        <translation>OCAD-kompatibilitet</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="207"/>

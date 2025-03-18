@@ -493,7 +493,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="275"/>
         <source>Color usage in symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Färganvändning i symboler</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="300"/>
@@ -508,7 +508,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="302"/>
         <source>Color usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Färganvändning</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="321"/>
@@ -4364,7 +4364,7 @@ eftersom det inte stöds att spara som %2 (.%3).</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="945"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="946"/>
@@ -9509,7 +9509,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="170"/>
         <source>OCAD compatibility settings</source>
-        <translation>Kompabilitetsinställningar för OCAD</translation>
+        <translation>Kompatibilitetsinställningar för OCAD</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="181"/>
@@ -9539,7 +9539,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="200"/>
         <source>OCAD compatibility</source>
-        <translation>OCAD-kompabilitet</translation>
+        <translation>OCAD-kompatibilitet</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="207"/>

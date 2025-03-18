@@ -433,12 +433,12 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="275"/>
         <source>Color usage in symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Použití barev v symbolech</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="302"/>
         <source>Color usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Použití barev</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="321"/>
@@ -3910,7 +3910,7 @@ protože uložení jako %2 (.%3) není podporováno.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="945"/>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="946"/>
@@ -4821,12 +4821,12 @@ symbolů</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1074"/>
         <source>Clip area</source>
-        <translation type="unfinished"></translation>
+        <translation>Oříznout oblast</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1075"/>
         <source>Erase area</source>
-        <translation type="unfinished"></translation>
+        <translation>Vymazat oblast</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1122"/>
@@ -5676,7 +5676,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1954"/>
         <source>In text symbol %1: exporting only %2 custom tabulator positions</source>
-        <translation type="unfinished"></translation>
+        <translation>V textovém symbolu %1: exportuji pouze %2 vlastních pozic tabulátoru</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2332"/>
@@ -5897,7 +5897,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1666"/>
         <source>Skipping unsupported reference to point symbol &apos;%1.%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vynechávám nepodporovaný odkaz na bodový symbol &apos;%1.%2&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1880"/>

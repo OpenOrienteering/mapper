@@ -430,7 +430,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="275"/>
         <source>Color usage in symbols</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Upotreba boja u simbolima</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="300"/>
@@ -445,7 +445,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="302"/>
         <source>Color usage</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Upotreba boja</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="321"/>
@@ -1531,7 +1531,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>Clip layers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Odreži slojeve</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="59"/>
@@ -1819,7 +1819,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="920"/>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lokalni</translation>
     </message>
 </context>
 <context>
@@ -1966,25 +1966,25 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="216"/>
         <source>Scale compensation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kompenzacija mjerila</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="221"/>
         <source>Combined scale factor:</source>
         <extracomment>The combined scale factor is the ratio between a length on the ground and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kombinirani faktor mjerila:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="227"/>
         <source>Auxiliary scale factor:</source>
         <extracomment>The auxiliary scale factor is the ratio between a length in the curved earth model and the corresponding length on the ground. It is applied as a factor to ground distances to get curved earth model distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pomoćni faktor mjerila:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="245"/>
         <location filename="../src/gui/select_crs_dialog.cpp" line="90"/>
         <source>&amp;Coordinate reference system:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Koordinatni referentni sustav (KRS):</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="251"/>
@@ -1999,7 +1999,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="256"/>
         <source>On CRS changes, keep:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pri promjeni KRS, zadrži:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="262"/>
@@ -2295,54 +2295,54 @@
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="297"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3.</source>
-        <translation type="unfinished">Pogreška prilikom učitavanja simbola tipa %1 u retku, %2 stupcu %3.</translation>
+        <translation>Greška prilikom učitavanja simbola tipa %1 u retku, %2 stupcu %3.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="312"/>
         <source>Symbol ID &apos;%1&apos; not unique at line %2 column %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>ID simbola &apos;%1&apos; nije jedinstven u retku %2, stupcu %3.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="392"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Greška pri učitavanju simbola tipa %1 u retku %2, stupcu %3: %4</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="316"/>
         <source>Error while loading an object of type %1.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pogreška pri učitavanju objekta tipa %1.</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="330"/>
         <location filename="../src/core/symbols/symbol.cpp" line="318"/>
         <location filename="../src/undo/object_undo.cpp" line="616"/>
         <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pogrešno oblikovan ID simbola &apos;%1&apos; u retku %2, stupcu %3.</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="393"/>
         <source>Error while loading an object of type %1 at %2:%3: %4</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Greška pri učitavanju objekta tipa %1 na %2:%3: %4</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="357"/>
         <source>Unable to find symbol for object at %1:%2.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ne mogu naći simbol za objekt na %1:%2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="95"/>
         <source>OpenOrienteering Mapper</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering Mapper</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="46"/>
         <source>OCAD</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="48"/>
         <source>OCAD version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD verzija %1</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="238"/>
@@ -2350,52 +2350,52 @@
         <location filename="../src/util/xml_stream_util.cpp" line="301"/>
         <location filename="../src/util/xml_stream_util.cpp" line="323"/>
         <source>Could not parse the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Koordinate se ne mogu obraditi.</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="278"/>
         <location filename="../src/util/xml_stream_util.cpp" line="353"/>
         <source>Expected %1 coordinates, found %2.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Očekivane %1 koordinate, pronađene %2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="1074"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pogreška pri učitavanju konfiguracije ispisa na %1:%2: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="1093"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="1113"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pogreška pri učitavanju koraka poništavanja/ponavljanja na %1:%2: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="76"/>
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nema takve opcije: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="616"/>
         <location filename="../src/gui/map/map_editor.cpp" line="969"/>
         <source>Geospatial vector data</source>
-        <translation type="unfinished"></translation>
+        <translation>Geoprostorni vektorski podaci</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1942"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1787"/>
         <source>Cannot find a vector data export driver named &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nije pronađen upravljački program za izvoz vektorskih podataka: &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/iof_course_export.cpp" line="43"/>
         <source>IOF Data Standard 3.0</source>
-        <translation type="unfinished"></translation>
+        <translation>IOF standard podataka 3.0</translation>
     </message>
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="43"/>
         <source>KML</source>
-        <translation type="unfinished"></translation>
+        <translation>KML</translation>
     </message>
 </context>
 <context>
@@ -2407,83 +2407,86 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne mogu otvoriti datoteku
+%1:
+%2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="173"/>
         <source>Found an object without symbol.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pronađen je objekt bez simbola.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/fileformats/file_import_export.cpp" line="201"/>
         <source>Dropped %n irregular object(s).</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Odbačen je %n nepravilni objekt.</numerusform>
+            <numerusform>Odbačena su %n nepravilna objekta.</numerusform>
+            <numerusform>Odbačeno je %n nepravilnih objekata.</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="208"/>
         <source>Error during symbol post-processing.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pogreška tijekom naknadne obrade simbola.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="226"/>
         <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
-        <translation type="unfinished"></translation>
+        <translation>Predložak &quot;%1&quot; je učitan iz direktorija karte umjesto iz relativne lokacije prema datoteci karte gdje je prethodno bio.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="319"/>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nije uspjelo učitavanje predloška &apos;%1&apos;, razlog: %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="155"/>
         <source>Georeferencing mismatch:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Neusklađenost georeferenciranja:</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="250"/>
         <source>Warnings when loading template &apos;%1&apos;:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Upozorenja pri učitavanju predloška &apos;%1&apos;:
+%2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="258"/>
         <location filename="../src/fileformats/file_import_export.cpp" line="260"/>
         <source>At least one template file could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Najmanje jedna datoteka predloška nije pronađena.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="261"/>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kliknite na crveno ime predloška u prozoru Predlošci -&gt; Postavke predloška kako biste pronašli ime datoteke predloška.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="548"/>
         <source>Unsupported obsolete file format version. Please use program version v%1 or older to load and update the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodržana zastarjela verzija formata datoteke. Molimo koristite verziju programa v%1 ili stariju za učitavanje i ažuriranje datoteke.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="560"/>
         <source>Invalid file format version.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevažeća verzija formata datoteke.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="562"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodržana stara verzija formata datoteke. Koristite stariju verziju programa za učitavanje i ažuriranje datoteke.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="554"/>
         <source>Unsupported file format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodržani format datoteke.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="564"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodržana nova verzija formata datoteke. Neke značajke karte neće biti učitane ili spremljene ovom verzijom programa.</translation>
     </message>
 </context>
 <context>
@@ -2491,17 +2494,17 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="195"/>
         <source>For KML/KMZ export, the map must be georeferenced.</source>
-        <translation type="unfinished"></translation>
+        <translation>Za izvoz u KML/KMZ format, karta mora biti georeferencirana.</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="202"/>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nepoznata pogreška</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="220"/>
         <source>%1 already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 već postoji.</translation>
     </message>
 </context>
 <context>
@@ -2509,7 +2512,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="320"/>
         <source>Line settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Postavke linije</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="81"/>
@@ -2542,118 +2545,118 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="96"/>
         <source>Minimum line length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Najmanja duljina linije:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="105"/>
         <source>Line cap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Završetak linije:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="107"/>
         <source>flat</source>
-        <translation type="unfinished"></translation>
+        <translation>ravan</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="102"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="108"/>
         <source>round</source>
-        <translation type="unfinished"></translation>
+        <translation>zaobljen</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="109"/>
         <source>square</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">četvrtast</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="110"/>
         <source>pointed</source>
-        <translation type="unfinished"></translation>
+        <translation>šiljat</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="99"/>
         <source>Line join:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spoj linije:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="101"/>
         <source>miter</source>
-        <translation type="unfinished"></translation>
+        <translation>oštar</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="103"/>
         <source>bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>zakošen</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="118"/>
         <source>Line is dashed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Isprekidana linija</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="220"/>
         <source>Show at least one mid symbol</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prikaži barem jedan srednji simbol</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="222"/>
         <source>Minimum mid symbol count:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Najmanji broj srednjih simbola:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="225"/>
         <source>Minimum mid symbol count when closed:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Najmanji broj srednjih simbola zatvorene linije:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="154"/>
         <source>Dash length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Duljina crtice:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="150"/>
         <source>Dashed line</source>
-        <translation type="unfinished"></translation>
+        <translation>Isprekidana linija</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="157"/>
         <source>Break length:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Duljina prekida:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="160"/>
         <source>Dashes grouped together:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Crtice grupirane zajedno:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="162"/>
         <source>none</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">nema</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="163"/>
         <source>2</source>
-        <translation type="unfinished"></translation>
+        <translation>2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="164"/>
         <source>3</source>
-        <translation type="unfinished"></translation>
+        <translation>3</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="165"/>
         <source>4</source>
-        <translation type="unfinished"></translation>
+        <translation>4</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="167"/>
         <source>In-group break length:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Duljina prekida unutar grupe:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="170"/>
         <source>Half length of first and last dash</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Polovica duljine prve i zadnje crtice</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="172"/>

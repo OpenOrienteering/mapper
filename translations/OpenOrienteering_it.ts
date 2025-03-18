@@ -445,7 +445,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="275"/>
         <source>Color usage in symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilizzo del colore nei simboli</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="300"/>
@@ -460,7 +460,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="302"/>
         <source>Color usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilizzo del color</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="321"/>
@@ -4144,7 +4144,7 @@ perché il salvataggio come %2 (.%3) non è supportato.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="945"/>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="946"/>
@@ -4209,12 +4209,12 @@ perché il salvataggio come %2 (.%3) non è supportato.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1074"/>
         <source>Clip area</source>
-        <translation type="unfinished"></translation>
+        <translation>Ritaglia area</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1075"/>
         <source>Erase area</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancella area</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1122"/>

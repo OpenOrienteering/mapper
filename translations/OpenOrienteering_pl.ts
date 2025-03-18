@@ -437,7 +437,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="275"/>
         <source>Color usage in symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Użycie kolorów w symbolach</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="301"/>
@@ -447,7 +447,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="302"/>
         <source>Color usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Użycie kolorów</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="321"/>
@@ -4984,12 +4984,12 @@ Przeskalować importowane dane?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1074"/>
         <source>Clip area</source>
-        <translation type="unfinished"></translation>
+        <translation>Obszar przycinania</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1075"/>
         <source>Erase area</source>
-        <translation type="unfinished"></translation>
+        <translation>Obszar do wymazania</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1893"/>
@@ -5618,7 +5618,7 @@ przybliżaj i oddalaj widok mapy, kręcąc pokrętłem myszy.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1954"/>
         <source>In text symbol %1: exporting only %2 custom tabulator positions</source>
-        <translation type="unfinished"></translation>
+        <translation>W symbolu %1 eksportowanie tylko %2 niestandardowych pozycji tabulatora</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2332"/>
@@ -5799,7 +5799,7 @@ przybliżaj i oddalaj widok mapy, kręcąc pokrętłem myszy.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1666"/>
         <source>Skipping unsupported reference to point symbol &apos;%1.%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pomijanie nieobsługiwanej referencji do znaku &apos;%1.%2&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1880"/>

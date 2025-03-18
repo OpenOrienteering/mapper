@@ -1,33 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ja_JP">
+<TS version="2.1" language="ta">
 <context>
     <name>OpenOrienteering</name>
     <message>
         <location filename="../packaging/translations.cpp" line="10"/>
         <source>Orienteering map</source>
-        <translation>オリエンテーリング地図</translation>
+        <translation>ஓரியண்டரிங் வரைபடம்</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation>オリエンテーリング地図作成のためのソフトウェア</translation>
-    </message>
-    <message>
-        <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="vanished">エンコード &apos;%1&apos; は使用できません。設定を確認してください。</translation>
-    </message>
-    <message>
-        <source>Failed to create feature in layer: %1</source>
-        <translation type="vanished">レイヤーにフィーチャーを作成できませんでした: %1</translation>
-    </message>
-    <message>
-        <source>Failed to create layer %1: %2</source>
-        <translation type="vanished">レイヤー %1 の作成に失敗しました: %2</translation>
-    </message>
-    <message>
-        <source>Failed to create name field: %1</source>
-        <translation type="vanished">名前フィールドの作成に失敗しました: %1</translation>
+        <translation>ஓரியண்டரிங் வரைபடங்களை வரைவதற்கான மென்பொருள்</translation>
     </message>
 </context>
 <context>
@@ -36,64 +20,44 @@
         <location filename="../src/gui/about_dialog.cpp" line="105"/>
         <location filename="../src/gui/about_dialog.cpp" line="175"/>
         <source>About %1</source>
-        <translation>%1 について</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/about_dialog.cpp" line="180"/>
-        <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation>このプログラムはフリー ソフトウェアです: フリー ソフトウェア財団によって公開される &lt;a %1&gt;GNU 一般公衆利用許諾書 (GPL)、バージョン&amp;nbsp;3&lt;/a&gt; の条件の下で再配布および/または変更することができます。</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/about_dialog.cpp" line="185"/>
-        <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation>このプログラムは有用であることを願って頒布されますが、全くの無保証です。商業可能性の保証や特定目的への適合性は、言外に示されたものも含め、全く存在しません。&lt;a %1&gt;詳細&lt;/a&gt;は GNU 一般公衆利用許諾書 (GPL)、バージョン&amp;nbsp;3 をご覧くださ い。</translation>
+        <translation>சுமார் %1</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="190"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
-        <translation>&lt;a %1&gt;ライセンス、著作権通知、条件、および免責事項に関するすべて。&lt;/a&gt;</translation>
+        <translation>&lt;A %1&gt; உரிமங்கள், பதிப்புரிமை அறிவிப்புகள், நிபந்தனைகள் மற்றும் மறுப்புகள் பற்றி. &lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="192"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation>OpenOrienteering 開発者 (アルファベット順) :</translation>
+        <translation>அகர வரிசைப்படி ஓபனோரியண்டரிங் டெவலப்பர்கள்:</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="193"/>
         <source>(project initiator)</source>
-        <translation>(プロジェクト創始者)</translation>
-    </message>
-    <message>
-        <source>License (%1)</source>
-        <translation type="vanished">ライセンス (%1)</translation>
+        <translation>(திட்ட துவக்கி)</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="14"/>
         <location filename="../src/gui/about_dialog.cpp" line="178"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
-        <translation>オリエンテーリング地図作成のための自由なソフトウェア</translation>
+        <translation>ஓரியண்டரிங் வரைபடங்களை வரைவதற்கான இலவச மென்பொருள்</translation>
     </message>
     <message>
-        <source>Developers in alphabetical order:</source>
-        <translation type="vanished">デベロッパ (アルファベット順):</translation>
+        <location filename="../src/gui/about_dialog.cpp" line="180"/>
+        <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
+        <translation>இந்த நிரல் இலவச மென்பொருள்: இலவச மென்பொருள் அறக்கட்டளை வெளியிட்டுள்ளபடி, நீங்கள் அதை மறுபகிர்வு செய்யலாம் மற்றும்/அல்லது மாற்றலாம் &lt;a %1&gt; குனு பொது பொது உரிமம் (சிபிஎல்), பதிப்பு &amp; nbsp; 3 &lt;/a&gt;.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="185"/>
+        <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
+        <translation>இந்த திட்டம் பயனுள்ளதாக இருக்கும் என்ற நம்பிக்கையில் விநியோகிக்கப்படுகிறது, ஆனால் எந்த உத்தரவாதமும் இல்லாமல்; ஒரு குறிப்பிட்ட நோக்கத்திற்காக வணிகத்தன்மை அல்லது உடற்தகுதி ஆகியவற்றின் மறைமுக பொறுப்பு கூட இல்லாமல். &lt;a %1&gt; மேலும் விவரங்களுக்கு குனு பொது பொது உரிமம் (சிபிஎல்), பதிப்பு &amp; nbsp; 3 ஐப் பார்க்கவும் &lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="194"/>
         <source>For contributions, thanks to:</source>
-        <translation>コントリビュータ:</translation>
-    </message>
-    <message>
-        <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
-        <translation type="vanished">このプログラムは &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson を使用しています。</translation>
-    </message>
-    <message>
-        <source>See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</source>
-        <translation type="vanished">詳細については、&lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; を参照してください。</translation>
-    </message>
-    <message>
-        <source>Additional information</source>
-        <translation type="vanished">追加情報</translation>
+        <translation>பங்களிப்புகளுக்கு, இதற்கு நன்றி:</translation>
     </message>
 </context>
 <context>
@@ -101,12 +65,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
         <source>Open most recently used file</source>
-        <translation>直前に使用したファイルを開く</translation>
+        <translation>மிக அண்மைக் காலத்தில் பயன்படுத்தப்பட்ட கோப்பைத் திறக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="119"/>
         <source>Show tip of the day</source>
-        <translation>今日のヒントを表示する</translation>
+        <translation>அன்றைய உதவிக்குறிப்பைக் காட்டு</translation>
     </message>
 </context>
 <context>
@@ -114,7 +78,7 @@
     <message>
         <location filename="../src/gui/widgets/action_grid_bar.cpp" line="57"/>
         <source>Show remaining items</source>
-        <translation>残りのアイテムを表示</translation>
+        <translation>மீதமுள்ள பொருட்களைக் காட்டு</translation>
     </message>
 </context>
 <context>
@@ -127,22 +91,22 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="87"/>
         <source>Minimum size:</source>
-        <translation>最小のサイズ:</translation>
+        <translation>குறைந்தபட்ச அளவு:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="94"/>
         <source>Fills</source>
-        <translation>フィル</translation>
+        <translation>நிரப்புகிறது</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="107"/>
         <source>Line fill</source>
-        <translation>ラインフィル</translation>
+        <translation>வரி நிரப்பு</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="108"/>
         <source>Pattern fill</source>
-        <translation>パターンフィル</translation>
+        <translation>முறை நிரப்பு</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="146"/>
@@ -151,136 +115,132 @@
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="183"/>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="188"/>
         <source>mm</source>
-        <translation>mm</translation>
+        <translation>மிமீ</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="161"/>
         <source>Single line</source>
-        <translation>シングルライン</translation>
+        <translation>ஒற்றை இருப்புப்பாதை</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="175"/>
         <source>Parallel lines</source>
-        <translation>平行線</translation>
+        <translation>இணை கோடுகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="177"/>
         <source>Line spacing:</source>
-        <translation>平行線の間隔:</translation>
+        <translation>வரி இடைவெளி:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="180"/>
         <source>Single row</source>
-        <translation>シングルロウ</translation>
+        <translation>ஒற்றை வரிசை</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="182"/>
         <source>Pattern interval:</source>
-        <translation>パターン間隔:</translation>
+        <translation>முறை இடைவெளி:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="187"/>
         <source>Pattern offset:</source>
-        <translation>パターンのオフセット:</translation>
+        <translation>முறை ஆஃப்செட்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="192"/>
         <source>Row offset:</source>
-        <translation>ロウのオフセット:</translation>
+        <translation>வரிசை ஆஃப்செட்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="194"/>
         <source>Parallel rows</source>
-        <translation>平行ロウ</translation>
+        <translation>இணை வரிசைகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="196"/>
         <source>Row spacing:</source>
-        <translation>ロウ間隔:</translation>
+        <translation>வரிசை இடைவெளி:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="202"/>
         <source>Fill rotation</source>
-        <translation>フィルの回転</translation>
-    </message>
-    <message>
-        <source>°</source>
-        <translation type="vanished">°</translation>
+        <translation>சுழற்சியை நிரப்பவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="207"/>
         <source>Angle:</source>
-        <translation>角度:</translation>
+        <translation>கோணம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="209"/>
         <source>adjustable per object</source>
-        <translation>オブジェクトごとに調節可能</translation>
+        <translation>ஒரு பொருளுக்கு சரிசெய்யக்கூடியது</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="229"/>
         <source>Element drawing at boundary</source>
-        <translation>境界で描画する要素</translation>
+        <translation>எல்லையில் உறுப்பு வரைதல்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
         <source>Clip elements at the boundary.</source>
-        <translation>要素を境界で切り抜きます。</translation>
+        <translation>எல்லையில் உள்ள கூறுகளை கிளிப் செய்யுங்கள்.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation>中心が境界の内部にある場合に、要素を描画します。</translation>
+        <translation>நடுவண் எல்லைக்குள் இருந்தால் கூறுகளை வரையவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="233"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation>任意のポイントが境界内にある場合に、要素を描画します。</translation>
+        <translation>எந்த புள்ளியும் எல்லைக்குள் இருந்தால் கூறுகளை வரையவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="234"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation>すべてのポイントが境界内にある場合に、要素を描画します。</translation>
+        <translation>எல்லா புள்ளிகளும் எல்லைக்குள் இருந்தால் கூறுகளை வரையவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="249"/>
         <source>Area settings</source>
-        <translation>エリアの設定</translation>
+        <translation>பகுதி அமைப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="343"/>
         <source>Pattern fill %1</source>
-        <translation>パターンフィル %1</translation>
+        <translation>முறை நிரப்பு %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="352"/>
         <source>Line fill %1</source>
-        <translation>ラインフィル %1</translation>
+        <translation>வரி நிரப்பு %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="371"/>
         <source>No fill selected</source>
-        <translation>フィルが選択されていません</translation>
+        <translation>நிரப்பு எதுவும் தேர்ந்தெடுக்கப்படவில்லை</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="84"/>
         <source>Area color:</source>
-        <translation>エリアの色:</translation>
+        <translation>பகுதி நிறம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="173"/>
         <source>Line offset:</source>
-        <translation>ラインのオフセット:</translation>
+        <translation>வரி ஆஃப்செட்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="168"/>
         <source>Line color:</source>
-        <translation>ラインの色:</translation>
+        <translation>வரி நிறம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="163"/>
         <source>Line width:</source>
-        <translation>ラインの幅:</translation>
+        <translation>வரி அகலம்:</translation>
     </message>
 </context>
 <context>
@@ -288,35 +248,36 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="46"/>
         <source>Autosaved file</source>
-        <translation>自動保存したファイル</translation>
+        <translation>தன்னியக்க கோப்பு</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/autosave_dialog.cpp" line="48"/>
         <location filename="../src/gui/autosave_dialog.cpp" line="54"/>
         <source>%n bytes</source>
         <translation>
-            <numerusform>%n バイト</numerusform>
+            <numerusform>%n பைட்டுகள்</numerusform>
+            <numerusform>%n பைட்டுகள்</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="52"/>
         <source>File saved by the user</source>
-        <translation>ユーザーによって保存されたファイル</translation>
+        <translation>கோப்பு பயனரால் சேமிக்கப்பட்டது</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="59"/>
         <source>File recovery</source>
-        <translation>ファイルの復元</translation>
+        <translation>கோப்பு மீட்பு</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="61"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation>ファイル %1 は正しく閉じられませんでした。現時点では、2 つのバージョンがあります:</translation>
+        <translation>கோப்பு %1 சரியாக மூடப்படவில்லை. இந்த நேரத்தில், இரண்டு பதிப்புகள் உள்ளன:</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="75"/>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation>作業中のファイルを保存して、競合するバージョンを削除します。</translation>
+        <translation>முரண்பட்ட பதிப்பை அகற்ற செயலில் உள்ள கோப்பை சேமிக்கவும்.</translation>
     </message>
 </context>
 <context>
@@ -324,51 +285,47 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="89"/>
         <source>Edit map color</source>
-        <translation>色の編集</translation>
+        <translation>வரைபட நிறத்தைத் திருத்து</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="96"/>
         <source>Edit</source>
-        <translation>編集</translation>
+        <translation>தொகு</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="104"/>
         <source>Spot color printing</source>
-        <translation>スポットカラー印刷</translation>
+        <translation>ச்பாட் வண்ண அச்சிடுதல்</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="109"/>
         <source>Defines a spot color:</source>
-        <translation>スポットカラーの定義:</translation>
+        <translation>ச்பாட் நிறத்தை வரையறுக்கிறது:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="118"/>
         <source>Screen frequency:</source>
-        <translation>画面周波数:</translation>
+        <translation>திரை அதிர்வெண்:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="119"/>
         <source>lpi</source>
-        <translation>lpi</translation>
+        <translation>எல்பிஐ</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="120"/>
         <source>Undefined</source>
-        <translation>未定義</translation>
+        <translation>வரையறுக்கப்படவில்லை</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="124"/>
         <source>Screen angle:</source>
-        <translation>画面の角度:</translation>
-    </message>
-    <message>
-        <source>°</source>
-        <translation type="obsolete">°</translation>
+        <translation>திரை கோணம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="131"/>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation>スポットカラーの混合(スクリーンとオーバープリント):</translation>
+        <translation>ச்பாட் வண்ணங்களின் கலவை (திரைகள் மற்றும் ஓவர் பிரிண்ட்):</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="146"/>
@@ -383,7 +340,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="151"/>
         <source>Knockout: erases lower colors</source>
-        <translation>ノックアウト(抜き): 下の色を消去</translation>
+        <translation>நாக் அவுட்: குறைந்த வண்ணங்களை அழிக்கிறது</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="164"/>
@@ -394,107 +351,107 @@
         <location filename="../src/gui/color_dialog.cpp" line="169"/>
         <location filename="../src/gui/color_dialog.cpp" line="226"/>
         <source>Calculate from spot colors</source>
-        <translation>スポットカラーから計算</translation>
+        <translation>ச்பாட் வண்ணங்களிலிருந்து கணக்கிடுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="174"/>
         <source>Calculate from RGB color</source>
-        <translation>RGBカラーから計算</translation>
+        <translation>RGB வண்ணத்திலிருந்து கணக்கிடுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="179"/>
         <source>Custom process color:</source>
-        <translation>カスタム・プロセスカラー:</translation>
+        <translation>தனிப்பயன் செயல்முறை நிறம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="185"/>
         <source>Cyan</source>
-        <translation>シアン</translation>
+        <translation>சியான்</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="190"/>
         <source>Magenta</source>
-        <translation>マゼンダ</translation>
+        <translation>மெசந்தா</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="195"/>
         <source>Yellow</source>
-        <translation>イエロー</translation>
+        <translation>மஞ்சள்</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="200"/>
         <source>Black</source>
-        <translation>ブラック</translation>
+        <translation>கருப்பு</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="221"/>
         <source>RGB</source>
-        <translation>RGB</translation>
+        <translation>ஆர்சிபி</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="231"/>
         <source>Calculate from CMYK color</source>
-        <translation>CMYKカラーから計算</translation>
+        <translation>CMYK வண்ணத்திலிருந்து கணக்கிடுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="236"/>
         <source>Custom RGB color:</source>
-        <translation>カスタム・RGBカラー:</translation>
+        <translation>தனிப்பயன் RGB நிறம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="242"/>
         <source>Red</source>
-        <translation>赤</translation>
+        <translation>சிவப்பு</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="247"/>
         <source>Green</source>
-        <translation>緑</translation>
+        <translation>பச்சை</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="252"/>
         <source>Blue</source>
-        <translation>青</translation>
+        <translation>நீலம்</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="257"/>
         <source>#RRGGBB</source>
-        <translation>#RRGGBB</translation>
+        <translation>#RRGBB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="275"/>
         <source>Color usage in symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>சின்னங்களில் வண்ண பயன்பாடு</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="300"/>
         <source>Desktop</source>
-        <translation>デスクトップ</translation>
+        <translation>டெச்க்டாப்</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="301"/>
         <source>Professional printing</source>
-        <translation>プロフェッショナル印刷</translation>
+        <translation>தொழில்முறை அச்சிடுதல்</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="302"/>
         <source>Color usage</source>
-        <translation type="unfinished"></translation>
+        <translation>வண்ண பயன்பாடு</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="321"/>
         <source>Name</source>
-        <translation>名前</translation>
+        <translation>பெயர்</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="375"/>
         <source>- unnamed -</source>
-        <translation>- 名称未設定 -</translation>
+        <translation>- பெயரிடப்படாத -</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="652"/>
         <source>Warning</source>
-        <translation>警告</translation>
+        <translation>எச்சரிக்கை</translation>
     </message>
 </context>
 <context>
@@ -502,7 +459,7 @@
     <message>
         <location filename="../src/gui/widgets/color_dropdown.cpp" line="42"/>
         <source>- none -</source>
-        <translation>- none -</translation>
+        <translation>- எதுவுமில்லை -</translation>
     </message>
 </context>
 <context>
@@ -510,45 +467,17 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="92"/>
         <source>Name</source>
-        <translation>名前</translation>
-    </message>
-    <message>
-        <source>C</source>
-        <translation type="obsolete">C</translation>
-    </message>
-    <message>
-        <source>M</source>
-        <translation type="obsolete">M</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="obsolete">Y</translation>
-    </message>
-    <message>
-        <source>K</source>
-        <translation type="obsolete">K</translation>
+        <translation>பெயர்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="92"/>
         <source>Opacity</source>
-        <translation>不透明度</translation>
-    </message>
-    <message>
-        <source>R</source>
-        <translation type="obsolete">R</translation>
-    </message>
-    <message>
-        <source>G</source>
-        <translation type="obsolete">G</translation>
-    </message>
-    <message>
-        <source>B</source>
-        <translation type="obsolete">B</translation>
+        <translation>ஒளிபுகாநிலை</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="92"/>
         <source>Spot color</source>
-        <translation>スポットカラー</translation>
+        <translation>ச்பாட் நிறம்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="92"/>
@@ -558,101 +487,85 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="92"/>
         <source>RGB</source>
-        <translation>RGB</translation>
+        <translation>ஆர்சிபி</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="92"/>
         <source>K.o.</source>
-        <translation>K.o.</translation>
+        <translation>கே.ஓ.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="98"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="103"/>
         <source>New</source>
-        <translation>新規</translation>
+        <translation>புதிய</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="106"/>
         <source>Delete</source>
-        <translation>削除</translation>
+        <translation>நீக்கு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="99"/>
         <source>Duplicate</source>
-        <translation>複製</translation>
+        <translation>நகல்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="112"/>
         <source>Move Up</source>
-        <translation>上へ移動</translation>
+        <translation>மேலே செல்லுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="114"/>
         <source>Move Down</source>
-        <translation>下へ移動</translation>
+        <translation>கீழே செல்லுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="125"/>
         <source>Help</source>
-        <translation>ヘルプ</translation>
+        <translation>உதவி</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="146"/>
         <source>Double-click a color value to open a dialog.</source>
-        <translation>色をダブルクリックするとダイアログが開きます。</translation>
+        <translation>உரையாடலைத் திறக்க வண்ண மதிப்பை இருமுறை சொடுக்கு செய்யவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="229"/>
         <source>Confirmation</source>
-        <translation>確認</translation>
+        <translation>உறுதிப்படுத்தல்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="229"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation>地図にこの色の記号が含まれています。削除するとそれらのオブジェクトからも色が削除されます。本当に削除しますか?</translation>
+        <translation>வரைபடத்தில் இந்த நிறத்துடன் சின்னங்கள் உள்ளன. அதை நீக்குவது இந்த பொருட்களிலிருந்து நிறத்தை அகற்றும்! நீங்கள் உண்மையில் அதை செய்ய விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="247"/>
         <source>%1 (duplicate)</source>
         <extracomment>Future replacement for COLOR_NAME + &quot; (Duplicate)&quot;, for better localization.</extracomment>
-        <translation>%1 (複製)</translation>
+        <translation>%1 (நகல்)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="248"/>
         <source> (Duplicate)</source>
-        <translation> (複製)</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/widgets/color_list_widget.cpp" line="450"/>
-        <source>%1 (%2°, %3 lpi)</source>
-        <translation>%1 (%2°, %3 lpi)</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">エラー</translation>
-    </message>
-    <message>
-        <source>Please enter a percentage from 0% to 100%!</source>
-        <translation type="vanished">0%から100%の値を入力してください!</translation>
+        <translation> (நகல்)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="406"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="463"/>
         <source>Double click to define the color</source>
-        <translation>ダブルクリックで色を定義します</translation>
+        <translation>வண்ணத்தை வரையறுக்க இரட்டை சொடுக்கு செய்க</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="414"/>
         <source>Click to select the name and click again to edit.</source>
-        <translation>名前をクリックで選択。もう一度クリックで編集。</translation>
+        <translation>பெயரைத் தேர்ந்தெடுக்க சொடுக்கு செய்து திருத்த மீண்டும் சொடுக்கு செய்க.</translation>
     </message>
     <message>
-        <source>Please enter a valid number from 0 to 255, or specify a percentage from 0 to 100!</source>
-        <translation type="obsolete">0から255の有効な数字を入力してください。または0から100のパーセントで指定してください!</translation>
-    </message>
-    <message>
-        <source>Double click to pick a color</source>
-        <translation type="obsolete">ダブルクリックで色を選択します</translation>
+        <location filename="../src/gui/widgets/color_list_widget.cpp" line="450"/>
+        <source>%1 (%2°, %3 lpi)</source>
+        <translation>%1 ( %2 °, %3 எல்பிஐ)</translation>
     </message>
 </context>
 <context>
@@ -660,7 +573,7 @@
     <message>
         <location filename="../src/gui/widgets/color_wheel_widget.cpp" line="392"/>
         <source>Select</source>
-        <translation type="unfinished">選択</translation>
+        <translation>தேர்ந்தெடு</translation>
     </message>
 </context>
 <context>
@@ -668,42 +581,42 @@
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="87"/>
         <source>&amp;Number of parts:</source>
-        <translation>要素の数(&amp;N):</translation>
+        <translation>பகுதிகளின் எண்ணிக்கை:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="95"/>
         <source>- Private line symbol -</source>
-        <translation>- プライベート・ライン記号-</translation>
+        <translation>- தனியார் வரி அடையாளம் -</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="96"/>
         <source>- Private area symbol -</source>
-        <translation>- プライベート・エリア記号-</translation>
+        <translation>- தனியார் பகுதி அடையாளம் -</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="99"/>
         <source>Edit private symbol...</source>
-        <translation>プライベート記号の編集...</translation>
+        <translation>தனிப்பட்ட சின்னத்தைத் திருத்தவும் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="113"/>
         <source>Combination settings</source>
-        <translation>組み合わせの設定</translation>
+        <translation>கூட்டு அமைப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="227"/>
         <source>Change from public to private symbol</source>
-        <translation>従来の記号からプライベート記号を作成</translation>
+        <translation>பொதுவில் இருந்து தனியார் சின்னத்திற்கு மாற்றம்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="228"/>
         <source>Take the old symbol as template for the private symbol?</source>
-        <translation>選択中の記号からプライベート記号を作成しますか?</translation>
+        <translation>பழைய சின்னத்தை தனியார் சின்னத்திற்கான வார்ப்புருவாக எடுத்துக் கொள்ளலாமா?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="92"/>
         <source>Symbol %1:</source>
-        <translation>記号 %1:</translation>
+        <translation>அடையாளம் %1:</translation>
     </message>
 </context>
 <context>
@@ -711,161 +624,153 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="67"/>
         <source>Configure grid</source>
-        <translation>グリッド設定</translation>
+        <translation>கட்டத்தை உள்ளமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="69"/>
         <source>Show grid</source>
-        <translation>グリッドを表示</translation>
+        <translation>கட்டத்தைக் காட்டு</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="70"/>
         <source>Snap to grid</source>
-        <translation>グリッドにスナップ(吸着)</translation>
+        <translation>கட்டத்திற்கு ச்னாப்</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="71"/>
         <source>Choose...</source>
-        <translation>選択...</translation>
+        <translation>தேர்வு ...</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="74"/>
         <source>All lines</source>
-        <translation>全ての線</translation>
+        <translation>அனைத்து வரிகளும்</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="75"/>
         <source>Horizontal lines</source>
-        <translation>横線</translation>
+        <translation>கிடைமட்ட கோடுகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="76"/>
         <source>Vertical lines</source>
-        <translation>縦線</translation>
+        <translation>செங்குத்து கோடுகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="128"/>
         <source>Alignment</source>
-        <translation>アラインメント</translation>
+        <translation>இருப்புவழி</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="78"/>
         <source>Align with magnetic north</source>
-        <translation>磁北線に合わせる</translation>
+        <translation>காந்த வடக்கோடு சீரமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
         <source>Align with grid north</source>
-        <translation>グリッド北に合わせる</translation>
+        <translation>கட்டம் வடக்கோடு சீரமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="80"/>
         <source>Align with true north</source>
-        <translation>真北に合わせる</translation>
+        <translation>உண்மையான வடக்கோடு சீரமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="82"/>
         <source>Additional rotation (counter-clockwise):</source>
-        <translation>追加回転 (反時計回り):</translation>
-    </message>
-    <message>
-        <source>°</source>
-        <translation type="vanished">°</translation>
+        <translation>கூடுதல் சுழற்சி (எதிர்-கடிகார திசையில்):</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="135"/>
         <source>Positioning</source>
-        <translation>位置調整</translation>
+        <translation>பொருத்துதல்</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="88"/>
         <source>meters in terrain</source>
-        <translation>テレイン内での距離 (m)</translation>
+        <translation>நிலப்பரப்பில் மீட்டர்</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="89"/>
         <source>millimeters on map</source>
-        <translation>地図上での長さ (mm)</translation>
+        <translation>வரைபடத்தில் மில்லிமீட்டர்</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="91"/>
         <source>Horizontal spacing:</source>
-        <translation>水平間隔:</translation>
+        <translation>கிடைமட்ட இடைவெளி:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="93"/>
         <source>Vertical spacing:</source>
-        <translation>垂直間隔:</translation>
+        <translation>செங்குத்து இடைவெளி:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="97"/>
         <source>Horizontal offset:</source>
-        <translation>水平オフセット:</translation>
+        <translation>கிடைமட்ட ஆஃப்செட்:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="99"/>
         <source>Vertical offset:</source>
-        <translation>垂直オフセット:</translation>
+        <translation>செங்குத்து ஆஃப்செட்:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="136"/>
         <source>Unit:</source>
         <comment>measurement unit</comment>
-        <translation>測定単位:</translation>
+        <translation>அலகு:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="124"/>
         <source>Line color:</source>
-        <translation>ラインの色:</translation>
+        <translation>வரி நிறம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="125"/>
         <source>Display:</source>
-        <translation>表示:</translation>
+        <translation>காட்சி:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="171"/>
         <source>Choose grid line color</source>
-        <translation>グリッド線の色を選択</translation>
+        <translation>கட்டம் வரி வண்ணத்தைத் தேர்வுசெய்க</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="255"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation>m</translation>
+        <translation>மீ</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="255"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation>mm</translation>
+        <translation>மிமீ</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="261"/>
         <source>Origin at: %1</source>
-        <translation>原点の位置: %1</translation>
+        <translation>தோற்றம்: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="263"/>
         <source>paper coordinates origin</source>
-        <translation>ペーパー座標の原点</translation>
+        <translation>காகித ஒருங்கிணைப்பு தோற்றம்</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="265"/>
         <source>projected coordinates origin</source>
-        <translation>投影座標の原点</translation>
+        <translation>திட்டமிடப்பட்ட ஒருங்கிணைப்புகள் தோற்றம்</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::CutHoleTool</name>
     <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; on a line to split it into two, &lt;b&gt;Drag&lt;/b&gt; along a line to remove this line part, &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary to start drawing a split line</source>
-        <translation type="obsolete">ライン上を&lt;b&gt;クリック&lt;/b&gt;でラインを分割、&lt;b&gt;ドラッグ&lt;/b&gt;でラインの部分を消去、エリアの輪郭上を&lt;b&gt;クリックまたはドラッグ&lt;/b&gt;でエリアの分割ラインを開始します</translation>
-    </message>
-    <message>
         <location filename="../src/tools/cut_hole_tool.cpp" line="272"/>
         <source>&lt;b&gt;Click or drag&lt;/b&gt;: Start drawing the hole. </source>
-        <translation>&lt;b&gt;クリックまたはドラッグ&lt;/b&gt;: 穴の描画を開始します。 </translation>
+        <translation>&lt;b&gt; சொடுக்கு செய்யவும் அல்லது இழுக்கவும் &lt;/b&gt;: துளை வரையத் தொடங்குங்கள். </translation>
     </message>
 </context>
 <context>
@@ -876,36 +781,32 @@
         <location filename="../src/tools/cut_tool.cpp" line="426"/>
         <location filename="../src/tools/cut_tool.cpp" line="433"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="419"/>
         <source>The split line must end on the area boundary!</source>
-        <translation>分割ラインはエリアの輪郭上で終わらせてください!</translation>
+        <translation>பிளவு வரி பகுதி எல்லையில் முடிவடைய வேண்டும்!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="426"/>
         <source>Start and end of the split line are at different parts of the object!</source>
-        <translation>分割ラインの始点と終点がオブジェクトの異なる部分にあります!</translation>
+        <translation>பிளவு கோட்டின் தொடக்க மற்றும் முடிவு பொருளின் வெவ்வேறு பகுதிகளில் உள்ளது!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="433"/>
         <source>Start and end of the split line are at the same position!</source>
-        <translation>分割ラインの始点と終点が同じ場所にあります!</translation>
+        <translation>பிளவு கோட்டின் தொடக்கமும் முடிவும் ஒரே நிலையில் உள்ளன!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="108"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation>ライン上を&lt;b&gt;クリック&lt;/b&gt;: ラインを分割。ライン上を&lt;b&gt;ドラッグ&lt;/b&gt;: ラインの一部を消去。エリアの輪郭を&lt;b&gt;クリックまたはドラッグ&lt;/b&gt;: エリアの分割を開始。 </translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; on a line to split it into two, &lt;b&gt;Drag&lt;/b&gt; along a line to remove this line part, &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary to start drawing a split line</source>
-        <translation type="obsolete">ライン上を&lt;b&gt;クリック&lt;/b&gt;でラインを分割、&lt;b&gt;ドラッグ&lt;/b&gt;でラインの部分を消去、エリアの輪郭上を&lt;b&gt;クリックまたはドラッグ&lt;/b&gt;でエリアの分割ラインを開始します</translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt; ஒரு வரியில்: அதை இரண்டாகப் பிரிக்கவும். &lt;b&gt; இழுத்து &lt;/b&gt; ஒரு வரியுடன்: இந்த வரி பகுதியை அகற்று. &lt;b&gt; சொடுக்கு அல்லது இழுக்கவும் &lt;/b&gt; ஒரு பகுதி எல்லையில்: பிளவு வரியைத் தொடங்கவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="373"/>
         <source>Splitting holes of area objects is not supported yet!</source>
-        <translation>エリアオブジェクトの穴の分割はまだサポートされていません!</translation>
+        <translation>பகுதி பொருள்களின் துளைகளைப் பிரிப்பது இன்னும் ஆதரிக்கப்படவில்லை!</translation>
     </message>
 </context>
 <context>
@@ -913,30 +814,26 @@
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="148"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the whole map. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 地図全体をクリップします。 </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: முழு வரைபடத்தையும் கிளிப் செய்யுங்கள். </translation>
     </message>
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="149"/>
         <location filename="../src/tools/cutout_tool.cpp" line="153"/>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation>&lt;b&gt;%1+クリックまたはドラッグ&lt;/b&gt;: クリップするオブジェクトを選択します。 </translation>
+        <translation>&lt;b&gt;%1+கிளிக் செய்யவும் அல்லது இழுக்கவும் &lt;/b&gt;: கிளிப் செய்ய வேண்டிய பொருள்களைத் தேர்ந்தெடுக்கவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="154"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the selected objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 選択中のオブジェクトをクリップします。 </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: தேர்ந்தெடுக்கப்பட்ட பொருள்களை கிளிப் செய்யுங்கள். </translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::DetermineFontSizeDialog</name>
     <message>
-        <source>Determine font size</source>
-        <translation type="vanished">フォントサイズの決定</translation>
-    </message>
-    <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="116"/>
         <source>Letter:</source>
-        <translation>文字:</translation>
+        <translation>கடிதம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="118"/>
@@ -945,17 +842,9 @@
         <translation>A</translation>
     </message>
     <message>
-        <source>This dialog allows to choose a font size which results in a given exact height for a specific letter.</source>
-        <translation type="vanished">このダイアログでは、特定の文字の高さを指定してフォントサイズを決めることができます。</translation>
-    </message>
-    <message>
-        <source>mm</source>
-        <translation type="vanished">mm</translation>
-    </message>
-    <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="124"/>
         <source>Height:</source>
-        <translation>高さ:</translation>
+        <translation>உயரம்:</translation>
     </message>
 </context>
 <context>
@@ -963,79 +852,66 @@
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="128"/>
         <source>Distribute points evenly along path</source>
-        <translation>パスに沿って均等にポイントを配布する</translation>
+        <translation>புள்ளிகளை பாதையில் சமமாக விநியோகிக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="134"/>
         <source>Number of points per path:</source>
-        <translation>パスあたりのポイント数:</translation>
+        <translation>பாதைக்கு புள்ளிகளின் எண்ணிக்கை:</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="136"/>
         <source>Also place objects at line end points</source>
-        <translation>線の終りのポイントにもオブジェクトを配置する</translation>
+        <translation>வரி இறுதி புள்ளிகளில் பொருட்களையும் வைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="142"/>
         <source>Rotation settings</source>
-        <translation>回転設定</translation>
+        <translation>சுழற்சி அமைப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="145"/>
         <source>Align points with direction of line</source>
-        <translation>線の方向でポイントを配置する</translation>
-    </message>
-    <message>
-        <source>°</source>
-        <comment>degrees</comment>
-        <translation type="vanished">°</translation>
+        <translation>வரியின் திசையுடன் புள்ளிகளை சீரமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="153"/>
         <source>Additional rotation angle (counter-clockwise):</source>
-        <translation>追加の回転角度 (反時計回りに):</translation>
+        <translation>கூடுதல் சுழற்சி கோணம் (எதிர்-கடிகார திசையில்):</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::DrawCircleTool</name>
     <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to start a circle or ellipse, &lt;b&gt;Drag&lt;/b&gt; to draw a circle</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;で円または楕円の描画開始、&lt;b&gt;ドラッグ&lt;/b&gt;で円を描画します</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to draw a circle, &lt;b&gt;Drag&lt;/b&gt; to draw an ellipse, &lt;b&gt;Esc&lt;/b&gt; to abort</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;で円を描画、&lt;b&gt;ドラッグ&lt;/b&gt;で楕円を描画、&lt;b&gt;Escキー&lt;/b&gt;で中止します</translation>
-    </message>
-    <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="70"/>
         <source>From center</source>
         <comment>Draw circle starting from center</comment>
-        <translation>中心から</translation>
+        <translation>மையத்திலிருந்து</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="313"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: 円または楕円の描画を開始します。 </translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt;: ஒரு வட்டம் அல்லது நீள்வட்டத்தைத் தொடங்குங்கள். </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="314"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a circle. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 円を描画します。 </translation>
+        <translation>&lt;b&gt; இழுத்து &lt;/b&gt;: ஒரு வட்டத்தை வரையவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="316"/>
         <source>Hold %1 to start drawing from the center.</source>
-        <translation>%1 を押したままにすると、中心から描画を開始します。</translation>
+        <translation>மையத்திலிருந்து வரையத் தொடங்க %1 ஐ வைத்திருங்கள்.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="320"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: 円の描画を終了します。 </translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt;: வட்டத்தை முடிக்கவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="321"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 楕円を描画します。 </translation>
+        <translation>&lt;b&gt; இழுத்து &lt;/b&gt;: ஒரு நீள்வட்டத்தை வரையவும். </translation>
     </message>
 </context>
 <context>
@@ -1043,7 +919,7 @@
     <message>
         <location filename="../src/tools/draw_freehand_tool.cpp" line="289"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: パスを描画します。 </translation>
+        <translation>&lt;b&gt; இழுத்து &lt;/b&gt;: ஒரு பாதையை வரையவும். </translation>
     </message>
 </context>
 <context>
@@ -1052,122 +928,110 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1155"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="730"/>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation>&lt;b&gt;ダッシュ点を入力します。&lt;/b&gt; </translation>
+        <translation>&lt;b&gt; கோடு புள்ளிகள். &lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1163"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation>&lt;b&gt;%1+クリック&lt;/b&gt;: 既存のオブジェクトにスナップ(吸着)またはアペンドします。 </translation>
+        <translation>&lt;b&gt;%1+கிளிக் &lt;/b&gt;: ஏற்கனவே இருக்கும் பொருள்களை ஒடுக்கவும் அல்லது சேர்க்கவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1171"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="736"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation>&lt;b&gt;%1+クリック&lt;/b&gt;: 既存のオブジェクトから方向をピック。 </translation>
+        <translation>&lt;b&gt;%1+கிளிக் &lt;/b&gt;: இருக்கும் பொருள்களிலிருந்து திசையைத் தேர்ந்தெடுக்கவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1172"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1199"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Segment azimuth and length. </source>
-        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: セグメントの方位角と長さ。 </translation>
+        <translation>&lt;b&gt;%1+%2 &lt;/b&gt;: பிரிவு அசிமுத் மற்றும் நீளம். </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1188"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="741"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="765"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1+クリック&lt;/b&gt;: 既存のオブジェクトにスナップ(吸着)します。 </translation>
+        <translation>&lt;b&gt;%1+கிளிக் &lt;/b&gt;: இருக்கும் பொருள்களுக்கு ஒடுக்கவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1198"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="755"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 一定角度ずつ回転。 </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: நிலையான கோணங்கள். </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1208"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="771"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 直前のポイントを元に戻す。 </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: கடைசி புள்ளியை செயல்தவிர்க்கவும். </translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::DrawPathTool</name>
     <message>
-        <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation type="obsolete">&lt;b&gt;ダッシュ点を入力します。&lt;/b&gt; </translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to start a polygonal segment, &lt;b&gt;Drag&lt;/b&gt; to start a curve</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;で折れ線、&lt;b&gt;ドラッグ&lt;/b&gt;で曲線を開始します</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to draw a polygonal segment, &lt;b&gt;Drag&lt;/b&gt; to draw a curve, &lt;b&gt;Right or double click&lt;/b&gt; to finish the path, &lt;b&gt;Return&lt;/b&gt; to close the path, &lt;b&gt;Backspace&lt;/b&gt; to undo, &lt;b&gt;Esc&lt;/b&gt; to abort. Try &lt;b&gt;Space&lt;/b&gt;</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;で折れ線、&lt;b&gt;ドラッグ&lt;/b&gt;で曲線を描画、&lt;b&gt;右クリックまたはダブルクリック&lt;/b&gt;でpath を終了、&lt;b&gt;Return キー&lt;/b&gt;でpath を閉じる、&lt;b&gt;Backspace キー&lt;/b&gt;で元に戻す。&lt;b&gt;Esc キー&lt;/b&gt;で中止します。&lt;b&gt;Space キー&lt;/b&gt;でさらに他の機能</translation>
-    </message>
-    <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="103"/>
         <source>Finish</source>
-        <translation>終了</translation>
+        <translation>முடிக்க</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="104"/>
         <source>Close</source>
-        <translation>閉じる</translation>
+        <translation>மூடு</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="105"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>スナップ(吸着)</translation>
+        <translation>ச்னாப்</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="106"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation>角度</translation>
+        <translation>கோணம்</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="107"/>
         <source>Info</source>
         <comment>Show segment azimuth and length</comment>
-        <translation>情報</translation>
+        <translation>தகவல்</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="110"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation>ダッシュ</translation>
+        <translation>கோடு</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="113"/>
         <source>Undo</source>
-        <translation>元に戻す</translation>
+        <translation>செயல்தவிர்</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="114"/>
         <source>Abort</source>
-        <translation>中止</translation>
+        <translation>கருக்கலைப்பு</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1150"/>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
-        <translation>&lt;b&gt;長さ:&lt;/b&gt; %1 m </translation>
+        <translation>&lt;b&gt; நீளம்: &lt;/b&gt; %1 மீ </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1178"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: 直線を開始。&lt;b&gt;ドラッグ&lt;/b&gt;: 曲線を開始。 </translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt;: ஒரு நேர் கோட்டைத் தொடங்கவும். &lt;b&gt; இழுத்து &lt;/b&gt;: ஒரு வளைவைத் தொடங்கவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1189"/>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
-        <translation>&lt;b&gt;%1+ドラッグ&lt;/b&gt;: 既存のオブジェクトをフォローします。 </translation>
+        <translation>&lt;b&gt;%1+இழுத்தல் &lt;/b&gt;: இருக்கும் பொருள்களைப் பின்பற்றுங்கள். </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1205"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: 直線を描く。 &lt;b&gt;ドラッグ&lt;/b&gt;: 曲線を描く。 &lt;b&gt;右クリック/ダブルクリック&lt;/b&gt;: パスを終了。 &lt;b&gt;%1&lt;/b&gt;: パスを閉じる。 </translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt;: ஒரு நேர் கோட்டை வரையவும். &lt;b&gt; இழுத்து &lt;/b&gt;: ஒரு வளைவை வரையவும். &lt;b&gt; வலது அல்லது இரட்டை சொடுக்கு &lt;/b&gt;: பாதையை முடிக்கவும். &lt;b&gt;%1 &lt;/b&gt;: பாதையை மூடு. </translation>
     </message>
 </context>
 <context>
@@ -1175,316 +1039,240 @@
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="81"/>
         <source>Touch the map to finish averaging</source>
-        <translation>地図をタッチすると平均化を終了します</translation>
+        <translation>சராசரியை முடிக்க வரைபடத்தைத் தொடவும்</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="193"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: オブジェクトの設定を終了します。 </translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt;: பொருளை அமைப்பதை முடிக்கவும். </translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::DrawPointTool</name>
     <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set a point object, &lt;b&gt;Drag&lt;/b&gt; to set its rotation if the symbol is rotatable</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;でポイントオブジェクトを配置、&lt;b&gt;ドラッグ&lt;/b&gt;で回転可能なポイントオブジェクトを回転して配置します</translation>
-    </message>
-    <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="83"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>スナップ(吸着)</translation>
+        <translation>ச்னாப்</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="84"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation>角度</translation>
+        <translation>கோணம்</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="85"/>
         <source>Reset</source>
         <comment>Reset rotation</comment>
-        <translation>リセット</translation>
+        <translation>மீட்டமை</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="334"/>
         <location filename="../src/tools/draw_point_tool.cpp" line="346"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation>&lt;b&gt;角度:&lt;/b&gt; %1° </translation>
+        <translation>&lt;b&gt; கோணம்: &lt;/b&gt; %1 ° </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="335"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 一定角度ずつ回転。 </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: நிலையான கோணங்கள். </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="340"/>
         <location filename="../src/tools/draw_point_tool.cpp" line="354"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: ポイントオブジェクトを作成します。</translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt;: ஒரு புள்ளி பொருளை உருவாக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="341"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: オブジェクトを作成して、方向を設定します。</translation>
+        <translation>&lt;b&gt; இழுத்து &lt;/b&gt;: ஒரு பொருளை உருவாக்கி அதன் நோக்குநிலையை அமைக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="347"/>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
-        <translation>&lt;b&gt;%1, 0&lt;/b&gt;: 回転をリセットします。</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object. &lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation (if rotatable). </source>
-        <translation type="vanished">&lt;b&gt;クリック&lt;/b&gt;: ポイントオブジェクトを作成します。&lt;b&gt;ドラッグ&lt;/b&gt;: ポイントオブジェクトを作成し、方向をセットします(回転可能なオブジェクトのみ)。 </translation>
+        <translation>&lt;b&gt;%1, 0 &lt;/b&gt;: சுழற்சியை மீட்டமை.</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::DrawRectangleTool</name>
     <message>
-        <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation type="obsolete">&lt;b&gt;ダッシュ点を入力します。&lt;/b&gt; </translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to start drawing a rectangle</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;で矩形の描画を開始します</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set a corner point, &lt;b&gt;Right or double click&lt;/b&gt; to finish the rectangle, &lt;b&gt;Backspace&lt;/b&gt; to undo, &lt;b&gt;Esc&lt;/b&gt; to abort</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;でコーナー点を配置、&lt;b&gt;右クリックまたはダブルクリック&lt;/b&gt;で矩形の描画を終了、&lt;b&gt;Backspace キー&lt;/b&gt;で元に戻す、&lt;b&gt;Esc キー&lt;/b&gt;で中止します</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Space&lt;/b&gt; to toggle dash points</source>
-        <translation type="obsolete">&lt;b&gt;Space キー&lt;/b&gt;で、コーナー点とダッシュ点を切り替えます</translation>
-    </message>
-    <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="90"/>
         <source>Finish</source>
-        <translation>終了</translation>
+        <translation>முடிக்க</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="91"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>スナップ(吸着)</translation>
+        <translation>ச்னாப்</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="92"/>
         <source>Line snap</source>
         <comment>Snap to previous lines</comment>
-        <translation>線のスナップ(吸着)</translation>
+        <translation>வரி ச்னாப்</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="93"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation>ダッシュ</translation>
+        <translation>கோடு</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="96"/>
         <source>Undo</source>
-        <translation>元に戻す</translation>
+        <translation>செயல்தவிர்</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="97"/>
         <source>Abort</source>
-        <translation>中止</translation>
+        <translation>கருக்கலைப்பு</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="746"/>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation>&lt;b&gt;クリックまたはドラッグ&lt;/b&gt;: 矩形の描画を開始します。 </translation>
+        <translation>&lt;b&gt; சொடுக்கு செய்யவும் அல்லது இழுக்கவும் &lt;/b&gt;: ஒரு செவ்வகத்தை வரையத் தொடங்குங்கள். </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="759"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to previous lines. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 既存のラインにスナップ(吸着)します。 </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: முந்தைய வரிகளுக்கு ஒடுங்கள். </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="770"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: コーナー点を配置します。&lt;b&gt;右クリックまたはダブルクリック&lt;/b&gt;: 矩形の描画を終了します。 </translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt;: ஒரு மூலையில் புள்ளியை அமைக்கவும். &lt;b&gt; வலது அல்லது இரட்டை சொடுக்கு &lt;/b&gt;: செவ்வகத்தை முடிக்கவும். </translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::DrawTextTool</name>
     <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to write text with a single anchor, &lt;b&gt;Drag&lt;/b&gt; to create a text box</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;でアンカーポイントを基準にテキストを入力、&lt;b&gt;ドラッグ&lt;/b&gt;でテキストボックスを作成します</translation>
-    </message>
-    <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="113"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation>既存のオブジェクトにスナップ(吸着)</translation>
+        <translation>ச்னாப்</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="476"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 編集を終了します。 </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: திருத்துதல் முடிக்கவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="477"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: 編集をキャンセルします。 </translation>
+        <translation>&lt;b&gt;%1+%2 &lt;/b&gt;: திருத்துதல் ரத்துசெய். </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="482"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: シングルアンカーを基準にテキストオブジェクトを作成します。&lt;b&gt;ドラッグ&lt;/b&gt;: テキストボックスを作成します。 </translation>
-    </message>
-    <message>
-        <source>A</source>
-        <translation type="vanished">A</translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt;: ஒற்றை நங்கூரத்துடன் உரை பொருளை உருவாக்கவும். &lt;b&gt; இழுத்து &lt;/b&gt;: உரை பெட்டியை உருவாக்கவும். </translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::EditLineTool</name>
     <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to select an object, &lt;b&gt;Drag&lt;/b&gt; for box selection, &lt;b&gt;Shift&lt;/b&gt; to toggle selection</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;でオブジェクトを選択、&lt;b&gt;ドラッグ&lt;/b&gt;で矩形選択、&lt;b&gt;Shiftキー&lt;/b&gt;で選択を切り替え</translation>
-    </message>
-    <message>
-        <source>, &lt;b&gt;Del&lt;/b&gt; to delete</source>
-        <translation type="obsolete">、 &lt;b&gt;Delキー&lt;/b&gt;で削除</translation>
-    </message>
-    <message>
-        <source>; Try &lt;u&gt;Ctrl&lt;/u&gt;</source>
-        <translation type="obsolete">、&lt;u&gt;Ctrl キー&lt;/u&gt;でさらに他の機能</translation>
-    </message>
-    <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="406"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>スナップ(吸着)</translation>
+        <translation>ச்னாப்</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="407"/>
         <source>Toggle curve</source>
         <comment>Toggle between curved and flat segment</comment>
-        <translation>曲線を切り替え</translation>
+        <translation>வளைவை மாற்றவும்</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="524"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Free movement. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 自由に移動します。 </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: இலவச இயக்கம். </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="540"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
-        <translation>セグメント上を&lt;b&gt;%1+クリック&lt;/b&gt; で、直線と曲線を切り替えます。 </translation>
+        <translation>&lt;b&gt;%1+கிளிக் &lt;/b&gt; பிரிவில்: நேராக மற்றும் வளைந்த இடையே மாற்றவும். </translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::EditPointTool</name>
     <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to select an object, &lt;b&gt;Drag&lt;/b&gt; for box selection, &lt;b&gt;Shift&lt;/b&gt; to toggle selection</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;でオブジェクトを選択、&lt;b&gt;ドラッグ&lt;/b&gt;で矩形選択、&lt;b&gt;Shiftキー&lt;/b&gt;で選択を切り替え</translation>
-    </message>
-    <message>
-        <source>, &lt;b&gt;Del&lt;/b&gt; to delete</source>
-        <translation type="obsolete">、 &lt;b&gt;Delキー&lt;/b&gt;で削除</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Ctrl+Click&lt;/b&gt; on point to delete it, on path to add a new point, with &lt;b&gt;Space&lt;/b&gt; to make it a dash point</source>
-        <translation type="obsolete">&lt;b&gt;Ctrl キー&lt;/b&gt;を押しながら、ポイントを&lt;b&gt;クリック&lt;/b&gt;で削除、path を&lt;b&gt;クリック&lt;/b&gt;で新しいポイントの追加、さらに&lt;b&gt;Space キー&lt;/b&gt;を押しながらpath を&lt;b&gt;クリック&lt;/b&gt;でダッシュ点を追加します</translation>
-    </message>
-    <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="534"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>スナップ(吸着)</translation>
+        <translation>ச்னாப்</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="535"/>
         <source>Point / Angle</source>
         <comment>Modify points or use constrained angles</comment>
-        <translation>ポイント / 角度</translation>
+        <translation>புள்ளி / கோணம்</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="536"/>
         <source>Toggle dash</source>
         <comment>Toggle dash points</comment>
-        <translation>ダッシュを切り替え</translation>
+        <translation>கோடு மாற்று</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="721"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 編集を終了します。 </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: திருத்துதல் முடிக்கவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="740"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Keep opposite handle positions. </source>
         <extracomment>Actually, this means: &quot;Keep the opposite handle&apos;s position. &quot;</extracomment>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 反対側の方向線(ハンドル)の位置を維持。 </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: எதிர் கைப்பிடி நிலைகளை வைத்திருங்கள். </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="761"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation>&lt;b&gt;%1+クリック&lt;/b&gt; ポイント上: 削除; パス上: ダッシュポイントを追加; &lt;b&gt;%2&lt;/b&gt;と: 通常の点を追加。 </translation>
+        <translation>&lt;b&gt;%1+கிளிக் &lt;/b&gt; புள்ளியில்: அதை நீக்கு; பாதையில்: புதிய கோடு புள்ளியைச் சேர்க்கவும்; &lt;b&gt;%2 &lt;/b&gt; உடன்: ஒரு சாதாரண புள்ளியைச் சேர்க்கவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="764"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation>&lt;b&gt;%1+クリック&lt;/b&gt; ポイント上: 削除; パス上: ポイントを追加; &lt;b&gt;%2&lt;/b&gt;と: ダッシュ点を追加。 </translation>
+        <translation>&lt;b&gt;%1+கிளிக் &lt;/b&gt; புள்ளியில்: அதை நீக்கு; பாதையில்: ஒரு புதிய புள்ளியைச் சேர்க்கவும்; &lt;b&gt;%2 &lt;/b&gt; உடன்: ஒரு கோடு புள்ளியைச் சேர்க்கவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="768"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation>ポイント上で&lt;b&gt;%1+クリック&lt;/b&gt;: ダッシュ点と通常の点を切り換え。 </translation>
+        <translation>&lt;b&gt;%1+கிளிக் &lt;/b&gt; கோடு மற்றும் சாதாரண புள்ளிகளுக்கு இடையில் மாற புள்ளியில். </translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::EditTool</name>
     <message>
-        <source>&lt;b&gt;Coordinate offset [mm]:&lt;/b&gt; %1, %2  &lt;b&gt;Distance [m]:&lt;/b&gt; %3</source>
-        <translation type="obsolete">&lt;b&gt;座標のオフセット [mm]:&lt;/b&gt; %1, %2  &lt;b&gt;距離 [m]:&lt;/b&gt; %3</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to select an object, &lt;b&gt;Drag&lt;/b&gt; for box selection, &lt;b&gt;Shift&lt;/b&gt; to toggle selection</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;でオブジェクトを選択、&lt;b&gt;ドラッグ&lt;/b&gt;で矩形選択、&lt;b&gt;Shiftキー&lt;/b&gt;で選択を切り替え</translation>
-    </message>
-    <message>
-        <source>, &lt;b&gt;Del&lt;/b&gt; to delete</source>
-        <translation type="obsolete">、 &lt;b&gt;Delキー&lt;/b&gt;で削除</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Ctrl+Click&lt;/b&gt; on point to delete it, on path to add a new point, with &lt;b&gt;Space&lt;/b&gt; to make it a dash point</source>
-        <translation type="obsolete">&lt;b&gt;Ctrl キー&lt;/b&gt;を押しながら、ポイントを&lt;b&gt;クリック&lt;/b&gt;で削除、path を&lt;b&gt;クリック&lt;/b&gt;で新しいポイントの追加、さらに&lt;b&gt;Space キー&lt;/b&gt;を押しながらpath を&lt;b&gt;クリック&lt;/b&gt;でダッシュ点を追加します</translation>
-    </message>
-    <message>
-        <source>; Try &lt;u&gt;Ctrl&lt;/u&gt;</source>
-        <translation type="obsolete">、&lt;u&gt;Ctrl キー&lt;/u&gt;でさらに他の機能</translation>
-    </message>
-    <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="726"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="517"/>
         <source>&lt;b&gt;Coordinate offset:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distance:&lt;/b&gt; %3 m </source>
-        <translation>&lt;b&gt;座標のオフセット:&lt;/b&gt; %1, %2 mm  &lt;b&gt;距離:&lt;/b&gt; %3 m </translation>
+        <translation>&lt;b&gt; ஒருங்கிணைப்பு ஆஃப்செட்: &lt;/b&gt; %1, %2 மிமீ &lt;b&gt; தூரம்: &lt;/b&gt; %3 மீ </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="733"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 一定の角度上で移動。 </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: நிலையான கோணங்கள். </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="484"/>
         <location filename="../src/tools/edit_point_tool.cpp" line="744"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="526"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 既存のオブジェクトにスナップ(吸着)します。 </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: இருக்கும் பொருள்களுக்கு ஒடுக்கவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="750"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="532"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: オブジェクトを選択。 &lt;b&gt;ドラッグ&lt;/b&gt;: 複数のオブジェクトを選択。 &lt;b&gt;%1+クリック&lt;/b&gt;: 選択を切り替え。 </translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt;: ஒரு பொருளைத் தேர்ந்தெடுக்கவும். &lt;b&gt; இழுத்தல் &lt;/b&gt;: பல பொருள்களைத் தேர்ந்தெடுக்கவும். &lt;b&gt;%1+கிளிக் &lt;/b&gt;: தேர்வை மாற்றவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="753"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="535"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 選択中のオブジェクトを削除します。 </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: தேர்ந்தெடுக்கப்பட்ட பொருள்களை நீக்கு. </translation>
     </message>
 </context>
 <context>
@@ -1492,27 +1280,23 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="56"/>
         <source>High quality map display (antialiasing)</source>
-        <translation>高品質な地図表示 (アンチエイリアス処理)</translation>
+        <translation>உயர்தர வரைபட காட்சி (ஆன்டிலியாசிங்)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="57"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="61"/>
         <source>Antialiasing makes the map look much better, but also slows down the map display</source>
-        <translation>アンチエイリアス処理によって地図の外観が滑らかになりますが、表示速度が遅くなります</translation>
+        <translation>ஆன்டிலிசிங் வரைபடத்தை மிகவும் சிறப்பாகக் காட்டுகிறது, ஆனால் வரைபடக் காட்சியை மெதுவாக்குகிறது</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="60"/>
         <source>High quality text display in map (antialiasing), slow</source>
-        <translation>高品質なテキスト表示 (アンチエイリアス処理)、(表示速度が遅くなります)</translation>
+        <translation>வரைபடத்தில் உயர் தரமான உரை காட்சி (ஆன்டிலியாசிங்), மெதுவாக</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="65"/>
         <source>Click tolerance:</source>
-        <translation>クリックの許容誤差:</translation>
-    </message>
-    <message>
-        <source>px</source>
-        <translation type="vanished">px</translation>
+        <translation>சகிப்புத்தன்மையைக் சொடுக்கு செய்க:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="49"/>
@@ -1522,106 +1306,101 @@
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="109"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation>mm</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
-        <source>Action button size:</source>
-        <translation>アクションボタンのサイズ:</translation>
+        <translation>மிமீ</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="68"/>
         <source>Snap distance (%1):</source>
-        <translation>スナップ（吸着）が有効になる既存オブジェクトからの距離 (%1):</translation>
+        <translation>ச்னாப் தூரம் (%1):</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="73"/>
         <source>Stepping of fixed angle mode (%1):</source>
-        <translation>一定角度ずつ回転時のステップ角(%1):</translation>
-    </message>
-    <message>
-        <source>°</source>
-        <comment>Degree sign for angles</comment>
-        <translation type="vanished">°</translation>
+        <translation>நிலையான கோண பயன்முறையின் படி (%1):</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="54"/>
         <source>Symbol icon size:</source>
-        <translation>記号アイコンサイズ:</translation>
+        <translation>அடையாளம் படவுரு அளவு:</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
+        <source>Action button size:</source>
+        <translation>செயல் பொத்தான் அளவு:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="75"/>
         <source>When selecting an object, automatically select its symbol, too</source>
-        <translation>オブジェクトを選択する際、同時に記号も選択する</translation>
+        <translation>ஒரு பொருளைத் தேர்ந்தெடுக்கும்போது, தானாகவே அதன் சின்னத்தையும் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="78"/>
         <source>Zoom away from cursor when zooming out</source>
-        <translation>カーソルの位置でズームアウトする</translation>
+        <translation>பெரிதாக்கும்போது கர்சரிலிருந்து பெரிதாக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="81"/>
         <source>Drawing tools: set last point on finishing with right click</source>
-        <translation>描画ツール: 右クリックによる終了で最終点をセットする</translation>
+        <translation>வரைதல் கருவிகள்: வலது சொடுக்கு மூலம் முடிக்க கடைசி புள்ளியை அமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="84"/>
         <source>Templates: keep settings of closed templates</source>
-        <translation>テンプレート: 閉じたテンプレートの設定を維持する</translation>
+        <translation>வார்ப்புருக்கள்: மூடிய வார்ப்புருக்களின் அமைப்புகளை வைத்திருங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
         <source>User input: Ignore display touch</source>
-        <translation type="unfinished"></translation>
+        <translation>பயனர் உள்ளீடு: காட்சி தொடுதலை புறக்கணிக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="92"/>
         <source>Edit tool:</source>
-        <translation>編集ツール:</translation>
+        <translation>கருவி திருத்து:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="95"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="101"/>
         <source>Retain old shape</source>
-        <translation>以前の形状を保つ</translation>
+        <translation>பழைய வடிவத்தைத் தக்க வைத்துக் கொள்ளுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="96"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="102"/>
         <source>Reset outer curve handles</source>
-        <translation>方向線(ハンドル)をリセット</translation>
+        <translation>வெளிப்புற வளைவு கைப்பிடிகளை மீட்டமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="97"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="103"/>
         <source>Keep outer curve handles</source>
-        <translation>方向線(ハンドル)を維持</translation>
+        <translation>வெளிப்புற வளைவு கைப்பிடிகளை வைத்திருங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="98"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="104"/>
         <source>Action on deleting a curve point with %1:</source>
-        <translation>%1 でカーブ点を削除したときのふるまい:</translation>
+        <translation>%1 உடன் வளைவு புள்ளியை நீக்குவதற்கான நடவடிக்கை:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="107"/>
         <source>Rectangle tool:</source>
-        <translation>矩形ツール:</translation>
+        <translation>செவ்வக கருவி:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="110"/>
         <source>Radius of helper cross:</source>
-        <translation>十字の補助線の長さ:</translation>
+        <translation>உதவி சிலுவையின் ஆரம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="112"/>
         <source>Preview the width of lines with helper cross</source>
-        <translation>線の太さを十字の補助線でプレビューする</translation>
+        <translation>உதவி சிலுவையுடன் வரிகளின் அகலத்தை முன்னோட்டமிடுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="128"/>
         <source>Editor</source>
-        <translation>エディター</translation>
+        <translation>திருத்தி</translation>
     </message>
 </context>
 <context>
@@ -1629,15 +1408,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="653"/>
         <source>Could not write file: %1</source>
-        <translation>ファイルを書き込みできません: %1</translation>
-    </message>
-    <message>
-        <source>Could not create new file: %1</source>
-        <translation type="vanished">新規ファイルの作成に失敗しました: %1</translation>
-    </message>
-    <message>
-        <source>Format (%1) does not support export</source>
-        <translation type="vanished">形式 (%1) はエクスポートをサポートしていません</translation>
+        <translation>கோப்பை எழுத முடியவில்லை: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="338"/>
@@ -1645,9 +1416,9 @@
         <source>Cannot save file
 %1:
 %2</source>
-        <translation>ファイルを保存できません
-%1:
-%2</translation>
+        <translation>கோப்பைச் சேமிக்க முடியாது
+ %1:
+ %2</translation>
     </message>
 </context>
 <context>
@@ -1655,39 +1426,39 @@
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="156"/>
         <source>Warning</source>
-        <translation>警告</translation>
+        <translation>எச்சரிக்கை</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="157"/>
         <source>The map area is large. Use of the fill tool may be very slow. Do you want to use it anyway?</source>
-        <translation>地図エリアが大きいです。塗りつぶしツールの使用は非常に遅くなることがあります。それでも使用しますか?</translation>
+        <translation>வரைபட பகுதி பெரியது. நிரப்பு கருவியின் பயன்பாடு மிகவும் மெதுவாக இருக்கலாம். எப்படியும் இதைப் பயன்படுத்த விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="142"/>
         <location filename="../src/tools/fill_tool.cpp" line="176"/>
         <location filename="../src/tools/fill_tool.cpp" line="231"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="143"/>
         <source>The clicked area is not bounded by lines or areas, cannot fill this area.</source>
-        <translation>クリックしたエリアは、線またはエリアで閉じられていません、このエリアを塗りつぶしできません。</translation>
+        <translation>சொடுக்கு செய்யப்பட்ட பகுதி கோடுகள் அல்லது பகுதிகளால் கட்டுப்படுத்தப்படவில்லை, இந்த பகுதியை நிரப்ப முடியாது.</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="177"/>
         <source>The clicked position is not free, cannot use the fill tool there.</source>
-        <translation>クリックした位置は空いていません。塗りつぶしツールを使用できません。</translation>
+        <translation>சொடுக்கு செய்யப்பட்ட நிலை இலவசம் அல்ல, அங்கு நிரப்பு கருவியைப் பயன்படுத்த முடியாது.</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="232"/>
         <source>Failed to create the fill object.</source>
-        <translation>塗りつぶしオブジェクトを作成できませんでした。</translation>
+        <translation>நிரப்பு பொருளை உருவாக்குவதில் தோல்வி.</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="243"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: 選択中の記号でエリアを塗りつぶします。塗りつぶすエリアは、線またはエリアで閉じている必要があります、他の記号は考慮しません。 </translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt;: செயலில் உள்ள சின்னத்துடன் பகுதியை நிரப்பவும். நிரப்பப்பட வேண்டிய பகுதி கோடுகள் அல்லது பகுதிகளால் கட்டுப்படுத்தப்பட வேண்டும், பிற சின்னங்கள் கணக்கில் எடுத்துக்கொள்ளப்படவில்லை. </translation>
     </message>
 </context>
 <context>
@@ -1695,17 +1466,17 @@
     <message>
         <location filename="../src/sensors/gps_display.cpp" line="172"/>
         <source>GPS is disabled in the device settings. Open settings now?</source>
-        <translation>デバイスの設定で GPS は無効です。今すぐ設定を開きますか?</translation>
+        <translation>சாதன அமைப்புகளில் சி.பி.எச் முடக்கப்பட்டுள்ளது. இப்போது அமைப்புகளைத் திறக்கவா?</translation>
     </message>
     <message>
         <location filename="../src/sensors/gps_display.cpp" line="173"/>
         <source>Yes</source>
-        <translation>はい</translation>
+        <translation>ஆம்</translation>
     </message>
     <message>
         <location filename="../src/sensors/gps_display.cpp" line="174"/>
         <source>No</source>
-        <translation>いいえ</translation>
+        <translation>இல்லை</translation>
     </message>
 </context>
 <context>
@@ -1714,98 +1485,90 @@
         <location filename="../src/gdal/gdal_image_reader.cpp" line="71"/>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="158"/>
         <source>Failed to read image data: %1</source>
-        <translation type="unfinished">画像データの読み取りに失敗しました：％1</translation>
+        <translation>பட தரவைப் படிக்கத் தவறிவிட்டது: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="127"/>
         <source>Unsupported raster data: %1</source>
-        <translation type="unfinished">サポートされていないラスターデータ：％1</translation>
+        <translation>ஆதரிக்கப்படாத ராச்டர் தரவு: %1</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::GdalSettingsPage</name>
     <message>
-        <location filename="../src/gdal/gdal_settings_page.cpp" line="54"/>
-        <source>Import with GDAL/OGR:</source>
-        <translation>GDAL/OGR でインポート:</translation>
-    </message>
-    <message>
-        <source>DXF</source>
-        <translation type="vanished">DXF</translation>
-    </message>
-    <message>
-        <location filename="../src/gdal/gdal_settings_page.cpp" line="60"/>
-        <source>GPX</source>
-        <translation>GPX</translation>
-    </message>
-    <message>
-        <source>OSM</source>
-        <translation type="vanished">OSM</translation>
-    </message>
-    <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"/>
         <source>Import Options</source>
-        <translation type="unfinished"></translation>
+        <translation>இறக்குமதி விருப்பங்கள்</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="54"/>
+        <source>Import with GDAL/OGR:</source>
+        <translation>GDAL/OGR உடன் இறக்குமதி:</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>Clip layers</source>
-        <translation type="unfinished"></translation>
+        <translation>கிளிப் அடுக்குகள்</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="59"/>
         <source>Use GDAL for GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>GPX க்கு GDAL ஐப் பயன்படுத்தவும்</translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_settings_page.cpp" line="60"/>
+        <source>GPX</source>
+        <translation>சி.பி.எக்ச்</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
         <source>Templates</source>
-        <translation>テンプレート</translation>
+        <translation>வார்ப்புருக்கள்</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="67"/>
         <source>Hatch areas</source>
-        <translation>ハッチ領域</translation>
+        <translation>அட்ச் பகுதிகள்</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Baseline view</source>
-        <translation>ベースライン表示</translation>
+        <translation>அடிப்படை பார்வை</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="75"/>
         <source>Export Options</source>
-        <translation>エクスポートオプション</translation>
+        <translation>ஏற்றுமதி விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="77"/>
         <source>Create a layer for each symbol</source>
-        <translation>シンボルごとにレイヤーを作成する</translation>
+        <translation>ஒவ்வொரு சின்னத்திற்கும் ஒரு அடுக்கை உருவாக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="82"/>
         <source>Configuration</source>
-        <translation>設定</translation>
+        <translation>உள்ளமைவு</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="90"/>
         <source>Parameter</source>
-        <translation>パラメーター</translation>
+        <translation>கூறளவு</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="90"/>
         <source>Value</source>
-        <translation>値</translation>
+        <translation>மதிப்பு</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="107"/>
         <source>GDAL</source>
-        <translation type="unfinished"></translation>
+        <translation>Gdal</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="108"/>
         <source>GDAL/OGR</source>
-        <translation>GDAL/OGR</translation>
+        <translation>Gdal/ogr</translation>
     </message>
 </context>
 <context>
@@ -1813,143 +1576,129 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="77"/>
         <source>Appearance</source>
-        <translation>外観</translation>
+        <translation>தோற்றம்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="82"/>
         <source>Language:</source>
-        <translation>言語:</translation>
+        <translation>மொழி:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="99"/>
         <source>Screen</source>
-        <translation>画面</translation>
+        <translation>திரை</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="104"/>
         <source>Pixels per inch:</source>
-        <translation>インチあたりのピクセル数:</translation>
+        <translation>ஒரு அங்குலத்திற்கு பிக்சல்கள்:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="114"/>
         <source>Program start</source>
-        <translation>起動時の表示</translation>
+        <translation>நிரல் தொடக்க</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="123"/>
         <source>Saving files</source>
-        <translation>保存するファイル</translation>
+        <translation>கோப்புகளைச் சேமிக்கிறது</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="125"/>
         <source>Retain compatibility with Mapper %1</source>
-        <translation>Mapper %1 と互換性を維持する</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="133"/>
-        <source>Save undo/redo history</source>
-        <translation>元に戻す/やり直しの履歴を保存</translation>
+        <translation>மேப்பர் %1 உடன் பொருந்தக்கூடிய தன்மையைத் தக்க வைத்துக் கொள்ளுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="136"/>
         <source>Save information for automatic recovery</source>
-        <translation>自動回復の情報を保存する</translation>
+        <translation>தானியங்கி மீட்புக்கான தகவல்களைச் சேமிக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="140"/>
         <source>Recovery information saving interval:</source>
-        <translation>回復情報の保存間隔:</translation>
+        <translation>மீட்பு செய்தி சேமிப்பு இடைவெளி:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
         <source>min</source>
         <comment>unit minutes</comment>
-        <translation>分</translation>
+        <translation>மணித்துளி</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="143"/>
         <source>File import and export</source>
-        <translation>ファイルのインポートとエクスポート</translation>
+        <translation>கோப்பு இறக்குமதி மற்றும் ஏற்றுமதி</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="168"/>
         <source>8-bit encoding:</source>
-        <translation>8ビットエンコーディング:</translation>
+        <translation>8-பிட் குறியாக்கம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="161"/>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="306"/>
         <source>More...</source>
-        <translation>さらに表示...</translation>
+        <translation>மேலும் ...</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="133"/>
+        <source>Save undo/redo history</source>
+        <translation>செயல்தவிர்/மீண்டும் வரலாற்றைச் சேமிக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="146"/>
         <source>Default</source>
-        <translation>デフォルト</translation>
+        <translation>இயல்புநிலை</translation>
     </message>
     <message>
-        <source>Use the new OCD importer also for version 8 files</source>
-        <translation type="vanished">新しい OCD importer でもバージョン8のファイルを使用する</translation>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="186"/>
+        <source>General</source>
+        <translation>பொது</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="210"/>
         <source>Notice</source>
-        <translation>通知</translation>
+        <translation>அறிவிப்பு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="210"/>
         <source>The program must be restarted for the language change to take effect!</source>
-        <translation>言語の変更を有効にするには、プログラムを再起動する必要があります!</translation>
-    </message>
-    <message>
-        <source>Use translation file...</source>
-        <translation type="vanished">翻訳ファイルを使用...</translation>
+        <translation>மொழி மாற்றம் நடைமுறைக்கு வர நிரல் மறுதொடக்கம் செய்யப்பட வேண்டும்!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="348"/>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="354"/>
         <source>Open translation</source>
-        <translation>翻訳ファイルを開く</translation>
+        <translation>திறந்த மொழிபெயர்ப்பு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="348"/>
         <source>Translation files (*.qm)</source>
-        <translation>翻訳ファイル(*.qm)</translation>
+        <translation>மொழிபெயர்ப்பு கோப்புகள் (*.qm)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="355"/>
         <source>The selected file is not a valid translation.</source>
-        <translation>選択されたファイルは有効な翻訳ファイルではありません。</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட கோப்பு சரியான மொழிபெயர்ப்பு அல்ல.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="385"/>
         <source>%1 x %2</source>
-        <translation>%1 x %2</translation>
+        <translation>%1 ஃச் %2</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="386"/>
         <source>Primary screen resolution in pixels:</source>
-        <translation>プライマリ画面解像度 (ピクセル):</translation>
+        <translation>பிக்சல்களில் முதன்மை திரை தெளிவுத்திறன்:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="390"/>
         <source>Primary screen size in inches (diagonal):</source>
-        <translation>プライマリ画面サイズ インチ (対角):</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="186"/>
-        <source>General</source>
-        <translation>全般</translation>
+        <translation>முதன்மை திரை அளவு அங்குலங்களில் (மூலைவிட்ட):</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::Georeferencing</name>
-    <message>
-        <location filename="../src/core/crs_template_implementation.cpp" line="92"/>
-        <location filename="../src/core/georeferencing.cpp" line="929"/>
-        <source>Local coordinates</source>
-        <translation>ローカル座標</translation>
-    </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="56"/>
         <source>UTM</source>
@@ -1959,93 +1708,95 @@
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="57"/>
         <source>UTM coordinates</source>
-        <translation>UTM座標</translation>
-    </message>
-    <message>
-        <source>UTM Zone (number north/south, e.g. &quot;32 N&quot;, &quot;24 S&quot;)</source>
-        <translation type="vanished">UTMゾーン (数字 North/South 例: &quot;32 N&quot;、&quot;24 S&quot;)</translation>
+        <translation>UTM ஆயத்தொகுப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="60"/>
         <source>UTM Zone (number north/south)</source>
-        <translation>UTM ゾーン (番号 北/南)</translation>
+        <translation>யுடிஎம் மண்டலம் (எண் வடக்கு/தெற்கு)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="67"/>
         <source>Gauss-Krueger, datum: Potsdam</source>
         <comment>Gauss-Krueger coordinate reference system</comment>
-        <translation>ガウス・クリューゲル座標系</translation>
+        <translation>காச்-க்ரூகர், தேதி: போட்ச்டாம்</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="68"/>
         <source>Gauss-Krueger coordinates</source>
-        <translation>ガウス・クリューゲル座標</translation>
+        <translation>காச்-க்ரூகர் ஆயத்தொகுப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="71"/>
         <source>Zone number (1 to 119)</source>
         <comment>Zone number for Gauss-Krueger coordinates</comment>
-        <translation>ゾーン番号 (1～119)</translation>
+        <translation>மண்டல எண் (1 முதல் 119 வரை)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="79"/>
         <source>by EPSG code</source>
         <comment>as in: The CRS is specified by EPSG code</comment>
-        <translation>EPSG コードで</translation>
+        <translation>EPSG குறியீடு மூலம்</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="81"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation>EPSG @code@ 座標</translation>
+        <translation>EPSG @ குறியீடு @ ஒருங்கிணைப்புகள்</translation>
+    </message>
+    <message>
+        <location filename="../src/core/crs_template_implementation.cpp" line="92"/>
+        <location filename="../src/core/georeferencing.cpp" line="929"/>
+        <source>Local coordinates</source>
+        <translation>உள்ளக ஆயத்தொகுப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="84"/>
         <source>EPSG code</source>
-        <translation>EPSG コード</translation>
+        <translation>EPSG குறியீடு</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="91"/>
         <source>Custom PROJ.4</source>
         <comment>PROJ.4 specification</comment>
-        <translation>カスタム PROJ.4</translation>
+        <translation>தனிப்பயன் புரோச் .4</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="95"/>
         <source>Specification</source>
         <comment>PROJ.4 specification</comment>
-        <translation>規程</translation>
+        <translation>விவரக்குறிப்பு</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="583"/>
         <source>Map scale specification invalid or missing.</source>
-        <translation>地図縮尺規程が無効または見つかりません。</translation>
+        <translation>வரைபட அளவிலான விவரக்குறிப்பு தவறானது அல்லது காணவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="589"/>
         <source>Invalid grid scale factor: %1</source>
-        <translation>無効なグリッド尺度: %1</translation>
+        <translation>தவறான கட்டம் அளவிலான காரணி: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="602"/>
         <source>Invalid auxiliary scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>தவறான துணை அளவிலான காரணி: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="634"/>
         <location filename="../src/core/georeferencing.cpp" line="661"/>
         <source>Unknown CRS specification language: %1</source>
-        <translation>不明な CRS 規程言語: %1</translation>
+        <translation>அறியப்படாத சிஆர்எச் விவரக்குறிப்பு மொழி: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="664"/>
         <source>Unsupported geographic CRS specification: %1</source>
-        <translation>地理 CRS 仕様はサポートされていません: %1</translation>
+        <translation>ஆதரிக்கப்படாத புவியியல் சிஆர்எச் விவரக்குறிப்பு: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="920"/>
         <source>Local</source>
-        <translation>ローカル</translation>
+        <translation>உள்ளக</translation>
     </message>
 </context>
 <context>
@@ -2053,206 +1804,115 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="136"/>
         <source>Map Georeferencing</source>
-        <translation>マップ ジオリファレンシング</translation>
-    </message>
-    <message>
-        <source>�</source>
-        <translation type="obsolete">�</translation>
+        <translation>வரைபடம் உலகம் பெரென்சிங்</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="208"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="624"/>
         <source>Lookup...</source>
-        <translation>調べる...</translation>
-    </message>
-    <message>
-        <source>&amp;Select...</source>
-        <translation type="obsolete">選択 (&amp;S) ...</translation>
-    </message>
-    <message>
-        <source>Local coordinates</source>
-        <translation type="obsolete">ローカル座標</translation>
-    </message>
-    <message>
-        <source>Edit projection parameters...</source>
-        <translation type="obsolete">投影パラメータを編集...</translation>
+        <translation>தேடல் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="167"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="168"/>
         <source>m</source>
-        <translation>m</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="obsolete">一般</translation>
-    </message>
-    <message>
-        <source>Map scale:</source>
-        <translation type="obsolete">地図の縮尺:</translation>
+        <translation>மீ</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="261"/>
         <source>Declination:</source>
-        <translation>磁気偏角:</translation>
-    </message>
-    <message>
-        <source>Reference point:</source>
-        <translation type="obsolete">基準点:</translation>
+        <translation>வீழ்ச்சி:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="193"/>
         <source>Projected coordinates</source>
-        <translation>投影座標</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="245"/>
-        <location filename="../src/gui/select_crs_dialog.cpp" line="90"/>
-        <source>&amp;Coordinate reference system:</source>
-        <translation>座標参照系 (&amp;C) :</translation>
-    </message>
-    <message>
-        <source>&amp;Zone:</source>
-        <translation type="obsolete">&amp;Zone:</translation>
+        <translation>திட்டமிடப்பட்ட ஆயத்தொலைவுகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="145"/>
         <source>Status:</source>
-        <translation>状態:</translation>
-    </message>
-    <message>
-        <source>Reference point &amp;easting:</source>
-        <translation type="obsolete">基準点の偏東距離 (&amp;E):</translation>
-    </message>
-    <message>
-        <source>Reference point &amp;northing:</source>
-        <translation type="obsolete">基準点の偏北距離 (&amp;N):</translation>
-    </message>
-    <message>
-        <source>Convergence:</source>
-        <translation type="obsolete">コンバージェンス:</translation>
-    </message>
-    <message>
-        <source>&amp;Grivation:</source>
-        <translation type="obsolete">グリッド偏差(&amp;G):</translation>
+        <translation>நிலை:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="194"/>
         <source>Geographic coordinates</source>
-        <translation>地理座標</translation>
-    </message>
-    <message>
-        <source>Datum</source>
-        <translation type="obsolete">測地系</translation>
-    </message>
-    <message>
-        <source>Reference point &amp;latitude:</source>
-        <translation type="obsolete">基準点の緯度 (&amp;L):</translation>
-    </message>
-    <message>
-        <source>Reference point longitude:</source>
-        <translation type="obsolete">基準点の経度:</translation>
+        <translation>புவியியல் ஆயத்தொலைவுகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="189"/>
         <source>Show reference point in:</source>
-        <translation>参照点を表示:</translation>
-    </message>
-    <message>
-        <source>%1 %2 (mm)</source>
-        <translation type="obsolete">%1 %2 (mm)</translation>
+        <translation>குறிப்பு புள்ளியைக் காட்டு:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="408"/>
         <source>valid</source>
-        <translation>有効</translation>
+        <translation>செல்லுபடியாகும்</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="402"/>
         <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</translation>
+        <translation>&lt;a href = &quot;%1&quot;&gt; openstreetmap &lt;/a&gt; | &lt;a href = &quot;%2&quot;&gt; ஓ வரைபடங்களின் உலகம் &lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="833"/>
         <source>Online declination lookup</source>
-        <translation>オンラインで磁気偏角を調べる</translation>
-    </message>
-    <message>
-        <source>The magnetic declination for the reference point %1� %2� will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation type="obsolete">基準点 %1� %2� の磁気偏角を &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt; から検索します。続行しますか？</translation>
+        <translation>நிகழ்நிலை சரிவு தேடல்</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="140"/>
         <source>Map coordinate reference system</source>
-        <translation>地図の座標参照系</translation>
-    </message>
-    <message>
-        <source>- none -</source>
-        <translation type="vanished">- none -</translation>
-    </message>
-    <message>
-        <source>- from Proj.4 specification -</source>
-        <translation type="vanished">- Proj.4 仕様から -</translation>
+        <translation>வரைபட ஒருங்கிணைப்பு குறிப்பு அமைப்பு</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="143"/>
         <source>- local -</source>
-        <translation>- local -</translation>
-    </message>
-    <message>
-        <source>Grid scale factor:</source>
-        <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="vanished">グリッド尺度係数:</translation>
+        <translation>- உள்ளக -</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="148"/>
         <source>Reference point</source>
-        <translation>参照点</translation>
+        <translation>குறிப்பு புள்ளி</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="150"/>
         <source>&amp;Pick on map</source>
-        <translation>地図から選択(&amp;P)</translation>
+        <translation>&amp; வரைபடத்தில் தேர்வு செய்யுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="152"/>
         <source>(Datum: WGS84)</source>
-        <translation>(データム: WGS84)</translation>
+        <translation>(தேதி: WGS84)</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="155"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="156"/>
         <source>mm</source>
-        <translation>mm</translation>
+        <translation>மிமீ</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="160"/>
         <source>X</source>
         <comment>x coordinate</comment>
-        <translation>X</translation>
+        <translation>ஃச்</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="162"/>
         <source>Y</source>
         <comment>y coordinate</comment>
-        <translation>Y</translation>
+        <translation>ஒய்</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="171"/>
         <source>E</source>
         <comment>west / east</comment>
-        <translation>E</translation>
+        <translation>இ</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="173"/>
         <source>N</source>
         <comment>north / south</comment>
         <translation>N</translation>
-    </message>
-    <message>
-        <source>°</source>
-        <translation type="vanished">°</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="182"/>
@@ -2264,122 +1924,124 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="184"/>
         <source>E</source>
         <comment>east</comment>
-        <translation>E</translation>
+        <translation>இ</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="205"/>
         <source>Map north</source>
-        <translation>地図上の北の向き</translation>
+        <translation>வரைபடம் வடக்கு</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="215"/>
         <source>Show scale factors</source>
-        <translation type="unfinished"></translation>
+        <translation>அளவிலான காரணிகளைக் காட்டு</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="216"/>
         <source>Scale compensation</source>
-        <translation type="unfinished"></translation>
+        <translation>அளவிலான இழப்பீடு</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="221"/>
         <source>Combined scale factor:</source>
         <extracomment>The combined scale factor is the ratio between a length on the ground and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ஒருங்கிணைந்த அளவிலான காரணி:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="227"/>
         <source>Auxiliary scale factor:</source>
         <extracomment>The auxiliary scale factor is the ratio between a length in the curved earth model and the corresponding length on the ground. It is applied as a factor to ground distances to get curved earth model distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>துணை அளவிலான காரணி:</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="245"/>
+        <location filename="../src/gui/select_crs_dialog.cpp" line="90"/>
+        <source>&amp;Coordinate reference system:</source>
+        <translation>&amp; குறிப்பு முறையை ஒருங்கிணைத்தல்:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="251"/>
         <source>Map coordinates:</source>
-        <translation>地図上の座標:</translation>
+        <translation>வரைபட ஒருங்கிணைப்புகள்:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="253"/>
         <source>Geographic coordinates:</source>
-        <translation>地理座標:</translation>
+        <translation>புவியியல் ஆயத்தொலைவுகள்:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="256"/>
         <source>On CRS changes, keep:</source>
-        <translation>座標参照系の変更時に維持する座標:</translation>
+        <translation>சிஆர்எச் மாற்றங்களில், வைத்திருங்கள்:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="262"/>
         <source>Grivation:</source>
-        <translation>グリッド偏差:</translation>
+        <translation>கிருபை:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="441"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation>参照点 &quot;%1&quot; &quot;%2&quot; の磁気偏角を &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt; から検索します。続行しますか？</translation>
+        <translation>குறிப்பு புள்ளி %1 ° %2 க்கு க்கான காந்த சரிவு இப்போது &lt;a href = &quot; %3&quot;&gt; %3 &lt;/a&gt; இலிருந்து மீட்டெடுக்கப்படும். நீங்கள் தொடர விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="525"/>
         <source>Declination change</source>
-        <translation>赤緯の変更</translation>
+        <translation>வீழ்ச்சி மாற்றம்</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="525"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
-        <translation>赤緯が変更されました。地図コンテンツもしたがって回転しますか?</translation>
+        <translation>சரிவு மாற்றப்பட்டுள்ளது. வரைபட உள்ளடக்கத்தை அதற்கு ஏற்ப சுழற்ற விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="550"/>
         <source>Scale factor change</source>
-        <translation type="unfinished"></translation>
+        <translation>அளவிலான காரணி மாற்றம்</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="550"/>
         <source>The scale factor has been changed. Do you want to stretch/shrink the map content accordingly, too?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Projected coordinates:</source>
-        <translation type="vanished">投影座標:</translation>
+        <translation>அளவிலான காரணி மாற்றப்பட்டுள்ளது. அதற்கேற்ப வரைபட உள்ளடக்கத்தை நீட்டவும்/சுருக்கவும் விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="597"/>
         <source>Local coordinates:</source>
-        <translation>ローカル座標:</translation>
+        <translation>உள்ளக ஆயத்தொகுப்புகள்:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="624"/>
         <source>Loading...</source>
-        <translation>読み込み...</translation>
+        <translation>ஏற்றுகிறது ...</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="629"/>
         <source>%1</source>
         <comment>scale factor value</comment>
-        <translation type="unfinished">%1° {1?}</translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="631"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="639"/>
         <source>locked</source>
-        <translation>ロック済</translation>
+        <translation>பூட்டப்பட்டுள்ளது</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="804"/>
         <source>Could not parse data.</source>
-        <translation>データを解析できませんでした。</translation>
+        <translation>தரவை அலச முடியவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="829"/>
         <source>Declination value not found.</source>
-        <translation>磁気偏角の値が見つかりませんでした。</translation>
+        <translation>வீழ்ச்சி மதிப்பு காணப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="834"/>
         <source>The online declination lookup failed:
 %1</source>
-        <translation>オンラインで磁気偏角を調べることに失敗しました:
-%1</translation>
+        <translation>நிகழ்நிலை சரிவு தேடல் தோல்வியடைந்தது:
+ %1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="637"/>
@@ -2387,32 +2049,13 @@
         <comment>degree value</comment>
         <translation>%1 °</translation>
     </message>
-    <message>
-        <source>Custom coordinates</source>
-        <translation type="obsolete">カスタム座標</translation>
-    </message>
 </context>
 <context>
     <name>OpenOrienteering::GeoreferencingTool</name>
     <message>
-        <source>&lt;b&gt;Left click&lt;/b&gt; to set the reference point, another button to cancel</source>
-        <translation type="obsolete">&lt;b&gt;左クリック&lt;/b&gt;で参照点をセット、右クリックでキャンセルします</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. Another button to cancel.</source>
-        <translation type="vanished">&lt;b&gt;クリック&lt;/b&gt;: 参照点をセットします。他のボタンでキャンセルします。</translation>
-    </message>
-    <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="862"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: 参照点を設定します。&lt;b&gt;右クリック&lt;/b&gt;: キャンセルします。</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::Global</name>
-    <message>
-        <source>OpenOrienteering Mapper</source>
-        <translation type="obsolete">OpenOrienteering Mapper</translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt;: குறிப்பு புள்ளியை அமைக்கவும். &lt;b&gt; வலது சொடுக்கு &lt;/b&gt;: ரத்துசெய்.</translation>
     </message>
 </context>
 <context>
@@ -2420,83 +2063,7 @@
     <message>
         <location filename="../src/gui/home_screen_controller.cpp" line="149"/>
         <source>Welcome to OpenOrienteering Mapper!</source>
-        <translation>OpenOrienteering Mapper へようこそ！</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::HomeScreenWidget</name>
-    <message>
-        <source>Clear list</source>
-        <translation type="vanished">リストをクリア</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <translation type="vanished">終了</translation>
-    </message>
-    <message>
-        <source>Activities</source>
-        <translation type="vanished">アクティビティ</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="vanished">設定</translation>
-    </message>
-    <message>
-        <source>About %1</source>
-        <translation type="obsolete">%1 について</translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation type="vanished">ヘルプ</translation>
-    </message>
-    <message>
-        <source>Open most recently used file on start</source>
-        <translation type="vanished">直前に使用したファイルを起動時に開く</translation>
-    </message>
-    <message>
-        <source>Tip of the day</source>
-        <translation type="vanished">今日のヒント</translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translation type="vanished">前へ</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translation type="vanished">次へ</translation>
-    </message>
-    <message>
-        <source>Maps</source>
-        <translation type="obsolete">地図</translation>
-    </message>
-    <message>
-        <source>Create a new map ...</source>
-        <translation type="vanished">新しい地図を作成...</translation>
-    </message>
-    <message>
-        <source>Open map ...</source>
-        <translation type="vanished">地図を開く...</translation>
-    </message>
-    <message>
-        <source>About %1</source>
-        <comment>As in &apos;About OpenOrienteering Mapper&apos;</comment>
-        <translation type="vanished">%1 について</translation>
-    </message>
-    <message>
-        <source>Recent maps</source>
-        <translation type="vanished">最近開いた地図</translation>
-    </message>
-    <message>
-        <source>Maps (*.omap *.ocd);;All files (*.*)</source>
-        <translation type="obsolete">地図ファイル (*.omap *.ocd);;すべてのファイル (*.*)</translation>
-    </message>
-    <message>
-        <source>Open most recently used file</source>
-        <translation type="vanished">直前に使用したファイルを開く</translation>
-    </message>
-    <message>
-        <source>Show tip of the day</source>
-        <translation type="vanished">今日のヒントを表示する</translation>
+        <translation>Openorienteering மேப்பருக்கு வருக!</translation>
     </message>
 </context>
 <context>
@@ -2504,80 +2071,80 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="146"/>
         <source>Activities</source>
-        <translation>アクティビティ</translation>
+        <translation>நடவடிக்கைகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="149"/>
         <source>Create a new map ...</source>
-        <translation>新しい地図を作成 ...</translation>
+        <translation>புதிய வரைபடத்தை உருவாக்கவும் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="152"/>
         <source>Open map ...</source>
-        <translation>地図を開く ...</translation>
+        <translation>திறந்த வரைபடம் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="157"/>
         <source>Touch mode</source>
-        <translation>タッチモード</translation>
+        <translation>தொடு முறை</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="162"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="347"/>
         <source>Settings</source>
-        <translation>設定</translation>
+        <translation>அமைப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="165"/>
         <source>About %1</source>
         <comment>As in &apos;About OpenOrienteering Mapper&apos;</comment>
-        <translation>%1 について</translation>
+        <translation>சுமார் %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="168"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="349"/>
         <source>Help</source>
-        <translation>ヘルプ</translation>
+        <translation>உதவி</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="171"/>
         <source>Exit</source>
-        <translation>終了</translation>
+        <translation>வெளியேறு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="192"/>
         <source>Recent maps</source>
-        <translation>最近開いた地図</translation>
+        <translation>அண்மைக் கால வரைபடங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="217"/>
         <source>Open most recently used file on start</source>
-        <translation>直前に使用したファイルを起動時に開く</translation>
+        <translation>தொடக்கத்தில் மிக அண்மைக் காலத்தில் பயன்படுத்தப்பட்ட கோப்பைத் திறக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="220"/>
         <source>Clear list</source>
-        <translation>リストをクリア</translation>
+        <translation>தெளிவான பட்டியல்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="239"/>
         <source>Tip of the day</source>
-        <translation>今日のヒント</translation>
+        <translation>அன்றைய உதவிக்குறிப்பு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="244"/>
         <source>Show tip of the day</source>
-        <translation>今日のヒントを表示する</translation>
+        <translation>அன்றைய உதவிக்குறிப்பைக் காட்டு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="248"/>
         <source>Previous</source>
-        <translation>前へ</translation>
+        <translation>முந்தைய</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="250"/>
         <source>Next</source>
-        <translation>次へ</translation>
+        <translation>அடுத்தது</translation>
     </message>
 </context>
 <context>
@@ -2585,25 +2152,17 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="533"/>
         <source>Help</source>
-        <translation>ヘルプ</translation>
+        <translation>உதவி</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="554"/>
         <source>Examples</source>
-        <translation>例</translation>
+        <translation>எடுத்துக்காட்டுகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="351"/>
         <source>About Mapper</source>
-        <translation>Mapper について</translation>
-    </message>
-    <message>
-        <source>File list</source>
-        <translation type="vanished">ファイルリスト</translation>
-    </message>
-    <message>
-        <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named &apos;OOMapper&apos; on the device or a memory card.</source>
-        <translation type="vanished">地図ファイルが見つかりません!&lt;br/&gt;&lt;br/&gt;デバイスやメモリカードの &apos;OOMapper&apos; という名前の最上位フォルダーに地図ファイルをコピーしてください。</translation>
+        <translation>மேப்பர் பற்றி</translation>
     </message>
 </context>
 <context>
@@ -2611,86 +2170,86 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="48"/>
         <source>PNG</source>
-        <translation>PNG</translation>
+        <translation>பி.என்.சி.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="49"/>
         <source>All files (*.*)</source>
-        <translation>すべてのファイル (*.*)</translation>
+        <translation>எல்லா கோப்புகளும் (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
         <source>Default icon</source>
-        <translation>デフォルトのアイコン</translation>
+        <translation>இயல்புநிலை படவுரு</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="69"/>
         <source>px</source>
-        <translation>px</translation>
+        <translation>பி.எக்ச்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="70"/>
         <source>Preview width:</source>
-        <translation>プレビュー幅:</translation>
+        <translation>முன்னோட்டம் அகலம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="86"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="118"/>
         <source>Save...</source>
-        <translation>保存...</translation>
+        <translation>சேமி ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="88"/>
         <source>Copy to custom icon</source>
-        <translation>カスタムアイコンにコピー</translation>
+        <translation>தனிப்பயன் ஐகானுக்கு நகலெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="98"/>
         <source>Custom icon</source>
-        <translation>カスタムアイコン</translation>
+        <translation>தனிப்பயன் படவுரு</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
         <source>Width:</source>
-        <translation>幅:</translation>
+        <translation>அகலம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
         <source>Load...</source>
-        <translation>読み込み...</translation>
+        <translation>ஏற்றுங்கள் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="122"/>
         <source>Clear</source>
-        <translation>クリア</translation>
+        <translation>தெளிவான</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="169"/>
         <source>%1 px</source>
-        <translation>%1 px</translation>
+        <translation>%1 பிஎக்ச்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="203"/>
         <source>Save symbol icon ...</source>
-        <translation>シンボルアイコンを保存 ...</translation>
+        <translation>குறியீட்டு ஐகானைச் சேமிக்கவும் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="234"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
         <source>Failed to save the image:
 %1</source>
-        <translation>画像の保存に失敗しました:
-%1</translation>
+        <translation>படத்தை சேமிப்பதில் தோல்வி:
+ %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="226"/>
         <source>Load symbol icon ...</source>
-        <translation>記号アイコンを読み込む ...</translation>
+        <translation>சுமை சின்ன படவுரு ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="235"/>
@@ -2698,10 +2257,10 @@
 %1
 
 %2</source>
-        <translation>ファイルを開くことができません:
-%1
+        <translation>கோப்பைத் திறக்க முடியாது:
+ %1
 
-%2</translation>
+ %2</translation>
     </message>
 </context>
 <context>
@@ -2709,70 +2268,54 @@
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="297"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3.</source>
-        <translation>%2 行目 %3 列目で、タイプ %1 の記号を読み込み中にエラー。</translation>
+        <translation>வரி %2 நெடுவரிசை %3 இல் வகை %1 இன் சின்னத்தை ஏற்றும்போது பிழை.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="312"/>
         <source>Symbol ID &apos;%1&apos; not unique at line %2 column %3.</source>
-        <translation>%2 行目 %3 列目で、記号 ID &apos;%1&apos; は一意ではありません。</translation>
+        <translation>குறியீட்டு ஐடி &apos; %1&apos; வரி %2 நெடுவரிசை %3 இல் தனித்துவமானது அல்ல.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="392"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
-        <translation>%2 行目 %3 列目で、タイプ %1 の記号を読み込み中にエラー: %4</translation>
-    </message>
-    <message>
-        <source>Error while loading a symbol.</source>
-        <translation type="vanished">記号を読み込む際にエラーが発生しました。</translation>
+        <translation>வரி %1 இன் குறியீட்டின் குறியீட்டை ஏற்றும்போது பிழை %2 நெடுவரிசை %3: %4</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="316"/>
         <source>Error while loading an object of type %1.</source>
-        <translation>タイプ %1 のオブジェクトを読み込み中にエラー。</translation>
+        <translation>வகை %1 இன் பொருளை ஏற்றும்போது பிழை.</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="330"/>
         <location filename="../src/core/symbols/symbol.cpp" line="318"/>
         <location filename="../src/undo/object_undo.cpp" line="616"/>
         <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
-        <translation type="unfinished">行％2、列％3に不正なシンボルID &apos;％1&apos;があります。</translation>
+        <translation>வரி %2 நெடுவரிசை %3 இல் தவறாக குறியீட்டு ஐடி &apos; %1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="393"/>
         <source>Error while loading an object of type %1 at %2:%3: %4</source>
-        <translation>%2:%3 で、タイプ %1 のオブジェクトを読み込み中にエラー: %4</translation>
+        <translation>%1 வகை %2: %3: %4 இல் ஒரு பொருளை ஏற்றும்போது பிழை</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="357"/>
         <source>Unable to find symbol for object at %1:%2.</source>
-        <translation>%1:%2 で、オブジェクトの記号を見つけることができません。</translation>
-    </message>
-    <message>
-        <source>Point object with undefined or wrong symbol at %1:%2.</source>
-        <translation type="vanished">%1:%2 で、定義されていないか間違った記号のポイントオブジェクト。</translation>
+        <translation>%1: %2 இல் பொருளின் சின்னத்தைக் கண்டுபிடிக்க முடியவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="95"/>
         <source>OpenOrienteering Mapper</source>
-        <translation>OpenOrienteering Mapper</translation>
-    </message>
-    <message>
-        <source>OCAD Versions 7, 8</source>
-        <translation type="vanished">OCAD バージョン 7, 8</translation>
+        <translation>Openorienteering Mapper</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="46"/>
         <source>OCAD</source>
-        <translation>OCAD</translation>
-    </message>
-    <message>
-        <source>OCAD version 8, old implementation</source>
-        <translation type="vanished">OCAD バージョン 8,旧実装</translation>
+        <translation>டோகாட்</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="48"/>
         <source>OCAD version %1</source>
-        <translation>OCAD バージョン %1</translation>
+        <translation>OCAD பதிப்பு %1</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="238"/>
@@ -2780,60 +2323,52 @@
         <location filename="../src/util/xml_stream_util.cpp" line="301"/>
         <location filename="../src/util/xml_stream_util.cpp" line="323"/>
         <source>Could not parse the coordinates.</source>
-        <translation>座標を解析できませんでした。</translation>
+        <translation>ஆயங்களை அலச முடியவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="278"/>
         <location filename="../src/util/xml_stream_util.cpp" line="353"/>
         <source>Expected %1 coordinates, found %2.</source>
-        <translation>%1 の座標が必要ですが、%2 が見つかりました。</translation>
+        <translation>எதிர்பார்க்கப்படும் %1 ஆயத்தொகுப்புகள், %2 காணப்படுகின்றன.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="1074"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
-        <translation>%1:%2 で、印刷の設定を読み込み中にエラー: %3</translation>
+        <translation>அச்சிடும் உள்ளமைவை %1: %2: %3 இல் ஏற்றும்போது பிழை</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="1093"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="1113"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
-        <translation>%1:%2 で、ステップを元に戻す/繰り返しを読み込み中にエラー: %3</translation>
+        <translation>செயல்தவிர்/மீண்டும் படிகளை %1: %2: %3 இல் ஏற்றும்போது பிழை</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="76"/>
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
-        <translation>そのようなオプションはありません: %1</translation>
+        <translation>அத்தகைய விருப்பம் இல்லை: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="616"/>
         <location filename="../src/gui/map/map_editor.cpp" line="969"/>
         <source>Geospatial vector data</source>
-        <translation>空間ベクトル データ</translation>
+        <translation>புவியியல் திசையன் தரவு</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1942"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1787"/>
         <source>Cannot find a vector data export driver named &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot save file
-%1:
-%2</source>
-        <translation type="obsolete">ファイルを保存できません
-%1:
-%2</translation>
+        <translation>&apos;%1&apos; என்ற திசையன் தரவு ஏற்றுமதி இயக்கியைக் கண்டுபிடிக்க முடியவில்லை</translation>
     </message>
     <message>
         <location filename="../src/fileformats/iof_course_export.cpp" line="43"/>
         <source>IOF Data Standard 3.0</source>
-        <translation type="unfinished"></translation>
+        <translation>IOF தரவு தரநிலை 3.0</translation>
     </message>
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="43"/>
         <source>KML</source>
-        <translation type="unfinished"></translation>
+        <translation>Kml</translation>
     </message>
 </context>
 <context>
@@ -2845,128 +2380,85 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation>ファイルを開くことができません
-%1:
-%2</translation>
+        <translation>கோப்பைத் திறக்க முடியாது
+ %1:
+ %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="173"/>
         <source>Found an object without symbol.</source>
-        <translation>記号のないオブジェクトが見つかりました。</translation>
+        <translation>அடையாளம் இல்லாமல் ஒரு பொருளைக் கண்டுபிடித்தார்.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/fileformats/file_import_export.cpp" line="201"/>
         <source>Dropped %n irregular object(s).</source>
         <translation>
-            <numerusform>不規則な %n のオブジェクトを削除します。</numerusform>
+            <numerusform>கைவிடப்பட்ட %n ஒழுங்கற்ற பொருள்.</numerusform>
+            <numerusform>%N ஒழுங்கற்ற பொருள்கள் கைவிடப்பட்டன.</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="208"/>
         <source>Error during symbol post-processing.</source>
-        <translation>記号の後処理中にエラー。</translation>
+        <translation>குறியீட்டு பிந்தைய செயலாக்கத்தின் போது பிழை.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="226"/>
         <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
-        <translation>テンプレート&quot;%1&quot;は、以前あった地図ファイルへの相対的な位置ではなく、地図のディレクトリから読み込まれています。</translation>
+        <translation>உறவினர் இருப்பிடத்திற்கு பதிலாக வரைபடத்தின் கோப்பகத்திலிருந்து முன்னர் இருந்த வரைபடக் கோப்பில் &quot;%1&quot; வார்ப்புரு ஏற்றப்பட்டுள்ளது.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="319"/>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
-        <translation>テンプレート &apos;%1&apos; の読み込みに失敗しました。理由: %2</translation>
+        <translation>&apos; %1&apos; வார்ப்புருவை ஏற்றுவதில் தோல்வி, காரணம்: %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="155"/>
         <source>Georeferencing mismatch:</source>
-        <translation type="unfinished"></translation>
+        <translation>புவிசார் பொருந்தாத தன்மை:</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="250"/>
         <source>Warnings when loading template &apos;%1&apos;:
 %2</source>
-        <translation>テンプレート &apos;%1&apos; の読み込み時に警告:
-%2</translation>
+        <translation>&apos;%1&apos; வார்ப்புருவை ஏற்றும்போது எச்சரிக்கைகள்:
+ %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="258"/>
         <location filename="../src/fileformats/file_import_export.cpp" line="260"/>
         <source>At least one template file could not be found.</source>
-        <translation>テンプレート ファイルが少なくとも 1 つ見つかりませんでした。</translation>
+        <translation>குறைந்தது ஒரு வார்ப்புரு கோப்பைக் கண்டுபிடிக்க முடியவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="261"/>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation>テンプレート -&gt; テンプレートウィンドウで、赤のテンプレート名をクリックして、テンプレートファイル名を設定します。</translation>
-    </message>
-    <message>
-        <source>This file uses an obsolete format. Support for this format is to be removed from this program soon. To be able to open the file in the future, save it again.</source>
-        <translation type="vanished">このファイルは、古いバージョンの形式を使用します。この形式のサポートは間もなくこのプログラムから削除されます。今後、ファイルを開くようにするには、再度保存してください。</translation>
+        <translation>வார்ப்புரு கோப்பு பெயர் (களை) கண்டுபிடிக்க வார்ப்புருக்கள் -&gt; வார்ப்புரு அமைவு சாளரத்தில் சிவப்பு வார்ப்புரு பெயர் (கள்) என்பதைக் சொடுக்கு செய்க.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="548"/>
         <source>Unsupported obsolete file format version. Please use program version v%1 or older to load and update the file.</source>
-        <translation>サポートされていない古いバージョンのファイル形式です。プログラムバージョン v%1 以上を使用して、ファイルを読み込んで更新してください。</translation>
+        <translation>ஆதரிக்கப்படாத வழக்கற்றுப்போன கோப்பு வடிவமைப்பு பதிப்பு. கோப்பை ஏற்றவும் புதுப்பிக்கவும் நிரல் பதிப்பு V%1 அல்லது அதற்கு மேற்பட்டதைப் பயன்படுத்தவும்.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="560"/>
         <source>Invalid file format version.</source>
-        <translation>無効なバージョンのファイル形式です。</translation>
+        <translation>தவறான கோப்பு வடிவமைப்பு பதிப்பு.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="562"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
-        <translation>サポートされていない古いファイル形式のバージョンです。ファイルの読み込みと更新には古いバージョンのプログラムを使用してください。</translation>
-    </message>
-    <message>
-        <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program. Consider updating.</source>
-        <translation type="vanished">サポートされていない新しいファイル形式のバージョンです。このバージョンのプログラムでは、いくつかの地図機能を読み込めないか、保存されません。更新をご検討ください。</translation>
-    </message>
-    <message>
-        <source>The geographic coordinate reference system of the map was &quot;%1&quot;. This CRS is not supported. Using &quot;%2&quot;.</source>
-        <translation type="vanished">この地図の地理座標参照系は &quot;%1&quot; です。この地理座標参照系はサポートされていません。&quot;%2&quot; を使用してください。</translation>
-    </message>
-    <message>
-        <source>Error while loading a symbol with type %2.</source>
-        <translation type="vanished">%2 のタイプの記号を読み込む際にエラーが発生しました。</translation>
-    </message>
-    <message>
-        <source>Error while loading a symbol.</source>
-        <translation type="vanished">記号を読み込む際にエラーが発生しました。</translation>
-    </message>
-    <message>
-        <source>Error while loading undo steps.</source>
-        <translation type="vanished">アンドゥ履歴を読み込む際にエラーが発生しました。</translation>
-    </message>
-    <message>
-        <source>Error while reading map part count.</source>
-        <translation type="vanished">地図パート数を読み取り中にエラー。</translation>
-    </message>
-    <message>
-        <source>Error while loading map part %2.</source>
-        <translation type="vanished">地図パート %2 を読み込み中にエラー。</translation>
-    </message>
-    <message>
-        <source>Could not read file: %1</source>
-        <translation type="vanished">ファイルの読み込みに失敗しました: %1</translation>
+        <translation>ஆதரிக்கப்படாத பழைய கோப்பு வடிவமைப்பு பதிப்பு. கோப்பை ஏற்றவும் புதுப்பிக்கவும் பழைய நிரல் பதிப்பைப் பயன்படுத்தவும்.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="554"/>
         <source>Unsupported file format.</source>
-        <translation>サポートされていないファイル形式です。</translation>
+        <translation>ஆதரிக்கப்படாத கோப்பு வடிவம்.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="564"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
-        <translation>サポートされていない新しいファイル形式のバージョンです。このバージョンのプログラムでは、いくつかの地図機能を読み込めないか、保存されません。</translation>
-    </message>
-    <message>
-        <source>Format (%1) does not support import</source>
-        <translation type="vanished">形式 (%1) はインポートをサポートしていません</translation>
-    </message>
-    <message>
-        <source>Could not read &apos;%1&apos;: %2</source>
-        <translation type="vanished">&apos;%1&apos; を読み込みできません: %2</translation>
+        <translation>ஆதரிக்கப்படாத புதிய கோப்பு வடிவமைப்பு பதிப்பு. நிரலின் இந்த பதிப்பால் சில வரைபட நற்பொருத்தங்கள் ஏற்றப்படாது அல்லது சேமிக்கப்படாது.</translation>
     </message>
 </context>
 <context>
@@ -2974,17 +2466,17 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="195"/>
         <source>For KML/KMZ export, the map must be georeferenced.</source>
-        <translation type="unfinished"></translation>
+        <translation>KML/KMZ ஏற்றுமதியைப் பொறுத்தவரை, வரைபடம் உலகம் வழங்கப்பட வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="202"/>
         <source>Unknown error</source>
-        <translation type="unfinished">不明なエラー</translation>
+        <translation>தெரியாத பிழை</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="220"/>
         <source>%1 already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ஏற்கனவே உள்ளது.</translation>
     </message>
 </context>
 <context>
@@ -2992,92 +2484,12 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="320"/>
         <source>Line settings</source>
-        <translation>ライン記号の設定</translation>
+        <translation>வரி அமைப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="81"/>
         <source>Line width:</source>
-        <translation>ラインの幅:</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="84"/>
-        <source>Line color:</source>
-        <translation>ラインの色:</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="96"/>
-        <source>Minimum line length:</source>
-        <translation>最小のラインの長さ:</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="105"/>
-        <source>Line cap:</source>
-        <translation>ラインのキャップ:</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="107"/>
-        <source>flat</source>
-        <translation>平ら(flat)</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="102"/>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="108"/>
-        <source>round</source>
-        <translation>丸型(round)</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="109"/>
-        <source>square</source>
-        <translation>突出線端(square)</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="110"/>
-        <source>pointed</source>
-        <translation>三角(pointed)</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="99"/>
-        <source>Line join:</source>
-        <translation>角の形状:</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="101"/>
-        <source>miter</source>
-        <translation>マイター結合(miter)</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="103"/>
-        <source>bevel</source>
-        <translation>ベベル結合(bevel)</translation>
-    </message>
-    <message>
-        <source>Cap length:</source>
-        <translation type="vanished">キャップの長さ:</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="118"/>
-        <source>Line is dashed</source>
-        <translation>ラインを破線にする</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="220"/>
-        <source>Show at least one mid symbol</source>
-        <translation>中間記号を一つ以上表示する</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="222"/>
-        <source>Minimum mid symbol count:</source>
-        <translation>最小の中間記号数:</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="225"/>
-        <source>Minimum mid symbol count when closed:</source>
-        <translation>ラインを閉じる場合の、最小の中間記号数:</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="154"/>
-        <source>Dash length:</source>
-        <translation>実線部分の長さ:</translation>
+        <translation>வரி அகலம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="82"/>
@@ -3095,27 +2507,103 @@
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="597"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="600"/>
         <source>mm</source>
-        <translation>mm</translation>
+        <translation>மிமீ</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="84"/>
+        <source>Line color:</source>
+        <translation>வரி நிறம்:</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="96"/>
+        <source>Minimum line length:</source>
+        <translation>குறைந்தபட்ச வரி நீளம்:</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="105"/>
+        <source>Line cap:</source>
+        <translation>வரி தொப்பி:</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="107"/>
+        <source>flat</source>
+        <translation>கிடைவளைவு</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="102"/>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="108"/>
+        <source>round</source>
+        <translation>சுற்று</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="109"/>
+        <source>square</source>
+        <translation>நாற்கை</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="110"/>
+        <source>pointed</source>
+        <translation>சுட்டிக்காட்டப்பட்டது</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="99"/>
+        <source>Line join:</source>
+        <translation>வரி சேர:</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="101"/>
+        <source>miter</source>
+        <translation>மைட்டர்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="103"/>
+        <source>bevel</source>
+        <translation>பெவல்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="118"/>
+        <source>Line is dashed</source>
+        <translation>வரி கோடு</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="220"/>
+        <source>Show at least one mid symbol</source>
+        <translation>குறைந்தது ஒரு நடுத்தர சின்னத்தைக் காட்டுங்கள்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="222"/>
+        <source>Minimum mid symbol count:</source>
+        <translation>குறைந்தபட்ச மிட் சிம்பல் எண்ணிக்கை:</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="225"/>
+        <source>Minimum mid symbol count when closed:</source>
+        <translation>மூடப்படும் போது குறைந்தபட்ச இடைப்பட்ட குறியீட்டு எண்ணிக்கை:</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="154"/>
+        <source>Dash length:</source>
+        <translation>கோடு நீளம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="150"/>
         <source>Dashed line</source>
-        <translation>破線</translation>
+        <translation>கோடு வரி</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="157"/>
         <source>Break length:</source>
-        <translation>空白部分の長さ:</translation>
+        <translation>இடைவெளி நீளம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="160"/>
         <source>Dashes grouped together:</source>
-        <translation>破線のグループ化:</translation>
+        <translation>கோடுகள் ஒன்றாக தொகுக்கப்பட்டுள்ளன:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="162"/>
         <source>none</source>
-        <translation>none</translation>
+        <translation>எதுவுமில்லை</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="163"/>
@@ -3135,97 +2623,87 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="167"/>
         <source>In-group break length:</source>
-        <translation>グループ内の空白部分の長さ:</translation>
+        <translation>குழு இடைவெளி நீளம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="170"/>
         <source>Half length of first and last dash</source>
-        <translation>両端の実線部分の長さを半分にする</translation>
+        <translation>முதல் மற்றும் கடைசி கோடு அரை நீளம்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="172"/>
         <source>Mid symbols placement:</source>
-        <translation>中間記号の配置:</translation>
+        <translation>மிட் சின்னங்கள் வேலைவாய்ப்பு:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="174"/>
         <source>Center of dashes</source>
-        <translation>ダッシュの中心</translation>
+        <translation>கோடுகளின் நடுவண்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="175"/>
         <source>Center of dash groups</source>
-        <translation>ダッシュグループの中心</translation>
+        <translation>கோடு குழுக்களின் நடுவண்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="176"/>
         <source>Center of gaps</source>
-        <translation>ギャップの中心</translation>
+        <translation>இடைவெளிகளின் நடுவண்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="206"/>
         <source>Mid symbols</source>
-        <translation>中間記号</translation>
+        <translation>மிட் சின்னங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="208"/>
         <source>Mid symbols per spot:</source>
-        <translation>中間記号のスポットごとの数:</translation>
+        <translation>ஒரு இடத்திற்கு நடுப்பகுதி:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="211"/>
         <source>Mid symbol distance:</source>
-        <translation>中間記号間の距離:</translation>
+        <translation>மிட் சிம்பல் தூரம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="269"/>
         <source>Borders</source>
-        <translation>輪郭線</translation>
+        <translation>எல்லைகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="273"/>
         <source>Different borders on left and right sides</source>
-        <translation>左右で異なる輪郭線</translation>
+        <translation>இடது மற்றும் வலது பக்கங்களில் வெவ்வேறு எல்லைகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="277"/>
         <source>Left border:</source>
-        <translation>左輪郭線:</translation>
+        <translation>இடது எல்லை:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="282"/>
         <source>Right border:</source>
-        <translation>右輪郭線:</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="302"/>
-        <source>Suppress the dash symbol at line start and line end</source>
-        <translation>線の開始と終了でダッシュ記号を抑制する</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="306"/>
-        <source>Scale the dash symbol at corners</source>
-        <translation>角にダッシュ記号のスケール</translation>
+        <translation>வலது எல்லை:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="677"/>
         <source>Cap length at start:</source>
-        <translation>開始時のキャップ長:</translation>
+        <translation>தொடக்கத்தில் தொப்பி நீளம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="678"/>
         <source>Cap length at end:</source>
-        <translation>終端のキャップ長:</translation>
+        <translation>முடிவில் தொப்பி நீளம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="682"/>
         <source>Offset at start:</source>
-        <translation>開始時のオフセット:</translation>
+        <translation>தொடக்கத்தில் ஈடுசெய்ய:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="683"/>
         <source>Offset at end:</source>
-        <translation>終端のオフセット:</translation>
+        <translation>முடிவில் ஈடுசெய்ய:</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1774"/>
@@ -3233,14 +2711,14 @@
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="325"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="815"/>
         <source>Start symbol</source>
-        <translation>開始記号</translation>
+        <translation>குறியீடைத் தொடங்கவும்</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1778"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="325"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="815"/>
         <source>Mid symbol</source>
-        <translation>中間記号</translation>
+        <translation>மிட் அடையாளம்</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1782"/>
@@ -3248,7 +2726,7 @@
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="325"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="815"/>
         <source>End symbol</source>
-        <translation>終了記号</translation>
+        <translation>இறுதி அடையாளம்</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1786"/>
@@ -3257,56 +2735,62 @@
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="325"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="815"/>
         <source>Dash symbol</source>
-        <translation>ダッシュ記号</translation>
+        <translation>கோடு அடையாளம்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="120"/>
         <source>Enable border lines</source>
-        <translation>輪郭線を有効にする</translation>
+        <translation>எல்லை கோடுகளை இயக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="214"/>
         <source>Distance between spots:</source>
-        <translation>スポットの間の距離:</translation>
+        <translation>புள்ளிகளுக்கு இடையிலான தூரம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="217"/>
         <source>Distance from line end:</source>
-        <translation>ラインの端からの距離:</translation>
+        <translation>வரி முடிவிலிருந்து தூரம்:</translation>
     </message>
     <message>
-        <source>Border</source>
-        <translation type="obsolete">輪郭線</translation>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="302"/>
+        <source>Suppress the dash symbol at line start and line end</source>
+        <translation>வரி தொடக்க மற்றும் வரி முடிவில் கோடு சின்னத்தை அடக்கவும்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="306"/>
+        <source>Scale the dash symbol at corners</source>
+        <translation>கோடு சின்னத்தை மூலைகளில் அளவிடவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="565"/>
         <source>Border width:</source>
-        <translation>輪郭線の幅:</translation>
+        <translation>எல்லை அகலம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="568"/>
         <source>Border color:</source>
-        <translation>輪郭線の色:</translation>
+        <translation>எல்லை நிறம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="571"/>
         <source>Border shift:</source>
-        <translation>輪郭線のシフト距離:</translation>
+        <translation>பார்டர் சிப்ட்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="574"/>
         <source>Border is dashed</source>
-        <translation>輪郭線を破線にする</translation>
+        <translation>எல்லை கோடு</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="596"/>
         <source>Border dash length:</source>
-        <translation>輪郭線の実線部分の長さ:</translation>
+        <translation>எல்லை கோடு நீளம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="599"/>
         <source>Border break length:</source>
-        <translation>輪郭線の空白部分の長さ:</translation>
+        <translation>எல்லை இடைவெளி நீளம்:</translation>
     </message>
 </context>
 <context>
@@ -3321,169 +2805,165 @@
 %1
 
 %2</source>
-        <translation>ファイルを開くことができません:
-%1
+        <translation>கோப்பைத் திறக்க முடியாது:
+ %1
 
-%2</translation>
+ %2</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="916"/>
         <location filename="../src/gui/map/map_editor.cpp" line="661"/>
         <source>Invalid file type.</source>
-        <translation>無効なファイル形式です。</translation>
+        <translation>தவறான கோப்பு வகை.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="378"/>
         <source>&amp;New</source>
-        <translation>新規(&amp;N)</translation>
+        <translation>&amp;புதிய</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="247"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>தகவல்</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="248"/>
         <source>When you select the &quot;OK&quot; button, the editor will ignore touch input.</source>
-        <translation type="unfinished"></translation>
+        <translation>நீங்கள் &quot;சரி&quot; பொத்தானைத் தேர்ந்தெடுக்கும்போது, டச் உள்ளீட்டை ஆசிரியர் புறக்கணிப்பார்.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="253"/>
         <source>Continue with touch input</source>
-        <translation type="unfinished"></translation>
+        <translation>தொடு உள்ளீட்டுடன் தொடரவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="381"/>
         <source>Create a new map</source>
-        <translation>新しい地図を作成</translation>
+        <translation>புதிய வரைபடத்தை உருவாக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="385"/>
         <source>&amp;Open...</source>
-        <translation>開く(&amp;O)...</translation>
+        <translation>&amp; திறந்த ...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="388"/>
         <source>Open an existing file</source>
-        <translation>既存のファイルを開く</translation>
+        <translation>ஏற்கனவே உள்ள கோப்பைத் திற</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="392"/>
         <source>Open &amp;recent</source>
-        <translation>最近開いたファイル(&amp;R)</translation>
+        <translation>திறந்த &amp; அண்மைக் கால</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="404"/>
         <source>&amp;Save</source>
-        <translation>上書き保存(&amp;S)</translation>
+        <translation>சேமி (&amp;s)</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="410"/>
         <source>Save &amp;as...</source>
-        <translation>名前を付けて保存(&amp;A)...</translation>
+        <translation>என சேமி... (&amp;a)</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="413"/>
         <source>Ctrl+Shift+S</source>
-        <translation>Ctrl+Shift+S</translation>
+        <translation>Ctrl+shift+s</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="419"/>
         <source>Settings...</source>
-        <translation>設定...</translation>
+        <translation>அமைப்புகள் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="424"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="163"/>
         <source>Close</source>
-        <translation>閉じる</translation>
-    </message>
-    <message>
-        <source>Ctrl+W</source>
-        <translation type="obsolete">Ctrl+W</translation>
+        <translation>மூடு</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="427"/>
         <source>Close this file</source>
-        <translation>ファイルを閉じる</translation>
+        <translation>இந்த கோப்பை மூடு</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="431"/>
         <source>E&amp;xit</source>
-        <translation>終了(&amp;X)</translation>
+        <translation>வெளியேறு (&amp;x)</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="434"/>
         <source>Exit the application</source>
-        <translation>アプリケーションを終了</translation>
+        <translation>பயன்பாட்டிலிருந்து வெளியேறவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="440"/>
         <source>&amp;File</source>
-        <translation>ファイル(&amp;F)</translation>
+        <translation>கோப்பு (&amp;f)</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="459"/>
         <source>General</source>
-        <translation>一般</translation>
+        <translation>பொது</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="474"/>
         <source>Open &amp;Manual</source>
-        <translation>マニュアルを開く(&amp;M)</translation>
+        <translation>திறந்த &amp; கையேடு</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="476"/>
         <source>Show the help file for this application</source>
-        <translation>このアプリケーションのヘルプファイルを表示</translation>
+        <translation>இந்த பயன்பாட்டிற்கான உதவி கோப்பைக் காட்டு</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="480"/>
         <source>&amp;About %1</source>
-        <translation>%1 について(&amp;A)</translation>
+        <translation>&amp; சுமார் %1</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="482"/>
         <source>Show information about this application</source>
-        <translation>このアプリケーションについての情報を表示</translation>
+        <translation>இந்த பயன்பாடு பற்றிய தகவல்களைக் காட்டு</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="485"/>
         <source>About &amp;Qt</source>
-        <translation>QT について(&amp;Q)</translation>
+        <translation>பற்றி &amp; கியுடி</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="487"/>
         <source>Show information about Qt</source>
-        <translation>Qtについての情報を表示</translation>
+        <translation>கியுடி பற்றிய தகவல்களைக் காட்டு</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="492"/>
         <source>&amp;Help</source>
-        <translation>ヘルプ(&amp;H)</translation>
+        <translation>உதவி (&amp;h)</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="704"/>
         <source>Do you want to remove the autosaved version?</source>
-        <translation>自動保存したバージョンを削除しますか?</translation>
+        <translation>ஆட்டோசாவ் பதிப்பை அகற்ற விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="710"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
-        <translation>ファイルが変更されています。
-変更を保存しますか?</translation>
+        <translation>கோப்பு மாற்றியமைக்கப்பட்டுள்ளது.
+ உங்கள் மாற்றங்களைச் சேமிக்க விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1392"/>
         <source>When you want to have touch input disabled, you must use another pointing device to select the &quot;OK&quot; button.</source>
-        <translation type="unfinished"></translation>
+        <translation>நீங்கள் தொடு உள்ளீடு முடக்கப்பட விரும்பினால், &quot;சரி&quot; பொத்தானைத் தேர்ந்தெடுக்க மற்றொரு சுட்டிக்காட்டி சாதனத்தைப் பயன்படுத்த வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="519"/>
         <location filename="../src/gui/main_window.cpp" line="869"/>
         <source>Unsaved file</source>
-        <translation>未保存のファイル</translation>
+        <translation>சேமிக்கப்படாத கோப்பு</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="831"/>
@@ -3491,67 +2971,68 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/main_window.cpp" line="1174"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="454"/>
         <source>Warning</source>
-        <translation>警告</translation>
+        <translation>எச்சரிக்கை</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="831"/>
         <source>The symbol set import generated warnings.</source>
-        <translation>記号セットのインポートで警告が生成されました。</translation>
+        <translation>குறியீட்டு தொகுப்பு இறக்குமதி உருவாக்கப்பட்ட எச்சரிக்கைகளை உருவாக்கியது.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="835"/>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
-        <translation>選択中の地図の縮尺は1:%1です。しかし選択された記号セットの名目上の縮尺は1:%2 です。
-記号の縮尺を地図の縮尺に合わせますか?</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட வரைபட அளவுகோல் 1:%1, ஆனால் தேர்ந்தெடுக்கப்பட்ட குறியீட்டு தொகுப்பு 1:%2 என்ற பெயரளவு அளவைக் கொண்டுள்ளது.
+
+ தேர்ந்தெடுக்கப்பட்ட அளவிற்கு சின்னங்களை அளவிட விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="925"/>
         <source>Crash warning</source>
-        <translation>クラッシュ警告</translation>
+        <translation>செயலிழப்பு எச்சரிக்கை</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="926"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
-        <translation>最後にこのファイルを開いた時に %1 はクラッシュしたようです:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;もう一度開いてもよろしいですか?</translation>
+        <translation>இந்த கோப்பு திறக்கப்பட்ட கடைசி நேரத்தில் %1 செயலிழந்ததாகத் தெரிகிறது: &lt;br /&gt; &lt;tt&gt; %2 &lt;/tt&gt; &lt;br /&gt; &lt;br /&gt; உண்மையில் அதைத் திறக்க மீண்டும் முயற்சிக்கிறதா?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1128"/>
         <source>Autosaving...</source>
-        <translation>自動保存中...</translation>
+        <translation>ஆட்டோசேவிங் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1138"/>
         <source>Autosaving failed!</source>
-        <translation>自動保存に失敗しました!</translation>
+        <translation>ஆட்டோசேவிங் தோல்வியடைந்தது!</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1227"/>
         <source>All maps</source>
-        <translation>すべての地図ファイル</translation>
+        <translation>அனைத்து வரைபடங்களும்</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1231"/>
         <source>All files</source>
-        <translation>すべてのファイル</translation>
+        <translation>அனைத்து கோப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="880"/>
         <source>Open file</source>
-        <translation>ファイルを開く</translation>
+        <translation>கோப்பை திற</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="178"/>
         <source>You must close the current file before you can open another one.</source>
-        <translation>別のファイルを開く前に、現在のファイルを閉じる必要があります。</translation>
+        <translation>நீங்கள் இன்னொன்றைத் திறப்பதற்கு முன்பு தற்போதைய கோப்பை மூட வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="1991"/>
         <location filename="../src/gui/main_window.cpp" line="901"/>
         <location filename="../src/gui/map/map_widget.cpp" line="307"/>
         <source>Opening %1</source>
-        <translation>%1 を開きます</translation>
+        <translation>திறந்த %1</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="824"/>
@@ -3560,7 +3041,7 @@ Do you want to scale the symbols to the selected scale?</source>
         <location filename="../src/gui/main_window.cpp" line="1319"/>
         <location filename="../src/gui/map/map_widget.cpp" line="318"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="942"/>
@@ -3568,22 +3049,22 @@ Do you want to scale the symbols to the selected scale?</source>
 %1
 
 File format not recognized.</source>
-        <translation>ファイルを開くことができません。
-%1
+        <translation>கோப்பைத் திறக்க முடியாது:
+ %1
 
-ファイル形式を認識できません。</translation>
+ கோப்பு வடிவம் அங்கீகரிக்கப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1025"/>
         <source>The file has been modified.
 Do you want to discard your changes?</source>
-        <translation>ファイルが変更されています。
-変更を破棄しますか?</translation>
+        <translation>கோப்பு மாற்றியமைக்கப்பட்டுள்ளது.
+ உங்கள் மாற்றங்களை நிராகரிக்க விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1080"/>
         <source>&amp;%1 %2</source>
-        <translation>&amp;%1 %2</translation>
+        <translation>&amp; %1 %2</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1169"/>
@@ -3591,64 +3072,32 @@ Do you want to discard your changes?</source>
 
 Press Yes to save in this format.
 Press No to choose a different format.</source>
-        <translation>地図は&quot;%1&quot;として保存されます。情報が失われます。
+        <translation>இந்த வரைபடம் &quot;%1&quot; கோப்பாக சேமிக்கப்படுகிறது. செய்தி இழக்கப்படலாம்.
 
-Yesを押してこの形式で保存します。
-Noを押して形式を変更します。</translation>
+ இந்த வடிவத்தில் சேமிக்க ஆம் என்பதை அழுத்தவும்.
+ வேறு வடிவமைப்பைத் தேர்வு செய்ய வேண்டாம் என்பதை அழுத்தவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1299"/>
         <source>Save file</source>
-        <translation>ファイルを保存</translation>
+        <translation>கோப்பை சேமி</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1320"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1786"/>
         <source>File could not be saved:</source>
-        <translation>ファイルを保存することができません:</translation>
+        <translation>கோப்பை சேமிக்க முடியவில்லை:</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1321"/>
         <source>There was a problem in determining the file format.</source>
-        <translation>ファイル形式を決定するときに問題が発生しました。</translation>
+        <translation>கோப்பு வடிவமைப்பை தீர்மானிப்பதில் சிக்கல் இருந்தது.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1322"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1789"/>
         <source>Please report this as a bug.</source>
-        <translation>この問題をバグとして報告してください。</translation>
-    </message>
-    <message>
-        <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
-        <translation type="obsolete">This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</translation>
-    </message>
-    <message>
-        <source>See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</source>
-        <translation type="obsolete">See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</translation>
-    </message>
-    <message>
-        <source>This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</source>
-        <translation type="obsolete">This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</translation>
-    </message>
-    <message>
-        <source>Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</source>
-        <translation type="obsolete">Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</translation>
-    </message>
-    <message>
-        <source>Failed to locate the help files.</source>
-        <translation type="obsolete">ヘルプファイルを探すのに失敗しました。</translation>
-    </message>
-    <message>
-        <source>Failed to start the help browser.</source>
-        <translation type="obsolete">ヘルプブラウザの開始に失敗しました。</translation>
-    </message>
-    <message>
-        <source>About %1</source>
-        <translation type="obsolete">%1 について</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="obsolete">OK</translation>
+        <translation>இதை ஒரு பிழையாக புகாரளிக்கவும்.</translation>
     </message>
 </context>
 <context>
@@ -3657,25 +3106,25 @@ Noを押して形式を変更します。</translation>
         <location filename="../src/gui/main_window_controller.cpp" line="63"/>
         <location filename="../src/gui/main_window_controller.cpp" line="71"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window_controller.cpp" line="64"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
-        <translation>次の地図がエクスポートできません
-&quot;%1&quot;
-不明なフォーマットです。</translation>
+        <translation>வரைபடத்தை ஏற்றுமதி செய்ய முடியாது
+ &quot;%1&quot;
+ ஏனெனில் வடிவம் தெரியவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window_controller.cpp" line="72"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation>次の地図がエクスポートできません。
-&quot;%1&quot;
-%2 (.%3) の保存はサポートされていません。</translation>
+        <translation>வரைபடத்தை ஏற்றுமதி செய்ய முடியாது
+ &quot;%1&quot;
+ ஏனெனில் %2 (. %3) என சேமிப்பது ஆதரிக்கப்படவில்லை.</translation>
     </message>
 </context>
 <context>
@@ -3683,133 +3132,45 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="938"/>
         <source>Question</source>
-        <translation>質問</translation>
+        <translation>கேள்வி</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="939"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation>インポートされた地図の縮尺 1:%1 と、編集中の地図の縮尺 1:%2 が異なります。
+        <translation>இறக்குமதி செய்யப்பட்ட தரவின் அளவு 1:%1 ஆகும், இது இந்த வரைபடத்தின் அளவின் 1:%2 இலிருந்து வேறுபட்டது.
 
-インポートされた地図の縮尺を変更しますか?</translation>
-    </message>
-    <message>
-        <source>default layer</source>
-        <translation type="obsolete">規定のレイヤー</translation>
+ இறக்குமதி செய்யப்பட்ட தரவை மீட்டெடுக்கவா?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="203"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="253"/>
         <source>Error</source>
-        <translation>エラー</translation>
-    </message>
-    <message>
-        <source>Cannot export the map as
-&quot;%1&quot;
-because saving as %2 (.%3) is not supported.</source>
-        <translation type="vanished">次の地図が作成できません。
-&quot;%1&quot;
-%2 (%3)はサポートされていません。</translation>
-    </message>
-    <message>
-        <source>Cannot export the map as
-&quot;%1&quot;
-because the format is unknown.</source>
-        <translation type="vanished">次の地図が作成できません。
-&quot;%1&quot;
-不明なフォーマットです。</translation>
-    </message>
-    <message>
-        <source>File does not exist or insufficient permissions to open:
-%1</source>
-        <translation type="vanished">ファイルが存在しないか、読み取り権限がありません:
-%1</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="vanished">警告</translation>
-    </message>
-    <message>
-        <source>The map export generated warnings.</source>
-        <translation type="vanished">地図のエクスポート時に警告が発生しました。</translation>
-    </message>
-    <message>
-        <source>Internal error while saving:
-%1</source>
-        <translation type="vanished">保存の際に内部エラーが発生しました:
-%1</translation>
-    </message>
-    <message>
-        <source>Cannot save file
-%1:
-%2</source>
-        <translation type="vanished">ファイルを保存できません
-%1:
-%2</translation>
-    </message>
-    <message>
-        <source>The map import generated warnings.</source>
-        <translation type="vanished">地図のインポート時に警告が発生しました。</translation>
-    </message>
-    <message>
-        <source>Cannot open file:
-%1
-for reading.</source>
-        <translation type="vanished">ファイルを開くことができません:
-%1
-を読み込むことができません。</translation>
-    </message>
-    <message>
-        <source>Invalid file type.</source>
-        <translation type="vanished">無効なファイル形式です。</translation>
-    </message>
-    <message>
-        <source>Cannot open file:
-%1
-
-%2</source>
-        <translation type="vanished">ファイルを開くことができません:
-%1
-
-%2</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-Error during symbol post-processing.</source>
-        <translation type="obsolete">ファイルを開く際に問題が発生しました:
-%1
-
-記号のポストプロセッシング時にエラーが発生しました。</translation>
-    </message>
-    <message>
-        <source>Nothing to import.</source>
-        <translation type="vanished">インポートするものがありません。</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="478"/>
         <source>default part</source>
-        <translation>デフォルトの地図パート</translation>
+        <translation>இயல்புநிலை பகுதி</translation>
     </message>
     <message>
         <location filename="../src/core/map_color.cpp" line="36"/>
         <location filename="../src/core/map_color.cpp" line="50"/>
         <source>New color</source>
-        <translation>新しい色</translation>
+        <translation>புதிய நிறம்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4249"/>
         <source>Import...</source>
-        <translation>インポート...</translation>
+        <translation>இறக்குமதி ...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4250"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
-        <translation>記号の置換がキャンセルされました。
-それでもデータをインポートしますか?</translation>
+        <translation>குறியீட்டு மாற்று ரத்து செய்யப்பட்டது.
+ எப்படியும் தரவை இறக்குமதி செய்யவா?</translation>
     </message>
 </context>
 <context>
@@ -3817,7 +3178,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/core/map_color.cpp" line="79"/>
         <source>Registration black (all printed colors)</source>
-        <translation>レジストレーションブラック (すべて印刷色)</translation>
+        <translation>பதிவு கருப்பு (அனைத்து அச்சிடப்பட்ட வண்ணங்களும்)</translation>
     </message>
 </context>
 <context>
@@ -3825,484 +3186,282 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/core/map_coord.cpp" line="183"/>
         <source>Coordinates are out-of-bounds.</source>
-        <translation>座標は範囲外です。</translation>
+        <translation>ஆயத்தொகுப்புகள் எல்லைக்கு அப்பாற்பட்டவை.</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::MapEditorController</name>
     <message>
-        <source>One or more templates could not be loaded. Use the Templates -&gt; Template setup window to resolve the issue(s) by clicking on the red template file name(s).</source>
-        <translation type="obsolete">一つ以上のテンプレートを読み込むことができませんでした。メニューバーの「テンプレート」から「テンプレートウィンドウ」を開いて、赤く表示されているテンプレートのファイル名をクリックし、問題を解決してください。</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="956"/>
-        <source>Print...</source>
-        <translation>印刷...</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="958"/>
-        <source>&amp;Image</source>
-        <translation>画像(&amp;I)</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="965"/>
-        <source>Simple &amp;course</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="966"/>
-        <source>&amp;PDF</source>
-        <translation>PDF(&amp;P)</translation>
-    </message>
-    <message>
         <location filename="../src/gui/map/map_editor.cpp" line="982"/>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="274"/>
         <source>Undo</source>
-        <translation>元に戻す</translation>
+        <translation>செயல்தவிர்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="982"/>
         <source>Undo the last step</source>
-        <translation>一つ前の操作を元に戻す</translation>
+        <translation>கடைசி படியை செயல்தவிர்க்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="983"/>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="280"/>
         <source>Redo</source>
-        <translation>やり直す</translation>
+        <translation>மீண்டும்செய்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="983"/>
         <source>Redo the last step</source>
-        <translation>一つ前の操作をやり直す</translation>
+        <translation>கடைசி கட்டத்தை மீண்டும் செய்யுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="984"/>
         <source>Cu&amp;t</source>
-        <translation>切り取り(&amp;T)</translation>
+        <translation>வெட்டு (&amp;t)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="986"/>
         <source>C&amp;opy</source>
-        <translation>コピー(&amp;C)</translation>
+        <translation>சி &amp; திறந்த</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="988"/>
         <source>&amp;Paste</source>
-        <translation>貼り付け(&amp;P)</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="991"/>
-        <source>Select all</source>
-        <translation>すべて選択</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="992"/>
-        <source>Select nothing</source>
-        <translation>何も選択しない</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="993"/>
-        <source>Invert selection</source>
-        <translation>選択を反転</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="997"/>
-        <source>Clear undo / redo history</source>
-        <translation>元に戻す/やり直すの履歴をクリア</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="997"/>
-        <source>Clear the undo / redo history to reduce map file size.</source>
-        <translation>元に戻す/やり直すの履歴をクリアし、地図のファイルサイズを縮小します。</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="999"/>
-        <source>Show grid</source>
-        <translation>グリッドを表示</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1000"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1307"/>
-        <source>Configure grid...</source>
-        <translation>グリッド設定...</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1001"/>
-        <source>Pan</source>
-        <translation>画面移動</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1002"/>
-        <source>Move to my location</source>
-        <translation>自分の場所に移動</translation>
+        <translation>ஒட்டு (&amp;p)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1005"/>
         <source>Zoom in</source>
-        <translation>拡大</translation>
+        <translation>பெரிதாக்கு</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1006"/>
         <source>Zoom out</source>
-        <translation>縮小</translation>
+        <translation>சிறிதாக்கு</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1008"/>
         <source>Toggle fullscreen mode</source>
-        <translation>フルスクリーン</translation>
+        <translation>முழுத்திரை பயன்முறையை மாற்றவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1009"/>
         <source>Set custom zoom factor...</source>
-        <translation>ズーム率を指定(x)...</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1011"/>
-        <source>Hatch areas</source>
-        <translation>面のハッチ表示</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1012"/>
-        <source>Baseline view</source>
-        <translation>ベースライン表示</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1013"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="158"/>
-        <source>Hide all templates</source>
-        <translation>すべてのテンプレートを非表示</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1014"/>
-        <source>Overprinting simulation</source>
-        <translation>オーバープリントをシミュレート</translation>
+        <translation>தனிப்பயன் சூம் காரணி அமைக்கவும் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1016"/>
         <source>Symbol window</source>
-        <translation>記号ウィンドウ</translation>
+        <translation>அடையாளம் சாளரம்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1016"/>
         <source>Show/Hide the symbol window</source>
-        <translation>記号ウィンドウを表示/隠す</translation>
+        <translation>குறியீட்டு சாளரத்தைக் காட்டவும்/மறைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1017"/>
         <source>Color window</source>
-        <translation>色ウィンドウ</translation>
+        <translation>வண்ண சாளரம்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1017"/>
         <source>Show/Hide the color window</source>
-        <translation>色ウィンドウを表示/隠す</translation>
-    </message>
-    <message>
-        <source>Load symbols from...</source>
-        <translation type="obsolete">記号を読み込み...</translation>
+        <translation>வண்ண சாளரத்தைக் காட்டவும்/மறைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1019"/>
         <source>Replace the symbols with those from another map file</source>
-        <translation>他の地図ファイルの記号と置換え</translation>
-    </message>
-    <message>
-        <source>Load colors from...</source>
-        <translation type="obsolete">色を読み込む...</translation>
-    </message>
-    <message>
-        <source>Replace the colors with those from another map file</source>
-        <translation type="obsolete">色を他の地図ファイルのものと置き換え</translation>
+        <translation>சின்னங்களை மற்றொரு வரைபடக் கோப்பிலிருந்து மாற்றவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1023"/>
         <source>Scale all symbols...</source>
-        <translation>すべての記号のスケールを変更...</translation>
+        <translation>அனைத்து சின்னங்களையும் அளவிடவும் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1023"/>
         <source>Scale the whole symbol set</source>
-        <translation>記号セットすべての縮尺を変更</translation>
+        <translation>முழு குறியீட்டு தொகுப்பை அளவிடவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1025"/>
         <source>Change map scale...</source>
-        <translation>地図の縮尺の変更...</translation>
+        <translation>வரைபட அளவை மாற்றவும் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1025"/>
         <source>Change the map scale and adjust map objects and symbol sizes</source>
-        <translation>地図の縮尺の変更と、オブジェクトサイズと記号サイズの調節</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1026"/>
-        <source>Rotate map...</source>
-        <translation>地図の回転...</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1026"/>
-        <source>Rotate the whole map</source>
-        <translation>地図全体を回転します</translation>
+        <translation>வரைபட அளவை மாற்றி, வரைபட பொருள்கள் மற்றும் குறியீட்டு அளவுகளை சரிசெய்யவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1027"/>
         <source>Map notes...</source>
-        <translation>ノート...</translation>
+        <translation>வரைபட குறிப்புகள் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1029"/>
         <source>Template setup window</source>
-        <translation>テンプレートウィンドウ</translation>
+        <translation>வார்ப்புரு அமைவு சாளரம்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1029"/>
         <source>Show/Hide the template window</source>
-        <translation>テンプレートウィンドウを表示/隠す</translation>
+        <translation>வார்ப்புரு சாளரத்தைக் காட்டவும்/மறைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1032"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="636"/>
         <source>Open template...</source>
-        <translation>テンプレートを開く...</translation>
-    </message>
-    <message>
-        <source>Edit projection parameters...</source>
-        <translation type="obsolete">投影パラメータの編集...</translation>
+        <translation>திறந்த வார்ப்புரு ...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1007"/>
         <source>Show whole map</source>
-        <translation>地図全体を表示</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1019"/>
-        <source>Replace symbol set...</source>
-        <translation>記号セットを置換...</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1033"/>
-        <source>Reopen template...</source>
-        <translation>テンプレートを開きなおす...</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1035"/>
-        <source>Tag editor</source>
-        <translation>タグ エディター</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1035"/>
-        <source>Show/Hide the tag editor window</source>
-        <translation>タグ エディター ウィンドウの表示/非表示</translation>
+        <translation>முழு வரைபடத்தையும் காட்டு</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1037"/>
         <source>Edit objects</source>
-        <translation>オブジェクトの編集</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1038"/>
-        <source>Edit lines</source>
-        <translation>ラインの編集</translation>
+        <translation>பொருள்களைத் திருத்தவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1039"/>
         <source>Set point objects</source>
-        <translation>ポイントオブジェクトを配置</translation>
+        <translation>புள்ளி பொருள்களை அமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1040"/>
         <source>Draw paths</source>
-        <translation>パスを描画</translation>
+        <translation>பாதைகளை வரையவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1041"/>
         <source>Draw circles and ellipses</source>
-        <translation>円と楕円を描画</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1043"/>
-        <source>Draw free-handedly</source>
-        <translation>フリーハンドで描画</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1044"/>
-        <source>Fill bounded areas</source>
-        <translation>閉領域の塗りつぶし</translation>
+        <translation>வட்டங்கள் மற்றும் நீள்வட்டங்களை வரையவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1045"/>
         <source>Write text</source>
-        <translation>テキストを挿入</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="990"/>
-        <source>Delete</source>
-        <translation>削除</translation>
+        <translation>உரையை எழுதுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1046"/>
         <source>Duplicate</source>
-        <translation>複製</translation>
+        <translation>நகல்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1047"/>
         <source>Switch symbol</source>
-        <translation>記号を置換</translation>
+        <translation>சுவிட்ச் அடையாளம்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1048"/>
         <source>Fill / Create border</source>
-        <translation>塗りつぶし/縁取り</translation>
+        <translation>எல்லையை நிரப்பவும் / உருவாக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1049"/>
         <source>Switch dash direction</source>
-        <translation>記号の向きの反転</translation>
+        <translation>கோடு திசையை மாற்றவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1050"/>
         <source>Connect paths</source>
-        <translation>パスを接続</translation>
+        <translation>பாதைகளை இணைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1052"/>
         <source>Cut object</source>
-        <translation>オブジェクトの切り取り</translation>
-    </message>
-    <message>
-        <source>Cut holes</source>
-        <translation type="obsolete">穴あけ</translation>
-    </message>
-    <message>
-        <source>Rotate object(s)</source>
-        <translation type="vanished">オブジェクトの回転</translation>
+        <translation>வெட்டு பொருள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1066"/>
         <source>Measure lengths and areas</source>
-        <translation>長さと面積の測定</translation>
+        <translation>நீளம் மற்றும் பகுதிகளை அளவிடவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1069"/>
         <source>Cut away from area</source>
-        <translation>エリアから切り取り</translation>
+        <translation>பகுதியிலிருந்து வெட்டுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1071"/>
         <source>Merge area holes</source>
-        <translation>エリアの穴をマージ</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1072"/>
-        <source>Convert to curves</source>
-        <translation>曲線に変換</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1073"/>
-        <source>Simplify path</source>
-        <translation>パスを単純化</translation>
-    </message>
-    <message>
-        <source>Cutout</source>
-        <translation type="vanished">切り抜き</translation>
-    </message>
-    <message>
-        <source>Cut away</source>
-        <translation type="vanished">切り取り</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1076"/>
-        <source>Distribute points along path</source>
-        <translation>パスに沿ってポイントを配布する</translation>
-    </message>
-    <message>
-        <source>Paint on template settings</source>
-        <translation type="vanished">テンプレート設定に書き込み</translation>
+        <translation>பகுதி துளைகளை ஒன்றிணைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1080"/>
         <source>Enable touch cursor</source>
-        <translation>タッチ カーソルを有効にする</translation>
+        <translation>டச் கர்சரை இயக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1081"/>
         <source>Enable GPS display</source>
-        <translation>GPS 表示を有効にする</translation>
+        <translation>சி.பி.எச் காட்சியை இயக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1083"/>
         <source>Enable GPS distance rings</source>
-        <translation>GPS 距離リングを有効にする</translation>
+        <translation>சி.பி.எச் தூர மோதிரங்களை இயக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1085"/>
         <source>Set point object at GPS position</source>
-        <translation>GPS の位置でポイント オブジェクトを設定</translation>
+        <translation>சி.பி.எச் நிலையில் புள்ளி பொருளை அமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1087"/>
         <source>Set temporary marker at GPS position</source>
-        <translation>GPS の位置で一時的なマーカーを設定</translation>
+        <translation>சி.பி.எச் நிலையில் தற்காலிக மார்க்கரை அமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1089"/>
         <source>Create temporary path at GPS position</source>
-        <translation>GPS の位置で一時的なパスを作成</translation>
+        <translation>சி.பி.எச் நிலையில் தற்காலிக பாதையை உருவாக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1091"/>
         <source>Clear temporary GPS markers</source>
-        <translation>一時的な GPS マーカーをクリア</translation>
+        <translation>தற்காலிக சி.பி.எச் குறிப்பான்களை அழிக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1094"/>
         <source>Enable compass display</source>
-        <translation>コンパスの表示を有効にする</translation>
+        <translation>திசைகாட்டி காட்சியை இயக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1095"/>
         <source>Align map with north</source>
-        <translation>地図を北に合わせる</translation>
+        <translation>வரைபடத்தை வடக்கே சீரமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1097"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3836"/>
         <source>Add new part...</source>
-        <translation>新しい地図パートを追加...</translation>
+        <translation>புதிய பகுதியைச் சேர்க்கவும் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1098"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3896"/>
         <source>Rename current part...</source>
-        <translation>現在の地図パートの名前を変更...</translation>
+        <translation>தற்போதைய பகுதியை மறுபெயரிடுங்கள் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1099"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3857"/>
         <source>Remove current part</source>
-        <translation>現在の地図パートを削除</translation>
+        <translation>தற்போதைய பகுதியை அகற்று</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1100"/>
         <source>Merge all parts</source>
-        <translation>すべての地図パートをマージ</translation>
+        <translation>அனைத்து பகுதிகளையும் ஒன்றிணைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1102"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4123"/>
         <source>Import...</source>
-        <translation>インポート...</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1122"/>
-        <source>Copy position</source>
-        <translation>位置をコピー</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1122"/>
-        <source>Copy position to clipboard.</source>
-        <translation>位置をクリップボードにコピーします。</translation>
+        <translation>இறக்குமதி ...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1159"/>
@@ -4310,184 +3469,437 @@ Import the data anyway?</source>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="152"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="294"/>
         <source>&amp;Edit</source>
-        <translation>編集(&amp;E)</translation>
+        <translation>திருத்து (&amp;e)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1180"/>
         <source>&amp;View</source>
-        <translation>表示(&amp;V)</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1204"/>
-        <source>Toolbars</source>
-        <translation>ツールバー</translation>
+        <translation>காண்க (&amp;v)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1211"/>
         <source>&amp;Tools</source>
-        <translation>ツール(&amp;T)</translation>
+        <translation>கருவிகள் (&amp;t)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1264"/>
         <source>Sy&amp;mbols</source>
-        <translation>記号(&amp;M)</translation>
+        <translation>மற்றும் &amp; Mbols</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1246"/>
         <source>M&amp;ap</source>
-        <translation>地図(&amp;M)</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="585"/>
-        <source>Editing in progress</source>
-        <translation>編集の処理中</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="586"/>
-        <source>The map is currently being edited. Please finish the edit operation before saving.</source>
-        <translation>地図は現在編集中です。保存する前に編集操作を終了してください。</translation>
+        <translation>எம் &amp; ஏபி</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1276"/>
         <source>&amp;Templates</source>
-        <translation>テンプレート(&amp;T)</translation>
-    </message>
-    <message>
-        <source>&amp;GPS</source>
-        <translation type="obsolete">GPS(&amp;G)</translation>
+        <translation>&amp; வார்ப்புருக்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1333"/>
         <source>Drawing</source>
-        <translation>描画</translation>
+        <translation>வரைதல்</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="175"/>
         <source>Paint on template</source>
-        <translation>テンプレート上に書き込み</translation>
+        <translation>வார்ப்புருவில் வண்ணம் தீட்டவும்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="585"/>
+        <source>Editing in progress</source>
+        <translation>திருத்துதல் முன்னேற்றத்தில் உள்ளது</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="586"/>
+        <source>The map is currently being edited. Please finish the edit operation before saving.</source>
+        <translation>வரைபடம் தற்போது திருத்தப்பட்டு வருகிறது. சேமிப்பதற்கு முன் திருத்து செயல்பாட்டை முடிக்கவும்.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="596"/>
+        <source>Map saved</source>
+        <translation>வரைபடம் சேமிக்கப்பட்டது</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="999"/>
+        <source>Show grid</source>
+        <translation>கட்டத்தைக் காட்டு</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1000"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1307"/>
+        <source>Configure grid...</source>
+        <translation>கட்டத்தை உள்ளமைக்கவும் ...</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1011"/>
+        <source>Hatch areas</source>
+        <translation>அட்ச் பகுதிகள்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1012"/>
+        <source>Baseline view</source>
+        <translation>அடிப்படை பார்வை</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1013"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="158"/>
+        <source>Hide all templates</source>
+        <translation>எல்லா வார்ப்புருக்களையும் மறைக்கவும்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1019"/>
+        <source>Replace symbol set...</source>
+        <translation>குறியீட்டு தொகுப்பை மாற்றவும் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1024"/>
         <source>Georeferencing...</source>
-        <translation>ジオリファレンシング...</translation>
+        <translation>சியோஃபெரென்சிங் ...</translation>
     </message>
     <message>
-        <source>Draw circles</source>
-        <translation type="obsolete">円を描画</translation>
+        <location filename="../src/gui/map/map_editor.cpp" line="1026"/>
+        <source>Rotate map...</source>
+        <translation>வரைபடத்தை சுழற்றுங்கள் ...</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1026"/>
+        <source>Rotate the whole map</source>
+        <translation>முழு வரைபடத்தையும் சுழற்றுங்கள்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1033"/>
+        <source>Reopen template...</source>
+        <translation>வார்ப்புருவை மீண்டும் திறக்கவும் ...</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1035"/>
+        <source>Tag editor</source>
+        <translation>குறிச்சொல் ஆசிரியர்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1035"/>
+        <source>Show/Hide the tag editor window</source>
+        <translation>டேக் எடிட்டர் சாளரத்தைக் காட்டவும்/மறைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1042"/>
         <source>Draw rectangles</source>
-        <translation>矩形を描画</translation>
+        <translation>செவ்வகங்களை வரையவும்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1043"/>
+        <source>Draw free-handedly</source>
+        <translation>இலவசமாக வரையவும்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1044"/>
+        <source>Fill bounded areas</source>
+        <translation>எல்லைக்குட்பட்ட பகுதிகளை நிரப்பவும்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="990"/>
+        <source>Delete</source>
+        <translation>நீக்கு</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1053"/>
         <source>Cut free form hole</source>
-        <translation>自由な形で穴あけ</translation>
+        <translation>இலவச படிவ துளை வெட்டு</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1054"/>
         <source>Cut round hole</source>
-        <translation>円形で穴あけ</translation>
+        <translation>சுற்று துளை வெட்டு</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1055"/>
         <source>Cut rectangular hole</source>
-        <translation>矩形の穴あけ</translation>
+        <translation>செவ்வக துளை வெட்டு</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1064"/>
         <source>Rotate pattern</source>
-        <translation>パターンの回転</translation>
-    </message>
-    <message>
-        <source>Scale object(s)</source>
-        <translation type="vanished">オブジェクトのスケール変更</translation>
+        <translation>சுழற்சி முறை</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1067"/>
         <source>Unify areas</source>
-        <translation>エリアの論理和</translation>
+        <translation>பகுதிகளை ஒன்றிணைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1068"/>
         <source>Intersect areas</source>
-        <translation>エリアの論理積</translation>
-    </message>
-    <message>
-        <source>Area difference</source>
-        <translation type="vanished">エリアの論理差</translation>
+        <translation>வெட்டும் பகுதிகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1070"/>
         <source>Area XOr</source>
-        <translation>エリアの排他的論理和</translation>
+        <translation>பகுதி Xor</translation>
     </message>
     <message>
-        <source>Import</source>
-        <translation type="obsolete">インポート</translation>
+        <location filename="../src/gui/map/map_editor.cpp" line="1076"/>
+        <source>Distribute points along path</source>
+        <translation>பாதையில் புள்ளிகளை விநியோகிக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1104"/>
         <source>Map coordinates</source>
-        <translation>マップ座標</translation>
+        <translation>வரைபட ஒருங்கிணைப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1106"/>
         <source>Projected coordinates</source>
-        <translation>投影座標</translation>
+        <translation>திட்டமிடப்பட்ட ஆயத்தொலைவுகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1108"/>
         <source>Latitude/Longitude (Dec)</source>
-        <translation>緯度/経度 (Dec)</translation>
+        <translation>அட்சரேகை/தீர்க்கரேகை (டிசம்பர்)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1110"/>
         <source>Latitude/Longitude (DMS)</source>
-        <translation>緯度/経度 (DMS)</translation>
+        <translation>அட்சரேகை (டி.எம்.எச்)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1194"/>
         <source>Display coordinates as...</source>
-        <translation>座標の表示方法...</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1146"/>
-        <source>&amp;Export as...</source>
-        <translation>形式を指定してエクスポート(&amp;E)...</translation>
+        <translation>ஒருங்கிணைப்புகளைக் காண்பி ...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1056"/>
         <source>Cut hole</source>
-        <translation>穴あけ</translation>
+        <translation>துளை வெட்டு</translation>
     </message>
     <message>
-        <source>Dummy</source>
-        <translation type="vanished">ダミー</translation>
+        <location filename="../src/gui/map/map_editor.cpp" line="908"/>
+        <source>Ctrl+A</source>
+        <translation>Ctrl+a</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="909"/>
+        <source>Ctrl+Shift+A</source>
+        <translation>Ctrl+shift+a</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="910"/>
+        <source>Ctrl+I</source>
+        <translation>Ctrl+i</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="912"/>
+        <source>G</source>
+        <translation>G</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="925"/>
+        <source>E</source>
+        <translation>இ</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="926"/>
+        <source>L</source>
+        <translation>எல்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="927"/>
+        <source>S</source>
+        <translation>கள்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="928"/>
+        <source>P</source>
+        <translation>ப</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="929"/>
+        <source>O</source>
+        <translation>ஓ</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="930"/>
+        <source>Ctrl+R</source>
+        <translation>Ctrl+r</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="931"/>
+        <source>F</source>
+        <translation>F</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="932"/>
+        <source>T</source>
+        <translation>டி</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="934"/>
+        <source>D</source>
+        <translation>டி</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="935"/>
+        <source>Ctrl+G</source>
+        <translation>Ctrl+g</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="936"/>
+        <source>Ctrl+F</source>
+        <translation>Ctrl+f</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="937"/>
+        <source>Ctrl+D</source>
+        <translation>Ctrl+d</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="938"/>
+        <source>C</source>
+        <translation>C</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="939"/>
+        <source>R</source>
+        <translation>R</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="940"/>
+        <source>Z</source>
+        <translation>சட்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="941"/>
+        <source>K</source>
+        <translation>கே</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="942"/>
+        <source>H</source>
+        <translation>ம</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="943"/>
+        <source>M</source>
+        <translation>மீ</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="944"/>
+        <source>U</source>
+        <translation>உ</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="946"/>
+        <source>N</source>
+        <translation>N</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="947"/>
+        <source>Ctrl+M</source>
+        <translation>Ctrl+m</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="965"/>
+        <source>Simple &amp;course</source>
+        <translation>எளிய &amp; பாடநெறி</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="991"/>
+        <source>Select all</source>
+        <translation>அனைத்தையும் தெரிவுசெய்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="992"/>
+        <source>Select nothing</source>
+        <translation>எதையும் தேர்ந்தெடுக்கவும்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="993"/>
+        <source>Invert selection</source>
+        <translation>தலைகீழ் தேர்வு</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1002"/>
+        <source>Move to my location</source>
+        <translation>எனது இருப்பிடத்திற்கு செல்லுங்கள்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1018"/>
+        <source>Symbol set ID...</source>
+        <translation>அடையாளம் தொகுப்பு ஐடி ...</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1018"/>
+        <source>Edit the symbol set ID</source>
+        <translation>குறியீட்டு தொகுப்பு ஐடியைத் திருத்தவும்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1020"/>
+        <source>Load CRT file...</source>
+        <translation>CRT கோப்பை ஏற்றவும் ...</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1020"/>
+        <source>Assign new symbols by cross-reference table</source>
+        <translation>குறுக்கு-குறிப்பு அட்டவணை மூலம் புதிய சின்னங்களை ஒதுக்குங்கள்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1122"/>
+        <source>Copy position</source>
+        <translation>நகல் நிலை</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1122"/>
+        <source>Copy position to clipboard.</source>
+        <translation>இடைநிலைப்பலகைக்கு நிலையை நகலெடுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1300"/>
         <source>View</source>
-        <translation>表示</translation>
+        <translation>பார்வை</translation>
     </message>
     <message>
-        <source>Select template...</source>
-        <translation type="vanished">テンプレートの選択...</translation>
+        <location filename="../src/gui/map/map_editor.cpp" line="1319"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1324"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1457"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3769"/>
+        <source>Map parts</source>
+        <translation>வரைபட பாகங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1352"/>
         <source>Editing</source>
-        <translation>編集</translation>
+        <translation>திருத்துதல்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1377"/>
         <source>Advanced editing</source>
-        <translation>高度な編集</translation>
+        <translation>மேம்பட்ட திருத்துதல்</translation>
     </message>
     <message>
-        <source>Print or Export</source>
-        <translation type="obsolete">プリント/エクスポート</translation>
+        <location filename="../src/gui/map/map_editor.cpp" line="1411"/>
+        <source>Select symbol</source>
+        <translation>சின்னத்தைத் தேர்ந்தெடுக்கவும்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1451"/>
+        <source>Hide top bar</source>
+        <translation>மேல் பட்டியை மறைக்கவும்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1454"/>
+        <source>Show top bar</source>
+        <translation>மேல் பட்டியைக் காட்டு</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1512"/>
+        <source>1x zoom</source>
+        <translation>1x சூம்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1516"/>
+        <source>2x zoom</source>
+        <translation>2x சூம்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="616"/>
@@ -4510,110 +3922,166 @@ Import the data anyway?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="4199"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4276"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>பிழை</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="610"/>
+        <source>Cannot export the map as
+&quot;%1&quot;
+because saving as %2 (.%3) is not supported.</source>
+        <translation>வரைபடத்தை ஏற்றுமதி செய்ய முடியாது
+ &quot;%1&quot;
+ ஏனெனில் %2 (. %3) என சேமிப்பது ஆதரிக்கப்படவில்லை.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="622"/>
+        <location filename="../src/templates/paint_on_template_feature.cpp" line="339"/>
+        <source>Cannot save file
+%1:
+%2</source>
+        <translation>கோப்பைச் சேமிக்க முடியாது
+ %1:
+ %2</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="631"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="693"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4204"/>
+        <location filename="../src/templates/paint_on_template_feature.cpp" line="84"/>
+        <source>Warning</source>
+        <translation>எச்சரிக்கை</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="632"/>
+        <source>The map export generated warnings.</source>
+        <translation>வரைபட ஏற்றுமதி எச்சரிக்கைகளை உருவாக்கியது.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="694"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4204"/>
+        <source>The map import generated warnings.</source>
+        <translation>வரைபட இறக்குமதி எச்சரிக்கைகளை உருவாக்கியது.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="945"/>
+        <source>X</source>
+        <translation>ஃச்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="960"/>
+        <source>&amp;KMZ</source>
+        <translation>&amp; Kmz</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1004"/>
+        <source>Keep my location on screen</source>
+        <translation>எனது இருப்பிடத்தை திரையில் வைத்திருங்கள்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1074"/>
+        <source>Clip area</source>
+        <translation>கிளிப் பகுதி</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1075"/>
+        <source>Erase area</source>
+        <translation>பகுதி அழிக்கவும்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1204"/>
+        <source>Toolbars</source>
+        <translation>கருவிப்பட்டிகள்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1772"/>
+        <source>Export</source>
+        <translation>ஏற்றுமதி</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1859"/>
         <source>Print / Export is not available in this program version!</source>
-        <translation>印刷 / エクスポートはこのバージョンのプログラムで利用できません!</translation>
+        <translation>இந்த நிரல் பதிப்பில் அச்சு / ஏற்றுமதி கிடைக்கவில்லை!</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1879"/>
         <source>No undo steps available.</source>
-        <translation>元に戻すことのできる操作がありません。</translation>
-    </message>
-    <message>
-        <source>Cut %1 object(s)</source>
-        <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
-        <translation type="vanished">%1 個のオブジェクトを切り取りました</translation>
+        <translation>செயல்தவிர் படிகள் எதுவும் கிடைக்கவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1935"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1968"/>
         <source>An internal error occurred, sorry!</source>
-        <translation>内部エラーが発生しました!</translation>
-    </message>
-    <message>
-        <source>Copied %1 object(s)</source>
-        <translation type="vanished">%1 個のオブジェクトをコピーしました</translation>
+        <translation>ஒரு உள் பிழை ஏற்பட்டது, மன்னிக்கவும்!</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1955"/>
         <source>There are no objects in clipboard which could be pasted!</source>
-        <translation>貼り付けのできるオブジェクトがクリップボードにありません!</translation>
-    </message>
-    <message>
-        <source>Pasted %1 object(s)</source>
-        <translation type="vanished">%1 個のオブジェクトを貼り付けました</translation>
+        <translation>கிளிப்போர்டில் ஒட்டக்கூடிய பொருள்கள் எதுவும் இல்லை!</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2086"/>
         <source>Set custom zoom factor</source>
-        <translation>ズーム率を指定</translation>
+        <translation>தனிப்பயன் சூம் காரணி அமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2086"/>
         <source>Zoom factor:</source>
-        <translation>ズーム:</translation>
+        <translation>சூம் காரணி:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2160"/>
         <source>Symbols</source>
-        <translation>記号</translation>
+        <translation>குறியிடுகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2174"/>
         <source>Colors</source>
-        <translation>色</translation>
+        <translation>நிறங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2195"/>
         <source>Symbol set ID</source>
-        <translation>記号セット ID</translation>
+        <translation>அடையாளம் தொகுப்பு ஐடி</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2196"/>
         <source>Edit the symbol set ID:</source>
-        <translation>記号セット ID を編集:</translation>
+        <translation>குறியீட்டு தொகுப்பு ஐடியைத் திருத்தவும்:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2223"/>
         <source>Scale all symbols</source>
-        <translation>すべての記号のスケールを変更</translation>
+        <translation>அனைத்து சின்னங்களையும் அளவிடவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2223"/>
         <source>Scale to percentage:</source>
-        <translation>パーセントでスケール変更:</translation>
+        <translation>சதவீதத்திற்கு அளவு:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2248"/>
         <source>Map notes</source>
-        <translation>ノート</translation>
+        <translation>வரைபட குறிப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2253"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>ரத்துசெய்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2254"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>சரி</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2293"/>
         <source>Templates</source>
-        <translation>テンプレート</translation>
+        <translation>வார்ப்புருக்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2353"/>
         <source>Tag Editor</source>
-        <translation>タグ エディター</translation>
-    </message>
-    <message>
-        <source>Tag Selector</source>
-        <translation type="vanished">タグ セレクター</translation>
+        <translation>குறிச்சொல் ஆசிரியர்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2417"/>
@@ -4621,9 +4089,9 @@ Import the data anyway?</source>
 symbol
 selected</source>
         <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
-        <translation>記号が
-選択されて
-いません</translation>
+        <translation>இல்லை
+ அடையாளம்
+ தேர்ந்தெடுக்கப்பட்டது</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2419"/>
@@ -4631,24 +4099,24 @@ selected</source>
 symbols
 selected</source>
         <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
-        <translation>複数の
-記号を
-選択</translation>
+        <translation>நான்கு
+ சின்னங்கள்
+ தேர்ந்தெடுக்கப்பட்டது</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2519"/>
         <source>Place point objects on the map.</source>
-        <translation>地図上にポイントオブジェクトを配置します。</translation>
+        <translation>வரைபடத்தில் புள்ளி பொருள்களை வைக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2519"/>
         <source>Select a point symbol to be able to use this tool.</source>
-        <translation>このツールを有効にするには、ポイント記号を選択してください。</translation>
+        <translation>இந்த கருவியைப் பயன்படுத்த ஒரு புள்ளி சின்னத்தைத் தேர்ந்தெடுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2521"/>
         <source>Draw polygonal and curved lines.</source>
-        <translation>折れ線と曲線を描画します。</translation>
+        <translation>பலகோண மற்றும் வளைந்த கோடுகளை வரையவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2521"/>
@@ -4657,159 +4125,239 @@ selected</source>
         <location filename="../src/gui/map/map_editor.cpp" line="2527"/>
         <location filename="../src/gui/map/map_editor.cpp" line="2529"/>
         <source>Select a line, area or combined symbol to be able to use this tool.</source>
-        <translation>このツールを有効にするには、ライン記号/エリア記号/組み合わせ記号を選択してください。</translation>
+        <translation>இந்த கருவியைப் பயன்படுத்த ஒரு வரி, பகுதி அல்லது ஒருங்கிணைந்த சின்னத்தைத் தேர்ந்தெடுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2523"/>
         <source>Draw circles and ellipses.</source>
-        <translation>円と楕円を描画します。</translation>
+        <translation>வட்டங்கள் மற்றும் நீள்வட்டங்களை வரையவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2527"/>
         <source>Draw paths free-handedly.</source>
-        <translation>フリーハンドでパスを描画します。</translation>
+        <translation>பாதைகளை இலவசமாக வரையவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2529"/>
         <source>Fill bounded areas.</source>
-        <translation>閉じられたエリアを塗りつぶします。</translation>
-    </message>
-    <message>
-        <source>Deletes the selected object(s).</source>
-        <translation type="vanished">選択したオブジェクトを削除します。</translation>
+        <translation>எல்லைக்குட்பட்ட பகுதிகளை நிரப்பவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2611"/>
         <source>Set the direction of area fill patterns or point objects.</source>
-        <translation>エリアフィルパターンまたはポイントオブジェクトの方向をセットします。</translation>
+        <translation>பகுதி நிரப்பு வடிவங்கள் அல்லது புள்ளி பொருள்களின் திசையை அமைக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2611"/>
         <source>Select an area object with rotatable fill pattern or a rotatable point object to activate this tool.</source>
-        <translation>このツールを有効にするには、回転可能なフィルパターンをもったエリアオブジェクト、または回転可能なポイントオブジェクトを選択してください。</translation>
+        <translation>இந்த கருவியை செயல்படுத்த சுழற்றக்கூடிய நிரப்பு முறை அல்லது சுழற்றக்கூடிய புள்ளி பொருளைக் கொண்ட ஒரு பகுதி பொருளைத் தேர்ந்தெடுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2641"/>
         <source>Resulting symbol: %1 %2.</source>
-        <translation>結果の記号: %1 %2。</translation>
+        <translation>இதன் விளைவாக சின்னம்: %1 %2.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2642"/>
         <source>Select at least two area or path objects activate this tool.</source>
-        <translation>このツールを有効にするには、少なくとも 2 つのエリアまたはパスオブジェクトを選択してください。</translation>
+        <translation>குறைந்தது இரண்டு பகுதி அல்லது பாதை பொருள்கள் இந்த கருவியை செயல்படுத்தவும் என்பதைத் தேர்ந்தெடுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2644"/>
         <source>Unify overlapping objects.</source>
-        <translation>重なり合ったオブジェクトを結合します。</translation>
+        <translation>ஒன்றுடன் ஒன்று பொருள்களை ஒன்றிணைக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2646"/>
         <source>Remove all parts which are not overlaps with the first selected object.</source>
-        <translation>最初に選択したオブジェクトと重ならない要素をすべて削除します。</translation>
+        <translation>முதல் தேர்ந்தெடுக்கப்பட்ட பொருளுடன் ஒன்றுடன் ஒன்று இல்லாத அனைத்து பகுதிகளையும் அகற்றவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2648"/>
         <source>Remove overlapped parts of the first selected object.</source>
-        <translation>最初に選択したオブジェクトと重なった要素を削除します。</translation>
+        <translation>முதலில் தேர்ந்தெடுக்கப்பட்ட பொருளின் ஒன்றுடன் ஒன்று பகுதிகளை அகற்று.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2650"/>
         <source>Remove all parts which overlap the first selected object.</source>
-        <translation>最初に選択したオブジェクトと重なった要素をすべて削除します。</translation>
+        <translation>முதல் தேர்ந்தெடுக்கப்பட்ட பொருளை ஒன்றுடன் ஒன்று சேர்க்கும் அனைத்து பகுதிகளையும் அகற்றவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2654"/>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
-        <translation>エリアの穴を一緒にマージ、またはオブジェクトの境界と穴をマージして、この要素を切り取ります。</translation>
+        <translation>பகுதி துளைகளை ஒன்றாக இணைக்கவும், அல்லது இந்த பகுதியை வெட்ட பொருள் எல்லையுடன் துளைகளை ஒன்றிணைக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2654"/>
         <source>Select one area object with holes to activate this tool.</source>
-        <translation>穴のあるエリア オブジェクトを 1 つ選択して、このツールを有効にします。</translation>
+        <translation>இந்த கருவியை செயல்படுத்த துளைகளுடன் ஒரு பகுதி பொருளைத் தேர்ந்தெடுக்கவும்.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="2659"/>
+        <source>Create a cutout of some objects or the whole map.</source>
+        <translation>சில பொருள்களின் கட்அவுட்டை அல்லது முழு வரைபடத்தையும் உருவாக்கவும்.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="2659"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2661"/>
+        <source>Select a closed path object as cutout shape to activate this tool.</source>
+        <translation>இந்த கருவியை செயல்படுத்த ஒரு மூடிய பாதை பொருளை கட்அவுட் வடிவமாகத் தேர்ந்தெடுக்கவும்.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="2661"/>
+        <source>Cut away some objects or everything in a limited area.</source>
+        <translation>சில பொருள்கள் அல்லது எல்லாவற்றையும் ஒரு வரையறுக்கப்பட்ட பகுதியில் வெட்டுங்கள்.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="2680"/>
+        <source>Places evenly spaced point objects along an existing path object</source>
+        <translation>ஏற்கனவே உள்ள பாதை பொருளுடன் சமமாக இடைவெளி கொண்ட புள்ளி பொருள்களை இடங்கள்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="2680"/>
+        <source>Select at least one path object and a single point symbol to activate this tool.</source>
+        <translation>இந்த கருவியை செயல்படுத்த குறைந்தது ஒரு பாதை பொருள் மற்றும் ஒற்றை புள்ளி சின்னத்தைத் தேர்ந்தெடுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3408"/>
         <source>Merging holes failed.</source>
-        <translation>穴のマージに失敗しました。</translation>
+        <translation>துளைகளை ஒன்றிணைப்பது தோல்வியடைந்தது.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3661"/>
         <source>Clear temporary markers</source>
-        <translation>一時的なマーカーをクリア</translation>
+        <translation>தற்காலிக குறிப்பான்களை அழிக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3661"/>
         <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
-        <translation>一時的な GPS マーカーをすべて削除してもよろしいですか? これは元に戻すことができません。</translation>
+        <translation>எல்லா தற்காலிக சி.பி.எச் குறிப்பான்களையும் நீக்க விரும்புகிறீர்களா? இதை செயல்தவிர்க்க முடியாது.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3776"/>
         <source>Merge this part with</source>
-        <translation>この地図パートをマージ</translation>
+        <translation>இந்த பகுதியை ஒன்றிணைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3783"/>
         <source>Move selected objects to</source>
-        <translation>選択したオブジェクトを移動</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட பொருள்களை நகர்த்தவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3837"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3897"/>
         <source>Enter the name of the map part:</source>
-        <translation>地図パートの名前を入力:</translation>
+        <translation>வரைபட பகுதியின் பெயரை உள்ளிடவும்:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3913"/>
         <source>Switched to map part &apos;%1&apos;.</source>
-        <translation>地図パート &apos;%1&apos; に切り替えました。</translation>
+        <translation>&apos;%1&apos; என்ற வரைபடத்திற்கு மாறியது.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3941"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3973"/>
         <source>Merge map parts</source>
-        <translation>地図パートをマージ</translation>
+        <translation>வரைபட பாகங்களை ஒன்றிணைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3942"/>
         <source>Do you want to move all objects from map part &quot;%1&quot; to &quot;%2&quot;, and to remove &quot;%1&quot;?</source>
-        <translation>すべてのオブジェクトを地図パート &quot;%1&quot; から &quot;%2&quot; に移動して、&quot;%1&quot; を削除しますか?</translation>
+        <translation>வரைபடப் பகுதியிலிருந்து &quot;%1&quot; இலிருந்து &quot;%2&quot; க்கு எல்லா பொருட்களையும் நகர்த்த விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3974"/>
         <source>Do you want to move all objects to map part &quot;%1&quot;, and to remove all other map parts?</source>
-        <translation>すべてのオブジェクトを地図パート &quot;%1&quot; に移動して、他の地図パートをすべて削除しますか?</translation>
+        <translation>பகுதி &quot;%1&quot; ஐ வரைபடமாக்கவும், மற்ற எல்லா வரைபட பகுதிகளையும் அகற்றவும் எல்லா பொருட்களையும் நகர்த்த விரும்புகிறீர்களா?</translation>
     </message>
     <message>
-        <source>Import %1, GPX, OSM or DXF file</source>
-        <translation type="vanished">%1、GPX、OSM、DXFファイルをインポート</translation>
+        <location filename="../src/gui/map/map_editor.cpp" line="4276"/>
+        <source>Nothing to import.</source>
+        <translation>இறக்குமதி செய்ய எதுவும் இல்லை.</translation>
     </message>
     <message>
-        <source>Cannot import the selected map file because it could not be loaded.</source>
-        <translation type="vanished">選択された地図はインポートできません。このファイルを読み込むことができませんでした。</translation>
+        <location filename="../src/gui/map/map_editor.cpp" line="4288"/>
+        <source>Question</source>
+        <translation>கேள்வி</translation>
     </message>
     <message>
-        <source>Draw circles.</source>
-        <translation type="obsolete">円を描画します。</translation>
+        <location filename="../src/gui/map/map_editor.cpp" line="4289"/>
+        <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
+
+Rescale the imported data?</source>
+        <translation>இறக்குமதி செய்யப்பட்ட தரவின் அளவு 1:%1 ஆகும், இது இந்த வரைபடத்தின் அளவின் 1:%2 இலிருந்து வேறுபட்டது.
+
+ இறக்குமதி செய்யப்பட்ட தரவை மீட்டெடுக்கவா?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2525"/>
         <source>Draw rectangles.</source>
-        <translation>矩形を描画します。</translation>
+        <translation>செவ்வகங்களை வரையவும்.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="956"/>
+        <source>Print...</source>
+        <translation>அச்சிடுக ...</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="958"/>
+        <source>&amp;Image</source>
+        <translation>&amp; படம்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="966"/>
+        <source>&amp;PDF</source>
+        <translation>பி.டி.எஃப்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="997"/>
+        <source>Clear undo / redo history</source>
+        <translation>செயல்தவிர் / மீண்டும் வரலாற்றை அழிக்கவும்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="997"/>
+        <source>Clear the undo / redo history to reduce map file size.</source>
+        <translation>வரைபட கோப்பு அளவைக் குறைக்க செயல்தவிர் / மீண்டும் வரலாற்றை அழிக்கவும்.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1001"/>
+        <source>Pan</source>
+        <translation>பான்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1014"/>
+        <source>Overprinting simulation</source>
+        <translation>அதிகப்படியான அச்சிடுதல் உருவகப்படுத்துதல்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1038"/>
+        <source>Edit lines</source>
+        <translation>வரிகளைத் திருத்து</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1072"/>
+        <source>Convert to curves</source>
+        <translation>வளைவுகளுக்கு மாற்றவும்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1073"/>
+        <source>Simplify path</source>
+        <translation>பாதையை எளிதாக்குங்கள்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1146"/>
+        <source>&amp;Export as...</source>
+        <translation>&amp; ஏற்றுமதி ...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2531"/>
         <source>Write text on the map.</source>
-        <translation>地図上にテキストを挿入します。</translation>
+        <translation>வரைபடத்தில் உரையை எழுதுங்கள்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2531"/>
         <source>Select a text symbol to be able to use this tool.</source>
-        <translation>このツールを有効にするには、テキスト記号を選択してください。</translation>
-    </message>
-    <message>
-        <source>Duplicate the selected object(s).</source>
-        <translation type="vanished">選択中のオブジェクトを複製します。</translation>
+        <translation>இந்த கருவியைப் பயன்படுத்த ஒரு உரை சின்னத்தைத் தேர்ந்தெடுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2600"/>
@@ -4817,574 +4365,198 @@ selected</source>
         <location filename="../src/gui/map/map_editor.cpp" line="2604"/>
         <location filename="../src/gui/map/map_editor.cpp" line="2606"/>
         <source>Select at least one object to activate this tool.</source>
-        <translation>このツールを有効にするには、一つ以上のオブジェクトを選択してください。</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="596"/>
-        <source>Map saved</source>
-        <translation>地図を保存しました</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="610"/>
-        <source>Cannot export the map as
-&quot;%1&quot;
-because saving as %2 (.%3) is not supported.</source>
-        <translation>次の地図がエクスポートできません。
-&quot;%1&quot;
-%2 (.%3) の保存はサポートされていません。</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="622"/>
-        <location filename="../src/templates/paint_on_template_feature.cpp" line="339"/>
-        <source>Cannot save file
-%1:
-%2</source>
-        <translation>ファイルを保存できません
-%1:
-%2</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="631"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="693"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4204"/>
-        <location filename="../src/templates/paint_on_template_feature.cpp" line="84"/>
-        <source>Warning</source>
-        <translation>警告</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="632"/>
-        <source>The map export generated warnings.</source>
-        <translation>地図のエクスポート時に警告が発生しました。</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="694"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4204"/>
-        <source>The map import generated warnings.</source>
-        <translation>地図のインポート時に警告が発生しました。</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="908"/>
-        <source>Ctrl+A</source>
-        <translation>Ctrl+A</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="909"/>
-        <source>Ctrl+Shift+A</source>
-        <translation>Ctrl+Shift+A</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="910"/>
-        <source>Ctrl+I</source>
-        <translation>Ctrl+I</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="912"/>
-        <source>G</source>
-        <translation>G</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="925"/>
-        <source>E</source>
-        <translation>E</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="926"/>
-        <source>L</source>
-        <translation>L</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="927"/>
-        <source>S</source>
-        <translation>S</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="928"/>
-        <source>P</source>
-        <translation>P</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="929"/>
-        <source>O</source>
-        <translation>O</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="930"/>
-        <source>Ctrl+R</source>
-        <translation>Ctrl+R</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="931"/>
-        <source>F</source>
-        <translation>F</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="932"/>
-        <source>T</source>
-        <translation>T</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="934"/>
-        <source>D</source>
-        <translation>D</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="935"/>
-        <source>Ctrl+G</source>
-        <translation>Ctrl+G</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="936"/>
-        <source>Ctrl+F</source>
-        <translation>Ctrl+F</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="937"/>
-        <source>Ctrl+D</source>
-        <translation>Ctrl+D</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="938"/>
-        <source>C</source>
-        <translation>C</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="939"/>
-        <source>R</source>
-        <translation>R</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="940"/>
-        <source>Z</source>
-        <translation>Z</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="941"/>
-        <source>K</source>
-        <translation>K</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="942"/>
-        <source>H</source>
-        <translation>H</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="943"/>
-        <source>M</source>
-        <translation>M</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="944"/>
-        <source>U</source>
-        <translation>U</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="945"/>
-        <source>X</source>
-        <translation type="unfinished">X</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="946"/>
-        <source>N</source>
-        <translation>N</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="947"/>
-        <source>Ctrl+M</source>
-        <translation>Ctrl+M</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="960"/>
-        <source>&amp;KMZ</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1004"/>
-        <source>Keep my location on screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1018"/>
-        <source>Symbol set ID...</source>
-        <translation>記号セット ID...</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1018"/>
-        <source>Edit the symbol set ID</source>
-        <translation>記号セット ID を編集</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1020"/>
-        <source>Load CRT file...</source>
-        <translation>CRT ファイルを読み込む...</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1020"/>
-        <source>Assign new symbols by cross-reference table</source>
-        <translation>相互参照テーブルで、新しい記号を割り当てる</translation>
-    </message>
-    <message>
-        <source>Import %1 or GPX file</source>
-        <translation type="vanished">%1 または GPX ファイルのインポート</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4276"/>
-        <source>Nothing to import.</source>
-        <translation>インポートするものがありません。</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4288"/>
-        <source>Question</source>
-        <translation>質問</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4289"/>
-        <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
-
-Rescale the imported data?</source>
-        <translation>インポートされた地図の縮尺 1:%1 と、この地図の縮尺 1:%2 が異なります。
-
-インポートされた地図の縮尺を変更しますか?</translation>
-    </message>
-    <message>
-        <source>Tag Selection</source>
-        <translation type="vanished">タグ選択</translation>
-    </message>
-    <message>
-        <source>Show/Hide the tag selection window</source>
-        <translation type="vanished">タグ選択ウィンドウの表示/非表示</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1319"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1324"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1457"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3769"/>
-        <source>Map parts</source>
-        <translation>地図パート</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1411"/>
-        <source>Select symbol</source>
-        <translation>記号を選択</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1451"/>
-        <source>Hide top bar</source>
-        <translation>上部のバーを非表示</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1454"/>
-        <source>Show top bar</source>
-        <translation>上部のバーを表示</translation>
+        <translation>இந்த கருவியை செயல்படுத்த குறைந்தது ஒரு பொருளையாவது தேர்ந்தெடுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2615"/>
         <source>Switch the direction of symbols on line objects.</source>
-        <translation>ラインオブジェクト上の記号の向きを反転します。</translation>
+        <translation>வரி பொருள்களில் சின்னங்களின் திசையை மாற்றவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2615"/>
         <location filename="../src/gui/map/map_editor.cpp" line="2617"/>
         <source>Select at least one line object to activate this tool.</source>
-        <translation>このツールを有効にするには、一つ以上のラインオブジェクトを選択してください。</translation>
+        <translation>இந்த கருவியை செயல்படுத்த குறைந்தது ஒரு வரி பொருளையாவது தேர்ந்தெடுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2617"/>
         <source>Connect endpoints of paths which are close together.</source>
-        <translation>近接するパスの終点を接続します。</translation>
-    </message>
-    <message>
-        <source>Cut the selected object(s) into smaller parts.</source>
-        <translation type="vanished">選択中のオブジェクトを分割します。</translation>
+        <translation>ஒன்றாக நெருக்கமான பாதைகளின் இறுதிப் புள்ளிகளை இணைக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2621"/>
         <source>Select at least one line or area object to activate this tool.</source>
-        <translation>このツールを有効にするには、一つ以上のラインオブジェクトまたはエリアオブジェクトを選択してください。</translation>
+        <translation>இந்த கருவியை செயல்படுத்த குறைந்தது ஒரு வரி அல்லது பகுதி பொருளையாவது தேர்ந்தெடுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2630"/>
         <source>Cut a hole into the selected area object.</source>
-        <translation>選択中のエリアオブジェクトに穴をあけます。</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட பகுதி பொருளில் ஒரு துளை வெட்டுங்கள்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2630"/>
         <source>Select a single area object to activate this tool.</source>
-        <translation>このツールを有効にするには、エリアオブジェクトを一つ選択してください。</translation>
-    </message>
-    <message>
-        <source>Rotate the selected object(s).</source>
-        <translation type="vanished">選択中のオブジェクトを回転します。</translation>
-    </message>
-    <message>
-        <source>Scale the selected object(s).</source>
-        <translation type="vanished">選択中のオブジェクトのスケールを変更します。</translation>
-    </message>
-    <message>
-        <source>Unify overlapping areas.</source>
-        <translation type="vanished">重なりのあるエリアオブジェクトを結合します。</translation>
-    </message>
-    <message>
-        <source>Select at least two area objects with the same symbol to activate this tool.</source>
-        <translation type="vanished">このツールを有効にするには、同じ記号を使用した二つ以上の.オブジェクトを選択してください。</translation>
-    </message>
-    <message>
-        <source>Intersect the first selected area object with all other selected overlapping areas.</source>
-        <translation type="vanished">重なったエリアの共通部分だけを出現させます。</translation>
-    </message>
-    <message>
-        <source>Subtract all other selected area objects from the first selected area object.</source>
-        <translation type="vanished">重なったエリアを片方のオブジェクトから切り取ります。</translation>
-    </message>
-    <message>
-        <source>Select at least two area objects to activate this tool.</source>
-        <translation type="vanished">このツールを有効にするには、二つ以上のオブジェクトを選択してください。</translation>
-    </message>
-    <message>
-        <source>Calculate nonoverlapping parts of areas.</source>
-        <translation type="vanished">重なったエリアを取り除きます。</translation>
+        <translation>இந்த கருவியை செயல்படுத்த ஒற்றை பகுதி பொருளைத் தேர்ந்தெடுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2623"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
-        <translation>直線セグメントからなるパスを滑らかなベジェスプラインに変換します。</translation>
+        <translation>நேரான பகுதிகளால் செய்யப்பட்ட பாதைகளை மென்மையான பெசியர் ச்ப்லைன்களாக மாற்றவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2623"/>
         <location filename="../src/gui/map/map_editor.cpp" line="2625"/>
         <source>Select a path object to activate this tool.</source>
-        <translation>このツールを有効にするには、パスオブジェクトを選択してください。</translation>
+        <translation>இந்த கருவியை செயல்படுத்த ஒரு பாதை பொருளைத் தேர்ந்தெடுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2625"/>
         <source>Reduce the number of points in path objects while trying to retain their shape.</source>
-        <translation>パスオブジェクトの形状を維持しながら、ポイントの数を減らします。</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2659"/>
-        <source>Create a cutout of some objects or the whole map.</source>
-        <translation>いくつかのオブジェクトまたは地図全体の切り抜きを作成します。</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2659"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2661"/>
-        <source>Select a closed path object as cutout shape to activate this tool.</source>
-        <translation>切り抜きの形状として閉じられたパスオブジェクトを選択して、このツールを有効にします。</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2661"/>
-        <source>Cut away some objects or everything in a limited area.</source>
-        <translation>限定したエリアのいくつかのオブジェクトまたはすべてを切り取ります。</translation>
-    </message>
-    <message>
-        <source>Switches the symbol of the selected object(s) to the selected symbol.</source>
-        <translation type="vanished">選択中のオブジェクトの記号を、選択中の記号に置き換えます。</translation>
+        <translation>அவற்றின் வடிவத்தைத் தக்கவைக்க முயற்சிக்கும்போது பாதை பொருள்களின் புள்ளிகளின் எண்ணிக்கையைக் குறைக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2675"/>
         <location filename="../src/gui/map/map_editor.cpp" line="2677"/>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
-        <translation>このツールを有効にするには、一つ以上のオブジェクトと、それと置き換え可能な別の記号を選択してください。</translation>
-    </message>
-    <message>
-        <source>Fill the selected line(s) or create a border for the selected area(s).</source>
-        <translation type="vanished">選択中のラインオブジェクトを塗りつぶし、または選択中のエリアオブジェクトを縁取りします。</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2680"/>
-        <source>Places evenly spaced point objects along an existing path object</source>
-        <translation>既存のパスオブジェクトに沿って、均等に間隔をあけてポイントオブジェクトを配置</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2680"/>
-        <source>Select at least one path object and a single point symbol to activate this tool.</source>
-        <translation>少なくとも 1 つのパスオブジェクトと単一のポイント記号を選択して、このツールを有効にします。</translation>
-    </message>
-    <message>
-        <source>%1 object(s) duplicated</source>
-        <translation type="vanished">%1 個のオブジェクトが複製されました</translation>
+        <translation>இந்த கருவியை செயல்படுத்த குறைந்தது ஒரு பொருளையும் பொருத்தமான, வெவ்வேறு சின்னத்தையும் தேர்ந்தெடுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3006"/>
         <source>Object selection</source>
-        <translation>オブジェクトの選択</translation>
-    </message>
-    <message>
-        <source>No objects were selected because there are no objects with the selected symbol(s).</source>
-        <translation type="vanished">オブジェクトは選択されませんでした。選択中の記号を使用したオブジェクトがありません。</translation>
+        <translation>பொருள் தேர்வு</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3367"/>
         <source>Measure</source>
-        <translation>測定</translation>
+        <translation>அளவீடு</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3381"/>
         <source>Unification failed.</source>
-        <translation>エリアの論理和が失敗しました。</translation>
+        <translation>ஒருங்கிணைப்பு தோல்வியடைந்தது.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3387"/>
         <source>Intersection failed.</source>
-        <translation>エリアの論理積が失敗しました。</translation>
+        <translation>குறுக்குவெட்டு தோல்வியடைந்தது.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3393"/>
         <source>Difference failed.</source>
-        <translation>エリアの論理差が失敗しました。</translation>
+        <translation>வேறுபாடு தோல்வியடைந்தது.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3399"/>
         <source>XOr failed.</source>
-        <translation>エリアの排他的論理和が失敗しました。</translation>
+        <translation>Xor தோல்வியுற்றது.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3858"/>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects?</source>
-        <translation>地図パート「%1」と、そのすべてのオブジェクトを削除しますか?</translation>
-    </message>
-    <message>
-        <source>Paint free-handedly on a template</source>
-        <translation type="vanished">テンプレート上にフリーハンドで書き込みをします</translation>
-    </message>
-    <message>
-        <source>Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button</source>
-        <translation type="vanished">テンプレート上にフリーハンドで書き込みをします。書き込み可能なテンプレートを読み込んで、このボタンを有効にしてください</translation>
-    </message>
-    <message>
-        <source>Import DXF or GPX file</source>
-        <translation type="obsolete">DXFファイル、GBXファイルをインポート</translation>
+        <translation>வரைபட பகுதி &quot;%1&quot; மற்றும் அதன் அனைத்து பொருட்களையும் அகற்ற விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4126"/>
         <source>Importable files</source>
-        <translation>インポート可能なファイル</translation>
+        <translation>இறக்குமதி செய்யக்கூடிய கோப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4126"/>
         <source>All files</source>
-        <translation>すべてのファイル</translation>
-    </message>
-    <message>
-        <source>Import OMAP, OCD, GPX, OSM or DXF file</source>
-        <translation type="obsolete">OMAP, OCD, GPX, OSM or DXF ファイルをインポート</translation>
+        <translation>அனைத்து கோப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4168"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
-        <translation>ファイルをインポートできません。このファイル形式はサポートされていません。</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட கோப்பை இறக்குமதி செய்ய முடியாது, ஏனெனில் அதன் கோப்பு வடிவம் ஆதரிக்கப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1063"/>
         <source>Rotate objects</source>
-        <translation>オブジェクトの回転</translation>
+        <translation>பொருள்களை சுழற்றுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1065"/>
         <source>Scale objects</source>
-        <translation>オブジェクトの拡大縮小</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1074"/>
-        <source>Clip area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1075"/>
-        <source>Erase area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1512"/>
-        <source>1x zoom</source>
-        <translation>1 倍ズーム</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1516"/>
-        <source>2x zoom</source>
-        <translation>2 倍ズーム</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1772"/>
-        <source>Export</source>
-        <translation>エクスポート</translation>
-    </message>
-    <message>
-        <source>Exported successfully to %1</source>
-        <translation type="obsolete">%1 へのエクスポートは成功しました</translation>
+        <translation>அளவிலான பொருள்கள்</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1893"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
         <translation>
-            <numerusform>%n オブジェクトを切り取りました</numerusform>
+            <numerusform>வெட்டு %n பொருள்</numerusform>
+            <numerusform>%N பொருள்களை வெட்டுங்கள்</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1945"/>
         <source>Copied %n object(s)</source>
         <translation>
-            <numerusform>%n オブジェクトをコピーしました</numerusform>
+            <numerusform>%N பொருள் நகலெடுக்கப்பட்டது</numerusform>
+            <numerusform>%N பொருள்களை நகலெடுத்தது</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1985"/>
         <source>Pasted %n object(s)</source>
         <translation>
-            <numerusform>%n オブジェクトを貼り付けました</numerusform>
+            <numerusform>ஒட்டப்பட்ட %n பொருள்</numerusform>
+            <numerusform>ஒட்டப்பட்ட %n பொருள்கள்</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2600"/>
         <source>Deletes the selected objects.</source>
-        <translation>選択したオブジェクトを削除します。</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட பொருட்களை நீக்குகிறது.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2602"/>
         <source>Duplicate the selected objects.</source>
-        <translation>選択したオブジェクトを複製します。</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட பொருட்களை நகலெடுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2604"/>
         <source>Rotate the selected objects.</source>
-        <translation>選択したオブジェクトを回転します。</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட பொருட்களை சுழற்றுங்கள்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2606"/>
         <source>Scale the selected objects.</source>
-        <translation>選択したオブジェクトを拡大縮小します。</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட பொருள்களை அளவிடவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2621"/>
         <source>Cut the selected objects into smaller parts.</source>
-        <translation>選択したオブジェクトを小さな要素に切り取ります。</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட பொருட்களை சிறிய பகுதிகளாக வெட்டுங்கள்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2675"/>
         <source>Switches the symbol of the selected objects to the selected symbol.</source>
-        <translation>選択したオブジェクトの記号を選択した記号に切り替えます。</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட பொருள்களின் சின்னத்தை தேர்ந்தெடுக்கப்பட்ட சின்னத்திற்கு மாற்றுகிறது.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2677"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
-        <translation>選択した線の塗りつぶし、または選択した領域の枠線を作成します。</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட வரிகளை நிரப்பவும் அல்லது தேர்ந்தெடுக்கப்பட்ட பகுதிகளுக்கு ஒரு எல்லையை உருவாக்கவும்.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="2796"/>
         <source>Duplicated %n object(s)</source>
         <translation>
-            <numerusform>%n オブジェクトを複製しました</numerusform>
+            <numerusform>நகல் %n பொருள்</numerusform>
+            <numerusform>நகல் %n பொருள்கள்</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3006"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
-        <translation>選択した記号を持つオブジェクトがないため、オブジェクトは選択されませんでした。</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட சின்னங்களுடன் பொருள்கள் இல்லாததால் எந்தவொரு பொருளும் தேர்ந்தெடுக்கப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="237"/>
         <source>Background drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>பின்னணி வரைதல்</translation>
     </message>
 </context>
 <context>
@@ -5397,7 +4569,7 @@ Rescale the imported data?</source>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="772"/>
         <location filename="../src/tools/draw_freehand_tool.cpp" line="290"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Abort. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 中止します。 </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: கைவிடவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1228"/>
@@ -5405,19 +4577,19 @@ Rescale the imported data?</source>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="726"/>
         <location filename="../src/tools/edit_point_tool.cpp" line="770"/>
         <source>More: %1, %2</source>
-        <translation>もっと表示: %1, %2</translation>
+        <translation>மேலும்: %1, %2</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1225"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="542"/>
         <source>More: %1</source>
-        <translation>もっと表示: %1</translation>
+        <translation>மேலும்: %1</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1231"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="724"/>
         <source>More: %1, %2, %3</source>
-        <translation>もっと表示: %1, %2, %3</translation>
+        <translation>மேலும்: %1, %2, %3</translation>
     </message>
 </context>
 <context>
@@ -5425,32 +4597,32 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="53"/>
         <source>&amp;Find...</source>
-        <translation>検索(&amp;F)...</translation>
+        <translation>தேடு... (&amp;f)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="61"/>
         <source>Find &amp;next</source>
-        <translation>次を検索(&amp;n)</translation>
+        <translation>அடுத்ததை தேடு (&amp;n)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="99"/>
         <source>Find objects</source>
-        <translation>オブジェクトを検索</translation>
+        <translation>பொருள்களைக் கண்டறியவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="106"/>
         <source>&amp;Find next</source>
-        <translation>次を検索(&amp;F)</translation>
+        <translation>அடுத்து கண்டுபிடிக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="109"/>
         <source>Find &amp;all</source>
-        <translation>すべて検索(&amp;a)</translation>
+        <translation>கண்டுபிடி &amp; அனைத்தையும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="112"/>
         <source>Query editor</source>
-        <translation>クエリ エディター</translation>
+        <translation>வினவல் ஆசிரியர்</translation>
     </message>
 </context>
 <context>
@@ -5458,32 +4630,32 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_printer.cpp" line="529"/>
         <source>- Map -</source>
-        <translation>- 地図 -</translation>
+        <translation>- வரைபடம் -</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1353"/>
         <source>Processing separations of page %1...</source>
-        <translation>ページ %1 のセパレーションを処理中...</translation>
+        <translation>பக்கம் %1 இன் பிரிப்புகளை செயலாக்குவது ...</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1354"/>
         <source>Processing page %1...</source>
-        <translation>ページ %1 を処理中...</translation>
+        <translation>செயலாக்க பக்கம் %1 ...</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1404"/>
         <source>Canceled</source>
-        <translation>キャンセルされました</translation>
+        <translation>ரத்து செய்யப்பட்டது</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1408"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1413"/>
         <source>Finished</source>
-        <translation>終了しました</translation>
+        <translation>முடிந்தது</translation>
     </message>
 </context>
 <context>
@@ -5492,13 +4664,13 @@ Rescale the imported data?</source>
         <location filename="../src/gui/color_dialog.cpp" line="317"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="73"/>
         <source>Text source:</source>
-        <translation>テキストソース:</translation>
+        <translation>உரை ஆதாரம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="569"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="321"/>
         <source>Map (%1)</source>
-        <translation>地図 (%1)</translation>
+        <translation>வரைபடம் (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="570"/>
@@ -5506,33 +4678,29 @@ Rescale the imported data?</source>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="322"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="335"/>
         <source>undefined language</source>
-        <translation>未定義の言語</translation>
+        <translation>வரையறுக்கப்படாத மொழி</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="588"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="338"/>
         <source>Translation (%1)</source>
-        <translation>翻訳 (%1)</translation>
+        <translation>மொழிபெயர்ப்பு (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="640"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="212"/>
         <source>Before editing, the stored text will be replaced with the current translation. Do you want to continue?</source>
-        <translation>編集する前に、格納されたテキストは現在の翻訳に置き換えられます。続行しますか?</translation>
+        <translation>திருத்துவதற்கு முன், சேமிக்கப்பட்ட உரை தற்போதைய மொழிபெயர்ப்புடன் மாற்றப்படும். நீங்கள் தொடர விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="647"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="219"/>
         <source>After modifying the stored text, the translation may no longer be found. Do you want to continue?</source>
-        <translation>格納されたテキストを変更した後、翻訳が見られなくなるかもしれません。続行しますか?</translation>
+        <translation>சேமிக்கப்பட்ட உரையை மாற்றியமைத்த பிறகு, மொழிபெயர்ப்பு இனி கண்டுபிடிக்க முடியாது. நீங்கள் தொடர விரும்புகிறீர்களா?</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::MapWidget</name>
-    <message>
-        <source>Zoom: %1x</source>
-        <translation type="obsolete">ズーム: %1x</translation>
-    </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="649"/>
         <source>%1x</source>
@@ -5543,18 +4711,18 @@ Rescale the imported data?</source>
         <location filename="../src/gui/map/map_widget.cpp" line="671"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation>mm</translation>
+        <translation>மிமீ</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="687"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation>m</translation>
+        <translation>மீ</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="724"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="906"/>
@@ -5564,11 +4732,12 @@ Start by defining some colors:
 Select Symbols -&gt; Color window to
 open the color dialog and
 define the colors there.</source>
-        <translation>空白の地図です。
+        <translation>வெற்று வரைபடம்!
 
-まず色を定義するところから始めましょう。
-メニューバーの「記号」から「色ウィンドウ」を選択して
-色ダイアログを開き、色を定義してください。</translation>
+ சில வண்ணங்களை வரையறுப்பதன் மூலம் தொடங்கவும்:
+ சின்னங்கள் -&gt; வண்ண சாளரம் என்பதைத் தேர்ந்தெடுக்கவும்
+ வண்ண உரையாடலைத் திறக்கவும்
+ அங்குள்ள வண்ணங்களை வரையறுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="908"/>
@@ -5578,11 +4747,12 @@ Now define some symbols:
 Right-click in the symbol bar
 and select &quot;New symbol&quot;
 to create one.</source>
-        <translation>記号がありません！
+        <translation>சின்னங்கள் இல்லை!
 
-まずは記号を定義してみましょう。
-記号ウィンドウを右クリックして「新しい記号」を選択し、
-記号を作成してください。</translation>
+ இப்போது சில சின்னங்களை வரையறுக்கவும்:
+ குறியீட்டு பட்டியில் வலது சொடுக்கு செய்யவும்
+ &quot;புதிய அடையாளம்&quot; என்பதைத் தேர்ந்தெடுக்கவும்
+ ஒன்றை உருவாக்க.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="910"/>
@@ -5591,73 +4761,65 @@ to create one.</source>
 Start drawing or load a base map.
 To load a base map, click
 Templates -&gt; Open template...</source>
-        <translation>地図を描く準備ができました。
+        <translation>வரைய தயாராக!
 
-作図を開始、または下絵を読み込んでください。
-下絵を読み込むには、メニューバーの「テンプレート」から
-「テンプレートを開く...」を選択してください。</translation>
+ ஒரு அடிப்படை வரைபடத்தை வரையத் தொடங்கவும் அல்லது ஏற்றவும்.
+ அடிப்படை வரைபடத்தை ஏற்ற, சொடுக்கு செய்க
+ வார்ப்புருக்கள் -&gt; திறந்த வார்ப்புரு ...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="910"/>
         <source>Hint: Hold the middle mouse button to drag the map,
 zoom using the mouse wheel, if available.</source>
-        <translation>ヒント: マウスのホイールドラッグで地図を移動できます。
-マウスホイールを回転でズームすることができます。</translation>
+        <translation>குறிப்பு: வரைபடத்தை இழுக்க நடுத்தர சுட்டி பொத்தானைப் பிடித்துக் கொள்ளுங்கள்,
+ கிடைத்தால், சுட்டி சக்கரத்தைப் பயன்படுத்தி பெரிதாக்கவும்.</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::MeasureWidget</name>
     <message>
-        <source>No objects selected.</source>
-        <translation type="obsolete">オブジェクトが選択されていません。</translation>
-    </message>
-    <message>
-        <source>No objects selected.&lt;br/&gt;Draw or select a path&lt;br/&gt;to measure it.</source>
-        <translation type="obsolete">オブジェクトが選択されていません。&lt;br/&gt;測定する path を描画または選択してください。</translation>
-    </message>
-    <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="98"/>
         <source>Boundary length:</source>
-        <translation>輪郭線の長さ:</translation>
+        <translation>எல்லை நீளம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="136"/>
         <source>Length:</source>
-        <translation>長さ:</translation>
+        <translation>நீளம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="114"/>
         <source>Area:</source>
-        <translation>面積:</translation>
+        <translation>பகுதி:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="61"/>
         <source>No object selected.</source>
-        <translation>オブジェクトが選択されていません。</translation>
+        <translation>எந்த பொருளும் தேர்ந்தெடுக்கப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="65"/>
         <source>%1 objects selected.</source>
-        <translation>%1 オブジェクトが選択されています。</translation>
+        <translation>%1 பொருள்கள் தேர்ந்தெடுக்கப்பட்டன.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="75"/>
         <source>The selected object is not a path.</source>
-        <translation>選択中のオブジェクトがパスではありません。</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட பொருள் ஒரு பாதை அல்ல.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="99"/>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="137"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation>mm</translation>
+        <translation>மிமீ</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="100"/>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation>m</translation>
+        <translation>மீ</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="115"/>
@@ -5674,12 +4836,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="128"/>
         <source>This object is too small.</source>
-        <translation>オブジェクトが小さすぎます。</translation>
+        <translation>இந்த பொருள் மிகவும் சிறியது.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="129"/>
         <source>The minimimum area is %1 %2.</source>
-        <translation>最小の面積は %1 %2 です。</translation>
+        <translation>குறைந்தபட்ச பகுதி %1 %2 ஆகும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="129"/>
@@ -5689,46 +4851,22 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="132"/>
         <source>Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such.</source>
-        <translation>注意: エリアオブジェクトの輪郭線の長さと面積は、交差や穴あけがあると正しく測定されません。</translation>
+        <translation>குறிப்பு: தன்வய குறுக்கீடுகள் இல்லாவிட்டால் மட்டுமே எல்லை நீளம் மற்றும் பரப்பளவு சரியானது மற்றும் துளைகள் பயன்படுத்தப்படுகின்றன.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="150"/>
         <source>This line is too short.</source>
-        <translation>ラインが短すぎます。</translation>
+        <translation>இந்த வரி மிகக் குறைவு.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="151"/>
         <source>The minimum length is %1 %2.</source>
-        <translation>最小の長さは %1 %2 です。</translation>
-    </message>
-    <message>
-        <source>Selected object is not a path.</source>
-        <translation type="obsolete">選択中のオブジェクトが path ではありません。</translation>
-    </message>
-    <message>
-        <source>Boundary length</source>
-        <translation type="obsolete">境界線の長さ</translation>
-    </message>
-    <message>
-        <source>Length</source>
-        <translation type="obsolete">長さ</translation>
+        <translation>குறைந்தபட்ச நீளம் %1 %2 ஆகும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="151"/>
         <source>mm</source>
-        <translation>mm</translation>
-    </message>
-    <message>
-        <source>meters</source>
-        <translation type="obsolete">m</translation>
-    </message>
-    <message>
-        <source>Area</source>
-        <translation type="obsolete">面積</translation>
-    </message>
-    <message>
-        <source>&lt;br/&gt;&lt;u&gt;Warning&lt;/u&gt;: area is only correct if&lt;br/&gt;there are no self-intersections and&lt;br/&gt;holes are used as such.</source>
-        <translation type="obsolete">&lt;br/&gt;&lt;u&gt;注意&lt;/u&gt;:面積は、エリアオブジェクトに重なりや穴あけがあると正しく測定されません。</translation>
+        <translation>மிமீ</translation>
     </message>
 </context>
 <context>
@@ -5736,57 +4874,53 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="66"/>
         <source>Create new map</source>
-        <translation>新しい地図を作成</translation>
+        <translation>புதிய வரைபடத்தை உருவாக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="70"/>
         <source>Choose the scale and symbol set for the new map.</source>
-        <translation>新しい地図の縮尺と記号セットを選択してください。</translation>
+        <translation>புதிய வரைபடத்திற்கான அளவு மற்றும் அடையாளம் தொகுப்பைத் தேர்வுசெய்க.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="77"/>
         <source>Scale:  1 : </source>
-        <translation>縮尺:  1 : </translation>
+        <translation>அளவு: 1: </translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="82"/>
         <source>Symbol sets:</source>
-        <translation>記号セット:</translation>
+        <translation>அடையாளம் தொகுப்புகள்:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="87"/>
         <source>Only show symbol sets matching the selected scale</source>
-        <translation>選択中の縮尺に一致する記号セットのみ表示する</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">キャンセル</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட அளவோடு பொருந்தக்கூடிய குறியீட்டு தொகுப்புகளை மட்டுமே காட்டு</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="95"/>
         <source>Create</source>
-        <translation>作成</translation>
+        <translation>உருவாக்கு</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="171"/>
         <source>Empty symbol set</source>
-        <translation>空白の記号セット</translation>
+        <translation>வெற்று அடையாளம் தொகுப்பு</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="209"/>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="264"/>
         <source>Load symbol set from a file...</source>
-        <translation>ファイルから記号セットを読み込む...</translation>
+        <translation>ஒரு கோப்பிலிருந்து அமைக்கப்பட்ட சின்னத்தை ஏற்றவும் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="260"/>
         <source>All symbol set files</source>
-        <translation>すべての記号セットファイル</translation>
+        <translation>அனைத்து குறியீட்டு கோப்புகளையும் அமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="262"/>
         <source>All files</source>
-        <translation>すべてのファイル</translation>
+        <translation>அனைத்து கோப்புகள்</translation>
     </message>
 </context>
 <context>
@@ -5795,61 +4929,61 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/core/objects/object_query.cpp" line="360"/>
         <source>is</source>
         <extracomment>Very short label</extracomment>
-        <translation>＝</translation>
+        <translation>என்பது</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="363"/>
         <source>is not</source>
         <extracomment>Very short label</extracomment>
-        <translation>≠</translation>
+        <translation>இல்லை</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="366"/>
         <source>contains</source>
         <extracomment>Very short label</extracomment>
-        <translation>含む</translation>
+        <translation>கொண்டுள்ளது</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="369"/>
         <source>Search</source>
         <extracomment>Very short label</extracomment>
-        <translation>検索</translation>
+        <translation>தேடல்</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="372"/>
         <source>Text</source>
         <extracomment>Very short label</extracomment>
-        <translation>テキスト</translation>
+        <translation>உரை</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="376"/>
         <source>and</source>
         <extracomment>Very short label</extracomment>
-        <translation>かつ</translation>
+        <translation>மற்றும்</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="379"/>
         <source>or</source>
         <extracomment>Very short label</extracomment>
-        <translation>または</translation>
+        <translation>அல்லது</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="382"/>
         <source>not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>இல்லை</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="386"/>
         <source>Symbol</source>
         <extracomment>Very short label</extracomment>
-        <translation>記号</translation>
+        <translation>அடையாளம்</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="390"/>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
-        <translation>無効</translation>
+        <translation>செல்லுபடியாகாத</translation>
     </message>
 </context>
 <context>
@@ -5857,130 +4991,126 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="625"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">エンコード &apos;%1&apos; は使用できません。設定を確認してください。</translation>
+        <translation>&apos;%1&apos; குறியாக்கம் கிடைக்கவில்லை. அமைப்புகளை சரிபார்க்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="654"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation>バージョン %1 の OCD ファイルはサポートされていません!</translation>
+        <translation>பதிப்பு %1 இன் ஒ.சி.டி கோப்புகள் ஆதரிக்கப்படவில்லை!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="738"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="749"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation>座標は、OCAD 8 描画領域に収まるように調整されます (-2 m ... 2 m)。</translation>
+        <translation>OCAD 8 வரைதல் பகுதிக்கு (-2 மீ ... 2 மீ) பொருந்தும் வகையில் ஆயத்தொகுப்புகள் சரிசெய்யப்படுகின்றன.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="759"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation>一部の座標が OCAD 8 描画領域外に残っています。 OCAD で到達できない可能性があります。</translation>
+        <translation>சில ஒருங்கிணைப்புகள் OCAD 8 வரைதல் பகுதிக்கு வெளியே உள்ளன. அவர்கள் OCAD இல் அணுக முடியாதவர்களாக இருக்கலாம்.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="793"/>
         <source>The georeferencing cannot be saved in OCD version 8.</source>
-        <translation>ジオリファレンスは OCD バージョン 8 で保存できません。</translation>
+        <translation>ஒ.சி.டி பதிப்பு 8 இல் புவிசார்மயமாக்கலை சேமிக்க முடியாது.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="843"/>
         <source>The map contains more than 24 spot colors which is not supported by OCD version 8.</source>
-        <translation>マップに、OCD バージョン 8 ではサポートされていない 24 色以上のスポットカラーが含まれています。</translation>
+        <translation>வரைபடத்தில் 24 க்கும் மேற்பட்ட ச்பாட் வண்ணங்கள் உள்ளன, இது ஒ.சி.டி பதிப்பு 8 ஆல் ஆதரிக்கப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="849"/>
         <source>The map contains more than 256 colors which is not supported by OCD version 8.</source>
-        <translation>マップに、OCD バージョン 8 ではサポートされていない 256 色以上の色が含まれています。</translation>
+        <translation>வரைபடத்தில் 256 க்கும் மேற்பட்ட வண்ணங்கள் உள்ளன, அவை ஒ.சி.டி பதிப்பு 8 ஆல் ஆதரிக்கப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="893"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="905"/>
         <source>Invalid spot color.</source>
-        <translation>スポットカラーが無効です。</translation>
+        <translation>தவறான ச்பாட் நிறம்.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1431"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1471"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished">エリア記号「%1」で、塗りつぶしパターンをスキップします。</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="obsolete">エリア記号「%1」に「シフト行」ポイントパターンを想定します。これは正しくない可能性もあります。</translation>
+        <translation>பகுதி சின்னத்தில் &quot;%1&quot;, நிரப்பு வடிவத்தைத் தவிர்க்கிறது.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1602"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2414"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">線の記号「%1」で、キャップ/結合の組み合わせを表すことはできません。</translation>
+        <translation>வரி சின்னத்தில் &quot;%1&quot;, தொப்பி/சேர கலவையை குறிக்க முடியாது.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1624"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished">線の記号「%1」で、破線グループを無視します。</translation>
+        <translation>வரி சின்னத்தில் &quot;%1&quot;, கோடு குழுவை புறக்கணிக்கிறது.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1636"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished">線の記号「%1」で、グループの破線の数を 2 に減らしました。</translation>
+        <translation>வரி சின்னத்தில் &quot;%1&quot;, ஒரு குழுவில் உள்ள கோடுகளின் எண்ணிக்கை 2 ஆகக் குறைக்கப்பட்டுள்ளது.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1731"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished">線の記号「%1」で、境界線を正しくエクスポートできません。</translation>
+        <translation>வரி சின்னத்தில் &quot;%1&quot;, எல்லைகளை சரியாக ஏற்றுமதி செய்ய முடியாது.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1918"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished">テキスト記号 %1: カスタム文字間隔が設定され、その実装はまだ OCAD の動作と一致しません</translation>
+        <translation>உரை சின்னத்தில் %1: தனிப்பயன் எழுத்து இடைவெளி அமைக்கப்பட்டுள்ளது, அதன் செயல்படுத்தல் OCAD இன் நடத்தைக்கு இன்னும் பொருந்தவில்லை</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1934"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished">テキスト記号 %1 で: 下線を無視しています</translation>
+        <translation>உரை சின்னத்தில் %1: அடிக்கோடிட்டுக் காட்டுவதை புறக்கணித்தல்</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1937"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished">テキスト記号 %1 で: カーニングを無視しています</translation>
+        <translation>உரை சின்னத்தில் %1: கெர்னிங்கை புறக்கணித்தல்</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1954"/>
         <source>In text symbol %1: exporting only %2 custom tabulator positions</source>
-        <translation type="unfinished"></translation>
+        <translation>உரை சின்னத்தில் %1: %2 தனிப்பயன் டேபுலேட்டர் நிலைகளை மட்டுமே ஏற்றுமதி செய்கிறது</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2332"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished">結合シンボル %1: インデックス %2 にサポートされていないサブシンボル。</translation>
+        <translation>ஒருங்கிணைந்த சின்னத்தில் %1: குறியீட்டு %2 இல் ஆதரிக்கப்படாத துணை.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2540"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="unfinished">エリアオブジェクトの塗りつぶしパターンのシフトをエクスポートできません</translation>
+        <translation>ஒரு பகுதி பொருளுக்கு நிரப்பு முறை மாற்றத்தை ஏற்றுமதி செய்ய முடியவில்லை</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2752"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation>見つからないテンプレートの正しい位置を保存できません: &quot;%1&quot;</translation>
+        <translation>காணாமல் போன வார்ப்புருவின் சரியான நிலையை சேமிக்க முடியவில்லை: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2737"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation>テンプレートをエクスポートできません: ファイル形式 &quot;%1&quot; はまだサポートされていません</translation>
+        <translation>வார்ப்புருவை ஏற்றுமதி செய்ய முடியவில்லை: &quot;%1&quot; இன் கோப்பு வகை இன்னும் ஆதரிக்கப்படவில்லை</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2797"/>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; வார்ப்புருவின் தனிப்பயன் நிலைப்பாட்டை சேமிக்க முடியாது.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="3128"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
-        <translation>テキストが &apos;|&apos;) で切り捨てられました: %1</translation>
+        <translation>உரை &apos;|&apos; இல் துண்டிக்கப்பட்டது): %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_georef_fields.cpp" line="882"/>
         <source>Could not translate coordinate reference system &apos;%1:%2&apos;.</source>
-        <translation>座標参照系 &apos;%1:%2&apos; を変換できませんでした。</translation>
+        <translation>ஒருங்கிணைப்பு குறிப்பு அமைப்பை &apos;%1:%2&apos; மொழிபெயர்க்க முடியவில்லை.</translation>
     </message>
 </context>
 <context>
@@ -5988,234 +5118,214 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="252"/>
         <source>In line symbol %1 &apos;%2&apos;: %3</source>
-        <translation>線の記号 %1 &apos;%2&apos; で: %3</translation>
+        <translation>வரி சின்னத்தில் %1 &apos; %2&apos;: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="258"/>
         <source>In text symbol %1 &apos;%2&apos;: %3</source>
-        <translation>テキスト記号 %1 &apos;%2&apos; で: %3</translation>
+        <translation>உரை சின்னத்தில் %1 &apos; %2&apos;: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_georef_fields.cpp" line="730"/>
         <source>Could not load the coordinate reference system &apos;%1&apos;.</source>
-        <translation>座標参照系 &apos;%1&apos; を読み込みできませんでした。</translation>
-    </message>
-    <message>
-        <source>Spot color information was ignored.</source>
-        <translation type="vanished">スポット カラー情報は無視されました。</translation>
+        <translation>ஒருங்கிணைப்பு குறிப்பு அமைப்பை &apos;%1&apos; ஏற்ற முடியவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="787"/>
         <source>Unable to import symbol %1.%2 &quot;%3&quot;: %4</source>
-        <translation>記号 %1.%2 &quot;%3&quot; をインポートできません: %4</translation>
+        <translation>குறியீடை இறக்குமதி செய்ய முடியவில்லை %1. %2 &quot; %3&quot;: %4</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="791"/>
         <source>Unsupported type &quot;%1&quot;.</source>
-        <translation>サポートされていない種類 &quot;%1&quot;。</translation>
-    </message>
-    <message>
-        <source>Unable to import template: &quot;%1&quot; is not a supported template type.</source>
-        <translation type="vanished">テンプレートをインポートすることができません: &quot;%1&quot; はサポートされているテンプレートの種類ではありません。</translation>
+        <translation>ஆதரிக்கப்படாத வகை &quot;%1&quot;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1198"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1225"/>
         <source>Unsupported line style &apos;%1&apos;.</source>
-        <translation>サポートされていない線の修飾 &apos;%1&apos;。</translation>
-    </message>
-    <message>
-        <source>Different lengths for pointed caps at begin (%1 mm) and end (%2 mm) are not supported. Using %3 mm.</source>
-        <translation type="vanished">始点 (%1 mm) と終点 (%2 mm) で異なる長さの三角のキャップはサポートされていません。%3 mm を使用しています。</translation>
+        <translation>ஆதரிக்கப்படாத வரி பாணி &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1271"/>
         <source>The dash pattern cannot be imported correctly.</source>
-        <translation>破線パターンを正しくインポートできません。</translation>
+        <translation>கோடு வடிவத்தை சரியாக இறக்குமதி செய்ய முடியாது.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1286"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1318"/>
         <source>The dash pattern&apos;s end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation>破線パターンの終点の長さ (%1 mm) を正しくインポートできません。%2 mm を使用しています。</translation>
+        <translation>கோடு வடிவத்தின் இறுதி நீளம் (%1 மிமீ) சரியாக இறக்குமதி செய்ய முடியாது. %2 மிமீ பயன்படுத்துதல்.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1293"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1333"/>
         <source>The dash pattern&apos;s end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation>破線パターンの終点のギャップ (%1 mm) を正しくインポートできません。%2 mm を使用しています。</translation>
+        <translation>கோடு வடிவத்தின் இறுதி இடைவெளி (%1 மிமீ) சரியாக இறக்குமதி செய்ய முடியாது. %2 மிமீ பயன்படுத்துதல்.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1372"/>
         <source>Unsupported framing line style &apos;%1&apos;.</source>
-        <translation>サポートされていないフレームの線の修飾 &apos;%1&apos; です。</translation>
+        <translation>ஆதரிக்கப்படாத ஃப்ரேமிங் லைன் பாணி &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1443"/>
         <source>Skipped secondary point symbol.</source>
-        <translation>セカンダリ ポイント記号をスキップしました。</translation>
+        <translation>இரண்டாம் நிலை புள்ளி சின்னத்தைத் தவிர்த்தது.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1488"/>
         <source>Suppressing dash symbol at line ends.</source>
-        <translation>線の終点のダッシュ記号を抑制します。</translation>
-    </message>
-    <message>
-        <source>This symbol cannot be saved as a proper OCD symbol again.</source>
-        <translation type="vanished">この記号は、再度適切な OCD 記号として保存できません。</translation>
+        <translation>வரி முனைகளில் கோடு சின்னத்தை அடக்குதல்.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2275"/>
         <source>Justified alignment is not supported.</source>
-        <translation>両端揃えはサポートされていません。</translation>
+        <translation>நியாயமான சீரமைப்பு ஆதரிக்கப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2290"/>
         <source>Vertical alignment &apos;%1&apos; is not supported.</source>
-        <translation>縦方向の割り付け &apos;%1&apos; はサポートされていません。</translation>
+        <translation>செங்குத்து சீரமைப்பு &apos;%1&apos; ஆதரிக்கப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2262"/>
         <source>Ignoring custom weight (%1).</source>
-        <translation>カスタム ウェイト (%1) を無視します。</translation>
+        <translation>தனிப்பயன் எடையை புறக்கணித்தல் (%1).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2299"/>
         <source>Custom character spacing may be incorrect.</source>
-        <translation>カスタムの文字間隔が正しくない可能性があります。</translation>
+        <translation>தனிப்பயன் எழுத்து இடைவெளி தவறாக இருக்கலாம்.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2304"/>
         <source>Ignoring custom word spacing (%1 %).</source>
-        <translation>カスタムの単語間隔 (%1 %) を無視します。</translation>
+        <translation>தனிப்பயன் சொல் இடைவெளியை புறக்கணித்தல் ( %1 %).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2328"/>
         <source>Ignoring custom indents (%1/%2).</source>
-        <translation>カスタムの字下げ (%1/%2) を無視します。</translation>
+        <translation>தனிப்பயன் உள்தள்ளல்களைப் புறக்கணித்தல் (%1/%2).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2350"/>
         <source>Ignoring text framing (mode %1).</source>
-        <translation>テキスト フレーム (モード %1) を無視します。</translation>
+        <translation>உரை ஃப்ரேமிங் புறக்கணித்தல் (பயன்முறை %1).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1682"/>
         <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
-        <translation>ラインテキスト記号はまだサポートされていません。非表示として記号をマークします。</translation>
+        <translation>வரி உரை சின்னங்கள் இன்னும் ஆதரிக்கப்படவில்லை. குறியீட்டை மறைத்து வைத்திருக்கும்.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="113"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation>エンコード &apos;%1&apos; は使用できません。設定を確認してください。</translation>
+        <translation>&apos;%1&apos; குறியாக்கம் கிடைக்கவில்லை. அமைப்புகளை சரிபார்க்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="246"/>
         <source>In area symbol %1 &apos;%2&apos;: %3</source>
-        <translation>エリア記号 %1 &apos;%2&apos; で: %3</translation>
+        <translation>பகுதி சின்னத்தில் %1 &apos; %2&apos;: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="513"/>
         <source>Color &quot;%1&quot; is imported as special color &quot;Registration black&quot;.</source>
-        <translation>色 &quot;%1&quot; は特別色 &quot;登録ブラック&quot; としてインポートされます。</translation>
+        <translation>வண்ணம் &quot;%1&quot; சிறப்பு வண்ண &quot;பதிவு கருப்பு&quot; ஆக இறக்குமதி செய்யப்படுகிறது.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1501"/>
         <source> - main line</source>
-        <translation> - 主線</translation>
+        <translation> - முதன்மையான வரி</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1508"/>
         <source> - double line</source>
-        <translation> - 二重線</translation>
+        <translation> - இரட்டை வரி</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1515"/>
         <source> - framing</source>
-        <translation> - フレーミング</translation>
+        <translation> - ஃப்ரேமிங்</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1555"/>
         <source>The border of this symbol could not be loaded.</source>
-        <translation>この記号の境界を読み込みできませんでした。</translation>
+        <translation>இந்த சின்னத்தின் எல்லையை ஏற்ற முடியவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1666"/>
         <source>Skipping unsupported reference to point symbol &apos;%1.%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>புள்ளி சின்னத்திற்கு ஆதரிக்கப்படாத குறிப்பைத் தவிர்ப்பது &apos;%1.%2&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1880"/>
         <source>Unable to load object</source>
-        <translation>オブジェクトを読み込むことができません</translation>
+        <translation>பொருளை ஏற்ற முடியவில்லை</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1890"/>
         <source>Unable to import rectangle object</source>
-        <translation>矩形オブジェクトを読み込むことができません</translation>
+        <translation>செவ்வக பொருளை இறக்குமதி செய்ய முடியவில்லை</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1931"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation>テキスト記号をインポートしません。パスを把握できませんでした (npts=%1): %2</translation>
+        <translation>உரை சின்னத்தை இறக்குமதி செய்யாமல், பாதையை கண்டுபிடிக்க முடியவில்லை &apos;(npts = %1): %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2237"/>
         <source>Trying to import a text object with unknown coordinate format</source>
-        <translation>不明な座標形式でテキスト オブジェクトをインポートしようとしています</translation>
+        <translation>அறியப்படாத ஒருங்கிணைப்பு வடிவத்துடன் உரை பொருளை இறக்குமதி செய்ய முயற்சிக்கிறது</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2364"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2368"/>
         <source>Invalid data.</source>
-        <translation>無効なデータ。</translation>
+        <translation>தவறான தரவு.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2395"/>
         <source>Support for OCD version %1 files is experimental.</source>
-        <translation>OCD バージョン %1 ファイルのサポートは実験的です。</translation>
+        <translation>ஒ.சி.டி பதிப்பு %1 கோப்புகளுக்கான உதவி சோதனை.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2401"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation>バージョン %1 の OCD ファイルはサポートされていません!</translation>
+        <translation>பதிப்பு %1 இன் ஒ.சி.டி கோப்புகள் ஆதரிக்கப்படவில்லை!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="236"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation>色 ID が見つかりませんでした: %1。この色を無視します</translation>
+        <translation>வண்ண ஐடி காணப்படவில்லை: %1, இந்த நிறத்தை புறக்கணித்து</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::OgrFileExport</name>
     <message>
-        <source>Couldn&apos;t find a driver for file extension %1</source>
-        <translation type="vanished">ファイル拡張子 %1 のドライバーが見つかりませんでした</translation>
-    </message>
-    <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1955"/>
         <source>Failed to create dataset: %1</source>
-        <translation>データセットの作成に失敗しました: %1</translation>
+        <translation>தரவுத்தொகுப்பை உருவாக்குவதில் தோல்வி: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2000"/>
         <source>Failed to create layer: %2</source>
-        <translation>レイヤーの作成に失敗しました: %2</translation>
+        <translation>அடுக்கு உருவாக்கத் தவறிவிட்டது: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2138"/>
         <source>The map is not georeferenced. Local georeferencing only.</source>
-        <translation>マップはジオリファレンスされません。ローカルジオリファレンスのみ。</translation>
+        <translation>வரைபடம் புவிசார் அல்ல. உள்ளக புவிசார்மயமாக்கல் மட்டுமே.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2151"/>
         <source>Failed to properly export the georeferencing info. Local georeferencing only.</source>
-        <translation>ジオリファレンス情報を正しくエクスポートできませんでした。ローカルジオリファレンスのみ。</translation>
+        <translation>புவிசார் தகவல்களை சரியாக ஏற்றுமதி செய்வதில் தோல்வி. உள்ளக புவிசார்மயமாக்கல் மட்டுமே.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2161"/>
         <source>The %1 driver requires valid georefencing info.</source>
-        <translation>%1 ドライバーには、有効なジオリフェンシング情報が必要です。</translation>
+        <translation>%1 இயக்கிக்கு செல்லுபடியாகும் உலகம் செய்தி தேவை.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2236"/>
@@ -6223,17 +5333,17 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2325"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2371"/>
         <source>Failed to create feature in layer: %1</source>
-        <translation>レイヤーにフィーチャーを作成できませんでした: %1</translation>
+        <translation>அடுக்கில் அம்சத்தை உருவாக்கத் தவறிவிட்டது: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2381"/>
         <source>Failed to create layer %1: %2</source>
-        <translation>レイヤー %1 の作成に失敗しました: %2</translation>
+        <translation>அடுக்கு %1: %2 ஐ உருவாக்கத் தவறிவிட்டது</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2388"/>
         <source>Failed to create name field: %1</source>
-        <translation>名前フィールドの作成に失敗しました: %1</translation>
+        <translation>பெயர் புலத்தை உருவாக்குவதில் தோல்வி: %1</translation>
     </message>
 </context>
 <context>
@@ -6241,36 +5351,32 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="790"/>
         <source>Unable to setup &quot;%1&quot; SRS for GDAL: %2</source>
-        <translation>GDAL の &quot;%1&quot; SRS をセットアップできません: %2</translation>
-    </message>
-    <message>
-        <source>Purple</source>
-        <translation type="vanished">紫</translation>
+        <translation>GDAL க்கு &quot; %1&quot; SRS ஐ அமைக்க முடியவில்லை: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="726"/>
         <source>Point</source>
-        <translation>ポイント</translation>
+        <translation>புள்ளியம்</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="733"/>
         <source>Line</source>
-        <translation>線</translation>
+        <translation>வரி</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="742"/>
         <source>Area</source>
-        <translation>エリア</translation>
+        <translation>பகுதி</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="748"/>
         <source>Text</source>
-        <translation>テキスト</translation>
+        <translation>உரை</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="850"/>
         <source>Unable to load layer %1.</source>
-        <translation>レイヤー %1 を読み込みできません。</translation>
+        <translation>அடுக்கு %1 ஐ ஏற்ற முடியவில்லை.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gdal/ogr_file_format.cpp" line="900"/>
@@ -6280,45 +5386,46 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gdal/ogr_file_format.cpp" line="920"/>
         <source>Unable to load %n objects, reason: %1</source>
         <translation>
-            <numerusform>%n オブジェクトを読み込みできません。 理由: %1</numerusform>
+            <numerusform>%N பொருள்களை ஏற்ற முடியவில்லை, காரணம்: %1</numerusform>
+            <numerusform>%N பொருள்களை ஏற்ற முடியவில்லை, காரணம்: %1</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="901"/>
         <source>Empty geometry.</source>
-        <translation>空のジオメトリ。</translation>
+        <translation>வெற்று வடிவியல்.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="906"/>
         <source>Can&apos;t determine the coordinate transformation: %1</source>
-        <translation>座標変換を決定できません: %1</translation>
+        <translation>ஒருங்கிணைப்பு மாற்றத்தை தீர்மானிக்க முடியாது: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="911"/>
         <source>Failed to transform the coordinates.</source>
-        <translation>座標の変換に失敗しました。</translation>
+        <translation>ஆயங்களை மாற்றுவதில் தோல்வி.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="916"/>
         <source>Unknown or unsupported geometry type.</source>
-        <translation>不明なまたはサポートされていないジオメトリタイプ。</translation>
+        <translation>அறியப்படாத அல்லது ஆதரிக்கப்படாத வடிவியல் வகை.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="921"/>
         <source>Not enough coordinates.</source>
-        <translation>座標が不足しています。</translation>
+        <translation>போதுமான ஒருங்கிணைப்புகள் இல்லை.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="966"/>
         <source>Cannot use this spatial reference:
 %1</source>
-        <translation>この空間参照は使用できません:
-%1</translation>
+        <translation>இந்த இடஞ்சார்ந்த குறிப்பைப் பயன்படுத்த முடியாது:
+ %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1029"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation>地理空間データに、適切な空間参照がありません。</translation>
+        <translation>புவியியல் தரவுகளுக்கு பொருத்தமான இடஞ்சார்ந்த குறிப்பு இல்லை.</translation>
     </message>
 </context>
 <context>
@@ -6326,7 +5433,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_template.cpp" line="354"/>
         <source>Invalid template configuration.</source>
-        <translation type="unfinished"></translation>
+        <translation>தவறான வார்ப்புரு உள்ளமைவு.</translation>
     </message>
 </context>
 <context>
@@ -6334,7 +5441,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="306"/>
         <source>Template file exists: &apos;%1&apos;</source>
-        <translation>テンプレートファイルが存在します: &apos;%1&apos;</translation>
+        <translation>வார்ப்புரு கோப்பு உள்ளது: &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -6343,106 +5450,102 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="77"/>
         <source>Traditional</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>பாரம்பரிய</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="82"/>
         <source>Confetti Hybrid</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>கான்ஃபெட்டி கலப்பின</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="87"/>
         <source>Guacamole Full</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>குவாக்காமோல் முழு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="132"/>
         <source>Add color...</source>
-        <translation type="unfinished"></translation>
+        <translation>வண்ணத்தைச் சேர்க்கவும் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="133"/>
         <source>Remove</source>
-        <translation type="unfinished">削除</translation>
+        <translation>அகற்று</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="140"/>
         <source>Move Up</source>
-        <translation type="unfinished">上へ移動</translation>
+        <translation>மேலே செல்லுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="143"/>
         <source>Move Down</source>
-        <translation type="unfinished">下へ移動</translation>
+        <translation>கீழே செல்லுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="175"/>
         <source>Available palette presets</source>
-        <translation type="unfinished"></translation>
+        <translation>கிடைக்கும் தட்டு முன்னமைவுகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="187"/>
         <source>Custom string</source>
-        <translation type="unfinished"></translation>
+        <translation>தனிப்பயன் சரம்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="193"/>
         <source>Activate preset</source>
-        <translation type="unfinished"></translation>
+        <translation>முன்னமைவை செயல்படுத்தவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="197"/>
         <source>Copy</source>
-        <translation type="unfinished">コピー</translation>
+        <translation>நகலெடு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="199"/>
         <source>Paste</source>
-        <translation type="unfinished">貼り付け</translation>
+        <translation>ஒட்டு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="233"/>
         <source>Paint on template</source>
-        <translation type="unfinished">テンプレート上に書き込み</translation>
+        <translation>வார்ப்புருவில் வண்ணம் தீட்டவும்</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::PaintOnTemplateTool</name>
     <message>
-        <source>&lt;b&gt;Left mouse click and drag&lt;/b&gt; to paint, &lt;b&gt;Right mouse click and drag&lt;/b&gt; to erase</source>
-        <translation type="obsolete">&lt;b&gt;左クリックしながらドラッグ&lt;/b&gt;で書き込み、&lt;b&gt;右クリックしながらドラッグ&lt;/b&gt;で消去します</translation>
-    </message>
-    <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="178"/>
         <source>&lt;b&gt;Click and drag&lt;/b&gt;: Paint. &lt;b&gt;Right click and drag&lt;/b&gt;: Erase. </source>
-        <translation>&lt;b&gt;左クリックしながらドラッグ&lt;/b&gt;: ペイントします。&lt;b&gt;右クリックしながらドラッグ&lt;/b&gt;: 消去します。 </translation>
+        <translation>&lt;b&gt; சொடுக்கு செய்து இழுக்கவும் &lt;/b&gt;: பெயிண்ட். &lt;b&gt; வலது சொடுக்கு செய்து இழுக்கவும் &lt;/b&gt;: அழிக்கவும். </translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="181"/>
         <source>Color selection</source>
-        <translation>色を選択</translation>
+        <translation>வண்ண தேர்வு</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="226"/>
         <source>Erase</source>
-        <translation type="unfinished"></translation>
+        <translation>அழிக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="247"/>
         <source>Filled area</source>
-        <translation type="unfinished"></translation>
+        <translation>நிரப்பப்பட்ட பகுதி</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="269"/>
         <source>Solid</source>
-        <translation type="unfinished"></translation>
+        <translation>திடமான</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="270"/>
         <source>Pattern</source>
-        <translation type="unfinished">パターン</translation>
+        <translation>முறை</translation>
     </message>
 </context>
 <context>
@@ -6450,7 +5553,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/tools/pan_tool.cpp" line="80"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 地図を移動します。 </translation>
+        <translation>&lt;b&gt; இழுத்து &lt;/b&gt;: வரைபடத்தை நகர்த்தவும். </translation>
     </message>
 </context>
 <context>
@@ -6465,201 +5568,177 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::PointSymbolEditorTool</name>
     <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to add a coordinate, &lt;b&gt;Ctrl+Click&lt;/b&gt; to change the selected coordinate</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;で座標を追加、&lt;b&gt;Ctrl キーを押しながらクリック&lt;/b&gt;で、選択中の座標を変更します</translation>
-    </message>
-    <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="987"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: 座標を追加します。&lt;b&gt;%1 + クリック&lt;/b&gt;: 選択中の座標を変更します。 </translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt;: ஒரு ஒருங்கிணைப்பைச் சேர்க்கவும். &lt;b&gt;%1+கிளிக் &lt;/b&gt;: தேர்ந்தெடுக்கப்பட்ட ஒருங்கிணைப்பை மாற்றவும். </translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::PointSymbolEditorWidget</name>
     <message>
-        <source>Point editor</source>
-        <translation type="obsolete">ポイントエディタ</translation>
-    </message>
-    <message>
-        <source>Edit:</source>
-        <translation type="obsolete">編集:</translation>
-    </message>
-    <message>
-        <source>Elements:</source>
-        <translation type="obsolete">要素:</translation>
-    </message>
-    <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="105"/>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="100"/>
         <source>Always oriented to north (not rotatable)</source>
-        <translation>常に北に向けて正置 (回転禁止)</translation>
+        <translation>எப்போதும் வடக்கே நோக்குநிலை (சுழற்ற முடியாதது)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="108"/>
         <source>Elements</source>
-        <translation>要素</translation>
+        <translation>கூறுகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="120"/>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="946"/>
         <source>Point</source>
-        <translation>ポイント</translation>
+        <translation>புள்ளியம்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="121"/>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="948"/>
         <source>Line</source>
-        <translation>ライン</translation>
+        <translation>வரி</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="122"/>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="950"/>
         <source>Area</source>
-        <translation>エリア</translation>
+        <translation>பகுதி</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="125"/>
         <source>Center all elements</source>
-        <translation>すべての要素を中央寄せ</translation>
+        <translation>அனைத்து கூறுகளையும் நடுவண்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="127"/>
         <source>Current element</source>
-        <translation>現在の要素</translation>
+        <translation>தற்போதைய உறுப்பு</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="133"/>
         <source>Diameter &lt;b&gt;a&lt;/b&gt;:</source>
-        <translation>直径 &lt;b&gt;a&lt;/b&gt;:</translation>
+        <translation>விட்டம் &lt;b&gt; அ &lt;/b&gt;:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="134"/>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="140"/>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="168"/>
         <source>mm</source>
-        <translation>mm</translation>
+        <translation>மிமீ</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="136"/>
         <source>Inner color:</source>
-        <translation>インナーの色:</translation>
+        <translation>உள் நிறம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="139"/>
         <source>Outer width &lt;b&gt;b&lt;/b&gt;:</source>
-        <translation>アウター &lt;b&gt;b&lt;/b&gt;:</translation>
+        <translation>வெளிப்புற அகலம் &lt;b&gt; பி &lt;/b&gt;:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="142"/>
         <source>Outer color:</source>
-        <translation>アウターの色:</translation>
+        <translation>வெளிப்புற நிறம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="167"/>
         <source>Line width:</source>
-        <translation>ラインの幅:</translation>
+        <translation>வரி அகலம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="170"/>
         <source>Line color:</source>
-        <translation>ラインの色:</translation>
+        <translation>வரி நிறம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="173"/>
         <source>Line cap:</source>
-        <translation>ラインのキャップ:</translation>
+        <translation>வரி தொப்பி:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="175"/>
         <source>flat</source>
-        <translation>平ら</translation>
+        <translation>கிடைவளைவு</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="176"/>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="183"/>
         <source>round</source>
-        <translation>ラウンド結合</translation>
+        <translation>சுற்று</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="177"/>
         <source>square</source>
-        <translation>突出線端</translation>
+        <translation>நாற்கை</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="180"/>
         <source>Line join:</source>
-        <translation>角の形状:</translation>
+        <translation>வரி சேர:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="182"/>
         <source>miter</source>
-        <translation>マイター結合</translation>
+        <translation>மைட்டர்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="184"/>
         <source>bevel</source>
-        <translation>ベベル結合</translation>
+        <translation>பெவல்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="186"/>
         <source>Line closed</source>
-        <translation>ラインを閉じる</translation>
+        <translation>வரி மூடப்பட்டது</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="206"/>
         <source>Area color:</source>
-        <translation>エリアの色:</translation>
+        <translation>பகுதி நிறம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="219"/>
         <source>Coordinates:</source>
-        <translation>座標:</translation>
+        <translation>ஒருங்கிணைப்புகள்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="224"/>
         <source>X</source>
-        <translation>X</translation>
+        <translation>ஃச்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="224"/>
         <source>Y</source>
-        <translation>Y</translation>
+        <translation>ஒய்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="224"/>
         <source>Curve start</source>
-        <translation>曲線を開始</translation>
+        <translation>வளைவு தொடக்க</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="235"/>
         <source>Center by coordinate average</source>
-        <translation>座標平均に中心を置く</translation>
+        <translation>ஒருங்கிணைப்பு சராசரியால் நடுவண்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="419"/>
         <source>[Midpoint]</source>
-        <translation>[中間点]</translation>
+        <translation>[மிட்பாயிண்ட்]</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="953"/>
         <source>Unknown</source>
-        <translation>不明</translation>
+        <translation>தெரியவில்லை</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::PointSymbolSettings</name>
     <message>
-        <source>Point settings</source>
-        <translation type="obsolete">ポイント記号の設定</translation>
-    </message>
-    <message>
-        <source>Always oriented to north (not rotatable)</source>
-        <translation type="obsolete">常に北に向けて正置 (回転禁止)</translation>
-    </message>
-    <message>
         <location filename="../src/gui/symbols/point_symbol_settings.cpp" line="60"/>
         <source>Point symbol</source>
-        <translation>ポイント記号</translation>
+        <translation>புள்ளி அடையாளம்</translation>
     </message>
 </context>
 <context>
@@ -6668,164 +5747,132 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_progress_dialog.cpp" line="58"/>
         <source>Printing</source>
         <comment>PrintWidget</comment>
-        <translation>印刷中</translation>
+        <translation>அச்சிடுதல்</translation>
     </message>
     <message>
         <location filename="../src/gui/print_progress_dialog.cpp" line="59"/>
         <source>An error occurred during processing.</source>
         <comment>PrintWidget</comment>
-        <translation>処理中にエラーが発生しました。</translation>
+        <translation>செயலாக்கத்தின் போது பிழை ஏற்பட்டது.</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::PrintTool</name>
     <message>
-        <source>&lt;b&gt;Drag&lt;/b&gt; to move the print area</source>
-        <translation type="obsolete">&lt;b&gt;ドラッグ&lt;/b&gt;で印刷領域を移動します</translation>
-    </message>
-    <message>
         <location filename="../src/gui/print_tool.cpp" line="60"/>
         <location filename="../src/gui/print_tool.cpp" line="372"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area&apos;s borders. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 地図、プリントエリア、エリアの縁を移動します。 </translation>
+        <translation>&lt;b&gt; இழுத்து &lt;/b&gt;: வரைபடம், அச்சு பகுதி அல்லது பகுதியின் எல்லைகளை நகர்த்தவும். </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="344"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: プリントエリアを移動します。 </translation>
+        <translation>&lt;b&gt; இழுத்து &lt;/b&gt;: அச்சு பகுதியை நகர்த்தவும். </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="348"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 地図を移動します。 </translation>
+        <translation>&lt;b&gt; இழுத்து &lt;/b&gt;: வரைபடத்தை நகர்த்தவும். </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="353"/>
         <location filename="../src/gui/print_tool.cpp" line="358"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s border. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: プリントエリアの縁を移動します。 </translation>
+        <translation>&lt;b&gt; இழுத்து &lt;/b&gt;: அச்சுப் பகுதியின் எல்லையை நகர்த்தவும். </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="363"/>
         <location filename="../src/gui/print_tool.cpp" line="368"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s borders. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: プリントエリアの縁を移動します。 </translation>
+        <translation>&lt;b&gt; இழுத்து &lt;/b&gt;: அச்சுப் பகுதியின் எல்லைகளை நகர்த்தவும். </translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::PrintWidget</name>
     <message>
-        <source>Printer or exporter:</source>
-        <translation type="obsolete">プリンタまたはエクスポータの選択:</translation>
-    </message>
-    <message>
-        <source>Export to PDF or PS</source>
-        <translation type="vanished">PDF または PSをエクスポート</translation>
-    </message>
-    <message>
-        <source>Export to image</source>
-        <translation type="obsolete">イメージをエクスポート</translation>
-    </message>
-    <message>
         <location filename="../src/gui/print_widget.cpp" line="282"/>
         <source>Show templates</source>
-        <translation>テンプレートを表示する</translation>
+        <translation>வார்ப்புருக்களைக் காட்டு</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="293"/>
         <source>Show grid</source>
-        <translation>グリッドを表示</translation>
+        <translation>கட்டத்தைக் காட்டு</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="186"/>
         <source>Page orientation:</source>
-        <translation>ページの方向:</translation>
+        <translation>பக்க நோக்குநிலை:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="146"/>
         <source>Printer:</source>
-        <translation>プリンター:</translation>
+        <translation>அச்சுப்பொறி:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="179"/>
         <source>Portrait</source>
-        <translation>縦</translation>
+        <translation>உருவப்படம்</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="181"/>
         <source>Landscape</source>
-        <translation>横</translation>
+        <translation>நிலப்பரப்பு</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="160"/>
         <source>Page format:</source>
-        <translation>印刷のサイズ:</translation>
-    </message>
-    <message>
-        <source>Dots per inch (dpi):</source>
-        <translation type="obsolete">ドット/インチ(dpi):</translation>
+        <translation>பக்க வடிவம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="189"/>
         <source>Copies:</source>
-        <translation>印刷部数:</translation>
-    </message>
-    <message>
-        <source>Print area</source>
-        <translation type="obsolete">印刷領域</translation>
+        <translation>நகல்கள்:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="202"/>
         <source>Left:</source>
-        <translation>左:</translation>
+        <translation>இடது:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="205"/>
         <source>Top:</source>
-        <translation>上:</translation>
+        <translation>மேலே:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="208"/>
         <source>Width:</source>
-        <translation>幅:</translation>
+        <translation>அகலம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="211"/>
         <source>Height:</source>
-        <translation>高さ:</translation>
-    </message>
-    <message>
-        <source>Center area on map</source>
-        <translation type="obsolete">地図の中心領域を印刷</translation>
+        <translation>உயரம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="323"/>
         <source>Preview...</source>
-        <translation>プレビュー...</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="obsolete">エクスポート</translation>
+        <translation>முன்னோட்டம் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="194"/>
         <source>Single page</source>
-        <translation>単一ページ</translation>
+        <translation>ஒற்றை பக்கம்</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="195"/>
         <source>Custom area</source>
-        <translation>カスタムエリア</translation>
+        <translation>தனிப்பயன் பகுதி</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="196"/>
         <source>Map area:</source>
-        <translation>マップエリア:</translation>
+        <translation>வரைபட பகுதி:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="198"/>
         <source>Center print area</source>
-        <translation>地図の中心を印刷</translation>
+        <translation>மைய அச்சு பகுதி</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="166"/>
@@ -6836,205 +5883,202 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="210"/>
         <location filename="../src/gui/print_widget.cpp" line="213"/>
         <source>mm</source>
-        <translation>mm</translation>
+        <translation>மிமீ</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="151"/>
+        <source>Properties</source>
+        <translation>பண்புகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="214"/>
         <source>Page overlap:</source>
-        <translation>ページのオーバーラップ:</translation>
+        <translation>பக்கம் ஒன்றுடன் ஒன்று:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="218"/>
         <source>Options</source>
-        <translation>オプション</translation>
-    </message>
-    <message>
-        <source>Normal output</source>
-        <translation type="vanished">通常のアウトプット</translation>
-    </message>
-    <message>
-        <source>Color separations</source>
-        <translation type="vanished">色分解</translation>
+        <translation>விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="252"/>
         <source>Resolution:</source>
-        <translation>解像度:</translation>
+        <translation>தீர்மானம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="268"/>
         <source>Print in different scale:</source>
-        <translation>縮尺を変更して印刷:</translation>
+        <translation>வெவ்வேறு அளவில் அச்சிடுக:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="289"/>
         <source>Template appearance may differ.</source>
-        <translation>テンプレートの外観が異なる場合があります。</translation>
+        <translation>வார்ப்புரு தோற்றம் வேறுபடலாம்.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="296"/>
         <source>Simulate overprinting</source>
-        <translation>オーバープリントをシミュレートする</translation>
+        <translation>அதிகப்படியான அச்சிடலை உருவகப்படுத்துங்கள்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="299"/>
+        <source>Save world file</source>
+        <translation>உலகக் கோப்பை சேமிக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="244"/>
         <source>Default</source>
-        <translation>デフォルト</translation>
+        <translation>இயல்புநிலை</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="245"/>
         <source>Device CMYK</source>
-        <translation>デバイス CMYK</translation>
+        <translation>சாதனம் CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="246"/>
         <source>Color mode:</source>
-        <translation>カラーモード:</translation>
+        <translation>வண்ண பயன்முறை:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="325"/>
         <location filename="../src/gui/print_widget.cpp" line="434"/>
         <source>Print</source>
-        <translation>印刷</translation>
+        <translation>அச்சிடுக</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="329"/>
         <source>Export...</source>
-        <translation>エクスポート...</translation>
+        <translation>ஏற்றுமதி ...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="441"/>
         <source>PDF export</source>
-        <translation>PDFをエクスポート</translation>
+        <translation>PDF ஏற்றுமதி</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="454"/>
         <source>Image export</source>
-        <translation>イメージをエクスポート</translation>
+        <translation>பட ஏற்றுமதி</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="573"/>
         <source>Save to PDF</source>
-        <translation>PDFに保存</translation>
+        <translation>PDF இல் சேமிக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="250"/>
         <location filename="../src/gui/print_widget.cpp" line="988"/>
         <location filename="../src/gui/print_widget.cpp" line="1038"/>
         <source>dpi</source>
-        <translation>dpi</translation>
+        <translation>டிபிஐ</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="256"/>
         <source>No tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>ஓடுகள் இல்லை</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="257"/>
         <source>256x256 pixel</source>
-        <translation type="unfinished"></translation>
+        <translation>256x256 படப்புள்ளி</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="258"/>
         <source>512x512 pixel</source>
-        <translation type="unfinished"></translation>
+        <translation>512x512 படப்புள்ளி</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="259"/>
         <source>Tiles:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/print_widget.cpp" line="299"/>
-        <source>Save world file</source>
-        <translation>world ファイルを保存</translation>
+        <translation>ஓடுகள்:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="467"/>
         <source>KMZ export</source>
-        <translation type="unfinished"></translation>
+        <translation>KMZ ஏற்றுமதி</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1005"/>
         <source>The map contains transparent elements which require the raster mode.</source>
-        <translation>マップに、ラスターモードを必要とする透明な要素が含まれています。</translation>
+        <translation>வரைபடத்தில் ராச்டர் பயன்முறை தேவைப்படும் வெளிப்படையான கூறுகள் உள்ளன.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1169"/>
         <source>Not supported on Android.</source>
-        <translation>Android ではサポートされていません。</translation>
+        <translation>ஆண்ட்ராய்டு இல் ஆதரிக்கப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1177"/>
         <source>Failed to prepare the preview.</source>
-        <translation>プレビューの準備に失敗しました。</translation>
+        <translation>முன்னோட்டத்தைத் தயாரிக்கத் தவறிவிட்டது.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1188"/>
         <source>Print Preview Progress</source>
-        <translation>印刷プレビューの進行状況</translation>
+        <translation>முன்னோட்ட முன்னேற்றத்தை அச்சிடுக</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1205"/>
         <source>Warning</source>
-        <translation>警告</translation>
+        <translation>எச்சரிக்கை</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1206"/>
         <source>A non-standard view mode is activated. Are you sure to print / export the map like this?</source>
-        <translation>非標準の表示モードが有効です。地図をこのように印刷 / エクスポートしてもよろしいですか?</translation>
+        <translation>தரமற்ற பார்வை முறை செயல்படுத்தப்படுகிறது. இதுபோன்ற வரைபடத்தை அச்சிட / ஏற்றுமதி செய்வது உறுதி?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1232"/>
         <source>KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>Kmz</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1233"/>
         <source>KML</source>
-        <translation type="unfinished"></translation>
+        <translation>Kml</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1260"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished">画像の保存に失敗しました:
-%1</translation>
+        <translation>படத்தை சேமிப்பதில் தோல்வி:
+ %1</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1274"/>
         <source>PNG</source>
-        <translation>PNG</translation>
+        <translation>பி.என்.சி.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1275"/>
         <source>BMP</source>
-        <translation>BMP</translation>
+        <translation>பி.எம்.பி.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1276"/>
         <source>TIFF</source>
-        <translation>TIFF</translation>
+        <translation>டிஃப்</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1277"/>
         <source>JPEG</source>
-        <translation>JPEG</translation>
+        <translation>Jpeg</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1349"/>
         <source>Failed to prepare the PDF export.</source>
-        <translation>PDF エクスポートの準備に失敗しました。</translation>
+        <translation>PDF ஏற்றுமதியைத் தயாரிக்கத் தவறிவிட்டது.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1359"/>
         <source>PDF</source>
-        <translation>PDF</translation>
+        <translation>பி.டி.எஃப்</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1412"/>
         <source>An error occurred during printing.</source>
-        <translation>印刷中にエラーが発生しました。</translation>
+        <translation>அச்சிடும் போது பிழை ஏற்பட்டது.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1236"/>
@@ -7044,24 +6088,24 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="1361"/>
         <location filename="../src/gui/print_widget.cpp" line="1373"/>
         <source>Export map ...</source>
-        <translation>地図のエクスポート...</translation>
+        <translation>ஏற்றுமதி வரைபடம் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1234"/>
         <location filename="../src/gui/print_widget.cpp" line="1278"/>
         <location filename="../src/gui/print_widget.cpp" line="1360"/>
         <source>All files (*.*)</source>
-        <translation>すべてのファイル (*.*)</translation>
+        <translation>எல்லா கோப்புகளும் (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1398"/>
         <source>Failed to prepare the printing.</source>
-        <translation>印刷の準備に失敗しました。</translation>
+        <translation>அச்சிடலைத் தயாரிக்கத் தவறிவிட்டது.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1407"/>
         <source>Printing Progress</source>
-        <translation>印刷の進行状況</translation>
+        <translation>முன்னேற்றம் அச்சிடும்</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1004"/>
@@ -7077,135 +6121,77 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="1425"/>
         <location filename="../src/gui/print_widget.cpp" line="1473"/>
         <source>Error</source>
-        <translation>エラー</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/print_widget.cpp" line="151"/>
-        <source>Properties</source>
-        <translation>プロパティ</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="225"/>
         <source>Vector
 graphics</source>
-        <translation>ベクター
-グラフィック</translation>
+        <translation>திசையன்
+ கிராபிக்ச்</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="226"/>
         <source>Raster
 graphics</source>
-        <translation>ラスター
-グラフィック</translation>
+        <translation>ராச்டர்
+ கிராபிக்ச்</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="227"/>
         <source>Color
 separations</source>
-        <translation>色
-分版</translation>
+        <translation>நிறம்
+ பிரிவினைகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="240"/>
         <source>Mode:</source>
-        <translation>モード:</translation>
+        <translation>பயன்முறை:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1297"/>
         <source>Failed to prepare the image. Not enough memory.</source>
-        <translation>画像の準備に失敗しました。メモリが不足しています。</translation>
+        <translation>படத்தைத் தயாரிக்கத் தவறிவிட்டது. போதுமான நினைவகம் இல்லை.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1318"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation>画像の保存に失敗しました。ファイルパスは存在しますか?&#x3000;十分な権利はもっていますか?</translation>
+        <translation>படத்தை சேமிப்பதில் தோல்வி. பாதை இருக்கிறதா? உங்களுக்கு போதுமான உரிமைகள் உள்ளதா?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1265"/>
         <location filename="../src/gui/print_widget.cpp" line="1322"/>
         <location filename="../src/gui/print_widget.cpp" line="1383"/>
         <source>Exported successfully to %1</source>
-        <translation>%1 へのエクスポートは成功しました</translation>
+        <translation>%1 க்கு வெற்றிகரமாக ஏற்றுமதி செய்யப்பட்டது</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1379"/>
         <source>Failed to finish the PDF export.</source>
-        <translation>PDF エクスポートを完了できませんでした。</translation>
+        <translation>PDF ஏற்றுமதியை முடிக்கத் தவறிவிட்டது.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1261"/>
         <location filename="../src/gui/print_widget.cpp" line="1389"/>
         <location filename="../src/gui/print_widget.cpp" line="1421"/>
         <source>Canceled.</source>
-        <translation>キャンセルされました。</translation>
+        <translation>ரத்து செய்யப்பட்டது.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1425"/>
         <source>The print job could not be stopped.</source>
-        <translation>プリントジョブを停止できません。</translation>
+        <translation>அச்சு வேலையை நிறுத்த முடியவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1416"/>
         <source>Successfully created print job</source>
-        <translation>プリントジョブの作成は成功しました</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <comment>Paper size</comment>
-        <translation type="vanished">不明</translation>
+        <translation>அச்சு வேலை வெற்றிகரமாக உருவாக்கப்பட்டது</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1473"/>
         <source>The map area is empty. Output canceled.</source>
-        <translation>マップエリアが空白です。出力はキャンセルされました。</translation>
-    </message>
-    <message>
-        <source>Letter</source>
-        <translation type="obsolete">レター</translation>
-    </message>
-    <message>
-        <source>Legal</source>
-        <translation type="obsolete">リーガル</translation>
-    </message>
-    <message>
-        <source>Executive</source>
-        <translation type="obsolete">エグゼクティブ</translation>
-    </message>
-    <message>
-        <source>C5E</source>
-        <translation type="obsolete">C5E</translation>
-    </message>
-    <message>
-        <source>Comm10E</source>
-        <translation type="obsolete">US Comm. Env. #10 ［#10封筒］</translation>
-    </message>
-    <message>
-        <source>DLE</source>
-        <translation type="obsolete">EUR DL Env. ［DL封筒］</translation>
-    </message>
-    <message>
-        <source>Folio</source>
-        <translation type="obsolete">Folio</translation>
-    </message>
-    <message>
-        <source>Ledger</source>
-        <translation type="obsolete">Ledger</translation>
-    </message>
-    <message>
-        <source>Tabloid</source>
-        <translation type="obsolete">タブロイド</translation>
-    </message>
-    <message>
-        <source>Custom</source>
-        <translation type="obsolete">カスタム</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation type="obsolete">不明</translation>
-    </message>
-    <message>
-        <source>The map is empty, there is nothing to print!</source>
-        <translation type="obsolete">印刷する地図がありません!</translation>
+        <translation>வரைபட பகுதி காலியாக உள்ளது. வெளியீடு ரத்து செய்யப்பட்டது.</translation>
     </message>
 </context>
 <context>
@@ -7213,32 +6199,32 @@ separations</source>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="41"/>
         <source>Reopen template</source>
-        <translation>テンプレートを開きなおす</translation>
+        <translation>வார்ப்புருவை மீண்டும் திறக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="43"/>
         <source>Drag items from the left list to the desired spot in the right list to reload them.</source>
-        <translation>アイテムを左のリストから右のリストの任意の場所にドラッグで再ロードします。</translation>
+        <translation>உருப்படிகளை மீண்டும் ஏற்ற வலது பட்டியலில் இடது பட்டியலிலிருந்து விரும்பிய இடத்திற்கு இழுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="45"/>
         <source>Closed templates:</source>
-        <translation>閉じたテンプレート:</translation>
+        <translation>மூடிய வார்ப்புருக்கள்:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="48"/>
         <source>Clear list</source>
-        <translation>リストをクリア</translation>
+        <translation>தெளிவான பட்டியல்</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="51"/>
         <source>Active templates:</source>
-        <translation>アクティブなテンプレート:</translation>
+        <translation>செயலில் வார்ப்புருக்கள்:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="60"/>
         <source>- Map -</source>
-        <translation>- 地図 -</translation>
+        <translation>- வரைபடம் -</translation>
     </message>
 </context>
 <context>
@@ -7246,73 +6232,40 @@ separations</source>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="47"/>
         <source>Rotate map</source>
-        <translation>地図を回転</translation>
+        <translation>வரைபடத்தை சுழற்றுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="54"/>
         <source>Angle (counter-clockwise):</source>
-        <translation>角度 (反時計回り):</translation>
-    </message>
-    <message>
-        <source>°</source>
-        <translation type="vanished">°</translation>
+        <translation>கோணம் (எதிர்-கடிகார திசையில்):</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="51"/>
         <source>Rotation parameters</source>
-        <translation>回転パラメータ</translation>
+        <translation>சுழற்சி அளவுருக்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="56"/>
         <source>Rotate around:</source>
-        <translation>回転の軸:</translation>
-    </message>
-    <message>
-        <source>Map coordinate system origin</source>
-        <comment>Rotation center point</comment>
-        <translation type="vanished">地図座標系の原点</translation>
-    </message>
-    <message>
-        <source>Georeferencing reference point</source>
-        <comment>Rotation center point</comment>
-        <translation type="vanished">ジオリファレンスの参照点</translation>
-    </message>
-    <message>
-        <source>Other point,</source>
-        <comment>Rotation center point</comment>
-        <translation type="vanished">その他の座標、</translation>
-    </message>
-    <message>
-        <source>mm</source>
-        <translation type="vanished">mm</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <comment>x coordinate</comment>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <comment>y coordinate</comment>
-        <translation type="vanished">Y:</translation>
+        <translation>சுற்றி சுழற்றுங்கள்:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="59"/>
         <source>Map coordinate system origin</source>
         <extracomment>Rotation center point</extracomment>
-        <translation>地図座標系の原点</translation>
+        <translation>வரைபட ஒருங்கிணைப்பு கணினி தோற்றம்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="64"/>
         <source>Georeferencing reference point</source>
         <extracomment>Rotation center point</extracomment>
-        <translation>ジオリファレンスの参照点</translation>
+        <translation>புவிசார் குறிப்பு புள்ளி</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="70"/>
         <source>Other point,</source>
         <extracomment>Rotation center point</extracomment>
-        <translation>その他の座標、</translation>
+        <translation>மற்ற புள்ளி,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="75"/>
@@ -7324,27 +6277,27 @@ separations</source>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="79"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation>Y:</translation>
+        <translation>ஒய்:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="83"/>
         <source>Options</source>
-        <translation>オプション</translation>
+        <translation>விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="85"/>
         <source>Adjust georeferencing reference point</source>
-        <translation>ジオリファレンスの参照点を調節</translation>
+        <translation>உலகம் பெரென்சிங் குறிப்பு புள்ளியை சரிசெய்யவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="92"/>
         <source>Adjust georeferencing declination</source>
-        <translation>ジオリファレンスの磁気偏角を調節</translation>
+        <translation>புவிசார் வீழ்ச்சியை சரிசெய்யவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="99"/>
         <source>Rotate non-georeferenced templates</source>
-        <translation>ジオリファレンスされていないテンプレートを回転</translation>
+        <translation>உலகம் அல்லாத வார்ப்புருக்களை சுழற்றுங்கள்</translation>
     </message>
 </context>
 <context>
@@ -7352,52 +6305,40 @@ separations</source>
     <message>
         <location filename="../src/tools/rotate_pattern_tool.cpp" line="81"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation>&lt;b&gt;角度:&lt;/b&gt; %1° </translation>
+        <translation>&lt;b&gt; கோணம்: &lt;/b&gt; %1 ° </translation>
     </message>
     <message>
         <location filename="../src/tools/rotate_pattern_tool.cpp" line="91"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 一定角度ずつ回転。 </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: நிலையான கோணங்கள். </translation>
     </message>
     <message>
         <location filename="../src/tools/rotate_pattern_tool.cpp" line="85"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: エリアフィルパターンまたはポイントオブジェクトの方向をセットします。 </translation>
+        <translation>&lt;b&gt; இழுத்தல் &lt;/b&gt;: பகுதி நிரப்பு வடிவங்கள் அல்லது புள்ளி பொருள்களின் திசையை அமைக்கவும். </translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::RotateTool</name>
     <message>
-        <source>&lt;b&gt;Rotation:&lt;/b&gt; %1</source>
-        <translation type="obsolete">&lt;b&gt;回転:&lt;/b&gt; %1</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the rotation center</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;で回転の軸をセットします</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the rotation center, &lt;b&gt;drag&lt;/b&gt; to rotate the selected object(s)</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;で回転の軸をセット、&lt;b&gt;ドラッグ&lt;/b&gt;で選択中のオブジェクトを回転します</translation>
-    </message>
-    <message>
         <location filename="../src/tools/rotate_tool.cpp" line="195"/>
         <source>&lt;b&gt;Rotation:&lt;/b&gt; %1° </source>
-        <translation>&lt;b&gt;回転:&lt;/b&gt; %1° </translation>
+        <translation>&lt;b&gt; சுழற்சி: &lt;/b&gt; %1 ° </translation>
     </message>
     <message>
         <location filename="../src/tools/rotate_tool.cpp" line="207"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 一定角度ずつ回転。 </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: நிலையான கோணங்கள். </translation>
     </message>
     <message>
         <location filename="../src/tools/rotate_tool.cpp" line="201"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the center of rotation. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: 回転の軸をセットします。 </translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt;: சுழற்சி மையத்தை அமைக்கவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/rotate_tool.cpp" line="202"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Rotate the selected objects. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 選択中のオブジェクトを回転します。 </translation>
+        <translation>&lt;b&gt; இழுத்து &lt;/b&gt;: தேர்ந்தெடுக்கப்பட்ட பொருள்களை சுழற்றுங்கள். </translation>
     </message>
 </context>
 <context>
@@ -7405,73 +6346,40 @@ separations</source>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="43"/>
         <source>Change map scale</source>
-        <translation>地図の縮尺の変更</translation>
+        <translation>வரைபட அளவை மாற்றவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="47"/>
         <source>Scaling parameters</source>
-        <translation>縮尺変更のパラメータ</translation>
-    </message>
-    <message>
-        <source>New scale:  1 :</source>
-        <translation type="vanished">新しい縮尺: 1:</translation>
+        <translation>அளவிடுதல் அளவுருக்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="55"/>
         <source>Scaling center:</source>
-        <translation>縮尺変更の中心:</translation>
-    </message>
-    <message>
-        <source>Map coordinate system origin</source>
-        <comment>Scaling center point</comment>
-        <translation type="vanished">地図座標系の原点</translation>
-    </message>
-    <message>
-        <source>Georeferencing reference point</source>
-        <comment>Scaling center point</comment>
-        <translation type="vanished">ジオリファレンスの参照点</translation>
-    </message>
-    <message>
-        <source>Other point,</source>
-        <comment>Scaling center point</comment>
-        <translation type="vanished">その他の座標、</translation>
-    </message>
-    <message>
-        <source>mm</source>
-        <translation type="vanished">mm</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <comment>x coordinate</comment>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <comment>y coordinate</comment>
-        <translation type="vanished">Y:</translation>
+        <translation>அளவிடுதல் மையம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="53"/>
         <source>New scale:</source>
-        <translation>新しいスケール:</translation>
+        <translation>புதிய அளவு:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="58"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation>地図座標系の原点</translation>
+        <translation>வரைபட ஒருங்கிணைப்பு கணினி தோற்றம்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="63"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation>ジオリファレンスの参照点</translation>
+        <translation>புவிசார் குறிப்பு புள்ளி</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="69"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation>その他の座標、</translation>
+        <translation>மற்ற புள்ளி,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="74"/>
@@ -7483,40 +6391,32 @@ separations</source>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="78"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation>Y:</translation>
+        <translation>ஒய்:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="81"/>
         <source>Options</source>
-        <translation>オプション</translation>
+        <translation>விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="83"/>
         <source>Scale symbol sizes</source>
-        <translation>記号サイズの縮尺の変更</translation>
+        <translation>அளவிலான குறியீட்டு அளவுகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="90"/>
         <source>Scale map object positions</source>
-        <translation>オブジェクトの位置を縮尺に合わせて変更</translation>
+        <translation>அளவிலான வரைபட பொருள் நிலைகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="97"/>
         <source>Adjust georeferencing reference point</source>
-        <translation>ジオリファレンスの参照点を調節</translation>
+        <translation>உலகம் பெரென்சிங் குறிப்பு புள்ளியை சரிசெய்யவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="104"/>
         <source>Scale non-georeferenced templates</source>
-        <translation>ジオリファレンスされていないテンプレートを縮尺変更</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">キャンセル</translation>
-    </message>
-    <message>
-        <source>Adjust</source>
-        <translation type="obsolete">変更</translation>
+        <translation>உலகம் அல்லாத வார்ப்புருக்கள்</translation>
     </message>
 </context>
 <context>
@@ -7524,30 +6424,22 @@ separations</source>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="69"/>
         <source>&lt;b&gt;Scaling:&lt;/b&gt; %1%</source>
-        <translation>&lt;b&gt;拡大・縮小率:&lt;/b&gt; %1%</translation>
+        <translation>&lt;b&gt; அளவிடுதல்: &lt;/b&gt; %1 %</translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="75"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the scaling center. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: スケール変更の中心点をセットします。 </translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt;: அளவிடுதல் மையத்தை அமைக்கவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="77"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Switch to individual object scaling. </source>
-        <translation>&lt;b&gt;&gt;%1&lt;/b&gt;: 個々のオブジェクトスケーリングに切り替えます。 </translation>
+        <translation>&lt;b&gt;%1 &lt;/b&gt;: தனிப்பட்ட பொருள் அளவீடுக்கு மாறவும். </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="73"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Scale the selected objects. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 選択中のオブジェクトのスケールを変更します。 </translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the scaling center</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;で拡大・縮小の中心をセットします</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the scaling center, &lt;b&gt;drag&lt;/b&gt; to scale the selected object(s)</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;で拡大・縮小の中心をセット、&lt;b&gt;ドラッグ&lt;/b&gt;で選択中のオブジェクトを拡大・縮小します</translation>
+        <translation>&lt;b&gt; இழுத்தல் &lt;/b&gt;: தேர்ந்தெடுக்கப்பட்ட பொருள்களை அளவிடவும். </translation>
     </message>
 </context>
 <context>
@@ -7555,41 +6447,37 @@ separations</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="65"/>
         <source>Select coordinate reference system</source>
-        <translation>座標参照系を選択</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/select_crs_dialog.cpp" line="76"/>
-        <source>From template file</source>
-        <translation type="unfinished"></translation>
+        <translation>ஒருங்கிணைப்பு குறிப்பு முறையைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="77"/>
         <source>Same as map</source>
-        <translation>地図と同じ</translation>
+        <translation>வரைபடத்தைப் போலவே</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="71"/>
         <source>Local</source>
-        <translation>ローカル</translation>
+        <translation>உள்ளக</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/select_crs_dialog.cpp" line="76"/>
+        <source>From template file</source>
+        <translation>வார்ப்புரு கோப்பிலிருந்து</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="78"/>
         <source>Geographic coordinates (WGS84)</source>
-        <translation>地理座標 (WGS84)</translation>
-    </message>
-    <message>
-        <source>(local)</source>
-        <translation type="vanished">(local)</translation>
+        <translation>புவியியல் ஆயத்தொலைவுகள் (WGS84)</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="91"/>
         <source>Status:</source>
-        <translation>ステータス:</translation>
+        <translation>நிலை:</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="153"/>
         <source>valid</source>
-        <translation>有効</translation>
+        <translation>செல்லுபடியாகும்</translation>
     </message>
 </context>
 <context>
@@ -7597,22 +6485,22 @@ separations</source>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="52"/>
         <source>Location:</source>
-        <translation>場所:</translation>
+        <translation>இடம்:</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="55"/>
         <source>Source:</source>
-        <translation>ソース:</translation>
+        <translation>ஆதாரம்:</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="64"/>
         <source>Serial port (NMEA):</source>
-        <translation>シリアルポート (NMEA):</translation>
+        <translation>சீரியல் துறைமுகம் (NMEA):</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="79"/>
         <source>Sensors</source>
-        <translation>センサー</translation>
+        <translation>சென்சார்கள்</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="91"/>
@@ -7620,41 +6508,37 @@ separations</source>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="146"/>
         <source>Default</source>
         <extracomment>Position source</extracomment>
-        <translation>デフォルト</translation>
+        <translation>இயல்புநிலை</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
         <source>NMEA (Qt)</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nmea (qt)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"/>
         <source>NMEA (OpenOrienteering)</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Serial port (NMEA)</source>
-        <translation type="vanished">シリアルポート (NMEA)</translation>
+        <translation>Nmea (openorienteering)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="123"/>
         <source>Windows</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation>Windows</translation>
+        <translation>சாளரங்கள்</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="126"/>
         <source>GeoClue</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation>GeoClue</translation>
+        <translation>சியோக்ளூ</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="129"/>
         <source>Core Location</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation>コアロケーション</translation>
+        <translation>முக்கிய இடம்</translation>
     </message>
 </context>
 <context>
@@ -7662,7 +6546,7 @@ separations</source>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="79"/>
         <source>Settings</source>
-        <translation>設定</translation>
+        <translation>அமைப்புகள்</translation>
     </message>
 </context>
 <context>
@@ -7670,22 +6554,22 @@ separations</source>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="43"/>
         <source>Event and course details</source>
-        <translation type="unfinished"></translation>
+        <translation>நிகழ்வு மற்றும் பாட விவரங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="48"/>
         <source>Event name:</source>
-        <translation type="unfinished"></translation>
+        <translation>நிகழ்வு பெயர்:</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="51"/>
         <source>Course name:</source>
-        <translation type="unfinished"></translation>
+        <translation>பாடநெறி பெயர்:</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="54"/>
         <source>First code number:</source>
-        <translation type="unfinished"></translation>
+        <translation>முதல் குறியீடு எண்:</translation>
     </message>
 </context>
 <context>
@@ -7693,44 +6577,40 @@ separations</source>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="35"/>
         <source>Unnamed event</source>
-        <translation type="unfinished"></translation>
+        <translation>பெயரிடப்படாத நிகழ்வு</translation>
     </message>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="41"/>
         <source>Unnamed course</source>
-        <translation type="unfinished"></translation>
+        <translation>பெயரிடப்படாத பாடநெறி</translation>
     </message>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="60"/>
         <source>For this course export, a single line object must be selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>இந்த பாடநெறி ஏற்றுமதிக்கு, ஒற்றை வரி பொருள் தேர்ந்தெடுக்கப்பட வேண்டும்.</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::StorageLocation</name>
     <message>
-        <source>&apos;%1&apos; is stored in a regular location.</source>
-        <translation type="vanished">&apos;%1&apos; は、通常の場所に格納されます。</translation>
-    </message>
-    <message>
         <location filename="../src/core/storage_location.cpp" line="308"/>
         <source>&apos;%1&apos; is located in app storage. The files will be removed when uninstalling the app.</source>
-        <translation>&apos;%1&apos; は、アプリ ストレージにあります。アプリをアンインストールするときにファイルは削除されます。</translation>
+        <translation>பயன்பாட்டு சேமிப்பகத்தில் &apos;%1&apos; அமைந்துள்ளது. பயன்பாட்டை நிறுவல் நீக்கும்போது கோப்புகள் அகற்றப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="311"/>
         <source>&apos;%1&apos; is not writable. Changes cannot be saved.</source>
-        <translation>&apos;%1&apos; は書き込み可能ではありません。変更を保存できません。</translation>
+        <translation>&apos;%1&apos; எழுதக்கூடியது அல்ல. மாற்றங்களைச் சேமிக்க முடியாது.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="314"/>
         <source>Extra permissions are required to access &apos;%1&apos;.</source>
-        <translation>&apos;%1&apos; にアクセスするには、追加のアクセス許可が必要です。</translation>
+        <translation>&apos;%1&apos; ஐ அணுக கூடுதல் அனுமதிகள் தேவை.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="317"/>
         <source>&apos;%1&apos; is not a valid storage location.</source>
-        <translation>&apos;%1&apos; は有効な格納場所ではありません。</translation>
+        <translation>&apos;%1&apos; சரியான சேமிப்பக இடம் அல்ல.</translation>
     </message>
 </context>
 <context>
@@ -7738,62 +6618,62 @@ separations</source>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="47"/>
         <source>Change scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>அளவிலான காரணியை மாற்றவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="51"/>
         <source>Scaling parameters</source>
-        <translation type="unfinished">縮尺変更のパラメータ</translation>
+        <translation>அளவிடுதல் அளவுருக்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="53"/>
         <source>Scaling center:</source>
-        <translation type="unfinished">縮尺変更の中心:</translation>
+        <translation>அளவிடுதல் மையம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="56"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">地図座標系の原点</translation>
+        <translation>வரைபட ஒருங்கிணைப்பு கணினி தோற்றம்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="62"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">ジオリファレンスの参照点</translation>
+        <translation>புவிசார் குறிப்பு புள்ளி</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="70"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">その他の座標、</translation>
+        <translation>மற்ற புள்ளி,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="75"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="79"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished">Y:</translation>
+        <translation>ஒய்:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="82"/>
         <source>Options</source>
-        <translation type="unfinished">オプション</translation>
+        <translation>விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="84"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished">ジオリファレンスの参照点を調節</translation>
+        <translation>உலகம் பெரென்சிங் குறிப்பு புள்ளியை சரிசெய்யவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="91"/>
         <source>Scale non-georeferenced templates</source>
-        <translation type="unfinished">ジオリファレンスされていないテンプレートを縮尺変更</translation>
+        <translation>உலகம் அல்லாத வார்ப்புருக்கள்</translation>
     </message>
 </context>
 <context>
@@ -7801,7 +6681,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_dropdown.cpp" line="67"/>
         <source>- none -</source>
-        <translation>- none -</translation>
+        <translation>- எதுவுமில்லை -</translation>
     </message>
 </context>
 <context>
@@ -7809,7 +6689,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_dropdown.cpp" line="177"/>
         <source>- None -</source>
-        <translation>- None -</translation>
+        <translation>- எதுவுமில்லை -</translation>
     </message>
 </context>
 <context>
@@ -7817,47 +6697,47 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="64"/>
         <source>Number:</source>
-        <translation>番号:</translation>
+        <translation>எண்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="75"/>
         <source>Edit</source>
-        <translation>編集</translation>
+        <translation>தொகு</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="76"/>
         <source>Name:</source>
-        <translation>名前:</translation>
+        <translation>பெயர்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="78"/>
         <source>Description:</source>
-        <translation>説明:</translation>
+        <translation>விளக்கம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="80"/>
         <source>Helper symbol (not shown in finished map)</source>
-        <translation>補助記号 (完成地図には非表示)</translation>
+        <translation>உதவி அடையாளம் (முடிக்கப்பட்ட வரைபடத்தில் காட்டப்படவில்லை)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="130"/>
         <source>General</source>
-        <translation>一般</translation>
+        <translation>பொது</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="133"/>
         <source>Icon</source>
-        <translation>アイコン</translation>
+        <translation>படவுரு</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="224"/>
         <source>Warning</source>
-        <translation>警告</translation>
+        <translation>எச்சரிக்கை</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1416"/>
         <source>Description</source>
-        <translation>説明</translation>
+        <translation>விவரம்</translation>
     </message>
 </context>
 <context>
@@ -7865,257 +6745,229 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="104"/>
         <source>For symbols with description, press F1 while the tooltip is visible to show it</source>
-        <translation>説明つきの記号では、ツールチップが表示されている間にF1キーを押すと説明を表示</translation>
+        <translation>விளக்கத்துடன் கூடிய சின்னங்களுக்கு, F1 ஐ அழுத்தவும், அதைக் காட்ட உதவிக்குறிப்பு தெரியும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="108"/>
         <source>New symbol</source>
-        <translation>新しい記号</translation>
+        <translation>புதிய அடையாளம்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="351"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="110"/>
         <source>Point</source>
-        <translation>ポイント記号</translation>
+        <translation>புள்ளியம்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="346"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="111"/>
         <source>Line</source>
-        <translation>ライン記号</translation>
+        <translation>வரி</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="336"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="112"/>
         <source>Area</source>
-        <translation>エリア記号</translation>
+        <translation>பகுதி</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="356"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="113"/>
         <source>Text</source>
-        <translation>テキスト記号</translation>
+        <translation>உரை</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="341"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="114"/>
         <source>Combined</source>
-        <translation>組み合わせ記号</translation>
+        <translation>இணைக்கப்பட்டது</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="117"/>
         <source>Edit</source>
-        <translation>編集</translation>
+        <translation>தொகு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="118"/>
         <source>Duplicate</source>
-        <translation>複製</translation>
+        <translation>நகல்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="119"/>
         <source>Delete</source>
-        <translation>削除</translation>
+        <translation>நீக்கு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="120"/>
         <source>Scale...</source>
-        <translation>縮尺...</translation>
+        <translation>அளவுகோல் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="122"/>
         <source>Copy</source>
-        <translation>コピー</translation>
+        <translation>நகலெடு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="123"/>
         <source>Paste</source>
-        <translation>貼り付け</translation>
+        <translation>ஒட்டு</translation>
     </message>
     <message>
-        <source>Switch symbol of selected object(s)</source>
-        <translation type="vanished">選択中のオブジェクトの記号を置換</translation>
-    </message>
-    <message>
-        <source>Fill / Create border for selected object(s)</source>
-        <translation type="vanished">塗りつぶし/選択中のオブジェクトの輪郭線を作成</translation>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="138"/>
+        <source>Show custom icons</source>
+        <translation>தனிப்பயன் சின்னங்களைக் காட்டு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="141"/>
         <source>Select symbols</source>
-        <translation>選択中の記号</translation>
+        <translation>சின்னங்களைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="152"/>
         <source>Enable drag and drop</source>
-        <translation>ドラッグ＆ドロップを有効にする</translation>
-    </message>
-    <message>
-        <source>All</source>
-        <translation type="obsolete">すべて</translation>
-    </message>
-    <message>
-        <source>Unused</source>
-        <translation type="obsolete">未使用</translation>
+        <translation>இழுத்து விடுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="902"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="916"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="928"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="902"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="928"/>
         <source>An internal error occurred, sorry!</source>
-        <translation>内部エラーが発生しました!</translation>
+        <translation>ஒரு உள் பிழை ஏற்பட்டது, மன்னிக்கவும்!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="916"/>
         <source>There are no symbols in clipboard which could be pasted!</source>
-        <translation>貼り付けのできる記号がクリップボードにありません!</translation>
+        <translation>கிளிப்போர்டில் எந்த சின்னங்களும் இல்லை, அவை ஒட்டப்படலாம்!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1114"/>
         <source>Select all objects with this symbol</source>
-        <translation>この記号のオブジェクトをすべて選択する</translation>
+        <translation>இந்த சின்னத்துடன் அனைத்து பொருட்களையும் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1115"/>
         <source>Add all objects with this symbol to selection</source>
-        <translation>この記号のオブジェクトをすべて選択に追加する</translation>
+        <translation>தேர்வில் இந்த சின்னத்துடன் அனைத்து பொருட்களையும் சேர்க்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1116"/>
         <source>Remove all objects with this symbol from selection</source>
-        <translation>選択範囲から、この記号のすべてのオブジェクトを削除</translation>
+        <translation>தேர்விலிருந்து இந்த சின்னத்துடன் அனைத்து பொருட்களையும் அகற்றவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1429"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1117"/>
         <source>Hide objects with this symbol</source>
-        <translation>この記号のオブジェクトを隠す</translation>
+        <translation>இந்த சின்னத்துடன் பொருட்களை மறைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1440"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1118"/>
         <source>Protect objects with this symbol</source>
-        <translation>この記号のオブジェクトを保護</translation>
+        <translation>இந்த சின்னத்துடன் பொருட்களைப் பாதுகாக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1123"/>
         <source>Add all objects with selected symbols to selection</source>
-        <translation>選択中の記号のオブジェクトをすべて選択に追加する</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட சின்னங்களுடன் அனைத்து பொருட்களையும் தேர்வில் சேர்க்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1124"/>
         <source>Remove all objects with selected symbols from selection</source>
-        <translation>選択範囲から、選択された記号のすべてのオブジェクトを削除</translation>
+        <translation>தேர்விலிருந்து தேர்ந்தெடுக்கப்பட்ட சின்னங்களுடன் அனைத்து பொருட்களையும் அகற்றவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1125"/>
         <source>Hide objects with selected symbols</source>
-        <translation>選択中のオブジェクトを隠す</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட சின்னங்களுடன் பொருள்களை மறைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1126"/>
         <source>Protect objects with selected symbols</source>
-        <translation>選択中のオブジェクトを保護する</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட சின்னங்களுடன் பொருட்களைப் பாதுகாக்கவும்</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="142"/>
-        <source>Select all</source>
-        <translation>すべてを選択</translation>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="145"/>
+        <source>Invert selection</source>
+        <translation>தலைகீழ் தேர்வு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="99"/>
         <source>F1</source>
         <comment>Shortcut for displaying the symbol&apos;s description</comment>
-        <translation>F1</translation>
+        <translation>எஃப் 1</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="138"/>
-        <source>Show custom icons</source>
-        <translation>カスタムアイコンを表示する</translation>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="142"/>
+        <source>Select all</source>
+        <translation>அனைத்தையும் தெரிவுசெய்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="143"/>
         <source>Select unused</source>
-        <translation>未使用の記号を選択</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="145"/>
-        <source>Invert selection</source>
-        <translation>選択を反転</translation>
+        <translation>பயன்படுத்தப்படாததைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="148"/>
         <source>Sort symbols</source>
-        <translation>記号を並び替え</translation>
+        <translation>சின்னங்களை வரிசைப்படுத்துங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="149"/>
         <source>Sort by number</source>
-        <translation>番号で並べ替え</translation>
+        <translation>எண்ணால் வரிசைப்படுத்தவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="150"/>
         <source>Sort by primary color</source>
-        <translation>色で並べ替え</translation>
+        <translation>முதன்மை வண்ணத்தால் வரிசைப்படுத்துங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="151"/>
         <source>Sort by primary color priority</source>
-        <translation>色の優先度で並べ替え</translation>
-    </message>
-    <message>
-        <source>Scale symbol %1</source>
-        <translation type="obsolete">記号のスケール %1</translation>
+        <translation>முதன்மை வண்ண முன்னுரிமையால் வரிசைப்படுத்தவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="811"/>
         <source>Scale to percentage:</source>
-        <translation>パーセントでスケール変更:</translation>
-    </message>
-    <message>
-        <source>Scale symbol(s)</source>
-        <translation type="vanished">縮尺記号</translation>
+        <translation>சதவீதத்திற்கு அளவு:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="840"/>
         <source>Confirmation</source>
-        <translation>確認</translation>
+        <translation>உறுதிப்படுத்தல்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="841"/>
         <source>The map contains objects with the symbol &quot;%1&quot;. Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
-        <translation>地図にこの記号 &quot;%1&quot; を使用したオブジェクトが含まれています。削除するとそれらのオブジェクトも削除され、また、アンドゥ履歴も消去されて元に戻すことができなくなります。本当に削除しますか?</translation>
-    </message>
-    <message>
-        <source>Select all objects with symbol &quot;%1&quot;</source>
-        <translation type="obsolete">&quot;%1&quot;の記号のオブジェクトを選択</translation>
+        <translation>வரைபடத்தில் &quot;%1&quot; குறியீட்டைக் கொண்ட பொருள்கள் உள்ளன. அதை நீக்குவது அந்த பொருட்களை நீக்கி, செயல்தவிர் வரலாற்றை அழிக்கும்! நீங்கள் உண்மையில் அதை செய்ய விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="994"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1122"/>
         <source>Select all objects with selected symbols</source>
-        <translation>選択中の記号のオブジェクトを選択</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட சின்னங்களுடன் அனைத்து பொருட்களையும் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="125"/>
         <source>Switch symbol of selected objects</source>
-        <translation>選択したオブジェクトの記号を切り替える</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட பொருட்களின் சின்னத்தை மாற்றவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="126"/>
         <source>Fill / Create border for selected objects</source>
-        <translation>選択したオブジェクトの塗りつぶし / 枠線を作成</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட பொருள்களுக்கு எல்லையை நிரப்பவும் / உருவாக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="811"/>
         <source>Scale symbols</source>
-        <translation>縮尺記号</translation>
+        <translation>அளவிலான சின்னங்கள்</translation>
     </message>
 </context>
 <context>
@@ -8123,108 +6975,108 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="104"/>
         <source>Replace symbol set</source>
-        <translation>記号セットを置き換え</translation>
+        <translation>குறியீட்டு தொகுப்பை மாற்றவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="106"/>
         <source>Configure how the symbols should be replaced, and which.</source>
-        <translation>記号の置き換え方法を構成します。</translation>
+        <translation>சின்னங்கள் எவ்வாறு மாற்றப்பட வேண்டும், எது என்பதை உள்ளமைக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="109"/>
         <source>Import all new symbols, even if not used as replacement</source>
-        <translation>置き換えとして使用しない場合でも、すべての新しい記号をインポート</translation>
+        <translation>மாற்றாக பயன்படுத்தப்படாவிட்டாலும் அனைத்து புதிய சின்னங்களையும் இறக்குமதி செய்க</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="115"/>
         <source>Delete original symbols which are unused after the replacement</source>
-        <translation>置き換え後、使用されない元の記号を削除</translation>
+        <translation>மாற்றத்திற்குப் பிறகு பயன்படுத்தப்படாத அசல் சின்னங்களை நீக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="118"/>
         <source>Delete unused colors after the replacement</source>
-        <translation>置き換え後、未使用の色を削除</translation>
+        <translation>மாற்றப்பட்ட பிறகு பயன்படுத்தப்படாத வண்ணங்களை நீக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="164"/>
         <source>Symbol mapping:</source>
-        <translation>記号マッピング:</translation>
+        <translation>அடையாளம் மேப்பிங்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="112"/>
         <source>Keep the symbols&apos; hidden / protected states of the old symbol set</source>
-        <translation>記号の非表示 / 古い記号セットの保護された状態を保持</translation>
+        <translation>பழைய அடையாளம் தொகுப்பின் சின்னங்களின் மறைக்கப்பட்ட / பாதுகாக்கப்பட்ட நிலைகளை வைத்திருங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="135"/>
         <source>Match replacement symbols by symbol number</source>
-        <translation>記号番号で一致する記号を置き換え</translation>
+        <translation>குறியீட்டு எண் மூலம் மாற்று சின்னங்களை பொருத்தவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="133"/>
         <source>Original</source>
-        <translation>元</translation>
+        <translation>அசல்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="130"/>
         <source>Edit the symbol set ID:</source>
-        <translation>記号セット ID を編集:</translation>
+        <translation>குறியீட்டு தொகுப்பு ஐடியைத் திருத்தவும்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="133"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="143"/>
         <source>Replacement</source>
-        <translation>置き換え</translation>
+        <translation>மாற்று</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="137"/>
         <source>Match by symbol name</source>
-        <translation>記号名で一致</translation>
+        <translation>குறியீட்டு பெயர் மூலம் பொருந்தவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="142"/>
         <source>Assign new symbols</source>
-        <translation>新しい記号を割り当て</translation>
+        <translation>புதிய சின்னங்களை ஒதுக்குங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="143"/>
         <source>Pattern</source>
-        <translation>パターン</translation>
+        <translation>முறை</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="155"/>
         <source>Clear replacements</source>
-        <translation>置き換えをクリア</translation>
+        <translation>தெளிவான மாற்றீடுகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="129"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="158"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="225"/>
         <source>Open CRT file...</source>
-        <translation>CRT ファイルを開く...</translation>
+        <translation>CRT கோப்பு திறந்த ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="160"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="240"/>
         <source>Save CRT file...</source>
-        <translation>CRT ファイルを保存...</translation>
+        <translation>CRT கோப்பைச் சேமி ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="165"/>
         <source>Symbol mapping</source>
-        <translation>記号マッピング</translation>
+        <translation>அடையாளம் மேப்பிங்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="127"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="224"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="239"/>
         <source>CRT file</source>
-        <translation>CRT ファイル</translation>
+        <translation>CRT கோப்பு</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="201"/>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation>記号 %1 に複数の置換があります。</translation>
+        <translation>குறியீடு %1 க்கு பல மாற்றீடுகள் உள்ளன.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="204"/>
@@ -8232,10 +7084,10 @@ separations</source>
 %1
 
 %2</source>
-        <translation>ファイルを開くことができません:
-%1
+        <translation>கோப்பைத் திறக்க முடியாது:
+ %1
 
-%2</translation>
+ %2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="254"/>
@@ -8243,27 +7095,27 @@ separations</source>
 %1
 
 %2</source>
-        <translation>ファイルを保存できません:
-%1
+        <translation>கோப்பைச் சேமிக்க முடியாது:
+ %1
 
-%2</translation>
+ %2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="270"/>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
-        <translation>相互参照テーブルは変更されています。
-変更内容を保存しますか?</translation>
+        <translation>குறுக்கு குறிப்பு அட்டவணை மாற்றியமைக்கப்பட்டுள்ளது.
+ உங்கள் மாற்றங்களைச் சேமிக்க விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="430"/>
         <source>- None -</source>
-        <translation>- None -</translation>
+        <translation>- எதுவுமில்லை -</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="227"/>
         <source>Choose map file to load symbols from</source>
-        <translation>記号をロードする地図を選択してください</translation>
+        <translation>சின்னங்களை ஏற்ற வரைபடக் கோப்பைத் தேர்வுசெய்க</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="182"/>
@@ -8272,7 +7124,7 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="250"/>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="259"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="183"/>
@@ -8281,107 +7133,71 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="251"/>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="260"/>
         <source>Cannot load symbol set, aborting.</source>
-        <translation>記号セットを読み込みできません。中止します。</translation>
-    </message>
-    <message>
-        <source>Cannot load map file, aborting.</source>
-        <translation type="vanished">地図ファイルをロードできません、中断します。</translation>
+        <translation>குறியீட்டு தொகுப்பை ஏற்ற முடியாது, கருக்கலைப்பு.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="267"/>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="275"/>
         <source>Warning</source>
-        <translation>警告</translation>
+        <translation>எச்சரிக்கை</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="268"/>
         <source>The symbol set import generated warnings.</source>
-        <translation>記号セットのインポートで警告が生成されました。</translation>
+        <translation>குறியீட்டு தொகுப்பு இறக்குமதி உருவாக்கப்பட்ட எச்சரிக்கைகளை உருவாக்கியது.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="276"/>
         <source>The chosen symbol set has a scale of 1:%1, while the map scale is 1:%2. Do you really want to choose this set?</source>
-        <translation>選択した記号セットの縮尺は 1:%1 ですが、地図の縮尺は 1:%2 です。このセットを選択しますか?</translation>
-    </message>
-    <message>
-        <source>Cannot load CRT file, aborting.</source>
-        <translation type="vanished">CRT ファイルを読み込みできません。中止します。</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட குறியீட்டு தொகுப்பு 1:%1 அளவைக் கொண்டுள்ளது, அதே நேரத்தில் வரைபட அளவுகோல் 1:%2 ஆகும். இந்த தொகுப்பை நீங்கள் உண்மையில் தேர்வு செய்ய விரும்புகிறீர்களா?</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::SymbolSettingDialog</name>
     <message>
-        <source>General</source>
-        <translation type="obsolete">一般</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">番号:</translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation type="obsolete">名前:</translation>
-    </message>
-    <message>
-        <source>Description:</source>
-        <translation type="obsolete">説明:</translation>
-    </message>
-    <message>
-        <source>Helper symbol (not shown in finished map)</source>
-        <translation type="obsolete">補助記号 (完成地図には非表示)</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">キャンセル</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="obsolete">OK</translation>
-    </message>
-    <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="62"/>
         <source>Symbol settings</source>
-        <translation>記号設定</translation>
+        <translation>குறியீட்டு அமைப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="104"/>
         <source>Template:</source>
-        <translation>テンプレート:</translation>
+        <translation>வார்ப்புரு:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="105"/>
         <source>&lt;b&gt;Template:&lt;/b&gt; </source>
-        <translation>&lt;b&gt;テンプレート:&lt;/b&gt; </translation>
+        <translation>&lt;b&gt; வார்ப்புரு: &lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="106"/>
         <source>(none)</source>
-        <translation>(none)</translation>
+        <translation>(எதுவுமில்லை)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="107"/>
         <source>Open...</source>
-        <translation>開く...</translation>
+        <translation>திறந்த ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="110"/>
         <source>Center template...</source>
-        <translation>テンプレートの中心...</translation>
+        <translation>மைய வார்ப்புரு ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="115"/>
         <source>bounding box on origin</source>
-        <translation>元の閉じたボックス</translation>
+        <translation>தோற்றம் கொண்ட பெட்டி</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="116"/>
         <source>center of gravity on origin</source>
-        <translation>原点の重心</translation>
+        <translation>தோற்றத்தில் ஈர்ப்பு நடுவண்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="228"/>
         <source>Select background color</source>
-        <translation>背景色の選択</translation>
+        <translation>பின்னணி நிறத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="414"/>
@@ -8389,24 +7205,15 @@ Do you want to save your changes?</source>
 takes the routechoice
 to jump over the lazy dog
 1234567890</source>
-        <translation>The quick brown fox
-takes the routechoice
-to jump over the lazy dog
-1234567890
-△Aaあぁアァ亜字◎</translation>
+        <translation>விரைவான பழுப்பு நரி
+ ரூல் எக்கைச் எடுக்கும்
+ சோம்பேறி நாய் மீது குதிக்க
+ 1234567890</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="489"/>
         <source>- unnamed -</source>
-        <translation>- 名称未設定 -</translation>
-    </message>
-    <message>
-        <source>Symbol settings - Please enter a symbol name!</source>
-        <translation type="obsolete">記号設定 - 記号の名前を入力してください。</translation>
-    </message>
-    <message>
-        <source>Symbol settings for %1</source>
-        <translation type="obsolete">%1 の記号設定</translation>
+        <translation>- பெயரிடப்படாத -</translation>
     </message>
 </context>
 <context>
@@ -8414,7 +7221,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/symbol_tooltip.cpp" line="201"/>
         <source>No description!</source>
-        <translation>説明はありません!</translation>
+        <translation>விளக்கம் இல்லை!</translation>
     </message>
 </context>
 <context>
@@ -8422,82 +7229,56 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="74"/>
         <source>Relation</source>
-        <translation>関係</translation>
+        <translation>உறவு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="74"/>
         <source>Key</source>
-        <translation>キー</translation>
+        <translation>விசை</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="74"/>
         <source>Comparison</source>
-        <translation>比較</translation>
+        <translation>ஒப்பீடு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="74"/>
         <source>Value</source>
-        <translation>値</translation>
+        <translation>மதிப்பு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="103"/>
         <source>Add Row</source>
-        <translation>行を追加</translation>
+        <translation>வரிசையைச் சேர்க்கவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="104"/>
         <source>Remove Row</source>
-        <translation>行を削除</translation>
+        <translation>வரிசையை அகற்று</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="111"/>
         <source>Move Up</source>
-        <translation>上へ移動</translation>
+        <translation>மேலே செல்லுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="114"/>
         <source>Move Down</source>
-        <translation>下へ移動</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">選択</translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation type="vanished">ヘルプ</translation>
+        <translation>கீழே செல்லுங்கள்</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_find_feature.cpp" line="240"/>
         <source>%n object(s) selected</source>
         <translation>
-            <numerusform>%n オブジェクト選択済</numerusform>
+            <numerusform>%n பொருள் தேர்ந்தெடுக்கப்பட்டது</numerusform>
+            <numerusform>தேர்ந்தெடுக்கப்பட்ட %n பொருள்கள்</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="184"/>
         <location filename="../src/gui/map/map_find_feature.cpp" line="231"/>
         <source>Invalid query</source>
-        <translation>無効なクエリ</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::TagsDialog</name>
-    <message>
-        <source>Add</source>
-        <translation type="vanished">追加</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">削除</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">閉じる</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">値</translation>
+        <translation>தவறான வினவல்</translation>
     </message>
 </context>
 <context>
@@ -8505,27 +7286,27 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="55"/>
         <source>Key</source>
-        <translation>キー</translation>
+        <translation>விசை</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="55"/>
         <source>Value</source>
-        <translation>値</translation>
+        <translation>மதிப்பு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="65"/>
         <source>Help</source>
-        <translation>ヘルプ</translation>
+        <translation>உதவி</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="215"/>
         <source>Key exists</source>
-        <translation>キーが存在</translation>
+        <translation>விசை உள்ளது</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="216"/>
         <source>The key &quot;%1&quot; already exists and must not be used twice.</source>
-        <translation>キー &quot;%1&quot; は既に存在します。二度は使用しないでください。</translation>
+        <translation>முக்கிய &quot;%1&quot; ஏற்கனவே உள்ளது மற்றும் இரண்டு முறை பயன்படுத்தக்கூடாது.</translation>
     </message>
 </context>
 <context>
@@ -8533,37 +7314,33 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template.cpp" line="494"/>
         <source>Find the moved template file</source>
-        <translation>移動されたテンプレートを探す</translation>
+        <translation>நகர்த்தப்பட்ட வார்ப்புரு கோப்பைக் கண்டறியவும்</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="496"/>
         <source>All files (*.*)</source>
-        <translation>すべてのファイル (*.*)</translation>
+        <translation>எல்லா கோப்புகளும் (*.*)</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="543"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="637"/>
         <location filename="../src/templates/template.cpp" line="670"/>
         <source>No such file.</source>
-        <translation>そのようなファイルはありません。</translation>
+        <translation>அத்தகைய கோப்பு இல்லை.</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="680"/>
         <source>Is the format of the file correct for this template type?</source>
-        <translation>ファイルの形式は、このテンプレートの種類として正しいですか?</translation>
+        <translation>இந்த வார்ப்புரு வகைக்கு கோப்பின் வடிவம் சரியானதா?</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="692"/>
         <source>Not enough free memory.</source>
-        <translation>メモリが足りません。</translation>
-    </message>
-    <message>
-        <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
-        <translation type="vanished">テンプレートをこのファイルに変更できません。ファイル形式はテンプレートの形式として正しいですか?</translation>
+        <translation>போதுமான இலவச நினைவகம் இல்லை.</translation>
     </message>
 </context>
 <context>
@@ -8571,62 +7348,46 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="68"/>
         <source>Template adjustment</source>
-        <translation>テンプレートの調節</translation>
+        <translation>வார்ப்புரு சரிசெய்தல்</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="145"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="145"/>
         <source>Failed to calculate adjustment!</source>
-        <translation>調節の計算に失敗しました!</translation>
+        <translation>சரிசெய்தலைக் கணக்கிடத் தவறிவிட்டது!</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::TemplateAdjustAddTool</name>
     <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the template position of the pass point</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;でパスポイントのテンプレート位置をセットします</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the map position of the pass point, &lt;b&gt;Esc&lt;/b&gt; to abort</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;でパスポイントのマップ位置をセット、&lt;b&gt;Escキー&lt;/b&gt;で中止します</translation>
-    </message>
-    <message>
         <location filename="../src/templates/template_adjust.cpp" line="593"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: パスポイントのテンプレート上の位置をセットします。 </translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt;: பாச் புள்ளியின் வார்ப்புரு நிலையை அமைக்கவும். </translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="618"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the map position of the pass point. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: パスポイントのマップ上の位置をセットします。 </translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt;: பாச் புள்ளியின் வரைபட நிலையை அமைக்கவும். </translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::TemplateAdjustDeleteTool</name>
     <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to delete pass points</source>
-        <translation type="obsolete">&lt;b&gt;クリック&lt;/b&gt;でパスポイントを削除します</translation>
-    </message>
-    <message>
         <location filename="../src/templates/template_adjust.cpp" line="834"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: パスポイントを削除します。 </translation>
+        <translation>&lt;b&gt; சொடுக்கு &lt;/b&gt;: பாச் புள்ளிகளை நீக்கு. </translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::TemplateAdjustMoveTool</name>
     <message>
-        <source>&lt;b&gt;Drag&lt;/b&gt; to move pass points</source>
-        <translation type="obsolete">&lt;b&gt;ドラッグ&lt;/b&gt;でパスポイントを移動します</translation>
-    </message>
-    <message>
         <location filename="../src/templates/template_adjust.cpp" line="705"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move pass points. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: パスポイントを移動します。 </translation>
+        <translation>&lt;b&gt; இழுத்தல் &lt;/b&gt;: பாச் புள்ளிகளை நகர்த்தவும். </translation>
     </message>
 </context>
 <context>
@@ -8634,86 +7395,67 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="203"/>
         <source>Pass points:</source>
-        <translation>パスポイント:</translation>
+        <translation>பாச் புள்ளிகள்:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="205"/>
         <source>New</source>
-        <translation>新規</translation>
+        <translation>புதிய</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="209"/>
         <source>Move</source>
-        <translation>移動</translation>
+        <translation>நகர்த்தவும்</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="213"/>
         <source>Delete</source>
-        <translation>削除</translation>
+        <translation>நீக்கு</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="220"/>
         <source>Template X</source>
-        <translation>テンプレート-X</translation>
+        <translation>வார்ப்புரு ஃச்</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="220"/>
         <source>Template Y</source>
-        <translation>テンプレート-Y</translation>
+        <translation>வார்ப்புரு மற்றும்</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="220"/>
         <source>Map X</source>
-        <translation>マップ X</translation>
+        <translation>வரைபடம் ஃச்</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="220"/>
         <source>Map Y</source>
-        <translation>マップ Y</translation>
+        <translation>வரைபடம் ஒய்</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="220"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="231"/>
         <source>Apply pass points</source>
-        <translation>パスポイントを適用</translation>
+        <translation>பாச் புள்ளிகளைப் பயன்படுத்துங்கள்</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="233"/>
         <source>Help</source>
-        <translation>ヘルプ</translation>
+        <translation>உதவி</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="234"/>
         <source>Apply &amp;&amp; clear all</source>
-        <translation>適用 &amp;&amp; すべて消去</translation>
+        <translation>விண்ணப்பிக்கவும் &amp;&amp; அனைத்தையும் அழிக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="235"/>
         <source>Clear all</source>
-        <translation>すべて消去</translation>
-    </message>
-</context>
-<context>
-    <name>OpenOrienteering::TemplateGPS</name>
-    <message>
-        <source>Error</source>
-        <translation type="obsolete">エラー</translation>
-    </message>
-    <message>
-        <source>The path is empty, there is nothing to import!</source>
-        <translation type="obsolete">path が空白です、インポートするものが何もありません。</translation>
-    </message>
-    <message>
-        <source>Question</source>
-        <translation type="obsolete">質問</translation>
-    </message>
-    <message>
-        <source>Should the waypoints be imported as a line going through all points?</source>
-        <translation type="obsolete">ウェイポイントを、すべてのポイントを通過しているラインとしてインポートしますか？</translation>
+        <translation>அனைத்தையும் அழிக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -8722,118 +7464,98 @@ to jump over the lazy dog
         <location filename="../src/gdal/gdal_image_reader.cpp" line="139"/>
         <location filename="../src/templates/template_image.cpp" line="219"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
-        <translation>十分な空きメモリがありません (画像サイズ: %1x%2 ピクセル)</translation>
+        <translation>போதுமான இலவச நினைவகம் இல்லை (பட அளவு: %1x %2 பிக்சல்கள்)</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_template.cpp" line="150"/>
         <location filename="../src/templates/template_image.cpp" line="243"/>
         <source>Georeferencing not found</source>
-        <translation>ジオリファレンスが見つかりません</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="vanished">警告</translation>
-    </message>
-    <message>
-        <source>Loading a GIF image template.
-Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
-If you do not intend to draw on this template however, that is no problem.</source>
-        <translation type="vanished">GIFイメージのテンプレートを読み込もうとしています。
-GIFファイルの保存はサポートされていません。
-テンプレート上へ書き込みを行った場合、保存されず終了時に破棄されることになります。</translation>
+        <translation>புவிநூழல் காணப்படவில்லை</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="148"/>
         <source>Format not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>வடிவம் ஆதரிக்கப்படவில்லை</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="301"/>
         <location filename="../src/templates/template_image.cpp" line="421"/>
         <source>Select the coordinate reference system of the georeferenced image.</source>
-        <translation type="unfinished"></translation>
+        <translation>புவிசார் படத்தின் ஒருங்கிணைப்பு குறிப்பு அமைப்பைத் தேர்ந்தெடுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="306"/>
         <location filename="../src/templates/template_image.cpp" line="426"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
-        <translation>ワールドファイル内の座標の座標参照系を選択してください</translation>
+        <translation>உலக கோப்பில் உள்ள ஆயங்களின் ஒருங்கிணைப்பு குறிப்பு முறையைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::TemplateImageOpenDialog</name>
     <message>
-        <source>Open image template</source>
-        <translation type="obsolete">画像テンプレートを開く</translation>
-    </message>
-    <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="50"/>
         <source>Opening %1</source>
-        <translation>%1 を開きます</translation>
+        <translation>திறந்த %1</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="52"/>
         <source>Image size:</source>
-        <translation>画像のサイズ:</translation>
+        <translation>பட அளவு:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="55"/>
         <source>Specify how to position or scale the image:</source>
-        <translation>画像の位置やサイズの調節方法を指定してください:</translation>
+        <translation>படத்தை எவ்வாறு நிலைநிறுத்துவது அல்லது அளவிடுவது என்பதைக் குறிப்பிடவும்:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="69"/>
         <source>World file</source>
-        <translation>ワールドファイル</translation>
+        <translation>உலக கோப்பு</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="70"/>
         <source>GeoTIFF</source>
-        <translation>GeoTIFF</translation>
+        <translation>சியோடிஃப்</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="71"/>
         <source>no georeferencing information</source>
-        <translation>ジオリファレンス情報がありません</translation>
+        <translation>புவிசார் செய்தி இல்லை</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="76"/>
         <source>Georeferenced (%1)</source>
-        <translation>ジオリファレンス済 (%1)</translation>
+        <translation>உலகம் (% 1)</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="79"/>
         <source>Meters per pixel:</source>
-        <translation>メートル/pixel:</translation>
+        <translation>பிக்சலுக்கு மீட்டர்:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="83"/>
         <source>Scanned with</source>
-        <translation>解像度</translation>
+        <translation>உடன் ச்கேன் செய்யப்பட்டது</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="86"/>
         <source>dpi</source>
-        <translation>dpi</translation>
+        <translation>டிபிஐ</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="88"/>
         <source>Template scale:  1 :</source>
-        <translation>テンプレートの縮尺: 1:</translation>
-    </message>
-    <message>
-        <source>Different template scale 1 :</source>
-        <translation type="obsolete">異なったテンプレートのスケール 1 :</translation>
+        <translation>வார்ப்புரு அளவு: 1:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="114"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>ரத்துசெய்</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="115"/>
         <source>Open</source>
-        <translation>開く</translation>
+        <translation>திற</translation>
     </message>
 </context>
 <context>
@@ -8841,148 +7563,100 @@ GIFファイルの保存はサポートされていません。
     <message>
         <location filename="../src/templates/template_table_model.cpp" line="165"/>
         <source>Show</source>
-        <translation>表示</translation>
+        <translation>காட்டு</translation>
     </message>
     <message>
         <location filename="../src/templates/template_table_model.cpp" line="171"/>
         <source>Opacity</source>
-        <translation>不透明度</translation>
+        <translation>ஒளிபுகாநிலை</translation>
     </message>
     <message>
         <location filename="../src/templates/template_table_model.cpp" line="175"/>
         <source>Group</source>
-        <translation>グループ</translation>
+        <translation>குழு</translation>
     </message>
     <message>
         <location filename="../src/templates/template_table_model.cpp" line="179"/>
         <source>Filename</source>
-        <translation>ファイル名</translation>
-    </message>
-    <message>
-        <source>Create...</source>
-        <translation type="obsolete">作成...</translation>
+        <translation>கோப்புப்பெயர்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="245"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="679"/>
         <source>Sketch</source>
-        <translation>スケッチ</translation>
+        <translation>ச்கெட்ச்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="247"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="683"/>
         <source>GPS</source>
-        <translation>GPS</translation>
+        <translation>உலக இடம் காட்டும் அமைப்பு</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="240"/>
         <source>Open...</source>
-        <translation>開く...</translation>
-    </message>
-    <message>
-        <source>Georeferenced: %1</source>
-        <translation type="vanished">ジオリファレンス: %1</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">削除</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">閉じる</translation>
+        <translation>திறந்த ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="243"/>
         <source>Duplicate</source>
-        <translation>複製</translation>
+        <translation>நகல்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="251"/>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="241"/>
         <source>Add template...</source>
-        <translation>テンプレートを追加...</translation>
+        <translation>வார்ப்புருவைச் சேர்க்கவும் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="255"/>
         <source>Remove</source>
-        <translation>削除</translation>
+        <translation>அகற்று</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="261"/>
         <source>Move Up</source>
-        <translation>上へ移動</translation>
+        <translation>மேலே செல்லுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="263"/>
         <source>Move Down</source>
-        <translation>下へ移動</translation>
+        <translation>கீழே செல்லுங்கள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="285"/>
         <source>Import and remove</source>
-        <translation>インポートと削除</translation>
+        <translation>இறக்குமதி செய்து அகற்றவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="324"/>
         <source>Help</source>
-        <translation>ヘルプ</translation>
-    </message>
-    <message>
-        <source>Selected template(s)</source>
-        <translation type="obsolete">選択中のテンプレート</translation>
+        <translation>உதவி</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="270"/>
         <source>Move by hand</source>
-        <translation>ドラッグで移動</translation>
-    </message>
-    <message>
-        <source>Open image, GPS track or DXF file</source>
-        <translation type="vanished">イメージ、GPSトラック、DXFファイルを開く</translation>
-    </message>
-    <message>
-        <source>Georeference...</source>
-        <translation type="obsolete">ジオリファレンス...</translation>
+        <translation>கையால் நகர்த்தவும்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="282"/>
         <source>Positioning...</source>
-        <translation>位置調整...</translation>
+        <translation>பொருத்துதல் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="640"/>
         <source>Template files</source>
-        <translation>テンプレートファイル</translation>
+        <translation>வார்ப்புரு கோப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="640"/>
         <source>All files</source>
-        <translation>すべてのファイル</translation>
-    </message>
-    <message>
-        <source>More...</source>
-        <translation type="obsolete">もっと表示...</translation>
+        <translation>அனைத்து கோப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="275"/>
         <source>Adjust...</source>
-        <translation>調節...</translation>
-    </message>
-    <message>
-        <source>Numeric transformation window</source>
-        <translation type="obsolete">数値変形ウィンドウ</translation>
-    </message>
-    <message>
-        <source>Set transparent color...</source>
-        <translation type="obsolete">透明色の設定...</translation>
-    </message>
-    <message>
-        <source>Trace lines...</source>
-        <translation type="obsolete">ラインをトレース...</translation>
-    </message>
-    <message>
-        <source>Open image or GPS track ...</source>
-        <translation type="obsolete">画像を開く、またはGPSトラック...</translation>
+        <translation>சரிசெய்யவும் ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="669"/>
@@ -8991,50 +7665,22 @@ GIFファイルの保存はサポートされていません。
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="930"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="980"/>
         <source>Error</source>
-        <translation>エラー</translation>
-    </message>
-    <message>
-        <source>Cannot open template:
-%1
-
-File format not recognized.</source>
-        <translation type="vanished">テンプレートを開くことができません:
-%1
-
-ファイル形式を認識することができません。</translation>
-    </message>
-    <message>
-        <source>Cannot open template:
-%1
-
-Failed to load template. Does the file exist and is it valid?</source>
-        <translation type="vanished">テンプレートを開くことができません:
-%1
-
-テンプレートを開くことに失敗しました。そのファイルは存在して、有効な形式ですか?</translation>
-    </message>
-    <message>
-        <source>Please enter a valid number from 0 to 1, or specify a percentage from 0 to 100!</source>
-        <translation type="obsolete">0 から 1 の有効な数字を入力してください。または 0 から 100 のパーセントで指定してください！</translation>
-    </message>
-    <message>
-        <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
-        <translation type="vanished">有効な整数値を入力してテンプレートのグループをセットするか、空白のままにしてテンプレートのグループを解除してください！</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="910"/>
         <source>Don&apos;t scale</source>
-        <translation>縮尺を変えない</translation>
+        <translation>அளவிட வேண்டாம்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="905"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
-        <translation>公称地図縮尺比 (%1 %) によって縮尺</translation>
+        <translation>பெயரளவு வரைபட அளவிலான விகிதத்தால் ( %1 %) அளவுகோல்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="280"/>
         <source>Georeferenced</source>
-        <translation>ジオリファレンス</translation>
+        <translation>புவிநூல்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="668"/>
@@ -9042,83 +7688,71 @@ Failed to load template. Does the file exist and is it valid?</source>
         <source>Cannot open template
 %1:
 %2</source>
-        <translation>テンプレートを開くことができません
-%1:
-%2</translation>
+        <translation>வார்ப்புருவைத் திறக்க முடியாது
+ %1:
+ %2</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="656"/>
         <source>File format not recognized.</source>
-        <translation>ファイル形式を認識できません。</translation>
+        <translation>கோப்பு வடிவம் அங்கீகரிக்கப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="288"/>
         <source>Vectorize lines</source>
-        <translation type="unfinished">ラインをベクトル化</translation>
+        <translation>திசையன் கோடுகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="662"/>
         <source>Failed to load template. Does the file exist and is it valid?</source>
-        <translation>テンプレートを読み込めませんでした。ファイルが存在して、有効ですか?</translation>
+        <translation>வார்ப்புருவை ஏற்றுவதில் தோல்வி. கோப்பு இருக்கிறதா, அது செல்லுபடியாகும்?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="884"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="930"/>
         <source>Cannot load map file, aborting.</source>
-        <translation>地図ファイルを読み込みできません、中断します。</translation>
+        <translation>வரைபடக் கோப்பை ஏற்ற முடியாது, கருக்கலைப்பு.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="894"/>
         <source>Warning</source>
-        <translation>警告</translation>
+        <translation>எச்சரிக்கை</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="894"/>
         <source>The map import generated warnings.</source>
-        <translation>地図のインポート時に警告が発生しました。</translation>
+        <translation>வரைபட இறக்குமதி எச்சரிக்கைகளை உருவாக்கியது.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="907"/>
         <source>Scale by current template scaling (%1 %)</source>
-        <translation>現在テンプレートの縮尺 (%1 %) で縮尺</translation>
+        <translation>தற்போதைய வார்ப்புரு அளவிடுதல் ( %1 %) மூலம் அளவுகோல்</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="912"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="942"/>
         <source>Template import</source>
-        <translation>テンプレートをインポート</translation>
+        <translation>வார்ப்புரு இறக்குமதி</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="913"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
-        <translation>インポートされたテンプレート地図の記号の縮尺方法は?</translation>
+        <translation>இறக்குமதி செய்யப்பட்ட வார்ப்புரு வரைபடத்தின் சின்னங்கள் எவ்வாறு அளவிடப்படும்?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="943"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
-        <translation>テンプレートは、重ね印刷のシミュレーションでは表示されません。標準表示に切り替えますか?</translation>
+        <translation>அதிகப்படியான அச்சிடுதலில் வார்ப்புரு கண்ணுக்கு தெரியாததாக இருக்கும். சாதாரண பார்வைக்கு மாறவா?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="980"/>
         <source>Cannot change the georeferencing state.</source>
-        <translation>ジオリファレンス状態を変更できません。</translation>
+        <translation>புவிசார் நிலையை மாற்ற முடியாது.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_table_model.cpp" line="257"/>
         <source>- Map -</source>
-        <translation>- 地図 -</translation>
-    </message>
-    <message>
-        <source>Find the moved template file</source>
-        <translation type="obsolete">移動されたテンプレートを探す</translation>
-    </message>
-    <message>
-        <source>All files (*.*)</source>
-        <translation type="obsolete">すべてのファイル (*.*)</translation>
-    </message>
-    <message>
-        <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
-        <translation type="obsolete">テンプレートをこのファイルに変更できません。ファイル形式はテンプレートの形式として正しいですか?</translation>
+        <translation>- வரைபடம் -</translation>
     </message>
 </context>
 <context>
@@ -9128,12 +7762,12 @@ Failed to load template. Does the file exist and is it valid?</source>
         <location filename="../src/templates/template_map.cpp" line="221"/>
         <location filename="../src/templates/template_map.cpp" line="328"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished">座標の変換に失敗しました。</translation>
+        <translation>ஆயங்களை மாற்றுவதில் தோல்வி.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_map.cpp" line="203"/>
         <source>Cannot load map file, aborting.</source>
-        <translation>地図ファイルを読み込みできません、中断します。</translation>
+        <translation>வரைபடக் கோப்பை ஏற்ற முடியாது, கருக்கலைப்பு.</translation>
     </message>
 </context>
 <context>
@@ -9141,7 +7775,7 @@ Failed to load template. Does the file exist and is it valid?</source>
     <message>
         <location filename="../src/templates/template_tool_move.cpp" line="48"/>
         <source>&lt;b&gt;Drag&lt;/b&gt; to move the current template</source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;で選択中のテンプレートを水平移動します</translation>
+        <translation>&lt;b&gt; இழுத்து &lt;/b&gt; தற்போதைய வார்ப்புருவை நகர்த்த</translation>
     </message>
 </context>
 <context>
@@ -9149,7 +7783,7 @@ Failed to load template. Does the file exist and is it valid?</source>
     <message>
         <location filename="../src/templates/template_placeholder.cpp" line="178"/>
         <source>Unknown file format</source>
-        <translation type="unfinished"></translation>
+        <translation>தெரியாத கோப்பு வடிவம்</translation>
     </message>
 </context>
 <context>
@@ -9157,7 +7791,7 @@ Failed to load template. Does the file exist and is it valid?</source>
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="40"/>
         <source>Positioning</source>
-        <translation>位置調整</translation>
+        <translation>பொருத்துதல்</translation>
     </message>
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="46"/>
@@ -9167,27 +7801,27 @@ Failed to load template. Does the file exist and is it valid?</source>
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="49"/>
         <source>Y:</source>
-        <translation>Y:</translation>
+        <translation>ஒய்:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="52"/>
         <source>X-Scale:</source>
-        <translation>X縮尺:</translation>
+        <translation>ஃச் அளவிலான:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="55"/>
         <source>Y-Scale:</source>
-        <translation>Y縮尺:</translation>
+        <translation>Y- அளவிலான:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="58"/>
         <source>Rotation:</source>
-        <translation>回転:</translation>
+        <translation>சுழற்சி:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="61"/>
         <source>Shear:</source>
-        <translation>せん断:</translation>
+        <translation>வெட்டு:</translation>
     </message>
 </context>
 <context>
@@ -9195,184 +7829,135 @@ Failed to load template. Does the file exist and is it valid?</source>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="42"/>
         <source>Track scaling and positioning</source>
-        <translation>トラックの縮尺と測位</translation>
+        <translation>கண்காணிப்பு மற்றும் பொருத்துதல்</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="47"/>
         <source>Coordinate system</source>
-        <translation>座標系</translation>
+        <translation>ஒருங்கிணைப்பு அமைப்பு</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="48"/>
         <source>Real</source>
-        <translation>実際</translation>
+        <translation>உண்மையான</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="49"/>
         <source>Map</source>
-        <translation>地図</translation>
+        <translation>வரைபடம்</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="52"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation>m</translation>
+        <translation>மீ</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="55"/>
         <source>One coordinate unit equals:</source>
-        <translation>1 座標単位に等しい:</translation>
+        <translation>ஒரு ஒருங்கிணைப்பு அலகு சமம்:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="57"/>
         <source>Position track at given coordinates</source>
-        <translation>指定した座標でトラックを配置</translation>
+        <translation>கொடுக்கப்பட்ட ஆயத்தொகுதிகளில் நிலை பாதை</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="61"/>
         <source>Position track at view center</source>
-        <translation>表示の中心でトラックを配置</translation>
+        <translation>பார்வை மையத்தில் நிலை தடம்</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::TemplateTrack</name>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="256"/>
-        <location filename="../src/templates/template_track.cpp" line="262"/>
-        <source>This template must be loaded with GDAL/OGR.</source>
-        <translation>このテンプレートは GDAL/OGR で読み込む必要があります。</translation>
-    </message>
-    <message>
-        <source>Select the coordinate reference system of the track coordinates</source>
-        <translation type="vanished">トラック座標の座標参照系を選択</translation>
-    </message>
-    <message>
         <location filename="../src/templates/template_track.cpp" line="83"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>மின்தடம்</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="96"/>
         <source>Route</source>
-        <translation type="unfinished"></translation>
+        <translation>பாதை</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="109"/>
         <source>Waypoint</source>
-        <translation type="unfinished"></translation>
+        <translation>பாதைப்புள்ளி</translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_track.cpp" line="256"/>
+        <location filename="../src/templates/template_track.cpp" line="262"/>
+        <source>This template must be loaded with GDAL/OGR.</source>
+        <translation>இந்த வார்ப்புரு GDAL/OGR உடன் ஏற்றப்பட வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="294"/>
         <source>Opening track ...</source>
-        <translation>トラックを開いています ...</translation>
+        <translation>திறக்கும் பாதையில் ...</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="295"/>
         <source>Load the track in georeferenced or non-georeferenced mode?</source>
-        <translation>ジオリファレンスまたは非ジオリファレンスモードでトラックを読み込みますか?</translation>
+        <translation>புவிசார் அல்லது புவிசார் அல்லாத பயன்முறையில் பாதையை ஏற்றவா?</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="297"/>
         <source>Positions the track according to the map&apos;s georeferencing settings.</source>
-        <translation>地図のジオリファレンス設定に従ってトラックを配置します。</translation>
+        <translation>வரைபடத்தின் புவிசார் அமைப்புகளின் படி பாதையை நிலைநிறுத்துகிறது.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="299"/>
         <source>These are not configured yet, so they will be shown as the next step.</source>
-        <translation>これらはまだ構成されていません。次のステップとして表示されます。</translation>
+        <translation>இவை இன்னும் கட்டமைக்கப்படவில்லை, எனவே அவை அடுத்த கட்டமாகக் காண்பிக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="300"/>
         <source>Georeferenced</source>
-        <translation>ジオリファレンス</translation>
+        <translation>புவிநூல்</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="301"/>
         <source>Non-georeferenced</source>
-        <translation>非ジオリファレンス</translation>
+        <translation>அழகற்றது</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="301"/>
         <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
-        <translation>トラックの座標の平均で中心とした正射影を使用してトラックを投影します。調整後のトラックの位置を使用して、変換の調整と地図ジオリファレンスの設定を可能にします。</translation>
+        <translation>டிராக்கின் ஒருங்கிணைப்பு சராசரியில் மையத்துடன் ஒரு ஆர்த்தோகிராஃபிக் திட்டத்தைப் பயன்படுத்தி பாதையை திட்டமிடுகிறது. மாற்றத்தை சரிசெய்ய அனுமதிக்கிறது மற்றும் சரிசெய்யப்பட்ட பாதையின் நிலையைப் பயன்படுத்தி வரைபட சியோர்ஃபெரென்சிங்கை அமைப்பது.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="485"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="485"/>
         <source>The path is empty, there is nothing to import!</source>
-        <translation>パスが空です、インポートするものが何もありません!</translation>
+        <translation>பாதை காலியாக உள்ளது, இறக்குமதி செய்ய எதுவும் இல்லை!</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="507"/>
         <source>Question</source>
-        <translation>質問</translation>
+        <translation>கேள்வி</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="508"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
-        <translation>ウェイポイントを、すべてのポイントを通過しているラインとしてインポートしますか？</translation>
+        <translation>எல்லா புள்ளிகளிலும் செல்லும் ஒரு வரியாக வழிப்பாதைகள் இறக்குமதி செய்ய வேண்டுமா?</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="572"/>
         <source>Import problems</source>
-        <translation>インポートの問題</translation>
+        <translation>இறக்குமதி சிக்கல்கள்</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/templates/template_track.cpp" line="573"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
-            <numerusform>%n パス オブジェクトをインポートできませんでした (理由: 座標が見つかりません)。</numerusform>
+            <numerusform>%n பாதை பொருளை இறக்குமதி செய்ய முடியவில்லை (காரணம்: ஆயத்தங்களைக் காணவில்லை).</numerusform>
+            <numerusform>%n பாதை பொருள்களை இறக்குமதி செய்ய முடியவில்லை (காரணம்: ஆயத்தங்களைக் காணவில்லை).</numerusform>
         </translation>
-    </message>
-    <message>
-        <source>Error reading</source>
-        <translation type="vanished">読み込みエラー</translation>
-    </message>
-    <message>
-        <source>There was an error reading the DXF file %1:
-
-%1</source>
-        <translation type="obsolete">DXF ファイル %1 を読み込む際にエラーが発生しました。
-
-%1</translation>
-    </message>
-    <message>
-        <source>There was an error reading the DXF file %1:
-
-%2</source>
-        <translation type="vanished">DXF ファイル:%1 を読み込む際にエラーが発生しました。
-
-%2</translation>
-    </message>
-    <message>
-        <source>%1:
-Not an OSM file.</source>
-        <translation type="vanished">%1:
-OSM ファイルではありません。</translation>
-    </message>
-    <message>
-        <source>The OSM file has version %1.
-The minimum supported version is %2.</source>
-        <translation type="vanished">OSM ファイルのバージョンは %1 です。
-サポートされているバージョンは%2 以上です。</translation>
-    </message>
-    <message>
-        <source>The OSM file has version %1.
-The maximum supported version is %2.</source>
-        <translation type="vanished">OSM ファイルのバージョンは %1 です。
-サポートされているバージョンは%2 以下です。</translation>
-    </message>
-    <message>
-        <source>Problems</source>
-        <translation type="vanished">問題</translation>
-    </message>
-    <message>
-        <source>%1 nodes could not be processed correctly.</source>
-        <translation type="vanished">%1 ノードを正しく処理できませんでした。</translation>
     </message>
 </context>
 <context>
@@ -9380,38 +7965,38 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/tools/text_object_editor_helper.cpp" line="133"/>
         <source>Alignment</source>
-        <translation>整列</translation>
+        <translation>இருப்புவழி</translation>
     </message>
     <message>
         <location filename="../src/tools/text_object_editor_helper.cpp" line="536"/>
         <source>Left</source>
-        <translation>左</translation>
+        <translation>இடது</translation>
     </message>
     <message>
         <location filename="../src/tools/text_object_editor_helper.cpp" line="538"/>
         <location filename="../src/tools/text_object_editor_helper.cpp" line="555"/>
         <source>Center</source>
-        <translation>中央</translation>
+        <translation>நடுவண்</translation>
     </message>
     <message>
         <location filename="../src/tools/text_object_editor_helper.cpp" line="540"/>
         <source>Right</source>
-        <translation>右</translation>
+        <translation>வலது</translation>
     </message>
     <message>
         <location filename="../src/tools/text_object_editor_helper.cpp" line="553"/>
         <source>Top</source>
-        <translation>上</translation>
+        <translation>மேலே</translation>
     </message>
     <message>
         <location filename="../src/tools/text_object_editor_helper.cpp" line="557"/>
         <source>Baseline</source>
-        <translation>ベースライン</translation>
+        <translation>அடிப்படை</translation>
     </message>
     <message>
         <location filename="../src/tools/text_object_editor_helper.cpp" line="559"/>
         <source>Bottom</source>
-        <translation>底</translation>
+        <translation>கீழே</translation>
     </message>
 </context>
 <context>
@@ -9419,21 +8004,17 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="95"/>
         <source>Text settings</source>
-        <translation>テキスト設定</translation>
+        <translation>உரை அமைப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="107"/>
         <source>Font family:</source>
-        <translation>フォント名:</translation>
+        <translation>எழுத்துரு குடும்பம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="111"/>
         <source>Font size:</source>
-        <translation>フォントサイズ:</translation>
-    </message>
-    <message>
-        <source>Determine size...</source>
-        <translation type="vanished">サイズの決定...</translation>
+        <translation>எழுத்துரு அளவு:</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/text_symbol.cpp" line="517"/>
@@ -9450,37 +8031,37 @@ The maximum supported version is %2.</source>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="508"/>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="602"/>
         <source>mm</source>
-        <translation>mm</translation>
+        <translation>மிமீ</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="110"/>
         <source>pt</source>
-        <translation>pt</translation>
+        <translation>பக்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="133"/>
         <source>Text color:</source>
-        <translation>テキストの色:</translation>
+        <translation>உரை நிறம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="136"/>
         <source>bold</source>
-        <translation>太字</translation>
+        <translation>தடிமான</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="138"/>
         <source>italic</source>
-        <translation>斜体</translation>
+        <translation>சாய்வு</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="140"/>
         <source>underlined</source>
-        <translation>下線</translation>
+        <translation>அடிக்கோடிட்டு</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="143"/>
         <source>Text style:</source>
-        <translation>文字の修飾:</translation>
+        <translation>உரை நடை:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="147"/>
@@ -9491,137 +8072,113 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="148"/>
         <source>Line spacing:</source>
-        <translation>行間隔:</translation>
+        <translation>வரி இடைவெளி:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="151"/>
         <source>Paragraph spacing:</source>
-        <translation>段落間隔:</translation>
+        <translation>பத்தி இடைவெளி:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="154"/>
         <source>Character spacing:</source>
-        <translation>文字間隔:</translation>
+        <translation>எழுத்து இடைவெளி:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="156"/>
         <source>Kerning</source>
-        <translation>文字間隔の自動調整 (カーニング)</translation>
+        <translation>கெர்னிங்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="163"/>
         <source>Symbol icon text:</source>
-        <translation>記号アイコンのテキスト:</translation>
+        <translation>அடையாளம் படவுரு உரை:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="167"/>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="175"/>
         <source>Framing</source>
-        <translation>フレーミング</translation>
+        <translation>ஃப்ரேமிங்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="170"/>
         <source>OCAD compatibility settings</source>
-        <translation>OCAD 互換の設定</translation>
+        <translation>OCAD பொருந்தக்கூடிய அமைப்புகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="181"/>
         <source>Framing color:</source>
-        <translation>フレーミングの色:</translation>
+        <translation>ஃப்ரேமிங் நிறம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="183"/>
         <source>Line framing</source>
-        <translation>ラインフレーミング</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="189"/>
-        <source>Shadow framing</source>
-        <translation>シャドーフレーミング</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="193"/>
-        <source>Left/Right Offset:</source>
-        <translation>左/右のオフセット:</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="196"/>
-        <source>Top/Down Offset:</source>
-        <translation>上/下のオフセット:</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="200"/>
-        <source>OCAD compatibility</source>
-        <translation>OCAD 互換</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="207"/>
-        <source>enabled</source>
-        <translation>有効</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="211"/>
-        <source>Line width:</source>
-        <translation>ラインの幅:</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="214"/>
-        <source>Line color:</source>
-        <translation>ラインの色:</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="490"/>
-        <source>Position:</source>
-        <translation>位置:</translation>
-    </message>
-    <message>
-        <source>Paragraph spacing [mm]:</source>
-        <translation type="obsolete">段落間隔[mm]:</translation>
-    </message>
-    <message>
-        <source>Character spacing [percentage of space character]:</source>
-        <translation type="obsolete">文字間隔 [空白文字の割合]:</translation>
-    </message>
-    <message>
-        <source>use kerning</source>
-        <translation type="obsolete">文字間隔の調整</translation>
-    </message>
-    <message>
-        <source>Show OCAD compatibility settings</source>
-        <translation type="obsolete">OCAD互換の設定の表示</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="205"/>
-        <source>Line below paragraphs</source>
-        <translation>下線</translation>
-    </message>
-    <message>
-        <source>Enable</source>
-        <translation type="obsolete">有効にする</translation>
+        <translation>வரி ஃப்ரேமிங்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="187"/>
         <source>Width:</source>
-        <translation>幅:</translation>
+        <translation>அகலம்:</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="189"/>
+        <source>Shadow framing</source>
+        <translation>நிழல் ஃப்ரேமிங்</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="193"/>
+        <source>Left/Right Offset:</source>
+        <translation>இடது/வலது ஆஃப்செட்:</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="196"/>
+        <source>Top/Down Offset:</source>
+        <translation>மேல்/கீழ் ஈடுசெய்ய:</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="200"/>
+        <source>OCAD compatibility</source>
+        <translation>OCAD பொருந்தக்கூடிய தன்மை</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="207"/>
+        <source>enabled</source>
+        <translation>இயக்கப்பட்டது</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="211"/>
+        <source>Line width:</source>
+        <translation>வரி அகலம்:</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="214"/>
+        <source>Line color:</source>
+        <translation>வரி நிறம்:</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="490"/>
+        <source>Position:</source>
+        <translation>நிலை:</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="205"/>
+        <source>Line below paragraphs</source>
+        <translation>பத்திகளுக்கு கீழே வரி</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="217"/>
         <source>Distance from baseline:</source>
-        <translation>文字のベースラインからの距離:</translation>
+        <translation>அடிப்படையிலிருந்து தூரம்:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="221"/>
         <source>Custom tabulator positions</source>
-        <translation>カスタムタビュレータの位置</translation>
+        <translation>தனிப்பயன் தாவல் நிலைகள்</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="489"/>
         <source>Add custom tabulator</source>
-        <translation>カスタムタビュレータの追加</translation>
-    </message>
-    <message>
-        <source>Position [mm]:</source>
-        <translation type="obsolete">位置 [mm]:</translation>
+        <translation>தனிப்பயன் தாவலைச் சேர்க்கவும்</translation>
     </message>
 </context>
 <context>
@@ -9629,7 +8186,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/gui/widgets/crs_param_widgets.cpp" line="77"/>
         <source>Calculate</source>
-        <translation>計算</translation>
+        <translation>கணக்கிடுங்கள்</translation>
     </message>
 </context>
 <context>
@@ -9638,60 +8195,60 @@ The maximum supported version is %2.</source>
         <location filename="../src/undo/undo_manager.cpp" line="140"/>
         <location filename="../src/undo/undo_manager.cpp" line="185"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="140"/>
         <source>Cannot undo because the last undo step became invalid. This can for example happen if you change the symbol of an object to another and then delete the old symbol.</source>
-        <translation>直前の操作が無効なので、元に戻すことができません。これは例えば、オブジェクトの記号を変更した後で、前の記号を削除したような場合に起こります。</translation>
+        <translation>கடைசியாக செயல்தவிர் படி செல்லாதது என்பதால் செயல்தவிர்க்க முடியாது. நீங்கள் ஒரு பொருளின் சின்னத்தை இன்னொருவருக்கு மாற்றி பழைய சின்னத்தை நீக்கினால் இது நிகழும்.</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="147"/>
         <source>Confirmation</source>
-        <translation>確認</translation>
+        <translation>உறுதிப்படுத்தல்</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="147"/>
         <source>Undoing this step will go beyond the point where the file was loaded. Are you sure?</source>
-        <translation>ファイルを開いた時点より前の操作を元に戻します。よろしいですか？</translation>
+        <translation>இந்த படிநிலையை செயல்தவிர்க்கச் செய்வது கோப்பு ஏற்றப்பட்ட இடத்திற்கு அப்பால் செல்லும். நீங்கள் உறுதியாக இருக்கிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="185"/>
         <source>Cannot redo because the first redo step became invalid. This can for example happen if you delete the symbol of an object you have drawn.</source>
-        <translation>直後の操作が無効なので、やり直すことができません。これは例えば、描画したオブジェクトの記号を削除したような場合に起こります。</translation>
+        <translation>முதல் மீண்டும் படி செல்லாதது என்பதால் மீண்டும் செய்ய முடியாது. நீங்கள் வரைந்த ஒரு பொருளின் சின்னத்தை நீக்கியால் இது நிகழும்.</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::UnitOfMeasurement</name>
     <message>
+        <location filename="../src/tools/tool_helpers.cpp" line="649"/>
+        <source>%1°</source>
+        <comment>degree</comment>
+        <translation>%1 °</translation>
+    </message>
+    <message>
+        <location filename="../src/tools/tool_helpers.cpp" line="650"/>
+        <source>%1 m</source>
+        <comment>meter</comment>
+        <translation>%1 மீ</translation>
+    </message>
+    <message>
         <location filename="../src/gui/util_gui.cpp" line="204"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation>mm</translation>
+        <translation>மிமீ</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="209"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation>m</translation>
+        <translation>மீ</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="214"/>
         <source>°</source>
         <comment>degrees</comment>
         <translation>°</translation>
-    </message>
-    <message>
-        <location filename="../src/tools/tool_helpers.cpp" line="649"/>
-        <source>%1°</source>
-        <comment>degree</comment>
-        <translation>%1°</translation>
-    </message>
-    <message>
-        <location filename="../src/tools/tool_helpers.cpp" line="650"/>
-        <source>%1 m</source>
-        <comment>meter</comment>
-        <translation>%1 m</translation>
     </message>
 </context>
 <context>
@@ -9701,35 +8258,37 @@ The maximum supported version is %2.</source>
         <location filename="../src/gui/util_gui.cpp" line="144"/>
         <location filename="../src/gui/util_gui.cpp" line="178"/>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation>பிழை</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="130"/>
         <source>Failed to locate the help files.</source>
-        <translation>ヘルプファイルを探すのに失敗しました。</translation>
+        <translation>உதவி கோப்புகளைக் கண்டுபிடிப்பதில் தோல்வி.</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="144"/>
         <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation>ヘルプブラウザを探すのに失敗しました (&quot;QT Assistant&quot;)。</translation>
+        <translation>உதவி உலாவி (&quot;QT உதவியாளர்&quot;) கண்டுபிடிக்கத் தவறிவிட்டது.</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="179"/>
         <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation>ヘルプブラウザの開始に失敗しました(&quot;Qt Assistant&quot;)。</translation>
+        <translation>உதவி உலாவி (&quot;QT உதவியாளர்&quot;) தொடங்குவதில் தோல்வி.</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="197"/>
         <source>See more...</source>
         <extracomment>This &quot;See more&quot; is displayed as a link to the manual in What&apos;s-this tooltips.</extracomment>
-        <translation>さらに表示...</translation>
+        <translation>மேலும் காண்க ...</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_format.cpp" line="54"/>
         <source>Internal error detected! Please report this issue.
 Version: %1
 Location: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>உள் பிழை கண்டறியப்பட்டது! இந்த சிக்கலைப் புகாரளிக்கவும்.
+ பதிப்பு: %1
+ இடம்: %2</translation>
     </message>
 </context>
 <context>
@@ -9737,7 +8296,7 @@ Location: %2</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="245"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
-        <translation>Mapper の古いバージョンでは、複数の地図パートはサポートしていません。互換モードで地図を保存するには、最初にすべての地図パートをマージする必要があります。</translation>
+        <translation>மேப்பரின் பழைய பதிப்புகள் பல வரைபட பகுதிகளை ஆதரிக்கவில்லை. பொருந்தக்கூடிய பயன்முறையில் வரைபடத்தை சேமிக்க, நீங்கள் முதலில் அனைத்து வரைபட பகுதிகளையும் ஒன்றிணைக்க வேண்டும்.</translation>
     </message>
 </context>
 <context>
@@ -9745,78 +8304,74 @@ Location: %2</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="530"/>
         <source>Unsupported element: %1 (line %2 column %3)</source>
-        <translation>サポートされていない要素: %1 (%2 行目 %3 列目)</translation>
+        <translation>ஆதரிக்கப்படாத உறுப்பு: %1 (வரி %2 நெடுவரிசை %3)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="574"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
-        <translation>いくつかの座標は印刷範囲外でした。地図コンテンツを調整しました。</translation>
+        <translation>சில ஆயத்தொகுப்புகள் அச்சிடுவதற்கான எல்லைக்கு அப்பாற்பட்டவை. வரைபட உள்ளடக்கம் சரிசெய்யப்பட்டது.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="666"/>
         <source>unknown</source>
-        <translation>不明</translation>
+        <translation>தெரியவில்லை</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="667"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
-        <translation>このバージョンの Mapper では、このファイルの要素を読み取ることができません。最低限必要なバージョン: %1</translation>
+        <translation>இந்த கோப்பின் பகுதிகளை மேப்பரின் இந்த பதிப்பால் படிக்க முடியாது. குறைந்தபட்ச தேவையான பதிப்பு: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="648"/>
         <source>Error at line %1 column %2: %3</source>
-        <translation>%1 行目 %2 列目でエラー: %3</translation>
-    </message>
-    <message>
-        <source>The map notes could not be read.</source>
-        <translation type="vanished">ノートを読み取ることができません。</translation>
+        <translation>வரி %1 நெடுவரிசை %2: %3 இல் பிழை</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="684"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="968"/>
         <source>Some invalid characters had to be removed.</source>
-        <translation>いくつかの無効な文字を削除する必要がありました。</translation>
+        <translation>சில தவறான எழுத்துக்கள் அகற்றப்பட வேண்டியிருந்தது.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="702"/>
         <source>Unknown error</source>
-        <translation>不明なエラー</translation>
+        <translation>தெரியாத பிழை</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="703"/>
         <source>Unsupported or invalid georeferencing specification &apos;%1&apos;: %2</source>
-        <translation>サポートされていないか無効なジオリファレンス仕様 &apos;%1&apos;: %2</translation>
+        <translation>ஆதரிக்கப்படாத அல்லது தவறான புவிசார் விவரக்குறிப்பு விவரக்குறிப்பு &apos; %1&apos;: %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="731"/>
         <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
-        <translation type="unfinished"></translation>
+        <translation>சீரற்ற சரிவு/பேரழிவு கண்டறியப்பட்டது. %1 பெறுநர் க்கு சரிவின் தானியங்கி சரிசெய்தல் மூலம் தீர்க்கப்படுகிறது.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="861"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="914"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
-        <translation>色 &apos;%1&apos; のノックアウト プロパティを設定できませんでした。</translation>
+        <translation>&apos;%1&apos; வண்ணத்தின் நாக் அவுட் சொத்தை அமைக்க முடியவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="874"/>
         <source>Expected %1 colors, found %2.</source>
-        <translation>%1 の色が必要ですが、%2 が見つかりました。</translation>
+        <translation>எதிர்பார்க்கப்படும் %1 வண்ணங்கள், %2 காணப்படுகிறது.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="890"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
-        <translation>%2 (%3) の処理中に、スポット カラー %1 が見つかりませんでした。</translation>
+        <translation>%2 ( %3) செயலாக்கும்போது ச்பாட் கலர் %1 காணப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="946"/>
         <source>Expected %1 symbols, found %2.</source>
-        <translation>%1 の記号を予期しましたが、%2 が見つかりました。</translation>
+        <translation>எதிர்பார்க்கப்படும் %1 சின்னங்கள், %2 காணப்படுகிறது.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="985"/>
         <source>Expected %1 map parts, found %2.</source>
-        <translation>%1 の地図の要素が必要ですが、%2 が見つかりました。</translation>
+        <translation>எதிர்பார்க்கப்படும் %1 வரைபட பாகங்கள், %2 காணப்பட்டது.</translation>
     </message>
 </context>
 </TS>
