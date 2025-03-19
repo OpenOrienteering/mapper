@@ -797,12 +797,12 @@ void XMLFileImporter::importColors()
 						if (xml.name() == literal::namedcolor)
 						{
 							XmlElementReader color_element(xml);
+							color->setSpotColorName(xml.readElementText());
 							if (color_element.hasAttribute(literal::screen_frequency))
 							{
 								color->setScreenAngle(color_element.attribute<double>(literal::screen_angle));
 								color->setScreenFrequency(std::max(0.0, color_element.attribute<double>(literal::screen_frequency)));
 							}
-							color->setSpotColorName(xml.readElementText());
 							color->setKnockout(knockout);
 						}
 						else if (xml.name() == literal::component)
