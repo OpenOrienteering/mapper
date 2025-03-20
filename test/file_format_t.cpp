@@ -249,7 +249,14 @@ namespace
 		}
 		else for (int i = 0; i < actual.getNumColors(); ++i)
 		{
-			QCOMPARE(*actual.getColor(i), *expected.getColor(i));
+			const auto& actual_color = *actual.getColor(i);
+			const auto& expected_color = *expected.getColor(i);
+			QCOMPARE(actual_color, expected_color);
+			if (expected_color.getSpotColorMethod() == MapColor::SpotColor)
+			{
+				QCOMPARE(actual_color.getScreenAngle(), expected_color.getScreenAngle());
+				QCOMPARE(actual_color.getScreenFrequency(), expected_color.getScreenFrequency());
+			}
 		}
 		
 		// Symbols
@@ -939,6 +946,8 @@ void FileFormatTest::pristineMapTest()
 	auto spot_color = std::make_unique<MapColor>(QString::fromLatin1("spot color"), 0);
 	spot_color->setSpotColorName(QString::fromLatin1("SPOTCOLOR"));
 	spot_color->setCmyk({0.1f, 0.2f, 0.3f, 0.4f});
+	spot_color->setScreenFrequency(55.0);
+	spot_color->setScreenAngle(73.0);
 	spot_color->setRgbFromCmyk();
 	
 	auto mixed_color = std::make_unique<MapColor>(QString::fromLatin1("mixed color"), 1);
