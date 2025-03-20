@@ -1925,7 +1925,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="601"/>
         <source>Invalid auxiliary scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>coefficient de compensation d&apos;échelle invalide: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="633"/>
@@ -2117,7 +2117,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="217"/>
         <source>Scale compensation</source>
-        <translation type="unfinished"></translation>
+        <translation>Compensation d&apos;échelle</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="222"/>
@@ -2129,7 +2129,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="228"/>
         <source>Auxiliary scale factor:</source>
         <extracomment>The auxiliary scale factor is the ratio between a length in the curved earth model and the corresponding length on the ground. It is applied as a factor to ground distances to get curved earth model distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Coefficient de compensation d&apos;échelle:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="245"/>
@@ -2637,7 +2637,7 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="1943"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1794"/>
         <source>Cannot find a vector data export driver named &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver le pilote d&apos;export nommé &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Cannot save file
