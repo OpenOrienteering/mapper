@@ -586,17 +586,17 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="247"/>
         <source>This color is used by the following symbols:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuto barvu používají následující symboly:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="269"/>
         <source>This color is used as a spot color by the following map colors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tato barva je použita jako přímá barva následujícími barvami mapy:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="287"/>
         <source>This spot color is used by the following symbols:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tato přímá barva je použita následujícími symboly:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="297"/>
@@ -606,7 +606,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="299"/>
         <source>Color &quot;%1&quot; is used by other elements. Removing the color will change the appearance of these elements. Do you really want to remove it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Barva „%1“ je používána jinými prvky. Odstraněním barvy se změní vzhled těchto prvků. Opravdu ji chcete odstranit?</translation>
     </message>
     <message>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
@@ -1960,7 +1960,7 @@
     <message>
         <location filename="../src/core/map_information.cpp" line="142"/>
         <source>Custom PROJ.4</source>
-        <translation type="unfinished">Vlastní PROJ.4</translation>
+        <translation>Vlastní PROJ.4</translation>
     </message>
 </context>
 <context>
@@ -2166,7 +2166,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="400"/>
         <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="442"/>
@@ -3766,7 +3766,7 @@ Importovat data tak jako tak?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1031"/>
         <source>Map information...</source>
-        <translation type="unfinished"></translation>
+        <translation>Informace o mapě...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1033"/>
@@ -5156,7 +5156,7 @@ symbolů</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2633"/>
         <source>Resulting symbol: %1.</source>
-        <translation type="unfinished">Výsledný symbol: %1 %2. {1.?}</translation>
+        <translation>Výsledný symbol: %1.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2667"/>
@@ -5259,53 +5259,53 @@ symbolů</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="149"/>
         <source>code</source>
-        <translation type="unfinished"></translation>
+        <translation>kód</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="149"/>
         <source>zone</source>
-        <translation type="unfinished"></translation>
+        <translation>zóna</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="166"/>
         <source>Point symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Bodové symboly</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="167"/>
         <source>Line symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Liniové symboly</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="168"/>
         <source>Area symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Plošné symboly</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="169"/>
         <source>Combined symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Kombinované symboly</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="170"/>
         <source>Text symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Textové symboly</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="171"/>
         <location filename="../src/core/map_information.cpp" line="253"/>
         <source>Undefined symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Nedefinované symboly</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="218"/>
         <source>&lt;undefined&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;nedefinováno&gt;</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="232"/>
         <source>Map</source>
-        <translation type="unfinished">Mapa</translation>
+        <translation>Mapa</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="232"/>
@@ -5313,137 +5313,137 @@ symbolů</translation>
         <location filename="../src/core/map_information.cpp" line="255"/>
         <location filename="../src/core/map_information.cpp" line="258"/>
         <source>%n object(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n objekt</numerusform>
+            <numerusform>%n objekty</numerusform>
+            <numerusform>%n objektů</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="234"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Měřítko</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="235"/>
         <source>Coordinate reference system</source>
-        <translation type="unfinished"></translation>
+        <translation>Souřadnicový systém</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="237"/>
         <source>Undo steps</source>
-        <translation type="unfinished"></translation>
+        <translation>Kroků zpět</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="237"/>
         <location filename="../src/core/map_information.cpp" line="239"/>
         <source>%n step(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n krok</numerusform>
+            <numerusform>%n kroky</numerusform>
+            <numerusform>%n kroků</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="239"/>
         <source>Redo steps</source>
-        <translation type="unfinished"></translation>
+        <translation>Kroků znovu</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="242"/>
         <source>Templates</source>
-        <translation type="unfinished">Podklady</translation>
+        <translation>Podklady</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="242"/>
         <source>%n template(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n podklad</numerusform>
+            <numerusform>%n podklady</numerusform>
+            <numerusform>%n podkladů</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="244"/>
         <source>Map parts</source>
-        <translation type="unfinished">Části mapy</translation>
+        <translation>Části mapy</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="244"/>
         <source>%n part(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n část</numerusform>
+            <numerusform>%n části</numerusform>
+            <numerusform>%n částí</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="250"/>
         <source>Symbols</source>
-        <translation type="unfinished">Symboly</translation>
+        <translation>Symboly</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="250"/>
         <location filename="../src/core/map_information.cpp" line="280"/>
         <source>%n symbol(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n symbol</numerusform>
+            <numerusform>%n symboly</numerusform>
+            <numerusform>%n symbolů</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="266"/>
         <source>Colors</source>
-        <translation type="unfinished">Barvy</translation>
+        <translation>Barvy</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="266"/>
         <source>%n color(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n barva</numerusform>
+            <numerusform>%n barvy</numerusform>
+            <numerusform>%n barev</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="274"/>
         <source>Fonts</source>
-        <translation type="unfinished"></translation>
+        <translation>Fonty</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="274"/>
         <source>%n font(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n font</numerusform>
+            <numerusform>%n fonty</numerusform>
+            <numerusform>%n fontů</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="279"/>
         <source>%1 (substituted by %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (nahrazen %2)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="78"/>
         <source>Map information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informace o mapě</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="80"/>
         <source>Save as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit jako...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="117"/>
         <source>Plain text</source>
-        <translation type="unfinished"></translation>
+        <translation>Prostý text</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="131"/>
         <source>Error</source>
-        <translation type="unfinished">Chyba</translation>
+        <translation>Chyba</translation>
     </message>
 </context>
 <context>
@@ -5451,7 +5451,7 @@ symbolů</translation>
     <message>
         <location filename="../src/gui/map/map_notes.cpp" line="45"/>
         <source>Map notes</source>
-        <translation type="unfinished">Poznámky k mapě</translation>
+        <translation>Poznámky k mapě</translation>
     </message>
 </context>
 <context>
@@ -5928,7 +5928,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2717"/>
         <source>The map contains an object with more than 32767 coordinates which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapa obsahuje objekt s více než 32767 souřadnicemi což není v OCD verzi 8 podporováno.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2761"/>
@@ -8206,64 +8206,64 @@ Chcete uložit vaše změny?</translation>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="162"/>
         <source>Map Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Barvy mapy</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="163"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Barva</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="164"/>
         <source>Name</source>
-        <translation type="unfinished">Název</translation>
+        <translation>Název</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="165"/>
         <source>RGB</source>
-        <translation type="unfinished">RGB</translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="166"/>
         <source>Spot colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Přímé barvy</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="167"/>
         <source>Knockout</source>
-        <translation type="unfinished"></translation>
+        <translation>Maskování</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="204"/>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="208"/>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="212"/>
         <source>[X] %1</source>
-        <translation type="unfinished"></translation>
+        <translation>[X] %1</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="205"/>
         <source>Symbol orientation can be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientace symbolu může být změněna.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="209"/>
         <source>Pattern orientation can be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientace vzoru může být změněna.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="213"/>
         <source>Helper symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomocný symbol</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="249"/>
         <source>Symbols</source>
-        <translation type="unfinished">Symboly</translation>
+        <translation>Symboly</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="283"/>
         <source>Symbol Set Report on &apos;%0&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Zpráva o sadě symbolů na &apos;%0&apos;</translation>
     </message>
 </context>
 <context>
@@ -8271,17 +8271,17 @@ Chcete uložit vaše změny?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="53"/>
         <source>HTML</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="54"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Všechny soubory (*.*)</translation>
+        <translation>Všechny soubory (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="76"/>
         <source>Create symbol set report...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit zprávu o sadě symbolů...</translation>
     </message>
 </context>
 <context>
@@ -8344,7 +8344,7 @@ Princ z vršku a jeho pinč, jeden
 vedle koně běže, druhý na oři sedě,
 za princeznou spanilou sedící na pařezu
 za řekou v údolí s pomocí chvátá. Slečna ta
-před chvílí, víme, vypadla z kabiny svého létadla.
+před chvílí, víme, vypadla z kabiny svého letadla.
 
 1234567890</translation>
     </message>
