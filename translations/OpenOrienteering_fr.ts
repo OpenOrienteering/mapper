@@ -590,7 +590,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="269"/>
         <source>This color is used as a spot color by the following map colors:</source>
-        <translation>Cette couleur est utilisée comme ton direct par les couleurs de cartes suivantes:</translation>
+        <translation>Cette couleur est utilisée comme ton direct par les couleurs de cartes suivantes&#xa0;:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="287"/>
@@ -835,7 +835,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="261"/>
         <source>Origin at: %1</source>
-        <translation>Origine placée à: %1</translation>
+        <translation>Origine placée à&#xa0;: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="263"/>
@@ -853,7 +853,7 @@
     <message>
         <location filename="../src/tools/cut_hole_tool.cpp" line="272"/>
         <source>&lt;b&gt;Click or drag&lt;/b&gt;: Start drawing the hole. </source>
-        <translation>&lt;b&gt;Clic ou glisser&lt;/b&gt;: pour débuter le dessin d&apos;un trou. </translation>
+        <translation>&lt;b&gt;Clic ou glisser&lt;/b&gt;&#xa0;: pour débuter le dessin d&apos;un trou. </translation>
     </message>
 </context>
 <context>
@@ -884,7 +884,7 @@
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="108"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt; sur une ligne: pour la séparer en deux. &lt;b&gt;Glisser&lt;/b&gt; le long d&apos;une ligne: pour supprimer une partie de cette ligne. &lt;b&gt; Clic ou Glisser&lt;/b&gt; sur la bordure d&apos;une surface: pour dessiner une ligne de coupe. </translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; sur une ligne&#xa0;: pour la séparer en deux. &lt;b&gt;Glisser&lt;/b&gt; le long d&apos;une ligne&#xa0;: pour supprimer une partie de cette ligne. &lt;b&gt; Clic ou Glisser&lt;/b&gt; sur la bordure d&apos;une surface&#xa0;: pour dessiner une ligne de coupe. </translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="373"/>
@@ -897,18 +897,18 @@
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="148"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the whole map. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: pour rogner toute la carte. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;&#xa0;: pour rogner toute la carte. </translation>
     </message>
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="149"/>
         <location filename="../src/tools/cutout_tool.cpp" line="153"/>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation>&lt;b&gt;%1+Clic ou Glisser&lt;/b&gt;: pour sélectionner les objets à rogner. </translation>
+        <translation>&lt;b&gt;%1+Clic ou Glisser&lt;/b&gt;&#xa0;: pour sélectionner les objets à rogner. </translation>
     </message>
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="154"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the selected objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: pour rogner les objets sélectionnés. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;&#xa0;: pour rogner les objets sélectionnés. </translation>
     </message>
 </context>
 <context>
@@ -991,12 +991,12 @@
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="313"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: pour débuter le dessin du cercle ou de l&apos;ellipse. </translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;&#xa0;: pour débuter le dessin du cercle ou de l&apos;ellipse. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="314"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a circle. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;: pour dessiner le cercle. </translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt;&#xa0;: pour dessiner le cercle. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="316"/>
@@ -1006,12 +1006,12 @@
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="320"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: pour terminer le cercle. </translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;&#xa0;: pour terminer le cercle. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="321"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;: pour dessiner une ellipse. </translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt;&#xa0;: pour dessiner une ellipse. </translation>
     </message>
 </context>
 <context>
@@ -1033,7 +1033,7 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1149"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation>&lt;b&gt;%1+Clic&lt;/b&gt;: pour aimanter ou ajouter à d&apos;autres objets. </translation>
+        <translation>&lt;b&gt;%1+Clic&lt;/b&gt;&#xa0;: pour aimanter ou ajouter à d&apos;autres objets. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1157"/>
@@ -1925,7 +1925,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="601"/>
         <source>Invalid auxiliary scale factor: %1</source>
-        <translation>coefficient de compensation d&apos;échelle invalide: %1</translation>
+        <translation>coefficient de correction d&apos;échelle invalide: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="633"/>
@@ -1979,7 +1979,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="260"/>
         <source>Declination:</source>
-        <translation>Déclinaison :</translation>
+        <translation>Déclinaison magnétique&#xa0;:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="194"/>
@@ -2112,24 +2112,24 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="216"/>
         <source>Show scale factors</source>
-        <translation>Afficher les facteurs de l&apos;échelle</translation>
+        <translation>Afficher les coefficients de correction d&apos;échelle</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="217"/>
         <source>Scale compensation</source>
-        <translation>Compensation d&apos;échelle</translation>
+        <translation>Correction d&apos;échelle</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="222"/>
         <source>Combined scale factor:</source>
         <extracomment>The combined scale factor is the ratio between a length on the ground and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation>Facteur d&apos;échelle combiné&#x202f;:</translation>
+        <translation>Coefficient d&apos;échelle combiné&#xa0;:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="228"/>
         <source>Auxiliary scale factor:</source>
         <extracomment>The auxiliary scale factor is the ratio between a length in the curved earth model and the corresponding length on the ground. It is applied as a factor to ground distances to get curved earth model distances.</extracomment>
-        <translation>Coefficient de compensation d&apos;échelle:</translation>
+        <translation>Coefficient d&apos;échelle auxiliaire&#xa0;:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="245"/>
@@ -2170,22 +2170,22 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="530"/>
         <source>Declination change</source>
-        <translation>Changement de déclinaison</translation>
+        <translation>Changement de la déclinaison magnétique</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="530"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
-        <translation>La déclinaison a été changée. Voulez-vous appliquer une rotation à la carte en fonction de celle-ci ?</translation>
+        <translation>La déclinaison magnétique a été changée. Voulez-vous appliquer une rotation à la carte en fonction de celle-ci&#x202f;?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="555"/>
         <source>Scale factor change</source>
-        <translation>Changement du coefficient d&apos;échelle</translation>
+        <translation>Changement du coefficient de correction d&apos;échelle</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="555"/>
         <source>The scale factor has been changed. Do you want to stretch/shrink the map content accordingly, too?</source>
-        <translation type="unfinished">Le coefficient de compensation d&apos;échelle a été modifié. Souhaitez vous étirer/rétrécir le contenu de la carte en conséquence&#x202f;?</translation>
+        <translation>Le coefficient de correction d&apos;échelle a été modifié. Souhaitez vous étirer/rétrécir le contenu de la carte en conséquence&#x202f;?</translation>
     </message>
     <message>
         <source>Projected coordinates:</source>
@@ -7439,7 +7439,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="43"/>
         <source>Event and course details</source>
-        <translation type="unfinished"></translation>
+        <translation>Détails de l&apos;événement et des circuits</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="48"/>
