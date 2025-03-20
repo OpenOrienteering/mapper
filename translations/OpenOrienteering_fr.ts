@@ -1468,7 +1468,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
         <source>User input: Ignore display touch</source>
-        <translation>Saisie utilisateur&#xa0;: ignorer l&apos;écran tactile</translation>
+        <translation>Saisie utilisateur: ignorer l&apos;écran tactile</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="92"/>
