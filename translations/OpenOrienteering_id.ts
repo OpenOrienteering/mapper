@@ -4832,7 +4832,7 @@ yang dipilih</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2633"/>
         <source>Resulting symbol: %1.</source>
-        <translation type="unfinished">Simbol yang dihasilkan: %1 %2. {1.?}</translation>
+        <translation>Simbol yang dihasilkan: %1.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2667"/>
