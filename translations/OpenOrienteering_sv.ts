@@ -5476,7 +5476,7 @@ valda</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2633"/>
         <source>Resulting symbol: %1.</source>
-        <translation type="unfinished">Resulterande symbol: %1 %2. {1.?}</translation>
+        <translation>Resulterande symbol: %1.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2667"/>
