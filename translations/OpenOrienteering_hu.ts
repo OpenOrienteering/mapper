@@ -574,12 +574,12 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="269"/>
         <source>This color is used as a spot color by the following map colors:</source>
-        <translation>Ezt a színt a következő térképszínek &quot;spot színként&quot; használják:</translation>
+        <translation>Ezt a színt a következő térképszínek foltszínként használják:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="287"/>
         <source>This spot color is used by the following symbols:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezt a foltszínt a következő szimbólumok használják:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="297"/>
@@ -5705,7 +5705,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="845"/>
         <source>The map contains more than 24 spot colors which is not supported by OCD version 8.</source>
-        <translation>A térkép több, mint 24 pont színt tartalmaz ami nem támogatott OCD 8 verzióban.</translation>
+        <translation>A térkép több, mint 24 foltszínt tartalmaz, amit az OCD 8. verziója nem támogat.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="851"/>
@@ -5716,7 +5716,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="895"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="907"/>
         <source>Invalid spot color.</source>
-        <translation>Érvénytelen pont szín.</translation>
+        <translation>Érvénytelen foltszín.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1433"/>
@@ -8034,7 +8034,7 @@ Elmented a változtatásaidat?</translation>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="166"/>
         <source>Spot colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Foltszínek</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="167"/>
@@ -9526,7 +9526,7 @@ Hely: %2</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="891"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
-        <translation>A %2 feldolgozása közben a %1 pont szín nem található (%3).</translation>
+        <translation>%2 feldolgozásakor %1 foltszín nem található (%3).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="947"/>
