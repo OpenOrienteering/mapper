@@ -3377,7 +3377,7 @@ Press No to choose a different format.</source>
         <translation>Die Karte wird als %1-Datei gespeichert. Bei diesem Dateiformat können Informationen verlorengehen.
 
 Wählen Sie Ja, um die Datei in diesem Format zu speichern.
-Wählen Sie Nein, um ein anderes Dateiformat auszusuchen.</translation>
+Wählen Sie Nein, um ein anderes Dateiformat auszuwählen.</translation>
     </message>
 </context>
 <context>
@@ -4475,7 +4475,7 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2231"/>
         <source>Scale to percentage:</source>
-        <translation>Skalieren auf Prozentwert :</translation>
+        <translation>Skalieren auf Prozentwert:</translation>
     </message>
     <message>
         <source>Map notes</source>
@@ -4847,7 +4847,7 @@ gewählt</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="2667"/>
         <location filename="../src/gui/map/map_editor.cpp" line="2669"/>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
-        <translation>Wählen Sie wenigstens ein Objekt sowie ein geeignetes alternatives Symbol, dieses Werkzeug verwenden zu können.</translation>
+        <translation>Wählen Sie wenigstens ein Objekt sowie ein geeignetes alternatives Symbol, um dieses Werkzeug verwenden zu können.</translation>
     </message>
     <message>
         <source>Fill the selected line(s) or create a border for the selected area(s).</source>
