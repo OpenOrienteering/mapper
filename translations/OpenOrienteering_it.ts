@@ -4956,7 +4956,7 @@ selezion</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2633"/>
         <source>Resulting symbol: %1.</source>
-        <translation type="unfinished">Simboli risultanti: %1 %2. {1.?}</translation>
+        <translation>Simboli risultanti: %1.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2667"/>
