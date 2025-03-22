@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2024 Kai Pastor
+ *    Copyright 2013-2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -97,7 +97,7 @@ TagsWidget::~TagsWidget() = default;
 // slot
 void TagsWidget::showHelp()
 {
-	Util::showHelp(controller->getWindow(), "tag_editor.html");
+	Util::showHelp(controller->getWindow(), "object_tags.html");
 }
 
 void TagsWidget::setupLastRow()
