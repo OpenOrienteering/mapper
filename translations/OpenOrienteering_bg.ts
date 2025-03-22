@@ -4457,7 +4457,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2633"/>
         <source>Resulting symbol: %1.</source>
-        <translation type="unfinished">Получен символ: %1 %2. {1.?}</translation>
+        <translation>Получен символ: %1.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2667"/>

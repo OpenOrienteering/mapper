@@ -54,12 +54,12 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="192"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation>Az OpenOrienteering fejlesztői névsorban:</translation>
+        <translation>Az OpenOrienteering fejlesztői névsor szerint:</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="193"/>
         <source>(project initiator)</source>
-        <translation>(projekt kezdeményező)</translation>
+        <translation>(projektkezdeményező)</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="14"/>
@@ -67,12 +67,12 @@
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
         <translatorcomment>Tartalmilag ez az igazság</translatorcomment>
-        <translation>Egy szabad szoftver tájékozódási sportok térképeinek rajzolásához</translation>
+        <translation>Szabad szoftver tájékozódási sportok térképeinek rajzolásához</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="180"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation>Ez a program szabad szoftver: tovább terjesztheti és/vagy módosíthatja a Szabad Szoftver Alapítvány által közzétett &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt; feltételei szerint.</translation>
+        <translation>Ez a program szabad szoftver: tovább terjesztheti és/vagy módosíthatja a Szabad Szoftver Alapítvány (Free Software Foundation) által közzétett &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt; feltételei szerint.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="185"/>
@@ -90,12 +90,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
         <source>Open most recently used file</source>
-        <translation>A legutóbb használt fájl megnyitása</translation>
+        <translation>Legutóbb használt fájl megnyitása</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="119"/>
         <source>Show tip of the day</source>
-        <translation>Mutasd a napi tippet</translation>
+        <translation>Napi tipp megjelenítése</translation>
     </message>
 </context>
 <context>
@@ -168,17 +168,17 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="182"/>
         <source>Pattern interval:</source>
-        <translation>Minta távolság:</translation>
+        <translation>Minták közötti távolság (intervallum):</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="187"/>
         <source>Pattern offset:</source>
-        <translation>Minta eltolás:</translation>
+        <translation>Minta eltolása:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="192"/>
         <source>Row offset:</source>
-        <translation>Sortávolság:</translation>
+        <translation>Sor eltolása:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="194"/>
@@ -222,17 +222,17 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation>Elemek rajzolása, ha a középpont a határolón belül van.</translation>
+        <translation>Elem rajzolása, ha a középpont a határolón belül van.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="233"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation>Elemek rajzolása, ha a középpont a határolón belül van.</translation>
+        <translation>Elem rajzolása, ha valamely pont a határolón belül van.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="234"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation>Elemek rajzolása, ha minden pont a határolón belül van.</translation>
+        <translation>Elem rajzolása, ha minden pont a határolón belül van.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="249"/>
@@ -242,12 +242,12 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="343"/>
         <source>Pattern fill %1</source>
-        <translation>Minta kitöltés %1</translation>
+        <translation>Mintakitöltés %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="352"/>
         <source>Line fill %1</source>
-        <translation>Vonal kitöltés %1</translation>
+        <translation>Vonalkitöltés %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="371"/>
@@ -257,22 +257,22 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="84"/>
         <source>Area color:</source>
-        <translation>Terület szín:</translation>
+        <translation>Terület színe:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="173"/>
         <source>Line offset:</source>
-        <translation>Vonal távolság:</translation>
+        <translation>Vonal eltolása:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="168"/>
         <source>Line color:</source>
-        <translation>Vonal szín:</translation>
+        <translation>Vonal színe:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="163"/>
         <source>Line width:</source>
-        <translation>Vonal vastagság:</translation>
+        <translation>Vonal vastagsága:</translation>
     </message>
 </context>
 <context>
@@ -288,7 +288,6 @@
         <source>%n bytes</source>
         <extracomment>The singular form will not be used!</extracomment>
         <translation>
-            <numerusform>Egy byte</numerusform>
             <numerusform>%n byte</numerusform>
         </translation>
     </message>
@@ -300,12 +299,12 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="59"/>
         <source>File recovery</source>
-        <translation>Fájl helyreállítás</translation>
+        <translation>Fájl helyreállítása</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="61"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation>A %1 fájl nem szabályosan lett lezárva. Ebben a pillanatban két különböző állapota van:</translation>
+        <translation>A(z) %1 fájl nem szabályosan lett bezárva. Most két különböző verziója van:</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="75"/>
@@ -323,22 +322,22 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="96"/>
         <source>Edit</source>
-        <translation>Szerkeszt</translation>
+        <translation>Szerkesztés</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="104"/>
         <source>Spot color printing</source>
-        <translation>Folt színmód nyomtatás</translation>
+        <translation>Foltszínmód nyomtatása</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="109"/>
         <source>Defines a spot color:</source>
-        <translation>Egy folt szín megadása:</translation>
+        <translation>Foltszín megadása:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="118"/>
         <source>Screen frequency:</source>
-        <translation>Kép frekvencia:</translation>
+        <translation>Képernyő-frekvencia:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="119"/>
@@ -348,12 +347,12 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="120"/>
         <source>Undefined</source>
-        <translation>Nem megadott</translation>
+        <translation>Nincs megadva</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="124"/>
         <source>Screen angle:</source>
-        <translation>Kép szög:</translation>
+        <translation>Kép szöge:</translation>
     </message>
     <message>
         <source>°</source>
@@ -362,7 +361,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="131"/>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation>A folt színek keveréke (raszter és felülnyomás):</translation>
+        <translation>Foltszínek keveréke (raszter és felülnyomás):</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="146"/>
@@ -388,17 +387,17 @@
         <location filename="../src/gui/color_dialog.cpp" line="169"/>
         <location filename="../src/gui/color_dialog.cpp" line="226"/>
         <source>Calculate from spot colors</source>
-        <translation>Számol egy folt színéből</translation>
+        <translation>Kiszámítás foltszínből</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="174"/>
         <source>Calculate from RGB color</source>
-        <translation>Számol egy RGB színből</translation>
+        <translation>Kiszámítás RGB színből</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="179"/>
         <source>Custom process color:</source>
-        <translation>Beállított folyamat szín:</translation>
+        <translation>Egyéni folyamatszín:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="185"/>
@@ -428,7 +427,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="231"/>
         <source>Calculate from CMYK color</source>
-        <translation>Számol a CMYK színekből</translation>
+        <translation>Kiszámítás CMYK színből</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="236"/>
@@ -458,7 +457,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="275"/>
         <source>Color usage in symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Szimbólumok színhasználata</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="300"/>
@@ -473,7 +472,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="302"/>
         <source>Color usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Színhasználat</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="321"/>
@@ -540,22 +539,22 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="107"/>
         <source>Delete</source>
-        <translation>Töröl</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="100"/>
         <source>Duplicate</source>
-        <translation>Megkettőz</translation>
+        <translation>Másolat készítése</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="113"/>
         <source>Move Up</source>
-        <translation>Fölfelé mozgat</translation>
+        <translation>Mozgatás fölfelé</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="115"/>
         <source>Move Down</source>
-        <translation>Lefelé mozgat</translation>
+        <translation>Mozgatás lefelé</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="126"/>
@@ -565,22 +564,22 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="147"/>
         <source>Double-click a color value to open a dialog.</source>
-        <translation>Dupla kattintás a színérték párbeszéd ablak megnyitásához.</translation>
+        <translation>Dupla kattintás egy színértékre a párbeszédablak megnyitásához.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="247"/>
         <source>This color is used by the following symbols:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezt a színt a következő szimbólumok használják:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="269"/>
         <source>This color is used as a spot color by the following map colors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezt a színt a következő térképszínek foltszínként használják:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="287"/>
         <source>This spot color is used by the following symbols:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ezt a foltszínt a következő szimbólumok használják:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="297"/>
@@ -2164,7 +2163,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="400"/>
         <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="442"/>
@@ -3668,7 +3667,7 @@ Az adatokat mégis importálja?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1031"/>
         <source>Map information...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Térkép adatok...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1033"/>
@@ -4305,7 +4304,7 @@ mert a %2 (.%3) mentés nem támogatott.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1079"/>
         <source>Erase area</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Terület kivágása</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1126"/>
@@ -5019,7 +5018,7 @@ kiválasztva</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2633"/>
         <source>Resulting symbol: %1.</source>
-        <translation type="unfinished">Létrejövő térképjel: %1 %2. {1.?}</translation>
+        <translation>Létrejövő térképjel: %1.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2667"/>
@@ -5132,33 +5131,33 @@ kiválasztva</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="166"/>
         <source>Point symbols</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pont szimbólumok</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="167"/>
         <source>Line symbols</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vonal szimbólumok</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="168"/>
         <source>Area symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Terület szimbólumok</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="169"/>
         <source>Combined symbols</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kombinált szimbólumok</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="170"/>
         <source>Text symbols</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Szöveg szimbólumok</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="171"/>
         <location filename="../src/core/map_information.cpp" line="253"/>
         <source>Undefined symbols</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nem definiált szimbólumok</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="218"/>
@@ -5183,17 +5182,17 @@ kiválasztva</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="234"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Méretarány</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="235"/>
         <source>Coordinate reference system</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinátarendszer</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="237"/>
         <source>Undo steps</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lépés visszavonása</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="237"/>
@@ -5706,7 +5705,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="845"/>
         <source>The map contains more than 24 spot colors which is not supported by OCD version 8.</source>
-        <translation>A térkép több, mint 24 pont színt tartalmaz ami nem támogatott OCD 8 verzióban.</translation>
+        <translation>A térkép több, mint 24 foltszínt tartalmaz, amit az OCD 8. verziója nem támogat.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="851"/>
@@ -5717,7 +5716,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="895"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="907"/>
         <source>Invalid spot color.</source>
-        <translation>Érvénytelen pont szín.</translation>
+        <translation>Érvénytelen foltszín.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1433"/>
@@ -8035,7 +8034,7 @@ Elmented a változtatásaidat?</translation>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="166"/>
         <source>Spot colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Foltszínek</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="167"/>
@@ -9527,7 +9526,7 @@ Hely: %2</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="891"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
-        <translation>A %2 feldolgozása közben a %1 pont szín nem található (%3).</translation>
+        <translation>%2 feldolgozásakor %1 foltszín nem található (%3).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="947"/>
