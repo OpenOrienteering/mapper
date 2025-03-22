@@ -2155,7 +2155,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="261"/>
         <source>Grivation:</source>
-        <translation>Grivation : (Déclinaison magnétique + convergence)</translation>
+        <translation>Grivation&#xa0;: (Déclinaison magnétique - convergence)</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="400"/>
