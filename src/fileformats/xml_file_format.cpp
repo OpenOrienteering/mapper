@@ -22,7 +22,6 @@
 #include "xml_file_format.h"
 #include "xml_file_format_p.h"
 
-#include <algorithm>
 #include <cstddef>
 #include <functional>
 #include <memory>
