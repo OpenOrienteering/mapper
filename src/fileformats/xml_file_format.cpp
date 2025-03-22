@@ -22,7 +22,6 @@
 #include "xml_file_format.h"
 #include "xml_file_format_p.h"
 
-#include <algorithm>
 #include <cstddef>
 #include <functional>
 #include <memory>
@@ -797,12 +796,11 @@ void XMLFileImporter::importColors()
 						if (xml.name() == literal::namedcolor)
 						{
 							XmlElementReader color_element(xml);
-							if (color_element.hasAttribute(literal::screen_frequency))
-							{
-								color->setScreenAngle(color_element.attribute<double>(literal::screen_angle));
-								color->setScreenFrequency(std::max(0.0, color_element.attribute<double>(literal::screen_frequency)));
-							}
+							const auto angle = color_element.attribute<double>(literal::screen_angle);
+							const auto frequency = color_element.attribute<double>(literal::screen_frequency);
 							color->setSpotColorName(xml.readElementText());
+							color->setScreenAngle(angle);
+							color->setScreenFrequency(frequency);
 							color->setKnockout(knockout);
 						}
 						else if (xml.name() == literal::component)

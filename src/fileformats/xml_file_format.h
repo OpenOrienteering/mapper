@@ -21,6 +21,8 @@
 #ifndef OPENORIENTEERING_XML_FILE_FORMAT_H
 #define OPENORIENTEERING_XML_FILE_FORMAT_H
 
+#include <memory>
+
 #include "fileformats/file_format.h"
 
 class QString;
