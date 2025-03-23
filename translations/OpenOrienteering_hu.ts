@@ -589,7 +589,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="299"/>
         <source>Color &quot;%1&quot; is used by other elements. Removing the color will change the appearance of these elements. Do you really want to remove it?</source>
-        <translation type="unfinished">A &quot;%1&quot; színt más elemek is használják. Az eltávolítása ezeknek a megjelenését is megváltoztatja. Biztosan el akarja távolítani?</translation>
+        <translation>A &quot;%1&quot; színt más elemek is használják. Az eltávolítása ezeknek a megjelenését is megváltoztatja. Biztosan el akarja távolítani?</translation>
     </message>
     <message>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
@@ -4299,12 +4299,12 @@ mert a %2 (.%3) mentés nem támogatott.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1078"/>
         <source>Clip area</source>
-        <translation type="unfinished">Terület körbevágása</translation>
+        <translation>Terület körbevágása</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1079"/>
         <source>Erase area</source>
-        <translation type="unfinished">Terület kivágása</translation>
+        <translation>Terület kivágása</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1126"/>
@@ -5121,22 +5121,22 @@ kiválasztva</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="149"/>
         <source>code</source>
-        <translation type="unfinished">kód</translation>
+        <translation>kód</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="149"/>
         <source>zone</source>
-        <translation type="unfinished">zóna</translation>
+        <translation>zóna</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="166"/>
         <source>Point symbols</source>
-        <translation type="unfinished">Pont szimbólumok</translation>
+        <translation>Pont szimbólumok</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="167"/>
         <source>Line symbols</source>
-        <translation type="unfinished">Vonal szimbólumok</translation>
+        <translation>Vonal szimbólumok</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="168"/>
@@ -5146,28 +5146,28 @@ kiválasztva</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="169"/>
         <source>Combined symbols</source>
-        <translation type="unfinished">Kombinált szimbólumok</translation>
+        <translation>Kombinált szimbólumok</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="170"/>
         <source>Text symbols</source>
-        <translation type="unfinished">Szöveg szimbólumok</translation>
+        <translation>Szöveg szimbólumok</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="171"/>
         <location filename="../src/core/map_information.cpp" line="253"/>
         <source>Undefined symbols</source>
-        <translation type="unfinished">Nem definiált szimbólumok</translation>
+        <translation>Nem definiált szimbólumok</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="218"/>
         <source>&lt;undefined&gt;</source>
-        <translation type="unfinished">&lt;nem definiált&gt;</translation>
+        <translation>&lt;nem definiált&gt;</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="232"/>
         <source>Map</source>
-        <translation type="unfinished">Térkép</translation>
+        <translation>Térkép</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="232"/>
@@ -5175,7 +5175,7 @@ kiválasztva</translation>
         <location filename="../src/core/map_information.cpp" line="255"/>
         <location filename="../src/core/map_information.cpp" line="258"/>
         <source>%n object(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n objektum</numerusform>
         </translation>
     </message>
@@ -5192,30 +5192,30 @@ kiválasztva</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="237"/>
         <source>Undo steps</source>
-        <translation type="unfinished">Lépés visszavonása</translation>
+        <translation>Lépés visszavonása</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="237"/>
         <location filename="../src/core/map_information.cpp" line="239"/>
         <source>%n step(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n lépés</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="239"/>
         <source>Redo steps</source>
-        <translation type="unfinished">Lépések visszaállítása</translation>
+        <translation>Lépések visszaállítása</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="242"/>
         <source>Templates</source>
-        <translation type="unfinished">Hátterek</translation>
+        <translation>Hátterek</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="242"/>
         <source>%n template(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n háttér</numerusform>
         </translation>
     </message>
@@ -5240,7 +5240,7 @@ kiválasztva</translation>
         <location filename="../src/core/map_information.cpp" line="250"/>
         <location filename="../src/core/map_information.cpp" line="280"/>
         <source>%n symbol(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n szimbólum</numerusform>
         </translation>
     </message>
@@ -5252,7 +5252,7 @@ kiválasztva</translation>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="266"/>
         <source>%n color(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n szín</numerusform>
         </translation>
     </message>
@@ -5264,14 +5264,14 @@ kiválasztva</translation>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="274"/>
         <source>%n font(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n betűtípus</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="279"/>
         <source>%1 (substituted by %2)</source>
-        <translation type="unfinished">%1 (%2 -re cserélve)</translation>
+        <translation>%1 (%2 -re cserélve)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="78"/>
@@ -5767,7 +5767,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1956"/>
         <source>In text symbol %1: exporting only %2 custom tabulator positions</source>
-        <translation type="unfinished">A %1 szöveg szimbólumnál: csak %2 tabulátorpozíció lesz exportálva</translation>
+        <translation>A %1 szöveg szimbólumnál: csak %2 tabulátorpozíció lesz exportálva</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2334"/>
@@ -5782,7 +5782,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2717"/>
         <source>The map contains an object with more than 32767 coordinates which is not supported by OCD version 8.</source>
-        <translation type="unfinished">Ez a térkép tartalmaz egy objektumot, melynek több mint 32767 koordinátája van. Az OCD 8 verzió ezt nem támogatja.</translation>
+        <translation>Ez a térkép tartalmaz egy objektumot, melynek több mint 32767 koordinátája van. Az OCD 8 verzió ezt nem támogatja.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2761"/>
@@ -5969,7 +5969,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1666"/>
         <source>Skipping unsupported reference to point symbol &apos;%1.%2&apos;.</source>
-        <translation type="unfinished">Nem támogatott hivatkozás &apos;%1.%2&apos; pont szimbólumra ki lesz hagyva.</translation>
+        <translation>Nem támogatott hivatkozás a &apos;%1.%2&apos; pont szimbólumra ki lesz hagyva.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1880"/>
@@ -8039,7 +8039,7 @@ Elmented a változtatásaidat?</translation>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="167"/>
         <source>Knockout</source>
-        <translation type="unfinished">Knockout</translation>
+        <translation>Knockout</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="204"/>
@@ -8061,7 +8061,7 @@ Elmented a változtatásaidat?</translation>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="213"/>
         <source>Helper symbol</source>
-        <translation type="unfinished">Vázlat szimbólum</translation>
+        <translation>Vázlat szimbólum</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="249"/>
@@ -8071,7 +8071,7 @@ Elmented a változtatásaidat?</translation>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="283"/>
         <source>Symbol Set Report on &apos;%0&apos;</source>
-        <translation type="unfinished">Szimbólumkészletjelentés &apos;%0&apos; -ról/ről</translation>
+        <translation>Szimbólumkészletjelentés &apos;%0&apos; -ról/ről</translation>
     </message>
 </context>
 <context>
@@ -8089,7 +8089,7 @@ Elmented a változtatásaidat?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="76"/>
         <source>Create symbol set report...</source>
-        <translation type="unfinished">Jelentés létrehozása a szibóliumkészletről...</translation>
+        <translation>Jelentés létrehozása a szibóliumkészletről...</translation>
     </message>
 </context>
 <context>
