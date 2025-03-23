@@ -2819,7 +2819,9 @@ Minimale Länge: 2 Striche (4.5 mm – Wirklichkeit 67.5 m).</translation>
 An out-of-bounds boundary shall not be crossed.
 Minimum length: 1 mm (footprint: 15 m).</source>
         <comment>Description of symbol 708</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eine Begrenzung, die nicht überquert werden darf.
+Ein Sperrgebietbegrenzung sollte nicht überquert werden.
+Minimale Länge: 1 mm (Wirklichkeit 15 m).</translation>
     </message>
     <message>
         <source>Out-of-bounds area</source>
@@ -2834,7 +2836,12 @@ Minimum length: 1 mm (footprint: 15 m).</source>
 An out-of-bounds area shall not be entered.
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 709</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ein gesperrtes Gebiet. Falls keine natürliche Begrenzung vorhanden ist, kann eine Begrenzungslinie wie folgt gezeichnet werden:
+- Eine durchgezogene Linie bedeutet, dass die Begrenzung im Gelände durchgehend markiert ist (z.B. durch Absperrband).
+- Eine gestrichelte Linie bedeutet eine teilweise Markierung im Gelände.
+- Keine Linie bedeutet keine Markierung im Gelände.
+Sperrgebiete dürfen nicht betreten werden. 
+Minimale Ausdehnung: 3 mm, Minimale Fläche: 3 mm x 3 mm (Wirklichkeit 45 m x 45 m).</translation>
     </message>
     <message>
         <source>Out-of-bounds area, solid boundary</source>
@@ -2876,7 +2883,9 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
 An out-of-bounds route shall not be used.
 Minimum length: 2 symbols (6 mm – footprint 90 m).</source>
         <comment>Description of symbol 711</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eine Strecke welche verboten ist. Wettkämpfer dürfen eine verbotene Strecke direkt überschreiten, aber es ist verboten, der Strecke entlang zu laufen.
+Eine Verbotene Strecke sollte nicht benutzt werden.
+Minimale Länge: 2 Symbole (6 mm – Wirklichkeit 90 m).</translation>
     </message>
     <message>
         <source>Out-of-bounds route, single cross</source>
@@ -2888,7 +2897,9 @@ Minimum length: 2 symbols (6 mm – footprint 90 m).</source>
 An out-of-bounds route shall not be used.
 Minimum length: 2 symbols (6 mm – footprint 90 m).</source>
         <comment>Description of symbol 711.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eine Strecke welche verboten ist. Wettkämpfer dürfen eine verbotene Strecke direkt überschreiten, aber es ist verboten, der Strecke entlang zu laufen.
+Eine Verbotene Strecke sollte nicht benutzt werden.
+Minimale Länge: 2 Symbole (6 mm – Wirklichkeit 90 m).</translation>
     </message>
     <message>
         <source>First aid post</source>
@@ -6956,7 +6967,7 @@ Die violette Linie ragt ein bisschen in das Zielsymbol hinein. Dies ist ein Mank
     <message>
         <source>Black 60%</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Schwarz 60%</translation>
     </message>
     <message>
         <source>Black 50%</source>
@@ -6971,7 +6982,7 @@ Die violette Linie ragt ein bisschen in das Zielsymbol hinein. Dies ist ein Mank
     <message>
         <source>White over light brown</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Weiß über Hellbraun</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
@@ -6981,12 +6992,12 @@ Die violette Linie ragt ein bisschen in das Zielsymbol hinein. Dies ist ein Mank
     <message>
         <source>Lower brown 30%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Untere Braun 30%</translation>
     </message>
     <message>
         <source>Black below lower light brown</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Schwarz unter untere Hellbraun</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
@@ -7006,7 +7017,7 @@ Die violette Linie ragt ein bisschen in das Zielsymbol hinein. Dies ist ein Mank
     <message>
         <source>OpenOrienteering Blue</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering Blau</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
@@ -7021,12 +7032,12 @@ Die violette Linie ragt ein bisschen in das Zielsymbol hinein. Dies ist ein Mank
     <message>
         <source>Green 50%/Yellow 100%</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grün 50%/Gelb 100%</translation>
     </message>
     <message>
         <source>Black 30% for bare rock</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Schwarz 30% für Nackte Felsplatte</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -7061,7 +7072,7 @@ Die violette Linie ragt ein bisschen in das Zielsymbol hinein. Dies ist ein Mank
     <message>
         <source>Yellow 100%</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gelb 100%</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
@@ -7079,7 +7090,10 @@ The standard vertical interval between contours is 2 or 2.5 m. To emphasize the 
 Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 However, contour lines shall be cut out for better legibility, if they touch the following symbols: Small earth wall (105), Small knoll (109), Small elongated knoll (110), Small depression (111), Pit or hole (112), Prominent landform feature (115), Stairway (532). The relative height difference between neighbouring features must be represented on the map as accurately as possible. Absolute height accuracy is of less importance. It is permissible to alter the height of a contour slightly if this will improve the representation of a feature. This deviation should not exceed 25% of the contour interval and attention must be paid to neighbouring features. The smallest bend in a contour is 0.4 mm from centre to centre of the line.</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eine Linie, die Punkte gleicher Höhe verbindet.
+Die normale Äquidistanz beträgt 2 oder 2.5 m. Um den dreidimensionalen Eindruck des Höhenkurvenbildes zu verstärken, sind Höhenkurven als durchgehende Linien durch alle Symbole hindurch, auch Gebäude (521) und Überdachung (522), darzustellen.
+Fallstriche können auf der abwärts gerichteten Seite einer Höhenkurve gezeichnet werden, damit die Richtung, in welche das Gelände abfällt, klarer wird. Die Fallstriche sollten in Mulden gezeichnet werden.
+Höhenkurven sind jedoch zur besseren Lesbarkeit auszuschneiden, wenn sie folgende Symbole berühren würden: Kleiner Erdwall (105), Kuppe (109), Längliche Kuppe (110), Kleine Senke (111), Grube oder Loch (112), Markantes Geländeobjekt (115), Treppe (532). Die Höhenkurven sollten angepasst, oder falls nicht möglich unterbrochen werden, um die Symbole Kuppe (109) oder Längliche Kuppe (110) nicht zu berühren. Der Höhenunterschied zwischen benachbarten Objekten muss auf der Karte so genau wie möglich wiedergegeben werden. Die absolute Höhe ist von geringerer Bedeutung. Es ist gestattet, die Höhenlage von Höhenkurven leicht zu ändern, wenn dadurch ein Objekt besser dargestellt werden kann. Eine derartige Abweichung sollte nicht mehr als 25% der Äquidistanz betragen, wobei benachbarte Objekte berücksichtigt werden müssen. Die engste Biegung in einer Höhenkurve misst 0.4 mm von Linienmitte zu Linienmitte.</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -7099,12 +7113,12 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with symbol Contour (101).</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jede fünfte Höhenkurve ist mit einer dickeren Linie darzustellen. Das hilft, Höhenunterschiede und grosse Geländeformen schnell zu erkennen. In einem Gebiet mit vielen Details kann eine Zählkurve streckenweise mit dem Symbol Höhenkurve (101) dargestellt werden. Höhenangaben können eingefügt werden, damit grössere Höhenunterschiede besser abschätzbar werden. Die Zahlen sind so auszurichten, dass die obere Kante hangaufwärts gerichtet ist. Sie sind so in der Zählkurve zu platzieren, dass andere Objekte nicht verdeckt werden.</translation>
     </message>
     <message>
         <source>Slope line, index contour</source>
         <comment>Name of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zählkurve</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -7119,7 +7133,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Contour values may be included to aid assessment of large height differences. The labels shall be orientated so that the top of the label is on the higher side of the contour. They are inserted in the index contours in positions where other detail is not obscured.</source>
         <comment>Description of symbol 102.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Höhenangaben können eingefügt werden, damit grössere Höhenunterschiede besser abschätzbar werden. Die Zahlen sind so auszurichten, dass die obere Kante hangaufwärts gerichtet ist. Sie sind so in der Zählkurve zu platzieren, dass andere Objekte nicht verdeckt werden.</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -7134,7 +7148,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Slope line, form line</source>
         <comment>Name of symbol 103.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Formlinie</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
