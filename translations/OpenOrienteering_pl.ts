@@ -9429,7 +9429,7 @@ Lokalizacja: %2</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="732"/>
         <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
-        <translation type="unfinished">Wykryto niespójność deklinacji/grivation. Rozwiązane przez automatyczne dostosowanie deklinacji do %1°.</translation>
+        <translation>Wykryto niespójność deklinacji/dewiacji. Rozwiązane przez automatyczne dostosowanie deklinacji do %1°.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="891"/>
