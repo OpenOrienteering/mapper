@@ -6838,12 +6838,12 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="468"/>
         <source>KMZ export</source>
-        <translation type="unfinished"></translation>
+        <translation>KMZ-eksport</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1006"/>
         <source>The map contains transparent elements which require the raster mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartet inneholder gjennomsiktige elementer som krever rastergrafikk</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1170"/>
@@ -6873,7 +6873,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1233"/>
         <source>KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1234"/>
@@ -7465,13 +7465,13 @@ separations</source>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="123"/>
         <source>Windows</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Windows</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="129"/>
         <source>Core Location</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Core Location</translation>
     </message>
     <message>
         <source>Serial port (NMEA)</source>
@@ -7497,17 +7497,17 @@ separations</source>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="43"/>
         <source>Event and course details</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrangement og løypedetaljer</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="48"/>
         <source>Event name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrangementets navn:</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="51"/>
         <source>Course name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Løypenavn:</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="54"/>
