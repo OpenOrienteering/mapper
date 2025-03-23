@@ -6,12 +6,12 @@
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fioletowy kryjący do nadruku trasy</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Biały kryjący do nadruku trasy</translation>
     </message>
     <message>
         <source>Black 100%</source>
