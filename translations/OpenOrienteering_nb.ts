@@ -477,7 +477,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="275"/>
         <source>Color usage in symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Fargebruk i symboler</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="300"/>
@@ -492,7 +492,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="302"/>
         <source>Color usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Fargebruk</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="321"/>
@@ -590,7 +590,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="247"/>
         <source>This color is used by the following symbols:</source>
-        <translation type="unfinished"></translation>
+        <translation>Denne fargen er brukt i følgende symboler:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="269"/>
@@ -600,7 +600,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="287"/>
         <source>This spot color is used by the following symbols:</source>
-        <translation type="unfinished"></translation>
+        <translation>Denne spotfargen er brukt i følgende symboler:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="297"/>
@@ -610,7 +610,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="299"/>
         <source>Color &quot;%1&quot; is used by other elements. Removing the color will change the appearance of these elements. Do you really want to remove it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Farge &quot;%1&quot; brukes av andre elementer. Å fjerne fargen vil endre utseendet på disse. Er du sikker på at du vil fjerne fargen?</translation>
     </message>
     <message>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
@@ -657,7 +657,7 @@
     <message>
         <location filename="../src/gui/widgets/color_wheel_widget.cpp" line="392"/>
         <source>Select</source>
-        <translation type="unfinished">Velg</translation>
+        <translation>Velg</translation>
     </message>
 </context>
 <context>
@@ -1975,7 +1975,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="183"/>
         <source>N</source>
         <comment>north</comment>
-        <translation type="unfinished">N</translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="209"/>
@@ -3184,7 +3184,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="247"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informasjon</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="248"/>
@@ -3409,7 +3409,7 @@ Vil du tilpasse symbolemene til den valgte målestokken?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="831"/>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Importering av symbolsett førte til advarsler.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="942"/>
@@ -3769,7 +3769,7 @@ Importer data likevel?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1031"/>
         <source>Map information...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartinformasjon...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1033"/>
@@ -3964,7 +3964,7 @@ da lagring av %2 (.%3) ikke er støttet.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="962"/>
         <source>&amp;KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1004"/>
@@ -5230,27 +5230,27 @@ er valgt</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="149"/>
         <source>code</source>
-        <translation type="unfinished"></translation>
+        <translation>kode</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="149"/>
         <source>zone</source>
-        <translation type="unfinished"></translation>
+        <translation>sone</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="166"/>
         <source>Point symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Punktsymboler</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="167"/>
         <source>Line symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjesymboler</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="168"/>
         <source>Area symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Flatesymboler</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="169"/>
@@ -5260,18 +5260,18 @@ er valgt</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="170"/>
         <source>Text symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekstsymboler</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="171"/>
         <location filename="../src/core/map_information.cpp" line="253"/>
         <source>Undefined symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Udefinerte symboler</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="218"/>
         <source>&lt;undefined&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;udefinert&gt;</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="232"/>
@@ -5284,15 +5284,15 @@ er valgt</translation>
         <location filename="../src/core/map_information.cpp" line="255"/>
         <location filename="../src/core/map_information.cpp" line="258"/>
         <source>%n object(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n objekt</numerusform>
+            <numerusform>%n objekter</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="234"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Skala</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="235"/>
@@ -5353,9 +5353,9 @@ er valgt</translation>
         <location filename="../src/core/map_information.cpp" line="250"/>
         <location filename="../src/core/map_information.cpp" line="280"/>
         <source>%n symbol(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n symbol</numerusform>
+            <numerusform>%n symboler</numerusform>
         </translation>
     </message>
     <message>
@@ -5366,9 +5366,9 @@ er valgt</translation>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="266"/>
         <source>%n color(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n farge</numerusform>
+            <numerusform>%n farger</numerusform>
         </translation>
     </message>
     <message>
@@ -5392,17 +5392,17 @@ er valgt</translation>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="78"/>
         <source>Map information</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartinformasjon</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="80"/>
         <source>Save as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre som...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="117"/>
         <source>Plain text</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekstfil</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="131"/>
@@ -5768,7 +5768,7 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="382"/>
         <source>not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ikke</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="386"/>
@@ -7424,7 +7424,7 @@ separations</source>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="52"/>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokasjon:</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="55"/>
@@ -7512,7 +7512,7 @@ separations</source>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="54"/>
         <source>First code number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Første postkode:</translation>
     </message>
 </context>
 <context>
@@ -7520,17 +7520,17 @@ separations</source>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="35"/>
         <source>Unnamed event</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrangement uten navn</translation>
     </message>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="41"/>
         <source>Unnamed course</source>
-        <translation type="unfinished"></translation>
+        <translation>Løype uten navn</translation>
     </message>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="60"/>
         <source>For this course export, a single line object must be selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>For å eksportere løypa må ett enkelt linjeobjekt være valgt.</translation>
     </message>
 </context>
 <context>
@@ -7565,7 +7565,7 @@ separations</source>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="47"/>
         <source>Change scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Endre skalafaktor</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="51"/>
@@ -8128,12 +8128,12 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="162"/>
         <source>Map Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartfarger</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="163"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Farge</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="164"/>
@@ -8148,7 +8148,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="166"/>
         <source>Spot colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Spotfarger</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="167"/>
@@ -8193,7 +8193,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="53"/>
         <source>HTML</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="54"/>
@@ -8579,7 +8579,7 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
     <message>
         <location filename="../src/templates/template_image.cpp" line="148"/>
         <source>Format not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatet støttes ikke</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="301"/>
@@ -8853,7 +8853,7 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="288"/>
         <source>Vectorize lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Vektorisér linjer</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="668"/>
@@ -9498,7 +9498,9 @@ Høyeste støttede versjon er %2.</translation>
         <source>Internal error detected! Please report this issue.
 Version: %1
 Location: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>En intern programfeil oppstod! Vennligst rapporter denne feilen.
+Versjon: %1
+Sted: %2</translation>
     </message>
 </context>
 <context>
