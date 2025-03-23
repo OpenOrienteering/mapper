@@ -1465,7 +1465,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="81"/>
         <source>Drawing tools: set last point on finishing with right click</source>
-        <translation>Tegneverktøy: set siste punkt med høyreklikk</translation>
+        <translation>Tegneverktøy: angi siste punkt med høyreklikk</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="84"/>
@@ -1475,7 +1475,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
         <source>User input: Ignore display touch</source>
-        <translation>Brukervalg: Ignorer skjermberøring</translation>
+        <translation>Tegning: ignorer skjermberøring</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="92"/>
@@ -2168,7 +2168,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="400"/>
         <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="442"/>
@@ -2475,7 +2475,7 @@
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="86"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="118"/>
         <source>Save...</source>
-        <translation type="unfinished">Lagre …</translation>
+        <translation>Lagre…</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="88"/>
@@ -2490,7 +2490,7 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
         <source>Width:</source>
-        <translation type="unfinished">Bredde:</translation>
+        <translation>Bredde:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
@@ -2753,7 +2753,7 @@
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="549"/>
         <source>Unsupported obsolete file format version. Please use program version v%1 or older to load and update the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Filformatet et gammelt og ikke støttet. Vennligst bruk programversjon v%1 eller eldre for å åpne og oppdatere fila.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="561"/>
@@ -2821,7 +2821,7 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="195"/>
         <source>For KML/KMZ export, the map must be georeferenced.</source>
-        <translation type="unfinished"></translation>
+        <translation>For KML/KMZ-eksport må kartet være georeferert.</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="202"/>
@@ -5255,7 +5255,7 @@ er valgt</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="169"/>
         <source>Combined symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Sammensatte symboler</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="170"/>
@@ -5302,15 +5302,15 @@ er valgt</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="237"/>
         <source>Undo steps</source>
-        <translation type="unfinished"></translation>
+        <translation>Angrehistorikk</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="237"/>
         <location filename="../src/core/map_information.cpp" line="239"/>
         <source>%n step(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n steg</numerusform>
+            <numerusform>%n steg</numerusform>
         </translation>
     </message>
     <message>
@@ -5374,14 +5374,14 @@ er valgt</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="274"/>
         <source>Fonts</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrifttyper</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="274"/>
         <source>%n font(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n skrifttype</numerusform>
+            <numerusform>%n skrifttyper</numerusform>
         </translation>
     </message>
     <message>
@@ -5809,12 +5809,12 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="795"/>
         <source>The georeferencing cannot be saved in OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferansen kan ikke lagres i OCD versjon 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="845"/>
         <source>The map contains more than 24 spot colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartet bruker mer enn 24 spotfarger, som ikke er støttet i OCD versjon 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="851"/>
@@ -5825,7 +5825,7 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="895"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="907"/>
         <source>Invalid spot color.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugyldig spotfarge.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1433"/>
@@ -5861,7 +5861,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1920"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished"></translation>
+        <translation>I tektsymbol %1: egendefinert tegnavstand er satt, men vil ikke oppføre seg likt som i OCAD enda</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1936"/>
@@ -5881,7 +5881,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2334"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>I sammensatt symbol %1: Undersymbolet i posisjon %2 er ikke støttet.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2542"/>
@@ -5891,7 +5891,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2717"/>
         <source>The map contains an object with more than 32767 coordinates which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartet inneholder et objekt med flere enn 32767 koordinater, som ikke støttes i OCD versjon 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2761"/>
@@ -6110,7 +6110,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2406"/>
         <source>Support for OCD version %1 files is experimental.</source>
-        <translation type="unfinished"></translation>
+        <translation>Støtten for OCD versjon %i filer er eksperimentell.</translation>
     </message>
     <message>
         <source>Untested file importer for format: OCD %1</source>
@@ -6142,12 +6142,12 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2139"/>
         <source>The map is not georeferenced. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartet er ikke georeferert. Kun lokal georeferanse.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2152"/>
         <source>Failed to properly export the georeferencing info. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunne ikke eksportere georeferanse-informasjonen. Kun lokal georeferering.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2162"/>
@@ -6281,24 +6281,24 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="77"/>
         <source>Traditional</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tradisjonell</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="82"/>
         <source>Confetti Hybrid</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Konfetti Hybrid</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="87"/>
         <source>Guacamole Full</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Guacamole Full</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="132"/>
         <source>Add color...</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg til farge...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="133"/>
@@ -7552,7 +7552,7 @@ separations</source>
     <message>
         <location filename="../src/core/storage_location.cpp" line="314"/>
         <source>Extra permissions are required to access &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekstra rettigheter er nødvendig for å få tilgang til &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="317"/>
@@ -8111,7 +8111,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="268"/>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Importen av symbolsettet førte til advarsler.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="276"/>
@@ -8160,7 +8160,7 @@ Do you want to save your changes?</source>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="208"/>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="212"/>
         <source>[X] %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[X] %1</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="205"/>
@@ -8185,7 +8185,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="283"/>
         <source>Symbol Set Report on &apos;%0&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolsettrapport for &apos;%0&apos;</translation>
     </message>
 </context>
 <context>
@@ -8203,7 +8203,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="76"/>
         <source>Create symbol set report...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lag symbolsettrapport...</translation>
     </message>
 </context>
 <context>
@@ -8597,7 +8597,7 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
         <location filename="../src/gdal/gdal_template.cpp" line="150"/>
         <location filename="../src/templates/template_image.cpp" line="243"/>
         <source>Georeferencing not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferanse ikke funnet</translation>
     </message>
 </context>
 <context>
@@ -8905,7 +8905,7 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="980"/>
         <source>Cannot change the georeferencing state.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke endre georeferanse-tilstanden.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_table_model.cpp" line="257"/>
