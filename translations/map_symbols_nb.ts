@@ -101,17 +101,17 @@
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul 100% for uthogd linje eller spor gjennom terrenget</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 60% for uthogd linje eller spor gjennom terrenget</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 30% for uthogd linje eller spor gjennom terrenget</translation>
     </message>
     <message>
         <source>White over green</source>
@@ -2221,7 +2221,7 @@ Footprint: 12 m x 12 m.</source>
     <message>
         <source>Stairway</source>
         <comment>Name of symbol 532</comment>
-        <translation type="unfinished"></translation>
+        <translation>Trapp</translation>
     </message>
     <message>
         <source>A distinct stairway through the terrain which helps to climb very steep slopes or to cross over impassable objects. A stairway going through rock passages or between impassable objects may be drawn without border lines.
@@ -2234,7 +2234,7 @@ Minimum width: 0.4 mm (IM).</source>
     <message>
         <source>Stairway, without border lines</source>
         <comment>Name of symbol 532.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Trapp, uten konturlinjer</translation>
     </message>
     <message>
         <source>A distinct stairway through the terrain which helps to climb very steep slopes or to cross over impassable objects. A stairway going through rock passages or between impassable objects may be drawn without border lines.
@@ -2516,7 +2516,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
-        <translation>OpenOrienteering-logoen</translation>
+        <translation>OpenOrienteering-logoen.</translation>
     </message>
 </context>
 <context>
@@ -2659,7 +2659,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation>En jordskrent er en krapp forhøyning i bakkenivå som tydelig kan spilles fra dens omgivelser, f.eks. grus eller sandtak, vei eller jernbanegjennomskjæringer eller diker. Minimumshøyde: 1 m. En jordskrent kan forstyrre løpetakt. Etiketten representerer hele lengden av jordskrenten. For lange jordskrenter tillates det å bruke etiketter kortere enn minimumslengden på endene. Hvis to jordskrenter er tett sammen, kan etikettene utelates. Jordskrenter som det ikke går an å forsere, skal representeres ved symbol 201 (uforserbar skrent).</translation>
+        <translation>En jordskråning er en brå endring av bakkenivå som skiller seg tydelig fra omgivelsene, f.eks grus-/ sandtak, vei-/jernbaneskjæringer eller -fyllinger. Minstehøyde: 1 m. En jordskråning kan påvirke løpbarheten. Taggene viser utstrekningen til skråningen.
+For lange jordskråninger kan det benyttes kortere tagger enn minstelengden ved endene. Dersom to jordskråninger ligger tett inntil hverandre, kan taggene sløyfes. Upasserbare jordskråninger skal tegnes med symbol 201 (upasserbart stup).</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
@@ -2781,7 +2782,7 @@ Minimumshøyde: 0,5 m.</translation>
     <message>
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
-        <translation>OpenOrienteering-logoen</translation>
+        <translation>OpenOrienteering-logoen.</translation>
     </message>
 </context>
 <context>
@@ -2959,7 +2960,7 @@ Minimumshøyde: 0,5 m.</translation>
     <message>
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
-        <translation>OpenOrienteering-logoen</translation>
+        <translation>OpenOrienteering-logoen.</translation>
     </message>
 </context>
 <context>
@@ -3127,7 +3128,7 @@ Minimumshøyde: 0,5 m.</translation>
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Høydekurve</translation>
     </message>
     <message>
         <source>A line joining points of equal height.
@@ -3140,7 +3141,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Slope line, contour</source>
         <comment>Name of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fallstrek, høydekurve</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -3150,7 +3151,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tellekurve</translation>
     </message>
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with symbol Contour (101).</source>
@@ -3160,7 +3161,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Slope line, index contour</source>
         <comment>Name of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fallstrek, tellekurve</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -3170,7 +3171,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 102.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kurvetall</translation>
     </message>
     <message>
         <source>Contour values may be included to aid assessment of large height differences. The labels shall be orientated so that the top of the label is on the higher side of the contour. They are inserted in the index contours in positions where other detail is not obscured.</source>
@@ -3180,7 +3181,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hjelpekurve</translation>
     </message>
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -3190,7 +3191,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Slope line, form line</source>
         <comment>Name of symbol 103.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fallstrek, hjelpekurve</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -3200,7 +3201,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Earth bank</source>
         <comment>Name of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jordskråning</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments.
@@ -3211,7 +3212,7 @@ The tags should show the full extent of the slope, but may be omitted if two ban
     <message>
         <source>Earth bank, very high</source>
         <comment>Name of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jordskråning, veldig høy</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments.
@@ -3222,7 +3223,7 @@ The tags should show the full extent of the slope, but may be omitted if two ban
     <message>
         <source>Earth bank, tag line</source>
         <comment>Name of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jordskråning, tagglinje</translation>
     </message>
     <message>
         <source>The tags should show the full extent of the slope, but may be omitted if two banks are close together.</source>
@@ -3232,7 +3233,7 @@ The tags should show the full extent of the slope, but may be omitted if two ban
     <message>
         <source>Small earth wall</source>
         <comment>Name of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jordvoll</translation>
     </message>
     <message>
         <source>A small distinct earth wall, usually man-made.
@@ -3245,7 +3246,7 @@ Minimum length: 1.4 mm (footprint 5,6 m).</source>
     <message>
         <source>Erosion gully or trench</source>
         <comment>Name of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>Erosjonskløft</translation>
     </message>
     <message>
         <source>An erosion gully or trench which is too small to be represented with the symbol Earth bank (104), Contour (101), Index contour (102) or Form line (103) is represented by a single line. The end of the line is pointed. Contour lines may be broken around this symbol for better readability.
@@ -3257,7 +3258,7 @@ Minimum length: 2.0 mm (footprint 8 m).</source>
     <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fure</translation>
     </message>
     <message>
         <source>A small erosion gully or trench.
@@ -3270,7 +3271,7 @@ Minimum length (isolated): three dots (1.6 mm - footprint 6.4 m).</source>
     <message>
         <source>Small knoll</source>
         <comment>Name of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>Liten kolle</translation>
     </message>
     <message>
         <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a Contour (101), Index contour (102) or Form line (103). The symbol shall not touch or overlap contours.
@@ -3282,7 +3283,7 @@ Footprint: 3 m in diameter.</source>
     <message>
         <source>Small elongated knoll</source>
         <comment>Name of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>Liten avlang kolle</translation>
     </message>
     <message>
         <source>A small obvious elongated knoll which cannot be drawn to scale with a Contour (101), Index contour (102) or Form line (103). The maximum length should be 6 m and the maximum width 2 m. Knolls larger than this shall be shown by contours. The symbol shall not be drawn in free form or such that two elongated knoll symbols touch or overlap. The symbol shall not touch or overlap contours.
@@ -3294,7 +3295,7 @@ Footprint: 4.8 m x 2.4 m.</source>
     <message>
         <source>Small depression</source>
         <comment>Name of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lita grop</translation>
     </message>
     <message>
         <source>A small shallow natural depression or hollow which cannot be represented by the symbol Contour (101) or Form line (103) is represented by a semicircle. The symbol shall not touch or overlap other brown symbols.
@@ -3307,7 +3308,7 @@ Footprint: 4.8 m x 2.4 m.</source>
     <message>
         <source>Pit or hole</source>
         <comment>Name of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hull</translation>
     </message>
     <message>
         <source>A pit or hole with distinct steep sides which cannot be represented to scale with the symbol Earth bank (104).
@@ -3320,7 +3321,7 @@ Footprint: 4.4 m x 5.0 m.</source>
     <message>
         <source>Broken ground</source>
         <comment>Name of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bruddfelt</translation>
     </message>
     <message>
         <source>An area of pits or knolls, which is too complex to be represented in detail.
@@ -3332,7 +3333,7 @@ The minimum number of dots is three.</source>
     <message>
         <source>Broken ground, single dot</source>
         <comment>Name of symbol 113.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bruddfelt, enkelt prikk</translation>
     </message>
     <message>
         <source>An area of pits or knolls, which is too complex to be represented in detail.
@@ -3344,7 +3345,7 @@ The minimum number of dots is three.</source>
     <message>
         <source>Broken ground, dense</source>
         <comment>Name of symbol 113.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bruddfelt, tett</translation>
     </message>
     <message>
         <source>An area of pits or knolls, which is too complex to be represented in detail.
@@ -3356,7 +3357,7 @@ The minimum number of dots is three.</source>
     <message>
         <source>Broken ground, single dot, enlarged</source>
         <comment>Name of symbol 113.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bruddfelt, enkelt prikk, forstørret</translation>
     </message>
     <message>
         <source>An area of pits or knolls, which is too complex to be represented in detail.
@@ -3368,7 +3369,7 @@ The minimum number of dots is three.</source>
     <message>
         <source>Prominent landform feature</source>
         <comment>Name of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fremtredende terrengdetalj</translation>
     </message>
     <message>
         <source>A small landform feature which is significant or prominent.
@@ -3394,7 +3395,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Upasserbart stup, minimal størrelse</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -3407,7 +3408,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Upasserbart stup, øvre linje</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -3420,7 +3421,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Upasserbart stup, tagglinje</translation>
     </message>
     <message>
         <source>Tags are drawn downwards, showing a cliff&apos;s full extent from the top line to the foot. The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line.</source>
@@ -3430,7 +3431,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Impassable cliff, no tags, minimum size (from ISSOM)</source>
         <comment>Name of symbol 201.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Upasserbart stup, uten tagger, minimal størrelse (fra ISSOM)</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -3441,7 +3442,7 @@ For vertical rock faces the tags may be omitted if space is short, e.g. narrow p
     <message>
         <source>Impassable cliff, minimum size (from ISSOM)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Upasserbart stup, minimal størrelse (fra ISSOM)</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -3454,7 +3455,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face, small (rounded ends, no tags)</source>
         <comment>Name of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skrent, liten (avrundede ender, uten tagger)</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -3467,7 +3468,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face</source>
         <comment>Name of symbol 202.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skrent</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -3480,7 +3481,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face, minimum size</source>
         <comment>Name of symbol 202.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skrent, minimal størrelse</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -3493,7 +3494,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face, top line (flat ends)</source>
         <comment>Name of symbol 202.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skrent, øvre linje (flate ender)</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -3506,7 +3507,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face, tag line</source>
         <comment>Name of symbol 202.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skrent, tagglinje</translation>
     </message>
     <message>
         <source>If the direction of fall of the rock face is not apparent from the contours, or to improve legibility, short tags should be drawn in the direction of the fall. For non-vertical cliffs, the tags should be drawn to show the full horizontal extent.</source>
@@ -3516,7 +3517,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face, small (rounded ends, no tags; minimum size, from ISSOM)</source>
         <comment>Name of symbol 202.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skrent, liten (avrundede ender, ingen tagger, minimal størrelse, fra ISSOM)</translation>
     </message>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -3526,7 +3527,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face, minimum size (from ISSOM)</source>
         <comment>Name of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skrent, minimal størrelse (fra ISSOM)</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -3539,7 +3540,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
         <comment>Name of symbol 203</comment>
-        <translation type="unfinished"></translation>
+        <translation>Berggrunnsgrop eller hule</translation>
     </message>
     <message>
         <source>A rocky pit, hole, cave (without a distinct entrance) or mineshaft which may constitute a danger to the competitor.
@@ -3552,7 +3553,7 @@ Footprint: 4.4 m x 5.0 m.</source>
     <message>
         <source>Cave (with a distinct entrance)</source>
         <comment>Name of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Berggrunnsgrop eller hule, med tydelig åpning</translation>
     </message>
     <message>
         <source>A cave with distinct entrance which may constitute a danger to the competitor.
@@ -3565,7 +3566,7 @@ Footprint: 4.4 m x 5.0 m.</source>
     <message>
         <source>Cave (with a distinct entrance) (from ISSOM)</source>
         <comment>Name of symbol 203.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Berggrunnsgrop eller hule, med tydelig åpning, fra ISSOM</translation>
     </message>
     <message>
         <source>A cave with distinct entrance which may constitute a danger to the competitor.
@@ -3578,7 +3579,7 @@ Footprint: 4.4 m x 5.0 m.</source>
     <message>
         <source>Boulder</source>
         <comment>Name of symbol 204</comment>
-        <translation type="unfinished"></translation>
+        <translation>Stein</translation>
     </message>
     <message>
         <source>A small distinct boulder.
@@ -3590,7 +3591,7 @@ Footprint: 2.4 m in diameter.</source>
     <message>
         <source>Large boulder</source>
         <comment>Name of symbol 205</comment>
-        <translation type="unfinished"></translation>
+        <translation>Stor stein</translation>
     </message>
     <message>
         <source>A particularly large and distinct boulder.
@@ -3601,7 +3602,7 @@ Footprint: 3.6 m in diameter.</source>
     <message>
         <source>Gigantic boulder or rock pillar</source>
         <comment>Name of symbol 206</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kampestein</translation>
     </message>
     <message>
         <source>A gigantic boulder, rock pillar or massive cliff shall be represented in plan shape. The objects can vary in shape and width.
@@ -3614,7 +3615,7 @@ Minimum area: 0.75 mm2 (footprint 12 m²)</source>
     <message>
         <source>Boulder cluster</source>
         <comment>Name of symbol 207</comment>
-        <translation type="unfinished"></translation>
+        <translation>Steinklynge</translation>
     </message>
     <message>
         <source>A distinct group of boulders so closely clustered together that they cannot be marked individually.
@@ -3626,7 +3627,7 @@ Footprint: 4.8 m x 4.0 m</source>
     <message>
         <source>Boulder cluster, large</source>
         <comment>Name of symbol 207.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Steinklynge, stor</translation>
     </message>
     <message>
         <source>A distinct group of boulders so closely clustered together that they cannot be marked individually.
@@ -3638,7 +3639,7 @@ Footprint: 4.8 m x 4.0 m</source>
     <message>
         <source>Boulder field</source>
         <comment>Name of symbol 208</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blokkfelt</translation>
     </message>
     <message>
         <source>An area which is covered with so many scattered blocks of stone that they cannot be marked individually is represented with randomly placed and orientated solid triangles. The runnability is reduced and is indicated by the density of the triangles.
@@ -3650,7 +3651,7 @@ To be able to show obvious height differences within a boulder field, it is perm
     <message>
         <source>Boulder field, single triangle</source>
         <comment>Name of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blokkfelt, enkel trekant</translation>
     </message>
     <message>
         <source>An area which is covered with so many scattered blocks of stone that they cannot be marked individually is represented with randomly placed and orientated solid triangles. The runnability is reduced and is indicated by the density of the triangles.
@@ -3662,7 +3663,7 @@ To be able to show obvious height differences within a boulder field, it is perm
     <message>
         <source>Boulder field, single triangle, enlarged</source>
         <comment>Name of symbol 208.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blokkfelt, enkel trekant, forstørret</translation>
     </message>
     <message>
         <source>An area which is covered with so many scattered blocks of stone that they cannot be marked individually is represented with randomly placed and orientated solid triangles. The runnability is reduced and is indicated by the density of the triangles.
@@ -3674,7 +3675,7 @@ To be able to show obvious height differences within a boulder field, it is perm
     <message>
         <source>Dense boulder field</source>
         <comment>Name of symbol 208.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tett blokkfelt</translation>
     </message>
     <message>
         <source>An area which is covered with so many scattered blocks of stone that they cannot be marked individually is represented with randomly placed and orientated solid triangles. The runnability is reduced and is indicated by the density of the triangles.
@@ -3686,7 +3687,7 @@ To be able to show obvious height differences within a boulder field, it is perm
     <message>
         <source>Stony ground</source>
         <comment>Name of symbol 210</comment>
-        <translation type="unfinished"></translation>
+        <translation>Steingrunn</translation>
     </message>
     <message>
         <source>An area of stony or rocky ground which reduces runnability.
@@ -3698,7 +3699,7 @@ Density: Minimum 3 dots.</source>
     <message>
         <source>Stony ground, single dot</source>
         <comment>Name of symbol 210.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Steingrunn, enkel prikk</translation>
     </message>
     <message>
         <source>An area of stony or rocky ground which reduces runnability.
@@ -3710,7 +3711,7 @@ Density: Minimum 3 dots.</source>
     <message>
         <source>Stony ground, enlarged</source>
         <comment>Name of symbol 210.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Steingrunn, forstørret</translation>
     </message>
     <message>
         <source>An area of stony or rocky ground which reduces runnability.
@@ -3722,7 +3723,7 @@ Density: Minimum 3 dots.</source>
     <message>
         <source>Stony ground, single dot, enlarged</source>
         <comment>Name of symbol 210.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Steingrunn, enkel prikk, forstørret</translation>
     </message>
     <message>
         <source>An area of stony or rocky ground which reduces runnability.
@@ -3734,7 +3735,7 @@ Density: Minimum 3 dots.</source>
     <message>
         <source>Open sandy ground</source>
         <comment>Name of symbol 213</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sandgrunn</translation>
     </message>
     <message>
         <source>An area of sandy ground or soft gravel with no vegetation which reduces runnability.
@@ -3748,7 +3749,7 @@ Minimum area: 1 mm² (footprint 16 m²).</source>
     <message>
         <source>Bare rock</source>
         <comment>Name of symbol 214</comment>
-        <translation type="unfinished"></translation>
+        <translation>Berg i dagen</translation>
     </message>
     <message>
         <source>An area of runnable rock without earth or vegetation.
@@ -3761,7 +3762,7 @@ Minimum area: 1 mm² (footprint 16 m²).</source>
     <message>
         <source>Uncrossable body of water (full colour)</source>
         <comment>Name of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>Upasserbart vann, full farge</translation>
     </message>
     <message>
         <source>An area of deep water such as a lake, pond, river or fountain. The dark blue colour and the bordering black line indicate that the feature shall not be crossed.
@@ -3774,7 +3775,7 @@ Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
     <message>
         <source>Uncrossable body of water (full colour), fill</source>
         <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Upasserbart vann, full farge, fyll</translation>
     </message>
     <message>
         <source>An area of deep water such as a lake, pond, river or fountain. The dark blue colour and the bordering black line indicate that the feature shall not be crossed.
@@ -3787,7 +3788,7 @@ Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
     <message>
         <source>Uncrossable body of water (dominant)</source>
         <comment>Name of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Upasserbart vann, dominant</translation>
     </message>
     <message>
         <source>An area of deep water such as a lake, pond, river or fountain. The dark blue colour and the bordering black line indicate that the feature shall not be crossed.
@@ -3800,7 +3801,7 @@ Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
     <message>
         <source>Uncrossable body of water (dominant), fill</source>
         <comment>Name of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Upasserbart vann, dominant, fyll</translation>
     </message>
     <message>
         <source>An area of deep water such as a lake, pond, river or fountain. The dark blue colour and the bordering black line indicate that the feature shall not be crossed.
@@ -3813,7 +3814,7 @@ Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
     <message>
         <source>Uncrossable body of water, bank line</source>
         <comment>Name of symbol 301.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Upasserbart vann, konturlinje</translation>
     </message>
     <message>
         <source>The bordering black line indicates that the feature shall not be crossed.</source>
@@ -3823,7 +3824,7 @@ Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
     <message>
         <source>Crossable body of water</source>
         <comment>Name of symbol 302</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grunt vann</translation>
     </message>
     <message>
         <source>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water should be less than 0.5 m deep and runnable.
@@ -3836,7 +3837,7 @@ Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
     <message>
         <source>Crossable body of water, fill</source>
         <comment>Name of symbol 302.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grunt vann, fyll</translation>
     </message>
     <message>
         <source>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water should be less than 0.5 m deep and runnable.
@@ -3849,7 +3850,7 @@ Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
     <message>
         <source>Crossable body of water, border line</source>
         <comment>Name of symbol 302.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grunt vann, konturlinje</translation>
     </message>
     <message>
         <source>If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line.</source>
@@ -3859,7 +3860,7 @@ Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
     <message>
         <source>Waterhole</source>
         <comment>Name of symbol 303</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vannhull</translation>
     </message>
     <message>
         <source>A water-filled pit or an area of water which is too small to be shown to scale.
@@ -3871,7 +3872,7 @@ Footprint: 4.4 m x 5.0 m.</source>
     <message>
         <source> Small crossable watercourse</source>
         <comment>Name of symbol 305</comment>
-        <translation type="unfinished"></translation>
+        <translation> Passerbar bekk, grøft</translation>
     </message>
     <message>
         <source>A crossable watercourse less than 2 m wide.
@@ -3882,7 +3883,7 @@ Minimum length: 1 mm (footprint 4 m)</source>
     <message>
         <source> Minor / seasonal watercourse</source>
         <comment>Name of symbol 306</comment>
-        <translation type="unfinished"></translation>
+        <translation> Flombekk, lita grøft</translation>
     </message>
     <message>
         <source>A natural or man-made minor watercourse which may contain water only intermittently.
@@ -3893,7 +3894,7 @@ Minimum length (isolated): two dashes (4.11 mm - footprint 16.5 m)</source>
     <message>
         <source>Uncrossable marsh</source>
         <comment>Name of symbol 307</comment>
-        <translation type="unfinished"></translation>
+        <translation>Upasserbar myr</translation>
     </message>
     <message>
         <source>A marsh which is uncrossable or which may constitute a danger to the competitor. The feature shall not be crossed.
@@ -3905,7 +3906,7 @@ Minimum width: 2 lines.</source>
     <message>
         <source>Uncrossable marsh, fill</source>
         <comment>Name of symbol 307.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Upasserbar myr, fyll</translation>
     </message>
     <message>
         <source>A marsh which is uncrossable or which may constitute a danger to the competitor. The feature shall not be crossed.
@@ -3917,7 +3918,7 @@ Minimum width: 2 lines.</source>
     <message>
         <source>Uncrossable marsh, border line</source>
         <comment>Name of symbol 307.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Upasserbar myr, konturlinje</translation>
     </message>
     <message>
         <source>The bordering black line indicates that the feature shall not be crossed.</source>
@@ -3927,7 +3928,7 @@ Minimum width: 2 lines.</source>
     <message>
         <source>Marsh</source>
         <comment>Name of symbol 308</comment>
-        <translation type="unfinished"></translation>
+        <translation>Myr</translation>
     </message>
     <message>
         <source>A crossable marsh, usually with a distinct edge.
@@ -3940,7 +3941,7 @@ Minimum width: 2 lines.</source>
     <message>
         <source>Marsh, minimum size</source>
         <comment>Name of symbol 308.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Myr, minimal størrelse</translation>
     </message>
     <message>
         <source>A crossable marsh, usually with a distinct edge.
@@ -3953,7 +3954,7 @@ Minimum width: 2 lines.</source>
     <message>
         <source>Narrow marsh</source>
         <comment>Name of symbol 309</comment>
-        <translation type="unfinished"></translation>
+        <translation>Smal myr</translation>
     </message>
     <message>
         <source>A marsh or trickle of water which is too narrow to be shown with symbol Marsh (310).
@@ -3964,7 +3965,7 @@ Minimum size (isolated): two dots (1 mm - footprint 4 m).</source>
     <message>
         <source>Indistinct marsh</source>
         <comment>Name of symbol 310</comment>
-        <translation type="unfinished"></translation>
+        <translation>Utydelig myr</translation>
     </message>
     <message>
         <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground.
@@ -3976,12 +3977,12 @@ At least three blue lines shall be clearly visible.</source>
     <message>
         <source>Indistinct marsh, minimum size</source>
         <comment>Name of symbol 310.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Utydelig myr, minimal størrelse</translation>
     </message>
     <message>
         <source>Small fountain or well</source>
         <comment>Name of symbol 311</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brønn, fontene eller vanntank</translation>
     </message>
     <message>
         <source>Small fountain or well which is at least 1 m in diameter.
@@ -3993,7 +3994,7 @@ Footprint: 3.6 m x 3.6 m.</source>
     <message>
         <source>Spring</source>
         <comment>Name of symbol 312</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kilde / oppkomme</translation>
     </message>
     <message>
         <source>The source of water with a distinct outflow.
@@ -4005,7 +4006,7 @@ Footprint: 4.8 m x 2.4 m.</source>
     <message>
         <source>Prominent water feature</source>
         <comment>Name of symbol 313</comment>
-        <translation type="unfinished"></translation>
+        <translation>Framtredende vanndetalj</translation>
     </message>
     <message>
         <source>A small water feature which is significant or prominent.
@@ -4017,7 +4018,7 @@ Footprint: 4.8 m in diameter.</source>
     <message>
         <source>Open land</source>
         <comment>Name of symbol 401</comment>
-        <translation type="unfinished"></translation>
+        <translation>Åpent lettløpt område</translation>
     </message>
     <message>
         <source>An area of cultivated land, lawn, field, meadow, grassland, bark mulch etc. without trees, offering very good runnability.
@@ -4029,7 +4030,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
     <message>
         <source>Open land with scattered trees</source>
         <comment>Name of symbol 402</comment>
-        <translation type="unfinished"></translation>
+        <translation>Åpent lettløpt område med spredte trær</translation>
     </message>
     <message>
         <source>An area of meadows with scattered trees or bushes, with grass or similar ground cover offering very good runnability.
@@ -4043,7 +4044,7 @@ Smaller areas must be left out, exaggerated or shown using the symbol Open land 
     <message>
         <source>Open land with scattered trees</source>
         <comment>Name of symbol 402.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Åpent lettløpt område med spredte trær</translation>
     </message>
     <message>
         <source>An area of meadows with scattered trees or bushes, with grass or similar ground cover offering very good runnability.
@@ -4057,7 +4058,7 @@ Smaller areas must be left out, exaggerated or shown using the symbol Open land 
     <message>
         <source>Rough open land</source>
         <comment>Name of symbol 403</comment>
-        <translation type="unfinished"></translation>
+        <translation>Åpent område</translation>
     </message>
     <message>
         <source>An area of heath or moorland, a felled area, a newly planted area (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, i.e. heather or tall grass.
@@ -4069,7 +4070,7 @@ Minimum area: 1 mm² (footprint 16 m²).</source>
     <message>
         <source>Rough open land with scattered trees</source>
         <comment>Name of symbol 404</comment>
-        <translation type="unfinished"></translation>
+        <translation>Åpent område med spredte trær</translation>
     </message>
     <message>
         <source>An area of rough open land with scattered trees or bushes. The dots may be white (scattered trees) or green (scattered bushes / thickets).
@@ -4083,7 +4084,7 @@ Smaller areas must be left out, exaggerated or shown using either the symbol Rou
     <message>
         <source>Rough open land with scattered trees</source>
         <comment>Name of symbol 404.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Åpent område med spredte trær</translation>
     </message>
     <message>
         <source>An area of rough open land with scattered trees or bushes. The dots may be white (scattered trees) or green (scattered bushes / thickets).
@@ -4097,7 +4098,7 @@ Smaller areas must be left out, exaggerated or shown using either the symbol Rou
     <message>
         <source>Forest</source>
         <comment>Name of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skog</translation>
     </message>
     <message>
         <source>Typical open forest for the particular type of terrain. If no part of the forest is easily runnable then no white should appear on the map.
@@ -4109,7 +4110,7 @@ Minimum area: 1 mm² (footprint 16 m²) for openings in screens of other colours
     <message>
         <source> Vegetation: slow running</source>
         <comment>Name of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation> Vegetasjon, nedsatt løpbarhet</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
@@ -4121,7 +4122,7 @@ Minimum area: 1 mm² (footprint 16 m²).</source>
     <message>
         <source>Vegetation: slow running, normal running in one direction</source>
         <comment>Name of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vegetasjon, nedsatt løpbarhet, normal løpbarhet i en retning</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
@@ -4134,7 +4135,7 @@ Minimum area: 1 mm² (footprint 16 m²).</source>
     <message>
         <source>Vegetation: slow running, minimum width</source>
         <comment>Name of symbol 406.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vegetasjon, nedsatt løpbarhet, minimal bredde</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.</source>
@@ -4144,7 +4145,7 @@ Minimum area: 1 mm² (footprint 16 m²).</source>
     <message>
         <source> Vegetation: slow running, good visibility</source>
         <comment>Name of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation> Vegetasjon, nedsatt løpbarhet, god sikt</translation>
     </message>
     <message>
         <source>An area of good visibility and reduced runnability due to, for instance, undergrowth (brambles, heather, low bushes, cut branches, etc.). Running speed is reduced to about 60-80% of normal speed.
@@ -4156,7 +4157,7 @@ Minimum width: 2 lines.</source>
     <message>
         <source> Vegetation: walk</source>
         <comment>Name of symbol 408</comment>
-        <translation type="unfinished"></translation>
+        <translation> Vegetasjon, gangfart</translation>
     </message>
     <message>
         <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
@@ -4168,7 +4169,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
     <message>
         <source>Vegetation: walk, normal running in one direction</source>
         <comment>Name of symbol 408.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vegetasjon, gangfart, normal løpbarhet i en retning</translation>
     </message>
     <message>
         <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
@@ -4181,7 +4182,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
     <message>
         <source>Vegetation: walk, slow running in one direction</source>
         <comment>Name of symbol 408.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vegetasjon, gangfart, bedre løpbarhet i en retning</translation>
     </message>
     <message>
         <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
@@ -4194,7 +4195,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
     <message>
         <source> Vegetation: walk, minimum width</source>
         <comment>Name of symbol 408.3</comment>
-        <translation type="unfinished"></translation>
+        <translation> Vegetasjon, gangfart, minimal størrelse</translation>
     </message>
     <message>
         <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.</source>
@@ -4204,7 +4205,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
     <message>
         <source>Vegetation: walk, good visibility</source>
         <comment>Name of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vegetasjon, gangfart, god sikt</translation>
     </message>
     <message>
         <source>An area of good visibility and reduced runnability due to, for instance, undergrowth (brambles, heather, low bushes, cut branches, etc.). Running speed is reduced to about 20-60% of normal speed.
@@ -4216,7 +4217,7 @@ Minimum width: 2 lines.</source>
     <message>
         <source> Impassable vegetation</source>
         <comment>Name of symbol 410</comment>
-        <translation type="unfinished"></translation>
+        <translation> Vegetasjon, upasserbar</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is impassable. Running speed is almost 0%.
@@ -4228,7 +4229,7 @@ Minimum width: 0.4 mm.</source>
     <message>
         <source> Impassable vegetation, minimum width (hedge)</source>
         <comment>Name of symbol 410.1</comment>
-        <translation type="unfinished"></translation>
+        <translation> Vegetasjon, upasserbar, minimal størrelse (hekk)</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is impassable. Running speed is almost 0%.</source>
@@ -4238,7 +4239,7 @@ Minimum width: 0.4 mm.</source>
     <message>
         <source>Cultivated land</source>
         <comment>Name of symbol 412</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dyrkamark</translation>
     </message>
     <message>
         <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses.
@@ -4251,7 +4252,7 @@ Minimum area: 9 mm² (144 m²).</source>
     <message>
         <source>Cultivated land (black pattern)</source>
         <comment>Name of symbol 412.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dyrkamark, sort mønster</translation>
     </message>
     <message>
         <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses.
@@ -4264,7 +4265,7 @@ Minimum area: 9 mm² (144 m²).</source>
     <message>
         <source>Orchard</source>
         <comment>Name of symbol 413</comment>
-        <translation type="unfinished"></translation>
+        <translation>Frukthage, åpent lettløpt område</translation>
     </message>
     <message>
         <source>Land planted with fruit trees or bushes, normally in regular pattern.
@@ -4277,7 +4278,7 @@ Minimum area: 4 mm² (64 m²)</source>
     <message>
         <source>Orchard, rough open land</source>
         <comment>Name of symbol 413.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Frukthage, åpent område</translation>
     </message>
     <message>
         <source>Land planted with fruit trees or bushes, normally in regular pattern.
@@ -4290,7 +4291,7 @@ Minimum area: 4 mm² (64 m²)</source>
     <message>
         <source> Vineyard or similar</source>
         <comment>Name of symbol 414</comment>
-        <translation type="unfinished"></translation>
+        <translation> Vingård eller tilsvarende, åpent lettløpt område</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting.
@@ -4303,7 +4304,7 @@ Minimum area: 4 mm² (64 m²)</source>
     <message>
         <source> Vineyard or similar, rough open land</source>
         <comment>Name of symbol 414.1</comment>
-        <translation type="unfinished"></translation>
+        <translation> Vingård eller tilsvarende, åpent område</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting.
@@ -4316,7 +4317,7 @@ Minimum area: 4 mm² (64 m²)</source>
     <message>
         <source>Distinct cultivation boundary</source>
         <comment>Name of symbol 415</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tydelig kulturgrense</translation>
     </message>
     <message>
         <source>A boundary of symbol cultivated land vegetation (401, 412, 413, 414) or a permanent boundary between different types of cultivated land, when not shown with other symbols (fence, wall, path, etc.)
@@ -4327,7 +4328,7 @@ Minimum length: 1 mm (footprint 4 m).</source>
     <message>
         <source>Distinct vegetation boundary</source>
         <comment>Name of symbol 416</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tydelig vegetasjonsgrense</translation>
     </message>
     <message>
         <source>A distinct forest edge or very distinct vegetation boundary within the forest. For indistinct boundaries, the area edges are shown only by the change in colour and / or dot screen.
@@ -4349,7 +4350,7 @@ Footprint: 4 m in diameter (OM 4.8 m).</source>
     <message>
         <source>Prominent bush or small tree</source>
         <comment>Name of symbol 418</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fremtredende busk eller tre</translation>
     </message>
     <message>
         <source>A prominent bush or a small single tree.
@@ -4360,7 +4361,7 @@ Footprint: 3.2 m in diameter.</source>
     <message>
         <source>Prominent vegetation feature</source>
         <comment>Name of symbol 419</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fremtredende vegetasjonsdetalj</translation>
     </message>
     <message>
         <source>A vegetation feature which is significant or prominent.
@@ -4372,7 +4373,7 @@ Footprint: 4.8 m x 4.8 m (OM 7.1 m x 7.1 m).</source>
     <message>
         <source>Paved area, light traffic, with border</source>
         <comment>Name of symbol 501</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med fast dekke, lett trafikkert, med konturlinje</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
@@ -4384,7 +4385,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source>Paved area, light traffic</source>
         <comment>Name of symbol 501.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med fast dekke, lett trafikkert</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
@@ -4396,7 +4397,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source> Paved area in multilevel structures, light traffic</source>
         <comment>Name of symbol 501.2</comment>
-        <translation type="unfinished"></translation>
+        <translation> Område med fast dekke i strukturer med flere nivå, lett trafikkert</translation>
     </message>
     <message>
         <source>Part of a multilevel structure which can be passed at two levels. The angle of the pattern is approximately 45° to the direction of the axis of the paved area.</source>
@@ -4406,7 +4407,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source>Paved area with scattered trees</source>
         <comment>Name of symbol 501.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med fast dekke og spredte trær</translation>
     </message>
     <message>
         <source>Area with scattered trees or bushes in a paved area.</source>
@@ -4416,7 +4417,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source> Step or edge of paved area</source>
         <comment>Name of symbol 501.1</comment>
-        <translation type="unfinished"></translation>
+        <translation> Område med fast dekke, kant</translation>
     </message>
     <message>
         <source>An edge of a paved area.
@@ -4427,7 +4428,7 @@ Edges within paved areas are generally not represented, unless they serve naviga
     <message>
         <source>Paved area, light traffic, footprint: 1.4 m</source>
         <comment>Name of symbol 501.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med fast dekke, lett trafikkert, fotavtrykk 1.4 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
@@ -4439,7 +4440,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source>Paved area, light traffic, footprint: 2 m</source>
         <comment>Name of symbol 501.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med fast dekke, lett trafikkert, fotavtrykk 2 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
@@ -4451,7 +4452,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source>Paved area, light traffic, footprint: 3 m</source>
         <comment>Name of symbol 501.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med fast dekke, lett trafikkert, fotavtrykk 3 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
@@ -4463,7 +4464,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source>Paved area, light traffic, footprint: 4 m</source>
         <comment>Name of symbol 501.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med fast dekke, lett trafikkert, fotavtrykk 4 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
@@ -4475,7 +4476,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source>Paved area, heavy traffic, with border</source>
         <comment>Name of symbol 501.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med fast dekke, tungt trafikkert, med konturlinje</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
@@ -4487,7 +4488,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source>Paved area, heavy traffic</source>
         <comment>Name of symbol 501.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med fast dekke, tungt trafikkert</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
@@ -4499,7 +4500,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source> Paved area in multilevel structures, heavy traffic</source>
         <comment>Name of symbol 501.12</comment>
-        <translation type="unfinished"></translation>
+        <translation> Område med fast dekke i strukturer med flere nivå, tungt trafikkert</translation>
     </message>
     <message>
         <source>Part of a multilevel structure which can be passed at two levels. The angle of the pattern is approximately 45° to the direction of the axis of the paved area.</source>
@@ -4509,7 +4510,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source>Paved area, heavy traffic, footprint: 1.4 m</source>
         <comment>Name of symbol 501.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med fast dekke, tungt trafikkert, fotavtrykk 1.4 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
@@ -4521,7 +4522,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source>Paved area, heavy traffic, footprint: 2 m</source>
         <comment>Name of symbol 501.17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med fast dekke, tungt trafikkert, fotavtrykk 2 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
@@ -4533,7 +4534,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source>Paved area, heavy traffic, footprint: 3 m</source>
         <comment>Name of symbol 501.18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med fast dekke, tungt trafikkert, fotavtrykk 3 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
@@ -4545,7 +4546,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source>Paved area, heavy traffic, footprint: 4 m</source>
         <comment>Name of symbol 501.19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Område med fast dekke, tungt trafikkert, fotavtrykk 4 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
@@ -4557,7 +4558,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source>Unpaved footpath or track, footprint: 1.4 m</source>
         <comment>Name of symbol 505.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Stor sti eller traktorvei, fotavtrykk 1.4 m</translation>
     </message>
     <message>
         <source>An unpaved footpath or rough vehicle track is a way for passing mainly by foot, without a smooth, hard surface.</source>
@@ -4567,7 +4568,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source>Unpaved footpath or track, footprint: 2 m</source>
         <comment>Name of symbol 505.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Stor sti eller traktorvei, fotavtrykk 2 m</translation>
     </message>
     <message>
         <source>An unpaved footpath or rough vehicle track is a way for passing mainly by foot, without a smooth, hard surface.</source>
@@ -4577,7 +4578,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source>Small unpaved footpath or track</source>
         <comment>Name of symbol 506</comment>
-        <translation type="unfinished"></translation>
+        <translation>Liten sti eller driftsvei</translation>
     </message>
     <message>
         <source>A small unpaved footpath or track.
@@ -4588,7 +4589,7 @@ Minimum length (isolated): two dashes (3.4 mm - footprint 13.6 m).</source>
     <message>
         <source>Less distinct small path</source>
         <comment>Name of symbol 507</comment>
-        <translation type="unfinished"></translation>
+        <translation>Utydelig sti</translation>
     </message>
     <message>
         <source>A less distinct path or forestry extraction track.
@@ -4599,7 +4600,7 @@ Minimum length: two sections of double dashes (7.9 mm - footprint 31.6 m).</sour
     <message>
         <source>Narrow ride</source>
         <comment>Name of symbol 508</comment>
-        <translation type="unfinished"></translation>
+        <translation>Uthogd linje eller spor gjennom terrenget</translation>
     </message>
     <message>
         <source>A distinct ride is a linear break in the forest (usually in a plantation), which does not have a distinct path along it. Where there is a path along a ride, the symbol Small unpaved footpath or track (506) shall be used.
@@ -4610,7 +4611,7 @@ Minimum length: two dashes (9.75 mm - footprint 39 m).</source>
     <message>
         <source>Railway</source>
         <comment>Name of symbol 509.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jernbane</translation>
     </message>
     <message>
         <source>A railway is a permanent track laid with rails on which locomotives, carriages or wagons can travel.
@@ -4622,7 +4623,7 @@ Minimum length (isolated): two dashes (4 mm - footprint 16 m).</source>
     <message>
         <source>Tramway</source>
         <comment>Name of symbol 509.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Trikkeskinne</translation>
     </message>
     <message>
         <source>A tramway is a public vehicle running regularly along certain streets, usually on rails. The track can be easily crossed by the competitor.
@@ -4633,7 +4634,7 @@ Tramways are generally not represented. However, if they serve navigation or ori
     <message>
         <source>Power line, cableway or skilift</source>
         <comment>Name of symbol 510</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kraftlinje, kabelbane eller skiheis</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift.
@@ -4646,7 +4647,7 @@ The bars indicate the exact location of the pylons. If a section of a power line
     <message>
         <source>Major power line</source>
         <comment>Name of symbol 511</comment>
-        <translation type="unfinished"></translation>
+        <translation>Stor kraftlinje</translation>
     </message>
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline. Very large carrying masts shall be represented in plan shape using symbol Building (521) or High tower (524). In this case, the cable lines can be left out (the map shows only the pylons).
@@ -4658,7 +4659,7 @@ The bars indicate the exact location of the pylons. If a section of a power line
     <message>
         <source>Major power line with pylons</source>
         <comment>Name of symbol 511.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Stor kraftlinje med master</translation>
     </message>
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline. Very large carrying masts shall be represented in plan shape using symbol Building (521) or High tower (524). In this case, the cable lines can be left out (the map shows only the pylons).
@@ -4670,7 +4671,7 @@ The bars indicate the exact location of the pylons. If a section of a power line
     <message>
         <source>Bridge, one side</source>
         <comment>Name of symbol 512</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bru, en side</translation>
     </message>
     <message>
         <source>A bridge is a structure spanning and permitting passage over a river, chasm, road or the like.
@@ -4681,7 +4682,7 @@ The bars indicate the exact location of the pylons. If a section of a power line
     <message>
         <source>Bridge, minimum width</source>
         <comment>Name of symbol 512.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bru, minimal størrelse</translation>
     </message>
     <message>
         <source>A bridge is a structure spanning and permitting passage over a river, chasm, road or the like.
@@ -4692,7 +4693,7 @@ The bars indicate the exact location of the pylons. If a section of a power line
     <message>
         <source>Underpass or tunnel</source>
         <comment>Name of symbol 512.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Undergang / tunell</translation>
     </message>
     <message>
         <source>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles.
@@ -4705,7 +4706,7 @@ If underpasses or tunnels etc. are to be used in a competition, they shall be em
     <message>
         <source>Passable wall</source>
         <comment>Name of symbol 513.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Passerbar mur</translation>
     </message>
     <message>
         <source>A passable wall is a construction made of stone, brick, concrete etc., which can be passed.
@@ -4717,7 +4718,7 @@ Minimum length (isolated): 1.4 mm (footprint 5.6 m).</source>
     <message>
         <source>Passable retained wall</source>
         <comment>Name of symbol 513.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Passerbar støttemur</translation>
     </message>
     <message>
         <source>A passable wall which is seen only from one side. Half dot must point to the lower level.
@@ -4729,7 +4730,7 @@ Minimum length (isolated): 2.4 mm (footprint 9.6 m).</source>
     <message>
         <source>Impassable wall</source>
         <comment>Name of symbol 515</comment>
-        <translation type="unfinished"></translation>
+        <translation>Upasserbar mur</translation>
     </message>
     <message>
         <source>An impassable or uncrossable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed.
@@ -4740,7 +4741,7 @@ Very wide impassable walls shall be drawn in plan shape and represented with the
     <message>
         <source>Passable fence or railing</source>
         <comment>Name of symbol 516</comment>
-        <translation type="unfinished"></translation>
+        <translation>Passerbart gjerde eller rekkverk</translation>
     </message>
     <message>
         <source>A passable fence is a barrier enclosing or bordering a field, yard, etc., usually made of posts and wire or wood. It is used to prevent entrance or to confine or mark a boundary. A railing is a fencelike barrier composed of one or more horizontal rails supported by widely spaced upright poles, usually it can be slipped through.
@@ -4752,7 +4753,7 @@ Minimum length (isolated): 2.2 mm (footprint 8.8 m).</source>
     <message>
         <source>Impassable fence or railing</source>
         <comment>Name of symbol 518</comment>
-        <translation type="unfinished"></translation>
+        <translation>Upasserbart gjerde eller rekkverk</translation>
     </message>
     <message>
         <source>An impassable fence or railing shall not be crossed.
@@ -4764,7 +4765,7 @@ Minimum length (isolated): 3 mm (footprint 12 m).</source>
     <message>
         <source>Crossing point (optional)</source>
         <comment>Name of symbol 519</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gjennomgang</translation>
     </message>
     <message>
         <source>A crossing point is a gap or an opening in a fence, railing or wall, which can easily be passed through by a competitor.
@@ -4775,7 +4776,7 @@ Small gaps or openings which cannot easily be passed through by competitors, sha
     <message>
         <source>Area that shall not be entered </source>
         <comment>Name of symbol 520</comment>
-        <translation type="unfinished"></translation>
+        <translation>Forbudt område </translation>
     </message>
     <message>
         <source>An area that shall not be entered such as a private area, a flower bed, a railway area etc.
@@ -4790,7 +4791,7 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
     <message>
         <source>Area that shall not be entered, boundary line</source>
         <comment>Name of symbol 520.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Forbudt område, grenselinje</translation>
     </message>
     <message>
         <source>An area that shall not be entered such as a private area, a flower bed, a railway area etc.
@@ -4805,7 +4806,7 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
     <message>
         <source>Building</source>
         <comment>Name of symbol 521</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bygning</translation>
     </message>
     <message>
         <source>A building is a relatively permanent construction having a roof.
@@ -4819,7 +4820,7 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
     <message>
         <source>Building, minimum size</source>
         <comment>Name of symbol 521.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bygning, minimal størrelse</translation>
     </message>
     <message>
         <source>A building is a relatively permanent construction having a roof.
@@ -4833,7 +4834,7 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
     <message>
         <source>Building, fill</source>
         <comment>Name of symbol 521.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bygning, fyll</translation>
     </message>
     <message>
         <source>A building is a relatively permanent construction having a roof.
@@ -4847,7 +4848,7 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
     <message>
         <source>Building, outline</source>
         <comment>Name of symbol 521.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bygning, grenselinje</translation>
     </message>
     <message>
         <source>A building is a relatively permanent construction having a roof.
@@ -4861,7 +4862,7 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
     <message>
         <source>Canopy</source>
         <comment>Name of symbol 522</comment>
-        <translation type="unfinished"></translation>
+        <translation>Overbygg</translation>
     </message>
     <message>
         <source>A canopy is a building construction (with a roof), normally supported by pillars, poles or walls, such as passages, gangways, courts, bus stops, gas stations or garages.
@@ -4874,7 +4875,7 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
     <message>
         <source>Canopy, fill</source>
         <comment>Name of symbol 522.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Overbygg, fyll</translation>
     </message>
     <message>
         <source>A canopy is a building construction (with a roof), normally supported by pillars, poles or walls, such as passages, gangways, courts, bus stops, gas stations or garages.
@@ -4887,7 +4888,7 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
     <message>
         <source>Canopy, outline</source>
         <comment>Name of symbol 522.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Overbygg, konturlinje</translation>
     </message>
     <message>
         <source>A canopy is a building construction (with a roof), normally supported by pillars, poles or walls, such as passages, gangways, courts, bus stops, gas stations or garages.
@@ -4900,7 +4901,7 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
     <message>
         <source>Pillar</source>
         <comment>Name of symbol 522.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Søyle</translation>
     </message>
     <message>
         <source>A pillar is an upright shaft or structure of stone, brick or other material, relatively slender in proportion to its height and any shape in section, used as a building support.
@@ -4934,7 +4935,7 @@ Footprint: 6 m x 6 m.</source>
     <message>
         <source>Cairn, memorial, small monument or boundary stone</source>
         <comment>Name of symbol 526</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varde, røys eller lite monument</translation>
     </message>
     <message>
         <source>Cairn, memorial, small monument or boundary stone that is obvious.
@@ -4946,7 +4947,7 @@ Footprint: 4 m in diameter.</source>
     <message>
         <source>Fodder rack</source>
         <comment>Name of symbol 527</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fôrkrybbe</translation>
     </message>
     <message>
         <source>A fodder rack, which is free standing or attached to a tree.
@@ -4957,7 +4958,7 @@ Footprint: 6 m x 6 m.</source>
     <message>
         <source> Prominent line feature</source>
         <comment>Name of symbol 528</comment>
-        <translation type="unfinished"></translation>
+        <translation> Fremtredende linjedetalj</translation>
     </message>
     <message>
         <source>A prominent man-made line feature. For example, a low pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track that is clearly visible.
@@ -4969,7 +4970,7 @@ Minimum length: 2.2 mm (footprint 8.8 m).</source>
     <message>
         <source> Prominent impassable line feature</source>
         <comment>Name of symbol 529</comment>
-        <translation type="unfinished"></translation>
+        <translation> Fremtredende upasserbar linjedetalj</translation>
     </message>
     <message>
         <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track.
@@ -4982,7 +4983,7 @@ Minimum length: 3 mm (footprint 12 m).</source>
     <message>
         <source>Prominent man-made feature – ring</source>
         <comment>Name of symbol 530</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fremtredende menneskeskapt detalj, ring</translation>
     </message>
     <message>
         <source>A man-made feature which is significant or prominent.
@@ -4994,7 +4995,7 @@ Footprint: 4 m in diameter.</source>
     <message>
         <source>Prominent man-made feature – x</source>
         <comment>Name of symbol 531</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fremtredende menneskeskapt detalj, x</translation>
     </message>
     <message>
         <source>Location is at the centre of gravity of the symbol.
@@ -5006,7 +5007,7 @@ Footprint: 4.8 m x 4.8 m.</source>
     <message>
         <source>Stairway, footprint: 1.6 m</source>
         <comment>Name of symbol 532.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Trapp, fotavtrykk 1.6 m</translation>
     </message>
     <message>
         <source>Steps of a stairway shall be represented in a generalized manner.
@@ -5018,7 +5019,7 @@ Minimum width: 0.4 mm (IM).</source>
     <message>
         <source>Stairway, footprint: 2 m</source>
         <comment>Name of symbol 532.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Trapp, fotavtrykk 2 m</translation>
     </message>
     <message>
         <source>Steps of a stairway shall be represented in a generalized manner.
@@ -5030,7 +5031,7 @@ Minimum width: 0.4 mm (IM).</source>
     <message>
         <source>Stairway, footprint: 3 m</source>
         <comment>Name of symbol 532.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Trapp, fotavtrykk 3 m</translation>
     </message>
     <message>
         <source>Steps of a stairway shall be represented in a generalized manner.
@@ -5042,7 +5043,7 @@ Minimum width: 0.4 mm (IM).</source>
     <message>
         <source>Stairway, footprint: 4 m</source>
         <comment>Name of symbol 532.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Trapp, fotavtrykk 4 m</translation>
     </message>
     <message>
         <source>Steps of a stairway shall be represented in a generalized manner.
@@ -5054,7 +5055,7 @@ Minimum width: 0.4 mm (IM).</source>
     <message>
         <source>North lines pattern</source>
         <comment>Name of symbol 601.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nordlinjemønster</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
@@ -5076,7 +5077,7 @@ North lines may be broken where they obscure small features such as boulders, kn
     <message>
         <source>Magnetic north line, black, with arrow</source>
         <comment>Name of symbol 601.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magnetisk nordlinje, sort, med pil</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
@@ -5110,7 +5111,7 @@ North lines may be broken where they obscure small features such as boulders, kn
     <message>
         <source>Magnetic north line, blue, with arrow</source>
         <comment>Name of symbol 601.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magnetisk nordlinje, blå, med pil</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
@@ -5133,7 +5134,7 @@ The centre of the triangle shows the precise position of the start point.</sourc
     <message>
         <source> Map issue point</source>
         <comment>Name of symbol 702</comment>
-        <translation type="unfinished"></translation>
+        <translation> Kartutleveringspunkt</translation>
     </message>
     <message>
         <source>If there is a marked route to the start point, the map issue point is marked using this symbol.</source>
@@ -5143,7 +5144,7 @@ The centre of the triangle shows the precise position of the start point.</sourc
     <message>
         <source>Control point</source>
         <comment>Name of symbol 703</comment>
-        <translation type="unfinished"></translation>
+        <translation>Post</translation>
     </message>
     <message>
         <source>The control points are shown with circles (footprint 24 m). The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
@@ -5153,7 +5154,7 @@ The centre of the triangle shows the precise position of the start point.</sourc
     <message>
         <source>Control number</source>
         <comment>Name of symbol 704</comment>
-        <translation type="unfinished"></translation>
+        <translation>Postnummer</translation>
     </message>
     <message>
         <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail.
@@ -5164,7 +5165,7 @@ An option for heavily building filled map is the possibility to have a white bor
     <message>
         <source>Control number, with white border</source>
         <comment>Name of symbol 704.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Postnummer, med hvit konturlinje</translation>
     </message>
     <message>
         <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail.
@@ -5175,7 +5176,7 @@ An option for heavily building filled map is the possibility to have a white bor
     <message>
         <source>Course line</source>
         <comment>Name of symbol 705</comment>
-        <translation type="unfinished"></translation>
+        <translation>Strek, sammenbindingslinje</translation>
     </message>
     <message>
         <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
@@ -5195,7 +5196,7 @@ An option for heavily building filled map is the possibility to have a white bor
     <message>
         <source>Marked route</source>
         <comment>Name of symbol 707</comment>
-        <translation type="unfinished"></translation>
+        <translation>Merka veivalg</translation>
     </message>
     <message>
         <source>A marked route is shown on the map with a dashed line.</source>
@@ -5205,7 +5206,7 @@ An option for heavily building filled map is the possibility to have a white bor
     <message>
         <source>Out-of-bounds boundary</source>
         <comment>Name of symbol 708</comment>
-        <translation type="unfinished"></translation>
+        <translation>Forbudt grense</translation>
     </message>
     <message>
         <source>An out-of-bounds boundary shall not be crossed. It shall be used for temporary uncrossable boundaries used for the course setting.</source>
@@ -5215,7 +5216,7 @@ An option for heavily building filled map is the possibility to have a white bor
     <message>
         <source>Out-of-bounds area</source>
         <comment>Name of symbol 709</comment>
-        <translation type="unfinished"></translation>
+        <translation>Forbudt område</translation>
     </message>
     <message>
         <source>An out-of-bounds area. A bounding line may be drawn if there is no natural boundary as follows:
@@ -5231,7 +5232,7 @@ Minimum area: 4 mm² (footprint 64 m²).</source>
     <message>
         <source>Out-of-bounds area, solid boundary</source>
         <comment>Name of symbol 709.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Forudt område, heltrukken grenselinje</translation>
     </message>
     <message>
         <source>A solid line indicates that the boundary is marked continuously (tapeetc.) in the terrain.</source>
@@ -5241,7 +5242,7 @@ Minimum area: 4 mm² (footprint 64 m²).</source>
     <message>
         <source>Out-of-bounds area, dashed boundary</source>
         <comment>Name of symbol 709.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Forbudt område, stipla grenselinje</translation>
     </message>
     <message>
         <source>A dashed line indicates intermittent marking in the terrain.</source>
@@ -5251,7 +5252,7 @@ Minimum area: 4 mm² (footprint 64 m²).</source>
     <message>
         <source>Crossing point</source>
         <comment>Name of symbol 710.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Passeringspunkt</translation>
     </message>
     <message>
         <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.
@@ -5262,7 +5263,7 @@ Minimum area: 4 mm² (footprint 64 m²).</source>
     <message>
         <source>Crossing section, one side</source>
         <comment>Name of symbol 710.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Passeringspunkt, en side</translation>
     </message>
     <message>
         <source>A crossing section through or over a building, wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map as a linear object, according to the plan shape.
@@ -5273,7 +5274,7 @@ Minimum area: 4 mm² (footprint 64 m²).</source>
     <message>
         <source> Temporary construction or closed area</source>
         <comment>Name of symbol 714</comment>
-        <translation type="unfinished"></translation>
+        <translation> Midlertidig anleggsarbeid eller sperret område</translation>
     </message>
     <message>
         <source>Obvious temporary constructions like platforms for spectators and speaker, closed area for spectators, outside restaurant areas, etc. shall be represented in plan shape. A Temporary construction or closed area shall not be entered.
@@ -5285,7 +5286,7 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
     <message>
         <source> Temporary construction or closed area, minimum size</source>
         <comment>Name of symbol 714.1</comment>
-        <translation type="unfinished"></translation>
+        <translation> Midlertidig anleggsarbeid eller sperret område, minimal størrelse</translation>
     </message>
     <message>
         <source>Obvious temporary constructions like platforms for spectators and speaker, closed area for spectators, outside restaurant areas, etc. shall be represented in plan shape. A Temporary construction or closed area shall not be entered.
@@ -5314,7 +5315,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
-        <translation>OpenOrienteering-logoen</translation>
+        <translation>OpenOrienteering-logoen.</translation>
     </message>
 </context>
 <context>
@@ -5457,7 +5458,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
-        <translation>OpenOrienteering-logoen</translation>
+        <translation>OpenOrienteering-logoen.</translation>
     </message>
 </context>
 <context>
@@ -6576,7 +6577,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
-        <translation>OpenOrienteering-logoen</translation>
+        <translation>OpenOrienteering-logoen.</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -7400,7 +7401,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
-        <translation>OpenOrienteering-logoen</translation>
+        <translation>OpenOrienteering-logoen.</translation>
     </message>
     <message>
         <source>Ruin</source>
@@ -9140,7 +9141,7 @@ A route which is out-of-bounds and forbidden to cross is shown with a zigzag. Th
     <message>
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
-        <translation>OpenOrienteering-logoen</translation>
+        <translation>OpenOrienteering-logoen.</translation>
     </message>
 </context>
 <context>
