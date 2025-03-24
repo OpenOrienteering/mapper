@@ -359,7 +359,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="119"/>
         <source>lpi</source>
-        <translation type="unfinished"></translation>
+        <translation>lpi</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="120"/>
@@ -595,7 +595,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="269"/>
         <source>This color is used as a spot color by the following map colors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Denne fargen er brukt som spotfarge av følgende kartfarger:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="287"/>
@@ -1663,12 +1663,12 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
         <source>Templates</source>
-        <translation type="unfinished">Bakgrunnsbilder</translation>
+        <translation>Bakgrunnsbilder</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="67"/>
         <source>Hatch areas</source>
-        <translation type="unfinished">Rasterflater</translation>
+        <translation>Rasterflater</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
@@ -1927,12 +1927,12 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="588"/>
         <source>Invalid grid scale factor: %1</source>
-        <translation>Feil skaleringsfaktor for rutenett: %1</translation>
+        <translation>Feil skalafaktor for rutenett: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="601"/>
         <source>Invalid auxiliary scale factor: %1</source>
-        <translation>Ugyldig hjelpeskaleringsfaktor: %1</translation>
+        <translation>Ugyldig hjelpeskalafaktor: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="633"/>
@@ -1961,7 +1961,7 @@
     <message>
         <location filename="../src/core/map_information.cpp" line="142"/>
         <source>Custom PROJ.4</source>
-        <translation type="unfinished">Egen PROJ.4</translation>
+        <translation>Egendefinert PROJ.4</translation>
     </message>
 </context>
 <context>
@@ -2119,24 +2119,24 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="216"/>
         <source>Show scale factors</source>
-        <translation type="unfinished">Vis skaleringsfaktorer</translation>
+        <translation>Vis skalafaktorer</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="217"/>
         <source>Scale compensation</source>
-        <translation type="unfinished">Skaleringskompensasjon</translation>
+        <translation>Skalakompensasjon</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="222"/>
         <source>Combined scale factor:</source>
         <extracomment>The combined scale factor is the ratio between a length on the ground and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished">Kombinert skaleringsfaktor:</translation>
+        <translation>Kombinert skalafaktor:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="228"/>
         <source>Auxiliary scale factor:</source>
         <extracomment>The auxiliary scale factor is the ratio between a length in the curved earth model and the corresponding length on the ground. It is applied as a factor to ground distances to get curved earth model distances.</extracomment>
-        <translation>Hjelpeskaleringsfaktor:</translation>
+        <translation>Hjelpeskalafaktor:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="245"/>
@@ -2188,12 +2188,12 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="555"/>
         <source>Scale factor change</source>
-        <translation>Skaleringsfaktorendring</translation>
+        <translation>Skalafaktorendring</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="555"/>
         <source>The scale factor has been changed. Do you want to stretch/shrink the map content accordingly, too?</source>
-        <translation>Skaleringsfaktoren er endret. Ønsker du å utvide/krympe kartinnholdet tilsvarende?</translation>
+        <translation>Skalafaktoren er endret. Ønsker du å utvide/krympe kartinnholdet tilsvarende?</translation>
     </message>
     <message>
         <source>Projected coordinates:</source>
@@ -2213,7 +2213,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="634"/>
         <source>%1</source>
         <comment>scale factor value</comment>
-        <translation type="unfinished">%1</translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="636"/>
@@ -2415,7 +2415,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="533"/>
         <source>Help</source>
-        <translation type="unfinished">Hjelp</translation>
+        <translation>Hjelp</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="554"/>
@@ -2449,12 +2449,12 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="48"/>
         <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="49"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Alle filer (*.*)</translation>
+        <translation>Alle filer (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
@@ -2510,13 +2510,13 @@
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="203"/>
         <source>Save symbol icon ...</source>
-        <translation type="unfinished">Lagre symbolikon …</translation>
+        <translation>Lagre symbolikon …</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="234"/>
         <source>Error</source>
-        <translation type="unfinished">Feil</translation>
+        <translation>Feil</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
@@ -2670,12 +2670,12 @@
     <message>
         <location filename="../src/fileformats/iof_course_export.cpp" line="43"/>
         <source>IOF Data Standard 3.0</source>
-        <translation type="unfinished">IOF Data Standard 3.0</translation>
+        <translation>IOF Data Standard 3.0</translation>
     </message>
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="43"/>
         <source>KML</source>
-        <translation type="unfinished">KML</translation>
+        <translation>KML</translation>
     </message>
 </context>
 <context>
@@ -2826,7 +2826,7 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="202"/>
         <source>Unknown error</source>
-        <translation type="unfinished">Ukjent feil</translation>
+        <translation>Ukjent feil</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="220"/>
@@ -3426,7 +3426,8 @@ Filfomatet er ukjent.</translation>
         <location filename="../src/gui/main_window.cpp" line="1025"/>
         <source>The file has been modified.
 Do you want to discard your changes?</source>
-        <translation>Filen har blitt endret. Vil du fjerne endringene?</translation>
+        <translation>Filen har blitt endret.
+Vil du miste endringene dine?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1080"/>
@@ -3475,14 +3476,14 @@ Velg Nei for å velge et annet format.</translation>
         <location filename="../src/gui/main_window_controller.cpp" line="63"/>
         <location filename="../src/gui/main_window_controller.cpp" line="71"/>
         <source>Error</source>
-        <translation type="unfinished">Feil</translation>
+        <translation>Feil</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window_controller.cpp" line="64"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
-        <translation type="unfinished">Kartet kan ikke eksporteres som
+        <translation>Kartet kan ikke eksporteres som
 &quot;%1&quot;
 da formatet ikke gjenkjennes.</translation>
     </message>
@@ -3491,7 +3492,7 @@ da formatet ikke gjenkjennes.</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">Kartet kan ikke eksporteres som
+        <translation>Kartet kan ikke eksporteres som
 &quot;%1&quot;
 da lagring av %2 (.%3) ikke er støttet.</translation>
     </message>
@@ -3508,7 +3509,7 @@ da lagring av %2 (.%3) ikke er støttet.</translation>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">Målestokken til de importerte dataene er 1:%1 som er forskjellig fra kartets målestokk 1:%2.
+        <translation>Målestokken til de importerte dataene er 1:%1 som er forskjellig fra kartets målestokk 1:%2.
 
 Skal de importerte dataene omskaleres?</translation>
     </message>
@@ -3642,7 +3643,7 @@ Importer data likevel?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="967"/>
         <source>Simple &amp;course</source>
-        <translation type="unfinished"></translation>
+        <translation>Enkel &amp;løype</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="984"/>
@@ -3797,7 +3798,7 @@ Importer data likevel?</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">Kartet kan ikke eksporteres som
+        <translation>Kartet kan ikke eksporteres som
 &quot;%1&quot;
 da lagring av %2 (.%3) ikke er støttet.</translation>
     </message>
@@ -3808,7 +3809,7 @@ da lagring av %2 (.%3) ikke er støttet.</translation>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Kan ikke lagre fil
+        <translation>Kan ikke lagre fil
 %1:
 %2</translation>
     </message>
@@ -3818,18 +3819,18 @@ da lagring av %2 (.%3) ikke er støttet.</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="4196"/>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="84"/>
         <source>Warning</source>
-        <translation type="unfinished">Advarsel</translation>
+        <translation>Advarsel</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="634"/>
         <source>The map export generated warnings.</source>
-        <translation type="unfinished">Karteksporteringen genererte advarsler.</translation>
+        <translation>Karteksporteringen genererte advarsler.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="696"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4196"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">Kartimporteringen genererte advarsler.</translation>
+        <translation>Kartimporteringen genererte advarsler.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="910"/>
@@ -3949,7 +3950,7 @@ da lagring av %2 (.%3) ikke er støttet.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="947"/>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="948"/>
@@ -3974,7 +3975,7 @@ da lagring av %2 (.%3) ikke er støttet.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1006"/>
         <source>Keep my location on screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Behold min lokasjon på skjermen</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1020"/>
@@ -4003,19 +4004,19 @@ da lagring av %2 (.%3) ikke er støttet.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4268"/>
         <source>Nothing to import.</source>
-        <translation type="unfinished">Ingenting å importere.</translation>
+        <translation>Ingenting å importere.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4280"/>
         <source>Question</source>
-        <translation type="unfinished">Spørsmål</translation>
+        <translation>Spørsmål</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4281"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">Målestokken til de importerte dataene er 1:%1 som er forskjellig fra kartets målestokk 1:%2.
+        <translation>Målestokken til de importerte dataene er 1:%1 som er forskjellig fra kartets målestokk 1:%2.
 
 Skal de importerte dataene omskaleres?</translation>
     </message>
@@ -5276,7 +5277,7 @@ er valgt</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="232"/>
         <source>Map</source>
-        <translation type="unfinished">Kart</translation>
+        <translation>Kart</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="232"/>
@@ -5316,12 +5317,12 @@ er valgt</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="239"/>
         <source>Redo steps</source>
-        <translation type="unfinished"></translation>
+        <translation>Gjør om-historikk</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="242"/>
         <source>Templates</source>
-        <translation type="unfinished">Bakgrunnsbilder</translation>
+        <translation>Bakgrunnsbilder</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="242"/>
@@ -5334,7 +5335,7 @@ er valgt</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="244"/>
         <source>Map parts</source>
-        <translation type="unfinished">Kartdeler</translation>
+        <translation>Kartdeler</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="244"/>
@@ -5347,7 +5348,7 @@ er valgt</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="250"/>
         <source>Symbols</source>
-        <translation type="unfinished">Symboler</translation>
+        <translation>Symboler</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="250"/>
@@ -5361,7 +5362,7 @@ er valgt</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="266"/>
         <source>Colors</source>
-        <translation type="unfinished">Farger</translation>
+        <translation>Farger</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="266"/>
@@ -5407,7 +5408,7 @@ er valgt</translation>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="131"/>
         <source>Error</source>
-        <translation type="unfinished">Feil</translation>
+        <translation>Feil</translation>
     </message>
 </context>
 <context>
@@ -5415,7 +5416,7 @@ er valgt</translation>
     <message>
         <location filename="../src/gui/map/map_notes.cpp" line="45"/>
         <source>Map notes</source>
-        <translation type="unfinished">Kartnotater</translation>
+        <translation>Kartnotater</translation>
     </message>
 </context>
 <context>
@@ -5793,18 +5794,18 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="656"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished">OCD-filer i versjon %1 er ikke støttet!</translation>
+        <translation>OCD-filer i versjon %1 er ikke støttet!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="740"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="751"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished">Koordinater justeres for å passe i OCAD-8s tegneområde (-2 m … 2 m).</translation>
+        <translation>Koordinater justeres for å passe i OCAD 8 sitt tegneområde (-2 m … 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="761"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished">Noen koordinater er fremdeles utenfor OCAD-8s tegneområde. De kan kanskje ikke leses i OCAD.</translation>
+        <translation>Noen koordinater er fremdeles utenfor OCAD 8 sitt tegneområde. De kan kanskje ikke nås i OCAD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="795"/>
@@ -5831,7 +5832,7 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1433"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1473"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished">For flatesymbol &quot;%1&quot; er et fyllmønster utelatt.</translation>
+        <translation>For flatesymbol &quot;%1&quot; er et fyllmønster utelatt.</translation>
     </message>
     <message>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
@@ -5841,7 +5842,7 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1604"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2416"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">For linjesymbol &quot;%1&quot;, kan ikke vise ende/knekk-kombinasjon.</translation>
+        <translation>For linjesymbol &quot;%1&quot;, kan ikke vise ende/knekk-kombinasjon.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1626"/>
@@ -5856,7 +5857,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1733"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished">For linjesymbol &quot;%1&quot; kan ikke kantlinjer eksporters korrekt.</translation>
+        <translation>For linjesymbol &quot;%1&quot; kan ikke kantlinjer eksporters korrekt.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1920"/>
@@ -5866,7 +5867,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1936"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished">For tekstsymbol %1: ignorerer understreking</translation>
+        <translation>For tekstsymbol %1: ignorerer understreking</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1939"/>
@@ -5886,7 +5887,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2542"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="unfinished">Ikke i stand til å eksportere fyllmønsterendring for et flateobjekt</translation>
+        <translation>Ikke i stand til å eksportere forskyving av fyllmønster for et flateobjekt</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2717"/>
@@ -5901,7 +5902,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2746"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="unfinished">Klrte ikke å eksportere bakgrunnsbilde: filtypen til &quot;%1&quot; er ikke støttet ennå</translation>
+        <translation>Klrte ikke å eksportere bakgrunnsbilde: filtypen til &quot;%1&quot; er ikke støttet ennå</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2806"/>
@@ -6079,7 +6080,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1666"/>
         <source>Skipping unsupported reference to point symbol &apos;%1.%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hopper over ustøttet referanse til punktsymbol &apos;%1.%2&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1880"/>
@@ -6303,17 +6304,17 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="133"/>
         <source>Remove</source>
-        <translation type="unfinished">Fjern</translation>
+        <translation>Fjern</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="140"/>
         <source>Move Up</source>
-        <translation type="unfinished">Flytt opp</translation>
+        <translation>Flytt opp</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="143"/>
         <source>Move Down</source>
-        <translation type="unfinished">Flytt ned</translation>
+        <translation>Flytt ned</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="175"/>
@@ -6333,12 +6334,12 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="197"/>
         <source>Copy</source>
-        <translation type="unfinished">Kopiér</translation>
+        <translation>Kopiér</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="199"/>
         <source>Paste</source>
-        <translation type="unfinished">Lim inn</translation>
+        <translation>Lim inn</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="233"/>
@@ -6376,7 +6377,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="270"/>
         <source>Pattern</source>
-        <translation type="unfinished">Mønster</translation>
+        <translation>Mønster</translation>
     </message>
 </context>
 <context>
@@ -6843,7 +6844,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1006"/>
         <source>The map contains transparent elements which require the raster mode.</source>
-        <translation>Kartet inneholder gjennomsiktige elementer som krever rastergrafikk</translation>
+        <translation>Kartet inneholder gjennomsiktige elementer som krever rastergrafikk.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1170"/>
@@ -6873,18 +6874,18 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1233"/>
         <source>KMZ</source>
-        <translation type="unfinished">KMZ</translation>
+        <translation>KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1234"/>
         <source>KML</source>
-        <translation type="unfinished">KML</translation>
+        <translation>KML</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1261"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished">Klarte ikke å lagre bildet:
+        <translation>Klarte ikke å lagre bildet:
 %1</translation>
     </message>
     <message>
@@ -7145,25 +7146,25 @@ separations</source>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="64"/>
         <source>Georeferencing reference point</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished">Georefereringens referansepunkt</translation>
+        <translation>Georefereringens referansepunkt</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="70"/>
         <source>Other point,</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished">Annet punkt,</translation>
+        <translation>Annet punkt,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="75"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="79"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="83"/>
@@ -7237,7 +7238,7 @@ separations</source>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="47"/>
         <source>Scaling parameters</source>
-        <translation>Skaleringsparametre</translation>
+        <translation>Skalaparametre</translation>
     </message>
     <message>
         <source>New scale:  1 :</source>
@@ -7292,25 +7293,25 @@ separations</source>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="63"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Georefereringens referansepunkt</translation>
+        <translation>Georefereringens referansepunkt</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="69"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Annet punkt,</translation>
+        <translation>Annet punkt,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="74"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="78"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="81"/>
@@ -7343,7 +7344,7 @@ separations</source>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="69"/>
         <source>&lt;b&gt;Scaling:&lt;/b&gt; %1%</source>
-        <translation>&lt;b&gt;Skalering:&lt;/b&gt; %1%</translation>
+        <translation>&lt;b&gt;Skala:&lt;/b&gt; %1%</translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="75"/>
@@ -7447,7 +7448,7 @@ separations</source>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="146"/>
         <source>Default</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished">Standard</translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
@@ -7465,13 +7466,13 @@ separations</source>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="123"/>
         <source>Windows</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation type="unfinished">Windows</translation>
+        <translation>Windows</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="129"/>
         <source>Core Location</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation type="unfinished">Core Location</translation>
+        <translation>Core Location</translation>
     </message>
     <message>
         <source>Serial port (NMEA)</source>
@@ -7570,57 +7571,57 @@ separations</source>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="51"/>
         <source>Scaling parameters</source>
-        <translation type="unfinished">Skaleringsparametre</translation>
+        <translation>Skalaparametre</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="53"/>
         <source>Scaling center:</source>
-        <translation type="unfinished">Skalingssentrum:</translation>
+        <translation>Skaleringssenter:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="56"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Kartkoordinatsystemets origo</translation>
+        <translation>Kartkoordinatsystemets origo</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="62"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Georefereringens referansepunkt</translation>
+        <translation>Georefereringens referansepunkt</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="70"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Annet punkt,</translation>
+        <translation>Annet punkt,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="75"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="79"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="82"/>
         <source>Options</source>
-        <translation type="unfinished">Valg</translation>
+        <translation>Valg</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="84"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished">Justér referansepunkt for georeferanse</translation>
+        <translation>Justér referansepunkt for georeferanse</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="91"/>
         <source>Scale non-georeferenced templates</source>
-        <translation type="unfinished">Skalér ikke-georefererte bakgrunnsbilder</translation>
+        <translation>Skalér ikke-georefererte bakgrunnsbilder</translation>
     </message>
 </context>
 <context>
@@ -8096,7 +8097,7 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="251"/>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="260"/>
         <source>Cannot load symbol set, aborting.</source>
-        <translation type="unfinished">Kan ikke laste inn symbolsett. Avbryter.</translation>
+        <translation>Kan ikke laste inn symbolsett. Avbryter.</translation>
     </message>
     <message>
         <source>Cannot load map file, aborting.</source>
@@ -8138,12 +8139,12 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="164"/>
         <source>Name</source>
-        <translation type="unfinished">Navn</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="165"/>
         <source>RGB</source>
-        <translation type="unfinished">RGB</translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="166"/>
@@ -8160,27 +8161,27 @@ Do you want to save your changes?</source>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="208"/>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="212"/>
         <source>[X] %1</source>
-        <translation type="unfinished">[X] %1</translation>
+        <translation>[X] %1</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="205"/>
         <source>Symbol orientation can be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolretning kan endres.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="209"/>
         <source>Pattern orientation can be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mønsterretning kan endres.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="213"/>
         <source>Helper symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Hjelpesymbol</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="249"/>
         <source>Symbols</source>
-        <translation type="unfinished">Symboler</translation>
+        <translation>Symboler</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="283"/>
@@ -8198,7 +8199,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="54"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Alle filer (*.*)</translation>
+        <translation>Alle filer (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="76"/>
@@ -8772,7 +8773,7 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="280"/>
         <source>Georeferenced</source>
-        <translation type="unfinished">Georeferert</translation>
+        <translation>Georeferert</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="285"/>
@@ -8869,17 +8870,17 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="884"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="930"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">Kan ikke laste kartfil, avbryter.</translation>
+        <translation>Kan ikke laste kartfil, avbryter.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="894"/>
         <source>Warning</source>
-        <translation type="unfinished">Advarsel</translation>
+        <translation>Advarsel</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="894"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">Kartimporteringen genererte advarsler.</translation>
+        <translation>Kartimporteringen genererte advarsler.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="907"/>
@@ -8920,12 +8921,12 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
         <location filename="../src/templates/template_map.cpp" line="221"/>
         <location filename="../src/templates/template_map.cpp" line="328"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished">Feil ved transformering av koordinatene.</translation>
+        <translation>Feil ved transformering av koordinatene.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_map.cpp" line="203"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">Kan ikke laste kartfil, avbryter.</translation>
+        <translation>Kan ikke laste kartfil, avbryter.</translation>
     </message>
 </context>
 <context>
@@ -9448,7 +9449,7 @@ Høyeste støttede versjon er %2.</translation>
         <location filename="../src/gui/util_gui.cpp" line="217"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="649"/>
