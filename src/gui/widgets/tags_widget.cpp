@@ -126,10 +126,10 @@ void TagsWidget::objectTagsChanged()
 	
 	react_to_changes = false;
 	
-	int row = 0;
-	const Object* object = map->getFirstSelectedObject();
-	if (object)
+	const auto* object = map->getFirstSelectedObject();
+	if (map->getNumSelectedObjects() == 1 && object)
 	{
+		int row = 0;
 		auto const& tags = object->tags();
 		tags_table->clearContents();
 		tags_table->setRowCount(tags.size() + 1);
