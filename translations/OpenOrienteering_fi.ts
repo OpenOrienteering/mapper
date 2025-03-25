@@ -5293,7 +5293,7 @@ valittu</translation>
         <source>%n template(s)</source>
         <translation>
             <numerusform>%n taustakuva</numerusform>
-            <numerusform>%n taustakuvat</numerusform>
+            <numerusform>%n taustakuvaa</numerusform>
         </translation>
     </message>
     <message>
@@ -5306,7 +5306,7 @@ valittu</translation>
         <source>%n part(s)</source>
         <translation>
             <numerusform>%n osa</numerusform>
-            <numerusform>%n osat</numerusform>
+            <numerusform>%n osaa</numerusform>
         </translation>
     </message>
     <message>
@@ -5320,7 +5320,7 @@ valittu</translation>
         <source>%n symbol(s)</source>
         <translation>
             <numerusform>%n symboli</numerusform>
-            <numerusform>%n symbolit</numerusform>
+            <numerusform>%n symbolia</numerusform>
         </translation>
     </message>
     <message>
@@ -5333,7 +5333,7 @@ valittu</translation>
         <source>%n color(s)</source>
         <translation>
             <numerusform>%n väri</numerusform>
-            <numerusform>%n värit</numerusform>
+            <numerusform>%n väriä</numerusform>
         </translation>
     </message>
     <message>
@@ -5346,7 +5346,7 @@ valittu</translation>
         <source>%n font(s)</source>
         <translation>
             <numerusform>%n fontti</numerusform>
-            <numerusform>%n fontit</numerusform>
+            <numerusform>%n fonttia</numerusform>
         </translation>
     </message>
     <message>
