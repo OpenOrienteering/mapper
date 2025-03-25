@@ -1653,7 +1653,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>Clip layers</source>
-        <translation>Beskjer lag</translation>
+        <translation>Beskjær lag</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="59"/>
@@ -3189,12 +3189,12 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="248"/>
         <source>When you select the &quot;OK&quot; button, the editor will ignore touch input.</source>
-        <translation type="unfinished"></translation>
+        <translation>Når du trykker &quot;OK&quot; knappen, vil programmet ignorere skjermberøring.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="253"/>
         <source>Continue with touch input</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortsett å bruke skjermberøring</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="381"/>
@@ -3317,7 +3317,7 @@ Vil du lagre endringene?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1392"/>
         <source>When you want to have touch input disabled, you must use another pointing device to select the &quot;OK&quot; button.</source>
-        <translation type="unfinished"></translation>
+        <translation>Når du ønsker å slå av skjermberøring, må du bruke en annen pekeenhet for å velge &quot;OK&quot;-knappen.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="519"/>
@@ -4598,7 +4598,7 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1016"/>
         <source>Overprinting simulation</source>
-        <translation>Overprintsimulering</translation>
+        <translation>Simulér overtrykking</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1021"/>
@@ -5340,9 +5340,9 @@ er valgt</translation>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="244"/>
         <source>%n part(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n kartdel</numerusform>
+            <numerusform>%n kartdeler</numerusform>
         </translation>
     </message>
     <message>
@@ -5388,7 +5388,7 @@ er valgt</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="279"/>
         <source>%1 (substituted by %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (erstattet av %2)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="78"/>
@@ -6153,7 +6153,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2162"/>
         <source>The %1 driver requires valid georefencing info.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1-driveren krever at georefereringen er gyldig.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2237"/>
@@ -6761,7 +6761,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="297"/>
         <source>Simulate overprinting</source>
-        <translation>Simulér overprinting</translation>
+        <translation>Simulér overtrykking</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="245"/>
@@ -8901,7 +8901,7 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="943"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
-        <translation>Dette bakgrunnsbildet vil ikke være synlig ved simulering av overprinting. Bytt til normal visning?</translation>
+        <translation>Dette bakgrunnsbildet vil ikke være synlig ved simulering av overtrykking. Bytt til normal visning?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="980"/>
