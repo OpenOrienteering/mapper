@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="9">
+    <notes>This map to demonstrate issue GH-2016, trimmed for testing purposes.
+In order to get an orthographic projection, this map was initially created by import from a .osm map similar to 'map.osm', but in the region of template-track.gpx.
+Then the OpenStreetMap objects were deleted, and the template-track.xmap was imported to get its line objects. Templates were added for template-track.gpx so that template_t.cpp could easily be expanded to validate the handling of this projection.</notes>
+    <georeferencing scale="10000" auxiliary_scale_factor="1.000738">
+        <projected_crs>
+            <spec language="PROJ.4">+proj=ortho +datum=WGS84 +ellps=WGS84 +units=m +lat_0=51.394000 +lon_0=21.199000 +no_defs</spec>
+        </projected_crs>
+        <geographic_crs id="Geographic coordinates">
+            <spec language="PROJ.4">+proj=latlong +datum=WGS84</spec>
+            <ref_point_deg lat="51.394" lon="21.199"/>
+        </geographic_crs>
+    </georeferencing>
+    <colors count="1">
+        <color priority="0" name="Purple" c="0.2" m="1" y="0" k="0" opacity="1">
+            <spotcolors>
+                <namedcolor>PURPLE</namedcolor>
+            </spotcolors>
+            <cmyk method="custom"/>
+            <rgb method="cmyk" r="0.8" g="0" b="1"/>
+        </color>
+    </colors>
+    <barrier version="6" required="0.6.0">
+        <symbols count="1">
+            <symbol type="2" id="0" code="1" name="Line">
+                <line_symbol color="0" line_width="40" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="1600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1600" break_length="400" dashes_in_group="1" in_group_break_length="200" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            </symbol>
+        </symbols>
+        <parts count="1" current="0">
+            <part name="default part">
+                <objects count="4">
+                    <object type="1" symbol="0">
+                        <coords count="2">
+                            <coord x="-385441" y="-4732"/>
+                            <coord x="-382440" y="-4643"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="-318340" y="163259"/>
+                        </pattern>
+                    </object>
+                    <object type="1" symbol="0">
+                        <coords count="2">
+                            <coord x="-385495" y="-2685"/>
+                            <coord x="-382486" y="-2596"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="-318340" y="163259"/>
+                        </pattern>
+                    </object>
+                    <object type="1" symbol="0">
+                        <coords count="2">
+                            <coord x="-385322" y="-2509"/>
+                            <coord x="-385253" y="-4896" flags="16"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="-318340" y="163259"/>
+                        </pattern>
+                    </object>
+                    <object type="1" symbol="0">
+                        <coords count="2">
+                            <coord x="-382685" y="-2433"/>
+                            <coord x="-382615" y="-4828"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="-318340" y="163259"/>
+                        </pattern>
+                    </object>
+                </objects>
+            </part>
+        </parts>
+        <templates count="2" first_front_template="0">
+            <template type="TemplateTrack" open="true" name="template-track.gpx" path="/home/scott/mapper/work/test/data/templates/template-track.gpx" relpath="template-track.gpx" georef="true">
+                <crs_spec>+proj=latlong +datum=WGS84</crs_spec>
+            </template>
+            <template type="TemplateTrack" open="true" name="template-track.gpx" path="/home/scott/mapper/work/test/data/templates/template-track.gpx" relpath="template-track.gpx" georef="true">
+                <crs_spec>+proj=latlong +datum=WGS84</crs_spec>
+            </template>
+            <defaults use_meters_per_pixel="true" meters_per_pixel="0" dpi="0" scale="0"/>
+        </templates>
+        <view>
+            <grid color="#646464" display="0" alignment="1" additional_rotation="0" unit="1" h_spacing="1" v_spacing="1" h_offset="0" v_offset="0" snapping_enabled="true"/>
+            <map_view zoom="32" position_x="-383674" position_y="-3816">
+                <map opacity="1" visible="true"/>
+                <templates count="2">
+                    <ref template="0" visible="true" opacity="1"/>
+                    <ref template="1" visible="true" opacity="1"/>
+                </templates>
+            </map_view>
+        </view>
+    </barrier>
+</map>
