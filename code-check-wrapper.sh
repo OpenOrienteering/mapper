@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-#    Copyright 2017, 2018, 2024 Kai Pastor
+#    Copyright 2017, 2018, 2024, 2025 Kai Pastor
 #
 #    This file is part of OpenOrienteering.
 #    
@@ -103,6 +103,7 @@ for I in \
   symbol_rule_set.cpp \
   symbol_t.cpp \
   symbol_tooltip.cpp \
+  tag_remove_widget.cpp \
   tag_select_widget.cpp \
   /template.cpp \
   template_image.cpp \

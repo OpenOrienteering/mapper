@@ -32,6 +32,7 @@
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
+#include "gui/widgets/tag_remove_widget.h"
 #include "undo/object_undo.h"
 
 
@@ -65,6 +66,9 @@ TagsWidget::TagsWidget(Map* map, MapView* main_view, MapEditorController* contro
 	auto help_button = Util::ToolButton::create(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
 	help_button->setAutoRaise(true);
 	
+	remove_button = Util::ToolButton::create(QIcon(QString::fromLatin1(":/images/delete.png")), tr("Remove tags"));
+	remove_button->setAutoRaise(true);
+	
 	auto all_buttons_layout = new QHBoxLayout();
 	QStyleOption style_option(QStyleOption::Version, QStyleOption::SO_DockWidget);
 	all_buttons_layout->setContentsMargins(
@@ -74,6 +78,7 @@ TagsWidget::TagsWidget(Map* map, MapView* main_view, MapEditorController* contro
 		style()->pixelMetric(QStyle::PM_LayoutBottomMargin, &style_option) / 2
 	);
 	all_buttons_layout->addWidget(new QLabel(QString::fromLatin1("   ")), 1);
+	all_buttons_layout->addWidget(remove_button);
 	all_buttons_layout->addWidget(help_button);
 	
 	layout->addLayout(all_buttons_layout);
@@ -83,6 +88,7 @@ TagsWidget::TagsWidget(Map* map, MapView* main_view, MapEditorController* contro
 	connect(tags_table, &QTableWidget::cellChanged, this, &TagsWidget::cellChange);
 	
 	connect(help_button, &QAbstractButton::clicked, this, &TagsWidget::showHelp);
+	connect(remove_button, &QAbstractButton::clicked, this, &TagsWidget::removeTags);
 	
 	connect(map, &Map::objectSelectionChanged, this, &TagsWidget::objectTagsChanged);
 	connect(map, &Map::selectedObjectEdited, this, &TagsWidget::objectTagsChanged);
@@ -98,6 +104,18 @@ TagsWidget::~TagsWidget() = default;
 void TagsWidget::showHelp()
 {
 	Util::showHelp(controller->getWindow(), "object_tags.html");
+}
+
+// slot
+void TagsWidget::removeTags()
+{
+	if (map)
+	{
+		TagRemoveDialog dialog(controller->getWindow(), map);
+		dialog.setWindowModality(Qt::WindowModal);
+		dialog.exec();
+		objectTagsChanged();
+	}
 }
 
 void TagsWidget::setupLastRow()
@@ -121,6 +139,8 @@ void TagsWidget::createUndoStep(Object* object)
 // slot
 void TagsWidget::objectTagsChanged()
 {
+	remove_button->setEnabled(map->getNumSelectedObjects() > 0);
+	
 	if (!react_to_changes)
 		return;
 	
