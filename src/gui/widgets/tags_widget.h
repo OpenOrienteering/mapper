@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013-2018, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -38,7 +38,7 @@ class Object;
 
 
 /**
- * This widget allows for display and editing of tags, i.e. key-value pairs.
+ * This widget allows to display and edit tags, i.e. key-value pairs.
  */
 class TagsWidget : public QWidget
 {
@@ -70,6 +70,11 @@ protected slots:
 	 */
 	void showHelp();
 	
+	/**
+	 * Opens a dialog for removing tags.
+	 */
+	void removeTags();
+	
 protected:
 	/** 
 	 * Sets up the last row: blank cells, right one not editable.
@@ -89,10 +94,11 @@ private:
 	MapEditorController* controller;
 	bool react_to_changes;
 	
+	QToolButton* remove_button;
 	QTableWidget* tags_table;
 };
 
 
 }  // namespace OpenOrienteering
 
-#endif // TAGS_WIDGET_H
+#endif // OPENORIENTEERING_TAGS_WIDGET_H
