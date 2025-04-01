@@ -126,13 +126,14 @@ void TagsWidget::objectTagsChanged()
 	
 	react_to_changes = false;
 	
-	const auto* object = map->getFirstSelectedObject();
-	if (map->getNumSelectedObjects() == 1 && object)
+	if (map->getNumSelectedObjects() == 1)
 	{
-		int row = 0;
+		const auto* object = map->getFirstSelectedObject();
 		auto const& tags = object->tags();
 		tags_table->clearContents();
 		tags_table->setRowCount(tags.size() + 1);
+		
+		int row = 0;
 		for (auto const& tag : tags)
 		{
 			tags_table->setItem(row, 0, new QTableWidgetItem(tag.key));
