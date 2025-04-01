@@ -2290,7 +2290,7 @@ North lines shall be broken to improve the legibility of the map, for instance w
     <message>
         <source>Registration mark</source>
         <comment>Name of symbol 602</comment>
-        <translation>Registreringsmerke</translation>
+        <translation>Passmerke</translation>
     </message>
     <message>
         <source>At least three registration marks may be placed in the corners of the map. These can be used for printing courses on already printed maps. In addition, it allows a check of colour registration when printing colours separately.</source>
@@ -2762,7 +2762,7 @@ Minimumshøyde: 0,5 m.</translation>
     <message>
         <source>Registration mark</source>
         <comment>Name of symbol 602</comment>
-        <translation>Registreringsmerke</translation>
+        <translation>Passmerke</translation>
     </message>
     <message>
         <source>Start</source>
@@ -2940,7 +2940,7 @@ Minimumshøyde: 0,5 m.</translation>
     <message>
         <source>Registration mark</source>
         <comment>Name of symbol 602</comment>
-        <translation>Registreringsmerke</translation>
+        <translation>Passmerke</translation>
     </message>
     <message>
         <source>Start</source>
@@ -5438,7 +5438,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Registration mark</source>
         <comment>Name of symbol 602</comment>
-        <translation>Registreringsmerke</translation>
+        <translation>Passmerke</translation>
     </message>
     <message>
         <source>Start</source>
@@ -6375,7 +6375,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Registration mark</source>
         <comment>Name of symbol 602</comment>
-        <translation>Registreringsmerke</translation>
+        <translation>Passmerke</translation>
     </message>
     <message>
         <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
@@ -7381,7 +7381,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Registration mark</source>
         <comment>Name of symbol 602</comment>
-        <translation>Registreringsmerke</translation>
+        <translation>Passmerke</translation>
     </message>
     <message>
         <source>Start</source>
