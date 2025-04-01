@@ -2927,17 +2927,17 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="222"/>
         <source>Show at least one mid symbol</source>
-        <translation>Vis minst ett mellomsymbol</translation>
+        <translation>Vis minst ett midtsymbol</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="224"/>
         <source>Minimum mid symbol count:</source>
-        <translation>Mimimumsantall mellomsymboler:</translation>
+        <translation>Minste antall midtsymboler:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="227"/>
         <source>Minimum mid symbol count when closed:</source>
-        <translation>Minimumsantall mellomsymboler ved lukking:</translation>
+        <translation>Minste antall midtsymboler ved lukking:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="156"/>
@@ -2993,37 +2993,37 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="174"/>
         <source>Mid symbols placement:</source>
-        <translation type="unfinished"></translation>
+        <translation>Plassering av midtsymboler:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="176"/>
         <source>Center of dashes</source>
-        <translation type="unfinished"></translation>
+        <translation>Senter av stiplet strek</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="177"/>
         <source>Center of dash groups</source>
-        <translation type="unfinished"></translation>
+        <translation>Senter av stiplet gruppe</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="178"/>
         <source>Center of gaps</source>
-        <translation type="unfinished"></translation>
+        <translation>Senter av mellomrommet i stipling</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="208"/>
         <source>Mid symbols</source>
-        <translation>Mellomsymboler</translation>
+        <translation>Midtsymboler</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="210"/>
         <source>Mid symbols per spot:</source>
-        <translation>Mellomsymboler per punkt:</translation>
+        <translation>Midtsymboler per punkt:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="213"/>
         <source>Mid symbol distance:</source>
-        <translation>Avstand mellom mellomsymboler:</translation>
+        <translation>Avstand mellom midtsymboler:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="271"/>
@@ -3083,7 +3083,7 @@
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="327"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="818"/>
         <source>Mid symbol</source>
-        <translation>Mellomsymbol</translation>
+        <translation>Midtsymbol</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1791"/>
@@ -3622,7 +3622,7 @@ Importer data likevel?</translation>
     <message>
         <location filename="../src/core/map_color.cpp" line="79"/>
         <source>Registration black (all printed colors)</source>
-        <translation>Ekte svart (alle utskriftsfarger)</translation>
+        <translation>Passmerke svart (alle utskriftsfarger)</translation>
     </message>
 </context>
 <context>
@@ -5069,12 +5069,12 @@ er valgt</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1078"/>
         <source>Clip area</source>
-        <translation type="unfinished"></translation>
+        <translation>Beskjær utvendig</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1079"/>
         <source>Erase area</source>
-        <translation type="unfinished"></translation>
+        <translation>Klipp vekk innvendig</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1900"/>
@@ -5157,7 +5157,7 @@ er valgt</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="237"/>
         <source>Background drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegning på bakgrunn</translation>
     </message>
 </context>
 <context>
@@ -5298,7 +5298,7 @@ er valgt</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="235"/>
         <source>Coordinate reference system</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatreferansesystem</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="237"/>
@@ -5327,9 +5327,9 @@ er valgt</translation>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="242"/>
         <source>%n template(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n bakgrunnsbilde</numerusform>
+            <numerusform>%n bakgrunnsbilder</numerusform>
         </translation>
     </message>
     <message>
@@ -5789,7 +5789,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="627"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">Kode &apos;%1&apos; er ikke tilgjengelig. Sjekk innstillingene.</translation>
+        <translation>Tegnkoding &apos;%1&apos; er ikke tilgjengelig. Sjekk innstillingene.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="656"/>
@@ -5847,7 +5847,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1626"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished">For linjesymbol &quot;%1&quot;, kan ikke vise dash grouping.</translation>
+        <translation>For linjesymbol &quot;%1&quot;, kan ikke vise gruppert stipling.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1638"/>
@@ -5872,12 +5872,12 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1939"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished">For tekstsymbol %1: ignorerer kniping</translation>
+        <translation>For tekstsymbol %1: ignorerer kerning</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1956"/>
         <source>In text symbol %1: exporting only %2 custom tabulator positions</source>
-        <translation type="unfinished"></translation>
+        <translation>I tekstsymbol %1: eksporterer kun %2 tilpassede innrykksnivåer</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2334"/>
@@ -5897,7 +5897,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2761"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished">Kunne ikke lagre korrekt plassering for manglende mal: &quot;%1&quot;</translation>
+        <translation>Kunne ikke lagre korrekt plassering for manglende bakgrunnsbilde: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2746"/>
@@ -5907,7 +5907,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2806"/>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke lagre egendefinert plassering av bakgrunnsbilde &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="3141"/>
@@ -5917,7 +5917,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_georef_fields.cpp" line="882"/>
         <source>Could not translate coordinate reference system &apos;%1:%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunne ikke oversette koordinatreferansesystem &apos;%1:%2&apos;.</translation>
     </message>
 </context>
 <context>
@@ -6055,7 +6055,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="513"/>
         <source>Color &quot;%1&quot; is imported as special color &quot;Registration black&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Farge &quot;%1&quot; importeres som spesiell farge &quot;Passmerke sort&quot;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1501"/>
@@ -6265,7 +6265,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gdal/ogr_template.cpp" line="354"/>
         <source>Invalid template configuration.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugyldig oppsett av bakgrunnsbilde.</translation>
     </message>
 </context>
 <context>
@@ -6319,17 +6319,17 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="175"/>
         <source>Available palette presets</source>
-        <translation type="unfinished"></translation>
+        <translation>Forhåndsdefinerte fargepaletter</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="187"/>
         <source>Custom string</source>
-        <translation type="unfinished"></translation>
+        <translation>Valgfri tekst</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="193"/>
         <source>Activate preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivér forhåndsinnstilling</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="197"/>
@@ -6344,7 +6344,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="233"/>
         <source>Paint on template</source>
-        <translation type="unfinished">Tegn på bakgrunnsbilde</translation>
+        <translation>Tegn på bakgrunnsbilde</translation>
     </message>
 </context>
 <context>
@@ -6362,17 +6362,17 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="226"/>
         <source>Erase</source>
-        <translation type="unfinished"></translation>
+        <translation>Visk ut</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="247"/>
         <source>Filled area</source>
-        <translation type="unfinished"></translation>
+        <translation>Fylt område</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="269"/>
         <source>Solid</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensfarget</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="270"/>
@@ -6557,7 +6557,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="412"/>
         <source>[Midpoint]</source>
-        <translation>[Mellompunkt]</translation>
+        <translation>[Midtpunkt]</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="996"/>
@@ -6814,22 +6814,22 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="257"/>
         <source>No tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen oppdeling</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="258"/>
         <source>256x256 pixel</source>
-        <translation type="unfinished"></translation>
+        <translation>256x256 piksler</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="259"/>
         <source>512x512 pixel</source>
-        <translation type="unfinished"></translation>
+        <translation>512x512 piksler</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="260"/>
         <source>Tiles:</source>
-        <translation type="unfinished"></translation>
+        <translation>Oppdeling i fliser:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="300"/>
@@ -7140,7 +7140,7 @@ separations</source>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="59"/>
         <source>Map coordinate system origin</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished">Kartkoordinatsystemets origo</translation>
+        <translation>Kartkoordinatenes origo</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="64"/>
@@ -7287,7 +7287,7 @@ separations</source>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="58"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Kartkoordinatsystemets origo</translation>
+        <translation>Kartkoordinatenes origo</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="63"/>
@@ -7354,7 +7354,7 @@ separations</source>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="77"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Switch to individual object scaling. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Bytt til skalering av individuelle objekter. </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="73"/>
@@ -8586,7 +8586,7 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
         <location filename="../src/templates/template_image.cpp" line="301"/>
         <location filename="../src/templates/template_image.cpp" line="421"/>
         <source>Select the coordinate reference system of the georeferenced image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Angi koordinatreferansesystemet til det georefererte bildet.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="306"/>
@@ -8980,7 +8980,7 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="61"/>
         <source>Shear:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjær:</translation>
     </message>
 </context>
 <context>
@@ -9042,17 +9042,17 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
     <message>
         <location filename="../src/templates/template_track.cpp" line="83"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Spor</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="96"/>
         <source>Route</source>
-        <translation type="unfinished"></translation>
+        <translation>Rute</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="109"/>
         <source>Waypoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Veipunkt</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="294"/>
@@ -9558,7 +9558,7 @@ Sted: %2</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="732"/>
         <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
-        <translation type="unfinished"></translation>
+        <translation>Magnetisk misvisning er inkonsistent. Misvisning er derfor automatisk justert til %1°.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="862"/>
