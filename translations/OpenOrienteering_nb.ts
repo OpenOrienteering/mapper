@@ -840,17 +840,17 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="261"/>
         <source>Origin at: %1</source>
-        <translation>Origo i:%1</translation>
+        <translation>Origo i: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="263"/>
         <source>paper coordinates origin</source>
-        <translation>origo for papirkoordinater</translation>
+        <translation>papirkoordinater sitt origo</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="265"/>
         <source>projected coordinates origin</source>
-        <translation>projiserte origokoordinater</translation>
+        <translation>projiserte koordinater sitt origo</translation>
     </message>
 </context>
 <context>
@@ -1673,7 +1673,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Baseline view</source>
-        <translation type="unfinished">Standard visning</translation>
+        <translation>Grunnlinjevisning</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="75"/>
@@ -2735,12 +2735,12 @@
         <location filename="../src/fileformats/file_import_export.cpp" line="258"/>
         <location filename="../src/fileformats/file_import_export.cpp" line="260"/>
         <source>At least one template file could not be found.</source>
-        <translation>Minst en malfil ble ikke funnet.</translation>
+        <translation>Ett eller flere bakgrunnsbilder ble ikke funnet.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="261"/>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation>Klikk på rød(e) malnavn i malene -&gt; Maloppsettsmeny for å sinne navn på malfiler.</translation>
+        <translation>Klikk på rød(e) bakgrunnsbilder i Bakgrunnsbilder -&gt; Innstillinger for å angi korrekte bakgrunnsbilder.</translation>
     </message>
     <message>
         <source>At least one template file could not be found. Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
@@ -3053,12 +3053,12 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="679"/>
         <source>Cap length at start:</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjetupp ved start:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="680"/>
         <source>Cap length at end:</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjetupp ved ende:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="684"/>
@@ -4171,7 +4171,7 @@ Skal de importerte dataene omskaleres?</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="1014"/>
         <source>Baseline view</source>
         <translatorcomment>Usikker på denne</translatorcomment>
-        <translation>Standard visning</translation>
+        <translation>Grunnlinjevisning</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1015"/>
@@ -5852,7 +5852,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1638"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished">For linjesymbol &quot;%1&quot; har antallet styrepunkter i en gruppe blitt redusert til 2.</translation>
+        <translation>For linjesymbol &quot;%1&quot; har antallet streker per stiplet gruppe blitt redusert til 2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1733"/>
@@ -6060,17 +6060,17 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1501"/>
         <source> - main line</source>
-        <translation type="unfinished"></translation>
+        <translation> - hovedlinje</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1508"/>
         <source> - double line</source>
-        <translation type="unfinished"></translation>
+        <translation> - dobbel linje</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1515"/>
         <source> - framing</source>
-        <translation type="unfinished"></translation>
+        <translation> - ramme</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1555"/>
@@ -8154,7 +8154,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="167"/>
         <source>Knockout</source>
-        <translation type="unfinished"></translation>
+        <translation>Knockout</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="204"/>
@@ -9564,7 +9564,7 @@ Sted: %2</translation>
         <location filename="../src/fileformats/xml_file_format.cpp" line="862"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="915"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
-        <translation>Kunne ikke angi utslagsverdi for farge &apos;%1&apos;.</translation>
+        <translation>Kunne ikke angi knockout-egenskap for farge &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="875"/>
