@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2020 Kai Pastor
+ *    Copyright 2016-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -123,8 +123,9 @@ std::unique_ptr<Georeferencing> OgrTemplate::getDataGeoreferencing(const QString
 }
 
 
-OgrTemplate::OgrTemplate(const QString& path, Map* map)
+OgrTemplate::OgrTemplate(const QString& path, Map* map, bool use_default_positioning)
 : TemplateMap(path, map)
+, use_default_positioning { use_default_positioning }
 {
 	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &OgrTemplate::applySettings);
 }
@@ -322,16 +323,20 @@ try
 		projected_crs_spec = explicit_georef->getProjectedCRSSpec();
 	}
 	
-	TemplatePositioningDialog dialog(dialog_parent);
-	if (dialog.exec() == QDialog::Rejected)
-		return false;
-	
-	center_in_view  = dialog.centerOnView();
-	use_real_coords = dialog.useRealCoords();
-	if (use_real_coords)
+	// Unit tests don't need template positioning dialog
+	if (!use_default_positioning)
 	{
-		transform.template_scale_x = transform.template_scale_y = dialog.getUnitScale();
-		updateTransformationMatrices();
+		TemplatePositioningDialog dialog(dialog_parent);
+		if (dialog.exec() == QDialog::Rejected)
+			return false;
+	
+		center_in_view  = dialog.centerOnView();
+		use_real_coords = dialog.useRealCoords();
+		if (use_real_coords)
+		{
+			transform.template_scale_x = transform.template_scale_y = dialog.getUnitScale();
+			updateTransformationMatrices();
+		}
 	}
 	return true;
 }
