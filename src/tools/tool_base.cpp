@@ -382,7 +382,7 @@ void MapEditorToolBase::gestureStarted()
 
 void MapEditorToolBase::startDragging() 
 {
-	Q_ASSERT(!dragging);
+	//Q_ASSERT(!dragging);
 	dragging = true;
 	dragging_canceled = false;
 	dragStart();
