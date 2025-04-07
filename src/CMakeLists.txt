@@ -246,6 +246,7 @@ set(Mapper_Common_SRCS
   tools/object_selector.cpp
   tools/pan_tool.cpp
   tools/point_handles.cpp
+  tools/move_parallel_tool.cpp
   tools/rotate_tool.cpp
   tools/rotate_pattern_tool.cpp
   tools/scale_tool.cpp
