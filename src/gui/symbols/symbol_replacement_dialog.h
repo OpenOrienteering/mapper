@@ -81,6 +81,7 @@ private slots:
 	void matchByName();
 	void matchByNumber();
 	void resetReplacements();
+	void clearMatchCheckmarks();
 	
 	void openCrtFile();
 	bool saveCrtFile();
@@ -101,6 +102,7 @@ private:
 	std::vector<std::unique_ptr<SymbolDropDownDelegate>> symbol_widget_delegates;
 	
 	Mode mode;
+	bool react_to_changes = false;
 };
 
 

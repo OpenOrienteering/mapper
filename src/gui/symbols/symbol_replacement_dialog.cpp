@@ -157,6 +157,7 @@ SymbolReplacementDialog::SymbolReplacementDialog(QWidget* parent, Map& object_ma
 	mapping_table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 	mapping_table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
 	mapping_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
+	connect(mapping_table, &QTableWidget::cellChanged, this, &SymbolReplacementDialog::clearMatchCheckmarks);
 	
 	auto action = mapping_menu->addAction(tr("Clear replacements"));
 	connect(action, &QAction::triggered, this, &SymbolReplacementDialog::resetReplacements);
@@ -219,11 +220,20 @@ void SymbolReplacementDialog::resetReplacements()
 		item.symbol = nullptr;
 		item.type = SymbolRule::NoAssignment;
 	}
-	if (match_by_number_action)
-		match_by_number_action->setChecked(false);
-	if (match_by_name_action)
-		match_by_name_action->setChecked(false);
+	clearMatchCheckmarks();
 	updateMappingTable();
+}
+
+// slot
+void SymbolReplacementDialog::clearMatchCheckmarks()
+{
+	if (react_to_changes)
+	{
+		if (match_by_number_action)
+			match_by_number_action->setChecked(false);
+		if (match_by_name_action)
+			match_by_name_action->setChecked(false);
+	}
 }
 
 
@@ -308,6 +318,7 @@ void SymbolReplacementDialog::updateMappingTable()
 	if (!mapping_table)
 		return;
 	
+	react_to_changes = false;
 	mapping_table->setUpdatesEnabled(false);
 	
 	mapping_table->clearContents();
@@ -454,6 +465,7 @@ void SymbolReplacementDialog::updateMappingTable()
 	}
 	
 	mapping_table->setUpdatesEnabled(true);
+	react_to_changes = true;
 }
 
 
