@@ -47,6 +47,7 @@ void BoxZoomTool::clickPress()
 
 void BoxZoomTool::dragStart()
 {
+	setEditingInProgress(true);	// suppress pie context menu
 	selection_start_point = click_pos_map;
 	updateDirtyRect();
 }
@@ -66,19 +67,21 @@ void BoxZoomTool::dragMove()
 void BoxZoomTool::dragFinish()
 {
 	if (selection_rectangle.isValid())
-	{
 		mapWidget()->adjustViewToRect(selection_rectangle, MapWidget::ContinuousZoom);
 
-		// invalidate selection rectangle since it has been used
-		selection_rectangle = QRectF(0,0,0,0);
-		updateDirtyRect();
-	}
+	// invalidate selection rectangle since it has been used
+	selection_rectangle = QRectF(0,0,0,0);
+	updateDirtyRect();
+
+	setEditingInProgress(false);
 }
 
 void BoxZoomTool::dragCanceled()
 {
 	selection_rectangle = QRectF(0,0,0,0);
 	updateDirtyRect();
+
+	setEditingInProgress(false);
 }
 
 void BoxZoomTool::updateStatusText()
