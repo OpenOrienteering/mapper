@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2017-2019 Kai Pastor
+ *    Copyright 2017-2019, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -31,6 +31,7 @@
 
 #include "core/objects/symbol_rule_set.h"
 
+class QAction;
 class QCheckBox;
 class QComboBox;
 class QTableWidget;
@@ -69,6 +70,12 @@ public:
 	QString replacementId() const;
 	
 protected:
+	void done(int r) override;
+	
+	void updateMappingTable();
+	void updateMappingFromTable();
+	
+private slots:
 	void showHelp();
 	
 	void matchByName();
@@ -78,16 +85,13 @@ protected:
 	void openCrtFile();
 	bool saveCrtFile();
 	
-	void done(int r) override;
-	
-	void updateMappingTable();
-	void updateMappingFromTable();
-	
 private:
 	Map& object_map;
 	const Map& symbol_set;
 	SymbolRuleSet& symbol_rules;
 	
+	QAction* match_by_name_action = nullptr;
+	QAction* match_by_number_action = nullptr;
 	QCheckBox* import_all_check = nullptr;
 	QCheckBox* delete_unused_symbols_check = nullptr;
 	QCheckBox* delete_unused_colors_check = nullptr;
@@ -102,4 +106,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_SYMBOL_REPLACEMENT_DIALOG_H
