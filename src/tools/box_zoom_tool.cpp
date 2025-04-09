@@ -96,10 +96,10 @@ void BoxZoomTool::objectSelectionChangedImpl()
 
 void BoxZoomTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
+	drawSelectionOrPreviewObjects(painter, widget, false);
+
 	if (selection_rectangle.isValid())
 		drawSelectionBox(painter, widget, selection_top_left, selection_bottom_right);
-
-	drawSelectionOrPreviewObjects(painter, widget, true);
 }
 
 int BoxZoomTool::updateDirtyRectImpl(QRectF& rect)
