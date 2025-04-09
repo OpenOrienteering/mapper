@@ -33,7 +33,7 @@
 namespace OpenOrienteering {
 
 BoxZoomTool::BoxZoomTool(MapEditorController* editor, QAction* tool_action)
- : MapEditorToolBase( scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-zoom.png")), 12, 12 }), Other, editor, tool_action)
+ : MapEditorToolBase( scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-zoom.png")), 12, 12 }), BoxZoom, editor, tool_action)
 {
 	useTouchCursor(false);
 }
