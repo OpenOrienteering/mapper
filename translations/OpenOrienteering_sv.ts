@@ -2093,7 +2093,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/core/map_information.cpp" line="142"/>
         <source>Custom PROJ.4</source>
-        <translation type="unfinished">Egen PROJ.4</translation>
+        <translation>Eget PROJ.4</translation>
     </message>
 </context>
 <context>
