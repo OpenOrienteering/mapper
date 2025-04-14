@@ -1,3 +1,7 @@
+---
+name: Bug Report
+about: Create a bug report.
+---
 ### Steps to reproduce
 1.
 2.
