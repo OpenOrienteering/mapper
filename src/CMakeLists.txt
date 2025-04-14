@@ -244,6 +244,7 @@ set(Mapper_Common_SRCS
   tools/edit_line_tool.cpp
   tools/fill_tool.cpp
   tools/object_selector.cpp
+  tools/box_zoom_tool.cpp
   tools/pan_tool.cpp
   tools/point_handles.cpp
   tools/rotate_tool.cpp
