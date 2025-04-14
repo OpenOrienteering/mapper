@@ -162,6 +162,8 @@ public:
 	
 	void addSymbolWarning(const LineSymbol* symbol, const QString& warning);
 	
+	void addSymbolWarning(const PointSymbol* symbol, const QString& warning);
+
 	void addSymbolWarning(const TextSymbol* symbol, const QString& warning);
 	
 	
