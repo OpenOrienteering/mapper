@@ -158,6 +158,7 @@
 #include "tools/edit_line_tool.h"
 #include "tools/fill_tool.h"
 #include "tools/pan_tool.h"
+#include "tools/move_parallel_tool.h"
 #include "tools/rotate_pattern_tool.h"
 #include "tools/rotate_tool.h"
 #include "tools/scale_tool.h"
@@ -942,6 +943,7 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("scaleobjects")->setShortcut(QKeySequence(tr("Z")));
 	findAction("cutobject")->setShortcut(QKeySequence(tr("K")));
 	findAction("cuthole")->setShortcut(QKeySequence(tr("H")));
+	findAction("moveparallel")->setShortcut(QKeySequence(tr("Ctrl+Shift+M")));
 	findAction("measure")->setShortcut(QKeySequence(tr("M")));
 	findAction("booleanunion")->setShortcut(QKeySequence(tr("U")));
 	findAction("booleandifference")->setShortcut(QKeySequence(tr("X")));
@@ -1064,6 +1066,7 @@ void MapEditorController::createActions()
 	cut_hole_menu->addAction(cut_hole_circle_act);
 	cut_hole_menu->addAction(cut_hole_rectangle_act);
 	
+	move_parallel_act = newToolAction("moveparallel", tr("Move parallel"), this, SLOT(moveParallelClicked()), "tool-move-parallel.png", QString{}, "toolbars.html#tool_move_parallel");
 	rotate_act = newToolAction("rotateobjects", tr("Rotate objects"), this, SLOT(rotateClicked()), "tool-rotate.png", QString{}, "toolbars.html#rotate");
 	rotate_pattern_act = newToolAction("rotatepatterns", tr("Rotate pattern"), this, SLOT(rotatePatternClicked()), "tool-rotate-pattern.png", QString{}, "toolbars.html#tool_rotate_pattern");
 	scale_act = newToolAction("scaleobjects", tr("Scale objects"), this, SLOT(scaleClicked()), "tool-scale.png", QString{}, "toolbars.html#scale");
@@ -1235,6 +1238,7 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addAction(boolean_merge_holes_act);
 	tools_menu->addAction(cut_tool_act);
 	tools_menu->addMenu(cut_hole_menu);
+	tools_menu->addAction(move_parallel_act);
 	tools_menu->addAction(rotate_act);
 	tools_menu->addAction(rotate_pattern_act);
 	tools_menu->addAction(scale_act);
@@ -1375,6 +1379,7 @@ void MapEditorController::createMenuAndToolbars()
 	cut_hole_button->setMenu(cut_hole_menu);
 	toolbar_editing->addWidget(cut_hole_button);
 	
+	toolbar_editing->addAction(move_parallel_act);
 	toolbar_editing->addAction(rotate_act);
 	toolbar_editing->addAction(rotate_pattern_act);
 	toolbar_editing->addAction(scale_act);
@@ -2613,6 +2618,8 @@ void MapEditorController::updateObjectDependentActions()
 	cut_tool_act->setStatusTip(tr("Cut the selected objects into smaller parts.") + (cut_tool_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one line or area object to activate this tool."))));
 	convert_to_curves_act->setEnabled(have_area || have_line);
 	convert_to_curves_act->setStatusTip(tr("Turn paths made of straight segments into smooth bezier splines.") + (convert_to_curves_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select a path object to activate this tool."))));
+	move_parallel_act->setEnabled(have_area || have_line);
+	move_parallel_act->setStatusTip(tr("Move lines and area borders in and out.") + (move_parallel_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one line or area object to activate this tool."))));
 	simplify_path_act->setEnabled(have_area || have_line);
 	simplify_path_act->setStatusTip(tr("Reduce the number of points in path objects while trying to retain their shape.") + (simplify_path_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select a path object to activate this tool."))));
 	
@@ -2714,6 +2721,11 @@ void MapEditorController::editLineToolClicked()
 {
 	if (!current_tool || current_tool->toolType() != MapEditorTool::EditLine)
 		setTool(new EditLineTool(this, edit_line_tool_act));
+}
+
+void MapEditorController::moveParallelClicked()
+{
+	setTool(new MoveParallelTool(this, move_parallel_act));
 }
 
 void MapEditorController::drawPointClicked()

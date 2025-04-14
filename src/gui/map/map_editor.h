@@ -398,6 +398,8 @@ public slots:
 	void editToolClicked();
 	/** Activates the line edit tool. */
 	void editLineToolClicked();
+	/** Move parallel tool activation */
+	void moveParallelClicked();	
 	/** Activates the draw point tool. */
 	void drawPointClicked();
 	/** Activates the draw path tool. */
@@ -773,6 +775,7 @@ private:
 	
 	QAction* edit_tool_act = {};
 	QAction* edit_line_tool_act = {};
+	QAction* move_parallel_act = {};
 	QAction* draw_point_act = {};
 	QAction* draw_path_act = {};
 	QAction* draw_circle_act = {};
