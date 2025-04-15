@@ -250,17 +250,18 @@ namespace {
 	bool getRawCodeValue(OGRFeatureH feature, int code, QString &result)
 	{
 		const auto field_index = OGR_F_GetFieldIndex(feature, "RawCodeValues");
-		if (field_index == -1)
-			return false;
-		auto field_string_list = OGR_F_GetFieldAsStringList(feature, field_index);
-		const QString search_code = QString::number(code) + QChar::Space;
-		for ( ; *field_string_list; ++field_string_list)
+		if (field_index >= 0)
 		{
-			QString str = QString::fromUtf8(*field_string_list);
-			if (str.startsWith(search_code))
+			auto field_string_list = OGR_F_GetFieldAsStringList(feature, field_index);
+			const QString search_code = QString::number(code) + QChar::Space;
+			for ( ; *field_string_list; ++field_string_list)
 			{
-				result = str.mid(search_code.length());
-				return true;
+				QString str = QString::fromUtf8(*field_string_list);
+				if (str.startsWith(search_code))
+				{
+					result = str.mid(search_code.length());
+					return true;
+				}
 			}
 		}
 		return false;
@@ -269,13 +270,15 @@ namespace {
 	bool getDoubleRawCodeValue(OGRFeatureH feature, int code, double &result)
 	{
 		QString result_as_string;
-		if (!getRawCodeValue(feature, code, result_as_string))
-			return false;
-		bool ok;
-		result = result_as_string.trimmed().toDouble(&ok);
+		auto ok = false;
+		if (getRawCodeValue(feature, code, result_as_string))
+		{
+			result = result_as_string.trimmed().toDouble(&ok);
+		}
 		return ok;
 	}
-
+	
+	
 	QString toPrettyWkt(OGRSpatialReferenceH spatial_reference)
 	{
 		char* srs_wkt_raw = nullptr;
