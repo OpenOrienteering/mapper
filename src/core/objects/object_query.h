@@ -1,6 +1,7 @@
 /*
  *    Copyright 2016 Mitchell Krome
  *    Copyright 2017-2025 Kai Pastor
+ *    Copyright 2025 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -67,6 +68,12 @@ public:
 		
 		OperatorSearch   = 19, ///< Tests if the symbol name, a tag key or a tag value contains the given value (case-insensitive)
 		OperatorObjectText = 20, ///< Text object content (case-insensitive)
+		
+		// Operators 24 .. 27 operate on object properties
+		OperatorLess           = 24,
+		OperatorLessOrEqual    = 25,
+		OperatorGreater        = 26,
+		OperatorGreaterOrEqual = 27,
 		
 		// More operators, 32 ..
 		OperatorSymbol   = 32, ///< Test the symbol for equality.
@@ -206,12 +213,15 @@ private:
 	
 	//QVariant getObjectProperty(const Object* object, const StringOperands& tags) const;
 	bool getBooleanObjectProperty(const Object* object, const StringOperands& tags, bool& value) const;
+	//bool getDoubleObjectProperty(const Object* object, const StringOperands& tags, double& value) const;
 	bool isObjectProperty(const Object* object, const QString& tag_value) const;
+	bool compareObjectProperty(const Object* object, const StringOperands& tags, Operator op) const;
 	
 	bool IsLogicalOperator(Operator op) const { return op >= 1 && op <= 3; }
 	bool IsTagOperator(Operator op) const { return op >= 16 && op <= 18; }
 	bool IsValueOperator(Operator op) const { return op >= 19 && op <= 20; }
 	bool IsStringOperator(Operator op) const { return op >= 16 && op <= 20; }
+	bool IsNumericalOperator(Operator op) const { return op >= 24 && op <= 27; }
 	
 	using SymbolOperand = const Symbol*;
 	
@@ -292,6 +302,7 @@ public:
 		TokenNot,
 		TokenLeftParen,
 		TokenRightParen,
+		TokenNumericalOperator,
 	};
 	
 private:
