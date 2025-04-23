@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2019, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,17 +19,17 @@
  */
 
 
-#ifndef OPENORIENTEERING_OBJECT_TEXT_H
-#define OPENORIENTEERING_OBJECT_TEXT_H
+#ifndef OPENORIENTEERING_TEXT_OBJECT_H
+#define OPENORIENTEERING_TEXT_OBJECT_H
 
 #include <memory>
 #include <vector>
 
 #include <QtGlobal>
-#include <QString>
 #include <QFontMetricsF>
 #include <QPointF>
 #include <QRectF>
+#include <QString>
 #include <QTransform>
 
 #include "core/map_coord.h"
@@ -266,8 +266,10 @@ public:
 	QTransform calcTextToMapTransform() const;
 	
 	/** Returns a QTransform from map coordinates to text coordinates.
+	 *  If inverse_rotation is true, the inverse of the rotation is applied
+	 *  which is required to correlate user interaction correctly.
 	 */
-	QTransform calcMapToTextTransform() const;
+	QTransform calcMapToTextTransform(bool inverse_rotation = false) const;
 	
 	
 	/** Return the number of rendered lines.
@@ -394,4 +396,4 @@ const TextObjectLineInfo*TextObject::getLineInfo(int i) const
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_TEXT_OBJECT_H

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2019, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,12 +24,10 @@
 #include <QtMath>
 #include <QChar>
 #include <QLatin1Char>
-#include <QPointF>
 
 #include "settings.h"
-#include "core/objects/object.h"
-#include "core/symbols/text_symbol.h"
 #include "core/symbols/symbol.h"
+#include "core/symbols/text_symbol.h"
 
 // IWYU pragma: no_forward_declare QPointF
 
@@ -286,7 +284,7 @@ QTransform TextObject::calcTextToMapTransform() const
 	return transform;
 }
 
-QTransform TextObject::calcMapToTextTransform() const
+QTransform TextObject::calcMapToTextTransform(bool inverse_rotation /* = false */) const
 {
 	const TextSymbol* text_symbol = reinterpret_cast<const TextSymbol*>(symbol);
 	
@@ -294,7 +292,12 @@ QTransform TextObject::calcMapToTextTransform() const
 	double scaling = 1.0f / text_symbol->calculateInternalScaling();
 	transform.scale(1.0f / scaling, 1.0f / scaling);
 	if (getRotation() != 0)
-		transform.rotate(-qRadiansToDegrees(getRotation()));
+	{
+		if (!inverse_rotation)
+			transform.rotate(-qRadiansToDegrees(getRotation()));
+		else
+			transform.rotate(qRadiansToDegrees(getRotation()));
+	}
 	transform.translate(-coords[0].x(), -coords[0].y());
 	
 	return transform;
@@ -326,7 +329,7 @@ bool TextObject::intersectsBox(const QRectF& box) const
 
 int TextObject::calcTextPositionAt(const MapCoordF& coord, bool find_line_only) const
 {
-	return calcTextPositionAt(calcMapToTextTransform().map(coord), find_line_only);
+	return calcTextPositionAt(calcMapToTextTransform(true).map(coord), find_line_only);
 }
 
 // FIXME actually this is two functions, selected by parameter find_line_only; make two functions or return TextObjectLineInfo reference
