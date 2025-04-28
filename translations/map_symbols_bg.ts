@@ -905,24 +905,32 @@ The minimum centre to centre distance between neighbouring dots is 0.25 mm.
 Density: 10-12 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 212</comment>
-        <translation type="unfinished"></translation>
+        <translation>Каменист или скалист терен, който е трудно проходим (по-малко от 20% от нормалната скорост).
+Точките трябва да бъдат разпределени на случаен принцип, но да не пречат на представянето на важни характеристики и обекти на терена. Илюстрацията служи като пример за плътност, а също така точков символ (единични точки) може да се използва за рисуване на каменист терен.
+Минималният брой точки е три (отпечатък 7 м x 7 м).
+Максималното разстояние между центрове и съседните точки е 0,32 мм.
+Минималното разстояние между центрове и съседните точки е 0,25 мм.
+Плътност: 10-12 точки / мм².
+За да се избегне объркване със символа „Различна граница на растителността“ (416), точките не трябва да са разположени така, че да образуват линия.</translation>
     </message>
     <message>
         <source>Sandy ground</source>
         <comment>Name of symbol 213</comment>
-        <translation type="unfinished"></translation>
+        <translation>Пясъчна земя</translation>
     </message>
     <message>
         <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.
 The symbol is orientated to north.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 213</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зона с мека песъчлива земя, където пробегаемостта е намалена до по-малко от 80% от нормалната скорост.
+Символът е ориентиран на север.
+Минимална площ: 1 мм x 1 мм (отпечатък 15 м x 15 м).</translation>
     </message>
     <message>
         <source>Bare rock</source>
         <comment>Name of symbol 214</comment>
-        <translation type="unfinished"></translation>
+        <translation>Гола скала</translation>
     </message>
     <message>
         <source>A runnable area of rock without earth or vegetation should be shown as bare rock.
@@ -930,12 +938,15 @@ An area of rock covered with grass, moss or other low vegetation, shall not be s
 An area of less runnable bare rock should be shown using a stony ground symbol (210-212).
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 214</comment>
-        <translation type="unfinished"></translation>
+        <translation>Проходима скална площ без пръст или растителност трябва да се показва като гола скала.
+Скалистна площ, покрита с трева, мъх или друга ниска растителност, не трябва да се показва със символа за гола скала.
+По-трудно проходима гола скална площ трябва да се показва със символ за камениста земя (210-212).
+Минимална площ: 1 мм x 1 мм (отпечатък 15 м x 15 м).</translation>
     </message>
     <message>
         <source>Trench</source>
         <comment>Name of symbol 215</comment>
-        <translation type="unfinished"></translation>
+        <translation>Траншея</translation>
     </message>
     <message>
         <source>Rocky or artificial trench. Minimum depth should be 1 m.
@@ -944,7 +955,11 @@ Shorter trenches may be exaggerated to the minimum graphical dimension.
 Impassable trenches shall be represented using symbol Impassable cliff (201).
 Collapsed and easily crossable trenches should be mapped as erosion gullies.</source>
         <comment>Description of symbol 215</comment>
-        <translation type="unfinished"></translation>
+        <translation>Скалист или изкуствен изкоп. Минималната дълбочина трябва да бъде 1 м.
+Минимална дължина: 1 мм (площадка 15 м).
+По-късите изкопи могат да бъдат увеличени до минималния графичен размер.
+Непроходимите изкопи трябва да бъдат представени със символа „Непроходима скала“ (201).
+Срутените и лесно проходими изкопи трябва да бъдат картографирани като ерозионни дерета.</translation>
     </message>
     <message>
         <source>Uncrossable body of water (full colour), with bank line</source>
