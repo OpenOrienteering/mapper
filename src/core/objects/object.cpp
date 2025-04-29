@@ -22,6 +22,7 @@
 #include "object.h"
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <cstddef>
 #include <iterator>
@@ -79,17 +80,38 @@ namespace literal
 	static const QLatin1String tags("tags");
 	
 	// object properties
-	static const QLatin1String UndefinedSymbol("UndefinedSymbol");
-	static const QLatin1String AreaTooSmall("AreaTooSmall");
-	static const QLatin1String LineTooShort("LineTooShort");
-	static const QLatin1String PaperArea("PaperArea");
-	static const QLatin1String RealArea("RealArea");
-	static const QLatin1String PaperLength("PaperLength");
-	static const QLatin1String RealLength("RealLength");
+	// boolean operations
+	static const QLatin1String UndefinedSymbol(".UndefinedSymbol");
+	static const QLatin1String AreaTooSmall(".AreaTooSmall");
+	static const QLatin1String LineTooShort(".LineTooShort");
+	// comparisons
+	static const QLatin1String PaperArea(".PaperArea");
+	static const QLatin1String RealArea(".RealArea");
+	static const QLatin1String PaperLength(".PaperLength");
+	static const QLatin1String RealLength(".RealLength");
 }
 
 
 namespace OpenOrienteering {
+
+static const std::array<QLatin1String, 7> object_properties = {literal::UndefinedSymbol, literal::AreaTooSmall, literal::LineTooShort, 
+															   literal::PaperArea, literal::RealArea, literal::PaperLength, literal::RealLength};
+
+bool Object::isObjectProperty(const QString& property)
+{
+	return std::find(object_properties.begin(), object_properties.end(), property) != object_properties.end();
+}
+
+bool Object::isBooleanObjectProperty(const QString& property)
+{
+	return std::find(object_properties.begin(), object_properties.begin() + 2, property) != object_properties.begin() + 2;
+}
+
+bool Object::isComparisonObjectProperty(const QString& property)
+{
+	return std::find(object_properties.begin() + 3, object_properties.end(), property) != object_properties.end();
+}
+
 
 // ### Object implementation ###
 
@@ -775,13 +797,6 @@ QVariant Object::getObjectProperty(const QString& property) const
 	return QVariant();
 }
 
-bool Object::isObjectProperty(const QString& property) const
-{
-	if (property == literal::UndefinedSymbol)
-		return true;
-	
-	return false;
-}
 
 // ### PathPart ###
 
@@ -3271,20 +3286,6 @@ QVariant PathObject::getObjectProperty(const QString& property) const
 	return Object::getObjectProperty(property);	// pass to base class function
 }
 
-// override
-bool PathObject::isObjectProperty(const QString& property) const
-{
-	if (property == literal::AreaTooSmall
-		|| property == literal::LineTooShort
-		|| property == literal::PaperArea
-		|| property == literal::RealArea
-		|| property == literal::PaperLength
-		|| property == literal::RealLength
-		)
-		return true;
-	
-	return Object::isObjectProperty(property);	// pass to base class function
-}
 
 
 // ### PointObject ###
