@@ -96,6 +96,8 @@ public:
 	/** Creates an empty object with the given type, symbol, coords and (optional) map. */
 	explicit Object(Type type, const Symbol* symbol, MapCoordVector coords, Map* map = nullptr);
 	
+	//static constexpr QLatin1String ObjectProperties[] = {QLatin1String{"aaa"}};
+	
 protected:
 	/**
 	 * Constructs an Object, initialized from the given prototype.
@@ -327,10 +329,10 @@ public:
 	
 	/**
 	 * Returns true if property is a dynamic object property that is provided for all objects.
-	 * Derived object classes (i.e., PathObject) override this function to test for class specific object properties.
-	 * If derived object classes don't provide a requested property, they invoke the base class function.
 	 */
-	virtual bool isObjectProperty(const QString& property) const;
+	static bool isObjectProperty(const QString& property);
+	static bool isBooleanObjectProperty(const QString& property);
+	static bool isComparisonObjectProperty(const QString& property);
 	
 protected:
 	virtual void updateEvent() const;
@@ -947,12 +949,6 @@ public:
 	 */
 	QVariant getObjectProperty(const QString& property) const override;
 	
-	/**
-	 * Returns true if property is a dynamic object property that is provided by the PathObject class.
-	 * Note: Overrides the base class function that returns true for dynamic object properties that are common for all objects.
-	 * If a requested property is not provided by PathObject, the base class function is invoked.
-	 */
-	bool isObjectProperty(const QString& property) const override;
 	
 protected:
 	/**
@@ -1162,7 +1158,6 @@ struct ObjectPathCoord : public PathCoord
 	 */
 	double findClosestPointTo(const MapCoordF& map_coord);
 };
-
 
 
 //### Object inline code ###

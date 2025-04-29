@@ -396,94 +396,25 @@ QString ObjectQuery::labelFor(ObjectQuery::Operator op)
 	Q_UNREACHABLE();
 }
 
-/*
-QVariant ObjectQuery::getObjectProperty(const Object* object, const StringOperands& tags) const
-{
-	auto property = QVariant();
-	
-	// check if tag refers to object properties
-	if (tags.key.startsWith(QLatin1Char('.')))
-	{
-		const auto internal_tag = tags.key.mid(1);
-		if (object->getType() == Object::Path)
-		{
-			const auto& path_object = static_cast<const PathObject*>(object);
-			property = path_object->getObjectProperty(internal_tag);
-		}
-		else
-		{
-			property = object->getObjectProperty(internal_tag);
-		}
-	}
-	return property;
-}*/
-
 bool ObjectQuery::getBooleanObjectProperty(const Object* object, const StringOperands& tags, bool& value) const
 {
-	auto property = QVariant();
-	
-	// check if tag refers to object properties
-	if (tags.value.startsWith(QLatin1Char('.')))
+	// check if tag refers to boolean object properties
+	if (Object::isBooleanObjectProperty(tags.value))
 	{
-		const auto internal_tag = tags.value.mid(1);
+		auto property = QVariant();
 		if (object->getType() == Object::Path)
 		{
 			const auto& path_object = static_cast<const PathObject*>(object);
-			property = path_object->getObjectProperty(internal_tag);
+			property = path_object->getObjectProperty(tags.value);
 		}
 		else
 		{
-			property = object->getObjectProperty(internal_tag);
+			property = object->getObjectProperty(tags.value);
 		}
-	}
-	if (property.isValid() && static_cast<QMetaType::Type>(property.type()) == QMetaType::Bool)
-	{
-		value = property.toBool();
-		return true;
-	}
-	return false;
-}
-
-/*bool ObjectQuery::getDoubleObjectProperty(const Object* object, const StringOperands& tags, double& value) const
-{
-	auto property = QVariant();
-	
-	// check if tag refers to object properties
-	if (tags.key.startsWith(QLatin1Char('.')))
-	{
-		const auto internal_tag = tags.key.mid(1);
-		if (object->getType() == Object::Path)
+		if (property.isValid() && static_cast<QMetaType::Type>(property.type()) == QMetaType::Bool)
 		{
-			const auto& path_object = static_cast<const PathObject*>(object);
-			property = path_object->getObjectProperty(internal_tag);
-		}
-		else
-		{
-			property = object->getObjectProperty(internal_tag);
-		}
-	}
-	if (property.isValid() && static_cast<QMetaType::Type>(property.type()) == QMetaType::Double)
-	{
-		value = property.toDouble();
-		return true;
-	}
-	return false;
-}*/
-
-bool ObjectQuery::isObjectProperty(const Object* object, const QString& tag_value) const
-{
-	// check if tags_value refers to object properties
-	if (tag_value.startsWith(QLatin1Char('.')))
-	{
-		const auto internal_tag = tag_value.mid(1);
-		if (object->getType() == Object::Path)
-		{
-			const auto& path_object = static_cast<const PathObject*>(object);
-			return path_object->isObjectProperty(internal_tag);
-		}
-		else
-		{
-			return object->isObjectProperty(internal_tag);
+			value = property.toBool();
+			return true;
 		}
 	}
 	return false;
@@ -491,45 +422,44 @@ bool ObjectQuery::isObjectProperty(const Object* object, const QString& tag_valu
 
 bool ObjectQuery::compareObjectProperty(const Object* object, const StringOperands& tags, Operator op) const
 {
-	auto property = QVariant();
-	
-	// check if tag refers to object properties
-	if (tags.key.startsWith(QLatin1Char('.')))
+	// check if tag refers to comparison object properties
+	if (Object::isComparisonObjectProperty(tags.key))
 	{
-		const auto internal_tag = tags.key.mid(1);
+		auto property = QVariant();
 		if (object->getType() == Object::Path)
 		{
 			const auto& path_object = static_cast<const PathObject*>(object);
-			property = path_object->getObjectProperty(internal_tag);
+			property = path_object->getObjectProperty(tags.key);
 		}
 		else
 		{
-			property = object->getObjectProperty(internal_tag);
+			property = object->getObjectProperty(tags.key);
 		}
-	}
-	if (property.isValid() && static_cast<QMetaType::Type>(property.type()) == QMetaType::Double)
-	{
-		bool ok;
-		const auto comp_value = tags.value.toDouble(&ok);
-		if (ok)
+	
+		if (property.isValid() && static_cast<QMetaType::Type>(property.type()) == QMetaType::Double)
 		{
-			const auto value = property.toDouble(&ok);
+			bool ok;
+			const auto comp_value = tags.value.toDouble(&ok);
 			if (ok)
 			{
-				switch(op)
+				const auto value = property.toDouble(&ok);
+				if (ok)
 				{
-				case OperatorLess:
-					return value < comp_value;
-				case OperatorLessOrEqual:
-					return value <= comp_value;
-				case OperatorGreater:
-					return value > comp_value;
-				case OperatorGreaterOrEqual:
-					return value >= comp_value;
-				default:
-					return false;	// unreachable
+					switch(op)
+					{
+					case OperatorLess:
+						return value < comp_value;
+					case OperatorLessOrEqual:
+						return value <= comp_value;
+					case OperatorGreater:
+						return value > comp_value;
+					case OperatorGreaterOrEqual:
+						return value >= comp_value;
+					default:
+						return false;	// unreachable
+					}
+					Q_UNREACHABLE();
 				}
-				Q_UNREACHABLE();
 			}
 		}
 	}
@@ -541,21 +471,11 @@ bool ObjectQuery::operator()(const Object* object) const
 	switch(op)
 	{
 	case OperatorIs:
-		/*{
-		auto property = getObjectProperty(object, tags);
-		if (property.isValid())
-			return static_cast<QMetaType::Type>(property.type()) == QMetaType::Bool && property.toBool();
-		}*/
 		return [](auto const& container,  auto const& tags) {
 			auto const it = container.find(tags.key);
 			return it != container.end() && it->value == tags.value;
 		} (object->tags(), tags);
 	case OperatorIsNot:
-		/*{
-		auto property = getObjectProperty(object, tags);
-		if (property.isValid())
-			return static_cast<QMetaType::Type>(property.type()) != QMetaType::Bool || !property.toBool();
-		}*/
 		// If the object does have the tag, not is true
 		return [](auto const& container,  auto const& tags) {
 			auto const it = container.find(tags.key);
@@ -581,7 +501,7 @@ bool ObjectQuery::operator()(const Object* object) const
 		}
 		return false;
 	case OperatorObjectText:
-		if (isObjectProperty(object, tags.value))	// don't search for object properties keywords
+		if (Object::isObjectProperty(tags.value))	// don't search for object properties keywords
 			return false;
 		qDebug("\nOperatorObjectText");
 		if (object->getType() == Object::Text)
@@ -879,7 +799,7 @@ ObjectQuery ObjectQueryParser::parse(const QString& text)
 				auto op = token_text;
 				auto num_op = token_text.toString();
 				getToken();
-				if (token == TokenWord)
+				if ((token == TokenWord || token == TokenString) && Object::isComparisonObjectProperty(key))
 				{
 					auto value = tokenAsString();
 					if (num_op == QLatin1String("<"))
