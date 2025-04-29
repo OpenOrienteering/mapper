@@ -211,10 +211,7 @@ private:
 	 */
 	void consume(ObjectQuery&& other);
 	
-	//QVariant getObjectProperty(const Object* object, const StringOperands& tags) const;
 	bool getBooleanObjectProperty(const Object* object, const StringOperands& tags, bool& value) const;
-	//bool getDoubleObjectProperty(const Object* object, const StringOperands& tags, double& value) const;
-	bool isObjectProperty(const Object* object, const QString& tag_value) const;
 	bool compareObjectProperty(const Object* object, const StringOperands& tags, Operator op) const;
 	
 	bool IsLogicalOperator(Operator op) const { return op >= 1 && op <= 3; }
