@@ -22,7 +22,6 @@
 #include "object.h"
 
 #include <algorithm>
-#include <array>
 #include <cmath>
 #include <cstddef>
 #include <iterator>
@@ -94,8 +93,8 @@ namespace literal
 
 namespace OpenOrienteering {
 
-static const std::array<QLatin1String, 7> object_properties = {literal::UndefinedSymbol, literal::AreaTooSmall, literal::LineTooShort, 
-															   literal::PaperArea, literal::RealArea, literal::PaperLength, literal::RealLength};
+static const std::vector<QLatin1String> object_properties = {literal::UndefinedSymbol, literal::AreaTooSmall, literal::LineTooShort, 
+                                                             literal::PaperArea, literal::RealArea, literal::PaperLength, literal::RealLength};
 
 bool Object::isObjectProperty(const QString& property)
 {
@@ -104,7 +103,7 @@ bool Object::isObjectProperty(const QString& property)
 
 bool Object::isBooleanObjectProperty(const QString& property)
 {
-	return std::find(object_properties.begin(), object_properties.begin() + 2, property) != object_properties.begin() + 2;
+	return std::find(object_properties.begin(), object_properties.begin() + 3, property) != object_properties.begin() + 3;
 }
 
 bool Object::isComparisonObjectProperty(const QString& property)
@@ -112,6 +111,10 @@ bool Object::isComparisonObjectProperty(const QString& property)
 	return std::find(object_properties.begin() + 3, object_properties.end(), property) != object_properties.end();
 }
 
+const std::vector<QLatin1String>& Object::getObjectProperties()
+{
+	return object_properties;
+}
 
 // ### Object implementation ###
 
