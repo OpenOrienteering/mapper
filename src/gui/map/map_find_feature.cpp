@@ -1,5 +1,6 @@
 /*
  *    Copyright 2017-2020, 2024, 2025 Kai Pastor
+ *    Copyright 2025 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,13 +25,16 @@
 
 #include <QAbstractButton>
 #include <QAction>
+#include <QContextMenuEvent>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QGridLayout>
 #include <QKeySequence>  // IWYU pragma: keep
+#include <QMenu>
+#include <QPoint>
 #include <QPushButton>
 #include <QStackedLayout>
-#include <QTextEdit>
+#include <QVariant>
 #include <QWidget>
 
 #include "core/map.h"
@@ -110,7 +114,7 @@ void MapFindFeature::showDialog()
 		find_dialog = new QDialog(window);
 		find_dialog->setWindowTitle(tr("Find objects"));
 		
-		text_edit = new QTextEdit;
+		text_edit = new MapFindTextEdit;
 		text_edit->setLineWrapMode(QTextEdit::WidgetWidth);
 		
 		tag_selector = new TagSelectWidget;
@@ -310,5 +314,37 @@ void MapFindFeature::tagSelectorToggled(bool active)
 	}
 }
 
+
+// slot
+void MapFindTextEdit::insertKeyword(QAction* action)
+{
+	const auto keyword = action->data().toString();
+	insertPlainText(keyword);
+}
+
+// override
+void MapFindTextEdit::contextMenuEvent(QContextMenuEvent* event)
+{
+	QMenu* menu = createStandardContextMenu(event->globalPos());
+	menu->addSeparator();
+	auto* insert_menu = new QMenu(tr("Insert keyword..."), menu);
+	insert_menu->menuAction()->setMenuRole(QAction::NoRole);
+	auto* keyword_actions_group = new QActionGroup(this);
+	
+	auto keywords = Object::getObjectProperties();
+	keywords.insert(keywords.end(), {QLatin1String("SYMBOL"), QLatin1String("AND"), QLatin1String("OR"), QLatin1String("NOT")});
+	for (auto& keyword : keywords)
+	{
+		auto* action = new QAction(keyword, this);
+		action->setData(QVariant(keyword));
+		keyword_actions_group->addAction(action);
+		insert_menu->addAction(action);
+	}
+	menu->addMenu(insert_menu);
+	connect(keyword_actions_group, &QActionGroup::triggered, this, &MapFindTextEdit::insertKeyword);
+	
+	menu->exec(event->globalPos());
+	delete menu;
+}
 
 }  // namespace OpenOrienteering
