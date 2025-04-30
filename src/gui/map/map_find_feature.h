@@ -24,12 +24,13 @@
 #include <QObject>
 #include <QPointer>
 #include <QString>
+#include <QTextEdit>
 
 class QAction;
+class QContextMenuEvent;
 class QDialog;
 class QPushButton;
 class QStackedLayout;
-class QTextEdit;
 class QWidget;
 
 namespace OpenOrienteering {
@@ -38,6 +39,22 @@ class MapEditorController;
 class Object;
 class ObjectQuery;
 class TagSelectWidget;
+
+/**
+ * The context menu (right click) is extended by the possibility to insert
+ * one of the keywords (e.g., SYMBOL, AND...)
+ */
+class MapFindTextEdit : public QTextEdit
+{
+	Q_OBJECT
+	
+private:
+	void contextMenuEvent(QContextMenuEvent* event) override;
+	
+private slots:
+	void insertKeyword(QAction* action);
+};
+
 
 /**
  * Provides an interactive feature for finding objects in the map.
@@ -87,7 +104,7 @@ private:
 	MapEditorController& controller;
 	QPointer<QDialog> find_dialog;           // child of controller's window
 	QStackedLayout* editor_stack = nullptr;  // child of find_dialog
-	QTextEdit* text_edit = nullptr;          // child of find_dialog
+	MapFindTextEdit* text_edit = nullptr;    // child of find_dialog
 	TagSelectWidget* tag_selector = nullptr; // child of find_dialog
 	QWidget* tag_selector_buttons = nullptr; // child of find_dialog
 	QPushButton* delete_find_next = nullptr; // child of find_dialog
@@ -98,7 +115,6 @@ private:
 	
 	Q_DISABLE_COPY(MapFindFeature)
 };
-
 
 }  // namespace OpenOrienteering
 

@@ -96,7 +96,6 @@ public:
 	/** Creates an empty object with the given type, symbol, coords and (optional) map. */
 	explicit Object(Type type, const Symbol* symbol, MapCoordVector coords, Map* map = nullptr);
 	
-	//static constexpr QLatin1String ObjectProperties[] = {QLatin1String{"aaa"}};
 	
 protected:
 	/**
@@ -327,12 +326,17 @@ public:
 	 */
 	virtual QVariant getObjectProperty(const QString& property) const;
 	
-	/**
-	 * Returns true if property is a dynamic object property that is provided for all objects.
-	 */
+	/** Returns true if property is a dynamic object property. */
 	static bool isObjectProperty(const QString& property);
+	
+	/** Returns true if property is a dynamic object property that returns a boolean value. */
 	static bool isBooleanObjectProperty(const QString& property);
+	
+	/** Returns true if property is a dynamic object property that returns a value for comparison. */
 	static bool isComparisonObjectProperty(const QString& property);
+	
+	/** Returns keywords of the available dynamic object properties. */
+	static const std::vector<QLatin1String>& getObjectProperties();
 	
 protected:
 	virtual void updateEvent() const;
