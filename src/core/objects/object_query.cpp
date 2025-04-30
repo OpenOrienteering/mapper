@@ -487,7 +487,6 @@ bool ObjectQuery::operator()(const Object* object) const
 			return it != container.end() && it->value.contains(tags.value);
 		} (object->tags(), tags);
 	case OperatorSearch:
-		qDebug("\nOperatorSearch");
 		bool value;
 		if (getBooleanObjectProperty(object, tags, value))
 			return value;
@@ -503,7 +502,6 @@ bool ObjectQuery::operator()(const Object* object) const
 	case OperatorObjectText:
 		if (Object::isObjectProperty(tags.value))	// don't search for object properties keywords
 			return false;
-		qDebug("\nOperatorObjectText");
 		if (object->getType() == Object::Text)
 			return static_cast<const TextObject*>(object)->getText().contains(tags.value, Qt::CaseInsensitive);
 		return false;
