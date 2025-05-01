@@ -22,7 +22,6 @@
 #ifndef OPENORIENTEERING_TEXT_OBJECT_H
 #define OPENORIENTEERING_TEXT_OBJECT_H
 
-#include <memory>
 #include <vector>
 
 #include <QtGlobal>

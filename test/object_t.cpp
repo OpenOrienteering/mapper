@@ -43,7 +43,7 @@ class ObjectTest : public QObject
 	Q_OBJECT
 	
 private slots:
-	void ObjectLengthTest_data()
+	void objectLengthTest_data()
 	{
 		QTest::addColumn<int>("map_scale");
 		QTest::addColumn<MapCoordVector>("coords");
@@ -58,7 +58,7 @@ private slots:
 		QTest::newRow("Line object 1 at 1:15000") << 15000 << coords << 30.0f << 50.0f;
 	}
 	
-	void ObjectLengthTest()
+	void objectLengthTest()
 	{
 		QFETCH(int, map_scale);
 		QFETCH(MapCoordVector, coords);
@@ -93,7 +93,7 @@ private slots:
 	}
 	
 	
-	void ObjectAreaTest_data()
+	void objectAreaTest_data()
 	{
 		QTest::addColumn<int>("map_scale");
 		QTest::addColumn<MapCoordVector>("coords");
@@ -115,7 +115,7 @@ private slots:
 		QTest::newRow("Area object 2 at 1:10000") << 10000 << coords2 << 30.0f << 44.0f;
 	}
 	
-	void ObjectAreaTest()
+	void objectAreaTest()
 	{
 		QFETCH(int, map_scale);
 		QFETCH(MapCoordVector, coords);
@@ -186,7 +186,7 @@ private slots:
  * We don't need a real GUI window.
  */
 namespace {
-	auto Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+	auto const Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
 }
 
 QTEST_MAIN(ObjectTest)

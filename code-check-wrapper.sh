@@ -114,6 +114,7 @@ for I in \
   template_t.cpp \
   template_tool \
   template_track.cpp \
+  text_object.cpp \
   text_object_editor_helper.cpp \
   text_browser_dialog \
   toast.cpp \

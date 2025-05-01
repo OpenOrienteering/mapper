@@ -275,7 +275,7 @@ QTransform TextObject::calcTextToMapTransform() const
 	const TextSymbol* text_symbol = reinterpret_cast<const TextSymbol*>(symbol);
 	
 	QTransform transform;
-	double scaling = 1.0f / text_symbol->calculateInternalScaling();
+	auto const scaling = 1.0 / text_symbol->calculateInternalScaling();
 	transform.translate(coords[0].x(), coords[0].y());
 	if (getRotation() != 0)
 		transform.rotate(-qRadiansToDegrees(getRotation()));
@@ -289,8 +289,8 @@ QTransform TextObject::calcMapToTextTransform() const
 	const TextSymbol* text_symbol = reinterpret_cast<const TextSymbol*>(symbol);
 	
 	QTransform transform;
-	double scaling = 1.0f / text_symbol->calculateInternalScaling();
-	transform.scale(1.0f / scaling, 1.0f / scaling);
+	auto const scaling = text_symbol->calculateInternalScaling();
+	transform.scale(scaling, scaling);
 	if (getRotation() != 0)
 		transform.rotate(qRadiansToDegrees(getRotation()));
 	transform.translate(-coords[0].x(), -coords[0].y());
@@ -416,7 +416,6 @@ void TextObject::prepareLineInfos() const
 	
 	//double next_line_x_offset = 0; // to keep indentation after word wrap in a line with tabs
 	int num_paragraphs = 0;
-	int line_num = 0;
 	int line_start = 0;
 	while (line_start <= text_end) 
 	{
@@ -511,7 +510,6 @@ void TextObject::prepareLineInfos() const
 			line_y += paragraph_spacing;
 			num_paragraphs++;
 		}
-		line_num++;
 		line_start = next_line_start;
 	}
 	
