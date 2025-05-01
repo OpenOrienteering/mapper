@@ -266,10 +266,8 @@ public:
 	QTransform calcTextToMapTransform() const;
 	
 	/** Returns a QTransform from map coordinates to text coordinates.
-	 *  If inverse_rotation is true, the inverse of the rotation is applied
-	 *  which is required to correlate user interaction correctly.
 	 */
-	QTransform calcMapToTextTransform(bool inverse_rotation = false) const;
+	QTransform calcMapToTextTransform() const;
 	
 	
 	/** Return the number of rendered lines.

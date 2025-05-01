@@ -284,7 +284,7 @@ QTransform TextObject::calcTextToMapTransform() const
 	return transform;
 }
 
-QTransform TextObject::calcMapToTextTransform(bool inverse_rotation /* = false */) const
+QTransform TextObject::calcMapToTextTransform() const
 {
 	const TextSymbol* text_symbol = reinterpret_cast<const TextSymbol*>(symbol);
 	
@@ -292,12 +292,7 @@ QTransform TextObject::calcMapToTextTransform(bool inverse_rotation /* = false *
 	double scaling = 1.0f / text_symbol->calculateInternalScaling();
 	transform.scale(1.0f / scaling, 1.0f / scaling);
 	if (getRotation() != 0)
-	{
-		if (!inverse_rotation)
-			transform.rotate(-qRadiansToDegrees(getRotation()));
-		else
-			transform.rotate(qRadiansToDegrees(getRotation()));
-	}
+		transform.rotate(qRadiansToDegrees(getRotation()));
 	transform.translate(-coords[0].x(), -coords[0].y());
 	
 	return transform;
@@ -329,7 +324,7 @@ bool TextObject::intersectsBox(const QRectF& box) const
 
 int TextObject::calcTextPositionAt(const MapCoordF& coord, bool find_line_only) const
 {
-	return calcTextPositionAt(calcMapToTextTransform(true).map(coord), find_line_only);
+	return calcTextPositionAt(calcMapToTextTransform().map(coord), find_line_only);
 }
 
 // FIXME actually this is two functions, selected by parameter find_line_only; make two functions or return TextObjectLineInfo reference
