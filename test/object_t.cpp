@@ -1,5 +1,6 @@
 /*
  *    Copyright 2025 Matthias Kühlewein
+ *    Copyright 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,9 +24,11 @@
 #include "core/map.h"
 #include "core/map_coord.h"
 #include "core/objects/object.h"
+#include "core/objects/text_object.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/symbol.h"
+#include "core/symbols/text_symbol.h"
 
 
 using namespace OpenOrienteering;
@@ -144,6 +147,37 @@ private slots:
 		
 		area_symbol->setMinimumArea(paper_area*1000 + 1);
 		QVERIFY(rectangle_area.isAreaTooSmall() == true);
+	}
+	
+	void calcTextCoordTransformTest()
+	{
+		struct RotatableTextSymbol : public TextSymbol {
+			RotatableTextSymbol() : TextSymbol() { setRotatable (true); }
+		} text_symbol;
+		QVERIFY(text_symbol.isRotatable());
+		QVERIFY(text_symbol.calculateInternalScaling() > 0);
+		
+		TextObject object(&text_symbol);
+		object.setText(QLatin1String("ABC"));
+		object.setRotation(1.5);
+		
+		// The anchor on the map is 0,0 on the text, regardless of rotation.
+		auto const anchor_map = QPointF{10.0, 10.0};
+		auto const anchor_text = QPointF{0.0, 0.0};
+		object.setAnchorPosition(MapCoordF(anchor_map));
+		
+		auto to_text = object.calcMapToTextTransform();
+		QVERIFY(!to_text.isIdentity());
+		
+		auto to_map = object.calcTextToMapTransform();
+		QVERIFY(!to_map.isIdentity());
+		
+		QCOMPARE(to_text.map(anchor_map), anchor_text);
+		QCOMPARE(to_map.map(anchor_text), anchor_map);
+		
+		// Another point in the rotated text, and subject to rotation.
+		auto const anchor_text_2 = QPointF{10.0, 5.0};
+		QCOMPARE(to_text.map(to_map.map(anchor_text_2)), anchor_text_2);
 	}
 	
 };  // class ObjectTest
