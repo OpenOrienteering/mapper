@@ -706,10 +706,16 @@ bool MainWindow::showSaveOnCloseDialog()
 		}
 		else
 		{
-			ret = QMessageBox::warning(this, appName(),
-			                           tr("The file has been modified.\n"
-			                              "Do you want to save your changes?"),
-			                           QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+			QMessageBox msgBox(QMessageBox::Warning, appName(),
+			                   tr("The file has been modified.\nDo you want to save your changes?"),
+			                   QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, this);
+			// Restyle destructive buttons
+			for (auto const& btn : msgBox.buttons())
+				if (msgBox.buttonRole(btn) == QMessageBox::ButtonRole::DestructiveRole)
+					btn->setStyleSheet(QLatin1Literal("QPushButton { color: red; }"));
+			msgBox.setDefaultButton(QMessageBox::Cancel);
+			auto exec = msgBox.exec();
+			ret = (exec == -1) ? QMessageBox::Cancel : msgBox.standardButton(msgBox.clickedButton());
 		}
 		
 		switch (ret)
