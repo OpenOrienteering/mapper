@@ -1,5 +1,6 @@
 /*
  *    Copyright 2017-2019, 2025 Kai Pastor
+ *    Copyright 2025 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,6 +28,7 @@
 #include <QTextEdit>
 
 class QAction;
+class QCheckBox;
 class QContextMenuEvent;
 class QDialog;
 class QPushButton;
@@ -41,8 +43,8 @@ class ObjectQuery;
 class TagSelectWidget;
 
 /**
- * The context menu (right click) is extended by the possibility to insert
- * one of the keywords (e.g., SYMBOL, AND...)
+ * The context menu (right click) is extended by the possibility
+ * to select and insert one of the keywords (e.g., SYMBOL, AND...)
  */
 class MapFindTextEdit : public QTextEdit
 {
@@ -86,6 +88,8 @@ private slots:
 	
 	void objectSelectionChanged();
 	
+	void centerView();
+	
 	void showHelp() const;
 	
 	void tagSelectorToggled(bool active);
@@ -108,6 +112,7 @@ private:
 	TagSelectWidget* tag_selector = nullptr; // child of find_dialog
 	QWidget* tag_selector_buttons = nullptr; // child of find_dialog
 	QPushButton* delete_find_next = nullptr; // child of find_dialog
+	QCheckBox* center_view = nullptr;        // child of find_dialog
 	QAction* show_action = nullptr;          // child of this
 	QAction* find_next_action = nullptr;     // child of this
 	
