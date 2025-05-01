@@ -25,6 +25,7 @@
 
 #include <QAbstractButton>
 #include <QAction>
+#include <QCheckBox>
 #include <QContextMenuEvent>
 #include <QDialog>
 #include <QDialogButtonBox>
@@ -130,6 +131,10 @@ void MapFindFeature::showDialog()
 		connect(controller.getMap(), &Map::objectSelectionChanged, this, &MapFindFeature::objectSelectionChanged);
 		objectSelectionChanged();
 		
+		center_view = new QCheckBox(tr("Center view"));
+		center_view->setChecked(true);
+		connect(center_view, &QCheckBox::stateChanged, this, &MapFindFeature::centerView);
+		
 		auto tags_button = new QPushButton(tr("Query editor"));
 		tags_button->setCheckable(true);
 		
@@ -151,9 +156,10 @@ void MapFindFeature::showDialog()
 		layout->addWidget(find_all, 0, 1, 1, 1);
 		layout->addWidget(find_next, 1, 1, 1, 1);
 		layout->addWidget(delete_find_next, 2, 1, 1, 1);
-		layout->addWidget(tags_button, 4, 1, 1, 1);
-		layout->addWidget(tag_selector_buttons, 6, 1, 1, 1);
-		layout->addWidget(button_box, 7, 0, 1, 2);
+		layout->addWidget(center_view, 3, 1, 1, 1);
+		layout->addWidget(tags_button, 5, 1, 1, 1);
+		layout->addWidget(tag_selector_buttons, 7, 1, 1, 1);
+		layout->addWidget(button_box, 8, 0, 1, 2);
 		
 		find_dialog->setLayout(layout);
 	}
@@ -238,7 +244,10 @@ void MapFindFeature::findNextMatchingObject(MapEditorController& controller, con
 		map->addObjectToSelection(next_match, false);
 	
 	map->emitSelectionChanged();
-	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+	if (center_view->isChecked())
+		map->ensureVisibilityOfSelectedObjects(Map::CenterFullVisibility);
+	else
+		map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
 	
 	if (!map->selectedObjects().empty())
 		controller.setEditTool();
@@ -278,7 +287,10 @@ void MapFindFeature::findAllMatchingObjects(MapEditorController& controller, con
 	}, std::cref(query));
 	
 	map->emitSelectionChanged();
-	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+	if (center_view->isChecked())
+		map->ensureVisibilityOfSelectedObjects(Map::CenterFullVisibility);
+	else
+		map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
 	controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("%n object(s) selected", nullptr, map->getNumSelectedObjects()), 2000);
 	
 	if (!map->selectedObjects().empty())
@@ -291,6 +303,18 @@ void MapFindFeature::objectSelectionChanged()
 {
 	auto map = controller.getMap();
 	delete_find_next->setEnabled(map->getNumSelectedObjects() == 1);
+}
+
+
+// slot
+void MapFindFeature::centerView()
+{
+	if (center_view->isChecked())
+	{
+		auto map = controller.getMap();
+		if (map->getNumSelectedObjects())
+			map->ensureVisibilityOfSelectedObjects(Map::CenterFullVisibility);
+	}
 }
 
 

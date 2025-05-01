@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -426,7 +426,7 @@ void MapWidget::moveMap(int steps_x, int steps_y)
 	}
 }
 
-void MapWidget::ensureVisibilityOfRect(QRectF map_rect, ZoomOption zoom_option)
+void MapWidget::ensureVisibilityOfRect(QRectF map_rect, ZoomOption zoom_option, bool center_view)
 {
 	// Amount in pixels that is scrolled "too much" if the rect is not completely visible
 	// TODO: change to absolute size using dpi value
@@ -436,7 +436,11 @@ void MapWidget::ensureVisibilityOfRect(QRectF map_rect, ZoomOption zoom_option)
 	// TODO: this method assumes that the viewport is not rotated.
 	
 	if (rect().contains(viewport_rect.topLeft()) && rect().contains(viewport_rect.bottomRight()))
+	{
+		if (center_view)
+			view->setCenter(MapCoord{ map_rect.center() });
 		return;
+	}
 	
 	auto offset = MapCoordF{ 0, 0 };
 	
@@ -451,7 +455,12 @@ void MapWidget::ensureVisibilityOfRect(QRectF map_rect, ZoomOption zoom_option)
 		offset.ry() = view->pixelToLength(viewport_rect.bottom() - height() + pixel_border) / 1000.0;
 	
 	if (!qIsNull(offset.lengthSquared()))
-		view->setCenter(view->center() + offset);
+	{
+		if (center_view)
+			view->setCenter(MapCoord{ map_rect.center() });
+		else
+			view->setCenter(view->center() + offset);
+	}
 	
 	// If the rect is still not completely in view, we have to zoom out
 	viewport_rect = mapToViewport(map_rect).toAlignedRect();
