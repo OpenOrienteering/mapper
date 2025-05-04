@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2019, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,12 +24,10 @@
 #include <QtMath>
 #include <QChar>
 #include <QLatin1Char>
-#include <QPointF>
 
 #include "settings.h"
-#include "core/objects/object.h"
-#include "core/symbols/text_symbol.h"
 #include "core/symbols/symbol.h"
+#include "core/symbols/text_symbol.h"
 
 // IWYU pragma: no_forward_declare QPointF
 
@@ -277,7 +275,7 @@ QTransform TextObject::calcTextToMapTransform() const
 	const TextSymbol* text_symbol = reinterpret_cast<const TextSymbol*>(symbol);
 	
 	QTransform transform;
-	double scaling = 1.0f / text_symbol->calculateInternalScaling();
+	auto const scaling = 1.0 / text_symbol->calculateInternalScaling();
 	transform.translate(coords[0].x(), coords[0].y());
 	if (getRotation() != 0)
 		transform.rotate(-qRadiansToDegrees(getRotation()));
@@ -291,10 +289,10 @@ QTransform TextObject::calcMapToTextTransform() const
 	const TextSymbol* text_symbol = reinterpret_cast<const TextSymbol*>(symbol);
 	
 	QTransform transform;
-	double scaling = 1.0f / text_symbol->calculateInternalScaling();
-	transform.scale(1.0f / scaling, 1.0f / scaling);
+	auto const scaling = text_symbol->calculateInternalScaling();
+	transform.scale(scaling, scaling);
 	if (getRotation() != 0)
-		transform.rotate(-qRadiansToDegrees(getRotation()));
+		transform.rotate(qRadiansToDegrees(getRotation()));
 	transform.translate(-coords[0].x(), -coords[0].y());
 	
 	return transform;
@@ -418,7 +416,6 @@ void TextObject::prepareLineInfos() const
 	
 	//double next_line_x_offset = 0; // to keep indentation after word wrap in a line with tabs
 	int num_paragraphs = 0;
-	int line_num = 0;
 	int line_start = 0;
 	while (line_start <= text_end) 
 	{
@@ -513,7 +510,6 @@ void TextObject::prepareLineInfos() const
 			line_y += paragraph_spacing;
 			num_paragraphs++;
 		}
-		line_num++;
 		line_start = next_line_start;
 	}
 	

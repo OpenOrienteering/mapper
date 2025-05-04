@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2019, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,17 +19,16 @@
  */
 
 
-#ifndef OPENORIENTEERING_OBJECT_TEXT_H
-#define OPENORIENTEERING_OBJECT_TEXT_H
+#ifndef OPENORIENTEERING_TEXT_OBJECT_H
+#define OPENORIENTEERING_TEXT_OBJECT_H
 
-#include <memory>
 #include <vector>
 
 #include <QtGlobal>
-#include <QString>
 #include <QFontMetricsF>
 #include <QPointF>
 #include <QRectF>
+#include <QString>
 #include <QTransform>
 
 #include "core/map_coord.h"
@@ -394,4 +393,4 @@ const TextObjectLineInfo*TextObject::getLineInfo(int i) const
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_TEXT_OBJECT_H
