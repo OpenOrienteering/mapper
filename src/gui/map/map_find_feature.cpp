@@ -122,6 +122,7 @@ void MapFindFeature::showDialog()
 		objectSelectionChanged();
 		
 		center_view = new QCheckBox(tr("Center view"));
+		center_view->setChecked(true);
 		connect(center_view, &QCheckBox::stateChanged, this, &MapFindFeature::centerView);
 		
 		auto tags_button = new QPushButton(tr("Query editor"));
