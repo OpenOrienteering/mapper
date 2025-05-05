@@ -31,6 +31,7 @@ class QAction;
 class QCheckBox;
 class QContextMenuEvent;
 class QDialog;
+class QLabel;
 class QPushButton;
 class QStackedLayout;
 class QWidget;
@@ -113,6 +114,7 @@ private:
 	QWidget* tag_selector_buttons = nullptr; // child of find_dialog
 	QPushButton* delete_find_next = nullptr; // child of find_dialog
 	QCheckBox* center_view = nullptr;        // child of find_dialog
+	QLabel* selected_objects = nullptr;      // child of find_dialog
 	QAction* show_action = nullptr;          // child of this
 	QAction* find_next_action = nullptr;     // child of this
 	
