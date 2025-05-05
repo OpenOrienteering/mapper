@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="9">
+<notes></notes>
+<georeferencing scale="4000"><projected_crs id="Local"/></georeferencing>
+<colors count="1">
+<color priority="0" name="Black" c="0" m="0" y="0" k="1" opacity="1"><cmyk method="custom"/><rgb method="custom" r="0" g="0" b="0"/></color>
+</colors>
+<barrier version="6" required="0.6.0">
+<symbols count="5">
+<symbol type="1" id="0" code="1" name="PointSymbol, rotatable"><point_symbol rotatable="true" inner_radius="1000" inner_color="0" outer_width="0" outer_color="-1" elements="1"><element><symbol type="2" code=""><line_symbol color="0" line_width="1000" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/></symbol><object type="1"><coords count="2">0 -5000;0 0;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object></element></point_symbol></symbol>
+<symbol type="8" id="1" code="2" name="Text"><text_symbol icon_text="" rotatable="true"><font family="Arial" size="4233"/><text color="0" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/></text_symbol></symbol>
+<symbol type="4" id="2" code="3" name="Area, rotatable pattern"><area_symbol inner_color="-1" min_area="0" patterns="1"><pattern type="1" angle="1.5708" rotatable="true" line_spacing="5000" line_offset="0" offset_along_line="0" color="0" line_width="1000"/></area_symbol></symbol>
+<symbol type="4" id="3" code="4" name="Area, non-rotatable pattern"><area_symbol inner_color="-1" min_area="0" patterns="1"><pattern type="1" angle="1.5708" line_spacing="5000" line_offset="0" offset_along_line="0" color="0" line_width="200"/></area_symbol></symbol>
+<symbol type="4" id="4" code="5" name="Area, mixed-rotatable pattern"><area_symbol inner_color="-1" min_area="0" patterns="2"><pattern type="1" angle="0" line_spacing="5000" line_offset="0" offset_along_line="0" color="0" line_width="200"/><pattern type="1" angle="0.523599" rotatable="true" line_spacing="5000" line_offset="0" offset_along_line="0" color="0" line_width="200"/></area_symbol></symbol>
+</symbols>
+<parts count="1" current="0">
+<part name="default part"><objects count="6">
+<object type="4" symbol="1" rotation="0.6" h_align="1" v_align="2"><coords count="2">10000 0;16000 10000;</coords><size width="16000" height="10000"/><text>boxed text</text></object>
+<object type="4" symbol="1" rotation="0.6" h_align="1" v_align="2"><coords count="1">-6000 0;</coords><text>single
+anchor</text></object>
+<object type="0" symbol="0" rotation="0.6"><coords count="1">-6000 -8000;</coords></object>
+<object type="1" symbol="2"><coords count="5">3000 -13000 32;13000 -13000 32;13000 -7000 32;3000 -7000 32;3000 -13000 50;</coords><pattern rotation="0.693223"><coord x="7654" y="-9945"/></pattern></object>
+<object type="1" symbol="3"><coords count="5">20000 -13000 32;30000 -13000 32;30000 -7000 32;20000 -7000 32;20000 -13000 50;</coords><pattern rotation="0.693223"><coord x="7654" y="-9945"/></pattern></object>
+<object type="1" symbol="4"><coords count="5">20000 -3000 32;30000 -3000 32;30000 3000 32;20000 3000 32;20000 -3000 50;</coords><pattern rotation="-2.95116"><coord x="29341" y="25"/></pattern></object>
+</objects></part>
+</parts>
+<templates count="0" first_front_template="0">
+<defaults use_meters_per_pixel="true" meters_per_pixel="0" dpi="0" scale="0"/>
+</templates>
+<view>
+<grid color="#80646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
+<map_view zoom="2.82843" position_x="9173" position_y="-8394"><map opacity="1" visible="true"/><templates count="0"/></map_view>
+</view>
+</barrier>
+</map>
