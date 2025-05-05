@@ -31,6 +31,7 @@
 #include <QDialogButtonBox>
 #include <QGridLayout>
 #include <QKeySequence>  // IWYU pragma: keep
+#include <QLabel>
 #include <QMenu>
 #include <QPoint>
 #include <QPushButton>
@@ -120,6 +121,8 @@ void MapFindFeature::showDialog()
 		
 		tag_selector = new TagSelectWidget;
 		
+		selected_objects = new QLabel();	// initialization by objectSelectionChanged() below
+		
 		auto find_all = new QPushButton(tr("Find &all"));
 		connect(find_all, &QPushButton::clicked, this, &MapFindFeature::findAll);
 		
@@ -158,6 +161,7 @@ void MapFindFeature::showDialog()
 		layout->addWidget(delete_find_next, 2, 1, 1, 1);
 		layout->addWidget(center_view, 3, 1, 1, 1);
 		layout->addWidget(tags_button, 5, 1, 1, 1);
+		layout->addWidget(selected_objects, 7, 0, 1, 1);
 		layout->addWidget(tag_selector_buttons, 7, 1, 1, 1);
 		layout->addWidget(button_box, 8, 0, 1, 2);
 		
@@ -303,6 +307,7 @@ void MapFindFeature::objectSelectionChanged()
 {
 	auto map = controller.getMap();
 	delete_find_next->setEnabled(map->getNumSelectedObjects() == 1);
+	selected_objects->setText(tr("Number of selected objects: %1").arg(map->getNumSelectedObjects()));
 }
 
 
