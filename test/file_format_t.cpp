@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021, 2024 Kai Pastor
+ *    Copyright 2012-2021, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -179,17 +179,19 @@ namespace
 	/**
 	 * Provides QVERIFY-style symbol property verification.
 	 * 
-	 * This macro reports the symbol, but avoids expensive string operations
-	 * when the properties match.
+	 * This macro reports the symbol on failure, but
+	 * avoids expensive string operations when the properties match.
 	 */
 	#define VERIFY_SYMBOL_PROPERTY(cond, symbol) \
-	if (cond) \
 	{ \
-		QVERIFY2(cond, QByteArray((symbol).getNumberAndPlainTextName().toUtf8())); \
-	} \
-	else \
-	{ \
-		QVERIFY(true);  /* for QEXPECT_FAIL etc. */ \
+		if (cond) \
+		{ \
+			QVERIFY(true);  /* for QEXPECT_FAIL etc. */ \
+		} \
+		else \
+		{ \
+			QVERIFY2(cond, QByteArray((symbol).getNumberAndPlainTextName().toUtf8())); \
+		} \
 	}
 	
 	
