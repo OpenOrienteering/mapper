@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021, 2024 Kai Pastor
+ *    Copyright 2012-2021, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -158,38 +158,42 @@ namespace
 	 * when the properties match.
 	 */
 	#define COMPARE_SYMBOL_PROPERTY(a, b, symbol) \
-	if ((a) != (b)) \
 	{ \
-		auto const diff = qstrlen(#b) - qstrlen(#a); \
-		auto const fill_a = QString().fill(QChar::Space, +diff); \
-		auto const fill_b = QString().fill(QChar::Space, -diff); \
-		QFAIL(QString::fromLatin1( \
-		       "Compared values are not the same (%1)\n   Actual   (%2)%3: %6\n   Expected (%4)%5: %7") \
-		      .arg((symbol).getNumberAndPlainTextName(), \
-		           QString::fromUtf8(#a), fill_a, \
-		           QString::fromUtf8(#b), fill_b) \
-		      .arg(a).arg(b) \
-		      .toUtf8()); \
-	} \
-	else \
-	{ \
-		QVERIFY(true);  /* for QEXPECT_FAIL etc. */ \
+		if ((a) == (b)) \
+		{ \
+			QVERIFY(true);  /* for QEXPECT_FAIL etc. */ \
+		} \
+		else \
+		{ \
+			auto const diff = qstrlen(#b) - qstrlen(#a); \
+			auto const fill_a = QString().fill(QChar::Space, +diff); \
+			auto const fill_b = QString().fill(QChar::Space, -diff); \
+			QFAIL(QString::fromLatin1( \
+			   "Compared values are not the same (%1)\n   Actual   (%2)%3: %6\n   Expected (%4)%5: %7") \
+			  .arg((symbol).getNumberAndPlainTextName(), \
+			       QString::fromUtf8(#a), fill_a, \
+			       QString::fromUtf8(#b), fill_b) \
+			  .arg(a).arg(b) \
+			  .toUtf8()); \
+		} \
 	}
 	
 	/**
 	 * Provides QVERIFY-style symbol property verification.
 	 * 
-	 * This macro reports the symbol, but avoids expensive string operations
-	 * when the properties match.
+	 * This macro reports the symbol on failure, but
+	 * avoids expensive string operations when the properties match.
 	 */
 	#define VERIFY_SYMBOL_PROPERTY(cond, symbol) \
-	if (cond) \
 	{ \
-		QVERIFY2(cond, QByteArray((symbol).getNumberAndPlainTextName().toUtf8())); \
-	} \
-	else \
-	{ \
-		QVERIFY(true);  /* for QEXPECT_FAIL etc. */ \
+		if (cond) \
+		{ \
+			QVERIFY(true);  /* for QEXPECT_FAIL etc. */ \
+		} \
+		else \
+		{ \
+			QVERIFY2(cond, QByteArray((symbol).getNumberAndPlainTextName().toUtf8())); \
+		} \
 	}
 	
 	
