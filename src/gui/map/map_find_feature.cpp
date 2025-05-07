@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017-2024 Kai Pastor
+ *    Copyright 2017-2020, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -35,7 +35,9 @@
 
 #include "core/map.h"
 #include "core/map_part.h"
+#include "core/objects/object.h"
 #include "core/objects/object_query.h"
+#include "core/symbols/symbol.h"
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
@@ -193,9 +195,11 @@ void MapFindFeature::findNext()
 				if (object == first_object)
 					first_object = nullptr;
 			}
-			else if (query(object))
+			else
 			{
-				next_object = object;
+				const auto* object_symbol = object->getSymbol();
+				if (!object_symbol->isProtected() && !object_symbol->isHidden() && query(object))
+					next_object = object;
 			}
 		}
 	};
@@ -231,10 +235,13 @@ void MapFindFeature::findAll()
 		controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("Invalid query"), 2000);
 		return;
 	}
-	
+	auto search = [&query](const Object* object) {
+		const auto* object_symbol = object->getSymbol();
+		return !object_symbol->isProtected() && !object_symbol->isHidden() && query(object);
+	};
 	map->getCurrentPart()->applyOnMatchingObjects([map](Object* object) {
 		map->addObjectToSelection(object, false);
-	}, std::cref(query));
+	}, search);
 	map->emitSelectionChanged();
 	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
 	controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("%n object(s) selected", nullptr, map->getNumSelectedObjects()), 2000);
