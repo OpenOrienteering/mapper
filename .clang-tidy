@@ -1,5 +1,7 @@
 Checks: >-
   *,
+  -altera-id-dependent-backward-branch,
+  -altera-unroll-loops,
   -bugprone-branch-clone,
   -bugprone-integer-division,
   -bugprone-narrowing-conversions,
@@ -64,6 +66,7 @@ Checks: >-
   -readability-redundant-control-flow,
   -readability-redundant-declaration,
   -readability-redundant-member-init,
+  -readability-identifier-length,
   -readability-simplify-boolean-expr,
   -readability-static-accessed-through-instance,
   -readability-static-definition-in-anonymous-namespace,
