@@ -1570,11 +1570,10 @@ Symbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol)
 
 void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool rotatable, bool fill_on, const Ocd::AreaSymbolCommonV8& ocd_symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements)
 {
-	Q_UNUSED(rotatable)  // To be done: Control rotate-map behavior
-	
 	// Basic area symbol fields: minimum_area, color
 	symbol->minimum_area = 0;
 	symbol->color = fill_on ? convertColor(ocd_symbol.fill_color) : nullptr;
+	symbol->setRotatable(rotatable);
 	symbol->patterns.clear();
 	symbol->patterns.reserve(4);
 	

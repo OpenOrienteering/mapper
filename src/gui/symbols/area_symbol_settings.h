@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -81,6 +81,7 @@ protected:
 	void updatePatternWidgets();
 	
 protected slots:
+	void orientedToNorthClicked(bool checked);
 	void colorChanged();
 	void minimumSizeChanged(double value);
 	void patternAngleChanged(double value);
@@ -98,6 +99,7 @@ private:
 	MapEditorController* controller;
 	std::vector<AreaSymbol::FillPattern>::iterator active_pattern;
 	
+	QCheckBox*      oriented_to_north;
 	ColorDropDown*  color_edit;
 	QDoubleSpinBox* minimum_size_edit;
 	
