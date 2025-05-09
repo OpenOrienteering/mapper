@@ -25,7 +25,9 @@
 
 class QCheckBox;
 class QComboBox;
+class QLabel;
 class QLineEdit;
+class QPlainTextEdit;
 class QPushButton;
 class QString;
 class QWidget;
@@ -48,13 +50,18 @@ public:
 	
 private slots:
 	void textChanged(const QString& text);
-	void okClicked();
+	void findClicked();
+	void removeClicked();
 	
 private:
-	QPushButton* ok_button;
+	QPushButton* find_button;
+	QPushButton* remove_button;
 	QCheckBox* undo_check;
 	QComboBox* compare_op;
+	QLabel* number_matching_objects;
+	QLabel* number_matching_keys;
 	QLineEdit* pattern_edit;
+	QPlainTextEdit* matching_keys_details;
 	
 	Map *map;
 };

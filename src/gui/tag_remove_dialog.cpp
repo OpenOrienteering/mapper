@@ -26,6 +26,7 @@
 
 #include <Qt>
 #include <QtGlobal>
+#include <QAbstractButton>
 #include <QChar>
 #include <QCheckBox>
 #include <QComboBox>
@@ -36,6 +37,7 @@
 #include <QLatin1String>
 #include <QLineEdit>
 #include <QMessageBox>
+#include <QPlainTextEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -54,10 +56,10 @@ struct CompOpStruct {
 };
 
 static const CompOpStruct compare_operations[4] = {
-	{ QCoreApplication::translate("OpenOrienteering::TagRemoveDialog", "equal to"), [](const QString& key, const QString& pattern) { return key == pattern; } },
-	{ QCoreApplication::translate("OpenOrienteering::TagRemoveDialog", "not equal to"), [](const QString& key, const QString& pattern) { return key != pattern; } },
-	{ QCoreApplication::translate("OpenOrienteering::TagRemoveDialog", "containing"), [](const QString& key, const QString& pattern) { return key.contains(pattern); } },
-	{ QCoreApplication::translate("OpenOrienteering::TagRemoveDialog", "not containing"), [](const QString& key, const QString& pattern) { return !key.contains(pattern); } }
+	{ QCoreApplication::translate("OpenOrienteering::TagRemoveDialog", "is"), [](const QString& key, const QString& pattern) { return key == pattern; } },
+	{ QCoreApplication::translate("OpenOrienteering::TagRemoveDialog", "is not"), [](const QString& key, const QString& pattern) { return key != pattern; } },
+	{ QCoreApplication::translate("OpenOrienteering::TagRemoveDialog", "contains"), [](const QString& key, const QString& pattern) { return key.contains(pattern); } },
+	{ QCoreApplication::translate("OpenOrienteering::TagRemoveDialog", "contains not"), [](const QString& key, const QString& pattern) { return !key.contains(pattern); } }
 };
 
 }  // namespace
@@ -71,36 +73,46 @@ TagRemoveDialog::TagRemoveDialog(QWidget* parent, Map* map)
 {
 	setWindowTitle(tr("Remove Tags"));
 	
-	auto* h_layout = new QHBoxLayout();
-	h_layout->addWidget(new QLabel(tr("Remove all tags")));
-	
+	auto* search_operation_layout = new QHBoxLayout();
+	search_operation_layout->addWidget(new QLabel(tr("Key")));
 	compare_op = new QComboBox();
 	for (auto& compare_operation : compare_operations)
 	{
 		compare_op->addItem(compare_operation.op);
 	}
-	h_layout->addWidget(compare_op);
-	
+	search_operation_layout->addWidget(compare_op);
 	pattern_edit = new QLineEdit();
+	search_operation_layout->addWidget(pattern_edit);
 	
 	undo_check = new QCheckBox(tr("Add undo step"));
-	
-	auto* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-	ok_button = button_box->button(QDialogButtonBox::Ok);
-	ok_button->setEnabled(false);
+	number_matching_objects = new QLabel();
+	number_matching_keys = new QLabel();
+	matching_keys_details = new QPlainTextEdit();
+	matching_keys_details->setReadOnly(true);
+
+	auto* button_box = new QDialogButtonBox();
+	find_button = new QPushButton(tr("Find"));
+	find_button->setEnabled(false);
+	button_box->addButton(find_button, QDialogButtonBox::ActionRole);
+	button_box->addButton(QDialogButtonBox::Cancel);
+	remove_button = new QPushButton(QIcon(QLatin1String(":/images/delete.png")), tr("Remove"));
+	remove_button->setEnabled(false);
+	button_box->addButton(remove_button, QDialogButtonBox::ActionRole);
 	
 	auto* layout = new QVBoxLayout();
-	layout->addLayout(h_layout);
-	layout->addWidget(pattern_edit);
-	layout->addWidget(new QLabel(tr("from the selected objects.")));
+	layout->addWidget(new QLabel(tr("Remove tags from %n selected object(s)", nullptr, map->getNumSelectedObjects())));
+	layout->addLayout(search_operation_layout);
 	layout->addWidget(undo_check);
 	layout->addItem(Util::SpacerItem::create(this));
-	layout->addStretch();
+	layout->addWidget(number_matching_objects);
+	layout->addWidget(number_matching_keys);
+	layout->addWidget(matching_keys_details);
 	layout->addWidget(button_box);
 	setLayout(layout);
 	
 	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
-	connect(button_box, &QDialogButtonBox::accepted, this, &TagRemoveDialog::okClicked);
+	connect(find_button, &QAbstractButton::clicked, this, &TagRemoveDialog::findClicked);
+	connect(remove_button, &QAbstractButton::clicked, this, &TagRemoveDialog::removeClicked);
 	connect(pattern_edit, &QLineEdit::textChanged, this, &TagRemoveDialog::textChanged);
 }
 
@@ -110,11 +122,11 @@ TagRemoveDialog::~TagRemoveDialog() = default;
 // slot
 void TagRemoveDialog::textChanged(const QString& text)
 {
-	ok_button->setEnabled(!text.trimmed().isEmpty());
+	find_button->setEnabled(!text.trimmed().isEmpty());
 }
 
 // slot
-void TagRemoveDialog::okClicked()
+void TagRemoveDialog::findClicked()
 {
 	const auto pattern = pattern_edit->text();
 	const auto op = compare_op->currentIndex();
@@ -136,61 +148,67 @@ void TagRemoveDialog::okClicked()
 		if (object_matched)
 			++objects_count;
 	}
-	if (matching_keys.empty())
+	
+	number_matching_objects->setText(tr("Number of matching objects: %1").arg(objects_count));
+	number_matching_keys->setText(tr("%n matching keys:", nullptr, matching_keys.size()));
+	matching_keys_details->clear();
+	
+	if (!matching_keys.empty())
 	{
-		QMessageBox::information(this, tr("Information"), tr("No matching object tags found."), QMessageBox::Ok);
-		return;
-	}
-	else
-	{
-		QString detailed_text = std::accumulate( begin(matching_keys), 
+		QString matching_keys_list = std::accumulate( begin(matching_keys), 
 												 end(matching_keys), 
-												 QString(tr("The following object tags will be removed:")),
-												 [](const QString& a, const QString& b) -> QString { return a + QChar::LineFeed + b; }
+												 QString(),
+												 [](const QString& a, const QString& b) -> QString { return a.isEmpty() ? b : a + QChar::LineFeed + b; }
 												);
-		QMessageBox msgBox;
-		msgBox.setWindowTitle(tr("Confirmation"));
-		msgBox.setIcon(QMessageBox::Warning);
-		QString question = tr("Do you want to remove %n tag(s)", nullptr, matching_keys.size());
-		question += QChar::Space + tr("from %n object(s)?", nullptr, objects_count);
-		msgBox.setText(question);
-		msgBox.setDetailedText(detailed_text);
-		msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-		
-		if (msgBox.exec() == QMessageBox::Yes)
-		{
-			const auto add_undo = undo_check->isChecked();
-			CombinedUndoStep* combined_step;
-			if (add_undo)
-				combined_step = new CombinedUndoStep(map);
-			std::vector<QString> matching_keys;
-			for (const auto& object : map->selectedObjects())
-			{
-				matching_keys.clear();
-				for (const auto& tag : object->tags())
-				{
-					if ((compare_operations[op].fn)(tag.key, pattern))
-					{
-						matching_keys.push_back(tag.key);
-					}
-				}
-				if (add_undo && !matching_keys.empty())
-				{
-					auto undo_step = new ObjectTagsUndoStep(map);
-					undo_step->addObject(map->getCurrentPart()->findObjectIndex(object));
-					combined_step->push(undo_step);
-				}
-				for (const auto& key : matching_keys)
-				{
-					object->removeTag(key);
-				}
-			}
-			if (add_undo)
-				map->push(combined_step);
-		}
+		matching_keys_details->insertPlainText(matching_keys_list);
+		remove_button->setEnabled(true);
 	}
-	accept();
 }
 
+// slot
+void TagRemoveDialog::removeClicked()
+{
+	const auto add_undo = undo_check->isChecked();
+	
+	auto question = QString(tr("Do you really want to remove the found object tags?"));
+	if (!add_undo)
+		question += QChar::LineFeed + QString(tr("This cannot be undone."));
+	if (QMessageBox::question(this, tr("Remove object tags"), question, QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+		return;
+	
+	const auto pattern = pattern_edit->text();
+	const auto op = compare_op->currentIndex();
+	
+	CombinedUndoStep* combined_step;
+	if (add_undo)
+		combined_step = new CombinedUndoStep(map);
+	
+	std::vector<QString> matching_keys;
+	for (const auto& object : map->selectedObjects())
+	{
+		matching_keys.clear();
+		for (const auto& tag : object->tags())
+		{
+			if ((compare_operations[op].fn)(tag.key, pattern))
+			{
+				matching_keys.push_back(tag.key);
+			}
+		}
+		if (add_undo && !matching_keys.empty())
+		{
+			auto undo_step = new ObjectTagsUndoStep(map);
+			undo_step->addObject(map->getCurrentPart()->findObjectIndex(object));
+			combined_step->push(undo_step);
+		}
+		for (const auto& key : matching_keys)
+		{
+			object->removeTag(key);
+		}
+	}
+	if (add_undo)
+		map->push(combined_step);
+	
+	accept();
+}
 
 }  // namespace OpenOrienteering
