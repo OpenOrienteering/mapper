@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,8 +20,6 @@
 
 
 #include "area_symbol_settings.h"
-
-#include <memory>
 
 #include <Qt>
 #include <QtGlobal>
@@ -79,6 +77,10 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	
 	
 	auto general_layout = new QFormLayout();
+	
+	// TODO: Revise label
+	oriented_to_north = new QCheckBox(QCoreApplication::translate("OpenOrienteering::PointSymbolEditorWidget", "Always oriented to north (not rotatable)"));
+	general_layout->addRow(oriented_to_north);
 	
 	color_edit = new ColorDropDown(map);
 	general_layout->addRow(tr("Area color:"), color_edit);
@@ -248,6 +250,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	area_tab->setLayout(layout);
 	addPropertiesGroup(tr("Area settings"), area_tab);
 	
+	connect(oriented_to_north, &QCheckBox::clicked, this, &AreaSymbolSettings::orientedToNorthClicked);
 	connect(color_edit, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &AreaSymbolSettings::colorChanged);
 	connect(minimum_size_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &AreaSymbolSettings::minimumSizeChanged);
 	connect(del_pattern_button, &QAbstractButton::clicked, this, &AreaSymbolSettings::deleteActivePattern);
@@ -295,7 +298,8 @@ void AreaSymbolSettings::reset(Symbol* symbol)
 
 void AreaSymbolSettings::updateAreaGeneral()
 {
-	ScopedMultiSignalsBlocker block(color_edit, minimum_size_edit);
+	ScopedMultiSignalsBlocker block(oriented_to_north, color_edit, minimum_size_edit);
+	oriented_to_north->setChecked(!symbol->isRotatable());
 	color_edit->setColor(symbol->getColor());
 	minimum_size_edit->setValue(0.001 * symbol->minimum_area);
 }
@@ -447,6 +451,7 @@ void AreaSymbolSettings::addPattern(AreaSymbol::FillPattern::Type type)
 	Q_ASSERT(int(symbol->patterns.size()) == pattern_list->count());
 	
 	active_pattern->type = type;
+	active_pattern->setRotatable(!oriented_to_north->isChecked());
 	if (type == AreaSymbol::FillPattern::PointPattern)
 	{
 		active_pattern->point = new PointSymbol();
@@ -510,6 +515,12 @@ void AreaSymbolSettings::selectPattern(int index)
 }
 
 
+
+void AreaSymbolSettings::orientedToNorthClicked(bool checked)
+{
+	symbol->setRotatable(!checked);
+	emit propertiesModified();
+}
 
 void AreaSymbolSettings::colorChanged()
 {
