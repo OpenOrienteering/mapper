@@ -24,9 +24,9 @@
 #include <algorithm>
 #include <limits>
 // IWYU pragma: no_include <memory>
+// IWYU pragma: no_include <vector>
 
 #include <Qt>
-#include <QAbstractButton>
 #include <QAbstractItemView>
 #include <QCheckBox>
 #include <QComboBox>
@@ -83,11 +83,10 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 , symbol(symbol)
 , object_origin_coord(0, offset_y)
 , offset_y(offset_y)
+, map(controller->getMap())
 , controller(controller)
 , permanent_preview(role == PrimarySymbol)
 {
-	map = controller->getMap();
-	
 	if (permanent_preview)
 	{
 		midpoint_object = new PointObject(symbol);
