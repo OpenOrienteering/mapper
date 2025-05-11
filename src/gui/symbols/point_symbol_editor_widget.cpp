@@ -97,6 +97,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	
 	oriented_to_north = new QCheckBox(tr("Always oriented to north (not rotatable)"));
 	oriented_to_north->setChecked(!symbol->isRotatable());
+	oriented_to_north->setVisible(role != AreaSymbolElement);
 	
 	auto* elements_label = Util::Headline::create(tr("Elements"));
 	element_list = new QListWidget();
