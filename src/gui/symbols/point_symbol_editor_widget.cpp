@@ -78,13 +78,13 @@
 
 namespace OpenOrienteering {
 
-PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, qreal offset_y, bool permanent_preview, QWidget* parent)
+PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, SymbolRole role, qreal offset_y, QWidget* parent)
 : QWidget(parent)
 , symbol(symbol)
 , object_origin_coord(0, offset_y)
 , offset_y(offset_y)
 , controller(controller)
-, permanent_preview(permanent_preview)
+, permanent_preview(role == PrimarySymbol)
 {
 	map = controller->getMap();
 	
