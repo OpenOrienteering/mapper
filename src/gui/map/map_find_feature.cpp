@@ -48,6 +48,18 @@ namespace OpenOrienteering {
 
 class Object;
 
+namespace {
+
+// Returns true if an object can be added to the selection.
+bool isSelectable(const Object* object)
+{
+	const auto* symbol = object ? object->getSymbol() : nullptr;
+	return symbol && !symbol->isHidden() && !symbol->isProtected();
+}
+
+}  // namespace
+
+
 MapFindFeature::MapFindFeature(MapEditorController& controller)
 : QObject{nullptr}
 , controller{controller}
@@ -195,11 +207,9 @@ void MapFindFeature::findNext()
 				if (object == first_object)
 					first_object = nullptr;
 			}
-			else
+			else if (isSelectable(object) && query(object))
 			{
-				const auto* object_symbol = object->getSymbol();
-				if (!object_symbol->isProtected() && !object_symbol->isHidden() && query(object))
-					next_object = object;
+				next_object = object;
 			}
 		}
 	};
@@ -236,8 +246,7 @@ void MapFindFeature::findAll()
 		return;
 	}
 	auto search = [&query](const Object* object) {
-		const auto* object_symbol = object->getSymbol();
-		return !object_symbol->isProtected() && !object_symbol->isHidden() && query(object);
+		return isSelectable(object) && query(object);
 	};
 	map->getCurrentPart()->applyOnMatchingObjects([map](Object* object) {
 		map->addObjectToSelection(object, false);
