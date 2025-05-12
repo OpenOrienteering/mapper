@@ -186,11 +186,6 @@ ObjectQuery MapFindFeature::makeQuery() const
 
 void MapFindFeature::findNext()
 {
-	auto map = controller.getMap();
-	auto first_object = map->getFirstSelectedObject();
-	map->clearObjectSelection(false);
-	
-	Object* next_object = nullptr;
 	auto query = makeQuery();
 	if (!query)
 	{
@@ -198,34 +193,36 @@ void MapFindFeature::findNext()
 			window->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("Invalid query"), 2000);
 		return;
 	}
+	
+	auto* map = controller.getMap();
+	Object* first_match = nullptr;  // the first match in all objects
+	Object* pivot_object = map->getFirstSelectedObject();
+	Object* next_match = nullptr;   // the next match after pivot_object
+	map->clearObjectSelection(false);
+	
+	auto search = [&first_match, &pivot_object, &next_match](Object* object) {
+		if (next_match)
+			return;
 		
-	auto search = [&first_object, &next_object, &query](Object* object) {
-		if (!next_object)
+		bool after_pivot = (pivot_object == nullptr);
+		if (object == pivot_object)
+			pivot_object = nullptr;
+		
+		if (isSelectable(object))
 		{
-			if (first_object)
-			{
-				if (object == first_object)
-					first_object = nullptr;
-			}
-			else if (isSelectable(object) && query(object))
-			{
-				next_object = object;
-			}
+			if (after_pivot && !next_match)
+				next_match = object;
+			else if (!first_match)
+				first_match = object;
 		}
 	};
-	
-	// Start from selected object
-	map->getCurrentPart()->applyOnAllObjects(search);
-	if (!next_object)
-	{
-		// Start from first object
-		first_object = nullptr;
-		map->getCurrentPart()->applyOnAllObjects(search);
-	}
+	map->getCurrentPart()->applyOnMatchingObjects(search, query);
 	
 	map->clearObjectSelection(false);
-	if (next_object)
-		map->addObjectToSelection(next_object, false);
+	if (!next_match)
+		next_match = first_match;
+	if (next_match)
+		map->addObjectToSelection(next_match, false);
 	map->emitSelectionChanged();
 	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
 	
