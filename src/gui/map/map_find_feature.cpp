@@ -20,6 +20,8 @@
 
 #include "map_find_feature.h"
 
+#include <functional>
+
 #include <QAction>
 #include <QAbstractButton>
 #include <QDialog>
@@ -212,7 +214,7 @@ void MapFindFeature::findNext()
 				first_match = object;
 		}
 	};
-	map->getCurrentPart()->applyOnMatchingObjects(search, query);
+	map->getCurrentPart()->applyOnMatchingObjects(search, std::cref(query));
 	if (!next_match)
 		next_match = first_match;
 	if (next_match)
@@ -239,7 +241,7 @@ void MapFindFeature::findAll()
 	map->getCurrentPart()->applyOnMatchingObjects([map](Object* object) {
 		if (isSelectable(object))
 			map->addObjectToSelection(object, false);
-	}, query);
+	}, std::cref(query));
 	map->emitSelectionChanged();
 	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
 	controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("%n object(s) selected", nullptr, map->getNumSelectedObjects()), 2000);
