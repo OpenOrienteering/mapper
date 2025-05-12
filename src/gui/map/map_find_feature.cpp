@@ -20,8 +20,6 @@
 
 #include "map_find_feature.h"
 
-#include <functional>
-
 #include <QAction>
 #include <QAbstractButton>
 #include <QDialog>
@@ -45,8 +43,6 @@
 
 
 namespace OpenOrienteering {
-
-class Object;
 
 namespace {
 
@@ -217,8 +213,6 @@ void MapFindFeature::findNext()
 		}
 	};
 	map->getCurrentPart()->applyOnMatchingObjects(search, query);
-	
-	map->clearObjectSelection(false);
 	if (!next_match)
 		next_match = first_match;
 	if (next_match)
