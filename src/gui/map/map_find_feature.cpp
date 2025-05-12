@@ -245,12 +245,10 @@ void MapFindFeature::findAll()
 		controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("Invalid query"), 2000);
 		return;
 	}
-	auto search = [&query](const Object* object) {
-		return isSelectable(object) && query(object);
-	};
 	map->getCurrentPart()->applyOnMatchingObjects([map](Object* object) {
-		map->addObjectToSelection(object, false);
-	}, search);
+		if (isSelectable(object))
+			map->addObjectToSelection(object, false);
+	}, query);
 	map->emitSelectionChanged();
 	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
 	controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("%n object(s) selected", nullptr, map->getNumSelectedObjects()), 2000);
