@@ -206,7 +206,7 @@ void MapFindFeature::findNext()
 		
 		if (isSelectable(object))
 		{
-			if (after_pivot && !next_match)
+			if (after_pivot)
 				next_match = object;
 			else if (!first_match)
 				first_match = object;
