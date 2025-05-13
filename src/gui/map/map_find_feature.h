@@ -37,7 +37,6 @@ class MapEditorController;
 class ObjectQuery;
 class TagSelectWidget;
 
-
 /**
  * Provides an interactive feature for finding objects in the map.
  * 
@@ -48,7 +47,6 @@ class TagSelectWidget;
 class MapFindFeature : public QObject
 {
 	Q_OBJECT
-	
 public:
 	MapFindFeature(MapEditorController& controller);
 	
@@ -59,6 +57,10 @@ public:
 	QAction* showDialogAction() const { return show_action; }
 	
 	QAction* findNextAction() const { return find_next_action; }
+	
+	void findNextMatchingObject(ObjectQuery& query);
+	
+	void findAllMatchingObjects(ObjectQuery& query);
 	
 private slots:
 	void findNext();
