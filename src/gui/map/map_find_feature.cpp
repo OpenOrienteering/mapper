@@ -22,8 +22,8 @@
 
 #include <functional>
 
-#include <QAction>
 #include <QAbstractButton>
+#include <QAction>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QGridLayout>
@@ -129,7 +129,7 @@ void MapFindFeature::showDialog()
 		
 		auto button_box = new QDialogButtonBox(QDialogButtonBox::Close | QDialogButtonBox::Help);
 		connect(button_box, &QDialogButtonBox::rejected, &*find_dialog, &QDialog::hide);
-		connect(button_box->button(QDialogButtonBox::Help), &QPushButton::clicked, this, &MapFindFeature::showHelp);
+		connect(button_box, &QDialogButtonBox::helpRequested, this, &MapFindFeature::showHelp);
 		
 		editor_stack = new QStackedLayout();
 		editor_stack->addWidget(text_edit);
@@ -182,6 +182,7 @@ ObjectQuery MapFindFeature::makeQuery() const
 }
 
 
+// slot
 void MapFindFeature::findNext()
 {
 	auto query = makeQuery();
@@ -227,6 +228,7 @@ void MapFindFeature::findNext()
 }
 
 
+// slot
 void MapFindFeature::findAll()
 {
 	auto map = controller.getMap();
@@ -251,12 +253,11 @@ void MapFindFeature::findAll()
 }
 
 
-
+// slot
 void MapFindFeature::showHelp() const
 {
 	Util::showHelp(controller.getWindow(), "find_objects.html");
 }
-
 
 
 // slot

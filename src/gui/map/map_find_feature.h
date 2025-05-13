@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017-2019, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -56,15 +56,11 @@ public:
 	
 	void setEnabled(bool enabled);
 	
-	QAction* showDialogAction() { return show_action; }
+	QAction* showDialogAction() const { return show_action; }
 	
-	QAction* findNextAction() { return find_next_action; }
+	QAction* findNextAction() const { return find_next_action; }
 	
-private:
-	void showDialog();
-	
-	ObjectQuery makeQuery() const;
-	
+private slots:
 	void findNext();
 	
 	void findAll();
@@ -72,6 +68,12 @@ private:
 	void showHelp() const;
 	
 	void tagSelectorToggled(bool active);
+	
+private:
+	void showDialog();
+	
+	ObjectQuery makeQuery() const;
+	
 	
 	MapEditorController& controller;
 	QPointer<QDialog> find_dialog;           // child of controller's window
@@ -88,4 +90,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_MAP_FIND_FEATURE_H
