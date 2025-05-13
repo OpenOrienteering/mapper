@@ -198,7 +198,7 @@ void MapFindFeature::findNext()
 	Object* next_match = nullptr;   // the next match after pivot_object
 	map->clearObjectSelection(false);
 	
-	auto search = [&first_match, &pivot_object, &next_match](Object* object) {
+	auto search = [&](Object* object) {
 		if (next_match)
 			return;
 		
@@ -206,7 +206,7 @@ void MapFindFeature::findNext()
 		if (object == pivot_object)
 			pivot_object = nullptr;
 		
-		if (isSelectable(object))
+		if (isSelectable(object) && query(object))
 		{
 			if (after_pivot)
 				next_match = object;
@@ -214,7 +214,7 @@ void MapFindFeature::findNext()
 				first_match = object;
 		}
 	};
-	map->getCurrentPart()->applyOnMatchingObjects(search, std::cref(query));
+	map->getCurrentPart()->applyOnAllObjects(search);
 	if (!next_match)
 		next_match = first_match;
 	if (next_match)
