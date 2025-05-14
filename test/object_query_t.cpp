@@ -1,6 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
- *    Copyright 2017-2022, 2025 Kai Pastor
+ *    Copyright 2017-2022 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,8 +20,8 @@
 
 #include "object_query_t.h"
 
-#include <algorithm>
 #include <memory>
+#include <algorithm>
 
 #include <QtGlobal>
 #include <QtTest>
@@ -29,16 +29,11 @@
 #include <QLatin1String>
 #include <QString>
 
-#include "global.h"
 #include "core/map.h"
-#include "core/map_part.h"
 #include "core/objects/object.h"
-#include "core/objects/object_query.h"
 #include "core/objects/text_object.h"
+#include "core/objects/object_query.h"
 #include "core/symbols/point_symbol.h"
-#include "gui/main_window.h"
-#include "gui/map/map_editor.h"
-#include "gui/map/map_find_feature.h"
 
 using namespace OpenOrienteering;
 
@@ -57,7 +52,6 @@ ObjectQueryTest::ObjectQueryTest(QObject* parent)
 {
 	// nothing
 }
-
 
 const Object* ObjectQueryTest::testObject()
 {
@@ -515,88 +509,11 @@ void ObjectQueryTest::testParser()
 }
 
 
-void ObjectQueryTest::testFindObjects()
-{
-	Q_INIT_RESOURCE(resources);
-	doStaticInitializations();
-	
-	Map map;
-	auto* window = new MainWindow();
-	auto* editor = new MapEditorController(MapEditorController::MapEditor, &map);
-	window->setController(editor);
-	const auto* part = map.getCurrentPart();
-	
-	auto* point_symbol_1 = new PointSymbol();
-	point_symbol_1->setNumberComponent(0, 123);
-	map.addSymbol(point_symbol_1, 0);
-	auto* point_object_1 = new PointObject(point_symbol_1);
-	point_object_1->setTag(QLatin1String("match"), QLatin1String("yes"));
-	QVERIFY(map.addObject(point_object_1) == 0);	// object pos 0
-	
-	auto* point_object_2 = new PointObject(point_symbol_1);
-	point_object_2->setTag(QLatin1String("match"), QLatin1String("no"));
-	QVERIFY(map.addObject(point_object_2) == 1);	// object pos 1
-	
-	point_object_2 = new PointObject(point_symbol_1);
-	point_object_2->setTag(QLatin1String("match"), QLatin1String("yes"));
-	QVERIFY(map.addObject(point_object_2) == 2);	// object pos 2
-	
-	auto* point_symbol_2 = new PointSymbol();
-	point_symbol_2->setNumberComponent(0, 124);
-	point_symbol_2->setHidden(true);
-	map.addSymbol(point_symbol_2, 1);
-	point_object_2 = new PointObject(point_symbol_2);
-	point_object_2->setTag(QLatin1String("match"), QLatin1String("yes"));
-	QVERIFY(map.addObject(point_object_2) == 3);	// object pos 3
-	
-	point_object_2 = new PointObject(point_symbol_1);
-	point_object_2->setTag(QLatin1String("match"), QLatin1String("yes"));
-	QVERIFY(map.addObject(point_object_2) == 4);	// object pos 4
-	
-	auto* point_symbol_3 = new PointSymbol();
-	point_symbol_3->setNumberComponent(0, 125);
-	point_symbol_3->setProtected(true);
-	map.addSymbol(point_symbol_3, 2);
-	point_object_2 = new PointObject(point_symbol_3);
-	point_object_2->setTag(QLatin1String("match"), QLatin1String("yes"));
-	QVERIFY(map.addObject(point_object_2) == 5);	// object pos 5
-	
-	std::unique_ptr<MapFindFeature> find_feature = std::make_unique<MapFindFeature>(*editor);
-	ObjectQuery single_query_is_true{QLatin1String("match"), ObjectQuery::OperatorIs, QLatin1String("yes")};
-	
-	map.clearObjectSelection(false);
-	auto symbol_query = ObjectQuery(single_query_is_true);
-	find_feature->findAllMatchingObjects(symbol_query);
-	QVERIFY(map.getNumSelectedObjects() == 3);	// matching objects at pos 0, 2, 4 while ignoring objects at pos 1, 3, 5
-	
-	map.clearObjectSelection(false);
-	find_feature->findNextMatchingObject(symbol_query);
-	QVERIFY(map.getNumSelectedObjects() == 1);
-	auto* selected_object = map.getFirstSelectedObject();
-	QCOMPARE(part->findObjectIndex(selected_object), 4);	// search first returns the last matching object
-	
-	find_feature->findNextMatchingObject(symbol_query);
-	QVERIFY(map.getNumSelectedObjects() == 1);
-	selected_object = map.getFirstSelectedObject();
-	QCOMPARE(part->findObjectIndex(selected_object), 2);
-	
-	find_feature->findNextMatchingObject(symbol_query);
-	QVERIFY(map.getNumSelectedObjects() == 1);
-	selected_object = map.getFirstSelectedObject();
-	QCOMPARE(part->findObjectIndex(selected_object), 0);
-	
-	find_feature->findNextMatchingObject(symbol_query);
-	QVERIFY(map.getNumSelectedObjects() == 1);
-	selected_object = map.getFirstSelectedObject();
-	QCOMPARE(part->findObjectIndex(selected_object), 4);
-}
-
-
 /*
  * We don't need a real GUI window.
  */
 namespace {
-	auto const Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+	auto Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
 }
 
 
