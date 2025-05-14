@@ -58,10 +58,9 @@ public:
 	
 	QAction* findNextAction() { return find_next_action; }
 	
-protected:
-	void findNextMatchingObject(ObjectQuery& query);
+	static void findNextMatchingObject(MapEditorController& controller, const ObjectQuery& query);
 	
-	void findAllMatchingObjects(ObjectQuery& query);
+	static void findAllMatchingObjects(MapEditorController& controller, const ObjectQuery& query);
 	
 private:
 	void showDialog();

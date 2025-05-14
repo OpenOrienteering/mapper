@@ -263,33 +263,26 @@ void ToolsTest::testFindObjects()
 	
 	TestMapEditor editor(map);  // taking ownership
 	
-	struct TestMapFindFeature : public MapFindFeature
-	{
-		TestMapFindFeature(MapEditorController &controller) : MapFindFeature(controller) {}
-		using MapFindFeature::findNextMatchingObject;
-		using MapFindFeature::findAllMatchingObjects;
-	} find_feature {*editor.editor};
-	
 	ObjectQuery query {QLatin1String("match"), ObjectQuery::OperatorIs, QLatin1String("yes")};
 	
 	map->clearObjectSelection(false);
-	find_feature.findAllMatchingObjects(query);
+	MapFindFeature::findAllMatchingObjects(*editor.editor, query);
 	QCOMPARE(map->getNumSelectedObjects(), 3);
 	
 	map->clearObjectSelection(false);
-	find_feature.findNextMatchingObject(query);
+	MapFindFeature::findNextMatchingObject(*editor.editor, query);
 	QCOMPARE(map->getNumSelectedObjects(), 1);
 	auto* first_match = map->getFirstSelectedObject();
 	
-	find_feature.findNextMatchingObject(query);
+	MapFindFeature::findNextMatchingObject(*editor.editor, query);
 	QCOMPARE(map->getNumSelectedObjects(), 1);
 	QVERIFY(map->getFirstSelectedObject() != first_match);
 	
-	find_feature.findNextMatchingObject(query);
+	MapFindFeature::findNextMatchingObject(*editor.editor, query);
 	QCOMPARE(map->getNumSelectedObjects(), 1);
 	QVERIFY(map->getFirstSelectedObject() != first_match);
 	
-	find_feature.findNextMatchingObject(query);
+	MapFindFeature::findNextMatchingObject(*editor.editor, query);
 	QCOMPARE(map->getNumSelectedObjects(), 1);
 	QVERIFY(map->getFirstSelectedObject() == first_match);
 }

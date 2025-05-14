@@ -191,19 +191,14 @@ void MapFindFeature::findNext()
 			window->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("Invalid query"), 2000);
 		return;
 	}
-	
-	auto* map = controller.getMap();
-	findNextMatchingObject(query);
-	map->emitSelectionChanged();
-	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
-	
-	if (!map->selectedObjects().empty())
-		controller.setEditTool();
+	findNextMatchingObject(controller, query);
 }
 
-void MapFindFeature::findNextMatchingObject(ObjectQuery& query)
+// static
+void MapFindFeature::findNextMatchingObject(MapEditorController& controller, const ObjectQuery& query)
 {
 	auto* map = controller.getMap();
+	
 	Object* first_match = nullptr;  // the first match in all objects
 	Object* pivot_object = map->getFirstSelectedObject();
 	Object* next_match = nullptr;   // the next match after pivot_object
@@ -231,6 +226,12 @@ void MapFindFeature::findNextMatchingObject(ObjectQuery& query)
 		next_match = first_match;
 	if (next_match)
 		map->addObjectToSelection(next_match, false);
+	
+	map->emitSelectionChanged();
+	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+	
+	if (!map->selectedObjects().empty())
+		controller.setEditTool();
 }
 
 
@@ -246,22 +247,24 @@ void MapFindFeature::findAll()
 		return;
 	}
 
-	findAllMatchingObjects(query);
-	map->emitSelectionChanged();
-	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
-	controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("%n object(s) selected", nullptr, map->getNumSelectedObjects()), 2000);
-	
-	if (!map->selectedObjects().empty())
-		controller.setEditTool();
+	findAllMatchingObjects(controller, query);
 }
 
-void MapFindFeature::findAllMatchingObjects(ObjectQuery& query)
+// static
+void MapFindFeature::findAllMatchingObjects(MapEditorController& controller, const ObjectQuery& query)
 {
 	auto map = controller.getMap();
 	map->getCurrentPart()->applyOnMatchingObjects([map](Object* object) {
 		if (isSelectable(object))
 			map->addObjectToSelection(object, false);
 	}, std::cref(query));
+	
+	map->emitSelectionChanged();
+	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+	controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("%n object(s) selected", nullptr, map->getNumSelectedObjects()), 2000);
+	
+	if (!map->selectedObjects().empty())
+		controller.setEditTool();
 }
 
 
