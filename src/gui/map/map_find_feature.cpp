@@ -178,20 +178,16 @@ ObjectQuery MapFindFeature::makeQuery() const
 			query = tag_selector->makeQuery();
 		}
 	}
+	if (!query)
+		controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("Invalid query"), 2000);
 	return query;
 }
 
 
 void MapFindFeature::findNext()
 {
-	auto query = makeQuery();
-	if (!query)
-	{
-		if (auto window = controller.getWindow())
-			window->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("Invalid query"), 2000);
-		return;
-	}
-	findNextMatchingObject(controller, query);
+	if (auto query = makeQuery())
+		findNextMatchingObject(controller, query);
 }
 
 // static
@@ -237,13 +233,8 @@ void MapFindFeature::findNextMatchingObject(MapEditorController& controller, con
 
 void MapFindFeature::findAll()
 {
-	auto query = makeQuery();
-	if (!query)
-	{
-		controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("Invalid query"), 2000);
-		return;
-	}
-	findAllMatchingObjects(controller, query);
+	if (auto query = makeQuery())
+		findAllMatchingObjects(controller, query);
 }
 
 // static
