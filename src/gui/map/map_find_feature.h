@@ -54,15 +54,20 @@ public:
 	
 	void setEnabled(bool enabled);
 	
-	QAction* showDialogAction() const { return show_action; }
+	QAction* showDialogAction() { return show_action; }
 	
-	QAction* findNextAction() const { return find_next_action; }
+	QAction* findNextAction() { return find_next_action; }
 	
+protected:
 	void findNextMatchingObject(ObjectQuery& query);
 	
 	void findAllMatchingObjects(ObjectQuery& query);
 	
-private slots:
+private:
+	void showDialog();
+	
+	ObjectQuery makeQuery() const;
+	
 	void findNext();
 	
 	void findAll();
@@ -70,11 +75,6 @@ private slots:
 	void showHelp() const;
 	
 	void tagSelectorToggled(bool active);
-	
-private:
-	void showDialog();
-	
-	ObjectQuery makeQuery() const;
 	
 	
 	MapEditorController& controller;

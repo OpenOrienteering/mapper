@@ -182,7 +182,6 @@ ObjectQuery MapFindFeature::makeQuery() const
 }
 
 
-// slot
 void MapFindFeature::findNext()
 {
 	auto query = makeQuery();
@@ -235,7 +234,6 @@ void MapFindFeature::findNextMatchingObject(ObjectQuery& query)
 }
 
 
-// slot
 void MapFindFeature::findAll()
 {
 	auto map = controller.getMap();
@@ -267,14 +265,12 @@ void MapFindFeature::findAllMatchingObjects(ObjectQuery& query)
 }
 
 
-// slot
 void MapFindFeature::showHelp() const
 {
 	Util::showHelp(controller.getWindow(), "find_objects.html");
 }
 
 
-// slot
 void MapFindFeature::tagSelectorToggled(bool active)
 {
 	editor_stack->setCurrentIndex(active ? 1 : 0);
