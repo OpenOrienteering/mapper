@@ -179,7 +179,10 @@ ObjectQuery MapFindFeature::makeQuery() const
 		}
 	}
 	if (!query)
+	{
+		controller.getMap()->clearObjectSelection(true);
 		controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("Invalid query"), 2000);
+	}
 	return query;
 }
 
