@@ -237,16 +237,12 @@ void MapFindFeature::findNextMatchingObject(MapEditorController& controller, con
 
 void MapFindFeature::findAll()
 {
-	auto map = controller.getMap();
-	map->clearObjectSelection(false);
-	
 	auto query = makeQuery();
 	if (!query)
 	{
 		controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("Invalid query"), 2000);
 		return;
 	}
-
 	findAllMatchingObjects(controller, query);
 }
 
@@ -254,6 +250,8 @@ void MapFindFeature::findAll()
 void MapFindFeature::findAllMatchingObjects(MapEditorController& controller, const ObjectQuery& query)
 {
 	auto map = controller.getMap();
+	map->clearObjectSelection(false);
+	
 	map->getCurrentPart()->applyOnMatchingObjects([map](Object* object) {
 		if (isSelectable(object))
 			map->addObjectToSelection(object, false);

@@ -264,12 +264,11 @@ void ToolsTest::testFindObjects()
 	TestMapEditor editor(map);  // taking ownership
 	
 	ObjectQuery query {QLatin1String("match"), ObjectQuery::OperatorIs, QLatin1String("yes")};
+	QVERIFY(query);
 	
-	map->clearObjectSelection(false);
 	MapFindFeature::findAllMatchingObjects(*editor.editor, query);
 	QCOMPARE(map->getNumSelectedObjects(), 3);
 	
-	map->clearObjectSelection(false);
 	MapFindFeature::findNextMatchingObject(*editor.editor, query);
 	QCOMPARE(map->getNumSelectedObjects(), 1);
 	auto* first_match = map->getFirstSelectedObject();
