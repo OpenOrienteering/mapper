@@ -122,16 +122,16 @@
         <file>images/cursor-zoom.png</file>
         <file>images/view-box-zoom.png</file>
     </qresource>
-    <qresource lang="de" prefix="/">
+    <qresource prefix="/" lang="de">
         <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_de.txt</file>
     </qresource>
-    <qresource lang="fr" prefix="/">
+    <qresource prefix="/" lang="fr">
         <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_fr.txt</file>
     </qresource>
-    <qresource lang="ru" prefix="/">
+    <qresource prefix="/" lang="ru">
         <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_ru.txt</file>
     </qresource>
-    <qresource lang="uk" prefix="/">
+    <qresource prefix="/" lang="uk">
         <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_uk.txt</file>
     </qresource>
 </RCC>
