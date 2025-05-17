@@ -298,8 +298,6 @@ public slots:
 	/** Shows the map grid configuration dialog. */
 	void configureGrid();
 	
-	/** Activates the box zoom tool. */
-	void boxZoom();
 	/** Activates the pan tool. */
 	void pan();
 	/** Moves view to GPS position. */
@@ -312,6 +310,8 @@ public slots:
 	void zoomIn();
 	/** Zooms out in the current map widget. */
 	void zoomOut();
+	/** Activates the box zoom tool. */
+	void boxZoom(bool checked);
 	/** Shows the dialog to set a custom zoom factor in the current map widget. */
 	void setCustomZoomFactorClicked();
 	

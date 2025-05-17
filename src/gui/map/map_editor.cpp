@@ -1007,7 +1007,7 @@ void MapEditorController::createActions()
 	follow_position_act = newCheckAction("follow-position", tr("Keep my location on screen"), this, SLOT(followPositionClicked(bool)), nullptr, QString{}, "view_menu.html");
 	zoom_in_act = newAction("zoomin", tr("Zoom in"), this, SLOT(zoomIn()), "view-zoom-in.png", QString{}, "view_menu.html");
 	zoom_out_act = newAction("zoomout", tr("Zoom out"), this, SLOT(zoomOut()), "view-zoom-out.png", QString{}, "view_menu.html");
-	box_zoom_act = newAction("boxzoom", tr("Zoom to box"), this, SLOT(boxZoom()), "view-box-zoom.png", QString{}, "view_menu.html");
+	box_zoom_act = newCheckAction("boxzoom", tr("Zoom to box"), this, SLOT(boxZoom(bool)), "view-box-zoom.png", QString{}, "view_menu.html");
 	show_all_act = newAction("showall", tr("Show whole map"), this, SLOT(showWholeMap()), "view-show-all.png", QString{}, "view_menu.html");
 	fullscreen_act = newAction("fullscreen", tr("Toggle fullscreen mode"), window, SLOT(toggleFullscreenMode()), nullptr, QString{}, "view_menu.html");
 	custom_zoom_act = newAction("setzoom", tr("Set custom zoom factor..."), this, SLOT(setCustomZoomFactorClicked()), nullptr, QString{}, "view_menu.html");
@@ -2037,11 +2037,6 @@ void MapEditorController::configureGrid()
 	}
 }
 
-void MapEditorController::boxZoom()
-{
-	setTool(new BoxZoomTool(this, box_zoom_act));
-}
-
 void MapEditorController::pan()
 {
 	setTool(new PanTool(this, pan_act));
@@ -2093,10 +2088,20 @@ void MapEditorController::zoomIn()
 {
 	main_view->zoomSteps(1);
 }
+
 void MapEditorController::zoomOut()
 {
 	main_view->zoomSteps(-1);
 }
+
+void MapEditorController::boxZoom(bool checked)
+{
+	if (checked)
+		setTool(new BoxZoomTool(this, box_zoom_act));
+	else
+		setTool(nullptr);
+}
+
 void MapEditorController::setCustomZoomFactorClicked()
 {
 	bool ok;
