@@ -19,7 +19,9 @@
 
 #include "box_zoom_tool.h"
 
+#include <Qt>
 #include <QCursor>
+#include <QKeyEvent>
 #include <QPixmap>
 #include <QRectF>
 
@@ -42,6 +44,16 @@ BoxZoomTool::~BoxZoomTool() = default;
 void BoxZoomTool::clickPress()
 {
 	startDragging();
+}
+
+bool BoxZoomTool::keyPress(QKeyEvent* event)
+{
+	if (event->key() == Qt::Key_Escape && isDragging())
+	{
+		cancelDragging();
+		return true;
+	}
+	return false;
 }
 
 void BoxZoomTool::dragStart()

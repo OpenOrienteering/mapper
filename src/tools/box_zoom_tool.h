@@ -27,6 +27,7 @@
 #include "tools/tool_base.h"
 
 class QAction;
+class QKeyEvent;
 class QPainter;
 class QRectF;
 
@@ -50,6 +51,7 @@ protected:
 	void updateStatusText() override;
 	void objectSelectionChangedImpl() override;
 	void clickPress() override;
+	bool keyPress(QKeyEvent* event) override;
 	void dragStart() override;
 	void dragMove() override;
 	void dragFinish() override;
