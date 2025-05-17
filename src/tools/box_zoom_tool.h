@@ -24,15 +24,16 @@
 #include <QObject>
 #include <QString>
 
-#include "core/map_coord.h"
 #include "tools/tool_base.h"
 
 class QAction;
 class QPainter;
+class QRectF;
 
 namespace OpenOrienteering {
 
 class MapEditorController;
+class MapWidget;
 
 
 /**
@@ -56,10 +57,6 @@ protected:
 
 	void drawImpl(QPainter* painter, MapWidget* widget) override;
 	int updateDirtyRectImpl(QRectF& rect) override;
-	MapCoordF selection_start_point, selection_end_point;
-	MapCoordF selection_top_left;
-	MapCoordF selection_bottom_right;
-	QRectF selection_rectangle;
 };
 
 

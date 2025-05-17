@@ -19,13 +19,12 @@
 
 #include "box_zoom_tool.h"
 
-#include <Qt>
 #include <QCursor>
-#include <QPoint>
-#include <QPainter>
+#include <QPixmap>
+#include <QRectF>
 
-#include "core/map.h"
-#include "core/map_view.h"
+#include "core/map_coord.h"
+#include "gui/main_window.h"
 #include "gui/map/map_widget.h"
 #include "tools/tool.h"
 #include "util/util.h"
@@ -47,40 +46,32 @@ void BoxZoomTool::clickPress()
 
 void BoxZoomTool::dragStart()
 {
-	setEditingInProgress(true);	// suppress pie context menu
-	selection_start_point = click_pos_map;
+	mainWindow()->clearStatusBarMessage();
+	setEditingInProgress(true);
 	updateDirtyRect();
 }
 
 void BoxZoomTool::dragMove()
 {
-	selection_end_point = cur_pos_map;
-
-	// to create a valid rectangle, separate the coordinates into top left and bottom right points
-	selection_top_left = MapCoordF(qMin(selection_start_point.x(),selection_end_point.x()), qMin(selection_start_point.y(),selection_end_point.y()));
-	selection_bottom_right = MapCoordF(qMax(selection_start_point.x(),selection_end_point.x()), qMax(selection_start_point.y(),selection_end_point.y()));
-
-	selection_rectangle = QRectF(selection_top_left, selection_bottom_right);
 	updateDirtyRect();
 }
 
 void BoxZoomTool::dragFinish()
 {
-	if (selection_rectangle.isValid())
-		mapWidget()->adjustViewToRect(selection_rectangle, MapWidget::ContinuousZoom);
+	constexpr auto min_size = 1; // mm
+	auto const rect = QRectF(click_pos_map, cur_pos_map).normalized();
+	if (rect.width() >= min_size && rect.height() >= min_size)
+		mapWidget()->adjustViewToRect(rect, MapWidget::ContinuousZoom);
+	else
+		mainWindow()->showStatusBarMessage(tr("The selected box is too small."), 2000);
 
-	// invalidate selection rectangle since it has been used
-	selection_rectangle = QRectF(0,0,0,0);
 	updateDirtyRect();
-
 	setEditingInProgress(false);
 }
 
 void BoxZoomTool::dragCanceled()
 {
-	selection_rectangle = QRectF(0,0,0,0);
 	updateDirtyRect();
-
 	setEditingInProgress(false);
 }
 
@@ -90,21 +81,20 @@ void BoxZoomTool::updateStatusText()
 }
 
 void BoxZoomTool::objectSelectionChangedImpl()
-{
-
-}
+{}
 
 void BoxZoomTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
 	drawSelectionOrPreviewObjects(painter, widget, false);
 
-	if (selection_rectangle.isValid())
-		drawSelectionBox(painter, widget, selection_top_left, selection_bottom_right);
+	if (isDragging())
+		drawSelectionBox(painter, widget, click_pos_map, cur_pos_map);
 }
 
 int BoxZoomTool::updateDirtyRectImpl(QRectF& rect)
 {
-	rectIncludeSafe(rect, selection_rectangle);
+	rectIncludeSafe(rect, click_pos_map);
+	rectInclude(rect, cur_pos_map);
 	return 5;
 }
 
