@@ -496,9 +496,9 @@ Footprint: 4.4 m x 5.0 m.</description>
                 <description>An area of pits or knolls, which is too complex to be represented in detail.
 The density of randomly placed dots may vary according to the detail on the ground. The dots shall not interfere with the representation of important terrain features or objects. Contours shall not be cut in broken ground areas. Dots shall not be arranged to form a single point wide line.
 The minimum number of dots is three.</description>
-                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <area_symbol inner_color="-1" min_area="0" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" no_clipping="2" rotatable="true" line_spacing="1000" line_offset="0" offset_along_line="0" point_distance="1000">
-                        <symbol type="1" code="" name="Fill pattern 1">
+                        <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="4">
                                 <element>
                                     <symbol type="1" code="">
@@ -555,7 +555,7 @@ The minimum number of dots is three.</description>
                 <description>An area of pits or knolls, which is too complex to be represented in detail.
 The density of randomly placed dots may vary according to the detail on the ground. The dots shall not interfere with the representation of important terrain features or objects. Contours shall not be cut in broken ground areas. Dots shall not be arranged to form a single point wide line.
 The minimum number of dots is three.</description>
-                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <area_symbol inner_color="-1" min_area="0" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" no_clipping="2" rotatable="true" line_spacing="1000" line_offset="0" offset_along_line="0" point_distance="1000">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="9">
@@ -1154,9 +1154,9 @@ Footprint: 4.8 m x 4.0 m</description>
                 <description>An area which is covered with so many scattered blocks of stone that they cannot be marked individually is represented with randomly placed and orientated solid triangles. The runnability is reduced and is indicated by the density of the triangles.
 A minimum of two triangles shall be used.
 To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</description>
-                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <area_symbol inner_color="-1" min_area="0" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" no_clipping="2" rotatable="true" line_spacing="3996" line_offset="0" offset_along_line="0" point_distance="3600">
-                        <symbol type="1" code="" name="Fill pattern 1">
+                        <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="1200" inner_color="-1" outer_width="0" outer_color="-1" elements="9">
                                 <element>
                                     <symbol type="4" code="">
@@ -1348,9 +1348,9 @@ To be able to show obvious height differences within a boulder field, it is perm
                 <description>An area which is covered with so many scattered blocks of stone that they cannot be marked individually is represented with randomly placed and orientated solid triangles. The runnability is reduced and is indicated by the density of the triangles.
 A minimum of two triangles shall be used.
 To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</description>
-                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <area_symbol inner_color="-1" min_area="0" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" no_clipping="2" rotatable="true" line_spacing="2400" line_offset="0" offset_along_line="0" point_distance="2400">
-                        <symbol type="1" code="" name="Fill pattern 1">
+                        <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="1200" inner_color="-1" outer_width="0" outer_color="-1" elements="10">
                                 <element>
                                     <symbol type="4" code="">
@@ -1511,9 +1511,9 @@ To be able to show obvious height differences within a boulder field, it is perm
                 <description>An area of stony or rocky ground which reduces runnability.
 The dots shall be randomly distributed with density according to the amount of rock but not interfere with the representation of important terrain features or objects. A minimum of three dots shall be used. To avoid confusion with symbol Distinct vegetation boundary (416), the dots shall not be arranged to form a line.
 Density: Minimum 3 dots.</description>
-                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <area_symbol inner_color="-1" min_area="0" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" no_clipping="2" rotatable="true" line_spacing="1000" line_offset="0" offset_along_line="0" point_distance="1000">
-                        <symbol type="1" code="" name="Fill pattern 1">
+                        <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="7">
                                 <element>
                                     <symbol type="1" code="">
@@ -1600,9 +1600,9 @@ Density: Minimum 3 dots.</description>
                 <description>An area of stony or rocky ground which reduces runnability.
 The dots shall be randomly distributed with density according to the amount of rock but not interfere with the representation of important terrain features or objects. A minimum of three dots shall be used. To avoid confusion with symbol Distinct vegetation boundary (416), the dots shall not be arranged to form a line.
 Density: Minimum 3 dots.</description>
-                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <area_symbol inner_color="-1" min_area="0" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" no_clipping="2" rotatable="true" line_spacing="1000" line_offset="0" offset_along_line="0" point_distance="2000">
-                        <symbol type="1" code="" name="Fill pattern 1">
+                        <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="7">
                                 <element>
                                     <symbol type="1" code="">
@@ -2202,7 +2202,7 @@ Minimum area: 1 mm² (footprint 16 m²).</description>
 When runnability is better in one direction a regular pattern of white stripes is left in the screen to show the direction of better running. At least two white stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 1 mm² (footprint 16 m²).</description>
-                <area_symbol inner_color="26" min_area="1000" patterns="1">
+                <area_symbol inner_color="26" min_area="1000" rotatable="true" patterns="1">
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="21" line_width="400"/>
                 </area_symbol>
             </symbol>
@@ -2229,7 +2229,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</description>
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</description>
-                <area_symbol inner_color="25" min_area="1000" patterns="1">
+                <area_symbol inner_color="25" min_area="1000" rotatable="true" patterns="1">
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="21" line_width="400"/>
                 </area_symbol>
             </symbol>
@@ -2238,7 +2238,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</description>
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</description>
-                <area_symbol inner_color="26" min_area="1000" patterns="1">
+                <area_symbol inner_color="26" min_area="1000" rotatable="true" patterns="1">
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="750" offset_along_line="0" color="25" line_width="1100"/>
                 </area_symbol>
             </symbol>
@@ -2292,9 +2292,9 @@ Minimum area: 9 mm² (144 m²).</description>
 The dot lines may be orientated to show the direction of planting. At least four dots shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum width: 2 mm.
 Minimum area: 4 mm² (64 m²)</description>
-                <area_symbol inner_color="30" min_area="4000" patterns="1">
+                <area_symbol inner_color="30" min_area="4000" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" rotatable="true" line_spacing="1200" line_offset="0" offset_along_line="0" point_distance="1200">
-                        <symbol type="1" code="" name="Fill pattern 1">
+                        <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="340" inner_color="24" outer_width="0" outer_color="-1" elements="0"/>
                         </symbol>
                     </pattern>
@@ -2305,9 +2305,9 @@ Minimum area: 4 mm² (64 m²)</description>
 The dot lines may be orientated to show the direction of planting. At least four dots shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum width: 2 mm.
 Minimum area: 4 mm² (64 m²)</description>
-                <area_symbol inner_color="31" min_area="4000" patterns="1">
+                <area_symbol inner_color="31" min_area="4000" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" rotatable="true" line_spacing="1200" line_offset="0" offset_along_line="0" point_distance="1200">
-                        <symbol type="1" code="" name="Fill pattern 1">
+                        <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="340" inner_color="24" outer_width="0" outer_color="-1" elements="0"/>
                         </symbol>
                     </pattern>
@@ -2318,9 +2318,9 @@ Minimum area: 4 mm² (64 m²)</description>
 The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum width: 2 mm.
 Minimum area: 4 mm² (64 m²)</description>
-                <area_symbol inner_color="30" min_area="400" patterns="2">
+                <area_symbol inner_color="30" min_area="400" rotatable="true" patterns="2">
                     <pattern type="2" angle="1.5708" rotatable="true" line_spacing="2600" line_offset="0" offset_along_line="0" point_distance="2900">
-                        <symbol type="1" code="" name="Fill pattern 1">
+                        <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="0" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                                 <element>
                                     <symbol type="2" code="">
@@ -2340,7 +2340,7 @@ Minimum area: 4 mm² (64 m²)</description>
                         </symbol>
                     </pattern>
                     <pattern type="2" angle="1.5708" rotatable="true" line_spacing="2600" line_offset="1300" offset_along_line="1000" point_distance="2900">
-                        <symbol type="1" code="" name="Fill pattern 2">
+                        <symbol type="1" code="" name="Pattern fill 2">
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                                 <element>
                                     <symbol type="2" code="">
@@ -2366,9 +2366,9 @@ Minimum area: 4 mm² (64 m²)</description>
 The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum width: 2 mm.
 Minimum area: 4 mm² (64 m²)</description>
-                <area_symbol inner_color="31" min_area="400" patterns="2">
+                <area_symbol inner_color="31" min_area="400" rotatable="true" patterns="2">
                     <pattern type="2" angle="1.5708" rotatable="true" line_spacing="2600" line_offset="0" offset_along_line="0" point_distance="2900">
-                        <symbol type="1" code="" name="Fill pattern 1">
+                        <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="0" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                                 <element>
                                     <symbol type="2" code="">
@@ -2388,7 +2388,7 @@ Minimum area: 4 mm² (64 m²)</description>
                         </symbol>
                     </pattern>
                     <pattern type="2" angle="1.5708" rotatable="true" line_spacing="2600" line_offset="1300" offset_along_line="1000" point_distance="2900">
-                        <symbol type="1" code="" name="Fill pattern 2">
+                        <symbol type="1" code="" name="Pattern fill 2">
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                                 <element>
                                     <symbol type="2" code="">
@@ -2532,7 +2532,7 @@ Differences in the brown colour shall be used to show differences in the traffic
             </symbol>
             <symbol type="4" id="106" code="501.2" name=" Paved area in multilevel structures, light traffic">
                 <description>Part of a multilevel structure which can be passed at two levels. The angle of the pattern is approximately 45° to the direction of the axis of the paved area.</description>
-                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <area_symbol inner_color="-1" min_area="0" rotatable="true" patterns="1">
                     <pattern type="1" angle="0.785398" rotatable="true" line_spacing="600" line_offset="0" offset_along_line="0" color="14" line_width="300"/>
                 </area_symbol>
             </symbol>
@@ -2614,7 +2614,7 @@ Differences in the brown colour shall be used to show differences in the traffic
             </symbol>
             <symbol type="4" id="115" code="501.12" name=" Paved area in multilevel structures, heavy traffic">
                 <description>Part of a multilevel structure which can be passed at two levels. The angle of the pattern is approximately 45° to the direction of the axis of the paved area.</description>
-                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <area_symbol inner_color="-1" min_area="0" rotatable="true" patterns="1">
                     <pattern type="1" angle="0.785398" rotatable="true" line_spacing="600" line_offset="0" offset_along_line="0" color="13" line_width="300"/>
                 </area_symbol>
             </symbol>
