@@ -301,6 +301,19 @@ bool validLineWidth(const LineSymbol& symbol)
 }
 
 
+bool validateAreaSymbolRotatability(const AreaSymbol& area_symbol)
+{
+	auto const num_fill_patterns = area_symbol.getNumFillPatterns();
+	switch (num_fill_patterns)
+	{
+	case 0:
+		return area_symbol.isRotatable() == false;
+	default:
+		return area_symbol.isRotatable() == area_symbol.hasRotatableFillPattern();
+	}
+}
+
+
 void checkOsmCrtFile(const Map& target, const QDir& symbol_set_dir)
 {
 	auto const crt_filename = QString::fromLatin1("OSM-%1.crt").arg(target.symbolSetId());
@@ -838,21 +851,34 @@ void SymbolSetTool::processSymbolSet()
 		ISSkiOM_2019::mergeISOM(map, symbol_set_dir);
 	}
 	
-	const int num_symbols = map.getNumSymbols();
-	QStringList previous_numbers;
-	for (int i = 0; i < num_symbols; ++i)
+	auto const is_legacy = legacy_symbol_sets.contains(id);
+	if (!is_legacy)
 	{
-		const Symbol* symbol = map.getSymbol(i);
-		QString number = symbol->getNumberAsString();
-		QString number_and_name = number + QLatin1Char(' ') % symbol->getPlainTextName();
-		QVERIFY2(!symbol->getName().isEmpty(), qPrintable(number_and_name + QLatin1String(": Name is empty")));
-		QVERIFY2(!previous_numbers.contains(number), qPrintable(number_and_name + QLatin1String(": Number is not unique")));
-		previous_numbers.append(number);
-		QVERIFY2(symbol->validate(), qPrintable(number_and_name + QLatin1String(": Symbol validation failed")));
-		if (symbol->getType() == Symbol::Line)
-			 QVERIFY2(validLineWidth(static_cast<const LineSymbol&>(*symbol)),  qPrintable(number_and_name + QLatin1String(": Invalid line width")));
+		const int num_symbols = map.getNumSymbols();
+		QStringList previous_numbers;
+		for (int i = 0; i < num_symbols; ++i)
+		{
+			const Symbol* symbol = map.getSymbol(i);
+			QString number = symbol->getNumberAsString();
+			QString number_and_name = number + QLatin1Char(' ') % symbol->getPlainTextName();
+			QVERIFY2(!symbol->getName().isEmpty(), qPrintable(number_and_name + QLatin1String(": Name is empty")));
+			QVERIFY2(!previous_numbers.contains(number), qPrintable(number_and_name + QLatin1String(": Number is not unique")));
+			previous_numbers.append(number);
+			QVERIFY2(symbol->validate(), qPrintable(number_and_name + QLatin1String(": Symbol validation failed")));
+			switch(symbol->getType())
+			{
+			case Symbol::Area:
+				QVERIFY2(validateAreaSymbolRotatability(static_cast<const AreaSymbol&>(*symbol)), qPrintable(number_and_name + QLatin1String(": Unexpected area symbol rotatability")));
+				break;
+			case Symbol::Line:
+				QVERIFY2(validLineWidth(static_cast<const LineSymbol&>(*symbol)), qPrintable(number_and_name + QLatin1String(": Invalid line width")));
+				break;
+			default:
+			    ; // nothing
+			}
+		}
 	}
-	
+		
 	if (std::none_of(begin(translation_entries), end(translation_entries),
 	                 [&id](auto const& entry) { return entry.context == id; }) )
 	{
@@ -888,7 +914,7 @@ void SymbolSetTool::processSymbolSet()
 	}
 	QCOMPARE(map.getScaleDenominator(), target_scale);
 	
-	if (legacy_symbol_sets.contains(id))
+	if (is_legacy)
 		return;
 	
 	MapView* new_view = nullptr;
