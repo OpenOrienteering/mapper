@@ -298,6 +298,8 @@ public slots:
 	/** Shows the map grid configuration dialog. */
 	void configureGrid();
 	
+	/** Activates the box zoom tool. */
+	void boxZoom();
 	/** Activates the pan tool. */
 	void pan();
 	/** Moves view to GPS position. */
@@ -722,6 +724,7 @@ private:
 	QAction* clear_undo_redo_history_act = {};
 	
 	QAction* pan_act = {};
+	QAction* box_zoom_act = {};
 	QAction* move_to_gps_pos_act = {};
 	QAction* follow_position_act = {};
 	QAction* zoom_in_act = {};

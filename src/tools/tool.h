@@ -90,6 +90,7 @@ public:
 		DrawFreehand  = 8,
 		Pan           = 9,
 		Scribble      = 10,
+		BoxZoom       = 11,
 		Other         = 0
 	};
 	
