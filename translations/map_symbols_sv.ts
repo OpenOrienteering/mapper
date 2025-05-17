@@ -2341,7 +2341,7 @@ Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     <message>
         <source>Building</source>
         <comment>Name of symbol 521</comment>
-        <translation type="unfinished"></translation>
+        <translation>Byggnad</translation>
     </message>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.
@@ -2356,7 +2356,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
     <message>
         <source>Building, minimum size</source>
         <comment>Name of symbol 521.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Byggnad, minsta storlek</translation>
     </message>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.
@@ -2371,7 +2371,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
     <message>
         <source>Large building with outline</source>
         <comment>Name of symbol 521.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Stor byggnad med ytterlinje</translation>
     </message>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.
@@ -2386,7 +2386,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
     <message>
         <source>Large building</source>
         <comment>Name of symbol 521.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Stor byggnad</translation>
     </message>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.
@@ -2401,7 +2401,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
     <message>
         <source>Large building, outline</source>
         <comment>Name of symbol 521.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Stor byggnad, ytterlinje</translation>
     </message>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.
@@ -2452,7 +2452,7 @@ Minimum (inside) width: 0.3 mm (footprint 4.5 m).</source>
     <message>
         <source>Ruin</source>
         <comment>Name of symbol 523</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruin</translation>
     </message>
     <message>
         <source>A ruined building. The ground plan of a ruin is shown to scale, down to the minimum size. Ruins that are so small that they cannot be drawn to scale may be represented using a solid line.
