@@ -2418,7 +2418,7 @@
         <translation type="vanished">Вкажіть об&apos;єкт з невідомим або невірним знаком у %1:%2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="95"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="94"/>
         <source>OpenOrienteering Mapper</source>
         <translation>OpenOrienteering Mapper</translation>
     </message>
@@ -2455,13 +2455,13 @@
         <translation>Очікувані координати %1, знайдені %2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="1076"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="1074"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
         <translation>Помилка при загрузці конфігурації друку у %1:%2:%3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="1095"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="1115"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="1093"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="1113"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
         <translation>Помилка під час завантаження кроків скасувати/повторити у %1:%2:%3</translation>
     </message>
@@ -2572,17 +2572,17 @@
         <translation type="vanished">Цей файл має застарілий формат. Підтримка цього формату невдовзі буде припинена програмою. Щоб зберегти можливість відкривати цей файл у майбутньому, збережіть його ще раз.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="549"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="548"/>
         <source>Unsupported obsolete file format version. Please use program version v%1 or older to load and update the file.</source>
         <translation>Формат файлу застарілий і не підтримується. Будь ласка скористайтеся програмою версії v%1 або старіше щоб оновити файл.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="561"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="560"/>
         <source>Invalid file format version.</source>
         <translation>Недійсний формат файла.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="563"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="562"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
         <translation>Непідтримуваний застарілий формат файла. Використайте старішу версію програми щоб відкрити і перезберегти цей файл.</translation>
     </message>
@@ -2619,12 +2619,12 @@
         <translation type="vanished">Неможливо прочитати файл: %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="555"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="554"/>
         <source>Unsupported file format.</source>
         <translation>Непідтримуваний формат файла.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="565"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="564"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
         <translation>Непідтримуваний новий формат файла. Деякі особливості карти неможливо обробити або зберегти цією версією програми.</translation>
     </message>
@@ -5361,17 +5361,17 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::MeasureWidget</name>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="122"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="118"/>
         <source>Boundary length:</source>
         <translation>Довжина периметру:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="156"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="146"/>
         <source>Length:</source>
         <translation>Довжина:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="128"/>
         <source>Area:</source>
         <translation>Площа:</translation>
     </message>
@@ -5391,67 +5391,67 @@ zoom using the mouse wheel, if available.</source>
         <translation>Виділений об’єкт не є контуром.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="123"/>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="157"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="119"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="147"/>
         <source>mm</source>
         <comment>millimeters</comment>
         <translatorcomment>міліметри</translatorcomment>
         <translation>мм</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="124"/>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="158"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="120"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="148"/>
         <source>m</source>
         <comment>meters</comment>
         <translatorcomment>метри</translatorcomment>
         <translation>м</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="139"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="129"/>
         <source>mm²</source>
         <comment>square millimeters</comment>
         <translatorcomment>квадратні міліметри</translatorcomment>
         <translation>мм²</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="140"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="130"/>
         <source>m²</source>
         <comment>square meters</comment>
         <translatorcomment>квадратні метри</translatorcomment>
         <translation>м²</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="147"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="137"/>
         <source>This object is too small.</source>
         <translation>Цей об’єк замалий.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="148"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>
         <source>The minimimum area is %1 %2.</source>
         <translation>Мінімальна площа становить %1 %2.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="148"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>
         <source>mm²</source>
         <translation>мм²</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="152"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="142"/>
         <source>Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such.</source>
         <translation>Запримітьте: Довжина межі та площа коректні лише в разі відсутності самоперетинів і якщо отвори використовуються як такі.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="165"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="155"/>
         <source>This line is too short.</source>
         <translation>Ця лінія закоротка.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="166"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="156"/>
         <source>The minimum length is %1 %2.</source>
         <translation>Мінімальна довжина становить %1 %2.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="166"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="156"/>
         <source>mm</source>
         <translation>мм</translation>
     </message>
@@ -6197,7 +6197,7 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::PointSymbolEditorWidget</name>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="98"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="97"/>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="101"/>
         <source>Always oriented to north (not rotatable)</source>
         <translation>Завжди зорієнтовано на північ (не обертається)</translation>
@@ -8088,12 +8088,12 @@ to jump over the lazy dog
         <translation>Довідка</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tags_widget.cpp" line="217"/>
+        <location filename="../src/gui/widgets/tags_widget.cpp" line="218"/>
         <source>Key exists</source>
         <translation>Ключ існує</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tags_widget.cpp" line="218"/>
+        <location filename="../src/gui/widgets/tags_widget.cpp" line="219"/>
         <source>The key &quot;%1&quot; already exists and must not be used twice.</source>
         <translation>Ключ &quot;%1&quot; вже існує і не може використовуватись двічи.</translation>
     </message>
@@ -9158,7 +9158,7 @@ Location: %2</source>
 <context>
     <name>OpenOrienteering::XMLFileExporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="245"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="244"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
         <translation>Старіші версії Mapper не підтримують частини карти. Для збереження карти у режимі сумісності вам доведеться об&apos;єднати усі частини карти.</translation>
     </message>
@@ -9166,74 +9166,74 @@ Location: %2</source>
 <context>
     <name>OpenOrienteering::XMLFileImporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="531"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="530"/>
         <source>Unsupported element: %1 (line %2 column %3)</source>
         <translation>Непідтримуваний елемент: %1 (рядок %2 стовбчик %3)</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="575"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="574"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
         <translation>Деякі координати поза межами області друку. Вміст карти був підігнаний.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="667"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="666"/>
         <source>unknown</source>
         <translation>невідомо</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="668"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="667"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
         <translation>Частина цього файлу не може бути прочитана цією версією Mapper. Мінімальна необхідна версія: %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="649"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="648"/>
         <source>Error at line %1 column %2: %3</source>
         <translation>Помилка у рядку %1 колонка %2: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="685"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="969"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="684"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="967"/>
         <source>Some invalid characters had to be removed.</source>
         <translation>Деякі помилкові текстові символи були видалені.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="703"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="702"/>
         <source>Unknown error</source>
         <translation>Невідома помилка</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="704"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="703"/>
         <source>Unsupported or invalid georeferencing specification &apos;%1&apos;: %2</source>
         <translation>Непідтримувана або недійсна специфікація геоприв&apos;язки &apos;%1&apos;: %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="732"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="731"/>
         <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
         <translation>Виявлено невідповідність схилення/квазісхилення. Виправлено автоматичною корекцією схилення на %1°.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="862"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="915"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="860"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="913"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
         <translation>Неможливо встановити властивості перекривання для кольору %1&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="875"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="873"/>
         <source>Expected %1 colors, found %2.</source>
         <translation>Очікувався колір %1, а знайдено %2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="891"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="889"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
         <translation>Планшетний колір %1 не знайдений під час обробки %2 (%3).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="947"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="945"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation>Очікувався знак %1, а знайдено %2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="986"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="984"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>Очікувалася частина карти %1, а знайдено %2.</translation>
     </message>

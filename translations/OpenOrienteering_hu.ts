@@ -289,6 +289,7 @@
         <extracomment>The singular form will not be used!</extracomment>
         <translation>
             <numerusform>%n byte</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -2518,7 +2519,7 @@
         <translation type="vanished">Pont objektum egy definiálatlan vagy hibás szimbólummal a %1:%2 -n.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="95"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="94"/>
         <source>OpenOrienteering Mapper</source>
         <translation>OpenOrienteering Mapper</translation>
     </message>
@@ -2559,13 +2560,13 @@
         <translation>Várható %1 koordináták megtalálva %2-n.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="1076"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="1074"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
         <translation>Hiba történt a nyomtatási beállítások betöltésekor itt: %1:%2: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="1095"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="1115"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="1093"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="1113"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
         <translation>Hiba történt a visszavonás/előrelépés lépéseinek betöltésekor itt: %1:%2: %3</translation>
     </message>
@@ -2676,17 +2677,17 @@
         <translation type="vanished">Ez a fájl egy régebbi formátumban van. Ennek a formátumnak a támogatása hamarosan ki fog kerülni ebből a programból. Annak érdekében, hogy a jövőben is meg tudja nyitni, kérem mentse el újból.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="549"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="548"/>
         <source>Unsupported obsolete file format version. Please use program version v%1 or older to load and update the file.</source>
         <translation>Nem támogatott fájl formátum verzió. Kérem, hogy használja a program %1 verzióját vagy régebbit a betöltéshez és a fájl aktualizálásához.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="561"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="560"/>
         <source>Invalid file format version.</source>
         <translation>Érvénytelen fájl formátum verzió.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="563"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="562"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
         <translation>Nem támogatott régi fájl formátum verzió. Kérem, hogy használjon egy régebbi verziót a fájl betöltéséhez és aktualizálásához.</translation>
     </message>
@@ -2723,12 +2724,12 @@
         <translation type="vanished">Nem olvasható a %1 fájl</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="555"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="554"/>
         <source>Unsupported file format.</source>
         <translation>Nem támogatott fájl formátum.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="565"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="564"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
         <translation>Nem támogatott új fájl formátum verzió. Néhány térkép tulajdonság nem lesz betöltve vagy mentve a program ezen verziójával.</translation>
     </message>
@@ -5175,6 +5176,7 @@ kiválasztva</translation>
         <location filename="../src/core/map_information.cpp" line="255"/>
         <location filename="../src/core/map_information.cpp" line="258"/>
         <source>%n object(s)</source>
+        <extracomment>The singular form will not be used!</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
@@ -5198,6 +5200,7 @@ kiválasztva</translation>
         <location filename="../src/core/map_information.cpp" line="237"/>
         <location filename="../src/core/map_information.cpp" line="239"/>
         <source>%n step(s)</source>
+        <extracomment>The singular form will not be used!</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
@@ -5215,6 +5218,7 @@ kiválasztva</translation>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="242"/>
         <source>%n template(s)</source>
+        <extracomment>The singular form will not be used!</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
@@ -5227,6 +5231,7 @@ kiválasztva</translation>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="244"/>
         <source>%n part(s)</source>
+        <extracomment>The singular form will not be used!</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
@@ -5240,6 +5245,7 @@ kiválasztva</translation>
         <location filename="../src/core/map_information.cpp" line="250"/>
         <location filename="../src/core/map_information.cpp" line="280"/>
         <source>%n symbol(s)</source>
+        <extracomment>The singular form will not be used!</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
@@ -5252,6 +5258,7 @@ kiválasztva</translation>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="266"/>
         <source>%n color(s)</source>
+        <extracomment>The singular form will not be used!</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
@@ -5264,6 +5271,7 @@ kiválasztva</translation>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="274"/>
         <source>%n font(s)</source>
+        <extracomment>The singular form will not be used!</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
@@ -5458,17 +5466,17 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
 <context>
     <name>OpenOrienteering::MeasureWidget</name>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="122"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="118"/>
         <source>Boundary length:</source>
         <translation>Kerület hossza:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="156"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="146"/>
         <source>Length:</source>
         <translation>Hossz:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="128"/>
         <source>Area:</source>
         <translation>Terület:</translation>
     </message>
@@ -5488,67 +5496,67 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <translation>A kijelölt objektum nem útvonal.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="123"/>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="157"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="119"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="147"/>
         <source>mm</source>
         <comment>millimeters</comment>
         <translatorcomment>milliméter</translatorcomment>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="124"/>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="158"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="120"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="148"/>
         <source>m</source>
         <comment>meters</comment>
         <translatorcomment>méter</translatorcomment>
         <translation>m</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="139"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="129"/>
         <source>mm²</source>
         <comment>square millimeters</comment>
         <translatorcomment>négyzetmiliméter</translatorcomment>
         <translation>mm²</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="140"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="130"/>
         <source>m²</source>
         <comment>square meters</comment>
         <translatorcomment>négyzetméter</translatorcomment>
         <translation>m²</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="147"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="137"/>
         <source>This object is too small.</source>
         <translation>Ez az objektum túl kicsi.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="148"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>
         <source>The minimimum area is %1 %2.</source>
         <translation>A minimum terület %1 %2.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="148"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>
         <source>mm²</source>
         <translation>mm²</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="152"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="142"/>
         <source>Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such.</source>
         <translation>Megjegyzés: Kerület és terület csak akkor pontos, ha az objektumban nincsenek lukak és önmagával nem kereszteződik.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="165"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="155"/>
         <source>This line is too short.</source>
         <translation>A vonal túl rövid.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="166"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="156"/>
         <source>The minimum length is %1 %2.</source>
         <translation>A minimum hossz %1 %2.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="166"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="156"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
@@ -6302,7 +6310,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
 <context>
     <name>OpenOrienteering::PointSymbolEditorWidget</name>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="98"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="97"/>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="101"/>
         <source>Always oriented to north (not rotatable)</source>
         <translation>Mindig tájolja északra (nem lehet elforgatni)</translation>
@@ -8244,12 +8252,12 @@ vagy, ezt tudod. Űzd el haragod, s jer velem!
         <translation>Súgó</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tags_widget.cpp" line="217"/>
+        <location filename="../src/gui/widgets/tags_widget.cpp" line="218"/>
         <source>Key exists</source>
         <translation>A kulcs létezik</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tags_widget.cpp" line="218"/>
+        <location filename="../src/gui/widgets/tags_widget.cpp" line="219"/>
         <source>The key &quot;%1&quot; already exists and must not be used twice.</source>
         <translation>A %1 kulcs már létezik és nem lehet kétszer használni.</translation>
     </message>
@@ -9455,7 +9463,7 @@ Hely: %2</translation>
 <context>
     <name>OpenOrienteering::XMLFileExporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="245"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="244"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
         <translation>A Mapper régebbi verziói nem támogatnak többszörös térképrészeket. Ahhoz, hogy kompatibilis üzemmódban mentse el a térképet, először össze kell olvasztania minden térképrészt.</translation>
     </message>
@@ -9463,43 +9471,43 @@ Hely: %2</translation>
 <context>
     <name>OpenOrienteering::XMLFileImporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="531"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="530"/>
         <source>Unsupported element: %1 (line %2 column %3)</source>
         <translation>Nem támogatott elem: %1 (%2. sor, %3. oszlop)</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="575"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="574"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
         <translation>Néhány koordináta a nyomtatási határon kívülre esett. A térképtartalom korrigálva lett.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="667"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="666"/>
         <source>unknown</source>
         <translation>ismeretlen</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="668"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="667"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
         <translation>A fájl részei nem olvashatók a Mapper ezen verziójával. Legalább %1 verzióra van szüksége</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="649"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="648"/>
         <source>Error at line %1 column %2: %3</source>
         <translation>Hiba a(z) %1 sor %2 oszlopnál: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="685"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="969"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="684"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="967"/>
         <source>Some invalid characters had to be removed.</source>
         <translation>Néhány érvénytelen jelet el kellett távolítani.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="703"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="702"/>
         <source>Unknown error</source>
         <translation>Ismeretlen hiba</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="704"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="703"/>
         <source>Unsupported or invalid georeferencing specification &apos;%1&apos;: %2</source>
         <translation>Nem támogatott vagy érvénytelen georeferációs leírás &apos;%1&apos;: %2</translation>
     </message>
@@ -9508,33 +9516,33 @@ Hely: %2</translation>
         <translation type="vanished">Inkonzisztens deklináció / griváció észlelve A deklináció % 1 ° -ról % 2 ° -ra beállítva.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="732"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="731"/>
         <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
         <translation>Inkonzisztens deklináció / griváció észlelve. Megoldva a deklináció automatikus beállításával %1° -ra.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="862"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="915"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="860"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="913"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
         <translation>Nem lehet beállítani a színátmenetek tulajdonságait &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="875"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="873"/>
         <source>Expected %1 colors, found %2.</source>
         <translation>A várt %1 színből %2 megtalálva.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="891"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="889"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
         <translation>%2 feldolgozásakor %1 foltszín nem található (%3).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="947"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="945"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation>A várt %1 szimbólumból %2 megtalálva.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="986"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="984"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>A várt %1 térképrészből %2 megtalálva.</translation>
     </message>

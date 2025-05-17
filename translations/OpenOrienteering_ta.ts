@@ -2331,7 +2331,7 @@
         <translation>%1: %2 இல் பொருளின் சின்னத்தைக் கண்டுபிடிக்க முடியவில்லை.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="95"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="94"/>
         <source>OpenOrienteering Mapper</source>
         <translation>Openorienteering Mapper</translation>
     </message>
@@ -2360,13 +2360,13 @@
         <translation>எதிர்பார்க்கப்படும் %1 ஆயத்தொகுப்புகள், %2 காணப்படுகின்றன.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="1076"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="1074"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
         <translation>அச்சிடும் உள்ளமைவை %1: %2: %3 இல் ஏற்றும்போது பிழை</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="1095"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="1115"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="1093"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="1113"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
         <translation>செயல்தவிர்/மீண்டும் படிகளை %1: %2: %3 இல் ஏற்றும்போது பிழை</translation>
     </message>
@@ -2464,27 +2464,27 @@
         <translation>வார்ப்புரு கோப்பு பெயர் (களை) கண்டுபிடிக்க வார்ப்புருக்கள் -&gt; வார்ப்புரு அமைவு சாளரத்தில் சிவப்பு வார்ப்புரு பெயர் (கள்) என்பதைக் சொடுக்கு செய்க.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="549"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="548"/>
         <source>Unsupported obsolete file format version. Please use program version v%1 or older to load and update the file.</source>
         <translation>ஆதரிக்கப்படாத வழக்கற்றுப்போன கோப்பு வடிவமைப்பு பதிப்பு. கோப்பை ஏற்றவும் புதுப்பிக்கவும் நிரல் பதிப்பு V%1 அல்லது அதற்கு மேற்பட்டதைப் பயன்படுத்தவும்.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="561"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="560"/>
         <source>Invalid file format version.</source>
         <translation>தவறான கோப்பு வடிவமைப்பு பதிப்பு.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="563"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="562"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
         <translation>ஆதரிக்கப்படாத பழைய கோப்பு வடிவமைப்பு பதிப்பு. கோப்பை ஏற்றவும் புதுப்பிக்கவும் பழைய நிரல் பதிப்பைப் பயன்படுத்தவும்.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="555"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="554"/>
         <source>Unsupported file format.</source>
         <translation>ஆதரிக்கப்படாத கோப்பு வடிவம்.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="565"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="564"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
         <translation>ஆதரிக்கப்படாத புதிய கோப்பு வடிவமைப்பு பதிப்பு. நிரலின் இந்த பதிப்பால் சில வரைபட நற்பொருத்தங்கள் ஏற்றப்படாது அல்லது சேமிக்கப்படாது.</translation>
     </message>
@@ -5008,17 +5008,17 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::MeasureWidget</name>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="122"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="118"/>
         <source>Boundary length:</source>
         <translation>எல்லை நீளம்:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="156"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="146"/>
         <source>Length:</source>
         <translation>நீளம்:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="128"/>
         <source>Area:</source>
         <translation>பகுதி:</translation>
     </message>
@@ -5038,63 +5038,63 @@ zoom using the mouse wheel, if available.</source>
         <translation>தேர்ந்தெடுக்கப்பட்ட பொருள் ஒரு பாதை அல்ல.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="123"/>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="157"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="119"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="147"/>
         <source>mm</source>
         <comment>millimeters</comment>
         <translation>மிமீ</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="124"/>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="158"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="120"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="148"/>
         <source>m</source>
         <comment>meters</comment>
         <translation>மீ</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="139"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="129"/>
         <source>mm²</source>
         <comment>square millimeters</comment>
         <translation>mm²</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="140"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="130"/>
         <source>m²</source>
         <comment>square meters</comment>
         <translation>m²</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="147"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="137"/>
         <source>This object is too small.</source>
         <translation>இந்த பொருள் மிகவும் சிறியது.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="148"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>
         <source>The minimimum area is %1 %2.</source>
         <translation>குறைந்தபட்ச பகுதி %1 %2 ஆகும்.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="148"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>
         <source>mm²</source>
         <translation>mm²</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="152"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="142"/>
         <source>Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such.</source>
         <translation>குறிப்பு: தன்வய குறுக்கீடுகள் இல்லாவிட்டால் மட்டுமே எல்லை நீளம் மற்றும் பரப்பளவு சரியானது மற்றும் துளைகள் பயன்படுத்தப்படுகின்றன.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="165"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="155"/>
         <source>This line is too short.</source>
         <translation>இந்த வரி மிகக் குறைவு.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="166"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="156"/>
         <source>The minimum length is %1 %2.</source>
         <translation>குறைந்தபட்ச நீளம் %1 %2 ஆகும்.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/measure_widget.cpp" line="166"/>
+        <location filename="../src/gui/widgets/measure_widget.cpp" line="156"/>
         <source>mm</source>
         <translation>மிமீ</translation>
     </message>
@@ -5811,7 +5811,7 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::PointSymbolEditorWidget</name>
     <message>
-        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="98"/>
+        <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="97"/>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="101"/>
         <source>Always oriented to north (not rotatable)</source>
         <translation>எப்போதும் வடக்கே நோக்குநிலை (சுழற்ற முடியாதது)</translation>
@@ -7617,12 +7617,12 @@ to jump over the lazy dog
         <translation>உதவி</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tags_widget.cpp" line="217"/>
+        <location filename="../src/gui/widgets/tags_widget.cpp" line="218"/>
         <source>Key exists</source>
         <translation>விசை உள்ளது</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tags_widget.cpp" line="218"/>
+        <location filename="../src/gui/widgets/tags_widget.cpp" line="219"/>
         <source>The key &quot;%1&quot; already exists and must not be used twice.</source>
         <translation>முக்கிய &quot;%1&quot; ஏற்கனவே உள்ளது மற்றும் இரண்டு முறை பயன்படுத்தக்கூடாது.</translation>
     </message>
@@ -8612,7 +8612,7 @@ Location: %2</source>
 <context>
     <name>OpenOrienteering::XMLFileExporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="245"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="244"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
         <translation>மேப்பரின் பழைய பதிப்புகள் பல வரைபட பகுதிகளை ஆதரிக்கவில்லை. பொருந்தக்கூடிய பயன்முறையில் வரைபடத்தை சேமிக்க, நீங்கள் முதலில் அனைத்து வரைபட பகுதிகளையும் ஒன்றிணைக்க வேண்டும்.</translation>
     </message>
@@ -8620,74 +8620,74 @@ Location: %2</source>
 <context>
     <name>OpenOrienteering::XMLFileImporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="531"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="530"/>
         <source>Unsupported element: %1 (line %2 column %3)</source>
         <translation>ஆதரிக்கப்படாத உறுப்பு: %1 (வரி %2 நெடுவரிசை %3)</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="575"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="574"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
         <translation>சில ஆயத்தொகுப்புகள் அச்சிடுவதற்கான எல்லைக்கு அப்பாற்பட்டவை. வரைபட உள்ளடக்கம் சரிசெய்யப்பட்டது.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="667"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="666"/>
         <source>unknown</source>
         <translation>தெரியவில்லை</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="668"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="667"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
         <translation>இந்த கோப்பின் பகுதிகளை மேப்பரின் இந்த பதிப்பால் படிக்க முடியாது. குறைந்தபட்ச தேவையான பதிப்பு: %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="649"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="648"/>
         <source>Error at line %1 column %2: %3</source>
         <translation>வரி %1 நெடுவரிசை %2: %3 இல் பிழை</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="685"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="969"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="684"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="967"/>
         <source>Some invalid characters had to be removed.</source>
         <translation>சில தவறான எழுத்துக்கள் அகற்றப்பட வேண்டியிருந்தது.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="703"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="702"/>
         <source>Unknown error</source>
         <translation>தெரியாத பிழை</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="704"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="703"/>
         <source>Unsupported or invalid georeferencing specification &apos;%1&apos;: %2</source>
         <translation>ஆதரிக்கப்படாத அல்லது தவறான புவிசார் விவரக்குறிப்பு விவரக்குறிப்பு &apos; %1&apos;: %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="732"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="731"/>
         <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
         <translation>சீரற்ற சரிவு/பேரழிவு கண்டறியப்பட்டது. %1 பெறுநர் க்கு சரிவின் தானியங்கி சரிசெய்தல் மூலம் தீர்க்கப்படுகிறது.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="862"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="915"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="860"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="913"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
         <translation>&apos;%1&apos; வண்ணத்தின் நாக் அவுட் சொத்தை அமைக்க முடியவில்லை.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="875"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="873"/>
         <source>Expected %1 colors, found %2.</source>
         <translation>எதிர்பார்க்கப்படும் %1 வண்ணங்கள், %2 காணப்படுகிறது.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="891"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="889"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
         <translation>%2 ( %3) செயலாக்கும்போது ச்பாட் கலர் %1 காணப்படவில்லை.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="947"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="945"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation>எதிர்பார்க்கப்படும் %1 சின்னங்கள், %2 காணப்படுகிறது.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="986"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="984"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>எதிர்பார்க்கப்படும் %1 வரைபட பாகங்கள், %2 காணப்பட்டது.</translation>
     </message>
