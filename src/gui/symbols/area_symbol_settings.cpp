@@ -299,6 +299,7 @@ void AreaSymbolSettings::reset(Symbol* symbol)
 void AreaSymbolSettings::updateAreaGeneral()
 {
 	ScopedMultiSignalsBlocker block(oriented_to_north, color_edit, minimum_size_edit);
+	oriented_to_north->setEnabled(symbol->getNumFillPatterns() != 0);
 	oriented_to_north->setChecked(!symbol->isRotatable());
 	color_edit->setColor(symbol->getColor());
 	minimum_size_edit->setValue(0.001 * symbol->minimum_area);
@@ -512,6 +513,7 @@ void AreaSymbolSettings::selectPattern(int index)
 {
 	active_pattern = symbol->patterns.begin() + index;
 	updatePatternWidgets();
+	updateAreaGeneral();
 }
 
 
