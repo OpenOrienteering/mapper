@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -321,7 +321,7 @@ void AreaSymbolSettings::loadPatterns()
 		pattern_list->addItem(pattern.name);
 		if (pattern.type == AreaSymbol::FillPattern::PointPattern)
 		{
-			auto editor = new PointSymbolEditorWidget(controller, pattern.point, 16);
+			auto editor = new PointSymbolEditorWidget(controller, pattern.point, PointSymbolEditorWidget::AreaSymbolElement, 16);
 			connect(editor, &PointSymbolEditorWidget::symbolEdited, this, &SymbolPropertiesWidget::propertiesModified );
 			addPropertiesGroup(pattern.name, editor);
 		}
@@ -451,7 +451,7 @@ void AreaSymbolSettings::addPattern(AreaSymbol::FillPattern::Type type)
 	{
 		active_pattern->point = new PointSymbol();
 		active_pattern->point->setRotatable(true);
-		auto editor = new PointSymbolEditorWidget(controller, active_pattern->point, 16);
+		auto editor = new PointSymbolEditorWidget(controller, active_pattern->point, PointSymbolEditorWidget::AreaSymbolElement, 16);
 		connect(editor, &PointSymbolEditorWidget::symbolEdited, this, &SymbolPropertiesWidget::propertiesModified );
 		if (pattern_list->currentRow() == int(symbol->patterns.size()) - 1)
 		{

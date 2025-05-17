@@ -62,13 +62,21 @@ class PointSymbolEditorWidget : public QWidget
 Q_OBJECT
 friend class PointSymbolEditorActivity;
 public:
+    /** Describes the role of the symbol to be edited. */
+    enum SymbolRole {
+		PrimarySymbol,      ///< A primary point symbol
+		AreaSymbolElement,  ///< A symbol used in an area symbol fill pattern
+		LineSymbolElement,  ///< A symbol used for decorating a line symbol
+	};
+	
 	/** Construct a new widget.
 	 * @param controller The controller of the preview map
 	 * @param symbol The point symbol to be edited
+	 * @param role The role of the symbol to be edited
 	 * @param offset_y The vertical offset of the point symbol preview/editor from the origin
-	 * @param permanent_preview A flag indicating whether the preview shall be visible even if the editor is not visible
+	 * @param parent Standard QWidget parentship
 	 */
-	PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, qreal offset_y = 0, bool permanent_preview = false, QWidget* parent = 0);
+	PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, SymbolRole role = PrimarySymbol, qreal offset_y = 0, QWidget* parent = nullptr);
 	
 	~PointSymbolEditorWidget() override;
 	
