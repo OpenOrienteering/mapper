@@ -206,15 +206,18 @@ ObjectQuery MapFindFeature::makeQuery() const
 }
 
 
-// slot
 void MapFindFeature::findNext()
 {
 	if (auto query = makeQuery())
-		findNextMatchingObject(controller, query);
+	{
+		// remember current selected object as start point in case next object found is deleted by 'Delete & Find Next'
+		previous_object = controller.getMap()->getFirstSelectedObject();
+		findNextMatchingObject(controller, query, center_view->isChecked());
+	}
 }
 
 // static
-void MapFindFeature::findNextMatchingObject(MapEditorController& controller, const ObjectQuery& query)
+void MapFindFeature::findNextMatchingObject(MapEditorController& controller, const ObjectQuery& query, bool center_selection_visibility)
 {
 	auto* map = controller.getMap();
 	
@@ -248,22 +251,18 @@ void MapFindFeature::findNextMatchingObject(MapEditorController& controller, con
 		map->addObjectToSelection(next_match, false);
 	
 	map->emitSelectionChanged();
-	if (center_view->isChecked())
-		map->ensureVisibilityOfSelectedObjects(Map::CenterFullVisibility);
-	else
-		map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+	map->ensureVisibilityOfSelectedObjects(center_selection_visibility ? Map::CenterFullVisibility : Map::FullVisibility);
 	
 	if (!map->selectedObjects().empty())
 		controller.setEditTool();
 }
 
 
-// slot
 void MapFindFeature::deleteAndFindNext()
 {
 	auto map = controller.getMap();
 	map->deleteSelectedObjects();
-	// restore start point for search in findNext() but only if the object still exists.
+	// restore start point for search in findNextMatchingObject() but only if the object still exists.
 	if (previous_object && map->getCurrentPart()->contains(previous_object))
 	{
 		map->addObjectToSelection(previous_object, false);
@@ -272,15 +271,14 @@ void MapFindFeature::deleteAndFindNext()
 }
 
 
-// slot
 void MapFindFeature::findAll()
 {
 	if (auto query = makeQuery())
-		findAllMatchingObjects(controller, query);
+		findAllMatchingObjects(controller, query, center_view->isChecked());
 }
 
 // static
-void MapFindFeature::findAllMatchingObjects(MapEditorController& controller, const ObjectQuery& query)
+void MapFindFeature::findAllMatchingObjects(MapEditorController& controller, const ObjectQuery& query, bool center_selection_visibility)
 {
 	auto map = controller.getMap();
 	map->clearObjectSelection(false);
@@ -291,10 +289,7 @@ void MapFindFeature::findAllMatchingObjects(MapEditorController& controller, con
 	}, std::cref(query));
 	
 	map->emitSelectionChanged();
-	if (center_view->isChecked())
-		map->ensureVisibilityOfSelectedObjects(Map::CenterFullVisibility);
-	else
-		map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+	map->ensureVisibilityOfSelectedObjects(center_selection_visibility ? Map::CenterFullVisibility : Map::FullVisibility);
 	controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("%n object(s) selected", nullptr, map->getNumSelectedObjects()), 2000);
 	
 	if (!map->selectedObjects().empty())
@@ -302,7 +297,6 @@ void MapFindFeature::findAllMatchingObjects(MapEditorController& controller, con
 }
 
 
-// slot
 void MapFindFeature::objectSelectionChanged()
 {
 	auto map = controller.getMap();
@@ -311,7 +305,6 @@ void MapFindFeature::objectSelectionChanged()
 }
 
 
-// slot
 void MapFindFeature::centerView()
 {
 	if (center_view->isChecked())
@@ -323,14 +316,12 @@ void MapFindFeature::centerView()
 }
 
 
-// slot
 void MapFindFeature::showHelp() const
 {
 	Util::showHelp(controller.getWindow(), "find_objects.html");
 }
 
 
-// slot
 void MapFindFeature::tagSelectorToggled(bool active)
 {
 	editor_stack->setCurrentIndex(active ? 1 : 0);
