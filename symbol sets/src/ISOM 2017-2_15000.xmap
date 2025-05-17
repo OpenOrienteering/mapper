@@ -647,7 +647,7 @@ The maximum centre to centre distance between neighbouring dots is 0.6 mm.
 The minimum centre to centre distance between neighbouring dots is 0.5 mm.
 Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.</description>
-                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <area_symbol inner_color="-1" min_area="0" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" no_clipping="2" rotatable="true" line_spacing="1000" line_offset="0" offset_along_line="0" point_distance="1000">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="4">
@@ -715,7 +715,7 @@ The maximum centre to centre distance between neighbouring dots is 0.38 mm.
 The minimum centre to centre distance between neighbouring dots is 0.25 mm.
 Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.</description>
-                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <area_symbol inner_color="-1" min_area="0" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" no_clipping="2" rotatable="true" line_spacing="1000" line_offset="0" offset_along_line="0" point_distance="1000">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="9">
@@ -1377,7 +1377,7 @@ A minimum of two triangles should be used. One triangle may be used if it is com
 The maximum centre to centre distance between neighbouring triangles is 1.2 mm. The minimum centre to centre distance between neighbouring triangles is 0.75 mm.
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</description>
-                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <area_symbol inner_color="-1" min_area="0" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" no_clipping="2" rotatable="true" line_spacing="3330" line_offset="0" offset_along_line="0" point_distance="3000">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="9">
@@ -1572,7 +1572,7 @@ Footprint of individual triangle: 12 m x 6 m.</description>
 The maximum centre to centre distance between neighbouring triangles is 0.6 mm.
 Density: 2-3 symbols / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</description>
-                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <area_symbol inner_color="-1" min_area="0" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" no_clipping="2" rotatable="true" line_spacing="2000" line_offset="0" offset_along_line="0" point_distance="2000">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="10">
@@ -1739,7 +1739,7 @@ The maximum centre to centre distance between neighbouring dots is 0.6 mm.
 The minimum centre to centre distance between neighbouring dots is 0.45 mm.
 Density: 3-4 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</description>
-                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <area_symbol inner_color="-1" min_area="0" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" no_clipping="2" rotatable="true" line_spacing="1000" line_offset="0" offset_along_line="0" point_distance="2000">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="7">
@@ -1836,7 +1836,7 @@ The maximum centre to centre distance between neighbouring dots is 0.4 mm.
 The minimum centre to centre distance between neighbouring dots is 0.32 mm.
 Density: 6-8 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</description>
-                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <area_symbol inner_color="-1" min_area="0" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" no_clipping="2" rotatable="true" line_spacing="1000" line_offset="0" offset_along_line="0" point_distance="1000">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="7">
@@ -1923,7 +1923,7 @@ The maximum centre to centre distance between neighbouring dots is 0.32 mm.
 The minimum centre to centre distance between neighbouring dots is 0.25 mm.
 Density: 10-12 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</description>
-                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <area_symbol inner_color="-1" min_area="0" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" no_clipping="2" rotatable="true" line_spacing="1000" line_offset="0" offset_along_line="0" point_distance="1000">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="12">
@@ -2607,7 +2607,7 @@ Minimum width: 0.4 mm (footprint 6 m).</description>
 Where runnability is better in one direction, a regular pattern of white stripes is left in the screen to show the direction of better running.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</description>
-                <area_symbol inner_color="28" min_area="1000" patterns="1">
+                <area_symbol inner_color="28" min_area="1000" rotatable="true" patterns="1">
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="22" line_width="400"/>
                 </area_symbol>
             </symbol>
@@ -2629,7 +2629,7 @@ Minimum width: 0.3 mm (footprint 4.5 m).</description>
                 <description>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width: 0.3 mm (footprint 4.5 m).</description>
-                <area_symbol inner_color="27" min_area="1000" patterns="1">
+                <area_symbol inner_color="27" min_area="1000" rotatable="true" patterns="1">
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="22" line_width="400"/>
                 </area_symbol>
             </symbol>
@@ -2637,7 +2637,7 @@ Minimum width: 0.3 mm (footprint 4.5 m).</description>
                 <description>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width: 0.3 mm (footprint 4.5 m).</description>
-                <area_symbol inner_color="28" min_area="1000" patterns="1">
+                <area_symbol inner_color="28" min_area="1000" rotatable="true" patterns="1">
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="750" offset_along_line="0" color="27" line_width="1100"/>
                 </area_symbol>
             </symbol>
@@ -2662,7 +2662,7 @@ Minimum width: 0.25 mm (footprint 3.8 m).</description>
 Where runnability is better in one direction, a regular pattern of white, green 30% or green 60% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</description>
-                <area_symbol inner_color="26" min_area="1000" patterns="1">
+                <area_symbol inner_color="26" min_area="1000" rotatable="true" patterns="1">
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="22" line_width="400"/>
                 </area_symbol>
             </symbol>
@@ -2671,7 +2671,7 @@ Minimum width: 0.25 mm (footprint 3.8 m).</description>
 Where runnability is better in one direction, a regular pattern of white, green 30% or green 60% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</description>
-                <area_symbol inner_color="28" min_area="1000" patterns="1">
+                <area_symbol inner_color="28" min_area="1000" rotatable="true" patterns="1">
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="750" offset_along_line="0" color="26" line_width="1100"/>
                 </area_symbol>
             </symbol>
@@ -2680,7 +2680,7 @@ Minimum width: 0.25 mm (footprint 3.8 m).</description>
 Where runnability is better in one direction, a regular pattern of white, green 30% or green 60% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</description>
-                <area_symbol inner_color="27" min_area="1000" patterns="1">
+                <area_symbol inner_color="27" min_area="1000" rotatable="true" patterns="1">
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="750" offset_along_line="0" color="26" line_width="1100"/>
                 </area_symbol>
             </symbol>
@@ -2731,7 +2731,7 @@ Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</description>
 Must be combined with either symbol Open land (401) or Rough open land (403).
 May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
-                <area_symbol inner_color="33" min_area="4000" patterns="1">
+                <area_symbol inner_color="33" min_area="4000" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" rotatable="true" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="225" inner_color="29" outer_width="0" outer_color="-1" elements="0"/>
@@ -2744,7 +2744,7 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
 Must be combined with either symbol Open land (401) or Rough open land (403).
 May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
-                <area_symbol inner_color="34" min_area="4000" patterns="1">
+                <area_symbol inner_color="34" min_area="4000" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" rotatable="true" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="225" inner_color="29" outer_width="0" outer_color="-1" elements="0"/>
@@ -2755,7 +2755,7 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
             <symbol type="4" id="103" code="414" name="Vineyard or similar">
                 <description>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
-                <area_symbol inner_color="33" min_area="4000" patterns="2">
+                <area_symbol inner_color="33" min_area="4000" rotatable="true" patterns="2">
                     <pattern type="2" angle="1.5708" rotatable="true" line_spacing="1700" line_offset="0" offset_along_line="0" point_distance="1900">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="0" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2801,7 +2801,7 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
             <symbol type="4" id="104" code="414.1" name="Vineyard or similar, rough open land">
                 <description>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
-                <area_symbol inner_color="34" min_area="500" patterns="2">
+                <area_symbol inner_color="34" min_area="500" rotatable="true" patterns="2">
                     <pattern type="2" angle="1.5708" rotatable="true" line_spacing="1700" line_offset="0" offset_along_line="0" point_distance="1900">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="0" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
