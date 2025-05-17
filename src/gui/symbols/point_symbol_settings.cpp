@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -49,7 +49,7 @@ PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialo
 : SymbolPropertiesWidget(symbol, dialog), 
   symbol(symbol)
 {
-	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), symbol, 0, true);
+	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), symbol);
 	connect(symbol_editor, &PointSymbolEditorWidget::symbolEdited, this, &SymbolPropertiesWidget::propertiesModified );
 	
 	layout = new QVBoxLayout();
@@ -81,7 +81,7 @@ void PointSymbolSettings::reset(Symbol* symbol)
 	layout->removeWidget(symbol_editor);
 	delete(symbol_editor);
 	
-	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), this->symbol, 0, true);
+	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), this->symbol);
 	connect(symbol_editor, &PointSymbolEditorWidget::symbolEdited, this, &SymbolPropertiesWidget::propertiesModified );
 	layout->addWidget(symbol_editor);
 }

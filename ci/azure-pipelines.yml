@@ -341,7 +341,7 @@ jobs:
   displayName: Windows x32 (Release, MinGW)
   timeoutInMinutes: 90
   variables:
-    IMAGE_NAME: 'windows-2019'
+    IMAGE_NAME: 'windows-2022'
     SUPERBUILD_IMAGE_NAME: $(IMAGE_NAME)
     SUPERBUILD_INSTALL_DIR: 'C:/msys2'
     MINGW: mingw32
@@ -369,7 +369,7 @@ jobs:
   displayName: Windows x64 (Release, MinGW)
   timeoutInMinutes: 90
   variables:
-    IMAGE_NAME: 'windows-2019'
+    IMAGE_NAME: 'windows-2022'
     SUPERBUILD_IMAGE_NAME: $(IMAGE_NAME)
     SUPERBUILD_INSTALL_DIR: 'C:/msys2'
     MINGW: mingw64
