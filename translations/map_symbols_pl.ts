@@ -2210,7 +2210,7 @@ Footprint: 12 m in diameter.</source>
     <message>
         <source>Prominent man-made feature – x</source>
         <comment>Name of symbol 531</comment>
-        <translation type="unfinished"></translation>
+        <translation>Wyróżniający się obiekt stworzony przez człowieka - x</translation>
     </message>
     <message>
         <source>Location is at the centre of gravity of the symbol.
@@ -2549,9 +2549,24 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Brązowy 50%</translation>
     </message>
     <message>
+        <source>Black below light browns</source>
+        <comment>Color 6</comment>
+        <translation>Czarny pod jasnobrązowym</translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <comment>Color 8</comment>
+        <translation>Niebieski</translation>
+    </message>
+    <message>
         <source>Blue 50%</source>
         <comment>Color 9</comment>
         <translation>Niebieski 50%</translation>
+    </message>
+    <message>
+        <source>Brown</source>
+        <comment>Color 10</comment>
+        <translation>Brązowy</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
@@ -2562,6 +2577,16 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Black 25% (Grey)</source>
         <comment>Color 12</comment>
         <translation>Czarny 25% (Szary)</translation>
+    </message>
+    <message>
+        <source>Green 50%, Yellow</source>
+        <comment>Color 13</comment>
+        <translation>Zielony 50%, Żółty</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <comment>Color 14</comment>
+        <translation>Zielony</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -2724,6 +2749,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Ściana skalna nie do przejścia, minimalny rozmiar (zgodny z ISOM2000)</translation>
     </message>
     <message>
+        <source>Cliff</source>
+        <comment>Name of symbol 202</comment>
+        <translation>Ściana skalna do przejścia</translation>
+    </message>
+    <message>
         <source>Cliff, minimum size</source>
         <comment>Name of symbol 202.1</comment>
         <translation>Ściana skalna do przejścia, minimalny rozmiar</translation>
@@ -2833,6 +2863,436 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <comment>Name of symbol 215</comment>
         <translation>Rów</translation>
     </message>
+    <message>
+        <source>Uncrossable body of water, bank line</source>
+        <comment>Name of symbol 301.2</comment>
+        <translation>Nieprzekraczalny obiekt wodny, linia brzegowa</translation>
+    </message>
+    <message>
+        <source>Shallow body of water</source>
+        <comment>Name of symbol 302.1</comment>
+        <translation>Przekraczalny obiekt wodny</translation>
+    </message>
+    <message>
+        <source>Shallow body of water, solid outline</source>
+        <comment>Name of symbol 302.2</comment>
+        <translation>Przekraczalny obiekt wodny, linia brzegowa</translation>
+    </message>
+    <message>
+        <source>Shallow body of water, dashed outline</source>
+        <comment>Name of symbol 302.3</comment>
+        <translation>Przekraczalny obiekt wodny, przerywana linia brzegowa</translation>
+    </message>
+    <message>
+        <source>Waterhole</source>
+        <comment>Name of symbol 303</comment>
+        <translation>Dół z wodą</translation>
+    </message>
+    <message>
+        <source>Crossable watercourse</source>
+        <comment>Name of symbol 304</comment>
+        <translation>Przekraczalny strumień</translation>
+    </message>
+    <message>
+        <source>Small crossable watercourse</source>
+        <comment>Name of symbol 305</comment>
+        <translation>Mały przekraczalny strumień</translation>
+    </message>
+    <message>
+        <source>Minor/seasonal water channel</source>
+        <comment>Name of symbol 306</comment>
+        <translation>Niewielki lub sezonowy strumień</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh, with border line</source>
+        <comment>Name of symbol 307</comment>
+        <translation>Nieprzekraczalne bagno, z linią brzegową</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh</source>
+        <comment>Name of symbol 307.1</comment>
+        <translation>Nieprzekraczalne bagno</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh, border line</source>
+        <comment>Name of symbol 307.2</comment>
+        <translation>Nieprzekraczalne bagno, linia brzegowa</translation>
+    </message>
+    <message>
+        <source>Marsh</source>
+        <comment>Name of symbol 308</comment>
+        <translation>Bagno</translation>
+    </message>
+    <message>
+        <source>Marsh, minimum size</source>
+        <comment>Name of symbol 308.1</comment>
+        <translation>Bagno, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Narrow marsh</source>
+        <comment>Name of symbol 309</comment>
+        <translation>Wąskie bagno</translation>
+    </message>
+    <message>
+        <source>Indistinct marsh</source>
+        <comment>Name of symbol 310</comment>
+        <translation>Teren podmokły</translation>
+    </message>
+    <message>
+        <source>Indistinct marsh, minimum size</source>
+        <comment>Name of symbol 310.1</comment>
+        <translation>Teren podmokły, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Well, fountain or water tank</source>
+        <comment>Name of symbol 311</comment>
+        <translation>Mała fontanna lub studnia</translation>
+    </message>
+    <message>
+        <source>Spring</source>
+        <comment>Name of symbol 312</comment>
+        <translation>Źródło</translation>
+    </message>
+    <message>
+        <source>Prominent water feature</source>
+        <comment>Name of symbol 313</comment>
+        <translation>Wyróżniający się obiekt wodny</translation>
+    </message>
+    <message>
+        <source>Open land</source>
+        <comment>Name of symbol 401</comment>
+        <translation>Teren otwarty</translation>
+    </message>
+    <message>
+        <source>Open land with scattered trees</source>
+        <comment>Name of symbol 402</comment>
+        <translation>Teren otwarty z rozproszonymi drzewami</translation>
+    </message>
+    <message>
+        <source>Rough open land</source>
+        <comment>Name of symbol 403</comment>
+        <translation>Nieuporządkowany teren otwarty</translation>
+    </message>
+    <message>
+        <source>Rough open land with scattered trees</source>
+        <comment>Name of symbol 404</comment>
+        <translation>Nieuporządkowany teren otwarty z rozproszonymi drzewami</translation>
+    </message>
+    <message>
+        <source>Forest</source>
+        <comment>Name of symbol 405</comment>
+        <translation>Las</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 3</source>
+        <comment>Name of symbol 410.1</comment>
+        <translation>Las, możliwość biegu w jednym kierunku, 3</translation>
+    </message>
+    <message>
+        <source>Cultivated land</source>
+        <comment>Name of symbol 412</comment>
+        <translation>Grunty uprawne</translation>
+    </message>
+    <message>
+        <source>Orchard</source>
+        <comment>Name of symbol 413</comment>
+        <translation>Sad</translation>
+    </message>
+    <message>
+        <source>Vineyard</source>
+        <comment>Name of symbol 414</comment>
+        <translation>Winnica</translation>
+    </message>
+    <message>
+        <source>Distinct cultivation boundary</source>
+        <comment>Name of symbol 415</comment>
+        <translation>Wyraźna granica uprawy</translation>
+    </message>
+    <message>
+        <source>Distinct vegetation boundary</source>
+        <comment>Name of symbol 416</comment>
+        <translation>Granica kultur</translation>
+    </message>
+    <message>
+        <source>Distinct vegetation boundary, green dashed line</source>
+        <comment>Name of symbol 416.1</comment>
+        <translation>Granica kultur, zielona linia kreskowana</translation>
+    </message>
+    <message>
+        <source>Prominent large tree</source>
+        <comment>Name of symbol 417</comment>
+        <translation>Wyróżniające się duże drzewo</translation>
+    </message>
+    <message>
+        <source>Prominent bush or tree</source>
+        <comment>Name of symbol 418</comment>
+        <translation>Wyróżniający się krzew lub małe drzewo</translation>
+    </message>
+    <message>
+        <source>Prominent vegetation feature</source>
+        <comment>Name of symbol 419</comment>
+        <translation>Wyróżniający się obiekt roślinny</translation>
+    </message>
+    <message>
+        <source>Paved area, with bounding line</source>
+        <comment>Name of symbol 501</comment>
+        <translation>Teren utwardzony, z obramowaniem</translation>
+    </message>
+    <message>
+        <source>Paved area</source>
+        <comment>Name of symbol 501.1</comment>
+        <translation>Teren utwardzony</translation>
+    </message>
+    <message>
+        <source>Paved area, bounding line</source>
+        <comment>Name of symbol 501.2</comment>
+        <translation>Teren utwardzony, obramowanie</translation>
+    </message>
+    <message>
+        <source>Wide road, minimum width</source>
+        <comment>Name of symbol 502</comment>
+        <translation>Szeroka droga, minimalna szerokość</translation>
+    </message>
+    <message>
+        <source>Road with two carriageways</source>
+        <comment>Name of symbol 502.2</comment>
+        <translation>Droga dwupasmowa</translation>
+    </message>
+    <message>
+        <source>Road</source>
+        <comment>Name of symbol 503</comment>
+        <translation>Droga</translation>
+    </message>
+    <message>
+        <source>Vehicle track</source>
+        <comment>Name of symbol 504</comment>
+        <translation>Droga jezdna</translation>
+    </message>
+    <message>
+        <source>Footpath</source>
+        <comment>Name of symbol 505</comment>
+        <translation>Ścieżka</translation>
+    </message>
+    <message>
+        <source>Small footpath</source>
+        <comment>Name of symbol 506</comment>
+        <translation>Mała ścieżka</translation>
+    </message>
+    <message>
+        <source>Less distinct small footpath</source>
+        <comment>Name of symbol 507</comment>
+        <translation>Mniej wyraźna mała ścieżka</translation>
+    </message>
+    <message>
+        <source>Narrow ride</source>
+        <comment>Name of symbol 508</comment>
+        <translation>Przecinka</translation>
+    </message>
+    <message>
+        <source>Railway</source>
+        <comment>Name of symbol 509</comment>
+        <translation>Linia kolejowa</translation>
+    </message>
+    <message>
+        <source>Power line, cableway or skilift</source>
+        <comment>Name of symbol 510</comment>
+        <translation>Linia energetyczna, kolejka linowa lub wyciąg</translation>
+    </message>
+    <message>
+        <source>Major power line, minimum width</source>
+        <comment>Name of symbol 511</comment>
+        <translation>Linia energatyczna wysokiego napięcia, minimalna długość</translation>
+    </message>
+    <message>
+        <source>Major power line</source>
+        <comment>Name of symbol 511.1</comment>
+        <translation>Linia energatyczna wysokiego napięcia</translation>
+    </message>
+    <message>
+        <source>Major power line, large carrying masts</source>
+        <comment>Name of symbol 511.2</comment>
+        <translation>Linia energatyczna wysokiego napięcia, duże słupy</translation>
+    </message>
+    <message>
+        <source>Bridge / tunnel</source>
+        <comment>Name of symbol 512</comment>
+        <translation>Most / tunel</translation>
+    </message>
+    <message>
+        <source>Bridge / tunnel, minimum size</source>
+        <comment>Name of symbol 512.1</comment>
+        <translation>Most / tunel, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Footbridge</source>
+        <comment>Name of symbol 512.2</comment>
+        <translation>Most pieszy</translation>
+    </message>
+    <message>
+        <source>Ruined wall</source>
+        <comment>Name of symbol 514</comment>
+        <translation>Zrujnowana ściana</translation>
+    </message>
+    <message>
+        <source>Impassable wall</source>
+        <comment>Name of symbol 515</comment>
+        <translation>Mur nie do przejścia</translation>
+    </message>
+    <message>
+        <source>Fence</source>
+        <comment>Name of symbol 516</comment>
+        <translation>Ogrodzenie</translation>
+    </message>
+    <message>
+        <source>Ruined fence</source>
+        <comment>Name of symbol 517</comment>
+        <translation>Zrujnowane ogrodzenie</translation>
+    </message>
+    <message>
+        <source>Impassable fence</source>
+        <comment>Name of symbol 518</comment>
+        <translation>Nieprzekraczalne ogrodzenie</translation>
+    </message>
+    <message>
+        <source>Crossing point</source>
+        <comment>Name of symbol 519</comment>
+        <translation>Punkt przejścia</translation>
+    </message>
+    <message>
+        <source>Building</source>
+        <comment>Name of symbol 521</comment>
+        <translation>Budynek</translation>
+    </message>
+    <message>
+        <source>Building, minimum size</source>
+        <comment>Name of symbol 521.1</comment>
+        <translation>Budynek, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Large building with outline</source>
+        <comment>Name of symbol 521.2</comment>
+        <translation>Duży budynek, z obramowaniem</translation>
+    </message>
+    <message>
+        <source>Large building</source>
+        <comment>Name of symbol 521.3</comment>
+        <translation>Duży budynek</translation>
+    </message>
+    <message>
+        <source>Canopy with outline</source>
+        <comment>Name of symbol 522</comment>
+        <translation>Zadaszenie, z obramowaniem</translation>
+    </message>
+    <message>
+        <source>Canopy</source>
+        <comment>Name of symbol 522.1</comment>
+        <translation>Zadaszenie</translation>
+    </message>
+    <message>
+        <source>Ruin</source>
+        <comment>Name of symbol 523</comment>
+        <translation>Ruina</translation>
+    </message>
+    <message>
+        <source>Ruin, minimum size</source>
+        <comment>Name of symbol 523.1</comment>
+        <translation>Ruina, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>High tower</source>
+        <comment>Name of symbol 524</comment>
+        <translation>Wysoka wieża</translation>
+    </message>
+    <message>
+        <source>Small tower</source>
+        <comment>Name of symbol 525</comment>
+        <translation>Mała wieża</translation>
+    </message>
+    <message>
+        <source>Cairn</source>
+        <comment>Name of symbol 526</comment>
+        <translation>Monument, pomnik lub kamień graniczny</translation>
+    </message>
+    <message>
+        <source>Fodder rack</source>
+        <comment>Name of symbol 527</comment>
+        <translation>Paśnik</translation>
+    </message>
+    <message>
+        <source>Prominent line feature</source>
+        <comment>Name of symbol 528</comment>
+        <translation>Wyróżniający się obiekt liniowy</translation>
+    </message>
+    <message>
+        <source>Prominent impassable line feature</source>
+        <comment>Name of symbol 529</comment>
+        <translation>Wyróżniający się obiekt liniowy nie do przejścia</translation>
+    </message>
+    <message>
+        <source>Prominent man-made feature – ring</source>
+        <comment>Name of symbol 530</comment>
+        <translation>Wyróżniający się obiekt stworzony przez człowieka - okrąg</translation>
+    </message>
+    <message>
+        <source>Prominent man-made feature – x</source>
+        <comment>Name of symbol 531</comment>
+        <translation>Wyróżniający się obiekt stworzony przez człowieka - x</translation>
+    </message>
+    <message>
+        <source>Magnetic north line</source>
+        <comment>Name of symbol 601.1</comment>
+        <translation>Linia północy magnetycznej</translation>
+    </message>
+    <message>
+        <source>Magnetic north line, blue</source>
+        <comment>Name of symbol 601.3</comment>
+        <translation>Linia północy magnetycznej, niebieska</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <comment>Name of symbol 701</comment>
+        <translation>Start</translation>
+    </message>
+    <message>
+        <source>Map issue point</source>
+        <comment>Name of symbol 702</comment>
+        <translation>Punkt wydania mapy</translation>
+    </message>
+    <message>
+        <source>Control point</source>
+        <comment>Name of symbol 703</comment>
+        <translation>Punkt kontrolny</translation>
+    </message>
+    <message>
+        <source>Control number</source>
+        <comment>Name of symbol 704</comment>
+        <translation>Numer punktu kontrolnego</translation>
+    </message>
+    <message>
+        <source>Course line</source>
+        <comment>Name of symbol 705</comment>
+        <translation>Linia przebiegu</translation>
+    </message>
+    <message>
+        <source>Finish</source>
+        <comment>Name of symbol 706</comment>
+        <translation>Meta</translation>
+    </message>
+    <message>
+        <source>Marked route</source>
+        <comment>Name of symbol 707</comment>
+        <translation>Przebieg wyznakowany</translation>
+    </message>
+    <message>
+        <source>Crossing point</source>
+        <comment>Name of symbol 710</comment>
+        <translation>Punkt przejścia</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Logo</source>
+        <comment>Name of symbol 999</comment>
+        <translation>Logo OpenOrienteering</translation>
+    </message>
 </context>
 <context>
     <name>ISOM2000</name>
@@ -2852,14 +3312,44 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Brązowy 50%</translation>
     </message>
     <message>
+        <source>Black below light browns</source>
+        <comment>Color 3</comment>
+        <translation>Czarny pod jasnobrązowym</translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <comment>Color 5</comment>
+        <translation>Niebieski</translation>
+    </message>
+    <message>
         <source>Blue 50%</source>
         <comment>Color 6</comment>
         <translation>Niebieski 50%</translation>
     </message>
     <message>
+        <source>Brown</source>
+        <comment>Color 7</comment>
+        <translation>Brązowy</translation>
+    </message>
+    <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 8</comment>
         <translation>OpenOrienteering Pomarańczowy</translation>
+    </message>
+    <message>
+        <source>Black 30%</source>
+        <comment>Color 9</comment>
+        <translation>Czarny 30%</translation>
+    </message>
+    <message>
+        <source>Green 50%, Yellow</source>
+        <comment>Color 10</comment>
+        <translation>Zielony 50%, Żółty</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <comment>Color 14</comment>
+        <translation>Zielony</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -2897,6 +3387,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Warstwica pomocnicza</translation>
     </message>
     <message>
+        <source>Slope line</source>
+        <comment>Name of symbol 104</comment>
+        <translation>Kreska spadu</translation>
+    </message>
+    <message>
         <source>Contour value</source>
         <comment>Name of symbol 105</comment>
         <translation>Wartość warstwicy</translation>
@@ -2910,6 +3405,16 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 106.0.1</comment>
         <translation>Skarpa, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Earth bank, very high</source>
+        <comment>Name of symbol 106.1</comment>
+        <translation>Skarpa, bardzo wysoka</translation>
+    </message>
+    <message>
+        <source>Earth bank, very high, minimum size</source>
+        <comment>Name of symbol 106.1.1</comment>
+        <translation>Skarpa, bardzo wysoka, minimalny rozmiar</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -2942,6 +3447,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Kopczyk</translation>
     </message>
     <message>
+        <source>Elongated knoll</source>
+        <comment>Name of symbol 113</comment>
+        <translation>Podłużny kopczyk</translation>
+    </message>
+    <message>
         <source>Small depression</source>
         <comment>Name of symbol 115</comment>
         <translation>Zagłębienie</translation>
@@ -2950,6 +3460,16 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Pit</source>
         <comment>Name of symbol 116</comment>
         <translation>Dół</translation>
+    </message>
+    <message>
+        <source>Broken ground, small</source>
+        <comment>Name of symbol 117.1</comment>
+        <translation>Nierówny teren, małe punkty</translation>
+    </message>
+    <message>
+        <source>Broken ground, big</source>
+        <comment>Name of symbol 117.2</comment>
+        <translation>Nierówny teren, duże punkty</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -2962,6 +3482,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Ściana skalna nie do przejścia, minimalny rozmiar</translation>
     </message>
     <message>
+        <source>Impassable cliff, no tags</source>
+        <comment>Name of symbol 201.1</comment>
+        <translation>Ściana skalna nie do przejścia, bez etykiet</translation>
+    </message>
+    <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.2</comment>
         <translation>Ściana skalna nie do przejścia, linia etykiety</translation>
@@ -2972,9 +3497,54 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Użyj tego symblu do pokazania pełnej rozpiętości urwiska.</translation>
     </message>
     <message>
+        <source>Passable rock face</source>
+        <comment>Name of symbol 203</comment>
+        <translation>Ściana skalna do przejścia</translation>
+    </message>
+    <message>
+        <source>Passable rock face, minimum size</source>
+        <comment>Name of symbol 203.0.1</comment>
+        <translation>Ściana skalna do przejścia, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags</source>
+        <comment>Name of symbol 203.1</comment>
+        <translation>Ściana skalna do przejścia, bez etykiet</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, minimum size</source>
+        <comment>Name of symbol 203.1.1</comment>
+        <translation>Ściana skalna do przejścia, bez etykiet, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded</source>
+        <comment>Name of symbol 203.2</comment>
+        <translation>Ściana skalna do przejścia, bez etykiet, zaokrąglona</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded, minimum size</source>
+        <comment>Name of symbol 203.2.1</comment>
+        <translation>Ściana skalna do przejścia, bez etykiet, zaokrąglona, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Rocky pit</source>
+        <comment>Name of symbol 204</comment>
+        <translation>Skalisty dół</translation>
+    </message>
+    <message>
+        <source>Cave</source>
+        <comment>Name of symbol 205</comment>
+        <translation>Jaskinia</translation>
+    </message>
+    <message>
         <source>Boulder</source>
         <comment>Name of symbol 206</comment>
         <translation>Głaz</translation>
+    </message>
+    <message>
+        <source>Boulder, enlarged</source>
+        <comment>Name of symbol 206.1</comment>
+        <translation>Głaz, powiększony</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -2985,6 +3555,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Boulder field</source>
         <comment>Name of symbol 208</comment>
         <translation>Pole głazów</translation>
+    </message>
+    <message>
+        <source>Boulder field, large</source>
+        <comment>Name of symbol 208.1</comment>
+        <translation>Pole głazów, duże</translation>
     </message>
     <message>
         <source>Boulder cluster</source>
@@ -3000,6 +3575,381 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Bare rock</source>
         <comment>Name of symbol 212</comment>
         <translation>Płyta skalna</translation>
+    </message>
+    <message>
+        <source>Lake</source>
+        <comment>Name of symbol 301</comment>
+        <translation>Jezioro</translation>
+    </message>
+    <message>
+        <source>Lake, bank line</source>
+        <comment>Name of symbol 301.1</comment>
+        <translation>Jezioro, linia brzegowa</translation>
+    </message>
+    <message>
+        <source>Lake, with bank line</source>
+        <comment>Name of symbol 301.2</comment>
+        <translation>Jezioro, z linią brzegową</translation>
+    </message>
+    <message>
+        <source>Pond</source>
+        <comment>Name of symbol 302</comment>
+        <translation>Staw</translation>
+    </message>
+    <message>
+        <source>Waterhole</source>
+        <comment>Name of symbol 303</comment>
+        <translation>Dół z wodą</translation>
+    </message>
+    <message>
+        <source>Crossable watercourse</source>
+        <comment>Name of symbol 305</comment>
+        <translation>Przekraczalny strumień</translation>
+    </message>
+    <message>
+        <source>Crossable small watercourse</source>
+        <comment>Name of symbol 306</comment>
+        <translation>Mały przekraczalny strumień</translation>
+    </message>
+    <message>
+        <source>Narrow marsh</source>
+        <comment>Name of symbol 308</comment>
+        <translation>Wąskie bagno</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh</source>
+        <comment>Name of symbol 309</comment>
+        <translation>Nieprzekraczalne bagno</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh, border line</source>
+        <comment>Name of symbol 309.1</comment>
+        <translation>Nieprzekraczalne bagno, linia brzegowa</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh, with border line</source>
+        <comment>Name of symbol 309.2</comment>
+        <translation>Nieprzekraczalne bagno, z linią brzegową</translation>
+    </message>
+    <message>
+        <source>Marsh</source>
+        <comment>Name of symbol 310</comment>
+        <translation>Bagno</translation>
+    </message>
+    <message>
+        <source>Marsh, minimum size</source>
+        <comment>Name of symbol 310.1</comment>
+        <translation>Bagno, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Indistinct marsh</source>
+        <comment>Name of symbol 311</comment>
+        <translation>Teren podmokły</translation>
+    </message>
+    <message>
+        <source>Indistinct marsh, minimum size</source>
+        <comment>Name of symbol 311.1</comment>
+        <translation>Teren podmokły, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Spring</source>
+        <comment>Name of symbol 313</comment>
+        <translation>Źródło</translation>
+    </message>
+    <message>
+        <source>Special water feature</source>
+        <comment>Name of symbol 314</comment>
+        <translation>Wyróżniający się obiekt wodny</translation>
+    </message>
+    <message>
+        <source>Open land</source>
+        <comment>Name of symbol 401</comment>
+        <translation>Teren otwarty</translation>
+    </message>
+    <message>
+        <source>Open land with scattered trees</source>
+        <comment>Name of symbol 402</comment>
+        <translation>Teren otwarty z rozproszonymi drzewami</translation>
+    </message>
+    <message>
+        <source>Rough open land</source>
+        <comment>Name of symbol 403</comment>
+        <translation>Nieuporządkowany teren otwarty</translation>
+    </message>
+    <message>
+        <source>Rough open land with scattered trees</source>
+        <comment>Name of symbol 404</comment>
+        <translation>Nieuporządkowany teren otwarty z rozproszonymi drzewami</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 1</source>
+        <comment>Name of symbol 411.0</comment>
+        <translation>Las, możliwość biegu w jednym kierunku, 1</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 2</source>
+        <comment>Name of symbol 411.1</comment>
+        <translation>Las, możliwość biegu w jednym kierunku, 2</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 3</source>
+        <comment>Name of symbol 411.2</comment>
+        <translation>Las, możliwość biegu w jednym kierunku, 3</translation>
+    </message>
+    <message>
+        <source>Orchard</source>
+        <comment>Name of symbol 412</comment>
+        <translation>Sad</translation>
+    </message>
+    <message>
+        <source>Vineyard</source>
+        <comment>Name of symbol 413</comment>
+        <translation>Winnica</translation>
+    </message>
+    <message>
+        <source>Distinct cultivation boundary</source>
+        <comment>Name of symbol 414</comment>
+        <translation>Wyraźna granica uprawy</translation>
+    </message>
+    <message>
+        <source>Cultivated land</source>
+        <comment>Name of symbol 415</comment>
+        <translation>Grunty uprawne</translation>
+    </message>
+    <message>
+        <source>Distinct vegetation boundary</source>
+        <comment>Name of symbol 416</comment>
+        <translation>Granica kultur</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 418</comment>
+        <translation>Wyróżniający się obiekt roślinny</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 419</comment>
+        <translation>Wyróżniający się obiekt roślinny</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 420</comment>
+        <translation>Wyróżniający się obiekt roślinny</translation>
+    </message>
+    <message>
+        <source>Major road, minimum width</source>
+        <comment>Name of symbol 502</comment>
+        <translation>Droga główna, minimalna szerokość</translation>
+    </message>
+    <message>
+        <source>Major road, minimum width, under construction</source>
+        <comment>Name of symbol 502.1</comment>
+        <translation>Droga główna, minimalna szerokość, w budowie</translation>
+    </message>
+    <message>
+        <source>Road</source>
+        <comment>Name of symbol 504</comment>
+        <translation>Droga</translation>
+    </message>
+    <message>
+        <source>Vehicle track</source>
+        <comment>Name of symbol 505</comment>
+        <translation>Droga jezdna</translation>
+    </message>
+    <message>
+        <source>Footpath</source>
+        <comment>Name of symbol 506</comment>
+        <translation>Ścieżka</translation>
+    </message>
+    <message>
+        <source>Less distinct small path</source>
+        <comment>Name of symbol 508</comment>
+        <translation>Mniej wyraźna mała ścieżka</translation>
+    </message>
+    <message>
+        <source>Narrow ride</source>
+        <comment>Name of symbol 509</comment>
+        <translation>Przecinka</translation>
+    </message>
+    <message>
+        <source>Footbridge</source>
+        <comment>Name of symbol 512</comment>
+        <translation>Most pieszy</translation>
+    </message>
+    <message>
+        <source>Railway</source>
+        <comment>Name of symbol 515</comment>
+        <translation>Linia kolejowa</translation>
+    </message>
+    <message>
+        <source>Power line</source>
+        <comment>Name of symbol 516</comment>
+        <translation>Linia energetyczna</translation>
+    </message>
+    <message>
+        <source>Major power line</source>
+        <comment>Name of symbol 517</comment>
+        <translation>Linia energatyczna wysokiego napięcia</translation>
+    </message>
+    <message>
+        <source>Ruined stone wall</source>
+        <comment>Name of symbol 520</comment>
+        <translation>Zrujnowana ściana kamienna</translation>
+    </message>
+    <message>
+        <source>Fence</source>
+        <comment>Name of symbol 522</comment>
+        <translation>Ogrodzenie</translation>
+    </message>
+    <message>
+        <source>Ruined fence</source>
+        <comment>Name of symbol 523</comment>
+        <translation>Zrujnowane ogrodzenie</translation>
+    </message>
+    <message>
+        <source>High fence</source>
+        <comment>Name of symbol 524</comment>
+        <translation>Wysoki płot</translation>
+    </message>
+    <message>
+        <source>Crossing point</source>
+        <comment>Name of symbol 525</comment>
+        <translation>Punkt przejścia</translation>
+    </message>
+    <message>
+        <source>Building</source>
+        <comment>Name of symbol 526</comment>
+        <translation>Budynek</translation>
+    </message>
+    <message>
+        <source>Building, minimum size</source>
+        <comment>Name of symbol 526.1</comment>
+        <translation>Budynek, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Paved area</source>
+        <comment>Name of symbol 529</comment>
+        <translation>Teren utwardzony</translation>
+    </message>
+    <message>
+        <source>Paved area, bounding line</source>
+        <comment>Name of symbol 529.1</comment>
+        <translation>Teren utwardzony, obramowanie</translation>
+    </message>
+    <message>
+        <source>Paved area, with bounding line</source>
+        <comment>Name of symbol 529.2</comment>
+        <translation>Teren utwardzony, z obramowaniem</translation>
+    </message>
+    <message>
+        <source>Ruin</source>
+        <comment>Name of symbol 530</comment>
+        <translation>Ruina</translation>
+    </message>
+    <message>
+        <source>Ruin, no dashes</source>
+        <comment>Name of symbol 530.1</comment>
+        <translation>Ruina, bez kreskowania</translation>
+    </message>
+    <message>
+        <source>Ruin, minimum size</source>
+        <comment>Name of symbol 530.2</comment>
+        <translation>Ruina, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Grave</source>
+        <comment>Name of symbol 532</comment>
+        <translation>Mogiła</translation>
+    </message>
+    <message>
+        <source>Crossable pipeline</source>
+        <comment>Name of symbol 533</comment>
+        <translation>Przekraczalny rurociąg</translation>
+    </message>
+    <message>
+        <source>High tower</source>
+        <comment>Name of symbol 535</comment>
+        <translation>Wysoka wieża</translation>
+    </message>
+    <message>
+        <source>Small tower</source>
+        <comment>Name of symbol 536</comment>
+        <translation>Mała wieża</translation>
+    </message>
+    <message>
+        <source>Cairn</source>
+        <comment>Name of symbol 537</comment>
+        <translation>Monument, pomnik lub kamień graniczny</translation>
+    </message>
+    <message>
+        <source>Fodder rack</source>
+        <comment>Name of symbol 538</comment>
+        <translation>Paśnik</translation>
+    </message>
+    <message>
+        <source>Special man-made feature</source>
+        <comment>Name of symbol 539</comment>
+        <translation>Wyróżniający się obiekt stworzony przez człowieka</translation>
+    </message>
+    <message>
+        <source>Special man-made feature</source>
+        <comment>Name of symbol 540</comment>
+        <translation>Wyróżniający się obiekt stworzony przez człowieka</translation>
+    </message>
+    <message>
+        <source>Magnetic north line</source>
+        <comment>Name of symbol 601</comment>
+        <translation>Linia północy magnetycznej</translation>
+    </message>
+    <message>
+        <source>Magnetic north line, blue</source>
+        <comment>Name of symbol 601.2</comment>
+        <translation>Linia północy magnetycznej, niebieska</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <comment>Name of symbol 701</comment>
+        <translation>Start</translation>
+    </message>
+    <message>
+        <source>Control point</source>
+        <comment>Name of symbol 702</comment>
+        <translation>Punkt kontrolny</translation>
+    </message>
+    <message>
+        <source>Control number</source>
+        <comment>Name of symbol 703</comment>
+        <translation>Numer punktu kontrolnego</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <comment>Name of symbol 704</comment>
+        <translation>Linia</translation>
+    </message>
+    <message>
+        <source>Marked route</source>
+        <comment>Name of symbol 705</comment>
+        <translation>Przebieg wyznakowany</translation>
+    </message>
+    <message>
+        <source>Finish</source>
+        <comment>Name of symbol 706</comment>
+        <translation>Meta</translation>
+    </message>
+    <message>
+        <source>Crossing point</source>
+        <comment>Name of symbol 708</comment>
+        <translation>Punkt przejścia</translation>
+    </message>
+    <message>
+        <source>Dangerous area</source>
+        <comment>Name of symbol 710</comment>
+        <translation>Teren zakazany</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Logo</source>
+        <comment>Name of symbol 999</comment>
+        <translation>Logo OpenOrienteering</translation>
     </message>
 </context>
 <context>
@@ -5365,9 +6315,24 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Purpurowy</translation>
     </message>
     <message>
+        <source>Purple 50%</source>
+        <comment>Color 1</comment>
+        <translation>Purpurowy 50%</translation>
+    </message>
+    <message>
         <source>Black</source>
         <comment>Color 2</comment>
         <translation>Czarny</translation>
+    </message>
+    <message>
+        <source>Black 50%</source>
+        <comment>Color 6</comment>
+        <translation>Czarny 50%</translation>
+    </message>
+    <message>
+        <source>Black 30%</source>
+        <comment>Color 7</comment>
+        <translation>Czarny 30%</translation>
     </message>
     <message>
         <source>Black 20%</source>
@@ -5375,9 +6340,39 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Czarny 20%</translation>
     </message>
     <message>
+        <source>Black below light browns</source>
+        <comment>Color 15</comment>
+        <translation>Czarny pod jasnobrązowym</translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <comment>Color 17</comment>
+        <translation>Niebieski</translation>
+    </message>
+    <message>
+        <source>Blue 30%</source>
+        <comment>Color 19</comment>
+        <translation>Niebieski 30%</translation>
+    </message>
+    <message>
+        <source>Brown</source>
+        <comment>Color 21</comment>
+        <translation>Brązowy</translation>
+    </message>
+    <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 22</comment>
         <translation>OpenOrienteering Pomarańczowy</translation>
+    </message>
+    <message>
+        <source>Green 50%, Yellow</source>
+        <comment>Color 24</comment>
+        <translation>Zielony 50%, Żółty</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <comment>Color 28</comment>
+        <translation>Zielony</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -5415,6 +6410,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Warstwica pomocnicza</translation>
     </message>
     <message>
+        <source>Slope line</source>
+        <comment>Name of symbol 104</comment>
+        <translation>Kreska spadu</translation>
+    </message>
+    <message>
         <source>Contour value</source>
         <comment>Name of symbol 105</comment>
         <translation>Wartość warstwicy</translation>
@@ -5423,6 +6423,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Earth bank</source>
         <comment>Name of symbol 106.0</comment>
         <translation>Skarpa</translation>
+    </message>
+    <message>
+        <source>Earth bank, very high</source>
+        <comment>Name of symbol 106.1</comment>
+        <translation>Skarpa, bardzo wysoka</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -5435,6 +6440,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Użyj tego symbolu do pokazania pełnej rozpiętości szerokich zmian poziomu gruntu.</translation>
     </message>
     <message>
+        <source>Erosion gully or trench</source>
+        <comment>Name of symbol 109</comment>
+        <translation>Rynna lub rów ziemny</translation>
+    </message>
+    <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 110</comment>
         <translation>Mały rów ziemny</translation>
@@ -5445,6 +6455,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Kopczyk</translation>
     </message>
     <message>
+        <source>Elongated knoll</source>
+        <comment>Name of symbol 113</comment>
+        <translation>Podłużny kopczyk</translation>
+    </message>
+    <message>
         <source>Small depression</source>
         <comment>Name of symbol 115</comment>
         <translation>Zagłębienie</translation>
@@ -5453,6 +6468,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Pit</source>
         <comment>Name of symbol 116</comment>
         <translation>Dół</translation>
+    </message>
+    <message>
+        <source>Broken ground, small</source>
+        <comment>Name of symbol 117.1</comment>
+        <translation>Nierówny teren, małe punkty</translation>
     </message>
     <message>
         <source>Broken ground</source>
@@ -5475,6 +6495,51 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Użyj tego symblu do pokazania pełnej rozpiętości urwiska.</translation>
     </message>
     <message>
+        <source>Gigantic boulder or rock pillar</source>
+        <comment>Name of symbol 202</comment>
+        <translation>Gigantyczny głaz lub filar skalny</translation>
+    </message>
+    <message>
+        <source>Passable rock face</source>
+        <comment>Name of symbol 203</comment>
+        <translation>Ściana skalna do przejścia</translation>
+    </message>
+    <message>
+        <source>Passable rock face, minimum size</source>
+        <comment>Name of symbol 203.0.1</comment>
+        <translation>Ściana skalna do przejścia, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags</source>
+        <comment>Name of symbol 203.1</comment>
+        <translation>Ściana skalna do przejścia, bez etykiet</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, minimum size</source>
+        <comment>Name of symbol 203.1.1</comment>
+        <translation>Ściana skalna do przejścia, bez etykiet, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded</source>
+        <comment>Name of symbol 203.2</comment>
+        <translation>Ściana skalna do przejścia, bez etykiet, zaokrąglona</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded, minimum size</source>
+        <comment>Name of symbol 203.2.1</comment>
+        <translation>Ściana skalna do przejścia, bez etykiet, zaokrąglona, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Rocky pit</source>
+        <comment>Name of symbol 204</comment>
+        <translation>Skalisty dół</translation>
+    </message>
+    <message>
+        <source>Cave</source>
+        <comment>Name of symbol 205</comment>
+        <translation>Jaskinia</translation>
+    </message>
+    <message>
         <source>Boulder</source>
         <comment>Name of symbol 206</comment>
         <translation>Głaz</translation>
@@ -5490,9 +6555,234 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Pole głazów</translation>
     </message>
     <message>
+        <source>Boulder field, large</source>
+        <comment>Name of symbol 208.1</comment>
+        <translation>Pole głazów, duże</translation>
+    </message>
+    <message>
         <source>Bare rock</source>
         <comment>Name of symbol 212</comment>
         <translation>Płyta skalna</translation>
+    </message>
+    <message>
+        <source>Waterhole</source>
+        <comment>Name of symbol 303</comment>
+        <translation>Dół z wodą</translation>
+    </message>
+    <message>
+        <source>Narrow marsh</source>
+        <comment>Name of symbol 308</comment>
+        <translation>Wąskie bagno</translation>
+    </message>
+    <message>
+        <source>Marsh</source>
+        <comment>Name of symbol 310</comment>
+        <translation>Bagno</translation>
+    </message>
+    <message>
+        <source>Marsh, minimum size</source>
+        <comment>Name of symbol 310.1</comment>
+        <translation>Bagno, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Indistinct marsh</source>
+        <comment>Name of symbol 311</comment>
+        <translation>Teren podmokły</translation>
+    </message>
+    <message>
+        <source>Indistinct marsh, minimum size</source>
+        <comment>Name of symbol 311.1</comment>
+        <translation>Teren podmokły, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Spring</source>
+        <comment>Name of symbol 313</comment>
+        <translation>Źródło</translation>
+    </message>
+    <message>
+        <source>Prominent water feature</source>
+        <comment>Name of symbol 314</comment>
+        <translation>Wyróżniający się obiekt wodny</translation>
+    </message>
+    <message>
+        <source>Open land</source>
+        <comment>Name of symbol 401</comment>
+        <translation>Teren otwarty</translation>
+    </message>
+    <message>
+        <source>Open land with scattered trees</source>
+        <comment>Name of symbol 402</comment>
+        <translation>Teren otwarty z rozproszonymi drzewami</translation>
+    </message>
+    <message>
+        <source>Rough open land</source>
+        <comment>Name of symbol 403</comment>
+        <translation>Nieuporządkowany teren otwarty</translation>
+    </message>
+    <message>
+        <source>Rough open land with scattered trees</source>
+        <comment>Name of symbol 404</comment>
+        <translation>Nieuporządkowany teren otwarty z rozproszonymi drzewami</translation>
+    </message>
+    <message>
+        <source>Orchard</source>
+        <comment>Name of symbol 412</comment>
+        <translation>Sad</translation>
+    </message>
+    <message>
+        <source>Distinct cultivation boundary</source>
+        <comment>Name of symbol 414</comment>
+        <translation>Wyraźna granica uprawy</translation>
+    </message>
+    <message>
+        <source>Distinct vegetation boundary</source>
+        <comment>Name of symbol 416</comment>
+        <translation>Granica kultur</translation>
+    </message>
+    <message>
+        <source>Prominent large tree</source>
+        <comment>Name of symbol 418</comment>
+        <translation>Wyróżniające się duże drzewo</translation>
+    </message>
+    <message>
+        <source>Prominent vegetation feature</source>
+        <comment>Name of symbol 420</comment>
+        <translation>Wyróżniający się obiekt roślinny</translation>
+    </message>
+    <message>
+        <source>Less distinct small path</source>
+        <comment>Name of symbol 508</comment>
+        <translation>Mniej wyraźna mała ścieżka</translation>
+    </message>
+    <message>
+        <source>Narrow ride</source>
+        <comment>Name of symbol 509</comment>
+        <translation>Przecinka</translation>
+    </message>
+    <message>
+        <source>Bridge, minimum width</source>
+        <comment>Name of symbol 512.1.1</comment>
+        <translation>Most, minimalna szerokość</translation>
+    </message>
+    <message>
+        <source>Bridge, one side</source>
+        <comment>Name of symbol 512.1.2</comment>
+        <translation>Most, jedna strona</translation>
+    </message>
+    <message>
+        <source>Railway</source>
+        <comment>Name of symbol 515.1</comment>
+        <translation>Linia kolejowa</translation>
+    </message>
+    <message>
+        <source>Power line, cableway or skilift</source>
+        <comment>Name of symbol 516</comment>
+        <translation>Linia energetyczna, kolejka linowa lub wyciąg</translation>
+    </message>
+    <message>
+        <source>Major power line</source>
+        <comment>Name of symbol 517</comment>
+        <translation>Linia energatyczna wysokiego napięcia</translation>
+    </message>
+    <message>
+        <source>Passable wall</source>
+        <comment>Name of symbol 519.1.1</comment>
+        <translation>Mur do przejścia</translation>
+    </message>
+    <message>
+        <source>Passable fence or railing</source>
+        <comment>Name of symbol 522</comment>
+        <translation>Ogrodzenie lub barierka do przejścia</translation>
+    </message>
+    <message>
+        <source>Crossing point</source>
+        <comment>Name of symbol 525</comment>
+        <translation>Punkt przejścia</translation>
+    </message>
+    <message>
+        <source>Canopy</source>
+        <comment>Name of symbol 526.2</comment>
+        <translation>Zadaszenie</translation>
+    </message>
+    <message>
+        <source>Pillar</source>
+        <comment>Name of symbol 526.3</comment>
+        <translation>Filar</translation>
+    </message>
+    <message>
+        <source>High tower</source>
+        <comment>Name of symbol 535</comment>
+        <translation>Wysoka wieża</translation>
+    </message>
+    <message>
+        <source>Small tower</source>
+        <comment>Name of symbol 536</comment>
+        <translation>Mała wieża</translation>
+    </message>
+    <message>
+        <source>Cairn, memorial, small monument or boundary stone</source>
+        <comment>Name of symbol 537</comment>
+        <translation>Monument, pomnik lub kamień graniczny</translation>
+    </message>
+    <message>
+        <source>Fodder rack</source>
+        <comment>Name of symbol 538</comment>
+        <translation>Paśnik</translation>
+    </message>
+    <message>
+        <source>Magnetic north line, blue</source>
+        <comment>Name of symbol 601.0.4</comment>
+        <translation>Linia północy magnetycznej, niebieska</translation>
+    </message>
+    <message>
+        <source>Magnetic north line, blue, with arrow</source>
+        <comment>Name of symbol 601.0.5</comment>
+        <translation>Linia północy magnetycznej, niebieska, ze strzałką</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <comment>Name of symbol 701</comment>
+        <translation>Start</translation>
+    </message>
+    <message>
+        <source>Control point</source>
+        <comment>Name of symbol 702</comment>
+        <translation>Punkt kontrolny</translation>
+    </message>
+    <message>
+        <source>Control number</source>
+        <comment>Name of symbol 703</comment>
+        <translation>Numer punktu kontrolnego</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <comment>Name of symbol 704</comment>
+        <translation>Linia</translation>
+    </message>
+    <message>
+        <source>Marked route</source>
+        <comment>Name of symbol 705</comment>
+        <translation>Przebieg wyznakowany</translation>
+    </message>
+    <message>
+        <source>Finish</source>
+        <comment>Name of symbol 706</comment>
+        <translation>Meta</translation>
+    </message>
+    <message>
+        <source>Crossing point</source>
+        <comment>Name of symbol 708</comment>
+        <translation>Punkt przejścia</translation>
+    </message>
+    <message>
+        <source>Crossing section, one side</source>
+        <comment>Name of symbol 708.1</comment>
+        <translation>Punkt przejścia, jedna strona</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Logo</source>
+        <comment>Name of symbol 999</comment>
+        <translation>Logo OpenOrienteering</translation>
     </message>
 </context>
 <context>
@@ -6189,7 +7479,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Railway</source>
         <comment>Name of symbol 515</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linia kolejowa</translation>
     </message>
     <message>
         <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
@@ -6846,7 +8136,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Waterhole</source>
         <comment>Name of symbol 303</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dół z wodą</translation>
     </message>
     <message>
         <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
@@ -7051,7 +8341,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Vehicle track</source>
         <comment>Name of symbol 505</comment>
-        <translation type="unfinished"></translation>
+        <translation>Droga jezdna</translation>
     </message>
     <message>
         <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. Width less than 3 m.</source>
@@ -7232,7 +8522,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Magnetic north line</source>
         <comment>Name of symbol 601</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linia północy magnetycznej</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
@@ -7293,14 +8583,44 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Brązowy 50%</translation>
     </message>
     <message>
+        <source>Black below light browns</source>
+        <comment>Color 5</comment>
+        <translation>Czarny pod jasnobrązowym</translation>
+    </message>
+    <message>
+        <source>Brown</source>
+        <comment>Color 6</comment>
+        <translation>Brązowy</translation>
+    </message>
+    <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 7</comment>
         <translation>OpenOrienteering Pomarańczowy</translation>
     </message>
     <message>
+        <source>Blue</source>
+        <comment>Color 9</comment>
+        <translation>Niebieski</translation>
+    </message>
+    <message>
         <source>Blue 50%</source>
         <comment>Color 10</comment>
         <translation>Niebieski 50%</translation>
+    </message>
+    <message>
+        <source>Black 30%</source>
+        <comment>Color 11</comment>
+        <translation>Czarny 30%</translation>
+    </message>
+    <message>
+        <source>Green 50%, Yellow</source>
+        <comment>Color 12</comment>
+        <translation>Zielony 50%, Żółty</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <comment>Color 16</comment>
+        <translation>Zielony</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -7338,6 +8658,11 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Warstwica pomocnicza</translation>
     </message>
     <message>
+        <source>Slope line</source>
+        <comment>Name of symbol 104</comment>
+        <translation>Kreska spadu</translation>
+    </message>
+    <message>
         <source>Contour value</source>
         <comment>Name of symbol 105</comment>
         <translation>Wartość warstwicy</translation>
@@ -7351,6 +8676,16 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 106.0.1</comment>
         <translation>Skarpa, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Earth bank, very high</source>
+        <comment>Name of symbol 106.1</comment>
+        <translation>Skarpa, bardzo wysoka</translation>
+    </message>
+    <message>
+        <source>Earth bank, very high, minimum size</source>
+        <comment>Name of symbol 106.1.1</comment>
+        <translation>Skarpa, bardzo wysoka, minimalny rozmiar</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -7383,6 +8718,11 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Ściana skalna nie do przejścia, minimalny rozmiar</translation>
     </message>
     <message>
+        <source>Impassable cliff, no tags</source>
+        <comment>Name of symbol 201.1</comment>
+        <translation>Ściana skalna nie do przejścia, bez etykiet</translation>
+    </message>
+    <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.2</comment>
         <translation>Ściana skalna nie do przejścia, linia etykiety</translation>
@@ -7393,9 +8733,44 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Użyj tego symblu do pokazania pełnej rozpiętości urwiska.</translation>
     </message>
     <message>
+        <source>Passable rock face</source>
+        <comment>Name of symbol 203</comment>
+        <translation>Ściana skalna do przejścia</translation>
+    </message>
+    <message>
+        <source>Passable rock face, minimum size</source>
+        <comment>Name of symbol 203.0.1</comment>
+        <translation>Ściana skalna do przejścia, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags</source>
+        <comment>Name of symbol 203.1</comment>
+        <translation>Ściana skalna do przejścia, bez etykiet</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, minimum size</source>
+        <comment>Name of symbol 203.1.1</comment>
+        <translation>Ściana skalna do przejścia, bez etykiet, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded</source>
+        <comment>Name of symbol 203.2</comment>
+        <translation>Ściana skalna do przejścia, bez etykiet, zaokrąglona</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded, minimum size</source>
+        <comment>Name of symbol 203.2.1</comment>
+        <translation>Ściana skalna do przejścia, bez etykiet, zaokrąglona, minimalny rozmiar</translation>
+    </message>
+    <message>
         <source>Boulder</source>
         <comment>Name of symbol 206</comment>
         <translation>Głaz</translation>
+    </message>
+    <message>
+        <source>Boulder, enlarged</source>
+        <comment>Name of symbol 206.1</comment>
+        <translation>Głaz, powiększony</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -7408,6 +8783,11 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Pole głazów</translation>
     </message>
     <message>
+        <source>Boulder field, large</source>
+        <comment>Name of symbol 208.1</comment>
+        <translation>Pole głazów, duże</translation>
+    </message>
+    <message>
         <source>Boulder cluster</source>
         <comment>Name of symbol 209</comment>
         <translation>Skupisko głazów</translation>
@@ -7416,6 +8796,206 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <source>Boulder cluster, large</source>
         <comment>Name of symbol 209.1</comment>
         <translation>Skupisko głazów, duże</translation>
+    </message>
+    <message>
+        <source>Crossable watercourse</source>
+        <comment>Name of symbol 305</comment>
+        <translation>Przekraczalny strumień</translation>
+    </message>
+    <message>
+        <source>Crossable small watercourse</source>
+        <comment>Name of symbol 306</comment>
+        <translation>Mały przekraczalny strumień</translation>
+    </message>
+    <message>
+        <source>Open land</source>
+        <comment>Name of symbol 401</comment>
+        <translation>Teren otwarty</translation>
+    </message>
+    <message>
+        <source>Open land with scattered trees</source>
+        <comment>Name of symbol 402</comment>
+        <translation>Teren otwarty z rozproszonymi drzewami</translation>
+    </message>
+    <message>
+        <source>Rough open land</source>
+        <comment>Name of symbol 403</comment>
+        <translation>Nieuporządkowany teren otwarty</translation>
+    </message>
+    <message>
+        <source>Rough open land with scattered trees</source>
+        <comment>Name of symbol 404</comment>
+        <translation>Nieuporządkowany teren otwarty z rozproszonymi drzewami</translation>
+    </message>
+    <message>
+        <source>Orchard</source>
+        <comment>Name of symbol 412</comment>
+        <translation>Sad</translation>
+    </message>
+    <message>
+        <source>Vineyard</source>
+        <comment>Name of symbol 413</comment>
+        <translation>Winnica</translation>
+    </message>
+    <message>
+        <source>Distinct cultivation boundary</source>
+        <comment>Name of symbol 414</comment>
+        <translation>Wyraźna granica uprawy</translation>
+    </message>
+    <message>
+        <source>Distinct vegetation boundary</source>
+        <comment>Name of symbol 416</comment>
+        <translation>Granica kultur</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 418</comment>
+        <translation>Wyróżniający się obiekt roślinny</translation>
+    </message>
+    <message>
+        <source>Major road, minimum width</source>
+        <comment>Name of symbol 502</comment>
+        <translation>Droga główna, minimalna szerokość</translation>
+    </message>
+    <message>
+        <source>Road</source>
+        <comment>Name of symbol 504</comment>
+        <translation>Droga</translation>
+    </message>
+    <message>
+        <source>Narrow ride</source>
+        <comment>Name of symbol 509</comment>
+        <translation>Przecinka</translation>
+    </message>
+    <message>
+        <source>Railway</source>
+        <comment>Name of symbol 515</comment>
+        <translation>Linia kolejowa</translation>
+    </message>
+    <message>
+        <source>Power line</source>
+        <comment>Name of symbol 516</comment>
+        <translation>Linia energetyczna</translation>
+    </message>
+    <message>
+        <source>Major power line</source>
+        <comment>Name of symbol 517</comment>
+        <translation>Linia energatyczna wysokiego napięcia</translation>
+    </message>
+    <message>
+        <source>Fence</source>
+        <comment>Name of symbol 522</comment>
+        <translation>Ogrodzenie</translation>
+    </message>
+    <message>
+        <source>High fence</source>
+        <comment>Name of symbol 524</comment>
+        <translation>Wysoki płot</translation>
+    </message>
+    <message>
+        <source>Crossing point</source>
+        <comment>Name of symbol 525</comment>
+        <translation>Punkt przejścia</translation>
+    </message>
+    <message>
+        <source>Building</source>
+        <comment>Name of symbol 526</comment>
+        <translation>Budynek</translation>
+    </message>
+    <message>
+        <source>Building, minimum size</source>
+        <comment>Name of symbol 526.1</comment>
+        <translation>Budynek, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Paved area</source>
+        <comment>Name of symbol 529</comment>
+        <translation>Teren utwardzony</translation>
+    </message>
+    <message>
+        <source>Paved area, bounding line</source>
+        <comment>Name of symbol 529.1</comment>
+        <translation>Teren utwardzony, obramowanie</translation>
+    </message>
+    <message>
+        <source>Paved area, with bounding line</source>
+        <comment>Name of symbol 529.2</comment>
+        <translation>Teren utwardzony, z obramowaniem</translation>
+    </message>
+    <message>
+        <source>High tower</source>
+        <comment>Name of symbol 535</comment>
+        <translation>Wysoka wieża</translation>
+    </message>
+    <message>
+        <source>Small tower</source>
+        <comment>Name of symbol 536</comment>
+        <translation>Mała wieża</translation>
+    </message>
+    <message>
+        <source>Special man-made feature</source>
+        <comment>Name of symbol 539</comment>
+        <translation>Wyróżniający się obiekt stworzony przez człowieka</translation>
+    </message>
+    <message>
+        <source>Special man-made feature</source>
+        <comment>Name of symbol 540</comment>
+        <translation>Wyróżniający się obiekt stworzony przez człowieka</translation>
+    </message>
+    <message>
+        <source>Magnetic north line</source>
+        <comment>Name of symbol 601</comment>
+        <translation>Linia północy magnetycznej</translation>
+    </message>
+    <message>
+        <source>Magnetic north line, blue</source>
+        <comment>Name of symbol 601.2</comment>
+        <translation>Linia północy magnetycznej, niebieska</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <comment>Name of symbol 701</comment>
+        <translation>Start</translation>
+    </message>
+    <message>
+        <source>Control point</source>
+        <comment>Name of symbol 702</comment>
+        <translation>Punkt kontrolny</translation>
+    </message>
+    <message>
+        <source>Control number</source>
+        <comment>Name of symbol 703</comment>
+        <translation>Numer punktu kontrolnego</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <comment>Name of symbol 704</comment>
+        <translation>Linia</translation>
+    </message>
+    <message>
+        <source>Marked route</source>
+        <comment>Name of symbol 705</comment>
+        <translation>Przebieg wyznakowany</translation>
+    </message>
+    <message>
+        <source>Finish</source>
+        <comment>Name of symbol 706</comment>
+        <translation>Meta</translation>
+    </message>
+    <message>
+        <source>Crossing point</source>
+        <comment>Name of symbol 708</comment>
+        <translation>Punkt przejścia</translation>
+    </message>
+    <message>
+        <source>Dangerous area</source>
+        <comment>Name of symbol 710</comment>
+        <translation>Teren zakazany</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Logo</source>
+        <comment>Name of symbol 999</comment>
+        <translation>Logo OpenOrienteering</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
@@ -7428,6 +9008,11 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Kopczyk</translation>
     </message>
     <message>
+        <source>Elongated knoll</source>
+        <comment>Name of symbol 113</comment>
+        <translation>Podłużny kopczyk</translation>
+    </message>
+    <message>
         <source>Small depression</source>
         <comment>Name of symbol 115</comment>
         <translation>Zagłębienie</translation>
@@ -7438,9 +9023,189 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Dół</translation>
     </message>
     <message>
+        <source>Broken ground, small</source>
+        <comment>Name of symbol 117.1</comment>
+        <translation>Nierówny teren, małe punkty</translation>
+    </message>
+    <message>
+        <source>Broken ground, big</source>
+        <comment>Name of symbol 117.2</comment>
+        <translation>Nierówny teren, duże punkty</translation>
+    </message>
+    <message>
+        <source>Rocky pit</source>
+        <comment>Name of symbol 204</comment>
+        <translation>Skalisty dół</translation>
+    </message>
+    <message>
+        <source>Cave</source>
+        <comment>Name of symbol 205</comment>
+        <translation>Jaskinia</translation>
+    </message>
+    <message>
         <source>Bare rock</source>
         <comment>Name of symbol 212</comment>
         <translation>Płyta skalna</translation>
+    </message>
+    <message>
+        <source>Pond</source>
+        <comment>Name of symbol 302</comment>
+        <translation>Staw</translation>
+    </message>
+    <message>
+        <source>Waterhole</source>
+        <comment>Name of symbol 303</comment>
+        <translation>Dół z wodą</translation>
+    </message>
+    <message>
+        <source>Narrow marsh</source>
+        <comment>Name of symbol 308</comment>
+        <translation>Wąskie bagno</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh</source>
+        <comment>Name of symbol 309</comment>
+        <translation>Nieprzekraczalne bagno</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh, border line</source>
+        <comment>Name of symbol 309.1</comment>
+        <translation>Nieprzekraczalne bagno, linia brzegowa</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh, with border line</source>
+        <comment>Name of symbol 309.2</comment>
+        <translation>Nieprzekraczalne bagno, z linią brzegową</translation>
+    </message>
+    <message>
+        <source>Marsh</source>
+        <comment>Name of symbol 310</comment>
+        <translation>Bagno</translation>
+    </message>
+    <message>
+        <source>Marsh, minimum size</source>
+        <comment>Name of symbol 310.1</comment>
+        <translation>Bagno, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Indistinct marsh</source>
+        <comment>Name of symbol 311</comment>
+        <translation>Teren podmokły</translation>
+    </message>
+    <message>
+        <source>Indistinct marsh, minimum size</source>
+        <comment>Name of symbol 311.1</comment>
+        <translation>Teren podmokły, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Spring</source>
+        <comment>Name of symbol 313</comment>
+        <translation>Źródło</translation>
+    </message>
+    <message>
+        <source>Special water feature</source>
+        <comment>Name of symbol 314</comment>
+        <translation>Wyróżniający się obiekt wodny</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 1</source>
+        <comment>Name of symbol 411.0</comment>
+        <translation>Las, możliwość biegu w jednym kierunku, 1</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 2</source>
+        <comment>Name of symbol 411.1</comment>
+        <translation>Las, możliwość biegu w jednym kierunku, 2</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 3</source>
+        <comment>Name of symbol 411.2</comment>
+        <translation>Las, możliwość biegu w jednym kierunku, 3</translation>
+    </message>
+    <message>
+        <source>Cultivated land</source>
+        <comment>Name of symbol 415</comment>
+        <translation>Grunty uprawne</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 419</comment>
+        <translation>Wyróżniający się obiekt roślinny</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 420</comment>
+        <translation>Wyróżniający się obiekt roślinny</translation>
+    </message>
+    <message>
+        <source>Major road, minimum width, under construction</source>
+        <comment>Name of symbol 502.1</comment>
+        <translation>Droga główna, minimalna szerokość, w budowie</translation>
+    </message>
+    <message>
+        <source>Vehicle track</source>
+        <comment>Name of symbol 505</comment>
+        <translation>Droga jezdna</translation>
+    </message>
+    <message>
+        <source>Footpath</source>
+        <comment>Name of symbol 506</comment>
+        <translation>Ścieżka</translation>
+    </message>
+    <message>
+        <source>Less distinct small path</source>
+        <comment>Name of symbol 508</comment>
+        <translation>Mniej wyraźna mała ścieżka</translation>
+    </message>
+    <message>
+        <source>Footbridge</source>
+        <comment>Name of symbol 512</comment>
+        <translation>Most pieszy</translation>
+    </message>
+    <message>
+        <source>Ruined stone wall</source>
+        <comment>Name of symbol 520</comment>
+        <translation>Zrujnowana ściana kamienna</translation>
+    </message>
+    <message>
+        <source>Ruined fence</source>
+        <comment>Name of symbol 523</comment>
+        <translation>Zrujnowane ogrodzenie</translation>
+    </message>
+    <message>
+        <source>Ruin</source>
+        <comment>Name of symbol 530</comment>
+        <translation>Ruina</translation>
+    </message>
+    <message>
+        <source>Ruin, no dashes</source>
+        <comment>Name of symbol 530.1</comment>
+        <translation>Ruina, bez kreskowania</translation>
+    </message>
+    <message>
+        <source>Ruin, minimum size</source>
+        <comment>Name of symbol 530.2</comment>
+        <translation>Ruina, minimalny rozmiar</translation>
+    </message>
+    <message>
+        <source>Grave</source>
+        <comment>Name of symbol 532</comment>
+        <translation>Mogiła</translation>
+    </message>
+    <message>
+        <source>Crossable pipeline</source>
+        <comment>Name of symbol 533</comment>
+        <translation>Przekraczalny rurociąg</translation>
+    </message>
+    <message>
+        <source>Cairn</source>
+        <comment>Name of symbol 537</comment>
+        <translation>Monument, pomnik lub kamień graniczny</translation>
+    </message>
+    <message>
+        <source>Fodder rack</source>
+        <comment>Name of symbol 538</comment>
+        <translation>Paśnik</translation>
     </message>
 </context>
 <context>

@@ -613,7 +613,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предоставено за миграция от ISOM2000. Използването на този вариант на символ не се препоръчва за нови карти.</translation>
     </message>
     <message>
         <source>Cliff</source>
@@ -679,7 +679,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предоставено за миграция от ISOM2000. Използването на този вариант на символ не се препоръчва за нови карти.</translation>
     </message>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
@@ -715,7 +715,7 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 203.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предоставено за миграция от ISOM2000. Използването на този вариант на символ не се препоръчва за нови карти.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -1718,7 +1718,7 @@ A road with two carriageways can be represented using two wide road symbols side
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предоставено за миграция от ISOM2000. Използването на този вариант на символ не се препоръчва за нови карти.</translation>
     </message>
     <message>
         <source>Road with two carriageways</source>
@@ -2626,6 +2626,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>OpenOrienteering Оранжев</translation>
     </message>
     <message>
+        <source>Black 25% (Grey)</source>
+        <comment>Color 12</comment>
+        <translation>Черно 25% (Сиво)</translation>
+    </message>
+    <message>
         <source>Yellow</source>
         <comment>Color 26</comment>
         <translation>Жълто</translation>
@@ -2646,9 +2651,124 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Линия на наклон, контур</translation>
     </message>
     <message>
+        <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
+        <comment>Description of symbol 101.1</comment>
+        <translation>Линии на наклона могат да бъдат начертани от долната страна на контурна линия, за да се изясни посоката на наклона. Когато се използват, те трябва да бъдат разположени в повторно навлизащи части.</translation>
+    </message>
+    <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
         <translation>Индексен контур</translation>
+    </message>
+    <message>
+        <source>Contour value</source>
+        <comment>Name of symbol 102.1</comment>
+        <translation>Контур стойност</translation>
+    </message>
+    <message>
+        <source>Form line</source>
+        <comment>Name of symbol 103</comment>
+        <translation>Форма линия</translation>
+    </message>
+    <message>
+        <source>Slope line, formline</source>
+        <comment>Name of symbol 103.1</comment>
+        <translation>Линия на наклона, линия на формата</translation>
+    </message>
+    <message>
+        <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
+        <comment>Description of symbol 103.1</comment>
+        <translation>Линии на наклона могат да бъдат начертани от долната страна на контурна линия, за да се изясни посоката на наклона. Когато се използват, те трябва да бъдат разположени в повторно навлизащи части.</translation>
+    </message>
+    <message>
+        <source>Earth wall</source>
+        <comment>Name of symbol 105</comment>
+        <translation>Земна стена</translation>
+    </message>
+    <message>
+        <source>Ruined earth wall</source>
+        <comment>Name of symbol 106</comment>
+        <translation>Разрушена земна стена</translation>
+    </message>
+    <message>
+        <source>Erosion gully</source>
+        <comment>Name of symbol 107</comment>
+        <translation>Ерозионно дере</translation>
+    </message>
+    <message>
+        <source>Small erosion gully</source>
+        <comment>Name of symbol 108</comment>
+        <translation>Малко ерозирало дере</translation>
+    </message>
+    <message>
+        <source>Small knoll</source>
+        <comment>Name of symbol 109</comment>
+        <translation>Малък хълм</translation>
+    </message>
+    <message>
+        <source>Small elongated knoll</source>
+        <comment>Name of symbol 110</comment>
+        <translation>Малък удължен хълм</translation>
+    </message>
+    <message>
+        <source>Small depression</source>
+        <comment>Name of symbol 111</comment>
+        <translation>Малка падина</translation>
+    </message>
+    <message>
+        <source>Pit</source>
+        <comment>Name of symbol 112</comment>
+        <translation>Яма</translation>
+    </message>
+    <message>
+        <source>Broken ground</source>
+        <comment>Name of symbol 113</comment>
+        <translation>Разрушена земя</translation>
+    </message>
+    <message>
+        <source>Broken ground, individual dot</source>
+        <comment>Name of symbol 113.1</comment>
+        <translation>Начупена земя, отделна точка</translation>
+    </message>
+    <message>
+        <source>Very broken ground</source>
+        <comment>Name of symbol 114</comment>
+        <translation>Много разрушен терен</translation>
+    </message>
+    <message>
+        <source>Prominent landform feature</source>
+        <comment>Name of symbol 115</comment>
+        <translation>Забележителна характеристика на релефа</translation>
+    </message>
+    <message>
+        <source>Impassable cliff</source>
+        <comment>Name of symbol 201</comment>
+        <translation>Непроходима скала</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, minimum size</source>
+        <comment>Name of symbol 201.1</comment>
+        <translation>Непроходима скала, минимален размер</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, top line</source>
+        <comment>Name of symbol 201.3</comment>
+        <translation>Непроходима скала, горна линия</translation>
+    </message>
+    <message>
+        <source>Sandy ground</source>
+        <comment>Name of symbol 213</comment>
+        <translation>Пясъчна земя</translation>
+    </message>
+    <message>
+        <source>Bare rock</source>
+        <comment>Name of symbol 214</comment>
+        <translation>Гола скала</translation>
+    </message>
+    <message>
+        <source>Trench</source>
+        <comment>Name of symbol 215</comment>
+        <translation>Траншея</translation>
     </message>
 </context>
 <context>
@@ -2692,6 +2812,61 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
         <translation>Индексен контур</translation>
+    </message>
+    <message>
+        <source>Form line</source>
+        <comment>Name of symbol 103</comment>
+        <translation>Форма линия</translation>
+    </message>
+    <message>
+        <source>Contour value</source>
+        <comment>Name of symbol 105</comment>
+        <translation>Контур стойност</translation>
+    </message>
+    <message>
+        <source>Earth wall</source>
+        <comment>Name of symbol 107</comment>
+        <translation>Земна стена</translation>
+    </message>
+    <message>
+        <source>Erosion gully</source>
+        <comment>Name of symbol 109</comment>
+        <translation>Ерозионно дере</translation>
+    </message>
+    <message>
+        <source>Small erosion gully</source>
+        <comment>Name of symbol 110</comment>
+        <translation>Малко ерозирало дере</translation>
+    </message>
+    <message>
+        <source>Small knoll</source>
+        <comment>Name of symbol 112</comment>
+        <translation>Малък хълм</translation>
+    </message>
+    <message>
+        <source>Small depression</source>
+        <comment>Name of symbol 115</comment>
+        <translation>Малка падина</translation>
+    </message>
+    <message>
+        <source>Pit</source>
+        <comment>Name of symbol 116</comment>
+        <translation>Яма</translation>
+    </message>
+    <message>
+        <source>Impassable cliff</source>
+        <comment>Name of symbol 201</comment>
+        <translation>Непроходима скала</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, minimum size</source>
+        <comment>Name of symbol 201.0.1</comment>
+        <translation>Непроходима скала, минимален размер</translation>
+    </message>
+    <message>
+        <source>Bare rock</source>
+        <comment>Name of symbol 212</comment>
+        <translation>Гола скала</translation>
     </message>
 </context>
 <context>
@@ -2764,7 +2939,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Долно кафяво 50%</translation>
     </message>
     <message>
         <source>Lower brown 30%</source>
@@ -2779,7 +2954,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Синьо 100% за характеристики на района</translation>
     </message>
     <message>
         <source>Blue 70%</source>
@@ -2804,7 +2979,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>White over green</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Бяло върху зелено</translation>
     </message>
     <message>
         <source>Green 50%/Yellow 100%</source>
@@ -2819,7 +2994,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелено 100% за характеристики на района</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -2877,7 +3052,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Линии на наклона могат да бъдат начертани от долната страна на контурна линия, за да се изясни посоката на наклона. Когато се използват, те трябва да бъдат разположени в повторно навлизащи части.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -2897,12 +3072,12 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Линии на наклона могат да бъдат начертани от долната страна на контурна линия, за да се изясни посоката на наклона. Когато се използват, те трябва да бъдат разположени в повторно навлизащи части.</translation>
     </message>
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 102.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Контур стойност</translation>
     </message>
     <message>
         <source>Contour values may be included to aid assessment of large height differences. The labels shall be orientated so that the top of the label is on the higher side of the contour. They are inserted in the index contours in positions where other detail is not obscured.</source>
@@ -2912,7 +3087,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Форма линия</translation>
     </message>
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -2927,7 +3102,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 103.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Линии на наклона могат да бъдат начертани от долната страна на контурна линия, за да се изясни посоката на наклона. Когато се използват, те трябва да бъдат разположени в повторно навлизащи части.</translation>
     </message>
     <message>
         <source>Earth bank</source>
@@ -2989,7 +3164,7 @@ Minimum length: 2.0 mm (footprint 8 m).</source>
     <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>Малко ерозирало дере</translation>
     </message>
     <message>
         <source>A small erosion gully or trench.
@@ -3002,7 +3177,7 @@ Minimum length (isolated): three dots (1.6 mm - footprint 6.4 m).</source>
     <message>
         <source>Small knoll</source>
         <comment>Name of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>Малък хълм</translation>
     </message>
     <message>
         <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a Contour (101), Index contour (102) or Form line (103). The symbol shall not touch or overlap contours.
@@ -3014,7 +3189,7 @@ Footprint: 3 m in diameter.</source>
     <message>
         <source>Small elongated knoll</source>
         <comment>Name of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>Малък удължен хълм</translation>
     </message>
     <message>
         <source>A small obvious elongated knoll which cannot be drawn to scale with a Contour (101), Index contour (102) or Form line (103). The maximum length should be 6 m and the maximum width 2 m. Knolls larger than this shall be shown by contours. The symbol shall not be drawn in free form or such that two elongated knoll symbols touch or overlap. The symbol shall not touch or overlap contours.
@@ -3026,7 +3201,7 @@ Footprint: 4.8 m x 2.4 m.</source>
     <message>
         <source>Small depression</source>
         <comment>Name of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Малка падина</translation>
     </message>
     <message>
         <source>A small shallow natural depression or hollow which cannot be represented by the symbol Contour (101) or Form line (103) is represented by a semicircle. The symbol shall not touch or overlap other brown symbols.
@@ -3052,7 +3227,7 @@ Footprint: 4.4 m x 5.0 m.</source>
     <message>
         <source>Broken ground</source>
         <comment>Name of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>Разрушена земя</translation>
     </message>
     <message>
         <source>An area of pits or knolls, which is too complex to be represented in detail.
@@ -3100,7 +3275,7 @@ The minimum number of dots is three.</source>
     <message>
         <source>Prominent landform feature</source>
         <comment>Name of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>Забележителна характеристика на релефа</translation>
     </message>
     <message>
         <source>A small landform feature which is significant or prominent.
@@ -3113,7 +3288,7 @@ Footprint: 5.4 m x 4.6 m.</source>
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>Непроходима скала</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -3126,7 +3301,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Непроходима скала, минимален размер</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -3139,7 +3314,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Непроходима скала, горна линия</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -3480,7 +3655,7 @@ Minimum area: 1 mm² (footprint 16 m²).</source>
     <message>
         <source>Bare rock</source>
         <comment>Name of symbol 214</comment>
-        <translation type="unfinished"></translation>
+        <translation>Гола скала</translation>
     </message>
     <message>
         <source>An area of runnable rock without earth or vegetation.
@@ -5091,6 +5266,51 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <comment>Name of symbol 102</comment>
         <translation>Индексен контур</translation>
     </message>
+    <message>
+        <source>Form line</source>
+        <comment>Name of symbol 103</comment>
+        <translation>Форма линия</translation>
+    </message>
+    <message>
+        <source>Contour value</source>
+        <comment>Name of symbol 105</comment>
+        <translation>Контур стойност</translation>
+    </message>
+    <message>
+        <source>Small erosion gully</source>
+        <comment>Name of symbol 110</comment>
+        <translation>Малко ерозирало дере</translation>
+    </message>
+    <message>
+        <source>Small knoll</source>
+        <comment>Name of symbol 112</comment>
+        <translation>Малък хълм</translation>
+    </message>
+    <message>
+        <source>Small depression</source>
+        <comment>Name of symbol 115</comment>
+        <translation>Малка падина</translation>
+    </message>
+    <message>
+        <source>Pit</source>
+        <comment>Name of symbol 116</comment>
+        <translation>Яма</translation>
+    </message>
+    <message>
+        <source>Broken ground</source>
+        <comment>Name of symbol 117.2</comment>
+        <translation>Разрушена земя</translation>
+    </message>
+    <message>
+        <source>Prominent landform feature</source>
+        <comment>Name of symbol 118</comment>
+        <translation>Забележителна характеристика на релефа</translation>
+    </message>
+    <message>
+        <source>Bare rock</source>
+        <comment>Name of symbol 212</comment>
+        <translation>Гола скала</translation>
+    </message>
 </context>
 <context>
     <name>ISMTBOM</name>
@@ -5252,7 +5472,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Контур стойност</translation>
     </message>
     <message>
         <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
@@ -5312,7 +5532,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Earth wall</source>
         <comment>Name of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земна стена</translation>
     </message>
     <message>
         <source>Distinct earth wall. Minimum height is 1 m.</source>
@@ -5322,7 +5542,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Erosion gully</source>
         <comment>Name of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ерозионно дере</translation>
     </message>
     <message>
         <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
@@ -5332,7 +5552,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>Непроходима скала</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -5342,7 +5562,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Непроходима скала, минимален размер</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -5432,7 +5652,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Bare rock</source>
         <comment>Name of symbol 212</comment>
-        <translation type="unfinished"></translation>
+        <translation>Гола скала</translation>
     </message>
     <message>
         <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
@@ -6213,7 +6433,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Форма линия</translation>
     </message>
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -6233,7 +6453,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>Малко ерозирало дере</translation>
     </message>
     <message>
         <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
@@ -6243,7 +6463,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Small knoll</source>
         <comment>Name of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>Малък хълм</translation>
     </message>
     <message>
         <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
@@ -6263,7 +6483,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Small depression</source>
         <comment>Name of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>Малка падина</translation>
     </message>
     <message>
         <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
@@ -6273,7 +6493,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Pit</source>
         <comment>Name of symbol 116</comment>
-        <translation type="unfinished"></translation>
+        <translation>Яма</translation>
     </message>
     <message>
         <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
@@ -6914,6 +7134,61 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <comment>Name of symbol 102</comment>
         <translation>Индексен контур</translation>
     </message>
+    <message>
+        <source>Form line</source>
+        <comment>Name of symbol 103</comment>
+        <translation>Форма линия</translation>
+    </message>
+    <message>
+        <source>Contour value</source>
+        <comment>Name of symbol 105</comment>
+        <translation>Контур стойност</translation>
+    </message>
+    <message>
+        <source>Earth wall</source>
+        <comment>Name of symbol 107</comment>
+        <translation>Земна стена</translation>
+    </message>
+    <message>
+        <source>Erosion gully</source>
+        <comment>Name of symbol 109</comment>
+        <translation>Ерозионно дере</translation>
+    </message>
+    <message>
+        <source>Impassable cliff</source>
+        <comment>Name of symbol 201</comment>
+        <translation>Непроходима скала</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, minimum size</source>
+        <comment>Name of symbol 201.0.1</comment>
+        <translation>Непроходима скала, минимален размер</translation>
+    </message>
+    <message>
+        <source>Small erosion gully</source>
+        <comment>Name of symbol 110</comment>
+        <translation>Малко ерозирало дере</translation>
+    </message>
+    <message>
+        <source>Small knoll</source>
+        <comment>Name of symbol 112</comment>
+        <translation>Малък хълм</translation>
+    </message>
+    <message>
+        <source>Small depression</source>
+        <comment>Name of symbol 115</comment>
+        <translation>Малка падина</translation>
+    </message>
+    <message>
+        <source>Pit</source>
+        <comment>Name of symbol 116</comment>
+        <translation>Яма</translation>
+    </message>
+    <message>
+        <source>Bare rock</source>
+        <comment>Name of symbol 212</comment>
+        <translation>Гола скала</translation>
+    </message>
 </context>
 <context>
     <name>ISSkiOM 2019</name>
@@ -6965,7 +7240,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Черно под лилаво за символи на следа</translation>
     </message>
     <message>
         <source>Black 65%</source>
@@ -6990,17 +7265,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Долно кафяво 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Черно под долното кафяво 50%</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Синьо 100% за характеристики на района</translation>
     </message>
     <message>
         <source>Blue 70%</source>
@@ -7035,27 +7310,27 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>White over green</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Бяло върху зелено</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Жълто 100%/Зелено 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Черно 25% (Сиво)</translation>
     </message>
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелено 100%/Черно 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелено 100% за характеристики на района</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -7114,7 +7389,16 @@ The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minim
 A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
 Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Линия, свързваща точки с еднаква височина. Стандартният вертикален интервал между контурите е 5 м. За равни терени може да се използва интервал между контурите от 2,5 м.
+Линии на наклона могат да се начертаят от долната страна на контурната линия, за да се изясни посоката на наклона. 
+Когато се използват, те трябва да се поставят в отклонения. Затвореният контур представлява хълмче или вдлъбнатина. Вдлъбнатината трябва да има поне една линия на наклона. Минималната височина/дълбочина трябва да бъде 1 м.
+Връзките между съседните контурни линии са важни. Съседните контурни линии показват форма и структура. Малките детайли по контурите трябва да се избягват, тъй като те са склонни да скрият основните характеристики на терена.
+Изтъкнати характеристики като вдлъбнатини, отклонения, разклонения, земни насипи и тераси може да се наложи да бъдат преувеличени.
+Абсолютната точност на височината е от малко значение, но относителната разлика във височината между съседните характеристики трябва да бъде представена на картата възможно най-точно. Допустимо е леко да се промени височината на контура, ако това подобрява представянето на даден обект. Това отклонение не трябва да надвишава 25% от интервала между контурите и трябва да се обърне внимание на съседните обекти.
+Най-малкото отклонение на контурна линия е 0,25 мм от центъра до центъра на линията (площадка 4 м). Устието на реинтернат или отклонение трябва да е по-широко от 0,5 мм от центъра до центъра на линията (площадка 8 м).
+Минималната дължина на контурен хълм е 0,9 мм (площадка 13,5 м), а минималната ширина е 0,6 мм (площадка 9 м) външна мярка. По-малките изпъкнали хълмове могат да бъдат представени със символа Малък хълм (109) или Малък удължен хълм (110) или могат да бъдат увеличени на картата, за да отговарят на минималния размер.
+Вдлъбнатината трябва да побира линия на наклона, така че минималната дължина е 1,1 мм (площадка 16,5 м), а минималната ширина е 0,7 мм (площадка 10,5 м) външна мярка. По-малките, изпъкнали вдлъбнатини могат да бъдат представени с помощта на символа „Малка вдлъбнатина“ (111) или могат да бъдат преувеличени, за да се отговори на минималния размер.
+Контурите трябва да бъдат адаптирани (да не се прекъснат), за да не докосват символа „Малка могила“ (109) или „Малка удължена могила“ (110).</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -7125,7 +7409,8 @@ Contours should be adapted (not broken) in order not to touch symbol Small knoll
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Линии на наклона могат да бъдат начертани от долната страна на контурна линия, за да се изясни посоката на наклона. Когато се използват, те трябва да бъдат разположени в обратни вдлъбнатини.
+Една вдлъбнатина трябва да има поне една линия на наклона.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -7137,39 +7422,43 @@ A depression has to have at least one slope line.</source>
 An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Всеки пети контур се начертава с по-дебела линия. Това е помощно средство за бърза оценка на разликата във височината и общата форма на теренната повърхност.
+Индексният контур може да бъде представен като обикновена контурна линия в район с много детайли. Малките контурни хълмове и вдлъбнатини обикновено не се представят с индексни контури.
+Нивото на индексния контур трябва да бъде внимателно избрано в равен терен. Идеалното ниво за индексния контур е централният контур в най-изявените склонове.</translation>
     </message>
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Контур стойност</translation>
     </message>
     <message>
         <source>An index contour may have a height value assigned. A height value should only be inserted in an index contour in places where other detail is not obscured. It shall be orientated so that the top of the label is on the higher side of the contour. The index value (label) shall be 1.5 mm high and represented in a sans-serif font.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Индексният контур може да има зададена стойност за височина. Стойност за височина трябва да се вмъква в индексния контур само на места, където други детайли не са скрити. Тя трябва да бъде ориентирана така, че горната част на етикета да е от по-високата страна на контура. Стойността на индекса (етикетът) трябва да е с височина 1,5 мм и да е представена с безсерифен шрифт.</translation>
     </message>
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Форма линия</translation>
     </message>
     <message>
         <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones (minimum height / depth should be 1 m). Excessive use of form lines must be avoided as this disturbs the three-dimensional picture of the ground shape and will complicate map reading.
 Minimum length (non-closed): two dashes.
 Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</source>
         <comment>Description of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Линиите на форма се използват, когато е необходимо да се даде повече информация за формата на терена. Линиите на форма се добавят само когато представянето би било непълно с обикновени контури. Те не трябва да се използват като междинни контури. Трябва да се използва само една линия на форма между съседните контури. Много е важно линията на форма логично да се вписва в системата от контури, така че началото и краят на линията на форма трябва да са успоредни на съседните контури. Пространствата между пунктирите на линиите на форма трябва да бъдат поставени върху сравнително прави участъци от линията на форма. Линиите на форма могат да се използват за разграничаване на плоски хълмове и вдлъбнатини от по-отчетливи (минималната височина/дълбочина трябва да бъде 1 м). Прекомерното използване на линии на форма трябва да се избягва, тъй като това нарушава триизмерната картина на формата на терена и ще затрудни четенето на картата.
+Минимална дължина (незатворена): две пунктира.
+Минимална дължина на линия на форма, хълм или вдлъбнатина: 1,1 мм (площ 16,5 м)</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
         <comment>Name of symbol 103.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Линия на наклона, линия на формата</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 103.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Линии на наклона могат да бъдат начертани от долната страна на контурна линия, за да се изясни посоката на наклона. Когато се използват, те трябва да бъдат разположени в повторно навлизащи части.</translation>
     </message>
     <message>
         <source>Earth bank</source>
@@ -7228,35 +7517,38 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предоставено за миграция от ISOM2000. Използването на този вариант на символ не се препоръчва за нови карти.</translation>
     </message>
     <message>
         <source>Earth wall</source>
         <comment>Name of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земна стена</translation>
     </message>
     <message>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Отчетлива земна стена. Минимална височина: 1 м.
+Минимална дължина: 1,4 мм (площадка 21 м).</translation>
     </message>
     <message>
         <source>Erosion gully</source>
         <comment>Name of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ерозионно дере</translation>
     </message>
     <message>
         <source>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Minimum depth: 1 m.
 Minimum length: 1.15 mm (footprint 17 m).
 Contour lines should not be broken around this symbol.</source>
         <comment>Description of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ерозионно дере, което е твърде малко, за да бъде показано със символа Земен насип (104), е показано с една линия. Минимална дълбочина: 1 м.
+Минимална дължина: 1,15 мм (площадка 17 м).
+Контурните линии не трябва да се прекъсват около този символ.</translation>
     </message>
     <message>
         <source>Small knoll</source>
         <comment>Name of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>Малък хълм</translation>
     </message>
     <message>
         <source>An obvious mound or knoll which cannot be drawn to scale with a contour.
@@ -7264,12 +7556,15 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 7.5 m x 7.5 m.</source>
         <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>Видима могила или хълмче, което не може да се начертае в мащаб с контур.
+Минимална височина: 1 м.
+Символът не трябва да докосва или да се припокрива с контури.
+Размери на основата: 7,5 м x 7,5 м.</translation>
     </message>
     <message>
         <source>Small depression</source>
         <comment>Name of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Малка падина</translation>
     </message>
     <message>
         <source>A small depression or hollow without steep sides that is too small to be shown by contours.
@@ -7278,12 +7573,16 @@ Small depressions with steep sides are represented with symbol Pit (112).
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Малка вдлъбнатина или падина без стръмни склонове, която е твърде малка, за да бъде показана с контури.
+Минимална дълбочина: 1 м, минимална ширина: 2 м.
+Малките вдлъбнатини със стръмни склонове се представят със символ „Яма“ (112).
+Символът не трябва да докосва или да се припокрива с други кафяви символи. Местоположението е центърът на тежестта на символа и символът е ориентиран на север.
+Размери: 12 м x 6 м.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>Непроходима скала</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -7292,12 +7591,16 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>Скала, кариера или земен насип, който е толкова висок и стръмен, че е невъзможно да се премине/изкачи или е опасен.
+За вертикални скални стени етикетите могат да бъдат пропуснати, ако пространството е малко. Краищата на горната линия могат да бъдат заоблени или квадратни. В краищата могат да се използват по-къси етикети.
+Разстоянието между две непроходими скали или между непроходими скали и други символи на непроходими обекти трябва да надвишава 0,25 мм на картата.
+Когато непроходима скала се спуска право във водата, което прави невъзможно преминаването под скалата по ръба на водата, бреговата линия се пропуска или етикетите трябва ясно да се простират над бреговата линия. Непроходимата скала трябва да взаимодейства с контурните линии.
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Непроходима скала, минимален размер</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -7306,22 +7609,26 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Скала, кариера или земен насип, който е толкова висок и стръмен, че е невъзможно да се премине/изкачи или е опасен.
+За вертикални скални стени етикетите могат да бъдат пропуснати, ако пространството е малко. Краищата на горната линия могат да бъдат заоблени или квадратни. В краищата могат да се използват по-къси етикети.
+Разстоянието между две непроходими скали или между непроходими скали и други символи на непроходими обекти трябва да надвишава 0,25 мм на картата.
+Когато непроходима скала се спуска право във водата, което прави невъзможно преминаването под скалата по ръба на водата, бреговата линия се пропуска или етикетите трябва ясно да се простират над бреговата линия. Непроходимата скала трябва да взаимодейства с контурните линии.
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Непроходима скала, представяне на формата на плана (от ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предоставено за миграция от ISOM2000. Използването на този вариант на символ не се препоръчва за нови карти.</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Непроходима скала, горна линия</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -7330,7 +7637,11 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Скала, кариера или земен насип, който е толкова висок и стръмен, че е невъзможно да се премине/изкачи или е опасен.
+За вертикални скални стени етикетите могат да бъдат пропуснати, ако пространството е малко. Краищата на горната линия могат да бъдат заоблени или квадратни. В краищата могат да се използват по-къси етикети.
+Разстоянието между две непроходими скали или между непроходими скали и други символи на непроходими обекти трябва да надвишава 0,25 мм на картата.
+Когато непроходима скала се спуска право във водата, което прави невъзможно преминаването под скалата по ръба на водата, бреговата линия се пропуска или етикетите трябва ясно да се простират над бреговата линия. Непроходимата скала трябва да взаимодейства с контурните линии.
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
@@ -7350,7 +7661,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предоставено за миграция от ISOM2000. Използването на този вариант на символ не се препоръчва за нови карти.</translation>
     </message>
     <message>
         <source>Cliff</source>
@@ -7416,7 +7727,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предоставено за миграция от ISOM2000. Използването на този вариант на символ не се препоръчва за нови карти.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -7877,7 +8188,7 @@ A road with two carriageways can be represented using two wide road symbols side
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предоставено за миграция от ISOM2000. Използването на този вариант на символ не се препоръчва за нови карти.</translation>
     </message>
     <message>
         <source>Road with two carriageways</source>

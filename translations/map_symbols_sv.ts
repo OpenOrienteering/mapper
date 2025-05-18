@@ -3968,6 +3968,31 @@ För opasserbara föremål ska uppehåll i linjen göras vid genomgången. För 
         <translation>Förbjudet område</translation>
     </message>
     <message>
+        <source>Building</source>
+        <comment>Name of symbol 521</comment>
+        <translation>Byggnad</translation>
+    </message>
+    <message>
+        <source>Building, minimum size</source>
+        <comment>Name of symbol 521.1</comment>
+        <translation>Byggnad, minsta storlek</translation>
+    </message>
+    <message>
+        <source>Large building with outline</source>
+        <comment>Name of symbol 521.2</comment>
+        <translation>Stor byggnad med ytterlinje</translation>
+    </message>
+    <message>
+        <source>Large building</source>
+        <comment>Name of symbol 521.3</comment>
+        <translation>Stor byggnad</translation>
+    </message>
+    <message>
+        <source>Ruin</source>
+        <comment>Name of symbol 523</comment>
+        <translation>Ruin</translation>
+    </message>
+    <message>
         <source>Crossing point</source>
         <comment>Name of symbol 710</comment>
         <translation>Genomgång</translation>
@@ -4371,6 +4396,16 @@ För opasserbara föremål ska uppehåll i linjen göras vid genomgången. För 
         <translation>Genomgång</translation>
     </message>
     <message>
+        <source>Building</source>
+        <comment>Name of symbol 526</comment>
+        <translation>Byggnad</translation>
+    </message>
+    <message>
+        <source>Building, minimum size</source>
+        <comment>Name of symbol 526.1</comment>
+        <translation>Byggnad, minsta storlek</translation>
+    </message>
+    <message>
         <source>Paved area</source>
         <comment>Name of symbol 529</comment>
         <translation>Hårdgjord yta</translation>
@@ -4384,6 +4419,11 @@ För opasserbara föremål ska uppehåll i linjen göras vid genomgången. För 
         <source>Paved area, with bounding line</source>
         <comment>Name of symbol 529.2</comment>
         <translation>Hårdgjord yta, med begränsningslinje</translation>
+    </message>
+    <message>
+        <source>Ruin</source>
+        <comment>Name of symbol 530</comment>
+        <translation>Ruin</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -6234,7 +6274,7 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
     <message>
         <source>Building</source>
         <comment>Name of symbol 521</comment>
-        <translation type="unfinished"></translation>
+        <translation>Byggnad</translation>
     </message>
     <message>
         <source>A building is a relatively permanent construction having a roof.
@@ -6248,7 +6288,7 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
     <message>
         <source>Building, minimum size</source>
         <comment>Name of symbol 521.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Byggnad, minsta storlek</translation>
     </message>
     <message>
         <source>A building is a relatively permanent construction having a roof.
@@ -7863,7 +7903,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Building</source>
         <comment>Name of symbol 526</comment>
-        <translation type="unfinished"></translation>
+        <translation>Byggnad</translation>
     </message>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.</source>
@@ -7873,7 +7913,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Building, minimum size</source>
         <comment>Name of symbol 526.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Byggnad, minsta storlek</translation>
     </message>
     <message>
         <source>Settlement</source>
@@ -8776,7 +8816,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Ruin</source>
         <comment>Name of symbol 530</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruin</translation>
     </message>
     <message>
         <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
@@ -9157,6 +9197,16 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Genomgång</translation>
     </message>
     <message>
+        <source>Building</source>
+        <comment>Name of symbol 526</comment>
+        <translation>Byggnad</translation>
+    </message>
+    <message>
+        <source>Building, minimum size</source>
+        <comment>Name of symbol 526.1</comment>
+        <translation>Byggnad, minsta storlek</translation>
+    </message>
+    <message>
         <source>Paved area</source>
         <comment>Name of symbol 529</comment>
         <translation>Hårdgjord yta</translation>
@@ -9285,6 +9335,11 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <source>Ruined fence</source>
         <comment>Name of symbol 523</comment>
         <translation>Raserat stängsel</translation>
+    </message>
+    <message>
+        <source>Ruin</source>
+        <comment>Name of symbol 530</comment>
+        <translation>Ruin</translation>
     </message>
 </context>
 <context>
@@ -10707,7 +10762,7 @@ Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     <message>
         <source>Building</source>
         <comment>Name of symbol 521</comment>
-        <translation type="unfinished"></translation>
+        <translation>Byggnad</translation>
     </message>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.
@@ -10722,7 +10777,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
     <message>
         <source>Building, minimum size</source>
         <comment>Name of symbol 521.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Byggnad, minsta storlek</translation>
     </message>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.
@@ -10737,7 +10792,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
     <message>
         <source>Large building with outline</source>
         <comment>Name of symbol 521.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Stor byggnad med ytterlinje</translation>
     </message>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.
@@ -10752,7 +10807,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
     <message>
         <source>Large building</source>
         <comment>Name of symbol 521.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Stor byggnad</translation>
     </message>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.
@@ -10767,7 +10822,7 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
     <message>
         <source>Large building, outline</source>
         <comment>Name of symbol 521.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Stor byggnad, ytterlinje</translation>
     </message>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.
