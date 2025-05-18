@@ -18,8 +18,8 @@
  */
 
 
-#ifndef OPENORIENTEERING_TOOL_BOX_ZOOM_H
-#define OPENORIENTEERING_TOOL_BOX_ZOOM_H
+#ifndef OPENORIENTEERING_BOX_ZOOM_TOOL_H
+#define OPENORIENTEERING_BOX_ZOOM_TOOL_H
 
 #include <QObject>
 #include <QString>
@@ -38,7 +38,7 @@ class MapWidget;
 
 
 /**
- * Tool to pan the map.
+ * Tool to zoom to a user defined region.
  */
 class BoxZoomTool : public MapEditorToolBase
 {
