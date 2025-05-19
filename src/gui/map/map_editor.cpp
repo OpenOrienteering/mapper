@@ -143,6 +143,7 @@
 #include "templates/template.h"
 #include "templates/template_dialog_reopen.h"
 #include "templates/template_track.h"
+#include "tools/box_zoom_tool.h"
 #include "tools/cut_tool.h"
 #include "tools/cut_hole_tool.h"
 #include "tools/cutout_tool.h"
@@ -1006,6 +1007,7 @@ void MapEditorController::createActions()
 	follow_position_act = newCheckAction("follow-position", tr("Keep my location on screen"), this, SLOT(followPositionClicked(bool)), nullptr, QString{}, "view_menu.html");
 	zoom_in_act = newAction("zoomin", tr("Zoom in"), this, SLOT(zoomIn()), "view-zoom-in.png", QString{}, "view_menu.html");
 	zoom_out_act = newAction("zoomout", tr("Zoom out"), this, SLOT(zoomOut()), "view-zoom-out.png", QString{}, "view_menu.html");
+	box_zoom_act = newCheckAction("boxzoom", tr("Zoom to box"), this, SLOT(boxZoom(bool)), "view-box-zoom.png", QString{}, "view_menu.html");
 	show_all_act = newAction("showall", tr("Show whole map"), this, SLOT(showWholeMap()), "view-show-all.png", QString{}, "view_menu.html");
 	fullscreen_act = newAction("fullscreen", tr("Toggle fullscreen mode"), window, SLOT(toggleFullscreenMode()), nullptr, QString{}, "view_menu.html");
 	custom_zoom_act = newAction("setzoom", tr("Set custom zoom factor..."), this, SLOT(setCustomZoomFactorClicked()), nullptr, QString{}, "view_menu.html");
@@ -1186,6 +1188,7 @@ void MapEditorController::createMenuAndToolbars()
 	view_menu->addAction(pan_act);
 	view_menu->addAction(zoom_in_act);
 	view_menu->addAction(zoom_out_act);
+	view_menu->addAction(box_zoom_act);
 	view_menu->addAction(show_all_act);
 	view_menu->addAction(custom_zoom_act);
 	view_menu->addSeparator();
@@ -1319,6 +1322,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_view->addAction(pan_act);
 	toolbar_view->addAction(zoom_in_act);
 	toolbar_view->addAction(zoom_out_act);
+	toolbar_view->addAction(box_zoom_act);
 	toolbar_view->addAction(show_all_act);
 	toolbar_view->addAction(template_window_act);
 	
@@ -2084,10 +2088,20 @@ void MapEditorController::zoomIn()
 {
 	main_view->zoomSteps(1);
 }
+
 void MapEditorController::zoomOut()
 {
 	main_view->zoomSteps(-1);
 }
+
+void MapEditorController::boxZoom(bool checked)
+{
+	if (checked)
+		setTool(new BoxZoomTool(this, box_zoom_act));
+	else
+		setTool(nullptr);
+}
+
 void MapEditorController::setCustomZoomFactorClicked()
 {
 	bool ok;
@@ -2448,7 +2462,7 @@ void MapEditorController::selectedSymbolsChanged()
 		if (symbol && !symbol->isHidden() && !symbol->isProtected() && current_tool)
 		{
 			// Auto-switch to a draw tool when selecting a symbol under certain conditions
-			if (current_tool->toolType() == MapEditorTool::Pan || current_tool->toolType() == MapEditorTool::Scribble
+			if (current_tool->toolType() == MapEditorTool::Pan || current_tool->toolType() == MapEditorTool::BoxZoom || current_tool->toolType() == MapEditorTool::Scribble
 			    || ((current_tool->toolType() == MapEditorTool::EditLine || current_tool->toolType() == MapEditorTool::EditPoint) && map->getNumSelectedObjects() == 0))
 			{
 				current_tool->switchToDefaultDrawTool(active_symbol);
@@ -4299,6 +4313,7 @@ QHash<const Symbol*, Symbol*> MapEditorController::importMap(
 void MapEditorController::setViewOptionsEnabled(bool enabled)
 {
 	pan_act->setEnabled(enabled);
+	box_zoom_act->setEnabled(enabled);
 	show_grid_act->setEnabled(enabled);
 // 	hatch_areas_view_act->setEnabled(enabled);
 // 	baseline_view_act->setEnabled(enabled);

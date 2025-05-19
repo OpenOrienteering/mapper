@@ -28,6 +28,7 @@
         <file>images/cursor-invisible.png</file>
         <file>images/cursor-rotate.png</file>
         <file>images/cursor-scale.png</file>
+        <file>images/cursor-zoom.png</file>
         <file>images/cut.png</file>
         <file>images/delete.png</file>
         <file>images/draw-circle.png</file>
@@ -111,6 +112,7 @@
         <file>images/tool-touch-cursor.png</file>
         <file>images/undo.png</file>
         <file>images/view-baseline.png</file>
+        <file>images/view-box-zoom.png</file>
         <file>images/view-hatch-areas.png</file>
         <file>images/view-show-all.png</file>
         <file>images/view-zoom-in.png</file>
