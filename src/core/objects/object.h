@@ -208,6 +208,13 @@ public:
 	 * @param factor_y vertical scaling factor
 	 */
 	virtual void scale(double factor_x, double factor_y);
+
+	/** Scales all coordinates.
+	 * @param center center of the scaling operation
+	 * @param factor_x horizontal scaling factor
+	 * @param factor_y vertical scaling factor
+	 */
+	virtual void scale(const MapCoordF& center, double factor_x, double factor_y);
 	
 protected:
 	/** Rotates the pattern origin around the center point.
