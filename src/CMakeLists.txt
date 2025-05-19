@@ -226,6 +226,7 @@ set(Mapper_Common_SRCS
   templates/template_track.cpp
   templates/world_file.cpp
   
+  tools/box_zoom_tool.cpp
   tools/cut_tool.cpp
   tools/cut_hole_tool.cpp
   tools/cutout_operation.cpp
@@ -244,7 +245,6 @@ set(Mapper_Common_SRCS
   tools/edit_line_tool.cpp
   tools/fill_tool.cpp
   tools/object_selector.cpp
-  tools/box_zoom_tool.cpp
   tools/pan_tool.cpp
   tools/point_handles.cpp
   tools/rotate_tool.cpp

@@ -724,11 +724,11 @@ private:
 	QAction* clear_undo_redo_history_act = {};
 	
 	QAction* pan_act = {};
-	QAction* box_zoom_act = {};
 	QAction* move_to_gps_pos_act = {};
 	QAction* follow_position_act = {};
 	QAction* zoom_in_act = {};
 	QAction* zoom_out_act = {};
+	QAction* box_zoom_act = {};
 	QAction* show_all_act = {};
 	QAction* fullscreen_act = {};
 	QAction* custom_zoom_act = {};
