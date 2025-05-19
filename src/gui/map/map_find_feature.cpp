@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017-2024 Kai Pastor
+ *    Copyright 2017-2020, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,8 +22,8 @@
 
 #include <functional>
 
-#include <QAction>
 #include <QAbstractButton>
+#include <QAction>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QGridLayout>
@@ -35,7 +35,9 @@
 
 #include "core/map.h"
 #include "core/map_part.h"
+#include "core/objects/object.h"
 #include "core/objects/object_query.h"
+#include "core/symbols/symbol.h"
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
@@ -44,7 +46,17 @@
 
 namespace OpenOrienteering {
 
-class Object;
+namespace {
+
+// Returns true if an object can be added to the selection.
+bool isSelectable(const Object* object)
+{
+	const auto* symbol = object ? object->getSymbol() : nullptr;
+	return symbol && !symbol->isHidden() && !symbol->isProtected();
+}
+
+}  // namespace
+
 
 MapFindFeature::MapFindFeature(MapEditorController& controller)
 : QObject{nullptr}
@@ -117,7 +129,7 @@ void MapFindFeature::showDialog()
 		
 		auto button_box = new QDialogButtonBox(QDialogButtonBox::Close | QDialogButtonBox::Help);
 		connect(button_box, &QDialogButtonBox::rejected, &*find_dialog, &QDialog::hide);
-		connect(button_box->button(QDialogButtonBox::Help), &QPushButton::clicked, this, &MapFindFeature::showHelp);
+		connect(button_box, &QDialogButtonBox::helpRequested, this, &MapFindFeature::showHelp);
 		
 		editor_stack = new QStackedLayout();
 		editor_stack->addWidget(text_edit);
@@ -166,52 +178,54 @@ ObjectQuery MapFindFeature::makeQuery() const
 			query = tag_selector->makeQuery();
 		}
 	}
+	if (!query)
+	{
+		controller.getMap()->clearObjectSelection(true);
+		controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("Invalid query"), 2000);
+	}
 	return query;
 }
 
 
 void MapFindFeature::findNext()
 {
-	auto map = controller.getMap();
-	auto first_object = map->getFirstSelectedObject();
+	if (auto query = makeQuery())
+		findNextMatchingObject(controller, query);
+}
+
+// static
+void MapFindFeature::findNextMatchingObject(MapEditorController& controller, const ObjectQuery& query)
+{
+	auto* map = controller.getMap();
+	
+	Object* first_match = nullptr;  // the first match in all objects
+	Object* pivot_object = map->getFirstSelectedObject();
+	Object* next_match = nullptr;   // the next match after pivot_object
 	map->clearObjectSelection(false);
 	
-	Object* next_object = nullptr;
-	auto query = makeQuery();
-	if (!query)
-	{
-		if (auto window = controller.getWindow())
-			window->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("Invalid query"), 2000);
-		return;
-	}
+	auto search = [&](Object* object) {
+		if (next_match)
+			return;
 		
-	auto search = [&first_object, &next_object, &query](Object* object) {
-		if (!next_object)
+		bool after_pivot = (pivot_object == nullptr);
+		if (object == pivot_object)
+			pivot_object = nullptr;
+		
+		if (isSelectable(object) && query(object))
 		{
-			if (first_object)
-			{
-				if (object == first_object)
-					first_object = nullptr;
-			}
-			else if (query(object))
-			{
-				next_object = object;
-			}
+			if (after_pivot)
+				next_match = object;
+			else if (!first_match)
+				first_match = object;
 		}
 	};
 	
-	// Start from selected object
 	map->getCurrentPart()->applyOnAllObjects(search);
-	if (!next_object)
-	{
-		// Start from first object
-		first_object = nullptr;
-		map->getCurrentPart()->applyOnAllObjects(search);
-	}
+	if (!next_match)
+		next_match = first_match;
+	if (next_match)
+		map->addObjectToSelection(next_match, false);
 	
-	map->clearObjectSelection(false);
-	if (next_object)
-		map->addObjectToSelection(next_object, false);
 	map->emitSelectionChanged();
 	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
 	
@@ -222,19 +236,21 @@ void MapFindFeature::findNext()
 
 void MapFindFeature::findAll()
 {
+	if (auto query = makeQuery())
+		findAllMatchingObjects(controller, query);
+}
+
+// static
+void MapFindFeature::findAllMatchingObjects(MapEditorController& controller, const ObjectQuery& query)
+{
 	auto map = controller.getMap();
 	map->clearObjectSelection(false);
 	
-	auto query = makeQuery();
-	if (!query)
-	{
-		controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("Invalid query"), 2000);
-		return;
-	}
-	
 	map->getCurrentPart()->applyOnMatchingObjects([map](Object* object) {
-		map->addObjectToSelection(object, false);
+		if (isSelectable(object))
+			map->addObjectToSelection(object, false);
 	}, std::cref(query));
+	
 	map->emitSelectionChanged();
 	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
 	controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("%n object(s) selected", nullptr, map->getNumSelectedObjects()), 2000);
@@ -244,15 +260,12 @@ void MapFindFeature::findAll()
 }
 
 
-
 void MapFindFeature::showHelp() const
 {
 	Util::showHelp(controller.getWindow(), "find_objects.html");
 }
 
 
-
-// slot
 void MapFindFeature::tagSelectorToggled(bool active)
 {
 	editor_stack->setCurrentIndex(active ? 1 : 0);

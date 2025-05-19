@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021, 2024 Kai Pastor
+ *    Copyright 2012-2021, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -127,6 +127,12 @@ private slots:
 	 */
 	void ocdPathImportTest_data();
 	void ocdPathImportTest();
+	
+	/**
+	 * Test OCD area symbol export and import.
+	 */
+	void ocdAreaSymbolTest_data();
+	void ocdAreaSymbolTest();
 
 };
 

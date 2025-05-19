@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021, 2024 Kai Pastor
+ *    Copyright 2012-2021, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -158,38 +158,42 @@ namespace
 	 * when the properties match.
 	 */
 	#define COMPARE_SYMBOL_PROPERTY(a, b, symbol) \
-	if ((a) != (b)) \
 	{ \
-		auto const diff = qstrlen(#b) - qstrlen(#a); \
-		auto const fill_a = QString().fill(QChar::Space, +diff); \
-		auto const fill_b = QString().fill(QChar::Space, -diff); \
-		QFAIL(QString::fromLatin1( \
-		       "Compared values are not the same (%1)\n   Actual   (%2)%3: %6\n   Expected (%4)%5: %7") \
-		      .arg((symbol).getNumberAndPlainTextName(), \
-		           QString::fromUtf8(#a), fill_a, \
-		           QString::fromUtf8(#b), fill_b) \
-		      .arg(a).arg(b) \
-		      .toUtf8()); \
-	} \
-	else \
-	{ \
-		QVERIFY(true);  /* for QEXPECT_FAIL etc. */ \
+		if ((a) == (b)) \
+		{ \
+			QVERIFY(true);  /* for QEXPECT_FAIL etc. */ \
+		} \
+		else \
+		{ \
+			auto const diff = qstrlen(#b) - qstrlen(#a); \
+			auto const fill_a = QString().fill(QChar::Space, +diff); \
+			auto const fill_b = QString().fill(QChar::Space, -diff); \
+			QFAIL(QString::fromLatin1( \
+			   "Compared values are not the same (%1)\n   Actual   (%2)%3: %6\n   Expected (%4)%5: %7") \
+			  .arg((symbol).getNumberAndPlainTextName(), \
+			       QString::fromUtf8(#a), fill_a, \
+			       QString::fromUtf8(#b), fill_b) \
+			  .arg(a).arg(b) \
+			  .toUtf8()); \
+		} \
 	}
 	
 	/**
 	 * Provides QVERIFY-style symbol property verification.
 	 * 
-	 * This macro reports the symbol, but avoids expensive string operations
-	 * when the properties match.
+	 * This macro reports the symbol on failure, but
+	 * avoids expensive string operations when the properties match.
 	 */
 	#define VERIFY_SYMBOL_PROPERTY(cond, symbol) \
-	if (cond) \
 	{ \
-		QVERIFY2(cond, QByteArray((symbol).getNumberAndPlainTextName().toUtf8())); \
-	} \
-	else \
-	{ \
-		QVERIFY(true);  /* for QEXPECT_FAIL etc. */ \
+		if (cond) \
+		{ \
+			QVERIFY(true);  /* for QEXPECT_FAIL etc. */ \
+		} \
+		else \
+		{ \
+			QVERIFY2(cond, QByteArray((symbol).getNumberAndPlainTextName().toUtf8())); \
+		} \
 	}
 	
 	
@@ -211,6 +215,38 @@ namespace
 		COMPARE_SYMBOL_PROPERTY(actual.isProtected(), expected.isProtected(), expected);
 		VERIFY_SYMBOL_PROPERTY(actual.stateEquals(&expected), expected);
 		VERIFY_SYMBOL_PROPERTY(actual.equals(&expected, Qt::CaseInsensitive), expected);
+	}
+	
+#define COMPARE_AREA_SYMBOL_PATTERN_PROPERTY(property) \
+	COMPARE_SYMBOL_PROPERTY(actual_pattern.property, expected_pattern.property, symbol)
+	
+	void compareAreaSymbolPattern(const AreaSymbol::FillPattern& actual_pattern, const AreaSymbol::FillPattern& expected_pattern, const AreaSymbol& symbol)
+	{
+		// cf. AreaSymbol::FillPattern::equals
+		COMPARE_AREA_SYMBOL_PATTERN_PROPERTY(type);
+		COMPARE_AREA_SYMBOL_PATTERN_PROPERTY(line_spacing);
+		COMPARE_AREA_SYMBOL_PATTERN_PROPERTY(line_offset);
+		
+		// OCD treats all patterns as rotatable.
+		COMPARE_SYMBOL_PROPERTY(actual_pattern.flags,
+		                        expected_pattern.flags | AreaSymbol::FillPattern::Rotatable,
+		                        symbol
+		)
+		
+		switch(expected_pattern.type)
+		{
+		case AreaSymbol::FillPattern::PointPattern:
+			COMPARE_AREA_SYMBOL_PATTERN_PROPERTY(offset_along_line);
+			COMPARE_AREA_SYMBOL_PATTERN_PROPERTY(point_distance);
+			COMPARE_SYMBOL_PROPERTY(bool(actual_pattern.point), bool(expected_pattern.point), symbol);
+			if(actual_pattern.point)
+				QVERIFY(actual_pattern.point->equals(expected_pattern.point));
+			break;
+		case AreaSymbol::FillPattern::LinePattern:
+			COMPARE_SYMBOL_PROPERTY(actual_pattern.line_color->operator QRgb(), expected_pattern.line_color->operator QRgb(), symbol);
+			COMPARE_AREA_SYMBOL_PATTERN_PROPERTY(line_width);
+			break;
+		}
 	}
 	
 	void compareMaps(const Map& actual, const Map& expected)
@@ -332,16 +368,16 @@ namespace
 	}
 	
 	
-	void fuzzyCompareSymbol(const AreaSymbol& actual, const AreaSymbol& expected)
+	void fuzzyCompareSymbol(const AreaSymbol& actual, const AreaSymbol& expected, const QByteArray& format_id)
 	{
-		auto pattern_rotable = false;
+		auto pattern_rotable = format_id.startsWith("OCD") ? true : false;
 		for (auto i = 0; i < expected.getNumFillPatterns(); ++i)
 			pattern_rotable |= expected.getFillPattern(i).rotatable();
 		for (auto i = 0; i < actual.getNumFillPatterns(); ++i)
 			COMPARE_SYMBOL_PROPERTY(actual.getFillPattern(i).rotatable(), pattern_rotable, expected);
 	}
 	
-	void fuzzyCompareSymbol(const Symbol& actual, const Symbol& expected, const QByteArray& /*format_id*/)
+	void fuzzyCompareSymbol(const Symbol& actual, const Symbol& expected, const QByteArray& format_id)
 	{
 		COMPARE_SYMBOL_PROPERTY(actual.isHidden(), expected.isHidden(), expected);
 		COMPARE_SYMBOL_PROPERTY(actual.isProtected(), expected.isProtected(), expected);
@@ -357,7 +393,7 @@ namespace
 		switch (actual.getType())
 		{
 		case Symbol::Area:
-			fuzzyCompareSymbol(static_cast<AreaSymbol const&>(actual), static_cast<AreaSymbol const&>(expected));
+			fuzzyCompareSymbol(static_cast<AreaSymbol const&>(actual), static_cast<AreaSymbol const&>(expected), format_id);
 			break;
 			
 		default:
@@ -1628,6 +1664,130 @@ void FileFormatTest::ocdPathImportTest()
 	}
 }
 
+
+void FileFormatTest::ocdAreaSymbolTest_data()
+{
+	QTest::addColumn<int>("format_version");
+	
+#ifndef MAPPER_BIG_ENDIAN
+	static struct { int version; const char* id; } const tests[] = {
+	    { 8, "OCD8" },
+	    { 9, "OCD9" },
+	    { 10, "OCD10" },
+	    { 11, "OCD11" },
+	    { 12, "OCD12" },
+	};
+	for (auto& t : tests)
+	{
+		QTest::newRow(t.id) << t.version;
+	}
+#endif
+}
+
+void FileFormatTest::ocdAreaSymbolTest()
+{
+	QFETCH(int, format_version);
+	
+	auto* format_id = QTest::currentDataTag();
+	const auto* format = FileFormats.findFormat(format_id);
+	QVERIFY(format);
+	
+	static const auto filepath = QString::fromLatin1("data:rotated-pattern.omap");
+	QVERIFY(QFileInfo::exists(filepath));
+	
+	// Load the test map
+	auto expected = std::make_unique<Map>();
+	QVERIFY(expected->loadFrom(filepath));
+	
+	// Save and load the map
+	auto actual = saveAndLoadMap(*expected, format);
+	QVERIFY2(actual, "Exception while importing / exporting.");
+	QCOMPARE(actual->property(OcdFileFormat::versionProperty()), format_version);
+	
+	// Symbols
+	QCOMPARE(actual->getNumSymbols(), expected->getNumSymbols());
+	for (int i = 0; i < actual->getNumSymbols(); ++i)
+	{
+		auto* expected_symbol = expected->getSymbol(i);
+		if (expected_symbol->getType() != Symbol::Area)
+			continue;
+		
+		auto* actual_symbol = actual->getSymbol(i);
+		QCOMPARE(actual_symbol->getType(), Symbol::Area);
+		
+		COMPARE_SYMBOL_PROPERTY(actual_symbol->getNumberComponent(0), expected_symbol->getNumberComponent(0), *expected_symbol);
+		// OCD limitation: always two number components
+		expected_symbol->setNumberComponent(2, -1);
+		if (expected_symbol->getNumberComponent(1) == -1)
+			expected_symbol->setNumberComponent(1, actual_symbol->getNumberComponent(1));
+		
+		auto* expected_area_symbol = expected_symbol->asArea();
+		auto* actual_area_symbol = actual_symbol->asArea();
+		COMPARE_SYMBOL_PROPERTY(bool(actual_area_symbol->getColor()), bool(expected_area_symbol->getColor()), *expected_area_symbol);
+		if (expected_area_symbol->getColor())
+			COMPARE_SYMBOL_PROPERTY(actual_area_symbol->getColor()->operator QRgb(), expected_area_symbol->getColor()->operator QRgb(), *expected_area_symbol);
+		COMPARE_SYMBOL_PROPERTY(actual_area_symbol->isRotatable(), expected_area_symbol->isRotatable(), *expected_area_symbol);
+		
+		COMPARE_SYMBOL_PROPERTY(actual_area_symbol->getNumFillPatterns(), expected_area_symbol->getNumFillPatterns(), *expected_area_symbol);
+		for (auto j = 0; j < expected_area_symbol->getNumFillPatterns(); ++j)
+		{
+			auto expected_pattern = expected_area_symbol->getFillPattern(j);
+			auto actual_pattern = actual_area_symbol->getFillPattern(j);
+			
+			// OCD limitation: Fill pattern always rotatable
+			expected_pattern.setRotatable(true);
+			
+			compareAreaSymbolPattern(actual_pattern, expected_pattern, *expected_area_symbol);
+		}
+	}
+	
+	// Objects
+	QCOMPARE(actual->getNumParts(), 1);
+	QCOMPARE(expected->getNumParts(), 1);
+	
+	const auto& actual_part = *actual->getPart(0);
+	const auto& expected_part = *expected->getPart(0);
+	QCOMPARE(actual_part.getNumObjects(), expected_part.getNumObjects());
+	for (int i = 0; i < actual_part.getNumObjects(); ++i)
+	{
+		auto const& expected_object = *expected_part.getObject(i);
+		auto const& expected_symbol = *expected_object.getSymbol();
+		if (expected_symbol.getType() != Symbol::Area)
+			continue;
+		
+		auto const& actual_object = *actual_part.getObject(i);
+		
+		// Adopt expected object properties to OCD format capabilites.
+		{
+			auto& expected_path = *const_cast<Object&>(expected_object).asPath();
+			
+			// ATM the last import coord never carries "HolePoint".
+			auto& last_coord = expected_path.getCoordinateRef(expected_path.getCoordinateCount()-1);
+			last_coord.setHolePoint(false);
+			
+			// OC*D uses tenths of a degree, counterclockwise.
+			auto delta_rotation = actual_object.getRotation() - expected_path.getRotation();
+			if (delta_rotation > M_PI)
+				delta_rotation -= 2*M_PI;
+			else if (delta_rotation < -M_PI)
+				delta_rotation += 2*M_PI;
+			if (qAbs(delta_rotation) < qDegreesToRadians(0.2))
+				expected_path.setRotation(actual_object.getRotation());
+			
+			// OC*D doesn't have pattern origin.
+			expected_path.setPatternOrigin({});
+			
+			// Mapper may store rotation even if there are no rotatable patterns (left).
+			if (!expected_symbol.hasRotatableFillPattern())
+				expected_path.setRotation(0);
+		}
+		
+		// Verifying object property; symbol is for tracing
+		VERIFY_SYMBOL_PROPERTY(actual_object.equals(&expected_object, false), expected_symbol);
+	}
+}
+
+
 /*
  * We don't need a real GUI window.
  * 
@@ -1636,7 +1796,7 @@ void FileFormatTest::ocdPathImportTest()
  */
 #ifndef Q_OS_MACOS
 namespace  {
-	auto Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+	auto const Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
 }
 #endif
 

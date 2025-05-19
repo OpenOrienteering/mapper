@@ -1,6 +1,7 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2015-2020 Kai Pastor
+ *    Copyright 2015-2020, 2025 Kai Pastor
+ *    Copyright 2025 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -35,10 +36,13 @@
 #include "core/map_color.h"
 #include "core/map_coord.h"
 #include "core/objects/object.h"
+#include "core/objects/object_query.h"
 #include "core/symbols/line_symbol.h"
+#include "core/symbols/point_symbol.h"
 #include "global.h"
 #include "gui/main_window.h"
 #include "gui/map/map_editor.h"
+#include "gui/map/map_find_feature.h"
 #include "gui/map/map_widget.h"
 #include "templates/paint_on_template_feature.h"
 #include "tools/edit_point_tool.h"
@@ -161,7 +165,7 @@ void TestMapEditor::simulateDrag(const QPointF& start_pos, const QPointF& end_po
 }
 
 
-// ### TestTools ###
+// ### ToolsTest ###
 
 void ToolsTest::initTestCase()
 {
@@ -229,6 +233,60 @@ void ToolsTest::paintOnTemplateFeature()
 }
 
 
+void ToolsTest::testFindObjects()
+{
+	auto* map = new Map;
+	{
+		auto* normal_point_symbol = new PointSymbol();
+		map->addSymbol(normal_point_symbol, 0);
+		
+		auto* hidden_point_symbol = new PointSymbol();
+		hidden_point_symbol->setHidden(true);
+		map->addSymbol(hidden_point_symbol, 1);
+		
+		auto* protected_point_symbol = new PointSymbol();
+		protected_point_symbol->setProtected(true);
+		map->addSymbol(protected_point_symbol, 2);
+		
+		auto add_object = [map](Symbol* symbol, const char* label) {
+			auto* object = new PointObject(symbol);
+			object->setTag(QLatin1String("match"), QLatin1String(label));
+			map->addObject(object);
+		};
+		add_object(normal_point_symbol, "yes");     // expected match
+		add_object(normal_point_symbol, "no");
+		add_object(normal_point_symbol, "yes");     // expected match
+		add_object(hidden_point_symbol, "yes");
+		add_object(normal_point_symbol, "yes");     // expected match
+		add_object(protected_point_symbol, "yes");
+	}
+	
+	TestMapEditor editor(map);  // taking ownership
+	
+	ObjectQuery query {QLatin1String("match"), ObjectQuery::OperatorIs, QLatin1String("yes")};
+	QVERIFY(query);
+	
+	MapFindFeature::findAllMatchingObjects(*editor.editor, query);
+	QCOMPARE(map->getNumSelectedObjects(), 3);
+	
+	MapFindFeature::findNextMatchingObject(*editor.editor, query);
+	QCOMPARE(map->getNumSelectedObjects(), 1);
+	auto* first_match = map->getFirstSelectedObject();
+	
+	MapFindFeature::findNextMatchingObject(*editor.editor, query);
+	QCOMPARE(map->getNumSelectedObjects(), 1);
+	QVERIFY(map->getFirstSelectedObject() != first_match);
+	
+	MapFindFeature::findNextMatchingObject(*editor.editor, query);
+	QCOMPARE(map->getNumSelectedObjects(), 1);
+	QVERIFY(map->getFirstSelectedObject() != first_match);
+	
+	MapFindFeature::findNextMatchingObject(*editor.editor, query);
+	QCOMPARE(map->getNumSelectedObjects(), 1);
+	QVERIFY(map->getFirstSelectedObject() == first_match);
+}
+
+
 /*
  * We select a non-standard QPA because we don't need a real GUI window.
  * 
@@ -236,7 +294,7 @@ void ToolsTest::paintOnTemplateFeature()
  * However, it bails out with a QFontDatabase error (cf. QTBUG-33674)
  */
 namespace  {
-	auto Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+	auto const Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
 }
 
 

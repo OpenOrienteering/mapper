@@ -142,7 +142,7 @@
 <context>
     <name>OpenOrienteering::TagSelectWidget</name>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_find_feature.cpp" line="240"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="256"/>
         <source>%n object(s) selected</source>
         <translation>
             <numerusform>One object selected</numerusform>

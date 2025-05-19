@@ -773,7 +773,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
             </symbol>
             <symbol type="4" id="41" code="412" name="Orchard">
                 <description>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</description>
-                <area_symbol inner_color="21" min_area="500" patterns="1">
+                <area_symbol inner_color="21" min_area="500" rotatable="true" patterns="1">
                     <pattern type="2" angle="0" rotatable="true" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="225" inner_color="17" outer_width="0" outer_color="-1" elements="0"/>
@@ -783,7 +783,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
             </symbol>
             <symbol type="4" id="42" code="413" name="Vineyard">
                 <description>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</description>
-                <area_symbol inner_color="21" min_area="500" patterns="2">
+                <area_symbol inner_color="21" min_area="500" rotatable="true" patterns="2">
                     <pattern type="2" angle="1.5708" rotatable="true" line_spacing="1700" line_offset="0" offset_along_line="0" point_distance="1900">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="0" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -6433,19 +6433,19 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             </symbol>
             <symbol type="4" id="137" code="411.0" name="Forest runnable in one direction, 1" is_hidden="true">
                 <description>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</description>
-                <area_symbol inner_color="19" min_area="1000" patterns="1">
+                <area_symbol inner_color="19" min_area="1000" rotatable="true" patterns="1">
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="14" line_width="400"/>
                 </area_symbol>
             </symbol>
             <symbol type="4" id="138" code="411.1" name="Forest runnable in one direction, 2" is_hidden="true">
                 <description>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</description>
-                <area_symbol inner_color="18" min_area="1000" patterns="1">
+                <area_symbol inner_color="18" min_area="1000" rotatable="true" patterns="1">
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="14" line_width="400"/>
                 </area_symbol>
             </symbol>
             <symbol type="4" id="139" code="411.2" name="Forest runnable in one direction, 3" is_hidden="true">
                 <description>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</description>
-                <area_symbol inner_color="16" min_area="1000" patterns="1">
+                <area_symbol inner_color="16" min_area="1000" rotatable="true" patterns="1">
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="14" line_width="400"/>
                 </area_symbol>
             </symbol>
@@ -6728,7 +6728,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             </symbol>
             <symbol type="4" id="166" code="601.1" name="North lines pattern" is_hidden="true">
                 <area_symbol inner_color="-1" min_area="0" patterns="1">
-                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="33330" line_offset="0" offset_along_line="0" color="1" line_width="140"/>
+                    <pattern type="1" angle="1.5708" line_spacing="33330" line_offset="0" offset_along_line="0" color="1" line_width="140"/>
                 </area_symbol>
             </symbol>
             <symbol type="2" id="167" code="709.2" name="Out-of-bounds area, dashed boundary" is_hidden="true">

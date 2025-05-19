@@ -1415,7 +1415,7 @@ Le symbole est orienté vers le Nord.</translation>
     <message>
         <source>Open land with scattered bushes (green dots)</source>
         <comment>Name of symbol 402.1</comment>
-        <translation>Terrain découvert avec buissons dispersés (points verts)</translation>
+        <translation>Terrain découvert parsemé de buissons (points verts)</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes / thickets). Prominent individual trees may be added using symbol Prominent large tree (417). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
@@ -1495,7 +1495,7 @@ For openings in symbol Vegetation: fight (410) the minimum area is 0.55 mm x 0.5
     <message>
         <source>Vegetation: slow running</source>
         <comment>Name of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>Végétation, course ralentie</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
@@ -14481,7 +14481,7 @@ For openings in symbol Vegetation: fight (410) the minimum area is 0.55 mm x 0.5
     <message>
         <source>Vegetation: slow running</source>
         <comment>Name of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>Végétation, course ralentie</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
