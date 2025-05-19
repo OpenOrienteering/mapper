@@ -354,15 +354,11 @@ void TemplateAdjustWidget::updateActions()
 	clear_and_revert_button->setEnabled(has_pass_points);
 	move_act->setEnabled(has_pass_points);
 	delete_act->setEnabled(has_pass_points);
-	if (!has_pass_points)
+	if (!has_pass_points && (move_act->isChecked() || delete_act->isChecked()))
 	{
-		stopTemplateAdjust();
-		if (new_act->isChecked())
-			new_act->setChecked(false);
-		if (move_act->isChecked())
-			move_act->setChecked(false);
-		if (delete_act->isChecked())
-			delete_act->setChecked(false);
+		move_act->setChecked(false);
+		delete_act->setChecked(false);
+		controller->setTool(nullptr);
 	}
 }
 
