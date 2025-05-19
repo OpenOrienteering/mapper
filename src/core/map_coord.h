@@ -547,6 +547,9 @@ public:
 	
 	
 	/** Assignment operator. */
+	constexpr MapCoordF& operator= (const MapCoordF& point) noexcept = default;
+	
+	/** Assignment operator. */
 	MapCoordF& operator= (const QPointF& point) noexcept;
 	
 	
