@@ -1,6 +1,7 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2025 Kai Pastor
+ *    Copyright 2025 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,7 +23,6 @@
 #include "template_list_widget.h"
 
 #include <utility>
-#include <vector>
 
 #include <Qt>
 #include <QtGlobal>
@@ -34,12 +34,15 @@
 #include <QAction>
 #include <QBoxLayout>
 #include <QByteArray>
+#include <QButtonGroup>
 #include <QCheckBox>
+#include <QColor>
 #include <QCoreApplication>
 #include <QDialog>
 #include <QDir>
 #include <QEvent>
 #include <QFileInfo>
+#include <QFontMetrics>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QIcon>
@@ -55,7 +58,9 @@
 #include <QMessageBox>
 #include <QModelIndex>
 #include <QPainter>
+#include <QPalette>
 #include <QPixmap>
+#include <QPushButton>
 #include <QRect>
 #include <QScroller>
 #include <QSettings>
@@ -145,6 +150,7 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 , main_view(main_view)
 , controller(controller)
 , mobile_mode(controller.isInMobileMode())
+, max_template_sets(9)
 {
 	setWhatsThis(Util::makeWhatThis("templates.html#setup"));
 	
@@ -314,7 +320,8 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 		style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option) / 2,
 		0, // Covered by the main layout's spacing.
 		style()->pixelMetric(QStyle::PM_LayoutRightMargin, &style_option) / 2,
-		style()->pixelMetric(QStyle::PM_LayoutBottomMargin, &style_option) / 2
+		//style()->pixelMetric(QStyle::PM_LayoutBottomMargin, &style_option) / 2
+		0
 	);
 	all_buttons_layout->addWidget(list_buttons_group);
 	all_buttons_layout->addWidget(new QLabel(QString::fromLatin1("   ")), 1);
@@ -327,7 +334,49 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 		connect(help_button, &QAbstractButton::clicked, this, &TemplateListWidget::showHelp);
 	}
 	
-	all_templates_layout->addLayout(all_buttons_layout);
+	// Template sets layout
+	auto* set_change_layout = new SegmentedButtonLayout();
+	new_template_set_button = createToolButton(QIcon(QString::fromLatin1(":/images/template-set-add.png")), tr("Add"));
+	set_change_layout->addWidget(new_template_set_button);
+	delete_template_set_button = createToolButton(QIcon(QString::fromLatin1(":/images/template-set-delete.png")), tr("Remove"));
+	set_change_layout->addWidget(delete_template_set_button);
+	
+	auto* set_selection_layout = new SegmentedButtonLayout();
+	auto* group = new QButtonGroup(this);
+	template_set_buttons.reserve(max_template_sets);
+	for (int i = 0; i < max_template_sets; ++i)
+	{
+		auto* template_set_button = new QPushButton(tr("%1").arg(i+1));
+		const auto textSize = template_set_button->fontMetrics().size(Qt::TextShowMnemonic, template_set_button->text());
+		QStyleOptionButton opt;
+		opt.initFrom(template_set_button);
+		opt.rect.setSize(textSize);
+		template_set_button->setMinimumSize(template_set_button->style()->sizeFromContents(QStyle::CT_PushButton, &opt, textSize, template_set_button));
+		template_set_button->setAutoFillBackground(true);
+		template_set_buttons.push_back(template_set_button);
+		group->addButton(template_set_button, i);
+		set_selection_layout->addWidget(template_set_button);
+	}
+	updateTemplateSetButtons();
+	
+	// The template set buttons row layout
+	auto* template_set_buttons_layout = new QHBoxLayout();
+	//template_set_buttons_layout->setContentsMargins(0,0,0,0);
+	template_set_buttons_layout->setContentsMargins(
+		style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option) / 2,
+		0, // Covered by the main layout's spacing.
+		style()->pixelMetric(QStyle::PM_LayoutRightMargin, &style_option) / 2,
+		style()->pixelMetric(QStyle::PM_LayoutBottomMargin, &style_option) / 2
+	);
+	template_set_buttons_layout->addLayout(set_change_layout);
+	template_set_buttons_layout->addLayout(set_selection_layout);
+	template_set_buttons_layout->addStretch();
+	
+	auto* two_rows_layout = new QVBoxLayout();
+	two_rows_layout->addLayout(all_buttons_layout);
+	two_rows_layout->addLayout(template_set_buttons_layout);
+	
+	all_templates_layout->addLayout(two_rows_layout);
 	
 	setLayout(all_templates_layout);
 	
@@ -360,6 +409,14 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 	connect(move_by_hand_action, &QAction::triggered, this, &TemplateListWidget::moveByHandClicked);
 	connect(adjust_button, &QAbstractButton::clicked, this, &TemplateListWidget::adjustClicked);
 	connect(position_action, &QAction::triggered, this, &TemplateListWidget::positionClicked);
+	
+	connect(new_template_set_button, &QAbstractButton::clicked, this, &TemplateListWidget::addTemplateSet);
+	connect(delete_template_set_button, &QAbstractButton::clicked, this, &TemplateListWidget::deleteTemplateSet);
+#if QT_VERSION < 0x051500
+	connect(group, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &TemplateListWidget::onGroupButtonClicked);
+#else
+	connect(group, &QButtonGroup::idClicked, this, &TemplateListWidget::onGroupButtonClicked);
+#endif
 	
 	//connect(group_button, SIGNAL(clicked(bool)), this, &TemplateListWidget::groupClicked);
 	//connect(more_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(moreActionClicked(QAction*)));
@@ -687,6 +744,57 @@ void TemplateListWidget::newTemplate(QAction* action)
 }
 #endif
 
+void TemplateListWidget::updateTemplateSetButtons()
+{
+	const auto template_sets = main_view.getNumberOfVisibilitySets();
+	const auto current_template_set = main_view.getActiveVisibilityIndex();
+	delete_template_set_button->setEnabled(template_sets > 1);
+	new_template_set_button->setEnabled(template_sets < max_template_sets);
+	for (int i = 0; i < max_template_sets; ++i)
+	{
+		template_set_buttons.at(i)->setVisible(template_sets > i);
+		if (i < template_sets)
+		{
+			auto pal = template_set_buttons.at(i)->palette();
+			pal.setColor(QPalette::Button, i == current_template_set ? QColor(Qt::green) : QColor(Qt::lightGray));
+			template_set_buttons.at(i)->setPalette(pal);
+		}
+	}
+}
+
+// slots:
+void TemplateListWidget::addTemplateSet()
+{
+	main_view.addVisibilitySet();
+	updateTemplateSetButtons();
+}
+
+void TemplateListWidget::deleteTemplateSet()
+{
+	main_view.deleteVisibilitySet();
+	updateTemplateSetButtons();
+	template_table->viewport()->update();
+}
+
+void TemplateListWidget::switchTemplateSet()
+{
+	auto template_set = main_view.getActiveVisibilityIndex() + 1;
+	if (template_set >= main_view.getNumberOfVisibilitySets())
+		template_set = 0;
+	
+	onGroupButtonClicked(template_set);
+}
+
+void TemplateListWidget::onGroupButtonClicked(int val)
+{
+	if (main_view.getActiveVisibilityIndex() != val)
+	{
+		main_view.setVisibilitySet(val);
+		updateTemplateSetButtons();
+		template_table->viewport()->update();
+	}
+}
+
 void TemplateListWidget::openTemplate()
 {
 	auto new_template = showOpenTemplateDialog(window(), controller);
@@ -718,7 +826,6 @@ void TemplateListWidget::duplicateTemplate()
 	Q_ASSERT(row >= 0);
 	int pos = posFromRow(row);
 	Q_ASSERT(pos >= 0);
-	
 	const auto* prototype = map.getTemplate(pos);
 	const auto visibility = main_view.getTemplateVisibility(prototype);
 	
