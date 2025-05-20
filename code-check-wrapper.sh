@@ -104,6 +104,7 @@ for I in \
   symbol_rule_set.cpp \
   symbol_t.cpp \
   symbol_tooltip.cpp \
+  tag_remove_dialog.cpp \
   tag_select_widget.cpp \
   /template.cpp \
   template_image.cpp \
