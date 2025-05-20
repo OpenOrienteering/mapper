@@ -152,16 +152,16 @@ void TagRemoveDialog::findClicked()
 	number_matching_objects->setText(tr("Number of matching objects: %1").arg(objects_count));
 	number_matching_keys->setText(tr("%n matching keys:", nullptr, matching_keys.size()));
 	matching_keys_details->clear();
+	remove_button->setEnabled(!matching_keys.empty());
 	
 	if (!matching_keys.empty())
 	{
-		QString matching_keys_list = std::accumulate( begin(matching_keys), 
-												 end(matching_keys), 
-												 QString(),
-												 [](const QString& a, const QString& b) -> QString { return a.isEmpty() ? b : a + QChar::LineFeed + b; }
-												);
+		QString matching_keys_list = std::accumulate(begin(matching_keys), 
+		                                             end(matching_keys), 
+		                                             QString(),
+		                                             [](const QString& a, const QString& b) -> QString { return a.isEmpty() ? b : a + QChar::LineFeed + b; }
+		                                            );
 		matching_keys_details->insertPlainText(matching_keys_list);
-		remove_button->setEnabled(true);
 	}
 }
 
