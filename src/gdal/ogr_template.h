@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2020 Kai Pastor
+ *    Copyright 2016-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -59,7 +59,7 @@ public:
 	static std::unique_ptr<Georeferencing> getDataGeoreferencing(const QString& path, const Georeferencing& initial_georef);
 	
 	
-	OgrTemplate(const QString& path, Map* map);
+	OgrTemplate(const QString& path, Map* map, bool use_default_positioning = false);
 	
 protected:
 	OgrTemplate(const OgrTemplate& proto);
@@ -140,6 +140,7 @@ private:
 	bool explicit_georef_pending      { false };  //  transient
 	bool use_real_coords              { true };   //  transient
 	bool center_in_view               { false };  //  transient
+	bool use_default_positioning;     // true for unit tests
 };
 
 
