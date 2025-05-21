@@ -33,6 +33,7 @@
 #include <QCoreApplication>
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
+#include <QIcon>
 #include <QLabel>
 #include <QLatin1String>
 #include <QLineEdit>
@@ -114,6 +115,7 @@ TagRemoveDialog::TagRemoveDialog(QWidget* parent, Map* map)
 	connect(find_button, &QAbstractButton::clicked, this, &TagRemoveDialog::findClicked);
 	connect(remove_button, &QAbstractButton::clicked, this, &TagRemoveDialog::removeClicked);
 	connect(pattern_edit, &QLineEdit::textChanged, this, &TagRemoveDialog::textChanged);
+	connect(compare_op, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TagRemoveDialog::comboBoxChanged);
 }
 
 TagRemoveDialog::~TagRemoveDialog() = default;
@@ -123,6 +125,13 @@ TagRemoveDialog::~TagRemoveDialog() = default;
 void TagRemoveDialog::textChanged(const QString& text)
 {
 	find_button->setEnabled(!text.trimmed().isEmpty());
+	remove_button->setEnabled(false);
+}
+
+// slot
+void TagRemoveDialog::comboBoxChanged()
+{
+	remove_button->setEnabled(false);
 }
 
 // slot
@@ -156,12 +165,12 @@ void TagRemoveDialog::findClicked()
 	
 	if (!matching_keys.empty())
 	{
-		QString matching_keys_list = std::accumulate(begin(matching_keys), 
-		                                             end(matching_keys), 
-		                                             QString(),
-		                                             [](const QString& a, const QString& b) -> QString { return a.isEmpty() ? b : a + QChar::LineFeed + b; }
-		                                            );
-		matching_keys_details->insertPlainText(matching_keys_list);
+		QString details = std::accumulate(begin(matching_keys), 
+		                                  end(matching_keys), 
+		                                  QString(),
+		                                  [](const QString& a, const QString& b) -> QString { return a.isEmpty() ? b : a + QChar::LineFeed + b; }
+		                                 );
+		matching_keys_details->insertPlainText(details);
 	}
 }
 
