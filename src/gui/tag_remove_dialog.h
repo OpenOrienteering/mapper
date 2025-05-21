@@ -50,6 +50,7 @@ public:
 	
 private slots:
 	void textChanged(const QString& text);
+	void comboBoxChanged();
 	void findClicked();
 	void removeClicked();
 	
