@@ -20,6 +20,8 @@
 #ifndef OPENORIENTEERING_TAG_REMOVE_DIALOG_H
 #define OPENORIENTEERING_TAG_REMOVE_DIALOG_H
 
+#include <set>
+
 #include <QDialog>
 #include <QObject>
 
@@ -47,6 +49,8 @@ public:
 	TagRemoveDialog(QWidget* parent, Map* map);
 	
 	~TagRemoveDialog() override;
+	
+	static int findMatchingTags(const Map *map, const QString& pattern, int op, std::set<QString>& matching_keys);
 	
 private slots:
 	void textChanged(const QString& text);

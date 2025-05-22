@@ -21,7 +21,6 @@
 
 #include <algorithm>
 #include <functional>
-#include <set>
 #include <vector>
 
 #include <Qt>
@@ -137,13 +136,14 @@ void TagRemoveDialog::comboBoxChanged()
 // slot
 void TagRemoveDialog::findClicked()
 {
-	const auto pattern = pattern_edit->text();
-	const auto op = compare_op->currentIndex();
+	//const auto pattern = pattern_edit->text();
+	//const auto op = compare_op->currentIndex();
 	
-	int objects_count = 0;
+	//int objects_count = 0;
 	std::set<QString> matching_keys;
+	const auto objects_count = findMatchingTags(map, pattern_edit->text(), compare_op->currentIndex(), matching_keys);
 	
-	for (const auto& object : map->selectedObjects())
+/*	for (const auto& object : map->selectedObjects())
 	{
 		auto object_matched = false;
 		for (const auto& tag : object->tags())
@@ -156,7 +156,7 @@ void TagRemoveDialog::findClicked()
 		}
 		if (object_matched)
 			++objects_count;
-	}
+	}*/
 	
 	number_matching_objects->setText(tr("Number of matching objects: %1").arg(objects_count));
 	number_matching_keys->setText(tr("%n matching keys:", nullptr, matching_keys.size()));
@@ -172,6 +172,29 @@ void TagRemoveDialog::findClicked()
 		                                 );
 		matching_keys_details->insertPlainText(details);
 	}
+}
+
+// static
+int TagRemoveDialog::findMatchingTags(const Map *map, const QString& pattern, int op, std::set<QString>& matching_keys)
+{
+	int objects_count = 0;
+	matching_keys.clear();
+	
+	for (const auto& object : map->selectedObjects())
+	{
+		auto object_matched = false;
+		for (const auto& tag : object->tags())
+		{
+			if ((compare_operations[op].fn)(tag.key, pattern))
+			{
+				matching_keys.insert(tag.key);
+				object_matched = true;
+			}
+		}
+		if (object_matched)
+			++objects_count;
+	}
+	return objects_count;
 }
 
 // slot
