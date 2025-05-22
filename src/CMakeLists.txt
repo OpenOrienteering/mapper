@@ -1,6 +1,6 @@
 #
 #    Copyright 2012-2014 Thomas Schöps
-#    Copyright 2012-2024 Kai Pastor
+#    Copyright 2012-2025 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -154,6 +154,7 @@ set(Mapper_Common_SRCS
   gui/select_crs_dialog.cpp
   gui/settings_dialog.cpp
   gui/simple_course_dialog.cpp
+  gui/tag_remove_dialog.cpp
   gui/task_dialog.cpp
   gui/text_browser_dialog.cpp
   gui/touch_cursor.cpp
