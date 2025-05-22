@@ -22,6 +22,9 @@
 
 #include "tools_t.h"
 
+#include <set>
+#include <vector>
+
 #include <Qt>
 #include <QtGlobal>
 #include <QtTest>
@@ -41,6 +44,7 @@
 #include "core/symbols/point_symbol.h"
 #include "global.h"
 #include "gui/main_window.h"
+#include "gui/tag_remove_dialog.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_find_feature.h"
 #include "gui/map/map_widget.h"
@@ -284,6 +288,38 @@ void ToolsTest::testFindObjects()
 	MapFindFeature::findNextMatchingObject(*editor.editor, query);
 	QCOMPARE(map->getNumSelectedObjects(), 1);
 	QVERIFY(map->getFirstSelectedObject() == first_match);
+}
+
+
+void ToolsTest::testDeleteObjectTags()
+{
+	auto* map = new Map;
+	{
+		auto* normal_point_symbol = new PointSymbol();
+		map->addSymbol(normal_point_symbol, 0);
+		
+		auto add_object = [map, normal_point_symbol](bool add_to_selection, std::vector<QString> tags) {
+			auto* object = new PointObject(normal_point_symbol);
+			for (const auto& key : tags)
+				object->setTag(key, QLatin1String("1"));
+			//std::for_each(tags.cbegin(), tags.cend(), [object](auto const& key) { object->setTag(key, QLatin1String("1")); });
+			map->addObject(object);
+			if (add_to_selection)
+				map->addObjectToSelection(object, false);
+		};
+		add_object(false, {QLatin1String("abc")});	// not added to selection
+		add_object(true, {QLatin1String("abc"), QLatin1String("bcd"), QLatin1String("cde")});	// added to selection
+	}
+	
+	TestMapEditor editor(map);  // taking ownership
+	
+	std::set<QString> matching_keys;
+	
+	const auto objects_count = TagRemoveDialog::findMatchingTags(map, QLatin1String("b"), 2 /* contains */, matching_keys);
+	QCOMPARE(objects_count, 1);
+	QCOMPARE(matching_keys.size(), 2);
+	
+	// TODO: add more tests, especially for deleting tags
 }
 
 
