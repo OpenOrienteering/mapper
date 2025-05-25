@@ -52,6 +52,8 @@ public:
 	
 	static int findMatchingTags(const Map *map, const QString& pattern, int op, std::set<QString>& matching_keys);
 	
+	static void removeMatchingTags(Map *map, const QString& pattern, int op, bool add_undo);
+	
 private slots:
 	void textChanged(const QString& text);
 	void comboBoxChanged();
