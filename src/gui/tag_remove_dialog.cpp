@@ -136,27 +136,8 @@ void TagRemoveDialog::comboBoxChanged()
 // slot
 void TagRemoveDialog::findClicked()
 {
-	//const auto pattern = pattern_edit->text();
-	//const auto op = compare_op->currentIndex();
-	
-	//int objects_count = 0;
 	std::set<QString> matching_keys;
 	const auto objects_count = findMatchingTags(map, pattern_edit->text(), compare_op->currentIndex(), matching_keys);
-	
-/*	for (const auto& object : map->selectedObjects())
-	{
-		auto object_matched = false;
-		for (const auto& tag : object->tags())
-		{
-			if ((compare_operations[op].fn)(tag.key, pattern))
-			{
-				matching_keys.insert(tag.key);
-				object_matched = true;
-			}
-		}
-		if (object_matched)
-			++objects_count;
-	}*/
 	
 	number_matching_objects->setText(tr("Number of matching objects: %1").arg(objects_count));
 	number_matching_keys->setText(tr("%n matching keys:", nullptr, matching_keys.size()));
@@ -205,12 +186,16 @@ void TagRemoveDialog::removeClicked()
 	auto question = QString(tr("Do you really want to remove the found object tags?"));
 	if (!add_undo)
 		question += QChar::LineFeed + QString(tr("This cannot be undone."));
-	if (QMessageBox::question(this, tr("Remove object tags"), question, QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
-		return;
-	
-	const auto pattern = pattern_edit->text();
-	const auto op = compare_op->currentIndex();
-	
+	if (QMessageBox::question(this, tr("Remove object tags"), question, QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+	{
+		removeMatchingTags(map, pattern_edit->text(), compare_op->currentIndex(), add_undo);
+		accept();
+	}
+}
+
+// static
+void TagRemoveDialog::removeMatchingTags(Map *map, const QString& pattern, int op, bool add_undo)
+{
 	CombinedUndoStep* combined_step;
 	if (add_undo)
 		combined_step = new CombinedUndoStep(map);
@@ -239,8 +224,6 @@ void TagRemoveDialog::removeClicked()
 	}
 	if (add_undo)
 		map->push(combined_step);
-	
-	accept();
 }
 
 }  // namespace OpenOrienteering
