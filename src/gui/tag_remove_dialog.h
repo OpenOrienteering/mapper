@@ -61,6 +61,8 @@ private slots:
 	void removeClicked();
 	
 private:
+	void reset();
+	
 	QPushButton* find_button;
 	QPushButton* remove_button;
 	QCheckBox* undo_check;
