@@ -124,12 +124,20 @@ TagRemoveDialog::~TagRemoveDialog() = default;
 void TagRemoveDialog::textChanged(const QString& text)
 {
 	find_button->setEnabled(!text.trimmed().isEmpty());
-	remove_button->setEnabled(false);
+	reset();
 }
 
 // slot
 void TagRemoveDialog::comboBoxChanged()
 {
+	reset();
+}
+
+void TagRemoveDialog::reset()
+{
+	number_matching_objects->setText(QString());
+	number_matching_keys->setText(QString());
+	matching_keys_details->clear();
 	remove_button->setEnabled(false);
 }
 
