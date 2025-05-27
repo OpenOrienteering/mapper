@@ -148,7 +148,7 @@ void TagRemoveDialog::findClicked()
 	const auto objects_count = findMatchingTags(map, pattern_edit->text(), compare_op->currentIndex(), matching_keys);
 	
 	number_matching_objects->setText(tr("Number of matching objects: %1").arg(objects_count));
-	number_matching_keys->setText(tr("%n matching keys:", nullptr, matching_keys.size()));
+	number_matching_keys->setText(tr("%n matching key(s):", nullptr, matching_keys.size()));
 	matching_keys_details->clear();
 	remove_button->setEnabled(!matching_keys.empty());
 	
