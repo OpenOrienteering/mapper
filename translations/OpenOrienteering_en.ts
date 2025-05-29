@@ -68,59 +68,59 @@
         <location filename="../src/core/map_information.cpp" line="255"/>
         <location filename="../src/core/map_information.cpp" line="258"/>
         <source>%n object(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n object</numerusform>
+            <numerusform>%n objects</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="237"/>
         <location filename="../src/core/map_information.cpp" line="239"/>
         <source>%n step(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n step</numerusform>
+            <numerusform>%n steps</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="242"/>
         <source>%n template(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n template</numerusform>
+            <numerusform>%n templates</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="244"/>
         <source>%n part(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n part</numerusform>
+            <numerusform>%n parts</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="250"/>
         <location filename="../src/core/map_information.cpp" line="280"/>
         <source>%n symbol(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n symbol</numerusform>
+            <numerusform>%n symbols</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="266"/>
         <source>%n color(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n color</numerusform>
+            <numerusform>%n colors</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="274"/>
         <source>%n font(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n font</numerusform>
+            <numerusform>%n fonts</numerusform>
         </translation>
     </message>
 </context>
