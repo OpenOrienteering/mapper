@@ -5,7 +5,7 @@ authors:
   - Thomas Schoeps
 keywords: Georeferencing
 nav_order: 0.12
-last_modified_date: 25 January 2020
+last_modified_date: 30 May 2025
 ---
 
  - [Introduction](#introduction)
@@ -30,7 +30,7 @@ This section specifies the projection which relates latitude/longitude (in degre
 In case you just want to load some GPS tracks, you can safely use UTM, which is widely used world-wide. Other choices are:
 
  - **Gauss-Kr&uuml;ger**: this is similar to UTM and widely used in Germany, but is being superseded by UTM.
- - **From Proj.4 specification**: projections are internally handled by the [PROJ.4 Cartographic Projections library](https://proj4.org/), so coordinate reference systems can also be given in its internal specification format. Examples may be found at [http://www.remotesensing.org/geotiff/proj_list/ (Internet Archive)](https://web.archive.org/web/20160802172057/http://www.remotesensing.org/geotiff/proj_list/) and [http://spatialreference.org/](http://spatialreference.org/). When selecting this option, the specification field will be pre-filled with the specification of the previously selected coordinate reference system.
+ - **From Proj.4 specification**: projections are internally handled by the [PROJ.4 Cartographic Projections library](https://proj4.org/), so coordinate reference systems can also be given in its internal specification format. Examples may be found at [http://www.remotesensing.org/geotiff/proj_list/ (Internet Archive)](https://web.archive.org/web/20160802172057/http://www.remotesensing.org/geotiff/proj_list/) and [https://spatialreference.org/](https://spatialreference.org/). When selecting this option, the specification field will be pre-filled with the specification of the previously selected coordinate reference system.
  - **EPSG**: for any coordinate reference system in this extensive worldwide registry.
  - **Local**: this enables you to use local projected coordinates without a mapping to global geographic coordinates.
 
@@ -54,7 +54,7 @@ latitude and longitude. Latitude and longitude are measured in decimal degrees. 
 
 The **Datum** field shows the datum the geographic coordinates refer to. This is especially relevant for the longitude.
 
-The second last line in the Reference point section contains hyperlinks for opening the reference point in OpenStreetMap or in the World of O Maps directory.
+The second last line in the Reference point section contains a hyperlink for opening the reference point in OpenStreetMap.
 
 The last option in this section determines which coordinates will be recalculated and which stay equal when changing the coordinate reference system.
 
@@ -68,7 +68,7 @@ In the **Declination** field the angle between true north and magnetic north at 
 
 #### Scale compensation
 
-**Auxiliary scale factor** may be set to compensate when distances on the ground differ from distances on the Earth model, such as occurs when the terrain is at high altitude. It is the ratio of model distance to ground distance. The default factor of 1.0 has no effect. Beside that, Mapper automatically calculates the grid scale factor, which accounts for the difference between projected distance and model distance. Mapper puts this together with the auxiliary scale factor, to form the **combined scale factor**.
+**Auxiliary scale factor** may be set to compensate when distances on the ground differ from distances on the Earth model, such as occurs when the terrain is at high altitude. It is the ratio of model distance to ground distance. The default factor of 1.0 has no effect. Besides that, Mapper automatically calculates the grid scale factor, which accounts for the difference between projected distance and model distance. Mapper puts this together with the auxiliary scale factor to form the **combined scale factor**.
 
 
 #### Related functions

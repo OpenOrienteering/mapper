@@ -6,7 +6,7 @@ authors:
   - Thomas Schoeps
   - Libor Pechacek
 keywords: FAQ
-last_modified_date: 5 December 2017
+last_modified_date: 29 January 2022
 nav_order: 0.81
 ---
 
@@ -45,6 +45,7 @@ With the [line edit tool](toolbars.md#tool_edit_line), select the object you wan
 ### How can I cut out a part of a map to take it for a new map?
 
 First you save the map to the new file. Then draw some closed line or area (symbol doesn't matter) around the border of the part which you want to keep. Now when this border object is finished and selected, click on the "Cutout" icon or menu item, then press the enter key.
+Keep in mind that the map area that was cut away has been added to the undo history, so anyone can restore the original map unless the undo/redo history is explicitly cleared.
 
 
 ## File formats
@@ -56,11 +57,11 @@ The .omap format is OpenOrienteering Mapper's native format. It is XML-based, wh
 ### What is the difference between .xmap and .omap format?
 
 The .xmap format is nearly identical but more verbose, even suitable for direct manual editing. The .omap format is tuned towards minimum size and fast processing.
-If you want to keep you data in a line-based version control system such as git, you must use the .xmap format.
+If you want to keep your data in a line-based version control system such as git, you must use the .xmap format.
 
 ### Can Mapper read and write .ocd files?
 
-Yes, Mapper reads .ocd files from different version (8 .. 12). But currently only version 8 .ocd files can be written. Beware that some details are neither loaded from nor saved to .ocd files, and some additional inaccuracies might occur.
+Yes, Mapper reads .ocd files from different versions (8 .. 12, 2018). Currently only version 8 .. 12 .ocd files can be written. Beware that some details are neither loaded from nor saved to .ocd files, and some additional inaccuracies might occur.
 
 
 ## Mobile devices
