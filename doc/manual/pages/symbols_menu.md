@@ -8,7 +8,7 @@ keywords: Menus
 parent: Menus
 grand_parent: Reference
 nav_order: 0.6
-last_modified_date: 20 January 2018
+last_modified_date: 1 June 2025
 ---
 
 #### ![ ](../mapper-images/symbols.png) Symbol window
@@ -45,3 +45,9 @@ Shows the [symbol set replacement dialog](symbol_replace_dialog.md).
 
 This action lets you select a [CRT file](crt_files.md) and replace symbols within the current map and symbol set.
 
+
+---
+
+#### Create symbol set report...
+
+This action lets you export a detailed HTML report for the current map showing all colors and symbols.
