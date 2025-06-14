@@ -4,7 +4,7 @@ authors:
   - Peter Hoban
   - Thomas Schoeps
 keywords: Symbols
-last_modified_date: 24 February 2013
+last_modified_date: 13 June 2025
 parent: Colors and Symbols
 nav_order: 0.2
 ---
@@ -53,7 +53,7 @@ To show the symbol menu, right click the symbol pane:
 #### Introduction  {#symbol_editor_introduction}
 
 The symbol editor enables to create new symbols or to modify any of the existing symbols. Its main use in normal operations is to create symbols for map labeling, because no symbols for this purpose are provided by default as they depend on the desired styling of the map sheet.
-Regarding symbols for use in the map itself, it should be understood that the default symbol sets include all the symbols permitted by the ISOM or ISSOM and that any new symbols created, or modifications of existing symbols, will be a departure from the international standard.
+Regarding symbols for use in the map itself, it should be understood that the default symbol sets include all the symbols permitted by the ISOM or ISSprOM and that any new symbols created, or modifications of existing symbols, will be a departure from the international standard.
 
 There is a temptation to employ a symbol which is used in other local cartography to represent some feature on the basis that everybody who competes in this area is familiar with the notation. However, any such departure is confusing for a competitor who may be familiar with the international standard but not with your local notation. Similarly a local competitor may find the conforming notation strange when entering international competition. Thus a non-standard notation can be to the disadvantage of both local and visiting competitors.
 
@@ -63,10 +63,10 @@ In each case the dialog opens with a General page which offers common options fo
 
 #### General page
 
-At the top, the symbol number and name can be entered. Both are specified in the ISOM and ISSOM for orienteering symbol sets.
+At the top, the symbol number and name can be entered. Both are specified in the ISOM and ISSprOM for orienteering symbol sets.
 It is recommended that helper symbols are given numbers in the third subset (which is not used by ISOM). Thus a helper for symbol number x.y might be numbered x.y.1.
 
-The description text appears when pressing F1 while hovering over the symbol with the cursor. For orienteering symbol sets, it is directly taken from the ISOM and ISSOM documents.
+The description text appears when pressing F1 while hovering over the symbol with the cursor. For orienteering symbol sets, it is directly taken from the ISOM and ISSprOM documents.
 
 At the foot of the dialog is a box which when checked hides the symbol when the map is printed out. It is intended for helper symbols which mark certain terrain features which are useful for mapping but will not be represented in the final map. **Use this with care!** When accidentally ticked, symbols will disappear in printouts without further notice!
 
@@ -76,11 +76,11 @@ At the foot of the dialog is a box which when checked hides the symbol when the 
 #### Line settings
 **Line width** and **color** define the basic line characteristics. Minimum line length function is not yet implemented. **Line cap** permits the shape of the end of the line to be specified. **Line join** refers to the rendering of vertices where line sections of different orientations join each other.
 
-**Dashed lines** are created by a tick in the dash box, which shows the dash dialog settings. Typical length of dash and gap may be specified &#8212; these will be rendered with gaps of the specified size and dashes as close as practicable to the specified length (so that there is no fractional dash at the end). The appearance of lines with regular symbols or breaks may be improved by making the end dash a half length &#8212; a check box provides for this. Dashes may be grouped together with a specified gap within the groups which is different from the between-group gap length.
+**Dashed lines** are created by a tick in the dash box, which shows the dash dialog settings. Typical length of dash and gap may be specified; these will be rendered with gaps of the specified size and dashes as close as practicable to the specified length (so that there is no fractional dash at the end). The appearance of lines with regular symbols or breaks may be improved by making the end dash a half length; a check box provides for this. Dashes may be grouped together with a specified gap within the groups which is different from the between-group gap length.
 
-Many symbols (e.g. 520 Stone wall) have a **repeated feature** along the line. This line feature is invoked by setting a non-zero integer number in the mid-symbol count. The mid-symbol distance sets the spacing between symbol centers. The distance between spots refers to the distance between symbol groups; if the mid-symbol distance is too large then the groups may overlap. The distance from the end is an approximate length of line projecting beyond the last group. A check box to require at least one mid-symbol ensures that the line has at least one symbol but may give confusing results if the line is too short for meaningful rendering. Setting a minimum mid-symbol count is not yet implemented. A different mid-symbol minimum may be specified for the boundary line of a closed symbol.
+Many symbols (e.g. 513 Wall) have a **repeated feature** along the line. This line feature is invoked by setting a non-zero integer number in the mid-symbol count. The mid-symbol distance sets the spacing between symbol centers. The distance between spots refers to the distance between symbol groups; if the mid-symbol distance is too large then the groups may overlap. The distance from the end is an approximate length of line projecting beyond the last group. A check box to require at least one mid-symbol ensures that the line has at least one symbol but may give confusing results if the line is too short for meaningful rendering. Setting a minimum mid-symbol count is not yet implemented. A different mid-symbol minimum may be specified for the boundary line of a closed symbol.
 
-Some line symbols require an **outline** which is enabled by selecting the border check box. Border width is the width (thickness) of the border lines. Shift moves the border lines further apart &#8212; shift equal to half the border width will place the line just outside the edge of the main line. A dash feature with characteristics which do not have to match the main line is enabled by the corresponding check box.
+Some line symbols require an **outline** which is enabled by selecting the border check box. Border width is the width (thickness) of the border lines. Shift moves the border lines further apart; shift equal to half the border width will place the line just outside the edge of the main line. A dash feature with characteristics which do not have to match the main line is enabled by the corresponding check box.
 
 #### Start symbol
 
