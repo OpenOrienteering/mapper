@@ -8,7 +8,7 @@ keywords: Menus
 parent: Menus
 grand_parent: Reference
 nav_order: 0.3
-last_modified_date: 20 January 2018
+last_modified_date: 11 June 2025
 ---
 
 #### ![ ](../mapper-images/move.png) Pan
@@ -29,6 +29,11 @@ Zoom in (enlarge) to view the map closer.
 Zoom out (shrink) the map to see more of it.
 
 
+#### ![ ](../mapper-images/view-box-zoom.png) Zoom to box
+
+Use this tool to zoom to a selectable rectangular area. Left-click and drag to define the box where to zoom to after releasing the mouse button.
+
+
 #### ![ ](../mapper-images/view-show-all.png) Show whole map {#zoom-all}
 
 Use this tool to display the whole map on your screen.
@@ -47,13 +52,13 @@ Shows a dialog to enter a specific zoom factor. Note that the zoom factor on the
 Shows or hides the [map grid](grid.md).
 
 
-#### Hatch areas
+#### ![ ](../mapper-images/view-hatch-areas.png) Hatch areas
 **F2**
 
 When this toggle is activated, all area objects in the map will be drawn in a hatched, semi-transparent style. This is useful to be able to see any templates below the map.
 
 
-#### Baseline view
+#### ![ ](../mapper-images/view-baseline.png) Baseline view
 **F3**
 
 When this toggle is activated, instead of the normal appearance of map objects only their midpoints respectively baselines are displayed. This can be combined with Hatch areas to see anything below the map even better.
@@ -68,7 +73,7 @@ When this toggle is activated, the effect of printing the map with layers of spo
 #### Hide all templates
 **F10**
 
-When this toggle is activated, no templates will be displayed. This is useful to check the appearance of the map alone.
+When this toggle is activated, no [templates](templates.md) will be displayed. This is useful to check the appearance of the map alone.
 
 
 ---
