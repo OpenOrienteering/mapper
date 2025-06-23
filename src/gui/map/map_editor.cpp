@@ -988,8 +988,14 @@ void MapEditorController::createActions()
 	cut_act->setMenuRole(QAction::TextHeuristicRole);
 	copy_act = newAction("copy", tr("C&opy"), this, SLOT(copy()), "copy.png", QString{}, "edit_menu.html");
 	copy_act->setMenuRole(QAction::TextHeuristicRole);
-	paste_act = newAction("paste", tr("&Paste"), this, SLOT(paste()), "paste", QString{}, "edit_menu.html");
+	auto* paste_act_mapper = new QSignalMapper(this);
+	connect(paste_act_mapper, QOverload<int>::of(&QSignalMapper::mapped), this, QOverload<int>::of(&MapEditorController::paste));
+	paste_act = newAction("paste", tr("&Paste"), paste_act_mapper, SLOT(map()), "paste", QString{}, "edit_menu.html");
 	paste_act->setMenuRole(QAction::TextHeuristicRole);
+	paste_act_mapper->setMapping(paste_act, 1);
+	paste_original_act = newAction("paste-original", tr("Paste at original location"), paste_act_mapper, SLOT(map()), nullptr, QString{}, "edit_menu.html");
+	paste_original_act->setMenuRole(QAction::TextHeuristicRole);
+	paste_act_mapper->setMapping(paste_original_act, 0);
 	delete_act = newAction("delete", tr("Delete"), this, SLOT(deleteClicked()), "delete.png", QString{}, "toolbars.html#delete");
 	select_all_act = newAction("select-all", tr("Select all"), this, SLOT(selectAll()), nullptr, QString{}, "edit_menu.html");
 	select_nothing_act = newAction("select-nothing", tr("Select nothing"), this, SLOT(selectNothing()), nullptr, QString{}, "edit_menu.html");
@@ -1170,6 +1176,7 @@ void MapEditorController::createMenuAndToolbars()
 	edit_menu->addAction(cut_act);
 	edit_menu->addAction(copy_act);
 	edit_menu->addAction(paste_act);
+	edit_menu->addAction(paste_original_act);
 	edit_menu->addAction(delete_act);
 	edit_menu->addSeparator();
 	edit_menu->addAction(select_all_act);
@@ -1965,7 +1972,7 @@ void MapEditorController::copy()
 }
 
 
-void MapEditorController::paste()
+void MapEditorController::paste(int paste_at_center)
 {
 	if (editing_in_progress)
 		return;
@@ -1988,14 +1995,17 @@ void MapEditorController::paste()
 		return;
 	}
 	
-	// Move objects in paste_map so their bounding box center is at this map's viewport center.
-	// This makes the pasted objects appear at the center of the viewport.
-	QRectF paste_extent = paste_map.calculateExtent(true, false, nullptr);
-	auto offset = main_view->center() - paste_extent.center();
-	
-	MapPart* part = paste_map.getCurrentPart();
-	for (int i = 0; i < part->getNumObjects(); ++i)
-		part->getObject(i)->move(offset);
+	if (paste_at_center)
+	{
+		// Move objects in paste_map so their bounding box center is at this map's viewport center.
+		// This makes the pasted objects appear at the center of the viewport.
+		QRectF paste_extent = paste_map.calculateExtent(true, false, nullptr);
+		auto offset = main_view->center() - paste_extent.center();
+		
+		MapPart* part = paste_map.getCurrentPart();
+		for (int i = 0; i < part->getNumObjects(); ++i)
+			part->getObject(i)->move(offset);
+	}
 	
 	// Import pasted map. Do not blindly import all colors.
 	importMap(paste_map, Map::MinimalObjectImport, window);
@@ -2714,13 +2724,14 @@ void MapEditorController::clipboardChanged(QClipboard::Mode mode)
 
 void MapEditorController::updatePasteAvailability()
 {
+	const bool paste_available = QApplication::clipboard()->mimeData()
+		&& QApplication::clipboard()->mimeData()->hasFormat(MimeType::OpenOrienteeringObjects())
+		&& !editing_in_progress;
+	
 	if (paste_act)
-	{
-		paste_act->setEnabled(
-			QApplication::clipboard()->mimeData()
-			&& QApplication::clipboard()->mimeData()->hasFormat(MimeType::OpenOrienteeringObjects())
-			&& !editing_in_progress);
-	}
+		paste_act->setEnabled(paste_available);
+	if (paste_original_act)
+		paste_original_act->setEnabled(paste_available);
 }
 
 void MapEditorController::showWholeMap()
