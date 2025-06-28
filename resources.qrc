@@ -26,6 +26,7 @@
         <file>images/cursor-georeferencing-move.png</file>
         <file>images/cursor-hollow.png</file>
         <file>images/cursor-invisible.png</file>
+        <file>images/cursor-paint-on-template.png</file>
         <file>images/cursor-rotate.png</file>
         <file>images/cursor-scale.png</file>
         <file>images/cursor-zoom.png</file>
@@ -54,7 +55,6 @@
         <file>images/new.png</file>
         <file>images/open-orienteering.png</file>
         <file>images/open.png</file>
-        <file>images/paint-on-template-settings.png</file>
         <file>images/move-to-gps.png</file>
         <file>images/paste.png</file>
         <file>images/pencil.png</file>
