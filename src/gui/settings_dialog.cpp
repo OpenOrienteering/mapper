@@ -222,8 +222,7 @@ void SettingsDialog::addPages()
 #ifdef MAPPER_USE_SENSORS
 	addPage(new SensorsSettingsPage(this));
 #endif
-	if (Settings::getInstance().touchModeEnabled())
-		addPage(new PaintOnTemplateSettingsPage(this));
+    addPage(new PaintOnTemplateSettingsPage(this));
 }
 
 void SettingsDialog::addPage(SettingsPage* page)
