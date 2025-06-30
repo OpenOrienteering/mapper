@@ -121,17 +121,19 @@
         <file>images/mapper-icon/Mapper-128.png</file>
         <file>images/map-information.png</file>
         <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_en.txt</file>
+        <file>images/template-set-add.png</file>
+        <file>images/template-set-delete.png</file>
     </qresource>
-    <qresource prefix="/" lang="de">
+    <qresource lang="de" prefix="/">
         <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_de.txt</file>
     </qresource>
-    <qresource prefix="/" lang="fr">
+    <qresource lang="fr" prefix="/">
         <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_fr.txt</file>
     </qresource>
-    <qresource prefix="/" lang="ru">
+    <qresource lang="ru" prefix="/">
         <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_ru.txt</file>
     </qresource>
-    <qresource prefix="/" lang="uk">
+    <qresource lang="uk" prefix="/">
         <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_uk.txt</file>
     </qresource>
 </RCC>
