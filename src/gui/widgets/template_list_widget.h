@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2020 Kai Pastor
+ *    Copyright 2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -36,6 +36,7 @@ class QBoxLayout;
 class QCheckBox;
 class QEvent;
 class QModelIndex;
+class QPoint;
 class QTableView;
 class QToolButton;
 class QVariant;
@@ -142,6 +143,8 @@ protected:
 	
 	void showOpacitySlider(int row);
 	
+	void showContextMenu(const QPoint &pos);
+	
 private:
 	Map& map;
 	MapView& main_view;
@@ -179,4 +182,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_TEMPLATE_LIST_WIDGET_H

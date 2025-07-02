@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -49,6 +49,7 @@
 #include <QLabel>
 #include <QLatin1Char>
 #include <QLatin1String>
+#include <QLineEdit>
 #include <QList>
 #include <QLocale>
 #include <QMenu>
@@ -56,6 +57,7 @@
 #include <QModelIndex>
 #include <QPainter>
 #include <QPixmap>
+#include <QPoint>
 #include <QRect>
 #include <QScroller>
 #include <QSettings>
@@ -227,6 +229,9 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 		auto header_check_size = geometry.size();
 		if (header_check_size.isValid())
 			template_model->setCheckBoxDecorator(makeCheckBoxDecorator(style(), header_check_size));
+		
+		template_table->setContextMenuPolicy(Qt::CustomContextMenu);
+		connect(template_table, &QTableView::customContextMenuRequested, this, &TemplateListWidget::showContextMenu);
 	}
 	
 	all_templates_layout = new QVBoxLayout();
@@ -1040,6 +1045,43 @@ void TemplateListWidget::showOpacitySlider(int row)
 	layout->addWidget(close_button);
 	
 	dialog.exec();
+}
+
+void TemplateListWidget::showContextMenu(const QPoint& clicked_pos)
+{
+	const auto index = template_table->indexAt(clicked_pos);
+	const auto row = index.row();
+	const auto pos = posFromRow(qMax(0, row));
+	if (row >= 0 && pos >= 0 && index.column() == TemplateTableModel::nameColumn())
+	{
+		auto* templ = map.getTemplate(pos);
+		if (!templ)
+			return;
+		auto* enter_customname_action = new QAction(tr("Enter custom name"), template_table);
+		connect(enter_customname_action, &QAction::triggered, this, [this, templ]() {
+			bool ok;
+			const auto previous_customname = templ->getTemplateCustomname();
+			const auto text = QInputDialog::getText(this, tr("Enter custom name"), tr("Custom name:"), QLineEdit::Normal, previous_customname, &ok);
+			if (ok)
+			{
+				templ->setTemplateCustomname(text);
+				templ->setCustomnamePreference(!text.isEmpty());
+				if (previous_customname != text)
+					map.setTemplatesDirty();	// only mark as dirty if custom name has changed
+			}
+		});
+		QMenu context_menu(this);
+		context_menu.addAction(enter_customname_action);
+		if (!templ->getTemplateCustomname().isEmpty())
+		{
+			auto* toggle_show_name_action = new QAction(templ->getCustomnamePreference() ? tr("Show filename") : tr("Show custom name"), template_table);
+			connect(toggle_show_name_action, &QAction::triggered, this, [templ]() {
+				templ->setCustomnamePreference(!templ->getCustomnamePreference());	// don't mark as dirty
+			});
+			context_menu.addAction(toggle_show_name_action);
+		}
+		context_menu.exec(mapToGlobal(clicked_pos));
+	}
 }
 
 
