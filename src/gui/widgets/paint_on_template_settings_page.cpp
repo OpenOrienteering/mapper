@@ -169,6 +169,8 @@ PaintOnTemplateSettingsPage::PaintOnTemplateSettingsPage(QWidget* parent)
 		move_up_button->setEnabled(enabled && color_table->currentRow() > 0);
 		move_down_button->setEnabled(enabled && color_table->currentRow() < color_table->rowCount() - 1);
 	});
+	connect(color_table, &QTableWidget::cellDoubleClicked, this, &PaintOnTemplateSettingsPage::editColor);
+	
 	connect(edit_button, &QAbstractButton::clicked, this, &PaintOnTemplateSettingsPage::editColor);
 	connect(delete_button, &QAbstractButton::clicked, this, &PaintOnTemplateSettingsPage::dropColor);
 
