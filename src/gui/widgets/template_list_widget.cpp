@@ -57,7 +57,6 @@
 #include <QModelIndex>
 #include <QPainter>
 #include <QPixmap>
-#include <QPoint>
 #include <QRect>
 #include <QScroller>
 #include <QSettings>
@@ -229,9 +228,6 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 		auto header_check_size = geometry.size();
 		if (header_check_size.isValid())
 			template_model->setCheckBoxDecorator(makeCheckBoxDecorator(style(), header_check_size));
-		
-		template_table->setContextMenuPolicy(Qt::CustomContextMenu);
-		connect(template_table, &QTableView::customContextMenuRequested, this, &TemplateListWidget::showContextMenu);
 	}
 	
 	all_templates_layout = new QVBoxLayout();
@@ -286,6 +282,9 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 	georef_action->setCheckable(true);
 	position_action = edit_menu->addAction(tr("Positioning..."));
 	position_action->setCheckable(true);
+	edit_menu->addSeparator();
+	custom_name_action = edit_menu->addAction(tr("Enter custom name..."), this, &TemplateListWidget::enterCustomname);
+	show_name_action = edit_menu->addAction(tr("Show filename"), this, &TemplateListWidget::showCustomOrFilename);
 	edit_menu->addSeparator();
 	import_action =  edit_menu->addAction(tr("Import and remove"), this, &TemplateListWidget::importClicked);
 	
@@ -495,6 +494,9 @@ void TemplateListWidget::updateButtons()
 				vectorize_enabled = qobject_cast<TemplateImage*>(temp)
 									&& temp->getTemplateState() == Template::Loaded;
 			}
+			show_name_action->setText(temp->getCustomnamePreference() ? tr("Show filename") : tr("Show custom name"));
+			show_name_action->setVisible(!temp->getTemplateCustomname().isEmpty());
+			
 		}
 		else if (current_row >= 0)
 		{
@@ -1047,40 +1049,34 @@ void TemplateListWidget::showOpacitySlider(int row)
 	dialog.exec();
 }
 
-void TemplateListWidget::showContextMenu(const QPoint& clicked_pos)
+void TemplateListWidget::enterCustomname()
 {
-	const auto index = template_table->indexAt(clicked_pos);
-	const auto row = index.row();
-	const auto pos = posFromRow(qMax(0, row));
-	if (row >= 0 && pos >= 0 && index.column() == TemplateTableModel::nameColumn())
+	auto* templ = currentTemplate();
+	if (templ)
 	{
-		auto* templ = map.getTemplate(pos);
-		if (!templ)
-			return;
-		auto* enter_customname_action = new QAction(tr("Enter custom name"), template_table);
-		connect(enter_customname_action, &QAction::triggered, this, [this, templ]() {
-			bool ok;
-			const auto previous_customname = templ->getTemplateCustomname();
-			const auto text = QInputDialog::getText(this, tr("Enter custom name"), tr("Custom name:"), QLineEdit::Normal, previous_customname, &ok);
-			if (ok)
-			{
-				templ->setTemplateCustomname(text);
-				templ->setCustomnamePreference(!text.isEmpty());
-				if (previous_customname != text)
-					map.setTemplatesDirty();	// only mark as dirty if custom name has changed
-			}
-		});
-		QMenu context_menu(this);
-		context_menu.addAction(enter_customname_action);
-		if (!templ->getTemplateCustomname().isEmpty())
+		bool ok;
+		const auto previous_customname = templ->getTemplateCustomname();
+		const auto text = QInputDialog::getText(this, tr("Enter custom name"), tr("Custom name:"), QLineEdit::Normal, previous_customname, &ok);
+		if (ok)
 		{
-			auto* toggle_show_name_action = new QAction(templ->getCustomnamePreference() ? tr("Show filename") : tr("Show custom name"), template_table);
-			connect(toggle_show_name_action, &QAction::triggered, this, [templ]() {
-				templ->setCustomnamePreference(!templ->getCustomnamePreference());	// don't mark as dirty
-			});
-			context_menu.addAction(toggle_show_name_action);
+			templ->setTemplateCustomname(text);
+			templ->setCustomnamePreference(!text.isEmpty());
+			if (previous_customname != text)
+			{
+				map.setTemplatesDirty();	// only mark as dirty if custom name has changed
+				updateButtons();
+			}
 		}
-		context_menu.exec(mapToGlobal(clicked_pos));
+	}
+}
+
+void TemplateListWidget::showCustomOrFilename()
+{
+	auto* templ = currentTemplate();
+	if (templ)
+	{
+		templ->setCustomnamePreference(!templ->getCustomnamePreference());	// don't mark as dirty
+		updateButtons();
 	}
 }
 

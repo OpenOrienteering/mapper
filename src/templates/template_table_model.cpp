@@ -316,7 +316,7 @@ QVariant TemplateTableModel::templateData(Template* temp, const QModelIndex &ind
 			break;
 		Q_FALLTHROUGH();
 	case combined(nameColumn(), Qt::ToolTipRole):
-		return temp->getTemplatePath();
+		return temp->getCustomnamePreference() ? temp->getTemplatePath() : temp->getTemplateCustomname();
 	}
 	
 	if (role == Qt::UserRole)

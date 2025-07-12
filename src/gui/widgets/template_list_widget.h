@@ -36,7 +36,6 @@ class QBoxLayout;
 class QCheckBox;
 class QEvent;
 class QModelIndex;
-class QPoint;
 class QTableView;
 class QToolButton;
 class QVariant;
@@ -143,7 +142,8 @@ protected:
 	
 	void showOpacitySlider(int row);
 	
-	void showContextMenu(const QPoint &pos);
+	void enterCustomname();
+	void showCustomOrFilename();
 	
 private:
 	Map& map;
@@ -162,6 +162,8 @@ private:
 	QAction* duplicate_action;
 	QAction* move_by_hand_action;
 	QAction* position_action;
+	QAction* custom_name_action;
+	QAction* show_name_action;
 	QAction* import_action;
 	QAction* georef_action;
 	QAction* vectorize_action;
