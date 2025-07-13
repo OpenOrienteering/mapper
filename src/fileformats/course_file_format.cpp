@@ -49,8 +49,8 @@ std::vector<std::unique_ptr<CourseFileFormat>> CourseFileFormat::makeAll()
 	std::vector<std::unique_ptr<CourseFileFormat>> result;
 	result.reserve(2);
 	
-	result.push_back(makeFileFormat<IofCourseExport>(SimpleCourseFile, "simple-iof-course"));
-	result.push_back(makeFileFormat<KmlCourseExport>(SimpleCourseFile, "simple-kml-course"));
+	result.push_back(makeFileFormat<IofCourseExport>(CourseFile, "iof-course"));
+	result.push_back(makeFileFormat<KmlCourseExport>(CourseFile, "kml-course"));
 	return result;
 }
 
