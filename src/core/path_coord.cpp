@@ -383,12 +383,15 @@ SplitPathCoord SplitPathCoord::at(
         length_type length,
         const SplitPathCoord& first )
 {
-	auto& path_coords = *first.path_coords;
-	auto& coords = path_coords.coords();
-	auto& flags  = path_coords.flags();
+	const auto& path_coords = *first.path_coords;
+	const auto& coords = path_coords.coords();
+	const auto& flags  = path_coords.flags();
 	
 	SplitPathCoord split = first;
-	split.path_coord_index = path_coords.upperBound(length, first.path_coord_index, first.path_coords->size()-1);
+	if (length > first.clen)
+	{
+		split.path_coord_index = path_coords.upperBound(length, first.path_coord_index, first.path_coords->size()-1);
+	}
 	if (split.path_coord_index > first.path_coord_index)
 	{
 		// New path coordinate, really
@@ -403,10 +406,12 @@ SplitPathCoord SplitPathCoord::at(
 		
 		auto factor = 1.0f;
 		if (qFuzzyCompare(1.0f + length, 1.0f + current_coord.clen) ||
-		    qFuzzyCompare(1.0f + curve_length, 1.0f))
+		    qFuzzyCompare(1.0f + curve_length, 1.0f) ||
+		    length > current_coord.clen)
 		{
 			// Close match at current path coordinate,
-			// or near-zero curve length.
+			// or near-zero curve length,
+			// or length exceeding path length.
 			split.pos   = current_coord.pos;
 			split.clen  = current_coord.clen;
 			split.param = current_coord.param;
@@ -506,9 +511,10 @@ SplitPathCoord SplitPathCoord::at(
 		{
 			--split.path_coord_index;
 		}
+		
+		split.index = path_coords[split.path_coord_index].index;
 	}
 	
-	split.index = path_coords[split.path_coord_index].index;
 	return split;
 }
 
