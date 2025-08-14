@@ -91,22 +91,22 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="87"></location>
         <source>Minimum size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimum boyut:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="94"></location>
         <source>Fills</source>
-        <translation type="unfinished"></translation>
+        <translation>Dolgular</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="107"></location>
         <source>Line fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi dolgusu</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="108"></location>
         <source>Pattern fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Desen dolgusu</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="146"></location>
@@ -115,7 +115,7 @@
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="183"></location>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="188"></location>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="161"></location>
@@ -210,17 +210,17 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="343"></location>
         <source>Pattern fill %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Desen dolgusu %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="352"></location>
         <source>Line fill %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi dolgusu %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="371"></location>
         <source>No fill selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Dolgu seçilmedi</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="84"></location>
@@ -230,17 +230,17 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="173"></location>
         <source>Line offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi ofseti:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="168"></location>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi rengi:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="163"></location>
         <source>Line width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi kalınlığı:</translation>
     </message>
 </context>
 <context>
@@ -920,12 +920,12 @@
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="320"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tıkla&lt;/b&gt;: Daireyi tamamla. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="321"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Sürükle&lt;/b&gt;: Elips çiz. </translation>
     </message>
 </context>
 <context>
@@ -1280,7 +1280,7 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="743"></location>
         <location filename="../src/tools/edit_line_tool.cpp" line="532"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tıkla&lt;/b&gt;: Tek bir nesneyi seç. &lt;b&gt;Sürükle&lt;/b&gt;: Birden fazla nesne seç. &lt;b&gt;%1+Tıkla&lt;/b&gt;: Seçimi değiştir. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="746"></location>
@@ -1294,7 +1294,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="56"></location>
         <source>High quality map display (antialiasing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Yüksek kaliteli harita görüntüsü (kenar yumuşatma)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="57"></location>
@@ -1305,12 +1305,12 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="60"></location>
         <source>High quality text display in map (antialiasing), slow</source>
-        <translation type="unfinished"></translation>
+        <translation>Haritada yüksek kaliteli metin görüntüleme (yavaş çalışır)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="65"></location>
         <source>Click tolerance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tıklama toleransı:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="49"></location>
@@ -1325,17 +1325,17 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="68"></location>
         <source>Snap distance (%1):</source>
-        <translation type="unfinished"></translation>
+        <translation>Yakalama mesafesi (%1):</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="73"></location>
         <source>Stepping of fixed angle mode (%1):</source>
-        <translation type="unfinished"></translation>
+        <translation>Sabit açı modu adımı (%1):</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="54"></location>
         <source>Symbol icon size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol ikon boyutu:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"></location>
@@ -1345,7 +1345,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="75"></location>
         <source>When selecting an object, automatically select its symbol, too</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir nesne seçerken sembolünü de otomatik seç</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="78"></location>
@@ -1355,40 +1355,40 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="81"></location>
         <source>Drawing tools: set last point on finishing with right click</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizim araçları: Son noktayı sağ tıklama ile tamamla</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="84"></location>
         <source>Templates: keep settings of closed templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablonlar: kapatılan şablon ayarlarını sakla</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"></location>
         <source>User input: Ignore display touch</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı girişi: Dokunmatik ekran temasını yoksay</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="92"></location>
         <source>Edit tool:</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzenleme aracı:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="95"></location>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="101"></location>
         <source>Retain old shape</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut şekli koru</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="96"></location>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="102"></location>
         <source>Reset outer curve handles</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış eğri tutamaçlarını sıfırla</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="97"></location>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="103"></location>
         <source>Keep outer curve handles</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış eğri tutamaçlarını koru</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="98"></location>
@@ -1399,22 +1399,22 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="107"></location>
         <source>Rectangle tool:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgen aracı:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="110"></location>
         <source>Radius of helper cross:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yardımcı çapraz çizgi yarıçapı:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="112"></location>
         <source>Preview the width of lines with helper cross</source>
-        <translation type="unfinished"></translation>
+        <translation>Yardımcı çapraz çizgi ile çizgi genişliğini önizle</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="128"></location>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzenleyici</translation>
     </message>
 </context>
 <context>
@@ -1430,7 +1430,9 @@
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya kaydedilemiyor
+%1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -1438,39 +1440,39 @@
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="156"></location>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Uyarı</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="157"></location>
         <source>The map area is large. Use of the fill tool may be very slow. Do you want to use it anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita alanı çok geniş. Dolgu aracının kullanımı yavaş olabilir. Yine de kullanmak istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="142"></location>
         <location filename="../src/tools/fill_tool.cpp" line="176"></location>
         <location filename="../src/tools/fill_tool.cpp" line="231"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="143"></location>
         <source>The clicked area is not bounded by lines or areas, cannot fill this area.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tıklanan alan çizgiler veya diğer alanlarla sınırlanmamış, bu alan doldurulamaz.</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="177"></location>
         <source>The clicked position is not free, cannot use the fill tool there.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tıklanan konum uygun değil, burada dolgu aracı kullanılamaz.</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="232"></location>
         <source>Failed to create the fill object.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dolgu nesnesi oluşturulamadı.</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="243"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tıkla&lt;/b&gt;: Aktif sembolle alanı doldur. Doldurulacak alan çizgiler veya diğer alanlarla sınırlanmış olmalıdır, diğer semboller dikkate alınmaz. </translation>
     </message>
 </context>
 <context>
@@ -1483,12 +1485,12 @@
     <message>
         <location filename="../src/sensors/gps_display.cpp" line="173"></location>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Evet</translation>
     </message>
     <message>
         <location filename="../src/sensors/gps_display.cpp" line="174"></location>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Hayır</translation>
     </message>
 </context>
 <context>
