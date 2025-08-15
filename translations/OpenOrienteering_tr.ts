@@ -135,37 +135,37 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="180"></location>
         <source>Single row</source>
-        <translation type="unfinished"></translation>
+        <translation>Tek sıra</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="182"></location>
         <source>Pattern interval:</source>
-        <translation type="unfinished"></translation>
+        <translation>Desen aralığı:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="187"></location>
         <source>Pattern offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Desen ofseti:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="192"></location>
         <source>Row offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sıra ofseti:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="194"></location>
         <source>Parallel rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Paralel sıralar</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="196"></location>
         <source>Row spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sıra aralığı:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="202"></location>
         <source>Fill rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Dolgu döndürme</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="207"></location>
@@ -180,27 +180,27 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="229"></location>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished"></translation>
+        <translation>Sınırda öge çizimi</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"></location>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ögeleri sınırda kırp.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"></location>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkezi sınır içinde ise öğeleri çiz.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="233"></location>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Herhangi bir noktası sınır içinde ise öğeleri çiz.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="234"></location>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm noktaları sınır içinde ise öğeleri çiz.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="249"></location>
@@ -800,27 +800,27 @@
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="419"></location>
         <source>The split line must end on the area boundary!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bölme çizgisi alan sınırında bitmelidir!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="426"></location>
         <source>Start and end of the split line are at different parts of the object!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bölme çizgisinin başlangıcı ve sonu nesnenin farklı yerlerindedir!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="433"></location>
         <source>Start and end of the split line are at the same position!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bölme çizgisinin başlangıcı ve sonu aynı noktada!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="108"></location>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tıkla&lt;/b&gt; bir çizgiye: ikiye böl. &lt;b&gt;Sürükle&lt;/b&gt; bir çizgi boyunca: Bu çizgi parçasını kaldır. &lt;b&gt;Tıkla veya Sürükle&lt;/b&gt; bir alan sınırında: Bölme çizgisi başlat. </translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="373"></location>
         <source>Splitting holes of area objects is not supported yet!</source>
-        <translation type="unfinished"></translation>
+        <translation>Alan nesnelerinin içindeki faklı nesnelerin bölünmesi henüz desteklenmiyor!</translation>
     </message>
 </context>
 <context>
@@ -881,7 +881,7 @@
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="142"></location>
         <source>Rotation settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Döndürme ayarları</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="145"></location>
@@ -915,7 +915,7 @@
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="316"></location>
         <source>Hold %1 to start drawing from the center.</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkezden çizmek için %1&apos;yi basılı tutun.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="320"></location>
@@ -933,7 +933,7 @@
     <message>
         <location filename="../src/tools/draw_freehand_tool.cpp" line="289"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Sürükle&lt;/b&gt;: Bir yol çiz. </translation>
     </message>
 </context>
 <context>
@@ -942,7 +942,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1141"></location>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="730"></location>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Kesikli noktalar açık.&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1149"></location>
@@ -1030,12 +1030,12 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1136"></location>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Uzunluk:&lt;/b&gt; %1 m </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1164"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tıkla&lt;/b&gt;: Düz bir çizgi başlat. &lt;b&gt;Sürükle&lt;/b&gt;: Bir eğri başlat. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1175"></location>
@@ -1045,7 +1045,7 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1191"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tıkla&lt;/b&gt;: Düz çizgi çiz. &lt;b&gt;Sürükle&lt;/b&gt;: Eğri çiz. &lt;b&gt;Sağ veya çift tık&lt;/b&gt;: Yolu tamamla. &lt;b&gt;%1&lt;/b&gt;: Yolu kapat. </translation>
     </message>
 </context>
 <context>
@@ -1053,12 +1053,12 @@
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="81"></location>
         <source>Touch the map to finish averaging</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortalama almayı bitirmek için haritaya dokunun</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="193"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tıkla&lt;/b&gt;: Nesne ayarlamayı tamamla. </translation>
     </message>
 </context>
 <context>
@@ -1147,7 +1147,7 @@
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="746"></location>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tıkla veya Sürükle&lt;/b&gt;: Dikdörtgen çizmeye başla. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="759"></location>
@@ -1157,7 +1157,7 @@
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="770"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tokla&lt;/b&gt;: Bir köşe noktası belirle. &lt;b&gt;Sağ veya çift tıkla&lt;/b&gt;: Dikdörtgeni tamamla. </translation>
     </message>
 </context>
 <context>
@@ -1166,7 +1166,7 @@
         <location filename="../src/tools/draw_text_tool.cpp" line="113"></location>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kenetleme</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="476"></location>
@@ -1512,37 +1512,37 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"></location>
         <source>Import Options</source>
-        <translation type="unfinished"></translation>
+        <translation>İçe Aktarma Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="54"></location>
         <source>Import with GDAL/OGR:</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL/OGR ile içe aktar:</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"></location>
         <source>Clip layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Katmanları kırp</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="59"></location>
         <source>Use GDAL for GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>GPX için GDAL kullanın</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="60"></location>
         <source>GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"></location>
         <source>Templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablonlar</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="67"></location>
         <source>Hatch areas</source>
-        <translation type="unfinished"></translation>
+        <translation>Alanları tarama</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"></location>
@@ -1552,32 +1552,32 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="75"></location>
         <source>Export Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Dışa Aktarma Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="77"></location>
         <source>Create a layer for each symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Her sembol için ayrı katman oluştur</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="82"></location>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Yapılandırma</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="90"></location>
         <source>Parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametre</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="90"></location>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Değer</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="107"></location>
         <source>GDAL</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="108"></location>
@@ -1615,7 +1615,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="123"></location>
         <source>Saving files</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya kaydetme</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="125"></location>
@@ -1630,18 +1630,18 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="140"></location>
         <source>Recovery information saving interval:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurtarma bilgisi kaydetme aralığı:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"></location>
         <source>min</source>
         <comment>unit minutes</comment>
-        <translation type="unfinished"></translation>
+        <translation>min</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="143"></location>
         <source>File import and export</source>
-        <translation type="unfinished"></translation>
+        <translation>İçe ve dışa dosya aktarma</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="168"></location>
@@ -1652,7 +1652,7 @@
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="161"></location>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="306"></location>
         <source>More...</source>
-        <translation type="unfinished"></translation>
+        <translation>Daha fazla...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="133"></location>
@@ -1662,22 +1662,22 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="146"></location>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Varsayılan</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="186"></location>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Genel</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="210"></location>
         <source>Notice</source>
-        <translation type="unfinished"></translation>
+        <translation>Uyarı</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="210"></location>
         <source>The program must be restarted for the language change to take effect!</source>
-        <translation type="unfinished"></translation>
+        <translation>Dil değişikliğinin uygulanması için programın yeniden başlatılması gerekiyor!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="348"></location>
