@@ -6020,7 +6020,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="212"></location>
         <source>Height:</source>
-        <translation type="unfinished">Yükseklik:</translation>
+        <translation>Yükseklik:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="324"></location>
