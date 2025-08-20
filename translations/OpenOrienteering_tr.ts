@@ -120,17 +120,17 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="161"></location>
         <source>Single line</source>
-        <translation type="unfinished"></translation>
+        <translation>Tek çizgi</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="175"></location>
         <source>Parallel lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Paralel çizgiler</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="177"></location>
         <source>Line spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi aralığı:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="180"></location>
@@ -261,22 +261,22 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="52"></location>
         <source>File saved by the user</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı tarafından kaydedilmiş dosya</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="59"></location>
         <source>File recovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya kurtarma</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="61"></location>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 dosyası düzgün kapatılmamış. Şu ana iki sürüm mevcut:</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="75"></location>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çakışan sürümü kaldırmak için etkin dosyayı kaydedin.</translation>
     </message>
 </context>
 <context>
@@ -304,7 +304,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="118"></location>
         <source>Screen frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekran frekansı:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="119"></location>
@@ -314,17 +314,17 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="120"></location>
         <source>Undefined</source>
-        <translation type="unfinished"></translation>
+        <translation>Tanımsız</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="124"></location>
         <source>Screen angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekran açısı:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="131"></location>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation type="unfinished"></translation>
+        <translation>Spot renk karışımı (tarama ve üstüne baskı):</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="146"></location>
@@ -420,7 +420,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="275"></location>
         <source>Color usage in symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembollerde renk kullanımı</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="300"></location>
@@ -435,7 +435,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="302"></location>
         <source>Color usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk kullanımı</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="321"></location>
@@ -450,7 +450,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="652"></location>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Uyarı</translation>
     </message>
 </context>
 <context>
@@ -458,7 +458,7 @@
     <message>
         <location filename="../src/gui/widgets/color_dropdown.cpp" line="42"></location>
         <source>- none -</source>
-        <translation type="unfinished"></translation>
+        <translation>- yok -</translation>
     </message>
 </context>
 <context>
@@ -471,7 +471,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="93"></location>
         <source>Opacity</source>
-        <translation type="unfinished"></translation>
+        <translation>Opaklık</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="93"></location>
@@ -507,7 +507,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="100"></location>
         <source>Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation>Çoğalt</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="113"></location>
@@ -547,12 +547,12 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="297"></location>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Onay</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="299"></location>
         <source>Color &quot;%1&quot; is used by other elements. Removing the color will change the appearance of these elements. Do you really want to remove it?</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot;rengi diğer ögeler tarafından kullanılıyor. Rengi kaldırmak bu ögelerin görünümünü değiştirecektir. Gerçekten kaldırmak istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="329"></location>
@@ -563,7 +563,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="330"></location>
         <source> (Duplicate)</source>
-        <translation type="unfinished"></translation>
+        <translation> (Kopya)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="488"></location>
@@ -595,7 +595,7 @@
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="87"></location>
         <source>&amp;Number of parts:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Parça sayısı:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="95"></location>
@@ -620,17 +620,17 @@
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="227"></location>
         <source>Change from public to private symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Genel sembolden özel sembole değiştir</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="228"></location>
         <source>Take the old symbol as template for the private symbol?</source>
-        <translation type="unfinished"></translation>
+        <translation>Eski sembol, özel sembol için şablon olarak alınsın mı?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="92"></location>
         <source>Symbol %1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol %1:</translation>
     </message>
 </context>
 <context>
@@ -653,7 +653,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="71"></location>
         <source>Choose...</source>
-        <translation>Seçmek...</translation>
+        <translation>Seç...</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="74"></location>
@@ -703,12 +703,12 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="88"></location>
         <source>meters in terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>arazide metre</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="89"></location>
         <source>millimeters on map</source>
-        <translation type="unfinished"></translation>
+        <translation>haritada milimetre</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="91"></location>
@@ -766,17 +766,17 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="261"></location>
         <source>Origin at: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç noktası: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="263"></location>
         <source>paper coordinates origin</source>
-        <translation type="unfinished"></translation>
+        <translation>kağıt koordinatları orijini</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="265"></location>
         <source>projected coordinates origin</source>
-        <translation type="unfinished"></translation>
+        <translation>projeksiyon koordinatları orijini</translation>
     </message>
 </context>
 <context>
@@ -900,7 +900,7 @@
         <location filename="../src/tools/draw_circle_tool.cpp" line="70"></location>
         <source>From center</source>
         <comment>Draw circle starting from center</comment>
-        <translation type="unfinished"></translation>
+        <translation>Merkezden</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="313"></location>
@@ -1101,7 +1101,7 @@
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="341"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Sürükle&lt;/b&gt;: Bir nesne oluşturun ve yönünü ayarlayın.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="347"></location>
@@ -1196,7 +1196,7 @@
         <location filename="../src/tools/edit_line_tool.cpp" line="407"></location>
         <source>Toggle curve</source>
         <comment>Toggle between curved and flat segment</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eğriyi değiştir</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="524"></location>
@@ -1221,13 +1221,13 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="528"></location>
         <source>Point / Angle</source>
         <comment>Modify points or use constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nokta / Açı</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="529"></location>
         <source>Toggle dash</source>
         <comment>Toggle dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kesikliği değiştir</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="714"></location>
@@ -1262,7 +1262,7 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="719"></location>
         <location filename="../src/tools/edit_line_tool.cpp" line="517"></location>
         <source>&lt;b&gt;Coordinate offset:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distance:&lt;/b&gt; %3 m </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Koordinat ofseti:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Mesafe:&lt;/b&gt; %3 m </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="726"></location>
@@ -1350,7 +1350,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="78"></location>
         <source>Zoom away from cursor when zooming out</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzaklaştırırken imleçten uzaklaş</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="81"></location>
@@ -1480,7 +1480,7 @@
     <message>
         <location filename="../src/sensors/gps_display.cpp" line="172"></location>
         <source>GPS is disabled in the device settings. Open settings now?</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS, cihaz ayarlarında devre dışı. Ayarlar şimdi açılsın mı?</translation>
     </message>
     <message>
         <location filename="../src/sensors/gps_display.cpp" line="173"></location>
@@ -1620,12 +1620,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="125"></location>
         <source>Retain compatibility with Mapper %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapper %1 ile uyumluluğu koruyun</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="136"></location>
         <source>Save information for automatic recovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Otomatik kurtarma için bilgileri kaydedin</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="140"></location>
@@ -3004,7 +3004,9 @@ Değişikliklerinizi kaydetmek ister misiniz?</translation>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen harita ölçeği 1:%1, ancak seçilen sembol kümesinin nominal ölçeği 1:%2.
+
+Sembolleri seçilen ölçeğe göre ölçeklendirmek ister misiniz?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="925"></location>
@@ -3014,7 +3016,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="926"></location>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu dosya en son açıldığında %1 çökmüş gibi görünüyor:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Yeniden açmayı denemek istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1128"></location>
@@ -3207,7 +3209,7 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
     <message>
         <location filename="../src/core/map_coord.cpp" line="183"></location>
         <source>Coordinates are out-of-bounds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlar sınır dışıdır.</translation>
     </message>
 </context>
 <context>
@@ -3408,7 +3410,7 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1075"></location>
         <source>Merge area holes</source>
-        <translation type="unfinished"></translation>
+        <translation>Birleştirme alanı boşlukları</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1084"></location>
@@ -3433,22 +3435,22 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1091"></location>
         <source>Set temporary marker at GPS position</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS konumuna geçici işaret koyun</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1093"></location>
         <source>Create temporary path at GPS position</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS konumunda geçici yol oluştur</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1095"></location>
         <source>Clear temporary GPS markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçici GPS işaretlerini temizleyin</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1098"></location>
         <source>Enable compass display</source>
-        <translation type="unfinished"></translation>
+        <translation>Pusula görünümünü etkinleştir</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1099"></location>
@@ -3465,18 +3467,18 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="1102"></location>
         <location filename="../src/gui/map/map_editor.cpp" line="3888"></location>
         <source>Rename current part...</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut parçanın adını değiştir...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1103"></location>
         <location filename="../src/gui/map/map_editor.cpp" line="3849"></location>
         <source>Remove current part</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut parçayı kaldır</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1104"></location>
         <source>Merge all parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm parçaları birleştir</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1106"></location>
@@ -3530,28 +3532,28 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="587"></location>
         <source>Editing in progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzenleme devam ediyor</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="588"></location>
         <source>The map is currently being edited. Please finish the edit operation before saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita şu anda düzenleniyor. Lütfen kaydetmeden önce düzenleme işlemini tamamlayın.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="598"></location>
         <source>Map saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita kaydedildi</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1001"></location>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgarayı göster</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1002"></location>
         <location filename="../src/gui/map/map_editor.cpp" line="1314"></location>
         <source>Configure grid...</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgarayı yapılandır...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1013"></location>
@@ -3572,7 +3574,7 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1021"></location>
         <source>Replace symbol set...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol setini değiştir...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1027"></location>
@@ -3587,7 +3589,7 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1029"></location>
         <source>Rotate the whole map</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm haritayı döndür</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1037"></location>
@@ -3597,62 +3599,62 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1039"></location>
         <source>Tag editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiket düzenleyici</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1039"></location>
         <source>Show/Hide the tag editor window</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiket düzenleyici penceresini göster/gizle</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1046"></location>
         <source>Draw rectangles</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgenler çiz</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1047"></location>
         <source>Draw free-handedly</source>
-        <translation type="unfinished"></translation>
+        <translation>El ile serbest çizim</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1048"></location>
         <source>Fill bounded areas</source>
-        <translation type="unfinished"></translation>
+        <translation>Sınırlı alanları doldur</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="992"></location>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Sil</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1057"></location>
         <source>Cut free form hole</source>
-        <translation type="unfinished"></translation>
+        <translation>Serbest biçimde keserek delik açma</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1058"></location>
         <source>Cut round hole</source>
-        <translation type="unfinished"></translation>
+        <translation>Yuvarlak biçimde keserek delik açma</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1059"></location>
         <source>Cut rectangular hole</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgen biçimde keserek delik açma</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1068"></location>
         <source>Rotate pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>Deseni döndür</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1071"></location>
         <source>Unify areas</source>
-        <translation type="unfinished"></translation>
+        <translation>Alanları birleştir</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1072"></location>
         <source>Intersect areas</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesişim alanları</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1074"></location>
@@ -3662,12 +3664,12 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1080"></location>
         <source>Distribute points along path</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktaları yol boyunca dağıtın</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1108"></location>
         <source>Map coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita koordinatları</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1110"></location>
@@ -3677,147 +3679,147 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1112"></location>
         <source>Latitude/Longitude (Dec)</source>
-        <translation type="unfinished"></translation>
+        <translation>Enlem/Boylam (Ond.)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1114"></location>
         <source>Latitude/Longitude (DMS)</source>
-        <translation type="unfinished"></translation>
+        <translation>Enlem/Boylam (DDS)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1198"></location>
         <source>Display coordinates as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatları şu şekilde göster...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1060"></location>
         <source>Cut hole</source>
-        <translation type="unfinished"></translation>
+        <translation>Delik kes</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="910"></location>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="911"></location>
         <source>Ctrl+Shift+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="912"></location>
         <source>Ctrl+I</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="914"></location>
         <source>G</source>
-        <translation type="unfinished"></translation>
+        <translation>G</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="927"></location>
         <source>E</source>
-        <translation type="unfinished"></translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="928"></location>
         <source>L</source>
-        <translation type="unfinished"></translation>
+        <translation>L</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="929"></location>
         <source>S</source>
-        <translation type="unfinished"></translation>
+        <translation>S</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="930"></location>
         <source>P</source>
-        <translation type="unfinished"></translation>
+        <translation>P</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="931"></location>
         <source>O</source>
-        <translation type="unfinished"></translation>
+        <translation>O</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="932"></location>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="933"></location>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation>F</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="934"></location>
         <source>T</source>
-        <translation type="unfinished"></translation>
+        <translation>T</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="936"></location>
         <source>D</source>
-        <translation type="unfinished"></translation>
+        <translation>D</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="937"></location>
         <source>Ctrl+G</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="938"></location>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="939"></location>
         <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="940"></location>
         <source>C</source>
-        <translation type="unfinished"></translation>
+        <translation>C</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="941"></location>
         <source>R</source>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="942"></location>
         <source>Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Z</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="943"></location>
         <source>K</source>
-        <translation type="unfinished"></translation>
+        <translation>K</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="944"></location>
         <source>H</source>
-        <translation type="unfinished"></translation>
+        <translation>H</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="945"></location>
         <source>M</source>
-        <translation type="unfinished"></translation>
+        <translation>M</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="946"></location>
         <source>U</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="948"></location>
         <source>N</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="949"></location>
         <source>Ctrl+M</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+M</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="967"></location>
@@ -3827,37 +3829,37 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="993"></location>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü seç</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="994"></location>
         <source>Select nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiçbir şeyi seçme</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="995"></location>
         <source>Invert selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimi ters çevir</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1004"></location>
         <source>Move to my location</source>
-        <translation type="unfinished"></translation>
+        <translation>Konumuma git</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1020"></location>
         <source>Symbol set ID...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol seti kimliği...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1020"></location>
         <source>Edit the symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol seti kimliğini düzenle</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1022"></location>
         <source>Load CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT dosyası yükle...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1022"></location>
@@ -3867,22 +3869,22 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1031"></location>
         <source>Map information...</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita bilgileri...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1126"></location>
         <source>Copy position</source>
-        <translation type="unfinished"></translation>
+        <translation>Konumu kopyala</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1126"></location>
         <source>Copy position to clipboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>Konumu panoya kopyala.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1307"></location>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Görünüm</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1326"></location>
@@ -3890,12 +3892,12 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="1464"></location>
         <location filename="../src/gui/map/map_editor.cpp" line="3761"></location>
         <source>Map parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita parçaları</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1359"></location>
         <source>Editing</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzenleme</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1384"></location>
@@ -3905,17 +3907,17 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1418"></location>
         <source>Select symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol seç</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1458"></location>
         <source>Hide top bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Üst çubuğu gizle</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1461"></location>
         <source>Show top bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Üst çubuğu göster</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1519"></location>
@@ -3948,14 +3950,16 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="4191"></location>
         <location filename="../src/gui/map/map_editor.cpp" line="4268"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="612"></location>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita
+&quot;%1&quot;
+olarak dışa aktarılamıyor çünkü %2 (.%3) olarak kaydetme desteklenmiyor.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="624"></location>
@@ -3964,7 +3968,9 @@ because saving as %2 (.%3) is not supported.</source>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya kaydedilemiyor
+%1:
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="633"></location>
@@ -3972,63 +3978,63 @@ because saving as %2 (.%3) is not supported.</source>
         <location filename="../src/gui/map/map_editor.cpp" line="4196"></location>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="84"></location>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Uyarı</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="634"></location>
         <source>The map export generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita dışa aktarımı uyarılar oluşturdu.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="696"></location>
         <location filename="../src/gui/map/map_editor.cpp" line="4196"></location>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita içe aktarımı uyarılar oluşturdu.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="947"></location>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="962"></location>
         <source>&amp;KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1006"></location>
         <source>Keep my location on screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Konumumu ekranda tut</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1078"></location>
         <source>Clip area</source>
-        <translation type="unfinished"></translation>
+        <translation>Alanı kırp</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1079"></location>
         <source>Erase area</source>
-        <translation type="unfinished"></translation>
+        <translation>Alanı sil</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1208"></location>
         <source>Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>Araç çubukları</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1779"></location>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Dışa aktar</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1866"></location>
         <source>Print / Export is not available in this program version!</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdırma / Dışa aktarma bu program sürümünde kullanılamaz!</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1886"></location>
         <source>No undo steps available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geri alınacak adım yok.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1942"></location>
@@ -4039,57 +4045,57 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1962"></location>
         <source>There are no objects in clipboard which could be pasted!</source>
-        <translation type="unfinished"></translation>
+        <translation>Panoda yapıştırabilecek nesne yok!</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2094"></location>
         <source>Set custom zoom factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel yakınlaştırma oranı ayarla</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2094"></location>
         <source>Zoom factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yakınlaştırma oranı:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2168"></location>
         <source>Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Semboller</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2182"></location>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Renkler</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2203"></location>
         <source>Symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol seti kimliği</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2204"></location>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol seti kimliğini düzenle:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2231"></location>
         <source>Scale all symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm sembolleri ölçeklendir</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2231"></location>
         <source>Scale to percentage:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yüzde olarak ölçeklendir:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2283"></location>
         <source>Templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablonlar</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2343"></location>
         <source>Tag Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiket Düzenleyici</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2407"></location>
@@ -4097,7 +4103,9 @@ because saving as %2 (.%3) is not supported.</source>
 symbol
 selected</source>
         <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hayır
+sembol
+seçili değil</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2409"></location>
@@ -4105,22 +4113,24 @@ selected</source>
 symbols
 selected</source>
         <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Birden fazla
+sembol
+seçildi</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2511"></location>
         <source>Place point objects on the map.</source>
-        <translation type="unfinished"></translation>
+        <translation>Haritaya nokta nesneleri yerleştir.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2511"></location>
         <source>Select a point symbol to be able to use this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu aracı kullanabilmek için bir nokta sembolü seçin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2513"></location>
         <source>Draw polygonal and curved lines.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çokgen ve eğri çizgiler çiz.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2513"></location>
@@ -4129,103 +4139,103 @@ selected</source>
         <location filename="../src/gui/map/map_editor.cpp" line="2519"></location>
         <location filename="../src/gui/map/map_editor.cpp" line="2521"></location>
         <source>Select a line, area or combined symbol to be able to use this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu aracı kullanabilmek için bir çizgi, alan veya birleşik sembol seçin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2515"></location>
         <source>Draw circles and ellipses.</source>
-        <translation type="unfinished"></translation>
+        <translation>Daireler ve elipsler çiz.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2519"></location>
         <source>Draw paths free-handedly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Serbest el ile yolları çiz.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2521"></location>
         <source>Fill bounded areas.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sınırlanmış alanları doldur.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2603"></location>
         <source>Set the direction of area fill patterns or point objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alan dolgu desenlerinin veya nokta nesnelerinin yönünü ayarlayın.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2603"></location>
         <source>Select an area object with rotatable fill pattern or a rotatable point object to activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu aracı etkinleştirmek için döndürülebilir dolgu desenine sahip bir alan nesnesi veya döndürülebilir bir nokta nesnesi seçin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2634"></location>
         <source>Select at least two area or path objects activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu aracı etkinleştirmek için en az iki alan veya yol nesnesi seçin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2636"></location>
         <source>Unify overlapping objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Örtüşen nesneleri birleştir.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2638"></location>
         <source>Remove all parts which are not overlaps with the first selected object.</source>
-        <translation type="unfinished"></translation>
+        <translation>İlk seçilen nesneyle örtüşmeyen tüm parçaları kaldır.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2640"></location>
         <source>Remove overlapped parts of the first selected object.</source>
-        <translation type="unfinished"></translation>
+        <translation>İlk seçilen nesnenin örtüşen kısımlarını kaldır.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2642"></location>
         <source>Remove all parts which overlap the first selected object.</source>
-        <translation type="unfinished"></translation>
+        <translation>İlk seçilen nesneyle örtüşen tüm parçaları kaldır.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2646"></location>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alan deliklerini birleştir veya bu kısmı kesip çıkarmak için delikleri nesne sınırıyla birleştir.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2646"></location>
         <source>Select one area object with holes to activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu aracı etkinleştirmek için delikli bir alan nesnesi seçin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2651"></location>
         <source>Create a cutout of some objects or the whole map.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bazı nesnelerin veya tüm haritanın bir kesimini oluştur.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2651"></location>
         <location filename="../src/gui/map/map_editor.cpp" line="2653"></location>
         <source>Select a closed path object as cutout shape to activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu aracı etkinleştirmek için kesim şekli olarak kapalı bir yol nesnesi seçin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2653"></location>
         <source>Cut away some objects or everything in a limited area.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sınırlı bir alandaki bazı nesneleri veya her şeyi kesip çıkarın.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2672"></location>
         <source>Places evenly spaced point objects along an existing path object</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut bir yol nesnesi boyunca eşit aralıklı nokta nesneleri yerleştirir</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2672"></location>
         <source>Select at least one path object and a single point symbol to activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu aracı etkinleştirmek için en az bir yol nesnesi ve tek bir nokta sembolü seçin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3400"></location>
         <source>Merging holes failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Delikler birleştirilemedi.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3653"></location>
         <source>Clear temporary markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçici işaretleyicileri temizle</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3653"></location>
@@ -4235,44 +4245,44 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3768"></location>
         <source>Merge this part with</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu parçayı şununla birleştir</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3775"></location>
         <source>Move selected objects to</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili nesneleri şuraya taşı</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3829"></location>
         <location filename="../src/gui/map/map_editor.cpp" line="3889"></location>
         <source>Enter the name of the map part:</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita parçasının adını girin:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3905"></location>
         <source>Switched to map part &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; harita parçasına geçildi.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3933"></location>
         <location filename="../src/gui/map/map_editor.cpp" line="3965"></location>
         <source>Merge map parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita parçalarını birleştir</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3934"></location>
         <source>Do you want to move all objects from map part &quot;%1&quot; to &quot;%2&quot;, and to remove &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; harita parçasındaki tüm nesneleri &quot;%2&quot; harita parçasına taşıyıp &quot;%1&quot;i kaldırmak istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3966"></location>
         <source>Do you want to move all objects to map part &quot;%1&quot;, and to remove all other map parts?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm nesneleri &quot;%1&quot; harita parçasına taşıyıp diğer tüm harita parçalarını kaldırmak istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4268"></location>
         <source>Nothing to import.</source>
-        <translation type="unfinished"></translation>
+        <translation>İçe aktarılacak bir şey yok.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4280"></location>
@@ -4291,7 +4301,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2517"></location>
         <source>Draw rectangles.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgenler çizin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="958"></location>
@@ -4301,62 +4311,62 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="960"></location>
         <source>&amp;Image</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Görüntü</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="968"></location>
         <source>&amp;PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;PDF</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="999"></location>
         <source>Clear undo / redo history</source>
-        <translation type="unfinished"></translation>
+        <translation>Geri al / yinele geçmişini temizle</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="999"></location>
         <source>Clear the undo / redo history to reduce map file size.</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita dosya boyutunu küçültmek için geri al/yinele geçmişini temizleyin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1003"></location>
         <source>Pan</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydır</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1016"></location>
         <source>Overprinting simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Üst baskı simülasyonu</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1042"></location>
         <source>Edit lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgileri düzenle</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1076"></location>
         <source>Convert to curves</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğrilere dönüştür</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1077"></location>
         <source>Simplify path</source>
-        <translation type="unfinished"></translation>
+        <translation>Yolu sadeleştir</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1150"></location>
         <source>&amp;Export as...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Faklı dışa aktar...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2523"></location>
         <source>Write text on the map.</source>
-        <translation type="unfinished"></translation>
+        <translation>Haritaya metin yaz.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2523"></location>
         <source>Select a text symbol to be able to use this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu aracı kullanabilmek için bir metin sembolü seçin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2592"></location>
@@ -4364,105 +4374,105 @@ Rescale the imported data?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="2596"></location>
         <location filename="../src/gui/map/map_editor.cpp" line="2598"></location>
         <source>Select at least one object to activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu aracı etkinleştirmek için en az bir nesne seçin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2607"></location>
         <source>Switch the direction of symbols on line objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi nesneleri üzerindeki sembollerin yönünü değiştir.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2607"></location>
         <location filename="../src/gui/map/map_editor.cpp" line="2609"></location>
         <source>Select at least one line object to activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu aracı etkinleştirmek için en az bir çizgi nesnesi seçin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2609"></location>
         <source>Connect endpoints of paths which are close together.</source>
-        <translation type="unfinished"></translation>
+        <translation>Birbirine yakın olan yolların uç noktalarını birleştir.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2613"></location>
         <source>Select at least one line or area object to activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu aracı etkinleştirmek için en az bir çizgi veya alan nesnesi seçin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2622"></location>
         <source>Cut a hole into the selected area object.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili alan nesnesinde bir delik kes.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2622"></location>
         <source>Select a single area object to activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu aracı etkinleştirmek için tek bir alan nesnesi seçin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2615"></location>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
-        <translation type="unfinished"></translation>
+        <translation>Düz segmentlerden oluşan yolları yumuşak bezier eğrileri haline getirin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2615"></location>
         <location filename="../src/gui/map/map_editor.cpp" line="2617"></location>
         <source>Select a path object to activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu aracı etkinleştirmek için bir yol nesnesi seçin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2617"></location>
         <source>Reduce the number of points in path objects while trying to retain their shape.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yol nesnelerindeki nokta sayısını, şeklini korumaya çalışarak azalt.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2633"></location>
         <source>Resulting symbol: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonuç sembolü: %1.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2667"></location>
         <location filename="../src/gui/map/map_editor.cpp" line="2669"></location>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu aracı etkinleştirmek için en az bir nesne ve uygun, farklı bir sembol seçin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2998"></location>
         <source>Object selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesne seçimi</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3359"></location>
         <source>Measure</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçüm</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3373"></location>
         <source>Unification failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Birleştirme başarısız oldu.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3379"></location>
         <source>Intersection failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesişim başarısız oldu.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3385"></location>
         <source>Difference failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fark alma başarısız oldu.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3391"></location>
         <source>XOr failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>XOr başarısız oldu.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3850"></location>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects?</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; harita parçasını ve tüm nesnelerini kaldırmak istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4118"></location>
         <source>Importable files</source>
-        <translation type="unfinished"></translation>
+        <translation>İçe aktarılabilir dosyalar</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4118"></location>
@@ -4472,24 +4482,24 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4160"></location>
         <source>Cannot import the selected file because its file format is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen dosya, dosya biçimi desteklenmediği için içe aktarılamıyor.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1067"></location>
         <source>Rotate objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesneleri döndür</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1069"></location>
         <source>Scale objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçek nesneleri</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1900"></location>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Nesneyi %n kes</numerusform>
         </translation>
     </message>
     <message numerus="yes">
