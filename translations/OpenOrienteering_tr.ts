@@ -2931,22 +2931,22 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="474"></location>
         <source>Open &amp;Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanım Kılavuzunu &amp;Aç</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="476"></location>
         <source>Show the help file for this application</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu uygulama için yardım dosyasını göster</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="480"></location>
         <source>&amp;About %1</source>
-        <translation>&amp;Yaklaşık %1</translation>
+        <translation>&amp;Hakkında %1</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="482"></location>
         <source>Show information about this application</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu uygulama hakkında bilgi göster</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="485"></location>
@@ -2956,7 +2956,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="487"></location>
         <source>Show information about Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt hakkında bilgi göster</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="492"></location>
@@ -2966,24 +2966,25 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="704"></location>
         <source>Do you want to remove the autosaved version?</source>
-        <translation type="unfinished"></translation>
+        <translation>Otomatik kaydedilen sürümü kaldırmak istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="710"></location>
         <source>The file has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya değiştirildi.
+Değişikliklerinizi kaydetmek ister misiniz?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1392"></location>
         <source>When you want to have touch input disabled, you must use another pointing device to select the &quot;OK&quot; button.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokunmatik girişi devre dışı bırakmak istediğinizde, “Tamam” düğmesini seçmek için başka bir işaretleme aygıtı kullanmanız gerekir.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="519"></location>
         <location filename="../src/gui/main_window.cpp" line="869"></location>
         <source>Unsaved file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydedilmemiş dosya</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="831"></location>
@@ -2991,12 +2992,12 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/main_window.cpp" line="1174"></location>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="454"></location>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Uyarı</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="831"></location>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol kümesi içe aktarıldığında uyarılar oluştu.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="835"></location>
