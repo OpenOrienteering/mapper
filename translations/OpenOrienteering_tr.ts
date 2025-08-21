@@ -35,14 +35,14 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="193"></location>
         <source>(project initiator)</source>
-        <translation type="unfinished"></translation>
+        <translation>(proje başlatıcısı)</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="14"></location>
         <location filename="../src/gui/about_dialog.cpp" line="178"></location>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
-        <translation>Oryantiring haritaları çizmek için ücretsiz bir proğram</translation>
+        <translation>Oryantiring haritaları çizmek için ücretsiz bir program</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="180"></location>
@@ -445,7 +445,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="375"></location>
         <source>- unnamed -</source>
-        <translation type="unfinished"></translation>
+        <translation>- isimsiz -</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="652"></location>
@@ -847,7 +847,7 @@
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="117"></location>
         <source>Letter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Harf:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="119"></location>
@@ -1657,7 +1657,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="133"></location>
         <source>Save undo/redo history</source>
-        <translation type="unfinished"></translation>
+        <translation>Geri al / yinele geçmişini kaydet</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="146"></location>
@@ -1683,17 +1683,17 @@
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="348"></location>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="354"></location>
         <source>Open translation</source>
-        <translation type="unfinished"></translation>
+        <translation>Çeviriyi aç</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="348"></location>
         <source>Translation files (*.qm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Çeviri dosyaları (*.qm)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="355"></location>
         <source>The selected file is not a valid translation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen dosya geçerli bir çeviri değil.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="385"></location>
@@ -1703,12 +1703,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="386"></location>
         <source>Primary screen resolution in pixels:</source>
-        <translation type="unfinished"></translation>
+        <translation>Piksel cinsinden birincil ekran çözünürlüğü:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="390"></location>
         <source>Primary screen size in inches (diagonal):</source>
-        <translation type="unfinished"></translation>
+        <translation>İnç cinsinden birincil ekran boyutu (diyagonal):</translation>
     </message>
 </context>
 <context>
@@ -1733,7 +1733,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="67"></location>
         <source>Gauss-Krueger, datum: Potsdam</source>
         <comment>Gauss-Krueger coordinate reference system</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gauss-Krueger, datum: Potsdam</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="68"></location>
@@ -1756,7 +1756,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="81"></location>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>EPSG @code@ koordinatlar</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="92"></location>
@@ -1789,33 +1789,33 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="588"></location>
         <source>Invalid grid scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz ızgara ölçek faktörü: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="601"></location>
         <source>Invalid auxiliary scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz yardımcı ölçek faktörü: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="633"></location>
         <location filename="../src/core/georeferencing.cpp" line="660"></location>
         <source>Unknown CRS specification language: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilinmeyen CRS belirtim dili: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="663"></location>
         <source>Unsupported geographic CRS specification: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Desteklenmeyen coğrafi CRS belirtimi: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="919"></location>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>Yerel</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="142"></location>
         <source>Custom PROJ.4</source>
-        <translation type="unfinished"></translation>
+        <translation>Custom PROJ.4</translation>
     </message>
 </context>
 <context>
@@ -1829,7 +1829,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="209"></location>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="629"></location>
         <source>Lookup...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ara...</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="168"></location>
@@ -1865,7 +1865,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="409"></location>
         <source>valid</source>
-        <translation type="unfinished"></translation>
+        <translation>geçerli</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</source>
@@ -1885,7 +1885,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="144"></location>
         <source>- local -</source>
-        <translation type="unfinished"></translation>
+        <translation>- yerel -</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="149"></location>
@@ -1895,12 +1895,12 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="151"></location>
         <source>&amp;Pick on map</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Haritada seç</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="153"></location>
         <source>(Datum: WGS84)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Datum: WGS84)</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="156"></location>
@@ -2121,7 +2121,7 @@
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="165"></location>
         <source>About %1</source>
         <comment>As in &apos;About OpenOrienteering Mapper&apos;</comment>
-        <translation>Yaklaşık %1</translation>
+        <translation>Hakkında %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="168"></location>
@@ -2291,7 +2291,7 @@
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="298"></location>
         <source>Error while loading a symbol of type %1 at line %2 column %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>%2 satır ve %3 sütununda %1 türünde bir sembol yüklenirken hata oluştu.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/symbol.cpp" line="313"></location>
@@ -2328,17 +2328,17 @@
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="94"></location>
         <source>OpenOrienteering Mapper</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering Mapper</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="46"></location>
         <source>OCAD</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="48"></location>
         <source>OCAD version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD sürümü %1</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="238"></location>
@@ -2346,52 +2346,52 @@
         <location filename="../src/util/xml_stream_util.cpp" line="301"></location>
         <location filename="../src/util/xml_stream_util.cpp" line="323"></location>
         <source>Could not parse the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlar ayrıştırılamadı.</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="278"></location>
         <location filename="../src/util/xml_stream_util.cpp" line="353"></location>
         <source>Expected %1 coordinates, found %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 koordinatları bekleniyordu, %2 bulundu.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="1074"></location>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>%1:%2: %3 konumunda yazdırma yapılandırması yüklenirken hata oluştu</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="1093"></location>
         <location filename="../src/fileformats/xml_file_format.cpp" line="1113"></location>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>%1:%2: %3 konumunda geri alma/yineleme adımları yüklenirken hata oluştu</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="76"></location>
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Böyle bir seçenek yok: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="616"></location>
         <location filename="../src/gui/map/map_editor.cpp" line="971"></location>
         <source>Geospatial vector data</source>
-        <translation type="unfinished"></translation>
+        <translation>Coğrafi uzamsal vektör verileri</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1943"></location>
         <location filename="../src/gui/map/map_editor.cpp" line="1794"></location>
         <source>Cannot find a vector data export driver named &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; adlı vektör verisi dışa aktarma sürücüsü bulunamıyor</translation>
     </message>
     <message>
         <location filename="../src/fileformats/iof_course_export.cpp" line="43"></location>
         <source>IOF Data Standard 3.0</source>
-        <translation type="unfinished"></translation>
+        <translation>IOF Veri Standardı 3.0</translation>
     </message>
     <message>
         <location filename="../src/fileformats/kml_course_export.cpp" line="43"></location>
         <source>KML</source>
-        <translation type="unfinished"></translation>
+        <translation>KML</translation>
     </message>
 </context>
 <context>
@@ -2422,28 +2422,29 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="208"></location>
         <source>Error during symbol post-processing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol son işleme sırasında hata.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="226"></location>
         <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; şablonu, önceki konumu olan harita dosyasına göreceli konum yerine haritanın bulunduğu dizinden yüklendi.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="319"></location>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; şablonu yüklenemedi, sebep: %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="155"></location>
         <source>Georeferencing mismatch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlandırma uyuşmazlığı:</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="250"></location>
         <source>Warnings when loading template &apos;%1&apos;:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; şablonu yüklenirken uyarılar:
+%2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="258"></location>
@@ -2454,32 +2455,32 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="261"></location>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablon dosya ad(lar)ını bulmak için Şablonlar -&gt; Şablon kurulum penceresindeki kırmızı şablon ad(lar)ına tıklayın.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="548"></location>
         <source>Unsupported obsolete file format version. Please use program version v%1 or older to load and update the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Desteklenmeyen eski dosya biçimi sürümü. Lütfen dosyayı yüklemek ve güncellemek için v%1 veya daha eski bir program sürümü kullanın.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="560"></location>
         <source>Invalid file format version.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz dosya biçimi sürümü.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="562"></location>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Desteklenmeyen eski dosya biçimi sürümü. Lütfen dosyayı yüklemek ve güncellemek için daha eski bir program sürümü kullanın.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="554"></location>
         <source>Unsupported file format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Desteklenmeyen dosya biçimi.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="564"></location>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
-        <translation type="unfinished"></translation>
+        <translation>Desteklenmeyen yeni dosya biçimi sürümü. Bazı harita özellikleri bu program sürümü ile yüklenmeyecek veya kaydedilmeyecek.</translation>
     </message>
 </context>
 <context>
@@ -2487,12 +2488,12 @@
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="195"></location>
         <source>For KML/KMZ export, the map must be georeferenced.</source>
-        <translation type="unfinished"></translation>
+        <translation>KML/KMZ dışa aktarımı için harita koordinatlandırılmış olmalıdır.</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="202"></location>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilinmeyen hata</translation>
     </message>
     <message>
         <location filename="../src/gdal/kmz_groundoverlay_export.cpp" line="220"></location>
@@ -2619,7 +2620,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="162"></location>
         <source>Dashes grouped together:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir arada gruplandırılmış kesikli çizgiler:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="164"></location>
@@ -2709,12 +2710,12 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="679"></location>
         <source>Cap length at start:</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç başlık uzunluğu:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="680"></location>
         <source>Cap length at end:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitiş başlık uzunluğu:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="684"></location>
@@ -2766,12 +2767,12 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="216"></location>
         <source>Distance between spots:</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktalar arası mesafe:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="219"></location>
         <source>Distance from line end:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi sonunda mesafe:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="304"></location>
@@ -2845,12 +2846,12 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="247"></location>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilgi</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="248"></location>
         <source>When you select the &quot;OK&quot; button, the editor will ignore touch input.</source>
-        <translation>&quot;Tamam&quot; butonuna tıkladığınızda editör dokunmatik girişi dikkate almayacaktır.</translation>
+        <translation>&quot;Tamam&quot; düğmesini seçtiğinizde editör dokunmatik girişi dikkate almayacaktır.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="253"></location>
@@ -3011,7 +3012,7 @@ Sembolleri seçilen ölçeğe göre ölçeklendirmek ister misiniz?</translation
     <message>
         <location filename="../src/gui/main_window.cpp" line="925"></location>
         <source>Crash warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Çökme uyarısı</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="926"></location>
@@ -3201,7 +3202,7 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
     <message>
         <location filename="../src/core/map_color.cpp" line="79"></location>
         <source>Registration black (all printed colors)</source>
-        <translation type="unfinished"></translation>
+        <translation>Baskı siyahı (tüm baskı renkleri)</translation>
     </message>
 </context>
 <context>
@@ -3527,7 +3528,7 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
     <message>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="175"></location>
         <source>Paint on template</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablon üzerine boya</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="587"></location>
@@ -3558,7 +3559,7 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1013"></location>
         <source>Hatch areas</source>
-        <translation type="unfinished"></translation>
+        <translation>Alanları tarama</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1014"></location>
@@ -3569,7 +3570,7 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="1015"></location>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="158"></location>
         <source>Hide all templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm şablonları gizle</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1021"></location>
@@ -3674,7 +3675,7 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1110"></location>
         <source>Projected coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>İzdüşümlü koordinatlar</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1112"></location>
@@ -3824,7 +3825,7 @@ Verileri yinede içe aktarmak ister misiniz?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="967"></location>
         <source>Simple &amp;course</source>
-        <translation type="unfinished"></translation>
+        <translation>Basit &amp;parkur</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="993"></location>
@@ -4519,37 +4520,37 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2592"></location>
         <source>Deletes the selected objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili nesneleri siler.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2594"></location>
         <source>Duplicate the selected objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili nesneleri çoğaltır.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2596"></location>
         <source>Rotate the selected objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili nesneleri döndürür.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2598"></location>
         <source>Scale the selected objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili nesneleri ölçeklendirir.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2613"></location>
         <source>Cut the selected objects into smaller parts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili nesneleri daha küçük parçalara keser.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2667"></location>
         <source>Switches the symbol of the selected objects to the selected symbol.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili nesnelerin sembolünü, seçili sembole değiştirir.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2669"></location>
         <source>Fill the selected lines or create a border for the selected areas.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili çizgileri doldurur veya seçili alanlar için kenarlık oluşturur.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="2788"></location>
@@ -4561,7 +4562,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2998"></location>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili sembollere sahip nesne olmadığı için hiçbir nesne seçilmedi.</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="237"></location>
@@ -4587,19 +4588,19 @@ Rescale the imported data?</source>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="726"></location>
         <location filename="../src/tools/edit_point_tool.cpp" line="763"></location>
         <source>More: %1, %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Daha fazlası: %1, %2</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1211"></location>
         <location filename="../src/tools/edit_line_tool.cpp" line="542"></location>
         <source>More: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Daha fazlası: %1</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1217"></location>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="724"></location>
         <source>More: %1, %2, %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Daha fazlası: %1, %2, %3</translation>
     </message>
 </context>
 <context>
@@ -4607,32 +4608,32 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="65"></location>
         <source>&amp;Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bul...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="73"></location>
         <source>Find &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonrakini &amp;bul</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="111"></location>
         <source>Find objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesneleri bul</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="118"></location>
         <source>&amp;Find next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sonrakini bul</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="121"></location>
         <source>Find &amp;all</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü &amp;bul</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="124"></location>
         <source>Query editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorgu düzenleyici</translation>
     </message>
 </context>
 <context>
@@ -4640,53 +4641,53 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_information.cpp" line="149"></location>
         <source>code</source>
-        <translation type="unfinished"></translation>
+        <translation>kod</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="149"></location>
         <source>zone</source>
-        <translation type="unfinished"></translation>
+        <translation>bölge</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="166"></location>
         <source>Point symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Nokta sembolleri</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="167"></location>
         <source>Line symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi sembolleri</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="168"></location>
         <source>Area symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Alan sembolleri</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="169"></location>
         <source>Combined symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Birleşik semboller</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="170"></location>
         <source>Text symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin sembolleri</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="171"></location>
         <location filename="../src/core/map_information.cpp" line="253"></location>
         <source>Undefined symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Tanımsız semboller</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="218"></location>
         <source>&lt;undefined&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;tanımsız&gt;</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="232"></location>
         <source>Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="232"></location>
@@ -4701,17 +4702,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_information.cpp" line="234"></location>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçek</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="235"></location>
         <source>Coordinate reference system</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat referans sistem</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="237"></location>
         <source>Undo steps</source>
-        <translation type="unfinished"></translation>
+        <translation>Geri al adımları</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="237"></location>
@@ -4724,12 +4725,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_information.cpp" line="239"></location>
         <source>Redo steps</source>
-        <translation type="unfinished"></translation>
+        <translation>Yinele adımları</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="242"></location>
         <source>Templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablonlar</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="242"></location>
@@ -4741,7 +4742,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_information.cpp" line="244"></location>
         <source>Map parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita parçaları</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="244"></location>
@@ -4753,7 +4754,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_information.cpp" line="250"></location>
         <source>Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Semboller</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="250"></location>
@@ -4766,7 +4767,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_information.cpp" line="266"></location>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Renkler</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="266"></location>
@@ -4778,7 +4779,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_information.cpp" line="274"></location>
         <source>Fonts</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazı tipleri</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="274"></location>
@@ -4790,12 +4791,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_information.cpp" line="279"></location>
         <source>%1 (substituted by %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (%2 ile değiştirildi)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="78"></location>
         <source>Map information</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita bilgisi</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="80"></location>
@@ -4805,12 +4806,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="117"></location>
         <source>Plain text</source>
-        <translation type="unfinished"></translation>
+        <translation>Düz metin</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="131"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
 </context>
 <context>
@@ -4818,7 +4819,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_notes.cpp" line="45"></location>
         <source>Map notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita notları</translation>
     </message>
 </context>
 <context>
@@ -4826,32 +4827,32 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_printer.cpp" line="529"></location>
         <source>- Map -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Harita -</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1353"></location>
         <source>Processing separations of page %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 sayfasının ayırmaları işleniyor...</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1354"></location>
         <source>Processing page %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 sayfa işleniyor...</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1404"></location>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>İptal edildi</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1408"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1413"></location>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamamlandı</translation>
     </message>
 </context>
 <context>
@@ -4860,13 +4861,13 @@ Rescale the imported data?</source>
         <location filename="../src/gui/color_dialog.cpp" line="317"></location>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="73"></location>
         <source>Text source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin kaynağı:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="569"></location>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="321"></location>
         <source>Map (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="570"></location>
@@ -4874,19 +4875,19 @@ Rescale the imported data?</source>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="322"></location>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="335"></location>
         <source>undefined language</source>
-        <translation type="unfinished"></translation>
+        <translation>tanımsız dil</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="588"></location>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="338"></location>
         <source>Translation (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Çeviri (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="640"></location>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="212"></location>
         <source>Before editing, the stored text will be replaced with the current translation. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzenlemeden önce, kayıtlı metin mevcut çeviri ile değiştirilecek. Devam etmek istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="647"></location>
@@ -4907,18 +4908,18 @@ Rescale the imported data?</source>
         <location filename="../src/gui/map/map_widget.cpp" line="671"></location>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="687"></location>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="724"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="906"></location>
@@ -4928,7 +4929,12 @@ Start by defining some colors:
 Select Symbols -&gt; Color window to
 open the color dialog and
 define the colors there.</source>
-        <translation type="unfinished"></translation>
+        <translation>Boş harita!
+
+Başlamak için bazı renkleri tanımlayın:
+Sembolleri seç -&gt; Renk penceresini
+ve renk dialogunu aç
+ve renkleri tanımla.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="908"></location>
@@ -4938,7 +4944,12 @@ Now define some symbols:
 Right-click in the symbol bar
 and select &quot;New symbol&quot;
 to create one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol yok!
+
+Şimdi bazı semboller tanımlayın:
+Sembol çubuğuna sağ tıklayın
+ve bir tane oluşturmak için &quot;Yeni Sembol&quot;ü seçin
+.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="910"></location>
@@ -4947,13 +4958,18 @@ to create one.</source>
 Start drawing or load a base map.
 To load a base map, click
 Templates -&gt; Open template...</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizmeye hazır!
+
+Çizmeye başlayın veya bir altlık harita yükleyin.
+Bir altlık harita yüklemek için
+Şablonlar -&gt; Şablon aç...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="910"></location>
         <source>Hint: Hold the middle mouse button to drag the map,
 zoom using the mouse wheel, if available.</source>
-        <translation type="unfinished"></translation>
+        <translation>İpucu: Haritayı sürüklemek için orta fare düğmesine basılı tutun,
+varsa fare tekerleği ile yakınlaştırın/uzaklaştırın.</translation>
     </message>
 </context>
 <context>
@@ -4961,12 +4977,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="118"></location>
         <source>Boundary length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sınır uzunluğu:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="146"></location>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzunluk:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="128"></location>
@@ -4976,7 +4992,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="85"></location>
         <source>No object selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesne seçilmedi.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="89"></location>
@@ -4986,68 +5002,68 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="99"></location>
         <source>The selected object is not a path.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen nesne bir yol değil.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="119"></location>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="147"></location>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="120"></location>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="148"></location>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="129"></location>
         <source>mm²</source>
         <comment>square millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>mm²</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="130"></location>
         <source>m²</source>
         <comment>square meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>m²</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="137"></location>
         <source>This object is too small.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu nesne çok küçük.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="138"></location>
         <source>The minimimum area is %1 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimum alan %1 %2&apos;dir.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="138"></location>
         <source>mm²</source>
-        <translation type="unfinished"></translation>
+        <translation>mm²</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="142"></location>
         <source>Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such.</source>
-        <translation type="unfinished"></translation>
+        <translation>Not: Sınır uzunluğu ve alan, yalnızca kendi kendine kesişme yoksa ve delikler doğru şekilde kullanılmışsa doğrudur.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="155"></location>
         <source>This line is too short.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu çizgi çok kısa.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="156"></location>
         <source>The minimum length is %1 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimum uzunluk %1 %2&apos;dir.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="156"></location>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
 </context>
 <context>
@@ -5055,43 +5071,43 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="66"></location>
         <source>Create new map</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni harita oluştur</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="70"></location>
         <source>Choose the scale and symbol set for the new map.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni harita için ölçek ve sembol kümesi seçin.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="77"></location>
         <source>Scale:  1 : </source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçek:  1 : </translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="82"></location>
         <source>Symbol sets:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol setleri:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="87"></location>
         <source>Only show symbol sets matching the selected scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Yalnızca seçilen ölçekle eşleşen sembol kümelerini göster</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="95"></location>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Oluştur</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="171"></location>
         <source>Empty symbol set</source>
-        <translation type="unfinished"></translation>
+        <translation>Boş sembol seti</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="209"></location>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="264"></location>
         <source>Load symbol set from a file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosyadan sembol seti yükle...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="260"></location>
@@ -5110,31 +5126,31 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/core/objects/object_query.cpp" line="360"></location>
         <source>is</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>dir</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="363"></location>
         <source>is not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>değildir</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="366"></location>
         <source>contains</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>içerir</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="369"></location>
         <source>Search</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ara</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="372"></location>
         <source>Text</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Metin</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="376"></location>
@@ -5146,25 +5162,25 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/core/objects/object_query.cpp" line="379"></location>
         <source>or</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>veya</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="382"></location>
         <source>not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>değil</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="386"></location>
         <source>Symbol</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sembol</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="390"></location>
         <source>invalid</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>geçersiz</translation>
     </message>
 </context>
 <context>
@@ -5172,7 +5188,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="627"></location>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; kodlaması mevcut değil. Ayarları kontrol edin.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="656"></location>
@@ -5198,105 +5214,105 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="845"></location>
         <source>The map contains more than 24 spot colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita, OCD 8 sürümü tarafından desteklenmeyen 24&apos;ten fazla spot renk içeriyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="851"></location>
         <source>The map contains more than 256 colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita, OCD 8 sürümü tarafından desteklenmeyen 256&apos;dan fazla renk içeriyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="895"></location>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="907"></location>
         <source>Invalid spot color.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz spot renk.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1433"></location>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1473"></location>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; alan sembolünde bir dolgu deseni atlanıyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1604"></location>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2416"></location>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; çizgi sembolünde başlık/birleşim kombinasyonu temsil edilemiyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1626"></location>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; çizgi sembolünde kesik gruplandırması ihmal ediliyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1638"></location>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; çizgi sembolünde bir gruptaki kesik sayısı 2&apos;ye indirildi.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1733"></location>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; çizgi sembolünde kenarlıklar doğru şekilde dışa aktarılamıyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1920"></location>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 metin sembolü: özel karakter aralığı ayarlanmış, uygulaması henüz OCAD&apos;in davranışı ile eşleşmiyor</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1936"></location>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 metin sembolü: alt çizgi yoksayılıyor</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1939"></location>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 metin sembolü: kerning yoksayılıyor</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1956"></location>
         <source>In text symbol %1: exporting only %2 custom tabulator positions</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 metin sembolü: yalnızca %2 özel sekme konumu dışa aktarılıyor</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2334"></location>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 birleşik sembol: %2 indeksindeki desteklenmeyen alt sembol.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2542"></location>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir alan nesnesi için dolgu deseni kaydırması dışa aktarılamıyor</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2717"></location>
         <source>The map contains an object with more than 32767 coordinates which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita, OCD 8 sürümü tarafından desteklenmeyen 32767&apos;den fazla koordinata sahip bir nesne içeriyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2761"></location>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksik şablonun doğru konumu kaydedilemiyor: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2746"></location>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablon dışa aktarılamıyor: &quot;%1&quot; dosya türü henüz desteklenmiyor</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2806"></location>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; şablonunun özel konumlandırması kaydedilemiyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="3141"></location>
         <source>Text truncated at &apos;|&apos;): %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin &apos;|&apos;) karakterinde kesildi: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_georef_fields.cpp" line="882"></location>
         <source>Could not translate coordinate reference system &apos;%1:%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1:%2&apos; koordinat referans sistemi çevrilemedi.</translation>
     </message>
 </context>
 <context>
@@ -5304,176 +5320,176 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="252"></location>
         <source>In line symbol %1 &apos;%2&apos;: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 çizgi sembolü &apos;%2&apos;: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="258"></location>
         <source>In text symbol %1 &apos;%2&apos;: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 metin sembolü &apos;%2&apos;: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_georef_fields.cpp" line="730"></location>
         <source>Could not load the coordinate reference system &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; koordinat referans sistemi yüklenemedi.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="787"></location>
         <source>Unable to import symbol %1.%2 &quot;%3&quot;: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>%1.%2 &quot;%3&quot; içe aktarılamadı: %4</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="791"></location>
         <source>Unsupported type &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Desteklenmeyen stil &quot;%1&quot;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1198"></location>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1225"></location>
         <source>Unsupported line style &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Desteklenmeyen çizgi stili &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1271"></location>
         <source>The dash pattern cannot be imported correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesik deseni doğru şekilde içe aktarılamıyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1286"></location>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1318"></location>
         <source>The dash pattern&apos;s end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesik deseninin bitiş uzunluğu (%1 mm) doğru şekilde içe aktarılamıyor. %2 mm kullanılıyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1293"></location>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1333"></location>
         <source>The dash pattern&apos;s end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesik deseninin bitiş boşluğu (%1 mm) doğru şekilde içe aktarılamıyor. %2 mm kullanılıyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1372"></location>
         <source>Unsupported framing line style &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Desteklenmeyen çizgi stili &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1443"></location>
         <source>Skipped secondary point symbol.</source>
-        <translation type="unfinished"></translation>
+        <translation>İkincil nokta sembolü atlandı.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1488"></location>
         <source>Suppressing dash symbol at line ends.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi uçlarındaki kesik sembolü bastırılıyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2286"></location>
         <source>Justified alignment is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>İki yana yaslı hizalama desteklenmiyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2301"></location>
         <source>Vertical alignment &apos;%1&apos; is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikey hizalama &apos;%1&apos; desteklenmiyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2273"></location>
         <source>Ignoring custom weight (%1).</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel ağırlık (%1) yok sayılıyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2310"></location>
         <source>Custom character spacing may be incorrect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel karakter aralığı yanlış olabilir.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2315"></location>
         <source>Ignoring custom word spacing (%1 %).</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel kelime aralığı (%1 %) yok sayılıyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2339"></location>
         <source>Ignoring custom indents (%1/%2).</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel girintiler (%1/%2) yok sayılıyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2361"></location>
         <source>Ignoring text framing (mode %1).</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin çerçeveleme (mode %1) yok sayılıyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1682"></location>
         <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi metin sembolleri henüz desteklenmiyor. Sembol gizli olarak işaretleniyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="113"></location>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; kodlaması kullanılamıyor. Ayarları kontrol edin.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="246"></location>
         <source>In area symbol %1 &apos;%2&apos;: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 alan sembolü &apos;%2&apos;: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="513"></location>
         <source>Color &quot;%1&quot; is imported as special color &quot;Registration black&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; rengi, özel renk &quot;Baskı siyahı&quot; olarak içe aktarıldı.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1501"></location>
         <source> - main line</source>
-        <translation type="unfinished"></translation>
+        <translation> - ana çizgi</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1508"></location>
         <source> - double line</source>
-        <translation type="unfinished"></translation>
+        <translation> - çift çizgi</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1515"></location>
         <source> - framing</source>
-        <translation type="unfinished"></translation>
+        <translation> - çerçeveleme</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1555"></location>
         <source>The border of this symbol could not be loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu sembolün kenarlığı yüklenemedi.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1666"></location>
         <source>Skipping unsupported reference to point symbol &apos;%1.%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Desteklenmeyen &apos;%1.%2&apos; nokta sembolü atlanıyor.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1880"></location>
         <source>Unable to load object</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesne yüklenemedi</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1890"></location>
         <source>Unable to import rectangle object</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikdörtgen nesnesi içe aktarılamadı</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1931"></location>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin sembolü içe aktarılamıyor, yol anlaşılamadı&apos; (npts=%1): %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2248"></location>
         <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilinmeyen koordinat formatına sahip bir metin nesnesi içe aktarılmaya çalışılıyor</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2375"></location>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2379"></location>
         <source>Invalid data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz veri.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2406"></location>
         <source>Support for OCD version %1 files is experimental.</source>
-        <translation type="unfinished"></translation>
+        <translation>OCD %1 sürümü dosyaları için destek deneyseldir.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2412"></location>
@@ -5483,7 +5499,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="236"></location>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk kimliği bulunamadı: %1, bu renk yok sayılıyor</translation>
     </message>
 </context>
 <context>
@@ -5491,27 +5507,27 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1956"></location>
         <source>Failed to create dataset: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Veri kümesi oluşturulamadı: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2001"></location>
         <source>Failed to create layer: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Katman oluşturulamadı: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2139"></location>
         <source>The map is not georeferenced. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita koordinatlandırılmamış. Yalnızca yerel koordinatlandırma.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2152"></location>
         <source>Failed to properly export the georeferencing info. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlandırma bilgisi düzgün şekilde dışa aktarılamadı. Yalnızca yerel koordinatlandırma.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2162"></location>
         <source>The %1 driver requires valid georefencing info.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 sürücüsü geçerli koordinatlandırma bilgisi gerektirir.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2237"></location>
@@ -5519,17 +5535,17 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2326"></location>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2372"></location>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Katmanda özellik oluşturulamadı: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2382"></location>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 katmanı oluşturulamadı: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2389"></location>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>İsim alanı oluşturulamadı: %1</translation>
     </message>
 </context>
 <context>
@@ -5537,17 +5553,17 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="791"></location>
         <source>Unable to setup &quot;%1&quot; SRS for GDAL: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL için &quot;%1&quot; SRS ayarlanamadı: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="727"></location>
         <source>Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Nokta</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="734"></location>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="743"></location>
@@ -5557,12 +5573,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="749"></location>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="851"></location>
         <source>Unable to load layer %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 katmanı yüklenemedi.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gdal/ogr_file_format.cpp" line="901"></location>
@@ -5571,45 +5587,46 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gdal/ogr_file_format.cpp" line="916"></location>
         <location filename="../src/gdal/ogr_file_format.cpp" line="921"></location>
         <source>Unable to load %n objects, reason: %1</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n nesne yüklenemedi, sebep: %1</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="902"></location>
         <source>Empty geometry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Boş geometri.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="907"></location>
         <source>Can&apos;t determine the coordinate transformation: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat dönüşümü belirlenemiyor: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="912"></location>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlar dönüştürülemedi.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="917"></location>
         <source>Unknown or unsupported geometry type.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilinmeyen veya desteklenmeyen geometri türü.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="922"></location>
         <source>Not enough coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeterli koordinat yok.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="967"></location>
         <source>Cannot use this spatial reference:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu uzamsal referans kullanılamaz:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1030"></location>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Coğrafi uzamsal verinin uygun bir uzamsal referansı yok.</translation>
     </message>
 </context>
 <context>
@@ -5617,7 +5634,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_template.cpp" line="354"></location>
         <source>Invalid template configuration.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz şablon yapılandırması.</translation>
     </message>
 </context>
 <context>
@@ -5625,7 +5642,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/templates/paint_on_template_feature.cpp" line="306"></location>
         <source>Template file exists: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablon dosyası mevcut: &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -5634,19 +5651,19 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="77"></location>
         <source>Traditional</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Geleneksel</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="82"></location>
         <source>Confetti Hybrid</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Konfeti Melezi</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="87"></location>
         <source>Guacamole Full</source>
         <extracomment>Paint on template color preset entry name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Guacamole Tam</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="132"></location>
@@ -5656,17 +5673,17 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="133"></location>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaldır</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="140"></location>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Yukarı Taşı</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="143"></location>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Aşağı Taşı</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="175"></location>
@@ -5676,7 +5693,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="187"></location>
         <source>Custom string</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel dize</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="193"></location>
@@ -5686,17 +5703,17 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="197"></location>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopyala</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="199"></location>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Yapıştır</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/paint_on_template_settings_page.cpp" line="233"></location>
         <source>Paint on template</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablon üzerine boya</translation>
     </message>
 </context>
 <context>
@@ -5709,27 +5726,27 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="181"></location>
         <source>Color selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk seçimi</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="226"></location>
         <source>Erase</source>
-        <translation type="unfinished"></translation>
+        <translation>Sil</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="247"></location>
         <source>Filled area</source>
-        <translation type="unfinished"></translation>
+        <translation>Dolu alan</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="269"></location>
         <source>Solid</source>
-        <translation type="unfinished"></translation>
+        <translation>Düz</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="270"></location>
         <source>Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>Desen</translation>
     </message>
 </context>
 <context>
@@ -5737,7 +5754,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/tools/pan_tool.cpp" line="80"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Sürükle&lt;/b&gt;: Haritayı hareket ettir. </translation>
     </message>
 </context>
 <context>
@@ -5768,19 +5785,19 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="101"></location>
         <source>Elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Öğeler</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="113"></location>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="989"></location>
         <source>Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Nokta</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="114"></location>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="991"></location>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="115"></location>
@@ -5791,90 +5808,90 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="118"></location>
         <source>Center all elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm öğeleri ortala</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="120"></location>
         <source>Current element</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçerli öğe</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="126"></location>
         <source>Diameter &lt;b&gt;a&lt;/b&gt;:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çap &lt;b&gt;a&lt;/b&gt;:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="127"></location>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="133"></location>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="161"></location>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="129"></location>
         <source>Inner color:</source>
-        <translation type="unfinished"></translation>
+        <translation>İç renk:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="132"></location>
         <source>Outer width &lt;b&gt;b&lt;/b&gt;:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış genişlik &lt;b&gt;b&lt;/b&gt;:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="135"></location>
         <source>Outer color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış renk:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="160"></location>
         <source>Line width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi genişliği:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="163"></location>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi rengi:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="166"></location>
         <source>Line cap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi sınırı:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="168"></location>
         <source>flat</source>
-        <translation type="unfinished"></translation>
+        <translation>düz</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="169"></location>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="176"></location>
         <source>round</source>
-        <translation type="unfinished"></translation>
+        <translation>yuvarlak</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="170"></location>
         <source>square</source>
-        <translation type="unfinished"></translation>
+        <translation>kare</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="173"></location>
         <source>Line join:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi birleştirme:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="175"></location>
         <source>miter</source>
-        <translation type="unfinished"></translation>
+        <translation>gönye</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="177"></location>
         <source>bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>eğim</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="179"></location>
         <source>Line closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi kapalı</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="199"></location>
@@ -5884,37 +5901,37 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="212"></location>
         <source>Coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlar:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="217"></location>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="217"></location>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="217"></location>
         <source>Curve start</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğri başlangıcı</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="228"></location>
         <source>Center by coordinate average</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat ortalamasına göre ortala</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="412"></location>
         <source>[Midpoint]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Orta nokta]</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="996"></location>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilinmeyen</translation>
     </message>
 </context>
 <context>
@@ -5922,7 +5939,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/symbols/point_symbol_settings.cpp" line="60"></location>
         <source>Point symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Nokta sembolü</translation>
     </message>
 </context>
 <context>
@@ -5931,7 +5948,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_progress_dialog.cpp" line="58"></location>
         <source>Printing</source>
         <comment>PrintWidget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yazdırılıyor</translation>
     </message>
     <message>
         <location filename="../src/gui/print_progress_dialog.cpp" line="59"></location>
@@ -5946,29 +5963,29 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_tool.cpp" line="60"></location>
         <location filename="../src/gui/print_tool.cpp" line="372"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area&apos;s borders. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Sürükle&lt;/b&gt;: Haritayı, yazdırma alanını veya alanın sınırlarını taşıyın. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="344"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Sürükle&lt;/b&gt;: Yazdırma alanını taşıyın. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="348"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Sürükle&lt;/b&gt;: Haritayı hareket ettir. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="353"></location>
         <location filename="../src/gui/print_tool.cpp" line="358"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s border. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Sürükle&lt;/b&gt;: Yazdırma alanının kenarlığını taşıyın. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="363"></location>
         <location filename="../src/gui/print_tool.cpp" line="368"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s borders. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Sürükle&lt;/b&gt;: Baskı alanının kenarlarını taşıyın. </translation>
     </message>
 </context>
 <context>
@@ -5976,57 +5993,57 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="283"></location>
         <source>Show templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablonları göster</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="294"></location>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgarayı göster</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="187"></location>
         <source>Page orientation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfa yönlendirmesi:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="147"></location>
         <source>Printer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazıcı:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="180"></location>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikey</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="182"></location>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Yatay</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="161"></location>
         <source>Page format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfa biçimi:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="190"></location>
         <source>Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopya sayısı:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="203"></location>
         <source>Left:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sol:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="206"></location>
         <source>Top:</source>
-        <translation type="unfinished"></translation>
+        <translation>Üst:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="209"></location>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Genişlik:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="212"></location>
@@ -6036,27 +6053,27 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="324"></location>
         <source>Preview...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ön izleme...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="195"></location>
         <source>Single page</source>
-        <translation type="unfinished"></translation>
+        <translation>Tek sayfa</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="196"></location>
         <source>Custom area</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel alan</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="197"></location>
         <source>Map area:</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita alanı:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="199"></location>
         <source>Center print area</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdırma alanını ortala</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="167"></location>
@@ -6067,100 +6084,100 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="211"></location>
         <location filename="../src/gui/print_widget.cpp" line="214"></location>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="152"></location>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Özellikler</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="215"></location>
         <source>Page overlap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfa üst üste binmesi:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="219"></location>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçenekler</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="253"></location>
         <source>Resolution:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çözünürlük:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="269"></location>
         <source>Print in different scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Farklı ölçekte yazdır:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="290"></location>
         <source>Template appearance may differ.</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablon görünümü farklı olabilir.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="297"></location>
         <source>Simulate overprinting</source>
-        <translation type="unfinished"></translation>
+        <translation>Üst baskı simülasyonu</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="300"></location>
         <source>Save world file</source>
-        <translation type="unfinished"></translation>
+        <translation>Dünya dosyasını kaydet</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="245"></location>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Varsayılan</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="246"></location>
         <source>Device CMYK</source>
-        <translation type="unfinished"></translation>
+        <translation>Cihaz CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="247"></location>
         <source>Color mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk modu:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="326"></location>
         <location filename="../src/gui/print_widget.cpp" line="435"></location>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdır</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="330"></location>
         <source>Export...</source>
-        <translation type="unfinished"></translation>
+        <translation>Dışa aktar...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="442"></location>
         <source>PDF export</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF dışa aktarma</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="455"></location>
         <source>Image export</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüntü dışa aktarımı</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="574"></location>
         <source>Save to PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF olarak kaydet</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="251"></location>
         <location filename="../src/gui/print_widget.cpp" line="989"></location>
         <location filename="../src/gui/print_widget.cpp" line="1039"></location>
         <source>dpi</source>
-        <translation type="unfinished"></translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="257"></location>
         <source>No tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Karo yok</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="258"></location>
@@ -6175,37 +6192,37 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="260"></location>
         <source>Tiles:</source>
-        <translation type="unfinished"></translation>
+        <translation>Karolar:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="468"></location>
         <source>KMZ export</source>
-        <translation type="unfinished"></translation>
+        <translation>KMZ dışa aktarımı</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1006"></location>
         <source>The map contains transparent elements which require the raster mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita, raster modunu gerektiren şeffaf öğeler içeriyor.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1170"></location>
         <source>Not supported on Android.</source>
-        <translation type="unfinished"></translation>
+        <translation>Android&apos;de desteklenmiyor.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1178"></location>
         <source>Failed to prepare the preview.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ön izleme hazırlanamadı.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1189"></location>
         <source>Print Preview Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdırma Ön izleme İlerlemesi</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1206"></location>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Uyarı</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1207"></location>
@@ -6215,48 +6232,49 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1233"></location>
         <source>KMZ</source>
-        <translation type="unfinished"></translation>
+        <translation>KMZ</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1234"></location>
         <source>KML</source>
-        <translation type="unfinished"></translation>
+        <translation>KML</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1261"></location>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüntü kaydedilemedi:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1275"></location>
         <source>PNG</source>
-        <translation type="unfinished"></translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1276"></location>
         <source>BMP</source>
-        <translation type="unfinished"></translation>
+        <translation>BMP</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1277"></location>
         <source>TIFF</source>
-        <translation type="unfinished"></translation>
+        <translation>TIFF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1278"></location>
         <source>JPEG</source>
-        <translation type="unfinished"></translation>
+        <translation>JPEG</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1350"></location>
         <source>Failed to prepare the PDF export.</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF dışa aktarımı hazırlanamadı.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1360"></location>
         <source>PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1413"></location>
@@ -6271,7 +6289,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="1362"></location>
         <location filename="../src/gui/print_widget.cpp" line="1374"></location>
         <source>Export map ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Haritayı dışa aktar ...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1235"></location>
@@ -6283,12 +6301,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1399"></location>
         <source>Failed to prepare the printing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdırma hazırlanamadı.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1408"></location>
         <source>Printing Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdırma İlerlemesi</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1005"></location>
@@ -6304,74 +6322,77 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="1426"></location>
         <location filename="../src/gui/print_widget.cpp" line="1474"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="226"></location>
         <source>Vector
 graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Vektör
+grafik</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="227"></location>
         <source>Raster
 graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Raster
+grafik</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="228"></location>
         <source>Color
 separations</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk
+ayrımlar</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="241"></location>
         <source>Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mod:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1298"></location>
         <source>Failed to prepare the image. Not enough memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüntü hazırlanamadı. Yeterli bellek yok.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1319"></location>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüntü kaydedilemedi. Yol mevcut mu? Yeterli izinlere sahip misiniz?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1266"></location>
         <location filename="../src/gui/print_widget.cpp" line="1323"></location>
         <location filename="../src/gui/print_widget.cpp" line="1384"></location>
         <source>Exported successfully to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 konumuna başarıyla dışa aktarıldı</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1380"></location>
         <source>Failed to finish the PDF export.</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF dışa aktarımı tamamlanamadı.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1262"></location>
         <location filename="../src/gui/print_widget.cpp" line="1390"></location>
         <location filename="../src/gui/print_widget.cpp" line="1422"></location>
         <source>Canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>İptal edildi.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1426"></location>
         <source>The print job could not be stopped.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdırma işlemi durdurulamadı.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1417"></location>
         <source>Successfully created print job</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdırma işi başarıyla oluşturuldu</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1474"></location>
         <source>The map area is empty. Output canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita alanı boş. Çıktı iptal edildi.</translation>
     </message>
 </context>
 <context>
@@ -6379,22 +6400,22 @@ separations</source>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="41"></location>
         <source>Reopen template</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablonu yeniden aç</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="43"></location>
         <source>Drag items from the left list to the desired spot in the right list to reload them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Öğeleri yeniden yüklemek için sol listeden sağ listedeki istediğiniz noktaya sürükleyin.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="45"></location>
         <source>Closed templates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapalı şablonlar:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="48"></location>
         <source>Clear list</source>
-        <translation type="unfinished"></translation>
+        <translation>Listeyi temizle</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="51"></location>
@@ -6404,7 +6425,7 @@ separations</source>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="60"></location>
         <source>- Map -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Harita -</translation>
     </message>
 </context>
 <context>
@@ -6412,7 +6433,7 @@ separations</source>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="47"></location>
         <source>Rotate map</source>
-        <translation type="unfinished"></translation>
+        <translation>Haritayı döndür</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="54"></location>
@@ -6422,47 +6443,47 @@ separations</source>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="51"></location>
         <source>Rotation parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Döndürme parametreleri</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="56"></location>
         <source>Rotate around:</source>
-        <translation type="unfinished"></translation>
+        <translation>Etrafında döndür:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="59"></location>
         <source>Map coordinate system origin</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Harita koordinat sistemi orijini</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="64"></location>
         <source>Georeferencing reference point</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlandırma referans noktası</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="70"></location>
         <source>Other point,</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Diğer nokta,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="75"></location>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="79"></location>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="83"></location>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçenekler</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="85"></location>
@@ -6477,7 +6498,7 @@ separations</source>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="99"></location>
         <source>Rotate non-georeferenced templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlandırılmamış şablonları döndür</translation>
     </message>
 </context>
 <context>
@@ -6495,7 +6516,7 @@ separations</source>
     <message>
         <location filename="../src/tools/rotate_pattern_tool.cpp" line="85"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Sürükle&lt;/b&gt;: Alan dolgu desenlerinin veya nokta nesnelerinin yönünü ayarla. </translation>
     </message>
 </context>
 <context>
@@ -6503,7 +6524,7 @@ separations</source>
     <message>
         <location filename="../src/tools/rotate_tool.cpp" line="195"></location>
         <source>&lt;b&gt;Rotation:&lt;/b&gt; %1° </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Döndürme:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tools/rotate_tool.cpp" line="207"></location>
@@ -6513,12 +6534,12 @@ separations</source>
     <message>
         <location filename="../src/tools/rotate_tool.cpp" line="201"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the center of rotation. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tıkla&lt;/b&gt;: Döndürme merkezini ayarla. </translation>
     </message>
     <message>
         <location filename="../src/tools/rotate_tool.cpp" line="202"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Rotate the selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Sürükle&lt;/b&gt;: Seçili nesneleri döndür. </translation>
     </message>
 </context>
 <context>
@@ -6526,67 +6547,67 @@ separations</source>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="43"></location>
         <source>Change map scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita ölçeğini değiştir</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="47"></location>
         <source>Scaling parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçeklendirme parametreleri</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="55"></location>
         <source>Scaling center:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçeklendirme merkezi:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="53"></location>
         <source>New scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni ölçek:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="58"></location>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Harita koordinat sistemi orijini</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="63"></location>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlandırma referans noktası</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="69"></location>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Diğer nokta,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="74"></location>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="78"></location>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="81"></location>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçenekler</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="83"></location>
         <source>Scale symbol sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol boyutlarını ölçeklendir</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="90"></location>
         <source>Scale map object positions</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita nesnesi konumlarını ölçeklendir</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="97"></location>
@@ -6596,7 +6617,7 @@ separations</source>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="104"></location>
         <source>Scale non-georeferenced templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlandırılmamış şablonları ölçeklendir</translation>
     </message>
 </context>
 <context>
@@ -6604,12 +6625,12 @@ separations</source>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="69"></location>
         <source>&lt;b&gt;Scaling:&lt;/b&gt; %1%</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Ölçeklendirme:&lt;/b&gt; %1%</translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="75"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the scaling center. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tıkla&lt;/b&gt;: Ölçeklendirme merkezin ayarla. </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="77"></location>
@@ -6619,7 +6640,7 @@ separations</source>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="73"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Scale the selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Sürükle&lt;/b&gt;: Seçili nesneleri ölçeklendir. </translation>
     </message>
 </context>
 <context>
@@ -6627,37 +6648,37 @@ separations</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="66"></location>
         <source>Select coordinate reference system</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat referans sistemi seç</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="78"></location>
         <source>Same as map</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita ile aynı</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="72"></location>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>Yerel</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="77"></location>
         <source>From template file</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablon dosyasından</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="79"></location>
         <source>Geographic coordinates (WGS84)</source>
-        <translation type="unfinished"></translation>
+        <translation>Coğrafi koordinatlar (WGS84)</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="92"></location>
         <source>Status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Durum:</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="154"></location>
         <source>valid</source>
-        <translation type="unfinished"></translation>
+        <translation>geçerli</translation>
     </message>
 </context>
 <context>
@@ -6665,22 +6686,22 @@ separations</source>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="52"></location>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konum:</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="55"></location>
         <source>Source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaynak:</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="64"></location>
         <source>Serial port (NMEA):</source>
-        <translation type="unfinished"></translation>
+        <translation>Seri port (NMEA):</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="79"></location>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Sensörler</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="91"></location>
@@ -6688,37 +6709,37 @@ separations</source>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="146"></location>
         <source>Default</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Varsayılan</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"></location>
         <source>NMEA (Qt)</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (Qt)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"></location>
         <source>NMEA (OpenOrienteering)</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (OpenOrienteering)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="123"></location>
         <source>Windows</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Windows</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="126"></location>
         <source>GeoClue</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>GeoClue</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="129"></location>
         <source>Core Location</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Core Location</translation>
     </message>
 </context>
 <context>
@@ -6726,7 +6747,7 @@ separations</source>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="79"></location>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlar</translation>
     </message>
 </context>
 <context>
@@ -6734,22 +6755,22 @@ separations</source>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="43"></location>
         <source>Event and course details</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkinlik ve parkur ayrıntıları</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="48"></location>
         <source>Event name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkinlik adı:</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="51"></location>
         <source>Course name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Parkur adı:</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="54"></location>
         <source>First code number:</source>
-        <translation type="unfinished"></translation>
+        <translation>İlk kontrol noktası numarası:</translation>
     </message>
 </context>
 <context>
@@ -6757,17 +6778,17 @@ separations</source>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="35"></location>
         <source>Unnamed event</source>
-        <translation type="unfinished"></translation>
+        <translation>İsimsiz etkinlik</translation>
     </message>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="41"></location>
         <source>Unnamed course</source>
-        <translation type="unfinished"></translation>
+        <translation>İsimsiz parkur</translation>
     </message>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="60"></location>
         <source>For this course export, a single line object must be selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu parkur dışa aktarımı için tek bir çizgi nesnesi seçilmiş olmalıdır.</translation>
     </message>
 </context>
 <context>
@@ -6775,7 +6796,7 @@ separations</source>
     <message>
         <location filename="../src/core/storage_location.cpp" line="308"></location>
         <source>&apos;%1&apos; is located in app storage. The files will be removed when uninstalling the app.</source>
-        <translation>&apos;%1&apos; uygulama deposunda bulunuyor. Uygulamayı kaldırırken dosyalar kaldırılacaktır.</translation>
+        <translation>&apos;%1&apos; uygulama depolama alanında bulunuyor. Uygulama kaldırıldığında dosyalar silinecektir.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="311"></location>
@@ -6785,7 +6806,7 @@ separations</source>
     <message>
         <location filename="../src/core/storage_location.cpp" line="314"></location>
         <source>Extra permissions are required to access &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; alanına erişmek için ek izinler gerekli.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="317"></location>
@@ -6798,62 +6819,62 @@ separations</source>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="47"></location>
         <source>Change scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçek faktörünü değiştir</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="51"></location>
         <source>Scaling parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçeklendirme parametreleri</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="53"></location>
         <source>Scaling center:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçeklendirme merkezi:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="56"></location>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Harita koordinat sistemi orijini</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="62"></location>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlandırma referans noktası</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="70"></location>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Diğer nokta,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="75"></location>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="79"></location>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="82"></location>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçenekler</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="84"></location>
         <source>Adjust georeferencing reference point</source>
-        <translation>Coğrafi referans noktasını ayarlamayın</translation>
+        <translation>Koordinatlandırma referans noktasını ayarla</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="91"></location>
         <source>Scale non-georeferenced templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlandırılmamış şablonları ölçeklendir</translation>
     </message>
 </context>
 <context>
@@ -6861,7 +6882,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_dropdown.cpp" line="67"></location>
         <source>- none -</source>
-        <translation type="unfinished"></translation>
+        <translation>- yok -</translation>
     </message>
 </context>
 <context>
@@ -6869,7 +6890,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_dropdown.cpp" line="177"></location>
         <source>- None -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Yok -</translation>
     </message>
 </context>
 <context>
@@ -6877,47 +6898,47 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="64"></location>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Numara:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="75"></location>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzenle</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="76"></location>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ad:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="78"></location>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıklama:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="80"></location>
         <source>Helper symbol (not shown in finished map)</source>
-        <translation type="unfinished"></translation>
+        <translation>Yardımcı sembol (bitmiş haritada gösterilmez)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="130"></location>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Genel</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="133"></location>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Simge</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="224"></location>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Uyarı</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1423"></location>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıklama</translation>
     </message>
 </context>
 <context>
@@ -6925,24 +6946,24 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="104"></location>
         <source>For symbols with description, press F1 while the tooltip is visible to show it</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıklamalı semboller için, açıklamayı görmek üzereyken F1&apos;e basın</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="108"></location>
         <source>New symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni sembol</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="350"></location>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="110"></location>
         <source>Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Nokta</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="345"></location>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="111"></location>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="335"></location>
@@ -6954,65 +6975,65 @@ separations</source>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="355"></location>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="113"></location>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="340"></location>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="114"></location>
         <source>Combined</source>
-        <translation type="unfinished"></translation>
+        <translation>Birleşik</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="117"></location>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzenle</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="118"></location>
         <source>Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation>Çoğalt</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="119"></location>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Sil</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="120"></location>
         <source>Scale...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçeklendir...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="122"></location>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopyala</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="123"></location>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Yapıştır</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="138"></location>
         <source>Show custom icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel simgeleri göster</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="141"></location>
         <source>Select symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembolleri seç</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="152"></location>
         <source>Enable drag and drop</source>
-        <translation type="unfinished"></translation>
+        <translation>Sürükle ve bırakmayı etkinleştir</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="902"></location>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="916"></location>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="928"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="902"></location>
@@ -7023,75 +7044,75 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="916"></location>
         <source>There are no symbols in clipboard which could be pasted!</source>
-        <translation type="unfinished"></translation>
+        <translation>Panoda yapıştırılabilecek sembol yok!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1114"></location>
         <source>Select all objects with this symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu sembole sahip tüm nesneleri seç</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1115"></location>
         <source>Add all objects with this symbol to selection</source>
-        <translation>Bu sembolle beraber tüm nesneleri seçime ekleyin</translation>
+        <translation>Bu sembole sahip tüm nesneleri seçime ekle</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1116"></location>
         <source>Remove all objects with this symbol from selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu sembole sahip tüm nesneleri seçimden kaldır</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1436"></location>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1117"></location>
         <source>Hide objects with this symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu sembole sahip nesneleri gizle</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1447"></location>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1118"></location>
         <source>Protect objects with this symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu sembole sahip nesneleri koru</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1123"></location>
         <source>Add all objects with selected symbols to selection</source>
-        <translation>Seçili sembollerle beraber tüm nesneleri seçime ekleyin</translation>
+        <translation>Seçili sembollere sahip tüm nesneleri seçime ekle</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1124"></location>
         <source>Remove all objects with selected symbols from selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili sembollere sahip tüm nesneleri seçimden kaldır</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1125"></location>
         <source>Hide objects with selected symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili sembollere sahip nesneleri gizle</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1126"></location>
         <source>Protect objects with selected symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili sembollere sahip nesneleri koru</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="145"></location>
         <source>Invert selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimi tersine çevir</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="99"></location>
         <source>F1</source>
         <comment>Shortcut for displaying the symbol&apos;s description</comment>
-        <translation type="unfinished"></translation>
+        <translation>F1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="142"></location>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü seç</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="143"></location>
         <source>Select unused</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanılmayanları seç</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="148"></location>
@@ -7116,38 +7137,38 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="811"></location>
         <source>Scale to percentage:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yüzde olarak ölçeklendir:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="840"></location>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Onay</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="841"></location>
         <source>The map contains objects with the symbol &quot;%1&quot;. Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita &quot;%1&quot; sembolüne sahip nesneler içeriyor. Silerseniz bu nesneler de silinecek ve geri alma geçmişi temizlenecek! Bunu gerçekten yapmak istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="996"></location>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1122"></location>
         <source>Select all objects with selected symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili sembollere sahip tüm nesneleri seç</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="125"></location>
         <source>Switch symbol of selected objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili nesnelerin sembolünü değiştir</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="126"></location>
         <source>Fill / Create border for selected objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili nesneleri doldur / kenarlık oluştur</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="811"></location>
         <source>Scale symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembolleri ölçeklendir</translation>
     </message>
 </context>
 <context>
@@ -7155,108 +7176,108 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="104"></location>
         <source>Replace symbol set</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol kümesini değiştir</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="106"></location>
         <source>Configure how the symbols should be replaced, and which.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembollerin nasıl ve hangilerinin değiştirileceğini yapılandırın.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="109"></location>
         <source>Import all new symbols, even if not used as replacement</source>
-        <translation type="unfinished"></translation>
+        <translation>Yedek olarak kullanılmasa bile tüm yeni sembolleri içe aktar</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="115"></location>
         <source>Delete original symbols which are unused after the replacement</source>
-        <translation type="unfinished"></translation>
+        <translation>Değiştirmeden sonra kullanılmayan orijinal sembolleri sil</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="118"></location>
         <source>Delete unused colors after the replacement</source>
-        <translation type="unfinished"></translation>
+        <translation>Değiştirmeden sonra kullanılmayan renkleri sil</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="164"></location>
         <source>Symbol mapping:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol eşleme:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="112"></location>
         <source>Keep the symbols&apos; hidden / protected states of the old symbol set</source>
-        <translation type="unfinished"></translation>
+        <translation>Eski sembol kümesinin sembol gizleme/koruma durumlarını koru</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="135"></location>
         <source>Match replacement symbols by symbol number</source>
-        <translation type="unfinished"></translation>
+        <translation>Yedek sembolleri sembol numarasına göre eşleştir</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="133"></location>
         <source>Original</source>
-        <translation type="unfinished"></translation>
+        <translation>Orijinal</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="130"></location>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol kümesi kimliğini düzenle:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="133"></location>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="143"></location>
         <source>Replacement</source>
-        <translation type="unfinished"></translation>
+        <translation>Yedek</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="137"></location>
         <source>Match by symbol name</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol adına göre eşleştir</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="142"></location>
         <source>Assign new symbols</source>
-        <translation>Yeni semboller atama</translation>
+        <translation>Yeni semboller ata</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="143"></location>
         <source>Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>Desen</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="155"></location>
         <source>Clear replacements</source>
-        <translation type="unfinished"></translation>
+        <translation>Yedekleri temizle</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="129"></location>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="158"></location>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="225"></location>
         <source>Open CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT dosyası aç...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="160"></location>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="240"></location>
         <source>Save CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT dosyası kaydet...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="165"></location>
         <source>Symbol mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol eşleme</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="127"></location>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="224"></location>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="239"></location>
         <source>CRT file</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT dosyası</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="201"></location>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 sembolü için birden fazla yedek var.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="204"></location>
@@ -7275,23 +7296,27 @@ separations</source>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya kaydedilemedi:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="269"></location>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Çapraz referans tablosu değiştirildi.
+Değişikliklerinizi kaydetmek istiyor musunuz?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="429"></location>
         <source>- None -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Yok -</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="227"></location>
         <source>Choose map file to load symbols from</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembollerin yükleneceği harita dosyasını seçin</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="182"></location>
@@ -7300,7 +7325,7 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="250"></location>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="259"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="183"></location>
@@ -7309,23 +7334,23 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="251"></location>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="260"></location>
         <source>Cannot load symbol set, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol kümesi yüklenemiyor, iptal ediliyor.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="267"></location>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="275"></location>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Uyarı</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="268"></location>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol kümesi içe aktarımı uyarılar oluşturdu.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="276"></location>
         <source>The chosen symbol set has a scale of 1:%1, while the map scale is 1:%2. Do you really want to choose this set?</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçilen sembol kümesinin ölçeği 1:%1, harita ölçeği ise 1:%2. Bu kümeyi gerçekten seçmek istiyor musunuz?</translation>
     </message>
 </context>
 <context>
@@ -7333,64 +7358,64 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="162"></location>
         <source>Map Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita Renkleri</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="163"></location>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="164"></location>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Ad</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="165"></location>
         <source>RGB</source>
-        <translation type="unfinished"></translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="166"></location>
         <source>Spot colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Spot renkler</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="167"></location>
         <source>Knockout</source>
-        <translation type="unfinished"></translation>
+        <translation>Knockout</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="204"></location>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="208"></location>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="212"></location>
         <source>[X] %1</source>
-        <translation type="unfinished"></translation>
+        <translation>[X] %1</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="205"></location>
         <source>Symbol orientation can be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol yönlendirmesi değiştirilebilir.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="209"></location>
         <source>Pattern orientation can be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Desen yönlendirmesi değiştirilebilir.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="213"></location>
         <source>Helper symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Yardımcı sembol</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="249"></location>
         <source>Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Semboller</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="283"></location>
         <source>Symbol Set Report on &apos;%0&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%0&apos; Sembol Kümesi Raporu</translation>
     </message>
 </context>
 <context>
@@ -7398,7 +7423,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="53"></location>
         <source>HTML</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="54"></location>
@@ -7408,7 +7433,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="76"></location>
         <source>Create symbol set report...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol kümesi raporu oluştur...</translation>
     </message>
 </context>
 <context>
@@ -7416,47 +7441,47 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="62"></location>
         <source>Symbol settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol ayarları</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="104"></location>
         <source>Template:</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablon:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="105"></location>
         <source>&lt;b&gt;Template:&lt;/b&gt; </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Şablon:&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="106"></location>
         <source>(none)</source>
-        <translation type="unfinished"></translation>
+        <translation>(yok)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="107"></location>
         <source>Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>Aç...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="110"></location>
         <source>Center template...</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablonu ortala...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="115"></location>
         <source>bounding box on origin</source>
-        <translation type="unfinished"></translation>
+        <translation>sınırlayıcı kutu orijinde</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="116"></location>
         <source>center of gravity on origin</source>
-        <translation type="unfinished"></translation>
+        <translation>ağırlık merkezi orijinde</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="228"></location>
         <source>Select background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Arka plan rengi seç</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="414"></location>
@@ -7464,12 +7489,15 @@ Do you want to save your changes?</source>
 takes the routechoice
 to jump over the lazy dog
 1234567890</source>
-        <translation type="unfinished"></translation>
+        <translation>Hızlı kahverengi tilki
+tembel köpeğin üzerinden atlamak için
+rota seçimini yapar
+1234567890</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="489"></location>
         <source>- unnamed -</source>
-        <translation type="unfinished"></translation>
+        <translation>- isimsiz -</translation>
     </message>
 </context>
 <context>
@@ -7477,7 +7505,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/symbol_tooltip.cpp" line="201"></location>
         <source>No description!</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıklama yok!</translation>
     </message>
 </context>
 <context>
@@ -7485,22 +7513,22 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="84"></location>
         <source>Relation</source>
-        <translation type="unfinished"></translation>
+        <translation>İlişki</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="84"></location>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Anahtar</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="84"></location>
         <source>Comparison</source>
-        <translation type="unfinished"></translation>
+        <translation>Karşılaştırma</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="84"></location>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Değer</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="115"></location>
@@ -7510,17 +7538,17 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="116"></location>
         <source>Remove Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Satırı Kaldır</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="123"></location>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Yukarı Taşı</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="126"></location>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Aşağı Taşı</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_find_feature.cpp" line="256"></location>
@@ -7532,7 +7560,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="184"></location>
         <source>Invalid query</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz sorgu</translation>
     </message>
 </context>
 <context>
@@ -7540,27 +7568,27 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="55"></location>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Anahtar</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="55"></location>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Değer</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="65"></location>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Yardım</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="218"></location>
         <source>Key exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Anahtar zaten var</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="219"></location>
         <source>The key &quot;%1&quot; already exists and must not be used twice.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; anahtarı zaten mevcut ve iki kez kullanılmamalı.</translation>
     </message>
 </context>
 <context>
@@ -7568,7 +7596,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template.cpp" line="494"></location>
         <source>Find the moved template file</source>
-        <translation type="unfinished"></translation>
+        <translation>Taşınan şablon dosyasını bul</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="496"></location>
@@ -7578,23 +7606,23 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template.cpp" line="543"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="637"></location>
         <location filename="../src/templates/template.cpp" line="670"></location>
         <source>No such file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Böyle bir dosya yok.</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="680"></location>
         <source>Is the format of the file correct for this template type?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya biçimi bu şablon türü için doğru mu?</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="692"></location>
         <source>Not enough free memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeterli boş bellek yok.</translation>
     </message>
 </context>
 <context>
@@ -7602,17 +7630,17 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="68"></location>
         <source>Template adjustment</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablon ayarlama</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="145"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="145"></location>
         <source>Failed to calculate adjustment!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayarlama hesaplanamadı!</translation>
     </message>
 </context>
 <context>
@@ -7620,12 +7648,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="593"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tıkla&lt;/b&gt;: Geçiş noktasının şablon konumunu ayarla. </translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="618"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the map position of the pass point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tıkla&lt;/b&gt;: Geçiş noktasının harita konumunu ayarla. </translation>
     </message>
 </context>
 <context>
@@ -7641,7 +7669,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="705"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move pass points. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Sürükle&lt;/b&gt;: Geçiş noktalarını taşı. </translation>
     </message>
 </context>
 <context>
@@ -7649,57 +7677,57 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="203"></location>
         <source>Pass points:</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçiş noktaları:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="205"></location>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="209"></location>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translation>Taşı</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="213"></location>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Sil</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="220"></location>
         <source>Template X</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablon X</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="220"></location>
         <source>Template Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablon Y</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="220"></location>
         <source>Map X</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita X</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="220"></location>
         <source>Map Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita Y</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="220"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="231"></location>
         <source>Apply pass points</source>
-        <translation>Geçiş noktaları uygula</translation>
+        <translation>Geçiş noktalarını uygula</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="233"></location>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Yardım</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="234"></location>
@@ -7709,7 +7737,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="235"></location>
         <source>Clear all</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü temizle</translation>
     </message>
 </context>
 <context>
@@ -7718,30 +7746,30 @@ to jump over the lazy dog
         <location filename="../src/gdal/gdal_image_reader.cpp" line="139"></location>
         <location filename="../src/templates/template_image.cpp" line="219"></location>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeterli boş bellek yok (görüntü boyutu: %1x%2 piksel)</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_template.cpp" line="150"></location>
         <location filename="../src/templates/template_image.cpp" line="243"></location>
         <source>Georeferencing not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlandırma bulunamadı</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="148"></location>
         <source>Format not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Biçim desteklenmiyor</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="301"></location>
         <location filename="../src/templates/template_image.cpp" line="421"></location>
         <source>Select the coordinate reference system of the georeferenced image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlandırılmış görüntünün koordinat referans sistemini seçin.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="306"></location>
         <location filename="../src/templates/template_image.cpp" line="426"></location>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
-        <translation type="unfinished"></translation>
+        <translation>World dosyasındaki koordinatların koordinat referans sistemini seçin</translation>
     </message>
 </context>
 <context>
@@ -7749,67 +7777,67 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="51"></location>
         <source>Opening %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 açılıyor</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="53"></location>
         <source>Image size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüntü boyutu:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="56"></location>
         <source>Specify how to position or scale the image:</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüntünün nasıl konumlandırılacağını veya ölçeklendirileceğini belirtin:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="66"></location>
         <source>World file</source>
-        <translation type="unfinished"></translation>
+        <translation>World dosyası</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="67"></location>
         <source>GeoTIFF</source>
-        <translation type="unfinished"></translation>
+        <translation>GeoTIFF</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="68"></location>
         <source>no georeferencing information</source>
-        <translation type="unfinished"></translation>
+        <translation>koordinatlandırma bilgisi yok</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="73"></location>
         <source>Georeferenced (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlandırılmış (%1)</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="76"></location>
         <source>Meters per pixel:</source>
-        <translation type="unfinished"></translation>
+        <translation>Piksel başına metre:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="80"></location>
         <source>Scanned with</source>
-        <translation type="unfinished"></translation>
+        <translation>Şununla taranmış</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="83"></location>
         <source>dpi</source>
-        <translation type="unfinished"></translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="85"></location>
         <source>Template scale:  1 :</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablon ölçeği:  1 :</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="111"></location>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>İptal</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="112"></location>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Aç</translation>
     </message>
 </context>
 <context>
@@ -7817,44 +7845,44 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_table_model.cpp" line="165"></location>
         <source>Show</source>
-        <translation type="unfinished"></translation>
+        <translation>Göster</translation>
     </message>
     <message>
         <location filename="../src/templates/template_table_model.cpp" line="171"></location>
         <source>Opacity</source>
-        <translation type="unfinished"></translation>
+        <translation>Opaklık</translation>
     </message>
     <message>
         <location filename="../src/templates/template_table_model.cpp" line="175"></location>
         <source>Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Grup</translation>
     </message>
     <message>
         <location filename="../src/templates/template_table_model.cpp" line="179"></location>
         <source>Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya adı</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="245"></location>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="679"></location>
         <source>Sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>Kroki</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="247"></location>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="683"></location>
         <source>GPS</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="240"></location>
         <source>Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>Aç...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="243"></location>
         <source>Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation>Çoğalt</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="251"></location>
@@ -7865,42 +7893,42 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="255"></location>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaldır</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="261"></location>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Yukarı Taşı</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="263"></location>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Aşağı Taşı</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="285"></location>
         <source>Import and remove</source>
-        <translation type="unfinished"></translation>
+        <translation>İçe aktar ve kaldır</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="324"></location>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Yardım</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="270"></location>
         <source>Move by hand</source>
-        <translation type="unfinished"></translation>
+        <translation>Elle taşı</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="282"></location>
         <source>Positioning...</source>
-        <translation type="unfinished"></translation>
+        <translation>Konumlandırma...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="640"></location>
         <source>Template files</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablon dosyaları</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="640"></location>
@@ -7919,22 +7947,22 @@ to jump over the lazy dog
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="930"></location>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="980"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="910"></location>
         <source>Don&apos;t scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçeklendirme</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="905"></location>
         <source>Scale by nominal map scale ratio (%1 %)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nominal harita ölçeği oranına göre ölçeklendir (%1 %)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="280"></location>
         <source>Georeferenced</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlandırılmış</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="668"></location>
@@ -7942,69 +7970,71 @@ to jump over the lazy dog
         <source>Cannot open template
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablon açılamıyor
+%1:
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="656"></location>
         <source>File format not recognized.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya biçimi tanınmadı.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="288"></location>
         <source>Vectorize lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgileri vektörleştir</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="662"></location>
         <source>Failed to load template. Does the file exist and is it valid?</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablon yüklenemedi. Dosya mevcut mu ve geçerli mi?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="884"></location>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="930"></location>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita dosyası yüklenemiyor, iptal ediliyor.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="894"></location>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Uyarı</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="894"></location>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita içe aktarımı uyarılar oluşturdu.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="907"></location>
         <source>Scale by current template scaling (%1 %)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut şablon ölçeklendirmesine göre ölçeklendir (%1 %)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="912"></location>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="942"></location>
         <source>Template import</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablon içe aktarımı</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="913"></location>
         <source>How shall the symbols of the imported template map be scaled?</source>
-        <translation type="unfinished"></translation>
+        <translation>İçe aktarılan şablon haritasının sembolleri nasıl ölçeklendirilsin?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="943"></location>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
-        <translation type="unfinished"></translation>
+        <translation>Şablon, üstüne baskı benzetiminde görünmez olacak. Normal görünüme geçilsin mi?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="980"></location>
         <source>Cannot change the georeferencing state.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlandırma durumu değiştirilemiyor.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_table_model.cpp" line="257"></location>
         <source>- Map -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Harita -</translation>
     </message>
 </context>
 <context>
@@ -8014,12 +8044,12 @@ to jump over the lazy dog
         <location filename="../src/templates/template_map.cpp" line="221"></location>
         <location filename="../src/templates/template_map.cpp" line="328"></location>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlar dönüştürülemedi.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_map.cpp" line="203"></location>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita dosyası yüklenemiyor, iptal ediliyor.</translation>
     </message>
 </context>
 <context>
@@ -8027,7 +8057,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_tool_move.cpp" line="48"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt; to move the current template</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Sürükle&lt;/b&gt; mevcut şablonu taşımak için</translation>
     </message>
 </context>
 <context>
@@ -8035,7 +8065,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_placeholder.cpp" line="178"></location>
         <source>Unknown file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilinmeyen dosya biçimi</translation>
     </message>
 </context>
 <context>
@@ -8043,37 +8073,37 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="40"></location>
         <source>Positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>Konumlandırma</translation>
     </message>
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="46"></location>
         <source>X:</source>
-        <translation type="unfinished"></translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="49"></location>
         <source>Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="52"></location>
         <source>X-Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>X-Ölçeği:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="55"></location>
         <source>Y-Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y-Ölçeği:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="58"></location>
         <source>Rotation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Döndürme:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="61"></location>
         <source>Shear:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydırma:</translation>
     </message>
 </context>
 <context>
@@ -8081,43 +8111,43 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="42"></location>
         <source>Track scaling and positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>İz ölçeklendirme ve konumlandırma</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="47"></location>
         <source>Coordinate system</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat sistemi</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="48"></location>
         <source>Real</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerçek</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="49"></location>
         <source>Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Harita</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="52"></location>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="55"></location>
         <source>One coordinate unit equals:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bir koordinat birimi eşittir:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="57"></location>
         <source>Position track at given coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>İzi verilen koordinatlara konumlandır</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="61"></location>
         <source>Position track at view center</source>
-        <translation type="unfinished"></translation>
+        <translation>İzi görünüm merkezine konumlandır</translation>
     </message>
 </context>
 <context>
@@ -8125,68 +8155,68 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_track.cpp" line="83"></location>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>İz</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="96"></location>
         <source>Route</source>
-        <translation type="unfinished"></translation>
+        <translation>Rota</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="109"></location>
         <source>Waypoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Yol noktası</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="256"></location>
         <location filename="../src/templates/template_track.cpp" line="262"></location>
         <source>This template must be loaded with GDAL/OGR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu şablon GDAL/OGR ile yüklenmelidir.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="294"></location>
         <source>Opening track ...</source>
-        <translation type="unfinished"></translation>
+        <translation>İz açılıyor ...</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="295"></location>
         <source>Load the track in georeferenced or non-georeferenced mode?</source>
-        <translation type="unfinished"></translation>
+        <translation>İz koordinatlandırılmış veya koordinatlandırılmamış modda mı yüklensin?</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="297"></location>
         <source>Positions the track according to the map&apos;s georeferencing settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>İzi, haritanın koordinatlandırma ayarlarına göre konumlandırır.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="299"></location>
         <source>These are not configured yet, so they will be shown as the next step.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bunlar henüz yapılandırılmadı, bu yüzden bir sonraki adım olarak gösterilecekler.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="300"></location>
         <source>Georeferenced</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlandırılmış</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="301"></location>
         <source>Non-georeferenced</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatlandırılmamış</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="301"></location>
         <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
-        <translation type="unfinished"></translation>
+        <translation>İzi, merkezi izin koordinat ortalamasında olan bir ortografik projeksiyon kullanarak projeler. Dönüşümün ayarlanmasına ve ayarlanmış iz konumu kullanılarak harita koordinatlandırmasının ayarlanmasına izin verir.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="485"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="485"></location>
         <source>The path is empty, there is nothing to import!</source>
-        <translation type="unfinished"></translation>
+        <translation>Yol boş, içe aktarılacak bir şey yok!</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="507"></location>
@@ -8196,18 +8226,18 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_track.cpp" line="508"></location>
         <source>Should the waypoints be imported as a line going through all points?</source>
-        <translation type="unfinished"></translation>
+        <translation>Yol noktaları, tüm noktalardan geçen bir çizgi olarak mı içe aktarılsın?</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="572"></location>
         <source>Import problems</source>
-        <translation type="unfinished"></translation>
+        <translation>İçe aktarma sorunları</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/templates/template_track.cpp" line="573"></location>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n yol nesnesi içe aktarılamadı (sebep: eksik koordinatlar).</numerusform>
         </translation>
     </message>
 </context>
@@ -8221,33 +8251,33 @@ to jump over the lazy dog
     <message>
         <location filename="../src/tools/text_object_editor_helper.cpp" line="536"></location>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Sol</translation>
     </message>
     <message>
         <location filename="../src/tools/text_object_editor_helper.cpp" line="538"></location>
         <location filename="../src/tools/text_object_editor_helper.cpp" line="555"></location>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Orta</translation>
     </message>
     <message>
         <location filename="../src/tools/text_object_editor_helper.cpp" line="540"></location>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Sağ</translation>
     </message>
     <message>
         <location filename="../src/tools/text_object_editor_helper.cpp" line="553"></location>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Üst</translation>
     </message>
     <message>
         <location filename="../src/tools/text_object_editor_helper.cpp" line="557"></location>
         <source>Baseline</source>
-        <translation>Temel hat</translation>
+        <translation>Taban çizgisi</translation>
     </message>
     <message>
         <location filename="../src/tools/text_object_editor_helper.cpp" line="559"></location>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt</translation>
     </message>
 </context>
 <context>
@@ -8255,17 +8285,17 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="96"></location>
         <source>Text settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin ayarları</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="108"></location>
         <source>Font family:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazı tipi ailesi:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="112"></location>
         <source>Font size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazı tipi boyutu:</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/text_symbol.cpp" line="517"></location>
@@ -8282,37 +8312,37 @@ to jump over the lazy dog
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="509"></location>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="603"></location>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="111"></location>
         <source>pt</source>
-        <translation type="unfinished"></translation>
+        <translation>pt</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="134"></location>
         <source>Text color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin rengi:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="137"></location>
         <source>bold</source>
-        <translation type="unfinished"></translation>
+        <translation>kalın</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="139"></location>
         <source>italic</source>
-        <translation type="unfinished"></translation>
+        <translation>italik</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="141"></location>
         <source>underlined</source>
-        <translation type="unfinished"></translation>
+        <translation>altı çizili</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="144"></location>
         <source>Text style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin stili:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="148"></location>
@@ -8323,113 +8353,113 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="149"></location>
         <source>Line spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Satır aralığı:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="152"></location>
         <source>Paragraph spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Paragraf aralığı:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="155"></location>
         <source>Character spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Karakter aralığı:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="157"></location>
         <source>Kerning</source>
-        <translation type="unfinished"></translation>
+        <translation>Kerning</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="164"></location>
         <source>Symbol icon text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembol simgesi metni:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="168"></location>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="176"></location>
         <source>Framing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çerçeveleme</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="171"></location>
         <source>OCAD compatibility settings</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD uyumluluk ayarları</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="182"></location>
         <source>Framing color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çerçeve rengi:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="184"></location>
         <source>Line framing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi çerçeveleme</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="188"></location>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Genişlik:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="190"></location>
         <source>Shadow framing</source>
-        <translation type="unfinished"></translation>
+        <translation>Gölge çerçeveleme</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="194"></location>
         <source>Left/Right Offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sol/Sağ Ofset:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="197"></location>
         <source>Top/Down Offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Üst/Alt Ofset:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="201"></location>
         <source>OCAD compatibility</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD uyumluluğu</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="208"></location>
         <source>enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>etkin</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="212"></location>
         <source>Line width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi genişliği:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="215"></location>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi rengi:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="491"></location>
         <source>Position:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konum:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="206"></location>
         <source>Line below paragraphs</source>
-        <translation type="unfinished"></translation>
+        <translation>Paragrafların altındaki çizgi</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="218"></location>
         <source>Distance from baseline:</source>
-        <translation type="unfinished"></translation>
+        <translation>Taban çizgisinden mesafe:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="222"></location>
         <source>Custom tabulator positions</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel sekme konumları</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="490"></location>
         <source>Add custom tabulator</source>
-        <translation>Kişiselleştirilmiş tabülatör ekleyin</translation>
+        <translation>Özel sekme ekle</translation>
     </message>
 </context>
 <context>
@@ -8437,7 +8467,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/crs_param_widgets.cpp" line="77"></location>
         <source>Calculate</source>
-        <translation type="unfinished"></translation>
+        <translation>Hesapla</translation>
     </message>
 </context>
 <context>
@@ -8446,27 +8476,27 @@ to jump over the lazy dog
         <location filename="../src/undo/undo_manager.cpp" line="140"></location>
         <location filename="../src/undo/undo_manager.cpp" line="185"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="140"></location>
         <source>Cannot undo because the last undo step became invalid. This can for example happen if you change the symbol of an object to another and then delete the old symbol.</source>
-        <translation type="unfinished"></translation>
+        <translation>Son geri alma adımı geçersiz olduğu için geri alınamıyor. Bu, örneğin bir nesnenin sembolünü başka bir sembolle değiştirip ardından eski sembolü silerseniz olabilir.</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="147"></location>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Onay</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="147"></location>
         <source>Undoing this step will go beyond the point where the file was loaded. Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu adımı geri almak, dosyanın yüklendiği noktanın ötesine geçecek. Emin misiniz?</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="185"></location>
         <source>Cannot redo because the first redo step became invalid. This can for example happen if you delete the symbol of an object you have drawn.</source>
-        <translation type="unfinished"></translation>
+        <translation>İlk ileri alma adımı geçersiz olduğu için ileri alınamıyor. Bu, örneğin çizdiğiniz bir nesnenin sembolünü silerseniz olabilir.</translation>
     </message>
 </context>
 <context>
@@ -8487,13 +8517,13 @@ to jump over the lazy dog
         <location filename="../src/gui/util_gui.cpp" line="207"></location>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="212"></location>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="217"></location>
@@ -8509,35 +8539,37 @@ to jump over the lazy dog
         <location filename="../src/gui/util_gui.cpp" line="147"></location>
         <location filename="../src/gui/util_gui.cpp" line="181"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hata</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="133"></location>
         <source>Failed to locate the help files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Yardım dosyaları bulunamadı.</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="147"></location>
         <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation type="unfinished"></translation>
+        <translation>Yardım tarayıcısı (&quot;Qt Assistant&quot;) bulunamadı.</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="182"></location>
         <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation type="unfinished"></translation>
+        <translation>Yardım tarayıcısı (&quot;Qt Assistant&quot;) başlatılamadı.</translation>
     </message>
     <message>
         <location filename="../src/gui/util_gui.cpp" line="200"></location>
         <source>See more...</source>
         <extracomment>This &quot;See more&quot; is displayed as a link to the manual in What&apos;s-this tooltips.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Daha fazla gör...</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_format.cpp" line="54"></location>
         <source>Internal error detected! Please report this issue.
 Version: %1
 Location: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Dahili hata tespit edildi! Lütfen bu sorunu bildirin.
+Sürüm: %1
+Konum: %2</translation>
     </message>
 </context>
 <context>
@@ -8545,7 +8577,7 @@ Location: %2</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="244"></location>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapper&apos;ın eski sürümleri birden fazla harita parçasını desteklemez. Haritayı uyumluluk modunda kaydetmek için önce tüm harita parçalarını birleştirmelisiniz.</translation>
     </message>
 </context>
 <context>
@@ -8553,74 +8585,74 @@ Location: %2</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="530"></location>
         <source>Unsupported element: %1 (line %2 column %3)</source>
-        <translation type="unfinished"></translation>
+        <translation>Desteklenmeyen öğe: %1 (satır %2 sütun %3)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="574"></location>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bazı koordinatlar yazdırma için sınırların dışındaydı. Harita içeriği ayarlandı.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="666"></location>
         <source>unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>bilinmeyen</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="667"></location>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu dosyanın bazı kısımları bu Mapper sürümü tarafından okunamıyor. Gereken minimum sürüm: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="648"></location>
         <source>Error at line %1 column %2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>%1. satır %2. sütunda hata: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="684"></location>
         <location filename="../src/fileformats/xml_file_format.cpp" line="967"></location>
         <source>Some invalid characters had to be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bazı geçersiz karakterlerin kaldırılması gerekti.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="702"></location>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilinmeyen hata</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="703"></location>
         <source>Unsupported or invalid georeferencing specification &apos;%1&apos;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Desteklenmeyen veya geçersiz koordinatlandırma tanımı &apos;%1&apos;: %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="731"></location>
         <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tutarsız sapma/grid sapması tespit edildi. Sapmanın otomatik olarak %1°&apos;ye ayarlanmasıyla çözüldü.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="860"></location>
         <location filename="../src/fileformats/xml_file_format.cpp" line="913"></location>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; renginin knockout özelliği ayarlanamadı.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="873"></location>
         <source>Expected %1 colors, found %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 renk bekleniyordu, %2 bulundu.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="889"></location>
         <source>Spot color %1 not found while processing %2 (%3).</source>
-        <translation type="unfinished"></translation>
+        <translation>%2 (%3) işlenirken %1 spot rengi bulunamadı.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="945"></location>
         <source>Expected %1 symbols, found %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 sembol bekleniyordu, %2 bulundu.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="984"></location>
         <source>Expected %1 map parts, found %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 harita parçası bekleniyordu, %2 bulundu.</translation>
     </message>
 </context>
 </TS>
