@@ -20,7 +20,7 @@
         <location filename="../src/gui/about_dialog.cpp" line="105"></location>
         <location filename="../src/gui/about_dialog.cpp" line="175"></location>
         <source>About %1</source>
-        <translation>Yaklaşık %1</translation>
+        <translation>%1 Hakkında</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="190"></location>
