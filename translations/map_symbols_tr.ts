@@ -71,17 +71,17 @@
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt kahverengi %50</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt kahverengi %50&apos;nin altında siyah</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alan özellikleri için %100 Mavi</translation>
     </message>
     <message>
         <source>Blue 70%</source>
@@ -101,17 +101,17 @@
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dar orman yolu için %100 Sarı</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dar orman yolu için %60 Yeşil</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dar orman yolu için %30 Yeşil</translation>
     </message>
     <message>
         <source>White over green</source>
@@ -136,7 +136,7 @@
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alan özellikleri için %100 Yeşil</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -151,7 +151,7 @@
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt bitki örtüsü için %100 Yeşil</translation>
     </message>
     <message>
         <source>White over yellow</source>
@@ -171,7 +171,7 @@
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 33</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alan özellikleri için %100 Sarı</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
@@ -195,7 +195,16 @@ The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minim
 A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
 Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşit yükseklikteki noktaları birleştiren bir çizgi. Eşyükseltiler arasındaki standart düşey aralık 5m&apos;dir. Düz araziler için 2,5 m&apos;lik bir eşyükselti aralığı kullanılabilir.
+Eğim yönünü netleştirmek için eğim çizgileri, bir eşyükselti çizgisinin alt tarafına çizilebilir. Kullanıldığında, girintilerin (re-entrant) içine yerleştirilmelidir.
+Kapalı bir eşyükselti, bir tepeciği veya bir çukuru temsil eder. Bir çukurun en az bir eğim çizgisi olmalıdır. Minimum yükseklik/derinlik 1 m olmalıdır.
+Bitişik eşyükselti çizgileri arasındaki ilişkiler önemlidir. Bitişik eşyükselti çizgileri form ve yapıyı gösterir. Eşyükseltilerdeki küçük detaylar, arazinin ana özelliklerini gizleme eğiliminde oldukları için kaçınılmalıdır.
+Çukurlar, girintiler, sırtlar, toprak setler ve taraçalar gibi belirgin özellikler abartılabilir.
+Mutlak yükseklik doğruluğunun önemi azdır, ancak komşu özellikler arasındaki bağıl yükseklik farkı haritada mümkün olduğunca doğru bir şekilde temsil edilmelidir. Bir özelliğin temsilini iyileştiriyorsa, bir eşyükseltinin yüksekliğini hafifçe değiştirmek caizdir. Bu sapma, eşyükselti aralığının %25&apos;ini geçmemeli ve komşu özelliklere dikkat edilmelidir.
+Bir eşyükselti çizgisindeki en küçük kıvrım, çizginin merkezinden merkezine 0,25 mm&apos;dir (yere izdüşüm 4 m). Bir girinti veya sırtın ağzı, çizginin merkezinden merkezine 0,5 mm&apos;den daha geniş olmalıdır (yere izdüşüm 8 m).
+Bir eşyükselti tümseğinin minimum uzunluğu 0,9 mm (yere izdüşüm 13,5 m) ve minimum genişliği dış ölçümde 0,6 mm&apos;dir (yere izdüşüm 9 m). Daha küçük belirgin tepeler, Küçük tepecik (109) veya Küçük uzun tepecik (110) sembolü kullanılarak temsil edilebilir veya minimum boyutu karşılaması için haritada abartılabilir.
+Bir çukurun bir eğim çizgisini barındırması gerekir, bu nedenle minimum uzunluk 1,1 mm (yere izdüşüm 16,5 m) ve minimum genişlik dış ölçümde 0,7 mm&apos;dir (yere izdüşüm 10,5 m). Daha küçük, belirgin çukurlar, Küçük çöküntü (111) sembolü kullanılarak temsil edilebilir veya minimum boyutu karşılaması için abartılabilir.
+Eşyükselti çizgileri, Küçük tepecik (109) veya Küçük uzun tepecik (110) sembollerine dokunmamak için uyarlanmalı (koparılmamalı)dır.</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -206,7 +215,8 @@ Contours should be adapted (not broken) in order not to touch symbol Small knoll
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eğim yönünü netleştirmek için eğim çizgileri, bir eşyükselti çizgisinin alt tarafına çizilebilir. Kullanıldığında, girintilerin (re-entrant) içine yerleştirilmelidir.
+Bir çukurun en az bir eğim çizgisi olmalıdır.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -218,7 +228,9 @@ A depression has to have at least one slope line.</source>
 An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Her beşinci eşyükselti, daha kalın bir çizgi ile çizilmelidir. Bu, yükseklik farkının ve arazi yüzeyinin genel şeklinin hızlı bir şekilde değerlendirilmesine yardımcı olur.
+Çok detaylı bir alanda bir indeks eşyükselti, sıradan bir eşyükselti çizgisi olarak temsil edilebilir. Küçük eşyükselti tepeleri ve çukurları normalde indeks eşyükseltileri kullanılarak temsil edilmez.
+İndeks eşyükselti seviyesi, düz arazide dikkatlice seçilmelidir. İndeks eşyükseltisi için ideal seviye, en belirgin yamaçlardaki merkezi eşyükseltidir.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -228,24 +240,26 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>An index contour may have a height value assigned. A height value should only be inserted in an index contour in places where other detail is not obscured. It shall be orientated so that the top of the label is on the higher side of the contour. The index value (label) shall be 1.5 mm high and represented in a sans-serif font.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir indeks eşyükseltisine bir yükseklik değeri atanabilir. Bir yükseklik değeri yalnızca, diğer detayların örtülmediği yerlerde bir indeks eşyükseltisine eklenmelidir. Etiketin üst kısmı, eşyükseltinin daha yüksek tarafında olacak şekilde yönlendirilmelidir. İndeks değeri (etiket) 1,5 mm yüksekliğinde ve sans-serif yazı tipinde temsil edilmelidir.</translation>
     </message>
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation>Biçim çizgisi</translation>
+        <translation>Form çizgisi</translation>
     </message>
     <message>
         <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones (minimum height / depth should be 1 m). Excessive use of form lines must be avoided as this disturbs the three-dimensional picture of the ground shape and will complicate map reading.
 Minimum length (non-closed): two dashes.
 Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</source>
         <comment>Description of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Form çizgileri, zeminin şekli hakkında daha fazla bilgi verilmesi gereken yerlerde kullanılır. Form çizgileri yalnızca sıradan eşyükseltilerle temsilin eksik kalacağı yerlere eklenir. Ara eşyükseltiler olarak kullanılmamalıdırlar. Komşu eşyükseltiler arasında yalnızca bir form çizgisi kullanılmalıdır. Bir form çizgisinin eşyükselti sistemine mantıksal olarak uyması çok önemlidir, bu nedenle bir form çizgisinin başlangıcı ve bitişi komşu eşyükseltilere paralel olmalıdır. Form çizgisi kesikli çizgileri arasındaki boşluklar, form çizgisinin makul derecede düz bölümlerine yerleştirilmelidir. Form çizgileri, düz tepeleri ve çukurları daha belirgin olanlardan ayırt etmek için kullanılabilir (minimum yükseklik/derinlik 1 m olmalıdır). Form çizgilerinin aşırı kullanımı, zemin şeklinin üç boyutlu görüntüsünü bozacağı ve harita okumayı zorlaştıracağı için kaçınılmalıdır.
+Minimum uzunluk (kapalı olmayan): iki kesikli çizgi.
+Bir form çizgisi, tepe veya çukurun minimum uzunluğu: 1,1 mm (yere izdüşüm 16,5 m)</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
         <comment>Name of symbol 103.1</comment>
-        <translation>Eğim çizgisi, biçim çizgisi</translation>
+        <translation>Eğim çizgisi, form çizgisi</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -263,7 +277,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir toprak set, çevresinden net bir şekilde ayırt edilebilen, zeminde ani bir seviye değişikliğidir, örn. çakıl veya kum çukurları, yol ve demiryolu yarmaları veya dolguları.
+Minimum yükseklik: 1 m. Bir toprak seti koşulabilirliği etkileyebilir. Çizgiler (tag), toprak setinin tam kapsamını temsil eder.
+Uzun toprak setleri için uçlarda minimum uzunluktan daha kısa çizgiler kullanılmasına izin verilir. İki toprak seti birbirine yakınsa, çizgiler çıkarılabilir. Geçilemez toprak setleri, geçilemez sarp kayalık (201) sembolü kullanılarak temsil edilmelidir.
+Minimum uzunluk: 0,6 mm (yere izdüşüm 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -276,12 +293,15 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir toprak set, çevresinden net bir şekilde ayırt edilebilen, zeminde ani bir seviye değişikliğidir, örn. çakıl veya kum çukurları, yol ve demiryolu yarmaları veya dolguları.
+Minimum yükseklik: 1 m. Bir toprak seti koşulabilirliği etkileyebilir. Çizgiler (tag), toprak setinin tam kapsamını temsil eder.
+Uzun toprak setleri için uçlarda minimum uzunluktan daha kısa çizgiler kullanılmasına izin verilir. İki toprak seti birbirine yakınsa, çizgiler çıkarılabilir. Geçilemez toprak setleri, geçilemez sarp kayalık (201) sembolü kullanılarak temsil edilmelidir.
+Minimum uzunluk: 0,6 mm (yere izdüşüm 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
         <comment>Name of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toprak set, üst çizgi</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -289,12 +309,15 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir toprak set, çevresinden net bir şekilde ayırt edilebilen, zeminde ani bir seviye değişikliğidir, örn. çakıl veya kum çukurları, yol ve demiryolu yarmaları veya dolguları.
+Minimum yükseklik: 1 m. Bir toprak seti koşulabilirliği etkileyebilir. Çizgiler (tag), toprak setinin tam kapsamını temsil eder.
+Uzun toprak setleri için uçlarda minimum uzunluktan daha kısa çizgiler kullanılmasına izin verilir. İki toprak seti birbirine yakınsa, çizgiler çıkarılabilir. Geçilemez toprak setleri, geçilemez sarp kayalık (201) sembolü kullanılarak temsil edilmelidir.
+Minimum uzunluk: 0,6 mm (yere izdüşüm 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
         <comment>Name of symbol 104.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toprak set, çizgi (tag)</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
