@@ -322,7 +322,7 @@ Minimum uzunluk: 0,6 mm (yere izdüşüm 9 m).</translation>
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
         <comment>Description of symbol 104.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geniş toprak setlerinin tam kapsamını göstermek için bu sembolü kullanın.</translation>
     </message>
     <message>
         <source>Earth bank, minimum size (from ISOM2000)</source>
@@ -332,7 +332,7 @@ Minimum uzunluk: 0,6 mm (yere izdüşüm 9 m).</translation>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>ISOM2000&apos;den geçiş için sağlanmıştır. Bu sembol varyantının yeni haritalar için kullanımı tavsiye edilmez.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -355,7 +355,8 @@ Minimum uzunluk: 1,4 mm (kapladığı alan 21 m).</translation>
         <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
 Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Earth wall (105).</source>
         <comment>Description of symbol 106</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yıkık veya daha az belirgin bir toprak duvar. Minimum yükseklik: 0,5 m.
+Minimum uzunluk: iki kesikli çizgi (3,65 mm - yere izdüşüm 55 m). Daha kısa ise, nesne minimum uzunluğa abartılmalı veya Toprak duvar (105) sembolüne değiştirilmelidir.</translation>
     </message>
     <message>
         <source>Erosion gully</source>
@@ -367,7 +368,9 @@ Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object mu
 Minimum length: 1.15 mm (footprint 17 m).
 Contour lines should not be broken around this symbol.</source>
         <comment>Description of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toprak set (104) sembolü kullanılarak gösterilemeyecek kadar küçük bir erozyon oyuğu, tek bir çizgi ile gösterilir. Minimum derinlik: 1 m.
+Minimum uzunluk: 1,15 mm (yere izdüşüm 17 m).
+Eşyükselti çizgileri bu sembolün etrafında kesilmemelidir.</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
@@ -379,7 +382,9 @@ Contour lines should not be broken around this symbol.</source>
 Minimum length (isolated): three dots (1.15 mm - footprint 17 m).
 Contour lines should be broken around this symbol.</source>
         <comment>Description of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük bir erozyon oyuğu, kuru hendek veya siper. Minimum derinlik: 0,5 m.
+Minimum uzunluk (izole): üç nokta (1,15 mm - yere izdüşüm 17 m).
+Eşyükselti çizgileri bu sembolün etrafında kesilmelidir.</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -392,7 +397,10 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 7.5 m x 7.5 m.</source>
         <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir eşyükselti ile ölçeğe uygun çizilemeyen belirgin bir höyük veya tepecik.
+Minimum yükseklik: 1 m.
+Sembol, eşyükseltilere dokunmamalı veya üstlerini örtmemelidir.
+Yere izdüşüm: 7,5 m x 7,5 m.</translation>
     </message>
     <message>
         <source>Small elongated knoll</source>
@@ -405,7 +413,10 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir eşyükselti ile ölçeğe uygun çizilemeyen belirgin uzun bir tepecik.
+Minimum yükseklik: 1 m.
+Sembol, eşyükseltilere dokunmamalı veya üstlerini örtmemelidir.
+Yere izdüşüm: 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -419,7 +430,11 @@ Small depressions with steep sides are represented with symbol Pit (112).
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükseltilerle gösterilemeyecek kadar küçük, dik kenarları olmayan küçük bir çöküntü veya oyuk.
+Minimum derinlik: 1 m, minimum genişlik: 2 m.
+Dik kenarlı küçük çöküntüler, Çukur (112) sembolü ile temsil edilir.
+Sembol, diğer kahverengi sembollere dokunmamalı veya üstlerini örtmemelidir. Konum, sembolün ağırlık merkezidir ve sembol kuzeye yönlendirilmiştir.
+Yere izdüşüm: 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Pit</source>
@@ -433,7 +448,11 @@ A pit larger than 5 m x 5 m should normally be exaggerated and drawn using Earth
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toprak set (104) sembolü kullanılarak ölçeğe uygun gösterilemeyen, belirgin dik kenarlara sahip çukurlar ve delikler.
+Minimum derinlik: 1 m, minimum genişlik: 1 m.
+5 m x 5 m&apos;den büyük bir çukur normalde abartılmalı ve Toprak seti (104) kullanılarak çizilmelidir. Dik kenarları olmayan çukurlar, Küçük çöküntü (111) sembolü ile temsil edilir.
+Sembol, diğer kahverengi sembollere dokunmamalı veya üstlerini örtmemelidir. Konum, sembolün ağırlık merkezidir ve sembol kuzeye yönlendirilmiştir.
+Yere izdüşüm: 10,5 m x 12 m.</translation>
     </message>
     <message>
         <source>Broken ground</source>
@@ -449,7 +468,13 @@ The minimum centre to centre distance between neighbouring dots is 0.5 mm.
 Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.</source>
         <comment>Description of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>Detaylı olarak gösterilemeyecek kadar karmaşık olan çukurlar ve/veya tepelerden oluşan bir alan veya açıkça ayırt edilebilen ancak koşulabilirliği çok az etkileyen diğer türden engebeli ve düzensiz zeminler.
+Noktalar rastgele dağıtılmalı ancak önemli arazi özelliklerinin ve nesnelerin temsiline müdahale etmemelidir.
+Minimum nokta sayısı üçtür (yere izdüşüm 10 m x 10 m).
+Komşu noktalar arasındaki maksimum merkezden merkeze mesafe 0,6 mm&apos;dir.
+Komşu noktalar arasındaki minimum merkezden merkeze mesafe 0,5 mm&apos;dir.
+Eşyükselti çizgileri, bozuk zemini olan alanlarda kesilmemelidir.
+Noktalar, tek nokta genişliğinde bir çizgi oluşturacak şekilde düzenlenmemelidir.</translation>
     </message>
     <message>
         <source>Broken ground, individual dot</source>
@@ -466,7 +491,14 @@ Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.
 Density: 3-4 dots / mm².</source>
         <comment>Description of symbol 113.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Detaylı olarak gösterilemeyecek kadar karmaşık olan çukurlar ve/veya tepelerden oluşan bir alan veya açıkça ayırt edilebilen ancak koşulabilirliği çok az etkileyen diğer türden engebeli ve düzensiz zeminler.
+Noktalar rastgele dağıtılmalı ancak önemli arazi özelliklerinin ve nesnelerin temsiline müdahale etmemelidir.
+Minimum nokta sayısı üçtür (yere izdüşüm 10 m x 10 m).
+Komşu noktalar arasındaki maksimum merkezden merkeze mesafe 0,6 mm&apos;dir.
+Komşu noktalar arasındaki minimum merkezden merkeze mesafe 0,5 mm&apos;dir.
+Eşyükselti çizgileri, bozuk zemini olan alanlarda kesilmemelidir.
+Noktalar, tek nokta genişliğinde bir çizgi oluşturacak şekilde düzenlenmemelidir.
+Yoğunluk: 3-4 nokta / mm².</translation>
     </message>
     <message>
         <source>Very broken ground</source>
@@ -482,12 +514,18 @@ The minimum centre to centre distance between neighbouring dots is 0.25 mm.
 Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.</source>
         <comment>Description of symbol 114</comment>
-        <translation type="unfinished"></translation>
+        <translation>Detaylı olarak gösterilemeyecek kadar karmaşık olan çukurlar ve/veya tepelerden oluşan bir alan veya açıkça ayırt edilebilen ve koşulabilirliği etkileyen diğer türden engebeli ve düzensiz zeminler.
+Noktalar rastgele dağıtılmalı ancak önemli arazi özelliklerinin ve nesnelerin temsiline müdahale etmemelidir.
+Minimum nokta sayısı üçtür (yere izdüşüm 7 m x 7 m).
+Komşu noktalar arasındaki maksimum merkezden merkeze mesafe 0,38 mm&apos;dir.
+Komşu noktalar arasındaki minimum merkezden merkeze mesafe 0,25 mm&apos;dir.
+Eşyükselti çizgileri, bozuk zemini olan alanlarda kesilmemelidir.
+Noktalar, tek nokta genişliğinde bir çizgi oluşturacak şekilde düzenlenmemelidir.</translation>
     </message>
     <message>
         <source>Prominent landform feature</source>
         <comment>Name of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin yeryüzü şekli özelliği</translation>
     </message>
     <message>
         <source>The feature must be very clearly distinguishable from its surroundings.
@@ -3167,7 +3205,10 @@ The standard vertical interval between contours is 2 or 2.5 m. To emphasize the 
 Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 However, contour lines shall be cut out for better legibility, if they touch the following symbols: Small earth wall (105), Small knoll (109), Small elongated knoll (110), Small depression (111), Pit or hole (112), Prominent landform feature (115), Stairway (532). The relative height difference between neighbouring features must be represented on the map as accurately as possible. Absolute height accuracy is of less importance. It is permissible to alter the height of a contour slightly if this will improve the representation of a feature. This deviation should not exceed 25% of the contour interval and attention must be paid to neighbouring features. The smallest bend in a contour is 0.4 mm from centre to centre of the line.</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşit yükseklikteki noktaları birleştiren doğru.
+Eş yükselti eğrileri arasındaki standart dikey aralık 2 veya 2,5 m&apos;dir. Eş yükselti çizgisi görüntüsünün 3 boyutlu etkisini vurgulamak için, eş yükselti çizgileri, Bina (521) ve Sundurma (522) de dahil olmak üzere tüm semboller boyunca sürekli çizgiler olarak temsil edilecektir.
+Eğimin yönünü netleştirmek için bir eş yükselti çizgisinin alt tarafına eğim çizgileri çizilebilir. Kullanıldıklarında, alçalmanın başladığı noktaya yerleştirilmelidirler.
+Bununla birlikte, kontur çizgileri, aşağıdaki sembollere dokunmaları halinde daha iyi okunabilirlik için kesilmelidir: Küçük toprak duvar (105), Küçük tepe (109), Küçük uzun tepe (110), Küçük çöküntü (111), Çukur veya delik (112), Belirgin yer şekli özelliği (115), Merdiven (532). Komşu özellikler arasındaki göreceli yükseklik farkı, haritada mümkün olduğunca doğru bir şekilde gösterilmelidir. Noktanın kesin yükseklik doğruluğu daha az önemlidir. Bir özelliğin gösterimini açıklayıcı ve anlamlı kılacaksa bir eş yükselti eğrisinin yüksekliği biraz değiştirilebilir. Bu değişiklik eş yükselti aralığının %25&apos;ini geçmemeli ve komşu özelliklere dikkat edilmelidir. Bir eş yükselti eğrisindeki en küçük bükülme, çizginin merkezinden merkezine 0,4 mm&apos;dir.</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -3187,7 +3228,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with symbol Contour (101).</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Her beşinci eş yükselti eğrisi daha kalın bir çizgi ile çizilecektir. Bu, yükseklik farkının ve arazi yüzeyinin genel şeklinin hızlı bir şekilde değerlendirilmesine yardımcı olur. Bir kalın eş yükselti eğrisi çok daha ayrıntılı bir alanla çakışması halinde eş yükselti çizgisi (101) sembolü ile gösterilebilir.</translation>
     </message>
     <message>
         <source>Slope line, index contour</source>
@@ -3207,7 +3248,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Contour values may be included to aid assessment of large height differences. The labels shall be orientated so that the top of the label is on the higher side of the contour. They are inserted in the index contours in positions where other detail is not obscured.</source>
         <comment>Description of symbol 102.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yükseklik değerleri, büyük yükseklik farklarının değerlendirilmesine yardımcı olmak için kalın eş yükselti çizgileri üzerine yazılabilir. Rakamlar, üst tarafı eş yükselti çizgisinin üst tarafında (yüksek olan tarafında) olacak şekilde yerleştirilmelidir. Yükseklik değerleri, başka detayların bulunmadığı yerlere yazılırlar.</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -3217,7 +3258,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
         <comment>Description of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir ara eş yükselti çizgisidir. Arazinin şekli hakkında daha fazla bilgi vermek için yardımcı eş yükselti eğrisi çizgileri kullanılır. Sadece eş yükselti çizgileriyle göstermenin mümkün olmadığı yerlerde kullanılırlar. Komşu iki eş yükselti eğrisi arasında sadece bir yardımcı eş yükselti eğrisi çizgisi kullanılabilir.</translation>
     </message>
     <message>
         <source>Slope line, form line</source>
@@ -3238,7 +3279,8 @@ However, contour lines shall be cut out for better legibility, if they touch the
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments.
 The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks shall be drawn with the symbol Impassable cliff (201). The line width of very high earth banks may be 0.37 mm.</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çevresindeki diğer nesnelerden kolayca ayırt edilebilen, yer seviyesindeki ani bir değişikliktir; çakıl veya kum ocakları, yollar ve demiryolu kesimleri veya dolguları.
+Eğim çizgileri, eğimin tamamını göstermelidir ancak iki toprak yar birbirine yakınsa ihmal edilebilir. Geçilemez toprak yarlar, Geçilmez yar/uçurum (201) sembolü ile çizilecektir. Çok yüksek toprak yarların çizgi genişliği 0,37 mm olabilir.</translation>
     </message>
     <message>
         <source>Earth bank, very high</source>
