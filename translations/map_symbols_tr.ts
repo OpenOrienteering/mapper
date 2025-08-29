@@ -3588,7 +3588,10 @@ Larger earth walls should be represented with the symbols Contour (101), Form li
 Minimum height: 0.5 m.
 Minimum length: 1.4 mm (footprint 5,6 m).</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Genellikle insan yapımı alçak bir toprak duvar/set.
+Daha büyük toprak duvarlar eşyükselti çizgisi(101), yardımcı eşyükselti çizgisi (103) veya Toprak yar (104) sembolleri ile gösterilmelidir.
+Minimum yükseklik: 0.5 m.
+Minimum uzunluk: 1,4 mm (kapladığı alan 5,6 m).</translation>
     </message>
     <message>
         <source>Erosion gully or trench</source>
@@ -3615,7 +3618,10 @@ Contour lines should be broken around this symbol.
 Minimum depth: 0.5 m.
 Minimum length (isolated): three dots (1.6 mm - footprint 6.4 m).</source>
         <comment>Description of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük bir su akıntı yarığı veya hendeği.
+Bu sembolün etrafındaki eş yükselti çizgileri kesilmelidir.
+Minimum derinlik: 0,5 m.
+Minimum uzunluk (izole): iki nokta (1,6 mm - kapladığı alan 6,4 m).</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -3627,7 +3633,9 @@ Minimum length (isolated): three dots (1.6 mm - footprint 6.4 m).</source>
 Minimum height: 0.5 m.
 Footprint: 3 m in diameter.</source>
         <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükselti çizgisi (101), Ana eş yükselti çizgisi (102) veya yardımcı eş yükselti çizgisi (103) ile ölçeklendirilemeyen küçük, belirgin bir höyük veya kayalık tepecik. Sembol eş yükselti çizgilerine temas etmemeli veya üst üste gelmemelidir.
+Minimum yükseklik: 0.5 m.
+Kapladığı alan: 3 m çapında.</translation>
     </message>
     <message>
         <source>Small elongated knoll</source>
@@ -3654,7 +3662,10 @@ Minimum depth: 0.5 m.
 Minimum width: 1 m.
 Footprint: 4.8 m x 2.4 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eş yükselti çizgisi (101) veya yardımcı eş yükselti çizgisi (103) ile temsil edilemeyen küçük bir sığ, doğal, çöküntü veya oyuk, içi boş bir yarım daire ile temsil edilir. Sembol diğer kahverengi sembollerle temas etmemeli veya üst üste gelmemelidir. Sembol kuzeye yönlendirilir.
+Minimum derinlik: 0,5 m.
+Minimum genişlik: 1 m.
+Kapladığı alan: 4,8 m x 2,4 m.</translation>
     </message>
     <message>
         <source>Pit or hole</source>
@@ -3667,7 +3678,10 @@ Minimum depth: 0.5 m.
 Minimum width: 1 m.
 Footprint: 4.4 m x 5.0 m.</source>
         <comment>Description of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toprak set (104) simgesiyle ölçeklendirilemeyen farklı dik kenarları olan bir çukur veya delik. Sembol kuzeye yönlendirilir.
+Minimum derinlik: 0,5 m.
+Minimum genişlik: 1 m.
+Kapladığı alan: 4,4 m x 5,0 m.</translation>
     </message>
     <message>
         <source>Broken ground</source>
@@ -3679,7 +3693,9 @@ Footprint: 4.4 m x 5.0 m.</source>
 The density of randomly placed dots may vary according to the detail on the ground. The dots shall not interfere with the representation of important terrain features or objects. Contours shall not be cut in broken ground areas. Dots shall not be arranged to form a single point wide line.
 The minimum number of dots is three.</source>
         <comment>Description of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ayrıntılı olarak gösterilemeyecek kadar karmaşık çukur veya tepeciklerle kaplı alan.
+Rastgele yerleştirilen noktaların yoğunluğu arazideki detaylara göre değişebilir. Noktalar, önemli arazi özelliklerinin veya nesnelerinin gösterilmesini engellememelidir. Bozuk zeminlerde eş yükselti çizgileri kesilmeyecektir. Noktalar tek nokta genişliğinde bir çizgi oluşturacak şekilde düzenlenemez.
+En az üç nokta kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Broken ground, single dot</source>
@@ -3691,7 +3707,9 @@ The minimum number of dots is three.</source>
 The density of randomly placed dots may vary according to the detail on the ground. The dots shall not interfere with the representation of important terrain features or objects. Contours shall not be cut in broken ground areas. Dots shall not be arranged to form a single point wide line.
 The minimum number of dots is three.</source>
         <comment>Description of symbol 113.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ayrıntılı olarak gösterilemeyecek kadar karmaşık çukur veya tepeciklerle kaplı alan.
+Rastgele yerleştirilen noktaların yoğunluğu arazideki detaylara göre değişebilir. Noktalar, önemli arazi özelliklerinin veya nesnelerinin gösterilmesini engellememelidir. Bozuk zeminlerde eş yükselti çizgileri kesilmeyecektir. Noktalar tek nokta genişliğinde bir çizgi oluşturacak şekilde düzenlenemez.
+En az üç nokta kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Broken ground, dense</source>
@@ -3703,7 +3721,9 @@ The minimum number of dots is three.</source>
 The density of randomly placed dots may vary according to the detail on the ground. The dots shall not interfere with the representation of important terrain features or objects. Contours shall not be cut in broken ground areas. Dots shall not be arranged to form a single point wide line.
 The minimum number of dots is three.</source>
         <comment>Description of symbol 113.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ayrıntılı olarak gösterilemeyecek kadar karmaşık çukur veya tepeciklerle kaplı alan.
+Rastgele yerleştirilen noktaların yoğunluğu arazideki detaylara göre değişebilir. Noktalar, önemli arazi özelliklerinin veya nesnelerinin gösterilmesini engellememelidir. Bozuk zeminlerde eş yükselti çizgileri kesilmeyecektir. Noktalar tek nokta genişliğinde bir çizgi oluşturacak şekilde düzenlenemez.
+En az üç nokta kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Broken ground, single dot, enlarged</source>
@@ -3715,7 +3735,9 @@ The minimum number of dots is three.</source>
 The density of randomly placed dots may vary according to the detail on the ground. The dots shall not interfere with the representation of important terrain features or objects. Contours shall not be cut in broken ground areas. Dots shall not be arranged to form a single point wide line.
 The minimum number of dots is three.</source>
         <comment>Description of symbol 113.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ayrıntılı olarak gösterilemeyecek kadar karmaşık çukur veya tepeciklerle kaplı alan.
+Rastgele yerleştirilen noktaların yoğunluğu arazideki detaylara göre değişebilir. Noktalar, önemli arazi özelliklerinin veya nesnelerinin gösterilmesini engellememelidir. Bozuk zeminlerde eş yükselti çizgileri kesilmeyecektir. Noktalar tek nokta genişliğinde bir çizgi oluşturacak şekilde düzenlenemez.
+En az üç nokta kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Prominent landform feature</source>
@@ -3728,7 +3750,10 @@ The symbol shall not touch or overlap contour lines or other brown symbols.
 The definition of the symbol must be given on the map.
 Footprint: 5.4 m x 4.6 m.</source>
         <comment>Description of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>Önemli ya da belirgin olan küçük bir yeryüzü özelliği. 
+Sembol, eş yükselti çizgilerine veya diğer kahverengi sembollere temas etmemeli veya üst üste gelmemelidir.
+Sembolün tanımı haritada verilmelidir.
+Kapladığı alan: 5,4 m x 4,6 m.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -3757,7 +3782,10 @@ Tags are drawn downwards, showing its full extent from the top line to the foot.
 Minimum height: 1.5 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez bir uçurum, taş ocağı veya toprak set (bkz. toprak set 104 sembolü).
+Eğim çizgileri (saçaklar) en üst çizgiden ayağa/tabana kadar araziye uygun şekilde çizilir. Dikey kaya yüzeyleri için dar alanlarda saçaklar atlanabilir, örn. uçurumlar arasındaki dar geçitler (geçit en az 0.4 mm genişlikte çizilmelidir). Saçaklar kaya yüzünün hemen altındaki nesneyi temsil eden bir alan sembolü üzerine uzanabilir. Bir kayanın dik yüzü doğrudan suya uzandığında, su kenarı boyunca altından geçmeyi imkansız hale getirdiğinde, suyun etrafındaki kenar çizgisi kesilir ya da saçaklar su kenar çizgisi üzerinden uzatılır. Geçilemez bir uçurum, eş yükselti çizgileri ile etkileşim halinde olmalıdır. Geçilemez bir uçurum geçilmemelidir.
+Minimum yükseklik: 1,5 m.
+Minimum uzunluk: 0,9 mm (kapladığı alan 3,6 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
@@ -3770,7 +3798,10 @@ Tags are drawn downwards, showing its full extent from the top line to the foot.
 Minimum height: 1.5 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 201.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez bir uçurum, taş ocağı veya toprak set (bkz. toprak set 104 sembolü).
+Eğim çizgileri (saçaklar) en üst çizgiden ayağa/tabana kadar araziye uygun şekilde çizilir. Dikey kaya yüzeyleri için dar alanlarda saçaklar atlanabilir, örn. uçurumlar arasındaki dar geçitler (geçit en az 0.4 mm genişlikte çizilmelidir). Saçaklar kaya yüzünün hemen altındaki nesneyi temsil eden bir alan sembolü üzerine uzanabilir. Bir kayanın dik yüzü doğrudan suya uzandığında, su kenarı boyunca altından geçmeyi imkansız hale getirdiğinde, suyun etrafındaki kenar çizgisi kesilir ya da saçaklar su kenar çizgisi üzerinden uzatılır. Geçilemez bir uçurum, eş yükselti çizgileri ile etkileşim halinde olmalıdır. Geçilemez bir uçurum geçilmemelidir.
+Minimum yükseklik: 1,5 m.
+Minimum uzunluk: 0,9 mm (kapladığı alan 3,6 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
@@ -3780,7 +3811,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Tags are drawn downwards, showing a cliff&apos;s full extent from the top line to the foot. The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line.</source>
         <comment>Description of symbol 201.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir uçurumun tam boyutunu (üst çizgiden tabana kadar) göstermek için saçaklar aşağı doğru çizilir. Saçaklar, kaya yüzeyinin hemen altındaki detayı temsil eden bir alan sembolünün (örneğin bitki örtüsü, su, yol) üzerine uzanabilir. Bir kaya yüzeyi doğrudan suya indiğinde ve su kenarı boyunca uçurumun altından geçişi imkansız kıldığında: Su kenar çizgisi çizilmez (ihmal edilir) veya saçaklar, su kenar çizgisi üzerinden belirgin şekilde uzatılarak geçilemezlik vurgulanır. Bu çizim kuralı, yarışmacıların su kenarından geçiş yapamayacağını görsel olarak belirtmek için kritik öneme sahiptir.</translation>
     </message>
     <message>
         <source>Impassable cliff, no tags, minimum size (from ISSOM)</source>
@@ -3791,7 +3822,8 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
 For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.4 mm).</source>
         <comment>Description of symbol 201.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez bir uçurum, taş ocağı veya toprak set (bkz. toprak set 104 sembolü).
+Dikey kaya yüzeyleri için dar alanlarda (örneğin uçurumlar arasındaki dar geçitler) saçaklar atlanabilir. Geçit en az 0.4 mm genişlikte çizilmelidir.</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size (from ISSOM)</source>
@@ -3820,7 +3852,10 @@ A small vertical rock face may be shown without tags if the direction of fall of
 Minimum height: 0.6 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir bir uçurum veya taş ocağı.
+Küçük dikey bir kaya yüzü, eğim yönü eşyükselti çizgilerinden anlaşılabiliyorsa saçaksız gösterilebilir. Saçaksız olarak gösterilen geçilebilir kaya yüzlerinde okunabilirliği artırmak için çizginin sonu yuvarlatılmalıdır.
+Minimum yükseklik: 0.6 m.
+Minimum uzunluk: 0.9 mm (kapladığı alan 3.6 m).</translation>
     </message>
     <message>
         <source>Passable rock face</source>
@@ -3833,7 +3868,10 @@ A small vertical rock face may be shown without tags. If the direction of fall o
 Minimum height: 0.6 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir bir uçurum veya taş ocağı.
+Küçük dikey bir kaya yüzü saçaksız gösterilebilir. Kaya yüzeyinin eğim/iniş yönü eş yükselti çizgilerinden anlaşılamıyorsa veya okunabilirliği artırmak için, iniş/eğim yönünde kısa saçaklar çizilmelidir. Dikey olmayan uçurumlar için, saçaklar yatay uzanımı gösterecek şekilde çizilmelidir. Saçaksız olarak gösterilen geçilebilir kaya yüzlerinde okunabilirliği artırmak için çizginin sonu yuvarlatılmalıdır.
+Minimum yükseklik: 0.6 m.
+Minimum uzunluk: 0.9 mm (kapladığı alan 3.6 m).</translation>
     </message>
     <message>
         <source>Passable rock face, minimum size</source>
@@ -3846,7 +3884,10 @@ A small vertical rock face may be shown without tags. If the direction of fall o
 Minimum height: 0.6 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir bir uçurum veya taş ocağı.
+Küçük dikey bir kaya yüzü saçaksız gösterilebilir. Kaya yüzeyinin eğim/iniş yönü eş yükselti çizgilerinden anlaşılamıyorsa veya okunabilirliği artırmak için, iniş/eğim yönünde kısa saçaklar çizilmelidir. Dikey olmayan uçurumlar için, saçaklar yatay uzanımı gösterecek şekilde çizilmelidir. Saçaksız olarak gösterilen geçilebilir kaya yüzlerinde okunabilirliği artırmak için çizginin sonu yuvarlatılmalıdır.
+Minimum yükseklik: 0.6 m.
+Minimum uzunluk: 0.9 mm (kapladığı alan 3.6 m).</translation>
     </message>
     <message>
         <source>Passable rock face, top line (flat ends)</source>
@@ -3859,7 +3900,10 @@ Short tags must be drawn in the direction of the fall. For non-vertical cliffs, 
 Minimum height: 0.6 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir bir uçurum veya taş ocağı.
+İniş/eğim yönünde kısa saçaklar çizilmelidir. Dikey olmayan uçurumlar için, saçaklar yatay uzanımı gösterecek şekilde çizilmelidir.
+Minimum yükseklik: 0.6 m.
+Minimum uzunluk: 0.9 mm (kapladığı alan 3.6 m).</translation>
     </message>
     <message>
         <source>Passable rock face, tag line</source>
@@ -3869,7 +3913,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>If the direction of fall of the rock face is not apparent from the contours, or to improve legibility, short tags should be drawn in the direction of the fall. For non-vertical cliffs, the tags should be drawn to show the full horizontal extent.</source>
         <comment>Description of symbol 202.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaya yüzeyinin eğim/iniş yönü eşyükselti çizgilerinden anlaşılamıyorsa veya okunabilirliği artırmak için, iniş/eğim yönünde kısa saçaklar çizilmelidir. Dikey olmayan uçurumlar için, saçaklar yatay uzanımı gösterecek şekilde çizilmelidir.</translation>
     </message>
     <message>
         <source>Passable rock face, small (rounded ends, no tags; minimum size, from ISSOM)</source>
@@ -3908,7 +3952,10 @@ Location is the centre of gravity of the symbol.
 Minimum depth: 0.5 m.
 Footprint: 4.4 m x 5.0 m.</source>
         <comment>Description of symbol 203</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin bir girişi olmayan ve yarışmacı için tehlike oluşturabilecek kayalık bir çukur, delik, mağara veya maden ocağı.
+Yeri, sembolün ağırlık merkezidir.
+Minimum derinlik: 0,5 m.
+Kapladığı alan: 4,4 m x 5,0 m.</translation>
     </message>
     <message>
         <source>Cave (with a distinct entrance)</source>
@@ -3921,7 +3968,10 @@ Location is the centre of gravity of the symbol, and the symbol should point int
 Minimum depth: 0.5 m.
 Footprint: 4.4 m x 5.0 m.</source>
         <comment>Description of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin bir girişe sahip ve yarışmacı için tehlike oluşturabilecek bir mağara.
+Yeri, sembolün ağırlık merkezidir ve sembol mağaranın içine doğru yönlendirilmelidir.
+Minimum derinlik: 0,5 m.
+Kapladığı alan: 4,4 m x 5,0 m.</translation>
     </message>
     <message>
         <source>Cave (with a distinct entrance) (from ISSOM)</source>
@@ -3934,7 +3984,10 @@ Location is the centre of gravity of the symbol, and the symbol should point int
 Minimum depth: 0.5 m.
 Footprint: 4.4 m x 5.0 m.</source>
         <comment>Description of symbol 203.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin bir girişe sahip ve yarışmacı için tehlike oluşturabilecek bir mağara.
+Yeri, sembolün ağırlık merkezidir ve sembol mağaranın içine doğru yönlendirilmelidir.
+Minimum derinlik: 0,5 m.
+Kapladığı alan: 4,4 m x 5,0 m.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -3946,7 +3999,9 @@ Footprint: 4.4 m x 5.0 m.</source>
 Every boulder marked on the map shall be immediately identifiable on the ground.
 Footprint: 2.4 m in diameter.</source>
         <comment>Description of symbol 204</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük, belirgin bir kaya.
+Haritada işaretlenen her kaya parçası arazide hemen seçilebilir olmalıdır.
+Kapladığı alan: 2,4 m çapında.</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -3957,7 +4012,8 @@ Footprint: 2.4 m in diameter.</source>
         <source>A particularly large and distinct boulder.
 Footprint: 3.6 m in diameter.</source>
         <comment>Description of symbol 205</comment>
-        <translation type="unfinished"></translation>
+        <translation>Özellikle büyük ve belirgin bir kaya.
+Kapladığı alan: 3,6 m çapında.</translation>
     </message>
     <message>
         <source>Gigantic boulder or rock pillar</source>
@@ -3970,7 +4026,10 @@ The gap between gigantic boulders or between gigantic boulders and other impassa
 Minimum width: 0.3 mm.
 Minimum area: 0.75 mm2 (footprint 12 m²)</source>
         <comment>Description of symbol 206</comment>
-        <translation type="unfinished"></translation>
+        <translation>Devasa bir kaya, kaya sütunu veya geniş uçurumlar arazideki şekline göre çizilecektir.
+Nesneler değişik şekil ve genişlikte olabilir. Devasa kayalar arasındaki veya devasa kayalar ile diğer geçilmez özellik sembolleri arasındaki boşluk haritada 0,15 mm&apos;den az olmamalıdır.
+Minimum genişlik: 0,3 mm.
+Minimum alan: 0,75 mm² (kapladığı alan 12 m²)</translation>
     </message>
     <message>
         <source>Boulder cluster</source>
@@ -3982,7 +4041,9 @@ Minimum area: 0.75 mm2 (footprint 12 m²)</source>
 The boulders in the cluster should be higher than 0.5 m. A boulder cluster must be easily identifiable as a group of boulders. To be able to show the distinction between neighbouring (maximum 8 m apart) boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 1.44 mm) for some of the boulder clusters.
 Footprint: 4.8 m x 4.0 m</source>
         <comment>Description of symbol 207</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ayrı ayrı işaretlenemeyecek kadar birbirine yakın kümelenmiş belirgin kaya grubu.
+Kümedeki kayalar 0,5 m’den yüksek olmalıdır. Bir kaya kümesi bir kayalar grubu olarak kolayca tanımlanabilir olmalıdır. Komşu (en fazla 8 m aralıklı) kaya kümeleri arasında kaya boyutunda belirgin bir fark bulunanları gösterebilmek için, bazı kaya kümeleri için bu sembol %20 (kenar uzunluğu 1,44 mm) oranında büyütülebilir.
+Kapladığı alan: 4,8 m x 4,0 m</translation>
     </message>
     <message>
         <source>Boulder cluster, large</source>
@@ -3994,7 +4055,9 @@ Footprint: 4.8 m x 4.0 m</source>
 The boulders in the cluster should be higher than 0.5 m. A boulder cluster must be easily identifiable as a group of boulders. To be able to show the distinction between neighbouring (maximum 8 m apart) boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 1.44 mm) for some of the boulder clusters.
 Footprint: 4.8 m x 4.0 m</source>
         <comment>Description of symbol 207.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ayrı ayrı işaretlenemeyecek kadar birbirine yakın kümelenmiş belirgin kaya grubu.
+Kümedeki kayalar 0.5 m’den yüksek olmalıdır. Bir kaya kümesi bir kayalar grubu olarak kolayca tanımlanabilir olmalıdır. Komşu (en fazla 8 m aralıklı) kaya kümeleri arasında kaya boyutunda belirgin bir fark bulunanları gösterebilmek için, bazı kaya kümeleri için bu sembol %20 (kenar uzunluğu 1.44 mm) oranında büyütülebilir.
+Kapladığı alan: 4.8 m x 4.0 m</translation>
     </message>
     <message>
         <source>Boulder field</source>
@@ -4006,7 +4069,9 @@ Footprint: 4.8 m x 4.0 m</source>
 A minimum of two triangles shall be used.
 To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
         <comment>Description of symbol 208</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ayrı ayrı işaretlenemeyecek kadar çok dağınık büyük taş/kayayla kaplı bir alan, rastgele yerleştirilmiş ve yönlendirilmiş içi dolu üçgenlerle temsil edilir. Azalan koşulabilirlik, üçgenlerin yoğunluğu ile gösterilir.
+En az iki üçgen kullanılmalıdır.
+Bir kayalık alanda belirgin yükseklik farklarını gösterebilmek için, bazı üçgenler %120&apos;ye kadar büyütülebilir.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle</source>
@@ -4030,7 +4095,9 @@ To be able to show obvious height differences within a boulder field, it is perm
 A minimum of two triangles shall be used.
 To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
         <comment>Description of symbol 208.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ayrı ayrı işaretlenemeyecek kadar çok dağınık büyük taş/kayayla kaplı bir alan, rastgele yerleştirilmiş ve yönlendirilmiş içi dolu üçgenlerle temsil edilir. Azalan koşulabilirlik, üçgenlerin yoğunluğu ile gösterilir.
+En az iki üçgen kullanılmalıdır.
+Bir kayalık alanda belirgin yükseklik farklarını gösterebilmek için, bazı üçgenler %120&apos;ye kadar büyütülebilir.</translation>
     </message>
     <message>
         <source>Dense boulder field</source>
@@ -4042,7 +4109,9 @@ To be able to show obvious height differences within a boulder field, it is perm
 A minimum of two triangles shall be used.
 To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
         <comment>Description of symbol 208.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ayrı ayrı işaretlenemeyecek kadar çok dağınık büyük taş/kayayla kaplı bir alan, rastgele yerleştirilmiş ve yönlendirilmiş içi dolu üçgenlerle temsil edilir. Azalan koşulabilirlik, üçgenlerin yoğunluğu ile gösterilir.
+En az iki üçgen kullanılmalıdır.
+Bir kayalık alanda belirgin yükseklik farklarını gösterebilmek için, bazı üçgenler %120&apos;ye kadar büyütülebilir.</translation>
     </message>
     <message>
         <source>Stony ground</source>
@@ -4054,7 +4123,9 @@ To be able to show obvious height differences within a boulder field, it is perm
 The dots shall be randomly distributed with density according to the amount of rock but not interfere with the representation of important terrain features or objects. A minimum of three dots shall be used. To avoid confusion with symbol Distinct vegetation boundary (416), the dots shall not be arranged to form a line.
 Density: Minimum 3 dots.</source>
         <comment>Description of symbol 210</comment>
-        <translation type="unfinished"></translation>
+        <translation>Koşulabilirliği azaltan taşlık veya kayalık zeminli alan.
+Noktalar, taş/kaya miktarına uygun yoğunlukta rastgele dağıtılmalı ancak önemli arazi özelliklerinin veya nesnelerinin okunabilirliğini etkilememelidir. En az üç nokta kullanılacaktır. Belirgin bitki örtüsü sınırı (416) sembolü ile karışmasını önlemek için, noktalar bir çizgi oluşturacak şekilde düzenlenmemelidir.
+Yoğunluk: En az 3 nokta.</translation>
     </message>
     <message>
         <source>Stony ground, single dot</source>
@@ -4066,7 +4137,9 @@ Density: Minimum 3 dots.</source>
 The dots shall be randomly distributed with density according to the amount of rock but not interfere with the representation of important terrain features or objects. A minimum of three dots shall be used. To avoid confusion with symbol Distinct vegetation boundary (416), the dots shall not be arranged to form a line.
 Density: Minimum 3 dots.</source>
         <comment>Description of symbol 210.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Koşulabilirliği azaltan taşlık veya kayalık zeminli alan.
+Noktalar, taş/kaya miktarına uygun yoğunlukta rastgele dağıtılmalı ancak önemli arazi özelliklerinin veya nesnelerinin okunabilirliğini etkilememelidir. En az üç nokta kullanılacaktır. Belirgin bitki örtüsü sınırı (416) sembolü ile karışmasını önlemek için, noktalar bir çizgi oluşturacak şekilde düzenlenmemelidir.
+Yoğunluk: En az 3 nokta.</translation>
     </message>
     <message>
         <source>Stony ground, enlarged</source>
@@ -4078,7 +4151,9 @@ Density: Minimum 3 dots.</source>
 The dots shall be randomly distributed with density according to the amount of rock but not interfere with the representation of important terrain features or objects. A minimum of three dots shall be used. To avoid confusion with symbol Distinct vegetation boundary (416), the dots shall not be arranged to form a line.
 Density: Minimum 3 dots.</source>
         <comment>Description of symbol 210.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Koşulabilirliği azaltan taşlık veya kayalık zeminli alan.
+Noktalar, taş/kaya miktarına uygun yoğunlukta rastgele dağıtılmalı ancak önemli arazi özelliklerinin veya nesnelerinin okunabilirliğini etkilememelidir. En az üç nokta kullanılacaktır. Belirgin bitki örtüsü sınırı (416) sembolü ile karışmasını önlemek için, noktalar bir çizgi oluşturacak şekilde düzenlenmemelidir.
+Yoğunluk: En az 3 nokta.</translation>
     </message>
     <message>
         <source>Stony ground, single dot, enlarged</source>
@@ -4090,7 +4165,9 @@ Density: Minimum 3 dots.</source>
 The dots shall be randomly distributed with density according to the amount of rock but not interfere with the representation of important terrain features or objects. A minimum of three dots shall be used. To avoid confusion with symbol Distinct vegetation boundary (416), the dots shall not be arranged to form a line.
 Density: Minimum 3 dots.</source>
         <comment>Description of symbol 210.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Koşulabilirliği azaltan taşlık veya kayalık zeminli alan.
+Noktalar, taş/kaya miktarına uygun yoğunlukta rastgele dağıtılmalı ancak önemli arazi özelliklerinin veya nesnelerinin okunabilirliğini etkilememelidir. En az üç nokta kullanılacaktır. Belirgin bitki örtüsü sınırı (416) sembolü ile karışmasını önlemek için, noktalar bir çizgi oluşturacak şekilde düzenlenmemelidir.
+Yoğunluk: En az 3 nokta.</translation>
     </message>
     <message>
         <source>Open sandy ground</source>
@@ -4104,7 +4181,11 @@ Black dots shall not interfere with black objects.
 Minimum width: 0.3 mm
 Minimum area: 1 mm² (footprint 16 m²).</source>
         <comment>Description of symbol 213</comment>
-        <translation type="unfinished"></translation>
+        <translation>Koşulabilirliği azaltan, bitki örtüsü olmayan kumlu zemin veya yumuşak çakıllı alan.
+Kumlu bir alan açık ve iyi koşulabilirliğe sahipse, Açık alan (401), Dağınık ağaçlı açık alan (402) veya Kaplamalı alan (501) sembolleri ile gösterilir.
+Siyah noktalar, siyah nesnelerle karışmamalıdır.
+Minimum genişlik: 0,3 mm.
+Minimum alan: 1 mm² (kapladığı alan 16 m²).</translation>
     </message>
     <message>
         <source>Bare rock</source>
@@ -4117,7 +4198,10 @@ An area of rock covered with grass, moss or other low vegetation shall be repres
 Minimum width: 0.25 mm
 Minimum area: 1 mm² (footprint 16 m²).</source>
         <comment>Description of symbol 214</comment>
-        <translation type="unfinished"></translation>
+        <translation>oprak veya bitki örtüsü olmayan koşulabilir bir kayalık alan.
+Ot, yosun veya diğer kısa bitki örtüsü ile kaplı bir kaya alanı, açıklığına ve koşulabilirliğine göre gösterilir (401/402/403/404).
+Minimum genişlik: 0,25 mm.
+Minimum alan: 1 mm² (kapladığı alan 16 m²).</translation>
     </message>
     <message>
         <source>Uncrossable body of water (full colour)</source>
@@ -4130,7 +4214,10 @@ Dominant areas of water may be shown with 70% colour.
 Minimum width: 0.3 mm
 Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
         <comment>Description of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>Göl, gölet, nehir veya çeşme gibi derin su alanları. Koyu mavi renk ve çevreleyen siyah kıyı çizgisi, su kütlesinin geçilemeyeceğini gösterir.
+Hakim su alanları %70 renk ile gösterilebilir.
+Minimum genişlik (iç): 0,3 mm.
+Minimum alan (iç): 0,5 mm² (kapladığı alan 8 m²)</translation>
     </message>
     <message>
         <source>Uncrossable body of water (full colour), fill</source>
@@ -4143,7 +4230,10 @@ Dominant areas of water may be shown with 70% colour.
 Minimum width: 0.3 mm
 Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
         <comment>Description of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Göl, gölet, nehir veya çeşme gibi derin su alanları. Koyu mavi renk ve çevreleyen siyah kıyı çizgisi, su kütlesinin geçilemeyeceğini gösterir.
+Hakim su alanları %70 renk ile gösterilebilir.
+Minimum genişlik (iç): 0,3 mm.
+Minimum alan (iç): 0,5 mm² (kapladığı alan 8 m²)</translation>
     </message>
     <message>
         <source>Uncrossable body of water (dominant)</source>
@@ -4156,7 +4246,10 @@ Dominant areas of water may be shown with 70% colour.
 Minimum width: 0.3 mm
 Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
         <comment>Description of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Göl, gölet, nehir veya çeşme gibi derin su alanları. Koyu mavi renk ve çevreleyen siyah kıyı çizgisi, su kütlesinin geçilemeyeceğini gösterir.
+Hakim su alanları %70 renk ile gösterilebilir.
+Minimum genişlik (iç): 0,3 mm.
+Minimum alan (iç): 0,5 mm² (kapladığı alan 8 m²)</translation>
     </message>
     <message>
         <source>Uncrossable body of water (dominant), fill</source>
@@ -4169,7 +4262,10 @@ Dominant areas of water may be shown with 70% colour.
 Minimum width: 0.3 mm
 Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
         <comment>Description of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Göl, gölet, nehir veya çeşme gibi derin su alanları. Koyu mavi renk ve çevreleyen siyah kıyı çizgisi, su kütlesinin geçilemeyeceğini gösterir.
+Hakim su alanları %70 renk ile gösterilebilir.
+Minimum genişlik (iç): 0,3 mm.
+Minimum alan (iç): 0,5 mm² (kapladığı alan 8 m²)</translation>
     </message>
     <message>
         <source>Uncrossable body of water, bank line</source>
@@ -4192,7 +4288,10 @@ If the body of water is not runnable it shall be represented with the symbol Unc
 Minimum width: 0.3 mm
 Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
         <comment>Description of symbol 302</comment>
-        <translation type="unfinished"></translation>
+        <translation>Su birikintisi, nehir veya çeşme gibi geçilebilir sığ sulu bir alan. Su kütlesi en fazla 0,5 m derinlikte ve koşulabilir olmalıdır.
+Su kütlesinin geçmeye elverişli olmaması durumunda, geçilmez su kütlesi (301) sembolü ile gösterilmelidir. Geçilebilir su kütlesinin sınırına başka hiçbir çizgi sembolü değmiyorsa, kıyı çizgisi mavi bir çizgiyle gösterilir.
+Minimum genişlik: 0,3 mm.
+Minimum alan (İç): 0,5 mm² (kapladığı alan 8 m²)</translation>
     </message>
     <message>
         <source>Crossable body of water, fill</source>
@@ -4205,7 +4304,10 @@ If the body of water is not runnable it shall be represented with the symbol Unc
 Minimum width: 0.3 mm
 Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
         <comment>Description of symbol 302.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Su birikintisi, nehir veya çeşme gibi geçilebilir sığ sulu bir alan. Su kütlesi en fazla 0,5 m derinlikte ve koşulabilir olmalıdır.
+Su kütlesinin geçmeye elverişli olmaması durumunda, geçilmez su kütlesi (301) sembolü ile gösterilmelidir. Geçilebilir su kütlesinin sınırına başka hiçbir çizgi sembolü değmiyorsa, kıyı çizgisi mavi bir çizgiyle gösterilir.
+Minimum genişlik: 0,3 mm.
+Minimum alan (İç): 0,5 mm² (kapladığı alan 8 m²)</translation>
     </message>
     <message>
         <source>Crossable body of water, border line</source>
