@@ -51,17 +51,17 @@
     <message>
         <source>Black 65%</source>
         <comment>Color 9</comment>
-        <translation>Siyah %65</translation>
+        <translation>%65 Siyah</translation>
     </message>
     <message>
         <source>Black 20%</source>
         <comment>Color 10</comment>
-        <translation>Siyah %20</translation>
+        <translation>%20 Siyah</translation>
     </message>
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 11</comment>
-        <translation>Üst kahverengi %50</translation>
+        <translation>%50 Üst kahverengi</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
@@ -76,12 +76,12 @@
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation>Alt kahverengi %50&apos;nin altında siyah</translation>
+        <translation>Alt kahverenginin altında siyah %50</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 15</comment>
-        <translation>Alan özellikleri için %100 Mavi</translation>
+        <translation>Alan özellikleri için %100 mavi</translation>
     </message>
     <message>
         <source>Blue 70%</source>
@@ -91,12 +91,12 @@
     <message>
         <source>Blue 50%</source>
         <comment>Color 17</comment>
-        <translation>Mavi %50</translation>
+        <translation>%50 Mavi</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 18</comment>
-        <translation>Açık orienteering Turuncu</translation>
+        <translation>OpenOrienteering Turuncu</translation>
     </message>
     <message>
         <source>Yellow 100% for narrow ride</source>
@@ -126,7 +126,7 @@
     <message>
         <source>Black 25% (Grey)</source>
         <comment>Color 24</comment>
-        <translation>Siyah %25 (Gri)</translation>
+        <translation>%25 Siyah (Gri)</translation>
     </message>
     <message>
         <source>Green 100%/Black 50%</source>
@@ -156,12 +156,12 @@
     <message>
         <source>White over yellow</source>
         <comment>Color 30</comment>
-        <translation>Sarı üstü Beyaz</translation>
+        <translation>Sarı üstü beyaz</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 31</comment>
-        <translation>Açık alan için Siyah</translation>
+        <translation>Açık alan için siyah</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -176,12 +176,12 @@
     <message>
         <source>Yellow 50%</source>
         <comment>Color 34</comment>
-        <translation>Sarı %50</translation>
+        <translation>%50 Sarı</translation>
     </message>
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation>Eşyükselti</translation>
+        <translation>Eşyükselti Eğrisi</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 m. A contour interval of 2.5 m may be used for flat terrains.
@@ -195,16 +195,16 @@ The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minim
 A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
 Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation>Eşit yükseklikteki noktaları birleştiren bir çizgi. Eşyükseltiler arasındaki standart düşey aralık 5m&apos;dir. Düz araziler için 2,5 m&apos;lik bir eşyükselti aralığı kullanılabilir.
-Eğim yönünü netleştirmek için eğim çizgileri, bir eşyükselti çizgisinin alt tarafına çizilebilir. Kullanıldığında, girintilerin (re-entrant) içine yerleştirilmelidir.
-Kapalı bir eşyükselti, bir tepeciği veya bir çukuru temsil eder. Bir çukurun en az bir eğim çizgisi olmalıdır. Minimum yükseklik/derinlik 1 m olmalıdır.
-Bitişik eşyükselti çizgileri arasındaki ilişkiler önemlidir. Bitişik eşyükselti çizgileri form ve yapıyı gösterir. Eşyükseltilerdeki küçük detaylar, arazinin ana özelliklerini gizleme eğiliminde oldukları için kaçınılmalıdır.
+        <translation>Eşit yükseklikteki noktaları birleştiren bir çizgi. Eşyükselti eğrileri arasındaki standart düşey aralık 5 m&apos;dir. Düz araziler için 2.5 m&apos;lik bir eşyükselti aralığı kullanılabilir.
+Eğim yönünü netleştirmek için eğim çizgileri, bir eşyükselti eğrisinin alt tarafına çizilebilir. Kullanıldığında, girintilerin (re-entrant) içine yerleştirilir.
+Kapalı bir eşyükselti eğrisi, bir tepeciği veya bir çukuru temsil eder. Bir çukurun en az bir eğim çizgisi olmalıdır. Minimum yükseklik/derinlik 1 m olmalıdır.
+Bitişik eşyükselti eğrileri arasındaki ilişkiler önemlidir. Bitişik eşyükselti eğrileri form ve yapıyı gösterir. Eşyükselti eğrilerindeki küçük detaylar, arazinin ana özelliklerini gizleme eğiliminde oldukları için kaçınılmalıdır.
 Çukurlar, girintiler, sırtlar, toprak setler ve taraçalar gibi belirgin özellikler abartılabilir.
-Mutlak yükseklik doğruluğunun önemi azdır, ancak komşu özellikler arasındaki bağıl yükseklik farkı haritada mümkün olduğunca doğru bir şekilde temsil edilmelidir. Bir özelliğin temsilini iyileştiriyorsa, bir eşyükseltinin yüksekliğini hafifçe değiştirmek caizdir. Bu sapma, eşyükselti aralığının %25&apos;ini geçmemeli ve komşu özelliklere dikkat edilmelidir.
-Bir eşyükselti çizgisindeki en küçük kıvrım, çizginin merkezinden merkezine 0,25 mm&apos;dir (kapladığı alan 4 m). Bir girinti veya sırtın ağzı, çizginin merkezinden merkezine 0,5 mm&apos;den daha geniş olmalıdır (kapladığı alan 8 m).
-Bir eşyükselti tümseğinin minimum uzunluğu 0,9 mm (kapladığı alan 13,5 m) ve minimum genişliği dış ölçümde 0,6 mm&apos;dir (kapladığı alan 9 m). Daha küçük belirgin tepeler, Küçük tepecik (109) veya Küçük uzun tepecik (110) sembolü kullanılarak temsil edilebilir veya minimum boyutu karşılaması için haritada abartılabilir.
-Bir çukurun bir eğim çizgisini barındırması gerekir, bu nedenle minimum uzunluk 1,1 mm (kapladığı alan 16,5 m) ve minimum genişlik dış ölçümde 0,7 mm&apos;dir (kapladığı alan 10,5 m). Daha küçük, belirgin çukurlar, Küçük çöküntü (111) sembolü kullanılarak temsil edilebilir veya minimum boyutu karşılaması için abartılabilir.
-Eşyükselti çizgileri, Küçük tepecik (109) veya Küçük uzun tepecik (110) sembollerine dokunmamak için uyarlanmalı (koparılmamalı)dır.</translation>
+Mutlak yükseklik doğruluğunun önemi azdır, ancak komşu özellikler arasındaki bağıl yükseklik farkı haritada mümkün olduğunca doğru bir şekilde temsil edilmelidir. Bir özelliğin temsilini iyileştiriyorsa, bir eşyükselti eğrisinin yüksekliğini hafifçe değiştirmek caizdir. Bu sapma, eşyükselti aralığının %25&apos;ini geçmemeli ve komşu özelliklere dikkat edilmelidir.
+Bir eşyükselti eğrisindeki en küçük kıvrım, çizginin merkezinden merkezine 0.25 mm&apos;dir (kapladığı alan 4 m). Bir girinti veya sırtın ağzı, çizginin merkezinden merkezine 0.5 mm&apos;den daha geniş olmalıdır (kapladığı alan 8 m).
+Bir eşyükselti tümseğinin minimum uzunluğu 0.9 mm (kapladığı alan 13.5 m) ve minimum genişliği dış ölçümde 0.6 mm&apos;dir (kapladığı alan 9 m). Daha küçük belirgin tepeler, Küçük Tepecik (109) veya Küçük Uzun Tepecik (110) sembolü kullanılarak temsil edilebilir veya minimum boyutu karşılaması için haritada abartılabilir.
+Bir çukurun bir eğim çizgisini barındırması gerekir, bu nedenle minimum uzunluk 1.1 mm (kapladığı alan 16.5 m) ve minimum genişlik dış ölçümde 0.7 mm&apos;dir (kapladığı alan 10.5 m). Daha küçük, belirgin çukurlar, Küçük Çöküntü (111) sembolü kullanılarak temsil edilebilir veya minimum boyutu karşılaması için abartılabilir.
+Eşyükselti eğrileri, Küçük Tepecik (109) veya Küçük Uzun Tepecik (110) sembollerine dokunmamak için uyarlanmalı (koparılmamalı)dır.</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -215,22 +215,22 @@ Eşyükselti çizgileri, Küçük tepecik (109) veya Küçük uzun tepecik (110)
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation>Eğim yönünü netleştirmek için eğim çizgileri, bir eşyükselti çizgisinin alt tarafına çizilebilir. Kullanıldığında, girintilerin (re-entrant) içine yerleştirilmelidir.
+        <translation>Eğim yönünü netleştirmek için eğim çizgileri, bir eşyükselti eğrisinin alt tarafına çizilebilir. Kullanıldığında, girintilerin (re-entrant) içine yerleştirilmelidir.
 Bir çukurun en az bir eğim çizgisi olmalıdır.</translation>
     </message>
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation>İndeks eşyükselti</translation>
+        <translation>İndeks eşyükselti eğrisi</translation>
     </message>
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface.
 An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
-        <translation>Her beşinci eşyükselti, daha kalın bir çizgi ile çizilmelidir. Bu, yükseklik farkının ve arazi yüzeyinin genel şeklinin hızlı bir şekilde değerlendirilmesine yardımcı olur.
-Çok detaylı bir alanda bir indeks eşyükselti, sıradan bir eşyükselti çizgisi olarak temsil edilebilir. Küçük eşyükselti tepeleri ve çukurları normalde indeks eşyükseltileri kullanılarak temsil edilmez.
-İndeks eşyükselti seviyesi, düz arazide dikkatlice seçilmelidir. İndeks eşyükseltisi için ideal seviye, en belirgin yamaçlardaki merkezi eşyükseltidir.</translation>
+        <translation>Her beşinci eşyükselti eğrisi, daha kalın bir çizgi ile çizilmelidir. Bu, yükseklik farkının ve arazi yüzeyinin genel şeklinin hızlı bir şekilde değerlendirilmesine yardımcı olur.
+Çok detaylı bir alanda bir indeks eşyükselti eğrisi, sıradan bir eşyükselti eğrisi olarak temsil edilebilir. Küçük eşyükselti tepeleri ve çukurları normalde indeks eşyükselti eğrileri kullanılarak temsil edilmez.
+İndeks eşyükselti eğrisi seviyesi, düz arazide dikkatlice seçilmelidir. İndeks eşyükselti eğrisi için ideal seviye, en belirgin yamaçlardaki merkezi eşyükselti eğrisidir.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -240,7 +240,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>An index contour may have a height value assigned. A height value should only be inserted in an index contour in places where other detail is not obscured. It shall be orientated so that the top of the label is on the higher side of the contour. The index value (label) shall be 1.5 mm high and represented in a sans-serif font.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation>Bir indeks eşyükseltisine bir yükseklik değeri atanabilir. Bir yükseklik değeri yalnızca, diğer detayların örtülmediği yerlerde bir indeks eşyükseltisine eklenmelidir. Etiketin üst kısmı, eşyükseltinin daha yüksek tarafında olacak şekilde yönlendirilmelidir. İndeks değeri (etiket) 1,5 mm yüksekliğinde ve sans-serif yazı tipinde temsil edilmelidir.</translation>
+        <translation>Bir indeks eşyükselti eğrisine bir yükseklik değeri atanabilir. Bir yükseklik değeri yalnızca, diğer detayların örtülmediği yerlerde bir indeks eşyükselti eğrisine eklenmelidir. Etiketin üst kısmı, eşyükselti eğrisinin daha yüksek tarafında olacak şekilde yönlendirilmelidir. İndeks değeri (etiket) 1.5 mm yüksekliğinde ve sans-serif yazı tipinde temsil edilmelidir.</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -252,9 +252,9 @@ The index contour level must be carefully selected in flat terrain. The ideal le
 Minimum length (non-closed): two dashes.
 Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</source>
         <comment>Description of symbol 103</comment>
-        <translation>Form çizgileri, zeminin şekli hakkında daha fazla bilgi verilmesi gereken yerlerde kullanılır. Form çizgileri yalnızca sıradan eşyükseltilerle temsilin eksik kalacağı yerlere eklenir. Ara eşyükseltiler olarak kullanılmamalıdırlar. Komşu eşyükseltiler arasında yalnızca bir form çizgisi kullanılmalıdır. Bir form çizgisinin eşyükselti sistemine mantıksal olarak uyması çok önemlidir, bu nedenle bir form çizgisinin başlangıcı ve bitişi komşu eşyükseltilere paralel olmalıdır. Form çizgisi kesikli çizgileri arasındaki boşluklar, form çizgisinin makul derecede düz bölümlerine yerleştirilmelidir. Form çizgileri, düz tepeleri ve çukurları daha belirgin olanlardan ayırt etmek için kullanılabilir (minimum yükseklik/derinlik 1 m olmalıdır). Form çizgilerinin aşırı kullanımı, zemin şeklinin üç boyutlu görüntüsünü bozacağı ve harita okumayı zorlaştıracağı için kaçınılmalıdır.
+        <translation>Form çizgileri, zeminin şekli hakkında daha fazla bilgi verilmesi gereken yerlerde kullanılır. Form çizgileri yalnızca sıradan eşyükselti eğrileriyle temsilin eksik kalacağı yerlere eklenir. Ara eşyükselti eğrileri olarak kullanılmamalıdırlar. Komşu eşyükselti eğrileri arasında yalnızca bir form çizgisi kullanılmalıdır. Bir form çizgisinin eşyükselti sistemine mantıksal olarak uyması çok önemlidir, bu nedenle bir form çizgisinin başlangıcı ve bitişi komşu eşyükselti eğrilerine paralel olmalıdır. Form çizgisi kesikli çizgileri arasındaki boşluklar, form çizgisinin makul derecede düz bölümlerine yerleştirilmelidir. Form çizgileri, düz tepeleri ve çukurları daha belirgin olanlardan ayırt etmek için kullanılabilir (minimum yükseklik/derinlik 1 m olmalıdır). Form çizgilerinin aşırı kullanımı, zemin şeklinin üç boyutlu görüntüsünü bozacağı ve harita okumayı zorlaştıracağı için kaçınılmalıdır.
 Minimum uzunluk (kapalı olmayan): iki kesikli çizgi.
-Bir form çizgisi, tepe veya çukurun minimum uzunluğu: 1,1 mm (kapladığı alan 16,5 m)</translation>
+Bir form çizgisi, tepe veya çukurun minimum uzunluğu: 1.1 mm (kapladığı alan 16.5 m)</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
@@ -264,7 +264,7 @@ Bir form çizgisi, tepe veya çukurun minimum uzunluğu: 1,1 mm (kapladığı al
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 103.1</comment>
-        <translation>Eğim çizgileri eğim yönünü açıklığa kavuşturmak için Kontur hattının alt tarafında çizilmiş olabilir. Kullanıldığında, girintilerin içinde yerleştirilmelidir.</translation>
+        <translation>Eğim yönünü netleştirmek için eğim çizgileri, bir eşyükselti eğrisinin alt tarafına çizilebilir. Kullanıldığında, girintilerin (re-entrant) içine yerleştirilir.</translation>
     </message>
     <message>
         <source>Earth bank</source>
@@ -280,12 +280,12 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <translation>Bir toprak set, çevresinden net bir şekilde ayırt edilebilen, zeminde ani bir seviye değişikliğidir, örn. çakıl veya kum çukurları, yol ve demiryolu yarmaları veya dolguları.
 Minimum yükseklik: 1 m. Bir toprak seti koşulabilirliği etkileyebilir. Çizgiler (tag), toprak setinin tam kapsamını temsil eder.
 Uzun toprak setleri için uçlarda minimum uzunluktan daha kısa çizgiler kullanılmasına izin verilir. İki toprak seti birbirine yakınsa, çizgiler çıkarılabilir. Geçilemez toprak setleri, geçilemez sarp kayalık (201) sembolü kullanılarak temsil edilmelidir.
-Minimum uzunluk: 0,6 mm (kapladığı alan 9 m).</translation>
+Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 104.1</comment>
-        <translation>Toprak set, minimum boy</translation>
+        <translation>Toprak set, minimum boyut</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -296,7 +296,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <translation>Bir toprak set, çevresinden net bir şekilde ayırt edilebilen, zeminde ani bir seviye değişikliğidir, örn. çakıl veya kum çukurları, yol ve demiryolu yarmaları veya dolguları.
 Minimum yükseklik: 1 m. Bir toprak seti koşulabilirliği etkileyebilir. Çizgiler (tag), toprak setinin tam kapsamını temsil eder.
 Uzun toprak setleri için uçlarda minimum uzunluktan daha kısa çizgiler kullanılmasına izin verilir. İki toprak seti birbirine yakınsa, çizgiler çıkarılabilir. Geçilemez toprak setleri, geçilemez sarp kayalık (201) sembolü kullanılarak temsil edilmelidir.
-Minimum uzunluk: 0,6 mm (kapladığı alan 9 m).</translation>
+Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
@@ -312,12 +312,12 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <translation>Bir toprak set, çevresinden net bir şekilde ayırt edilebilen, zeminde ani bir seviye değişikliğidir, örn. çakıl veya kum çukurları, yol ve demiryolu yarmaları veya dolguları.
 Minimum yükseklik: 1 m. Bir toprak seti koşulabilirliği etkileyebilir. Çizgiler (tag), toprak setinin tam kapsamını temsil eder.
 Uzun toprak setleri için uçlarda minimum uzunluktan daha kısa çizgiler kullanılmasına izin verilir. İki toprak seti birbirine yakınsa, çizgiler çıkarılabilir. Geçilemez toprak setleri, geçilemez sarp kayalık (201) sembolü kullanılarak temsil edilmelidir.
-Minimum uzunluk: 0,6 mm (kapladığı alan 9 m).</translation>
+Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
         <comment>Name of symbol 104.3</comment>
-        <translation>Toprak set, çizgi (tag)</translation>
+        <translation type="unfinished">Toprak set, çizgi (tag)</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -327,7 +327,7 @@ Minimum uzunluk: 0,6 mm (kapladığı alan 9 m).</translation>
     <message>
         <source>Earth bank, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 104.9</comment>
-        <translation>Toprak set, minimum boy (ISOM2000)</translation>
+        <translation>Toprak set, minimum boyut (ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -344,7 +344,7 @@ Minimum uzunluk: 0,6 mm (kapladığı alan 9 m).</translation>
 Minimum length: 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 105</comment>
         <translation>Belirgin toprak duvar. Minimum yükseklik: 1 m.
-Minimum uzunluk: 1,4 mm (kapladığı alan 21 m).</translation>
+Minimum uzunluk: 1.4 mm (kapladığı alan 21 m).</translation>
     </message>
     <message>
         <source>Ruined earth wall</source>
@@ -355,13 +355,13 @@ Minimum uzunluk: 1,4 mm (kapladığı alan 21 m).</translation>
         <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
 Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Earth wall (105).</source>
         <comment>Description of symbol 106</comment>
-        <translation>Yıkık veya daha az belirgin bir toprak duvar. Minimum yükseklik: 0,5 m.
-Minimum uzunluk: iki kesikli çizgi (3,65 mm - kapladığı alan 55 m). Daha kısa ise, nesne minimum uzunluğa abartılmalı veya Toprak duvar (105) sembolüne değiştirilmelidir.</translation>
+        <translation>Yıkık veya daha az belirgin bir toprak duvar. Minimum yükseklik: 0.5 m.
+Minimum uzunluk: iki kesikli çizgi (3.65 mm - kapladığı alan 55 m). Daha kısa ise, nesne minimum uzunluğa abartılmalı veya Toprak duvar (105) sembolüne değiştirilmelidir.</translation>
     </message>
     <message>
         <source>Erosion gully</source>
         <comment>Name of symbol 107</comment>
-        <translation>Erozyon kanalı</translation>
+        <translation>Erozyon oyuğu</translation>
     </message>
     <message>
         <source>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Minimum depth: 1 m.
@@ -369,22 +369,22 @@ Minimum length: 1.15 mm (footprint 17 m).
 Contour lines should not be broken around this symbol.</source>
         <comment>Description of symbol 107</comment>
         <translation>Toprak set (104) sembolü kullanılarak gösterilemeyecek kadar küçük bir erozyon oyuğu, tek bir çizgi ile gösterilir. Minimum derinlik: 1 m.
-Minimum uzunluk: 1,15 mm (kapladığı alan 17 m).
-Eşyükselti çizgileri bu sembolün etrafında kesilmemelidir.</translation>
+Minimum uzunluk: 1.15 mm (kapladığı alan 17 m).
+Eşyükselti eğrileri bu sembolün etrafında kesilmemelidir.</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 108</comment>
-        <translation>Küçük erozyon kanalı</translation>
+        <translation>Küçük erozyon oyuğu</translation>
     </message>
     <message>
         <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
 Minimum length (isolated): three dots (1.15 mm - footprint 17 m).
 Contour lines should be broken around this symbol.</source>
         <comment>Description of symbol 108</comment>
-        <translation>Küçük bir erozyon oyuğu, kuru hendek veya siper. Minimum derinlik: 0,5 m.
-Minimum uzunluk (izole): üç nokta (1,15 mm - kapladığı alan 17 m).
-Eşyükselti çizgileri bu sembolün etrafında kesilmelidir.</translation>
+        <translation>Küçük bir erozyon oyuğu, kuru hendek veya siper. Minimum derinlik: 0.5 m.
+Minimum uzunluk (izole): üç nokta (1.15 mm - kapladığı alan 17 m).
+Eşyükselti eğrileri bu sembolün etrafında kesilmelidir.</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -397,10 +397,10 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 7.5 m x 7.5 m.</source>
         <comment>Description of symbol 109</comment>
-        <translation>Bir eşyükselti ile ölçeğe uygun çizilemeyen belirgin bir höyük veya tepecik.
+        <translation>Bir eşyükselti eğrisi ile ölçeğe uygun çizilemeyen belirgin bir höyük veya tepecik.
 Minimum yükseklik: 1 m.
-Sembol, eşyükseltilere dokunmamalı veya üstlerini örtmemelidir.
-Kapladığı alan: 7,5 m x 7,5 m.</translation>
+Sembol, eşyükselti eğrilerine dokunmamalı veya üstlerini örtmemelidir.
+Kapladığı alan: 7.5 m x 7.5 m.</translation>
     </message>
     <message>
         <source>Small elongated knoll</source>
@@ -413,9 +413,9 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 110</comment>
-        <translation>Bir eşyükselti ile ölçeğe uygun çizilemeyen belirgin uzun bir tepecik.
+        <translation>Bir eşyükselti eğrisi ile ölçeğe uygun çizilemeyen belirgin uzun bir tepecik.
 Minimum yükseklik: 1 m.
-Sembol, eşyükseltilere dokunmamalı veya üstlerini örtmemelidir.
+Sembol, eşyükselti eğrilerine dokunmamalı veya üstlerini örtmemelidir.
 Kapladığı alan: 12 m x 6 m.</translation>
     </message>
     <message>
@@ -430,7 +430,7 @@ Small depressions with steep sides are represented with symbol Pit (112).
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation>Eşyükseltilerle gösterilemeyecek kadar küçük, dik kenarları olmayan küçük bir çöküntü veya oyuk.
+        <translation>Eşyükselti eğrileriyle gösterilemeyecek kadar küçük, dik kenarları olmayan küçük bir çöküntü veya oyuk.
 Minimum derinlik: 1 m, minimum genişlik: 2 m.
 Dik kenarlı küçük çöküntüler, Çukur (112) sembolü ile temsil edilir.
 Sembol, diğer kahverengi sembollere dokunmamalı veya üstlerini örtmemelidir. Konum, sembolün ağırlık merkezidir ve sembol kuzeye yönlendirilmiştir.
@@ -452,7 +452,7 @@ Footprint: 10.5 m x 12 m.</source>
 Minimum derinlik: 1 m, minimum genişlik: 1 m.
 5 m x 5 m&apos;den büyük bir çukur normalde abartılmalı ve Toprak seti (104) kullanılarak çizilmelidir. Dik kenarları olmayan çukurlar, Küçük çöküntü (111) sembolü ile temsil edilir.
 Sembol, diğer kahverengi sembollere dokunmamalı veya üstlerini örtmemelidir. Konum, sembolün ağırlık merkezidir ve sembol kuzeye yönlendirilmiştir.
-Kapladığı alan: 10,5 m x 12 m.</translation>
+Kapladığı alan: 10.5 m x 12 m.</translation>
     </message>
     <message>
         <source>Broken ground</source>
@@ -471,8 +471,8 @@ The dots shall not be arranged to form a single point wide line.</source>
         <translation>Detaylı olarak gösterilemeyecek kadar karmaşık olan çukurlar ve/veya tepelerden oluşan bir alan veya açıkça ayırt edilebilen ancak koşulabilirliği çok az etkileyen diğer türden engebeli ve düzensiz zeminler.
 Noktalar rastgele dağıtılmalı ancak önemli arazi özelliklerinin ve nesnelerin temsiline müdahale etmemelidir.
 Minimum nokta sayısı üçtür (kapladığı alan 10 m x 10 m).
-Komşu noktalar arasındaki maksimum merkezden merkeze mesafe 0,6 mm&apos;dir.
-Komşu noktalar arasındaki minimum merkezden merkeze mesafe 0,5 mm&apos;dir.
+Komşu noktalar arasındaki maksimum merkezden merkeze mesafe 0.6 mm&apos;dir.
+Komşu noktalar arasındaki minimum merkezden merkeze mesafe 0.5 mm&apos;dir.
 Eşyükselti çizgileri, bozuk zemini olan alanlarda kesilmemelidir.
 Noktalar, tek nokta genişliğinde bir çizgi oluşturacak şekilde düzenlenmemelidir.</translation>
     </message>
@@ -494,8 +494,8 @@ Density: 3-4 dots / mm².</source>
         <translation>Detaylı olarak gösterilemeyecek kadar karmaşık olan çukurlar ve/veya tepelerden oluşan bir alan veya açıkça ayırt edilebilen ancak koşulabilirliği çok az etkileyen diğer türden engebeli ve düzensiz zeminler.
 Noktalar rastgele dağıtılmalı ancak önemli arazi özelliklerinin ve nesnelerin temsiline müdahale etmemelidir.
 Minimum nokta sayısı üçtür (kapladığı alan 10 m x 10 m).
-Komşu noktalar arasındaki maksimum merkezden merkeze mesafe 0,6 mm&apos;dir.
-Komşu noktalar arasındaki minimum merkezden merkeze mesafe 0,5 mm&apos;dir.
+Komşu noktalar arasındaki maksimum merkezden merkeze mesafe 0.6 mm&apos;dir.
+Komşu noktalar arasındaki minimum merkezden merkeze mesafe 0.5 mm&apos;dir.
 Eşyükselti çizgileri, bozuk zemini olan alanlarda kesilmemelidir.
 Noktalar, tek nokta genişliğinde bir çizgi oluşturacak şekilde düzenlenmemelidir.
 Yoğunluk: 3-4 nokta / mm².</translation>
@@ -517,8 +517,8 @@ The dots shall not be arranged to form a single point wide line.</source>
         <translation>Detaylı olarak gösterilemeyecek kadar karmaşık olan çukurlar ve/veya tepelerden oluşan bir alan veya açıkça ayırt edilebilen ve koşulabilirliği etkileyen diğer türden engebeli ve düzensiz zeminler.
 Noktalar rastgele dağıtılmalı ancak önemli arazi özelliklerinin ve nesnelerin temsiline müdahale etmemelidir.
 Minimum nokta sayısı üçtür (kapladığı alan 7 m x 7 m).
-Komşu noktalar arasındaki maksimum merkezden merkeze mesafe 0,38 mm&apos;dir.
-Komşu noktalar arasındaki minimum merkezden merkeze mesafe 0,25 mm&apos;dir.
+Komşu noktalar arasındaki maksimum merkezden merkeze mesafe 0.38 mm&apos;dir.
+Komşu noktalar arasındaki minimum merkezden merkeze mesafe 0.25 mm&apos;dir.
 Eşyükselti çizgileri, bozuk zemini olan alanlarda kesilmemelidir.
 Noktalar, tek nokta genişliğinde bir çizgi oluşturacak şekilde düzenlenmemelidir.</translation>
     </message>
@@ -534,11 +534,11 @@ The symbol shall not touch or overlap other brown symbols.
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 11.5 m.</source>
         <comment>Description of symbol 115</comment>
-        <translation>Önemli ya da belirgin olan küçük bir yeryüzü özelliği.
-Sembol kuzeye yönlendirilir.
-Sembol, eş yükselti çizgilerine veya diğer kahverengi sembollere temas etmemeli veya üst üste gelmemelidir.
+        <translation>Özellik çevresinden çok net bir şekilde ayırt edilebilir olmalıdır.
+Konum, sembolün ağırlık merkezidir ve sembol kuzeye yönlendirilir.
+Sembol, diğer kahverengi sembollere dokunmamalı veya üstlerini örtmemelidir.
 Sembolün tanımı haritada verilmelidir.
-Kapladığı alan: 13,5 m x 11,5 m.</translation>
+Kapladığı alan: 13.5 m x 11.5 m.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -554,14 +554,14 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201</comment>
         <translation>Yüksek ve dik olduğu için geçilmesi/tırmanılması imkansız veya tehlikeli olan bir uçurum, taş ocağı veya toprak set.
 Dar alanlarda dikey kaya yüzeyleri için eğim çizgileri (saçaklar) ihmal edilebilir. Üst çizginin uçları yuvarlatılmış veya düz olabilir. Uçlarda daha kısa saçaklar kullanılabilir.
-İki geçilemez uçurum arasındaki veya geçilemez uçurumlar ile diğer geçilemez özellik sembolleri arasındaki boşluk, haritada 0,25 mm&apos;den az olmamalıdır.
-Bir uçurum doğrudan suya indiğinde ve su kenarı boyunca uçurumun altından geçişi imkansız kıldığında, kıyı çizgisi çizilmez veya saçaklar kıyı çizgisi üzerinden açıkça uzatılmalıdır. Geçilemez bir uçurum, eş yükselti çizgileri ile etkileşim halinde olmalıdır.
-Minimum uzunluk: 0,6 mm (kapladığı alan 9 m).</translation>
+İki geçilemez uçurum arasındaki veya geçilemez uçurumlar ile diğer geçilemez özellik sembolleri arasındaki boşluk, haritada 0.25 mm&apos;den az olmamalıdır.
+Bir uçurum doğrudan suya indiğinde ve su kenarı boyunca uçurumun altından geçişi imkansız kıldığında, kıyı çizgisi çizilmez veya saçaklar kıyı çizgisi üzerinden açıkça uzatılmalıdır. Geçilemez bir uçurum, eş yükselti eğrileri ile etkileşim halinde olmalıdır.
+Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation>Geçilemez yar / Uçurum, minimum boy</translation>
+        <translation>Geçilemez yar / Uçurum, minimum boyut</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -572,9 +572,9 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.1</comment>
         <translation>Yüksek ve dik olduğu için geçilmesi/tırmanılması imkansız veya tehlikeli olan bir uçurum, taş ocağı veya toprak set.
 Dar alanlarda dikey kaya yüzeyleri için eğim çizgileri (saçaklar) ihmal edilebilir. Üst çizginin uçları yuvarlatılmış veya düz olabilir. Uçlarda daha kısa saçaklar kullanılabilir.
-İki geçilemez uçurum arasındaki veya geçilemez uçurumlar ile diğer geçilemez özellik sembolleri arasındaki boşluk, haritada 0,25 mm&apos;den az olmamalıdır.
-Bir uçurum doğrudan suya indiğinde ve su kenarı boyunca uçurumun altından geçişi imkansız kıldığında, kıyı çizgisi çizilmez veya saçaklar kıyı çizgisi üzerinden açıkça uzatılmalıdır. Geçilemez bir uçurum, eş yükselti çizgileri ile etkileşim halinde olmalıdır.
-Minimum uzunluk: 0,6 mm (kapladığı alan 9 m).</translation>
+İki geçilemez uçurum arasındaki veya geçilemez uçurumlar ile diğer geçilemez özellik sembolleri arasındaki boşluk, haritada 0.25 mm&apos;den az olmamalıdır.
+Bir uçurum doğrudan suya indiğinde ve su kenarı boyunca uçurumun altından geçişi imkansız kıldığında, kıyı çizgisi çizilmez veya saçaklar kıyı çizgisi üzerinden açıkça uzatılmalıdır. Geçilemez bir uçurum, eş yükselti eğrileri ile etkileşim halinde olmalıdır.
+Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
@@ -600,9 +600,9 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.3</comment>
         <translation>Yüksek ve dik olduğu için geçilmesi/tırmanılması imkansız veya tehlikeli olan bir uçurum, taş ocağı veya toprak set.
 Dar alanlarda dikey kaya yüzeyleri için eğim çizgileri (saçaklar) ihmal edilebilir. Üst çizginin uçları yuvarlatılmış veya düz olabilir. Uçlarda daha kısa saçaklar kullanılabilir.
-İki geçilemez uçurum arasındaki veya geçilemez uçurumlar ile diğer geçilemez özellik sembolleri arasındaki boşluk, haritada 0,25 mm&apos;den az olmamalıdır.
-Bir uçurum doğrudan suya indiğinde ve su kenarı boyunca uçurumun altından geçişi imkansız kıldığında, kıyı çizgisi çizilmez veya saçaklar kıyı çizgisi üzerinden açıkça uzatılmalıdır. Geçilemez bir uçurum, eş yükselti çizgileri ile etkileşim halinde olmalıdır.
-Minimum uzunluk: 0,6 mm (kapladığı alan 9 m).</translation>
+İki geçilemez uçurum arasındaki veya geçilemez uçurumlar ile diğer geçilemez özellik sembolleri arasındaki boşluk, haritada 0.25 mm&apos;den az olmamalıdır.
+Bir uçurum doğrudan suya indiğinde ve su kenarı boyunca uçurumun altından geçişi imkansız kıldığında, kıyı çizgisi çizilmez veya saçaklar kıyı çizgisi üzerinden açıkça uzatılmalıdır. Geçilemez bir uçurum, eşyükselti eğrileri ile etkileşim halinde olmalıdır.
+Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
@@ -636,11 +636,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation>Geçilebilir bir uçurum veya taş ocağı. Kaya yüzeyinin eğim/iniş yönü eş yükselti çizgilerinden anlaşılamıyorsa veya okunabilirliği artırmak için, iniş/eğim yönünde kısa saçaklar çizilmelidir.
-Dikey olmayan uçurumlar için, saçaklar yatay uzanımı gösterecek şekilde çizilmelidir. Saçaksız olarak gösterilen geçilebilir kaya yüzlerinde okunabilirliği artırmak için çizginin sonu yuvarlatılmalıdır. İki kaya yüzü arasındaki geçit en az 0,2 mm genişliğinde çizilmelidir. Bir kaya yüzü, eş yükselti çizgileri ile etkileşim halinde olmalıdır.
+        <translation>Geçilebilir bir uçurum veya taş ocağı. Kaya yüzeyinin eğim/iniş yönü eş yükselti eğrilerinden anlaşılamıyorsa veya okunabilirliği artırmak için, iniş/eğim yönünde kısa saçaklar çizilmelidir.
+Dikey olmayan uçurumlar için, saçaklar yatay uzanımı gösterecek şekilde çizilmelidir. Saçaksız olarak gösterilen geçilebilir kaya yüzlerinde okunabilirliği artırmak için çizginin sonu yuvarlatılmalıdır. İki kaya yüzü arasındaki geçit en az 0.2 mm genişliğinde çizilmelidir. Bir kaya yüzü, eş yükselti eğrileri ile etkileşim halinde olmalıdır.
 Bir kaya yüzeyinin geçişi normalde ilerlemeyi yavaşlatır.
 Minimum yükseklik: 1 m.
-Minimum uzunluk: 0,6 mm (kapladığı alan 9 m).</translation>
+Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     </message>
     <message>
         <source>Cliff, minimum size</source>
@@ -654,11 +654,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation>Geçilebilir bir uçurum veya taş ocağı. Kaya yüzeyinin eğim/iniş yönü eş yükselti çizgilerinden anlaşılamıyorsa veya okunabilirliği artırmak için, iniş/eğim yönünde kısa saçaklar çizilmelidir.
-Dikey olmayan uçurumlar için, saçaklar yatay uzanımı gösterecek şekilde çizilmelidir. Saçaksız olarak gösterilen geçilebilir kaya yüzlerinde okunabilirliği artırmak için çizginin sonu yuvarlatılmalıdır. İki kaya yüzü arasındaki geçit en az 0,2 mm genişliğinde çizilmelidir. Bir kaya yüzü, eş yükselti çizgileri ile etkileşim halinde olmalıdır.
+        <translation>Geçilebilir bir uçurum veya taş ocağı. Kaya yüzeyinin eğim/iniş yönü eş yükselti eğrilerinden anlaşılamıyorsa veya okunabilirliği artırmak için, iniş/eğim yönünde kısa saçaklar çizilmelidir.
+Dikey olmayan uçurumlar için, saçaklar yatay uzanımı gösterecek şekilde çizilmelidir. Saçaksız olarak gösterilen geçilebilir kaya yüzlerinde okunabilirliği artırmak için çizginin sonu yuvarlatılmalıdır. İki kaya yüzü arasındaki geçit en az 0.2 mm genişliğinde çizilmelidir. Bir kaya yüzü, eş yükselti eğrileri ile etkileşim halinde olmalıdır.
 Bir kaya yüzeyinin geçişi normalde ilerlemeyi yavaşlatır.
 Minimum yükseklik: 1 m.
-Minimum uzunluk: 0,6 mm (kapladığı alan 9 m).</translation>
+Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     </message>
     <message>
         <source>Cliff, with tags</source>
@@ -672,11 +672,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation>Geçilebilir bir uçurum veya taş ocağı. Kaya yüzeyinin eğim/iniş yönü eş yükselti çizgilerinden anlaşılamıyorsa veya okunabilirliği artırmak için, iniş/eğim yönünde kısa saçaklar çizilmelidir.
-Dikey olmayan uçurumlar için, saçaklar yatay uzanımı gösterecek şekilde çizilmelidir. Saçaksız olarak gösterilen geçilebilir kaya yüzlerinde okunabilirliği artırmak için çizginin sonu yuvarlatılmalıdır. İki kaya yüzü arasındaki geçit en az 0,2 mm genişliğinde çizilmelidir. Bir kaya yüzü, eş yükselti çizgileri ile etkileşim halinde olmalıdır.
+        <translation>Geçilebilir bir uçurum veya taş ocağı. Kaya yüzeyinin eğim/iniş yönü eş yükselti eğrilerinden anlaşılamıyorsa veya okunabilirliği artırmak için, iniş/eğim yönünde kısa saçaklar çizilmelidir.
+Dikey olmayan uçurumlar için, saçaklar yatay uzanımı gösterecek şekilde çizilmelidir. Saçaksız olarak gösterilen geçilebilir kaya yüzlerinde okunabilirliği artırmak için çizginin sonu yuvarlatılmalıdır. İki kaya yüzü arasındaki geçit en az 0.2 mm genişliğinde çizilmelidir. Bir kaya yüzü, eş yükselti eğrileri ile etkileşim halinde olmalıdır.
 Bir kaya yüzeyinin geçişi normalde ilerlemeyi yavaşlatır.
 Minimum yükseklik: 1 m.
-Minimum uzunluk: 0,6 mm (kapladığı alan 9 m).</translation>
+Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size</source>
@@ -690,11 +690,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation>Geçilebilir bir uçurum veya taş ocağı. Kaya yüzeyinin eğim/iniş yönü eş yükselti çizgilerinden anlaşılamıyorsa veya okunabilirliği artırmak için, iniş/eğim yönünde kısa saçaklar çizilmelidir.
-Dikey olmayan uçurumlar için, saçaklar yatay uzanımı gösterecek şekilde çizilmelidir. Saçaksız olarak gösterilen geçilebilir kaya yüzlerinde okunabilirliği artırmak için çizginin sonu yuvarlatılmalıdır. İki kaya yüzü arasındaki geçit en az 0,2 mm genişliğinde çizilmelidir. Bir kaya yüzü, eş yükselti çizgileri ile etkileşim halinde olmalıdır.
+        <translation>Geçilebilir bir uçurum veya taş ocağı. Kaya yüzeyinin eğim/iniş yönü eş yükselti eğrilerinden anlaşılamıyorsa veya okunabilirliği artırmak için, iniş/eğim yönünde kısa saçaklar çizilmelidir.
+Dikey olmayan uçurumlar için, saçaklar yatay uzanımı gösterecek şekilde çizilmelidir. Saçaksız olarak gösterilen geçilebilir kaya yüzlerinde okunabilirliği artırmak için çizginin sonu yuvarlatılmalıdır. İki kaya yüzü arasındaki geçit en az 0.2 mm genişliğinde çizilmelidir. Bir kaya yüzü, eş yükselti eğrileri ile etkileşim halinde olmalıdır.
 Bir kaya yüzeyinin geçişi normalde ilerlemeyi yavaşlatır.
 Minimum yükseklik: 1 m.
-Minimum uzunluk: 0,6 mm (kapladığı alan 9 m).</translation>
+Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size (from ISOM2000)</source>
@@ -722,20 +722,20 @@ Footprint: 10.5 m x 12 m.</source>
 Yeri, sembolün ağırlık merkezidir ve sembol kuzeye yönlendirilmelidir.
 Çapı 5 m&apos;den büyük kayalık çukurlar abartılarak uçurum sembolleri (201, 202) kullanılarak gösterilmelidir.
 Minimum derinlik: 1 m.
-Kapladığı alan: 10,5 m x 12,0 m.</translation>
+Kapladığı alan: 10.5 m x 12.0 m.</translation>
     </message>
     <message>
         <source>Cave or rocky pit (with a distinct entrance)</source>
         <comment>Name of symbol 203.2</comment>
-        <translation>Kayalık çukur veya mağara (belirgin girişi olmayan)</translation>
+        <translation>Kayalık çukur veya mağara (belirgin girişi olan)</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
 Location is the centre of gravity of the symbol, and the symbol should point into the cave.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
         <comment>Description of symbol 203.2</comment>
-        <translation>Belirgin bir girişi olmayan ve yarışmacı için tehlike oluşturabilecek kayalık bir çukur, delik, mağara veya maden ocağı. Minimum derinlik: 1 m.
-Yeri, sembolün ağırlık merkezidir ve sembol kuzeye yönlendirilmelidir.
+        <translation>Belirgin bir girişi olan ve yarışmacı için tehlike oluşturabilecek kayalık çukur, delik, mağara veya maden ocağı. Minimum derinlik: 1 m.
+Yeri, sembolün ağırlık merkezidir ve sembol mağaranın içine doğru işaret etmelidir.
 Çapı 5 m&apos;den büyük kayalık çukurlar abartılarak uçurum sembolleri (201, 202) kullanılarak gösterilmelidir.</translation>
     </message>
     <message>
@@ -759,8 +759,8 @@ To be able to show the distinction between neighbouring (closer than 30 m apart)
 Footprint: 6 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 204</comment>
         <translation>Arazide hemen seçilebilir olan belirgin bir kaya (1 m&apos;den yüksek olmalıdır). Kaya grupları, Kaya kümesi (207) veya kayalık alan sembolü (208, 209) kullanılarak gösterilir.
-Komşu (30 m&apos;den daha yakın aralıklı) kayalar arasında boyut açısından belirgin bir fark bulunanları gösterebilmek için, bazı kayalar için bu sembol 0,5 mm&apos;ye kadar büyütülebilir.
-Kapladığı alan: 6,0 m çapında (7,5 m çapında).</translation>
+Komşu (30 m&apos;den daha yakın aralıklı) kayalar arasında boyut açısından belirgin bir fark bulunanları gösterebilmek için, bazı kayalar için bu sembol 0.5 mm&apos;ye kadar büyütülebilir.
+Kapladığı alan: 6.0 m çapında (7.5 m çapında).</translation>
     </message>
     <message>
         <source>Boulder or large boulder, different size</source>
@@ -776,9 +776,9 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
         <comment>Description of symbol 204.5</comment>
         <translation>Komşu kayalardan (204) daha büyük olan bir kaya veya komşu büyük kayalardan (205) daha küçük olan bir büyük kaya.
 
-Komşu (30 metreden daha yakın mesafedeki) kayalar (204) arasında boyut açısından belirgin bir fark bulunanları gösterebilmek için, bazı kayalar için bu sembol (0,5 mm), 204 numaralı sembolün büyütülmüş hali olarak kullanılabilir.
+Komşu (30 metreden daha yakın mesafedeki) kayalar (204) arasında boyut açısından belirgin bir fark bulunanları gösterebilmek için, bazı kayalar için bu sembol (0.5 mm), 204 numaralı sembolün büyütülmüş hali olarak kullanılabilir.
 
-Komşu (30 metreden daha yakın mesafedeki) büyük kayalar (205) arasında boyut açısından belirgin bir fark bulunanları gösterebilmek için, bazı kayalar için bu sembol (0,5 mm), 205 numaralı sembolün küçültülmüş hali olarak kullanılabilir.</translation>
+Komşu (30 metreden daha yakın mesafedeki) büyük kayalar (205) arasında boyut açısından belirgin bir fark bulunanları gösterebilmek için, bazı kayalar için bu sembol (0.5 mm), 205 numaralı sembolün küçültülmüş hali olarak kullanılabilir.</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -791,8 +791,8 @@ To be able to show the distinction between neighbouring (closer than 30 m apart)
 Footprint: 9 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 205</comment>
         <translation>Özellikle büyük ve belirgin bir kaya. Büyük bir kaya 2 m&apos;den yüksek olmalıdır.
-Komşu (30 m&apos;den daha yakın aralıklı) büyük kayalar arasında boyut açısından belirgin bir fark bulunanları gösterebilmek için, bazı kayalar için bu sembol 0,5 mm&apos;ye kadar küçültülebilir.
-Kapladığı alan: 9,0 m çapında (7,5 m çapında).</translation>
+Komşu (30 m&apos;den daha yakın aralıklı) büyük kayalar arasında boyut açısından belirgin bir fark bulunanları gösterebilmek için, bazı kayalar için bu sembol 0.5 mm&apos;ye kadar küçültülebilir.
+Kapladığı alan: 9.0 m çapında (7.5 m çapında).</translation>
     </message>
     <message>
         <source>Gigantic boulder</source>
@@ -806,9 +806,9 @@ Minimum width: 0.25 mm (footprint 3.75 m).
 Minimum area: 0.3 mm² (footprint 67 m²).</source>
         <comment>Description of symbol 206</comment>
         <translation>Devasa bir kaya, kaya sütunu veya geniş uçurumlar arazideki şekline göre çizilecektir.
-Nesneler değişik şekil ve genişlikte olabilir. Devasa kayalar arasındaki veya devasa kayalar ile diğer geçilmez özellik sembolleri arasındaki boşluk haritada 0,15 mm&apos;den az olmamalıdır.
-Minimum genişlik: 0,25 mm (kapladığı alan 3,75 m).
-Minimum alan: 0,3 mm² (kapladığı alan 67 m²).</translation>
+Nesneler değişik şekil ve genişlikte olabilir. Devasa kayalar arasındaki veya devasa kayalar ile diğer geçilmez özellik sembolleri arasındaki boşluk haritada 0.15 mm&apos;den az olmamalıdır.
+Minimum genişlik: 0.25 mm (kapladığı alan 3.75 m).
+Minimum alan: 0.3 mm² (kapladığı alan 67 m²).</translation>
     </message>
     <message>
         <source>Boulder cluster</source>
@@ -824,9 +824,9 @@ Footprint: 12 m x 10 m.</source>
         <comment>Description of symbol 207</comment>
         <translation>Ayrı ayrı işaretlenemeyecek kadar birbirine yakın kümelenmiş belirgin kaya grubu. Kümedeki kayalar 1 m’den yüksek olmalıdır.
 Bir kaya kümesi bir kayalar grubu olarak kolayca tanımlanabilir olmalıdır.
-Komşu (en fazla 30 m aralıklı) kaya kümeleri arasında, kaya boyutunda belirgin bir fark bulunanları gösterebilmek için, bazı kaya kümeleri için bu sembol % 120 (kenar uzunluğu 0,96 mm) oranında büyütülebilir.
+Komşu (en fazla 30 m aralıklı) kaya kümeleri arasında, kaya boyutunda belirgin bir fark bulunanları gösterebilmek için, bazı kaya kümeleri için bu sembol % 120 (kenar uzunluğu 0.96 mm) oranında büyütülebilir.
 Sembol kuzeye doğru yönlendirilmiştir.
-Kapladığı alan: 12,0 m x 10,0 m.</translation>
+Kapladığı alan: 12 m x 10 m.</translation>
     </message>
     <message>
         <source>Boulder cluster, large</source>
@@ -852,9 +852,9 @@ Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208</comment>
         <translation>Ayrı ayrı işaretlenemeyecek kadar çok dağınık büyük taş/kayayla kaplı bir alan, rastgele yerleştirilmiş ve yönlendirilmiş içi dolu üçgenlerle temsil edilir. Bir kayalık alan genellikle koşulabilirliği etkilemez. Eğer kayalık alanın koşulabilirliği azalmışsa, 209 numaralı sembol (yoğun kayalık alan) kullanılmalı veya sembol taşlı zemin sembolleriyle birleştirilmelidir.
 En az iki üçgen kullanılmalıdır. Eğer sembol diğer kaya sembolleriyle (örneğin doğrudan uçurum sembollerinin (201, 202) altında, kaya sembollerine (204-206) bitişik veya taşlı zemin sembolleriyle (210-212) birleştirilmişse) bir üçgen kullanılabilir.
-Komşu üçgenler arasındaki maksimum merkezden merkeze mesafe 1,2 mm&apos;dir. Komşu üçgenler arasındaki minimum merkezden merkeze mesafe 0,75 mm&apos;dir.
-Yoğunluk: 0,8-1 sembol/mm². Bir kayalık alan içindeki belirgin yükseklik farklarını gösterebilmek için, bazı üçgenler %120&apos;ye kadar büyütülebilir.
-Tekil üçgenin kapladığı alan: 12,0 m x 6,0 m.</translation>
+Komşu üçgenler arasındaki maksimum merkezden merkeze mesafe 1.2 mm&apos;dir. Komşu üçgenler arasındaki minimum merkezden merkeze mesafe 0.75 mm&apos;dir.
+Yoğunluk: 0.8-1 sembol/mm². Bir kayalık alan içindeki belirgin yükseklik farklarını gösterebilmek için, bazı üçgenler %120&apos;ye kadar büyütülebilir.
+Tekil üçgenin kapladığı alan: 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle</source>
@@ -870,9 +870,9 @@ Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208.1</comment>
         <translation>Ayrı ayrı işaretlenemeyecek kadar çok dağınık büyük taş/kayayla kaplı bir alan, rastgele yerleştirilmiş ve yönlendirilmiş içi dolu üçgenlerle temsil edilir. Bir kayalık alan genellikle koşulabilirliği etkilemez. Eğer kayalık alanın koşulabilirliği azalmışsa, 209 numaralı sembol (yoğun kayalık alan) kullanılmalı veya sembol taşlı zemin sembolleriyle birleştirilmelidir.
 En az iki üçgen kullanılmalıdır. Eğer sembol diğer kaya sembolleriyle (örneğin doğrudan uçurum sembollerinin (201, 202) altında, kaya sembollerine (204-206) bitişik veya taşlı zemin sembolleriyle (210-212) birleştirilmişse) bir üçgen kullanılabilir.
-Komşu üçgenler arasındaki maksimum merkezden merkeze mesafe 1,2 mm&apos;dir. Komşu üçgenler arasındaki minimum merkezden merkeze mesafe 0,75 mm&apos;dir.
-Yoğunluk: 0,8-1 sembol/mm². Bir kayalık alan içindeki belirgin yükseklik farklarını gösterebilmek için, bazı üçgenler %120&apos;ye kadar büyütülebilir.
-Tekil üçgenin kapladığı alan: 12,0 m x 6,0 m.</translation>
+Komşu üçgenler arasındaki maksimum merkezden merkeze mesafe 1.2 mm&apos;dir. Komşu üçgenler arasındaki minimum merkezden merkeze mesafe 0.75 mm&apos;dir.
+Yoğunluk: 0.8-1 sembol/mm². Bir kayalık alan içindeki belirgin yükseklik farklarını gösterebilmek için, bazı üçgenler %120&apos;ye kadar büyütülebilir.
+Tekil üçgenin kapladığı alan: 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle, enlarged</source>
@@ -887,7 +887,7 @@ Tekil üçgenin kapladığı alan: 12,0 m x 6,0 m.</translation>
     <message>
         <source>Dense boulder field</source>
         <comment>Name of symbol 209</comment>
-        <translation>Yoğun kaya alanı</translation>
+        <translation>Yoğun kayalık alan</translation>
     </message>
     <message>
         <source>An area which is covered with so many blocks of stone that they cannot be marked individually and the runnability is affected, is shown with randomly placed and orientated solid triangles. A minimum of two triangles must be used.
@@ -896,9 +896,9 @@ Density: 2-3 symbols / mm². To be able to show obvious height differences withi
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 209</comment>
         <translation>Ayrı ayrı işaretlenemeyecek kadar çok taş bloğuyla kaplı ve koşulabilirliği etkilenmiş bir alan, rastgele yerleştirilmiş ve yönlendirilmiş içi dolu üçgenlerle temsil edilir. En az iki üçgen kullanılmalıdır.
-Komşu üçgenler arasındaki maksimum merkezden merkeze mesafe 0,6 mm&apos;dir.
+Komşu üçgenler arasındaki maksimum merkezden merkeze mesafe 0.6 mm&apos;dir.
 Yoğunluk: 2-3 sembol/mm². Bir kayalık alan içindeki belirgin yükseklik farklarını gösterebilmek için, bazı üçgenler %120&apos;ye kadar büyütülebilir.
-Tek üçgenin kapladığı alan: 12,0 m x 6,0 m.</translation>
+Tek üçgenin kapladığı alan: 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Stony ground, slow running</source>
@@ -917,8 +917,8 @@ To avoid confusion with symbol Distinct vegetation boundary (416), the dots shou
         <translation>Koşulabilirliği normal hızın yaklaşık %60-80&apos;ine düşüren taşlık veya kayalık zeminli alan.
 Noktalar rastgele dağıtılmalı ancak önemli arazi özelliklerinin veya nesnelerinin gösterimini engellememelidir. Çizim, yoğunluk örneği olarak hizmet eder ve ayrıca nokta sembolleri (tek noktalar) taşlı zemin çizmek için kullanılabilir.
 Minimum nokta sayısı üçtür (kapladığı alan 10 m x 10 m).
-Komşu noktalar arasındaki maksimum merkezden merkeze mesafe 0,6 mm&apos;dir.
-Komşu noktalar arasındaki minimum merkezden merkeze mesafe 0,45 mm&apos;dir.
+Komşu noktalar arasındaki maksimum merkezden merkeze mesafe 0.6 mm&apos;dir.
+Komşu noktalar arasındaki minimum merkezden merkeze mesafe 0.45 mm&apos;dir.
 Yoğunluk: 3-4 nokta/mm².
 Belirgin bitki örtüsü sınırı (416) sembolü ile karışmasını önlemek için, noktalar bir çizgi oluşturacak şekilde düzenlenmemelidir.</translation>
     </message>
@@ -939,15 +939,15 @@ To avoid confusion with symbol Distinct vegetation boundary (416), the dots shou
         <translation>Koşulabilirliği normal hızın yaklaşık %60-80&apos;ine düşüren taşlık veya kayalık zeminli alan.
 Noktalar rastgele dağıtılmalı ancak önemli arazi özelliklerinin veya nesnelerinin gösterimini engellememelidir. Çizim, yoğunluk örneği olarak hizmet eder ve ayrıca nokta sembolleri (tek noktalar) taşlı zemin çizmek için kullanılabilir.
 Minimum nokta sayısı üçtür (kapladığı alan 10 m x 10 m).
-Komşu noktalar arasındaki maksimum merkezden merkeze mesafe 0,6 mm&apos;dir.
-Komşu noktalar arasındaki minimum merkezden merkeze mesafe 0,45 mm&apos;dir.
+Komşu noktalar arasındaki maksimum merkezden merkeze mesafe 0.6 mm&apos;dir.
+Komşu noktalar arasındaki minimum merkezden merkeze mesafe 0.45 mm&apos;dir.
 Yoğunluk: 3-4 nokta/mm².
 Belirgin bitki örtüsü sınırı (416) sembolü ile karışmasını önlemek için, noktalar bir çizgi oluşturacak şekilde düzenlenmemelidir.</translation>
     </message>
     <message>
         <source>Stony ground, walk</source>
         <comment>Name of symbol 211</comment>
-        <translation>Taşlı zemin, yürüyüş</translation>
+        <translation>Taşlı zemin, yürüme</translation>
     </message>
     <message>
         <source>Stony or rocky ground which reduces the runnability significantly (to about 20-60% of normal speed).
@@ -958,11 +958,11 @@ The minimum centre to centre distance between neighbouring dots is 0.32 mm.
 Density: 6-8 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 211</comment>
-        <translation>Koşulabilirliği normal hızın yaklaşık %20-60&apos;ine düşüren taşlık veya kayalık zeminli alan.
+        <translation>Koşulabilirliği normal hızın yaklaşık %20-60&apos;ıne düşüren taşlık veya kayalık zeminli alan.
 Noktalar rastgele dağıtılmalı ancak önemli arazi özelliklerinin veya nesnelerinin gösterimini engellememelidir. Çizim, yoğunluk örneği olarak hizmet eder ve ayrıca nokta sembolleri (tek noktalar) taşlı zemin çizmek için kullanılabilir.
 Minimum nokta sayısı üçtür (kapladığı alan 8 m x 8 m).
-Komşu noktalar arasındaki maksimum merkezden merkeze mesafe 0,4 mm&apos;dir.
-Komşu noktalar arasındaki minimum merkezden merkeze mesafe 0,32 mm&apos;dir.
+Komşu noktalar arasındaki maksimum merkezden merkeze mesafe 0.4 mm&apos;dir.
+Komşu noktalar arasındaki minimum merkezden merkeze mesafe 0.32 mm&apos;dir.
 Yoğunluk: 6-8 nokta/mm².
 Belirgin bitki örtüsü sınırı (416) sembolü ile karışmasını önlemek için, noktalar bir çizgi oluşturacak şekilde düzenlenmemelidir.</translation>
     </message>
@@ -983,8 +983,8 @@ To avoid confusion with symbol Distinct vegetation boundary (416), the dots shou
         <translation>Koşulabilirliği normal hızın %20&apos;sinden daha düşük olan (neredeyse geçilemez) taşlı veya kayalık zemin.
 Noktalar rastgele dağıtılmalı ancak önemli arazi özelliklerinin veya nesnelerinin gösterimini engellememelidir. Çizim, yoğunluk örneği olarak hizmet eder ve ayrıca nokta sembolleri (tek noktalar) taşlı zemin çizmek için kullanılabilir.
 Minimum nokta sayısı üçtür (kapladığı alan 7 m x 7 m).
-Komşu noktalar arasındaki maksimum merkezden merkeze mesafe 0,32 mm&apos;dir.
-Komşu noktalar arasındaki minimum merkezden merkeze mesafe 0,25 mm&apos;dir.
+Komşu noktalar arasındaki maksimum merkezden merkeze mesafe 0.32 mm&apos;dir.
+Komşu noktalar arasındaki minimum merkezden merkeze mesafe 0.25 mm&apos;dir.
 Yoğunluk: 10-12 nokta/mm².
 Belirgin bitki örtüsü sınırı (416) sembolü ile karışmasını önlemek için, noktalar bir çizgi oluşturacak şekilde düzenlenmemelidir.</translation>
     </message>
@@ -1033,8 +1033,8 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <translation>Kayalık veya yapay hendek. Minimum derinlik 1 m olmalıdır.
 Minimum uzunluk: 1 mm (kapladığı alan 15 m).
 Daha kısa hendekler minimum grafik boyutuna abartılarak çizilebilir.
-Geçilemez hendekler, geçilmez yar/uçurum (201) sembolü kullanılarak gösterilmelidir.
-Çökmüş ve kolayca geçilebilen hendekler, erozyon yarıkları olarak haritalanmalıdır.</translation>
+Geçilemez hendekler, Geçilmez yar/uçurum (201) sembolü kullanılarak gösterilmelidir.
+Çökmüş ve kolayca geçilebilen hendekler, erozyon oyuğu olarak haritalanmalıdır.</translation>
     </message>
     <message>
         <source>Uncrossable body of water (full colour), with bank line</source>
@@ -1049,8 +1049,8 @@ Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301</comment>
         <translation>Siyah kıyı çizgisi, özelliğin geçilemez olduğunu vurgular.
 Hakim su alanları %70 renk ile gösterilebilir. Küçük su alanları ve dar kısımları olan su kütleleri her zaman tam renk (%100) ile gösterilmelidir.
-Minimum genişlik (iç): 0,3 mm.
-Minimum alan (iç): 0,55 mm x 0,55 mm (kapladığı alan 8 m x 8 m).</translation>
+Minimum genişlik (iç): 0.3 mm.
+Minimum alan (iç): 0.55 mm x 0.55 mm (kapladığı alan 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Uncrossable body of water (full colour)</source>
@@ -1063,8 +1063,8 @@ Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301.1</comment>
         <translation>Hakim su alanları %70 renk ile gösterilebilir. Küçük su alanları ve dar kısımları olan su kütleleri her zaman tam renk (%100) ile gösterilmelidir.
-Minimum genişlik (iç): 0,3 mm.
-Minimum alan (iç): 0,55 mm x 0,55 mm (kapladığı alan 8 m x 8 m).</translation>
+Minimum genişlik (iç): 0.3 mm.
+Minimum alan (iç): 0.55 mm x 0.55 mm (kapladığı alan 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Uncrossable body of water (dominant), with bank line</source>
@@ -1079,8 +1079,8 @@ Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301.2</comment>
         <translation>Siyah kıyı çizgisi, özelliğin geçilemez olduğunu vurgular.
 Hakim su alanları %70 renk ile gösterilebilir. Küçük su alanları ve dar kısımları olan su kütleleri her zaman tam renk (%100) ile gösterilmelidir.
-Minimum genişlik (iç): 0,3 mm.
-Minimum alan (iç): 0,55 mm x 0,55 mm (kapladığı alan 8 m x 8 m).</translation>
+Minimum genişlik (iç): 0.3 mm.
+Minimum alan (iç): 0.55 mm x 0.55 mm (kapladığı alan 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Uncrossable body of water (dominant)</source>
@@ -1093,8 +1093,8 @@ Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301.3</comment>
         <translation>Hakim su alanları %70 renk ile gösterilebilir. Küçük su alanları ve dar kısımları olan su kütleleri her zaman tam renk (%100) ile gösterilmelidir.
-Minimum genişlik (iç): 0,3 mm.
-Minimum alan (iç): 0,55 mm x 0,55 mm (kapladığı alan 8 m x 8 m).</translation>
+Minimum genişlik (iç): 0.3 mm.
+Minimum alan (iç): 0.55 mm x 0.55 mm (kapladığı alan 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Uncrossable body of water, bank line</source>
@@ -1104,12 +1104,12 @@ Minimum alan (iç): 0,55 mm x 0,55 mm (kapladığı alan 8 m x 8 m).</translatio
     <message>
         <source>A black bank line indicates that the feature cannot be crossed.</source>
         <comment>Description of symbol 301.4</comment>
-        <translation>Siyah kıyı çizgisi özelliğin geçilemeyeceğini gösterir.</translation>
+        <translation>Siyah bir kıyı çizgisi, özelliğin geçilemez olduğunu belirtir.</translation>
     </message>
     <message>
         <source>Shallow body of water, with solid outline</source>
         <comment>Name of symbol 302</comment>
-        <translation>Geçilebilir / sığ su kütlesi, düz çizgi sınırlı</translation>
+        <translation>Geçilebilir / sığ su kütlesi, düz anahat çizgili</translation>
     </message>
     <message>
         <source>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).
@@ -1119,10 +1119,10 @@ Minimum width (full colour): 0.3 mm.
 Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 302</comment>
         <translation>Sığ, mevsimsel veya periyodik bir su kütlesi kesikli bir anahat çizgisi ile gösterilebilir. Küçük sığ su kütleleri, anahat çizgisi olmadan %100 mavi renk ile temsil edilebilir.
-Minimum genişlik (iç): 0,3 mm.
-Minimum alan (iç): 0,7 mm x 0,7 mm (kapladığı alan 10,5 m x 10,5 m).
-Minimum genişlik (tam renk): 0,3 mm.
-Minimum alan (tam renk): 0,55 mm x 0,55 mm (kapladığı alan 8 m x 8 m).</translation>
+Minimum genişlik (iç): 0.3 mm.
+Minimum alan (iç): 0.7 mm x 0.7 mm (kapladığı alan 10.5 m x 10.5 m).
+Minimum genişlik (tam renk): 0.3 mm.
+Minimum alan (tam renk): 0.55 mm x 0.55 mm (kapladığı alan 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Shallow body of water</source>
@@ -1137,15 +1137,15 @@ Minimum width (full colour): 0.3 mm.
 Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 302.1</comment>
         <translation>Sığ, mevsimsel veya periyodik bir su kütlesi kesikli bir anahat çizgisi ile gösterilebilir. Küçük sığ su kütleleri, anahat çizgisi olmadan %100 mavi renk ile temsil edilebilir.
-Minimum genişlik (iç): 0,3 mm.
-Minimum alan (iç): 0,7 mm x 0,7 mm (kapladığı alan 10,5 m x 10,5 m).
-Minimum genişlik (tam renk): 0,3 mm.
-Minimum alan (tam renk): 0,55 mm x 0,55 mm (kapladığı alan 8 m x 8 m).</translation>
+Minimum genişlik (iç): 0.3 mm.
+Minimum alan (iç): 0.7 mm x 0.7 mm (kapladığı alan 10.5 m x 10.5 m).
+Minimum genişlik (tam renk): 0.3 mm.
+Minimum alan (tam renk): 0.55 mm x 0.55 mm (kapladığı alan 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Shallow body of water, solid outline</source>
         <comment>Name of symbol 302.2</comment>
-        <translation>Geçilebilir / sığ su kütlesi, düz çizgi sınırlı</translation>
+        <translation>Geçilebilir / sığ su kütlesi, düz anahat çizgisi</translation>
     </message>
     <message>
         <source>Use this symbol to represent the outline of a shallow body of water which is not seasonal or periodic.</source>
@@ -1155,7 +1155,7 @@ Minimum alan (tam renk): 0,55 mm x 0,55 mm (kapladığı alan 8 m x 8 m).</trans
     <message>
         <source>Shallow body of water, dashed outline</source>
         <comment>Name of symbol 302.3</comment>
-        <translation>Geçilebilir / sığ su kütlesi, kesikli çizgi sınırlı</translation>
+        <translation>Geçilebilir / sığ su kütlesi, kesikli anahat çizgisi</translation>
     </message>
     <message>
         <source>Use this symbol to represent the outline of a shallow seasonal or periodic body of water.</source>
@@ -1173,8 +1173,8 @@ Minimum width: 0.3 mm.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 302.5</comment>
         <translation>Küçük sığ su kütleleri bu sembol kullanılarak (anahat çizgisi olmadan) temsil edilebilir.
-Minimum genişlik: 0,3 mm.
-Minimum alan: 0,55 mm x 0,55 mm (kapladığı alan 8 m x 8 m).</translation>
+Minimum genişlik: 0.3 mm.
+Minimum alan: 0.55 mm x 0.55 mm (kapladığı alan 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Waterhole</source>
@@ -1185,8 +1185,8 @@ Minimum alan: 0,55 mm x 0,55 mm (kapladığı alan 8 m x 8 m).</translation>
         <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 303</comment>
-        <translation>Su dolu bir çukur veya ölçeklemeyecek kadar küçük bir su alanı. Yeri, sembolün ağırlık merkezidir ve sembol kuzeye doğru yönlendirilir.
-Kapladığı alan: 10,5 m x 12,0 m.</translation>
+        <translation>Su dolu bir çukur veya ölçeğe uygun gösterilemeyecek kadar küçük bir su alanı. Konum, sembolün ağırlık merkezidir ve sembol kuzeye yönlendirilir.
+Kapladığı alan: 10.5 m x 12 m.</translation>
     </message>
     <message>
         <source>Crossable watercourse</source>
@@ -1197,7 +1197,7 @@ Kapladığı alan: 10,5 m x 12,0 m.</translation>
         <source>Should be at least 2 m wide.
 Minimum length (isolated): 1 mm (footprint 15 m).</source>
         <comment>Description of symbol 304</comment>
-        <translation>Genişliği en az 2 m olan geçilebilir bir su yolu.
+        <translation>Genişliği en az 2 m olmalıdır.
 Minimum uzunluk (izole): 1 mm (kapladığı alan 15 m).</translation>
     </message>
     <message>
@@ -1220,12 +1220,12 @@ Minimum uzunluk (izole): 1 mm (kapladığı alan 15 m).</translation>
 Minimum length (isolated): two dashes (2.75 mm - footprint 41 m).</source>
         <comment>Description of symbol 306</comment>
         <translation>Sadece aralıklı olarak su bulunduran doğal veya insan yapımı küçük bir su yolu.
-Minimum uzunluk (izole): iki çizgi (2,75 mm - kapladığı alan 41 m).</translation>
+Minimum uzunluk (izole): iki çizgi (2.75 mm - kapladığı alan 41 m).</translation>
     </message>
     <message>
         <source>Uncrossable marsh, with outline</source>
         <comment>Name of symbol 307</comment>
-        <translation>Geçilemez bataklık, sınır çizgili</translation>
+        <translation>Geçilemez bataklık, anahat çizgili</translation>
     </message>
     <message>
         <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol Uncrossable body of water (301). The symbol may be combined with a rough open land symbol (403, 404) to show openness.
@@ -1253,7 +1253,7 @@ Minimum genişlik (iç): 0.3 mm. Minimum alan (iç): 0.5 mm².</translation>
     <message>
         <source>Uncrossable marsh, outline</source>
         <comment>Name of symbol 307.2</comment>
-        <translation>Geçilemez bataklık, sınır çizgili</translation>
+        <translation>Geçilemez bataklık, anahat çizgisi</translation>
     </message>
     <message>
         <source>The black outline emphasises that the feature is uncrossable.</source>
@@ -1290,7 +1290,7 @@ Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</source>
         <translation>Genellikle belirgin bir kenarı olan geçilebilir bir bataklık.
 Sembol, koşulabilirlik ve açıklığı göstermek için bitki örtüsü sembolleriyle birleştirilmelidir.
 Sembol kuzeye doğru yönlendirilmiştir.
-Minimum alan: 0.5 mm x 0.4 mm (kapladığı alan 7.5 m x 6.0 m).</translation>
+Minimum alan: 0.5 mm x 0.4 mm (kapladığı alan 7.5 m x 6 m).</translation>
     </message>
     <message>
         <source>Narrow marsh</source>
@@ -1525,7 +1525,7 @@ Minimum genişlik: 0.4 mm (kapladığı alan 6 m).</translation>
     <message>
         <source>Vegetation: slow running, normal running in one direction</source>
         <comment>Name of symbol 406.1</comment>
-        <translation>Bitki örtüsü: yavaş koşu, bir yönde normal koşu</translation>
+        <translation>Bitki örtüsü: yavaş koşu, tek yönde normal koşu</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
@@ -1569,7 +1569,7 @@ Minimum genişlik: 0.3 mm (kapladığı alan 4.5 m).</translation>
     <message>
         <source>Vegetation: walk, normal running in one direction</source>
         <comment>Name of symbol 408.1</comment>
-        <translation>Bitki örtüsü: yürüme, bir yönde normal koşu</translation>
+        <translation>Bitki örtüsü: yürüme, tek yönde normal koşu</translation>
     </message>
     <message>
         <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
@@ -1583,7 +1583,7 @@ Minimum genişlik: 0.3 mm (kapladığı alan 4.5 m).</translation>
     <message>
         <source>Vegetation: walk, slow running in one direction</source>
         <comment>Name of symbol 408.2</comment>
-        <translation>Bitki örtüsü: yürüme, bir yönde yavaş koşu</translation>
+        <translation>Bitki örtüsü: yürüme, tek yönde yavaş koşu</translation>
     </message>
     <message>
         <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
@@ -1629,7 +1629,7 @@ Minimum genişlik: 0.25 mm (kapladığı alan 3.8 m).</translation>
     <message>
         <source>Vegetation: fight, normal running in one direction</source>
         <comment>Name of symbol 410.1</comment>
-        <translation>Bitki örtüsü: mücadele, bir yönde normal koşu</translation>
+        <translation>Bitki örtüsü: mücadele, tek yönde normal koşu</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
@@ -1645,7 +1645,7 @@ Minimum genişlik: 0.25 mm (kapladığı alan 3.8 m).</translation>
     <message>
         <source>Vegetation: fight, slow running in one direction</source>
         <comment>Name of symbol 410.2</comment>
-        <translation>Bitki örtüsü: mücadele, bir yönde yavaş koşu</translation>
+        <translation>Bitki örtüsü: mücadele, tek yönde yavaş koşu</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
@@ -1661,7 +1661,7 @@ Minimum genişlik: 0.25 mm (kapladığı alan 3.8 m).</translation>
     <message>
         <source>Vegetation: fight, walk in one direction</source>
         <comment>Name of symbol 410.3</comment>
-        <translation>Bitki örtüsü: mücadele, bir yönde yürüme</translation>
+        <translation>Bitki örtüsü: mücadele, tek yönde yürüme</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
@@ -1771,7 +1771,7 @@ Minimum alan: 2 mm x 2 mm (kapladığı alan 30 m x 30 m).</translation>
     <message>
         <source>Vineyard or similar</source>
         <comment>Name of symbol 414</comment>
-        <translation>Bağ ve benzeri</translation>
+        <translation>Bağ veya benzeri</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
@@ -1783,7 +1783,7 @@ Minimum alan: 2 mm x 2 mm (kapladığı alan 30 m x 30 m).</translation>
     <message>
         <source>Vineyard or similar, rough open land</source>
         <comment>Name of symbol 414.1</comment>
-        <translation>Bağ ve benzeri, engebeli açık arazi</translation>
+        <translation>Bağ veya benzeri, engebeli açık arazi</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
@@ -1859,7 +1859,7 @@ Minimum uzunluk, yeşil çizgi uygulaması: 4 çizgi (1.8 mm - kapladığı alan
         <source>Use sparingly, as it is easily mistaken for symbol Small knoll (109).
 Footprint: 9.0 m x 9.0 m.</source>
         <comment>Description of symbol 418</comment>
-        <translation>Küçük tepe (109) sembolüyle kolayca karıştırılabileceğinden, dikkatli kullanın.
+        <translation>Küçük tepe (109) sembolü ile kolayca karıştırılabileceğinden dolayı dikkatli kullanılmalıdır.
 Kapladığı alan: 9.0 m x 9.0 m.</translation>
     </message>
     <message>
@@ -1908,7 +1908,7 @@ Minimum alan: 1 mm x 1 mm (kapladığı alan 15 m x 15 m).</translation>
     <message>
         <source>Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.</source>
         <comment>Description of symbol 501.2</comment>
-        <translation>Kaplanmış alanlar, belirgin bir sınıra sahip oldukları yerlerde ince siyah bir çizgi ile sınırlanmalı (veya çerçevelenmelidir).</translation>
+        <translation>Kaplamalı alanlar, belirgin bir sınıra sahip oldukları yerlerde ince siyah bir çizgi ile sınırlanmalı (veya çerçevelenmelidir).</translation>
     </message>
     <message>
         <source>Wide road, minimum width</source>
@@ -2013,8 +2013,8 @@ Minimum uzunluk (izole): iki çizgi (2.25 mm - kapladığı alan 34 m).</transla
         <source>A runnable less distinct / visible small path or forestry extraction track.
 Minimum length: two sections of double dashes (5.3 mm - footprint 79.5 m).</source>
         <comment>Description of symbol 507</comment>
-        <translation>Koşulabilir, daha az belirgin / görünür küçük bir patika veya orman çıkarma yolu.
-Minimum uzunluk: iki kesik çizgi bölümü (5.3 mm - kapladığı alan 79.5 m).</translation>
+        <translation>Koşulabilir, daha az belirgin/görünür küçük bir patika veya ormancılık çıkış yolu.
+Minimum uzunluk: iki çift çizgi bölümü (5.3 mm - kapladığı alan 79.5 m).</translation>
     </message>
     <message>
         <source>Narrow ride</source>
@@ -2110,7 +2110,7 @@ Minimum uzunluk (izole): iki çizgi (4 mm - kapladığı alan 60 m).</translatio
 If a section of a power line, cableway or skilift goes along a road or path (and does not offer significant additional navigational value) it should be omitted.
 Minimum length (isolated): 5 mm (footprint: 75 m).</source>
         <comment>Description of symbol 510</comment>
-        <translation>Elektrik hattı, teleferik veya telesiyej. Çizgiler direklerin tam konumunu gösterir. Okunabilirliği artırmak için çizgi kesilebilir.
+        <translation>Elektrik hattı, teleferik veya telesiyej. Çizgiler direklerin tam konumunu gösterir. Okunabilirliği artırmak için hat kesilebilir.
 Eğer bir elektrik hattı, teleferik veya telesiyej bölümü, bir yol veya patika boyunca gidiyorsa (ve önemli ek bir navigasyon değeri sunmuyorsa), bu bölüm atlanmalıdır.
 Minimum uzunluk (izole): 5 mm (kapladığı alan: 75 m).</translation>
     </message>
@@ -2134,7 +2134,7 @@ Very large carrying masts shall be represented in plan shape using outline of sy
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the power line. The lines may be broken to improve legibility. The bars show the exact location of the pylons. Very large carrying masts shall be represented in plan shape using outline of symbol Building (521) or with symbol High tower (524).</source>
         <comment>Description of symbol 511.1</comment>
-        <translation>Büyük elektrik hatları çift çizgi ile çizilmelidir. Çizgiler arasındaki boşluk, elektrik hattının kapsamını gösterebilir. Okunabilirliği artırmak için çizgiler kesilebilir. Çubuklar, direklerin tam konumunu gösterir. Çok büyük taşıyıcı direkler, Bina (521) sembolünün anahat şekli veya Yüksek kule (524) sembolü kullanılarak plan şeklinde gösterilmelidir.</translation>
+        <translation>Yüksek gerilim hatları çift çizgi ile çizilmelidir. Çizgiler arasındaki boşluk, enerji hattının kapsamını gösterebilir. Okunabilirliği artırmak için çizgiler kesilebilir. Çubuklar, direklerin tam konumunu gösterir. Çok büyük taşıyıcı direkler, Bina (521) sembolünün anahat şekli veya Yüksek kule (524) sembolü kullanılarak plan şeklinde gösterilmelidir.</translation>
     </message>
     <message>
         <source>Major power line, large carrying masts</source>
@@ -2144,7 +2144,7 @@ Very large carrying masts shall be represented in plan shape using outline of sy
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline. The bars show the exact location of the pylons. The lines may be broken to improve legibility. Very large carrying masts shall be represented in plan shape using symbol 521 (building) or with symbol 524 (high tower).</source>
         <comment>Description of symbol 511.2</comment>
-        <translation>Büyük elektrik hatları çift çizgi ile çizilmelidir. Çizgiler arasındaki boşluk, elektrik hattının kapsamını gösterebilir. Okunabilirliği artırmak için çizgiler kesilebilir. Çubuklar, direklerin tam konumunu gösterir. Çok büyük taşıyıcı direkler, Bina (521) sembolünün anahat şekli veya Yüksek kule (524) sembolü kullanılarak plan şeklinde gösterilmelidir.</translation>
+        <translation>Yüksek gerilim hatları çift çizgi ile çizilmelidir. Çizgiler arasındaki boşluk, enerji hattının kapsamını gösterebilir. Okunabilirliği artırmak için çizgiler kesilebilir. Çubuklar, direklerin tam konumunu gösterir. Çok büyük taşıyıcı direkler, Bina (521) sembolünün anahat şekli veya Yüksek kule (524) sembolü kullanılarak plan şeklinde gösterilmelidir.</translation>
     </message>
     <message>
         <source>Bridge / tunnel</source>
@@ -2243,7 +2243,7 @@ Minimum uzunluk (izole): 1.5 mm (kapladığı alan 22.5 m).</translation>
     <message>
         <source>Ruined fence</source>
         <comment>Name of symbol 517</comment>
-        <translation>Yıkılmış çit</translation>
+        <translation>Yıkık çit</translation>
     </message>
     <message>
         <source>A ruined or less distinct fence. If the fence forms an enclosed area, tags should be placed inside.
@@ -2275,8 +2275,8 @@ Minimum uzunluk (izole): 2 mm (kapladığı alan 30 m).</translation>
         <source>A way through or over a wall, fence or other linear feature, including a gate or stile.
 For impassable features, the line shall be broken at the crossing point. For passable features, the line shall not be broken if passing involves a degree of climb.</source>
         <comment>Description of symbol 519</comment>
-        <translation>Bir duvar, çit veya diğer doğrusal özelliklerin üzerinden veya içinden geçiş yolu; buna bir kapı veya çit geçidi de dahildir.
-Geçilmez özellikler için, çizgi geçiş noktasında kesilmelidir. Geçilebilir özellikler için, geçiş tırmanma derecesinde bir zorluk içeriyorsa çizgi kesilmemelidir.</translation>
+        <translation>Bir duvar, çit veya diğer çizgisel özellikten geçen veya üzerinden geçen bir yol, kapı veya basamak dahil.
+Geçilemez özellikler için, çizgi geçiş noktasında kesilir. Geçilebilir özellikler için, geçiş bir miktar tırmanma gerektiriyorsa çizgi kesilmez.</translation>
     </message>
     <message>
         <source>Area that shall not be entered</source>
@@ -2413,15 +2413,15 @@ Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
         <comment>Description of symbol 521.3</comment>
         <translation>Bina, ölçeğin izin verdiği ölçüde zemin planına göre gösterilir.
 75 m x 75 m&apos;den büyük binalar, kentsel alanlarda koyu gri dolgu ile temsil edilebilir.
-Binalar arası geçişler minimum 0,3 mm genişliğinde olmalıdır (kapladığı alan 4,5 m).
+Binalar arası geçişler minimum 0.3 mm genişliğinde olmalıdır (kapladığı alan 4.5 m).
 Yasak alanlar içindeki binalar genelleştirilir.
-Bir binanın içinde tamamen yer alan alanlar haritalanmamalıdır (binanın bir parçası olarak temsil edilmelidir). Binalar arası ve binalar ile diğer geçilemez özellikler arasındaki geçişi gösteren minimum boşluk 0,4 mm olmalıdır.
-Minimum alan: 0,5 mm x 0,5 mm (kapladığı alan 7,5 m x 7,5 m).</translation>
+Bir binanın içinde tamamen yer alan alanlar haritalanmamalıdır (binanın bir parçası olarak temsil edilmelidir). Binalar arası ve binalar ile diğer geçilemez özellikler arasındaki geçişi gösteren minimum boşluk 0.4 mm olmalıdır.
+Minimum alan: 0.5 mm x 0.5 mm (kapladığı alan 7.5 m x 7.5 m).</translation>
     </message>
     <message>
         <source>Large building, outline</source>
         <comment>Name of symbol 521.4</comment>
-        <translation>Büyük bina, ana hatlar</translation>
+        <translation>Büyük bina, anahat çizgisi</translation>
     </message>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.
@@ -2441,7 +2441,7 @@ Minimum alan: 0.5 mm x 0.5 mm (kapladığı alan 7.5 m x 7.5 m).</translation>
     <message>
         <source>Canopy with outline</source>
         <comment>Name of symbol 522</comment>
-        <translation>Gölgelik/sundurma</translation>
+        <translation>Gölgelik/sundurma anahat çizgisi ile</translation>
     </message>
     <message>
         <source>An accessible and runnable area with roof.
@@ -2469,7 +2469,7 @@ Minimum (iç) genişlik: 0.3 mm (kapladığı alan 4.5 m).</translation>
     <message>
         <source>Canopy, outline</source>
         <comment>Name of symbol 522.2</comment>
-        <translation>Gölgelik, ana hatlar</translation>
+        <translation>Gölgelik, anahat çizgisi</translation>
     </message>
     <message>
         <source>An accessible and runnable area with roof.
@@ -2489,8 +2489,8 @@ Minimum (iç) genişlik: 0.3 mm (kapladığı alan 4.5 m).</translation>
         <source>A ruined building. The ground plan of a ruin is shown to scale, down to the minimum size. Ruins that are so small that they cannot be drawn to scale may be represented using a solid line.
 Minimum area (outside measures): 0.8 mm x 0.8 mm (footprint 12 m x 12 m).</source>
         <comment>Description of symbol 523</comment>
-        <translation>Bir harabe binanın zemin planı, minimum boyuta kadar ölçekli olarak gösterilir. Ölçekli çizilemeyecek kadar küçük harabeler, düz bir çizgi kullanılarak gösterilebilir.
-Minimum alan (dış ölçüler): 0.8 mm x 0.8 mm (kapladığı alan 12 m x 12 m).</translation>
+        <translation>Yıkık bir bina. Bir harabenin zemin planı, minimum boyuta kadar ölçeğe uygun gösterilir. Ölçeğe uygun çizilemeyecek kadar küçük harabeler düz bir çizgi kullanılarak temsil edilebilir.
+Minimum alan (dış ölçümler): 0.8 mm x 0.8 mm (kapladığı alan 12 m x 12 m).</translation>
     </message>
     <message>
         <source>Ruin, minimum size</source>
@@ -2501,8 +2501,8 @@ Minimum alan (dış ölçüler): 0.8 mm x 0.8 mm (kapladığı alan 12 m x 12 m)
         <source>A ruined building. The ground plan of a ruin is shown to scale, down to the minimum size. Ruins that are so small that they cannot be drawn to scale may be represented using a solid line.
 Minimum area (outside measures): 0.8 mm x 0.8 mm (footprint 12 m x 12 m).</source>
         <comment>Description of symbol 523.1</comment>
-        <translation>Bir harabe binanın zemin planı, minimum boyuta kadar ölçekli olarak gösterilir. Ölçekli çizilemeyecek kadar küçük harabeler, düz bir çizgi kullanılarak gösterilebilir.
-Minimum alan (dış ölçüler): 0.8 mm x 0.8 mm (kapladığı alan 12 m x 12 m).</translation>
+        <translation>Yıkık bir bina. Bir harabenin zemin planı, minimum boyuta kadar ölçeğe uygun gösterilir. Ölçeğe uygun çizilemeyecek kadar küçük harabeler düz bir çizgi kullanılarak temsil edilebilir.
+Minimum alan (dış ölçümler): 0.8 mm x 0.8 mm (kapladığı alan 12 m x 12 m).</translation>
     </message>
     <message>
         <source>High tower</source>
@@ -2559,7 +2559,7 @@ Location is at the centre of gravity of the symbol.
 The symbol is orientated to north.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 527</comment>
-        <translation>Tek başına duran veya bir ağaca bağlı bir yem rafı.
+        <translation>Bağımsız duran veya bir ağaca bağlı bir yem rafı.
 Konum, sembolün ağırlık merkezindedir.
 Sembol kuzeye yönlendirilmiştir.
 Kapladığı Alan: 13.5 m x 13.5 m.</translation>
@@ -2598,9 +2598,9 @@ Minimum uzunluk: 2 mm (kapladığı alan 30 m).</translation>
 The definition of the symbol must be given on the map.
 Footprint: 12 m in diameter.</source>
         <comment>Description of symbol 530</comment>
-        <translation>Bir dairenin merkezinde konumlandırılan bu sembol, belirgin insan yapımı bir özelliği temsil eder.
-Sembolün tanımı harita üzerinde mutlaka belirtilmelidir.
-Kapladığı alan: 12 metre çapında.</translation>
+        <translation>Konum, sembolün ağırlık merkezindedir.
+Sembolün tanımı haritada verilmelidir.
+Kapladığı alan: 12 m çapında.</translation>
     </message>
     <message>
         <source>Prominent man-made feature – x</source>
@@ -2613,7 +2613,7 @@ The symbol is orientated to north.
 The definition of the symbol must be given on the map.
 Footprint: 12 m x 12 m.</source>
         <comment>Description of symbol 531</comment>
-        <translation>Önemli ya da belirgin olan küçük bir yeryüzü özelliği. Yeri, sembolün ağırlık merkezidir.
+        <translation>Konum, sembolün ağırlık merkezindedir.
 Sembol kuzeye yönlendirilir.
 Sembolün tanımı haritada verilmelidir.
 Kapladığı alan: 12 m x 12 m.</translation>
@@ -2629,8 +2629,8 @@ An easily runnable stairway or indistinct stairway should be drawn as a footpath
 Minimum length: 3 (graphical) steps.
 Minimum width: 0.4 mm (IM).</source>
         <comment>Description of symbol 532</comment>
-        <translation>Eğimli arazilerde veya geçilemeyen engellerin üzerinden aşmaya yardımcı olan belirgin merdivenler. Kaya geçitlerinden veya geçilemeyen nesnelerin arasından geçen bir merdiven, kenar çizgileri olmadan çizilebilir.
-Kolayca koşulabilen veya belirgin olmayan bir merdiven, patika olarak çizilmelidir. Bir merdivenin basamakları genelleştirilmiş bir şekilde temsil edilir.
+        <translation>Çok dik yamaçları tırmanmaya veya geçilemez nesnelerin üzerinden geçmeye yardımcı olan, arazide belirgin bir merdiven. Kaya geçitlerinden veya geçilemez nesneler arasından geçen bir merdiven, kenar çizgileri olmadan çizilebilir.
+Kolayca koşulabilir bir merdiven veya belirsiz merdiven, bir patika olarak çizilmelidir. Bir merdivenin basamakları genelleştirilmiş bir şekilde temsil edilir.
 Minimum uzunluk: 3 (grafiksel) basamak.
 Minimum genişlik: 0.4 mm (IM).</translation>
     </message>
@@ -2644,58 +2644,62 @@ Minimum genişlik: 0.4 mm (IM).</translation>
 An easily runnable stairway or indistinct stairway should be drawn as a footpath. Steps of a stairway shall be represented in a generalized manner.
 </source>
         <comment>Description of symbol 532.1</comment>
-        <translation>Eğimli arazilerde veya geçilemeyen engellerin üzerinden aşmaya yardımcı olan belirgin merdivenler. Kaya geçitlerinden veya geçilemeyen nesnelerin arasından geçen bir merdiven, kenar çizgileri olmadan çizilebilir.
-Kolayca koşulabilen veya belirgin olmayan bir merdiven, patika olarak çizilmelidir. Bir merdivenin basamakları genelleştirilmiş bir şekilde temsil edilir.
+        <translation>Çok dik yamaçları tırmanmaya veya geçilemez nesnelerin üzerinden geçmeye yardımcı olan, arazide belirgin bir merdiven. Kaya geçitlerinden veya geçilemez nesneler arasından geçen bir merdiven, kenar çizgileri olmadan çizilebilir.
+Kolayca koşulabilir bir merdiven veya belirsiz merdiven, bir patika olarak çizilmelidir. Bir merdivenin basamakları genelleştirilmiş bir şekilde temsil edilir.
 </translation>
     </message>
     <message>
         <source>Magnetic north line</source>
         <comment>Name of symbol 601.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Manyetik kuzey çizgisi</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Manyetik kuzey çizgileri, manyetik kuzeyi işaret eden, kağıdın kenarlarına paralel olarak haritaya yerleştirilmiş çizgilerdir. Harita üzerindeki aralıkları, 1:15 000 ölçeğinde yerde 300 m&apos;yi temsil eden 20 mm olmalıdır. Harita 1:10 000&apos;e büyütülürse, çizgilerin aralığı haritada 30 mm olacaktır.
+Küçük özellikleri örtecekleri yerlerde haritanın okunabilirliğini artırmak için kuzey çizgileri kesilmelidir. Çok az su özelliği bulunan alanlarda mavi çizgiler kullanılabilir.</translation>
     </message>
     <message>
         <source>North lines pattern</source>
         <comment>Name of symbol 601.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kuzey çizgisi deseni</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Manyetik kuzey çizgileri, manyetik kuzeyi işaret eden, kağıdın kenarlarına paralel olarak haritaya yerleştirilmiş çizgilerdir. Harita üzerindeki aralıkları, 1:15 000 ölçeğinde yerde 300 m&apos;yi temsil eden 20 mm olmalıdır. Harita 1:10 000&apos;e büyütülürse, çizgilerin aralığı haritada 30 mm olacaktır.
+Küçük özellikleri örtecekleri yerlerde haritanın okunabilirliğini artırmak için kuzey çizgileri kesilmelidir. Çok az su özelliği bulunan alanlarda mavi çizgiler kullanılabilir.</translation>
     </message>
     <message>
         <source>Magnetic north line, blue</source>
         <comment>Name of symbol 601.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Manyetik kuzey çizgisi, mavi</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Manyetik kuzey çizgileri, manyetik kuzeyi işaret eden, kağıdın kenarlarına paralel olarak haritaya yerleştirilmiş çizgilerdir. Harita üzerindeki aralıkları, 1:15 000 ölçeğinde yerde 300 m&apos;yi temsil eden 20 mm olmalıdır. Harita 1:10 000&apos;e büyütülürse, çizgilerin aralığı haritada 30 mm olacaktır.
+Küçük özellikleri örtecekleri yerlerde haritanın okunabilirliğini artırmak için kuzey çizgileri kesilmelidir. Çok az su özelliği bulunan alanlarda mavi çizgiler kullanılabilir.</translation>
     </message>
     <message>
         <source>North lines pattern, blue</source>
         <comment>Name of symbol 601.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kuzey çizgileri deseni, mavi</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Manyetik kuzey çizgileri, manyetik kuzeyi işaret eden, kağıdın kenarlarına paralel olarak haritaya yerleştirilmiş çizgilerdir. Harita üzerindeki aralıkları, 1:15 000 ölçeğinde yerde 300 m&apos;yi temsil eden 20 mm olmalıdır. Harita 1:10 000&apos;e büyütülürse, çizgilerin aralığı haritada 30 mm olacaktır.
+Küçük özellikleri örtecekleri yerlerde haritanın okunabilirliğini artırmak için kuzey çizgileri kesilmelidir. Çok az su özelliği bulunan alanlarda mavi çizgiler kullanılabilir.</translation>
     </message>
     <message>
         <source>Registration mark</source>
         <comment>Name of symbol 602</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kayıt işareti</translation>
     </message>
     <message>
         <source>At least three registration marks may be placed in the corners of the map. These can be used for printing courses on already printed maps. In addition, it allows a check of colour registration when printing colours separately.</source>
@@ -2705,74 +2709,81 @@ North lines shall be broken to improve the legibility of the map, for instance w
     <message>
         <source>Spot height, dot</source>
         <comment>Name of symbol 603.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kot noktası, nokta</translation>
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
 Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</source>
         <comment>Description of symbol 603.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kot noktaları, yükseklik farklarının kabaca değerlendirilmesi için kullanılır. Yükseklik en yakın metreye verilir.
+Su seviyeleri noktasız verilir.
+Kot noktaları yalnızca diğer sembollerle çakışmadığı yerlerde kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Spot height, text</source>
         <comment>Name of symbol 603.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kot noktası, metin</translation>
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
 Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</source>
         <comment>Description of symbol 603.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kot noktaları, yükseklik farklarının kabaca değerlendirilmesi için kullanılır. Yükseklik en yakın metreye verilir.
+Su seviyeleri noktasız verilir.
+Kot noktaları yalnızca diğer sembollerle çakışmadığı yerlerde kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Start</source>
         <comment>Name of symbol 701</comment>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç</translation>
     </message>
     <message>
         <source>The place where the orienteering starts. The centre of the triangle shows the precise position where the orienteering course starts. The start must be on a clearly identifiable point on the map. The triangle points in the direction of the first control.</source>
         <comment>Description of symbol 701</comment>
-        <translation type="unfinished"></translation>
+        <translation>Oryantiringin başladığı yer. Üçgenin merkezi, oryantiring parkurunun başladığı kesin konumu gösterir. Başlangıç, haritada açıkça tanımlanabilir bir noktada olmalıdır. Üçgen, ilk kontrole doğru işaret eder.</translation>
     </message>
     <message>
         <source>Map issue point</source>
         <comment>Name of symbol 702</comment>
-        <translation type="unfinished"></translation>
+        <translation>Harita dağıtım noktası</translation>
     </message>
     <message>
         <source>If there is a marked route to the start point, the map issue point is marked using this symbol.</source>
         <comment>Description of symbol 702</comment>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç noktasına işaretlenmiş bir rota varsa, harita dağıtım noktası bu sembol kullanılarak işaretlenir.</translation>
     </message>
     <message>
         <source>Control point</source>
         <comment>Name of symbol 703</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol noktası</translation>
     </message>
     <message>
         <source>For point features, the centre of the circle shall be the centre of the symbol. For line and area features, the centre of the circle shows the precise position of the control marker. Controls shall only be placed on points that are clearly identifiable on the map.
 Sections of the circle should be omitted to leave important detail showing.
 Footprint 75 m</source>
         <comment>Description of symbol 703</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nokta özellikleri için, dairenin merkezi sembolün merkezi olmalıdır. Çizgi ve alan özellikleri için, dairenin merkezi kontrol işaretleyicisinin kesin konumunu gösterir. Kontroller yalnızca haritada açıkça tanımlanabilir noktalara yerleştirilmelidir.
+Önemli detayları göstermek için dairenin bölümleri çıkarılmalıdır.
+Kapladığı alan 75 m</translation>
     </message>
     <message>
         <source>Control number</source>
         <comment>Name of symbol 704</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol numarası</translation>
     </message>
     <message>
         <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail.
 The numbers are orientated to north.</source>
         <comment>Description of symbol 704</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol numarası, önemli detayları örtmeyecek şekilde kontrol noktası dairesinin yakınına yerleştirilir.
+Numaralar kuzeye yönlendirilir.</translation>
     </message>
     <message>
         <source>Course line</source>
         <comment>Name of symbol 705</comment>
-        <translation type="unfinished"></translation>
+        <translation>Parkur çizgisi</translation>
     </message>
     <message>
         <source>Where controls are to be visited in order, the sequence is shown using straight lines from the start to the first control and then from each control to the next one. Sections of lines should be omitted to leave important detail showing. The line should be drawn via mandatory crossing points. There should be gaps between the line and the control circle in order to increase the readability of the underlying detail close to the control.</source>
@@ -2782,40 +2793,43 @@ The numbers are orientated to north.</source>
     <message>
         <source>Finish</source>
         <comment>Name of symbol 706</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bitiş</translation>
     </message>
     <message>
         <source>The end of the course.</source>
         <comment>Description of symbol 706</comment>
-        <translation type="unfinished"></translation>
+        <translation>Parkurun sonu.</translation>
     </message>
     <message>
         <source>Marked route</source>
         <comment>Name of symbol 707</comment>
-        <translation type="unfinished"></translation>
+        <translation>İşaretli rota</translation>
     </message>
     <message>
         <source>A marked route that is a part of the course. It is mandatory to follow the marked route.
 Minimum length: 2 dashes (4.5 mm – footprint: 67.5 m).</source>
         <comment>Description of symbol 707</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yarışma parkurunun bir parçası olan işaretlenmiş rotayı gösterir. İşaretli rotayı takip etmek zorunludur.
+Minimum uzunluk: 2 çizgi (4.5 mm – kapladığı alan: 67.5 m).</translation>
     </message>
     <message>
         <source>Out-of-bounds boundary</source>
         <comment>Name of symbol 708</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak bölge sınırı</translation>
     </message>
     <message>
         <source>A boundary which it is not permitted to cross.
 An out-of-bounds boundary shall not be crossed.
 Minimum length: 1 mm (footprint: 15 m).</source>
         <comment>Description of symbol 708</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilmesine izin verilmeyen bir sınır.
+Yasak bölge sınırı geçilmez.
+Minimum uzunluk: 1 mm (kapladığı alan: 15 m).</translation>
     </message>
     <message>
         <source>Out-of-bounds area</source>
         <comment>Name of symbol 709</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak bölge</translation>
     </message>
     <message>
         <source>An out-of-bounds area. A bounding line may be drawn if there is no natural boundary, as follows:
@@ -2825,37 +2839,37 @@ Minimum length: 1 mm (footprint: 15 m).</source>
 An out-of-bounds area shall not be entered.
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 709</comment>
-        <translation>Yasak alan. Eğer doğal bir sınır yoksa aşağıdaki gibi bir sınır çizgisi çizilebilir:
+        <translation>Yasak bölge. Eğer doğal bir sınır yoksa aşağıdaki gibi bir sınır çizgisi çizilebilir:
 -düz kesintisiz bir çizgi, sınırın arazide sürekli işaretlendiğini (bantlar, vb.) gösterir,
 -kesikli çizgi, arazide aralıklı işaretleme olduğunu gösterir,
 -çizgi olmaması, arazide işaretleme olmadığını gösterir.
-Yasak alana girilmemelidir.
+Yasak bölgeye girilmemelidir.
 Minimum alan: 2 mm x 2 mm (kapladığı alan 30 m x 30 m).</translation>
     </message>
     <message>
         <source>Out-of-bounds area, solid boundary</source>
         <comment>Name of symbol 709.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak bölge, düz sınır</translation>
     </message>
     <message>
         <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
         <comment>Description of symbol 709.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Düz bir çizgi, sınırın arazide sürekli olarak (bantlar, vb.) işaretlendiğini gösterir.</translation>
     </message>
     <message>
         <source>Out-of-bounds area, dashed boundary</source>
         <comment>Name of symbol 709.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak bölge, kesikli sınır</translation>
     </message>
     <message>
         <source>A dashed line indicates intermittent marking on the ground.</source>
         <comment>Description of symbol 709.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kesikli bir çizgi, arazide aralıklı işaretleme olduğunu gösterir.</translation>
     </message>
     <message>
         <source>Crossing point</source>
         <comment>Name of symbol 710</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçiş noktası</translation>
     </message>
     <message>
         <source>A crossing point, for instance through or over a wall or fence, across a road or railway, through a tunnel or out-of-bounds area, or over an uncrossable boundary is drawn on the map with two lines curving outwards. The lines shall reflect the length of the crossing.</source>
@@ -2865,70 +2879,74 @@ Minimum alan: 2 mm x 2 mm (kapladığı alan 30 m x 30 m).</translation>
     <message>
         <source>Out-of-bounds route</source>
         <comment>Name of symbol 711</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak rota</translation>
     </message>
     <message>
         <source>A route which is out-of-bounds. Competitors are allowed to cross directly over a forbidden route, but it is forbidden to go along it.
 An out-of-bounds route shall not be used.
 Minimum length: 2 symbols (6 mm – footprint 90 m).</source>
         <comment>Description of symbol 711</comment>
-        <translation>Yarışmacıların üzerinden doğrudan geçmesine izin verilen, ancak boyunca gitmesinin yasak olduğu, sınır dışı bir rota.
-Yasak bir rota kullanılmamalıdır.
+        <translation>Yasak bir rota. Yarışmacıların yasak bir rotanın üzerinden doğrudan geçmesine izin verilir, ancak boyunca gitmek yasaktır.
+Yasak rota kullanılmaz.
 Minimum uzunluk: 2 sembol (6 mm – kapladığı alan 90 m).</translation>
     </message>
     <message>
         <source>Out-of-bounds route, single cross</source>
         <comment>Name of symbol 711.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak rota, tekli çapraz</translation>
     </message>
     <message>
         <source>A route which is out-of-bounds. Competitors are allowed to cross directly over a forbidden route, but it is forbidden to go along it.
 An out-of-bounds route shall not be used.
 Minimum length: 2 symbols (6 mm – footprint 90 m).</source>
         <comment>Description of symbol 711.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak bir rota. Yarışmacıların yasak bir rotanın üzerinden doğrudan geçmesine izin verilir, ancak boyunca gitmek yasaktır.
+Yasak rota kullanılmaz.
+Minimum uzunluk: 2 sembol (6 mm – kapladığı alan 90 m).</translation>
     </message>
     <message>
         <source>First aid post</source>
         <comment>Name of symbol 712</comment>
-        <translation type="unfinished"></translation>
+        <translation>İlk yardım noktası</translation>
     </message>
     <message>
         <source>The location of a first aid post.</source>
         <comment>Description of symbol 712</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir ilk yardım noktasının konumu.</translation>
     </message>
     <message>
         <source>Refreshment point</source>
         <comment>Name of symbol 713</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dinlenme noktası</translation>
     </message>
     <message>
         <source>The location of a refreshment point which is not at a control.</source>
         <comment>Description of symbol 713</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol noktasında olmayan bir dinlenme noktasının konumu.</translation>
     </message>
     <message>
         <source>Simple Orienteering Course</source>
         <comment>Name of symbol 799</comment>
-        <translation type="unfinished"></translation>
+        <translation>Basit Oryantiring Parkuru</translation>
     </message>
     <message>
         <source>This symbol provides a simple and quick way to make training courses.
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
         <comment>Description of symbol 799</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bu sembol, antrenman parkurları oluşturmak için basit ve hızlı bir yol sağlar.
+
+Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaşımın bir eksiğidir.</translation>
     </message>
     <message>
         <source>OpenOrienteering Logo</source>
         <comment>Name of symbol 999</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering Logosu</translation>
     </message>
     <message>
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering Logosu.</translation>
     </message>
 </context>
 <context>
@@ -2946,7 +2964,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Opaque White below Black</source>
         <comment>Color 2</comment>
-        <translation>Siyah altında Mat Beyaz</translation>
+        <translation>Siyah altında opak Beyaz</translation>
     </message>
     <message>
         <source>Black 65%</source>
@@ -2971,7 +2989,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Opaque Blue</source>
         <comment>Color 7</comment>
-        <translation>Mat mavi</translation>
+        <translation>Opak Mavi</translation>
     </message>
     <message>
         <source>Blue</source>
@@ -2991,7 +3009,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 11</comment>
-        <translation>Açık orienteering Turuncu</translation>
+        <translation>OpenOrienteering Turuncu</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -3011,22 +3029,22 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Opaque Yellow</source>
         <comment>Color 15</comment>
-        <translation>Mat Sarı</translation>
+        <translation>Opak Sarı</translation>
     </message>
     <message>
         <source>Opaque White over Green</source>
         <comment>Color 16</comment>
-        <translation>Yeşil üzerine Mat Beyaz</translation>
+        <translation>Yeşil üzerine opak Beyaz</translation>
     </message>
     <message>
         <source>Opaque Green 20%</source>
         <comment>Color 17</comment>
-        <translation>Mat Yeşil %20</translation>
+        <translation>Opak Yeşil %20</translation>
     </message>
     <message>
         <source>Opaque Green 50%</source>
         <comment>Color 18</comment>
-        <translation>Mat Yeşil %50</translation>
+        <translation>Opak Yeşil %50</translation>
     </message>
     <message>
         <source>Green, Black 50%</source>
@@ -3036,7 +3054,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Opaque Green</source>
         <comment>Color 20</comment>
-        <translation>Mat Yeşil</translation>
+        <translation>Opak Yeşil</translation>
     </message>
     <message>
         <source>Green 50%</source>
@@ -3051,7 +3069,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green below light greens</source>
         <comment>Color 23</comment>
-        <translation>Açık yeşiller altında Yeşil</translation>
+        <translation>Açık yeşiller altında yeşil</translation>
     </message>
     <message>
         <source>Green 50% over Yellow</source>
@@ -3061,7 +3079,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>White over Yellow</source>
         <comment>Color 25</comment>
-        <translation>Beyaz Sarı üzerinde</translation>
+        <translation>Sarı üzerinde Beyaz</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -3076,12 +3094,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation>Eşyükselti</translation>
+        <translation>Eşyükselti eğrisi</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
         <comment>Description of symbol 101</comment>
-        <translation>Eş yükseklikteki noktaları birleştiren bir çizgi. Eşyükselti arasındaki standart düşey aralık 5 metredir. 2,5 metre eşyükselti aralığı düz arazilerde için kullanılabilir. Bir eşyükseltideki en küçük kıvrım merkezden çizgilerin ortasına 0,25 mm dir.</translation>
+        <translation>Eşit yükseklikteki noktaları birleştiren çizgi. Eşyükselti eğrileri arasındaki standart düşey aralık 5 metredir. Düz araziler için 2.5 metrelik eşyükselti aralığı kullanılabilir. Bir eşyükselti eğrisindeki en küçük kıvrım, çizgilerin merkezinden merkezine 0.25 mm&apos;dir.</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -3091,17 +3109,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation>Eğim çizgileri eğim yönünü açıklığa kavuşturmak için Kontur hattının alt tarafında çizilmiş olabilir. Kullanıldığında, girintilerin içinde yerleştirilmelidir.</translation>
+        <translation>Eğim yönünü belirtmek için eşyükselti eğrisinin alt tarafına eğim çizgileri çizilebilir. Kullanıldığında, girintilerin (re-entrant) içine yerleştirilir.</translation>
     </message>
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation>İndeks eşyükselti</translation>
+        <translation>İndeks eşyükselti eğrisi</translation>
     </message>
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
         <comment>Description of symbol 102</comment>
-        <translation>Her beşinci kontur kalın bir çizgi ile çizilmelidir. Bu, yükseklik farkının ve yeryüzünün genel şeklinin hızlı değerlendirmesine yardımcı olur. Bir indeks eşyükselti eğrisi çok detay içeren bir arazide normal bir eşyükselti çizgisi gibi temsil edilebilir. Küçük tepecikler ve çöküntüler normalde indeks eşyükselti kullanarak gösterilmez.</translation>
+        <translation>Her beşinci eşyükselti eğrisi daha kalın bir çizgi ile çizilir. Bu, yükseklik farkının ve arazinin genel şeklinin hızlı değerlendirilmesine yardımcı olur. Çok detaylı bir alanda bir indis eşyükselti eğrisi sıradan bir eşyükselti eğrisi olarak gösterilebilir. Küçük eşyükselti tepecikleri ve çukurları normalde indis eşyükselti eğrileri kullanılarak gösterilmez.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -3111,27 +3129,27 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation>Eşyükselti değerleri büyük yükseklik farklılıklarını değerlendirmeye yardım için kullanılabilir. Diğer ayrıntıları örtmediği pozisyonlarda indeks eşyükselti çizgileri üzerine eklenir. Rakamlar, figürün üst kısmı eşyükseltinin üst tarafında olacak şekilde yönlendirilmelidir.</translation>
+        <translation>Büyük yükseklik farklarının değerlendirilmesine yardımcı olmak için eşyükselti değerleri eklenebilir. Diğer detayların görünmediği konumlarda indis eşyükselti eğrilerinin üzerine yazılır. Rakamlar, rakamın üst kısmı eşyükseltinin daha yüksek tarafına bakacak şekilde yönlendirilir.</translation>
     </message>
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation>Biçim çizgisi</translation>
+        <translation>Form çizgisi</translation>
     </message>
     <message>
         <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.</source>
         <comment>Description of symbol 103</comment>
-        <translation>Biçim çizgileri yerin şekli hakkında daha fazla bilgi verilmesi gereken yerlerde kullanılır. Biçim çizgileri sadece normal eşyükselti ile temsilin eksik olacağı yerlerde eklenir. Ara eşyükseltiler gibi kullanılamaz. Tek bir biçim çizgisi komşu eşyükseltilerin arasında kullanılmalıdır. Biçim çizgilerinin eşyükselti sistemine mantıklı uyması çok önemlidir, bu yüzden biçim çizgisi başlangıç ve bitişi komşu eşyükseltilere paralel olmalıdır. Biçim çizgisinin kesikli çizgileri arasındaki boşluklar, form çizgisinin oldukça düz bölümlerine yerleştirilmelidir. Biçim çizgileri düz tepecikleri ve çöküntüleri daha belirgin olanlardan ayırmak için kullanılabilir.</translation>
+        <translation>Form çizgileri, zemin şekli hakkında daha fazla bilgi verilmesi gereken yerlerde kullanılır. Sadece sıradan eşyükselti eğrileriyle gösterimin eksik kalacağı yerlere eklenir. Ara eşyükseltiler olarak kullanılmaz. Komşu eşyükselti eğrileri arasında sadece bir form çizgisi kullanılmalıdır. Bir form çizgisinin eşyükselti sistemine mantıklı bir şekilde uyması çok önemlidir, bu nedenle bir form çizgisinin başlangıcı ve bitişi komşu eşyükselti eğrilerine paralel olmalıdır. Form çizgisi tireleri arasındaki boşluklar, çizginin nispeten düz bölümlerine yerleştirilmelidir. Form çizgileri, düz tepecik ve çukurları daha belirgin olanlardan ayırmak için kullanılabilir.</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
         <comment>Name of symbol 103.1</comment>
-        <translation>Eğim çizgisi, biçim çizgisi</translation>
+        <translation>Eğim çizgisi, form çizgisi</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 103.1</comment>
-        <translation>Eğim çizgileri eğim yönünü açıklığa kavuşturmak için eşyükselti çizgisinin alt tarafında çizilmiş olabilir. Kullanıldığında, girintilerin içinde yerleştirilmelidir.</translation>
+        <translation>Eğim yönünü belirtmek için bir eşyükselti eğrisinin alt tarafına eğim çizgileri çizilebilir. Kullanıldığında, girintilerin (re-entrant) içine yerleştirilir.</translation>
     </message>
     <message>
         <source>Earth bank</source>
@@ -3141,12 +3159,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 104.1</comment>
-        <translation>Toprak set, minimum boy</translation>
+        <translation>Toprak set, minimum boyut</translation>
     </message>
     <message>
         <source>Earth bank, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 104.9</comment>
-        <translation>Toprak set, minimum boy (ISOM2000)</translation>
+        <translation>Toprak set, minimum boyut (ISOM2000)</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -3161,12 +3179,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Erosion gully</source>
         <comment>Name of symbol 107</comment>
-        <translation>Erozyon kanalı</translation>
+        <translation>Erozyon oyuğu</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 108</comment>
-        <translation>Küçük erozyon kanalı</translation>
+        <translation>Küçük erozyon oyuğu</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -3206,12 +3224,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation>Aşılmaz taş set</translation>
+        <translation>Geçilemez yar / uçurum</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation>Aşılmaz taş set, minimum boy</translation>
+        <translation>Geçilemez yar / uçurum, minimum boyut</translation>
     </message>
 </context>
 <context>
