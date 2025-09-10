@@ -365,7 +365,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="185"/>
         <source>Cyan</source>
-        <translation>Cyan</translation>
+        <translation type="unfinished">Cyan</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="190"/>
@@ -4493,7 +4493,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1069"/>
         <source>Scale objects</source>
-        <translation>Ölçek nesneleri</translation>
+        <translation>Nesneleri ölçeklendir</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1900"/>
@@ -6124,7 +6124,7 @@ varsa fare tekerleği ile yakınlaştırın/uzaklaştırın.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="300"/>
         <source>Save world file</source>
-        <translation>Dünya dosyasını kaydet</translation>
+        <translation>World dosyasını kaydet</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="245"/>
@@ -6986,7 +6986,7 @@ ayrımlar</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="117"/>
         <source>Edit</source>
-        <translation>Düzenle</translation>
+        <translation>Düzen</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="118"/>
@@ -7428,7 +7428,7 @@ Değişikliklerinizi kaydetmek istiyor musunuz?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="54"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Tüm dosyalar (*.*)</translation>
+        <translation>Tüm dosyalar (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="76"/>
@@ -7553,8 +7553,8 @@ rota seçimini yapar
     <message numerus="yes">
         <location filename="../src/gui/map/map_find_feature.cpp" line="256"/>
         <source>%n object(s) selected</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n nesne(ler) seçildi</numerusform>
         </translation>
     </message>
     <message>
@@ -8237,7 +8237,7 @@ rota seçimini yapar
         <location filename="../src/templates/template_track.cpp" line="573"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
-            <numerusform>%n yol nesnesi içe aktarılamadı (sebep: eksik koordinatlar).</numerusform>
+            <numerusform>%n yol nesne(ler)i içe aktarılamadı (sebep: eksik koordinatlar).</numerusform>
         </translation>
     </message>
 </context>
