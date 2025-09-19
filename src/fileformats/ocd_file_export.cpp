@@ -1877,6 +1877,7 @@ QByteArray OcdFileExport::exportTextSymbol(const TextSymbol* text_symbol, quint3
 	setupTextSymbolExtra(text_symbol, ocd_symbol);
 	setupTextSymbolBasic(text_symbol, alignment, ocd_symbol.basic);
 	setupTextSymbolSpecial(text_symbol, ocd_symbol.special);
+	setupTextSymbolFraming(text_symbol, ocd_symbol.framing);
 	
 	auto header_size = int(sizeof(OcdTextSymbol));
 	ocd_symbol.base.size = decltype(ocd_symbol.base.size)(header_size);
@@ -1963,6 +1964,8 @@ void OcdFileExport::setupTextSymbolFraming(const TextSymbol* text_symbol, OcdTex
 	if (text_symbol->getFramingColor())
 	{
 		ocd_text_framing.color = convertColor(text_symbol->getFramingColor());
+		if (ocd_version >= 9)
+			ocd_text_framing.line_style_V9 = 4;		// Default value
 		switch (text_symbol->getFramingMode())
 		{
 		case TextSymbol::NoFraming:
