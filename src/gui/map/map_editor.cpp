@@ -4003,6 +4003,7 @@ void MapEditorController::mergeCurrentMapPartTo(int target)
 void MapEditorController::mergeAllMapParts()
 {
 	QString const name = map->getCurrentPart()->getName();
+	const auto visibility = map->getCurrentPart()->isVisible();
 	const QMessageBox::StandardButton button =
 	        QMessageBox::question(
 	            window,
@@ -4015,7 +4016,7 @@ void MapEditorController::mergeAllMapParts()
 		auto* undo = new CombinedUndoStep(map);
 		
 		// For simplicity, we merge to the first part,
-		// but keep the properties (i.e. name) of the current part.
+		// but keep the properties (i.e. name, visibility) of the current part.
 		map->setCurrentPartIndex(0);
 		MapPart* target_part = map->getPart(0);
 		
@@ -4032,6 +4033,7 @@ void MapEditorController::mergeAllMapParts()
 		
 		undo->push(new MapPartUndoStep(map, MapPartUndoStep::ModifyMapPart, 0));
 		target_part->setName(name);
+		target_part->setVisible(visibility);
 		
 		map->push(undo);
 	}
