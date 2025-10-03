@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2020 Kai Pastor
+ *    Copyright 2016-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1975,23 +1975,23 @@ bool OgrFileExport::exportImplementation()
 
 	auto is_point_object = [](const Object* object) {
 		const auto* symbol = object->getSymbol();
-		return symbol && symbol->getContainedTypes() & Symbol::Point;
+		return symbol && !symbol->isHidden() && !symbol->isHelperSymbol() && symbol->getContainedTypes() & Symbol::Point;
 	};
 
 	auto is_text_object = [](const Object* object) {
 		const auto* symbol = object->getSymbol();
-		return symbol && symbol->getContainedTypes() & Symbol::Text;
+		return symbol && !symbol->isHidden() && !symbol->isHelperSymbol() && symbol->getContainedTypes() & Symbol::Text;
 	};
 
 	auto is_line_object = [](const Object* object) {
 		const auto* symbol = object->getSymbol();
-		return symbol && (symbol->getType() == Symbol::Line
-		                  || (symbol->getType() == Symbol::Combined && !(symbol->getContainedTypes() & Symbol::Area)));
+		return symbol && !symbol->isHidden() && !symbol->isHelperSymbol() 
+		              && (symbol->getType() == Symbol::Line || (symbol->getType() == Symbol::Combined && !(symbol->getContainedTypes() & Symbol::Area)));
 	};
 
 	auto is_area_object = [](const Object* object) {
 		const auto* symbol = object->getSymbol();
-		return symbol && symbol->getContainedTypes() & Symbol::Area;
+		return symbol && !symbol->isHidden() && !symbol->isHelperSymbol() && symbol->getContainedTypes() & Symbol::Area;
 	};
 
 	if (quirks & SingleLayer)
