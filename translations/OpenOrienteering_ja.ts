@@ -1591,7 +1591,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
         <source>User input: Ignore display touch</source>
-        <translation type="unfinished"></translation>
+        <translation>ユーザー入力: 画面タッチを無視する</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="92"/>
@@ -2010,7 +2010,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="79"/>
         <source>by EPSG code</source>
         <comment>as in: The CRS is specified by EPSG code</comment>
-        <translation>EPSG コードで</translation>
+        <translation>EPSG コードで指定</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="81"/>
@@ -2837,7 +2837,7 @@
         <location filename="../src/gdal/ogr_file_format.cpp" line="616"/>
         <location filename="../src/gui/map/map_editor.cpp" line="971"/>
         <source>Geospatial vector data</source>
-        <translation>空間ベクトル データ</translation>
+        <translation>地理空間ベクトルデータ</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1943"/>
