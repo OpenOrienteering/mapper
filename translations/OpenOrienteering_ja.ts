@@ -1733,12 +1733,12 @@
         <location filename="../src/gdal/gdal_image_reader.cpp" line="71"/>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="158"/>
         <source>Failed to read image data: %1</source>
-        <translation type="unfinished">画像データの読み取りに失敗しました：％1</translation>
+        <translation>画像データの読み取りに失敗しました: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="127"/>
         <source>Unsupported raster data: %1</source>
-        <translation type="unfinished">サポートされていないラスターデータ：％1</translation>
+        <translation>サポートされていないラスターデータ: %1</translation>
     </message>
 </context>
 <context>
@@ -2384,7 +2384,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="634"/>
         <source>%1</source>
         <comment>scale factor value</comment>
-        <translation type="unfinished">%1° {1?}</translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="636"/>
@@ -2763,7 +2763,7 @@
         <location filename="../src/core/symbols/symbol.cpp" line="319"/>
         <location filename="../src/undo/object_undo.cpp" line="616"/>
         <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
-        <translation type="unfinished">行％2、列％3に不正なシンボルID &apos;％1&apos;があります。</translation>
+        <translation>行%2、列%3に不正なシンボルID &apos;%1&apos;があります。</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="393"/>
@@ -3531,8 +3531,9 @@ Do you want to save your changes?</source>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
-        <translation>選択中の地図の縮尺は1:%1です。しかし選択された記号セットの名目上の縮尺は1:%2 です。
-記号の縮尺を地図の縮尺に合わせますか?</translation>
+        <translation>選択した地図の縮尺は1:%1ですが、選択した記号セットの標準縮尺は1:%2 です。
+
+記号を選択した地図の縮尺に合わせて拡大縮小しますか?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="925"/>
@@ -3720,9 +3721,9 @@ because saving as %2 (.%3) is not supported.</source>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation>インポートされた地図の縮尺 1:%1 と、編集中の地図の縮尺 1:%2 が異なります。
+        <translation>インポートされたデータの縮尺 1:%1 と、編集中の地図の縮尺 1:%2 が異なります。
 
-インポートされた地図の縮尺を変更しますか?</translation>
+インポートされたデータの縮尺を変更しますか?</translation>
     </message>
     <message>
         <source>default layer</source>
@@ -5394,7 +5395,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2633"/>
         <source>Resulting symbol: %1.</source>
-        <translation type="unfinished">結果の記号: %1 %2。 {1.?}</translation>
+        <translation>結果の記号: %1.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2667"/>
@@ -5803,9 +5804,10 @@ and select &quot;New symbol&quot;
 to create one.</source>
         <translation>記号がありません！
 
-まずは記号を定義してみましょう。
-記号ウィンドウを右クリックして「新しい記号」を選択し、
-記号を作成してください。</translation>
+まずは記号を追加しましょう:
+記号バーを右クリックし、
+「新しい記号」を選択して
+作成します。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="910"/>
@@ -8703,8 +8705,7 @@ to jump over the lazy dog
         <translation>The quick brown fox
 takes the routechoice
 to jump over the lazy dog
-1234567890
-△Aaあぁアァ亜字◎</translation>
+1234567890 △Aaあぁアァ亜字◎</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="489"/>
@@ -10111,7 +10112,7 @@ Location: %2</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="873"/>
         <source>Expected %1 colors, found %2.</source>
-        <translation>%1 の色が必要ですが、%2 が見つかりました。</translation>
+        <translation>想定していた色は %1 個でしたが、%2 個見つかりました。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="889"/>
@@ -10121,12 +10122,12 @@ Location: %2</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="945"/>
         <source>Expected %1 symbols, found %2.</source>
-        <translation>%1 の記号を予期しましたが、%2 が見つかりました。</translation>
+        <translation>想定していた記号は %1 個でしたが、%2 個見つかりました。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="984"/>
         <source>Expected %1 map parts, found %2.</source>
-        <translation>%1 の地図の要素が必要ですが、%2 が見つかりました。</translation>
+        <translation>想定していた地図パートは %1 個でしたが、%2 個見つかりました。</translation>
     </message>
 </context>
 </TS>
