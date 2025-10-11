@@ -1973,99 +1973,98 @@ bool OgrFileExport::exportImplementation()
 	// Setup style table
 	populateStyleTable(symbols);
 	
+	enum class ExportMode
+	{
+		SingleLayer,
+		LayerPerSymbol,
+		LayerPerType
+	} export_mode;
+	
+	OGRLayerH layer = nullptr;
+	
 	if (quirks & SingleLayer)
 	{
-		auto layer = createLayer("Layer", wkbUnknown);
+		export_mode = ExportMode::SingleLayer;
+		layer = createLayer("Layer", wkbUnknown);
 		if (layer == nullptr)
 			throw FileFormatException(tr("Failed to create layer: %2").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
-		
-		for (auto symbol : symbols)
-		{
-			auto match_symbol = [symbol](auto object) { return object->getSymbol() == symbol; };
-			switch (symbol->getType())
-			{
-			case Symbol::Point:
-				addPointsToLayer(layer, match_symbol);
-				break;
-			case Symbol::Text:
-				addTextToLayer(layer, match_symbol);
-				break;
-			case Symbol::Line:
-				addLinesToLayer(layer, match_symbol);
-				break;
-			case Symbol::Combined:
-				if (!(symbol->getContainedTypes() & Symbol::Area))
-				{
-					addLinesToLayer(layer, match_symbol);
-					break;
-				}
-				Q_FALLTHROUGH();
-			case Symbol::Area:
-				addAreasToLayer(layer, match_symbol);
-				break;
-			case Symbol::NoSymbol:
-			case Symbol::AllSymbols:
-				Q_UNREACHABLE();
-			}
-		}
 	}
 	else
 	{
-		const auto per_symbol_layers = option(QString::fromLatin1("Per Symbol Layers")).toBool();
-		// Add points, lines, areas in this order for driver compatibility (esp GPX)
-		OGRLayerH point_layer = nullptr;
-		if (!per_symbol_layers)
-			point_layer = createLayer(QString::fromLatin1("%1_points").arg(info.baseName()).toLatin1(), wkbPoint);
-		for (auto symbol : symbols)
+		export_mode = option(QString::fromLatin1("Per Symbol Layers")).toBool() ? ExportMode::LayerPerSymbol : ExportMode::LayerPerType;
+	}
+	
+	// Add points, lines, areas in this order for driver compatibility (esp GPX)
+	if (export_mode == ExportMode::LayerPerType)
+	{
+		layer = nullptr;
+		layer = createLayer(QString::fromLatin1("%1_points").arg(info.baseName()).toLatin1(), wkbPoint);
+	}
+	for (auto symbol : symbols)
+	{
+		if (symbol->getType() == Symbol::Point)
 		{
-			if (symbol->getType() == Symbol::Point)
+			if (export_mode == ExportMode::LayerPerSymbol)
 			{
-				if (per_symbol_layers)
-					point_layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPoint);
-				if (point_layer != nullptr)
-					addPointsToLayer(point_layer, [symbol](auto object) { return object->getSymbol() == symbol; });
+				layer = nullptr;
+				layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPoint);
 			}
+			if (layer != nullptr)
+				addPointsToLayer(layer, [symbol](auto object) { return object->getSymbol() == symbol; });
 		}
-		for (auto symbol : symbols)
+	}
+	for (auto symbol : symbols)
+	{
+		if (symbol->getType() == Symbol::Text)
 		{
-			if (symbol->getType() == Symbol::Text)
+			if (export_mode == ExportMode::LayerPerSymbol)
 			{
-				if (per_symbol_layers)
-					point_layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPoint);
-				if (point_layer != nullptr)
-					addTextToLayer(point_layer, [symbol](auto object) { return object->getSymbol() == symbol; });
+				layer = nullptr;
+				layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPoint);
 			}
+			if (layer != nullptr)
+				addTextToLayer(layer, [symbol](auto object) { return object->getSymbol() == symbol; });
 		}
-
-		// Line symbols
-		OGRLayerH line_layer = nullptr;
-		if (!per_symbol_layers)
-			line_layer = createLayer(QString::fromLatin1("%1_lines").arg(info.baseName()).toLatin1(), wkbLineString);
-		for (auto symbol : symbols)
+	}
+	
+	// Line symbols
+	if (export_mode == ExportMode::LayerPerType)
+	{
+		layer = nullptr;
+		layer = createLayer(QString::fromLatin1("%1_lines").arg(info.baseName()).toLatin1(), wkbLineString);
+	}
+	for (auto symbol : symbols)
+	{
+		if (symbol->getType() == Symbol::Line
+		    || (symbol->getType() == Symbol::Combined && !(symbol->getContainedTypes() & Symbol::Area)))
 		{
-			if (symbol->getType() == Symbol::Line
-			    || (symbol->getType() == Symbol::Combined && !(symbol->getContainedTypes() & Symbol::Area)))
+			if (export_mode == ExportMode::LayerPerSymbol)
 			{
-				if (per_symbol_layers)
-					line_layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbLineString);
-				if (line_layer != nullptr)
-					addLinesToLayer(line_layer, [symbol](auto object) { return object->getSymbol() == symbol; });
+				layer = nullptr;
+				layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbLineString);
 			}
+			if (layer != nullptr)
+				addLinesToLayer(layer, [symbol](auto object) { return object->getSymbol() == symbol; });
 		}
-
-		// Area symbols
-		OGRLayerH area_layer = nullptr;
-		if (!per_symbol_layers)
-			area_layer = createLayer(QString::fromLatin1("%1_areas").arg(info.baseName()).toLatin1(), wkbPolygon);
-		for (auto symbol : symbols)
+	}
+	
+	// Area symbols
+	if (export_mode == ExportMode::LayerPerType)
+	{
+		layer = nullptr;
+		layer = createLayer(QString::fromLatin1("%1_areas").arg(info.baseName()).toLatin1(), wkbPolygon);
+	}
+	for (auto symbol : symbols)
+	{
+		if (symbol->getContainedTypes() & Symbol::Area)
 		{
-			if (symbol->getContainedTypes() & Symbol::Area)
+			if (export_mode == ExportMode::LayerPerSymbol)
 			{
-				if (per_symbol_layers)
-					area_layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPolygon);
-				if (area_layer != nullptr)
-					addAreasToLayer(area_layer, [symbol](auto object) { return object->getSymbol() == symbol; });
+				layer = nullptr;
+				layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPolygon);
 			}
+			if (layer != nullptr)
+				addAreasToLayer(layer, [symbol](auto object) { return object->getSymbol() == symbol; });
 		}
 	}
 	
