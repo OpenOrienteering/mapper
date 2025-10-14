@@ -8173,7 +8173,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="141"/>
         <source>Select symbols</source>
-        <translation>選択中の記号</translation>
+        <translation>記号を選択</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="152"/>
@@ -8335,7 +8335,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="125"/>
         <source>Switch symbol of selected objects</source>
-        <translation>選択したオブジェクトの記号を切り替える</translation>
+        <translation>選択したオブジェクトの記号を置き換える</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="126"/>
