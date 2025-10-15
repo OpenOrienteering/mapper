@@ -72,12 +72,11 @@ public:
 	/** Construct a new widget.
 	 * @param controller The controller of the preview map
 	 * @param symbol The point symbol to be edited
-	 * @param source_map The source map
 	 * @param role The role of the symbol to be edited
 	 * @param offset_y The vertical offset of the point symbol preview/editor from the origin
-	 * @param parent Standard QWidget parentship
+	 * @param source_map The source map
 	 */
-	PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, Map* source_map, SymbolRole role = PrimarySymbol, qreal offset_y = 0, QWidget* parent = nullptr);
+	PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, SymbolRole role = PrimarySymbol, qreal offset_y = 0, Map* source_map = nullptr);
 	
 	~PointSymbolEditorWidget() override;
 	

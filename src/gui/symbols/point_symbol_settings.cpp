@@ -49,7 +49,7 @@ PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialo
 : SymbolPropertiesWidget(symbol, dialog), 
   symbol(symbol)
 {
-	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), symbol, dialog->getSourceMap());
+	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), symbol, PointSymbolEditorWidget::PrimarySymbol, 0, dialog->getSourceMap());
 	connect(symbol_editor, &PointSymbolEditorWidget::symbolEdited, this, &SymbolPropertiesWidget::propertiesModified );
 	
 	layout = new QVBoxLayout();
@@ -81,7 +81,7 @@ void PointSymbolSettings::reset(Symbol* symbol)
 	layout->removeWidget(symbol_editor);
 	delete(symbol_editor);
 	
-	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), this->symbol, dialog->getSourceMap());
+	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), this->symbol, PointSymbolEditorWidget::PrimarySymbol, 0, dialog->getSourceMap());
 	connect(symbol_editor, &PointSymbolEditorWidget::symbolEdited, this, &SymbolPropertiesWidget::propertiesModified );
 	layout->addWidget(symbol_editor);
 }

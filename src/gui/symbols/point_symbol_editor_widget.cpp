@@ -24,6 +24,7 @@
 
 #include <algorithm>
 #include <limits>
+#include <numeric>
 // IWYU pragma: no_include <memory>
 // IWYU pragma: no_include <vector>
 
@@ -80,8 +81,8 @@
 
 namespace OpenOrienteering {
 
-PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, Map* source_map, SymbolRole role, qreal offset_y, QWidget* parent)
-: QWidget(parent)
+PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, SymbolRole role, qreal offset_y, Map* source_map)
+: QWidget(nullptr)
 , symbol(symbol)
 , object_origin_coord(0, offset_y)
 , offset_y(offset_y)

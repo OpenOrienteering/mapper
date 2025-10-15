@@ -326,7 +326,7 @@ void AreaSymbolSettings::loadPatterns()
 		pattern_list->addItem(pattern.name);
 		if (pattern.type == AreaSymbol::FillPattern::PointPattern)
 		{
-			auto editor = new PointSymbolEditorWidget(controller, pattern.point, nullptr, PointSymbolEditorWidget::AreaSymbolElement, 16);
+			auto editor = new PointSymbolEditorWidget(controller, pattern.point, PointSymbolEditorWidget::AreaSymbolElement, 16);
 			connect(editor, &PointSymbolEditorWidget::symbolEdited, this, &SymbolPropertiesWidget::propertiesModified );
 			addPropertiesGroup(pattern.name, editor);
 		}
@@ -457,7 +457,7 @@ void AreaSymbolSettings::addPattern(AreaSymbol::FillPattern::Type type)
 	{
 		active_pattern->point = new PointSymbol();
 		active_pattern->point->setRotatable(true);
-		auto editor = new PointSymbolEditorWidget(controller, active_pattern->point, nullptr, PointSymbolEditorWidget::AreaSymbolElement, 16);
+		auto editor = new PointSymbolEditorWidget(controller, active_pattern->point, PointSymbolEditorWidget::AreaSymbolElement, 16);
 		connect(editor, &PointSymbolEditorWidget::symbolEdited, this, &SymbolPropertiesWidget::propertiesModified );
 		if (pattern_list->currentRow() == int(symbol->patterns.size()) - 1)
 		{
