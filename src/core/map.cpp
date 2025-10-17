@@ -2061,8 +2061,8 @@ void Map::removePart(std::size_t index)
 	Q_ASSERT(parts.size() > 1);
 	
 	if (current_part_index == index)
-		// First switch to another part when removing the current part
-		setCurrentPartIndex((index == parts.size() - 1) ? (parts.size() - 2) : (index + 1));
+		// First switch to another part when removing the current part, this will also clear any object selection
+		setCurrentPartIndex((index == parts.size() - 1) ? (index - 1) : (index + 1));
 	
 	MapPart* part = parts[index];
 	
@@ -2098,7 +2098,8 @@ void Map::setCurrentPartIndex(std::size_t index)
 {
 	Q_ASSERT(index < parts.size());
 	
-	MapPart* const old_part = parts[current_part_index];
+	// If the last but one map part is removed, current_part_index would be one higher than the highest element index
+	MapPart* const old_part = parts[current_part_index == parts.size() ? (parts.size() - 1) : current_part_index];
 	if (index != current_part_index)
 	{
 		current_part_index = index;
