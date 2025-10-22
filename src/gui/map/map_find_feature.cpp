@@ -1,5 +1,6 @@
 /*
  *    Copyright 2017-2020, 2024, 2025 Kai Pastor
+ *    Copyright 2025 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,13 +25,18 @@
 
 #include <QAbstractButton>
 #include <QAction>
+#include <QCheckBox>
+#include <QContextMenuEvent>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QGridLayout>
 #include <QKeySequence>  // IWYU pragma: keep
+#include <QLabel>
+#include <QMenu>
+#include <QPoint>
 #include <QPushButton>
 #include <QStackedLayout>
-#include <QTextEdit>
+#include <QVariant>
 #include <QWidget>
 
 #include "core/map.h"
@@ -110,16 +116,27 @@ void MapFindFeature::showDialog()
 		find_dialog = new QDialog(window);
 		find_dialog->setWindowTitle(tr("Find objects"));
 		
-		text_edit = new QTextEdit;
+		text_edit = new MapFindTextEdit;
 		text_edit->setLineWrapMode(QTextEdit::WidgetWidth);
 		
 		tag_selector = new TagSelectWidget;
 		
-		auto find_next = new QPushButton(tr("&Find next"));
-		connect(find_next, &QPushButton::clicked, this, &MapFindFeature::findNext);
+		selected_objects = new QLabel();	// initialization by objectSelectionChanged() below
 		
 		auto find_all = new QPushButton(tr("Find &all"));
 		connect(find_all, &QPushButton::clicked, this, &MapFindFeature::findAll);
+		
+		auto find_next = new QPushButton(tr("&Find next"));
+		connect(find_next, &QPushButton::clicked, this, &MapFindFeature::findNext);
+		
+		delete_find_next = new QPushButton(tr("Delete && Find next"));
+		connect(delete_find_next, &QPushButton::clicked, this, &MapFindFeature::deleteAndFindNext);
+		connect(controller.getMap(), &Map::objectSelectionChanged, this, &MapFindFeature::objectSelectionChanged);
+		objectSelectionChanged();
+		
+		center_view = new QCheckBox(tr("Center view"));
+		center_view->setChecked(true);
+		connect(center_view, &QCheckBox::stateChanged, this, &MapFindFeature::centerView);
 		
 		auto tags_button = new QPushButton(tr("Query editor"));
 		tags_button->setCheckable(true);
@@ -138,12 +155,15 @@ void MapFindFeature::showDialog()
 		connect(tags_button, &QAbstractButton::toggled, this, &MapFindFeature::tagSelectorToggled);
 		
 		auto layout = new QGridLayout;
-		layout->addLayout(editor_stack, 0, 0, 6, 1);
-		layout->addWidget(find_next, 0, 1, 1, 1);
-		layout->addWidget(find_all, 1, 1, 1, 1);
-		layout->addWidget(tags_button, 3, 1, 1, 1);
-		layout->addWidget(tag_selector_buttons, 5, 1, 1, 1);
-		layout->addWidget(button_box, 6, 0, 1, 2);
+		layout->addLayout(editor_stack, 0, 0, 7, 1);
+		layout->addWidget(find_all, 0, 1, 1, 1);
+		layout->addWidget(find_next, 1, 1, 1, 1);
+		layout->addWidget(delete_find_next, 2, 1, 1, 1);
+		layout->addWidget(center_view, 3, 1, 1, 1);
+		layout->addWidget(tags_button, 5, 1, 1, 1);
+		layout->addWidget(selected_objects, 7, 0, 1, 1);
+		layout->addWidget(tag_selector_buttons, 7, 1, 1, 1);
+		layout->addWidget(button_box, 8, 0, 1, 2);
 		
 		find_dialog->setLayout(layout);
 	}
@@ -152,7 +172,6 @@ void MapFindFeature::showDialog()
 	find_dialog->raise();
 	find_dialog->activateWindow();
 }
-
 
 
 ObjectQuery MapFindFeature::makeQuery() const
@@ -190,17 +209,22 @@ ObjectQuery MapFindFeature::makeQuery() const
 void MapFindFeature::findNext()
 {
 	if (auto query = makeQuery())
-		findNextMatchingObject(controller, query);
+	{
+		// remember current selected object as start point in case next object found is deleted by 'Delete & Find Next'
+		previous_object = controller.getMap()->getFirstSelectedObject();
+		findNextMatchingObject(controller, query, center_view->isChecked());
+	}
 }
 
 // static
-void MapFindFeature::findNextMatchingObject(MapEditorController& controller, const ObjectQuery& query)
+void MapFindFeature::findNextMatchingObject(MapEditorController& controller, const ObjectQuery& query, bool center_selection_visibility)
 {
 	auto* map = controller.getMap();
 	
 	Object* first_match = nullptr;  // the first match in all objects
 	Object* pivot_object = map->getFirstSelectedObject();
 	Object* next_match = nullptr;   // the next match after pivot_object
+	
 	map->clearObjectSelection(false);
 	
 	auto search = [&](Object* object) {
@@ -227,21 +251,34 @@ void MapFindFeature::findNextMatchingObject(MapEditorController& controller, con
 		map->addObjectToSelection(next_match, false);
 	
 	map->emitSelectionChanged();
-	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+	map->ensureVisibilityOfSelectedObjects(center_selection_visibility ? Map::CenterFullVisibility : Map::FullVisibility);
 	
 	if (!map->selectedObjects().empty())
 		controller.setEditTool();
 }
 
 
+void MapFindFeature::deleteAndFindNext()
+{
+	auto map = controller.getMap();
+	map->deleteSelectedObjects();
+	// restore start point for search in findNextMatchingObject() but only if the object still exists.
+	if (previous_object && map->getCurrentPart()->contains(previous_object))
+	{
+		map->addObjectToSelection(previous_object, false);
+	}
+	findNext();
+}
+
+
 void MapFindFeature::findAll()
 {
 	if (auto query = makeQuery())
-		findAllMatchingObjects(controller, query);
+		findAllMatchingObjects(controller, query, center_view->isChecked());
 }
 
 // static
-void MapFindFeature::findAllMatchingObjects(MapEditorController& controller, const ObjectQuery& query)
+void MapFindFeature::findAllMatchingObjects(MapEditorController& controller, const ObjectQuery& query, bool center_selection_visibility)
 {
 	auto map = controller.getMap();
 	map->clearObjectSelection(false);
@@ -252,11 +289,30 @@ void MapFindFeature::findAllMatchingObjects(MapEditorController& controller, con
 	}, std::cref(query));
 	
 	map->emitSelectionChanged();
-	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+	map->ensureVisibilityOfSelectedObjects(center_selection_visibility ? Map::CenterFullVisibility : Map::FullVisibility);
 	controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("%n object(s) selected", nullptr, map->getNumSelectedObjects()), 2000);
 	
 	if (!map->selectedObjects().empty())
 		controller.setEditTool();
+}
+
+
+void MapFindFeature::objectSelectionChanged()
+{
+	auto map = controller.getMap();
+	delete_find_next->setEnabled(map->getNumSelectedObjects() == 1);
+	selected_objects->setText(tr("Number of selected objects: %1").arg(map->getNumSelectedObjects()));
+}
+
+
+void MapFindFeature::centerView()
+{
+	if (center_view->isChecked())
+	{
+		auto map = controller.getMap();
+		if (map->getNumSelectedObjects())
+			map->ensureVisibilityOfSelectedObjects(Map::CenterFullVisibility);
+	}
 }
 
 
@@ -278,5 +334,37 @@ void MapFindFeature::tagSelectorToggled(bool active)
 	}
 }
 
+
+// slot
+void MapFindTextEdit::insertKeyword(QAction* action)
+{
+	const auto keyword = action->data().toString();
+	insertPlainText(keyword);
+}
+
+// override
+void MapFindTextEdit::contextMenuEvent(QContextMenuEvent* event)
+{
+	QMenu* menu = createStandardContextMenu(event->globalPos());
+	menu->addSeparator();
+	auto* insert_menu = new QMenu(tr("Insert keyword..."), menu);
+	insert_menu->menuAction()->setMenuRole(QAction::NoRole);
+	auto* keyword_actions_group = new QActionGroup(this);
+	
+	auto keywords = Object::getObjectProperties();
+	keywords.insert(keywords.end(), {QLatin1String("SYMBOL"), QLatin1String("AND"), QLatin1String("OR"), QLatin1String("NOT")});
+	for (auto& keyword : keywords)
+	{
+		auto* action = new QAction(keyword, this);
+		action->setData(QVariant(keyword));
+		keyword_actions_group->addAction(action);
+		insert_menu->addAction(action);
+	}
+	menu->addMenu(insert_menu);
+	connect(keyword_actions_group, &QActionGroup::triggered, this, &MapFindTextEdit::insertKeyword);
+	
+	menu->exec(event->globalPos());
+	delete menu;
+}
 
 }  // namespace OpenOrienteering
