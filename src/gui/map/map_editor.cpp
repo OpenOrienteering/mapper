@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021, 2024 Kai Pastor
+ *    Copyright 2012-2021, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -258,6 +258,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map, MapView* 
 , template_list_widget(nullptr)
 , mappart_remove_act(nullptr)
 , mappart_merge_act(nullptr)
+, mappart_visibility_act(nullptr)
 , mappart_merge_menu(nullptr)
 , mappart_move_menu(nullptr)
 , mappart_selector_box(nullptr)
@@ -470,6 +471,7 @@ void MapEditorController::setEditingInProgress(bool value)
 		mappart_add_act->setEnabled(!editing_in_progress);
 		mappart_rename_act->setEnabled(!editing_in_progress && num_parts > 0);
 		mappart_remove_act->setEnabled(!editing_in_progress && num_parts > 1);
+		mappart_visibility_act->setEnabled(!editing_in_progress && num_parts > 0);
 		mappart_move_menu->setEnabled(!editing_in_progress && num_parts > 1);
 		mappart_merge_act->setEnabled(!editing_in_progress && num_parts > 1);
 		mappart_merge_menu->setEnabled(!editing_in_progress && num_parts > 1);
@@ -1103,8 +1105,9 @@ void MapEditorController::createActions()
 	mappart_add_act = newAction("addmappart", tr("Add new part..."), this, SLOT(addMapPart()));
 	mappart_rename_act = newAction("renamemappart", tr("Rename current part..."), this, SLOT(renameMapPart()));
 	mappart_remove_act = newAction("removemappart", tr("Remove current part"), this, SLOT(removeMapPart()));
+	mappart_visibility_act = newAction("visibilitymappart", {/* set in updateMapPartsUI() */} , this, SLOT(toggleMapPartVisible()));
 	mappart_merge_act = newAction("mergemapparts", tr("Merge all parts"), this, SLOT(mergeAllMapParts()));
-	
+
 	import_act = newAction("import", tr("Import..."), this, SLOT(importClicked()), nullptr, QString{}, "file_menu.html");
 	
 	map_coordinates_act = new QAction(tr("Map coordinates"), this);
@@ -1264,6 +1267,7 @@ void MapEditorController::createMenuAndToolbars()
 	map_menu->addAction(mappart_add_act);
 	map_menu->addAction(mappart_rename_act);
 	map_menu->addAction(mappart_remove_act);
+	map_menu->addAction(mappart_visibility_act);
 	map_menu->addMenu(mappart_move_menu);
 	map_menu->addMenu(mappart_merge_menu);
 	map_menu->addAction(mappart_merge_act);
@@ -2612,7 +2616,7 @@ void MapEditorController::updateObjectDependentActions()
 	scale_act->setStatusTip(tr("Scale the selected objects.") + (scale_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object to activate this tool."))));
 	mappart_move_menu->setEnabled(have_selection && have_multiple_parts);
 	
-	// have_rotatable_pattern || have_rotatable_point
+	// have_rotatable_pattern || have_rotatable_object
 	rotate_pattern_act->setEnabled(have_rotatable_pattern || have_rotatable_object);
 	rotate_pattern_act->setStatusTip(tr("Set the direction of area fill patterns or point objects.") + (rotate_pattern_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select an area object with rotatable fill pattern or a rotatable point object to activate this tool."))));
 	
@@ -2622,7 +2626,7 @@ void MapEditorController::updateObjectDependentActions()
 	connect_paths_act->setEnabled(have_line);
 	connect_paths_act->setStatusTip(tr("Connect endpoints of paths which are close together.") + (connect_paths_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one line object to activate this tool."))));
 	
-	// have_are || have_line
+	// have_area || have_line
 	cut_tool_act->setEnabled(have_area || have_line);
 	cut_tool_act->setStatusTip(tr("Cut the selected objects into smaller parts.") + (cut_tool_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one line or area object to activate this tool."))));
 	convert_to_curves_act->setEnabled(have_area || have_line);
@@ -3807,6 +3811,11 @@ void MapEditorController::updateMapPartsUI()
 	{
 		toolbar_mapparts->setVisible(have_multiple_parts);
 	}
+	if (mappart_visibility_act && count)
+	{
+		MapPart* const part = map->getCurrentPart();
+		mappart_visibility_act->setText(part->isVisible() ? tr("Hide current part") : tr("Show current part"));
+	}
 	
 	if (count > 0)
 	{
@@ -3973,6 +3982,7 @@ void MapEditorController::mergeCurrentMapPartTo(int target)
 void MapEditorController::mergeAllMapParts()
 {
 	QString const name = map->getCurrentPart()->getName();
+	const auto visibility = map->getCurrentPart()->isVisible();
 	const QMessageBox::StandardButton button =
 	        QMessageBox::question(
 	            window,
@@ -3985,7 +3995,7 @@ void MapEditorController::mergeAllMapParts()
 		auto* undo = new CombinedUndoStep(map);
 		
 		// For simplicity, we merge to the first part,
-		// but keep the properties (i.e. name) of the current part.
+		// but keep the properties (i.e. name, visibility) of the current part.
 		map->setCurrentPartIndex(0);
 		MapPart* target_part = map->getPart(0);
 		
@@ -4002,11 +4012,17 @@ void MapEditorController::mergeAllMapParts()
 		
 		undo->push(new MapPartUndoStep(map, MapPartUndoStep::ModifyMapPart, 0));
 		target_part->setName(name);
+		target_part->setVisible(visibility);
 		
 		map->push(undo);
 	}
 }
 
+void MapEditorController::toggleMapPartVisible()
+{
+	MapPart* const part = map->getCurrentPart();
+	part->setVisible(!part->isVisible());
+}
 
 void MapEditorController::templateAdded(int /*pos*/, const Template* /*temp*/)
 {
