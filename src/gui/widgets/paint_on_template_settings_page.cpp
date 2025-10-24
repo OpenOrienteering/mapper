@@ -1,5 +1,5 @@
 /*
- *    Copyright 2021 Libor Pecháček
+ *    Copyright 2021, 2025 Libor Pecháček
  *
  *    This file is part of OpenOrienteering.
  *
@@ -166,8 +166,8 @@ PaintOnTemplateSettingsPage::PaintOnTemplateSettingsPage(QWidget* parent)
 		auto const enabled = !color_table->selectedItems().empty();
 		delete_button->setEnabled(enabled);
 		edit_button->setEnabled(enabled);
-		move_up_button->setEnabled(enabled);
-		move_down_button->setEnabled(enabled);
+		move_up_button->setEnabled(enabled && color_table->currentRow() > 0);
+		move_down_button->setEnabled(enabled && color_table->currentRow() < color_table->rowCount() - 1);
 	});
 	connect(edit_button, &QAbstractButton::clicked, this, &PaintOnTemplateSettingsPage::editColor);
 	connect(delete_button, &QAbstractButton::clicked, this, &PaintOnTemplateSettingsPage::dropColor);
