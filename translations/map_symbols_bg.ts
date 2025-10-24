@@ -101,17 +101,17 @@
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Жълто 100% за тясна ивица</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелено 60% за тясна ивица</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелено 30% за тясна ивица</translation>
     </message>
     <message>
         <source>White over green</source>
@@ -269,7 +269,7 @@ Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</s
     <message>
         <source>Earth bank</source>
         <comment>Name of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земен насип</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -277,12 +277,15 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земният насип е рязка промяна в нивото на земята, която може да бъде ясно разграничена от околността, например чакълести или пясъчни кариери, пътни и железопътни изкопи или насипи.
+Минимална височина: 1 м. Земният насип може да повлияе на проходимостта. Етикетите представляват пълния обхват на земния насип.
+За дълги земни насипи е разрешено използването на етикети, по-къси от минималната дължина в краищата. Ако два земни насипа са близо един до друг, етикетите могат да бъдат пропуснати. Непроходимите земни насипи се представят със символа непроходима скала (201).
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земен насип, минимален размер</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -290,12 +293,15 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земният насип е рязка промяна в нивото на земята, която може да бъде ясно разграничена от околността, например чакълести или пясъчни кариери, пътни и железопътни изкопи или насипи.
+Минимална височина: 1 м. Земният насип може да повлияе на проходимостта. Етикетите представляват пълния обхват на земния насип.
+За дълги земни насипи е разрешено използването на етикети, по-къси от минималната дължина в краищата. Ако два земни насипа са близо един до друг, етикетите могат да бъдат пропуснати. Непроходимите земни насипи се представят със символа непроходима скала (201).
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
         <comment>Name of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земен насип, горна линия</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -303,7 +309,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земният насип е рязка промяна в нивото на земята, която може да бъде ясно разграничена от околността, например чакълести или пясъчни кариери, пътни и железопътни изкопи или насипи.
+Минимална височина: 1 м. Земният насип може да повлияе на проходимостта. Етикетите представляват пълния обхват на земния насип.
+За дълги земни насипи е разрешено използването на етикети, по-къси от минималната дължина в краищата. Ако два земни насипа са близо един до друг, етикетите могат да бъдат пропуснати. Непроходимите земни насипи се представят със символа „непроходима скала“ (201).
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -313,12 +322,12 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
         <comment>Description of symbol 104.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Използвайте този символ, за да покажете пълния обхват на широките земни насипи.</translation>
     </message>
     <message>
         <source>Earth bank, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земен насип, минимален размер (от ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -603,12 +612,12 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
         <comment>Description of symbol 201.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Използвайте този символ, за да покажете пълния обхват на широка скала.</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Непроходима скала, минимален размер (от ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -618,7 +627,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Cliff</source>
         <comment>Name of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>Скала</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -627,12 +636,16 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>Проходима скала или кариера. Ако посоката на падане на скалата не е видима от контурите или за да се подобри четливостта, могат да се начертаят кратки етикети в посока надолу по склона.
+За невертикални скали етикетите трябва да се начертаят така, че да показват пълния хоризонтален обхват. Краищата на базовата линия трябва да бъдат заоблени, ако не се виждат етикети. Проходът между две скали трябва да е поне 0,2 мм. Скалата трябва да взаимодейства с контурните линии.
+Пресичането на скала обикновено забавя напредъка.
+Минимална височина: 1 м.
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
     <message>
         <source>Cliff, minimum size</source>
         <comment>Name of symbol 202.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Скала, минимален размер</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -641,7 +654,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Проходима скала или кариера. Ако посоката на падане на скалата не е видима от контурите или за да се подобри четливостта, могат да се начертаят кратки етикети в посока надолу по склона.
+За невертикални скали етикетите трябва да се начертаят така, че да показват пълния хоризонтален обхват. Краищата на базовата линия трябва да бъдат заоблени, ако не се виждат етикети. Проходът между две скали трябва да е поне 0,2 мм. Скалата трябва да взаимодейства с контурните линии.
+Пресичането на скала обикновено забавя напредъка.
+Минимална височина: 1 м.
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
     <message>
         <source>Cliff, with tags</source>
@@ -655,7 +672,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Проходима скала или кариера. Ако посоката на падане на скалата не е видима от контурите или за да се подобри четливостта, могат да се начертаят кратки етикети в посока надолу по склона.
+За невертикални скали етикетите трябва да се начертаят така, че да показват пълния хоризонтален обхват. Краищата на базовата линия трябва да бъдат заоблени, ако не се виждат етикети. Проходът между две скали трябва да е поне 0,2 мм. Скалата трябва да взаимодейства с контурните линии.
+Пресичането на скала обикновено забавя напредъка.
+Минимална височина: 1 м.
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size</source>
@@ -669,7 +690,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Проходима скала или кариера. Ако посоката на падане на скалата не е видима от контурите или за да се подобри четливостта, могат да се начертаят кратки етикети в посока надолу по склона.
+За невертикални скали етикетите трябва да се начертаят така, че да показват пълния хоризонтален обхват. Краищата на базовата линия трябва да бъдат заоблени, ако не се виждат етикети. Проходът между две скали трябва да е поне 0,2 мм. Скалата трябва да взаимодейства с контурните линии.
+Пресичането на скала обикновено забавя напредъка.
+Минимална височина: 1 м.
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size (from ISOM2000)</source>
@@ -684,7 +709,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
         <comment>Name of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Скална яма или пещера (без ясно изразен вход)</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts without a distinct entrance which may constitute a danger to the competitor.
@@ -693,24 +718,30 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
 Minimum depth: 1 m.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Скални ями, дупки, пещери или минни шахти без ясно изразен вход, които могат да представляват опасност за състезателя.
+Местоположението е центърът на тежестта на символа и символът трябва да бъде ориентиран на север.
+Скални ями с диаметър над 5 м трябва да бъдат преувеличени и представени с помощта на скални символи (201, 202).
+Минимална дълбочина: 1 м.
+Размери на основата: 10,5 м x 12 м.</translation>
     </message>
     <message>
         <source>Cave or rocky pit (with a distinct entrance)</source>
         <comment>Name of symbol 203.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Пещера или скална яма (с отчетлив вход)</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
 Location is the centre of gravity of the symbol, and the symbol should point into the cave.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
         <comment>Description of symbol 203.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Скални ями, дупки, пещери или минни шахти с ясно изразен вход, които могат да представляват опасност за състезателя. Минимална дълбочина: 1 м.
+Местоположението е центърът на тежестта на символа и символът трябва да сочи навътре в пещерата.
+Скални ями с диаметър над 5 м трябва да бъдат преувеличени и представени с помощта на скални символи (201, 202).</translation>
     </message>
     <message>
         <source>Rocky pit or cave with distinct entrance (from ISOM2000)</source>
         <comment>Name of symbol 203.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Скална яма или пещера с отделен вход (от ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -727,7 +758,9 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
 To be able to show the distinction between neighbouring (closer than 30 m apart) boulders with significant difference in size, it is permitted to enlarge the symbol to 0.5 mm for some of the boulders.
 Footprint: 6 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 204</comment>
-        <translation type="unfinished"></translation>
+        <translation>Отличителният камък (трябва да е по-висок от 1 м), който е веднага разпознаваем на земята. Групите камъни се представят със символ „Клъстер камъни“ (207) или символ „Поле камъни“ (208, 209).
+За да може да се покаже разликата между съседни (на разстояние по-малко от 30 м един от друг) камъни със значителна разлика в размера, е разрешено символът да се увеличи до 0,5 мм за някои от камъните.
+Площ на основата: 6 м диаметър (7,5 м диаметър).</translation>
     </message>
     <message>
         <source>Boulder or large boulder, different size</source>
@@ -2681,6 +2714,31 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Линии на наклона могат да бъдат начертани от долната страна на контурна линия, за да се изясни посоката на наклона. Когато се използват, те трябва да бъдат разположени в повторно навлизащи части.</translation>
     </message>
     <message>
+        <source>Earth bank</source>
+        <comment>Name of symbol 104</comment>
+        <translation>Земен насип</translation>
+    </message>
+    <message>
+        <source>Earth bank, minimum size</source>
+        <comment>Name of symbol 104.1</comment>
+        <translation>Земен насип, минимален размер</translation>
+    </message>
+    <message>
+        <source>Earth bank, top line</source>
+        <comment>Name of symbol 104.2</comment>
+        <translation>Земен насип, горна линия</translation>
+    </message>
+    <message>
+        <source>Use this symbol to display the full extent of wide earth banks.</source>
+        <comment>Description of symbol 104.3</comment>
+        <translation>Използвайте този символ, за да покажете пълния обхват на широките земни насипи.</translation>
+    </message>
+    <message>
+        <source>Earth bank, minimum size (from ISOM2000)</source>
+        <comment>Name of symbol 104.9</comment>
+        <translation>Земен насип, минимален размер (от ISOM2000)</translation>
+    </message>
+    <message>
         <source>Earth wall</source>
         <comment>Name of symbol 105</comment>
         <translation>Земна стена</translation>
@@ -2756,6 +2814,49 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Непроходима скала, горна линия</translation>
     </message>
     <message>
+        <source>Use this symbol to display the full extent of a wide cliff.</source>
+        <comment>Description of symbol 201.4</comment>
+        <translation>Използвайте този символ, за да покажете пълния обхват на широка скала.</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, minimum size (from ISOM2000)</source>
+        <comment>Name of symbol 201.9</comment>
+        <translation>Непроходима скала, минимален размер (от ISOM2000)</translation>
+    </message>
+    <message>
+        <source>Cliff</source>
+        <comment>Name of symbol 202</comment>
+        <translation>Скала</translation>
+    </message>
+    <message>
+        <source>Cliff, minimum size</source>
+        <comment>Name of symbol 202.1</comment>
+        <translation>Скала, минимален размер</translation>
+    </message>
+    <message>
+        <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
+Location is the centre of gravity of the symbol, and the symbol should point into the cave.
+Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
+        <comment>Description of symbol 203.2</comment>
+        <translation>Скални ями, дупки, пещери или минни шахти с ясно изразен вход, които могат да представляват опасност за състезателя. Минимална дълбочина: 1 м.
+Местоположението е центърът на тежестта на символа и символът трябва да сочи навътре в пещерата.
+Скални ями с диаметър над 5 м трябва да бъдат преувеличени и представени с помощта на скални символи (201, 202).</translation>
+    </message>
+    <message>
+        <source>Rocky pit or cave with distinct entrance (from ISOM2000)</source>
+        <comment>Name of symbol 203.9</comment>
+        <translation>Скална яма или пещера с отделен вход (от ISOM2000)</translation>
+    </message>
+    <message>
+        <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
+Location is the centre of gravity of the symbol, and the symbol should point into the cave.
+Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
+        <comment>Description of symbol 203.9</comment>
+        <translation>Скални ями, дупки, пещери или минни шахти с ясно изразен вход, които могат да представляват опасност за състезателя. Минимална дълбочина: 1 м.
+Местоположението е центърът на тежестта на символа и символът трябва да сочи навътре в пещерата.
+Скални ями с диаметър над 5 м трябва да бъдат преувеличени и представени с помощта на скални символи (201, 202).</translation>
+    </message>
+    <message>
         <source>Sandy ground</source>
         <comment>Name of symbol 213</comment>
         <translation>Пясъчна земя</translation>
@@ -2824,6 +2925,21 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Контур стойност</translation>
     </message>
     <message>
+        <source>Earth bank</source>
+        <comment>Name of symbol 106</comment>
+        <translation>Земен насип</translation>
+    </message>
+    <message>
+        <source>Earth bank, minimum size</source>
+        <comment>Name of symbol 106.0.1</comment>
+        <translation>Земен насип, минимален размер</translation>
+    </message>
+    <message>
+        <source>Use this symbol to display the full extent of wide earth banks.</source>
+        <comment>Description of symbol 106.2</comment>
+        <translation>Използвайте този символ, за да покажете пълния обхват на широките земни насипи.</translation>
+    </message>
+    <message>
         <source>Earth wall</source>
         <comment>Name of symbol 107</comment>
         <translation>Земна стена</translation>
@@ -2862,6 +2978,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.0.1</comment>
         <translation>Непроходима скала, минимален размер</translation>
+    </message>
+    <message>
+        <source>Use this symbol to display the full extent of a wide cliff.</source>
+        <comment>Description of symbol 201.2</comment>
+        <translation>Използвайте този символ, за да покажете пълния обхват на широка скала.</translation>
     </message>
     <message>
         <source>Bare rock</source>
@@ -3107,7 +3228,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Earth bank</source>
         <comment>Name of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земен насип</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments.
@@ -3446,7 +3567,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
         <comment>Name of symbol 203</comment>
-        <translation type="unfinished"></translation>
+        <translation>Скална яма или пещера (без ясно изразен вход)</translation>
     </message>
     <message>
         <source>A rocky pit, hole, cave (without a distinct entrance) or mineshaft which may constitute a danger to the competitor.
@@ -5277,6 +5398,16 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Контур стойност</translation>
     </message>
     <message>
+        <source>Earth bank</source>
+        <comment>Name of symbol 106.0</comment>
+        <translation>Земен насип</translation>
+    </message>
+    <message>
+        <source>Use this symbol to display the full extent of wide earth banks.</source>
+        <comment>Description of symbol 106.2</comment>
+        <translation>Използвайте този символ, за да покажете пълния обхват на широките земни насипи.</translation>
+    </message>
+    <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 110</comment>
         <translation>Малко ерозирало дере</translation>
@@ -5305,6 +5436,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Prominent landform feature</source>
         <comment>Name of symbol 118</comment>
         <translation>Забележителна характеристика на релефа</translation>
+    </message>
+    <message>
+        <source>Use this symbol to display the full extent of a wide cliff.</source>
+        <comment>Description of symbol 201.2</comment>
+        <translation>Използвайте този символ, за да покажете пълния обхват на широка скала.</translation>
     </message>
     <message>
         <source>Bare rock</source>
@@ -5482,7 +5618,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Earth bank</source>
         <comment>Name of symbol 106</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земен насип</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -5492,7 +5628,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 106.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земен насип, минимален размер</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -5527,7 +5663,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
         <comment>Description of symbol 106.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Използвайте този символ, за да покажете пълния обхват на широките земни насипи.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -5587,7 +5723,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Използвайте този символ, за да покажете пълния обхват на широка скала.</translation>
     </message>
     <message>
         <source>Rock pillars/cliffs</source>
@@ -7145,6 +7281,21 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Контур стойност</translation>
     </message>
     <message>
+        <source>Earth bank</source>
+        <comment>Name of symbol 106</comment>
+        <translation>Земен насип</translation>
+    </message>
+    <message>
+        <source>Earth bank, minimum size</source>
+        <comment>Name of symbol 106.0.1</comment>
+        <translation>Земен насип, минимален размер</translation>
+    </message>
+    <message>
+        <source>Use this symbol to display the full extent of wide earth banks.</source>
+        <comment>Description of symbol 106.2</comment>
+        <translation>Използвайте този символ, за да покажете пълния обхват на широките земни насипи.</translation>
+    </message>
+    <message>
         <source>Earth wall</source>
         <comment>Name of symbol 107</comment>
         <translation>Земна стена</translation>
@@ -7163,6 +7314,11 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.0.1</comment>
         <translation>Непроходима скала, минимален размер</translation>
+    </message>
+    <message>
+        <source>Use this symbol to display the full extent of a wide cliff.</source>
+        <comment>Description of symbol 201.2</comment>
+        <translation>Използвайте този символ, за да покажете пълния обхват на широка скала.</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
@@ -7295,17 +7451,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Жълто 100% за тясна ивица</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелено 60% за тясна ивица</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелено 30% за тясна ивица</translation>
     </message>
     <message>
         <source>White over green</source>
@@ -7463,7 +7619,7 @@ Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</s
     <message>
         <source>Earth bank</source>
         <comment>Name of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земен насип</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -7471,12 +7627,15 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земният насип е рязка промяна в нивото на земята, която може да бъде ясно разграничена от околността, например чакълести или пясъчни кариери, пътни и железопътни изкопи или насипи.
+Минимална височина: 1 м. Земният насип може да повлияе на проходимостта. Етикетите представляват пълния обхват на земния насип.
+За дълги земни насипи е разрешено използването на етикети, по-къси от минималната дължина в краищата. Ако два земни насипа са близо един до друг, етикетите могат да бъдат пропуснати. Непроходимите земни насипи се представят със символа непроходима скала (201).
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земен насип, минимален размер</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -7484,12 +7643,15 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земният насип е рязка промяна в нивото на земята, която може да бъде ясно разграничена от околността, например чакълести или пясъчни кариери, пътни и железопътни изкопи или насипи.
+Минимална височина: 1 м. Земният насип може да повлияе на проходимостта. Етикетите представляват пълния обхват на земния насип.
+За дълги земни насипи е разрешено използването на етикети, по-къси от минималната дължина в краищата. Ако два земни насипа са близо един до друг, етикетите могат да бъдат пропуснати. Непроходимите земни насипи се представят със символа непроходима скала (201).
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
         <comment>Name of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земен насип, горна линия</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -7497,7 +7659,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земният насип е рязка промяна в нивото на земята, която може да бъде ясно разграничена от околността, например чакълести или пясъчни кариери, пътни и железопътни изкопи или насипи.
+Минимална височина: 1 м. Земният насип може да повлияе на проходимостта. Етикетите представляват пълния обхват на земния насип.
+За дълги земни насипи е разрешено използването на етикети, по-къси от минималната дължина в краищата. Ако два земни насипа са близо един до друг, етикетите могат да бъдат пропуснати. Непроходимите земни насипи се представят със символа непроходима скала (201).
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -7507,12 +7672,12 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
         <comment>Description of symbol 104.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Използвайте този символ, за да покажете пълния обхват на широките земни насипи.</translation>
     </message>
     <message>
         <source>Earth bank, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Земен насип, минимален размер (от ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -7651,12 +7816,12 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
         <comment>Description of symbol 201.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Използвайте този символ, за да покажете пълния обхват на широка скала.</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Непроходима скала, минимален размер (от ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -7666,7 +7831,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Cliff</source>
         <comment>Name of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>Скала</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -7675,12 +7840,16 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>Проходима скала или кариера. Ако посоката на падане на скалата не е видима от контурите или за да се подобри четливостта, могат да се начертаят кратки етикети в посока надолу по склона.
+За невертикални скали етикетите трябва да се начертаят така, че да показват пълния хоризонтален обхват. Краищата на базовата линия трябва да бъдат заоблени, ако не се виждат етикети. Проходът между две скали трябва да е поне 0,2 мм. Скалата трябва да взаимодейства с контурните линии.
+Пресичането на скала обикновено забавя напредъка.
+Минимална височина: 1 м.
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
     <message>
         <source>Cliff, minimum size</source>
         <comment>Name of symbol 202.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Скала, минимален размер</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -7689,7 +7858,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Проходима скала или кариера. Ако посоката на падане на скалата не е видима от контурите или за да се подобри четливостта, могат да се начертаят кратки етикети в посока надолу по склона.
+За невертикални скали етикетите трябва да се начертаят така, че да показват пълния хоризонтален обхват. Краищата на базовата линия трябва да бъдат заоблени, ако не се виждат етикети. Проходът между две скали трябва да е поне 0,2 мм. Скалата трябва да взаимодейства с контурните линии.
+Пресичането на скала обикновено забавя напредъка.
+Минимална височина: 1 м.
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
     <message>
         <source>Cliff, with tags</source>
@@ -7703,7 +7876,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Проходима скала или кариера. Ако посоката на падане на скалата не е видима от контурите или за да се подобри четливостта, могат да се начертаят кратки етикети в посока надолу по склона.
+За невертикални скали етикетите трябва да се начертаят така, че да показват пълния хоризонтален обхват. Краищата на базовата линия трябва да бъдат заоблени, ако не се виждат етикети. Проходът между две скали трябва да е поне 0,2 мм. Скалата трябва да взаимодейства с контурните линии.
+Пресичането на скала обикновено забавя напредъка.
+Минимална височина: 1 м.
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size</source>
@@ -7717,7 +7894,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Проходима скала или кариера. Ако посоката на падане на скалата не е видима от контурите или за да се подобри четливостта, могат да се начертаят кратки етикети в посока надолу по склона.
+За невертикални скали етикетите трябва да се начертаят така, че да показват пълния хоризонтален обхват. Краищата на базовата линия трябва да бъдат заоблени, ако не се виждат етикети. Проходът между две скали трябва да е поне 0,2 мм. Скалата трябва да взаимодейства с контурните линии.
+Пресичането на скала обикновено забавя напредъка.
+Минимална височина: 1 м.
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size (from ISOM2000)</source>
@@ -7739,7 +7920,9 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
 To be able to show the distinction between neighbouring (closer than 30 m apart) boulders with significant difference in size, it is permitted to enlarge the symbol to 0.5 mm for some of the boulders.
 Footprint: 6 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 204</comment>
-        <translation type="unfinished"></translation>
+        <translation>Отличителният камък (трябва да е по-висок от 1 м), който е веднага разпознаваем на земята. Групите камъни се представят със символ „Клъстер камъни“ (207) или символ „Поле камъни“ (208, 209).
+За да може да се покаже разликата между съседни (на разстояние по-малко от 30 м един от друг) камъни със значителна разлика в размера, е разрешено символът да се увеличи до 0,5 мм за някои от камъните.
+Площ на основата: 6 м диаметър (7,5 м диаметър).</translation>
     </message>
     <message>
         <source>Boulder or large boulder, different size</source>

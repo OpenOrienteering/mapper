@@ -6041,7 +6041,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1666"/>
         <source>Skipping unsupported reference to point symbol &apos;%1.%2&apos;.</source>
-        <translation type="unfinished">Ei tuetun referenssi pistesymbolin skippaus &apos;%1.%2&apos;.</translation>
+        <translation>Ei tuetun referenssi pistesymbolin skippaus &apos;%1.%2&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1880"/>
@@ -8104,12 +8104,12 @@ Haluatko tallentaa muutokset?</translation>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="164"/>
         <source>Name</source>
-        <translation type="unfinished">Nimi</translation>
+        <translation>Nimi</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="165"/>
         <source>RGB</source>
-        <translation type="unfinished">RGB</translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="166"/>
@@ -8146,7 +8146,7 @@ Haluatko tallentaa muutokset?</translation>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="249"/>
         <source>Symbols</source>
-        <translation type="unfinished">Symbolit</translation>
+        <translation>Symbolit</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="283"/>
@@ -8164,7 +8164,7 @@ Haluatko tallentaa muutokset?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="54"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Kaikki tiedostot (*.*)</translation>
+        <translation>Kaikki tiedostot (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="76"/>

@@ -1967,7 +1967,7 @@
     <message>
         <location filename="../src/core/map_information.cpp" line="142"/>
         <source>Custom PROJ.4</source>
-        <translation type="unfinished">PROJ.4 personalizado</translation>
+        <translation>PROJ.4 personalizado</translation>
     </message>
 </context>
 <context>
@@ -5297,7 +5297,7 @@ selecc</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="232"/>
         <source>Map</source>
-        <translation type="unfinished">Mapa</translation>
+        <translation>Mapa</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="232"/>
@@ -5342,7 +5342,7 @@ selecc</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="242"/>
         <source>Templates</source>
-        <translation type="unfinished">Plantillas</translation>
+        <translation>Plantillas</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="242"/>
@@ -5355,7 +5355,7 @@ selecc</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="244"/>
         <source>Map parts</source>
-        <translation type="unfinished">Partes del mapa</translation>
+        <translation>Partes del mapa</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="244"/>
@@ -5368,7 +5368,7 @@ selecc</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="250"/>
         <source>Symbols</source>
-        <translation type="unfinished">Símbolos</translation>
+        <translation>Símbolos</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="250"/>
@@ -5382,7 +5382,7 @@ selecc</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="266"/>
         <source>Colors</source>
-        <translation type="unfinished">Colores</translation>
+        <translation>Colores</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="266"/>
@@ -5395,14 +5395,14 @@ selecc</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="274"/>
         <source>Fonts</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuentes</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="274"/>
         <source>%n font(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Fuente</numerusform>
+            <numerusform>Fuentes</numerusform>
         </translation>
     </message>
     <message>
@@ -5428,7 +5428,7 @@ selecc</translation>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="131"/>
         <source>Error</source>
-        <translation type="unfinished">Error</translation>
+        <translation>Error</translation>
     </message>
 </context>
 <context>
@@ -5436,7 +5436,7 @@ selecc</translation>
     <message>
         <location filename="../src/gui/map/map_notes.cpp" line="45"/>
         <source>Map notes</source>
-        <translation type="unfinished">Notas del mapa</translation>
+        <translation>Notas del mapa</translation>
     </message>
 </context>
 <context>
@@ -8170,12 +8170,12 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="164"/>
         <source>Name</source>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="165"/>
         <source>RGB</source>
-        <translation type="unfinished">RGB</translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="166"/>
@@ -8185,7 +8185,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="167"/>
         <source>Knockout</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminación</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="204"/>
@@ -8212,7 +8212,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="249"/>
         <source>Symbols</source>
-        <translation type="unfinished">Símbolos</translation>
+        <translation>Símbolos</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="283"/>
@@ -8230,7 +8230,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="54"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Todos los archivos (*.*)</translation>
+        <translation>Todos los archivos (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="76"/>

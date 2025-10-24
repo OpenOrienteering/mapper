@@ -1923,31 +1923,31 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="163"/>
         <source>Y</source>
         <comment>y coordinate</comment>
-        <translation>У</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="172"/>
         <source>E</source>
         <comment>west / east</comment>
-        <translation>И</translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="174"/>
         <source>N</source>
         <comment>north / south</comment>
-        <translation>С</translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="183"/>
         <source>N</source>
         <comment>north</comment>
-        <translation>С</translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="185"/>
         <source>E</source>
         <comment>east</comment>
-        <translation>И</translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="206"/>
@@ -2000,12 +2000,12 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="261"/>
         <source>Grivation:</source>
-        <translation>Гривация:</translation>
+        <translation>Гравитация:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="400"/>
         <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt;</source>
-        <translation type="unfinished">&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="442"/>
@@ -4009,7 +4009,7 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="947"/>
         <source>X</source>
-        <translation type="unfinished">Х</translation>
+        <translation>Х</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="962"/>
@@ -4721,7 +4721,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_information.cpp" line="232"/>
         <source>Map</source>
-        <translation type="unfinished">Карта</translation>
+        <translation>Карта</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="232"/>
@@ -4766,7 +4766,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_information.cpp" line="242"/>
         <source>Templates</source>
-        <translation type="unfinished">Шаблони</translation>
+        <translation>Шаблони</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="242"/>
@@ -4779,7 +4779,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_information.cpp" line="244"/>
         <source>Map parts</source>
-        <translation type="unfinished">Части от картата</translation>
+        <translation>Части от картата</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="244"/>
@@ -4792,7 +4792,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_information.cpp" line="250"/>
         <source>Symbols</source>
-        <translation type="unfinished">Символи</translation>
+        <translation>Символи</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="250"/>
@@ -4806,7 +4806,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_information.cpp" line="266"/>
         <source>Colors</source>
-        <translation type="unfinished">Цветове</translation>
+        <translation>Цветове</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="266"/>
@@ -4852,7 +4852,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="131"/>
         <source>Error</source>
-        <translation type="unfinished">Грешка</translation>
+        <translation>Грешка</translation>
     </message>
 </context>
 <context>
@@ -4860,7 +4860,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_notes.cpp" line="45"/>
         <source>Map notes</source>
-        <translation type="unfinished">Бележки по картата</translation>
+        <translation>Бележки по картата</translation>
     </message>
 </context>
 <context>
@@ -7410,12 +7410,12 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="164"/>
         <source>Name</source>
-        <translation type="unfinished">Име</translation>
+        <translation>Име</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="165"/>
         <source>RGB</source>
-        <translation type="unfinished">RGB</translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="166"/>
@@ -7452,7 +7452,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="249"/>
         <source>Symbols</source>
-        <translation type="unfinished">Символи</translation>
+        <translation>Символи</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="283"/>
@@ -7470,7 +7470,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="54"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Всички файлове (*.*)</translation>
+        <translation>Всички файлове (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="76"/>
