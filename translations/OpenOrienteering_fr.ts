@@ -1954,7 +1954,7 @@
     <message>
         <location filename="../src/core/map_information.cpp" line="142"/>
         <source>Custom PROJ.4</source>
-        <translation type="unfinished">Specification PROJ.4</translation>
+        <translation>Spécification PROJ.4</translation>
     </message>
 </context>
 <context>
@@ -3614,7 +3614,7 @@ Faut-il poursuivre l&apos;import ?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="967"/>
         <source>Simple &amp;course</source>
-        <translation type="unfinished">Simple &amp;course</translation>
+        <translation>Simple et course</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="984"/>
@@ -4369,13 +4369,13 @@ car enregistrer en %2 (.%3) n&apos;est pas supporté.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="634"/>
         <source>The map export generated warnings.</source>
-        <translation type="unfinished">L&apos;export de la carte a généré des alertes.</translation>
+        <translation>L&apos;exportation de la carte a généré des alertes.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="696"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4196"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">L&apos;import de la carte a généré des alertes.</translation>
+        <translation>L&apos;importation de la carte a généré des alertes.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="910"/>
@@ -4791,7 +4791,7 @@ sdélectionnés</translation>
 Rescale the imported data?</source>
         <translation type="unfinished">L&apos;échelle du fichier importé est 1:%1 ce qui est différent de l&apos;échelle de la carte au 1:%2.
 
-Voulez-vous redimensionner le fichier importé ?</translation>
+Voulez-vous redimensionner le fichier importé&#x202f;?</translation>
     </message>
     <message>
         <source>Deletes the selected object(s).</source>
@@ -5829,7 +5829,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2334"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished">Dans symbole composé %1 : sous-symbole non pris en charge à index %2.</translation>
+        <translation>Dans symbole composé %1&#xa0;: sous-symbole non pris en charge à l&apos;index %2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2542"/>
@@ -6083,12 +6083,12 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1956"/>
         <source>Failed to create dataset: %1</source>
-        <translation type="unfinished">Echec lors de la création du jeu de données : %1</translation>
+        <translation type="unfinished">Echec lors de la création du jeu de données&#xa0;: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2001"/>
         <source>Failed to create layer: %2</source>
-        <translation type="unfinished">Echec lors de la création de la couche : %2</translation>
+        <translation type="unfinished">Echec lors de la création de la couche&#xa0;: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2139"/>
@@ -6098,7 +6098,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2152"/>
         <source>Failed to properly export the georeferencing info. Local georeferencing only.</source>
-        <translation type="unfinished">Echec lors de l&apos;export du géoréférencement. Système local de référence seulement.</translation>
+        <translation>Echec lors de l&apos;exportation du géoréférencement. Système local de référence seulement.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2162"/>
@@ -6111,17 +6111,17 @@ utiliser la molette de la souris pour zoomer.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2326"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2372"/>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="unfinished">Echec lors de la création de l&apos;élément dans la couche : %1</translation>
+        <translation type="unfinished">Echec lors de la création de l&apos;élément dans la couche&#xa0;: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2382"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished">Impossible de créer la couche %1&#x202f;: %2</translation>
+        <translation type="unfinished">Impossible de créer la couche %1&#xa0;: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2389"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished">Impossible de créer le nom du champ&#x202f;: %1</translation>
+        <translation type="unfinished">Impossible de créer le nom du champ&#xa0;: %1</translation>
     </message>
 </context>
 <context>
@@ -6791,7 +6791,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1006"/>
         <source>The map contains transparent elements which require the raster mode.</source>
-        <translation type="unfinished">La carte contient des éléments transparents qui nécessite le mode raster.</translation>
+        <translation>La carte contient des éléments transparents qui nécessitent le mode raster.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1170"/>
@@ -6832,7 +6832,7 @@ utiliser la molette de la souris pour zoomer.</translation>
         <location filename="../src/gui/print_widget.cpp" line="1261"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished">Echec lors de l&apos;enregistrement de l&apos;image :
+        <translation type="unfinished">Echec lors de l&apos;enregistrement de l&apos;image&#xa0;:
 %1</translation>
     </message>
     <message>
@@ -6947,7 +6947,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1319"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation type="unfinished">La sauvegarde de l&apos;image a échoué. Vérifier le chemin d&apos;accès et vos autorisations.</translation>
+        <translation>La sauvegarde de l&apos;image a échoué. Vérifiez le chemin d&apos;accès et vos autorisations.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1266"/>
@@ -7222,7 +7222,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="53"/>
         <source>New scale:</source>
-        <translation type="unfinished">Nouvelle échelle :</translation>
+        <translation type="unfinished">Nouvelle échelle&#xa0;:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="58"/>
@@ -7295,7 +7295,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="77"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Switch to individual object scaling. </source>
-        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; : Basculer vers redimensionner des objets individuels. </translation>
+        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;&#xa0;: Basculer vers redimensionner des objets individuels. </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="73"/>
@@ -7366,7 +7366,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="52"/>
         <source>Location:</source>
-        <translation type="unfinished">Position :</translation>
+        <translation type="unfinished">Position&#xa0;:</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="55"/>
@@ -7494,7 +7494,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="314"/>
         <source>Extra permissions are required to access &apos;%1&apos;.</source>
-        <translation type="unfinished">Des autorisations supplémentaires sont nécessaires pour accéder &apos;%1&apos;.</translation>
+        <translation>Des autorisations supplémentaires sont nécessaires pour accéder à &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="317"/>
@@ -7517,7 +7517,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="53"/>
         <source>Scaling center:</source>
-        <translation type="unfinished">Centre du redimensionnement :</translation>
+        <translation type="unfinished">Centre du redimensionnement&#xa0;:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="56"/>
@@ -7541,13 +7541,13 @@ des couleurs</translation>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="75"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished">X :</translation>
+        <translation type="unfinished">X&#xa0;:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="79"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished">Y :</translation>
+        <translation type="unfinished">Y&#xa0;:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="82"/>
@@ -7797,7 +7797,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="138"/>
         <source>Show custom icons</source>
-        <translation type="unfinished">Montrer icônes personnalisés</translation>
+        <translation>Montrer les icônes personnalisées</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="142"/>
@@ -8038,7 +8038,7 @@ Voulez-vous sauvegarder les modifications ?</translation>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="251"/>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="260"/>
         <source>Cannot load symbol set, aborting.</source>
-        <translation type="unfinished">Impossible de charger le jeu de symboles : abandon de l&apos;opération.</translation>
+        <translation type="unfinished">Impossible de charger le jeu de symboles&#xa0;: abandon de l&apos;opération.</translation>
     </message>
     <message>
         <source>Cannot load map file, aborting.</source>
@@ -8791,7 +8791,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="894"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">L&apos;import de la carte a généré des avertissements.</translation>
+        <translation>L&apos;importation de la carte a généré des avertissements.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="907"/>
