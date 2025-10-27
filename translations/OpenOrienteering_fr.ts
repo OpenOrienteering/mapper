@@ -3614,7 +3614,7 @@ Faut-il poursuivre l&apos;import ?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="967"/>
         <source>Simple &amp;course</source>
-        <translation>Simple et course</translation>
+        <translation>Simple &amp;course</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="984"/>
