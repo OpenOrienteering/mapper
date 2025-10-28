@@ -830,10 +830,10 @@ void FileFormatTest::issue_513_high_coordinates()
 	}
 	
 	auto print_area = map.printerConfig().print_area;
-	QVERIFY2(print_area.top()    <  1000000.0, "extent.top() outside printable range");
-	QVERIFY2(print_area.left()   > -1000000.0, "extent.left() outside printable range");
-	QVERIFY2(print_area.bottom() > -1000000.0, "extent.bottom() outside printable range");
-	QVERIFY2(print_area.right()  <  1000000.0, "extent.right() outside printable range");
+	QVERIFY2(print_area.top()    <  1000000.0, "print_area.top() outside printable range");
+	QVERIFY2(print_area.left()   > -1000000.0, "print_area.left() outside printable range");
+	QVERIFY2(print_area.bottom() > -1000000.0, "print_area.bottom() outside printable range");
+	QVERIFY2(print_area.right()  <  1000000.0, "print_area.right() outside printable range");
 }
 
 
