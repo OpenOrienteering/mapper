@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2020 Kai Pastor
+ *    Copyright 2016-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -246,7 +246,39 @@ namespace {
 			Q_UNREACHABLE();
 		}
 	}
-
+	
+	bool getRawCodeValue(OGRFeatureH feature, int code, QString &result)
+	{
+		const auto field_index = OGR_F_GetFieldIndex(feature, "RawCodeValues");
+		if (field_index >= 0)
+		{
+			auto field_string_list = OGR_F_GetFieldAsStringList(feature, field_index);
+			const QString search_code = QString::number(code) + QChar::Space;
+			for ( ; *field_string_list; ++field_string_list)
+			{
+				QString str = QString::fromUtf8(*field_string_list);
+				if (str.startsWith(search_code))
+				{
+					result = str.mid(search_code.length());
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	bool getDoubleRawCodeValue(OGRFeatureH feature, int code, double &result)
+	{
+		QString result_as_string;
+		auto ok = false;
+		if (getRawCodeValue(feature, code, result_as_string))
+		{
+			result = result_as_string.trimmed().toDouble(&ok);
+		}
+		return ok;
+	}
+	
+	
 	QString toPrettyWkt(OGRSpatialReferenceH spatial_reference)
 	{
 		char* srs_wkt_raw = nullptr;
@@ -1173,6 +1205,14 @@ Object* OgrFileImport::importPointGeometry(OGRFeatureH feature, OGRGeometryH geo
 	{
 		auto object = new PointObject(symbol);
 		object->setPosition(toMapCoord(OGR_G_GetX(geometry, 0), OGR_G_GetY(geometry, 0)));
+		if (driverName() == "DXF")
+		{
+			double angle = 0;
+			if (getDoubleRawCodeValue(feature, 50, angle))
+			{
+				object->setRotation(qDegreesToRadians(angle));
+			}
+		}
 		return object;
 	}
 	
