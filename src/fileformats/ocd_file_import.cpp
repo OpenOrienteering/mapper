@@ -2355,7 +2355,13 @@ void OcdFileImport::setFraming(OcdFileImport::OcdImportedTextSymbol* symbol, con
 	case Ocd::FramingLine: // since V7
 		symbol->framing = true;
 		symbol->framing_mode = TextSymbol::LineFraming;
+		symbol->framing_color = convertColor(framing.color);
 		symbol->framing_line_half_width = convertLength(framing.line_width);
+		if (ocd_version >= 9)
+		{
+			if (framing.line_style_V9 != 0 && framing.line_style_V9 != 4)
+				addSymbolWarning(symbol, tr("Ignoring text framing line style."));
+		}
 		break;
 	case Ocd::FramingRectangle:
 	default:
