@@ -22,6 +22,9 @@
 
 #include "tools_t.h"
 
+#include <set>
+#include <vector>
+
 #include <Qt>
 #include <QtGlobal>
 #include <QtTest>
@@ -41,12 +44,14 @@
 #include "core/symbols/point_symbol.h"
 #include "global.h"
 #include "gui/main_window.h"
+#include "gui/tag_remove_dialog.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_find_feature.h"
 #include "gui/map/map_widget.h"
 #include "templates/paint_on_template_feature.h"
 #include "tools/edit_point_tool.h"
 #include "tools/edit_tool.h"
+#include "undo/undo_manager.h"
 
 using namespace OpenOrienteering;
 
@@ -284,6 +289,55 @@ void ToolsTest::testFindObjects()
 	MapFindFeature::findNextMatchingObject(*editor.editor, query);
 	QCOMPARE(map->getNumSelectedObjects(), 1);
 	QVERIFY(map->getFirstSelectedObject() == first_match);
+}
+
+
+void ToolsTest::testDeleteObjectTags()
+{
+	auto* map = new Map;
+	{
+		auto* point_symbol = new PointSymbol();
+		map->addSymbol(point_symbol, 0);
+		
+		auto add_object = [map, point_symbol](bool add_to_selection, std::vector<QString> tags) {
+			auto* object = new PointObject(point_symbol);
+			for (const auto& key : tags)
+				object->setTag(key, QLatin1String("1"));
+			map->addObject(object);
+			if (add_to_selection)
+				map->addObjectToSelection(object, false);
+		};
+		add_object(false, {QLatin1String("abc")});	// not added to selection
+		add_object(true, {QLatin1String("abc"), QLatin1String("bcd"), QLatin1String("cde")});	// added to selection
+		add_object(true, {QLatin1String("abc")});	// added to selection
+		add_object(true, {QLatin1String("cde"), QLatin1String("def"), QLatin1String("fgh")});	// added to selection
+	}
+	
+	TestMapEditor editor(map);  // taking ownership
+	
+	std::set<QString> matching_keys;
+	
+	auto objects_count = TagRemoveDialog::findMatchingTags(map, QLatin1String("b"), 2 /* contains */, matching_keys);
+	QCOMPARE(map->getNumSelectedObjects(), 3);
+	QVERIFY(objects_count ==  2 && matching_keys.size() == 2);
+	
+	TagRemoveDialog::removeMatchingTags(map, QLatin1String("b"), 2 /* contains */, true);	// add removal as undo step
+	objects_count = TagRemoveDialog::findMatchingTags(map, QLatin1String("b"), 2 /* contains */, matching_keys);
+	QVERIFY(objects_count ==  0 && matching_keys.size() == 0);
+	QVERIFY(map->undoManager().canUndo());
+	
+	map->undoManager().undo(editor.window);
+	QVERIFY(!map->undoManager().canUndo());
+	QVERIFY(map->undoManager().canRedo());
+	objects_count = TagRemoveDialog::findMatchingTags(map, QLatin1String("b"), 2 /* contains */, matching_keys);
+	QVERIFY(objects_count ==  2 && matching_keys.size() == 2);
+	
+	objects_count = TagRemoveDialog::findMatchingTags(map, QLatin1String("cde"), 0 /* is */, matching_keys);
+	QCOMPARE(map->getNumSelectedObjects(), 2);	// 2 objects are restored => number of selected objects is now 2
+	QVERIFY(objects_count ==  1 && matching_keys.size() == 1);
+	
+	TagRemoveDialog::removeMatchingTags(map, QLatin1String("cde"), 0 /* is */, false);	// don't add removal as undo step
+	QVERIFY(!map->undoManager().canUndo());
 }
 
 
