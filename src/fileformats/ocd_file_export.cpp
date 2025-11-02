@@ -1964,8 +1964,7 @@ void OcdFileExport::setupTextSymbolFraming(const TextSymbol* text_symbol, OcdTex
 	if (text_symbol->getFramingColor())
 	{
 		ocd_text_framing.color = convertColor(text_symbol->getFramingColor());
-		if (ocd_version >= 9)
-			ocd_text_framing.line_style_V9 = 4;		// Default value
+		ocd_text_framing.line_style_V9 = (ocd_version >= 9) ? /* miter join */ 4 : 0;
 		switch (text_symbol->getFramingMode())
 		{
 		case TextSymbol::NoFraming:
