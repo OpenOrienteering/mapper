@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2020 Kai Pastor
+ *    Copyright 2020-2020, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,10 +28,9 @@
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
 #include <QFormLayout>
-#include <QVBoxLayout>
 #include <QLabel>
 #include <QRadioButton>
-#include <QSpacerItem>
+#include <QVBoxLayout>
 
 #include "core/georeferencing.h"
 #include "core/map.h"
@@ -61,7 +60,7 @@ RotateMapDialog::RotateMapDialog(const Map& map, QWidget* parent, Qt::WindowFlag
 	layout->addRow(center_origin_radio);
 	
 	//: Rotation center point
-	center_georef_radio = new QRadioButton(tr("Georeferencing reference point"));
+	center_georef_radio = new QRadioButton(tr("Map reference point"));
 	if (map.getGeoreferencing().getState() == Georeferencing::Local)
 		center_georef_radio->setEnabled(false);
 	layout->addRow(center_georef_radio);
@@ -82,7 +81,7 @@ RotateMapDialog::RotateMapDialog(const Map& map, QWidget* parent, Qt::WindowFlag
 	layout->addItem(Util::SpacerItem::create(this));
 	layout->addRow(Util::Headline::create(tr("Options")));
 	
-	adjust_georeferencing_check = new QCheckBox(tr("Adjust georeferencing reference point"));
+	adjust_georeferencing_check = new QCheckBox(tr("Adjust map reference point"));
 	if (map.getGeoreferencing().getState() == Georeferencing::Geospatial)
 		adjust_georeferencing_check->setChecked(true);
 	else
@@ -101,7 +100,7 @@ RotateMapDialog::RotateMapDialog(const Map& map, QWidget* parent, Qt::WindowFlag
 	layout->addRow(adjust_templates_check);
 	
 	
-	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal);
+	auto* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal);
 	
 	auto* box_layout = new QVBoxLayout();
 	box_layout->addLayout(layout);
