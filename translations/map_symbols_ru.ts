@@ -46,7 +46,7 @@
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Чёрный под фиолетовым для символов трека</translation>
     </message>
     <message>
         <source>Black 65%</source>
@@ -195,7 +195,25 @@ The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minim
 A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
 Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Линия, соединяющая точки одинаковой высоты. Стандартный вертикальный интервал между горизонталями составляет 5 м. Для равнинных участков допускается интервал между горизонталями 2,5 м.
+
+Линии уклона можно наносить на нижнюю сторону горизонтали для уточнения направления уклона. При использовании горизонталей их следует размещать на входящих в рельеф участках.
+
+Замкнутая горизонталь представляет собой холм или впадину. Впадина должна иметь как минимум одну линию уклона. Минимальная высота/глубина должна составлять 1 м.
+
+Важны соотношения между соседними горизонталями. Смежные горизонтали показывают форму и структуру. Следует избегать мелких деталей на горизонталях, поскольку они могут скрывать основные особенности рельефа.
+
+Значительные объекты, такие как впадины, входящие в рельеф участки, отроги, земляные валы и террасы, могут быть преувеличены.
+
+Абсолютная точность высоты не имеет большого значения, но относительная разница высот между соседними объектами должна быть отображена на карте как можно точнее. Допускается незначительное изменение высоты контура, если это улучшает представление объекта. Это отклонение не должно превышать 25% от интервала контура, при этом необходимо учитывать соседние объекты.
+
+Наименьший изгиб контура составляет 0,25 мм от центра до центра линии (проекция 4 м). Устье входящего или отрога должно быть шире 0,5 мм от центра до центра линии (проекция 8 м).
+
+Минимальная длина контурного холма составляет 0,9 мм (проекция 13,5 м), а минимальная ширина — 0,6 мм (проекция 9 м) по наружному измерению. Небольшие, выступающие холмы можно обозначить символом «Малый холмик» (109) или «Малый удлинённый холмик» (110), либо их можно преувеличить на карте для соответствия минимальному размеру.
+
+Впадина должна соответствовать линии склона, поэтому минимальная длина составляет 1,1 мм (проекция 16,5 м), а минимальная ширина — 0,7 мм (проекция 10,5 м) по внешнему размеру. Небольшие, но заметные впадины можно изобразить с помощью символа «Малая впадина» (111) или преувеличить, чтобы соответствовать минимальному размеру.
+
+Контуры следует адаптировать (не разрывать), чтобы не касаться символа «Малая горка» (109) или «Малая удлинённая горка» (110).</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -206,7 +224,9 @@ Contours should be adapted (not broken) in order not to touch symbol Small knoll
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Линии уклона могут быть нанесены на нижней стороне контурной линии для уточнения направления уклона. При использовании их следует размещать во входящих отрогах.
+
+Впадина должна иметь как минимум одну линию уклона.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -218,7 +238,11 @@ A depression has to have at least one slope line.</source>
 An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Каждый пятый контур следует отображать более толстой линией. Это помогает быстро оценить перепад высот и общую форму поверхности рельефа.
+
+На участке с высокой степенью детализации опорный контур может быть представлен обычной горизонталью. Небольшие холмы и впадины опорными контурами обычно не изображаются.
+
+На ровной местности уровень опорного контура необходимо тщательно выбирать. Идеальным уровнем для опорного контура является центральный контур на наиболее выступающих склонах.</translation>
     </message>
     <message>
         <source>Contour value</source>
