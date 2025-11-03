@@ -423,29 +423,23 @@ Ocd::OcdPoint32 convertPoint(const MapCoord& coord)
 
 
 /**
- * Convert a size to the OCD format.
+ * Convert a size or offset to the OCD format.
  * 
- * This function converts from 1/100 mm to 1/10 mm, rounding half up for positive values and rounding half down for negative values.
+ * This function converts from 1/100 mm to 1/10 mm, rounding halfway cases away from zero.
  */
 constexpr qint16 convertSize(qint32 size)
 {
-	if (size >= 0)
-		return qint16((size+5) / 10);
-	else
-		return qint16((size-5) / 10);
+	return qint16(((size < 0) ? (size-5) : (size+5)) / 10);
 }
 
 /**
  * Convert a size to the OCD format.
  * 
- * This function converts from 1/100 mm to 1/10 mm, rounding half up for positive values and rounding half down for negative values.
+ * This function converts from 1/100 mm to 1/10 mm, rounding halfway cases away from zero.
  */
 constexpr qint32 convertSize(qint64 size)
 {
-	if (size >= 0)
-		return qint32((size+5) / 10);
-	else
-		return qint32((size-5) / 10);
+	return qint32(((size < 0) ? (size-5) : (size+5)) / 10);
 }
 
 
