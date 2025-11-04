@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021, 2024 Kai Pastor
+ *    Copyright 2012-2021, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1844,6 +1844,14 @@ void MapEditorController::exportVector()
 void MapEditorController::printClicked(int task)
 {
 #ifdef QT_PRINTSUPPORT_LIB
+	if (editing_in_progress)
+	{
+		QMessageBox::warning(window,
+		                     tr("Editing in progress"),
+		                     tr("The map is currently being edited. "
+		                        "Please finish the edit operation first.") );
+		return;
+	}
 	if (!print_dock_widget)
 	{
 		print_dock_widget = new EditorDockWidget(QString{}, nullptr, this, window);
