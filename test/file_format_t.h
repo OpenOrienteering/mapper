@@ -133,7 +133,13 @@ private slots:
 	 */
 	void ocdAreaSymbolTest_data();
 	void ocdAreaSymbolTest();
-
+	
+	/**
+	 * Test OCD text symbol export and import.
+	 */
+	void ocdTextSymbolTest_data();
+	void ocdTextSymbolTest();
+	
 };
 
 #endif // OPENORIENTEERING_FILE_FORMAT_T_H
