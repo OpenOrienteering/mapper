@@ -423,23 +423,23 @@ Ocd::OcdPoint32 convertPoint(const MapCoord& coord)
 
 
 /**
- * Convert a size to the OCD format.
+ * Convert a size or offset to the OCD format.
  * 
- * This function converts from 1/100 mm to 1/10 mm, rounding half up for positive values.
+ * This function converts from 1/100 mm to 1/10 mm, rounding halfway cases away from zero.
  */
 constexpr qint16 convertSize(qint32 size)
 {
-	return qint16((size+5) / 10);
+	return qint16(((size < 0) ? (size-5) : (size+5)) / 10);
 }
 
 /**
  * Convert a size to the OCD format.
  * 
- * This function converts from 1/100 mm to 1/10 mm, rounding half up for positive values.
+ * This function converts from 1/100 mm to 1/10 mm, rounding halfway cases away from zero.
  */
 constexpr qint32 convertSize(qint64 size)
 {
-	return qint32((size+5) / 10);
+	return qint32(((size < 0) ? (size-5) : (size+5)) / 10);
 }
 
 
@@ -1877,6 +1877,7 @@ QByteArray OcdFileExport::exportTextSymbol(const TextSymbol* text_symbol, quint3
 	setupTextSymbolExtra(text_symbol, ocd_symbol);
 	setupTextSymbolBasic(text_symbol, alignment, ocd_symbol.basic);
 	setupTextSymbolSpecial(text_symbol, ocd_symbol.special);
+	setupTextSymbolFraming(text_symbol, ocd_symbol.framing);
 	
 	auto header_size = int(sizeof(OcdTextSymbol));
 	ocd_symbol.base.size = decltype(ocd_symbol.base.size)(header_size);
@@ -1963,6 +1964,7 @@ void OcdFileExport::setupTextSymbolFraming(const TextSymbol* text_symbol, OcdTex
 	if (text_symbol->getFramingColor())
 	{
 		ocd_text_framing.color = convertColor(text_symbol->getFramingColor());
+		ocd_text_framing.line_style_V9 = (ocd_version >= 9) ? /* miter join */ 4 : 0;
 		switch (text_symbol->getFramingMode())
 		{
 		case TextSymbol::NoFraming:

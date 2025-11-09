@@ -353,8 +353,8 @@ namespace Ocd
 		quint16 line_width;
 		quint16 font_weight;             /// TextSymbol only
 		quint16 italic;                  /// TextSymbol only
-		quint16 offset_x;
-		quint16 offset_y;
+		qint16 offset_x;
+		qint16 offset_y;
 	};
 
 	struct TextSymbolV8

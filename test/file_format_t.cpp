@@ -71,16 +71,17 @@
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/symbols/area_symbol.h"
-#include "core/symbols/symbol.h"
 #include "core/symbols/line_symbol.h"
+#include "core/symbols/symbol.h"
+#include "core/symbols/text_symbol.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
 #include "fileformats/iof_course_export.h"
 #include "fileformats/kml_course_export.h"
 #include "fileformats/ocd_file_export.h"
-#include "fileformats/ocd_file_import.h"
 #include "fileformats/ocd_file_format.h"
+#include "fileformats/ocd_file_import.h"
 #include "fileformats/ocd_types.h"
 #include "fileformats/ocd_types_v8.h"
 #include "fileformats/ocd_types_v12.h"
@@ -143,7 +144,7 @@ namespace QTest
 			ba += ", overprinting";
 		return qstrdup(ba.data());
 	}
-}
+}  // namespace QTest
 
 #endif
 
@@ -1784,6 +1785,102 @@ void FileFormatTest::ocdAreaSymbolTest()
 		
 		// Verifying object property; symbol is for tracing
 		VERIFY_SYMBOL_PROPERTY(actual_object.equals(&expected_object, false), expected_symbol);
+	}
+}
+
+void FileFormatTest::ocdTextSymbolTest_data()
+{
+	QTest::addColumn<int>("format_version");
+	
+#ifndef MAPPER_BIG_ENDIAN
+	static struct { int version; const char* id; } const tests[] = {
+	    { 8, "OCD8" },
+	    { 9, "OCD9" },
+	    { 10, "OCD10" },
+	    { 11, "OCD11" },
+	    { 12, "OCD12" },
+	};
+	for (auto& t : tests)
+	{
+		QTest::newRow(t.id) << t.version;
+	}
+#endif
+}
+
+void FileFormatTest::ocdTextSymbolTest()
+{
+	QFETCH(int, format_version);
+	
+	auto* format_id = QTest::currentDataTag();
+	const auto* format = FileFormats.findFormat(format_id);
+	QVERIFY(format);
+	
+	static const auto filepath = QString::fromLatin1("data:text-symbol.omap");
+	QVERIFY(QFileInfo::exists(filepath));
+	
+	// Load the test map
+	auto expected = std::make_unique<Map>();
+	QVERIFY(expected->loadFrom(filepath));
+	
+	// Save and load the map
+	auto actual = saveAndLoadMap(*expected, format);
+	QVERIFY2(actual, "Exception while importing / exporting.");
+	QCOMPARE(actual->property(OcdFileFormat::versionProperty()), format_version);
+	
+	// Symbols
+	QCOMPARE(actual->getNumSymbols(), expected->getNumSymbols());
+	for (int i = 0; i < actual->getNumSymbols(); ++i)
+	{
+		auto* expected_symbol = expected->getSymbol(i);
+		if (expected_symbol->getType() != Symbol::Text)	// actually redundant for the given test data
+			continue;
+		
+		auto* actual_symbol = actual->getSymbol(i);
+		QCOMPARE(actual_symbol->getType(), Symbol::Text);
+		
+		COMPARE_SYMBOL_PROPERTY(actual_symbol->getNumberComponent(0), expected_symbol->getNumberComponent(0), *expected_symbol);
+		// OCD limitation: always two number components
+		if (expected_symbol->getNumberComponent(1) != -1)
+			COMPARE_SYMBOL_PROPERTY(actual_symbol->getNumberComponent(1), expected_symbol->getNumberComponent(1), *expected_symbol);
+		
+		QVERIFY(expected_symbol->stateEquals(actual_symbol));
+		
+		auto* expected_text_symbol = expected_symbol->asText();
+		auto* actual_text_symbol = actual_symbol->asText();
+		
+		COMPARE_SYMBOL_PROPERTY(bool(actual_text_symbol->getColor()), bool(expected_text_symbol->getColor()), *expected_text_symbol);
+		if (expected_text_symbol->getColor())
+			COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getColor()->operator QRgb(), expected_text_symbol->getColor()->operator QRgb(), *expected_text_symbol);
+		COMPARE_SYMBOL_PROPERTY(bool(actual_text_symbol->getFramingColor()), bool(expected_text_symbol->getFramingColor()), *expected_text_symbol);
+		if (expected_text_symbol->getFramingColor())
+			COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getFramingColor()->operator QRgb(), expected_text_symbol->getFramingColor()->operator QRgb(), *expected_text_symbol);
+		COMPARE_SYMBOL_PROPERTY(bool(actual_text_symbol->getLineBelowColor()), bool(expected_text_symbol->getLineBelowColor()), *expected_text_symbol);
+		if (expected_text_symbol->getLineBelowColor())
+			COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getLineBelowColor()->operator QRgb(), expected_text_symbol->getLineBelowColor()->operator QRgb(), *expected_text_symbol);
+		
+		COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getFramingMode(), expected_text_symbol->getFramingMode(), *expected_text_symbol);
+		if (expected_text_symbol->getFramingMode() == TextSymbol::FramingMode::ShadowFraming)
+		{
+			COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getFramingShadowYOffset(), expected_text_symbol->getFramingShadowYOffset(), *expected_text_symbol);
+			COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getFramingShadowXOffset(), expected_text_symbol->getFramingShadowXOffset(), *expected_text_symbol);
+		}
+		if (expected_text_symbol->getFramingMode() == TextSymbol::FramingMode::LineFraming)
+		{
+			COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getFramingLineHalfWidth(), expected_text_symbol->getFramingLineHalfWidth(), *expected_text_symbol);
+		}
+
+		if (expected_text_symbol->hasLineBelow())
+		{
+			COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getLineBelowWidth(), expected_text_symbol->getLineBelowWidth(), *expected_text_symbol);
+			COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getLineBelowDistance(), expected_text_symbol->getLineBelowDistance(), *expected_text_symbol);
+		}
+		
+		COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getNumCustomTabs(), expected_text_symbol->getNumCustomTabs(), *expected_text_symbol);
+		if (expected_text_symbol->getNumCustomTabs())
+		{
+			for (int i = 0; i < expected_text_symbol->getNumCustomTabs(); ++i)
+				COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getCustomTab(i), expected_text_symbol->getCustomTab(i), *expected_text_symbol);
+		}
 	}
 }
 
