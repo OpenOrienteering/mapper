@@ -1,6 +1,7 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
  *    Copyright 2012-2019, 2024, 2025 Kai Pastor
+ *    Copyright 2025 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,6 +24,7 @@
 
 #include <algorithm>
 #include <limits>
+#include <numeric>
 // IWYU pragma: no_include <memory>
 // IWYU pragma: no_include <vector>
 
@@ -64,6 +66,7 @@
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/symbols/area_symbol.h"
+#include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/symbol.h"
@@ -78,12 +81,13 @@
 
 namespace OpenOrienteering {
 
-PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, SymbolRole role, qreal offset_y, QWidget* parent)
-: QWidget(parent)
+PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, SymbolRole role, qreal offset_y, Map* source_map)
+: QWidget(nullptr)
 , symbol(symbol)
 , object_origin_coord(0, offset_y)
 , offset_y(offset_y)
 , map(controller->getMap())
+, source_map(source_map)
 , controller(controller)
 , permanent_preview(role == PrimarySymbol)
 {
@@ -226,6 +230,11 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	add_coord_button = new QPushButton(QIcon(QString::fromLatin1(":/images/plus.png")), QString{});
 	delete_coord_button = new QPushButton(QIcon(QString::fromLatin1(":/images/minus.png")), QString{});
 	center_coords_button = new QPushButton(tr("Center by coordinate average"));
+	if (source_map)
+	{
+		import_objects_button = new QPushButton(tr("Import from selected objects"));
+		import_objects_button->setEnabled(source_map->getNumSelectedObjects() > 0);
+	}
 	
 	// Layout
 	auto* left_layout = new QVBoxLayout();
@@ -237,6 +246,8 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	element_buttons_layout->addWidget(add_element_button, 1, 2);
 	element_buttons_layout->addWidget(delete_element_button, 1, 3);
 	element_buttons_layout->addWidget(center_all_elements_button, 2, 1, 1, 4);
+	if (source_map)
+		element_buttons_layout->addWidget(import_objects_button, 3, 1, 1, 4);
 	element_buttons_layout->setColumnStretch(5, 1);
 	left_layout->addLayout(element_buttons_layout);
 	
@@ -292,6 +303,8 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	connect(add_coord_button, &QPushButton::clicked, this, &PointSymbolEditorWidget::addCoordClicked);
 	connect(delete_coord_button, &QPushButton::clicked, this, &PointSymbolEditorWidget::deleteCoordClicked);
 	connect(center_coords_button, &QPushButton::clicked, this, &PointSymbolEditorWidget::centerCoordsClicked);
+	if (source_map)
+		connect(import_objects_button, &QPushButton::clicked, this, &PointSymbolEditorWidget::importSelectedObjects);
 }
 
 PointSymbolEditorWidget::~PointSymbolEditorWidget()
@@ -1012,6 +1025,170 @@ Symbol* PointSymbolEditorWidget::getCurrentElementSymbol()
 		return symbol;
 }
 
+
+void PointSymbolEditorWidget::importSelectedObjects()
+{
+	auto selection_center = determineSelectionCenter();
+	const auto previous_elements_count = element_list->count();
+	for (const auto object : source_map->selectedObjects())
+	{
+		switch (object->getSymbol()->getType())
+		{
+		case Symbol::Point:
+			importPointObject(object, selection_center);
+			break;
+		case Symbol::Area:
+			importAreaObject(object, selection_center);
+			break;
+		case Symbol::Line:
+			importLineObject(object, selection_center);
+			break;
+		case Symbol::Combined:
+			importCombinedObject(object, selection_center);
+			break;
+		default:
+			;
+		}
+	}
+	if (previous_elements_count != element_list->count())
+	{
+		map->updateAllObjectsWithSymbol(symbol);
+		emit symbolEdited();
+	}
+}
+
+MapCoordF PointSymbolEditorWidget::determineSelectionCenter()
+{
+	const auto only_point_objects = std::all_of(source_map->selectedObjectsBegin(), source_map->selectedObjectsEnd(), [](auto const* object) { return object->getType() == Object::Point; });
+	if (only_point_objects)
+	{
+		QPointF sum = std::accumulate(source_map->selectedObjectsBegin(), source_map->selectedObjectsEnd(), QPointF{0.0,0.0}, [](const QPointF& sum, const auto* object) {
+			return QPointF{sum.x() + object->asPoint()->getCoordF().x(), sum.y() + object->asPoint()->getCoordF().y()};
+		});
+		return MapCoordF(sum.x() / source_map->getNumSelectedObjects(), sum.y() / source_map->getNumSelectedObjects());
+	}
+
+	QRectF rect;
+	source_map->includeSelectionRect(rect);
+	return MapCoordF(rect.center());
+}
+
+void PointSymbolEditorWidget::importPointObject(const Object* object, MapCoordF& selection_center)
+{
+	const auto point_symbol = object->getSymbol()->asPoint();
+	const auto point_object = object->asPoint();
+	if (point_symbol->getInnerColor() || point_symbol->getOuterColor())
+	{
+		auto* new_symbol = new PointSymbol();
+		new_symbol->setInnerColor(point_symbol->getInnerColor());
+		new_symbol->setInnerRadius(point_symbol->getInnerRadius());
+		new_symbol->setOuterColor(point_symbol->getOuterColor());
+		new_symbol->setOuterWidth(point_symbol->getOuterWidth());
+		auto* new_object = new PointObject(new_symbol);
+		const MapCoordF new_coords = point_object->getCoordF() - selection_center;
+		new_object->setPosition(new_coords);
+		addNewSymbol(new_object, new_symbol);
+	}
+	for (int i = 0; i < point_symbol->getNumElements(); ++i)
+	{
+		auto* element_symbol = point_symbol->getElementSymbol(i);
+		auto* element_object = point_symbol->getElementObject(i);
+		switch (element_object->getSymbol()->getType())
+		{
+		case Symbol::Point:
+			{
+			auto* new_symbol = element_symbol->asPoint()->duplicate();
+			auto* new_object = element_object->asPoint()->duplicate();
+			const MapCoordF distance_to_center = point_object->getCoordF() - selection_center;
+			new_object->move(MapCoord(distance_to_center));
+			addNewSymbol(new_object, new_symbol);
+			}
+			break;
+		case Symbol::Area:
+			{
+			auto* new_symbol = element_symbol->asArea()->duplicate();
+			auto* new_object = element_object->asPath()->duplicate();
+			const MapCoordF distance_to_center = point_object->getCoordF() - selection_center;
+			new_object->move(MapCoord(distance_to_center));
+			addNewSymbol(new_object, new_symbol);
+			}
+			break;
+		case Symbol::Line:
+			{
+			auto* new_symbol = element_symbol->asLine()->duplicate();
+			auto* new_object = element_object->asPath()->duplicate();
+			const MapCoordF distance_to_center = point_object->getCoordF() - selection_center;
+			new_object->move(MapCoord(distance_to_center));
+			addNewSymbol(new_object, new_symbol);
+			}
+			break;
+		default:
+			Q_UNREACHABLE();
+		}
+	}
+}
+
+void PointSymbolEditorWidget::importAreaObject(const Object* object, MapCoordF& selection_center)
+{
+	auto* new_symbol = object->getSymbol()->asArea()->duplicate();
+	auto* new_object = object->asPath()->duplicate();
+	new_object->move(MapCoord(-selection_center));
+	addNewSymbol(new_object, new_symbol);
+}
+
+void PointSymbolEditorWidget::importLineObject(const Object* object, MapCoordF& selection_center)
+{
+	auto* new_symbol = object->getSymbol()->asLine()->duplicate();
+	auto* new_object = object->asPath()->duplicate();
+	new_object->move(MapCoord(-selection_center));
+	addNewSymbol(new_object, new_symbol);
+}
+
+void PointSymbolEditorWidget::importCombinedObject(const Object* object, MapCoordF& selection_center)
+{
+	const auto combined_symbol = object->getSymbol()->asCombined();
+	
+	for (int i = 0; i < combined_symbol->getNumParts(); ++i)
+	{
+		auto part = combined_symbol->getPart(i);
+		if (!part)
+			continue;
+		switch (part->getType())
+		{
+		case Symbol::Area:
+			{
+			auto area_object = object->asPath()->duplicate();
+			area_object->setSymbol(part, false);
+			importAreaObject(area_object, selection_center);
+			}
+			break;
+		case Symbol::Line:
+			{
+			auto line_object = object->asPath()->duplicate();
+			line_object->setSymbol(part, false);
+			importLineObject(line_object, selection_center);
+			}
+			break;
+		case Symbol::Combined:
+			{
+			auto combined_object = object->asPath()->duplicate();
+			combined_object->setSymbol(part, false);
+			importCombinedObject(combined_object, selection_center);
+			}
+			break;
+		default:
+			;
+		}
+	}
+}
+
+void PointSymbolEditorWidget::addNewSymbol(Object* new_object, Symbol* new_symbol)
+{
+	int row = (element_list->currentRow() < 0) ? element_list->count() : (element_list->currentRow() + 1);
+	symbol->addElement(row - 1, new_object, new_symbol);
+	element_list->insertItem(row, getLabelForSymbol(new_symbol));
+	element_list->setCurrentRow(row);
+}
 
 
 // ### PointSymbolEditorTool ###
