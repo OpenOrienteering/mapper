@@ -23,12 +23,14 @@ find_package(Qt5LinguistTools REQUIRED)
 
 # Translation files which are updated by lupdate.
 set(Mapper_translations
+  OpenOrienteering_bg.ts
   OpenOrienteering_cs.ts
   OpenOrienteering_da.ts
   OpenOrienteering_de.ts
   OpenOrienteering_en.ts
   OpenOrienteering_eo.ts
   OpenOrienteering_es.ts
+  OpenOrienteering_et.ts
   OpenOrienteering_fi.ts
   OpenOrienteering_fr.ts
   OpenOrienteering_he.ts
@@ -37,25 +39,27 @@ set(Mapper_translations
   OpenOrienteering_id.ts
   OpenOrienteering_it.ts
   OpenOrienteering_ja.ts
+  OpenOrienteering_ko.ts
   OpenOrienteering_lv.ts
   OpenOrienteering_nb.ts
   OpenOrienteering_nl.ts
   OpenOrienteering_pl.ts
+  OpenOrienteering_pt.ts
   OpenOrienteering_pt_BR.ts
-  OpenOrienteering_pt_PT.ts
   OpenOrienteering_ru.ts
   OpenOrienteering_sv.ts
+  OpenOrienteering_ta.ts
+  OpenOrienteering_tr.ts
   OpenOrienteering_uk.ts
   OpenOrienteering_zh_CN.ts
+  OpenOrienteering_zh_Hant.ts
 )
 # Make translation list available for Qt translation lookup
 set(Mapper_translations ${Mapper_translations} PARENT_SCOPE)
 
 # Translation files which are updated but not deployed.
 set(Mapper_translations_template
-  OpenOrienteering_et.ts
   OpenOrienteering_eu.ts
-  OpenOrienteering_tr.ts
   OpenOrienteering_template.ts
 )
 
@@ -71,7 +75,11 @@ set(map_symbols_translations
   map_symbols_hr.ts
   map_symbols_hu.ts
   map_symbols_it.ts
+  map_symbols_lv.ts
   map_symbols_nb.ts
+  map_symbols_nl.ts
+  map_symbols_pl.ts
+  map_symbols_pt.ts
   map_symbols_ru.ts
   map_symbols_sv.ts
   map_symbols_tr.ts
@@ -83,9 +91,10 @@ set(map_symbols_translations ${map_symbols_translations} PARENT_SCOPE)
 
 # Translation files which are updated but not deployed.
 set(map_symbols_translations_template
-  map_symbols_lv.ts
-  map_symbols_nl.ts
-  map_symbols_pl.ts
+  map_symbols_bg.ts
+  map_symbols_et.ts
+  map_symbols_id.ts
+  map_symbols_zh_Hant.ts
   map_symbols_template.ts
 )
 # Make translation list available for SymbolSetTool

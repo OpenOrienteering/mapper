@@ -15,7 +15,7 @@ This window can be shown by clicking the menu item Symbols -&gt; Color window.
 
 #### Introduction
 
-Colors on orienteering maps are defined in the orienteering map standards, ISOM and ISSOM, as colors from the Pantone Matching System (PMS). The recommended way to print maps is to use these spot colors to print each color layer separately onto the map sheet. This way colors printed later will overlap colors which are printed earlier. The color system in OpenOrienteering Mapper follows this analogy: each map file contains a prioritized list of available colors, where colors higher in the list overlap lower colors.
+Colors on orienteering maps are defined in the orienteering map standards, ISOM and ISSprOM, as colors from the Pantone Matching System (PMS). The recommended way to print maps is to use these spot colors to print each color layer separately onto the map sheet. This way colors printed later will overlap colors which are printed earlier. The color system in OpenOrienteering Mapper follows this analogy: each map file contains a prioritized list of available colors, where colors higher in the list overlap lower colors.
 
 Colors can be managed with the buttons at the bottom of the list. To edit a color, double click its entry in the color list.
 

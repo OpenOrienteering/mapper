@@ -22,7 +22,7 @@ add_custom_target(APK SOURCES
   CPackConfig.cmake.in
   install_android_package.cmake.in
   Mapper.pro.in
-  strings.xml
+  strings.xml.in
 )
 
 if(NOT ANDROID)

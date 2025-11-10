@@ -1,5 +1,5 @@
 #
-#    Copyright 2017 Kai Pastor
+#    Copyright 2017-2021 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -16,6 +16,16 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
+# The generated custom install script `install-html.cmake` is run at install
+# time. Here, `file(INSTALL ...)` must be called with the absolute path of
+# the destination, and so we must explicitly take care of adding
+# `CMAKE_INSTALL_PREFIX` when needed.
+# This is different from using `file(INSTALL ...)` at configuration time
+# where CMake takes care of `CMAKE_INSTALL_PREFIX` for generated scripts.
+
+get_filename_component(destination "@MAPPER_ABOUT_DESTINATION@/manual" ABSOLUTE
+  BASE_DIR "${CMAKE_INSTALL_PREFIX}"
+)
 
 file(READ "@CMAKE_CURRENT_BINARY_DIR@/html/index.qhp" index_qhp)
 string(REGEX MATCHALL "<file>[^<]*</file>" matches "${index_qhp}")
@@ -23,7 +33,7 @@ foreach(match ${matches})
 	string(REGEX REPLACE ".*<file>" "" match "${match}")
 	string(REGEX REPLACE "</file>.*" "" match "${match}")
 	file(INSTALL
-	  DESTINATION "${CMAKE_INSTALL_PREFIX}/@MAPPER_ABOUT_DESTINATION@/manual"
+	  DESTINATION "${destination}"
 	  FILES "@CMAKE_CURRENT_BINARY_DIR@/html/${match}"
 	)
 endforeach()

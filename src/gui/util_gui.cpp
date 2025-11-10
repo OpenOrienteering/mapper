@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017, 2019 Kai Pastor
+ *    Copyright 2017, 2019, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -32,9 +32,10 @@
 #include <QDoubleSpinBox>
 #include <QFileInfo>
 #include <QGuiApplication>
+#include <QIcon>
+#include <QLabel>
 #include <QLatin1Char>
 #include <QLatin1String>
-#include <QLabel>
 #include <QLocale>
 #include <QMessageBox>
 #include <QPainter>
@@ -47,11 +48,13 @@
 #include <QStandardPaths>
 #include <QStringList>
 #include <QStyle>
-#include <QTextDocument>
+#include <QTextDocumentFragment>
+#include <QToolButton>
+#if defined(Q_OS_ANDROID)
+#include <QUrl>
+#endif
 #include <QVariant>
 #include <QWidget>
-#include <QToolButton>
-#include <QIcon>
 
 #include "mapper_config.h"
 #include "settings.h"
@@ -69,7 +72,7 @@ DoubleValidator::DoubleValidator(double bottom, double top, QObject* parent, int
 
 
 DoubleValidator::~DoubleValidator() = default;
-                                      
+
 
 QValidator::State DoubleValidator::validate(QString& input, int& pos) const
 {
@@ -373,9 +376,7 @@ namespace Util {
 	{
 		if (maybe_markup.contains(QLatin1Char('<')))
 		{
-			QTextDocument doc;
-			doc.setHtml(maybe_markup);
-			maybe_markup = doc.toPlainText();
+			maybe_markup = QTextDocumentFragment::fromHtml(maybe_markup).toPlainText();
 		}
 		return maybe_markup;
 	}

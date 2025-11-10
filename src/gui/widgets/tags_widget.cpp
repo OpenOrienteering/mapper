@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -69,7 +69,7 @@ TagsWidget::TagsWidget(Map* map, MapView* main_view, MapEditorController* contro
 	QStyleOption style_option(QStyleOption::Version, QStyleOption::SO_DockWidget);
 	all_buttons_layout->setContentsMargins(
 		style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option) / 2,
-		style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option) / 2,
+		0, // Covered by the main layout's spacing.
 		style()->pixelMetric(QStyle::PM_LayoutRightMargin, &style_option) / 2,
 		style()->pixelMetric(QStyle::PM_LayoutBottomMargin, &style_option) / 2
 	);
@@ -81,6 +81,8 @@ TagsWidget::TagsWidget(Map* map, MapView* main_view, MapEditorController* contro
 	setLayout(layout);
 	
 	connect(tags_table, &QTableWidget::cellChanged, this, &TagsWidget::cellChange);
+	
+	connect(help_button, &QAbstractButton::clicked, this, &TagsWidget::showHelp);
 	
 	connect(map, &Map::objectSelectionChanged, this, &TagsWidget::objectTagsChanged);
 	connect(map, &Map::selectedObjectEdited, this, &TagsWidget::objectTagsChanged);
@@ -95,7 +97,7 @@ TagsWidget::~TagsWidget() = default;
 // slot
 void TagsWidget::showHelp()
 {
-	Util::showHelp(controller->getWindow(), "tag_editor.html");
+	Util::showHelp(controller->getWindow(), "object_tags.html");
 }
 
 void TagsWidget::setupLastRow()
@@ -124,13 +126,14 @@ void TagsWidget::objectTagsChanged()
 	
 	react_to_changes = false;
 	
-	int row = 0;
-	const Object* object = map->getFirstSelectedObject();
-	if (object)
+	if (map->getNumSelectedObjects() == 1)
 	{
+		const auto* object = map->getFirstSelectedObject();
 		auto const& tags = object->tags();
 		tags_table->clearContents();
 		tags_table->setRowCount(tags.size() + 1);
+		
+		int row = 0;
 		for (auto const& tag : tags)
 		{
 			tags_table->setItem(row, 0, new QTableWidgetItem(tag.key));

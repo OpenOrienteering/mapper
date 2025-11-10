@@ -73,4 +73,4 @@ struct OcdIcon
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_OCD_ICON_H

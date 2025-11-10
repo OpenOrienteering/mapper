@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -275,7 +275,7 @@ void XmlElementReader::read(MapCoordVector& coords)
 	
 	if (coords.size() != num_coords)
 	{
-		throw FileFormatException(::OpenOrienteering::ImportExport::tr("Expected %1 coordinates, found %2."));
+		throw FileFormatException(::OpenOrienteering::ImportExport::tr("Expected %1 coordinates, found %2.").arg(num_coords).arg(coords.size()));
 	}
 }
 
@@ -350,7 +350,7 @@ void XmlElementReader::readForText(MapCoordVector& coords)
 	
 	if (coords.size() != num_coords)
 	{
-		throw FileFormatException(::OpenOrienteering::ImportExport::tr("Expected %1 coordinates, found %2."));
+		throw FileFormatException(::OpenOrienteering::ImportExport::tr("Expected %1 coordinates, found %2.").arg(num_coords).arg(coords.size()));
 	}
 }
 

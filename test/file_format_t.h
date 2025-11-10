@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2021, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -41,6 +41,12 @@ private slots:
 	 */
 	void mapCoordtoString();
 	void mapCoordtoString_data();
+	
+	/**
+	 * Tests the MapCoord::fromString() implementation which is used for import.
+	 */
+	void mapCoordFromString();
+	void mapCoordFromString_data();
 	
 	/**
 	 * Tests filename extension fixup.
@@ -94,10 +100,45 @@ private slots:
 	void kmlCourseExportTest();
 	
 	/**
+	 * Tests the export of IOF courses.
+	 */
+	void iofCourseExportTest();
+	
+	/**
 	 * Test the creation of templates.
 	 */
 	void importTemplateTest_data();
 	void importTemplateTest();
+	
+	/**
+	 * Test text export to OCD.
+	 */
+	void ocdTextExportTest_data();
+	void ocdTextExportTest();
+	
+	/**
+	 * Test text import from OCD.
+	 */
+	void ocdTextImportTest_data();
+	void ocdTextImportTest();
+	
+	/**
+	 * Test path import from OCD.
+	 */
+	void ocdPathImportTest_data();
+	void ocdPathImportTest();
+	
+	/**
+	 * Test OCD area symbol export and import.
+	 */
+	void ocdAreaSymbolTest_data();
+	void ocdAreaSymbolTest();
+	
+	/**
+	 * Test OCD text symbol export and import.
+	 */
+	void ocdTextSymbolTest_data();
+	void ocdTextSymbolTest();
 	
 };
 

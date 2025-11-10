@@ -1,6 +1,6 @@
 #
 #    Copyright 2012-2014 Thomas Schöps
-#    Copyright 2012-2018 Kai Pastor
+#    Copyright 2012-2024 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -93,6 +93,7 @@ set(Mapper_Common_SRCS
   core/map_color.cpp
   core/map_coord.cpp
   core/map_grid.cpp
+  core/map_information.cpp
   core/map_part.cpp
   core/map_printer.cpp
   core/map_view.cpp
@@ -114,6 +115,7 @@ set(Mapper_Common_SRCS
   
   core/symbols/area_symbol.cpp
   core/symbols/combined_symbol.cpp
+  core/symbols/html_symbol_report.cpp
   core/symbols/line_symbol.cpp
   core/symbols/point_symbol.cpp
   core/symbols/symbol.cpp
@@ -131,6 +133,7 @@ set(Mapper_Common_SRCS
   fileformats/ocd_file_import.cpp
   fileformats/ocd_georef_fields.cpp
   fileformats/ocd_icon.cpp
+  fileformats/ocd_parameter_stream_reader.cpp
   fileformats/ocd_types.cpp
   fileformats/simple_course_export.cpp
   fileformats/xml_file_format.cpp
@@ -161,6 +164,8 @@ set(Mapper_Common_SRCS
   gui/map/map_editor.cpp
   gui/map/map_editor_activity.cpp
   gui/map/map_find_feature.cpp
+  gui/map/map_information_dialog.cpp
+  gui/map/map_notes.cpp
   gui/map/map_widget.cpp
   gui/map/rotate_map_dialog.cpp
   gui/map/stretch_map_dialog.cpp
@@ -174,6 +179,7 @@ set(Mapper_Common_SRCS
   gui/symbols/symbol_properties_widget.cpp
   gui/symbols/symbol_replacement.cpp
   gui/symbols/symbol_replacement_dialog.cpp
+  gui/symbols/symbol_report_feature.cpp
   gui/symbols/symbol_setting_dialog.cpp
   gui/symbols/text_symbol_settings.cpp
   
@@ -220,6 +226,7 @@ set(Mapper_Common_SRCS
   templates/template_track.cpp
   templates/world_file.cpp
   
+  tools/box_zoom_tool.cpp
   tools/cut_tool.cpp
   tools/cut_hole_tool.cpp
   tools/cutout_operation.cpp
@@ -301,7 +308,7 @@ add_dependencies(Mapper_Common
 )
 target_link_libraries(Mapper_Common
   Polyclipping::Polyclipping
-  PROJ4::proj
+  ${PROJ_LIBRARIES}
   Qt5::Widgets
 )
 foreach(lib
@@ -361,6 +368,14 @@ target_compile_definitions(Mapper PRIVATE
   QT_NO_CAST_TO_ASCII
   QT_USE_QSTRINGBUILDER
 )
+if(APPLE)
+	add_custom_command(
+	  TARGET Mapper
+	  POST_BUILD
+	  COMMAND plutil -replace NSHighResolutionCapable -bool true
+	    $<TARGET_BUNDLE_DIR:Mapper>/Contents/Info.plist
+	)
+endif()
 
 install(TARGETS Mapper
   RUNTIME DESTINATION "${MAPPER_RUNTIME_DESTINATION}"

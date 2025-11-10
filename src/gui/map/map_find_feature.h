@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017-2019, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -37,7 +37,6 @@ class MapEditorController;
 class ObjectQuery;
 class TagSelectWidget;
 
-
 /**
  * Provides an interactive feature for finding objects in the map.
  * 
@@ -48,7 +47,6 @@ class TagSelectWidget;
 class MapFindFeature : public QObject
 {
 	Q_OBJECT
-	
 public:
 	MapFindFeature(MapEditorController& controller);
 	
@@ -59,6 +57,10 @@ public:
 	QAction* showDialogAction() { return show_action; }
 	
 	QAction* findNextAction() { return find_next_action; }
+	
+	static void findNextMatchingObject(MapEditorController& controller, const ObjectQuery& query);
+	
+	static void findAllMatchingObjects(MapEditorController& controller, const ObjectQuery& query);
 	
 private:
 	void showDialog();
@@ -72,6 +74,7 @@ private:
 	void showHelp() const;
 	
 	void tagSelectorToggled(bool active);
+	
 	
 	MapEditorController& controller;
 	QPointer<QDialog> find_dialog;           // child of controller's window
@@ -88,4 +91,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_MAP_FIND_FEATURE_H

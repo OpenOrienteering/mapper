@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2021 Kai Pastor
+#    Copyright 2012-2025 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -19,6 +19,13 @@
  
 cmake_minimum_required(VERSION 3.7 FATAL_ERROR)
 
+if(POLICY CMP0115)
+    cmake_policy(SET CMP0115 NEW)
+endif()
+if(POLICY CMP0135)
+    cmake_policy(SET CMP0135 NEW)
+endif()
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(FeatureSummary)
@@ -31,8 +38,8 @@ option(CMAKE_FIND_PACKAGE_PREFER_CONFIG "Lookup package config files before usin
 
 # Project declaration
 
-project(Mapper VERSION 0.9.5 LANGUAGES CXX C)
-set(Mapper_COPYRIGHT "(C) 2021 The OpenOrienteering developers")
+project(Mapper VERSION 0.9.6 LANGUAGES CXX C)
+set(Mapper_COPYRIGHT "(C) 2025 The OpenOrienteering developers")
 
 math(EXPR Mapper_VERSION_CODE "${Mapper_VERSION_MAJOR} * 10000 + ${Mapper_VERSION_MINOR} * 100 + ${Mapper_VERSION_PATCH} * 2 + ${CMAKE_SIZEOF_VOID_P} / 4 - 1")
 
@@ -57,11 +64,6 @@ if(NOT CMAKE_BUILD_TYPE)
 	  "Type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
 	  FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
-
-if(APPLE)
-	SET(Mapper_MACOSX_VERSION "10.7" CACHE STRING
-	  "Minimum Mac OS X version to build for, recommended: 10.7")
-endif()
 
 option(Mapper_DEBUG_TRANSLATIONS "Debug missing translations" OFF)
 
@@ -162,12 +164,6 @@ include(CTest)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
-if(APPLE AND Mapper_MACOSX_VERSION)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -mmacosx-version-min=${Mapper_MACOSX_VERSION}")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mmacosx-version-min=${Mapper_MACOSX_VERSION}")
-	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mmacosx-version-min=${Mapper_MACOSX_VERSION}")
-endif()
-
 if(CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wpedantic -Wextra")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall -Wpedantic")
@@ -203,20 +199,27 @@ endif()
 
 # We must not require a minimum version of PROJ via find_package
 # because PROJ config requires the major version to match exactly.
-find_package(PROJ4 REQUIRED)
-if(NOT TARGET PROJ4::proj)
-	include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindPROJ.cmake")
+find_package(PROJ CONFIG)
+if(NOT PROJ_LIBRARIES)
+	find_package(PkgConfig REQUIRED)
+	if(PKG_CONFIG_FOUND)
+		pkg_check_modules(PROJ4_PC IMPORTED_TARGET proj)
+	endif()
+	if(TARGET PkgConfig::PROJ4_PC)
+		set(PROJ_LIBRARIES PkgConfig::PROJ4_PC)
+		set(PROJ_VERSION "${PROJ4_PC_VERSION}")
+	endif()
 endif()
-if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 4.9)
+if(NOT PROJ_VERSION OR PROJ_VERSION VERSION_LESS 4.9)
 	message(FATAL_ERROR "At least PROJ 4.9 is required")
-elseif(PROJ4_VERSION VERSION_LESS 6.1)
+elseif(PROJ_VERSION VERSION_LESS 6.1)
 	# New PROJ API missing or incomplete.
 	# (proj_normalize_for_visualization() came in 6.1.)
-	set_property(TARGET PROJ4::proj APPEND PROPERTY
+	set_property(TARGET "${PROJ_LIBRARIES}" APPEND PROPERTY
 	  INTERFACE_COMPILE_DEFINITIONS ACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
-elseif(PROJ4_VERSION VERSION_LESS 6.2.1)
+elseif(PROJ_VERSION VERSION_LESS 6.2.1)
 	# Datum Potsdam issue, https://github.com/OSGeo/PROJ/pull/1573
-	set_property(TARGET PROJ4::proj APPEND PROPERTY
+	set_property(TARGET "${PROJ_LIBRARIES}" APPEND PROPERTY
 	  INTERFACE_COMPILE_DEFINITIONS PROJ_ISSUE_1573)
 endif()
 
@@ -253,21 +256,25 @@ endif()
 
 # Build-time code checks
 
-if(NOT CMAKE_CXX_CLANG_TIDY)
+if(NOT CMAKE_HOST_WIN32)
+	find_program(SH_EXECUTABLE NAMES sh PATHS ENV PATH NO_DEFAULT_PATH)
+endif()
+
+if(NOT CMAKE_CXX_CLANG_TIDY AND Mapper_DEVELOPMENT_BUILD AND SH_EXECUTABLE)
 	set(min_version 8)
 	find_package(ClangTidy ${min_version})
 	if(ClangTidy_FOUND)
-		set(CMAKE_CXX_CLANG_TIDY "${PROJECT_SOURCE_DIR}/code-check-wrapper.sh;${ClangTidy_EXECUTABLE}")
+		set(CMAKE_CXX_CLANG_TIDY "${SH_EXECUTABLE};-e;${PROJECT_SOURCE_DIR}/code-check-wrapper.sh;${ClangTidy_EXECUTABLE}")
 	else()
 		message(AUTHOR_WARNING "Install clang-tidy >= ${min_version} for code checks during build")
 	endif()
 endif()
 
-if(NOT CMAKE_CXX_INCLUDE_WHAT_YOU_USE)
+if(NOT CMAKE_CXX_INCLUDE_WHAT_YOU_USE AND Mapper_DEVELOPMENT_BUILD AND SH_EXECUTABLE)
 	set(min_version 0.12)
 	find_package(IWYU ${min_version})
 	if(IWYU_FOUND)
-		set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "${PROJECT_SOURCE_DIR}/code-check-wrapper.sh;${IWYU_EXECUTABLE}")
+		set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "${SH_EXECUTABLE};-e;${PROJECT_SOURCE_DIR}/code-check-wrapper.sh;${IWYU_EXECUTABLE}")
 	else()
 		message(AUTHOR_WARNING "Install include-what-you-use >= ${min_version} for code checks during build")
 	endif()

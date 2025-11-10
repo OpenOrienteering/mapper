@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2020, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -486,10 +486,7 @@ void Map::init()
 	
 	printer_config.reset();
 	
-	image_template_use_meters_per_pixel = true;
-	image_template_meters_per_pixel = 0;
-	image_template_dpi = 0;
-	image_template_scale = 0;
+	image_template_defaults = {};
 	
 	colors_dirty = false;
 	symbols_dirty = false;
@@ -943,7 +940,6 @@ void Map::deleteSelectedObjects()
 			if (index >= 0)
 			{
 				undo_step->addObject(index, *obj);
-				part->releaseObject(index);
 			}
 			else
 			{
@@ -951,8 +947,7 @@ void Map::deleteSelectedObjects()
 			}
 		}
 		
-		setObjectsDirty();
-		clearObjectSelection(true);
+		undo_step->removeContainedObjects(true);
 		push(undo_step);
 	}
 }
@@ -1395,6 +1390,25 @@ bool Map::hasAlpha() const
 }
 
 
+void Map::applyOnMatchingColors(const std::function<void (const MapColor*)>& operation, const std::function<bool (const MapColor*)>& condition) const
+{
+	for (const auto* color : color_set->colors)
+	{
+		if (condition(color))
+			operation(color);
+	}
+}
+
+
+void Map::applyOnAllColors(const std::function<void (const MapColor*)>& operation) const
+{
+	for (const auto* color : color_set->colors)
+	{
+		operation(color);
+	}
+}
+
+
 void Map::setSymbolSetId(const QString& id)
 {
 	symbol_set_id = id;
@@ -1541,6 +1555,8 @@ const Symbol* Map::getSymbol(int i) const
 		return getUndefinedPoint();
 	else if (i == -3)
 		return getUndefinedLine();
+	else if (i == -4)
+		return getUndefinedText();
 	else
 	{
 		Q_ASSERT(!"Invalid symbol index given");
@@ -1718,6 +1734,25 @@ void Map::determineSymbolUseClosure(std::vector< bool >& symbol_bitfield) const
 		}
 		
 	} while (change);
+}
+
+
+void Map::applyOnMatchingSymbols(const std::function<void (const Symbol*)>& operation, const std::function<bool (const Symbol*)>& condition) const
+{
+	for (const auto* symbol : symbols)
+	{
+		if (condition(symbol))
+			operation(symbol);
+	}
+}
+
+
+void Map::applyOnAllSymbols(const std::function<void (const Symbol*)>& operation) const
+{
+	for (const auto* symbol : symbols)
+	{
+		operation(symbol);
+	}
 }
 
 
@@ -2026,8 +2061,8 @@ void Map::removePart(std::size_t index)
 	Q_ASSERT(parts.size() > 1);
 	
 	if (current_part_index == index)
-		// First switch to another part when removing the current part
-		setCurrentPartIndex((index == parts.size() - 1) ? (parts.size() - 2) : (index + 1));
+		// First switch to another part when removing the current part, this will also clear any object selection
+		setCurrentPartIndex((index == parts.size() - 1) ? (index - 1) : (index + 1));
 	
 	MapPart* part = parts[index];
 	
@@ -2063,7 +2098,8 @@ void Map::setCurrentPartIndex(std::size_t index)
 {
 	Q_ASSERT(index < parts.size());
 	
-	MapPart* const old_part = parts[current_part_index];
+	// If the last but one map part is removed, current_part_index would be one higher than the highest element index
+	MapPart* const old_part = parts[current_part_index == parts.size() ? (parts.size() - 1) : current_part_index];
 	if (index != current_part_index)
 	{
 		current_part_index = index;
@@ -2434,21 +2470,6 @@ void Map::resetPrinterConfig()
 	}
 }
 
-void Map::setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale)
-{
-	image_template_use_meters_per_pixel = use_meters_per_pixel;
-	image_template_meters_per_pixel = meters_per_pixel;
-	image_template_dpi = dpi;
-	image_template_scale = scale;
-}
-
-void Map::getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel, double& dpi, double& scale)
-{
-	use_meters_per_pixel = image_template_use_meters_per_pixel;
-	meters_per_pixel = image_template_meters_per_pixel;
-	dpi = image_template_dpi;
-	scale = image_template_scale;
-}
 
 void Map::setHasUnsavedChanges(bool has_unsaved_changes)
 {

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2018, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,14 +21,28 @@
 
 #include "measure_widget.h"
 
+#include <iterator>
+#include <set>
+// IWYU pragma: no_include <memory>
+
+#include <QtGlobal>
+#include <QBuffer>
+#include <QByteArray>
+#include <QFlags>
+#include <QIODevice>
+#include <QIcon>
+#include <QLatin1Char>
+#include <QLatin1String>
 #include <QLocale>
+#include <QPixmap>
 #include <QScroller>
+#include <QSize>
+#include <QStyle>
+#include <QWidget>
 
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
-#include "core/symbols/area_symbol.h"
-#include "core/symbols/line_symbol.h"
 
 
 namespace OpenOrienteering {
@@ -37,6 +51,15 @@ MeasureWidget::MeasureWidget(Map* map, QWidget* parent)
 : QTextBrowser(parent)
 , map(map)
 {
+	auto const std_icon = style()->standardIcon(QStyle::SP_MessageBoxWarning);
+	auto const pixmap = std_icon.pixmap(QSize {22, 22});
+	QBuffer buffer;
+	buffer.open(QIODevice::WriteOnly);
+	pixmap.save(&buffer, "PNG");
+	warning_icon = QLatin1String("<img align=\"right\" src=\"data:image/png;base64,")
+	               + QString::fromLatin1(buffer.data().toBase64())
+	               + QLatin1String("\"/>");
+	
 	QScroller::grabGesture(viewport(), QScroller::TouchGesture);
 	
 	connect(map, &Map::objectSelectionChanged, this, &MeasureWidget::objectSelectionChanged);
@@ -54,6 +77,7 @@ void MeasureWidget::objectSelectionChanged()
 	QString headline;   // inline HTML
 	QString body;       // HTML blocks
 	QString extra_text; // inline HTML
+	bool show_warning = false;
 	
 	auto& selected_objects = map->selectedObjects();
 	if (selected_objects.empty())
@@ -66,8 +90,8 @@ void MeasureWidget::objectSelectionChanged()
 	}
 	else
 	{
-		const Object* object = *begin(selected_objects);
-		const Symbol* symbol = object->getSymbol();
+		const auto* object = *begin(selected_objects);
+		const auto* symbol = object->getSymbol();
 		headline = symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getName();
 		
 		if (object->getType() != Object::Path)
@@ -81,14 +105,10 @@ void MeasureWidget::objectSelectionChanged()
 			  "<tr><td>%1</td><td align=\"center\">%2 %3</td><td align=\"center\">(%4 %5)</td></tr>" 
 			} };
 			
-			double paper_to_real = 0.001 * map->getScaleDenominator();
-			
 			object->update();
-			const PathPartVector& parts = static_cast<const PathObject*>(object)->parts();
-			Q_ASSERT(!parts.empty());
 			
-			auto paper_length = parts.front().length();
-			auto real_length  = paper_length * paper_to_real;
+			auto paper_length = object->asPath()->getPaperLength();
+			auto real_length  = object->asPath()->getRealLength();
 			
 			auto paper_length_text = locale().toString(paper_length, 'f', 2);
 			auto real_length_text  = locale().toString(real_length, 'f', 0);
@@ -99,14 +119,8 @@ void MeasureWidget::objectSelectionChanged()
 				                          paper_length_text, tr("mm", "millimeters"),
 				                          real_length_text, tr("m", "meters")));
 				
-				auto paper_area = parts.front().calculateArea();
-				if (parts.size() > 1)
-				{
-					paper_area *= 2;
-					for (const auto& part : parts)
-						paper_area -= part.calculateArea();
-				}
-				double real_area = paper_area * paper_to_real * paper_to_real;
+				auto paper_area = object->asPath()->calculatePaperArea();
+				auto real_area = object->asPath()->calculateRealArea();
 				
 				auto paper_area_text = locale().toString(paper_area, 'f', 2);
 				auto real_area_text   = locale().toString(real_area, 'f', 0);
@@ -115,19 +129,15 @@ void MeasureWidget::objectSelectionChanged()
 				                          paper_area_text, tr("mm²", "square millimeters"),
 				                          real_area_text , tr("m²", "square meters")));
 				
-				auto minimum_area = 0.0;
-				auto minimum_area_text = QString{ };
-				if (symbol->getType() == Symbol::Area)
-				{
-					minimum_area      = 0.001 * static_cast<const AreaSymbol*>(symbol)->getMinimumArea();
-					minimum_area_text = locale().toString(minimum_area, 'f', 2);
-				}
+				auto minimum_area = 0.001 * symbol->getMinimumArea();
+				auto minimum_area_text = locale().toString(minimum_area, 'f', 2);
 				
 				if (paper_area < minimum_area && paper_area_text != minimum_area_text)
 				{
 					extra_text = QLatin1String("<b>") + tr("This object is too small.") + QLatin1String("</b><br/>")
 					             + tr("The minimimum area is %1 %2.").arg(minimum_area_text, tr("mm²"))
 					             + QLatin1String("<br/>");
+					show_warning = true;
 				}
 				extra_text.append(tr("Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such."));
 			}
@@ -137,18 +147,14 @@ void MeasureWidget::objectSelectionChanged()
 				                          paper_length_text, tr("mm", "millimeters"),
 				                          real_length_text, tr("m", "meters")));
 				
-				auto minimum_length  = 0.0;
-				auto minimum_length_text = QString{ };
-				if (symbol->getType() == Symbol::Line)
-				{
-					minimum_length      = 0.001 * static_cast<const LineSymbol*>(symbol)->getMinimumLength();
-					minimum_length_text = locale().toString(minimum_length, 'f', 2);
-				}
+				auto minimum_length = 0.001 * symbol->getMinimumLength();
+				auto minimum_length_text = locale().toString(minimum_length, 'f', 2);
 				
 				if (paper_length < minimum_length && paper_length_text != minimum_length_text)
 				{
 					extra_text = QLatin1String("<b>") + tr("This line is too short.") + QLatin1String("</b><br/>")
 					             + tr("The minimum length is %1 %2.").arg(minimum_length_text, tr("mm"));
+					show_warning = true;
 				}
 			}
 			
@@ -158,7 +164,7 @@ void MeasureWidget::objectSelectionChanged()
 	
 	if (!extra_text.isEmpty())
 		body.append(QLatin1String("<p>") + extra_text + QLatin1String("</p>"));
-	setHtml(QLatin1String("<p><b>") + headline + QLatin1String("</b></p>") + body);
+	setHtml(QLatin1String("<p><b>") + (show_warning ? warning_icon : QLatin1String()) + headline + QLatin1String("</b></p>") + body);
 }
 
 

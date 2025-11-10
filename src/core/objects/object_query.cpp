@@ -1,6 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
- *    Copyright 2017-2020 Kai Pastor
+ *    Copyright 2017-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -80,7 +80,6 @@ QString fromEscaped(QString string)
 		if (c == QLatin1Char('\\'))
 		{
 			string.remove(i, 1);
-			++i;
 		}
 	}
 	return string;
@@ -639,6 +638,11 @@ bool operator==(const ObjectQuery& lhs, const ObjectQuery& rhs)
 
 // ### ObjectQueryParser ###
 
+ObjectQueryParser::ObjectQueryParser(const Map* map)
+: map{map}
+{}
+
+
 void ObjectQueryParser::setMap(const Map* map)
 {
 	this->map = map;
@@ -834,8 +838,7 @@ void ObjectQueryParser::getToken()
 			}
 			else if (current == QLatin1Char('\\'))
 			{
-				if (pos < input.length())
-					++pos;
+				++pos;
 			}
 		}
 	}
@@ -858,7 +861,7 @@ void ObjectQueryParser::getToken()
 		++pos;
 	}
 	else if ((current == QLatin1Char('!') || current == QLatin1Char('~'))
-	         && pos < input.length()
+	         && pos+1 < input.length()
 	         && input.at(pos+1) == QLatin1Char('='))
 	{
 		token = TokenTextOperator;
@@ -880,7 +883,7 @@ void ObjectQueryParser::getToken()
 				break;
 			}
 			else if ((current == QLatin1Char('!') || current == QLatin1Char('~'))
-			         && pos < input.length()
+			         && pos+1 < input.length()
 			         && input.at(pos+1) == QLatin1Char('='))
 			{
 				break;

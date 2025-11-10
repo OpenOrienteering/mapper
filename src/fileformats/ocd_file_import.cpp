@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2022, 2024, 2025 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -46,6 +46,7 @@
 #include <QLatin1Char>
 #include <QLatin1String>
 #include <QPointF>
+#include <QStringRef>
 #include <QTextCodec>
 #include <QTextDecoder>
 #include <QVariant>
@@ -68,6 +69,7 @@
 #include "fileformats/ocd_file_format.h"
 #include "fileformats/ocd_georef_fields.h"
 #include "fileformats/ocd_icon.h"
+#include "fileformats/ocd_parameter_stream_reader.h"
 #include "fileformats/ocd_types_v8.h"
 #include "fileformats/ocd_types_v9.h"
 #include "fileformats/ocd_types_v10.h"
@@ -356,7 +358,7 @@ void OcdFileImport::importGeoreferencing(const OcdFile< F >& file)
 
 namespace {
 
-void tryParamConvert(int& out, const QString& param_value)
+void tryParamConvert(int& out, const QStringRef& param_value)
 {
 	bool ok;
 	auto value = qRound(param_value.toFloat(&ok));
@@ -368,7 +370,7 @@ void tryParamConvert(int& out, const QString& param_value)
 
 void OcdFileImport::importGeoreferencing(const QString& param_string)
 {
-	const QChar* unicode = param_string.unicode();
+	OcdParameterStreamReader parameters(param_string);
 	
 	// si_ScalePar (type 1039) contains both georeferencing and map grid
 	// display parameters. Georeferencing data is extracted into a structure
@@ -378,15 +380,11 @@ void OcdFileImport::importGeoreferencing(const QString& param_string)
 	Georeferencing georef;
 	OcdGeorefFields fields;
 
-	int i = param_string.indexOf(QLatin1Char('\t'), 0);
-	; // skip first word for this entry type
-	while (i >= 0)
+	while (parameters.readNext())
 	{
 		bool ok;
-		int next_i = param_string.indexOf(QLatin1Char('\t'), i+1);
-		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
-		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
-		switch (param_string[i+1].toLatin1())
+		QStringRef param_value = parameters.value();
+		switch (parameters.key())
 		{
 		case 'm':
 			tryParamConvert(fields.m, param_value);
@@ -423,12 +421,9 @@ void OcdFileImport::importGeoreferencing(const QString& param_string)
 				}
 			}
 			break;
-		case '\t':
-			// empty item, fall through
 		default:
 			; // nothing
 		}
-		i = next_i;
 	}
 	
 	fields.setupGeoref(georef, add_warning);
@@ -556,10 +551,9 @@ void OcdFileImport::importColors(const OcdFile< F >& file)
 
 void OcdFileImport::importSpotColor(const QString& param_string)
 {
-	const QChar* unicode = param_string.unicode();
+	OcdParameterStreamReader parameters(param_string);
 	
-	int i = param_string.indexOf(QLatin1Char('\t'), 0);
-	const QString name = param_string.left(qMax(-1, i)); // copied
+	const QString name = parameters.value().toString();
 	
 	int number = -1;
 	bool number_ok = false;
@@ -569,24 +563,19 @@ void OcdFileImport::importSpotColor(const QString& param_string)
 	
 	SpotColorComponents components;
 	
-	while (i >= 0)
+	while (parameters.readNext())
 	{
 		float f_value;
 		bool ok;
-		int next_i = param_string.indexOf(QLatin1Char('\t'), i+1);
-		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
-		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
-		switch (param_string[i+1].toLatin1())
+		QStringRef param_value = parameters.value();
+		switch (parameters.key())
 		{
-		case '\t':
-			// empty item
-			break;
 		case 'n':
 			number = param_value.toInt(&number_ok);
 			break;
 		case 'v':
 			if (param_value != QLatin1String("1"))
-				qInfo("Spot color %s: Unknown value v:%s", qUtf8Printable(name), qUtf8Printable(param_value));
+				qInfo("Spot color %s: Unknown value v:%s", qUtf8Printable(name), qUtf8Printable(param_value.toString()));
 			break;
 		case 'c':
 			f_value = param_value.toFloat(&ok);
@@ -621,7 +610,6 @@ void OcdFileImport::importSpotColor(const QString& param_string)
 		default:
 			; // nothing
 		}
-		i = next_i;
 	}
 	
 	if (!number_ok)
@@ -637,11 +625,9 @@ void OcdFileImport::importSpotColor(const QString& param_string)
 
 void OcdFileImport::importColor(const QString& param_string)
 {
-	const QChar* unicode = param_string.unicode();
+	OcdParameterStreamReader parameters(param_string);
 	
-	int i = param_string.indexOf(QLatin1Char('\t'), 0);
-	const QString name = param_string.left(qMax(-1, i)); // copied
-	
+	const QString name = parameters.value().toString();
 	int number;
 	bool number_ok = false;
 	MapColorCmyk cmyk { 0.0, 0.0, 0.0, 0.0 };
@@ -651,19 +637,14 @@ void OcdFileImport::importColor(const QString& param_string)
 	SpotColorComponents components;
 	QString spot_color_name;
 	
-	while (i >= 0)
+	while (parameters.readNext())
 	{
 		float f_value;
 		int i_value;
 		bool ok;
-		int next_i = param_string.indexOf(QLatin1Char('\t'), i+1);
-		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
-		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
-		switch (param_string[i+1].toLatin1())
+		QStringRef param_value = parameters.value();
+		switch (parameters.key())
 		{
-		case '\t':
-			// empty item
-			break;
 		case 'n':
 			number = param_value.toInt(&number_ok);
 			break;
@@ -698,7 +679,7 @@ void OcdFileImport::importColor(const QString& param_string)
 				opacity = 0.01f * f_value;
 			break;
 		case 's':
-			spot_color_name = param_value;
+			spot_color_name = param_value.toString();
 			break;
 		case 'p':
 			if (!spot_color_name.isEmpty())
@@ -717,7 +698,6 @@ void OcdFileImport::importColor(const QString& param_string)
 		default:
 			; // nothing
 		}
-		i = next_i;
 	}
 	
 	if (!number_ok)
@@ -888,10 +868,9 @@ void OcdFileImport::importTemplates(const OcdFile< F >& file)
 
 void OcdFileImport::importTemplate(const QString& param_string)
 {
-	const QChar* unicode = param_string.unicode();
+	OcdParameterStreamReader parameters(param_string);
 	
-	int i = param_string.indexOf(QLatin1Char('\t'), 0);
-	auto const filename = QString::fromRawData(unicode, qMax(-1, i)).replace(QLatin1Char('\\'), QLatin1Char('/'));
+	auto const filename = parameters.value().toString().replace(QLatin1Char('\\'), QLatin1Char('/'));
 	auto const clean_path = QDir::cleanPath(filename);
 	// Leave template type resolution to Importer::validate().
 	auto* templ = new TemplatePlaceholder("", clean_path, map);
@@ -906,18 +885,13 @@ void OcdFileImport::importTemplate(const QString& param_string)
 	bool visible = false;
 	bool explicit_positioning = false;
 	
-	while (i >= 0)
+	while (parameters.readNext())
 	{
 		double value;
 		bool ok;
-		int next_i = param_string.indexOf(QLatin1Char('\t'), i+1);
-		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
-		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
-		switch (param_string[i+1].toLatin1())
+		QStringRef param_value = parameters.value();
+		switch (parameters.key())
 		{
-		case '\t':
-			// empty item
-			break;
 		case 'x':
 			explicit_positioning = true;
 			value = param_value.toDouble(&ok);
@@ -959,7 +933,6 @@ void OcdFileImport::importTemplate(const QString& param_string)
 		default:
 			; // nothing
 		}
-		i = next_i;
 	}
 	
 	if (explicit_positioning)
@@ -1039,42 +1012,34 @@ void OcdFileImport::importView(const OcdFile< F >& file)
 
 void OcdFileImport::importView(const QString& param_string)
 {
-	const QChar* unicode = param_string.unicode();
+	OcdParameterStreamReader parameters(param_string);
 	
 	bool zoom_ok = false;
 	double zoom=1.0, offset_x=0.0, offset_y=0.0;
 	
-	int i = param_string.indexOf(QLatin1Char('\t'), 0);
-	; // skip first word for this entry type
-	while (i >= 0)
+	while (parameters.readNext())
 	{
-		int next_i = param_string.indexOf(QLatin1Char('\t'), i+1);
-		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
-		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
-		switch (param_string[i+1].toLatin1())
+		QStringRef param_value = parameters.value();
+		switch (parameters.key())
 		{
-		case '\t':
-			// empty item
-			break;
 		case 'x':
-			{
-				offset_x = param_value.toDouble();
-				break;
-			}
+			offset_x = param_value.toDouble();
+			break;
 		case 'y':
-			{
-				offset_y = param_value.toDouble();
-				break;
-			}
+			offset_y = param_value.toDouble();
+			break;
 		case 'z':
-			{
-				zoom = param_value.toDouble(&zoom_ok);
-				break;
-			}
+			zoom = param_value.toDouble(&zoom_ok);
+			break;
+		case 'h':
+			map->setAreaHatchingEnabled(param_value.toInt() != 0);
+			break;
+		case 'k':
+			map->setBaselineViewEnabled(param_value.toInt() != 0);
+			break;
 		default:
 			; // nothing
 		}
-		i = next_i;
 	}
 	
 	if (view)
@@ -1608,6 +1573,7 @@ void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool ro
 	// Basic area symbol fields: minimum_area, color
 	symbol->minimum_area = 0;
 	symbol->color = fill_on ? convertColor(ocd_symbol.fill_color) : nullptr;
+	symbol->setRotatable(rotatable);
 	symbol->patterns.clear();
 	symbol->patterns.reserve(4);
 	
@@ -1617,7 +1583,7 @@ void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool ro
 		AreaSymbol::FillPattern pattern;
 		pattern.type = AreaSymbol::FillPattern::LinePattern;
 		pattern.angle = convertAngle(ocd_symbol.hatch_angle_1);
-		pattern.setRotatable(rotatable);
+		pattern.setRotatable(true);
 		pattern.line_spacing = convertLength(ocd_symbol.hatch_dist);
 		pattern.line_offset = 0;
 		pattern.line_width = convertLength(ocd_symbol.hatch_line_width);
@@ -1642,7 +1608,7 @@ void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool ro
 		AreaSymbol::FillPattern pattern;
 		pattern.type = AreaSymbol::FillPattern::PointPattern;
 		pattern.angle = convertAngle(ocd_symbol.structure_angle);
-		pattern.setRotatable(rotatable);
+		pattern.setRotatable(true);
 		pattern.point_distance = convertLength(ocd_symbol.structure_width);
 		pattern.line_spacing = convertLength(ocd_symbol.structure_height);
 		pattern.line_offset = 0;
@@ -1695,6 +1661,13 @@ TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol)
 	setBasicAttributes(symbol, convertOcdString(ocd_symbol.font_name), ocd_symbol.basic);
 	setSpecialAttributes(symbol, ocd_symbol.special);
 	setFraming(symbol, ocd_symbol.framing);
+	if (ocd_version >= 10)
+	{
+		if (ocd_symbol.framing.point_symbol_on_V10)
+			addSymbolWarning(symbol, OcdFileImport::tr("Skipping unsupported reference to point symbol '%1.%2'.") .
+			                         arg(ocd_symbol.framing.point_symbol_number_V10 / S::BaseSymbol::symbol_number_factor) .
+			                         arg(ocd_symbol.framing.point_symbol_number_V10 % S::BaseSymbol::symbol_number_factor));
+	}
 	symbol->setRotatable(ocd_symbol.base.flags & Ocd::SymbolRotatable);
 	return symbol;
 }
@@ -1749,7 +1722,8 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 		
 		rect.inner_line = inner_line;
 		rect.text = text;
-		rect.number_from_bottom = ocd_symbol.grid_flags & 2;
+		rect.numbering_on = ocd_symbol.grid_flags & 2;
+		rect.number_from_bottom = ocd_symbol.grid_flags & 4;
 		rect.cell_width = 0.001 * convertLength(ocd_symbol.cell_width);
 		rect.cell_height = 0.001 * convertLength(ocd_symbol.cell_height);
 		rect.unnumbered_cells = ocd_symbol.unnumbered_cells;
@@ -2001,13 +1975,24 @@ QString OcdFileImport::getObjectText(const Ocd::ObjectV8& ocd_object) const
 	return object_text;
 }
 
+namespace {
+	
+QString fromRawOcdChars(const QChar* first, const QChar* last)
+{
+	if (first != last && first + 1 != last && first[0] == QChar::CarriageReturn && first[1] == QChar::LineFeed)
+		first += 2;
+	last = std::find(first, last, QChar::Null);
+	return QString(first, std::distance(first, last));
+}
+
+}
+
 template< class O >
 QString OcdFileImport::getObjectText(const O& ocd_object) const
 {
-	auto data = reinterpret_cast<const QChar *>(ocd_object.coords + ocd_object.num_items);
-	if (data[0] == QLatin1Char{'\r'} && data[1] == QLatin1Char{'\n'})
-		data += 2;
-	return QString(data);
+	auto* first = reinterpret_cast<const Ocd::OcdPoint32*>(ocd_object.coords) + ocd_object.num_items;
+	auto* last = first + ocd_object.num_text;
+	return fromRawOcdChars(reinterpret_cast<const QChar*>(first), reinterpret_cast<const QChar*>(last));
 }
 
 
@@ -2104,7 +2089,7 @@ Object* OcdFileImport::importRectangleObject(const Ocd::OcdPoint32* ocd_points, 
 		}
 		
 		// Create grid text
-		if (height >= rect.cell_height / 2)
+		if (rect.numbering_on && height >= rect.cell_height / 2)
 		{
 			for (int y = 0; y < num_cells_y; ++y) 
 			{
@@ -2114,9 +2099,9 @@ Object* OcdFileImport::importRectangleObject(const Ocd::OcdPoint32* ocd_points, 
 					QString cell_text;
 					
 					if (rect.number_from_bottom)
-						cell_num = y * num_cells_x + x + 1;
-					else
 						cell_num = (num_cells_y - 1 - y) * num_cells_x + x + 1;
+					else
+						cell_num = y * num_cells_x + x + 1;
 					
 					if (cell_num > num_cells_x * num_cells_y - rect.unnumbered_cells)
 						cell_text = rect.unnumbered_text;
@@ -2370,7 +2355,13 @@ void OcdFileImport::setFraming(OcdFileImport::OcdImportedTextSymbol* symbol, con
 	case Ocd::FramingLine: // since V7
 		symbol->framing = true;
 		symbol->framing_mode = TextSymbol::LineFraming;
+		symbol->framing_color = convertColor(framing.color);
 		symbol->framing_line_half_width = convertLength(framing.line_width);
+		if (ocd_version >= 9)
+		{
+			if (framing.line_style_V9 != 0 && framing.line_style_V9 != 4)
+				addSymbolWarning(symbol, tr("Ignoring text framing line style."));
+		}
 		break;
 	case Ocd::FramingRectangle:
 	default:
@@ -2446,6 +2437,10 @@ void OcdFileImport::handleStrings(const OcdFile<F>& file, std::initializer_list<
 		}
 	}
 }
+
+
+// explicit instantiation for tests
+template QString OcdFileImport::getObjectText(const Ocd::FormatV12::Object& ocd_object) const;
 
 
 }  // namespace OpenOrienteering

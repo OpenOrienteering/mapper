@@ -86,6 +86,7 @@
 #include "core/map_coord.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
+#include "fileformats/xml_file_format.h"
 #include "gui/file_dialog.h"
 #include "gui/main_window.h"
 #include "gui/print_progress_dialog.h"
@@ -547,7 +548,7 @@ void PrintWidget::setActive(bool active)
 			// Restore view
 			QXmlStreamReader reader(saved_view_state);
 			reader.readNextStartElement();
-			main_view->load(reader);
+			main_view->load(reader, XMLFileFormat::current_version);
 			
 			editor->setViewOptionsEnabled(true);
 		}
@@ -655,7 +656,7 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 		printer_properties_button->setEnabled(is_printer);
 
 	bool is_image_target = target == MapPrinter::imageTarget();
-	bool is_raster_target = target == MapPrinter::imageTarget() || MapPrinter::kmzTarget();
+	bool is_raster_target = target == MapPrinter::imageTarget() || target == MapPrinter::kmzTarget();
 	vector_mode_button->setEnabled(!is_raster_target);
 	separations_mode_button->setEnabled(!is_raster_target && map->hasSpotColors());
 	if (is_raster_target)

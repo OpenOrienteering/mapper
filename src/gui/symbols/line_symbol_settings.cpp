@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -40,9 +40,9 @@
 #include <QVariant>
 #include <QWidget>
 
-#include "core/symbols/symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
+#include "core/symbols/symbol.h"
 #include "gui/util_gui.h"
 #include "gui/symbols/point_symbol_editor_widget.h"
 #include "gui/symbols/symbol_setting_dialog.h"
@@ -69,7 +69,9 @@ SymbolPropertiesWidget* LineSymbol::createPropertiesWidget(SymbolSettingDialog* 
 // ### LineSymbolSettings ###
 
 LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* dialog)
-: SymbolPropertiesWidget(symbol, dialog), symbol(symbol), dialog(dialog)
+: SymbolPropertiesWidget(symbol, dialog)
+, symbol(symbol)
+, dialog(dialog)
 {
 	auto map = dialog->getPreviewMap();
 	
@@ -325,7 +327,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	symbol->ensurePointSymbols(tr("Start symbol"), tr("Mid symbol"), tr("End symbol"), tr("Dash symbol"));
 	for (auto point_symbol : { symbol->getStartSymbol(), symbol->getMidSymbol(), symbol->getEndSymbol(), symbol->getDashSymbol() })
 	{
-		point_symbol_editor = new PointSymbolEditorWidget(controller, point_symbol, 16);
+		point_symbol_editor = new PointSymbolEditorWidget(controller, point_symbol, PointSymbolEditorWidget::LineSymbolElement, 16);
 		addPropertiesGroup(point_symbol->getName(), point_symbol_editor);
 		connect(point_symbol_editor, &PointSymbolEditorWidget::symbolEdited, this, &LineSymbolSettings::pointSymbolEdited);
 	}
@@ -717,8 +719,9 @@ void LineSymbolSettings::updateStates()
 	{
 		mid_symbol_widget->setEnabled(!symbol->mid_symbol->isEmpty());
 	}
-	mid_symbol_distance_label->setEnabled(mid_symbol_distance_label->isEnabled() && symbol->mid_symbols_per_spot > 1);
-	mid_symbol_distance_edit->setEnabled(mid_symbol_distance_edit->isEnabled() && symbol->mid_symbols_per_spot > 1);
+	const bool mid_symbol_distance_enabled = !symbol->mid_symbol->isEmpty() && symbol->mid_symbols_per_spot > 1;
+	mid_symbol_distance_label->setEnabled(mid_symbol_distance_enabled);
+	mid_symbol_distance_edit->setEnabled(mid_symbol_distance_enabled);
 	
 	const bool border_active = symbol_active && symbol->have_border_lines;
 	for (auto border_widget : border_widget_list)
@@ -815,7 +818,7 @@ void LineSymbolSettings::reset(Symbol* symbol)
 	this->symbol->ensurePointSymbols(tr("Start symbol"), tr("Mid symbol"), tr("End symbol"), tr("Dash symbol"));
 	for (auto point_symbol : { this->symbol->getStartSymbol(), this->symbol->getMidSymbol(), this->symbol->getEndSymbol(), this->symbol->getDashSymbol() })
 	{
-		point_symbol_editor = new PointSymbolEditorWidget(controller, point_symbol, 16);
+		point_symbol_editor = new PointSymbolEditorWidget(controller, point_symbol, PointSymbolEditorWidget::LineSymbolElement, 16);
 		connect(point_symbol_editor, &PointSymbolEditorWidget::symbolEdited, this, &LineSymbolSettings::pointSymbolEdited);
 		
 		int index = indexOfPropertiesGroup(point_symbol->getName()); // existing symbol editor

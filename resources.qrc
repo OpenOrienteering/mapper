@@ -26,8 +26,10 @@
         <file>images/cursor-georeferencing-move.png</file>
         <file>images/cursor-hollow.png</file>
         <file>images/cursor-invisible.png</file>
+        <file>images/cursor-paint-on-template.png</file>
         <file>images/cursor-rotate.png</file>
         <file>images/cursor-scale.png</file>
+        <file>images/cursor-zoom.png</file>
         <file>images/cut.png</file>
         <file>images/delete.png</file>
         <file>images/draw-circle.png</file>
@@ -53,7 +55,6 @@
         <file>images/new.png</file>
         <file>images/open-orienteering.png</file>
         <file>images/open.png</file>
-        <file>images/paint-on-template-settings.png</file>
         <file>images/move-to-gps.png</file>
         <file>images/paste.png</file>
         <file>images/pencil.png</file>
@@ -88,16 +89,16 @@
         <file>images/tool-boolean-union.png</file>
         <file>images/tool-boolean-xor.png</file>
         <file>images/tool-boolean-merge-holes.png</file>
+        <file>images/tool-clip.png</file>
         <file>images/tool-connect-paths.png</file>
         <file>images/tool-convert-to-curves.png</file>
         <file>images/tool-cut.png</file>
         <file>images/tool-cut-hole.png</file>
-        <file>images/tool-cutout-physical.png</file>
-        <file>images/tool-cutout-physical-inner.png</file>
         <file>images/tool-distribute-points.png</file>
         <file>images/tool-duplicate.png</file>
         <file>images/tool-edit.png</file>
         <file>images/tool-edit-line.png</file>
+        <file>images/tool-erase.png</file>
         <file>images/tool-fill.png</file>
         <file>images/tool-fill-border.png</file>
         <file>images/tool-gps-display.png</file>
@@ -111,12 +112,14 @@
         <file>images/tool-touch-cursor.png</file>
         <file>images/undo.png</file>
         <file>images/view-baseline.png</file>
+        <file>images/view-box-zoom.png</file>
         <file>images/view-hatch-areas.png</file>
         <file>images/view-show-all.png</file>
         <file>images/view-zoom-in.png</file>
         <file>images/view-zoom-out.png</file>
         <file>images/window-new.png</file>
         <file>images/mapper-icon/Mapper-128.png</file>
+        <file>images/map-information.png</file>
         <file alias="doc/tip-of-the-day/tips.txt">doc/tip-of-the-day/tips_en.txt</file>
     </qresource>
     <qresource prefix="/" lang="de">

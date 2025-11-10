@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2020, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -122,8 +122,16 @@ public:
 		FullVisibility,
 		PartialVisibility,
 		IgnoreVisibilty
-	};	
+	};
 	
+	/** Default parameters for loading of image templates. */
+	struct ImageTemplateDefaults
+	{
+		bool use_meters_per_pixel = true;
+		double meters_per_pixel   = 0.0;
+		double dpi                = 0.0;
+		double scale              = 0.0;
+	};
 	
 	/** Creates a new, empty map. */
 	Map();
@@ -157,7 +165,7 @@ public:
 	/**
 	 * Attempts to load the map from the specified path. Returns true on success.
 	 * 
-	 * This is a convenience function used by tests. Normally, a importer should be
+	 * This is a convenience function used by tests. Normally, an importer should be
 	 * used explicitly.
 	 * 
 	 * @param path The file path to load the map from.
@@ -454,7 +462,7 @@ public:
 	
 	/**
 	 * Marks the colors as "dirty", i.e. as having unsaved changes.
-	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changes before.
 	 */
 	void setColorsDirty();
 	
@@ -489,6 +497,16 @@ public:
 	 */
 	bool hasAlpha() const;
 	
+	/**
+	 * Applies a const operation on all colors which match a particular condition.
+	 */
+	void applyOnMatchingColors(const std::function<void (const MapColor*)>& operation, const std::function<bool (const MapColor*)>& condition) const;
+	
+	/**
+	 * Applies a const operation on all colors.
+	 */
+	void applyOnAllColors(const std::function<void (const MapColor*)>& operation) const;
+	
 	
 	// Symbols
 	
@@ -502,7 +520,10 @@ public:
 	/** Returns the number of symbols in this map. */
 	int getNumSymbols() const;
 	
-	/** Returns a pointer to the i-th symbol. */
+	/** Returns a pointer to the i-th symbol.
+	 *  
+	 * \sa findSymbolIndex()
+	 */
 	const Symbol* getSymbol(int i) const;
 	
 	/** Returns a pointer to the i-th symbol. */
@@ -540,12 +561,14 @@ public:
 	 * Loops over all symbols, looking for the given symbol pointer.
 	 * Returns the index of the symbol, or -1 if the symbol is not found.
 	 * For the "undefined" symbols, returns special indices smaller than -1.
+	 * 
+	 * \sa getSymbol()
 	 */
 	int findSymbolIndex(const Symbol* symbol) const;
 	
 	/**
 	 * Marks the symbols as "dirty", i.e. as having unsaved changes.
-	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changes before.
 	 */
 	void setSymbolsDirty();
 	
@@ -575,6 +598,16 @@ public:
 	void determineSymbolUseClosure(std::vector< bool >& symbol_bitfield) const;
 	
 	/**
+	 * Applies a const operation on all symbols which match a particular condition.
+	 */
+	void applyOnMatchingSymbols(const std::function<void (const Symbol*)>& operation, const std::function<bool (const Symbol*)>& condition) const;
+	
+	/**
+	 * Applies a const operation on all symbols.
+	 */
+	void applyOnAllSymbols(const std::function<void (const Symbol*)>& operation) const;
+	
+	/**
 	 * Returns the scale factor to be used for default symbol icons.
 	 * 
 	 * The full icon size (width, height) is represented by 1.0.
@@ -586,7 +619,7 @@ public slots:
 	 * Updates the symbol icon zoom from the current set of symbols.
 	 * 
 	 * The symbol icon zoom is chosen so that most symbols fit into the full
-	 * icon space, and the number of symbol below 10% size is kept low.
+	 * icon space, and the number of symbols below 10% size is kept low.
 	 * For a map without symbols, this returns 1.0.
 	 */
 	void updateSymbolIconZoom();
@@ -688,7 +721,7 @@ public:
 	/**
 	 * Marks the template settings as "dirty", i.e. as having unsaved changes.
 	 * 
-	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changes before.
 	 */
 	void setTemplatesDirty();
 	
@@ -885,7 +918,7 @@ public:
 	
 	/**
 	 * Marks the objects as "dirty", i.e. as having unsaved changes.
-	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changes before.
 	 */
 	void setObjectsDirty();
 	
@@ -1126,7 +1159,7 @@ public:
 	 * @param object The object to add.
 	 * @param emit_selection_changed Set to true if objectSelectionChanged()
 	 *     should be emitted. Do this only for the last in a
-	 *     sequence of selection change oparations to prevent bad performance!
+	 *     sequence of selection change operations to prevent bad performance!
 	 */
 	void addObjectToSelection(Object* object, bool emit_selection_changed);
 	
@@ -1298,15 +1331,10 @@ public:
 	
 	
 	/** Returns the default parameters for loading of image templates. */
-	void getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel,
-		double& dpi, double& scale);
+	const ImageTemplateDefaults& getImageTemplateDefaults() const { return image_template_defaults; };
 	
-	/**
-	 * Sets default parameters for loading of image templates.
-	 * TODO: put these into a struct.
-	 */
-	void setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel,
-		double dpi, double scale);
+	/** Sets default parameters for loading of image templates. */
+	void setImageTemplateDefaults(const ImageTemplateDefaults& defaults) { image_template_defaults = defaults; };
 	
 	
 	/**
@@ -1320,7 +1348,7 @@ public:
 	 */
 	bool hasUnsavedChanges() const;
 	
-	/** Do not use this in usual cases, see hasUnsavedChanged(). */
+	/** Do not use this in usual cases, see hasUnsavedChanges(). */
 	void setHasUnsavedChanges(bool has_unsaved_changes);
 	
 	/** Returns if there are unsaved changes to the colors. */
@@ -1340,7 +1368,7 @@ public:
 	
 	/**
 	 * Marks something unspecific in the map as "dirty", i.e. as having unsaved changes.
-	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changes before.
 	 * 
 	 * Use setColorsDirty(), setSymbolsDirty(), setTemplatesDirty() or
 	 * setObjectsDirty() if you know more specifically what has changed.
@@ -1383,7 +1411,7 @@ public:
 	
 signals:
 	/**
-	 * Emitted when a the map enters or leaves the state which is saved on map.
+	 * Emitted when the map enters or leaves the state which is saved on map.
 	 */
 	void hasUnsavedChanged(bool is_clean);
 	
@@ -1605,10 +1633,7 @@ private:
 	
 	QScopedPointer<MapPrinterConfig> printer_config;
 	
-	bool image_template_use_meters_per_pixel;
-	double image_template_meters_per_pixel;
-	double image_template_dpi;
-	double image_template_scale;
+	ImageTemplateDefaults image_template_defaults;
 	
 	bool colors_dirty;				// are there unsaved changes for the colors?
 	bool symbols_dirty;				//    ... for the symbols?
@@ -1921,4 +1946,4 @@ Q_DECLARE_METATYPE(const OpenOrienteering::Map*)
 Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Map::ImportMode)
 
 
-#endif
+#endif // OPENORIENTEERING_MAP_H

@@ -547,6 +547,9 @@ public:
 	
 	
 	/** Assignment operator. */
+	constexpr MapCoordF& operator= (const MapCoordF& point) noexcept = default;
+	
+	/** Assignment operator. */
 	MapCoordF& operator= (const QPointF& point) noexcept;
 	
 	
@@ -600,7 +603,7 @@ public:
 	/**
 	 * Returns the angle of the vector relative to the vector (1, 0).
 	 * 
-	 * The returned value is in radians, in the range range [-PI; +PI].
+	 * The returned value is in radians, in the range [-PI; +PI].
 	 * MapCoordF { 0, 1 }.getAngle() returns +PI/2,
 	 * MapCoordF { 0, -1 }.getAngle() returns -PI/2.
 	 */

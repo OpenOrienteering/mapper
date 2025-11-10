@@ -1,6 +1,6 @@
 # This file is part of OpenOrienteering.
 
-# Copyright 2019 Kai Pastor
+# Copyright 2019-2021 Kai Pastor
 #
 # Redistribution and use is allowed according to the terms of the BSD license:
 #
@@ -30,14 +30,14 @@
 steps:
 - bash: |
     set -e
-    sudo apt-get update
-    sudo apt-get install python-pip
-    sudo pip install codespell
+    sudo apt-get install python3-pip
+    pip3 install codespell
+    test -f $HOME/.local/bin/codespell
   displayName: 'Setup codespell'
 - bash: |
     set -e
+    export PATH=$PATH:$HOME/.local/bin
     ./codespell.sh \
-      -L childs \
     | sed -e 's,^\([^:]*\):\([0-9]*\): *,##vso[task.LogIssue type=warning;sourcepath=\1;linenumber=\2;],'
   displayName: 'Run codespell'
 

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,7 +23,6 @@
 
 #include <cmath>
 #include <functional>
-#include <vector>
 
 #include <Qt>
 #include <QtGlobal>
@@ -50,6 +49,8 @@
 #include <QSignalBlocker>
 #include <QSize>
 #include <QSpacerItem>
+#include <QString>
+#include <QStringList>
 #include <QStringRef>
 #include <QTimer>
 #include <QUrl>
@@ -187,7 +188,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	geographic_ref_layout->addWidget(geographic_datum_label, 0);
 	
 	show_refpoint_label = new QLabel(tr("Show reference point in:"));
-	link_label = new QLabel();
+	link_label = new QLabel(QLatin1String("-"));
 	link_label->setOpenExternalLinks(true);
 	
 	keep_projected_radio = new QRadioButton(tr("Projected coordinates"));
@@ -237,7 +238,6 @@ GeoreferencingDialog::GeoreferencingDialog(
 	  Qt::Horizontal);
 	reset_button = buttons_box->button(QDialogButtonBox::Reset);
 	reset_button->setEnabled(initial);
-	auto help_button = buttons_box->button(QDialogButtonBox::Help);
 	
 	auto edit_layout = new QFormLayout();
 	
@@ -251,7 +251,6 @@ GeoreferencingDialog::GeoreferencingDialog(
 	edit_layout->addRow(tr("Map coordinates:"), map_ref_layout);
 	edit_layout->addRow(projected_ref_label, projected_ref_layout);
 	edit_layout->addRow(tr("Geographic coordinates:"), geographic_ref_layout);
-	edit_layout->addRow(show_refpoint_label, link_label);
 	edit_layout->addRow(show_refpoint_label, link_label);
 	edit_layout->addRow(tr("On CRS changes, keep:"), keep_projected_radio);
 	edit_layout->addRow({}, keep_geographic_radio);
@@ -301,7 +300,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	connect(buttons_box, &QDialogButtonBox::accepted, this, &GeoreferencingDialog::accept);
 	connect(buttons_box, &QDialogButtonBox::rejected, this, &GeoreferencingDialog::reject);
 	connect(reset_button, &QPushButton::clicked, this, &GeoreferencingDialog::reset);
-	connect(help_button, &QPushButton::clicked, this, &GeoreferencingDialog::showHelp);
+	connect(buttons_box, &QDialogButtonBox::helpRequested, this, &GeoreferencingDialog::showHelp);
 	
 	connect(georef.data(), &Georeferencing::stateChanged, this, &GeoreferencingDialog::georefStateChanged);
 	connect(georef.data(), &Georeferencing::transformationChanged, this, &GeoreferencingDialog::transformationChanged);
@@ -392,16 +391,18 @@ void GeoreferencingDialog::projectionChanged()
 	double longitude = latlon.longitude();
 	setValueIfChanged(lat_edit, latitude);
 	setValueIfChanged(lon_edit, longitude);
-	QString osm_link =
-	  QString::fromLatin1("https://www.openstreetmap.org/?mlat=%1&mlon=%2&zoom=18&layers=M").
-	  arg(latitude, 0, 'g', 10).arg(longitude, 0, 'g', 10);
-	QString worldofo_link =
-	  QString::fromLatin1("http://maps.worldofo.com/?zoom=15&lat=%1&lng=%2").
-	  arg(latitude).arg(longitude);
-	link_label->setText(
-	  tr("<a href=\"%1\">OpenStreetMap</a> | <a href=\"%2\">World of O Maps</a>").
-	  arg(osm_link, worldofo_link)
-	);
+	
+	if (georef->getState() == Georeferencing::Geospatial)
+	{
+		QString osm_link =
+		  QString::fromLatin1("https://www.openstreetmap.org/?mlat=%1&mlon=%2&zoom=18&layers=M").
+		  arg(latitude, 0, 'f', 6).arg(longitude, 0, 'f', 6);
+		link_label->setText(tr("<a href=\"%1\">OpenStreetMap</a>").arg(osm_link));
+	}
+	else
+	{
+		link_label->setText(QLatin1String("-"));
+	}
 	
 	QString error = georef->getErrorText();
 	if (error.length() == 0)
@@ -431,8 +432,8 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 		return;
 	
 	/// \todo Move URL (template) to settings.
-	QString user_url(QString::fromLatin1("https://www.ngdc.noaa.gov/geomag-web/"));
-	QUrl service_url(user_url + QLatin1String("calculators/calculateDeclination"));
+	QString user_url(QString::fromLatin1("https://geomag.bgs.ac.uk"));
+	QUrl service_url(user_url + QLatin1String("/web_service/GMModels/wmm/2025"));
 	LatLon latlon(georef->getGeographicRefPoint());
 	
 	if (!no_confirm)
@@ -447,30 +448,34 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	}
 	
 	QUrlQuery query;
-	QDate today = QDate::currentDate();
-	query.addQueryItem(QString::fromLatin1("lat1"), QString::number(latlon.latitude()));
-	query.addQueryItem(QString::fromLatin1("lon1"), QString::number(latlon.longitude()));
-	query.addQueryItem(QString::fromLatin1("startYear"), QString::number(today.year()));
-	query.addQueryItem(QString::fromLatin1("startMonth"), QString::number(today.month()));
-	query.addQueryItem(QString::fromLatin1("startDay"), QString::number(today.day()));
+	const auto today = QDate::currentDate().toString(Qt::ISODate);
+	query.addQueryItem(QString::fromLatin1("latitude"), QString::number(latlon.latitude()));
+	query.addQueryItem(QString::fromLatin1("longitude"), QString::number(latlon.longitude()));
+	query.addQueryItem(QString::fromLatin1("altitude"), QString::number(0.0f));
+	query.addQueryItem(QString::fromLatin1("date"), today);
 	
-#if defined(Q_OS_WIN) || defined(Q_OS_MACOS) || defined(Q_OS_ANDROID) || !defined(QT_NETWORK_LIB)
-	// No QtNetwork or no OpenSSL: open result in system browser.
-	query.addQueryItem(QString::fromLatin1("resultFormat"), QString::fromLatin1("html"));
-	service_url.setQuery(query);
-	QDesktopServices::openUrl(service_url);
-#else
-	// Use result directly
-	query.addQueryItem(QString::fromLatin1("resultFormat"), QString::fromLatin1("xml"));
-	service_url.setQuery(query);
-	
-	declination_query_in_progress = true;
-	updateDeclinationButton();
-	
-	auto network = new QNetworkAccessManager(this);
-	connect(network, &QNetworkAccessManager::finished, this, &GeoreferencingDialog::declinationReplyFinished);
-	network->get(QNetworkRequest(service_url));
+#if defined(QT_NETWORK_LIB)
+	auto* network = new QNetworkAccessManager(this);
+	if (network->supportedSchemes().contains(QLatin1String("https")))
+	{
+		// Use result directly
+		query.addQueryItem(QString::fromLatin1("format"), QString::fromLatin1("xml"));
+		service_url.setQuery(query);
+		
+		declination_query_in_progress = true;
+		updateDeclinationButton();
+		
+		connect(network, &QNetworkAccessManager::finished, this, &GeoreferencingDialog::declinationReplyFinished);
+		network->get(QNetworkRequest(service_url));
+	}
+	else
 #endif
+	{
+		// No QtNetwork or no OpenSSL: open result in system browser.
+		query.addQueryItem(QString::fromLatin1("format"), QString::fromLatin1("html"));
+		service_url.setQuery(query);
+		QDesktopServices::openUrl(service_url);
+	}
 }
 
 void GeoreferencingDialog::setMapRefPoint(const MapCoord& coords)
@@ -601,7 +606,7 @@ void GeoreferencingDialog::updateWidgets()
 	status_field->setVisible(geographic_coords_enabled);
 	lat_edit->setEnabled(geographic_coords_enabled);
 	lon_edit->setEnabled(geographic_coords_enabled);
-	link_label->setEnabled(geographic_coords_enabled);
+	show_refpoint_label->setEnabled(geographic_coords_enabled);
 	//keep_geographic_radio->setEnabled(geographic_coords_enabled);
 	
 	updateDeclinationButton();
@@ -781,11 +786,11 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 		QXmlStreamReader xml(reply);
 		while (xml.readNextStartElement())
 		{
-			if (xml.name() == QLatin1String("maggridresult"))
+			if (xml.name() == QLatin1String("geomagnetic-field-model-result"))
 			{
 				while(xml.readNextStartElement())
 				{
-					if (xml.name() == QLatin1String("result"))
+					if (xml.name() == QLatin1String("field-value"))
 					{
 						while (xml.readNextStartElement())
 						{
@@ -805,16 +810,12 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 								}
 							}
 							
-							xml.skipCurrentElement(); // child of result
+							xml.skipCurrentElement(); // child of field-value
 						}
 					}
 					
-					xml.skipCurrentElement(); // child of mapgridresult
+					xml.skipCurrentElement(); // child of geomagnetic-field-model-result
 				}
-			}
-			else if (xml.name() == QLatin1String("errors"))
-			{
-				error_string.append(xml.readElementText(QXmlStreamReader::IncludeChildElements) + QLatin1Char(' '));
 			}
 			
 			xml.skipCurrentElement(); // child of root
@@ -831,9 +832,9 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 	}
 	
 	int result = QMessageBox::critical(this, tr("Online declination lookup"),
-		tr("The online declination lookup failed:\n%1").arg(error_string),
-		QMessageBox::Retry | QMessageBox::Close,
-		QMessageBox::Close );
+	                                   tr("The online declination lookup failed:\n%1").arg(error_string),
+	                                   QMessageBox::Retry | QMessageBox::Close,
+	                                   QMessageBox::Close );
 	if (result == QMessageBox::Retry)
 		requestDeclination(true);
 #else

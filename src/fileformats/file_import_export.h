@@ -18,8 +18,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OPENORIENTEERING_IMPORT_EXPORT_H
-#define OPENORIENTEERING_IMPORT_EXPORT_H
+#ifndef OPENORIENTEERING_FILE_IMPORT_EXPORT_H
+#define OPENORIENTEERING_FILE_IMPORT_EXPORT_H
 
 #include <vector>
 
@@ -199,7 +199,7 @@ protected:
 	 * the input is not passed to this function by intention: It is meant to
 	 * be used also by importers which do not use QIODevice.
 	 * 
-	 * Overriding functions must call the the default implementation.
+	 * Overriding functions must call the default implementation.
 	 */
 	virtual void prepare();
 	
@@ -223,7 +223,7 @@ protected:
 	/**
 	 * Event handler called from doImport() to complete to postprocess imported data.
 	 * 
-	 * Overriding functions must call the the default implementation early.
+	 * Overriding functions must call the default implementation early.
 	 * It validates the object and symbols, and looks for templates. It may
 	 * throw FileFormatException.
 	 */
@@ -233,7 +233,7 @@ protected:
 	 * Event handler called from doImport() to complete to cleanup a failed
 	 * import attempt.
 	 * 
-	 * Overriding functions must call the the default implementation.
+	 * Overriding functions must call the default implementation.
 	 */
 	virtual void importFailed();
 	
@@ -334,4 +334,4 @@ protected:
 
 }  // namespace OpenOrienteering
 
-#endif // OPENORIENTEERING_IMPORT_EXPORT_H
+#endif // OPENORIENTEERING_FILE_IMPORT_EXPORT_H

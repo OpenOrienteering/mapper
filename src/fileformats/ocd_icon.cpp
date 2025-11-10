@@ -135,33 +135,7 @@ quint8 getPaletteColorV8(QRgb rgb)
 
 quint8 getPaletteColorV9(int r, int g, int b)
 {
-	// Quickly return most frequent value
-	if (r == 255 && g == 255 && b == 255)
-		return 124;
-	
-	struct PaletteColor
-	{
-		int r;
-		int g;
-		int b;
-	};
-	static const auto palette = Ocd::IconV9::palette<PaletteColor>();
-	
-	auto sq = [](int n) { return n*n; };
-
-	quint8 best_index = 0;
-	auto best_distance = 10000; // > (2 + 3 + 4) * sq(32)
-	for (quint8 i = 0; i < 125; ++i)
-	{
-		auto palette_color = palette[i];
-		auto distance = 2 * sq(r - palette_color.r) + 4 * sq(g - palette_color.g) + 3 * sq(b - palette_color.b);
-		if (distance < best_distance)
-		{
-			best_distance = distance;
-			best_index = i;
-		}
-	}
-	return best_index;
+	return int((b+32)/64) + int((g+32)/64)*5 + int((r+32)/64)*25;
 }
 
 } // namespace

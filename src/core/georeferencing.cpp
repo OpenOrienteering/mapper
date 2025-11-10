@@ -383,7 +383,14 @@ ProjTransform::ProjTransform(const QString& crs_spec)
 	// Cf. https://github.com/OSGeo/PROJ/pull/1573
 	crs_spec_utf8.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
 #endif
+#if defined(ACCEPT_USE_OF_DEPRECATED_PROJ_API_H) || (PROJ_VERSION_MAJOR) < 8
 	pj = proj_create_crs_to_crs(PJ_DEFAULT_CTX, geographic_crs_spec_utf8, crs_spec_utf8, nullptr);
+#else
+	static auto const geographic_crs = crs(Georeferencing::geographic_crs_spec);
+	auto const projected_crs = crs(crs_spec);
+	static const char* const options[] = {"AUTHORITY=any", nullptr};
+	pj = proj_create_crs_to_crs_from_pj(PJ_DEFAULT_CTX, geographic_crs.pj, projected_crs.pj, nullptr, options);
+#endif
 	if (pj)
 		operator=({proj_normalize_for_visualization(PJ_DEFAULT_CTX, pj)});
 }
@@ -535,7 +542,6 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	projected_ref_point      = other.projected_ref_point;
 	from_projected           = other.from_projected;
 	to_projected             = other.to_projected;
-	projected_ref_point      = other.projected_ref_point;
 	projected_crs_id         = other.projected_crs_id;
 	projected_crs_spec       = other.projected_crs_spec;
 	projected_crs_parameters = other.projected_crs_parameters;

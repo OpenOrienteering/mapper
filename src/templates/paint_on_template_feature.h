@@ -103,7 +103,7 @@ protected:
 	 * Creates a menu of actions which start painting on new or existing templates.
 	 * 
 	 * When the given action is null, the menu is initially empty. It gets filled
-	 * or updated when the the action is hovered.
+	 * or updated when the action is hovered.
 	 */
 	QMenu* makeTemplateMenu(QAction* action, QWidget* parent);
 	

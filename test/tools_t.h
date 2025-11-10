@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017, 2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -36,6 +36,8 @@ private slots:
 	void editTool();
 	
 	void paintOnTemplateFeature();
+	
+	void testFindObjects();
 };
 
 #endif

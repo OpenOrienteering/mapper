@@ -6,10 +6,10 @@ authors:
 keywords: Templates
 parent: Templates and Data
 nav_order: 0.1
-last_modified_date: 21 December 2019
+last_modified_date: 13 June 2025
 ---
 
-Images, tracks recorded with GPS receivers and other layers which are used to provide base information for the mapper are called templates. They can be loaded into the map file using the template setup window which is available via the menu item Templates -&gt; Template Setup Window. Templates can also be "abused" to display information on the final map, for example sponsor logos which are only available as raster images.
+Images, tracks recorded with GNSS receivers and other layers which are used to provide base information for the mapper are called templates. They can be loaded into the map file using the template setup window which is available via the menu item Templates -&gt; Template Setup Window. Templates can also be "abused" to display information on the final map, for example sponsor logos which are only available as raster images.
 
 **Attention**: as templates are not covered by the undo/redo system, be sure to save your map before making changes to them!
 
@@ -73,8 +73,8 @@ Depending on the format, the information may be embedded (e.g. for GeoTIFF), or
 come in auxiliary files such as so-called world files.
 
 World files are text files containing 6 entries of a transformation matrix
-mapping pixel coordinates to grid coordinates of some geodesic coordinate reference system
-([more information on Wikipedia](http://en.wikipedia.org/wiki/World_file)).
+mapping pixel coordinates to grid coordinates of some geodetic coordinate reference system
+([more information on Wikipedia](https://en.wikipedia.org/wiki/World_file)).
 Unfortunately, a world file does not specify the actual coordinate reference system.
 So if you choose this option for positioning, you usually have to specify the
 coordinate reference system in the next step. You should get this information
@@ -97,14 +97,14 @@ with reference point coordinates already pre-filled as the center of the loaded 
 
 This method of positioning should only be chosen if you have no georeferencing information available for the image. First, there are two possible options to specify the image scale:
 
- - **Meters per pixel**: this is primarily useful for base maps from a digital source, where you may know this value directly. Alternatively you can also calculate it yourself: if your fieldwork image covers 500m width on the ground and the image is 1200 pixels wide then the scale will be 500 / 1200 = 0.625 meters per pixel. (Take care that the number of meters corresponds exactly the width of the image file.)
- - **Scanned**: if your fieldwork is at a known scale (it should be &#8212; say 1:5000), and the scan is at a chosen resolution (say 200dpi) then these parameters may be entered to scale the fieldwork image. This assumes that printer and scanner work accurately.
+ - **Meters per pixel**: this is primarily useful for base maps from a digital source, where you may know this value directly. Alternatively you can also calculate it yourself: if your fieldwork image covers 500m width on the ground and the image is 1200 pixels wide then the scale will be 500 / 1200 = 0.625 meters per pixel. (Take care that the number of meters corresponds exactly to the width of the image file.)
+ - **Scanned**: if your fieldwork is at a known scale (it should be - say 1:5000), and the scan is at a chosen resolution (say 200dpi) then these parameters may be entered to scale the fieldwork image. This assumes that printer and scanner work accurately.
 
 Note that if you do not know the image scale and / or if you are going to adjust the template position to the existing map anyway using the [adjust feature](#adjust), you can just enter any value here as the scaling will be changed again later.
 
 ### Track templates
 
-These templates represent tracks from a GPS receiver or similar.
+These templates represent tracks from a GNSS receiver or similar.
 By default, mapper uses a special template type to display this type of files.
 However, it is possible to disable this special template type on the
 GDAL [settings](settings.md) page, so that GPX tracks will be handled as

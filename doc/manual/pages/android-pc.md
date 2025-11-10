@@ -1,5 +1,6 @@
 ---
 title: Preparing a Map on the PC
+last_modified_date: 29 January 2021
 parent: The Mapper App for Android
 nav_order: 0.2
 ---

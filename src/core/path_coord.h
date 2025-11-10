@@ -52,13 +52,13 @@ class PathCoord
 	friend class PathCoordVector;
 	
 public:
-	/** A reaonably sized unsigned integer type for map coord vector sizes and indexes. */
+	/** A reasonably sized unsigned integer type for map coord vector sizes and indexes. */
 	using size_type = quint32;
 	
-	/** A reaonably precise float type for lengths and distances. */
+	/** A reasonably precise float type for lengths and distances. */
 	using length_type = float;
 	
-	/** A reaonably precise float type for relative position in the range [0, 1). */
+	/** A reasonably precise float type for relative position in the range [0, 1). */
 	using param_type = float;
 	
 	
@@ -192,7 +192,7 @@ struct ClosestBorderPathCoord
 class SplitPathCoord
 {
 public:
-	/** A reaonably precise float type for lengths and distances. */
+	/** A reasonably precise float type for lengths and distances. */
 	using length_type = PathCoord::length_type;
 	
 	/** Position. */

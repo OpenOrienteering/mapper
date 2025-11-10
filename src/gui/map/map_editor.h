@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2013-2021 Kai Pastor
+ *    Copyright 2013-2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -71,6 +71,7 @@ class PaintOnTemplateFeature;
 class PrintWidget;
 class ReopenTemplateDialog;
 class Symbol;
+class SymbolReportFeature;
 class SymbolWidget;
 class Template;
 class TemplateListWidget;
@@ -182,7 +183,7 @@ public:
 	bool isEditingInProgress() const override;
 	
 	/**
-	 * Adds a a floating dock widget to the main window.
+	 * Adds a floating dock widget to the main window.
 	 * Adjusts some geometric properties.
 	 */
 	void addFloatingDockWidget(QDockWidget* dock_widget);
@@ -305,10 +306,12 @@ public slots:
 	void followPositionClicked(bool enable);
 	/** Follow-position mode update handler. */
 	void followPositionUpdate(OpenOrienteering::MapCoordF position);
-	/** Zooms in in the current map widget. */
+	/** Zooms in the current map widget. */
 	void zoomIn();
 	/** Zooms out in the current map widget. */
 	void zoomOut();
+	/** Activates the box zoom tool. */
+	void boxZoom(bool checked);
 	/** Shows the dialog to set a custom zoom factor in the current map widget. */
 	void setCustomZoomFactorClicked();
 	
@@ -347,6 +350,8 @@ public slots:
 	void rotateMapClicked();
 	/** Shows the dialog to enter map notes. */
 	void mapNotesClicked();
+	/** Shows the map information. */
+	void mapInfoClicked();
 	
 	/** Shows or hides the template setup dock widget. */
 	void showTemplateWindow(bool show);
@@ -470,9 +475,9 @@ public slots:
 	/** Tries to remove points of selected paths while retaining their shape */
 	void simplifyPathClicked();
 	/** Activates the physical cutout tool */
-	void cutoutPhysicalClicked();
+	void clipAreaClicked();
 	/** Activates the physical cutout tool (inversed) */
-	void cutawayPhysicalClicked();
+	void eraseAreaClicked();
 	/** Executes the "distribute points along path" action.
 	 *  The prerequisites for using the tool must be given. */
 	void distributePointsClicked();
@@ -723,6 +728,7 @@ private:
 	QAction* follow_position_act = {};
 	QAction* zoom_in_act = {};
 	QAction* zoom_out_act = {};
+	QAction* box_zoom_act = {};
 	QAction* show_all_act = {};
 	QAction* fullscreen_act = {};
 	QAction* custom_zoom_act = {};
@@ -745,7 +751,10 @@ private:
 	QAction* scale_map_act = {};
 	QAction* rotate_map_act = {};
 	QAction* map_notes_act = {};
+	QAction* map_info_act = {};
 	QAction* symbol_set_id_act = {};
+	std::unique_ptr<SymbolReportFeature> symbol_report_feature;
+	
 	
 	QAction* color_window_act = {};
 	QPointer<EditorDockWidget> color_dock_widget;
@@ -797,8 +806,8 @@ private:
 	QAction* boolean_merge_holes_act = {};
 	QAction* convert_to_curves_act = {};
 	QAction* simplify_path_act = {};
-	QAction* cutout_physical_act = {};
-	QAction* cutaway_physical_act = {};
+	QAction* clip_area_act = {};
+	QAction* erase_area_act = {};
 	QAction* distribute_points_act = {};
 	
 	std::unique_ptr<PaintOnTemplateFeature> paint_feature;

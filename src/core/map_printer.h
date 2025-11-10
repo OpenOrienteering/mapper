@@ -97,10 +97,10 @@ public:
 	/** The total dimensions of the page in mm. */
 	QSizeF paper_dimensions;
 	
-	/** The horizontal overlap in mm of pages when the output covers muliple pages. */
+	/** The horizontal overlap in mm of pages when the output covers multiple pages. */
 	qreal h_overlap;
 	
-	/** The vertival overlap in mm of pages when the output covers muliple pages. */
+	/** The vertival overlap in mm of pages when the output covers multiple pages. */
 	qreal v_overlap;
 };
 
@@ -316,8 +316,8 @@ public:
 	 * 
 	 * Drawing non-opaque data might cause rasterization with some Qt print
 	 * engines. This function is used to detect configurations where such
-	 * rasterization may happen. The result can be comined with tests for the
-	 * data actually having alpha.
+	 * rasterization may happen. The result can be combined with tests for
+	 * the data actually having alpha.
 	 */
 	bool engineMayRasterize() const;
 	

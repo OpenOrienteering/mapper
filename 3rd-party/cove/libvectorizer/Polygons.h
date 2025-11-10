@@ -21,8 +21,6 @@
 #ifndef COVE_POLYGONS_H
 #define COVE_POLYGONS_H
 
-#include <algorithm>
-#include <functional>
 #include <limits>
 #include <vector>
 
@@ -142,15 +140,6 @@ private:
 	};
 
 	typedef std::vector<JOINENDPOINT> JOINENDPOINTLIST;
-
-	struct greater_weight
-		: public std::binary_function<const JOINOP&, const JOINOP&, bool>
-	{
-		bool operator()(const JOINOP& x, const JOINOP& y)
-		{
-			return x.weight > y.weight;
-		}
-	};
 
 	// implementation dependent value...
 	static const int NPOINTS_MAX;

@@ -63,6 +63,16 @@ target_link_libraries(printsupport
   ZLIB::ZLIB
 )
 
+# Suppress warnings from Qt code
+include(CheckCXXCompilerFlag)
+foreach(flag IN ITEMS "-Wno-stringop-overflow")
+    string(MAKE_C_IDENTIFIER "HAVE_${flag}" cache_var)
+    check_cxx_compiler_flag("${flag}" "${cache_var}")
+    if("${${cache_var}}")
+        target_compile_options(printsupport PRIVATE "${flag}")
+    endif()
+endforeach()
+
 
 # Workaround Qt private include dir issue
 # Cf. https://bugreports.qt.io/browse/QTBUG-37417

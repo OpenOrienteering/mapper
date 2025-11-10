@@ -6,11 +6,8 @@ Features that are not important for a competitor taking part in a sprint oriente
 In the end, it is the mapmaker's task to produce precise and legible orienteering maps by applying the specifications and generalisation rules, such as selection, simplification and exaggeration.
 Mapping multilevel structures (bridges, underpasses or underground buildings) is confusing. Generally only the main "running" level should be shown. However, underground passages (e.g. underpasses, lighted tunnels) or overpasses (e.g. bridges), which are important for competitors should be mapped.
 All line widths and symbol dimensions must be kept strictly to their specified value. Certain minimum dimensions must also be observed. These are based on both printing technology and the need for legibility.
-Minimum gap between two line symbols of the same colour, in brown or black: 0.15 mm, in blue: 0.25 mm.
-Minimum gap between line symbols and area symbols of the same colour, in black: 0.15 mm.
 Shortest dotted line: at least two dots.
 Shortest dashed line: at least two dashes.
-Smallest area enclosed by a dotted line: 1.5 mm (diameter) with 5 dots.
-Smallest area of colour:<ul><li>Blue, green, grey or yellow full colour: 0.5 mm<sup>2</sup></li><li>Black dot screen: 0.5 mm<sup>2</sup></li><li>Blue, brown, green or yellow dot screen: 1.0 mm<sup>2</sup></li></ul>
+Smallest area enclosed by a dotted line: 2.0 mm (diameter) with 5 dots.
 All features plotting smaller than the minimum dimensions must be either exaggerated or omitted, depending on whether or not they are of significance to the competitor.
-The sprint map format should not exceed DIN A4.
+The sprint map format should not exceed DIN A3.

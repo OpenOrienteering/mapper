@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017, 2018, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,8 +19,8 @@
  */
 
 
-#ifndef OPENORIENTEERING_SYMBOL_POINT_EDITOR_H
-#define OPENORIENTEERING_SYMBOL_POINT_EDITOR_H
+#ifndef OPENORIENTEERING_POINT_SYMBOL_EDITOR_WIDGET_H
+#define OPENORIENTEERING_POINT_SYMBOL_EDITOR_WIDGET_H
 
 #include <QtGlobal>
 #include <QObject>
@@ -56,19 +56,27 @@ class PointSymbolEditorActivity;
 class Symbol;
 
 
-/** A Widget for editing point symbol definitions */
+/** A widget for editing point symbol definitions */
 class PointSymbolEditorWidget : public QWidget
 {
 Q_OBJECT
 friend class PointSymbolEditorActivity;
 public:
+    /** Describes the role of the symbol to be edited. */
+    enum SymbolRole {
+		PrimarySymbol,      ///< A primary point symbol
+		AreaSymbolElement,  ///< A symbol used in an area symbol fill pattern
+		LineSymbolElement,  ///< A symbol used for decorating a line symbol
+	};
+	
 	/** Construct a new widget.
 	 * @param controller The controller of the preview map
 	 * @param symbol The point symbol to be edited
+	 * @param role The role of the symbol to be edited
 	 * @param offset_y The vertical offset of the point symbol preview/editor from the origin
-	 * @param permanent_preview A flag indicating whether the preview shall be visible even if the editor is not visible
+	 * @param parent Standard QWidget parentship
 	 */
-	PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, qreal offset_y = 0, bool permanent_preview = false, QWidget* parent = 0);
+	PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, SymbolRole role = PrimarySymbol, qreal offset_y = 0, QWidget* parent = nullptr);
 	
 	~PointSymbolEditorWidget() override;
 	
@@ -135,7 +143,7 @@ private:
 	Object* getCurrentElementObject();
 	
 	PointSymbol* const symbol;
-	PointObject* midpoint_object;
+	PointObject* midpoint_object = nullptr;
 	const MapCoordF object_origin_coord;
 	
 	QCheckBox* oriented_to_north;
@@ -178,7 +186,7 @@ private:
 
 
 /**
- * PointSymbolEditorActivity allows to add or modify coordinates of point symbol elements
+ * PointSymbolEditorTool allows to add or modify coordinates of point symbol elements
  * by clicking in the map.
  */
 class PointSymbolEditorTool : public MapEditorTool
@@ -206,7 +214,7 @@ private:
  */
 class PointSymbolEditorActivity : public MapEditorActivity
 {
-	Q_OBJECT
+Q_OBJECT
 	
 public:
 	PointSymbolEditorActivity(Map* map, PointSymbolEditorWidget* symbol_editor);
@@ -226,4 +234,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_POINT_SYMBOL_EDITOR_WIDGET_H

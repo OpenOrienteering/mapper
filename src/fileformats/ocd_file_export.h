@@ -73,7 +73,7 @@ class TextSymbol;
  *   We specialize the template function (as done in 
  *   `template<> void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)`).
  * - If the same algorithm can be used for multiple formats:
- *   - If the differences are completely represented by the the exporter's state
+ *   - If the differences are completely represented by the exporter's state
  *     (which captures version and parameter string handler), then we may just
  *     call into a non-template function (as done in
  *     `template<class Format> void OcdFileExport::exportSetup(OcdFile<Format>&)`.
@@ -120,6 +120,8 @@ class OcdFileExport : public Exporter
 	
 	
 	using StringAppender = void (qint32, const QString&);
+	
+	struct TextFormatMapping;
 	
 public:
 	/// \todo Add proper API
@@ -214,6 +216,8 @@ protected:
 	
 	template< class OcdTextSymbol >
 	QByteArray exportTextSymbol(const TextSymbol* text_symbol, quint32 symbol_number, int alignment);
+	
+	std::vector<TextFormatMapping>::iterator prepareTextSymbolExport(const TextSymbol* text_symbol);
 	
 	template< class OcdTextSymbol >
 	void setupTextSymbolExtra(const TextSymbol* text_symbol, OcdTextSymbol& ocd_text_symbol);
@@ -347,4 +351,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_OCD_FILE_EXPORT_H

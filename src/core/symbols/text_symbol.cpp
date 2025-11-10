@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2022 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -508,15 +508,7 @@ bool TextSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 			line_below_distance != text->line_below_distance)
 			return false;
 	}
-	if (custom_tabs.size() != text->custom_tabs.size())
-		return false;
-	for (size_t i = 0, end = custom_tabs.size(); i < end; ++i)
-	{
-		if (custom_tabs[i] != text->custom_tabs[i])
-			return false;
-	}
-	
-	return true;
+	return (custom_tabs == text->custom_tabs);
 }
 
 QString TextSymbol::getIconText() const

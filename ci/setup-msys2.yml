@@ -1,6 +1,6 @@
 # This file is part of OpenOrienteering.
 
-# Copyright 2019 Kai Pastor
+# Copyright 2019, 2025 Kai Pastor
 #
 # Redistribution and use is allowed according to the terms of the BSD license:
 #
@@ -35,7 +35,7 @@ steps:
     SUPERBUILD_INSTALL_DIR_NATIVE=${SUPERBUILD_INSTALL_DIR_NATIVE//\//\\}
     echo "##vso[task.setVariable variable=SOURCE_DIR]${SOURCE_DIR}"
     echo "##vso[task.setVariable variable=TEST_RESULTS]${BUILD_SOURCESDIRECTORY}\\build\\default\\openorienteering-mapper-ci\\Testing"
-    echo "##vso[task.setVariable variable=CMAKE_WRAPPING]-E env ${SUPERBUILD_INSTALL_DIR_NATIVE}\usr\bin\bash.exe ${SOURCE_DIR}/ci/shell.sh cmake"
+    echo "##vso[task.setVariable variable=CMAKE_WRAPPING]-E env \"PATH=${SUPERBUILD_INSTALL_DIR_NATIVE}\$(MINGW)\toolchain\bin;${SUPERBUILD_INSTALL_DIR_NATIVE}\$(MINGW)\superbuild\bin;${SUPERBUILD_INSTALL_DIR_NATIVE}\$(MINGW)\bin;${SUPERBUILD_INSTALL_DIR_NATIVE}\usr\bin;C:\Windows\System32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\" cmake"
     echo "##vso[task.setVariable variable=CHERE_INVOKING]enabled_from_arguments"
     echo "##vso[task.setVariable variable=MSYSCON]defterm"
     case "$(MINGW)" in

@@ -141,13 +141,13 @@ private:
 /**
  * A VirtualPath class represents a single path out of a sequence of coords and flags.
  * 
- * It provides a PathCoordVector which is is a polyline approximation of the path
+ * It provides a PathCoordVector which is a polyline approximation of the path
  * (i.e. no curves) and provides metadata such as length for each point of the path.
  */
 class VirtualPath
 {
 public:
-	/** A reaonably sized unsigned integer type for coord vector sizes and indexes. */
+	/** A reasonably sized unsigned integer type for coord vector sizes and indexes. */
 	using size_type = VirtualCoordVector::size_type;
 	
 	/** The underlying coordinates and flags. */

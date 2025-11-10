@@ -6,47 +6,47 @@
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magenta per sovrastampa</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bianco per sovrastampa</translation>
     </message>
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nero 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bianco per ferrovia</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blu 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Marrone 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Magenta per i simboli delle piste</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nero sotto magenta per simboli delle piste</translation>
     </message>
     <message>
         <source>Black 65%</source>
@@ -81,12 +81,12 @@
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blu 100% per simboli d&apos;area</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blu 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -116,12 +116,12 @@
     <message>
         <source>White over green</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>BIanco sopra il verde</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Giallo 100%/Verde 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -131,37 +131,37 @@
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 100%/Nero 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 100% per simboli d&apos;area</translation>
     </message>
     <message>
         <source>Green 60%</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 28</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 30%</translation>
     </message>
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 100% per sottobosco</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bianco sopra giallo</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nero per area aperta</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -171,7 +171,7 @@
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 33</comment>
-        <translation type="unfinished"></translation>
+        <translation>Giallo 100% per simboli d&apos;area</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
@@ -4003,6 +4003,16 @@ Il bordo esterno può essere sostituito da altri simboli con linea nera, come il
         <translation>Verde</translation>
     </message>
     <message>
+        <source>Green 60%</source>
+        <comment>Color 15</comment>
+        <translation>Verde 60%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 16</comment>
+        <translation>Verde 30%</translation>
+    </message>
+    <message>
         <source>Green below light greens</source>
         <comment>Color 17</comment>
         <translation>Verde sotto verde chiaro</translation>
@@ -4303,32 +4313,32 @@ Il bordo esterno può essere sostituito da altri simboli con linea nera, come il
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magenta per sovrastampa</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bianco per sovrastampa</translation>
     </message>
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nero 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bianco per ferrovia</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Magenta per i simboli delle piste</translation>
     </message>
     <message>
         <source>Purple 50%</source>
@@ -4338,12 +4348,12 @@ Il bordo esterno può essere sostituito da altri simboli con linea nera, come il
     <message>
         <source>Blue 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blu 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Marrone 100%</translation>
     </message>
     <message>
         <source>Black 60%</source>
@@ -4383,12 +4393,12 @@ Il bordo esterno può essere sostituito da altri simboli con linea nera, come il
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blu 100% per simboli d&apos;area</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blu 70%</translation>
     </message>
     <message>
         <source>Blue 30%</source>
@@ -4408,7 +4418,7 @@ Il bordo esterno può essere sostituito da altri simboli con linea nera, come il
     <message>
         <source>White over green</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>BIanco sopra il verde</translation>
     </message>
     <message>
         <source>Green 50%/Yellow 100%</source>
@@ -4423,32 +4433,32 @@ Il bordo esterno può essere sostituito da altri simboli con linea nera, come il
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 100% per simboli d&apos;area</translation>
     </message>
     <message>
         <source>Green 60%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 30%</translation>
     </message>
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 100% per sottobosco</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 28</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bianco sopra giallo</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nero per area aperta</translation>
     </message>
     <message>
         <source>Yellow 100%</source>
@@ -6721,6 +6731,16 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Verde</translation>
     </message>
     <message>
+        <source>Green 60%</source>
+        <comment>Color 29</comment>
+        <translation>Verde 60%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 30</comment>
+        <translation>Verde 30%</translation>
+    </message>
+    <message>
         <source>Green below light greens</source>
         <comment>Color 31</comment>
         <translation>Verde sotto verde chiaro</translation>
@@ -7026,12 +7046,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green 60%</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 30%</translation>
     </message>
     <message>
         <source>Green below light greens</source>
@@ -8779,6 +8799,16 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Verde</translation>
     </message>
     <message>
+        <source>Green 60%</source>
+        <comment>Color 17</comment>
+        <translation>Verde 60%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 18</comment>
+        <translation>Verde 30%</translation>
+    </message>
+    <message>
         <source>Green below light greens</source>
         <comment>Color 19</comment>
         <translation>Verde sotto verde chiaro</translation>
@@ -9079,12 +9109,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magenta per sovrastampa</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bianco per sovrastampa</translation>
     </message>
     <message>
         <source>Green for SkiO</source>
@@ -9094,37 +9124,37 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nero 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bianco per ferrovia</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blu 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Marrone 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Magenta per i simboli delle piste</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nero sotto magenta per simboli delle piste</translation>
     </message>
     <message>
         <source>Black 65%</source>
@@ -9159,12 +9189,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blu 100% per simboli d&apos;area</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blu 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -9194,12 +9224,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>White over green</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>BIanco sopra il verde</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Giallo 100%/Verde 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -9209,37 +9239,37 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 100%/Nero 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 100% per simboli d&apos;area</translation>
     </message>
     <message>
         <source>Green 60%</source>
         <comment>Color 28</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 30%</translation>
     </message>
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verde 100% per sottobosco</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bianco sopra giallo</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 32</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nero per area aperta</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -9249,7 +9279,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 34</comment>
-        <translation type="unfinished"></translation>
+        <translation>Giallo 100% per simboli d&apos;area</translation>
     </message>
     <message>
         <source>Yellow 50%</source>

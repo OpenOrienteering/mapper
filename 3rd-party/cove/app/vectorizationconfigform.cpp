@@ -30,7 +30,6 @@
 
 #include "ui_vectorizationconfigform.h"
 
-class QDoubleValidator;
 class QWidget;
 
 namespace cove {
@@ -39,11 +38,9 @@ VectorizationConfigForm::VectorizationConfigForm(QWidget* parent)
 {
 	ui.setupUi(this);
 
-	QDoubleValidator* dv;
 	ui.shortPathLineEdit->setValidator(new QIntValidator(2, INT_MAX, this));
 	ui.joinDistanceLineEdit->setValidator(
-		dv = new QDoubleValidator(1, std::numeric_limits<double>::infinity(), 1,
-								  this));
+		new QDoubleValidator(1, std::numeric_limits<double>::infinity(), 1, this));
 	ui.distDirBalanceLineEdit->setValidator(
 		new QDoubleValidator(0, 1, 2, this));
 }

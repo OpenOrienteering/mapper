@@ -31,6 +31,7 @@
 #include <QSpacerItem>
 #include <QVBoxLayout>
 
+#include "core/crs_template.h"
 #include "core/georeferencing.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/crs_selector.h"

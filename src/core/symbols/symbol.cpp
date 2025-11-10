@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2022, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -30,6 +30,7 @@
 #include <QtGlobal>
 #include <QBuffer>
 #include <QByteArray>
+#include <QChar>
 #include <QImageReader>
 #include <QImageWriter>
 #include <QLatin1Char>
@@ -868,6 +869,11 @@ QString Symbol::getNumberAsString() const
 	return string;
 }
 
+QString Symbol::getNumberAndPlainTextName() const
+{
+	return getNumberAsString() + QChar::Space + getPlainTextName();
+}
+
 
 // virtual
 bool Symbol::hasRotatableFillPattern() const
@@ -879,7 +885,6 @@ void Symbol::setRotatable(bool value)
 {
 	is_rotatable = value;
 }
-
 
 
 std::unique_ptr<Symbol> Symbol::makeSymbolForType(Symbol::Type type)
@@ -974,14 +979,32 @@ bool Symbol::lessByColor::operator() (const Symbol* s1, const Symbol* s2) const
 	if (rgb_c1 == rgb_c2)
 		return false;
 	
-	const auto last = colors.rend();
-	auto first = std::find_if(colors.rbegin(), last, [rgb_c2](const auto rgb) {
-		return rgb == rgb_c2;
-	});
-	auto second = std::find_if(first, last, [rgb_c1](const auto rgb) {
-		return rgb == rgb_c1;
-	});
-	return second != last;
+	const auto first = colors.begin();
+	const auto last = colors.end();
+	const auto rgb1 = std::find(first, last, rgb_c1);
+	const auto rgb2 = std::find(first, last, rgb_c2);
+	return std::distance(first, rgb1) < std::distance(first, rgb2);
+}
+
+
+// virtual function, derived classes LineSymbol and CombinedSymbol override default behaviour below.
+bool Symbol::containsDashSymbol() const
+{
+	return false;
+}
+
+
+// virtual function, derived classes AreaSymbol and CombinedSymbol override default behaviour below.
+int Symbol::getMinimumArea() const
+{
+	return 0;
+}
+
+
+// virtual function, derived classes LineSymbol and CombinedSymbol override default behaviour below.
+int Symbol::getMinimumLength() const
+{
+	return 0;
 }
 
 

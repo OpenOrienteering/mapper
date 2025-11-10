@@ -564,6 +564,7 @@ int bestpolygon(privpath_t *pp)
   SAFE_MALLOC(seg0, n+1, int);
   SAFE_MALLOC(seg1, n+1, int);
 
+if (n > 2) {
   /* calculate clipped paths */
   if(pp->closed) {
     for (i=0; i<n; i++) {
@@ -649,6 +650,13 @@ int bestpolygon(privpath_t *pp)
   }
   if(!pp->closed)
     pp->po[m-1] = n-1;
+} else {
+  // n <= 2, shouldn't occur after despeckling
+  pp->m = 2;
+  SAFE_MALLOC(pp->po, 2, int);
+  pp->po[0] = 0;
+  pp->po[1] = n-1;
+}
 
   free(pen);
   free(prev);

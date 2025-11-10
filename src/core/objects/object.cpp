@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2021, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1929,7 +1929,7 @@ double PathObject::calcBezierPointDeletionRetainingShapeCost(MapCoord p0, MapCoo
 void PathObject::calcBezierPointDeletionRetainingShapeOptimization(MapCoord p0, MapCoord p1, MapCoord p2, MapCoord q0, MapCoord q1, MapCoord q2, MapCoord q3, double& out_pfactor, double& out_qfactor)
 {
 	auto const gradient_abort_threshold_sq = 0.0025;	// if the gradient magnitude is lower than this over num_abort_steps step, the optimization is aborted
-	auto const decrease_abort_threshold = 0.004;	// if the cost descrease if lower than this over num_abort_steps step, the optimization is aborted
+	auto const decrease_abort_threshold = 0.004;	// if the cost decrease is lower than this over num_abort_steps step, the optimization is aborted
 	const int num_abort_steps = 2;
 	auto const derivative_delta = 0.05;
 	const int num_tested_step_sizes = 5;
@@ -3173,6 +3173,50 @@ void PathObject::updateEvent() const
 void PathObject::createRenderables(ObjectRenderables& output, Symbol::RenderableOptions options) const
 {
 	symbol->createRenderables(this, path_parts, output, options);
+}
+
+
+double PathObject::getPaperLength() const
+{
+	const PathPartVector& parts = this->parts();
+	return parts.empty() ? 0.0 : parts.front().length();
+}
+
+double PathObject::getRealLength() const
+{
+	return map ? getPaperLength() * (0.001 * map->getScaleDenominator()) : 0.0;
+}
+
+double PathObject::calculatePaperArea() const
+{
+	const PathPartVector& parts = this->parts();
+	auto first = parts.begin(), last = parts.end();
+	auto paper_area = 0.0;
+	if (first != last)
+	{
+		paper_area = std::accumulate(first + 1, last, first->calculateArea(), [](auto acc, const auto& cur) {
+			return acc - cur.calculateArea();
+		});
+	}
+	return paper_area;
+}
+
+double PathObject::calculateRealArea() const
+{
+	double paper_to_real = map ? 0.001 * map->getScaleDenominator() : 0.0;
+	return calculatePaperArea() * paper_to_real * paper_to_real;
+}
+
+bool PathObject::isAreaTooSmall() const
+{
+	int minimum_area = symbol ? symbol->getMinimumArea() : 0;
+	return calculatePaperArea() < 0.001 * minimum_area;
+}
+
+bool PathObject::isLineTooShort() const
+{
+	int minimum_length = symbol ? symbol->getMinimumLength() : 0;
+	return getPaperLength() < 0.001 * minimum_length;
 }
 
 

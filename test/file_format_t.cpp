@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021 Kai Pastor
+ *    Copyright 2012-2021, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,10 +20,13 @@
 
 #include "file_format_t.h"
 
-#include <array>
-#include <initializer_list>
+#include <algorithm>
+// IWYU pragma: no_include <array>
+#include <cstddef>
+// IWYU pragma: no_include <initializer_list>
 #include <limits>
 #include <memory>
+#include <stdexcept>
 // IWYU pragma: no_include <type_traits>
 #include <utility>
 
@@ -32,15 +35,18 @@
 #include <QtTest>
 #include <QBuffer>
 #include <QByteArray>
+#include <QByteRef>
 #include <QChar>
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QFlags>
 #include <QIODevice>
 #include <QLatin1Char>
 #include <QLatin1String>
 #include <QMetaObject>
+#include <QMetaType>
 #include <QPageSize>
 #include <QPoint>
 #include <QPointF>
@@ -48,6 +54,7 @@
 #include <QSize>
 #include <QSizeF>
 #include <QString>
+#include <QStringRef>
 #include <QTemporaryDir>
 #include <QVariant>
 
@@ -64,14 +71,20 @@
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/symbols/area_symbol.h"
-#include "core/symbols/symbol.h"
 #include "core/symbols/line_symbol.h"
+#include "core/symbols/symbol.h"
+#include "core/symbols/text_symbol.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
+#include "fileformats/iof_course_export.h"
 #include "fileformats/kml_course_export.h"
 #include "fileformats/ocd_file_export.h"
 #include "fileformats/ocd_file_format.h"
+#include "fileformats/ocd_file_import.h"
+#include "fileformats/ocd_types.h"
+#include "fileformats/ocd_types_v8.h"
+#include "fileformats/ocd_types_v12.h"
 #include "fileformats/simple_course_export.h"
 #include "fileformats/xml_file_format.h"
 #include "templates/template.h"
@@ -131,7 +144,7 @@ namespace QTest
 			ba += ", overprinting";
 		return qstrdup(ba.data());
 	}
-}
+}  // namespace QTest
 
 #endif
 
@@ -146,39 +159,42 @@ namespace
 	 * when the properties match.
 	 */
 	#define COMPARE_SYMBOL_PROPERTY(a, b, symbol) \
-	if ((a) != (b)) \
 	{ \
-		auto const diff = qstrlen(#b) - qstrlen(#a); \
-		auto const fill_a = QString().fill(QChar::Space, +diff); \
-		auto const fill_b = QString().fill(QChar::Space, -diff); \
-		QFAIL(QString::fromLatin1( \
-		       "Compared values are not the same (%1 %2)\n   Actual   (%3)%4: %7\n   Expected (%5)%6: %8") \
-		      .arg((symbol).getNumberAsString(), (symbol).getPlainTextName(), \
-		           QString::fromUtf8(#a), fill_a, \
-		           QString::fromUtf8(#b), fill_b) \
-		      .arg(a).arg(b) \
-		      .toUtf8()); \
-	} \
-	else \
-	{ \
-		QVERIFY(true);  /* for QEXPECT_FAIL etc. */ \
+		if ((a) == (b)) \
+		{ \
+			QVERIFY(true);  /* for QEXPECT_FAIL etc. */ \
+		} \
+		else \
+		{ \
+			auto const diff = qstrlen(#b) - qstrlen(#a); \
+			auto const fill_a = QString().fill(QChar::Space, +diff); \
+			auto const fill_b = QString().fill(QChar::Space, -diff); \
+			QFAIL(QString::fromLatin1( \
+			   "Compared values are not the same (%1)\n   Actual   (%2)%3: %6\n   Expected (%4)%5: %7") \
+			  .arg((symbol).getNumberAndPlainTextName(), \
+			       QString::fromUtf8(#a), fill_a, \
+			       QString::fromUtf8(#b), fill_b) \
+			  .arg(a).arg(b) \
+			  .toUtf8()); \
+		} \
 	}
 	
 	/**
 	 * Provides QVERIFY-style symbol property verification.
 	 * 
-	 * This macro reports the symbol, but avoids expensive string operations
-	 * when the properties match.
+	 * This macro reports the symbol on failure, but
+	 * avoids expensive string operations when the properties match.
 	 */
 	#define VERIFY_SYMBOL_PROPERTY(cond, symbol) \
-	if (cond) \
 	{ \
-		QVERIFY2(cond, QByteArray((symbol).getNumberAsString().toUtf8() + ' ' \
-		                          + (symbol).getPlainTextName().toUtf8())); \
-	} \
-	else \
-	{ \
-		QVERIFY(true);  /* for QEXPECT_FAIL etc. */ \
+		if (cond) \
+		{ \
+			QVERIFY(true);  /* for QEXPECT_FAIL etc. */ \
+		} \
+		else \
+		{ \
+			QVERIFY2(cond, QByteArray((symbol).getNumberAndPlainTextName().toUtf8())); \
+		} \
 	}
 	
 	
@@ -200,6 +216,38 @@ namespace
 		COMPARE_SYMBOL_PROPERTY(actual.isProtected(), expected.isProtected(), expected);
 		VERIFY_SYMBOL_PROPERTY(actual.stateEquals(&expected), expected);
 		VERIFY_SYMBOL_PROPERTY(actual.equals(&expected, Qt::CaseInsensitive), expected);
+	}
+	
+#define COMPARE_AREA_SYMBOL_PATTERN_PROPERTY(property) \
+	COMPARE_SYMBOL_PROPERTY(actual_pattern.property, expected_pattern.property, symbol)
+	
+	void compareAreaSymbolPattern(const AreaSymbol::FillPattern& actual_pattern, const AreaSymbol::FillPattern& expected_pattern, const AreaSymbol& symbol)
+	{
+		// cf. AreaSymbol::FillPattern::equals
+		COMPARE_AREA_SYMBOL_PATTERN_PROPERTY(type);
+		COMPARE_AREA_SYMBOL_PATTERN_PROPERTY(line_spacing);
+		COMPARE_AREA_SYMBOL_PATTERN_PROPERTY(line_offset);
+		
+		// OCD treats all patterns as rotatable.
+		COMPARE_SYMBOL_PROPERTY(actual_pattern.flags,
+		                        expected_pattern.flags | AreaSymbol::FillPattern::Rotatable,
+		                        symbol
+		)
+		
+		switch(expected_pattern.type)
+		{
+		case AreaSymbol::FillPattern::PointPattern:
+			COMPARE_AREA_SYMBOL_PATTERN_PROPERTY(offset_along_line);
+			COMPARE_AREA_SYMBOL_PATTERN_PROPERTY(point_distance);
+			COMPARE_SYMBOL_PROPERTY(bool(actual_pattern.point), bool(expected_pattern.point), symbol);
+			if(actual_pattern.point)
+				QVERIFY(actual_pattern.point->equals(expected_pattern.point));
+			break;
+		case AreaSymbol::FillPattern::LinePattern:
+			COMPARE_SYMBOL_PROPERTY(actual_pattern.line_color->operator QRgb(), expected_pattern.line_color->operator QRgb(), symbol);
+			COMPARE_AREA_SYMBOL_PATTERN_PROPERTY(line_width);
+			break;
+		}
 	}
 	
 	void compareMaps(const Map& actual, const Map& expected)
@@ -238,7 +286,14 @@ namespace
 		}
 		else for (int i = 0; i < actual.getNumColors(); ++i)
 		{
-			QCOMPARE(*actual.getColor(i), *expected.getColor(i));
+			const auto& actual_color = *actual.getColor(i);
+			const auto& expected_color = *expected.getColor(i);
+			QCOMPARE(actual_color, expected_color);
+			if (expected_color.getSpotColorMethod() == MapColor::SpotColor)
+			{
+				QCOMPARE(actual_color.getScreenAngle(), expected_color.getScreenAngle());
+				QCOMPARE(actual_color.getScreenFrequency(), expected_color.getScreenFrequency());
+			}
 		}
 		
 		// Symbols
@@ -314,16 +369,16 @@ namespace
 	}
 	
 	
-	void fuzzyCompareSymbol(const AreaSymbol& actual, const AreaSymbol& expected)
+	void fuzzyCompareSymbol(const AreaSymbol& actual, const AreaSymbol& expected, const QByteArray& format_id)
 	{
-		auto pattern_rotable = false;
+		auto pattern_rotable = format_id.startsWith("OCD") ? true : false;
 		for (auto i = 0; i < expected.getNumFillPatterns(); ++i)
 			pattern_rotable |= expected.getFillPattern(i).rotatable();
 		for (auto i = 0; i < actual.getNumFillPatterns(); ++i)
 			COMPARE_SYMBOL_PROPERTY(actual.getFillPattern(i).rotatable(), pattern_rotable, expected);
 	}
 	
-	void fuzzyCompareSymbol(const Symbol& actual, const Symbol& expected, const QByteArray& /*format_id*/)
+	void fuzzyCompareSymbol(const Symbol& actual, const Symbol& expected, const QByteArray& format_id)
 	{
 		COMPARE_SYMBOL_PROPERTY(actual.isHidden(), expected.isHidden(), expected);
 		COMPARE_SYMBOL_PROPERTY(actual.isProtected(), expected.isProtected(), expected);
@@ -339,7 +394,7 @@ namespace
 		switch (actual.getType())
 		{
 		case Symbol::Area:
-			fuzzyCompareSymbol(static_cast<AreaSymbol const&>(actual), static_cast<AreaSymbol const&>(expected));
+			fuzzyCompareSymbol(static_cast<AreaSymbol const&>(actual), static_cast<AreaSymbol const&>(expected), format_id);
 			break;
 			
 		default:
@@ -399,7 +454,7 @@ namespace
 		if (actual)
 			fuzzyCompareSymbol(*actual, *expected, format_id);
 		else
-			QFAIL(qPrintable(QString::fromLatin1("Missing symbol: %1 %2").arg(expected->getNumberAsString(), expected->getPlainTextName())));
+			QFAIL(qPrintable(QString::fromLatin1("Missing symbol: %1").arg(expected->getNumberAndPlainTextName())));
 	}
 	
 	/**
@@ -501,6 +556,7 @@ namespace
 	  "data:/examples/forest sample.omap",
 	  "data:/examples/overprinting.omap",
 	  "testdata:templates/world-file.xmap",
+	  "data:undefined-objects.omap",
 	};
 	
 	auto const xml_test_files = {
@@ -560,6 +616,46 @@ void FileFormatTest::mapCoordtoString()
 	
 	MapCoord::StringBuffer<char> buffer;
 	QCOMPARE(coord.toUtf8(buffer), expected);
+}
+
+
+
+void FileFormatTest::mapCoordFromString_data()
+{
+	using native_int = decltype(MapCoord().nativeX());
+	using flags_type = decltype(MapCoord().flags());
+	QTest::addColumn<QString>("input");
+	QTest::addColumn<native_int>("x");
+	QTest::addColumn<native_int>("y");
+	QTest::addColumn<flags_type>("flags");
+	
+	QTest::newRow("plain")     << QString::fromLatin1("-12 -23 255;")    << -12 << -23 << flags_type(255);
+	QTest::newRow("multi ' '") << QString::fromLatin1("-12  23    255;") << -12 <<  23 << flags_type(255);
+	QTest::newRow("early \\n") << QString::fromLatin1("-12\n\n 23 255;") << -12 <<  23 << flags_type(255);
+	QTest::newRow("late \\r")  << QString::fromLatin1("12 -23 \r\r255;") <<  12 << -23 << flags_type(255);
+}
+
+void FileFormatTest::mapCoordFromString()
+{
+	using native_int = decltype(MapCoord().nativeX());
+	using flags_type = decltype(MapCoord().flags());
+	QFETCH(QString, input);
+	QFETCH(native_int, x);
+	QFETCH(native_int, y);
+	QFETCH(flags_type, flags);
+	
+	bool no_exception = true;
+	auto ref = QStringRef{&input};
+	MapCoord coord;
+	try {
+		coord = MapCoord(ref);
+	}  catch (std::invalid_argument const& e) {
+		no_exception = false;
+	}
+	QVERIFY(no_exception);
+	QCOMPARE(coord.nativeX(), x);
+	QCOMPARE(coord.nativeY(), y);
+	QCOMPARE(coord.flags(), flags);
 }
 
 
@@ -735,10 +831,10 @@ void FileFormatTest::issue_513_high_coordinates()
 	}
 	
 	auto print_area = map.printerConfig().print_area;
-	QVERIFY2(print_area.top()    <  1000000.0, "extent.top() outside printable range");
-	QVERIFY2(print_area.left()   > -1000000.0, "extent.left() outside printable range");
-	QVERIFY2(print_area.bottom() > -1000000.0, "extent.bottom() outside printable range");
-	QVERIFY2(print_area.right()  <  1000000.0, "extent.right() outside printable range");
+	QVERIFY2(print_area.top()    <  1000000.0, "print_area.top() outside printable range");
+	QVERIFY2(print_area.left()   > -1000000.0, "print_area.left() outside printable range");
+	QVERIFY2(print_area.bottom() > -1000000.0, "print_area.bottom() outside printable range");
+	QVERIFY2(print_area.right()  <  1000000.0, "print_area.right() outside printable range");
 }
 
 
@@ -887,6 +983,8 @@ void FileFormatTest::pristineMapTest()
 	auto spot_color = std::make_unique<MapColor>(QString::fromLatin1("spot color"), 0);
 	spot_color->setSpotColorName(QString::fromLatin1("SPOTCOLOR"));
 	spot_color->setCmyk({0.1f, 0.2f, 0.3f, 0.4f});
+	spot_color->setScreenFrequency(55.0);
+	spot_color->setScreenAngle(73.0);
 	spot_color->setRgbFromCmyk();
 	
 	auto mixed_color = std::make_unique<MapColor>(QString::fromLatin1("mixed color"), 1);
@@ -1051,6 +1149,40 @@ void FileFormatTest::kmlCourseExportTest()
 }
 
 
+void FileFormatTest::iofCourseExportTest()
+{
+	QString const map_filepath = QStringLiteral("testdata:/export/single-line.xmap");
+	
+	Map map;
+	QVERIFY(map.loadFrom(map_filepath));
+	
+	SimpleCourseExport simple_export{map};
+	QVERIFY(simple_export.canExport());
+	
+	simple_export.setProperties(map, QStringLiteral("Test event"), QStringLiteral("Test course"), 101);
+	
+	IofCourseExport exporter{{}, &map, nullptr};
+	
+	QBuffer exported;
+	exporter.setDevice(&exported);
+	QVERIFY(exporter.doExport());
+	QVERIFY(!exported.data().isEmpty());
+	
+	QString const expected_filepath = QStringLiteral("testdata:/export/iof-3.0-course.xml");
+	QFile expected_file = {expected_filepath};
+	expected_file.open(QIODevice::ReadOnly | QIODevice::Text);
+	auto const expected_data = expected_file.readAll();
+	QVERIFY(!expected_data.isEmpty());
+	
+	// Ignore creator and timestamp
+	auto stable_exported = exported.data().indexOf("<Event");
+	QVERIFY(stable_exported > 0);
+	auto stable_expected = expected_data.indexOf("<Event");
+	QVERIFY(stable_expected > 0);
+	QCOMPARE(exported.data().mid(stable_exported), expected_data.mid(stable_expected));
+}
+
+
 void FileFormatTest::importTemplateTest_data()
 {
 	QTest::addColumn<QString>("filepath");
@@ -1085,6 +1217,673 @@ void FileFormatTest::importTemplateTest()
 }
 
 
+struct TestOcdFileExport : public OcdFileExport
+{
+	explicit TestOcdFileExport(const QString& path)
+	: OcdFileExport(path, nullptr, nullptr, 12)
+	{}
+
+	using OcdFileExport::exportTextData;
+};
+
+void FileFormatTest::ocdTextExportTest_data()
+{
+	QTest::addColumn<QString>("input");
+	QTest::addColumn<int>("expected_len");
+	QTest::addColumn<int>("first_null");
+	
+	// Between two chunks (size: 8)
+	QTest::newRow("0 chars") << ""                            <<  8 <<  0;
+	QTest::newRow("3 chars") << "123"                         <<  8 <<  6;
+	QTest::newRow("4 chars") << "1234"                        << 16 <<  8;
+	
+	// End of last chunk (max chunks: 2)
+	QTest::newRow("7 chars") << "1234567"                     << 16 << 14;
+	QTest::newRow("8 chars") << "12345678"                    << 16 << 14;
+	
+	// Trailing surrogate pair at end of last chunk
+	QTest::newRow("5+Yee")   << QString::fromUtf8("12345𐐷")   << 16 << 14;
+	QTest::newRow("6+Yee")   << QString::fromUtf8("123456𐐷")  << 16 << 12;
+	QTest::newRow("7+Yee")   << QString::fromUtf8("1234567𐐷") << 16 << 14;
+}
+
+void FileFormatTest::ocdTextExportTest()
+{
+	QFETCH(QString, input);
+	QFETCH(int, expected_len);
+	QFETCH(int, first_null);
+
+	TestOcdFileExport ocd_export{{}};
+
+	TextObject object;
+	object.setText(input);
+	auto exported = ocd_export.exportTextData(&object, /* chunk_size */ 8, /* max_chunks */ 2);
+	QCOMPARE(exported.length(), expected_len);
+	QCOMPARE(exported[first_null], '\0');
+	QCOMPARE(exported[first_null+1], '\0');
+	if(first_null > 0)
+		QVERIFY(exported[first_null-2] != '\0');
+	QCOMPARE(exported.back(), '\0');
+}
+
+
+struct TestOcdFileImport : public OcdFileImport
+{
+	explicit TestOcdFileImport(int ocd_version)
+		: OcdFileImport({}, nullptr, nullptr)
+	{
+		this->ocd_version = ocd_version;
+	}
+	
+	using OcdFileImport::getObjectText;
+	using OcdFileImport::fillPathCoords;
+	using OcdFileImport::OcdImportedPathObject;
+};
+
+void FileFormatTest::ocdTextImportTest_data()
+{
+	QTest::addColumn<QString>("string");
+	QTest::addColumn<int>("num_chars");
+	QTest::addColumn<QString>("expected");
+	
+	const QString string1 = QLatin1String("123456789abcdef") + QChar::Null + QLatin1String("789ABCDEF");
+	QTest::newRow("0 from 0")   << string1.left(0)  <<  0 << string1.left(0);
+	QTest::newRow("0 from 5")   << string1.left(5)  <<  0 << string1.left(0);
+	QTest::newRow("13 from 13") << string1.left(13) << 13 << string1.left(13);
+	QTest::newRow("15 from 20") << string1.left(20) << 15 << string1.left(15);
+	QTest::newRow("16 from 20") << string1.left(20) << 16 << string1.left(15);
+	QTest::newRow("20 from 20") << string1.left(20) << 20 << string1.left(15);
+	
+	const QString string2 = QLatin1String("\r\n123");
+	QTest::newRow("\\r\\n")     << string2.left(2)  <<  0 <<  string2.mid(2, 0);
+	QTest::newRow("\\r\\n123")  << string2.left(5)  <<  5 <<  string2.mid(2, 3);
+}
+
+void FileFormatTest::ocdTextImportTest()
+{
+	QFETCH(QString, string);
+	QFETCH(int, num_chars);
+	QFETCH(QString, expected);
+	
+	{
+		TestOcdFileImport ocd_v8_import{8};
+		Ocd::FormatV8::Object buffer[8]; // large enough to hold more than the string
+		auto& ocd_object = buffer[0];
+		ocd_object.num_items = 4; // arbitrary offset, here: 32 bytes
+		ocd_object.num_text = (num_chars * sizeof(QChar) + sizeof(Ocd::OcdPoint32) - 1) / sizeof(Ocd::OcdPoint32);
+		ocd_object.unicode = 1;
+		
+		auto* first = reinterpret_cast<QChar*>(reinterpret_cast<Ocd::OcdPoint32*>(ocd_object.coords) + ocd_object.num_items);
+		auto* tail = std::copy(string.begin(), string.end(), first);
+		
+		// Must not read behind the reserved space.
+		auto num_reserved = int(ocd_object.num_text * sizeof(Ocd::OcdPoint32) / sizeof(QChar));
+		std::fill(tail, first + std::max(num_reserved, string.length()) + 1, QChar::Space);
+		QVERIFY(ocd_v8_import.getObjectText(ocd_object).length() <= num_reserved);
+		
+		// With zero at the end of the reserved space, the output must begin with the expected text.
+		*(first + num_reserved - 1) = QChar::Null;
+		QVERIFY(ocd_v8_import.getObjectText(ocd_object).startsWith(expected));
+		
+		// With zero at the end of the input text, the output must match the expected text.
+		*tail = QChar::Null;
+		QCOMPARE(ocd_v8_import.getObjectText(ocd_object), expected);
+	}
+	
+	{
+		TestOcdFileImport ocd_v12_import{12};
+		Ocd::FormatV12::Object buffer[8]; // large enough to hold more than the string
+		auto& ocd_object = buffer[0];
+		ocd_object.num_items = 4; // arbitrary offset, here: 32 bytes
+		ocd_object.num_text = (num_chars * sizeof(QChar) + sizeof(Ocd::OcdPoint32) - 1) / sizeof(Ocd::OcdPoint32);
+		
+		auto* first = reinterpret_cast<QChar*>(reinterpret_cast<Ocd::OcdPoint32*>(ocd_object.coords) + ocd_object.num_items);
+		auto* tail = std::copy(string.begin(), string.end(), first);
+		
+		// Must not read behind the reserved space.
+		auto num_reserved = int(ocd_object.num_text * sizeof(Ocd::OcdPoint32) / sizeof(QChar));
+		std::fill(tail, first + std::max(num_reserved, string.length()) + 1, QChar::Space);
+		QVERIFY(ocd_v12_import.getObjectText(ocd_object).length() <= num_reserved);
+		
+		// With zero at the end of the reserved space, the output must begin with the expected text.
+		*(first + num_reserved - 1) = QChar::Null;
+		QVERIFY(ocd_v12_import.getObjectText(ocd_object).startsWith(expected));
+		
+		// With zero at the end of the input text, the output must match the expected text.
+		*tail = QChar::Null;
+		QCOMPARE(ocd_v12_import.getObjectText(ocd_object), expected);
+	}
+}
+
+
+struct OcdPointsView {
+	const Ocd::OcdPoint32* data = nullptr;
+	int size = 0;
+	
+	OcdPointsView() = default;
+	
+	template <class T, std::size_t n>
+	explicit OcdPointsView(T(& t)[n])
+	: data { t }
+	, size { int(n) }
+	{}
+};
+Q_DECLARE_METATYPE(OcdPointsView)
+
+struct FlagsView {
+	const int* data = nullptr;
+	int size = 0;
+	
+	FlagsView() = default;
+	
+	template <class T, std::size_t n>
+	explicit FlagsView(T(& t)[n], int size)
+	: data { t }
+	, size { size }
+	{}
+	
+	template <class T, std::size_t n>
+	explicit FlagsView(T(& t)[n])
+	: data { t }
+	, size { int(n) }
+	{}
+};
+Q_DECLARE_METATYPE(FlagsView)
+
+enum OcdPathPersonality {
+	Line = 0,
+	Area = 1
+};
+Q_DECLARE_METATYPE(OcdPathPersonality)
+
+void FileFormatTest::ocdPathImportTest_data()
+{
+	#define C(x) ((int)((unsigned int)(x)<<8))  // FIXME: Not the same as in export
+	constexpr auto ocd_flag_gap = 8;  // TODO: implement as Ocd::OcdPoint32::FlagGap
+	
+	QTest::addColumn<OcdPointsView>("points");
+	QTest::addColumn<OcdPathPersonality>("personality");
+	QTest::addColumn<FlagsView>("expected");
+	
+	{
+		// bezier curve
+		static Ocd::OcdPoint32 ocd_points[] = {
+		    { C(-1109), C(212) },
+		    { C(-1035) | Ocd::OcdPoint32::FlagCtl1, C(302) },
+		    { C(-1008) | Ocd::OcdPoint32::FlagCtl2, C(519) },
+		    { C(-926), C(437) }  // different from first point
+		};
+		static int expected_flags[] = {
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    MapCoord::ClosePoint  // injected by Mapper
+		};
+		QTest::newRow("bezier, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags);
+		QTest::newRow("bezier, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags, 4);
+	}
+	
+	{
+		// straight segments, corner flag
+		static Ocd::OcdPoint32 ocd_points[] = {
+		    { C(-589), C(432) },
+		    { C(-269), C(845) | Ocd::OcdPoint32::FlagCorner },
+		    { C(267), C(279) },  // different from first point
+		};
+		static int expected_flags[] = {
+		    0,
+		    MapCoord::DashPoint,
+		    0,
+		    MapCoord::ClosePoint  // injected by Mapper
+		};
+		QTest::newRow("straight, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags);
+		QTest::newRow("straight, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags, 3);
+	}
+	
+	{
+		// straight segments, virtual gap
+		static Ocd::OcdPoint32 ocd_points[] = {
+		    { C(-972), C(-264) },
+		    { C(-836) | Ocd::OcdPoint32::FlagLeft | ocd_flag_gap, C(-151) | Ocd::OcdPoint32::FlagRight },
+		    { C(-677), C(-19) },
+		    { C(-518), C(112) }  // different from first point
+		};
+		static int expected_flags[] = {
+		    0,
+		    0,
+		    0,
+		    0,
+		    MapCoord::ClosePoint  // injected by Mapper
+		};
+		QTest::newRow("virtual gap, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags);
+		QTest::newRow("virtual gap, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags, 4);
+	}
+	
+	{
+		// straight segments, one hole
+		static Ocd::OcdPoint32 ocd_points[] = {
+		    { C(100), C(-250) },
+		    { C(150), C(-260) },
+		    { C(100), C(-250) },  // same as first point
+		    { C(200), C(-350) | Ocd::OcdPoint32::FlagHole },
+		    { C(220), C(-400) },
+		    { C(200), C(-350) }  // same as first point of hole
+		};
+		static int expected_flags_area[] = {
+		    0,
+		    0,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,
+		    0,
+		    0,
+		    MapCoord::ClosePoint
+		};
+		QTest::newRow("hole, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags_area);
+		static int expected_flags_line[6] = {};
+		QTest::newRow("hole, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags_line);
+	}
+	
+	{
+		// straight segments, with an "empty" hole
+		static Ocd::OcdPoint32 ocd_points[] = {
+		    { C(100), C(-250) },
+		    { C(150), C(-260) },
+		    { C(100), C(-250) },  // same as first point
+		    { C(120), C(-200) | Ocd::OcdPoint32::FlagHole },
+		    { C(200), C(-350) | Ocd::OcdPoint32::FlagHole },
+		    { C(220), C(-400) },
+		    { C(200), C(-350) }  // same as second FlagHole point
+		};
+		static int expected_flags_area[] = {
+		    0,
+		    0,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,
+		    0,
+		    0,
+		    MapCoord::ClosePoint
+		};
+		QTest::newRow("empty hole, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags_area);
+		static int expected_flags_line[7] = {};
+		QTest::newRow("empty hole, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags_line);
+	}
+	
+	{
+		// straight segments, with two "empty" holes
+		static Ocd::OcdPoint32 ocd_points[] = {
+		    { C(100), C(-250) },
+		    { C(150), C(-260) },
+		    { C(100), C(-250) },  // same as first point
+		    { C(120), C(-200) | Ocd::OcdPoint32::FlagHole },
+		    { C(140), C(-300) | Ocd::OcdPoint32::FlagHole },
+		    { C(200), C(-350) | Ocd::OcdPoint32::FlagHole },
+		    { C(220), C(-400) },
+		    { C(200), C(-350) },  // same as third FlagHole point
+		};
+		static int expected_flags_area[] = {
+		    0,
+		    0,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,
+		    0,
+		    0,
+		    MapCoord::ClosePoint
+		};
+		QTest::newRow("two empty holes, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags_area);
+		static int expected_flags_line[8] = {};
+		QTest::newRow("two empty holes, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags_line);
+	}
+	
+	{
+		// straight segments, one hole, not actual areas
+		static Ocd::OcdPoint32 ocd_points[] = {
+		    { C(100), C(-250) },
+		    { C(150), C(-260) },
+		    { C(200), C(-350) | Ocd::OcdPoint32::FlagHole },
+		    { C(220), C(-400) }
+		};
+		static int expected_flags_area[] = {
+		    0,
+		    0,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,  // injected by Mapper
+		    0,
+		    0,
+		    MapCoord::ClosePoint  // injected by Mapper
+		};
+		QTest::newRow("open areas with hole, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags_area);
+		static int expected_flags_line[4] = {};
+		QTest::newRow("open areas with hole, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags_line);
+	}
+	
+	{
+		// area with hole in hole
+		static Ocd::OcdPoint32 ocd_points[] = {
+			{ C(-405), C(-167) },
+		    { C(-348) | Ocd::OcdPoint32::FlagCtl1, C(22) },
+		    { C(-113) | Ocd::OcdPoint32::FlagCtl2, C(667) },
+		    { C(54), C(687) },
+		    { C(184) | Ocd::OcdPoint32::FlagCtl1, C(702) },
+		    { C(836) | Ocd::OcdPoint32::FlagCtl2, C(418) },
+		    { C(889), C(298) },
+		    { C(599), C(117) },
+		    { C(137), C(93) | Ocd::OcdPoint32::FlagDash},  // different from first point
+		    { C(-25), C(79) | Ocd::OcdPoint32::FlagHole},
+		    { C(-208) | Ocd::OcdPoint32::FlagCtl1, C(259) },
+		    { C(90) | Ocd::OcdPoint32::FlagCtl2, C(652) },
+		    { C(559), C(322) },  // different from first point of hole
+		    { C(78), C(326) | Ocd::OcdPoint32::FlagHole},
+		    { C(100) | Ocd::OcdPoint32::FlagCtl1, C(341) },
+		    { C(157) | Ocd::OcdPoint32::FlagCtl2, C(354) },
+		    { C(198), C(339) | Ocd::OcdPoint32::FlagCorner },
+		    { C(227) | Ocd::OcdPoint32::FlagCtl1, C(329) },
+		    { C(247) | Ocd::OcdPoint32::FlagCtl2, C(304) },
+		    { C(242), C(256) },
+		    { C(144), C(243) },  // different from first point of hole
+		};
+		static int expected_flags_area[] = {
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    0,
+		    MapCoord::DashPoint,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,  // injected by Mapper
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    MapCoord::ClosePoint | MapCoord::HolePoint,  // injected by Mapper
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    MapCoord::DashPoint | MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    0,
+		    MapCoord::ClosePoint  // injected by Mapper
+		};
+		QTest::newRow("area with nested holes, area") << OcdPointsView(ocd_points) << Area << FlagsView(expected_flags_area);
+		static int expected_flags_line[] = {
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    0,
+		    MapCoord::DashPoint,
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    MapCoord::CurveStart,
+		    0,
+		    0,
+		    MapCoord::DashPoint | MapCoord::CurveStart,
+		    0,
+		    0,
+		    0,
+		    0
+		};
+		QTest::newRow("area with nested holes, line") << OcdPointsView(ocd_points) << Line << FlagsView(expected_flags_line);
+	}
+}
+
+void FileFormatTest::ocdPathImportTest()
+{
+	QFETCH(OcdPointsView, points);
+	QFETCH(OcdPathPersonality, personality);
+	QFETCH(FlagsView, expected);
+	
+	TestOcdFileImport ocd_v12_import{12};
+	
+	TestOcdFileImport::OcdImportedPathObject path_object;
+	ocd_v12_import.fillPathCoords(&path_object, personality == Area, points.size, points.data);
+	QVERIFY(path_object.getRawCoordinateVector().size() > 0);
+	
+	QCOMPARE(path_object.getRawCoordinateVector().size(), expected.size);
+	for (int i = 0; i < expected.size; ++i)
+	{
+		// Provide the current index when failing.
+		if (path_object.getCoordinate(i).flags() != MapCoord::Flags(expected.data[i]))
+		{
+			auto err = QString::fromLatin1("Compared flags are not the same at index %1\n"
+			                               "   Actual  : %2\n"
+			                               "   Expected: %3"
+			                               ).arg(QString::number(i),
+			                                     QString::number(path_object.getCoordinate(i).flags()),
+			                                     QString::number(expected.data[i])
+			                               );
+			QFAIL(qPrintable(err));
+		}
+	}
+}
+
+
+void FileFormatTest::ocdAreaSymbolTest_data()
+{
+	QTest::addColumn<int>("format_version");
+	
+#ifndef MAPPER_BIG_ENDIAN
+	static struct { int version; const char* id; } const tests[] = {
+	    { 8, "OCD8" },
+	    { 9, "OCD9" },
+	    { 10, "OCD10" },
+	    { 11, "OCD11" },
+	    { 12, "OCD12" },
+	};
+	for (auto& t : tests)
+	{
+		QTest::newRow(t.id) << t.version;
+	}
+#endif
+}
+
+void FileFormatTest::ocdAreaSymbolTest()
+{
+	QFETCH(int, format_version);
+	
+	auto* format_id = QTest::currentDataTag();
+	const auto* format = FileFormats.findFormat(format_id);
+	QVERIFY(format);
+	
+	static const auto filepath = QString::fromLatin1("data:rotated-pattern.omap");
+	QVERIFY(QFileInfo::exists(filepath));
+	
+	// Load the test map
+	auto expected = std::make_unique<Map>();
+	QVERIFY(expected->loadFrom(filepath));
+	
+	// Save and load the map
+	auto actual = saveAndLoadMap(*expected, format);
+	QVERIFY2(actual, "Exception while importing / exporting.");
+	QCOMPARE(actual->property(OcdFileFormat::versionProperty()), format_version);
+	
+	// Symbols
+	QCOMPARE(actual->getNumSymbols(), expected->getNumSymbols());
+	for (int i = 0; i < actual->getNumSymbols(); ++i)
+	{
+		auto* expected_symbol = expected->getSymbol(i);
+		if (expected_symbol->getType() != Symbol::Area)
+			continue;
+		
+		auto* actual_symbol = actual->getSymbol(i);
+		QCOMPARE(actual_symbol->getType(), Symbol::Area);
+		
+		COMPARE_SYMBOL_PROPERTY(actual_symbol->getNumberComponent(0), expected_symbol->getNumberComponent(0), *expected_symbol);
+		// OCD limitation: always two number components
+		expected_symbol->setNumberComponent(2, -1);
+		if (expected_symbol->getNumberComponent(1) == -1)
+			expected_symbol->setNumberComponent(1, actual_symbol->getNumberComponent(1));
+		
+		auto* expected_area_symbol = expected_symbol->asArea();
+		auto* actual_area_symbol = actual_symbol->asArea();
+		COMPARE_SYMBOL_PROPERTY(bool(actual_area_symbol->getColor()), bool(expected_area_symbol->getColor()), *expected_area_symbol);
+		if (expected_area_symbol->getColor())
+			COMPARE_SYMBOL_PROPERTY(actual_area_symbol->getColor()->operator QRgb(), expected_area_symbol->getColor()->operator QRgb(), *expected_area_symbol);
+		COMPARE_SYMBOL_PROPERTY(actual_area_symbol->isRotatable(), expected_area_symbol->isRotatable(), *expected_area_symbol);
+		
+		COMPARE_SYMBOL_PROPERTY(actual_area_symbol->getNumFillPatterns(), expected_area_symbol->getNumFillPatterns(), *expected_area_symbol);
+		for (auto j = 0; j < expected_area_symbol->getNumFillPatterns(); ++j)
+		{
+			auto expected_pattern = expected_area_symbol->getFillPattern(j);
+			auto actual_pattern = actual_area_symbol->getFillPattern(j);
+			
+			// OCD limitation: Fill pattern always rotatable
+			expected_pattern.setRotatable(true);
+			
+			compareAreaSymbolPattern(actual_pattern, expected_pattern, *expected_area_symbol);
+		}
+	}
+	
+	// Objects
+	QCOMPARE(actual->getNumParts(), 1);
+	QCOMPARE(expected->getNumParts(), 1);
+	
+	const auto& actual_part = *actual->getPart(0);
+	const auto& expected_part = *expected->getPart(0);
+	QCOMPARE(actual_part.getNumObjects(), expected_part.getNumObjects());
+	for (int i = 0; i < actual_part.getNumObjects(); ++i)
+	{
+		auto const& expected_object = *expected_part.getObject(i);
+		auto const& expected_symbol = *expected_object.getSymbol();
+		if (expected_symbol.getType() != Symbol::Area)
+			continue;
+		
+		auto const& actual_object = *actual_part.getObject(i);
+		
+		// Adopt expected object properties to OCD format capabilites.
+		{
+			auto& expected_path = *const_cast<Object&>(expected_object).asPath();
+			
+			// ATM the last import coord never carries "HolePoint".
+			auto& last_coord = expected_path.getCoordinateRef(expected_path.getCoordinateCount()-1);
+			last_coord.setHolePoint(false);
+			
+			// OC*D uses tenths of a degree, counterclockwise.
+			auto delta_rotation = actual_object.getRotation() - expected_path.getRotation();
+			if (delta_rotation > M_PI)
+				delta_rotation -= 2*M_PI;
+			else if (delta_rotation < -M_PI)
+				delta_rotation += 2*M_PI;
+			if (qAbs(delta_rotation) < qDegreesToRadians(0.2))
+				expected_path.setRotation(actual_object.getRotation());
+			
+			// OC*D doesn't have pattern origin.
+			expected_path.setPatternOrigin({});
+			
+			// Mapper may store rotation even if there are no rotatable patterns (left).
+			if (!expected_symbol.hasRotatableFillPattern())
+				expected_path.setRotation(0);
+		}
+		
+		// Verifying object property; symbol is for tracing
+		VERIFY_SYMBOL_PROPERTY(actual_object.equals(&expected_object, false), expected_symbol);
+	}
+}
+
+void FileFormatTest::ocdTextSymbolTest_data()
+{
+	QTest::addColumn<int>("format_version");
+	
+#ifndef MAPPER_BIG_ENDIAN
+	static struct { int version; const char* id; } const tests[] = {
+	    { 8, "OCD8" },
+	    { 9, "OCD9" },
+	    { 10, "OCD10" },
+	    { 11, "OCD11" },
+	    { 12, "OCD12" },
+	};
+	for (auto& t : tests)
+	{
+		QTest::newRow(t.id) << t.version;
+	}
+#endif
+}
+
+void FileFormatTest::ocdTextSymbolTest()
+{
+	QFETCH(int, format_version);
+	
+	auto* format_id = QTest::currentDataTag();
+	const auto* format = FileFormats.findFormat(format_id);
+	QVERIFY(format);
+	
+	static const auto filepath = QString::fromLatin1("data:text-symbol.omap");
+	QVERIFY(QFileInfo::exists(filepath));
+	
+	// Load the test map
+	auto expected = std::make_unique<Map>();
+	QVERIFY(expected->loadFrom(filepath));
+	
+	// Save and load the map
+	auto actual = saveAndLoadMap(*expected, format);
+	QVERIFY2(actual, "Exception while importing / exporting.");
+	QCOMPARE(actual->property(OcdFileFormat::versionProperty()), format_version);
+	
+	// Symbols
+	QCOMPARE(actual->getNumSymbols(), expected->getNumSymbols());
+	for (int i = 0; i < actual->getNumSymbols(); ++i)
+	{
+		auto* expected_symbol = expected->getSymbol(i);
+		if (expected_symbol->getType() != Symbol::Text)	// actually redundant for the given test data
+			continue;
+		
+		auto* actual_symbol = actual->getSymbol(i);
+		QCOMPARE(actual_symbol->getType(), Symbol::Text);
+		
+		COMPARE_SYMBOL_PROPERTY(actual_symbol->getNumberComponent(0), expected_symbol->getNumberComponent(0), *expected_symbol);
+		// OCD limitation: always two number components
+		if (expected_symbol->getNumberComponent(1) != -1)
+			COMPARE_SYMBOL_PROPERTY(actual_symbol->getNumberComponent(1), expected_symbol->getNumberComponent(1), *expected_symbol);
+		
+		QVERIFY(expected_symbol->stateEquals(actual_symbol));
+		
+		auto* expected_text_symbol = expected_symbol->asText();
+		auto* actual_text_symbol = actual_symbol->asText();
+		
+		COMPARE_SYMBOL_PROPERTY(bool(actual_text_symbol->getColor()), bool(expected_text_symbol->getColor()), *expected_text_symbol);
+		if (expected_text_symbol->getColor())
+			COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getColor()->operator QRgb(), expected_text_symbol->getColor()->operator QRgb(), *expected_text_symbol);
+		COMPARE_SYMBOL_PROPERTY(bool(actual_text_symbol->getFramingColor()), bool(expected_text_symbol->getFramingColor()), *expected_text_symbol);
+		if (expected_text_symbol->getFramingColor())
+			COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getFramingColor()->operator QRgb(), expected_text_symbol->getFramingColor()->operator QRgb(), *expected_text_symbol);
+		COMPARE_SYMBOL_PROPERTY(bool(actual_text_symbol->getLineBelowColor()), bool(expected_text_symbol->getLineBelowColor()), *expected_text_symbol);
+		if (expected_text_symbol->getLineBelowColor())
+			COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getLineBelowColor()->operator QRgb(), expected_text_symbol->getLineBelowColor()->operator QRgb(), *expected_text_symbol);
+		
+		COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getFramingMode(), expected_text_symbol->getFramingMode(), *expected_text_symbol);
+		if (expected_text_symbol->getFramingMode() == TextSymbol::FramingMode::ShadowFraming)
+		{
+			COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getFramingShadowYOffset(), expected_text_symbol->getFramingShadowYOffset(), *expected_text_symbol);
+			COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getFramingShadowXOffset(), expected_text_symbol->getFramingShadowXOffset(), *expected_text_symbol);
+		}
+		if (expected_text_symbol->getFramingMode() == TextSymbol::FramingMode::LineFraming)
+		{
+			COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getFramingLineHalfWidth(), expected_text_symbol->getFramingLineHalfWidth(), *expected_text_symbol);
+		}
+
+		if (expected_text_symbol->hasLineBelow())
+		{
+			COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getLineBelowWidth(), expected_text_symbol->getLineBelowWidth(), *expected_text_symbol);
+			COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getLineBelowDistance(), expected_text_symbol->getLineBelowDistance(), *expected_text_symbol);
+		}
+		
+		COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getNumCustomTabs(), expected_text_symbol->getNumCustomTabs(), *expected_text_symbol);
+		if (expected_text_symbol->getNumCustomTabs())
+		{
+			for (int i = 0; i < expected_text_symbol->getNumCustomTabs(); ++i)
+				COMPARE_SYMBOL_PROPERTY(actual_text_symbol->getCustomTab(i), expected_text_symbol->getCustomTab(i), *expected_text_symbol);
+		}
+	}
+}
+
 
 /*
  * We don't need a real GUI window.
@@ -1094,7 +1893,7 @@ void FileFormatTest::importTemplateTest()
  */
 #ifndef Q_OS_MACOS
 namespace  {
-	auto Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+	auto const Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
 }
 #endif
 

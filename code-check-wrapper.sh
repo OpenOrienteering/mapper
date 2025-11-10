@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-#    Copyright 2017, 2018 Kai Pastor
+#    Copyright 2017, 2018, 2024 Kai Pastor
 #
 #    This file is part of OpenOrienteering.
 #    
@@ -53,17 +53,13 @@ for I in \
   combined_symbol.cpp \
   configure_grid_dialog.cpp \
   course_file_format.cpp \
-  crs_param_widgets.cpp \
-  crs_template.cpp \
-  crs_template_implementation.cpp \
+  crs_ \
   duplicate_equals_t.cpp \
   file_dialog.cpp \
   /file_format.cpp \
   file_format_t.cpp \
   file_import_export.cpp \
-  georeferencing.cpp \
-  georeferencing_dialog.cpp \
-  georeferencing_t.cpp \
+  georeferencing \
   icon_engine \
   iof_course_export \
   key_button_bar.cpp \
@@ -75,9 +71,13 @@ for I in \
   map_coord.cpp \
   map_editor.cpp \
   map_find_feature.cpp \
+  map_information.cpp \
+  map_information_dialog.cpp \
+  map_notes.cpp \
   map_printer \
   map_widget.cpp \
   mapper_proxystyle.cpp \
+  measure_widget.cpp \
   /object.cpp \
   object_mover.cpp \
   object_query.cpp \
@@ -86,6 +86,7 @@ for I in \
   overriding_shortcut.cpp \
   paint_on_template \
   point_symbol.cpp \
+  point_symbol_editor_widget.cpp \
   print_widget.cpp \
   renderable.cpp \
   renderable_implementation.cpp \
@@ -96,6 +97,7 @@ for I in \
   stretch_map_dialog.cpp \
   style_t.cpp \
   /symbol.cpp \
+  symbol_report \
   symbol_replacement.cpp \
   symbol_replacement_dialog.cpp \
   symbol_rule_set.cpp \
@@ -112,8 +114,9 @@ for I in \
   template_t.cpp \
   template_tool \
   template_track.cpp \
+  text_object.cpp \
   text_object_editor_helper.cpp \
-  text_brwoser_dialog \
+  text_browser_dialog \
   toast.cpp \
   track_t.cpp \
   /track.cpp \

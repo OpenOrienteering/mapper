@@ -1,7 +1,7 @@
 /*
  *    Copyright 2012 Pete Curtis
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,12 +22,11 @@
 #include "xml_file_format.h"
 #include "xml_file_format_p.h"
 
-#include <algorithm>
 #include <cstddef>
 #include <functional>
 #include <memory>
-#include <vector>
 #include <utility>
+#include <vector>
 
 #include <QtGlobal>
 #include <QByteArray>
@@ -467,10 +466,11 @@ void XMLFileExporter::exportTemplates()
 	{
 		writeLineBreak(xml);
 		XmlElementWriter defaults_element(xml, literal::defaults);
-		defaults_element.writeAttribute(literal::use_meters_per_pixel, map->image_template_use_meters_per_pixel);
-		defaults_element.writeAttribute(literal::meters_per_pixel, map->image_template_meters_per_pixel);
-		defaults_element.writeAttribute(literal::dpi, map->image_template_dpi);
-		defaults_element.writeAttribute(literal::scale, map->image_template_scale);
+		const auto& defaults = map->getImageTemplateDefaults();
+		defaults_element.writeAttribute(literal::use_meters_per_pixel, defaults.use_meters_per_pixel);
+		defaults_element.writeAttribute(literal::meters_per_pixel, defaults.meters_per_pixel);
+		defaults_element.writeAttribute(literal::dpi, defaults.dpi);
+		defaults_element.writeAttribute(literal::scale, defaults.scale);
 	}
 	writeLineBreak(xml);
 }
@@ -796,12 +796,11 @@ void XMLFileImporter::importColors()
 						if (xml.name() == literal::namedcolor)
 						{
 							XmlElementReader color_element(xml);
-							if (color_element.hasAttribute(literal::screen_frequency))
-							{
-								color->setScreenAngle(color_element.attribute<double>(literal::screen_angle));
-								color->setScreenFrequency(std::max(0.0, color_element.attribute<double>(literal::screen_frequency)));
-							}
+							const auto angle = color_element.attribute<double>(literal::screen_angle);
+							const auto frequency = color_element.attribute<double>(literal::screen_frequency);
 							color->setSpotColorName(xml.readElementText());
+							color->setScreenAngle(angle);
+							color->setScreenFrequency(frequency);
 							color->setKnockout(knockout);
 						}
 						else if (xml.name() == literal::component)
@@ -1016,10 +1015,11 @@ void XMLFileImporter::importTemplates()
 		else if (xml.name() == literal::defaults)
 		{
 			XmlElementReader defaults_element(xml);
-			map->image_template_use_meters_per_pixel = defaults_element.attribute<bool>(literal::use_meters_per_pixel);
-			map->image_template_meters_per_pixel = defaults_element.attribute<double>(literal::meters_per_pixel);
-			map->image_template_dpi = defaults_element.attribute<double>(literal::dpi);
-			map->image_template_scale = defaults_element.attribute<double>(literal::scale);
+			Map::ImageTemplateDefaults defaults = { defaults_element.attribute<bool>(literal::use_meters_per_pixel),
+			                                        defaults_element.attribute<double>(literal::meters_per_pixel),
+			                                        defaults_element.attribute<double>(literal::dpi),
+			                                        defaults_element.attribute<double>(literal::scale) };
+			map->setImageTemplateDefaults(defaults);
 		}
 		else
 		{
@@ -1050,7 +1050,7 @@ void XMLFileImporter::importView()
 		else if (xml.name() == literal::map_view)
 		{
 			if (view)
-				view->load(xml);
+				view->load(xml, version);
 			else
 				xml.skipCurrentElement();
 		}

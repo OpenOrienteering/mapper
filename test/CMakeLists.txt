@@ -65,7 +65,7 @@ function(add_test_helper testname autorun)
 	endforeach()
 	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS})
 	target_link_libraries(${testname} PRIVATE
-	  PROJ4::proj
+	  ${PROJ_LIBRARIES}
 	  Qt5::Test
 	  Qt5::Gui
 	  Polyclipping::Polyclipping
@@ -180,6 +180,7 @@ add_unit_test(key_value_container_t ../src/util/key_value_container)
 add_unit_test(locale_t ../src/util/translation_util)
 add_unit_test(map_color_t ../src/core/map_color)
 add_unit_test(ocd_t ../src/fileformats/ocd_types)
+add_unit_test(ocd_parameter_stream_reader_t ../src/fileformats/ocd_parameter_stream_reader)
 add_unit_test(qpainter_t)
 add_unit_test(util_t ../src/util/util
 	../src/settings
@@ -193,6 +194,7 @@ add_system_test(file_format_t)
 add_system_test(duplicate_equals_t)
 add_system_test(map_t)
 add_system_test(map_printer_t)
+add_system_test(object_t)
 add_system_test(object_query_t)
 add_system_test(path_object_t)
 add_system_test(style_t)
@@ -230,4 +232,13 @@ if(Mapper_AUTORUN_TESTS)
 	  COMMENT "Running tests for modified sources"
 	)
 	add_dependencies(AUTORUN_TESTS ${Mapper_AUTORUN_TESTS})
+endif()
+
+
+set(IOF_3_XSD_FILE "" CACHE FILEPATH "Path of the IOF Data Standard 3 XSD file")
+if(IOF_3_XSD_FILE)
+	find_program(XMLLINT NAMES xmllint)
+	add_test(NAME validate_iof_course
+		COMMAND "${XMLLINT}" --schema "${IOF_3_XSD_FILE}" "${CMAKE_CURRENT_SOURCE_DIR}/data/export/iof-3.0-course.xml"
+	)
 endif()

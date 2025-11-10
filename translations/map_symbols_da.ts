@@ -6,37 +6,37 @@
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lilla for banepåtryk</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvid for banepåtryk</translation>
     </message>
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sort 100 %</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grøn 100 %</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvid for jernbane</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå 100 %</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun 100 %</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
@@ -46,7 +46,7 @@
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sort under lilla for sporsymboler</translation>
     </message>
     <message>
         <source>Black 65%</source>
@@ -61,12 +61,12 @@
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Øvre brun 50 %</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sort under øvre brun 50%</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
@@ -86,7 +86,7 @@
     <message>
         <source>Blue 70%</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå 70 %</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -3218,27 +3218,27 @@ I det tilfælde, hvor klippevæggen ligger så tæt på vand, at passage under d
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lilla for banepåtryk</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvid for banepåtryk</translation>
     </message>
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sort 100 %</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grøn 100 %</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvid for jernbane</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
@@ -3253,12 +3253,12 @@ I det tilfælde, hvor klippevæggen ligger så tæt på vand, at passage under d
     <message>
         <source>Blue 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå 100 %</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun 100 %</translation>
     </message>
     <message>
         <source>Black 60%</source>
@@ -3303,7 +3303,7 @@ I det tilfælde, hvor klippevæggen ligger så tæt på vand, at passage under d
     <message>
         <source>Blue 70%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå 70 %</translation>
     </message>
     <message>
         <source>Blue 30%</source>
@@ -7734,12 +7734,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lilla for banepåtryk</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvid for banepåtryk</translation>
     </message>
     <message>
         <source>Green for SkiO</source>
@@ -7749,27 +7749,27 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sort 100 %</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grøn 100 %</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvid for jernbane</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå 100 %</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun 100 %</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
@@ -7779,7 +7779,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sort under lilla for sporsymboler</translation>
     </message>
     <message>
         <source>Black 65%</source>
@@ -7794,12 +7794,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Øvre brun 50 %</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sort under øvre brun 50%</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
@@ -7819,7 +7819,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Blue 70%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå 70 %</translation>
     </message>
     <message>
         <source>Blue 50%</source>

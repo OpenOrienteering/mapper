@@ -46,9 +46,10 @@ steps:
       --print-summary
   displayName: 'Process test coverage results'
 
-- task: PublishCodeCoverageResults@1
+- task: reportgenerator@5
   inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Build.SourcesDirectory)/coverage/coverage.xml'
+    reports: '$(Build.SourcesDirectory)/coverage/coverage.xml'
+    targetdir: '$(Build.SourcesDirectory)/coverage'
+    publishCodeCoverageResults: true
   displayName: 'Publish test coverage results'
 

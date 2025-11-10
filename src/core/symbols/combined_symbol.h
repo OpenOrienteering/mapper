@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -97,12 +97,12 @@ public:
     qreal calculateLargestLineExtent() const override;
 	
 	/**
-	 * Determines the border hints for this line symbol.
+	 * Determines the border hints for this combined symbol.
 	 */
 	const BorderHints* borderHints() const override;
 	
 	
-	// Getters / Setter
+	// Getters / Setters
 	inline int getNumParts() const {return (int)parts.size();}
 	inline void setNumParts(int num) {parts.resize(num, nullptr); private_parts.resize(num, false);}
 	
@@ -115,6 +115,12 @@ public:
 	bool hasRotatableFillPattern() const override;
 	
 	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
+	
+	bool containsDashSymbol() const override;
+	
+	int getMinimumArea() const override;
+	
+	int getMinimumLength() const override;
 	
 protected:
 	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
@@ -131,4 +137,4 @@ protected:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_COMBINED_SYMBOL_H

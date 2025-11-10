@@ -68,7 +68,7 @@ struct SymbolRule
  * 
  * When the rule set is applied on a map or object, the rules are tried in
  * reverse order. After the first matching rule with a valid assigned symbol,
- * no further attempts are made for an object. This means lists using object
+ * no further attempts are made for an object. This means that lists using object
  * queries must have more specific rules following more general rules.
  */
 class SymbolRuleSet : public std::vector<SymbolRule>
@@ -144,7 +144,7 @@ public:
 	 * 
 	 * The tag key and value are only available for queries with operator
 	 * ObjectQuery::OperatorIs, ObjectQuery::OperatorIsNot, and
-	 * ObjectQuery::OperatorIs. Other rules are moved to the end.
+	 * ObjectQuery::OperatorContains. Other rules are moved to the end.
 	 */
 	void sortByQueryKeyAndValue();
 	
@@ -180,9 +180,9 @@ public:
 	 * where REPLACEMENT is the formatted number of the replacement symbol.
 	 * 
 	 * If the replacement symbol number exists, the import creates a new entry
-	 * of type DefinedReplacement with the given replacement symbol. Otherwise,
-	 * the replacement symbool is set to nullptr, and the type is set to
-	 * NoReplacement. No other validation is performed.
+	 * of type DefinedAssignment with the given replacement symbol. Otherwise,
+	 * the replacement symbol is set to nullptr, and the type is set to
+	 * NoAssignment. No other validation is performed.
 	 * 
 	 * The query is set to operand ObjectQuery::OperatorSearch and the tag value
 	 * is set to the given pattern.
@@ -227,7 +227,7 @@ public:
 	
 	
 	/**
-	 * Options for importing of new colors and symbols in to a map.
+	 * Options for importing of new colors and symbols into a map.
 	 * 
 	 * The default value (no option selected) describes the minimal behaviour:
 	 * symbols are imported only as needed, in their present state, and

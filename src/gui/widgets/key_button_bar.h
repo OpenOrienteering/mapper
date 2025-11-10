@@ -77,8 +77,8 @@ public:
 	 * event and a release event for the given key_code. If a modifier_code
 	 * different from Qt::NoModifier is given, and this modifier key is not
 	 * already active, a press event for the corresponding modifier key code is
-	 * sent first, and a release event for the modifier key code is send after
-	 * the the event for the key_code.
+	 * sent first, and a release event for the modifier key code is sent after
+	 * the event for the key_code.
 	 * 
 	 * Application code may turn this into a checkable button if it also takes
 	 * care of maintaining the state.

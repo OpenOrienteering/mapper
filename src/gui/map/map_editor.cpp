@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021 Kai Pastor
+ *    Copyright 2012-2021, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -35,7 +35,6 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
-#include <QAbstractButton>
 #include <QAction>
 #include <QActionGroup>
 #include <QApplication>
@@ -75,7 +74,6 @@
 #include <QPoint>
 #include <QPointer>
 #include <QPointF>
-#include <QPushButton>
 #include <QRect>
 #include <QRectF>
 #include <QSettings>
@@ -87,7 +85,6 @@
 #include <QSplitter>
 #include <QStatusBar>
 #include <QStringList>
-#include <QTextEdit>
 #include <QToolBar>
 #include <QToolButton>
 #include <QVariant>
@@ -124,9 +121,12 @@
 #include "gui/map/map_dialog_scale.h"
 #include "gui/map/map_editor_activity.h"
 #include "gui/map/map_find_feature.h"
+#include "gui/map/map_information_dialog.h"
+#include "gui/map/map_notes.h"
 #include "gui/map/map_widget.h"
 #include "gui/map/rotate_map_dialog.h"
 #include "gui/symbols/symbol_replacement.h"
+#include "gui/symbols/symbol_report_feature.h"
 #include "gui/widgets/action_grid_bar.h"
 #include "gui/widgets/color_list_widget.h"
 #include "gui/widgets/compass_display.h"
@@ -143,6 +143,7 @@
 #include "templates/template.h"
 #include "templates/template_dialog_reopen.h"
 #include "templates/template_track.h"
+#include "tools/box_zoom_tool.h"
 #include "tools/cut_tool.h"
 #include "tools/cut_hole_tool.h"
 #include "tools/cutout_tool.h"
@@ -335,6 +336,7 @@ MapEditorController::~MapEditorController()
 	delete gps_display;
 	delete gps_track_recorder;
 	delete compass_display;
+	delete gps_marker_display;
 	delete map;
 }
 
@@ -454,7 +456,6 @@ void MapEditorController::setEditingInProgress(bool value)
 		select_all_act->setEnabled(!editing_in_progress);
 		select_nothing_act->setEnabled(!editing_in_progress);
 		invert_selection_act->setEnabled(!editing_in_progress);
-		select_by_current_symbol_act->setEnabled(!editing_in_progress);
 		find_feature->setEnabled(!editing_in_progress);
 		
 		// Map menu
@@ -462,6 +463,7 @@ void MapEditorController::setEditingInProgress(bool value)
 		scale_map_act->setEnabled(!editing_in_progress);
 		rotate_map_act->setEnabled(!editing_in_progress);
 		map_notes_act->setEnabled(!editing_in_progress);
+		map_info_act->setEnabled(!editing_in_progress);
 		
 		// Map menu, continued
 		const int num_parts = map->getNumParts();
@@ -477,6 +479,7 @@ void MapEditorController::setEditingInProgress(bool value)
 		scale_all_symbols_act->setEnabled(!editing_in_progress);
 		load_symbols_from_act->setEnabled(!editing_in_progress);
 		load_crt_act->setEnabled(!editing_in_progress);
+		symbol_report_feature->setEnabled(!editing_in_progress);
 		
 		// Templates menu
 		paint_feature->setEnabled(!editing_in_progress);
@@ -820,6 +823,10 @@ void MapEditorController::attach(MainWindow* window)
 		if (mobile_mode)
 		{
 			createSymbolWidget(window);
+
+			// Activate the map view pan tool
+			pan_act->setChecked(true);
+			pan();
 		}
 		else
 		{
@@ -830,11 +837,11 @@ void MapEditorController::attach(MainWindow* window)
 			
 			if (map->getNumColors() == 0)
 				QTimer::singleShot(0, color_dock_widget, &QWidget::show);
+
+			// Activate the edit tool
+			edit_tool_act->setChecked(true);
+			setEditTool();
 		}
-		
-		// Auto-select the edit tool
-		edit_tool_act->setChecked(true);
-		setEditTool();
 		
 		// Set the coordinates display mode
 		coordsDisplayChanged();
@@ -938,6 +945,7 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("cuthole")->setShortcut(QKeySequence(tr("H")));
 	findAction("measure")->setShortcut(QKeySequence(tr("M")));
 	findAction("booleanunion")->setShortcut(QKeySequence(tr("U")));
+	findAction("booleandifference")->setShortcut(QKeySequence(tr("X")));
 	findAction("converttocurves")->setShortcut(QKeySequence(tr("N")));
 	findAction("simplify")->setShortcut(QKeySequence(tr("Ctrl+M")));
 }
@@ -999,6 +1007,7 @@ void MapEditorController::createActions()
 	follow_position_act = newCheckAction("follow-position", tr("Keep my location on screen"), this, SLOT(followPositionClicked(bool)), nullptr, QString{}, "view_menu.html");
 	zoom_in_act = newAction("zoomin", tr("Zoom in"), this, SLOT(zoomIn()), "view-zoom-in.png", QString{}, "view_menu.html");
 	zoom_out_act = newAction("zoomout", tr("Zoom out"), this, SLOT(zoomOut()), "view-zoom-out.png", QString{}, "view_menu.html");
+	box_zoom_act = newCheckAction("boxzoom", tr("Zoom to box"), this, SLOT(boxZoom(bool)), "view-box-zoom.png", QString{}, "view_menu.html");
 	show_all_act = newAction("showall", tr("Show whole map"), this, SLOT(showWholeMap()), "view-show-all.png", QString{}, "view_menu.html");
 	fullscreen_act = newAction("fullscreen", tr("Toggle fullscreen mode"), window, SLOT(toggleFullscreenMode()), nullptr, QString{}, "view_menu.html");
 	custom_zoom_act = newAction("setzoom", tr("Set custom zoom factor..."), this, SLOT(setCustomZoomFactorClicked()), nullptr, QString{}, "view_menu.html");
@@ -1014,12 +1023,14 @@ void MapEditorController::createActions()
 	load_symbols_from_act = newAction("loadsymbols", tr("Replace symbol set..."), this, SLOT(loadSymbolsFromClicked()), nullptr, tr("Replace the symbols with those from another map file"), "symbol_replace_dialog.html");
 	load_crt_act = newAction("loadcrt", tr("Load CRT file..."), this, SLOT(loadCrtClicked()), nullptr, tr("Assign new symbols by cross-reference table"), "symbol_replace_dialog.html");
 	/*QAction* load_colors_from_act = newAction("loadcolors", tr("Load colors from..."), this, SLOT(loadColorsFromClicked()), nullptr, tr("Replace the colors with those from another map file"));*/
+	symbol_report_feature = std::make_unique<SymbolReportFeature>(*this);
 	
 	scale_all_symbols_act = newAction("scaleall", tr("Scale all symbols..."), this, SLOT(scaleAllSymbolsClicked()), nullptr, tr("Scale the whole symbol set"), "map_menu.html");
 	georeferencing_act = newAction("georef", tr("Georeferencing..."), this, SLOT(editGeoreferencing()), nullptr, QString{}, "georeferencing.html");
 	scale_map_act = newAction("scalemap", tr("Change map scale..."), this, SLOT(scaleMapClicked()), "tool-scale.png", tr("Change the map scale and adjust map objects and symbol sizes"), "map_menu.html");
 	rotate_map_act = newAction("rotatemap", tr("Rotate map..."), this, SLOT(rotateMapClicked()), "tool-rotate.png", tr("Rotate the whole map"), "map_menu.html");
 	map_notes_act = newAction("mapnotes", tr("Map notes..."), this, SLOT(mapNotesClicked()), nullptr, QString{}, "map_menu.html");
+	map_info_act = newAction("mapinfo", tr("Map information..."), this, SLOT(mapInfoClicked()), "map-information.png", QString{}, "map_menu.html");
 	
 	template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "templates.png", tr("Show/Hide the template window"), "templates_menu.html");
 	//QAction* template_config_window_act = newCheckAction("templateconfigwindow", tr("Template configurations window"), this, SLOT(showTemplateConfigurationsWindow(bool)), "window-new", tr("Show/Hide the template configurations window"));
@@ -1066,8 +1077,8 @@ void MapEditorController::createActions()
 	boolean_merge_holes_act = newAction("booleanmergeholes", tr("Merge area holes"), this, SLOT(booleanMergeHolesClicked()), "tool-boolean-merge-holes.png", QString{}, "toolbars.html#area_merge_holes"); // TODO:documentation
 	convert_to_curves_act = newAction("converttocurves", tr("Convert to curves"), this, SLOT(convertToCurvesClicked()), "tool-convert-to-curves.png", QString{}, "toolbars.html#convert_to_curves");
 	simplify_path_act = newAction("simplify", tr("Simplify path"), this, SLOT(simplifyPathClicked()), "tool-simplify-path.png", QString{}, "toolbars.html#simplify_path");
-	cutout_physical_act = newToolAction("cutoutphysical", tr("Cutout"), this, SLOT(cutoutPhysicalClicked()), "tool-cutout-physical.png", QString{}, "toolbars.html#cutout_physical");
-	cutaway_physical_act = newToolAction("cutawayphysical", tr("Cut away"), this, SLOT(cutawayPhysicalClicked()), "tool-cutout-physical-inner.png", QString{}, "toolbars.html#cutaway_physical");
+	clip_area_act = newToolAction("cliparea", tr("Clip area"), this, SLOT(clipAreaClicked()), "tool-clip.png", QString{}, "toolbars.html#clip_area");
+	erase_area_act = newToolAction("erasearea", tr("Erase area"), this, SLOT(eraseAreaClicked()), "tool-erase.png", QString{}, "toolbars.html#erase_area");
 	distribute_points_act = newAction("distributepoints", tr("Distribute points along path"), this, SLOT(distributePointsClicked()), "tool-distribute-points.png", QString{}, "toolbars.html#distribute_points"); // TODO: write documentation
 	
 	paint_feature = std::make_unique<PaintOnTemplateFeature>(*this);
@@ -1177,6 +1188,7 @@ void MapEditorController::createMenuAndToolbars()
 	view_menu->addAction(pan_act);
 	view_menu->addAction(zoom_in_act);
 	view_menu->addAction(zoom_out_act);
+	view_menu->addAction(box_zoom_act);
 	view_menu->addAction(show_all_act);
 	view_menu->addAction(custom_zoom_act);
 	view_menu->addSeparator();
@@ -1232,8 +1244,8 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addAction(measure_act);
 	tools_menu->addAction(convert_to_curves_act);
 	tools_menu->addAction(simplify_path_act);
-	tools_menu->addAction(cutout_physical_act);
-	tools_menu->addAction(cutaway_physical_act);
+	tools_menu->addAction(clip_area_act);
+	tools_menu->addAction(erase_area_act);
 	tools_menu->addAction(distribute_points_act);
 	tools_menu->addAction(touch_cursor_action);
 	
@@ -1246,6 +1258,7 @@ void MapEditorController::createMenuAndToolbars()
 	map_menu->addAction(scale_map_act);
 	map_menu->addAction(rotate_map_act);
 	map_menu->addAction(map_notes_act);
+	map_menu->addAction(map_info_act);
 	map_menu->addSeparator();
 	updateMapPartsUI();
 	map_menu->addAction(mappart_add_act);
@@ -1266,6 +1279,8 @@ void MapEditorController::createMenuAndToolbars()
 	symbols_menu->addAction(load_symbols_from_act);
 	symbols_menu->addAction(load_crt_act);
 	/*symbols_menu->addAction(load_colors_from_act);*/
+	symbols_menu->addSeparator();
+	symbols_menu->addAction(symbol_report_feature->showDialogAction());
 	
 	// Templates menu
 	QMenu* template_menu = window->menuBar()->addMenu(tr("&Templates"));
@@ -1307,6 +1322,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_view->addAction(pan_act);
 	toolbar_view->addAction(zoom_in_act);
 	toolbar_view->addAction(zoom_out_act);
+	toolbar_view->addAction(box_zoom_act);
 	toolbar_view->addAction(show_all_act);
 	toolbar_view->addAction(template_window_act);
 	
@@ -1371,8 +1387,8 @@ void MapEditorController::createMenuAndToolbars()
 	// Advanced editing toolbar
 	toolbar_advanced_editing = window->addToolBar(tr("Advanced editing"));
 	toolbar_advanced_editing->setObjectName(QString::fromLatin1("Advanced editing toolbar"));
-	toolbar_advanced_editing->addAction(cutout_physical_act);
-	toolbar_advanced_editing->addAction(cutaway_physical_act);
+	toolbar_advanced_editing->addAction(clip_area_act);
+	toolbar_advanced_editing->addAction(erase_area_act);
 	toolbar_advanced_editing->addAction(convert_to_curves_act);
 	toolbar_advanced_editing->addAction(simplify_path_act);
 	toolbar_advanced_editing->addAction(distribute_points_act);
@@ -1828,6 +1844,14 @@ void MapEditorController::exportVector()
 void MapEditorController::printClicked(int task)
 {
 #ifdef QT_PRINTSUPPORT_LIB
+	if (editing_in_progress)
+	{
+		QMessageBox::warning(window,
+		                     tr("Editing in progress"),
+		                     tr("The map is currently being edited. "
+		                        "Please finish the edit operation first.") );
+		return;
+	}
 	if (!print_dock_widget)
 	{
 		print_dock_widget = new EditorDockWidget(QString{}, nullptr, this, window);
@@ -1997,7 +2021,8 @@ void MapEditorController::spotColorPresenceChanged(bool has_spot_colors)
 		}
 		else
 		{
-			overprinting_simulation_act->setChecked(false);
+			if (overprinting_simulation_act->isChecked())
+				overprinting_simulation_act->trigger();
 			overprinting_simulation_act->setEnabled(false);
 		}
 	}
@@ -2071,10 +2096,20 @@ void MapEditorController::zoomIn()
 {
 	main_view->zoomSteps(1);
 }
+
 void MapEditorController::zoomOut()
 {
 	main_view->zoomSteps(-1);
 }
+
+void MapEditorController::boxZoom(bool checked)
+{
+	if (checked)
+		setTool(new BoxZoomTool(this, box_zoom_act));
+	else
+		setTool(nullptr);
+}
+
 void MapEditorController::setCustomZoomFactorClicked()
 {
 	bool ok;
@@ -2239,37 +2274,19 @@ void MapEditorController::rotateMapClicked()
 
 void MapEditorController::mapNotesClicked()
 {
-	QDialog dialog(window, Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
-	dialog.setWindowTitle(tr("Map notes"));
-	dialog.setWindowModality(Qt::WindowModal);
-	
-	auto* text_edit = new QTextEdit();
-	text_edit->setPlainText(map->getMapNotes());
-	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	QPushButton* ok_button = new QPushButton(QIcon(QString::fromLatin1(":/images/arrow-right.png")), tr("OK"));
-	ok_button->setDefault(true);
-	
-	auto* buttons_layout = new QHBoxLayout();
-	buttons_layout->addWidget(cancel_button);
-	buttons_layout->addStretch(1);
-	buttons_layout->addWidget(ok_button);
-	
-	auto* layout = new QVBoxLayout();
-	layout->addWidget(text_edit);
-	layout->addLayout(buttons_layout);
-	dialog.setLayout(layout);
-	
-	connect(cancel_button, &QAbstractButton::clicked, &dialog, &QDialog::reject);
-	connect(ok_button, &QAbstractButton::clicked, &dialog, &QDialog::accept);
-	
-	if (dialog.exec() == QDialog::Accepted)
+	if (map)
 	{
-		if (text_edit->toPlainText() != map->getMapNotes())
-		{
-			map->setMapNotes(text_edit->toPlainText());
-			map->setHasUnsavedChanges(true);
-		}
+		MapNotesDialog dialog(window, *map);
+		dialog.setWindowModality(Qt::WindowModal);
+		dialog.exec();
 	}
+}
+
+void MapEditorController::mapInfoClicked()
+{
+	MapInformationDialog dialog(window, map);
+	dialog.setWindowModality(Qt::WindowModal);
+	dialog.exec();
 }
 
 void MapEditorController::createTemplateWindow()
@@ -2436,7 +2453,7 @@ void MapEditorController::selectedSymbolsChanged()
 			symbol_button->setMenu(mobile_symbol_button_menu);
 			const auto actions = mobile_symbol_button_menu->actions();
 			int i = 0;
-			actions[i]->setText(symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getPlainTextName());
+			actions[i]->setText(symbol->getNumberAndPlainTextName());
 			actions[++i]->setVisible(!symbol->getDescription().isEmpty());
 			++i;  // separator
 			actions[++i]->setChecked(symbol->isHidden());
@@ -2453,7 +2470,7 @@ void MapEditorController::selectedSymbolsChanged()
 		if (symbol && !symbol->isHidden() && !symbol->isProtected() && current_tool)
 		{
 			// Auto-switch to a draw tool when selecting a symbol under certain conditions
-			if (current_tool->toolType() == MapEditorTool::Pan || current_tool->toolType() == MapEditorTool::Scribble
+			if (current_tool->toolType() == MapEditorTool::Pan || current_tool->toolType() == MapEditorTool::BoxZoom || current_tool->toolType() == MapEditorTool::Scribble
 			    || ((current_tool->toolType() == MapEditorTool::EditLine || current_tool->toolType() == MapEditorTool::EditPoint) && map->getNumSelectedObjects() == 0))
 			{
 				current_tool->switchToDefaultDrawTool(active_symbol);
@@ -2461,7 +2478,7 @@ void MapEditorController::selectedSymbolsChanged()
 		}
 		
 		if (symbol)
-			window->showStatusBarMessage(symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getPlainTextName(), 1000);
+			window->showStatusBarMessage(symbol->getNumberAndPlainTextName(), 1000);
 	}
 	
 	// Even when the symbol (pointer) hasn't changed,
@@ -2508,6 +2525,8 @@ void MapEditorController::updateSymbolDependentActions()
 {
 	const Symbol* symbol = activeSymbol();
 	const Symbol::Type type = (symbol && !editing_in_progress) ? symbol->getType() : Symbol::NoSymbol;
+	
+	select_by_current_symbol_act->setEnabled(!editing_in_progress && symbol_widget && symbol_widget->selectedSymbolsCount());
 	
 	updateDrawPointGPSAvailability();
 	draw_point_act->setEnabled(type == Symbol::Point && !symbol->isHidden());
@@ -2633,7 +2652,7 @@ void MapEditorController::updateObjectDependentActions()
 	bool const boolean_prerequisite = first_selected_is_path && num_selected_paths >= 2;
 	QString const extra_status_tip = QLatin1Char(' ') +
 	                                 ( boolean_prerequisite
-	                                 ? tr("Resulting symbol: %1 %2.").arg(first_selected_symbol->getNumberAsString(), first_selected_symbol->getPlainTextName())
+	                                 ? tr("Resulting symbol: %1.").arg(first_selected_symbol->getNumberAndPlainTextName())
 	                                 : tr("Select at least two area or path objects activate this tool.") );
 	boolean_union_act->setEnabled(boolean_prerequisite);
 	boolean_union_act->setStatusTip(tr("Unify overlapping objects.") + extra_status_tip);
@@ -2648,12 +2667,12 @@ void MapEditorController::updateObjectDependentActions()
 	boolean_merge_holes_act->setEnabled(single_object_selected && have_area_with_holes);
 	boolean_merge_holes_act->setStatusTip(tr("Merge area holes together, or merge holes with the object boundary to cut out this part.") + (boolean_merge_holes_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select one area object with holes to activate this tool."))));
 	
-	// cutout_enabled
-	bool const cutout_enabled = single_object_selected && (have_area || have_line) && !have_area_with_holes && (*(map->selectedObjectsBegin()))->asPath()->parts().front().isClosed();
-	cutout_physical_act->setEnabled(cutout_enabled);
-	cutout_physical_act->setStatusTip(tr("Create a cutout of some objects or the whole map.") + (cutout_physical_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select a closed path object as cutout shape to activate this tool."))));
-	cutaway_physical_act->setEnabled(cutout_enabled);
-	cutaway_physical_act->setStatusTip(tr("Cut away some objects or everything in a limited area.") + (cutaway_physical_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select a closed path object as cutout shape to activate this tool."))));
+	// clip_erase_enabled
+	bool const clip_erase_enabled = single_object_selected && (have_area || have_line) && !have_area_with_holes && (*(map->selectedObjectsBegin()))->asPath()->parts().front().isClosed();
+	clip_area_act->setEnabled(clip_erase_enabled);
+	clip_area_act->setStatusTip(tr("Create a cutout of some objects or the whole map.") + (clip_area_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select a closed path object as cutout shape to activate this tool."))));
+	erase_area_act->setEnabled(clip_erase_enabled);
+	erase_area_act->setStatusTip(tr("Cut away some objects or everything in a limited area.") + (erase_area_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select a closed path object as cutout shape to activate this tool."))));
 }
 
 void MapEditorController::updateSymbolAndObjectDependentActions()
@@ -3465,14 +3484,14 @@ void MapEditorController::simplifyPathClicked()
 	}
 }
 
-void MapEditorController::cutoutPhysicalClicked()
+void MapEditorController::clipAreaClicked()
 {
-	setTool(new CutoutTool(this, cutout_physical_act, false));
+	setTool(new CutoutTool(this, clip_area_act, false));
 }
 
-void MapEditorController::cutawayPhysicalClicked()
+void MapEditorController::eraseAreaClicked()
 {
-	setTool(new CutoutTool(this, cutaway_physical_act, true));
+	setTool(new CutoutTool(this, erase_area_act, true));
 }
 
 void MapEditorController::distributePointsClicked()
@@ -4302,6 +4321,7 @@ QHash<const Symbol*, Symbol*> MapEditorController::importMap(
 void MapEditorController::setViewOptionsEnabled(bool enabled)
 {
 	pan_act->setEnabled(enabled);
+	box_zoom_act->setEnabled(enabled);
 	show_grid_act->setEnabled(enabled);
 // 	hatch_areas_view_act->setEnabled(enabled);
 // 	baseline_view_act->setEnabled(enabled);

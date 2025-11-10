@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2020 Kai Pastor
+ *    Copyright 2014-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,8 +26,6 @@
 #include <iterator>
 #include <stdexcept>
 
-#include <QRectF>
-
 #include <Qt>
 #include <QLatin1String>
 #include <QString>
@@ -45,7 +43,6 @@
 namespace literal
 {
 	static const QLatin1String zoom("zoom");
-	static const QLatin1String rotation("rotation");
 	static const QLatin1String position_x("position_x");
 	static const QLatin1String position_y("position_y");
 	static const QLatin1String grid("grid");
@@ -147,7 +144,7 @@ void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, boo
 	}
 }
 
-void MapView::load(QXmlStreamReader& xml)
+void MapView::load(QXmlStreamReader& xml, int version)
 {
 	// We do not load transient attributes such as rotation (for compass) or pan offset.
 	XmlElementReader mapview_element(xml);
@@ -176,7 +173,8 @@ void MapView::load(QXmlStreamReader& xml)
 		{
 			XmlElementReader map_element(xml);
 			map_visibility.opacity = map_element.attribute<qreal>(literal::opacity);
-			if (map_element.hasAttribute(literal::visible))
+			// Some old maps before version 6 lack visible="true".
+			if (version >= 6)
 				map_visibility.visible = map_element.attribute<bool>(literal::visible);
 			else
 				map_visibility.visible = true;

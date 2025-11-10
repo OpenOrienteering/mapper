@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -185,7 +185,7 @@ public:
 	
 	
 	/**
-	 * Returns the dimension which shall considered when scaling the icon.
+	 * Returns the dimension which shall be considered when scaling the icon.
 	 */
 	qreal dimensionForIcon() const override;
 	
@@ -198,6 +198,9 @@ public:
 	 * Determines the border hints for this line symbol.
 	 */
 	const BorderHints* borderHints() const override;
+	
+	
+	bool containsDashSymbol() const override;
 	
 	
 	/**
@@ -213,7 +216,7 @@ public:
 	inline void setLineWidth(double width) {line_width = qRound(1000 * width);}
 	inline const MapColor* getColor() const {return color;}
 	inline void setColor(const MapColor* color) {this->color = color;}
-	inline int getMinimumLength() const {return minimum_length;}
+	inline int getMinimumLength() const override {return minimum_length;}
 	inline void setMinimumLength(int length) {this->minimum_length = length;}
 	inline CapStyle getCapStyle() const {return cap_style;}
 	inline void setCapStyle(CapStyle style) {cap_style = style;}
@@ -481,4 +484,4 @@ protected:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_LINE_SYMBOL_H

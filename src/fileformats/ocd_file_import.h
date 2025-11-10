@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2018 Kai Pastor
+ *    Copyright 2013-2022 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -20,8 +20,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OPENORIENTEERING_OCD_FILE_IMPORT
-#define OPENORIENTEERING_OCD_FILE_IMPORT
+#ifndef OPENORIENTEERING_OCD_FILE_IMPORT_H
+#define OPENORIENTEERING_OCD_FILE_IMPORT_H
 
 #include <cstddef>
 #include <initializer_list>
@@ -76,6 +76,7 @@ protected:
 		// Only valid if has_grid is true
 		LineSymbol* inner_line;
 		TextSymbol* text;
+		bool numbering_on;
 		bool number_from_bottom;
 		double cell_width;
 		double cell_height;
@@ -364,4 +365,4 @@ protected:
 
 }  // namespace OpenOrienteering
 
-#endif // OPENORIENTEERING_OCD_FILE_IMPORT
+#endif // OPENORIENTEERING_OCD_FILE_IMPORT_H

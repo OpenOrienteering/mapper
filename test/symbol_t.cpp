@@ -1,5 +1,5 @@
 /*
- *    Copyright 2018 Kai Pastor
+ *    Copyright 2018-2020, 2022, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -44,6 +44,8 @@
 #include "core/map.h"
 #include "core/map_color.h"
 #include "core/renderables/renderable.h"
+#include "core/symbols/area_symbol.h"
+#include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/symbol.h"
@@ -234,6 +236,8 @@ private slots:
 		    { "testdata:symbols/line-symbol-cap-variants.omap", 50 },
 		    { "testdata:symbols/line-symbol-start-end-symbol.omap", 50 },
 		    { "testdata:symbols/line-symbol-mid-symbol-variants.omap", 50 },
+		    { "testdata:symbols/line-symbol-mid-symbol-at-gap.omap", 30 },
+		    { "testdata:symbols/dashed-line-with-mid-symbols.omap", 80 },
 #ifdef ENABLE_VOLATILE_RENDER_TESTS
 		    { "data:examples/complete map.omap", 5 },
 		    { "data:examples/forest sample.omap", 10 },
@@ -381,6 +385,91 @@ private slots:
 		QVERIFY(clone->equals(&l));
 		l.cleanupPointSymbols();
 		QVERIFY(clone->equals(&l));
+	}
+	
+	void CombinedSymbolTest()
+	{
+		CombinedSymbol c;
+		c.setNumParts(10);
+		
+		Symbol& s = c;
+		QCOMPARE(s.getMinimumLength(), 0);
+		QCOMPARE(s.getMinimumArea(), 0);
+		
+		auto make_line_symbol = [](int len) {
+			auto* l = new LineSymbol();
+			l->setMinimumLength(len);
+			return l;
+		};
+		c.setPart(1, make_line_symbol(18), true);
+		c.setPart(2, make_line_symbol(20), true);
+		c.setPart(3, make_line_symbol(19), true);
+		
+		auto make_area_symbol = [](int area) {
+			auto* a = new AreaSymbol();
+			a->setMinimumArea(area);
+			return a;
+		};
+		c.setPart(5, make_area_symbol(28), true);
+		c.setPart(6, make_area_symbol(30), true);
+		c.setPart(7, make_area_symbol(29), true);
+		
+		QCOMPARE(s.getMinimumLength(), 20);
+		QCOMPARE(s.getMinimumArea(), 30);
+	}
+	
+	void lessByColorTest_data()
+	{
+		QTest::addColumn<QString>("map_filename");
+		for (auto raw_path : example_files)
+		{
+			QTest::newRow(raw_path) << QString::fromUtf8(raw_path);
+		}
+	}
+	
+	void lessByColorTest()
+	{
+		QFETCH(QString, map_filename);
+		Map map {};
+		QVERIFY(map.loadFrom(map_filename));
+		
+		auto failed_compare = QString{};
+		
+		auto const less_by_color = Symbol::lessByColor(&map);
+		auto const last = map.getNumSymbols();
+		for (int i = 0; i < last; ++i)
+		{
+			const auto* a = map.getSymbol(i);
+			for (int j = 0; j < last; ++j)
+			{
+				const auto* b = map.getSymbol(j);
+				if (less_by_color(a, b) && less_by_color(b, a))
+					failed_compare += a->getNumberAsString() + QLatin1String("<=>") + b->getNumberAsString() + QLatin1String("  ");
+			}
+		}
+		QCOMPARE(failed_compare, QString{});
+	}
+	
+	
+	void getNumberAndPlainTextName_data()
+	{
+		QTest::addColumn<QString>("input");
+		QTest::addColumn<QString>("number_and_name");
+		QTest::newRow("simple") << QString::fromLatin1("Symbol 1") << QString::fromLatin1("1 Symbol 1");
+		QTest::newRow("html tag") << QString::fromLatin1("<b>Symbol</b> 2") << QString::fromLatin1("1 Symbol 2");
+		QTest::newRow("invalid html") << QString::fromLatin1("<b>Symbol 3") << QString::fromLatin1("1 Symbol 3");
+		QTest::newRow("html entity")  << QString::fromLatin1("Symbol &nbsp; 4") << QString::fromLatin1("1 Symbol < 4");
+	}
+	
+	void getNumberAndPlainTextName()
+	{
+		QFETCH(QString, input);
+		QFETCH(QString, number_and_name);
+		PointSymbol s;
+		s.setNumberComponent(0, 1);
+		s.setName(input);
+		QEXPECT_FAIL("html entity", "HTML entities are not converted", Continue);
+		QCOMPARE(s.getNumberAndPlainTextName(), number_and_name);
 	}
 };
 

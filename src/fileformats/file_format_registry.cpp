@@ -54,14 +54,14 @@ void FileFormatRegistry::registerFormat(FileFormat *format)
 	if (fmts.size() == 1) default_format_id = format->id();
 	if (format->supportsReading())
 	{
-		// There must be at least one one format for a filename with the registered extension.
+		// There must be at least one format for a filename with the registered extension.
 		Q_ASSERT(findFormatForFilename(QLatin1String("filename.") + format->primaryExtension(), &FileFormat::supportsReading) != nullptr);
 		// The filter shall be unique at least by description.
 		Q_ASSERT(findFormatByFilter(format->filter(), &FileFormat::supportsReading) == format); 
 	}
 	if (format->supportsWriting())
 	{
-		// There must be at least one one format for a filename with the registered extension.
+		// There must be at least one format for a filename with the registered extension.
 		Q_ASSERT(findFormatForFilename(QLatin1String("filename.") + format->primaryExtension(), &FileFormat::supportsWriting) != nullptr);
 		// The filter shall be unique at least by description.
 		Q_ASSERT(findFormatByFilter(format->filter(), &FileFormat::supportsWriting) == format); 

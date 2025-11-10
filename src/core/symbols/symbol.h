@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -133,7 +133,7 @@ public:
 	 * with covariant return types when duplicating instances of the
 	 * polymorphic type Symbol.
 	 * 
-	 * For convenient use outside of (child class) method implementatations,
+	 * For convenient use outside of (child class) method implementations,
 	 * there is a free template function duplicate(const Derived& d).
 	 */
 	template<class S>
@@ -174,25 +174,25 @@ public:
 	Type getType() const { return type; }
 	
 	// Convenience casts with type checking
-	/** Case to PointSymbol with type checking */
+	/** Cast to PointSymbol with type checking */
 	const PointSymbol* asPoint() const;
-	/** Case to PointSymbol with type checking */
+	/** Cast to PointSymbol with type checking */
 	PointSymbol* asPoint();
-	/** Case to LineSymbol with type checking */
+	/** Cast to LineSymbol with type checking */
 	const LineSymbol* asLine() const;
-	/** Case to LineSymbol with type checking */
+	/** Cast to LineSymbol with type checking */
 	LineSymbol* asLine();
-	/** Case to AreaSymbol with type checking */
+	/** Cast to AreaSymbol with type checking */
 	const AreaSymbol* asArea() const;
-	/** Case to AreaSymbol with type checking */
+	/** Cast to AreaSymbol with type checking */
 	AreaSymbol* asArea();
-	/** Case to TextSymbol with type checking */
+	/** Cast to TextSymbol with type checking */
 	const TextSymbol* asText() const;
-	/** Case to TextSymbol with type checking */
+	/** Cast to TextSymbol with type checking */
 	TextSymbol* asText();
-	/** Case to CombinedSymbol with type checking */
+	/** Cast to CombinedSymbol with type checking */
 	const CombinedSymbol* asCombined() const;
-	/** Case to CombinedSymbol with type checking */
+	/** Cast to CombinedSymbol with type checking */
 	CombinedSymbol* asCombined();
 	
 	/**
@@ -322,7 +322,7 @@ public:
 	/**
 	 * Called when a symbol was changed, replaced, or removed.
 	 * 
-	 * Symbol need top update or remove references to the given old_symbol.
+	 * Symbol need to update or remove references to the given old_symbol.
 	 * If new_symbol is nullptr, the symbol is about to be deleted.
 	 * 
 	 * Returns true if this symbol contained the deleted symbol.
@@ -428,9 +428,15 @@ public:
 	
 	
 	/**
-	 * Returns the symbol number as string
+	 * Returns the symbol number as string.
 	 */
 	QString getNumberAsString() const;
+	
+	/**
+	 * Returns the concatenation of symbol number and symbol name.
+	 */
+	QString getNumberAndPlainTextName() const;
+	
 	
 	/**
 	 * Returns the i-th component of the symbol number as int.
@@ -495,9 +501,32 @@ public:
 	bool isRotatable() const { return is_rotatable; }
 	
 	/**
-	 * Returns if the objects has fill patterns which can be rotated in arbitrary directions.
+	 * Returns if objects with this symbol have fill patterns which can be rotated in arbitrary directions.
 	 */
 	virtual bool hasRotatableFillPattern() const;
+	
+	/**
+	 * Returns if this symbol contains a dash symbol.
+	 */
+	virtual bool containsDashSymbol() const;
+	
+	/**
+	 * Returns the specified minimum area of this symbol.
+	 * 
+	 * This function shall be overridden by symbol types with area personality.
+	 * The default implementation returns zero, representing the absence of
+	 * a minimum required area.
+	 */
+	virtual int getMinimumArea() const;
+	
+	/**
+	 * Returns the specified minimum length of this symbol.
+	 * 
+	 * This function shall be overridden by symbol types with line personality.
+	 * The default implementation returns zero, representing the absence of
+	 * a minimum required length.
+	 */
+	virtual int getMinimumLength() const;
 	
 protected:
 	/**
@@ -656,4 +685,4 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Symbol::TypeCombination)
 Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Symbol::RenderableOptions)
 
 
-#endif
+#endif // OPENORIENTEERING_SYMBOL_H
