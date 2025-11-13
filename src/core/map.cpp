@@ -2508,6 +2508,15 @@ void Map::setOtherDirty()
 	setHasUnsavedChanges(true);
 }
 
+
+void Map::clearAuxiliarySymbolProperties()
+{
+	for (auto* symbol : symbols)
+	{
+		symbol->clearAuxiliaryProperties();
+	}
+}
+
 // slot
 void Map::undoCleanChanged(bool is_clean)
 {
