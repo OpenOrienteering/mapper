@@ -860,7 +860,6 @@ void TemplateListWidget::importClicked()
 		prototype->getTransform(transform);
 	
 	Map template_map;
-	bool ok = true;
 	if (qstrcmp(prototype->getTemplateType(), "OgrTemplate") == 0)
 	{
 		template_map.importMap(*prototype->templateMap(), Map::MinimalObjectImport);
@@ -907,12 +906,13 @@ void TemplateListWidget::importClicked()
 			scale_options.append(tr("Scale by current template scaling (%1 %)").arg(locale().toString(current_scale * 100.0, 'f', 1)));
 		if (!scale_options.isEmpty())
 		{
+			bool ok;
 			scale_options.prepend(tr("Don't scale"));
 			QString option = QInputDialog::getItem( window(),
 			  tr("Template import"),
 			  tr("How shall the symbols of the imported template map be scaled?"),
 			  scale_options, 0, false, &ok );
-			if (option.isEmpty())
+			if (!ok || option.isEmpty())
 				return;
 			else if (option == scale_options[0])
 				Q_ASSERT(scale == 1.0);
@@ -922,7 +922,7 @@ void TemplateListWidget::importClicked()
 				scale = current_scale;
 		}
 		
-		if (ok && scale != 1.0)
+		if (scale != 1.0)
 				template_map.scaleAllSymbols(scale);
 	}
 	else
