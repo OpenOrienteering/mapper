@@ -1498,7 +1498,6 @@ void FileFormatTest::ocdPathImportTest_data()
 		    0,
 		    0,
 		    MapCoord::ClosePoint | MapCoord::HolePoint,
-		    MapCoord::ClosePoint | MapCoord::HolePoint,
 		    0,
 		    0,
 		    MapCoord::ClosePoint
@@ -1523,8 +1522,6 @@ void FileFormatTest::ocdPathImportTest_data()
 		static int expected_flags_area[] = {
 		    0,
 		    0,
-		    MapCoord::ClosePoint | MapCoord::HolePoint,
-		    MapCoord::ClosePoint | MapCoord::HolePoint,
 		    MapCoord::ClosePoint | MapCoord::HolePoint,
 		    0,
 		    0,
