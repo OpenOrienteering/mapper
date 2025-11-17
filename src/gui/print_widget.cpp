@@ -1322,12 +1322,15 @@ void PrintWidget::exportToImage()
 	{
 		main_window->showStatusBarMessage(tr("Exported successfully to %1").arg(path), 4000);
 		if (world_file_check->isChecked())
-			exportWorldFile(path);  /// \todo Handle errors
+		{
+			if (!exportWorldFile(path))
+				QMessageBox::warning(this, tr("Error"), tr("Failed to save the world file."));
+		}
 		emit finished(0);
 	}
 }
 
-void PrintWidget::exportWorldFile(const QString& path) const
+bool PrintWidget::exportWorldFile(const QString& path) const
 {
 	const auto& georef = map->getGeoreferencing();
 	const auto& mm_to_world = georef.mapToProjected();
@@ -1339,7 +1342,7 @@ void PrintWidget::exportWorldFile(const QString& path) const
 	const auto top_left = georef.toProjectedCoords(MapCoord{map_printer->getPrintArea().topLeft()});
 	const QTransform pixel_to_world(xscale, yskew, 0, xskew, yscale, 0, top_left.x(), top_left.y());
 	const WorldFile world_file(pixel_to_world);
-	world_file.save(WorldFile::pathForImage(path));
+	return world_file.save(WorldFile::pathForImage(path));
 }
 
 void PrintWidget::exportToPdf()
