@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -173,6 +173,12 @@ public:
 	 *  Only available in MapPrinterOptions::Raster mode.
 	 */
 	bool simulate_overprinting;
+	
+	/** Controls if images shall be exported with transparent background (for suitable file formats).
+	 * 
+	 *  Only available in MapPrinterOptions::Raster mode.
+	 */
+	bool transparent_background = false;
 };
 
 
@@ -424,6 +430,9 @@ public slots:
 	/** Controls whether to print in overprinting simulation mode. */
 	void setSimulateOverprinting(bool enabled);
 	
+	/** Controls whether to export image with transparent background. */
+	void setTransparentBackground(bool enabled);
+	
 	/** Controls the color mode. */
 	void setColorMode(MapPrinterOptions::ColorMode color_mode);
 	
@@ -538,4 +547,4 @@ bool operator!=(const MapPrinterConfig& lhs, const MapPrinterConfig& rhs)
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_MAP_PRINTER_H
