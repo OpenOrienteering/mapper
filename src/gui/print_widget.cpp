@@ -1318,7 +1318,7 @@ void PrintWidget::exportToImage()
 	    && !path.endsWith(QLatin1String(".tif"), Qt::CaseInsensitive) && !path.endsWith(QLatin1String(".tiff"), Qt::CaseInsensitive) )
 	{
 		transparent_background = false;
-		QMessageBox::warning(this, tr("Warning"), tr("Transparent background not supported for this file format."));
+		QMessageBox::information(this, tr("Information"), tr("Transparent background is not supported for this file format.\nUsing a white background instead."));
 	}
 	
 	int dots_per_meter = qRound(pixel_per_mm * 1000);
