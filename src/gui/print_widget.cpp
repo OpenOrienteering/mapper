@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021 Kai Pastor
+ *    Copyright 2012-2021, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -301,6 +301,10 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	layout->addRow(world_file_check);
 	world_file_check->hide();
 	
+	transparent_background_check = new QCheckBox(tr("Make background transparent"));
+	layout->addRow(transparent_background_check);
+	transparent_background_check->hide();
+	
 	scrolling_content = new QWidget();
 	scrolling_content->setLayout(layout);
 	
@@ -357,6 +361,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(show_templates_check, &QAbstractButton::clicked, this, &PrintWidget::showTemplatesClicked);
 	connect(show_grid_check, &QAbstractButton::clicked, this, &PrintWidget::showGridClicked);
 	connect(overprinting_check, &QAbstractButton::clicked, this, &PrintWidget::overprintingClicked);
+	connect(transparent_background_check, &QAbstractButton::clicked, this, &PrintWidget::transparentBackgroundClicked);
 	connect(color_mode_combo, &QComboBox::currentTextChanged, this, &PrintWidget::colorModeChanged);
 	
 	connect(preview_button, &QAbstractButton::clicked, this, &PrintWidget::previewClicked);
@@ -669,6 +674,8 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 	// If MapCoord (0,0) maps to projected (0,0), then there is probably
 	// no point in writing a world file.
 	world_file_check->setChecked(!map->getGeoreferencing().toProjectedCoords(MapCoordF{}).isNull());
+	
+	transparent_background_check->setVisible(is_image_target);
 	
 	updateColorMode();
 }
@@ -1154,6 +1161,12 @@ void PrintWidget::overprintingClicked(bool checked)
 	map_printer->setSimulateOverprinting(checked);
 }
 
+// slot
+void PrintWidget::transparentBackgroundClicked(bool checked)
+{
+	map_printer->setTransparentBackground(checked);
+}
+
 void PrintWidget::colorModeChanged()
 {
 	if (color_mode_combo->currentData().toBool())
@@ -1299,11 +1312,20 @@ void PrintWidget::exportToImage()
 		return;
 	}
 	
+	bool transparent_background = map_printer->getOptions().transparent_background;
+	if (transparent_background
+		&& !path.endsWith(QLatin1String(".png"), Qt::CaseInsensitive)
+	    && !path.endsWith(QLatin1String(".tif"), Qt::CaseInsensitive) && !path.endsWith(QLatin1String(".tiff"), Qt::CaseInsensitive) )
+	{
+		transparent_background = false;
+		QMessageBox::information(this, tr("Information"), tr("Transparent background is not supported for this file format.\nUsing a white background instead."));
+	}
+	
 	int dots_per_meter = qRound(pixel_per_mm * 1000);
 	image.setDotsPerMeterX(dots_per_meter);
 	image.setDotsPerMeterY(dots_per_meter);
 	
-	image.fill(QColor(Qt::white));
+	image.fill(QColor(transparent_background ? Qt::transparent : Qt::white));
 	
 #if 0  // Pointless unless drawPage drives the event loop and sends progress
 	PrintProgressDialog progress(map_printer, main_window);

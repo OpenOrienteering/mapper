@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -755,6 +755,16 @@ void MapPrinter::setSimulateOverprinting(bool enabled)
 	else if (options.simulate_overprinting != enabled)
 	{
 		options.simulate_overprinting = enabled;
+		emit optionsChanged(options);
+	}
+}
+
+// slot
+void MapPrinter::setTransparentBackground(bool enabled)
+{
+	if (options.transparent_background != enabled)
+	{
+		options.transparent_background = enabled;
 		emit optionsChanged(options);
 	}
 }
