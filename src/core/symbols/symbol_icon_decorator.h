@@ -1,5 +1,6 @@
 /*
  *    Copyright 2014, 2018 Kai Pastor
+ *    Copyright 2025 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -85,6 +86,25 @@ private:
 	int pen_width;
 	int box_width;
 	int box_height;
+	QPoint offset;
+};
+
+
+/**
+ * Draws the decoration for a helper symbol.
+ * 
+ * A small blue gearwheel is drawn in the bottom-left corner of the icon.
+ */
+class HelperSymbolDecorator : public SymbolIconDecorator
+{
+public:
+	explicit HelperSymbolDecorator(int icon_size);
+	~HelperSymbolDecorator() override;
+	void draw(QPainter& p) const override;
+	
+private:
+	int pen_width;
+	int x_width;
 	QPoint offset;
 };
 
