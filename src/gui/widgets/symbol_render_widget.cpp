@@ -423,11 +423,11 @@ void SymbolRenderWidget::drawIcon(QPainter &painter, int i) const
 	if (symbol->isProtected())
 		protected_symbol_decoration->draw(painter);
 	
-	if (symbol->isHidden())
-		hidden_symbol_decoration->draw(painter);
-	
 	if (symbol->isHelperSymbol())
 		helper_symbol_decoration->draw(painter);
+	
+	if (symbol->isHidden())
+		hidden_symbol_decoration->draw(painter);
 	
 	if (isSymbolSelected(i))
 	{
