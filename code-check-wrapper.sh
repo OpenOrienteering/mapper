@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-#    Copyright 2017, 2018, 2024 Kai Pastor
+#    Copyright 2017, 2018, 2024, 2025 Kai Pastor
 #
 #    This file is part of OpenOrienteering.
 #    
@@ -97,6 +97,7 @@ for I in \
   stretch_map_dialog.cpp \
   style_t.cpp \
   /symbol.cpp \
+  symbol_icon_decorator.cpp \
   symbol_report \
   symbol_replacement.cpp \
   symbol_replacement_dialog.cpp \

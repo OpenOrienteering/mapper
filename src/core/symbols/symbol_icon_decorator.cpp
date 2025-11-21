@@ -1,5 +1,6 @@
 /*
  *    Copyright 2014, 2018 Kai Pastor
+ *    Copyright 2025 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,8 +20,13 @@
 
 #include "symbol_icon_decorator.h"
 
+#include <Qt>
 #include <QtMath>
+#include <QBrush>
 #include <QPainter>
+#include <QPen>
+#include <QPointF>
+#include <QRectF>
 
 
 namespace OpenOrienteering {
@@ -46,7 +52,7 @@ HiddenSymbolDecorator::~HiddenSymbolDecorator() = default;
 
 void HiddenSymbolDecorator::draw(QPainter& painter) const
 {
-	// Draw a lock symbol
+	// Draw a red x symbol
 	painter.save();
 	painter.setRenderHint(QPainter::Antialiasing, true);
 	
@@ -100,6 +106,43 @@ void ProtectedSymbolDecorator::draw(QPainter& painter) const
 	painter.setPen(arc_pen);
 	painter.drawRoundedRect((box_width-arc_size)/2, 0, arc_size, arc_size+pen_width, qreal(pen_width), qreal(pen_width));
 	painter.fillRect(0, arc_size, box_width, box_height, QBrush(Qt::darkGray));
+	
+	painter.restore();
+}
+
+
+
+//### HelperSymbolDecorator ###
+
+HelperSymbolDecorator::HelperSymbolDecorator(int icon_size)
+: pen_width(qMax(1, qCeil(0.06*icon_size)))
+, x_width(icon_size/6)
+, offset(x_width + 1 + pen_width, icon_size - x_width - 1 - pen_width)
+{
+	; // nothing else
+}
+
+HelperSymbolDecorator::~HelperSymbolDecorator() = default;
+
+void HelperSymbolDecorator::draw(QPainter& painter) const
+{
+	// Draw a gearwheel symbol
+	painter.save();
+	painter.setRenderHint(QPainter::Antialiasing, true);
+	
+	constexpr float sin45 = 0.7;
+	painter.translate(offset);
+	painter.setOpacity(1.0);
+	QPen pen(Qt::darkBlue);
+	pen.setWidth(pen_width);
+	painter.setPen(pen);
+	painter.drawLine(QPointF(-sin45*x_width, -sin45*x_width), QPointF(sin45*x_width, sin45*x_width));
+	painter.drawLine(QPointF(sin45*x_width, -sin45*x_width), QPointF(-sin45*x_width, sin45*x_width));
+	painter.drawLine(QPointF(-x_width, 0), QPointF(x_width, 0));
+	painter.drawLine(QPointF(0, -x_width), QPointF(0, x_width));
+	
+	painter.setBrush(Qt::white);
+	painter.drawEllipse(QRectF(QPointF(-0.6*x_width, -0.6*x_width), QPointF(0.6*x_width, 0.6*x_width)));
 	
 	painter.restore();
 }

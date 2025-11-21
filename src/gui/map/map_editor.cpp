@@ -2440,13 +2440,15 @@ void MapEditorController::selectedSymbolsChanged()
 				image = symbol->createIcon(*map, qMin(icon_size.width(), icon_size.height()));
 			else
 				image = image.scaled(icon_size.width(), icon_size.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-			if (symbol->isHidden() || symbol->isProtected())
+			if (symbol->isHidden() || symbol->isProtected() || symbol->isHelperSymbol())
 			{
 				QPainter p(&image);
 				if (symbol->isHidden())
 					HiddenSymbolDecorator(icon_size.width()).draw(p);
 				if (symbol->isProtected())
 					ProtectedSymbolDecorator(icon_size.width()).draw(p);
+				if (symbol->isHelperSymbol())
+					HelperSymbolDecorator(icon_size.width()).draw(p);
 			}
 			pixmap = QPixmap::fromImage(image);
 			
