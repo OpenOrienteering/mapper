@@ -140,6 +140,17 @@ private slots:
 	void ocdTextSymbolTest_data();
 	void ocdTextSymbolTest();
 	
+	/**
+	 * Test DXF export and import.
+	 */
+	void dxfExportTest_data();
+	void dxfExportTest();
+	
+	/**
+	 * Test SHP export and import.
+	 */
+	void shpExportTest_data();
+	void shpExportTest();
 };
 
 #endif // OPENORIENTEERING_FILE_FORMAT_T_H
