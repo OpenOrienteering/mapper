@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021 Kai Pastor
+ *    Copyright 2012-2021, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -300,6 +300,10 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	world_file_check = new QCheckBox(tr("Save world file"));
 	layout->addRow(world_file_check);
 	world_file_check->hide();
+	
+	transparent_background_check = new QCheckBox(tr("Transparent background"));
+	layout->addRow(transparent_background_check);
+	transparent_background_check->hide();
 	
 	scrolling_content = new QWidget();
 	scrolling_content->setLayout(layout);
@@ -669,6 +673,8 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 	// If MapCoord (0,0) maps to projected (0,0), then there is probably
 	// no point in writing a world file.
 	world_file_check->setChecked(!map->getGeoreferencing().toProjectedCoords(MapCoordF{}).isNull());
+	
+	transparent_background_check->setVisible(is_image_target);
 	
 	updateColorMode();
 }
@@ -1154,6 +1160,7 @@ void PrintWidget::overprintingClicked(bool checked)
 	map_printer->setSimulateOverprinting(checked);
 }
 
+
 void PrintWidget::colorModeChanged()
 {
 	if (color_mode_combo->currentData().toBool())
@@ -1299,11 +1306,20 @@ void PrintWidget::exportToImage()
 		return;
 	}
 	
+	bool transparent_background = transparent_background_check->isChecked();
+	if (transparent_background
+		&& !path.endsWith(QLatin1String(".png"), Qt::CaseInsensitive)
+	    && !path.endsWith(QLatin1String(".tif"), Qt::CaseInsensitive) && !path.endsWith(QLatin1String(".tiff"), Qt::CaseInsensitive) )
+	{
+		transparent_background = false;
+		QMessageBox::information(this, tr("Information"), tr("Transparent background is not supported for this file format.\nUsing a white background instead."));
+	}
+	
 	int dots_per_meter = qRound(pixel_per_mm * 1000);
 	image.setDotsPerMeterX(dots_per_meter);
 	image.setDotsPerMeterY(dots_per_meter);
 	
-	image.fill(QColor(Qt::white));
+	image.fill(QColor(transparent_background ? Qt::transparent : Qt::white));
 	
 #if 0  // Pointless unless drawPage drives the event loop and sends progress
 	PrintProgressDialog progress(map_printer, main_window);
