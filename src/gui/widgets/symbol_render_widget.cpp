@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2019 Kai Pastor
+ *    Copyright 2014-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -89,6 +89,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 , preferred_size(icons_per_row * icon_size, num_rows * icon_size)
 , hidden_symbol_decoration(new HiddenSymbolDecorator(icon_size))
 , protected_symbol_decoration(new ProtectedSymbolDecorator(icon_size))
+, helper_symbol_decoration(new HelperSymbolDecorator(icon_size))
 {	
 	setBackgroundRole(QPalette::Base);
 	setMouseTracking(true);
@@ -253,6 +254,7 @@ void SymbolRenderWidget::adjustLayout()
 	{
 		hidden_symbol_decoration.reset(new HiddenSymbolDecorator(icon_size));
 		protected_symbol_decoration.reset(new ProtectedSymbolDecorator(icon_size));
+		helper_symbol_decoration.reset(new HelperSymbolDecorator(icon_size));
 	}
 }
 
@@ -420,6 +422,9 @@ void SymbolRenderWidget::drawIcon(QPainter &painter, int i) const
 	
 	if (symbol->isProtected())
 		protected_symbol_decoration->draw(painter);
+	
+	if (symbol->isHelperSymbol())
+		helper_symbol_decoration->draw(painter);
 	
 	if (symbol->isHidden())
 		hidden_symbol_decoration->draw(painter);
