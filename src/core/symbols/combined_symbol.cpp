@@ -85,7 +85,7 @@ CombinedSymbol* CombinedSymbol::duplicate() const
 
 bool CombinedSymbol::validate() const
 {
-	return std::all_of(begin(parts), end(parts), [](auto& symbol) { return symbol->validate(); });
+	return std::all_of(begin(parts), end(parts), [](auto& symbol) { return !symbol || symbol->validate(); });
 }
 
 
