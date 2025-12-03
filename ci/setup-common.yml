@@ -1,6 +1,6 @@
 # This file is part of OpenOrienteering.
 
-# Copyright 2019, 2021, 2023, 2024 Kai Pastor
+# Copyright 2019, 2021, 2023-2025 Kai Pastor
 #
 # Redistribution and use is allowed according to the terms of the BSD license:
 #
@@ -42,7 +42,7 @@ steps:
     echo "##vso[task.setVariable variable=VERSION_DISPLAY]${VERSION_DISPLAY}"
     echo "##vso[task.setVariable variable=SOURCE_DIR]${BUILD_SOURCESDIRECTORY}"
     echo "##vso[task.setVariable variable=TEST_RESULTS]${BUILD_SOURCESDIRECTORY}/build/default/openorienteering-mapper-ci/Testing"
-    echo "##vso[task.setVariable variable=CMAKE_WRAPPING]-E env bash ${BUILD_SOURCESDIRECTORY}/ci/shell.sh cmake"
+    echo "##vso[task.setVariable variable=CMAKE_WRAPPING]${CMAKE_WRAPPING:=-E env bash ${BUILD_SOURCESDIRECTORY}/ci/shell.sh ${CMAKE:-cmake}}"
     echo "##vso[task.setVariable variable=TARGET_SUFFIX]${TARGET_SUFFIX}"
     echo "##vso[task.setVariable variable=CTEST_OUTPUT_ON_FAILURE]1"
     if [ -z "${OUTPUT_SUFFIX}" ] ; then
