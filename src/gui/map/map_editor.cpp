@@ -993,7 +993,7 @@ void MapEditorController::createActions()
 	paste_act = newAction("paste", tr("&Paste"), paste_act_mapper, SLOT(map()), "paste", QString{}, "edit_menu.html");
 	paste_act->setMenuRole(QAction::TextHeuristicRole);
 	paste_act_mapper->setMapping(paste_act, 1);
-	paste_original_act = newAction("paste-original", tr("Paste at original location"), paste_act_mapper, SLOT(map()), nullptr, QString{}, "edit_menu.html");
+	paste_original_act = newAction("paste-original", tr("Paste at original location"), paste_act_mapper, SLOT(map()), "paste-at-location.png", QString{}, "edit_menu.html");
 	paste_original_act->setMenuRole(QAction::TextHeuristicRole);
 	paste_act_mapper->setMapping(paste_original_act, 0);
 	delete_act = newAction("delete", tr("Delete"), this, SLOT(deleteClicked()), "delete.png", QString{}, "toolbars.html#delete");
