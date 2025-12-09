@@ -38,6 +38,8 @@ private slots:
 	void paintOnTemplateFeature();
 	
 	void testFindObjects();
+	
+	void testDeleteObjectTags();
 };
 
 #endif
