@@ -67,7 +67,7 @@ bool operator==(const GeorefCoreData& lhs, const GeorefCoreData& rhs)
 	        && lhs.grivation == rhs.grivation
 	        && lhs.ref_point == rhs.ref_point
 	        && lhs.crs_id == rhs.crs_id
-	        && std::equal(lhs.crs_parameters.begin(), lhs.crs_parameters.begin(), rhs.crs_parameters.begin());
+	        && std::equal(lhs.crs_parameters.begin(), lhs.crs_parameters.end(), rhs.crs_parameters.begin());
 }
 
 namespace QTest
@@ -102,7 +102,7 @@ char* toString(const OcdGeorefFields &f) // NOLINT : declared parameter name is 
 	return qstrdup(qUtf8Printable(ret));
 }
 
-}  // namesapce QTest
+}  // namespace QTest
 
 namespace {
 
