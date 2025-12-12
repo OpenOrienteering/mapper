@@ -466,7 +466,7 @@ bool GdalManager::isFormatEnabled(GdalManager::FileFormat format) const
 
 void GdalManager::setExportOptionEnabled(GdalManager::ExportOption option, bool enabled)
 {
-	return p->setExportOptionEnabled(option, enabled);
+	p->setExportOptionEnabled(option, enabled);
 }
 
 bool GdalManager::isExportOptionEnabled(GdalManager::ExportOption option) const
@@ -476,7 +476,7 @@ bool GdalManager::isExportOptionEnabled(GdalManager::ExportOption option) const
 
 void GdalManager::setImportOptionEnabled(GdalManager::ImportOption option, bool enabled)
 {
-	return p->setImportOptionEnabled(option, enabled);
+	p->setImportOptionEnabled(option, enabled);
 }
 
 bool GdalManager::isImportOptionEnabled(GdalManager::ImportOption option) const
