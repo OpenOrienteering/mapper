@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2021, 2025 Kai Pastor
  *    Copyright 2021 Libor Pecháček
  *
  *    This file is part of OpenOrienteering.
@@ -358,7 +358,6 @@ constexpr struct
     { OcdGrid::Slovakia, 2, 28403 }, // Pulkovo_1942_GK_Zone_3
     { OcdGrid::Slovakia, 3, 28404 }, // Pulkovo 1942 / Gauss-Kruger zone 4
     { OcdGrid::Slovenia, 1, 3912 }, // MGI 1901 / Slovene National Grid
-    { OcdGrid::Slovenia, 1, 3912 }, // MGI 1901 / Slovene National Grid
     { OcdGrid::Slovenia, 2, 3794 }, // Slovenia 1996 / Slovene National Grid
     { OcdGrid::SouthAfrica, 1, 2046 }, // Hartebeesthoek94 / Lo15
     { OcdGrid::SouthAfrica, 2, 2047 }, // Hartebeesthoek94 / Lo17
@@ -525,7 +524,7 @@ constexpr struct
     { OcdGrid::Usa, 120, 32156 }, // NAD83 / Wyoming East Central
     { OcdGrid::Usa, 121, 32157 }, // NAD83 / Wyoming West Central
     { OcdGrid::Usa, 122, 32158 }, // NAD83 / Wyoming West
-    { OcdGrid::Usa, 123, 32158 }, // NAD83 / Wyoming West
+    { OcdGrid::Usa, 123, 32161 }, // NAD83 / Puerto Rico & Virgin Is.
     { OcdGrid::UsaFeet, 1, 102629 }, // NAD_1983_StatePlane_Alabama_East_FIPS_0101_Feet
     { OcdGrid::UsaFeet, 2, 102630 }, // NAD_1983_StatePlane_Alabama_West_FIPS_0102_Feet
     { OcdGrid::UsaFeet, 13, 2222 }, // NAD83 / Arizona East (ft)
@@ -555,8 +554,8 @@ constexpr struct
     { OcdGrid::UsaFeet, 41, 2243 }, // NAD83 / Idaho West (ftUS)
     { OcdGrid::UsaFeet, 42, 3435 }, // NAD83 / Illinois East (ftUS)
     { OcdGrid::UsaFeet, 43, 3436 }, // NAD83 / Illinois West (ftUS)
-    { OcdGrid::UsaFeet, 44, 2244 }, //
-    { OcdGrid::UsaFeet, 45, 2245 }, //
+    { OcdGrid::UsaFeet, 44, 2244 }, // NAD83 / Indiana East (ftUS) (deprecated record)
+    { OcdGrid::UsaFeet, 45, 2245 }, // NAD83 / Indiana West (ftUS) (deprecated record)
     { OcdGrid::UsaFeet, 46, 3417 }, // NAD83 / Iowa North (ftUS)
     { OcdGrid::UsaFeet, 47, 3418 }, // NAD83 / Iowa South (ftUS)
     { OcdGrid::UsaFeet, 48, 3419 }, // NAD83 / Kansas North (ftUS)
@@ -609,7 +608,7 @@ constexpr struct
     { OcdGrid::UsaFeet, 95, 2272 }, // NAD83 / Pennsylvania South (ftUS)
     { OcdGrid::UsaFeet, 96, 3438 }, // NAD83 / Rhode Island (ftUS)
     { OcdGrid::UsaFeet, 97, 2273 }, // NAD83 / South Carolina (ft)
-    { OcdGrid::UsaFeet, 98, 3454 }, //
+    { OcdGrid::UsaFeet, 98, 3454 }, // NAD83 / South Dakota North (ftUS) (deprecated record)
     { OcdGrid::UsaFeet, 99, 3455 }, // NAD83 / South Dakota South (ftUS)
     { OcdGrid::UsaFeet, 100, 2274 }, // NAD83 / Tennessee (ftUS)
     { OcdGrid::UsaFeet, 101, 2275 }, // NAD83 / Texas North (ftUS)
