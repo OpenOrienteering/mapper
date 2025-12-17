@@ -353,7 +353,7 @@ public slots:
 	/** Shows the map information. */
 	void mapInfoClicked();
 	/** Shows the TagRemoveDialog. */
-	void cleanupObjectTagsClicked();
+	void removeObjectTagsClicked();
 	
 	/** Shows or hides the template setup dock widget. */
 	void showTemplateWindow(bool show);
@@ -754,7 +754,7 @@ private:
 	QAction* rotate_map_act = {};
 	QAction* map_notes_act = {};
 	QAction* map_info_act = {};
-	QAction* cleanup_tags_act = {};
+	QAction* remove_tags_act = {};
 	QAction* symbol_set_id_act = {};
 	std::unique_ptr<SymbolReportFeature> symbol_report_feature;
 	
