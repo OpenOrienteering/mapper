@@ -21,6 +21,7 @@
 #define OPENORIENTEERING_TAG_REMOVE_DIALOG_H
 
 #include <set>
+#include <utility>
 
 #include <QDialog>
 #include <QObject>
@@ -31,6 +32,7 @@ class QLabel;
 class QLineEdit;
 class QPlainTextEdit;
 class QPushButton;
+class QStackedWidget;
 class QString;
 class QWidget;
 
@@ -62,6 +64,7 @@ private slots:
 	
 private:
 	void reset();
+	std::pair<QString, int> getPatternAndOperation() const;
 	
 	QPushButton* find_button;
 	QPushButton* remove_button;
@@ -70,6 +73,8 @@ private:
 	QLabel* number_matching_objects;
 	QLabel* number_matching_keys;
 	QLineEdit* pattern_edit;
+	QComboBox* pattern_select;
+	QStackedWidget* pattern_choice;
 	QPlainTextEdit* matching_keys_details;
 	
 	Map *map;

@@ -39,6 +39,9 @@
 #include <QMessageBox>
 #include <QPlainTextEdit>
 #include <QPushButton>
+#include <QSignalBlocker>
+#include <QStackedWidget>
+#include <QStringList>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -82,7 +85,12 @@ TagRemoveDialog::TagRemoveDialog(QWidget* parent, Map* map)
 	}
 	search_operation_layout->addWidget(compare_op);
 	pattern_edit = new QLineEdit();
-	search_operation_layout->addWidget(pattern_edit);
+	pattern_select = new QComboBox();
+	pattern_choice = new QStackedWidget();
+	pattern_choice->addWidget(pattern_select);
+	pattern_choice->addWidget(pattern_edit);
+	
+	search_operation_layout->addWidget(pattern_choice);
 	
 	undo_check = new QCheckBox(tr("Add undo step"));
 	number_matching_objects = new QLabel();
@@ -115,6 +123,9 @@ TagRemoveDialog::TagRemoveDialog(QWidget* parent, Map* map)
 	connect(remove_button, &QAbstractButton::clicked, this, &TagRemoveDialog::removeClicked);
 	connect(pattern_edit, &QLineEdit::textChanged, this, &TagRemoveDialog::textChanged);
 	connect(compare_op, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TagRemoveDialog::comboBoxChanged);
+	connect(pattern_select, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TagRemoveDialog::findClicked);
+	
+	comboBoxChanged();
 }
 
 TagRemoveDialog::~TagRemoveDialog() = default;
@@ -131,6 +142,33 @@ void TagRemoveDialog::textChanged(const QString& text)
 void TagRemoveDialog::comboBoxChanged()
 {
 	reset();
+	pattern_choice->setCurrentIndex(compare_op->currentIndex() <= 1 ? 0 : 1);
+	if (compare_op->currentIndex() >= 2)
+	{
+		find_button->setEnabled(!pattern_edit->text().trimmed().isEmpty());
+		if (!pattern_edit->text().trimmed().isEmpty())
+			findClicked();
+		return;
+	}
+	
+	std::set<QString> all_keys;
+	findMatchingTags(map, QString(), 1 /* is not */, all_keys);		// empty keys are not possible, so "QString(), 1" will match all keys
+	if (!all_keys.empty())
+	{
+		QSignalBlocker block(pattern_select);
+		pattern_select->clear();
+		if (compare_op->currentIndex() == 0)	// is
+		{
+			pattern_select->addItem(tr("- any key -"));
+		}
+		pattern_select->addItems(QStringList(all_keys.begin(), all_keys.end()));
+		find_button->setEnabled(true);
+	}
+	else
+	{
+		find_button->setEnabled(false);
+	}
+	findClicked();
 }
 
 void TagRemoveDialog::reset()
@@ -141,11 +179,31 @@ void TagRemoveDialog::reset()
 	remove_button->setEnabled(false);
 }
 
+std::pair<QString, int> TagRemoveDialog::getPatternAndOperation() const
+{
+	QString pattern;
+	auto op = compare_op->currentIndex();
+	
+	if (op <= 1)
+	{
+		if (op == 0 && pattern_select->currentIndex() == 0)	// - any key -
+			op = 1;
+		else
+			pattern = pattern_select->currentText();
+	}
+	else
+		pattern = pattern_edit->text();
+
+	return {pattern, op};
+}
+
 // slot
 void TagRemoveDialog::findClicked()
 {
 	std::set<QString> matching_keys;
-	const auto objects_count = findMatchingTags(map, pattern_edit->text(), compare_op->currentIndex(), matching_keys);
+	
+	const auto res = getPatternAndOperation();
+	const auto objects_count = findMatchingTags(map, res.first, res.second, matching_keys);
 	
 	number_matching_objects->setText(tr("Number of matching objects: %1").arg(objects_count));
 	number_matching_keys->setText(tr("%n matching key(s):", nullptr, matching_keys.size()));
@@ -191,12 +249,13 @@ void TagRemoveDialog::removeClicked()
 {
 	const auto add_undo = undo_check->isChecked();
 	
-	auto question = QString(tr("Do you really want to remove the found object tags?"));
+	auto question = QString(tr("Do you really want to remove the object tags?"));
 	if (!add_undo)
 		question += QChar::LineFeed + QString(tr("This cannot be undone."));
 	if (QMessageBox::question(this, tr("Remove object tags"), question, QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
 	{
-		removeMatchingTags(map, pattern_edit->text(), compare_op->currentIndex(), add_undo);
+		const auto res = getPatternAndOperation();
+		removeMatchingTags(map, res.first, res.second, add_undo);
 		accept();
 	}
 }
