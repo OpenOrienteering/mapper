@@ -161,7 +161,10 @@ void TagRemoveDialog::comboBoxChanged()
 		{
 			pattern_select->addItem(tr("- any key -"));
 		}
-		pattern_select->addItems(QStringList(all_keys.begin(), all_keys.end()));
+		QStringList keys_list;
+		for (const auto& key : all_keys)
+			keys_list.append(key);
+		pattern_select->addItems(keys_list);
 		find_button->setEnabled(true);
 	}
 	else
