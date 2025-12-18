@@ -197,7 +197,7 @@ function(add_copyright var name path)
 		  OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${target}/${name}"
 		  INPUT  "${path}"
 		)
-	elseif()
+	else()
 		message(FATAL_ERROR "Cannot create link for ${name}, ${path}, ${target}")
 	endif()
 	set(${var} "${${var}}" PARENT_SCOPE)
