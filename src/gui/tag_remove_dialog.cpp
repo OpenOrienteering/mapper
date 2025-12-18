@@ -41,7 +41,6 @@
 #include <QPushButton>
 #include <QSignalBlocker>
 #include <QStackedWidget>
-#include <QStringList>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -161,10 +160,8 @@ void TagRemoveDialog::comboBoxChanged()
 		{
 			pattern_select->addItem(tr("- any key -"));
 		}
-		QStringList keys_list;
 		for (const auto& key : all_keys)
-			keys_list.append(key);
-		pattern_select->addItems(keys_list);
+			pattern_select->addItem(key);
 		find_button->setEnabled(true);
 	}
 	else
