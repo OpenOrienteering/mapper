@@ -1489,7 +1489,7 @@ void MapEditorController::createMobileGUI()
 		for (auto i = 0; i < map->getNumParts(); ++i)
 		{
 			auto* part = map->getPart(i);
-			auto* action = mappart_menu->addAction(part->getName());
+			auto* action = mappart_menu->addAction(part->isVisible() ? QIcon() : QIcon(QString::fromLatin1(":/images/hidden-eye.png")), part->getName());
 			action->setCheckable(true);
 			action->setActionGroup(mappart_group);
 			if (part == map->getCurrentPart())
@@ -3834,7 +3834,7 @@ void MapEditorController::updateMapPartsUI()
 	}
 	if (mappart_visibility_act && count)
 	{
-		MapPart* const part = map->getCurrentPart();
+		const auto* part = map->getCurrentPart();
 		mappart_visibility_act->setText(part->isVisible() ? tr("Hide current part") : tr("Show current part"));
 	}
 	
@@ -3843,17 +3843,18 @@ void MapEditorController::updateMapPartsUI()
 		const int current = map->getCurrentPartIndex();
 		for (int i = 0; i < count; ++i)
 		{
-			QString part_name = map->getPart(i)->getName();
-			mappart_selector_box->addItem(part_name);
+			const auto part_name = map->getPart(i)->getName();
+			const QIcon icon = map->getPart(i)->isVisible() ? QIcon() : QIcon(QString::fromLatin1(":/images/hidden-eye.png"));
+			mappart_selector_box->addItem(icon, part_name);
 			
 			if (i != current)
 			{
-				auto* action = new QAction(part_name, this);
+				auto* action = new QAction(icon, part_name, this);
 				mappart_merge_mapper->setMapping(action, i);
 				connect(action, QOverload<bool>::of(&QAction::triggered), mappart_merge_mapper, QOverload<>::of(&QSignalMapper::map));
 				mappart_merge_menu->addAction(action);
 				
-				action = new QAction(part_name, this);
+				action = new QAction(icon, part_name, this);
 				mappart_move_mapper->setMapping(action, i);
 				connect(action, QOverload<bool>::of(&QAction::triggered), mappart_move_mapper, QOverload<>::of(&QSignalMapper::map));
 				mappart_move_menu->addAction(action);
