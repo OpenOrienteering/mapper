@@ -3833,7 +3833,10 @@ void MapEditorController::updateMapPartsUI()
 		for (int i = 0; i < count; ++i)
 		{
 			QString part_name = map->getPart(i)->getName();
-			mappart_selector_box->addItem(part_name);
+			if (map->getPart(i)->isVisible())
+				mappart_selector_box->addItem(part_name);
+			else
+				mappart_selector_box->addItem(QIcon(QString::fromLatin1(":/images/hidden-eye.png")), part_name);
 			
 			if (i != current)
 			{
