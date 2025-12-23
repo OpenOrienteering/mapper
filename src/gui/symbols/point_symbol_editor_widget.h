@@ -74,9 +74,9 @@ public:
 	 * @param symbol The point symbol to be edited
 	 * @param role The role of the symbol to be edited
 	 * @param offset_y The vertical offset of the point symbol preview/editor from the origin
-	 * @param parent Standard QWidget parentship
+	 * @param source_map The source map
 	 */
-	PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, SymbolRole role = PrimarySymbol, qreal offset_y = 0, QWidget* parent = nullptr);
+	PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, SymbolRole role = PrimarySymbol, qreal offset_y = 0, Map* source_map = nullptr);
 	
 	~PointSymbolEditorWidget() override;
 	
@@ -130,6 +130,8 @@ private slots:
 	void deleteCoordClicked();
 	void centerCoordsClicked();
 	
+	void importSelectedObjects();
+	
 private:
 	void initElementList();
 	void updateCoordsTable();
@@ -142,6 +144,13 @@ private:
 	Symbol* getCurrentElementSymbol();
 	Object* getCurrentElementObject();
 	
+	void importPointObject(const Object* object, MapCoordF& selection_center);
+	void importAreaObject(const Object* object, MapCoordF& selection_center);
+	void importLineObject(const Object* object, MapCoordF& selection_center);
+	void importCombinedObject(const Object* object, MapCoordF& selection_center);
+	MapCoordF determineSelectionCenter();
+	void addNewSymbol(Object* new_object, Symbol* new_symbol);
+	
 	PointSymbol* const symbol;
 	PointObject* midpoint_object = nullptr;
 	const MapCoordF object_origin_coord;
@@ -151,6 +160,7 @@ private:
 	QListWidget* element_list;
 	QPushButton* delete_element_button;
 	QPushButton* center_all_elements_button;
+	QPushButton* import_objects_button;
 	
 	QStackedWidget* element_properties_widget;
 	
@@ -179,6 +189,7 @@ private:
 	const qreal offset_y;
 	PointSymbolEditorActivity* activity;
 	Map* map;
+	Map* source_map;
 	MapEditorController* controller;
 	const bool permanent_preview;
 };
