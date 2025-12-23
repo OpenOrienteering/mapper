@@ -179,6 +179,18 @@ public:
 	
 	
 	/**
+	 * Changes the visibility of an object.
+	 * 
+	 * Even when linked to a map, an object may be invisible when it is in a
+	 * hidden map part.
+	 */
+	void setVisible(bool visible);
+	
+	/** Returns the object's visibility. */
+	bool isVisible() const noexcept { return visible; }
+	
+	
+	/**
 	 * If the output_dirty flag is set, regenerates output and extent, and updates the object's map (if set).
 	 * 
 	 * Returns true if output was dirty.
@@ -331,6 +343,7 @@ protected:
 private:
 	qreal rotation = 0;               ///< The object's rotation (in radians).
 	mutable bool output_dirty = true; // does the output have to be re-generated because of changes?
+	bool visible = true;              ///< The object's renderables are in a visible map part.
 	mutable QRectF extent;            // only valid after calling update()
 	mutable ObjectRenderables output; // only valid after calling update()
 };
