@@ -1,6 +1,6 @@
 /*
  *    Copyright 2017-2019, 2025 Kai Pastor
- *    Copyright 2025 Matthias Kühlewein
+ *    Copyright 2026 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *

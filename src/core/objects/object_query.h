@@ -24,6 +24,8 @@
 
 #include <memory>
 
+#include "core/objects/dynamic_object_query.h"
+
 #include <QCoreApplication>
 #include <QMetaType>
 #include <QString>
@@ -77,6 +79,7 @@ public:
 		
 		// More operators, 32 ..
 		OperatorSymbol   = 32, ///< Test the symbol for equality.
+		OperatorDynamic  = 33,
 		
 		OperatorInvalid  = 0   ///< Marks an invalid query
 	};
@@ -146,6 +149,10 @@ public:
 	 */
 	ObjectQuery(const Symbol* symbol) noexcept;
 	
+	/**
+	 * Constructs a query for .
+	 */
+	ObjectQuery(const DynamicObjectQuery* dynamic_query) noexcept;
 	
 	/**
 	 * Returns a query which is the negation of the sub-query.
@@ -229,6 +236,7 @@ private:
 		LogicalOperands subqueries;
 		StringOperands  tags;
 		SymbolOperand   symbol;
+		const DynamicObjectQuery* dynamic_query;
 	};
 	
 };
@@ -300,6 +308,7 @@ public:
 		TokenLeftParen,
 		TokenRightParen,
 		TokenNumericalOperator,
+		TokenDynamicQuery,
 	};
 	
 private:
@@ -309,10 +318,13 @@ private:
 	
 	const Symbol* findSymbol(const QString& key) const;
 	
+	DynamicObjectQueryManager dynamic_object_manager;
 	const Map* map = nullptr;
 	QStringRef input;
 	QStringRef token_text;
+	QStringRef token_attributes_text;
 	TokenType token;
+	DynamicObjectQuery* dynamic_token;
 	int token_start = -1;
 	int pos;
 };
