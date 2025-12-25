@@ -2188,6 +2188,7 @@ void OgrFileExport::setupQuirks(GDALDriverH po_driver)
 	    { "DGNv8",         GeorefOptional },
 	    { "DWG",           GeorefOptional },
 	    { "DXF",           OgrQuirks() | GeorefOptional | SingleLayer | UseLayerField },
+	    { "GeoJSON",       SingleLayer },
 	    { "Geomedia",      GeorefOptional },
 	    { "GPX",           NeedsWgs84 },
 	    { "INGRES",        GeorefOptional },
