@@ -353,6 +353,7 @@ void MapFindTextEdit::contextMenuEvent(QContextMenuEvent* event)
 	
 	auto keywords = Object::getObjectProperties();
 	keywords.insert(keywords.end(), {QLatin1String("SYMBOL"), QLatin1String("AND"), QLatin1String("OR"), QLatin1String("NOT")});
+	keywords.insert(keywords.end(), {QLatin1String("AREA("), QLatin1String("LINE("), QLatin1String("SYMBOL(")});
 	for (auto& keyword : keywords)
 	{
 		auto* action = new QAction(keyword, this);

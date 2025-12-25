@@ -148,7 +148,7 @@ public:
  * Create a cheap placeholder ObjectQuery.
  * 
  * During object query parsing, operands right of operators are unknown
- * at construction time. However, ObjectQuery does not allowed to construct
+ * at construction time. However, ObjectQuery does not allow to construct
  * logical query instances with invalid operands. This function creates valid
  * placeholders which can be replaced with an invalid operand in a second step.
  */
@@ -224,6 +224,10 @@ ObjectQuery::ObjectQuery(const ObjectQuery& query)
 	{
 		symbol = query.symbol;
 	}
+	else if (op == ObjectQuery::OperatorDynamic)
+	{
+		dynamic_query = query.dynamic_query;
+	}
 }
 
 
@@ -251,7 +255,7 @@ ObjectQuery& ObjectQuery::operator=(ObjectQuery&& proto) noexcept
 		return *this;
 	
 	reset();
-	consume(std::move(proto));	
+	consume(std::move(proto));
 	return *this;
 }
 
@@ -336,6 +340,14 @@ ObjectQuery::ObjectQuery(const Symbol* symbol) noexcept
 }
 
 
+ObjectQuery::ObjectQuery(const DynamicObjectQuery* dynamic_query) noexcept
+: op { ObjectQuery::OperatorDynamic }
+, dynamic_query { dynamic_query }
+{
+	// nothing else
+}
+
+
 // static
 ObjectQuery ObjectQuery::negation(ObjectQuery query) noexcept
 {
@@ -387,6 +399,10 @@ QString ObjectQuery::labelFor(ObjectQuery::Operator op)
 	case OperatorSymbol:
 		//: Very short label
 		return tr("Symbol");
+		
+	case OperatorDynamic:
+		//: Very short label
+		return tr("Dynamic");
 		
 	case OperatorInvalid:
 		//: Very short label
@@ -522,6 +538,10 @@ bool ObjectQuery::operator()(const Object* object) const
 	case OperatorSymbol:
 		return object->getSymbol() == symbol;
 		
+	case OperatorDynamic:
+		Q_ASSERT(dynamic_query);
+		return DynamicObjectQueryManager::performDynamicQuery(object, dynamic_query);
+		
 	case OperatorInvalid:
 		return false;
 	}
@@ -631,6 +651,7 @@ QString ObjectQuery::toString() const
 		ret = QLatin1String("SYMBOL \"") + (symbol ? symbol->getNumberAsString() : QString{}) + QLatin1Char('\"');
 		break;
 		
+	case OperatorDynamic:	//TODO
 	case OperatorInvalid:
 		// Default empty string is sufficient
 		break;
@@ -661,6 +682,13 @@ void ObjectQuery::reset()
 	{
 		op = ObjectQuery::OperatorInvalid;
 	}
+	else if (op == ObjectQuery::OperatorDynamic)
+	{
+		Q_ASSERT(dynamic_query);
+		if (dynamic_query)
+			delete dynamic_query;
+		op = ObjectQuery::OperatorInvalid;
+	}
 }
 
 
@@ -685,6 +713,10 @@ void ObjectQuery::consume(ObjectQuery&& other)
 	else if (op == ObjectQuery::OperatorSymbol)
 	{
 		symbol = other.symbol;
+	}
+	else if (op == ObjectQuery::OperatorDynamic)
+	{
+		dynamic_query = other.dynamic_query;
 	}
 	other.op = ObjectQuery::OperatorInvalid;
 }
@@ -723,6 +755,9 @@ bool operator==(const ObjectQuery& lhs, const ObjectQuery& rhs)
 		
 	case ObjectQuery::OperatorSymbol:
 		return lhs.symbol == rhs.symbol;
+		
+	case ObjectQuery::OperatorDynamic:
+		return lhs.dynamic_query == rhs.dynamic_query;
 		
 	case ObjectQuery::OperatorInvalid:
 		return false;
@@ -918,6 +953,11 @@ ObjectQuery ObjectQueryParser::parse(const QString& text)
 			}
 			getToken();
 		}
+		else if (token == TokenDynamicQuery && !*current)
+		{
+			*current = ObjectQuery{dynamic_token};
+			getToken();
+		}
 		else
 		{
 			// Invalid input
@@ -1045,6 +1085,29 @@ void ObjectQueryParser::getToken()
 			token = TokenAnd;
 		else if (token_text == QLatin1String("NOT"))
 			token = TokenNot;
+		else if (current == QLatin1Char('('))
+		{
+			int token_attributes_start = ++pos;
+			for ( ; pos < input.length(); ++pos)
+			{
+				if (input.at(pos) == QLatin1Char(')'))
+				{
+					token_attributes_text = input.mid(token_attributes_start, pos - token_attributes_start);	// n == 0 ?
+					//qDebug("Token: %s\n",qUtf8Printable(token_text.toString()));
+					//qDebug("Tokenattr.: %s\n",qUtf8Printable(token_attributes_text.toString()));
+					dynamic_token = dynamic_object_manager.parse(token_text, token_attributes_text); //TODO: make smartptr?
+					if (dynamic_token)
+					{
+						if (dynamic_token->IsValid())
+							token = TokenDynamicQuery;
+						else
+							delete dynamic_token;	// TODO: show information about failure
+					}
+					++pos;
+					break;
+				}
+			}
+		}
 		else if (token_text == QLatin1String("SYMBOL"))
 			token = TokenSymbol;
 		else
