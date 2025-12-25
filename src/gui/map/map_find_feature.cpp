@@ -1,6 +1,6 @@
 /*
  *    Copyright 2017-2020, 2024, 2025 Kai Pastor
- *    Copyright 2025 Matthias Kühlewein
+ *    Copyright 2026 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -36,11 +36,13 @@
 #include <QPoint>
 #include <QPushButton>
 #include <QStackedLayout>
+#include <QTextCursor>
 #include <QVariant>
 #include <QWidget>
 
 #include "core/map.h"
 #include "core/map_part.h"
+#include "core/objects/dynamic_object_query.h"
 #include "core/objects/object.h"
 #include "core/objects/object_query.h"
 #include "core/symbols/symbol.h"
@@ -189,7 +191,6 @@ ObjectQuery MapFindFeature::makeQuery() const
 					query = ObjectQuery{ ObjectQuery(ObjectQuery::OperatorSearch, text),
 					        ObjectQuery::OperatorOr,
 					        ObjectQuery(ObjectQuery::OperatorObjectText, text) };
-			
 			}
 		}
 		else
@@ -340,6 +341,12 @@ void MapFindTextEdit::insertKeyword(QAction* action)
 {
 	const auto keyword = action->data().toString();
 	insertPlainText(keyword);
+	if (keyword.endsWith(QLatin1Char(')')))
+	{
+		auto position = textCursor();
+		if (position.movePosition(QTextCursor::Left))
+			setTextCursor(position);
+	}
 }
 
 // override
@@ -351,8 +358,13 @@ void MapFindTextEdit::contextMenuEvent(QContextMenuEvent* event)
 	insert_menu->menuAction()->setMenuRole(QAction::NoRole);
 	auto* keyword_actions_group = new QActionGroup(this);
 	
-	auto keywords = Object::getObjectProperties();
-	keywords.insert(keywords.end(), {QLatin1String("SYMBOL"), QLatin1String("AND"), QLatin1String("OR"), QLatin1String("NOT")});
+	//auto keywords = Object::getObjectProperties();	TBR
+	bool append = false;;
+	auto keywords = DynamicObjectQueryManager::getContextKeywords(toPlainText(), textCursor().position(), append);
+	if (append)
+	{
+		keywords.append({QLatin1String(" SYMBOL "), QLatin1String(" AND " ), QLatin1String(" OR "), QLatin1String(" NOT ")});
+	}
 	for (auto& keyword : keywords)
 	{
 		auto* action = new QAction(keyword, this);
