@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -530,6 +530,12 @@ public:
 	
 	inline const QString& getTemplateFilename() const {return template_file;}
 	
+	inline const QString& getTemplateCustomname() const {return template_custom_name;}
+	inline void setTemplateCustomname(const QString& template_custom_name) {this->template_custom_name = template_custom_name;}
+	
+	inline bool getCustomnamePreference() const {return custom_name_preference;}
+	inline void setCustomnamePreference(bool custom_name_preference) {this->custom_name_preference = custom_name_preference;}
+	
 	/// Changes the path and filename only. Does not do any reloading etc.
 	void setTemplateFileInfo(const QFileInfo& file_info);
 	
@@ -753,6 +759,12 @@ protected:
 	/// Can be empty as long as the map file has not been saved yet.
 	QString template_relative_path;
 	
+	/// The custom name of the template set by the user
+	QString template_custom_name;
+	
+	/// User preference to show custom name instead of filename
+	bool custom_name_preference = false;
+	
 	/// The template lifetime state
 	State template_state = Configuring;
 	
@@ -811,4 +823,4 @@ protected:
 Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Template::ScribbleOptions)
 
 
-#endif
+#endif // OPENORIENTEERING_TEMPLATE_H
