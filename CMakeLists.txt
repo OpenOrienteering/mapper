@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2025 Kai Pastor
+#    Copyright 2012-2026 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -39,7 +39,7 @@ option(CMAKE_FIND_PACKAGE_PREFER_CONFIG "Lookup package config files before usin
 # Project declaration
 
 project(Mapper VERSION 0.9.7 LANGUAGES CXX C)
-set(Mapper_COPYRIGHT "(C) 2025 The OpenOrienteering developers")
+set(Mapper_COPYRIGHT "(C) 2026 The OpenOrienteering developers")
 
 math(EXPR Mapper_VERSION_CODE "${Mapper_VERSION_MAJOR} * 10000 + ${Mapper_VERSION_MINOR} * 100 + ${Mapper_VERSION_PATCH} * 2 + ${CMAKE_SIZEOF_VOID_P} / 4 - 1")
 
