@@ -357,7 +357,11 @@ DynamicObjectQuery::DynamicObjectQuery(Type type) noexcept
 
 void DynamicObjectQuery::parseTokenAttributes(QStringRef token_attributes_text)
 {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
 	attributes = token_attributes_text.toString().split(QLatin1Char(';'), Qt::SkipEmptyParts);
+#else
+	attributes = token_attributes_text.toString().split(QLatin1Char(';'), QString::SkipEmptyParts);
+#endif
 	for (auto& item : attributes)
 		item = item.trimmed();
 }
