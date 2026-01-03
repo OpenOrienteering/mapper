@@ -24,14 +24,15 @@
 #include <QtGlobal>
 #include <QObject>
 #include <QPointer>
-#include <QString>
 #include <QTextEdit>
 
 class QAction;
 class QCheckBox;
 class QContextMenuEvent;
 class QDialog;
+class QKeyEvent;
 class QLabel;
+class QPoint;
 class QPushButton;
 class QStackedLayout;
 class QWidget;
@@ -44,7 +45,7 @@ class ObjectQuery;
 class TagSelectWidget;
 
 /**
- * The context menu (right click) is extended by the possibility
+ * The context menu (right click or Ctrl+K) is extended by the possibility
  * to select and insert one of the keywords (e.g., SYMBOL, AND...)
  */
 class MapFindTextEdit : public QTextEdit
@@ -53,6 +54,8 @@ class MapFindTextEdit : public QTextEdit
 	
 private:
 	void contextMenuEvent(QContextMenuEvent* event) override;
+	void keyPressEvent(QKeyEvent* event) override;
+	void showCustomContextMenu(const QPoint& globalPos);
 	
 private slots:
 	void insertKeyword(QAction* action);
