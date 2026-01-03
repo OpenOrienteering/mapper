@@ -96,6 +96,7 @@ public:
 	/** Creates an empty object with the given type, symbol, coords and (optional) map. */
 	explicit Object(Type type, const Symbol* symbol, MapCoordVector coords, Map* map = nullptr);
 	
+	
 protected:
 	/**
 	 * Constructs an Object, initialized from the given prototype.

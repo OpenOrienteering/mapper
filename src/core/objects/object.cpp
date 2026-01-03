@@ -65,6 +65,7 @@ class QRectF;
 
 namespace literal
 {
+	// map file
 	static const QLatin1String object("object");
 	static const QLatin1String symbol("symbol");
 	static const QLatin1String type("type");
@@ -77,7 +78,6 @@ namespace literal
 	static const QLatin1String size("size");
 	static const QLatin1String tags("tags");
 }
-
 
 
 namespace OpenOrienteering {
