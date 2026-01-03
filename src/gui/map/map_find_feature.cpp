@@ -358,8 +358,7 @@ void MapFindTextEdit::contextMenuEvent(QContextMenuEvent* event)
 	insert_menu->menuAction()->setMenuRole(QAction::NoRole);
 	auto* keyword_actions_group = new QActionGroup(this);
 	
-	//auto keywords = Object::getObjectProperties();	TBR
-	bool append = false;;
+	bool append = false;
 	auto keywords = DynamicObjectQueryManager::getContextKeywords(toPlainText(), textCursor().position(), append);
 	if (append)
 	{

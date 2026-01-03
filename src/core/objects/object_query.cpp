@@ -1,7 +1,7 @@
 /*
  *    Copyright 2016 Mitchell Krome
- *    Copyright 2017-2025 Kai Pastor
- *    Copyright 2025 Matthias Kühlewein
+ *    Copyright 2017-2024 Kai Pastor
+ *    Copyright 2026 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -46,7 +46,7 @@
 
 namespace {
 
-static QChar special_chars[11] = {
+static QChar special_chars[9] = {
     QLatin1Char('"'),
     QLatin1Char(' '),
     QLatin1Char('\t'),
@@ -55,9 +55,7 @@ static QChar special_chars[11] = {
     QLatin1Char('='),
     QLatin1Char('!'),
     QLatin1Char('~'),
-    QLatin1Char('\\'),
-    QLatin1Char('<'),
-    QLatin1Char('>')
+    QLatin1Char('\\')
 };
 
 QString toEscaped(QString string)
@@ -270,10 +268,10 @@ ObjectQuery::ObjectQuery(const QString& key, ObjectQuery::Operator op, const QSt
 : op { op }
 , tags { key, value }
 {
-	// Can't have an empty key (but can have empty value (if not a numerical operator))
+	// Can't have an empty key (but can have empty value)
 	// Must be a key/value operator
-	Q_ASSERT(IsTagOperator(op) || IsNumericalOperator(op));	// 16..18 and 24..27
-	if ((!IsTagOperator(op) && !IsNumericalOperator(op)) || key.length() == 0 || (value.length() == 0 && IsNumericalOperator(op)))
+	Q_ASSERT(IsTagOperator(op));	// 16..18
+	if (!IsTagOperator(op) || key.length() == 0)
 	{
 		reset();
 	}
@@ -377,15 +375,6 @@ QString ObjectQuery::labelFor(ObjectQuery::Operator op)
 		//: Very short label
 		return tr("Text");
 		
-	case OperatorLess:
-		return tr("less than");
-	case OperatorLessOrEqual:
-		return tr("less or equal than");
-	case OperatorGreater:
-		return tr("greater than");
-	case OperatorGreaterOrEqual:
-		return tr("greater or equal than");
-		
 	case OperatorAnd:
 		//: Very short label
 		return tr("and");
@@ -412,75 +401,6 @@ QString ObjectQuery::labelFor(ObjectQuery::Operator op)
 	Q_UNREACHABLE();
 }
 
-bool ObjectQuery::getBooleanObjectProperty(const Object* object, const StringOperands& tags, bool& value) const
-{
-	// check if tag refers to boolean object properties
-	if (Object::isBooleanObjectProperty(tags.value))
-	{
-		auto property = QVariant();
-		if (object->getType() == Object::Path)
-		{
-			const auto& path_object = static_cast<const PathObject*>(object);
-			property = path_object->getObjectProperty(tags.value);
-		}
-		else
-		{
-			property = object->getObjectProperty(tags.value);
-		}
-		if (property.isValid() && static_cast<QMetaType::Type>(property.type()) == QMetaType::Bool)
-		{
-			value = property.toBool();
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ObjectQuery::compareObjectProperty(const Object* object, const StringOperands& tags, Operator op) const
-{
-	// check if tag refers to comparison object properties
-	if (Object::isComparisonObjectProperty(tags.key))
-	{
-		auto property = QVariant();
-		if (object->getType() == Object::Path)
-		{
-			const auto& path_object = static_cast<const PathObject*>(object);
-			property = path_object->getObjectProperty(tags.key);
-		}
-		else
-		{
-			property = object->getObjectProperty(tags.key);
-		}
-	
-		if (property.isValid() && static_cast<QMetaType::Type>(property.type()) == QMetaType::Double)
-		{
-			bool ok;
-			const auto comp_value = tags.value.toDouble(&ok);
-			if (ok)
-			{
-				const auto value = property.toDouble(&ok);
-				if (ok)
-				{
-					switch(op)
-					{
-					case OperatorLess:
-						return value < comp_value;
-					case OperatorLessOrEqual:
-						return value <= comp_value;
-					case OperatorGreater:
-						return value > comp_value;
-					case OperatorGreaterOrEqual:
-						return value >= comp_value;
-					default:
-						return false;	// unreachable
-					}
-					Q_UNREACHABLE();
-				}
-			}
-		}
-	}
-	return false;
-}
 
 bool ObjectQuery::operator()(const Object* object) const
 {
@@ -503,9 +423,6 @@ bool ObjectQuery::operator()(const Object* object) const
 			return it != container.end() && it->value.contains(tags.value);
 		} (object->tags(), tags);
 	case OperatorSearch:
-		bool value;
-		if (getBooleanObjectProperty(object, tags, value))
-			return value;
 		if (object->getSymbol() && object->getSymbol()->getName().contains(tags.value, Qt::CaseInsensitive))
 			return true;
 		for (auto const& current : object->tags())
@@ -516,17 +433,9 @@ bool ObjectQuery::operator()(const Object* object) const
 		}
 		return false;
 	case OperatorObjectText:
-		if (Object::isObjectProperty(tags.value))	// don't search for object properties keywords
-			return false;
 		if (object->getType() == Object::Text)
 			return static_cast<const TextObject*>(object)->getText().contains(tags.value, Qt::CaseInsensitive);
 		return false;
-		
-	case OperatorLess:
-	case OperatorLessOrEqual:
-	case OperatorGreater:
-	case OperatorGreaterOrEqual:
-		return compareObjectProperty(object, tags, op);
 		
 	case OperatorAnd:
 		return (*subqueries.first)(object) && (*subqueries.second)(object);
@@ -616,19 +525,6 @@ QString ObjectQuery::toString() const
 		ret = QLatin1Char('"') + toEscaped(tags.value) + QLatin1Char('"');
 		break;
 		
-	case OperatorLess:
-		ret = keyToString(tags.key) + QLatin1String(" < ") + toEscaped(tags.value);
-		break;
-	case OperatorLessOrEqual:
-		ret = keyToString(tags.key) + QLatin1String(" <= ") + toEscaped(tags.value);
-		break;
-	case OperatorGreater:
-		ret = keyToString(tags.key) + QLatin1String(" > ") + toEscaped(tags.value);
-		break;	
-	case OperatorGreaterOrEqual:
-		ret = keyToString(tags.key) + QLatin1String(" >= ") + toEscaped(tags.value);
-		break;
-		
 	case OperatorAnd:
 		if (subqueries.first->getOperator() == OperatorOr)
 			ret = QLatin1Char('(') + subqueries.first->toString() + QLatin1Char(')');
@@ -651,7 +547,7 @@ QString ObjectQuery::toString() const
 		ret = QLatin1String("SYMBOL \"") + (symbol ? symbol->getNumberAsString() : QString{}) + QLatin1Char('\"');
 		break;
 		
-	case OperatorDynamic:	//TODO
+	case OperatorDynamic:	//TODO?
 	case OperatorInvalid:
 		// Default empty string is sufficient
 		break;
@@ -740,10 +636,6 @@ bool operator==(const ObjectQuery& lhs, const ObjectQuery& rhs)
 	case ObjectQuery::OperatorContains:
 	case ObjectQuery::OperatorSearch:
 	case ObjectQuery::OperatorObjectText:
-	case ObjectQuery::OperatorLess:
-	case ObjectQuery::OperatorLessOrEqual:
-	case ObjectQuery::OperatorGreater:
-	case ObjectQuery::OperatorGreaterOrEqual:
 		return lhs.tags == rhs.tags;
 		
 	case ObjectQuery::OperatorAnd:
@@ -818,42 +710,6 @@ ObjectQuery ObjectQueryParser::parse(const QString& text)
 						break;
 					default:
 						Q_UNREACHABLE();
-					}
-					getToken();
-				}
-				else
-				{
-					op = {};
-					break;
-				}
-			}
-			else if (token == TokenNumericalOperator)
-			{
-				auto op = token_text;
-				auto num_op = token_text.toString();
-				getToken();
-				if ((token == TokenWord || token == TokenString) && Object::isComparisonObjectProperty(key))
-				{
-					auto value = tokenAsString();
-					if (num_op == QLatin1String("<"))
-					{
-						*current = { key, ObjectQuery::OperatorLess , value };
-					}
-					else if (num_op == QLatin1String("<="))
-					{
-						*current = { key, ObjectQuery::OperatorLessOrEqual , value };
-					}
-					else if (num_op == QLatin1String(">"))
-					{
-						*current = { key, ObjectQuery::OperatorGreater, value };
-					}
-					else if (num_op == QLatin1String(">="))
-					{
-						*current = { key, ObjectQuery::OperatorGreaterOrEqual, value };
-					}
-					else	// can not happen
-					{
-						qWarning("Undefined operation %s", qUtf8Printable(num_op));
 					}
 					getToken();
 				}
@@ -1041,20 +897,6 @@ void ObjectQueryParser::getToken()
 		token_text = input.mid(token_start, 2);
 		pos += 2;
 	}
-	else if (current == QLatin1Char('<') || current == QLatin1Char('>'))
-	{
-		token = TokenNumericalOperator;
-		if (pos+1 < input.length() && input.at(pos+1) == QLatin1Char('='))
-		{
-			token_text = input.mid(token_start, 2);
-			pos += 2;
-		}
-		else
-		{
-			token_text = input.mid(token_start, 1);
-			++pos;
-		}
-	}
 	else
 	{
 		for (++pos; pos < input.length(); ++pos)
@@ -1065,9 +907,7 @@ void ObjectQueryParser::getToken()
 			    || current == QLatin1Char('\t')
 			    || current == QLatin1Char('(')
 			    || current == QLatin1Char(')')
-			    || current == QLatin1Char('=')
-			    || current == QLatin1Char('<')
-			    || current == QLatin1Char('>'))
+			    || current == QLatin1Char('='))
 			{
 				break;
 			}
@@ -1092,16 +932,14 @@ void ObjectQueryParser::getToken()
 			{
 				if (input.at(pos) == QLatin1Char(')'))
 				{
-					token_attributes_text = input.mid(token_attributes_start, pos - token_attributes_start);	// n == 0 ?
-					//qDebug("Token: %s\n",qUtf8Printable(token_text.toString()));
-					//qDebug("Tokenattr.: %s\n",qUtf8Printable(token_attributes_text.toString()));
+					token_attributes_text = input.mid(token_attributes_start, pos - token_attributes_start);
 					dynamic_token = dynamic_object_manager.parse(token_text, token_attributes_text); //TODO: make smartptr?
 					if (dynamic_token)
 					{
 						if (dynamic_token->IsValid())
 							token = TokenDynamicQuery;
 						else
-							delete dynamic_token;	// TODO: show information about failure
+							delete dynamic_token;	// TODO: show information about failure?
 					}
 					++pos;
 					break;

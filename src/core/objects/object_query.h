@@ -1,7 +1,7 @@
 /*
  *    Copyright 2016 Mitchell Krome
- *    Copyright 2017-2025 Kai Pastor
- *    Copyright 2025 Matthias Kühlewein
+ *    Copyright 2017-2024 Kai Pastor
+ *    Copyright 2026 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -30,7 +30,6 @@
 #include <QMetaType>
 #include <QString>
 #include <QStringRef>
-#include <QVariant>
 
 namespace OpenOrienteering {
 
@@ -71,15 +70,9 @@ public:
 		OperatorSearch   = 19, ///< Tests if the symbol name, a tag key or a tag value contains the given value (case-insensitive)
 		OperatorObjectText = 20, ///< Text object content (case-insensitive)
 		
-		// Operators 24 .. 27 operate on object properties
-		OperatorLess           = 24,
-		OperatorLessOrEqual    = 25,
-		OperatorGreater        = 26,
-		OperatorGreaterOrEqual = 27,
-		
 		// More operators, 32 ..
 		OperatorSymbol   = 32, ///< Test the symbol for equality.
-		OperatorDynamic  = 33,
+		OperatorDynamic  = 33, ///< Processing dynamic object properties
 		
 		OperatorInvalid  = 0   ///< Marks an invalid query
 	};
@@ -150,7 +143,7 @@ public:
 	ObjectQuery(const Symbol* symbol) noexcept;
 	
 	/**
-	 * Constructs a query for .
+	 * Constructs a query for a dynamic object property.
 	 */
 	ObjectQuery(const DynamicObjectQuery* dynamic_query) noexcept;
 	
@@ -218,14 +211,10 @@ private:
 	 */
 	void consume(ObjectQuery&& other);
 	
-	bool getBooleanObjectProperty(const Object* object, const StringOperands& tags, bool& value) const;
-	bool compareObjectProperty(const Object* object, const StringOperands& tags, Operator op) const;
-	
 	bool IsLogicalOperator(Operator op) const { return op >= 1 && op <= 3; }
 	bool IsTagOperator(Operator op) const { return op >= 16 && op <= 18; }
 	bool IsValueOperator(Operator op) const { return op >= 19 && op <= 20; }
 	bool IsStringOperator(Operator op) const { return op >= 16 && op <= 20; }
-	bool IsNumericalOperator(Operator op) const { return op >= 24 && op <= 27; }
 	
 	using SymbolOperand = const Symbol*;
 	
@@ -307,7 +296,6 @@ public:
 		TokenNot,
 		TokenLeftParen,
 		TokenRightParen,
-		TokenNumericalOperator,
 		TokenDynamicQuery,
 	};
 	

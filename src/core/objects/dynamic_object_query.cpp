@@ -289,7 +289,7 @@ const QStringList DynamicObjectQueryManager::getContextKeywords(const QString& t
 				}
 				return QStringList();
 			}
-			return QString(QLatin1String("ISUNDEFINED; TYPE; ID; == != AND; OR;")).split(QLatin1Char(' '));
+			return QString(QLatin1String("ISUNDEFINED; TYPE; ID; AND; OR; == !=")).split(QLatin1Char(' '));
 			
 		case DynamicObjectQuery::GeneralObjectQuery:
 			return QStringList{QLatin1String("IGNORESYMBOL;"), QLatin1String("ISDUPLICATE;")};
