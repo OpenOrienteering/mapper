@@ -96,7 +96,6 @@ public:
 	/** Creates an empty object with the given type, symbol, coords and (optional) map. */
 	explicit Object(Type type, const Symbol* symbol, MapCoordVector coords, Map* map = nullptr);
 	
-	
 protected:
 	/**
 	 * Constructs an Object, initialized from the given prototype.
@@ -317,26 +316,6 @@ public:
 	 * @brief Extends a rectangle to enclose all of the object's control points.
 	 */
 	void includeControlPointsRect(QRectF& rect) const;
-	
-	
-	/**
-	 * Returns dynamic object properties that are common for all objects.
-	 * Derived object classes (i.e., PathObject) override this function to return class specific object properties.
-	 * If derived object classes don't provide a requested property, they invoke the base class function.
-	 */
-	virtual QVariant getObjectProperty(const QString& property) const;
-	
-	/** Returns true if property is a dynamic object property. */
-	static bool isObjectProperty(const QString& property);
-	
-	/** Returns true if property is a dynamic object property that returns a boolean value. */
-	static bool isBooleanObjectProperty(const QString& property);
-	
-	/** Returns true if property is a dynamic object property that returns a value for comparison. */
-	static bool isComparisonObjectProperty(const QString& property);
-	
-	/** Returns keywords of the available dynamic object properties. */
-	static const std::vector<QLatin1String>& getObjectProperties();
 	
 protected:
 	virtual void updateEvent() const;
@@ -946,14 +925,6 @@ public:
 	bool isLineTooShort() const;
 	
 	
-	/**
-	 * Returns dynamic object properties that are specific for the PathObject class.
-	 * Note: Overrides the base class function that returns dynamic object properties that are common for all objects.
-	 * If a requested property is not provided by PathObject, the base class function is invoked.
-	 */
-	QVariant getObjectProperty(const QString& property) const override;
-	
-	
 protected:
 	/**
 	 * Adjusts the end index of the given part and the start/end indexes of the following parts.
@@ -1162,6 +1133,7 @@ struct ObjectPathCoord : public PathCoord
 	 */
 	double findClosestPointTo(const MapCoordF& map_coord);
 };
+
 
 
 //### Object inline code ###
