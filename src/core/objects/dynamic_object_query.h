@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Matthias Kühlewein
+ *    Copyright 2026 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,7 +20,8 @@
 #ifndef DYNAMIC_OBJECT_QUERY_H
 #define DYNAMIC_OBJECT_QUERY_H
 
-#include <QLatin1String>
+#include <vector>
+
 #include <QString>
 #include <QStringList>
 #include <QStringRef>
@@ -40,10 +41,10 @@ public:
 	 */
 	enum Type
 	{
-		LineObjectQuery = 0,
-		AreaObjectQuery = 1,
-		SymbolQuery     = 2,
-		ObjectQuery     = 3
+		LineObjectQuery    = 0,
+		AreaObjectQuery    = 1,
+		SymbolQuery        = 2,
+		GeneralObjectQuery = 3
 	};
 	
 	DynamicObjectQuery(Type type) noexcept;
@@ -68,8 +69,6 @@ class AreaObjectQuery : public DynamicObjectQuery
 public:
 	AreaObjectQuery(QStringRef token_attributes_text);
 	
-	static QString getKeyword() { return QLatin1String{"AREA"}; };
-	
 	bool performQuery(const PathObject* path_object) const;
 };
 
@@ -78,8 +77,6 @@ class LineObjectQuery : public DynamicObjectQuery
 {
 public:
 	LineObjectQuery(QStringRef token_attributes_text);
-	
-	static QString getKeyword() { return QLatin1String{"LINE"}; };
 	
 	bool performQuery(const PathObject* path_object) const;
 };
@@ -90,22 +87,18 @@ class SymbolQuery : public DynamicObjectQuery
 public:
 	SymbolQuery(QStringRef token_attributes_text);
 	
-	static QString getKeyword() { return QLatin1String{"SYMBOL"}; };
-	
 	bool performQuery(const Map* map, const Symbol* symbol) const;
 };
 
-/*
-class ObjectQuery : public DynamicObjectQuery
+
+class GeneralObjectQuery : public DynamicObjectQuery
 {
 public:
-	ObjectQuery(QStringRef token_attributes_text);
+	GeneralObjectQuery(QStringRef token_attributes_text);
 	
-	static QString getKeyword() { return QLatin1String{"OBJECT"}; };
-	
-	bool performQuery(const Object* object) const;
+	bool performQuery(const Map* map, const Object* object) const;
 };
-*/
+
 
 class DynamicObjectQueryManager
 {
@@ -113,9 +106,12 @@ public:
 	DynamicObjectQueryManager();
 	
 	static bool performDynamicQuery(const Object* object, const DynamicObjectQuery* dynamic_query);
+	static const QStringList getContextKeywords(const QString& text, int position, bool& append);
 	
 	DynamicObjectQuery* parse(QStringRef token_text, QStringRef token_attributes_text);
 	
+private:
+	static const QStringList keywords;
 };
 
 
