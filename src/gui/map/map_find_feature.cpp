@@ -23,6 +23,7 @@
 
 #include <functional>
 
+#include <Qt>
 #include <QAbstractButton>
 #include <QAction>
 #include <QCheckBox>
@@ -35,6 +36,7 @@
 #include <QMenu>
 #include <QPoint>
 #include <QPushButton>
+#include <QRect>
 #include <QStackedLayout>
 #include <QTextCursor>
 #include <QVariant>
@@ -352,9 +354,27 @@ void MapFindTextEdit::insertKeyword(QAction* action)
 // override
 void MapFindTextEdit::contextMenuEvent(QContextMenuEvent* event)
 {
-	QMenu* menu = createStandardContextMenu(event->globalPos());
+	showCustomContextMenu(event->globalPos());
+}
+
+// override
+void MapFindTextEdit::keyPressEvent(QKeyEvent* event)
+{
+	if (event->key() == tr("K") && (event->modifiers() & Qt::ControlModifier))
+	{
+		showCustomContextMenu(viewport()->mapToGlobal(cursorRect().center()));
+	}
+	else
+	{
+		QTextEdit::keyPressEvent(event);
+	}
+}
+
+void MapFindTextEdit::showCustomContextMenu(const QPoint& globalPos)
+{
+	QMenu* menu = createStandardContextMenu(globalPos);
 	menu->addSeparator();
-	auto* insert_menu = new QMenu(tr("Insert keyword..."), menu);
+	auto* insert_menu = new QMenu(tr("Insert keyword...\tCtrl+K"), menu);
 	insert_menu->menuAction()->setMenuRole(QAction::NoRole);
 	auto* keyword_actions_group = new QActionGroup(this);
 	
@@ -374,7 +394,7 @@ void MapFindTextEdit::contextMenuEvent(QContextMenuEvent* event)
 	menu->addMenu(insert_menu);
 	connect(keyword_actions_group, &QActionGroup::triggered, this, &MapFindTextEdit::insertKeyword);
 	
-	menu->exec(event->globalPos());
+	menu->exec(globalPos);
 	delete menu;
 }
 
