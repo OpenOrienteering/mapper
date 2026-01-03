@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012 Thomas Schöps
- *    Copyright 2012-2017, 2019 Kai Pastor
+ *    Copyright 2012-2017, 2019, 2026 Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -32,8 +32,8 @@
 
 #cmakedefine Mapper_DEBUG_TRANSLATIONS
 #cmakedefine Mapper_PACKAGE_NAME
-#define MAPPER_DATA_DESTINATION  "@CMAKE_INSTALL_PREFIX@/@MAPPER_DATA_DESTINATION@"
-#define MAPPER_ABOUT_DESTINATION "@CMAKE_INSTALL_PREFIX@/@MAPPER_ABOUT_DESTINATION@"
+#define MAPPER_DATA_DESTINATION  "@ABSOLUTE_DATA_DESTINATION@"
+#define MAPPER_ABOUT_DESTINATION "@ABSOLUTE_ABOUT_DESTINATION@"
 
 #ifdef Mapper_PACKAGE_NAME
 #define MAPPER_PACKAGE_NAME "@Mapper_PACKAGE_NAME@"
