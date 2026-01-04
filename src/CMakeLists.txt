@@ -1,6 +1,6 @@
 #
 #    Copyright 2012-2014 Thomas Schöps
-#    Copyright 2012-2024 Kai Pastor
+#    Copyright 2012-2024, 2026 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -34,6 +34,12 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
 
 # Build configuration
 
+get_filename_component(ABSOLUTE_ABOUT_DESTINATION "${MAPPER_ABOUT_DESTINATION}" ABSOLUTE
+  BASE_DIR "${CMAKE_INSTALL_PREFIX}"
+)
+get_filename_component(ABSOLUTE_DATA_DESTINATION "${MAPPER_DATA_DESTINATION}" ABSOLUTE
+  BASE_DIR "${CMAKE_INSTALL_PREFIX}"
+)
 configure_file(mapper_config.h.in "${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h.tmp")
 execute_process(
   COMMAND "${CMAKE_COMMAND}" -E copy_if_different mapper_config.h.tmp mapper_config.h
@@ -412,3 +418,18 @@ foreach(module ${PRIVATE_MODULES})
 	endif()
 	target_include_directories(Mapper_Common SYSTEM PRIVATE ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
 endforeach()
+
+
+# Workaround for "assistant" not being in PATH.
+# https://github.com/OpenOrienteering/mapper/issues/2446
+
+if(NOT CMAKE_CROSSCOMPILING AND NOT WIN32 AND NOT APPLE AND NOT ANDROID)
+	find_package(Qt5Help)
+	if(TARGET Qt5::qhelpgenerator)
+		get_target_property(help_program Qt5::qhelpgenerator IMPORTED_LOCATION)
+		if(help_program)
+			get_filename_component(qt5_bin_dir "${help_program}" DIRECTORY)
+			set_source_files_properties("gui/util_gui.cpp" PROPERTIES COMPILE_DEFINITIONS "ASSISTANT_DIR=\"${qt5_bin_dir}\"")
+		endif()
+	endif()
+endif()
