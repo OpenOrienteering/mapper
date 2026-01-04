@@ -56,6 +56,8 @@
 #include <QTransform>
 #include <QVarLengthArray>
 #include <QVariant>
+#include <QDateTime>
+#include <QTimeZone>
 
 #include "settings.h"
 #include "core/georeferencing.h"
@@ -2482,12 +2484,56 @@ void OcdFileExport::exportObjects(OcdFile<Format>& file)
  * Object setup which depends on the type features, not on minor type variations of members.
  */
 template< class OcdObject >
-void OcdFileExport::handleObjectExtras(const Object* object, OcdObject& ocd_object, typename OcdObject::IndexEntryType& entry)
+void OcdFileExport::fillV9ObjectExtras(const Object* object, OcdObject& ocd_object, typename OcdObject::IndexEntryType& entry)
 {
 	// Extra entry members since V9
 	entry.type = ocd_object.type;
 	entry.status = Ocd::ObjectNormal;
-	entry.color = convertColor(object->getSymbol()->guessDominantColor());
+	entry.color = ocd_object.color = convertColor(object->getSymbol()->guessDominantColor());
+}
+
+
+template< class OcdObject >
+void OcdFileExport::fillV12ObjectExtras(const Object* object, OcdObject& ocd_object, typename OcdObject::IndexEntryType& entry)
+{
+	Q_UNUSED(entry)
+	
+	// Extra members since V12
+	ocd_object.server_object_id = -1;
+	
+	static auto const dawn_of_time = QDate(1899, 12, 30).startOfDay(Qt::UTC);
+	auto const now = dawn_of_time.msecsTo(QDateTime::currentDateTimeUtc()) / 86400000.0;
+	auto const ctime = QDateTime::fromString(object->getTag(QString::fromLatin1("ctime")), Qt::ISODateWithMs);
+	auto const mtime = QDateTime::fromString(object->getTag(QString::fromLatin1("mtime")), Qt::ISODateWithMs);
+	
+	if (ctime.isValid())
+	{
+		ocd_object.creation_date = dawn_of_time.msecsTo(ctime) / 86400000.0;
+		if (mtime.isValid())
+			ocd_object.modification_date = dawn_of_time.msecsTo(mtime) / 86400000.0;
+		else
+			ocd_object.modification_date = now;
+	}
+	else
+	{
+		ocd_object.creation_date = now;
+		ocd_object.modification_date = now;
+	}
+}
+
+
+template< class OcdObject >
+void OcdFileExport::handleObjectExtras(const Object* object, OcdObject& ocd_object, typename OcdObject::IndexEntryType& entry)
+{
+	fillV9ObjectExtras(object, ocd_object, entry);
+	fillV12ObjectExtras(object, ocd_object, entry);
+}
+
+
+template< >
+void OcdFileExport::handleObjectExtras<Ocd::ObjectV9>(const Object* object, Ocd::ObjectV9& ocd_object, typename Ocd::ObjectV9::IndexEntryType& entry)
+{
+	fillV9ObjectExtras(object, ocd_object, entry);
 }
 
 
