@@ -1,6 +1,7 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
  *    Copyright 2012-2021, 2024, 2025 Kai Pastor
+ *    Copyright 2025 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,6 +30,7 @@
 #include <stdexcept>
 // IWYU pragma: no_include <type_traits>
 #include <utility>
+#include <vector>
 
 #include <Qt>
 #include <QtGlobal>
@@ -54,6 +56,7 @@
 #include <QSize>
 #include <QSizeF>
 #include <QString>
+#include <QStringList>
 #include <QStringRef>
 #include <QTemporaryDir>
 #include <QVariant>
@@ -1884,6 +1887,165 @@ void FileFormatTest::ocdTextSymbolTest()
 	}
 }
 
+void FileFormatTest::dxfExportTest_data()
+{
+	QTest::addColumn<QString>("map_filepath");
+	QTest::addColumn<QByteArray>("ogr_format_id");
+	QTest::addColumn<QString>("ogr_extension");
+	QTest::addColumn<bool>("export_one_layer_per_symbol");
+	
+	QTest::newRow("export_one_layer_per_symbol = false") << QString::fromLatin1("data:helper-hidden-symbols.omap")
+	                              << QByteArray("OGR-export-DXF") << QString::fromLatin1("dxf")
+	                              << false;
+	QTest::newRow("export_one_layer_per_symbol = true") << QString::fromLatin1("data:helper-hidden-symbols.omap")
+	                              << QByteArray("OGR-export-DXF") << QString::fromLatin1("dxf")
+	                              << true;
+}
+
+void FileFormatTest::dxfExportTest()
+{
+#ifdef MAPPER_USE_GDAL
+	QFETCH(QString, map_filepath);
+	QFETCH(QByteArray, ogr_format_id);
+	QFETCH(QString, ogr_extension);
+	QFETCH(bool, export_one_layer_per_symbol);
+	
+	QTemporaryDir dir;
+	QVERIFY(dir.isValid());
+	auto const ogr_filepath = QString {dir.path() + QLatin1String("/dxfexport.") + ogr_extension};
+	
+	GdalManager manager;
+	auto prev_export_one_layer_per_symbol = manager.isExportOptionEnabled(GdalManager::OneLayerPerSymbol);
+	if (prev_export_one_layer_per_symbol != export_one_layer_per_symbol)
+		manager.setExportOptionEnabled(GdalManager::OneLayerPerSymbol, export_one_layer_per_symbol);
+	
+	Map map;
+	{
+		QVERIFY(map.loadFrom(map_filepath));
+		
+		auto const* format = FileFormats.findFormat(ogr_format_id);
+		QVERIFY(format);
+		
+		auto exporter = format->makeExporter(ogr_filepath, &map, nullptr);
+		QVERIFY(bool(exporter));
+		QVERIFY(exporter->doExport());
+	}
+	
+	if (prev_export_one_layer_per_symbol != export_one_layer_per_symbol)
+		manager.setExportOptionEnabled(GdalManager::OneLayerPerSymbol, prev_export_one_layer_per_symbol);
+	
+	Map imported_map;
+	{
+		auto const* format = FileFormats.findFormat("OGR");
+		QVERIFY(format);
+		
+		auto importer = format->makeImporter(ogr_filepath, &imported_map, nullptr);
+		QVERIFY(bool(importer));
+		QVERIFY(importer->doImport());
+	}
+	
+	// Symbols
+	QCOMPARE(imported_map.getNumSymbols(), 8);	// 4 default symbols and 4 symbols for the imported objects
+	
+	// Objects
+	const auto& actual_part = *map.getPart(0);
+	const auto& imported_part = *imported_map.getPart(0);
+	QCOMPARE(actual_part.getNumObjects(), 12);
+	QCOMPARE(imported_part.getNumObjects(), 4);
+#endif  // MAPPER_USE_GDAL
+}
+
+
+void FileFormatTest::shpExportTest_data()
+{
+	QTest::addColumn<QString>("map_filepath");
+	QTest::addColumn<QByteArray>("ogr_format_id");
+	QTest::addColumn<QString>("ogr_extension");
+	QTest::addColumn<bool>("export_one_layer_per_symbol");
+	QTest::addColumn<QString>("name_extensions");
+	QTest::addColumn<std::vector<int>>("number_symbols");
+	QTest::addColumn<std::vector<int>>("number_objects");
+	
+	
+	QTest::newRow("export_one_layer_per_symbol = false") << QString::fromLatin1("data:helper-hidden-symbols.omap")
+	                              << QByteArray("OGR-export-ESRI Shapefile") << QString::fromLatin1("shp")
+	                              << false
+	                              << QString::fromLatin1("areas lines")
+	                              << std::vector<int>{4, 4}
+ 	                              << std::vector<int>{1, 2};	// the single line is exported as two lines
+	QTest::newRow("export_one_layer_per_symbol = true") << QString::fromLatin1("data:helper-hidden-symbols.omap")
+	                              << QByteArray("OGR-export-ESRI Shapefile") << QString::fromLatin1("shp")
+	                              << true
+	                              << QString::fromLatin1("Area Line Text")
+	                              << std::vector<int>{4, 4, 4}
+ 	                              << std::vector<int>{1, 2, 0};	// the single line is exported as two lines
+}
+
+void FileFormatTest::shpExportTest()
+{
+#ifdef MAPPER_USE_GDAL
+	QFETCH(QString, map_filepath);
+	QFETCH(QByteArray, ogr_format_id);
+	QFETCH(QString, ogr_extension);
+	QFETCH(bool, export_one_layer_per_symbol);
+	QFETCH(QString, name_extensions);
+	QFETCH(std::vector<int>, number_symbols);
+	QFETCH(std::vector<int>, number_objects);
+	
+	const auto name_extension_list = name_extensions.split(QLatin1String(" "));
+	QVERIFY(name_extension_list.size() == (int)number_symbols.size());
+	QVERIFY(number_objects.size() == number_symbols.size());
+	
+	QTemporaryDir dir;
+	QVERIFY(dir.isValid());
+	auto const ogr_filepath = QString {dir.path() + QLatin1String("/shpexport.") + ogr_extension};
+	
+	GdalManager manager;
+	auto prev_export_one_layer_per_symbol = manager.isExportOptionEnabled(GdalManager::OneLayerPerSymbol);
+	if (prev_export_one_layer_per_symbol != export_one_layer_per_symbol)
+		manager.setExportOptionEnabled(GdalManager::OneLayerPerSymbol, export_one_layer_per_symbol);
+	
+	Map map;
+	{
+		QVERIFY(map.loadFrom(map_filepath));
+		
+		auto const* format = FileFormats.findFormat(ogr_format_id);
+		QVERIFY(format);
+		
+		auto exporter = format->makeExporter(ogr_filepath, &map, nullptr);
+		QVERIFY(bool(exporter));
+		QVERIFY(exporter->doExport());
+	}
+	
+	if (prev_export_one_layer_per_symbol != export_one_layer_per_symbol)
+		manager.setExportOptionEnabled(GdalManager::OneLayerPerSymbol, prev_export_one_layer_per_symbol);
+	
+	int i = 0;
+	for (const auto& name_extension : name_extension_list)
+	{
+		Map imported_map;
+		{
+			auto const* format = FileFormats.findFormat("OGR");
+			QVERIFY(format);
+			
+			auto const ogr_filepath = QString {dir.path() + QLatin1String("/shpexport_") + name_extension + QLatin1String(".") + ogr_extension};
+			auto importer = format->makeImporter(ogr_filepath, &imported_map, nullptr);
+			QVERIFY(bool(importer));
+			QVERIFY(importer->doImport());
+		}
+	
+		// Symbols
+		QCOMPARE(imported_map.getNumSymbols(), number_symbols.at(i));	// 4 default symbols and 4 symbols for the imported objects
+		
+		// Objects
+		const auto& actual_part = *map.getPart(0);
+		const auto& imported_part = *imported_map.getPart(0);
+		QCOMPARE(actual_part.getNumObjects(), 12);
+		QCOMPARE(imported_part.getNumObjects(), number_objects.at(i));
+		++i;
+	}
+#endif  // MAPPER_USE_GDAL
+}
 
 /*
  * We don't need a real GUI window.
