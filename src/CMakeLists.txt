@@ -418,3 +418,18 @@ foreach(module ${PRIVATE_MODULES})
 	endif()
 	target_include_directories(Mapper_Common SYSTEM PRIVATE ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
 endforeach()
+
+
+# Workaround for "assistant" not being in PATH.
+# https://github.com/OpenOrienteering/mapper/issues/2446
+
+if(NOT CMAKE_CROSSCOMPILING AND NOT WIN32 AND NOT APPLE AND NOT ANDROID)
+	find_package(Qt5Help)
+	if(TARGET Qt5::qhelpgenerator)
+		get_target_property(help_program Qt5::qhelpgenerator IMPORTED_LOCATION)
+		if(help_program)
+			get_filename_component(qt5_bin_dir "${help_program}" DIRECTORY)
+			set_source_files_properties("gui/util_gui.cpp" PROPERTIES COMPILE_DEFINITIONS "ASSISTANT_DIR=\"${qt5_bin_dir}\"")
+		endif()
+	endif()
+endif()

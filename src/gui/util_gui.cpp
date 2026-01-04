@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017, 2019, 2024 Kai Pastor
+ *    Copyright 2017, 2019, 2024, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -140,6 +140,10 @@ namespace Util {
 			const auto assistant = QString::fromLatin1("assistant");
 	#endif
 			auto assistant_path = QStandardPaths::findExecutable(assistant, { QCoreApplication::applicationDirPath() });
+	#if defined(ASSISTANT_DIR)
+			if (assistant_path.isEmpty())
+				assistant_path = QStandardPaths::findExecutable(assistant, { QString::fromLatin1(ASSISTANT_DIR) });
+	#endif
 			if (assistant_path.isEmpty())
 				assistant_path = QStandardPaths::findExecutable(assistant);
 			if (assistant_path.isEmpty())
