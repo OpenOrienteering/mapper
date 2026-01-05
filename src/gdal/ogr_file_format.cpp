@@ -1059,7 +1059,16 @@ void OgrFileImport::importLayer(MapPart* map_part, OGRLayerH layer)
 			++empty_geometries;
 			continue;
 		}
-		
+				
+		if (OGR_G_HasCurveGeometry(geometry, 1)) {
+			OGRGeometryH linear_geom = OGR_G_GetLinearGeometry(geometry, 0, nullptr);
+			if (linear_geom) {
+				OGR_F_SetGeometryDirectly(feature.get(), linear_geom);
+				geometry = linear_geom;
+			}
+		}
+
+		OGR_G_FlattenTo2D(geometry);
 		importFeature(map_part, feature_definition, feature.get(), geometry, clipping.get());
 	}
 }
