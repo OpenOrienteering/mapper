@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CourseData xmlns="http://www.orienteering.org/datastandard/3.0" iofVersion="3.0" creator="OpenOrienteering Mapper Debug 0.9.6" createTime="2021-05-20T09:28:32">
+<CourseData xmlns="http://www.orienteering.org/datastandard/3.0" iofVersion="3.0" creator="OpenOrienteering Mapper Debug 0.9.6" createTime="2023-07-08T15:07:40">
     <Event>
         <Name>Test event</Name>
     </Event>
     <RaceCourseData>
+        <Map>
+            <Scale>10000</Scale>
+            <MapPositionTopLeft x="-3.196" y="-3.80311" unit="mm"/>
+            <MapPositionBottomRight x="53.675" y="3.80311" unit="mm"/>
+        </Map>
         <Control>
             <Id>S1</Id>
             <Position lng="8" lat="51"/>
