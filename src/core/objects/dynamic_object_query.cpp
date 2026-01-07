@@ -292,7 +292,7 @@ const QStringList DynamicObjectQueryManager::getContextKeywords(const QString& t
 			return QString(QLatin1String("ISUNDEFINED; TYPE; ID; AND; OR; == !=")).split(QLatin1Char(' '));
 			
 		case DynamicObjectQuery::GeneralObjectQuery:
-			return QStringList{QLatin1String("IGNORESYMBOL;"), QLatin1String("ISDUPLICATE;")};
+			return QString(QLatin1String("IGNORESYMBOL; IGNORETAGS; ISDUPLICATE;")).split(QLatin1Char(' '));
 			
 		default:
 			return QStringList();	// we should not get here
@@ -467,6 +467,7 @@ bool GeneralObjectQuery::performQuery(const Map* map, const Object* object) cons
 {
 	int and_or_operation = 1;	// 0 = AND, 1 = OR
 	bool ignore_symbols = false;
+	bool ignore_tags = false;
 	
 	bool result = false;
 	for (auto& element : attributes)
@@ -475,12 +476,14 @@ bool GeneralObjectQuery::performQuery(const Map* map, const Object* object) cons
 			continue;
 		else if (element == QLatin1String("IGNORESYMBOL"))
 			ignore_symbols = true;
+		else if (element == QLatin1String("IGNORETAGS"))
+			ignore_tags = true;
 		else if (element == QLatin1String("ISDUPLICATE"))
 		{
 			if (!map || !object)
 				return true;
-			const bool isduplicate_result = map->getCurrentPart()->existsObject([object, ignore_symbols](auto const* o)
-			                                { return object != o && object->equals(o, !ignore_symbols); }
+			const bool isduplicate_result = map->getCurrentPart()->existsObject([object, ignore_symbols, ignore_tags](auto const* o)
+			                                { return object != o && object->equals(o, !ignore_symbols, !ignore_tags); }
 			);
 			result = and_or_operation ? (result || isduplicate_result) : (result && isduplicate_result);
 			and_or_operation = 0;	// default after first operation is AND operation
