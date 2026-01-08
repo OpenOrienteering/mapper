@@ -844,6 +844,20 @@ void Georeferencing::setScaleFactors(double combined_scale_factor, double auxili
 	}
 }
 
+bool Georeferencing::areScaleFactorsConsistent() const
+{
+	// Check for georeferencings with inconsistent grid scale factor
+	Q_ASSERT(auxiliary_scale_factor > 0);
+	double implied_grid_scale_factor = combined_scale_factor / auxiliary_scale_factor;
+	Q_ASSERT(grid_scale_factor > 0);
+	double discrepancy = implied_grid_scale_factor / grid_scale_factor;
+	// Consider scale factors consistent if their discrepancy is
+	// within the margin used when rounding.
+	// Taking the square root effectively doubles the allowed margin.
+	Q_ASSERT(discrepancy >= 0);
+	return roundScaleFactor(sqrt(discrepancy)) == 1.0;
+}
+
 void Georeferencing::setDeclination(double value)
 {
 	double declination = roundDeclination(value);
@@ -1243,6 +1257,21 @@ QString Georeferencing::degToDMS(double val)
 	int deg = tmp / 60;
 	QString ret = QString::fromUtf8("%1°%2'%3\"").arg(deg).arg(min).arg(QLocale().toString(csec/100.0,'f',2));
 	return ret;
+}
+
+bool Georeferencing::trySetOrthoSpheroidal(QString &spec)
+{
+	const QString ortho_proj = QLatin1String("+proj=ortho ");
+	auto flattening_param = QLatin1String(" +f=");
+	auto i = spec.indexOf(ortho_proj);
+	if (i >= 0 && !spec.contains(flattening_param))
+	{
+		auto pos = i + ortho_proj.length() - 1;
+		// Insert to make "+proj=ortho +f=0", no flattening.
+		spec.insert(pos, flattening_param + QLatin1String("0"));
+		return true;
+	}
+	return false;
 }
 
 QDebug operator<<(QDebug dbg, const Georeferencing &georef)

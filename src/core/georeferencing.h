@@ -291,6 +291,12 @@ public:
 	 * \see getAuxiliaryScaleFactor()
 	 */
 	void setAuxiliaryScaleFactor(double value);
+
+	/**
+	 * Returns whether the combined and auxiliary scale factors are
+	 * consistent with the grid scale factor calculated for the CRS.
+	 */
+	bool areScaleFactorsConsistent() const;
 	
 	
 	/**
@@ -527,6 +533,12 @@ public:
 	 */
 	static QString degToDMS(double val);
 	
+	/**
+	 * Change spec using ortho projection from implicit flattening
+	 * to explicitly spheroidal. Returns true if the spec is changed.
+	 */
+	static bool trySetOrthoSpheroidal(QString &spec);
+
 	
 	/**
 	 * Updates the transformation parameters between map coordinates and 
