@@ -82,6 +82,7 @@ MapFindFeature::MapFindFeature(MapEditorController& controller)
 	show_action->setMenuRole(QAction::NoRole);
 	// QKeySequence::Find may be Ctrl+F, which conflicts with "Fill / Create Border"
 	//show_action->setShortcut(QKeySequence::Find);
+	show_action->setShortcut(QKeySequence(tr("Ctrl+Shift+F")));
 	//action->setStatusTip(tr_tip);
 	show_action->setWhatsThis(Util::makeWhatThis("edit_menu.html"));
 	connect(show_action, &QAction::triggered, this, &MapFindFeature::showDialog);
