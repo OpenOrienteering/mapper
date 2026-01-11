@@ -1,5 +1,6 @@
 /*
  *    Copyright 2017-2020, 2024, 2025 Kai Pastor
+ *    Copyright 2026 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,22 +23,46 @@
 
 #include <functional>
 
+#include <Qt>
 #include <QAbstractButton>
 #include <QAction>
+#include <QActionGroup>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QContextMenuEvent>
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QFile>
 #include <QGridLayout>
+#include <QHBoxLayout>
+#include <QIcon>
+#include <QIODevice>
+#include <QKeyEvent>
 #include <QKeySequence>  // IWYU pragma: keep
+#include <QLabel>
+#include <QLatin1Char>
+#include <QLatin1String>
+#include <QMenu>
+#include <QMessageBox>
+#include <QPoint>
 #include <QPushButton>
+#include <QRect>
+#include <QSignalBlocker>
 #include <QStackedLayout>
-#include <QTextEdit>
+#include <QStringList>
+#include <QTextCursor>
+#include <QTextStream>
+#include <QVariant>
 #include <QWidget>
+#include <QXmlStreamReader>
 
 #include "core/map.h"
 #include "core/map_part.h"
+#include "core/objects/dynamic_object_query.h"
 #include "core/objects/object.h"
 #include "core/objects/object_query.h"
 #include "core/symbols/symbol.h"
+#include "gui/file_dialog.h"
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
@@ -66,6 +91,7 @@ MapFindFeature::MapFindFeature(MapEditorController& controller)
 	show_action->setMenuRole(QAction::NoRole);
 	// QKeySequence::Find may be Ctrl+F, which conflicts with "Fill / Create Border"
 	//show_action->setShortcut(QKeySequence::Find);
+	show_action->setShortcut(QKeySequence(tr("Ctrl+Shift+F")));
 	//action->setStatusTip(tr_tip);
 	show_action->setWhatsThis(Util::makeWhatThis("edit_menu.html"));
 	connect(show_action, &QAction::triggered, this, &MapFindFeature::showDialog);
@@ -110,16 +136,38 @@ void MapFindFeature::showDialog()
 		find_dialog = new QDialog(window);
 		find_dialog->setWindowTitle(tr("Find objects"));
 		
-		text_edit = new QTextEdit;
+		text_edit = new MapFindTextEdit;
 		text_edit->setLineWrapMode(QTextEdit::WidgetWidth);
 		
 		tag_selector = new TagSelectWidget;
 		
-		auto find_next = new QPushButton(tr("&Find next"));
-		connect(find_next, &QPushButton::clicked, this, &MapFindFeature::findNext);
+		selected_objects = new QLabel();	// initialization by objectSelectionChanged() below
+		
+		auto* query_collection_box = new QHBoxLayout();
+		query_collection = new QComboBox();
+		query_collection->setEnabled(false);
+		connect(query_collection, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MapFindFeature::querySelected);
+		query_collection_box->addWidget(new QLabel(tr("Query collection")));
+		query_collection_box->addWidget(query_collection, 1);
+		
+		auto* load_query_collection = new QPushButton(QIcon(QString::fromLatin1(":/images/open.png")), QLatin1String{});
+		query_collection_box->addWidget(load_query_collection);
+		connect(load_query_collection, &QPushButton::clicked, this, &MapFindFeature::loadQueryCollection);
 		
 		auto find_all = new QPushButton(tr("Find &all"));
 		connect(find_all, &QPushButton::clicked, this, &MapFindFeature::findAll);
+		
+		auto find_next = new QPushButton(tr("&Find next"));
+		connect(find_next, &QPushButton::clicked, this, &MapFindFeature::findNext);
+		
+		delete_find_next = new QPushButton(tr("Delete && Find next"));
+		connect(delete_find_next, &QPushButton::clicked, this, &MapFindFeature::deleteAndFindNext);
+		connect(controller.getMap(), &Map::objectSelectionChanged, this, &MapFindFeature::objectSelectionChanged);
+		objectSelectionChanged();
+		
+		center_view = new QCheckBox(tr("Center view"));
+		center_view->setChecked(true);
+		connect(center_view, &QCheckBox::stateChanged, this, &MapFindFeature::centerView);
 		
 		auto tags_button = new QPushButton(tr("Query editor"));
 		tags_button->setCheckable(true);
@@ -138,12 +186,16 @@ void MapFindFeature::showDialog()
 		connect(tags_button, &QAbstractButton::toggled, this, &MapFindFeature::tagSelectorToggled);
 		
 		auto layout = new QGridLayout;
-		layout->addLayout(editor_stack, 0, 0, 6, 1);
-		layout->addWidget(find_next, 0, 1, 1, 1);
-		layout->addWidget(find_all, 1, 1, 1, 1);
-		layout->addWidget(tags_button, 3, 1, 1, 1);
-		layout->addWidget(tag_selector_buttons, 5, 1, 1, 1);
-		layout->addWidget(button_box, 6, 0, 1, 2);
+		layout->addLayout(editor_stack, 0, 0, 7, 1);
+		layout->addWidget(find_all, 0, 1, 1, 1);
+		layout->addWidget(find_next, 1, 1, 1, 1);
+		layout->addWidget(delete_find_next, 2, 1, 1, 1);
+		layout->addWidget(center_view, 3, 1, 1, 1);
+		layout->addWidget(tags_button, 5, 1, 1, 1);
+		layout->addWidget(selected_objects, 7, 0, 1, 1);
+		layout->addWidget(tag_selector_buttons, 7, 1, 1, 1);
+		layout->addLayout(query_collection_box, 8, 0, 1, 1);
+		layout->addWidget(button_box, 9, 0, 1, 2);
 		
 		find_dialog->setLayout(layout);
 	}
@@ -152,7 +204,6 @@ void MapFindFeature::showDialog()
 	find_dialog->raise();
 	find_dialog->activateWindow();
 }
-
 
 
 ObjectQuery MapFindFeature::makeQuery() const
@@ -170,7 +221,6 @@ ObjectQuery MapFindFeature::makeQuery() const
 					query = ObjectQuery{ ObjectQuery(ObjectQuery::OperatorSearch, text),
 					        ObjectQuery::OperatorOr,
 					        ObjectQuery(ObjectQuery::OperatorObjectText, text) };
-			
 			}
 		}
 		else
@@ -190,17 +240,22 @@ ObjectQuery MapFindFeature::makeQuery() const
 void MapFindFeature::findNext()
 {
 	if (auto query = makeQuery())
-		findNextMatchingObject(controller, query);
+	{
+		// remember current selected object as start point in case next object found is deleted by 'Delete & Find Next'
+		previous_object = controller.getMap()->getFirstSelectedObject();
+		findNextMatchingObject(controller, query, center_view->isChecked());
+	}
 }
 
 // static
-void MapFindFeature::findNextMatchingObject(MapEditorController& controller, const ObjectQuery& query)
+void MapFindFeature::findNextMatchingObject(MapEditorController& controller, const ObjectQuery& query, bool center_selection_visibility)
 {
 	auto* map = controller.getMap();
 	
 	Object* first_match = nullptr;  // the first match in all objects
 	Object* pivot_object = map->getFirstSelectedObject();
 	Object* next_match = nullptr;   // the next match after pivot_object
+	
 	map->clearObjectSelection(false);
 	
 	auto search = [&](Object* object) {
@@ -227,21 +282,34 @@ void MapFindFeature::findNextMatchingObject(MapEditorController& controller, con
 		map->addObjectToSelection(next_match, false);
 	
 	map->emitSelectionChanged();
-	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+	map->ensureVisibilityOfSelectedObjects(center_selection_visibility ? Map::CenterFullVisibility : Map::FullVisibility);
 	
 	if (!map->selectedObjects().empty())
 		controller.setEditTool();
 }
 
 
+void MapFindFeature::deleteAndFindNext()
+{
+	auto map = controller.getMap();
+	map->deleteSelectedObjects();
+	// restore start point for search in findNextMatchingObject() but only if the object still exists.
+	if (previous_object && map->getCurrentPart()->contains(previous_object))
+	{
+		map->addObjectToSelection(previous_object, false);
+	}
+	findNext();
+}
+
+
 void MapFindFeature::findAll()
 {
 	if (auto query = makeQuery())
-		findAllMatchingObjects(controller, query);
+		findAllMatchingObjects(controller, query, center_view->isChecked());
 }
 
 // static
-void MapFindFeature::findAllMatchingObjects(MapEditorController& controller, const ObjectQuery& query)
+void MapFindFeature::findAllMatchingObjects(MapEditorController& controller, const ObjectQuery& query, bool center_selection_visibility)
 {
 	auto map = controller.getMap();
 	map->clearObjectSelection(false);
@@ -252,11 +320,30 @@ void MapFindFeature::findAllMatchingObjects(MapEditorController& controller, con
 	}, std::cref(query));
 	
 	map->emitSelectionChanged();
-	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+	map->ensureVisibilityOfSelectedObjects(center_selection_visibility ? Map::CenterFullVisibility : Map::FullVisibility);
 	controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("%n object(s) selected", nullptr, map->getNumSelectedObjects()), 2000);
 	
 	if (!map->selectedObjects().empty())
 		controller.setEditTool();
+}
+
+
+void MapFindFeature::objectSelectionChanged()
+{
+	auto map = controller.getMap();
+	delete_find_next->setEnabled(map->getNumSelectedObjects() == 1);
+	selected_objects->setText(tr("Number of selected objects: %1").arg(map->getNumSelectedObjects()));
+}
+
+
+void MapFindFeature::centerView()
+{
+	if (center_view->isChecked())
+	{
+		auto map = controller.getMap();
+		if (map->getNumSelectedObjects())
+			map->ensureVisibilityOfSelectedObjects(Map::CenterFullVisibility);
+	}
 }
 
 
@@ -278,5 +365,231 @@ void MapFindFeature::tagSelectorToggled(bool active)
 	}
 }
 
+void MapFindFeature::querySelected()
+{
+	const auto index = query_collection->currentIndex();
+	if (index > 0)
+	{
+		text_edit->insertPlainText(query_collection_list.at(index - 1).query);
+	}
+}
+
+void MapFindFeature::showUnsupportedElementWarning(QXmlStreamReader& xml) const
+{
+	QMessageBox::warning(find_dialog,
+	                     tr("Warning"),
+	                     tr("Unsupported element: %1 (line %2 column %3)")
+	                     .arg(xml.name().toString())
+	                     .arg(xml.lineNumber())
+	                     .arg(xml.columnNumber())
+	                    );
+}
+
+void MapFindFeature::loadQueryCollection()
+{
+	auto const filter = QString{QLatin1String{"(*txt *.xml)"}};
+	auto const filepath = FileDialog::getOpenFileName(find_dialog,
+	                                                  tr("Open Query collection file..."),
+	                                                  QLatin1String{},
+	                                                  filter);
+	if (filepath.isEmpty())
+		return;
+	
+	QFile query_collection_file(filepath);
+	if (!query_collection_file.open(QFile::ReadOnly))
+	{
+		QMessageBox::warning(find_dialog,
+		                     tr("Error"),
+		                     ::OpenOrienteering::MainWindow::tr("Cannot open file:\n%1\n\n%2")
+		                     .arg(filepath, query_collection_file.errorString())
+		                    );
+		return;
+	}
+	
+	query_collection_list.clear();
+	
+	if (filepath.endsWith(QLatin1String(".xml"), Qt::CaseInsensitive))
+	{
+		QXmlStreamReader xml(&query_collection_file);
+		if (xml.readNextStartElement())
+		{
+			while (xml.readNextStartElement())
+			{
+				if (xml.name() == QLatin1String("object_query"))
+				{
+					QueryCollectionItem query_collection_item;
+					
+					while (xml.readNextStartElement())
+					{
+						auto value = xml.readElementText();
+						if (xml.name() == QLatin1String("name"))
+						{
+							query_collection_item.name = value;
+						}
+						else if (xml.name() == QLatin1String("query"))
+						{
+							query_collection_item.query = value;
+						}
+						else if (xml.name() == QLatin1String("hint"))
+						{
+							query_collection_item.hint = value;
+						}
+						else
+						{
+							showUnsupportedElementWarning(xml);
+						}
+					}
+					if (!query_collection_item.name.isEmpty() && !query_collection_item.query.isEmpty())
+					{
+						query_collection_list.push_back(query_collection_item);
+					}
+				}
+				else
+				{
+					xml.skipCurrentElement();
+					showUnsupportedElementWarning(xml);
+				}
+			}
+		}
+	}
+	else	// .txt
+	{
+		QTextStream stream(&query_collection_file);
+		QString line;
+		QueryCollectionItem query_collection_item;
+		
+		while (stream.readLineInto(&line, 1000))	// arbitrary limit
+		{
+			if (line.startsWith(QLatin1String("name=")))
+			{
+				line.remove(0, 5);
+				if (!query_collection_item.name.isEmpty())
+				{
+					if (query_collection_item.query.isEmpty())
+					{
+						QMessageBox::warning(find_dialog,
+											 tr("Warning"),
+											 tr("Missing query for: %1")
+											 .arg(query_collection_item.name)
+											 );
+					}
+					else
+					{
+						query_collection_list.push_back(query_collection_item);
+						query_collection_item.name.clear();
+						query_collection_item.query.clear();
+						query_collection_item.hint.clear();
+					}
+				}
+				query_collection_item.name = line;
+			}
+			else if (line.startsWith(QLatin1String("query=")))
+			{
+				line.remove(0, 6);
+				query_collection_item.query += line;
+			}
+			else if (line.startsWith(QLatin1String("hint=")))
+			{
+				line.remove(0, 5);
+				query_collection_item.hint += line;
+			}
+			else
+			{
+				// skip empty lines, lines with comments and anything else (silently)
+			}
+		}
+		if (!query_collection_item.name.isEmpty())
+		{
+			if (query_collection_item.query.isEmpty())
+			{
+				QMessageBox::warning(find_dialog,
+									 tr("Warning"),
+									 tr("Missing query for: %1")
+									 .arg(query_collection_item.name)
+									);
+			}
+			else
+				query_collection_list.push_back(query_collection_item);
+		}
+	}
+	
+	QSignalBlocker block(query_collection);
+
+	query_collection->clear();
+	if (!query_collection_list.size())
+	{
+		query_collection->setEnabled(false);
+		return;
+	}
+	query_collection->addItem(QLatin1String("---"));
+	for (auto i = 0; i < (int)query_collection_list.size(); ++i)
+	{
+		query_collection->addItem(query_collection_list.at(i).name);
+		if (!query_collection_list.at(i).hint.isEmpty())
+			query_collection->setItemData(i + 1, query_collection_list.at(i).hint, Qt::ToolTipRole);
+	}
+	query_collection->setEnabled(true);
+}
+
+
+// slot
+void MapFindTextEdit::insertKeyword(QAction* action)
+{
+	const auto keyword = action->data().toString();
+	insertPlainText(keyword);
+	if (keyword.endsWith(QLatin1Char(')')))
+	{
+		auto position = textCursor();
+		if (position.movePosition(QTextCursor::Left))
+			setTextCursor(position);
+	}
+}
+
+// override
+void MapFindTextEdit::contextMenuEvent(QContextMenuEvent* event)
+{
+	showCustomContextMenu(event->globalPos());
+}
+
+// override
+void MapFindTextEdit::keyPressEvent(QKeyEvent* event)
+{
+	if (event->key() == tr("K") && (event->modifiers() & Qt::ControlModifier))
+	{
+		showCustomContextMenu(viewport()->mapToGlobal(cursorRect().center()));
+	}
+	else
+	{
+		QTextEdit::keyPressEvent(event);
+	}
+}
+
+void MapFindTextEdit::showCustomContextMenu(const QPoint& globalPos)
+{
+	QMenu* menu = createStandardContextMenu(globalPos);
+	menu->addSeparator();
+	auto* insert_menu = new QMenu(tr("Insert keyword...\tCtrl+K"), menu);
+	insert_menu->menuAction()->setMenuRole(QAction::NoRole);
+	auto* keyword_actions_group = new QActionGroup(this);
+	
+	bool append = false;
+	auto keywords = DynamicObjectQueryManager::getContextKeywords(toPlainText(), textCursor().position(), append);
+	if (append)
+	{
+		keywords.append({QLatin1String(" SYMBOL "), QLatin1String(" AND " ), QLatin1String(" OR "), QLatin1String(" NOT ")});
+	}
+	for (auto& keyword : keywords)
+	{
+		auto* action = new QAction(keyword, this);
+		action->setData(QVariant(keyword));
+		keyword_actions_group->addAction(action);
+		insert_menu->addAction(action);
+	}
+	menu->addMenu(insert_menu);
+	connect(keyword_actions_group, &QActionGroup::triggered, this, &MapFindTextEdit::insertKeyword);
+	
+	menu->exec(globalPos);
+	delete menu;
+}
 
 }  // namespace OpenOrienteering
