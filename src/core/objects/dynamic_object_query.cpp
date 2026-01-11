@@ -28,6 +28,7 @@
 
 #include "core/map.h"
 #include "core/map_part.h"
+#include "core/virtual_path.h"
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
 
@@ -271,7 +272,16 @@ const QStringList DynamicObjectQueryManager::getContextKeywords(const QString& t
 					return QStringList();
 			}
 			{
-				QStringList keywords = {keyword_found == DynamicObjectQuery::LineObjectQuery ? QLatin1String("ISTOOSHORT;") : QLatin1String("ISTOOSMALL;")};
+				QStringList keywords;
+				if (keyword_found == DynamicObjectQuery::LineObjectQuery)
+				{
+					keywords = QString(QLatin1String("ISTOOSHORT; ISCLOSED; ISOPEN;")).split(QLatin1Char(' '));
+				}
+				else
+				{
+					keywords.append(QLatin1String("ISTOOSMALL;"));
+				}
+				
 				keywords += QString(QLatin1String("PAPER; REAL; AND; OR;")).split(QLatin1Char(' '));
 				for (const auto& comp : numerical_compare_operations)
 					keywords += comp.op;
@@ -389,6 +399,18 @@ bool LineObjectQuery::performQuery(const PathObject* path_object) const
 			}
 			const bool comparison_result = NumericalComparison(true, element, object_value);
 			result = and_or_operation ? (result || comparison_result) : (result && comparison_result);
+			and_or_operation = 0;	// default after first operation is AND operation
+		}
+		else if (element == QLatin1String("ISCLOSED"))
+		{
+			const bool is_closed = path_object ? path_object->parts().front().isClosed() : false;
+			result = and_or_operation ? (result || is_closed) : (result && is_closed);
+			and_or_operation = 0;	// default after first operation is AND operation
+		}
+		else if (element == QLatin1String("ISOPEN"))
+		{
+			const bool is_open = path_object ? !path_object->parts().front().isClosed() : false;
+			result = and_or_operation ? (result || is_open) : (result && is_open);
 			and_or_operation = 0;	// default after first operation is AND operation
 		}
 		else	// unknown element or failure in NumericalComparison()
