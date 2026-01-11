@@ -28,25 +28,33 @@
 #include <QAction>
 #include <QActionGroup>
 #include <QCheckBox>
+#include <QComboBox>
 #include <QContextMenuEvent>
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QFile>
 #include <QGridLayout>
+#include <QHBoxLayout>
+#include <QIcon>
+#include <QIODevice>
 #include <QKeyEvent>
 #include <QKeySequence>  // IWYU pragma: keep
 #include <QLabel>
 #include <QLatin1Char>
 #include <QLatin1String>
 #include <QMenu>
+#include <QMessageBox>
 #include <QPoint>
 #include <QPushButton>
 #include <QRect>
+#include <QSignalBlocker>
 #include <QStackedLayout>
-#include <QString>
 #include <QStringList>
 #include <QTextCursor>
+#include <QTextStream>
 #include <QVariant>
 #include <QWidget>
+#include <QXmlStreamReader>
 
 #include "core/map.h"
 #include "core/map_part.h"
@@ -54,6 +62,7 @@
 #include "core/objects/object.h"
 #include "core/objects/object_query.h"
 #include "core/symbols/symbol.h"
+#include "gui/file_dialog.h"
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
@@ -134,6 +143,17 @@ void MapFindFeature::showDialog()
 		
 		selected_objects = new QLabel();	// initialization by objectSelectionChanged() below
 		
+		auto* query_collection_box = new QHBoxLayout();
+		query_collection = new QComboBox();
+		query_collection->setEnabled(false);
+		connect(query_collection, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MapFindFeature::querySelected);
+		query_collection_box->addWidget(new QLabel(tr("Query collection")));
+		query_collection_box->addWidget(query_collection, 1);
+		
+		auto* load_query_collection = new QPushButton(QIcon(QString::fromLatin1(":/images/open.png")), QLatin1String{});
+		query_collection_box->addWidget(load_query_collection);
+		connect(load_query_collection, &QPushButton::clicked, this, &MapFindFeature::loadQueryCollection);
+		
 		auto find_all = new QPushButton(tr("Find &all"));
 		connect(find_all, &QPushButton::clicked, this, &MapFindFeature::findAll);
 		
@@ -174,7 +194,8 @@ void MapFindFeature::showDialog()
 		layout->addWidget(tags_button, 5, 1, 1, 1);
 		layout->addWidget(selected_objects, 7, 0, 1, 1);
 		layout->addWidget(tag_selector_buttons, 7, 1, 1, 1);
-		layout->addWidget(button_box, 8, 0, 1, 2);
+		layout->addLayout(query_collection_box, 8, 0, 1, 1);
+		layout->addWidget(button_box, 9, 0, 1, 2);
 		
 		find_dialog->setLayout(layout);
 	}
@@ -342,6 +363,172 @@ void MapFindFeature::tagSelectorToggled(bool active)
 		if (!text.isEmpty())
 			text_edit->setText(text);
 	}
+}
+
+void MapFindFeature::querySelected()
+{
+	const auto index = query_collection->currentIndex();
+	if (index > 0)
+	{
+		text_edit->insertPlainText(query_collection_list.at(index - 1).query);
+	}
+}
+
+void MapFindFeature::showUnsupportedElementWarning(QXmlStreamReader& xml) const
+{
+	QMessageBox::warning(find_dialog,
+	                     tr("Warning"),
+	                     tr("Unsupported element: %1 (line %2 column %3)")
+	                     .arg(xml.name().toString())
+	                     .arg(xml.lineNumber())
+	                     .arg(xml.columnNumber())
+	                    );
+}
+
+void MapFindFeature::loadQueryCollection()
+{
+	auto const filter = QString{QLatin1String{"(*txt *.xml)"}};
+	auto const filepath = FileDialog::getOpenFileName(find_dialog,
+	                                                  tr("Open Query collection file..."),
+	                                                  QLatin1String{},
+	                                                  filter);
+	if (filepath.isEmpty())
+		return;
+	
+	QFile query_collection_file(filepath);
+	if (!query_collection_file.open(QFile::ReadOnly))
+	{
+		QMessageBox::warning(find_dialog,
+		                     tr("Error"),
+		                     ::OpenOrienteering::MainWindow::tr("Cannot open file:\n%1\n\n%2")
+		                     .arg(filepath, query_collection_file.errorString())
+		                    );
+		return;
+	}
+	
+	query_collection_list.clear();
+	
+	if (filepath.endsWith(QLatin1String(".xml"), Qt::CaseInsensitive))
+	{
+		QXmlStreamReader xml(&query_collection_file);
+		if (xml.readNextStartElement())
+		{
+			while (xml.readNextStartElement())
+			{
+				if (xml.name() == QLatin1String("object_query"))
+				{
+					QueryCollectionItem query_collection_item;
+					
+					while (xml.readNextStartElement())
+					{
+						auto value = xml.readElementText();
+						if (xml.name() == QLatin1String("name"))
+						{
+							query_collection_item.name = value;
+						}
+						else if (xml.name() == QLatin1String("query"))
+						{
+							query_collection_item.query = value;
+						}
+						else if (xml.name() == QLatin1String("hint"))
+						{
+							query_collection_item.hint = value;
+						}
+						else
+						{
+							showUnsupportedElementWarning(xml);
+						}
+					}
+					if (!query_collection_item.name.isEmpty() && !query_collection_item.query.isEmpty())
+					{
+						query_collection_list.push_back(query_collection_item);
+					}
+				}
+				else
+				{
+					xml.skipCurrentElement();
+					showUnsupportedElementWarning(xml);
+				}
+			}
+		}
+	}
+	else	// .txt
+	{
+		QTextStream stream(&query_collection_file);
+		QString line;
+		QueryCollectionItem query_collection_item;
+		
+		while (stream.readLineInto(&line, 1000))	// arbitrary limit
+		{
+			if (line.startsWith(QLatin1String("name=")))
+			{
+				line.remove(0, 5);
+				if (!query_collection_item.name.isEmpty())
+				{
+					if (query_collection_item.query.isEmpty())
+					{
+						QMessageBox::warning(find_dialog,
+											 tr("Warning"),
+											 tr("Missing query for: %1")
+											 .arg(query_collection_item.name)
+											 );
+					}
+					else
+					{
+						query_collection_list.push_back(query_collection_item);
+						query_collection_item.name.clear();
+						query_collection_item.query.clear();
+						query_collection_item.hint.clear();
+					}
+				}
+				query_collection_item.name = line;
+			}
+			else if (line.startsWith(QLatin1String("query=")))
+			{
+				line.remove(0, 6);
+				query_collection_item.query += line;
+			}
+			else if (line.startsWith(QLatin1String("hint=")))
+			{
+				line.remove(0, 5);
+				query_collection_item.hint += line;
+			}
+			else
+			{
+				// skip empty lines, lines with comments and anything else (silently)
+			}
+		}
+		if (!query_collection_item.name.isEmpty())
+		{
+			if (query_collection_item.query.isEmpty())
+			{
+				QMessageBox::warning(find_dialog,
+									 tr("Warning"),
+									 tr("Missing query for: %1")
+									 .arg(query_collection_item.name)
+									);
+			}
+			else
+				query_collection_list.push_back(query_collection_item);
+		}
+	}
+	
+	QSignalBlocker block(query_collection);
+
+	query_collection->clear();
+	if (!query_collection_list.size())
+	{
+		query_collection->setEnabled(false);
+		return;
+	}
+	query_collection->addItem(QLatin1String("---"));
+	for (auto i = 0; i < (int)query_collection_list.size(); ++i)
+	{
+		query_collection->addItem(query_collection_list.at(i).name);
+		if (!query_collection_list.at(i).hint.isEmpty())
+			query_collection->setItemData(i + 1, query_collection_list.at(i).hint, Qt::ToolTipRole);
+	}
+	query_collection->setEnabled(true);
 }
 
 
