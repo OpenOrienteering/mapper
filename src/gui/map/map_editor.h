@@ -282,7 +282,7 @@ public slots:
 	
 	/** Undoes the last object edit step. */
 	void undo();
-	/** Redoes the last object edit step */
+	/** Redoes the last object edit step. */
 	void redo();
 	/** Cuts the selected object(s). */
 	void cut();
@@ -388,8 +388,8 @@ public slots:
 	void updatePasteAvailability();
 	
 	/**
-	 * Checks the presence of spot colors,
-	 * and to disables overprinting simulation if there are no spot colors.
+	 * Checks the presence of spot colors
+	 * and disables overprinting simulation if there are no spot colors.
 	 */
 	void spotColorPresenceChanged(bool has_spot_colors);
 	
@@ -438,7 +438,7 @@ public slots:
 	void selectByCurrentSymbols();
 	
 	/**
-	 * Reverses the selected object(s) direcction(s),
+	 * Reverses the selected object(s) direction(s),
 	 * thus switching dash directions for lines.
 	 */
 	void switchDashesClicked();
@@ -525,6 +525,8 @@ public slots:
 	void mergeCurrentMapPartTo(int target);
 	/** Merges all map parts into the current one. */
 	void mergeAllMapParts();
+	/** Toggles the visibility of the current map part */
+	void toggleMapPartVisible();
 	
 	/** Updates action enabled states after a template has been added */
 	void templateAdded(int pos, const OpenOrienteering::Template* temp);
@@ -832,6 +834,7 @@ private:
 	QAction* mappart_rename_act = {};
 	QAction* mappart_remove_act = {};
 	QAction* mappart_merge_act = {};
+	QAction* mappart_visibility_act = {};
 	QMenu* mappart_merge_menu;
 	QMenu* mappart_move_menu;
 	
@@ -876,4 +879,4 @@ Symbol* MapEditorController::activeSymbol() const
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_MAP_EDITOR_H

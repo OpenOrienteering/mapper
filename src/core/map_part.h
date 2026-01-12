@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,8 +25,8 @@
 #include <cstddef>
 #include <functional>
 #include <memory>
-#include <vector>
 #include <utility>
+#include <vector>
 
 #include <QHash>
 #include <QRectF>
@@ -62,8 +62,6 @@ using SelectionInfoVector = std::vector<std::pair<int, Object*>> ;
  * a map part for event-specific map objects and parts for course-specific
  * map objects. Then a course can be printed by merging the event-specific part
  * with the part for the course.
- * 
- * Currently, only one map part can be used per map.
  */
 class MapPart
 {
@@ -106,6 +104,15 @@ public:
 	 */
 	void setName(const QString& new_name);
 	
+	/**
+	 * Returns the part's visibility.
+	 */
+	bool isVisible() const { return visible; };
+
+	/**
+	 * Sets the part's visibility.
+	 */
+	void setVisible(bool visible);
 	
 	/**
 	 * Returns the number of objects in the part.
@@ -155,12 +162,12 @@ public:
 	void addObject(Object* object, int pos);
 	
 	/**
-	 * Deleted the object from the given index.
+	 * Deletes the object from the given index.
 	 */
 	void deleteObject(int pos);
 	
 	/**
-	 * Deleted the object from the given index.
+	 * Deletes the object from the given index.
 	 * 
 	 * Returns if the object was found in this part.
 	 */
@@ -269,6 +276,7 @@ private:
 	QString name;
 	ObjectList objects;  ///< @todo This could be a spatial representation optimized for quick access
 	Map* const map;
+	bool visible = true;  ///< Visibility of the part's objects.
 };
 
 
@@ -302,4 +310,4 @@ const Object* MapPart::getObject(int i) const
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_MAP_PART_H

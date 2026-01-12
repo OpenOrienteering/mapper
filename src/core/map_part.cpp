@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -47,6 +47,7 @@ namespace literal
 	const QLatin1String objects("objects");
 	const QLatin1String object("object");
 	const QLatin1String count("count");
+	const QLatin1String hidden("hidden");
 }
 
 
@@ -75,12 +76,26 @@ void MapPart::setName(const QString& new_name)
 		emit map->mapPartChanged(map->findPartIndex(this), this);
 }
 
-
+void MapPart::setVisible(bool visible)
+{
+	if (this->visible == visible)
+		return;
+		
+	this->visible = visible;
+	if (map)
+	{
+		emit map->mapPartChanged(map->findPartIndex(this), this);
+		applyOnAllObjects([visible](Object* o) {
+			o->setVisible(visible);
+		});
+	}
+}
 
 void MapPart::save(QXmlStreamWriter& xml) const
 {
 	XmlElementWriter part_element(xml, literal::part);
 	part_element.writeAttribute(literal::name, name);
+	part_element.writeAttribute(literal::hidden, !visible);
 	{
 		XmlElementWriter objects_element(xml, literal::objects);
 		objects_element.writeAttribute(literal::count, objects.size());
@@ -99,6 +114,7 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol
 	
 	XmlElementReader part_element(xml);
 	auto part = new MapPart(part_element.attribute<QString>(literal::name), &map);
+	part->visible = !part_element.attribute<bool>(literal::hidden);
 	
 	while (xml.readNextStartElement())
 	{
@@ -113,9 +129,14 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol
 			while (xml.readNextStartElement())
 			{
 				if (xml.name() == literal::object)
+				{
 					part->objects.push_back(Object::load(xml, &map, symbol_dict));
+					part->objects.back()->setVisible(part->visible);
+				}
 				else
+				{
 					xml.skipCurrentElement(); // unknown
+				}
 			}
 		}
 		else
@@ -150,6 +171,7 @@ void MapPart::setObject(Object* object, int pos, bool delete_old)
 		delete objects[pos];
 	
 	objects[pos] = object;
+	object->setVisible(visible);
 	object->setMap(map);
 	object->update();
 	map->setObjectsDirty(); // TODO: remove from here, dirty state handling should be separate
@@ -163,6 +185,7 @@ void MapPart::addObject(Object* object)
 void MapPart::addObject(Object* object, int pos)
 {
 	objects.insert(objects.begin() + pos, object);
+	object->setVisible(visible);
 	object->setMap(map);
 	object->update();
 	
@@ -227,6 +250,7 @@ std::unique_ptr<UndoStep> MapPart::importPart(const MapPart* other, const QHash<
 		new_object->transform(transform);
 		
 		objects.push_back(new_object);
+		new_object->setVisible(visible);
 		new_object->setMap(map);
 		new_object->update();
 		
