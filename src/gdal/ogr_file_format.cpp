@@ -702,6 +702,17 @@ OgrFileImport::OgrFileImport(const QString& path, Map* map, MapView* view, UnitT
 	GdalManager manager;
 	manager.configure();
 	
+	switch (unit_type)
+	{
+	case UnitOnPaper:
+		to_map_coord = &OgrFileImport::fromDrawing;
+		break;
+		
+	case UnitOnGround:
+		to_map_coord = &OgrFileImport::fromProjected;
+		break;
+	}
+	
 	clip_layers = manager.isImportOptionEnabled(GdalManager::ClipLayers);
 	setOption(QString::fromLatin1("Clip layers"), clip_layers);
 	
@@ -768,6 +779,39 @@ bool OgrFileImport::supportsQIODevice() const noexcept
 void OgrFileImport::setGeoreferencingImportEnabled(bool enabled)
 {
 	georeferencing_import_enabled = enabled;
+}
+
+
+
+QString OgrFileImport::overrideCrs() const
+{
+	return override_srs_spec;
+}
+
+bool OgrFileImport::setOverrideCrs(const QString& spec)
+{
+	if (spec.isEmpty())
+	{
+		override_srs_spec.clear();
+		override_srs.reset();
+		return true;
+	}
+	
+	auto srs = ogr::unique_srs(OSRNewSpatialReference(nullptr));
+	auto spec_latin1 = spec.toLatin1();
+#ifdef PROJ_ISSUE_1573
+	// Cf. https://github.com/OSGeo/PROJ/pull/1573
+	spec_latin1.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
+#endif
+	if (auto error = OSRImportFromProj4(srs.get(), spec_latin1))
+	{
+		addWarning(tr("Unable to setup \"%1\" SRS for GDAL: %2")
+		           .arg(spec, QString::number(error)));
+		return false;
+	}
+	override_srs_spec = spec;
+	override_srs = std::move(srs);
+	return true;
 }
 
 
@@ -1067,19 +1111,11 @@ void OgrFileImport::importLayer(MapPart* map_part, OGRLayerH layer)
 
 void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_definition, OGRFeatureH feature, OGRGeometryH geometry, const Clipping* clipping)
 {
-	auto new_srs = OGR_G_GetSpatialReference(geometry);
-	if (!setSRS(new_srs))
+	if (!setSRS(OGR_G_GetSpatialReference(geometry)))
 		return;
 	
-	if (new_srs)
-	{
-		auto error = OGR_G_Transform(geometry, data_transform.get());
-		if (error)
-		{
-			++failed_transformation;
-			return;
-		}
-	}
+	if (!transform(geometry))
+		return;
 	
 	auto objects = importGeometry(feature, geometry);
 	auto const tags = importFields(feature_definition, feature);
@@ -1299,45 +1335,50 @@ PathObject* OgrFileImport::importPolygonGeometry(OGRFeatureH feature, OGRGeometr
 std::unique_ptr<OgrFileImport::Clipping> OgrFileImport::getLayerClipping(OGRLayerH layer)
 {
 	OGREnvelope envelope;
-	if (OGR_L_GetExtent(layer, &envelope, false) == OGRERR_NONE)
-	{
-		auto outline = ogr::unique_geometry(OGR_G_CreateGeometry(wkbLinearRing));
-		OGR_G_AddPoint_2D(outline.get(), envelope.MinX, envelope.MinY);
-		OGR_G_AddPoint_2D(outline.get(), envelope.MaxX, envelope.MinY);
-		OGR_G_AddPoint_2D(outline.get(), envelope.MaxX, envelope.MaxY);
-		OGR_G_AddPoint_2D(outline.get(), envelope.MinX, envelope.MaxY);
-		OGR_G_AddPoint_2D(outline.get(), envelope.MinX, envelope.MinY);
-		OGR_G_CloseRings(outline.get());
-		
-		auto layer_srs = OGR_L_GetSpatialRef(layer);
-		if (setSRS(layer_srs))
-		{
-			if (layer_srs)
-			{
-				auto error = OGR_G_Transform(outline.get(), data_transform.get());
-				if (error)
-				{
-					++failed_transformation;
-					return {};
-				}
-			}
-		}
-		
-		MapCoordVector coords;
-		coords.reserve(5);
-		for (int i = 0; i < 5; ++i)
-			coords.emplace_back(toMapCoord(OGR_G_GetX(outline.get(), i), OGR_G_GetY(outline.get(), i)));
-		coords.back().setClosePoint(true);
-		return std::make_unique<ClippingImplementation>(std::move(coords));
-	}
-	return {};
+	if (OGR_L_GetExtent(layer, &envelope, false) != OGRERR_NONE)
+		return {};
+	
+	if (!setSRS(OGR_L_GetSpatialRef(layer)))
+		return {};
+	
+	auto outline = ogr::unique_geometry(OGR_G_CreateGeometry(wkbLinearRing));
+	OGR_G_AddPoint_2D(outline.get(), envelope.MinX, envelope.MinY);
+	OGR_G_AddPoint_2D(outline.get(), envelope.MaxX, envelope.MinY);
+	OGR_G_AddPoint_2D(outline.get(), envelope.MaxX, envelope.MaxY);
+	OGR_G_AddPoint_2D(outline.get(), envelope.MinX, envelope.MaxY);
+	OGR_G_AddPoint_2D(outline.get(), envelope.MinX, envelope.MinY);
+	OGR_G_CloseRings(outline.get());
+	
+	if (!transform(outline.get()))
+		return {};
+	
+	MapCoordVector coords;
+	coords.reserve(5);
+	for (int i = 0; i < 5; ++i)
+		coords.emplace_back(toMapCoord(OGR_G_GetX(outline.get(), i), OGR_G_GetY(outline.get(), i)));
+	coords.back().setClosePoint(true);
+	return std::make_unique<ClippingImplementation>(std::move(coords));
 }
 
 
 bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
 {
-	to_map_coord = &OgrFileImport::fromProjected;
-	if (srs && data_srs != srs)
+	if (unit_type == UnitOnPaper)
+	{
+		return true;
+	}
+	
+	if (override_srs)
+	{
+		srs = override_srs.get();
+	}
+	
+	if (!srs)
+	{
+		data_srs = {};
+		data_transform = {};
+	}
+	else if (data_srs != srs)
 	{
 		// New SRS, indeed.
 		auto transformation = ogr::unique_transformation{ OCTNewCoordinateTransformation(srs, map_srs.get()) };
@@ -1352,9 +1393,19 @@ bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
 		data_transform = std::move(transformation);
 	}
 	
-	if (!srs && unit_type == UnitOnPaper)
+	return true;
+}
+
+bool OgrFileImport::transform(OGRGeometryH geometry)
+{
+	if (data_transform)
 	{
-		to_map_coord = &OgrFileImport::fromDrawing;
+		auto error = OGR_G_Transform(geometry, data_transform.get());
+		if (error)
+		{
+			++failed_transformation;
+			return false;
+		}
 	}
 	return true;
 }
