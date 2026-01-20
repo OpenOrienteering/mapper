@@ -152,14 +152,14 @@ PercentageDelegate::PercentageDelegate(QObject* parent, int step)
  : QStyledItemDelegate(parent),
    step(step)
 {
-	unit = QLatin1Char(' ') + tr("%");
+	unit = tr("%");
 }
 
 PercentageDelegate::PercentageDelegate(int step)
  : QStyledItemDelegate(),
    step(step)
 {
-	unit = QLatin1Char(' ') + tr("%");
+	unit = tr("%");
 }
 
 QString PercentageDelegate::displayText(const QVariant& value, const QLocale& locale) const

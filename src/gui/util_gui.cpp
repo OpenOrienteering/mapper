@@ -299,11 +299,7 @@ namespace Util {
 		{
 			auto box = new QSpinBox();
 			box->setRange(min, max);
-			const auto space = QLatin1Char{' '};
-			if (unit.startsWith(space))
-				box->setSuffix(unit);
-			else if (unit.length() > 0)
-				box->setSuffix(space + unit);
+			box->setSuffix(unit);
 			if (step > 0)
 				box->setSingleStep(step);
 #ifndef NDEBUG
@@ -324,11 +320,7 @@ namespace Util {
 			auto box = new QDoubleSpinBox();
 			box->setDecimals(decimals);
 			box->setRange(min, max);
-			const auto space = QLatin1Char{' '};
-			if (unit.startsWith(space))
-				box->setSuffix(unit);
-			else if (unit.length() > 0)
-				box->setSuffix(space + unit);
+			box->setSuffix(unit);
 			if (step > 0.0)
 				box->setSingleStep(step);
 			else

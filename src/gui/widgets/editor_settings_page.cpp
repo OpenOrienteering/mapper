@@ -61,10 +61,10 @@ EditorSettingsPage::EditorSettingsPage(QWidget* parent)
 	text_antialiasing->setToolTip(tr("Antialiasing makes the map look much better, but also slows down the map display"));
 	layout->addRow(text_antialiasing);
 	
-	tolerance = Util::SpinBox::create(0, 50, tr("mm", "millimeters"));
+	tolerance = Util::SpinBox::create(0, 50, QLatin1Char(' ') + tr("mm", "millimeters"));
 	layout->addRow(tr("Click tolerance:"), tolerance);
 	
-	snap_distance = Util::SpinBox::create(0, 100, tr("mm", "millimeters"));
+	snap_distance = Util::SpinBox::create(0, 100, QLatin1Char(' ') + tr("mm", "millimeters"));
 	layout->addRow(tr("Snap distance (%1):").arg(ModifierKey::shift()), snap_distance);
 	
 	fixed_angle_stepping = Util::SpinBox::create<Util::RotationalDegrees>();
@@ -106,7 +106,7 @@ EditorSettingsPage::EditorSettingsPage(QWidget* parent)
 	layout->addItem(Util::SpacerItem::create(this));
 	layout->addRow(Util::Headline::create(tr("Rectangle tool:")));
 	
-	rectangle_helper_cross_radius = Util::SpinBox::create(0, 999999, tr("mm", "millimeters"));
+	rectangle_helper_cross_radius = Util::SpinBox::create(0, 999999, QLatin1Char(' ') + tr("mm", "millimeters"));
 	layout->addRow(tr("Radius of helper cross:"), rectangle_helper_cross_radius);
 	
 	rectangle_preview_line_width = new QCheckBox(tr("Preview the width of lines with helper cross"));
