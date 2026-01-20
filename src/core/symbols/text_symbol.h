@@ -114,7 +114,8 @@ public:
 	/** Calculates the factor to convert from the real font size to the internal font size */
 	inline double calculateInternalScaling() const {return internal_point_size / (0.001 * font_size);}
 	
-	// Getters
+	// Getters and setters
+	using Symbol::setRotatable;
 	inline const MapColor* getColor() const {return color;}
 	inline void setColor(const MapColor* color) {this->color = color;}
 	inline const QString& getFontFamily() const {return font_family;}
