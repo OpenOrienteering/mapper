@@ -419,7 +419,13 @@ private slots:
 		QTest::newRow("TemplateTrack OGR georef")     << QStringLiteral("testdata:templates/template-track.xmap") << 2;
 		QTest::newRow("TemplateTrack OGR non-georef") << QStringLiteral("testdata:templates/template-track.xmap") << 3;
 		QTest::newRow("TemplateTrack NAD83")          << QStringLiteral("testdata:templates/template-track-NA.xmap") << 0;
-		QTest::newRow("OgrTemplate NAD83")            << QStringLiteral("testdata:templates/template-track-NA.xmap") << 1;
+		QTest::newRow("TemplateTrack NAD83 2014")     << QStringLiteral("testdata:templates/template-track-NA.xmap") << 1;
+		QTest::newRow("TemplateTrack NAD83 2013")     << QStringLiteral("testdata:templates/template-track-NA.xmap") << 2;
+		QTest::newRow("TemplateTrack NAD83 2012")     << QStringLiteral("testdata:templates/template-track-NA.xmap") << 3;
+		QTest::newRow("TemplateTrack NAD83 2013")     << QStringLiteral("testdata:templates/template-track-NA.xmap") << 4;
+		QTest::newRow("TemplateTrack NAD83 2012")     << QStringLiteral("testdata:templates/template-track-NA.xmap") << 5;
+		QTest::newRow("TemplateTrack NAD83 1997")     << QStringLiteral("testdata:templates/template-track-NA.xmap") << 6;
+		QTest::newRow("OgrTemplate NAD83")            << QStringLiteral("testdata:templates/template-track-NA.xmap") << 7;
 		QTest::newRow("TemplateTrack from v0.8.4")    << QStringLiteral("testdata:templates/template-track-NA-084.xmap") << 0;
 		QTest::newRow("TemplateTrack from v0.9.3")    << QStringLiteral("testdata:templates/template-track-NA-093-PROJ.xmap") << 0;
 	}
@@ -471,7 +477,13 @@ private slots:
 		QTest::newRow("OgrTemplate basic")            << QStringLiteral("testdata:templates/ogr-template.xmap")   << 0;
 		QTest::newRow("OgrTemplate compatibility")    << QStringLiteral("testdata:templates/ogr-template.xmap")   << 1;
 		QTest::newRow("TemplateTrack NAD83")          << QStringLiteral("testdata:templates/template-track-NA.xmap") << 0;
-		QTest::newRow("OgrTemplate NAD83")            << QStringLiteral("testdata:templates/template-track-NA.xmap") << 1;
+		QTest::newRow("TemplateTrack NAD83 2014")     << QStringLiteral("testdata:templates/template-track-NA.xmap") << 1;
+		QTest::newRow("TemplateTrack NAD83 2013")     << QStringLiteral("testdata:templates/template-track-NA.xmap") << 2;
+		QTest::newRow("TemplateTrack NAD83 2012")     << QStringLiteral("testdata:templates/template-track-NA.xmap") << 3;
+		QTest::newRow("TemplateTrack NAD83 2013")     << QStringLiteral("testdata:templates/template-track-NA.xmap") << 4;
+		QTest::newRow("TemplateTrack NAD83 2012")     << QStringLiteral("testdata:templates/template-track-NA.xmap") << 5;
+		QTest::newRow("TemplateTrack NAD83 1997")     << QStringLiteral("testdata:templates/template-track-NA.xmap") << 6;
+		QTest::newRow("OgrTemplate NAD83")            << QStringLiteral("testdata:templates/template-track-NA.xmap") << 7;
 		QTest::newRow("TemplateTrack from v0.8.4")    << QStringLiteral("testdata:templates/template-track-NA-084.xmap") << 0;
 		QTest::newRow("OGRTemplate from v0.9.3")      << QStringLiteral("testdata:templates/template-track-NA-093-GDAL.xmap") << 0;
 	}
