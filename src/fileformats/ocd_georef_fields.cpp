@@ -837,9 +837,9 @@ int toOcd(const MapperCrs crs_unique_id,
 bool operator==(const OcdGeorefFields& lhs, const OcdGeorefFields& rhs)
 {
 	return lhs.i == rhs.i
-	        && lhs.m == rhs.m
-	        && lhs.x == rhs.x
-	        && lhs.y == rhs.y
+	        && ((qIsNaN(lhs.m) && qIsNaN(rhs.m)) || qAbs(lhs.m - rhs.m) < 5e-9) // 8-digit precision or both NaN's
+	        && ((qIsNaN(lhs.x) && qIsNaN(rhs.x)) || qAbs(lhs.x - rhs.x) < 5e-9) // 8-digit precision or both NaN's
+	        && ((qIsNaN(lhs.y) && qIsNaN(rhs.y)) || qAbs(lhs.y - rhs.y) < 5e-9) // 8-digit precision or both NaN's
 	        && ((qIsNaN(lhs.a) && qIsNaN(rhs.a)) || qAbs(lhs.a - rhs.a) < 5e-9) // 8-digit precision or both NaN's
 	        && lhs.r == rhs.r;
 }
@@ -847,15 +847,19 @@ bool operator==(const OcdGeorefFields& lhs, const OcdGeorefFields& rhs)
 void OcdGeorefFields::setupGeoref(Georeferencing& georef,
                                   const std::function<void (const QString&)>& warning_handler) const
 {
-	if (m > 0)
-		georef.setScaleDenominator(m);
+	auto map_scale = qRound(m);
+	if (map_scale > 0)
+		georef.setScaleDenominator(map_scale);
 
 	if (r)
 		applyGridAndZone(georef, i, warning_handler);
 
 	QPointF proj_ref_point(x, y);
 	georef.setProjectedRefPoint(proj_ref_point, false, false);
-	georef.setCombinedScaleFactor(1.0);
+	if (m > 0)
+		georef.setCombinedScaleFactor(m / georef.getScaleDenominator());
+	else
+		georef.setCombinedScaleFactor(1.0);
 	georef.setGrivation(qIsFinite(a) ? a : 0);
 }
 
@@ -866,10 +870,10 @@ OcdGeorefFields OcdGeorefFields::fromGeoref(const Georeferencing& georef,
 
 	// store known values early, they can be useful even if CRS translation fails
 	retval.a = georef.getGrivation();
-	retval.m = georef.getScaleDenominator();
+	retval.m = georef.getScaleDenominator() * georef.getCombinedScaleFactor();
 	const QPointF offset(georef.toProjectedCoords(MapCoord{}));
-	retval.x = qRound(offset.x()); // OCD easting and northing is integer
-	retval.y = qRound(offset.y());
+	retval.x = offset.x();
+	retval.y = offset.y();
 
 	// attempt translation from Mapper CRS reference into OCD one
 	auto crs_id_string = georef.getProjectedCRSId();
