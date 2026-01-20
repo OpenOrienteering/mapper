@@ -265,9 +265,9 @@ public:
 	
 public slots:
 	/**
-	 * Lets the user export a PathObject as a simple course.
+	 * Lets the user export a course from the current map.
 	 */
-	void exportSimpleCourse();
+	void exportCourse();
 	
 	/**
 	 * Lets the user export the map as geospatial vector data.
@@ -706,7 +706,7 @@ private:
 	QAction* print_act = {};
 	QAction* export_image_act = {};
 	QAction* export_kmz_act = {};
-	QAction* export_simple_course_act = {};
+	QAction* export_course_act = {};
 	QAction* export_pdf_act = {};
 	QAction* export_vector_act = {};
 	
