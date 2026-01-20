@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -297,13 +297,14 @@ bool TemplateImage::postLoadSetup(QWidget* dialog_parent, bool& out_center_in_vi
 		if (map->getGeoreferencing().getState() == Georeferencing::Geospatial)
 		{
 			// Let user select the coordinate reference system.
-			// \todo Change description text below (no longer just for world files.)
 			Q_UNUSED(QT_TR_NOOP("Select the coordinate reference system of the georeferenced image."))
 			SelectCRSDialog dialog(
 			            available_georef,
 			            map->getGeoreferencing(),
 			            dialog_parent,
-			            tr("Select the coordinate reference system of the coordinates in the world file") );
+			            available_georef.effective.transform.source == QByteArray("World file") ?
+			                 tr("Select the coordinate reference system of the coordinates in the world file") :
+			                 tr("Select the coordinate reference system") );
 			if (dialog.exec() == QDialog::Accepted)
 			{
 				available_georef.effective.crs_spec = dialog.currentCRSSpec();
@@ -417,13 +418,14 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 		{
 			// Cf. postLoadSetup
 			// Let user select the coordinate reference system.
-			// \todo Change description text below (no longer just for world files.)
 			Q_UNUSED(QT_TR_NOOP("Select the coordinate reference system of the georeferenced image."))
 			SelectCRSDialog dialog(
 			            available_georef,
 			            map->getGeoreferencing(),
 			            dialog_parent,
-			            tr("Select the coordinate reference system of the coordinates in the world file") );
+			            available_georef.effective.transform.source == QByteArray("World file") ?
+			                 tr("Select the coordinate reference system of the coordinates in the world file") :
+			                 tr("Select the coordinate reference system") );
 			if (dialog.exec() == QDialog::Rejected)
 				return true;  // not failed!
 			
