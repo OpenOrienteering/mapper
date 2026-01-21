@@ -138,7 +138,15 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 	static void checkGPSEnabled()
 	{
 		LocationManager locationManager = (LocationManager) instance.getSystemService(LOCATION_SERVICE);
-		boolean enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		// Use isLocationEnabled() for API 28 or higher to check if location services are enabled at all,
+		// on lower API levels check if either GPS or Network provider is enabled to cover devices without GPS (mocked with external device).
+		boolean enabled;
+		if (Build.VERSION.SDK_INT >= 28) {
+			enabled = locationManager.isLocationEnabled();
+		} else {
+			enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+			       || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+		}
 		if (!enabled)
 		{
 			instance.runOnUiThread(new Runnable() {

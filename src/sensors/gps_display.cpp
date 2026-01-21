@@ -147,7 +147,8 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, 
 		return;
 	}
 	
-	source->setPreferredPositioningMethods(QGeoPositionInfoSource::SatellitePositioningMethods);
+	// Use all available positioning methods to cover devices without GPS (mocked with external device)
+	source->setPreferredPositioningMethods(QGeoPositionInfoSource::AllPositioningMethods);
 	source->setUpdateInterval(1000);
 	connect(source, &QGeoPositionInfoSource::positionUpdated, this, &GPSDisplay::positionUpdated, Qt::QueuedConnection);
 	connect(source, QOverload<QGeoPositionInfoSource::Error>::of(&QGeoPositionInfoSource::error), this, &GPSDisplay::error);
@@ -438,7 +439,8 @@ MapCoordF GPSDisplay::calcLatestGPSCoord(bool& ok)
 		return latest_gps_coord;
 	}
 	
-	const auto latest_pos_info = source->lastKnownPosition(true);
+	// Get latest position info from any source
+	const auto latest_pos_info = source->lastKnownPosition(false);
 	latest_gps_coord_accuracy = latest_pos_info.hasAttribute(QGeoPositionInfo::HorizontalAccuracy)
 	                            ? float(latest_pos_info.attribute(QGeoPositionInfo::HorizontalAccuracy))
 	                            : -1;
