@@ -124,9 +124,10 @@ public:
 	 * Checks for equality with another object.
 	 * 
 	 * If compare_symbol is set, also the symbols are compared for having the same properties.
+	 * If compare_tags is set, also the tags are compared for being equal.
 	 * Note that the map property is not compared.
 	 */
-	bool equals(const Object* other, bool compare_symbol) const;
+	bool equals(const Object* other, bool compare_symbol, bool compare_tags = true) const;
 	
 	virtual bool validate() const;
 	
