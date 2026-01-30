@@ -53,8 +53,6 @@
 
 QT_BEGIN_NAMESPACE
 
-const char *qt_real_to_string(qreal val, char *buf);
-const char *qt_int_to_string(int val, char *buf);
 
 namespace AdvancedPdf {
 
