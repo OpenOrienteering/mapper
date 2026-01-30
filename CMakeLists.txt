@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2025 Kai Pastor
+#    Copyright 2012-2026 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -224,7 +224,7 @@ elseif(PROJ_VERSION VERSION_LESS 6.2.1)
 endif()
 
 if(Mapper_USE_GDAL)
-	find_package(GDAL 2 REQUIRED)
+	find_package(GDAL REQUIRED)
 endif()
 
 find_package(Qt5Core 5.5 REQUIRED)
