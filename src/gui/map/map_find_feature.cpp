@@ -370,6 +370,7 @@ void MapFindFeature::querySelected()
 	const auto index = query_collection->currentIndex();
 	if (index > 0)
 	{
+		text_edit->clear();
 		text_edit->insertPlainText(query_collection_list.at(index - 1).query);
 	}
 }
@@ -415,39 +416,49 @@ void MapFindFeature::loadQueryCollection()
 		{
 			while (xml.readNextStartElement())
 			{
-				if (xml.name() == QLatin1String("object_query"))
+				if (xml.name() == QLatin1String("object_queries"))
 				{
-					QueryCollectionItem query_collection_item;
-					
 					while (xml.readNextStartElement())
 					{
-						auto value = xml.readElementText();
-						if (xml.name() == QLatin1String("name"))
+						if (xml.name() == QLatin1String("object_query"))
 						{
-							query_collection_item.name = value;
-						}
-						else if (xml.name() == QLatin1String("query"))
-						{
-							query_collection_item.query = value;
-						}
-						else if (xml.name() == QLatin1String("hint"))
-						{
-							query_collection_item.hint = value;
+							QueryCollectionItem query_collection_item;
+							
+							while (xml.readNextStartElement())
+							{
+								auto value = xml.readElementText();
+								if (xml.name() == QLatin1String("name"))
+								{
+									query_collection_item.name = value;
+								}
+								else if (xml.name() == QLatin1String("query"))
+								{
+									query_collection_item.query = value;
+								}
+								else if (xml.name() == QLatin1String("hint"))
+								{
+									query_collection_item.hint = value;
+								}
+								else
+								{
+									showUnsupportedElementWarning(xml);
+								}
+							}
+							if (!query_collection_item.name.isEmpty() && !query_collection_item.query.isEmpty())
+							{
+								query_collection_list.push_back(query_collection_item);
+							}
 						}
 						else
 						{
+							xml.skipCurrentElement();
 							showUnsupportedElementWarning(xml);
 						}
-					}
-					if (!query_collection_item.name.isEmpty() && !query_collection_item.query.isEmpty())
-					{
-						query_collection_list.push_back(query_collection_item);
 					}
 				}
 				else
 				{
 					xml.skipCurrentElement();
-					showUnsupportedElementWarning(xml);
 				}
 			}
 		}
