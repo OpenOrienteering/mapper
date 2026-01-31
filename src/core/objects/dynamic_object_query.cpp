@@ -275,14 +275,14 @@ const QStringList DynamicObjectQueryManager::getContextKeywords(const QString& t
 				QStringList keywords;
 				if (keyword_found == DynamicObjectQuery::LineObjectQuery)
 				{
-					keywords = QString(QLatin1String("ISTOOSHORT; ISCLOSED; ISOPEN;")).split(QLatin1Char(' '));
+					keywords = QString(QLatin1String("ISTOOSHORT;|ISCLOSED;|ISOPEN;")).split(QLatin1Char('|'));
 				}
 				else
 				{
 					keywords.append(QLatin1String("ISTOOSMALL;"));
 				}
 				
-				keywords += QString(QLatin1String("PAPER; REAL; AND; OR;")).split(QLatin1Char(' '));
+				keywords += QString(QLatin1String("PAPER;|REAL;|AND;|OR;")).split(QLatin1Char('|'));
 				for (const auto& comp : numerical_compare_operations)
 					keywords += comp.op;
 				return keywords;
@@ -295,14 +295,14 @@ const QStringList DynamicObjectQueryManager::getContextKeywords(const QString& t
 				const auto find_id_keyword = parameters.lastIndexOf(QLatin1String("ID"));
 				if (find_type_keyword >= find_id_keyword)	// if both keywords are not found the '=' part is needed for the -1 values
 				{
-					return QString(QLatin1String("Point; Line; Area; Text; Combined;")).split(QLatin1Char(' '));
+					return QString(QLatin1String("Point;|Line;|Area;|Text;|Combined;")).split(QLatin1Char('|'));
 				}
 				return QStringList();
 			}
-			return QString(QLatin1String("ISUNDEFINED; TYPE; ID; AND; OR; == !=")).split(QLatin1Char(' '));
+			return QString(QLatin1String("ISUNDEFINED;|TYPE;|ID;|AND;|OR;|== |!= ")).split(QLatin1Char('|'));
 			
 		case DynamicObjectQuery::GeneralObjectQuery:
-			return QString(QLatin1String("IGNORESYMBOL; IGNORETAGS; ISDUPLICATE;")).split(QLatin1Char(' '));
+			return QString(QLatin1String("PART == |IGNORESYMBOL;|IGNORETAGS;|ISDUPLICATE;")).split(QLatin1Char('|'));
 			
 		default:
 			return QStringList();	// we should not get here
@@ -492,6 +492,7 @@ bool GeneralObjectQuery::performQuery(const Map* map, const Object* object) cons
 	bool ignore_tags = false;
 	
 	bool result = false;
+	auto* compare_part = map ? map->getCurrentPart() : nullptr;
 	for (auto& element : attributes)
 	{
 		if (EvaluateAndOrOperation(element, and_or_operation))
@@ -500,11 +501,23 @@ bool GeneralObjectQuery::performQuery(const Map* map, const Object* object) cons
 			ignore_symbols = true;
 		else if (element == QLatin1String("IGNORETAGS"))
 			ignore_tags = true;
+		else if (element.startsWith(QLatin1String("PART ==")))
+		{
+			const auto part_name = element.mid(7).trimmed();
+			for (auto i = 0; map && i < map->getNumParts(); ++i)
+			{
+				if (map->getPart(i)->getName() == part_name)
+				{
+					compare_part = map->getPart(i);
+					break;
+				}
+			}
+		}
 		else if (element == QLatin1String("ISDUPLICATE"))
 		{
-			if (!map || !object)
+			if (!compare_part || !object)
 				return true;
-			const bool isduplicate_result = map->getCurrentPart()->existsObject([object, ignore_symbols, ignore_tags](auto const* o)
+			const bool isduplicate_result = compare_part->existsObject([object, ignore_symbols, ignore_tags](auto const* o)
 			                                { return object != o && object->equals(o, !ignore_symbols, !ignore_tags); }
 			);
 			result = and_or_operation ? (result || isduplicate_result) : (result && isduplicate_result);
