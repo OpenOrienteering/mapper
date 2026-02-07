@@ -64,13 +64,8 @@
 #include "core/map_grid.h"
 #include "core/map_part.h"
 #include "core/map_view.h"
-#include "core/objects/text_object.h"
-#include "core/symbols/area_symbol.h"
 #include "core/symbols/combined_symbol.h"
-#include "core/symbols/line_symbol.h"
-#include "core/symbols/point_symbol.h"
 #include "core/symbols/symbol.h"
-#include "core/symbols/text_symbol.h"
 #include "fileformats/file_format.h"
 #include "fileformats/ocd_file_format.h"
 #include "fileformats/ocd_georef_fields.h"
@@ -253,20 +248,20 @@ const MapColor* OcdFileImport::convertColor(int ocd_color)
 
 void OcdFileImport::addSymbolWarning(const AreaSymbol* symbol, const QString& warning)
 {
-	addWarning( tr("In area symbol %1 '%2': %3").
-	            arg(symbol->getNumberAsString(), symbol->getName(), warning) );
+	addWarning(tr("In area symbol %1 '%2': %3").
+	           arg(symbol->getNumberAsString(), symbol->getName(), warning) );
 }
 
 void OcdFileImport::addSymbolWarning(const LineSymbol* symbol, const QString& warning)
 {
-	addWarning( tr("In line symbol %1 '%2': %3").
-	            arg(symbol->getNumberAsString(), symbol->getName(), warning) );
+	addWarning(tr("In line symbol %1 '%2': %3").
+	           arg(symbol->getNumberAsString(), symbol->getName(), warning) );
 }
 
 void OcdFileImport::addSymbolWarning(const TextSymbol* symbol, const QString& warning)
 {
-	addWarning( tr("In text symbol %1 '%2': %3").
-	            arg(symbol->getNumberAsString(), symbol->getName(), warning) );
+	addWarning(tr("In text symbol %1 '%2': %3").
+	           arg(symbol->getNumberAsString(), symbol->getName(), warning) );
 }
 
 
@@ -1196,19 +1191,19 @@ void OcdFileImport::importLayoutObjects(const QString& param_string)
 		if (!embedded_image.isEmpty())
 		{
 			QMessageBox msgBox(QMessageBox::Question, tr("Import embedded image"), 
-							   tr("The map contains an embedded image (%1) which cannot be imported directly.\nDo you want to save the image locally and import it as template?").arg(path_or_description),
-							   QMessageBox::Yes | QMessageBox::No, nullptr);
+			                   tr("The map contains an embedded image (%1) which cannot be imported directly.\nDo you want to save the image locally and import it as template?").arg(path_or_description),
+			                   QMessageBox::Yes | QMessageBox::No, nullptr);
 			if (msgBox.exec() != QMessageBox::Yes)
 				return;
 			
 			auto const filename = path_or_description.replace(QLatin1Char('\\'), QLatin1Char('/'));
 			const QFileInfo proposed_imagefile(QFileInfo(QDir::cleanPath(path)).dir(), QFileInfo(QDir::cleanPath(filename)).fileName());
-			QString imagefilename = FileDialog::getSaveFileName(
-									nullptr,
-									tr("Save embedded image"),
-									proposed_imagefile.filePath(),
-									tr("All files (*.*)"),
-									nullptr);
+			auto const imagefilename = FileDialog::getSaveFileName(
+			                              nullptr,
+			                              tr("Save embedded image"),
+			                              proposed_imagefile.filePath(),
+			                              tr("All files (*.*)"),
+			                              nullptr);
 			if (imagefilename.isEmpty())
 				return;
 			
@@ -1220,7 +1215,7 @@ void OcdFileImport::importLayoutObjects(const QString& param_string)
 			}
 			if (file.error() != QFileDevice::NoError)
 			{
-				addWarning(tr("Error when trying to save embedded image (%1) locally.").arg(imagefilename));
+				addWarning(tr("Error when saving embedded image (%1) locally:\n%2").arg(imagefilename, file.errorString()));
 				return;
 			}
 			path_or_description = imagefilename;
@@ -2113,9 +2108,9 @@ Symbol* OcdFileImport::getSpecialObjectSymbol(const O& ocd_object)
 			line_symbol->line_width = convertLength(ocd_object.line_width);
 			// Cap and join styles
 			if (!setupLineStyle(line_symbol, ocd_object.diam_flags))
-				addSymbolWarning( line_symbol,
-								  tr("Unsupported line style '%1'.").
-								  arg(ocd_object.diam_flags) );
+				addSymbolWarning(line_symbol,
+								 tr("Unsupported line style '%1'.").
+								 arg(ocd_object.diam_flags));
 			symbol = line_symbol;
 		}
 		break;
