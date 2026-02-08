@@ -1,7 +1,7 @@
 /*
  *    Copyright 2013-2022, 2024, 2025 Kai Pastor
  *    Copyright 2017-2020 Libor Pecháček
- *    Copyright 2021-2022, 2024, 2025 Matthias Kühlewein
+ *    Copyright 2021-2022, 2024-2026 Matthias Kühlewein
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -2073,7 +2073,7 @@ Symbol* OcdFileImport::getSpecialObjectSymbol(const O& ocd_object)
 			symbol.setNumberComponent(0, 999);
 			symbol.setHidden(graphic_objects_hidden);
 		}
-		symbol.setNumberComponent(1, -1);
+		symbol.setNumberComponent(1, 0);
 		symbol.setNumberComponent(2, -1);
 		
 	};
@@ -2084,17 +2084,18 @@ Symbol* OcdFileImport::getSpecialObjectSymbol(const O& ocd_object)
 		cmyk.m = quint8(color >> 8) / 255.f;
 		cmyk.y = quint8(color >> 16) / 255.f;
 		cmyk.k = quint8(color >> 24) / 255.f;
-		int num_colors = map->getNumColors();
-		for (int i = 0; i < num_colors; ++i)
+		const static auto num_imported_colors = map->getNumColors();	// this is the number of colors that were imported and not created by this lambda
+		const auto num_colors = map->getNumColors();
+		if (num_colors > num_imported_colors)
 		{
-			const auto* map_color = map->getColor(i);
+			const auto* map_color = map->getColor(num_imported_colors);		// 'num_imported_colors' always points to the last added color for imported layout or image objects
 			if (map_color->getCmyk() == cmyk)	// actually a fuzzy comparision
 				return const_cast<MapColor*>(map_color);
 		}
-		auto new_color = new MapColor(tr("Imported layout or image object"), num_colors);
+		auto new_color = new MapColor(tr("Imported object color %1").arg(num_colors - num_imported_colors), num_imported_colors);
 		new_color->setCmyk(cmyk);
 		new_color->setOpacity(opacity);
-		map->addColor(new_color, num_colors);
+		map->addColor(new_color, num_imported_colors);
 		return new_color;
 	};
 	
