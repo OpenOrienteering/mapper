@@ -1,0 +1,30 @@
+name: GHA security analysis (zizmor)
+
+on:
+  push:
+    paths: [ '.github/**' ]
+  pull_request:
+    paths: [ '.github/**' ]
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  zizmor:
+    name: GHA security analysis (zizmor)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6.1.0
+        with:
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.1.0
+        with:
+          enable-cache: false
+
+      - name: Run zizmor
+        run: uvx zizmor --format=github .
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
