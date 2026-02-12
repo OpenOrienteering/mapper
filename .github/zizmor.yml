@@ -1,0 +1,12 @@
+rules:
+  unpinned-uses:
+    config:
+      policies:
+        actions/*: ref-pin
+        astral-sh/setup-uv: ref-pin
+        OpenOrienteering/mapper-vcpkg/*: any
+  unsound-contains:
+    ignore:
+      # Using "contains" for target string pattern matching
+      # TODO: Use lists as input
+      - ci.yml
