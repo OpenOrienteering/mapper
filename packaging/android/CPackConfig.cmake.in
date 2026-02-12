@@ -95,11 +95,12 @@ if(result)
 endif()
 
 execute_process(
-  COMMAND androiddeployqt
+  COMMAND "@ANDROIDDEPLOYQT_EXECUTABLE@"
     --input "${deployment_settings}"
     --output "@MAPPER_PRO_DIR@/android-build"
     --deployment "bundled"
     --gradle
+    @ANDROIDDEPLOYQT_ARGS@
     --verbose
 $<@RELEASE_APK@:
     --release

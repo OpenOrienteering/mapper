@@ -30,6 +30,9 @@ if(NOT ANDROID)
 endif()
 
 
+find_program(ANDROIDDEPLOYQT_EXECUTABLE androiddeployqt REQUIRED)
+set(ANDROIDDEPLOYQT_ARGS "" CACHE STRING "Extra options for androiddeployqt")
+
 set(MAPPER_APP_ID "default" CACHE STRING
   "Mapper Android App ID, either an explicit ID, or 'default'"
 )
@@ -50,13 +53,14 @@ set(ANDROID_PACKAGE_SOURCE_DIR "${MAPPER_PRO_DIR}/${MAPPER_APP_ID}")
 
 
 if("${Qt5Core_VERSION}" VERSION_GREATER_EQUAL 5.13.0)
-	set(ANDROID_MIN_SDK_VERSION 21)
+	set(default_ANDROID_MIN_SDK_VERSION 21)
 elseif("${ANDROID_ABI}" MATCHES "64")
-	set(ANDROID_MIN_SDK_VERSION 21)
+	set(default_ANDROID_MIN_SDK_VERSION 21)
 else()
-	set(ANDROID_MIN_SDK_VERSION 16)
+	set(default_ANDROID_MIN_SDK_VERSION 16)
 endif()
-set(ANDROID_TARGET_SDK_VERSION 28)
+set(ANDROID_MIN_SDK_VERSION "${default_ANDROID_MIN_SDK_VERSION}" CACHE STRING "The minimum version of the OS to be compatible with")
+set(ANDROID_TARGET_SDK_VERSION 28 CACHE STRING "Maximum API level which can be used")
 
 
 set(KEYSTORE_URL "KEYSTORE_URL-NOTFOUND" CACHE STRING
