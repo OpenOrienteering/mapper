@@ -220,7 +220,7 @@ GdalImageReader::RasterInfo GdalImageReader::readRasterInfo() const
 			raster.image_format = QImage::Format_Indexed8;
 			raster.pixel_space = 1;
 			raster.bands.push_back(color_band);
-			raster.postprocessing = [this](QImage& image) {
+			raster.postprocessing = [this, color_band](QImage& image) {
 				image.setColorTable(readColorTable(color_band));
 			};
 			break;
