@@ -1929,11 +1929,11 @@ bool OgrFileExport::exportImplementation()
 {
 	// Choose driver and setup format-specific features
 	QFileInfo info(path);
-	GDALDriverH po_driver = nullptr;
+	OGRSFDriverH po_driver = nullptr;
 	
 	if (id)
 	{
-		auto driver_data = GDALGetDriverByName(id);
+		auto driver_data = OGRGetDriverByName(id);
 		auto type = GDALGetMetadataItem(driver_data, GDAL_DCAP_VECTOR, nullptr);
 		auto cap_create = GDALGetMetadataItem(driver_data, GDAL_DCAP_CREATE, nullptr);
 		if (qstrcmp(type, "YES") == 0 && qstrcmp(cap_create, "YES") == 0)

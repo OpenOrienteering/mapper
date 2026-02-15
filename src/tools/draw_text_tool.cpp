@@ -53,7 +53,7 @@
 #include "util/util.h"
 
 
-#if defined(__MINGW32__) and defined(DrawText)
+#if defined(__MINGW32__) && defined(DrawText)
 // MinGW(64) winuser.h issue
 #undef DrawText
 #endif
