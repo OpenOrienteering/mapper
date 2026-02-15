@@ -22,6 +22,7 @@
 #include "transformation.h"
 
 #include <cmath>
+#include <stdexcept>
 
 #include <QTransform>
 
