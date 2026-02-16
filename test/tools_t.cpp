@@ -289,12 +289,9 @@ void ToolsTest::testFindObjects()
 
 /*
  * We select a non-standard QPA because we don't need a real GUI window.
- * 
- * Normally, the "offscreen" plugin would be the correct one.
- * However, it bails out with a QFontDatabase error (cf. QTBUG-33674)
  */
 namespace  {
-	auto const Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+	auto const Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "offscreen");  // clazy:exclude=non-pod-global-static
 }
 
 
