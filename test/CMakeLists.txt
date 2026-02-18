@@ -1,5 +1,5 @@
 #
-#    Copyright 2012-2020 Kai Pastor
+#    Copyright 2012-2022, 2025, 2026 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -172,8 +172,8 @@ add_unit_test(georeferencing_t ../src/core/georeferencing
 if (Mapper_USE_GDAL)
 	# cf. src/gdal/CMakeLists.txt
 	target_compile_definitions(georeferencing_t PRIVATE MAPPER_TEST_GDAL)
-	target_include_directories(georeferencing_t SYSTEM PRIVATE "${GDAL_INCLUDE_DIR}")
-	target_link_libraries(georeferencing_t PRIVATE "${GDAL_LIBRARY}")
+	target_include_directories(georeferencing_t SYSTEM PRIVATE ${GDAL_INCLUDE_DIRS})
+	target_link_libraries(georeferencing_t PRIVATE ${GDAL_LIBRARIES})
 endif()
 add_unit_test(grid_t ../src/util/util)
 add_unit_test(key_value_container_t ../src/util/key_value_container)

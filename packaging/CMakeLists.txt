@@ -1,5 +1,5 @@
 #
-#    Copyright 2012-2020 Kai Pastor
+#    Copyright 2012-2021, 2024-2026 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -282,7 +282,7 @@ if(Mapper_PACKAGE_GDAL)
 		if(GDAL_CONFIG AND gdal_config_result EQUAL 0)
 			set(gdal_data_paths "${gdal_data_dir}")
 		elseif(GDAL_INCLUDE_DIRS)
-			string(REGEX REPLACE "/include$" "/share/gdal" gdal_data_paths ${GDAL_INCLUDE_DIRS}) # MSYS2 et al.
+			string(REGEX REPLACE "/include$" "/share/gdal" gdal_data_paths "${GDAL_INCLUDE_DIRS}") # MSYS2 et al.
 		else()
 			set(gdal_data_paths PATHS "${CMAKE_INSTALL_PREFIX}/share/gdal")
 		endif()
@@ -303,8 +303,12 @@ if(Mapper_PACKAGE_GDAL)
 	install(
 	  DIRECTORY "${GDAL_DATA_DIR}/"
 	  DESTINATION "${MAPPER_DATA_DESTINATION}/gdal")
-	get_filename_component(GDAL_LIBRARY_DIR "{GDAL_LIBRARY}" PATH)
-	list(APPEND MAPPER_LIB_HINTS "${GDAL_LIBRARY_DIR}")
+	foreach(item IN LISTS GDAL_LIBRARIES)
+		if(EXISTS "${item}")
+			get_filename_component(GDAL_LIBRARY_DIR "{item}" PATH)
+			list(APPEND MAPPER_LIB_HINTS "${GDAL_LIBRARY_DIR}")
+		endif()
+	endforeach()
 endif()
 
 unset(MAPPER_QT_PLUGINS)
