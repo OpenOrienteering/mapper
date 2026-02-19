@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
-cmake_minimum_required(VERSION 3.7 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
 if(POLICY CMP0115)
     cmake_policy(SET CMP0115 NEW)
