@@ -12,6 +12,7 @@ add_library(cove-potrace STATIC
     potrace/trace.c
 )
 target_include_directories(cove-potrace INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")
+target_compile_definitions(cove-potrace PRIVATE NOMINMAX)
 
 add_library(cove-vectorizer STATIC
     libvectorizer/AlphaGetter.cpp

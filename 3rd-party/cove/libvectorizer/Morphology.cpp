@@ -424,15 +424,15 @@ int Morphology::modifyImage(bool* table, bool insert,
 		// initialize bottom line
 		botScanLine[0] = !!thinnedImage.pixelIndex(0, y + 1);
 		// create neighborhood
-		p = topScanLine[0] << 6 | topScanLine[1] << 5 | midScanLine[0] << 3 |
-			midScanLine[1] << 2 | botScanLine[0];
+		p = int(topScanLine[0]) << 6 | int(topScanLine[1]) << 5 | int(midScanLine[0]) << 3 |
+			int(midScanLine[1]) << 2 | int(botScanLine[0]);
 
 		// process line
 		for (int x = 0; x < xSize - 1; x++)
 		{
 			botScanLine[x + 1] = !!thinnedImage.pixelIndex(x + 1, y + 1);
-			p = ((p << 1) & 0666) | (topScanLine[x + 1] << 6) |
-				(midScanLine[x + 1] << 3) | (botScanLine[x + 1]);
+			p = ((p << 1) & 0666) | int(topScanLine[x + 1]) << 6 |
+				int(midScanLine[x + 1]) << 3 | int(botScanLine[x + 1]);
 			if (table[p])
 			{
 				thinnedImage.setPixel(x, y, insert ? 1 : 0); // set the pixel
@@ -463,12 +463,12 @@ int Morphology::modifyImage(bool* table, bool insert,
 	topScanLine = midScanLine;
 	midScanLine = botScanLine;
 	botScanLine = temp;
-	p = topScanLine[0] << 7 | topScanLine[1] << 6 | midScanLine[0] << 4 |
-		midScanLine[1] << 3;
+	p = int(topScanLine[0]) << 7 | int(topScanLine[1]) << 6 | int(midScanLine[0]) << 4 |
+		int(midScanLine[1]) << 3;
 	for (int x = 0; x < xSize - 1 && !cancel; x++)
 	{
-		p = ((p << 1) & 0666) | (topScanLine[x + 1] << 6) |
-			(midScanLine[x + 1] << 3);
+		p = ((p << 1) & 0666) | int(topScanLine[x + 1]) << 6 |
+			int(midScanLine[x + 1]) << 3;
 		if (table[p])
 		{
 			thinnedImage.setPixel(x, ySize - 1,
