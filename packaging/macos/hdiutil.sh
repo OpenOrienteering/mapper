@@ -19,6 +19,6 @@ i=1
 until hdiutil "$@"
 do
     if [ $i -eq $max ]; then exit 1; fi
-    sleep 1
+    sleep $max
     i=$((i+1))
 done
