@@ -22,7 +22,7 @@
 #define COVE_PARALLELIMAGEPROCESSING_H
 
 #include <algorithm>
-#include <iosfwd>
+#include <cstddef>
 
 #include <QImage>
 #include <QThreadPool>
