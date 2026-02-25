@@ -340,6 +340,9 @@ target_compile_definitions(Mapper_Common PRIVATE
 target_compile_definitions(Mapper_Common INTERFACE
   MAPPER_COMMON_LIB
 )
+if(MAPPER_WITH_CUSTOM_LOCATIONS)
+	target_compile_definitions(Mapper_Common PRIVATE MAPPER_WITH_CUSTOM_LOCATIONS)
+endif()
 
 
 mapper_translations_sources(${Mapper_Common_SRCS} ${Mapper_Common_HEADERS})
