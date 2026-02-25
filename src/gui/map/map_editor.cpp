@@ -2392,6 +2392,26 @@ void MapEditorController::showTagsWindow(bool show)
 
 void MapEditorController::editGeoreferencing()
 {
+	// Check for 'is_realization' not set.
+	const Georeferencing& georef = getMap()->getGeoreferencing();
+	if (georef.getState() == Georeferencing::Geospatial
+		&& !georef.isDatumBallpark()
+		&& Georeferencing::ballpark_geographic_crs_spec == georef.getGeographicCRSSpec())
+	{
+		auto message =
+		        tr("This map was saved by an older version of Mapper, "
+		           "with less accurate template alignment.\n\n"
+		           "Press Yes for more accurate alignment.\n"
+		           "Press No to retain template alignment.");
+		int result = QMessageBox::question(getWindow(), tr("Warning"), message, QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes);
+		if (QMessageBox::Yes == result || QMessageBox::No == result)
+		{
+			auto local_georef = Georeferencing(georef);
+			local_georef.setDatumBallpark(QMessageBox::No == result);
+			map->setGeoreferencing(local_georef);
+		}
+	}
+
 	if (georeferencing_dialog.isNull())
 	{
 		auto* dialog = new GeoreferencingDialog(this); 
