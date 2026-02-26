@@ -163,6 +163,9 @@ private slots:
 		
 	void powershellPositionSourceLiveTest()
 	{
+		if(!qEnvironmentVariableIsEmpty("SKIP_POWERSHELL_POSITION_SOURCE_LIVE_TEST"))
+			QSKIP("SKIP_POWERSHELL_POSITION_SOURCE_LIVE_TEST is set");
+		
 		auto powershell_path = QStandardPaths::findExecutable(QStringLiteral("powershell.exe"));
 #if !defined(Q_OS_WIN)
 		if (powershell_path.isEmpty())
