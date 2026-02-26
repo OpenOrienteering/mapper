@@ -1,5 +1,5 @@
 #
-#    Copyright 2012 Kai Pastor
+#    Copyright 2012, 2026 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -18,19 +18,30 @@
 
 # @testname@-RUN.cmake is generated from TESTNAME-RUN.cmake.in
 
-# Run the test executable
+set(TEST_OPTIONS "")
+if("@MSVC@")
+    # Win32 GUI apps don't print to console.
+    # Revise with Qt 6.5's QT_WIN_DEBUG_CONSOLE.
+    file(REMOVE "@CMAKE_CURRENT_BINARY_DIR@/@testname@-out.txt")
+    list(APPEND TEST_OPTIONS -o "@CMAKE_CURRENT_BINARY_DIR@/@testname@-out.txt")
+endif()
+
 execute_process(
-  COMMAND @CMAKE_CURRENT_BINARY_DIR@/@testname@ 
-  RESULT_VARIABLE TEST_RESULT
+    COMMAND @CMAKE_CURRENT_BINARY_DIR@/@testname@ ${TEST_OPTIONS}
+    RESULT_VARIABLE TEST_RESULT
 )
 
 if(TEST_RESULT EQUAL 0)
-	# Test successful, update stamp file
-	execute_process(
-	  COMMAND ${CMAKE_COMMAND} -E touch @testname@-RUN.stamp 
-	  WORKING_DIRECTORY @CMAKE_CURRENT_BINARY_DIR@
-	)
+    # Test successful, update stamp file
+    execute_process(
+        COMMAND ${CMAKE_COMMAND} -E touch @testname@-RUN.stamp
+        WORKING_DIRECTORY @CMAKE_CURRENT_BINARY_DIR@
+    )
 else()
-	# Test failed, terminate this script with an error
-	message(FATAL_ERROR "Test @testname@ failed: ${TEST_RESULT}")
+    # Test failed, terminate this script with an error
+    if("@MSVC@" AND EXISTS "@CMAKE_CURRENT_BINARY_DIR@/@testname@-out.txt")
+        file(READ "@CMAKE_CURRENT_BINARY_DIR@/@testname@-out.txt" TEST_OUTPUT)
+        message(STATUS "${TEST_OUTPUT}")
+    endif()
+    message(FATAL_ERROR "Test @testname@ failed: ${TEST_RESULT}")
 endif()
