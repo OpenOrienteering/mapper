@@ -361,7 +361,7 @@ private slots:
 		
 		QCOMPARE(map.getNumTemplates(), 1);
 		auto temp = map.getTemplate(0);
-		QCOMPARE(temp->getTemplateFilename(), QString::fromUtf8("\u0433\u0435\u043E.tiff"));
+		QCOMPARE(temp->getTemplateFilename(), QString::fromWCharArray(L"\u0433\u0435\u043E.tiff"));
 #ifndef MAPPER_USE_GDAL
 		QCOMPARE(temp->getTemplateType(), "TemplateImage");
 #else
