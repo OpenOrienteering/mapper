@@ -1,6 +1,7 @@
 /*
  *    Copyright 2016 Mitchell Krome
  *    Copyright 2017-2024 Kai Pastor
+ *    Copyright 2026 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +23,8 @@
 #define OPENORIENTEERING_OBJECT_QUERY_H
 
 #include <memory>
+
+#include "core/objects/dynamic_object_query.h"
 
 #include <QCoreApplication>
 #include <QMetaType>
@@ -52,6 +55,7 @@ class ObjectQuery
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::ObjectQuery)
 	
 public:
+	// Important: When adding operators update the Is... functions below
 	enum Operator {
 		// Operators 1 .. 15 operate on other queries
 		OperatorAnd      = 1,  ///< And-chains two object queries
@@ -62,11 +66,13 @@ public:
 		OperatorIs       = 16, ///< Tests an existing tag for equality with the given value (case-sensitive)
 		OperatorIsNot    = 17, ///< Tests an existing tag for inequality with the given value (case-sensitive)
 		OperatorContains = 18, ///< Tests an existing tag for containing the given value (case-sensitive)
+		
 		OperatorSearch   = 19, ///< Tests if the symbol name, a tag key or a tag value contains the given value (case-insensitive)
 		OperatorObjectText = 20, ///< Text object content (case-insensitive)
 		
 		// More operators, 32 ..
 		OperatorSymbol   = 32, ///< Test the symbol for equality.
+		OperatorDynamic  = 33, ///< Processing dynamic object properties
 		
 		OperatorInvalid  = 0   ///< Marks an invalid query
 	};
@@ -136,6 +142,10 @@ public:
 	 */
 	ObjectQuery(const Symbol* symbol) noexcept;
 	
+	/**
+	 * Constructs a query for a dynamic object property.
+	 */
+	ObjectQuery(const DynamicObjectQuery* dynamic_query) noexcept;
 	
 	/**
 	 * Returns a query which is the negation of the sub-query.
@@ -201,6 +211,11 @@ private:
 	 */
 	void consume(ObjectQuery&& other);
 	
+	bool IsLogicalOperator(Operator op) const { return op >= 1 && op <= 3; }
+	bool IsTagOperator(Operator op) const { return op >= 16 && op <= 18; }
+	bool IsValueOperator(Operator op) const { return op >= 19 && op <= 20; }
+	bool IsStringOperator(Operator op) const { return op >= 16 && op <= 20; }
+	
 	using SymbolOperand = const Symbol*;
 	
 	Operator op;
@@ -208,8 +223,9 @@ private:
 	union
 	{
 		LogicalOperands subqueries;
-		StringOperands     tags;
+		StringOperands  tags;
 		SymbolOperand   symbol;
+		const DynamicObjectQuery* dynamic_query;
 	};
 	
 };
@@ -280,6 +296,7 @@ public:
 		TokenNot,
 		TokenLeftParen,
 		TokenRightParen,
+		TokenDynamicQuery,
 	};
 	
 private:
@@ -289,10 +306,13 @@ private:
 	
 	const Symbol* findSymbol(const QString& key) const;
 	
+	DynamicObjectQueryManager dynamic_object_manager;
 	const Map* map = nullptr;
 	QStringRef input;
 	QStringRef token_text;
+	QStringRef token_attributes_text;
 	TokenType token;
+	DynamicObjectQuery* dynamic_token;
 	int token_start = -1;
 	int pos;
 };
@@ -317,4 +337,4 @@ bool operator!=(const ObjectQuery::StringOperands& lhs, const ObjectQuery::Strin
 Q_DECLARE_METATYPE(OpenOrienteering::ObjectQuery::Operator)
 
 
-#endif
+#endif // OPENORIENTEERING_OBJECT_QUERY_H
