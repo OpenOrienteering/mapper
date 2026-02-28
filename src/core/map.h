@@ -588,8 +588,9 @@ public:
 	 * Returns a vector of the same size as the symbol list, where each element
 	 * is set to true if there is at least one object which uses this symbol or
 	 * a derived (combined) symbol.
+	 * If exclude_hidden_objects equals true, hidden objects are ignored.
 	 */
-	void determineSymbolsInUse(std::vector<bool>& out) const;
+	void determineSymbolsInUse(std::vector<bool>& out, bool exclude_hidden_objects = false) const;
 	
 	/**
 	 * Adds to the given symbol bitfield all other symbols which are needed to
