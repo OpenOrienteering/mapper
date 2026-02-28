@@ -290,6 +290,11 @@ void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open, const
 		primary_path = relative_path;
 	xml.writeAttribute(QString::fromLatin1("path"), primary_path);
 	xml.writeAttribute(QString::fromLatin1("relpath"), relative_path);
+	if (!template_custom_name.isEmpty())
+	{
+		xml.writeAttribute(QString::fromLatin1("customname"), getTemplateCustomname());
+		xml.writeAttribute(QString::fromLatin1("custompref"), QString::fromLatin1(getCustomnamePreference() ? "true" : "false"));
+	}
 	
 	if (template_group)
 	{
@@ -349,6 +354,11 @@ std::unique_ptr<Template> Template::loadTemplateConfiguration(QXmlStreamReader& 
 	temp->setTemplateRelativePath(attributes.value(QLatin1String("relpath")).toString());
 	if (attributes.hasAttribute(QLatin1String("name")))
 		temp->template_file = attributes.value(QLatin1String("name")).toString();
+	if (attributes.hasAttribute(QLatin1String("customname")))
+	{
+		temp->template_custom_name = attributes.value(QLatin1String("customname")).toString();
+		temp->custom_name_preference = (attributes.value(QLatin1String("custompref")) == QLatin1String("true"));
+	}
 	temp->is_georeferenced = (attributes.value(QLatin1String("georef")) == QLatin1String("true"));
 	if (attributes.hasAttribute(QLatin1String("group")))
 		temp->template_group = attributes.value(QLatin1String("group")).toInt();
