@@ -471,6 +471,7 @@ void OcdFileImport::importColors(const OcdFile<Ocd::FormatV8>& file)
 		const QString name = convertOcdString(color_info.name);
 		int color_pos = map->getNumColorPrios();
 		auto color = new MapColor(name, color_pos);
+		color->setId(color_info.number);
 		
 		// OC*D stores CMYK values as integers from 0-200.
 		MapColorCmyk cmyk;
@@ -543,8 +544,13 @@ void OcdFileImport::importColors(const OcdFile< F >& file)
 		return a->getPriority() < b->getPriority();
 	});
 	// Insert the spot colors into the map after (below) the regular colors.
+	auto non_conflicting_id = 0;
+	for (auto prio = 0; prio < map->getNumColorPrios(); ++prio)
+		non_conflicting_id = std::max(non_conflicting_id, map->getColorByPrio(prio)->getId());
+	non_conflicting_id += 512; // Provide breathing room to the regular colors
 	for (auto spot_color : spot_colors)
 	{
+		spot_color->setId(non_conflicting_id++);
 		map->addColor(spot_color, map->getNumColorPrios());
 	}
 }
@@ -718,6 +724,7 @@ void OcdFileImport::importColor(const QString& param_string)
 	
 	int color_pos = map->getNumColorPrios();
 	auto color = new MapColor(name, color_pos);
+	color->setId(number);
 	color->setCmyk(cmyk);
 	color->setOpacity(opacity);
 	map->addColor(color, color_pos);
