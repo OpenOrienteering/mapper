@@ -139,11 +139,33 @@ Map::MapColorSet::~MapColorSet()
 void Map::MapColorSet::insert(int pos, MapColor* color)
 {
 	colors.insert(colors.begin() + pos, color);
+	auto const color_id = color->getId();
+	if (color_id >= 0 && color_id < static_cast<int>(ids.size()) && !ids[color_id])
+	{
+		ids[color_id] = color;
+	}
+	else
+	{
+		// Prefer ids starting at one.
+		auto free_spot = !ids.empty() ? std::find(begin(ids) + 1, end(ids), nullptr) : end(ids);
+		if (free_spot == end(ids))
+		{
+			color->setId(ids.size());
+			ids.push_back(color);
+		}
+		else
+		{
+			auto const n = free_spot - begin(ids);
+			color->setId(n);
+			ids[n] = color;
+		}
+	}
 	adjustColorPriorities(pos + 1, colors.size());
 }
 
 void Map::MapColorSet::erase(int pos)
 {
+	ids[colors[pos]->getId()] = nullptr;
 	colors.erase(colors.begin() + pos);
 	adjustColorPriorities(pos, colors.size());	
 }
