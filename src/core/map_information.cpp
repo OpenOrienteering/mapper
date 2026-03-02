@@ -153,7 +153,7 @@ MapInformationBuilder::MapInformationBuilder(const Map& map)
 	
 	templates_count = map.getNumTemplates();
 	
-	colors.reserve(map.getNumColors());
+	colors.reserve(map.getNumColorPrios());
 	map.applyOnAllColors([this, &map](const auto* color){
 		colors.push_back({color->getName()});
 		
