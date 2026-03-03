@@ -88,7 +88,7 @@
 #include "fileformats/ocd_types.h"
 #include "fileformats/ocd_types_v8.h"
 #include "fileformats/ocd_types_v12.h"
-#include "fileformats/simple_course_export.h"
+#include "fileformats/course_export.h"
 #include "fileformats/xml_file_format.h"
 #include "templates/template.h"
 #include "undo/undo.h"
@@ -1090,18 +1090,16 @@ void FileFormatTest::kmlCourseExportTest()
 		Map map;
 		map.setGeoreferencing(georef);
 		
-		SimpleCourseExport simple_export{map};
-		QVERIFY(!simple_export.canExport());  // empty map
+		CourseExport course_export{map};
+		QVERIFY(!course_export.canExport());  // empty map
 		
 		auto* path_object = new PathObject(Map::getUndefinedLine());
 		path_object->addCoordinate(georef.toMapCoords(LatLon{50.001, 9.000}));  // start
 		path_object->addCoordinate(georef.toMapCoords(LatLon{50.001, 9.001}));  // 1
 		path_object->addCoordinate(georef.toMapCoords(LatLon{50.000, 9.001}));  // 2
 		path_object->addCoordinate(georef.toMapCoords(LatLon{50.000, 9.000}));  // finish
-		QVERIFY(simple_export.canExport(path_object));
-		
 		map.getPart(0)->addObject(path_object);
-		QVERIFY(simple_export.canExport());
+		QVERIFY(course_export.canExport());
 		
 		KmlCourseExport exporter{filepath, &map, nullptr};
 		QVERIFY(exporter.doExport());
@@ -1154,35 +1152,56 @@ void FileFormatTest::kmlCourseExportTest()
 
 void FileFormatTest::iofCourseExportTest()
 {
-	QString const map_filepath = QStringLiteral("testdata:/export/single-line.xmap");
-	
-	Map map;
-	QVERIFY(map.loadFrom(map_filepath));
-	
-	SimpleCourseExport simple_export{map};
-	QVERIFY(simple_export.canExport());
-	
-	simple_export.setProperties(map, QStringLiteral("Test event"), QStringLiteral("Test course"), 101);
-	
-	IofCourseExport exporter{{}, &map, nullptr};
-	
-	QBuffer exported;
-	exporter.setDevice(&exported);
-	QVERIFY(exporter.doExport());
-	QVERIFY(!exported.data().isEmpty());
-	
-	QString const expected_filepath = QStringLiteral("testdata:/export/iof-3.0-course.xml");
-	QFile expected_file = {expected_filepath};
-	expected_file.open(QIODevice::ReadOnly | QIODevice::Text);
-	auto const expected_data = expected_file.readAll();
-	QVERIFY(!expected_data.isEmpty());
-	
-	// Ignore creator and timestamp
-	auto stable_exported = exported.data().indexOf("<Event");
-	QVERIFY(stable_exported > 0);
-	auto stable_expected = expected_data.indexOf("<Event");
-	QVERIFY(stable_expected > 0);
-	QCOMPARE(exported.data().mid(stable_exported), expected_data.mid(stable_expected));
+	const std::vector<QString> map_filepaths = {
+		QStringLiteral("testdata:/export/single-line.xmap"),
+		QStringLiteral("testdata:/export/course.xmap")
+	};
+
+	const std::vector<QString> expected_filepaths = {
+		QStringLiteral("testdata:/export/iof-3.0-course.xml"),
+		QStringLiteral("testdata:/export/iof-3.0-course2.xml")
+	};
+
+	for (size_t i = 0; i < map_filepaths.size(); ++i)
+	{
+		const auto& map_filepath = map_filepaths[i];
+		const auto& expected_filepath = expected_filepaths[i];
+
+		Map map;
+		QVERIFY(map.loadFrom(map_filepath));
+
+		map.getCurrentPart()->applyOnAllObjects([&map](Object* object) {
+			map.addObjectToSelection(object, false);
+		});
+
+		CourseExport course_export{map};
+		QVERIFY(course_export.canExport());
+		
+		course_export.setProperties(map, QStringLiteral("Test event"), QStringLiteral("Test course"), QStringLiteral("701"), QStringLiteral("706"), 101);
+		
+		IofCourseExport exporter{{}, &map, nullptr};
+		
+		QBuffer exported;
+		exporter.setDevice(&exported);
+		QVERIFY(exporter.doExport());
+		QVERIFY(!exported.data().isEmpty());
+		
+		QFile expected_file = {expected_filepath};
+		expected_file.open(QIODevice::ReadOnly | QIODevice::Text);
+		auto expected_data = expected_file.readAll();
+		QVERIFY(!expected_data.isEmpty());
+		if (expected_data.endsWith('\n'))
+		{
+			expected_data.chop(1);
+		}
+		
+		// Ignore creator and timestamp
+		auto stable_exported = exported.data().indexOf("<Event");
+		QVERIFY(stable_exported > 0);
+		auto stable_expected = expected_data.indexOf("<Event");
+		QVERIFY(stable_expected > 0);
+		QCOMPARE(exported.data().mid(stable_exported), expected_data.mid(stable_expected));
+	}
 }
 
 
