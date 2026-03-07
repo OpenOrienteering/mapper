@@ -1688,13 +1688,15 @@ void Map::scaleAllSymbols(double factor)
 	setSymbolsDirty();
 }
 
-void Map::determineSymbolsInUse(std::vector< bool >& out) const
+void Map::determineSymbolsInUse(std::vector< bool >& out, bool exclude_hidden_objects) const
 {
 	out.assign(symbols.size(), false);
 	for (auto part : parts)
 	{
 		for (int o = 0; o < part->getNumObjects(); ++o)
 		{
+			if (exclude_hidden_objects && !part->getObject(o)->isVisible())
+				continue;
 			const Symbol* symbol = part->getObject(o)->getSymbol();
 			int index = findSymbolIndex(symbol);
 			if (index >= 0)
