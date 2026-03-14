@@ -2269,7 +2269,8 @@ void Map::findAllObjectsAt(
         SelectionInfoVector& out ) const
 {
 	for (const MapPart* part : parts)
-		part->findObjectsAt(coord, tolerance, treat_areas_as_paths, extended_selection, include_hidden_objects, include_protected_objects, out);
+		if (part->isVisible())
+			part->findObjectsAt(coord, tolerance, treat_areas_as_paths, extended_selection, include_hidden_objects, include_protected_objects, out);
 }
 
 void Map::findObjectsAtBox(
