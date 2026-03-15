@@ -743,6 +743,7 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 						// Import as new part
 						dest_part = new MapPart(part_to_import->getName(), this);
 						addPart(dest_part, 0);
+						//dest_part->setVisible(part_to_import->isVisible());  // keep visibility of imported parts
 						undo_step->push(new MapPartUndoStep(this, MapPartUndoStep::RemoveMapPart, 0));
 					}
 				}
@@ -2043,6 +2044,11 @@ void Map::push(UndoStep *step)
 }
 
 
+int Map::getNumVisibleParts() const
+{
+	return std::count_if(parts.begin(), parts.end(), [](const auto* part) { return part->isVisible(); });
+}
+
 void Map::addPart(MapPart* part, std::size_t index)
 {
 	Q_ASSERT(index <= parts.size());
@@ -2172,6 +2178,19 @@ int Map::mergeParts(std::size_t source, std::size_t destination)
 		removePart(source);
 	
 	return target_part->getNumObjects() - count;
+}
+
+std::size_t Map::findVisiblePart() const
+{
+	auto i = current_part_index;
+	while (!parts[i]->isVisible())
+	{
+		if (++i >= parts.size())
+			i = 0;
+		if (Q_UNLIKELY(i == current_part_index))
+			break;
+	}
+	return i;
 }
 
 

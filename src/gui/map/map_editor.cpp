@@ -1111,7 +1111,7 @@ void MapEditorController::createActions()
 	mappart_add_act = newAction("addmappart", tr("Add new part..."), this, SLOT(addMapPart()));
 	mappart_rename_act = newAction("renamemappart", tr("Rename current part..."), this, SLOT(renameMapPart()));
 	mappart_remove_act = newAction("removemappart", tr("Remove current part"), this, SLOT(removeMapPart()));
-	mappart_visibility_act = newAction("visibilitymappart", {/* set in updateMapPartsUI() */} , this, SLOT(toggleMapPartVisible()));
+	mappart_visibility_act = newAction("visibilitymappart", tr("Hide current part"), this, SLOT(hideCurrentMapPart()));
 	mappart_merge_act = newAction("mergemapparts", tr("Merge all parts"), this, SLOT(mergeAllMapParts()));
 
 	import_act = newAction("import", tr("Import..."), this, SLOT(importClicked()), nullptr, QString{}, "file_menu.html");
@@ -1494,7 +1494,18 @@ void MapEditorController::createMobileGUI()
 			action->setActionGroup(mappart_group);
 			if (part == map->getCurrentPart())
 				action->setChecked(true);
-			connect(action, &QAction::triggered, this, [this, i]() { changeMapPart(i); });
+			connect(action, &QAction::triggered, this, [this, i]() { 
+				if (map->getCurrentPartIndex() == (std::size_t)i)
+				{
+					if (map->getNumVisibleParts() > 1)
+					{
+						map->getCurrentPart()->setVisible(false);
+						changeMapPart(map->findVisiblePart());
+					}
+					return;
+				}
+				changeMapPart(i);
+			});
 		}
 	});
 	
@@ -1914,6 +1925,18 @@ void MapEditorController::doUndo(bool redo)
 		map->undoManager().redo(window);
 	else
 		map->undoManager().undo(window);
+	
+	if (!map->getCurrentPart()->isVisible())
+	{
+		if (map->getNumVisibleParts() == 0)
+		{
+			map->getCurrentPart()->setVisible(true);	// enforce one visible part
+		}
+		else
+		{
+			map->setCurrentPartIndex(map->findVisiblePart());
+		}
+	}
 }
 
 void MapEditorController::cut()
@@ -2478,7 +2501,7 @@ void MapEditorController::selectedSymbolsChanged()
 		mobile_symbol_selector_action->setIcon(QIcon(pixmap));
 	}
 	
-	// FIXME: Postpone switch of active symbol while editing is progress
+	// FIXME: Postpone switch of active symbol while editing is in progress
 	if (active_symbol != symbol)
 	{
 		active_symbol = symbol;
@@ -3820,22 +3843,22 @@ void MapEditorController::updateMapPartsUI()
 	mappart_move_menu->clear();
 	
 	const int count = map ? map->getNumParts() : 0;
+	const int visible_parts = map ? map->getNumVisibleParts() : 0;
 	const bool have_multiple_parts = (count > 1);
-	mappart_merge_menu->setEnabled(have_multiple_parts);
+	mappart_merge_menu->setEnabled(visible_parts > 1);
 	mappart_move_menu->setEnabled(have_multiple_parts && map->getNumSelectedObjects() > 0);
 	if (mappart_remove_act)
 	{
-		mappart_remove_act->setEnabled(have_multiple_parts);
+		mappart_remove_act->setEnabled(visible_parts > 1);
 		mappart_merge_act->setEnabled(have_multiple_parts);
 	}
 	if (toolbar_mapparts && !toolbar_mapparts->isVisible())
 	{
 		toolbar_mapparts->setVisible(have_multiple_parts);
 	}
-	if (mappart_visibility_act && count)
+	if (mappart_visibility_act)
 	{
-		const auto* part = map->getCurrentPart();
-		mappart_visibility_act->setText(part->isVisible() ? tr("Hide current part") : tr("Show current part"));
+		mappart_visibility_act->setEnabled(visible_parts > 1);
 	}
 	
 	if (count > 0)
@@ -3921,6 +3944,9 @@ void MapEditorController::removeMapPart()
 		
 		map->push(undo_step);
 		map->removePart(index);
+		const auto visible_part_index = map->findVisiblePart();
+		if (map->getCurrentPartIndex() != visible_part_index)
+			changeMapPart(visible_part_index);
 	}
 }
 
@@ -3946,8 +3972,13 @@ void MapEditorController::changeMapPart(int index)
 {
 	if (index >= 0)
 	{
-		map->setCurrentPartIndex(std::size_t(index));
-		window->showStatusBarMessage(tr("Switched to map part '%1'.").arg(map->getCurrentPart()->getName()), 1000);
+		if (std::size_t(index) != map->getCurrentPartIndex())
+		{
+			map->setCurrentPartIndex(std::size_t(index));
+			if (!map->getCurrentPart()->isVisible())
+				map->getCurrentPart()->setVisible(true);
+			window->showStatusBarMessage(tr("Switched to map part '%1'.").arg(map->getCurrentPart()->getName()), 1000);
+		}
 	}
 }
 
@@ -3998,6 +4029,9 @@ void MapEditorController::mergeCurrentMapPartTo(int target)
 		undo->push(switch_part_undo);
 		undo->push(add_part_step);
 		map->push(undo);
+		const auto visible_part_index = map->findVisiblePart();
+		if (map->getCurrentPartIndex() != visible_part_index)
+			changeMapPart(visible_part_index);
 	}
 }
 
@@ -4040,10 +4074,10 @@ void MapEditorController::mergeAllMapParts()
 	}
 }
 
-void MapEditorController::toggleMapPartVisible()
+void MapEditorController::hideCurrentMapPart()
 {
-	MapPart* const part = map->getCurrentPart();
-	part->setVisible(!part->isVisible());
+	map->getCurrentPart()->setVisible(false);
+	changeMapPart(map->findVisiblePart());
 }
 
 void MapEditorController::templateAdded(int /*pos*/, const Template* /*temp*/)
