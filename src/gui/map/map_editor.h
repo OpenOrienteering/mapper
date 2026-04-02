@@ -31,6 +31,7 @@
 #include <QPointer>
 #include <QScopedPointer>
 #include <QString>
+#include <QStringList>
 #include <QTimer>
 
 #include "core/map.h"
@@ -232,6 +233,21 @@ public:
 	 */
 	QAction* getAction(const char* id);
 	
+	/** Returns editable mobile toolbar action IDs in display order for the selected bar. */
+	static QStringList editableMobileToolbarActionIds(bool top_bar);
+
+	/** Returns the default mobile toolbar action IDs in display order for the selected bar. */
+	static QStringList defaultMobileToolbarActionIds(bool top_bar);
+
+	/** Returns whether an editable mobile toolbar action belongs to the leading toolbar section. */
+	static bool mobileToolbarActionOnLeadingSide(const QString& id);
+
+	/** Returns the translated label for an editable mobile toolbar action. */
+	static QString mobileToolbarActionLabel(const QString& id);
+
+	/** Returns a sanitized mobile toolbar configuration or the default list if invalid. */
+	static QStringList sanitizeMobileToolbarActionIds(bool top_bar, const QStringList& ids);
+
 	/** Override from MainWindowController */
 	bool saveTo(const QString& path, const FileFormat& format) override;
 	/** Override from MainWindowController */
@@ -678,7 +694,9 @@ private:
 	void createActions();
 	void createMenuAndToolbars();
 	void createMobileGUI();
-	
+	QStringList configuredMobileToolbarActionIds(bool top_bar) const;
+	void addConfiguredMobileToolbarActions(ActionGridBar* bar, bool top_bar);
+
 	void doUndo(bool redo);
 	
 	Map* map;

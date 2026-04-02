@@ -99,6 +99,63 @@ Settings& Settings::getInstance()
 	return instance;
 }
 
+QStringList Settings::defaultMobileTopToolbarActions()
+{
+	return {
+		QStringLiteral("compassdisplay"),
+		QStringLiteral("gpsdisplay"),
+		QStringLiteral("gpsdistancerings"),
+		QStringLiteral("alignmapwithnorth"),
+		QStringLiteral("showgrid"),
+		QStringLiteral("showall"),
+		QStringLiteral("redo"),
+		QStringLiteral("undo"),
+		QStringLiteral("touchcursor"),
+		QStringLiteral("templatewindow"),
+		QStringLiteral("editobjects"),
+		QStringLiteral("editlines"),
+		QStringLiteral("delete"),
+		QStringLiteral("duplicate"),
+		QStringLiteral("switchsymbol"),
+		QStringLiteral("fillborder"),
+		QStringLiteral("switchdashes"),
+		QStringLiteral("booleanunion"),
+		QStringLiteral("cutobject"),
+		QStringLiteral("connectpaths"),
+		QStringLiteral("rotateobjects"),
+		QStringLiteral("cuthole"),
+		QStringLiteral("scaleobjects"),
+		QStringLiteral("rotatepatterns"),
+		QStringLiteral("converttocurves"),
+		QStringLiteral("simplify"),
+		QStringLiteral("distributepoints"),
+		QStringLiteral("booleandifference"),
+		QStringLiteral("measure"),
+		QStringLiteral("booleanmergeholes"),
+	};
+}
+
+QStringList Settings::defaultMobileBottomToolbarActions()
+{
+	return {
+		QStringLiteral("zoomin"),
+		QStringLiteral("panmap"),
+		QStringLiteral("zoomout"),
+		QStringLiteral("movegps"),
+		QStringLiteral("hatchareasview"),
+		QStringLiteral("baselineview"),
+		QStringLiteral("gpstemporarypath"),
+		QStringLiteral("gpstemporarypoint"),
+		QStringLiteral("drawpoint"),
+		QStringLiteral("drawpointgps"),
+		QStringLiteral("drawpath"),
+		QStringLiteral("drawfreehand"),
+		QStringLiteral("drawrectangle"),
+		QStringLiteral("drawcircle"),
+		QStringLiteral("drawtext"),
+	};
+}
+
 
 
 Settings::Settings()
@@ -147,6 +204,8 @@ Settings::Settings()
 	registerSetting(Templates_KeepSettingsOfClosed, "Templates/keep_settings_of_closed_templates", true);
 	
 	registerSetting(ActionGridBar_ButtonSizeMM, "ActionGridBar/button_size_mm", touch_button_minimum_size_default);
+	registerSetting(MobileToolbar_TopActions, "ActionGridBar/mobile_top_actions", defaultMobileTopToolbarActions());
+	registerSetting(MobileToolbar_BottomActions, "ActionGridBar/mobile_bottom_actions", defaultMobileBottomToolbarActions());
 	registerSetting(SymbolWidget_IconSizeMM, "SymbolWidget/icon_size_mm", symbol_widget_icon_size_mm_default);
 	registerSetting(SymbolWidget_ShowCustomIcons, "SymbolWidget/show_custom_icons", true);
 	

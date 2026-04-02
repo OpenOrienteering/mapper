@@ -23,21 +23,254 @@
 #include <QAbstractButton>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QCoreApplication>
+#include <QDialog>
+#include <QDialogButtonBox>
 #include <QDoubleSpinBox>
 #include <QFormLayout>
+#include <QHBoxLayout>
 #include <QLabel>
+#include <QListWidget>
+#include <QPushButton>
 #include <QSpacerItem>
 #include <QSpinBox>
 #include <QVariant>
+#include <QVBoxLayout>
 #include <QWidget>
 
 #include "settings.h"
+#include "gui/map/map_editor.h"
 #include "gui/modifier_key.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/settings_page.h"
 
 
 namespace OpenOrienteering {
+
+namespace {
+
+class MobileToolbarConfigDialog final : public QDialog
+{
+public:
+	explicit MobileToolbarConfigDialog(QWidget* parent = nullptr)
+	: QDialog(parent)
+	, toolbar_box(new QComboBox(this))
+	, selected_list(new QListWidget(this))
+	, available_list(new QListWidget(this))
+	{
+		setWindowTitle(QCoreApplication::translate("OpenOrienteering::EditorSettingsPage", "Mobile toolbar icons"));
+
+		auto* layout = new QVBoxLayout(this);
+
+		auto* note = new QLabel(QCoreApplication::translate("OpenOrienteering::EditorSettingsPage",
+			"Only regular toolbar icons can be changed here. Fixed buttons stay in place, and actions keep their left/right toolbar section in this first version."));
+		note->setWordWrap(true);
+		layout->addWidget(note);
+
+		toolbar_box->addItem(QCoreApplication::translate("OpenOrienteering::EditorSettingsPage", "Top toolbar"), true);
+		toolbar_box->addItem(QCoreApplication::translate("OpenOrienteering::EditorSettingsPage", "Bottom toolbar"), false);
+		layout->addWidget(toolbar_box);
+
+		auto* lists_layout = new QHBoxLayout();
+		layout->addLayout(lists_layout, 1);
+
+		auto* selected_layout = new QVBoxLayout();
+		selected_layout->addWidget(new QLabel(QCoreApplication::translate("OpenOrienteering::EditorSettingsPage", "Displayed actions")));
+		selected_layout->addWidget(selected_list, 1);
+		lists_layout->addLayout(selected_layout, 1);
+
+		auto* buttons_layout = new QVBoxLayout();
+		auto* add_button = new QPushButton(QCoreApplication::translate("OpenOrienteering::EditorSettingsPage", "Add ->"), this);
+		auto* remove_button = new QPushButton(QCoreApplication::translate("OpenOrienteering::EditorSettingsPage", "<- Remove"), this);
+		auto* up_button = new QPushButton(QCoreApplication::translate("OpenOrienteering::EditorSettingsPage", "Up"), this);
+		auto* down_button = new QPushButton(QCoreApplication::translate("OpenOrienteering::EditorSettingsPage", "Down"), this);
+		auto* reset_button = new QPushButton(QCoreApplication::translate("OpenOrienteering::EditorSettingsPage", "Reset"), this);
+		buttons_layout->addStretch(1);
+		buttons_layout->addWidget(add_button);
+		buttons_layout->addWidget(remove_button);
+		buttons_layout->addSpacing(12);
+		buttons_layout->addWidget(up_button);
+		buttons_layout->addWidget(down_button);
+		buttons_layout->addSpacing(12);
+		buttons_layout->addWidget(reset_button);
+		buttons_layout->addStretch(1);
+		lists_layout->addLayout(buttons_layout);
+
+		auto* available_layout = new QVBoxLayout();
+		available_layout->addWidget(new QLabel(QCoreApplication::translate("OpenOrienteering::EditorSettingsPage", "Available actions")));
+		available_layout->addWidget(available_list, 1);
+		lists_layout->addLayout(available_layout, 1);
+
+		auto* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+		layout->addWidget(button_box);
+
+		connect(toolbar_box, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this]() {
+			refillLists(QString{});
+		});
+		connect(add_button, &QPushButton::clicked, this, [this]() {
+			moveAction(true);
+		});
+		connect(remove_button, &QPushButton::clicked, this, [this]() {
+			moveAction(false);
+		});
+		connect(up_button, &QPushButton::clicked, this, [this]() {
+			moveSelectedAction(-1);
+		});
+		connect(down_button, &QPushButton::clicked, this, [this]() {
+			moveSelectedAction(1);
+		});
+		connect(reset_button, &QPushButton::clicked, this, [this]() {
+			currentActions() = MapEditorController::defaultMobileToolbarActionIds(currentTopBar());
+			refillLists(QString{});
+		});
+		connect(selected_list, &QListWidget::itemDoubleClicked, this, [this]() {
+			moveAction(false);
+		});
+		connect(available_list, &QListWidget::itemDoubleClicked, this, [this]() {
+			moveAction(true);
+		});
+		connect(button_box, &QDialogButtonBox::accepted, this, &QDialog::accept);
+		connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
+	}
+
+	void setSelectedActions(bool top_bar, const QStringList& actions)
+	{
+		if (top_bar)
+			top_actions = MapEditorController::sanitizeMobileToolbarActionIds(true, actions);
+		else
+			bottom_actions = MapEditorController::sanitizeMobileToolbarActionIds(false, actions);
+		refillLists(QString{});
+	}
+
+	QStringList selectedActions(bool top_bar) const
+	{
+		return top_bar ? top_actions : bottom_actions;
+	}
+
+private:
+	bool currentTopBar() const
+	{
+		return toolbar_box->currentData().toBool();
+	}
+
+	QStringList& currentActions()
+	{
+		return currentTopBar() ? top_actions : bottom_actions;
+	}
+
+	QStringList candidateActions() const
+	{
+		return MapEditorController::editableMobileToolbarActionIds(currentTopBar());
+	}
+
+	static QListWidgetItem* makeItem(const QString& id)
+	{
+		auto* item = new QListWidgetItem(MapEditorController::mobileToolbarActionLabel(id));
+		item->setData(Qt::UserRole, id);
+		return item;
+	}
+
+	void refillLists(const QString& selected_id)
+	{
+		selected_list->clear();
+		available_list->clear();
+
+		auto const candidates = candidateActions();
+		auto const actions = currentActions();
+		for (const auto& id : actions)
+		{
+			if (candidates.contains(id))
+				selected_list->addItem(makeItem(id));
+		}
+		for (const auto& id : candidates)
+		{
+			if (!actions.contains(id))
+				available_list->addItem(makeItem(id));
+		}
+
+		auto select_item = [&selected_id](QListWidget* list) {
+			if (selected_id.isEmpty())
+				return;
+			for (int i = 0; i < list->count(); ++i)
+			{
+				if (list->item(i)->data(Qt::UserRole).toString() == selected_id)
+				{
+					list->setCurrentRow(i);
+					break;
+				}
+			}
+		};
+		select_item(selected_list);
+		select_item(available_list);
+	}
+
+	void moveAction(bool add_to_selected)
+	{
+		auto* source = add_to_selected ? available_list : selected_list;
+		auto* item = source->currentItem();
+		if (!item)
+			return;
+
+		auto const id = item->data(Qt::UserRole).toString();
+		auto& actions = currentActions();
+		if (add_to_selected)
+		{
+			if (!actions.contains(id))
+			{
+				if (MapEditorController::mobileToolbarActionOnLeadingSide(id))
+				{
+					auto insert_pos = actions.size();
+					for (int i = 0; i < actions.size(); ++i)
+					{
+						if (!MapEditorController::mobileToolbarActionOnLeadingSide(actions.at(i)))
+						{
+							insert_pos = i;
+							break;
+						}
+					}
+					actions.insert(insert_pos, id);
+				}
+				else
+				{
+					actions << id;
+				}
+			}
+		}
+		else
+		{
+			actions.removeAll(id);
+		}
+		refillLists(id);
+	}
+
+	void moveSelectedAction(int delta)
+	{
+		auto* item = selected_list->currentItem();
+		if (!item)
+			return;
+
+		auto& actions = currentActions();
+		auto const id = item->data(Qt::UserRole).toString();
+		auto const index = actions.indexOf(id);
+		auto const new_index = index + delta;
+		if (index < 0 || new_index < 0 || new_index >= actions.size())
+			return;
+		if (MapEditorController::mobileToolbarActionOnLeadingSide(id)
+		    != MapEditorController::mobileToolbarActionOnLeadingSide(actions.at(new_index)))
+			return;
+
+		actions.move(index, new_index);
+		refillLists(id);
+	}
+
+	QComboBox* toolbar_box;
+	QListWidget* selected_list;
+	QListWidget* available_list;
+	QStringList top_actions = Settings::defaultMobileTopToolbarActions();
+	QStringList bottom_actions = Settings::defaultMobileBottomToolbarActions();
+};
+
+}  // namespace
 
 EditorSettingsPage::EditorSettingsPage(QWidget* parent)
  : SettingsPage(parent)
@@ -48,6 +281,9 @@ EditorSettingsPage::EditorSettingsPage(QWidget* parent)
 	{
 		button_size = Util::SpinBox::create(1, 3.0, 26.0, tr("mm", "millimeters"), 0.1);
 		layout->addRow(tr("Action button size:"), button_size);
+
+		mobile_toolbar_button = new QPushButton(tr("Configure mobile toolbars..."), this);
+		layout->addRow(tr("Toolbar icons:"), mobile_toolbar_button);
 	}
 
 	icon_size = Util::SpinBox::create(1, 25, tr("mm", "millimeters"));
@@ -114,6 +350,8 @@ EditorSettingsPage::EditorSettingsPage(QWidget* parent)
 	
 	
 	connect(antialiasing, &QAbstractButton::toggled, text_antialiasing, &QCheckBox::setEnabled);
+	if (mobile_toolbar_button)
+		connect(mobile_toolbar_button, &QPushButton::clicked, this, &EditorSettingsPage::configureMobileToolbars);
 	
 	updateWidgets();
 }
@@ -143,6 +381,8 @@ void EditorSettingsPage::apply()
 	setSetting(Settings::MapEditor_DrawLastPointOnRightClick, draw_last_point_on_right_click->isChecked());
 	setSetting(Settings::Templates_KeepSettingsOfClosed, keep_settings_of_closed_templates->isChecked());
 	setSetting(Settings::MapEditor_IgnoreTouchInput, ignore_touch_input->isChecked());
+	setSetting(Settings::MobileToolbar_TopActions, mobile_top_toolbar_actions);
+	setSetting(Settings::MobileToolbar_BottomActions, mobile_bottom_toolbar_actions);
 	setSetting(Settings::EditTool_DeleteBezierPointAction, edit_tool_delete_bezier_point_action->currentData());
 	setSetting(Settings::EditTool_DeleteBezierPointActionAlternative, edit_tool_delete_bezier_point_action_alternative->currentData());
 	setSetting(Settings::RectangleTool_HelperCrossRadiusMM, rectangle_helper_cross_radius->value());
@@ -170,12 +410,26 @@ void EditorSettingsPage::updateWidgets()
 	draw_last_point_on_right_click->setChecked(getSetting(Settings::MapEditor_DrawLastPointOnRightClick).toBool());
 	keep_settings_of_closed_templates->setChecked(getSetting(Settings::Templates_KeepSettingsOfClosed).toBool());
 	ignore_touch_input->setChecked(getSetting(Settings::MapEditor_IgnoreTouchInput).toBool());
+	mobile_top_toolbar_actions = MapEditorController::sanitizeMobileToolbarActionIds(true, getSetting(Settings::MobileToolbar_TopActions).toStringList());
+	mobile_bottom_toolbar_actions = MapEditorController::sanitizeMobileToolbarActionIds(false, getSetting(Settings::MobileToolbar_BottomActions).toStringList());
 	
 	edit_tool_delete_bezier_point_action->setCurrentIndex(edit_tool_delete_bezier_point_action->findData(getSetting(Settings::EditTool_DeleteBezierPointAction).toInt()));
 	edit_tool_delete_bezier_point_action_alternative->setCurrentIndex(edit_tool_delete_bezier_point_action_alternative->findData(getSetting(Settings::EditTool_DeleteBezierPointActionAlternative).toInt()));
 	
 	rectangle_helper_cross_radius->setValue(getSetting(Settings::RectangleTool_HelperCrossRadiusMM).toInt());
 	rectangle_preview_line_width->setChecked(getSetting(Settings::RectangleTool_PreviewLineWidth).toBool());
+}
+
+void EditorSettingsPage::configureMobileToolbars()
+{
+	MobileToolbarConfigDialog dialog(window());
+	dialog.setSelectedActions(true, mobile_top_toolbar_actions);
+	dialog.setSelectedActions(false, mobile_bottom_toolbar_actions);
+	if (dialog.exec() != QDialog::Accepted)
+		return;
+
+	mobile_top_toolbar_actions = dialog.selectedActions(true);
+	mobile_bottom_toolbar_actions = dialog.selectedActions(false);
 }
 
 
