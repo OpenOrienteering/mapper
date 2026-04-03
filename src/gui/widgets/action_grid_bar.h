@@ -80,12 +80,12 @@ public:
 	
 	/** Returns the number of grid columns. */
 	int columnCount() const;
-	
+
 	/** Adds an action to the grid. */
-	void addAction(QAction* action, int row, int col, int row_span = 1, int col_span = 1, bool at_end = false);
-	
+	void addAction(QAction* action, int row, int col, int row_span = 1, int col_span = 1, bool at_end = false, bool always_visible = false);
+
 	/** Adds an action to the grid, starting from the opposite direction. */
-	void addActionAtEnd(QAction* action, int row, int col, int row_span = 1, int col_span = 1);
+	void addActionAtEnd(QAction* action, int row, int col, int row_span = 1, int col_span = 1, bool always_visible = false);
 	
 	/** Returns the size of the button icons. */
 	QSize getIconSize(int row_span = 1, int col_span = 1) const;
@@ -129,6 +129,7 @@ protected:
 		int row_span;
 		int col_span;
 		bool at_end;
+		bool always_visible;
 		bool button_hidden = false;
 	};
 	

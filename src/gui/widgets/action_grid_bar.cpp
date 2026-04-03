@@ -25,6 +25,7 @@
 
 #include <QtGlobal>
 #include <QAction>
+#include <QDebug>
 #include <QGridLayout>
 #include <QIcon>
 #include <QLayout>
@@ -70,25 +71,25 @@ int ActionGridBar::columnCount() const
 	return column_count;
 }
 
-void ActionGridBar::addAction(QAction* action, int row, int col, int row_span, int col_span, bool at_end)
+void ActionGridBar::addAction(QAction* action, int row, int col, int row_span, int col_span, bool at_end, bool always_visible)
 {
 	auto* button = new QToolButton();
 	button->setDefaultAction(action);
 	button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	button->setAutoRaise(true);
 	button->setIconSize(getIconSize(row_span, col_span));
-	
+
 	// Add the item
-	items.push_back({action, button, next_id++, row, col, row_span, col_span, at_end});
-	
+	items.push_back({action, button, next_id++, row, col, row_span, col_span, at_end, always_visible});
+
 	// If this is the overflow action, remember the button.
 	if (action == overflow_action)
 		overflow_button = button;
 }
 
-void ActionGridBar::addActionAtEnd(QAction* action, int row, int col, int row_span, int col_span)
+void ActionGridBar::addActionAtEnd(QAction* action, int row, int col, int row_span, int col_span, bool always_visible)
 {
-	addAction(action, row, col, row_span, col_span, true);
+	addAction(action, row, col, row_span, col_span, true, always_visible);
 }
 
 QSize ActionGridBar::getIconSize(int row_span, int col_span) const
@@ -174,7 +175,9 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 	for (auto& item : items)
 	{
 		int resulting_col = item.at_end ? (column_count - 1 - item.col) : item.col;
-		bool hidden = item.row >= row_count || item.col >= column_count;
+		if (item.always_visible)
+			resulting_col = qBound(0, resulting_col, qMax(0, column_count - item.col_span));
+		bool hidden = item.always_visible ? false : (item.row >= row_count || item.col >= column_count);
 		if (! hidden)
 		{
 			// Check for collisions with other items
@@ -183,11 +186,20 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 				if (&item == &other)
 					continue;
 				int resulting_col_other = other.at_end ? (column_count - 1 - other.col) : other.col;
+				if (other.always_visible)
+					resulting_col_other = qBound(0, resulting_col_other, qMax(0, column_count - other.col_span));
 				if (item.row == other.row && resulting_col == resulting_col_other)
 				{
 					// Check which item "wins" this spot and which will be hidden
 					if (item.at_end == other.at_end)
 						qDebug("Warning: two items set to same position in ActionGridBar, this case is not handled!");
+					if (item.always_visible != other.always_visible)
+					{
+						hidden = !item.always_visible;
+						if (hidden)
+							break;
+						continue;
+					}
 					if ((item.at_end && resulting_col <= column_count / 2)
 					    || (! item.at_end && resulting_col > column_count / 2))
 					{

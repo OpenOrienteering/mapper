@@ -156,6 +156,82 @@ QStringList Settings::defaultMobileBottomToolbarActions()
 	};
 }
 
+QStringList Settings::defaultMobileTopLeftToolbarActions()
+{
+	return {
+		QStringLiteral("hidetopbar"),
+		QStringLiteral("save"),
+		QStringLiteral("compassdisplay"),
+		QStringLiteral("gpsdisplay"),
+		QStringLiteral("gpsdistancerings"),
+		QStringLiteral("alignmapwithnorth"),
+		QStringLiteral("showgrid"),
+		QStringLiteral("showall"),
+	};
+}
+
+QStringList Settings::defaultMobileTopRightToolbarActions()
+{
+	return {
+		QStringLiteral("close"),
+		QStringLiteral("overflow"),
+		QStringLiteral("redo"),
+		QStringLiteral("undo"),
+		QStringLiteral("touchcursor"),
+		QStringLiteral("templatewindow"),
+		QStringLiteral("editobjects"),
+		QStringLiteral("editlines"),
+		QStringLiteral("delete"),
+		QStringLiteral("duplicate"),
+		QStringLiteral("switchsymbol"),
+		QStringLiteral("fillborder"),
+		QStringLiteral("switchdashes"),
+		QStringLiteral("booleanunion"),
+		QStringLiteral("cutobject"),
+		QStringLiteral("connectpaths"),
+		QStringLiteral("rotateobjects"),
+		QStringLiteral("cuthole"),
+		QStringLiteral("scaleobjects"),
+		QStringLiteral("rotatepatterns"),
+		QStringLiteral("converttocurves"),
+		QStringLiteral("simplify"),
+		QStringLiteral("distributepoints"),
+		QStringLiteral("booleandifference"),
+		QStringLiteral("measure"),
+		QStringLiteral("booleanmergeholes"),
+		QStringLiteral("mapparts"),
+	};
+}
+
+QStringList Settings::defaultMobileBottomLeftToolbarActions()
+{
+	return {
+		QStringLiteral("zoomin"),
+		QStringLiteral("panmap"),
+		QStringLiteral("zoomout"),
+		QStringLiteral("movegps"),
+		QStringLiteral("hatchareasview"),
+		QStringLiteral("baselineview"),
+		QStringLiteral("gpstemporarypath"),
+		QStringLiteral("gpstemporarypoint"),
+		QStringLiteral("paint"),
+	};
+}
+
+QStringList Settings::defaultMobileBottomRightToolbarActions()
+{
+	return {
+		QStringLiteral("symbolselector"),
+		QStringLiteral("drawpoint"),
+		QStringLiteral("drawpointgps"),
+		QStringLiteral("drawpath"),
+		QStringLiteral("drawfreehand"),
+		QStringLiteral("drawrectangle"),
+		QStringLiteral("drawcircle"),
+		QStringLiteral("drawtext"),
+	};
+}
+
 
 
 Settings::Settings()
@@ -206,6 +282,10 @@ Settings::Settings()
 	registerSetting(ActionGridBar_ButtonSizeMM, "ActionGridBar/button_size_mm", touch_button_minimum_size_default);
 	registerSetting(MobileToolbar_TopActions, "ActionGridBar/mobile_top_actions", defaultMobileTopToolbarActions());
 	registerSetting(MobileToolbar_BottomActions, "ActionGridBar/mobile_bottom_actions", defaultMobileBottomToolbarActions());
+	registerSetting(MobileToolbar_TopLeftActions, "ActionGridBar/mobile_top_left_actions", defaultMobileTopLeftToolbarActions());
+	registerSetting(MobileToolbar_TopRightActions, "ActionGridBar/mobile_top_right_actions", defaultMobileTopRightToolbarActions());
+	registerSetting(MobileToolbar_BottomLeftActions, "ActionGridBar/mobile_bottom_left_actions", defaultMobileBottomLeftToolbarActions());
+	registerSetting(MobileToolbar_BottomRightActions, "ActionGridBar/mobile_bottom_right_actions", defaultMobileBottomRightToolbarActions());
 	registerSetting(SymbolWidget_IconSizeMM, "SymbolWidget/icon_size_mm", symbol_widget_icon_size_mm_default);
 	registerSetting(SymbolWidget_ShowCustomIcons, "SymbolWidget/show_custom_icons", true);
 	
@@ -230,7 +310,62 @@ Settings::Settings()
 	registerSetting(PaintOnTemplateTool_Colors, "PaintOnTemplateTool/colors", QLatin1String("FF0000,FFFF00,00FF00,DB00D9,0000FF,D15C00,000000"));
 
 	QSettings settings;
-	
+
+	auto migrate_legacy_mobile_toolbar_settings = [this, &settings]() {
+		auto const has_new_toolbar_settings
+		    = settings.contains(getSettingPath(MobileToolbar_TopLeftActions))
+		      || settings.contains(getSettingPath(MobileToolbar_TopRightActions))
+		      || settings.contains(getSettingPath(MobileToolbar_BottomLeftActions))
+		      || settings.contains(getSettingPath(MobileToolbar_BottomRightActions));
+		if (has_new_toolbar_settings)
+			return;
+
+		auto const has_legacy_toolbar_settings
+		    = settings.contains(getSettingPath(MobileToolbar_TopActions))
+		      || settings.contains(getSettingPath(MobileToolbar_BottomActions));
+		if (!has_legacy_toolbar_settings)
+			return;
+
+		auto const legacy_top = settings.value(getSettingPath(MobileToolbar_TopActions), getDefaultValue(MobileToolbar_TopActions)).toStringList();
+		auto const legacy_bottom = settings.value(getSettingPath(MobileToolbar_BottomActions), getDefaultValue(MobileToolbar_BottomActions)).toStringList();
+
+		auto top_left = QStringList{ QStringLiteral("hidetopbar"), QStringLiteral("save") };
+		auto top_right = QStringList{ QStringLiteral("close"), QStringLiteral("overflow") };
+		auto bottom_left = QStringList{};
+		auto bottom_right = QStringList{ QStringLiteral("symbolselector") };
+
+		auto const default_top_left = defaultMobileTopLeftToolbarActions();
+		auto const default_top_right = defaultMobileTopRightToolbarActions();
+		auto const default_bottom_left = defaultMobileBottomLeftToolbarActions();
+		auto const default_bottom_right = defaultMobileBottomRightToolbarActions();
+
+		for (const auto& id : legacy_top)
+		{
+			if (default_top_left.contains(id))
+				top_left << id;
+			else if (default_top_right.contains(id))
+				top_right << id;
+		}
+		for (const auto& id : legacy_bottom)
+		{
+			if (default_bottom_left.contains(id))
+				bottom_left << id;
+			else if (default_bottom_right.contains(id))
+				bottom_right << id;
+		}
+
+		if (!top_right.contains(QStringLiteral("mapparts")))
+			top_right << QStringLiteral("mapparts");
+		if (!bottom_left.contains(QStringLiteral("paint")))
+			bottom_left << QStringLiteral("paint");
+
+		settings.setValue(getSettingPath(MobileToolbar_TopLeftActions), top_left);
+		settings.setValue(getSettingPath(MobileToolbar_TopRightActions), top_right);
+		settings.setValue(getSettingPath(MobileToolbar_BottomLeftActions), bottom_left);
+		settings.setValue(getSettingPath(MobileToolbar_BottomRightActions), bottom_right);
+	};
+	migrate_legacy_mobile_toolbar_settings();
+
 #ifndef Q_OS_ANDROID
 	// Overwrite default value with actual setting
 	touch_mode_enabled = mobileModeEnforced() || settings.value(QLatin1String("General/touch_mode_enabled"), touch_mode_enabled).toBool();

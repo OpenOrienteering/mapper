@@ -75,8 +75,10 @@ private:
 	
 	QSpinBox* rectangle_helper_cross_radius;
 	QCheckBox* rectangle_preview_line_width;
-	QStringList mobile_top_toolbar_actions;
-	QStringList mobile_bottom_toolbar_actions;
+	QStringList mobile_top_left_toolbar_actions;
+	QStringList mobile_top_right_toolbar_actions;
+	QStringList mobile_bottom_left_toolbar_actions;
+	QStringList mobile_bottom_right_toolbar_actions;
 };
 
 

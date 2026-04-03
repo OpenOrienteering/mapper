@@ -102,6 +102,14 @@ public:
 		PopupLocationTop = 0x04,
 		PopupLocationBottom = 0x08,
 	};
+
+	enum MobileToolbarZone
+	{
+		MobileToolbarTopLeft = 0,
+		MobileToolbarTopRight,
+		MobileToolbarBottomLeft,
+		MobileToolbarBottomRight,
+	};
 	
 	/**
 	 * Constructs a new MapEditorController for a map.
@@ -233,20 +241,28 @@ public:
 	 */
 	QAction* getAction(const char* id);
 	
-	/** Returns editable mobile toolbar action IDs in display order for the selected bar. */
-	static QStringList editableMobileToolbarActionIds(bool top_bar);
+	/** Returns editable mobile toolbar action IDs. */
+	static QStringList editableMobileToolbarActionIds();
 
-	/** Returns the default mobile toolbar action IDs in display order for the selected bar. */
-	static QStringList defaultMobileToolbarActionIds(bool top_bar);
+	/** Returns the default mobile toolbar action IDs for the selected zone. */
+	static QStringList defaultMobileToolbarActionIds(MobileToolbarZone zone);
 
-	/** Returns whether an editable mobile toolbar action belongs to the leading toolbar section. */
-	static bool mobileToolbarActionOnLeadingSide(const QString& id);
+	/** Returns the translated label for a mobile toolbar zone. */
+	static QString mobileToolbarZoneLabel(MobileToolbarZone zone);
 
 	/** Returns the translated label for an editable mobile toolbar action. */
 	static QString mobileToolbarActionLabel(const QString& id);
 
-	/** Returns a sanitized mobile toolbar configuration or the default list if invalid. */
-	static QStringList sanitizeMobileToolbarActionIds(bool top_bar, const QStringList& ids);
+	/** Returns true if a mobile toolbar action may be removed from the layout. */
+	static bool mobileToolbarActionRemovable(const QString& id);
+
+	/** Sanitizes a mobile toolbar configuration in-place. */
+	static void sanitizeMobileToolbarConfiguration(
+	        QStringList& top_left,
+	        QStringList& top_right,
+	        QStringList& bottom_left,
+	        QStringList& bottom_right
+	);
 
 	/** Override from MainWindowController */
 	bool saveTo(const QString& path, const FileFormat& format) override;
@@ -694,8 +710,6 @@ private:
 	void createActions();
 	void createMenuAndToolbars();
 	void createMobileGUI();
-	QStringList configuredMobileToolbarActionIds(bool top_bar) const;
-	void addConfiguredMobileToolbarActions(ActionGridBar* bar, bool top_bar);
 
 	void doUndo(bool redo);
 	
