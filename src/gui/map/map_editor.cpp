@@ -69,7 +69,9 @@
 #include <QMessageBox>
 // IWYU pragma: no_include <QMetaObject>
 #include <QMimeData>
+#include <QPalette>
 #include <QPainter>
+#include <QPen>
 #include <QPixmap>
 #include <QPoint>
 #include <QPointer>
@@ -247,6 +249,312 @@ QString OpenOrienteeringObjects()
 
 }  // namespace MimeType
 
+namespace {
+
+struct MobileToolbarActionDefinition
+{
+	const char* id;
+	MapEditorController::MobileToolbarZone default_zone;
+	enum ActionSource
+	{
+		ControllerAction,
+		SaveAction,
+		CloseAction,
+		OverflowAction,
+		HideTopBarAction,
+		MapPartsAction,
+		PaintAction,
+		SymbolSelectorAction,
+		SpacerItem,
+	} source;
+	int row_span;
+	int col_span;
+	int preferred_row;
+	bool removable;
+	bool always_visible;
+	const char* icon_name;
+	const char* text_noop;
+};
+
+const MobileToolbarActionDefinition mobile_toolbar_action_definitions[] = {
+	{ "hidetopbar",        MapEditorController::MobileToolbarTopLeft,    MobileToolbarActionDefinition::HideTopBarAction, 1, 1, 0,  true,  false, "arrow-thin-upleft.png", QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Hide top bar") },
+	{ "save",              MapEditorController::MobileToolbarTopLeft,    MobileToolbarActionDefinition::SaveAction,       1, 1, 1,  false, false, "save.png",               QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Save") },
+	{ "compassdisplay",    MapEditorController::MobileToolbarTopLeft,    MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "compass.png",            QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Enable compass display") },
+	{ "gpsdisplay",        MapEditorController::MobileToolbarTopLeft,    MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-gps-display.png",   QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Enable GPS display") },
+	{ "gpsdistancerings",  MapEditorController::MobileToolbarTopLeft,    MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "gps-distance-rings.png",  QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Enable GPS distance rings") },
+	{ "alignmapwithnorth", MapEditorController::MobileToolbarTopLeft,    MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "rotate-map.png",         QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Align map with north") },
+	{ "showgrid",          MapEditorController::MobileToolbarTopLeft,    MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "grid.png",               QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Show grid") },
+	{ "showall",           MapEditorController::MobileToolbarTopLeft,    MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "view-show-all.png",      QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Show whole map") },
+	{ "close",             MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::CloseAction,      1, 1, 0,  false, false, "close.png",              QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Close") },
+	{ "overflow",          MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::OverflowAction,   1, 1, 1,  false, true,  "three-dots.png",         QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Show remaining items") },
+	{ "redo",              MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "redo.png",               QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Redo") },
+	{ "undo",              MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "undo.png",               QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Undo") },
+	{ "touchcursor",       MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-touch-cursor.png",  QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Enable touch cursor") },
+	{ "templatewindow",    MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "templates.png",          QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Template setup window") },
+	{ "editobjects",       MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-edit.png",          QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Edit objects") },
+	{ "editlines",         MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-edit-line.png",     QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Edit lines") },
+	{ "delete",            MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "delete.png",             QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Delete") },
+	{ "duplicate",         MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-duplicate.png",     QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Duplicate") },
+	{ "switchsymbol",      MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-switch-symbol.png", QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Switch symbol") },
+	{ "fillborder",        MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-fill-border.png",   QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Fill / Create border") },
+	{ "switchdashes",      MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-switch-dashes.png", QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Switch dash direction") },
+	{ "booleanunion",      MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-boolean-union.png", QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Unify areas") },
+	{ "cutobject",         MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-cut.png",           QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Cut object") },
+	{ "connectpaths",      MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-connect-paths.png", QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Connect paths") },
+	{ "rotateobjects",     MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-rotate.png",        QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Rotate objects") },
+	{ "cuthole",           MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-cut-hole.png",            QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Cut free form hole") },
+	{ "scaleobjects",      MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-scale.png",               QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Scale objects") },
+	{ "rotatepatterns",    MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-rotate-pattern.png",      QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Rotate pattern") },
+	{ "converttocurves",   MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-convert-to-curves.png",   QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Convert to curves") },
+	{ "simplify",          MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-simplify-path.png",       QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Simplify path") },
+	{ "distributepoints",  MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-distribute-points.png",   QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Distribute points along path") },
+	{ "booleandifference", MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-boolean-difference.png",  QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Cut away from area") },
+	{ "measure",           MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-measure.png",             QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Measure lengths and areas") },
+	{ "booleanmergeholes", MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "tool-boolean-merge-holes.png", QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Merge area holes") },
+	{ "mapparts",          MapEditorController::MobileToolbarTopRight,   MobileToolbarActionDefinition::MapPartsAction,   1, 1, 1,  true,  false, "map-parts.png",                QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Map parts") },
+	{ "zoomin",            MapEditorController::MobileToolbarBottomLeft,  MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "view-zoom-in.png",             QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Zoom in") },
+	{ "panmap",            MapEditorController::MobileToolbarBottomLeft,  MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "move.png",                     QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Pan") },
+	{ "zoomout",           MapEditorController::MobileToolbarBottomLeft,  MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "view-zoom-out.png",            QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Zoom out") },
+	{ "movegps",           MapEditorController::MobileToolbarBottomLeft,  MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "move-to-gps.png",              QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Move to my location") },
+	{ "hatchareasview",    MapEditorController::MobileToolbarBottomLeft,  MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "view-hatch-areas.png",         QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Hatch areas") },
+	{ "baselineview",      MapEditorController::MobileToolbarBottomLeft,  MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "view-baseline.png",            QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Baseline view") },
+	{ "gpstemporarypath",  MapEditorController::MobileToolbarBottomLeft,  MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "gps-temporary-path.png",       QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Create temporary path at GPS position") },
+	{ "gpstemporarypoint", MapEditorController::MobileToolbarBottomLeft,  MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "gps-temporary-point.png",      QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Set temporary marker at GPS position") },
+	{ "paint",             MapEditorController::MobileToolbarBottomLeft,  MobileToolbarActionDefinition::PaintAction,      1, 1, 0,  true,  false, "pencil.png",                   QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Paint on template") },
+	{ "symbolselector",    MapEditorController::MobileToolbarBottomRight, MobileToolbarActionDefinition::SymbolSelectorAction, 2, 2, 0, true, false, "symbols.png",                 QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Select symbol") },
+	{ "drawpoint",         MapEditorController::MobileToolbarBottomRight, MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "draw-point.png",               QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Set point objects") },
+	{ "drawpointgps",      MapEditorController::MobileToolbarBottomRight, MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "draw-point-gps.png",           QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Set point object at GPS position") },
+	{ "drawpath",          MapEditorController::MobileToolbarBottomRight, MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "draw-path.png",                QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Draw paths") },
+	{ "drawfreehand",      MapEditorController::MobileToolbarBottomRight, MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "draw-freehand.png",            QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Draw free-handedly") },
+	{ "drawrectangle",     MapEditorController::MobileToolbarBottomRight, MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "draw-rectangle.png",           QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Draw rectangles") },
+	{ "drawcircle",        MapEditorController::MobileToolbarBottomRight, MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "draw-circle.png",              QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Draw circles and ellipses") },
+	{ "drawtext",          MapEditorController::MobileToolbarBottomRight, MobileToolbarActionDefinition::ControllerAction, 1, 1, -1, true,  false, "draw-text.png",                QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Write text") },
+	{ "spacer01",          MapEditorController::MobileToolbarTopLeft,     MobileToolbarActionDefinition::SpacerItem,       1, 1, -1, true,  false, nullptr,                  QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Spacer 1") },
+	{ "spacer02",          MapEditorController::MobileToolbarTopLeft,     MobileToolbarActionDefinition::SpacerItem,       1, 1, -1, true,  false, nullptr,                  QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Spacer 2") },
+	{ "spacer03",          MapEditorController::MobileToolbarTopLeft,     MobileToolbarActionDefinition::SpacerItem,       1, 1, -1, true,  false, nullptr,                  QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Spacer 3") },
+	{ "spacer04",          MapEditorController::MobileToolbarTopLeft,     MobileToolbarActionDefinition::SpacerItem,       1, 1, -1, true,  false, nullptr,                  QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Spacer 4") },
+	{ "spacer05",          MapEditorController::MobileToolbarTopLeft,     MobileToolbarActionDefinition::SpacerItem,       1, 1, -1, true,  false, nullptr,                  QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Spacer 5") },
+	{ "spacer06",          MapEditorController::MobileToolbarTopLeft,     MobileToolbarActionDefinition::SpacerItem,       1, 1, -1, true,  false, nullptr,                  QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Spacer 6") },
+	{ "spacer07",          MapEditorController::MobileToolbarTopLeft,     MobileToolbarActionDefinition::SpacerItem,       1, 1, -1, true,  false, nullptr,                  QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Spacer 7") },
+	{ "spacer08",          MapEditorController::MobileToolbarTopLeft,     MobileToolbarActionDefinition::SpacerItem,       1, 1, -1, true,  false, nullptr,                  QT_TRANSLATE_NOOP("OpenOrienteering::MapEditorController", "Spacer 8") },
+};
+
+const MobileToolbarActionDefinition* findMobileToolbarActionDefinition(const QString& id)
+{
+	auto const it = std::find_if(std::begin(mobile_toolbar_action_definitions),
+	                             std::end(mobile_toolbar_action_definitions),
+	                             [&id](const auto& definition) { return id == QLatin1String(definition.id); });
+	return it == std::end(mobile_toolbar_action_definitions) ? nullptr : &*it;
+}
+
+QIcon mobileToolbarActionIcon(const MobileToolbarActionDefinition& definition)
+{
+	if (definition.source == MobileToolbarActionDefinition::SpacerItem)
+	{
+		static auto const spacer_icon = []() {
+			auto pixmap = QPixmap(48, 48);
+			pixmap.fill(Qt::transparent);
+
+			QPainter painter(&pixmap);
+			auto pen = QPen(QApplication::palette().color(QPalette::Mid));
+			pen.setStyle(Qt::DashLine);
+			pen.setWidth(2);
+			painter.setRenderHint(QPainter::Antialiasing, false);
+			painter.setPen(pen);
+			painter.setBrush(Qt::NoBrush);
+			painter.drawRect(QRect(8, 8, pixmap.width() - 16, pixmap.height() - 16));
+			return QIcon(pixmap);
+		}();
+		return spacer_icon;
+	}
+
+	if (!definition.icon_name)
+		return {};
+	return QIcon(QString::fromLatin1(":/images/") + QLatin1String(definition.icon_name));
+}
+
+QStringList editableMobileToolbarActionIdsImpl()
+{
+	auto ids = QStringList{};
+	ids.reserve(int(sizeof(mobile_toolbar_action_definitions) / sizeof(*mobile_toolbar_action_definitions)));
+	for (const auto& definition : mobile_toolbar_action_definitions)
+		ids << QLatin1String(definition.id);
+	return ids;
+}
+
+QStringList defaultMobileToolbarActionIdsImpl(MapEditorController::MobileToolbarZone zone)
+{
+	switch (zone)
+	{
+	case MapEditorController::MobileToolbarTopLeft:
+		return Settings::defaultMobileTopLeftToolbarActions();
+	case MapEditorController::MobileToolbarTopRight:
+		return Settings::defaultMobileTopRightToolbarActions();
+	case MapEditorController::MobileToolbarBottomLeft:
+		return Settings::defaultMobileBottomLeftToolbarActions();
+	case MapEditorController::MobileToolbarBottomRight:
+		return Settings::defaultMobileBottomRightToolbarActions();
+	}
+	Q_UNREACHABLE();
+	return {};
+}
+
+QStringList& mobileToolbarZoneActions(
+        QStringList& top_left,
+        QStringList& top_right,
+        QStringList& bottom_left,
+        QStringList& bottom_right,
+        MapEditorController::MobileToolbarZone zone
+)
+{
+	switch (zone)
+	{
+	case MapEditorController::MobileToolbarTopLeft:
+		return top_left;
+	case MapEditorController::MobileToolbarTopRight:
+		return top_right;
+	case MapEditorController::MobileToolbarBottomLeft:
+		return bottom_left;
+	case MapEditorController::MobileToolbarBottomRight:
+		return bottom_right;
+	}
+	Q_UNREACHABLE();
+	return top_left;
+}
+
+void sanitizeMobileToolbarConfigurationImpl(
+        QStringList& top_left,
+        QStringList& top_right,
+        QStringList& bottom_left,
+        QStringList& bottom_right
+)
+{
+	auto const available_ids = editableMobileToolbarActionIdsImpl();
+	auto seen_ids = QStringList{};
+	auto sanitize_zone = [&available_ids, &seen_ids](QStringList& actions) {
+		auto sanitized_actions = QStringList{};
+		sanitized_actions.reserve(actions.size());
+		for (const auto& id : actions)
+		{
+			if (!available_ids.contains(id) || seen_ids.contains(id))
+				continue;
+			sanitized_actions << id;
+			seen_ids << id;
+		}
+		actions = sanitized_actions;
+	};
+	sanitize_zone(top_left);
+	sanitize_zone(top_right);
+	sanitize_zone(bottom_left);
+	sanitize_zone(bottom_right);
+
+	for (const auto required_id : { QStringLiteral("save"), QStringLiteral("close"), QStringLiteral("overflow") })
+	{
+		if (seen_ids.contains(required_id))
+			continue;
+		if (auto const* definition = findMobileToolbarActionDefinition(required_id))
+		{
+			mobileToolbarZoneActions(top_left, top_right, bottom_left, bottom_right, definition->default_zone) << required_id;
+			seen_ids << required_id;
+		}
+	}
+}
+
+bool mobileToolbarZoneIsTop(MapEditorController::MobileToolbarZone zone)
+{
+	return zone == MapEditorController::MobileToolbarTopLeft
+	       || zone == MapEditorController::MobileToolbarTopRight;
+}
+
+QToolButton* findMobileToolbarButton(ActionGridBar* top_action_bar, ActionGridBar* bottom_action_bar, const QAction* action)
+{
+	if (top_action_bar)
+	{
+		if (auto* button = top_action_bar->getButtonForAction(action))
+			return button;
+	}
+	if (bottom_action_bar)
+		return bottom_action_bar->getButtonForAction(action);
+	return nullptr;
+}
+
+template <typename ResolveAction>
+int addMobileToolbarZoneActions(ActionGridBar* bar, const QStringList& ids, bool at_end, ResolveAction&& resolve_action)
+{
+	int col = 0;
+	bool row_used[2] = { false, false };
+	auto advance_column = [&]() {
+		++col;
+		row_used[0] = false;
+		row_used[1] = false;
+	};
+
+	for (const auto& id : ids)
+	{
+		auto const* definition = findMobileToolbarActionDefinition(id);
+		if (!definition)
+			continue;
+
+		auto add_toolbar_item = [&](int row, int current_col) {
+			if (definition->source == MobileToolbarActionDefinition::SpacerItem)
+			{
+				bar->addSpacer(row, current_col, definition->row_span, definition->col_span, at_end);
+				return true;
+			}
+
+			auto* action = resolve_action(*definition);
+			if (!action)
+				return false;
+
+			bar->addAction(action, row, current_col, definition->row_span, definition->col_span, at_end, definition->always_visible);
+			return true;
+		};
+
+		if (definition->row_span > 1 || definition->col_span > 1)
+		{
+			if (row_used[0] || row_used[1])
+				advance_column();
+			if (!add_toolbar_item(0, col))
+				continue;
+			col += definition->col_span;
+			row_used[0] = false;
+			row_used[1] = false;
+			continue;
+		}
+
+		int row = definition->preferred_row;
+		if (row >= 0)
+		{
+			if (row_used[row])
+				advance_column();
+			if (row_used[row])
+				continue;
+		}
+		else
+		{
+			if (!row_used[0])
+				row = 0;
+			else if (!row_used[1])
+				row = 1;
+			else
+			{
+				advance_column();
+				row = 0;
+			}
+		}
+
+		if (!add_toolbar_item(row, col))
+			continue;
+		row_used[row] = true;
+		if (row_used[0] && row_used[1])
+			advance_column();
+	}
+
+	return col + ((row_used[0] || row_used[1]) ? 1 : 0);
+}
+
+}  // namespace
+
 
 
 // ### MapEditorController ###
@@ -338,6 +646,85 @@ MapEditorController::~MapEditorController()
 	delete compass_display;
 	delete gps_marker_display;
 	delete map;
+}
+
+QStringList MapEditorController::editableMobileToolbarActionIds()
+{
+	return editableMobileToolbarActionIdsImpl();
+}
+
+QStringList MapEditorController::defaultMobileToolbarActionIds(MobileToolbarZone zone)
+{
+	return defaultMobileToolbarActionIdsImpl(zone);
+}
+
+QString MapEditorController::mobileToolbarZoneLabel(MobileToolbarZone zone)
+{
+	switch (zone)
+	{
+	case MobileToolbarTopLeft:
+		return tr("Top left");
+	case MobileToolbarTopRight:
+		return tr("Top right");
+	case MobileToolbarBottomLeft:
+		return tr("Bottom left");
+	case MobileToolbarBottomRight:
+		return tr("Bottom right");
+	}
+	Q_UNREACHABLE();
+	return {};
+}
+
+QString MapEditorController::mobileToolbarActionLabel(const QString& id)
+{
+	if (auto const* definition = findMobileToolbarActionDefinition(id))
+		return QCoreApplication::translate("OpenOrienteering::MapEditorController", definition->text_noop);
+	return id;
+}
+
+QIcon MapEditorController::mobileToolbarActionIcon(const QString& id)
+{
+	if (auto const* definition = findMobileToolbarActionDefinition(id))
+		return ::OpenOrienteering::mobileToolbarActionIcon(*definition);
+	return {};
+}
+
+QSize MapEditorController::mobileToolbarActionSpan(const QString& id)
+{
+	if (auto const* definition = findMobileToolbarActionDefinition(id))
+		return QSize(definition->col_span, definition->row_span);
+	return QSize(1, 1);
+}
+
+int MapEditorController::mobileToolbarActionPreferredRow(const QString& id)
+{
+	if (auto const* definition = findMobileToolbarActionDefinition(id))
+		return definition->preferred_row;
+	return -1;
+}
+
+bool MapEditorController::mobileToolbarActionRemovable(const QString& id)
+{
+	if (auto const* definition = findMobileToolbarActionDefinition(id))
+		return definition->removable;
+	return true;
+}
+
+bool MapEditorController::mobileToolbarActionAlwaysVisible(const QString& id)
+{
+	if (auto const* definition = findMobileToolbarActionDefinition(id))
+		return definition->always_visible;
+	return false;
+}
+
+void MapEditorController::sanitizeMobileToolbarConfiguration(
+        QStringList& top_left,
+        QStringList& top_right,
+        QStringList& bottom_left,
+        QStringList& bottom_right
+)
+{
+	sanitizeMobileToolbarConfigurationImpl(top_left, top_right, bottom_left, bottom_right);
 }
 
 bool MapEditorController::menuBarVisible()
@@ -1514,137 +1901,105 @@ void MapEditorController::createMobileGUI()
 	show_top_bar_button->setAutoRaise(true);
 	show_top_bar_button->setIconSize(icon_size);
 	show_top_bar_button->setGeometry(0, 0, button_size_px, button_size_px);
-	
-	
+
+	auto top_left_actions = Settings::getInstance().getSetting(Settings::MobileToolbar_TopLeftActions).toStringList();
+	auto top_right_actions = Settings::getInstance().getSetting(Settings::MobileToolbar_TopRightActions).toStringList();
+	auto bottom_left_actions = Settings::getInstance().getSetting(Settings::MobileToolbar_BottomLeftActions).toStringList();
+	auto bottom_right_actions = Settings::getInstance().getSetting(Settings::MobileToolbar_BottomRightActions).toStringList();
+	sanitizeMobileToolbarConfiguration(top_left_actions, top_right_actions, bottom_left_actions, bottom_right_actions);
+
+	auto overflow_zone = MobileToolbarTopRight;
+	for (auto zone : { MobileToolbarTopLeft, MobileToolbarTopRight, MobileToolbarBottomLeft, MobileToolbarBottomRight })
+	{
+		auto const& actions = mobileToolbarZoneActions(top_left_actions, top_right_actions, bottom_left_actions, bottom_right_actions, zone);
+		if (actions.contains(QStringLiteral("overflow")))
+		{
+			overflow_zone = zone;
+			break;
+		}
+	}
+
 	// Create bottom action bar
 	bottom_action_bar = new ActionGridBar(ActionGridBar::Horizontal, 2);
-	
-	// Left side
-	int col = 0;
-	bottom_action_bar->addAction(zoom_in_act, 0, col);
-	bottom_action_bar->addAction(pan_act, 1, col++);
-	
-	bottom_action_bar->addAction(zoom_out_act, 0, col);
-	auto* zoom_out_button = bottom_action_bar->getButtonForAction(zoom_out_act);
-	auto* mobile_zoom_out_menu = new QMenu(zoom_out_button);
-	auto* zoom_1x_action = mobile_zoom_out_menu->addAction(tr("1x zoom"));
-	connect(zoom_1x_action, &QAction::triggered, this, [this]() {
-		main_view->setZoom(1);
-	});
-	auto* zoom_2x_action = mobile_zoom_out_menu->addAction(tr("2x zoom"));
-	connect(zoom_2x_action, &QAction::triggered, this, [this]() {
-		main_view->setZoom(2);
-	});
-	zoom_out_button->setMenu(mobile_zoom_out_menu);
-
-	auto* move_to_gps_pos_menu = new QMenu(bottom_action_bar);
-	move_to_gps_pos_menu->addAction(follow_position_act);
-	move_to_gps_pos_act->setMenu(move_to_gps_pos_menu);
-	bottom_action_bar->addAction(move_to_gps_pos_act, 1, col++);
-	if (auto* button = bottom_action_bar->getButtonForAction(move_to_gps_pos_act))
-		button->setPopupMode(QToolButton::DelayedPopup);
-	
-	bottom_action_bar->addAction(hatch_areas_view_act, 0, col);
-	bottom_action_bar->addAction(baseline_view_act, 1, col++);	
-
-	bottom_action_bar->addAction(gps_temporary_path_act, 0, col);
-	auto* temp_path_button = bottom_action_bar->getButtonForAction(gps_temporary_path_act);
-	auto* mobile_gps_temp_path_menu = new QMenu(temp_path_button);
-	mobile_gps_temp_path_menu->addAction(gps_temporary_clear_act);
-	temp_path_button->setMenu(mobile_gps_temp_path_menu);
-	
-	bottom_action_bar->addAction(gps_temporary_point_act, 1, col++);
-
-	auto* paint_action = paint_feature->paintAction();
-	bottom_action_bar->addAction(paint_action, 0, col);
-	if (auto* button = bottom_action_bar->getButtonForAction(paint_action))
-		button->setPopupMode(QToolButton::DelayedPopup);
-	
-	// Right side
-	bottom_action_bar->addActionAtEnd(mobile_symbol_selector_action, 0, 1, 2, 2);
-	auto* button = bottom_action_bar->getButtonForAction(mobile_symbol_selector_action);
-	button->setPopupMode(QToolButton::DelayedPopup);
-	
-	col = 2;
-	bottom_action_bar->addActionAtEnd(draw_point_act, 0, col);
-	bottom_action_bar->addActionAtEnd(draw_point_gps_act, 1, col++);
-	
-	bottom_action_bar->addActionAtEnd(draw_path_act, 0, col);
-	bottom_action_bar->addActionAtEnd(draw_freehand_act, 1, col++);
-	
-	bottom_action_bar->addActionAtEnd(draw_rectangle_act, 0, col);
-	bottom_action_bar->addActionAtEnd(draw_circle_act, 1, col++);
-	
-	//bottom_action_bar->addActionAtEnd(draw_fill_act, 0, col);
-	bottom_action_bar->addActionAtEnd(draw_text_act, 1, col++);
-	
-	
 	// Create top action bar
 	top_action_bar = new ActionGridBar(ActionGridBar::Horizontal, 2);
-	
-	// Left side
-	col = 0;
-	top_action_bar->addAction(hide_top_bar_action, 0, col);
-	top_action_bar->addAction(window->getSaveAct(), 1, col++);
-	
-	top_action_bar->addAction(compass_action, 0, col);
-	top_action_bar->addAction(gps_display_action, 1, col++);
-	
-	top_action_bar->addAction(gps_distance_rings_action, 0, col);
-	top_action_bar->addAction(align_map_with_north_act, 1, col++);
-	
-	top_action_bar->addAction(show_grid_act, 0, col);
-	top_action_bar->addAction(show_all_act, 1, col++);
-	
-	// Right side
-	col = 0;
-	top_action_bar->addActionAtEnd(window->getCloseAct(), 0, col);
-	top_action_bar->addActionAtEnd(top_action_bar->getOverflowAction(), 1, col++);
-	
-	top_action_bar->addActionAtEnd(redo_act, 0, col);
-	top_action_bar->addActionAtEnd(undo_act, 1, col++);
-	
-	top_action_bar->addActionAtEnd(touch_cursor_action, 0, col);
-	top_action_bar->addActionAtEnd(template_window_act, 1, col++);
-	
-	top_action_bar->addActionAtEnd(edit_tool_act, 0, col);
-	top_action_bar->addActionAtEnd(edit_line_tool_act, 1, col++);
-	
-	top_action_bar->addActionAtEnd(delete_act, 0, col);
-	top_action_bar->addActionAtEnd(duplicate_act, 1, col++);
-	
-	top_action_bar->addActionAtEnd(switch_symbol_act, 0, col);
-	top_action_bar->addActionAtEnd(fill_border_act, 1, col++);
-	
-	top_action_bar->addActionAtEnd(switch_dashes_act, 0, col);
-	top_action_bar->addActionAtEnd(boolean_union_act, 1, col++);
-	
-	top_action_bar->addActionAtEnd(cut_tool_act, 0, col);
-	top_action_bar->addActionAtEnd(connect_paths_act, 1, col++);
-	
-	top_action_bar->addActionAtEnd(rotate_act, 0, col);
-	top_action_bar->addActionAtEnd(cut_hole_act, 1, col++);
-	
-	top_action_bar->addActionAtEnd(scale_act, 0, col);
-	top_action_bar->addActionAtEnd(rotate_pattern_act, 1, col++);
-	
-	top_action_bar->addActionAtEnd(convert_to_curves_act, 0, col);
-	top_action_bar->addActionAtEnd(simplify_path_act, 1, col++);
-	
-	top_action_bar->addActionAtEnd(distribute_points_act, 0, col);
-	top_action_bar->addActionAtEnd(boolean_difference_act, 1, col++);
-	
-	top_action_bar->addActionAtEnd(measure_act, 0, col);
-	top_action_bar->addActionAtEnd(boolean_merge_holes_act, 1, col++);
-	
-	top_action_bar->addActionAtEnd(mappart_action, 1, col++);
-	if (auto* mappart_button = top_action_bar->getButtonForAction(mappart_action))
+
+	auto* overflow_host_bar = mobileToolbarZoneIsTop(overflow_zone) ? top_action_bar : bottom_action_bar;
+	auto resolve_toolbar_action = [&](const MobileToolbarActionDefinition& definition) -> QAction* {
+		switch (definition.source)
+		{
+		case MobileToolbarActionDefinition::ControllerAction:
+			return getAction(definition.id);
+		case MobileToolbarActionDefinition::SaveAction:
+			return window->getSaveAct();
+		case MobileToolbarActionDefinition::CloseAction:
+			return window->getCloseAct();
+		case MobileToolbarActionDefinition::OverflowAction:
+			return overflow_host_bar->getOverflowAction();
+		case MobileToolbarActionDefinition::HideTopBarAction:
+			return hide_top_bar_action;
+		case MobileToolbarActionDefinition::MapPartsAction:
+			return mappart_action;
+		case MobileToolbarActionDefinition::PaintAction:
+			return paint_feature->paintAction();
+		case MobileToolbarActionDefinition::SymbolSelectorAction:
+			return mobile_symbol_selector_action;
+		case MobileToolbarActionDefinition::SpacerItem:
+			return nullptr;
+		}
+		Q_UNREACHABLE();
+		return nullptr;
+	};
+
+	addMobileToolbarZoneActions(top_action_bar, top_left_actions, false, resolve_toolbar_action);
+	addMobileToolbarZoneActions(top_action_bar, top_right_actions, true, resolve_toolbar_action);
+	addMobileToolbarZoneActions(bottom_action_bar, bottom_left_actions, false, resolve_toolbar_action);
+	addMobileToolbarZoneActions(bottom_action_bar, bottom_right_actions, true, resolve_toolbar_action);
+
+	if (overflow_host_bar == top_action_bar)
+		bottom_action_bar->setToUseOverflowActionFrom(top_action_bar);
+	else
+		top_action_bar->setToUseOverflowActionFrom(bottom_action_bar);
+
+	if (auto* paint_button = findMobileToolbarButton(top_action_bar, bottom_action_bar, paint_feature->paintAction()))
+		paint_button->setPopupMode(QToolButton::DelayedPopup);
+	if (auto* symbol_button = findMobileToolbarButton(top_action_bar, bottom_action_bar, mobile_symbol_selector_action))
+		symbol_button->setPopupMode(QToolButton::DelayedPopup);
+
+	auto* zoom_out_button = findMobileToolbarButton(top_action_bar, bottom_action_bar, zoom_out_act);
+	if (zoom_out_button)
+	{
+		auto* mobile_zoom_out_menu = new QMenu(zoom_out_button);
+		auto* zoom_1x_action = mobile_zoom_out_menu->addAction(tr("1x zoom"));
+		connect(zoom_1x_action, &QAction::triggered, this, [this]() {
+			main_view->setZoom(1);
+		});
+		auto* zoom_2x_action = mobile_zoom_out_menu->addAction(tr("2x zoom"));
+		connect(zoom_2x_action, &QAction::triggered, this, [this]() {
+			main_view->setZoom(2);
+		});
+		zoom_out_button->setMenu(mobile_zoom_out_menu);
+	}
+
+	auto* move_to_gps_pos_menu = new QMenu(window);
+	move_to_gps_pos_menu->addAction(follow_position_act);
+	move_to_gps_pos_act->setMenu(move_to_gps_pos_menu);
+	if (auto* move_to_gps_button = findMobileToolbarButton(top_action_bar, bottom_action_bar, move_to_gps_pos_act))
+		move_to_gps_button->setPopupMode(QToolButton::DelayedPopup);
+
+	auto* temp_path_button = findMobileToolbarButton(top_action_bar, bottom_action_bar, gps_temporary_path_act);
+	if (temp_path_button)
+	{
+		auto* mobile_gps_temp_path_menu = new QMenu(temp_path_button);
+		mobile_gps_temp_path_menu->addAction(gps_temporary_clear_act);
+		temp_path_button->setMenu(mobile_gps_temp_path_menu);
+	}
+
+	if (auto* mappart_button = findMobileToolbarButton(top_action_bar, bottom_action_bar, mappart_action))
 		mappart_button->setPopupMode(QToolButton::InstantPopup);
-	
-	bottom_action_bar->setToUseOverflowActionFrom(top_action_bar);
-	
+
 	top_action_bar->setParent(map_widget);
-	
+
 	auto* container_widget = new QWidget();
 	auto* layout = new QVBoxLayout();
 	layout->setMargin(0);
@@ -2422,56 +2777,58 @@ void MapEditorController::selectedSymbolsChanged()
 	
 	if (mobile_mode)
 	{
-		auto* symbol_button = bottom_action_bar->getButtonForAction(mobile_symbol_selector_action);
-		        
-		// (Re-)create the mobile_symbol_selector_action icon
-		QSize icon_size = bottom_action_bar->getIconSize(2, 2);
-		QPixmap pixmap(icon_size);
-		pixmap.fill(Qt::white);
-		if (symbol_widget->selectedSymbolsCount() != 1)
+		auto* symbol_button = findMobileToolbarButton(top_action_bar, bottom_action_bar, mobile_symbol_selector_action);
+		if (symbol_button)
 		{
-			QFont font(window->font());
-			font.setPixelSize(icon_size.height() / 5);
-			QPainter painter(&pixmap);
-			painter.setFont(font);
-			QString text = (symbol_widget->selectedSymbolsCount() == 0) ?
-				//: Keep it short. Should not be much longer per line than the longest word in the original.
-				tr("No\nsymbol\nselected") :
-				//: Keep it short. Should not be much longer per line than the longest word in the original.
-				tr("Multiple\nsymbols\nselected");
-			painter.drawText(pixmap.rect(), Qt::AlignCenter, text);
-			
-			symbol_button->setMenu(nullptr);
-		}
-		else //if (symbol_widget->getNumSelectedSymbols() == 1)
-		{
-			auto image = symbol->getCustomIcon();
-			if (image.isNull())
-				image = symbol->createIcon(*map, qMin(icon_size.width(), icon_size.height()));
-			else
-				image = image.scaled(icon_size.width(), icon_size.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-			if (symbol->isHidden() || symbol->isProtected() || symbol->isHelperSymbol())
+			// (Re-)create the mobile_symbol_selector_action icon
+			QSize icon_size = symbol_button->iconSize();
+			QPixmap pixmap(icon_size);
+			pixmap.fill(Qt::white);
+			if (symbol_widget->selectedSymbolsCount() != 1)
 			{
-				QPainter p(&image);
-				if (symbol->isHidden())
-					HiddenSymbolDecorator(icon_size.width()).draw(p);
-				if (symbol->isProtected())
-					ProtectedSymbolDecorator(icon_size.width()).draw(p);
-				if (symbol->isHelperSymbol())
-					HelperSymbolDecorator(icon_size.width()).draw(p);
+				QFont font(window->font());
+				font.setPixelSize(icon_size.height() / 5);
+				QPainter painter(&pixmap);
+				painter.setFont(font);
+				QString text = (symbol_widget->selectedSymbolsCount() == 0) ?
+					//: Keep it short. Should not be much longer per line than the longest word in the original.
+					tr("No\nsymbol\nselected") :
+					//: Keep it short. Should not be much longer per line than the longest word in the original.
+					tr("Multiple\nsymbols\nselected");
+				painter.drawText(pixmap.rect(), Qt::AlignCenter, text);
+
+				symbol_button->setMenu(nullptr);
 			}
-			pixmap = QPixmap::fromImage(image);
-			
-			symbol_button->setMenu(mobile_symbol_button_menu);
-			const auto actions = mobile_symbol_button_menu->actions();
-			int i = 0;
-			actions[i]->setText(symbol->getNumberAndPlainTextName());
-			actions[++i]->setVisible(!symbol->getDescription().isEmpty());
-			++i;  // separator
-			actions[++i]->setChecked(symbol->isHidden());
-			actions[++i]->setChecked(symbol->isProtected());
+			else //if (symbol_widget->getNumSelectedSymbols() == 1)
+			{
+				auto image = symbol->getCustomIcon();
+				if (image.isNull())
+					image = symbol->createIcon(*map, qMin(icon_size.width(), icon_size.height()));
+				else
+					image = image.scaled(icon_size.width(), icon_size.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+				if (symbol->isHidden() || symbol->isProtected() || symbol->isHelperSymbol())
+				{
+					QPainter p(&image);
+					if (symbol->isHidden())
+						HiddenSymbolDecorator(icon_size.width()).draw(p);
+					if (symbol->isProtected())
+						ProtectedSymbolDecorator(icon_size.width()).draw(p);
+					if (symbol->isHelperSymbol())
+						HelperSymbolDecorator(icon_size.width()).draw(p);
+				}
+				pixmap = QPixmap::fromImage(image);
+
+				symbol_button->setMenu(mobile_symbol_button_menu);
+				const auto actions = mobile_symbol_button_menu->actions();
+				int i = 0;
+				actions[i]->setText(symbol->getNumberAndPlainTextName());
+				actions[++i]->setVisible(!symbol->getDescription().isEmpty());
+				++i;  // separator
+				actions[++i]->setChecked(symbol->isHidden());
+				actions[++i]->setChecked(symbol->isProtected());
+			}
+			mobile_symbol_selector_action->setIcon(QIcon(pixmap));
 		}
-		mobile_symbol_selector_action->setIcon(QIcon(pixmap));
 	}
 	
 	// FIXME: Postpone switch of active symbol while editing is progress

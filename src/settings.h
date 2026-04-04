@@ -28,6 +28,7 @@
 #include <QHash>
 #include <QObject>
 #include <QString>
+#include <QStringList>
 #include <QVariant>
 
 class QColor;
@@ -64,6 +65,12 @@ public:
 		SymbolWidget_IconSizeMM,
 		SymbolWidget_ShowCustomIcons,
 		ActionGridBar_ButtonSizeMM,
+		MobileToolbar_TopActions,
+		MobileToolbar_BottomActions,
+		MobileToolbar_TopLeftActions,
+		MobileToolbar_TopRightActions,
+		MobileToolbar_BottomLeftActions,
+		MobileToolbar_BottomRightActions,
 		General_RetainCompatiblity,
 		General_SaveUndoRedo,
 		General_AutosaveInterval,
@@ -114,7 +121,14 @@ public:
 	inline QVariant getDefaultValue(SettingsEnum setting) const { return setting_defaults[setting]; }
 	
 	static Settings& getInstance();
-	
+
+	static QStringList defaultMobileTopToolbarActions();
+	static QStringList defaultMobileBottomToolbarActions();
+	static QStringList defaultMobileTopLeftToolbarActions();
+	static QStringList defaultMobileTopRightToolbarActions();
+	static QStringList defaultMobileBottomLeftToolbarActions();
+	static QStringList defaultMobileBottomRightToolbarActions();
+
 	// Methods related to specific settings
 	
 	int getSymbolWidgetIconSizePx();

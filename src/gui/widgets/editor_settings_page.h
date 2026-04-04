@@ -23,12 +23,14 @@
 
 #include <QObject>
 #include <QString>
+#include <QStringList>
 
 #include "settings_page.h"
 
 class QCheckBox;
 class QComboBox;
 class QDoubleSpinBox;
+class QPushButton;
 class QSpinBox;
 class QWidget;
 
@@ -51,9 +53,11 @@ public:
 	
 protected:
 	void updateWidgets();
+	void configureMobileToolbars();
 	
 private:
 	QDoubleSpinBox* button_size = nullptr;
+	QPushButton* mobile_toolbar_button = nullptr;
 	QSpinBox* icon_size;
 	QCheckBox* antialiasing;
 	QCheckBox* text_antialiasing;
@@ -71,6 +75,10 @@ private:
 	
 	QSpinBox* rectangle_helper_cross_radius;
 	QCheckBox* rectangle_preview_line_width;
+	QStringList mobile_top_left_toolbar_actions;
+	QStringList mobile_top_right_toolbar_actions;
+	QStringList mobile_bottom_left_toolbar_actions;
+	QStringList mobile_bottom_right_toolbar_actions;
 };
 
 

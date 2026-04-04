@@ -45,6 +45,9 @@ import android.os.SystemClock;
 import android.provider.Settings;
 import android.view.Gravity;
 import android.view.Surface;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 
 /**
@@ -67,6 +70,59 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 		super.onCreate(savedInstanceState);
 
 		instance = this;
+		applyEdgeToEdge();
+	}
+
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		applyEdgeToEdge();
+	}
+
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus)
+	{
+		super.onWindowFocusChanged(hasFocus);
+		if (hasFocus)
+			applyEdgeToEdge();
+	}
+
+	private void applyEdgeToEdge()
+	{
+		Window window = getWindow();
+		if (window == null)
+			return;
+
+		if (Build.VERSION.SDK_INT >= 21)
+		{
+			window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+			                  | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+			window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+			window.setStatusBarColor(0x00000000);
+			window.setNavigationBarColor(0x00000000);
+		}
+
+		if (Build.VERSION.SDK_INT >= 28)
+		{
+			WindowManager.LayoutParams attributes = window.getAttributes();
+			attributes.layoutInDisplayCutoutMode =
+			        WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+			window.setAttributes(attributes);
+		}
+
+		View decor_view = window.getDecorView();
+		if (decor_view == null)
+			return;
+
+		decor_view.setSystemUiVisibility(
+		        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+		        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+		        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+		        | View.SYSTEM_UI_FLAG_FULLSCREEN
+		        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+		        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+		);
 	}
 	
 	/** Call setIntent, as recommended for singleTask launch mode. */
