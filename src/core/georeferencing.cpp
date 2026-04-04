@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2021 Kai Pastor
+ *    Copyright 2012-2021, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,6 +27,7 @@
 
 #include <QtGlobal>
 #include <QtMath>
+#include <QtNumeric>
 #include <QByteArray>
 #include <QDebug>
 #include <QDir> // IWYU pragma: keep
@@ -143,7 +144,7 @@ namespace
 	}
 	
 	/**
-	 * Provides a cache directory for RROJ resource files.
+	 * Provides a cache directory for PROJ resource files.
 	 */
 	const QDir& projCacheDirectory()
 	{
@@ -1236,12 +1237,12 @@ double Georeferencing::degToRad(double val)
 
 QString Georeferencing::degToDMS(double val)
 {
-	qint64 tmp = val * 360000;
+	qint64 tmp = qAbs(val) * 360000;
 	int csec = tmp % 6000;
 	tmp = tmp / 6000;
 	int min = tmp % 60;
 	int deg = tmp / 60;
-	QString ret = QString::fromUtf8("%1°%2'%3\"").arg(deg).arg(min).arg(QLocale().toString(csec/100.0,'f',2));
+	QString ret = QString::fromUtf8("%1°%2'%3\"").arg(val < 0 ? -deg : deg).arg(min).arg(QLocale().toString(csec/100.0,'f',2));
 	return ret;
 }
 
