@@ -27,9 +27,11 @@
 
 #include <QClipboard>
 #include <QHash>
+#include <QIcon>
 #include <QObject>
 #include <QPointer>
 #include <QScopedPointer>
+#include <QSize>
 #include <QString>
 #include <QStringList>
 #include <QTimer>
@@ -253,8 +255,20 @@ public:
 	/** Returns the translated label for an editable mobile toolbar action. */
 	static QString mobileToolbarActionLabel(const QString& id);
 
+	/** Returns the icon for an editable mobile toolbar action. */
+	static QIcon mobileToolbarActionIcon(const QString& id);
+
+	/** Returns the grid span used by an editable mobile toolbar action. */
+	static QSize mobileToolbarActionSpan(const QString& id);
+
+	/** Returns the preferred row for an editable mobile toolbar action, or -1. */
+	static int mobileToolbarActionPreferredRow(const QString& id);
+
 	/** Returns true if a mobile toolbar action may be removed from the layout. */
 	static bool mobileToolbarActionRemovable(const QString& id);
+
+	/** Returns true if a mobile toolbar action is kept visible when crowded. */
+	static bool mobileToolbarActionAlwaysVisible(const QString& id);
 
 	/** Sanitizes a mobile toolbar configuration in-place. */
 	static void sanitizeMobileToolbarConfiguration(

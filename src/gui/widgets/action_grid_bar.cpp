@@ -92,6 +92,23 @@ void ActionGridBar::addActionAtEnd(QAction* action, int row, int col, int row_sp
 	addAction(action, row, col, row_span, col_span, true, always_visible);
 }
 
+void ActionGridBar::addSpacer(int row, int col, int row_span, int col_span, bool at_end)
+{
+	auto* button = new QToolButton();
+	button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	button->setAutoRaise(true);
+	button->setFocusPolicy(Qt::NoFocus);
+	button->setAttribute(Qt::WA_TransparentForMouseEvents);
+	button->setStyleSheet(QStringLiteral("QToolButton { border: none; background: transparent; padding: 0px; margin: 0px; }"));
+
+	items.push_back({nullptr, button, next_id++, row, col, row_span, col_span, at_end, false});
+}
+
+void ActionGridBar::addSpacerAtEnd(int row, int col, int row_span, int col_span)
+{
+	addSpacer(row, col, row_span, col_span, true);
+}
+
 QSize ActionGridBar::getIconSize(int row_span, int col_span) const
 {
 	auto size = QSize{col_span * button_size_px - margin_size_px, row_span * button_size_px - margin_size_px};
@@ -153,7 +170,10 @@ void ActionGridBar::overflowActionClicked()
 	for (const auto* source_bar : include_overflow_from_list)
 	{
 		for (const auto* hidden_item : source_bar->hidden_items)
-			overflow_menu->addAction(hidden_item->action);
+		{
+			if (hidden_item->action)
+				overflow_menu->addAction(hidden_item->action);
+		}
 	}
 	if (overflow_button)
 		overflow_menu->popup(overflow_button->mapToGlobal(QPoint(0, overflow_button->height())));
@@ -172,11 +192,15 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 	auto* new_layout = new QGridLayout(this);
 	new_layout->setContentsMargins(0, 0, 0, 0);
 	new_layout->setSpacing(0);
+	auto const resultingColumn = [this](const GridItem& item) {
+		auto col = item.at_end ? qMax(0, column_count - item.col - item.col_span) : item.col;
+		if (item.always_visible)
+			col = qBound(0, col, qMax(0, column_count - item.col_span));
+		return col;
+	};
 	for (auto& item : items)
 	{
-		int resulting_col = item.at_end ? (column_count - 1 - item.col) : item.col;
-		if (item.always_visible)
-			resulting_col = qBound(0, resulting_col, qMax(0, column_count - item.col_span));
+		int resulting_col = resultingColumn(item);
 		bool hidden = item.always_visible ? false : (item.row >= row_count || item.col >= column_count);
 		if (! hidden)
 		{
@@ -185,9 +209,7 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 			{
 				if (&item == &other)
 					continue;
-				int resulting_col_other = other.at_end ? (column_count - 1 - other.col) : other.col;
-				if (other.always_visible)
-					resulting_col_other = qBound(0, resulting_col_other, qMax(0, column_count - other.col_span));
+				int resulting_col_other = resultingColumn(other);
 				if (item.row == other.row && resulting_col == resulting_col_other)
 				{
 					// Check which item "wins" this spot and which will be hidden
@@ -213,7 +235,8 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 		{
 			item.button->hide();
 			item.button_hidden = true;
-			hidden_items.push_back(&item);
+			if (item.action)
+				hidden_items.push_back(&item);
 			continue;
 		}
 		
