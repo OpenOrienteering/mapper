@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -38,6 +38,7 @@
 #include <QLatin1Char>
 #include <QLatin1String>
 #include <QLineEdit>
+#include <QListWidget>
 #include <QMessageBox>
 #include <QPixmap>
 #include <QPushButton>
@@ -51,17 +52,15 @@
 #include <QTabWidget>
 #include <QVariant>
 #include <QWidget>
-#include <QListWidget>
 
 #include "core/map.h"
-#include "core/map_color.h"
 #include "core/symbols/symbol.h"
 #include "gui/util_gui.h"
 #include "gui/symbols/symbol_setting_dialog.h"
 #include "gui/widgets/color_dropdown.h"
 #include "util/backports.h"  // IWYU pragma: keep
-#include "util/util.h"
 #include "util/translation_util.h"
+#include "util/util.h"
 
 
 namespace OpenOrienteering {
@@ -427,7 +426,7 @@ void ColorDialog::updateWidgets()
 		sc_name_edit->setEnabled(false);
 		sc_frequency_edit->setEnabled(false);
 		sc_angle_edit->setEnabled(false);
-		cmyk_spot_color_option->setEnabled(false);
+		knockout_option->setEnabled(false);
 		if (cmyk_spot_color_option->isChecked())
 		{
 			custom_cmyk_option->setChecked(true);
