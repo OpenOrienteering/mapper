@@ -206,7 +206,7 @@ QString MainWindow::appName() const
 }
 
 
-void MainWindow::setCentralWidget(QWidget* widget)
+void MainWindow::setCentralWidget(QWidget* widget, bool immediate_delete)
 {
 	if (widget)
 	{
@@ -221,7 +221,10 @@ void MainWindow::setCentralWidget(QWidget* widget)
 	{
 		QWidget* w = central_widget->widget(0);
 		central_widget->removeWidget(w);
-		w->deleteLater();
+		if (immediate_delete)
+			delete w;
+		else
+			w->deleteLater();
 	}
 }
 
