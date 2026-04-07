@@ -362,6 +362,7 @@ signals:
 	
 private slots:
 	void updateDrawingLaterSlot();
+	void updateDeferredTemplateCaches();
 	
 protected:
 	bool event(QEvent *event) override;
@@ -400,6 +401,15 @@ private:
 	/** Checks if there is any visible template below the map. */
 	bool isBelowTemplateVisible() const;
 	/**
+	 * Stores the view state a template cache was rendered for.
+	 */
+	struct TemplateCacheViewState
+	{
+		QTransform map_to_viewport;
+		QSize cache_size;
+		bool valid = false;
+	};
+	/**
 	 * Redraws the template cache.
 	 * @param cache Reference to pointer to the cache.
 	 * @param dirty_rect Rectangle of the cache to redraw, in viewport coordinates.
@@ -408,7 +418,7 @@ private:
 	 * @param use_background If set to true, fills the cache with white before
 	 *     drawing the templates, else makes it transparent.
 	 */
-	void updateTemplateCache(QImage& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background);
+	void updateTemplateCache(QImage& cache, QRect& dirty_rect, TemplateCacheViewState& state, int first_template, int last_template, bool use_background);
 	/**
 	 * Redraws the map cache in the map cache dirty rect.
 	 * @param use_background If set to true, fills the cache with white before
@@ -416,10 +426,24 @@ private:
 	 */
 	void updateMapCache(bool use_background);
 	/** Redraws all dirty caches. */
-	void updateAllDirtyCaches();
+	void updateAllDirtyCaches(bool allow_deferred_template_updates = false);
 	/** Shifts the content in the cache by the given amount of pixels. */
 	void shiftCache(int sx, int sy, QImage& cache);
 	void shiftCache(int sx, int sy, QPixmap& cache);
+	/** Returns the current transform from map coordinates to viewport coordinates. */
+	QTransform mapToViewportTransform() const;
+	/** Updates the cached view state after a template cache redraw. */
+	void recordTemplateCacheState(TemplateCacheViewState& state, const QImage& cache) const;
+	/** Checks whether a template cache can be reused for a transformed fallback draw. */
+	bool canReuseTemplateCache(const QImage& cache, const TemplateCacheViewState& state) const;
+	/** Checks whether a template cache update should be deferred to keep the old cache visible. */
+	bool shouldDeferTemplateCacheUpdate(const QImage& cache, const QRect& dirty_rect, const TemplateCacheViewState& state) const;
+	/** Draws a template cache, transforming stale caches to the current view if needed. */
+	void drawTemplateCache(QPainter& painter, const QImage& cache, const TemplateCacheViewState& state, const QRect& target, const QRect& exposed, bool use_background = false) const;
+	/** Draws templates and map objects directly for the uncovered region during pinch zoom-out. */
+	void drawPinchUncoveredRegion(QPainter& painter, const QRect& exposed) const;
+	/** Draws templates and map objects directly for the uncovered region during pan. */
+	void drawPanUncoveredRegion(QPainter& painter, const QRect& exposed) const;
 	
 	/**
 	 * Calculates the bounding box of the given map coordinates rect and
@@ -500,10 +524,12 @@ private:
 	/** Cache for templates below map layer */
 	QImage below_template_cache;
 	QRect below_template_cache_dirty_rect;
-	
+	TemplateCacheViewState below_template_cache_state;
+
 	/** Cache for templates above map layer */
 	QImage above_template_cache;
 	QRect above_template_cache_dirty_rect;
+	TemplateCacheViewState above_template_cache_state;
 	
 	/** Map layer cache  */
 	QImage map_cache;
@@ -530,6 +556,7 @@ private:
 	
 	/** Cached updates */
 	QRect cached_update_rect;
+	bool deferred_template_cache_update_pending = false;
 	
 	/** Right-click menu */
 	PieMenu* context_menu;

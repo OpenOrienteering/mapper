@@ -82,6 +82,20 @@ class QGesture;
 
 namespace OpenOrienteering {
 
+namespace {
+
+bool transformsMatch(const QTransform& lhs, const QTransform& rhs)
+{
+	return qFuzzyCompare(1.0 + lhs.m11(), 1.0 + rhs.m11())
+	       && qFuzzyCompare(1.0 + lhs.m12(), 1.0 + rhs.m12())
+	       && qFuzzyCompare(1.0 + lhs.m21(), 1.0 + rhs.m21())
+	       && qFuzzyCompare(1.0 + lhs.m22(), 1.0 + rhs.m22())
+	       && qFuzzyCompare(1.0 + lhs.dx(), 1.0 + rhs.dx())
+	       && qFuzzyCompare(1.0 + lhs.dy(), 1.0 + rhs.dy());
+}
+
+}  // namespace
+
 MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
  : QWidget(parent)
  , view(nullptr)
@@ -605,6 +619,30 @@ void MapWidget::updateDrawingLaterSlot()
 	cached_update_rect = QRect();
 }
 
+void MapWidget::updateDeferredTemplateCaches()
+{
+	deferred_template_cache_update_pending = false;
+
+	if (!view || view->areAllTemplatesHidden())
+		return;
+
+	bool updated = false;
+	if (below_template_cache_dirty_rect.isValid() && isBelowTemplateVisible())
+	{
+		updateTemplateCache(below_template_cache, below_template_cache_dirty_rect, below_template_cache_state, 0, view->getMap()->getFirstFrontTemplate() - 1, true);
+		updated = true;
+	}
+
+	if (above_template_cache_dirty_rect.isValid() && isAboveTemplateVisible())
+	{
+		updateTemplateCache(above_template_cache, above_template_cache_dirty_rect, above_template_cache_state, view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1, false);
+		updated = true;
+	}
+
+	if (updated)
+		update();
+}
+
 void MapWidget::updateEverything()
 {
 	map_cache_dirty_rect = rect();
@@ -864,7 +902,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	bool no_contents = view->getMap()->getNumObjects() == 0 && view->getMap()->getNumTemplates() == 0 && !view->isGridVisible();
 	
 	QTransform transform = painter.worldTransform();
-	
+
 	// Update all dirty caches
 	// TODO: It would be an idea to do these updates in a background thread and use the old caches in the meantime
 	updateAllDirtyCaches();
@@ -872,31 +910,29 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	QRect target = exposed;
 	if (pinching)
 	{
-		// Just draw the scaled map and templates
-		painter.fillRect(exposed, QColor(Qt::gray));
+		if (pinching_factor < 1.0)
+		{
+			// Zoom-out: draw the uncovered region first, then overlay
+			// the scaled cache on top.
+			drawPinchUncoveredRegion(painter, exposed);
+		}
+		else
+		{
+			painter.fillRect(exposed, QColor(Qt::gray));
+		}
 		painter.translate(pinching_center.x(), pinching_center.y());
 		painter.scale(pinching_factor, pinching_factor);
 		painter.translate(-drag_start_pos.x(), -drag_start_pos.y());
 	}
 	else if (pan_offset != QPoint())
 	{
-		// Background color
-		if (pan_offset.x() > 0)
-			painter.fillRect(QRect(0, pan_offset.y(), pan_offset.x(), height() - pan_offset.y()), QColor(Qt::gray));
-		else if (pan_offset.x() < 0)
-			painter.fillRect(QRect(width() + pan_offset.x(), pan_offset.y(), -pan_offset.x(), height() - pan_offset.y()), QColor(Qt::gray));
-		
-		if (pan_offset.y() > 0)
-			painter.fillRect(QRect(0, 0, width(), pan_offset.y()), QColor(Qt::gray));
-		else if (pan_offset.y() < 0)
-			painter.fillRect(QRect(0, height() + pan_offset.y(), width(), -pan_offset.y()), QColor(Qt::gray));
-		
+		drawPanUncoveredRegion(painter, exposed);
 		target.translate(pan_offset);
 	}
 	
 	if (!view->areAllTemplatesHidden() && isBelowTemplateVisible() && !below_template_cache.isNull() && view->getMap()->getFirstFrontTemplate() > 0)
 	{
-		painter.drawImage(target, below_template_cache, exposed);
+		drawTemplateCache(painter, below_template_cache, below_template_cache_state, target, exposed, true);
 	}
 	else if (show_help && no_contents)
 	{
@@ -925,7 +961,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	}
 	
 	if (!view->areAllTemplatesHidden() && isAboveTemplateVisible() && !above_template_cache.isNull() && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
-		painter.drawImage(target, above_template_cache, exposed);
+		drawTemplateCache(painter, above_template_cache, above_template_cache_state, target, exposed);
 	
 	//painter.setClipRect(exposed);
 	
@@ -965,6 +1001,8 @@ void MapWidget::resizeEvent(QResizeEvent* event)
 		map_cache = QImage();
 		below_template_cache = QImage();
 		above_template_cache = QImage();
+		below_template_cache_state.valid = false;
+		above_template_cache_state.valid = false;
 	}
 	
 	for (QObject* const child : children())
@@ -1302,10 +1340,289 @@ bool MapWidget::isBelowTemplateVisible() const
 	return containsVisibleTemplate(0, view->getMap()->getFirstFrontTemplate() - 1);
 }
 
-void MapWidget::updateTemplateCache(QImage& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background)
+QTransform MapWidget::mapToViewportTransform() const
+{
+	const auto origin = mapToViewport(QPointF(0.0, 0.0));
+	const auto x_axis = mapToViewport(QPointF(1.0, 0.0));
+	const auto y_axis = mapToViewport(QPointF(0.0, 1.0));
+	return QTransform(x_axis.x() - origin.x(),
+	                  x_axis.y() - origin.y(),
+	                  y_axis.x() - origin.x(),
+	                  y_axis.y() - origin.y(),
+	                  origin.x(),
+	                  origin.y());
+}
+
+void MapWidget::recordTemplateCacheState(TemplateCacheViewState& state, const QImage& cache) const
+{
+	// Record the transform that was actually used to paint the cache:
+	// translate(width/2, height/2) * worldTransform — without pan_offset.
+	// mapToViewportTransform() includes pan_offset, so we must remove it.
+	auto transform = mapToViewportTransform();
+	if (pan_offset != QPoint())
+		transform *= QTransform::fromTranslate(-pan_offset.x(), -pan_offset.y());
+	state.map_to_viewport = transform;
+	state.cache_size = cache.size();
+	state.valid = !cache.isNull();
+}
+
+bool MapWidget::canReuseTemplateCache(const QImage& cache, const TemplateCacheViewState& state) const
+{
+	return state.valid && !cache.isNull() && state.cache_size == size();
+}
+
+bool MapWidget::shouldDeferTemplateCacheUpdate(const QImage& cache, const QRect& dirty_rect, const TemplateCacheViewState& state) const
+{
+	return dirty_rect == rect() && canReuseTemplateCache(cache, state);
+}
+
+void MapWidget::drawTemplateCache(QPainter& painter, const QImage& cache, const TemplateCacheViewState& state, const QRect& target, const QRect& exposed, bool use_background) const
+{
+	if (!canReuseTemplateCache(cache, state))
+	{
+		painter.drawImage(target, cache, exposed);
+		return;
+	}
+
+	// Compare using cache-space transforms (without pan_offset) so that
+	// pure panning uses the efficient target-shift path, not the correction path.
+	auto current_cache_transform = mapToViewportTransform();
+	if (pan_offset != QPoint())
+		current_cache_transform *= QTransform::fromTranslate(-pan_offset.x(), -pan_offset.y());
+
+	if (transformsMatch(state.map_to_viewport, current_cache_transform))
+	{
+		// View state unchanged — target already includes pan_offset shift.
+		painter.drawImage(target, cache, exposed);
+		return;
+	}
+
+	bool invertible = false;
+	const auto cache_correction = current_cache_transform * state.map_to_viewport.inverted(&invertible);
+	if (!invertible)
+	{
+		painter.drawImage(target, cache, exposed);
+		return;
+	}
+
+	// Fill background before drawing the corrected cache so that uncovered
+	// corner areas (from the rotation/zoom correction) show the expected
+	// background instead of the widget background.  Only done in this
+	// correction path to avoid unnecessary redraws in the normal path.
+	if (use_background)
+		painter.fillRect(target, Qt::white);
+
+	painter.save();
+	painter.setRenderHint(QPainter::SmoothPixmapTransform);
+	// First apply pan_offset shift (target vs exposed), then cache correction.
+	painter.translate(target.x() - exposed.x(), target.y() - exposed.y());
+	painter.setWorldTransform(cache_correction, true);
+	painter.drawImage(QPointF(0.0, 0.0), cache);
+	painter.restore();
+}
+
+void MapWidget::drawPinchUncoveredRegion(QPainter& painter, const QRect& exposed) const
+{
+	Q_ASSERT(pinching);
+	Q_ASSERT(pinching_factor < 1.0);
+
+	// The pinch transform scales the cache around pinching_center.  When
+	// zooming out the scaled cache is smaller than the widget, leaving an
+	// uncovered border.  Instead of computing a separate "virtual" view
+	// state, we use the exact same composite transform that paintEvent
+	// applies to the cache:
+	//   pinch_xf * translate(w/2, h/2) * worldTransform
+	// This guarantees that the uncovered region aligns perfectly with the
+	// scaled cache — no independent center/zoom calculation needed.
+
+	// 1. Build the pinch-to-viewport transform (same as paintEvent sets on the painter)
+	QTransform pinch_xf;
+	pinch_xf.translate(pinching_center.x(), pinching_center.y());
+	pinch_xf.scale(pinching_factor, pinching_factor);
+	pinch_xf.translate(-drag_start_pos.x(), -drag_start_pos.y());
+
+	// 2. Determine the area covered by the scaled cache
+	QRect cache_rect = exposed; // the cache covers the full widget
+	QPolygon covered = pinch_xf.mapToPolygon(cache_rect);
+	QRegion covered_region(covered);
+	QRegion uncovered = QRegion(exposed) - covered_region;
+	if (uncovered.isEmpty())
+		return; // zoom-in or fully covered — nothing to do
+
+	// 3. Set up the composite transform:
+	//    pinch * translate(w/2, h/2) * view->worldTransform()
+	//    This is the same transform the cache content goes through.
+	auto setupTransform = [&](QPainter& p) {
+		p.translate(pinching_center.x(), pinching_center.y());
+		p.scale(pinching_factor, pinching_factor);
+		p.translate(-drag_start_pos.x(), -drag_start_pos.y());
+		p.translate(width() / 2.0, height() / 2.0);
+		p.setWorldTransform(view->worldTransform(), true);
+	};
+
+	// Compute map_rect from the inverse of the full composite transform
+	// We need a temporary transform to get the inverse
+	QTransform composite = pinch_xf;
+	composite.translate(width() / 2.0, height() / 2.0);
+	composite = view->worldTransform() * composite;
+	bool invertible = false;
+	QTransform inv = composite.inverted(&invertible);
+	if (!invertible)
+		return;
+	QRectF map_rect = inv.mapRect(QRectF(exposed));
+
+	double ppm = view->calculateFinalZoomFactor() * pinching_factor;
+
+	// 4. Draw into the uncovered region
+	painter.save();
+	painter.setClipRegion(uncovered);
+
+	// Below templates (with white background)
+	Map* map = view->getMap();
+	bool has_below_templates = !view->areAllTemplatesHidden()
+	                           && isBelowTemplateVisible()
+	                           && map->getFirstFrontTemplate() > 0;
+	if (has_below_templates)
+	{
+		painter.fillRect(exposed, Qt::white);
+		painter.save();
+		setupTransform(painter);
+		map->drawTemplates(&painter, map_rect, 0, map->getFirstFrontTemplate() - 1, view, true);
+		painter.restore();
+	}
+	else
+	{
+		painter.fillRect(exposed, Qt::white);
+	}
+
+	// Map objects
+	const auto map_visibility = view->effectiveMapVisibility();
+	if (map_visibility.visible)
+	{
+		painter.save();
+		qreal saved_opacity = painter.opacity();
+		painter.setOpacity(map_visibility.opacity);
+
+		RenderConfig::Options options(RenderConfig::Screen | RenderConfig::HelperSymbols);
+		bool use_antialiasing = force_antialiasing || Settings::getInstance().getSettingCached(Settings::MapDisplay_Antialiasing).toBool();
+		if (use_antialiasing)
+			painter.setRenderHint(QPainter::Antialiasing);
+		else
+			options |= RenderConfig::DisableAntialiasing | RenderConfig::ForceMinSize;
+
+		setupTransform(painter);
+		RenderConfig config = { *map, map_rect, ppm, options, 1.0 };
+		map->draw(&painter, config);
+
+		painter.setOpacity(saved_opacity);
+		painter.restore();
+	}
+
+	// Above templates
+	if (!view->areAllTemplatesHidden() && isAboveTemplateVisible()
+	    && map->getNumTemplates() - map->getFirstFrontTemplate() > 0)
+	{
+		painter.save();
+		setupTransform(painter);
+		map->drawTemplates(&painter, map_rect, map->getFirstFrontTemplate(), map->getNumTemplates() - 1, view, true);
+		painter.restore();
+	}
+
+	painter.restore();
+}
+
+void MapWidget::drawPanUncoveredRegion(QPainter& painter, const QRect& exposed) const
+{
+	Q_ASSERT(pan_offset != QPoint());
+
+	// The cache is drawn at target = exposed.translated(pan_offset).
+	// The uncovered region is what's in exposed but not in the shifted target.
+	QRegion uncovered = QRegion(exposed) - QRegion(exposed).translated(pan_offset);
+	if (uncovered.isEmpty())
+		return;
+
+	// Use the same composite transform as the panned cache:
+	//   translate(pan_offset) * translate(w/2, h/2) * worldTransform
+	auto setupTransform = [&](QPainter& p) {
+		p.translate(pan_offset.x(), pan_offset.y());
+		p.translate(width() / 2.0, height() / 2.0);
+		p.setWorldTransform(view->worldTransform(), true);
+	};
+
+	// Compute map_rect from the inverse of the full composite transform
+	QTransform composite;
+	composite.translate(pan_offset.x(), pan_offset.y());
+	composite.translate(width() / 2.0, height() / 2.0);
+	composite = view->worldTransform() * composite;
+	bool invertible = false;
+	QTransform inv = composite.inverted(&invertible);
+	if (!invertible)
+		return;
+	QRectF map_rect = inv.mapRect(QRectF(exposed));
+
+	double ppm = view->calculateFinalZoomFactor();
+
+	painter.save();
+	painter.setClipRegion(uncovered);
+
+	// Below templates (with white background)
+	Map* map = view->getMap();
+	bool has_below_templates = !view->areAllTemplatesHidden()
+	                           && isBelowTemplateVisible()
+	                           && map->getFirstFrontTemplate() > 0;
+	if (has_below_templates)
+	{
+		painter.fillRect(exposed, Qt::white);
+		painter.save();
+		setupTransform(painter);
+		map->drawTemplates(&painter, map_rect, 0, map->getFirstFrontTemplate() - 1, view, true);
+		painter.restore();
+	}
+	else
+	{
+		painter.fillRect(exposed, Qt::white);
+	}
+
+	// Map objects
+	const auto map_visibility = view->effectiveMapVisibility();
+	if (map_visibility.visible)
+	{
+		painter.save();
+		qreal saved_opacity = painter.opacity();
+		painter.setOpacity(map_visibility.opacity);
+
+		RenderConfig::Options options(RenderConfig::Screen | RenderConfig::HelperSymbols);
+		bool use_antialiasing = force_antialiasing || Settings::getInstance().getSettingCached(Settings::MapDisplay_Antialiasing).toBool();
+		if (use_antialiasing)
+			painter.setRenderHint(QPainter::Antialiasing);
+		else
+			options |= RenderConfig::DisableAntialiasing | RenderConfig::ForceMinSize;
+
+		setupTransform(painter);
+		RenderConfig config = { *map, map_rect, ppm, options, 1.0 };
+		map->draw(&painter, config);
+
+		painter.setOpacity(saved_opacity);
+		painter.restore();
+	}
+
+	// Above templates
+	if (!view->areAllTemplatesHidden() && isAboveTemplateVisible()
+	    && map->getNumTemplates() - map->getFirstFrontTemplate() > 0)
+	{
+		painter.save();
+		setupTransform(painter);
+		map->drawTemplates(&painter, map_rect, map->getFirstFrontTemplate(), map->getNumTemplates() - 1, view, true);
+		painter.restore();
+	}
+
+	painter.restore();
+}
+
+void MapWidget::updateTemplateCache(QImage& cache, QRect& dirty_rect, TemplateCacheViewState& state, int first_template, int last_template, bool use_background)
 {
 	Q_ASSERT(containsVisibleTemplate(first_template, last_template));
-	
+
 	if (cache.isNull())
 	{
 		// Lazy allocation of cache image
@@ -1338,11 +1655,20 @@ void MapWidget::updateTemplateCache(QImage& cache, QRect& dirty_rect, int first_
 	painter.setWorldTransform(view->worldTransform(), true);
 	
 	Map* map = view->getMap();
-	QRectF map_view_rect = view->calculateViewedRect(viewportToView(dirty_rect));
-	
+	// Compute the viewed rect without pan_offset, because the cache painting
+	// transform (translate(width/2, height/2) * worldTransform) does not
+	// include pan_offset.  Using viewportToView() would shift the clip rect,
+	// causing TemplateImage::drawTemplate to clip the image to a wrong region.
+	QRectF cache_view_rect(dirty_rect.left() - 0.5 * width(),
+	                       dirty_rect.top() - 0.5 * height(),
+	                       dirty_rect.width(),
+	                       dirty_rect.height());
+	QRectF map_view_rect = view->calculateViewedRect(cache_view_rect);
+
 	map->drawTemplates(&painter, map_view_rect, first_template, last_template, view, true);
-	
+
 	dirty_rect.setWidth(-1); // => !dirty_rect.isValid()
+	recordTemplateCacheState(state, cache);
 }
 
 void MapWidget::updateMapCache(bool use_background)
@@ -1407,18 +1733,44 @@ void MapWidget::updateMapCache(bool use_background)
 	map_cache_dirty_rect.setWidth(-1); // => !map_cache_dirty_rect.isValid()
 }
 
-void MapWidget::updateAllDirtyCaches()
+void MapWidget::updateAllDirtyCaches(bool allow_deferred_template_updates)
 {
 	if (map_cache_dirty_rect.isValid())
 		updateMapCache(false);
-	
+
 	if (!view->areAllTemplatesHidden())
 	{
 		if (below_template_cache_dirty_rect.isValid() && isBelowTemplateVisible())
-			updateTemplateCache(below_template_cache, below_template_cache_dirty_rect, 0, view->getMap()->getFirstFrontTemplate() - 1, true);
-		
+		{
+			if (allow_deferred_template_updates && shouldDeferTemplateCacheUpdate(below_template_cache, below_template_cache_dirty_rect, below_template_cache_state))
+			{
+				if (!deferred_template_cache_update_pending)
+				{
+					deferred_template_cache_update_pending = true;
+					QTimer::singleShot(0, this, &MapWidget::updateDeferredTemplateCaches);
+				}
+			}
+			else
+			{
+				updateTemplateCache(below_template_cache, below_template_cache_dirty_rect, below_template_cache_state, 0, view->getMap()->getFirstFrontTemplate() - 1, true);
+			}
+		}
+
 		if (above_template_cache_dirty_rect.isValid() && isAboveTemplateVisible())
-			updateTemplateCache(above_template_cache, above_template_cache_dirty_rect, view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1, false);
+		{
+			if (allow_deferred_template_updates && shouldDeferTemplateCacheUpdate(above_template_cache, above_template_cache_dirty_rect, above_template_cache_state))
+			{
+				if (!deferred_template_cache_update_pending)
+				{
+					deferred_template_cache_update_pending = true;
+					QTimer::singleShot(0, this, &MapWidget::updateDeferredTemplateCaches);
+				}
+			}
+			else
+			{
+				updateTemplateCache(above_template_cache, above_template_cache_dirty_rect, above_template_cache_state, view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1, false);
+			}
+		}
 	}
 }
 
