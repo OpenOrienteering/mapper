@@ -993,6 +993,13 @@ EditorSettingsPage::EditorSettingsPage(QWidget* parent)
 	gesture_extra_rendering->addItem(tr("Full (templates + map)"));
 	layout->addRow(tr("Gesture uncovered area:"), gesture_extra_rendering);
 	
+	auto_rotation_frequency = new QComboBox();
+	auto_rotation_frequency->addItem(tr("1 Hz"));
+	auto_rotation_frequency->addItem(tr("2 Hz"));
+	auto_rotation_frequency->addItem(tr("5 Hz"));
+	auto_rotation_frequency->addItem(tr("10 Hz"));
+	layout->addRow(tr("Auto-rotation frequency:"), auto_rotation_frequency);
+	
 	
 	layout->addItem(Util::SpacerItem::create(this));
 	layout->addRow(Util::Headline::create(tr("Edit tool:")));
@@ -1052,6 +1059,7 @@ void EditorSettingsPage::apply()
 	setSetting(Settings::Templates_KeepSettingsOfClosed, keep_settings_of_closed_templates->isChecked());
 	setSetting(Settings::MapEditor_IgnoreTouchInput, ignore_touch_input->isChecked());
 	setSetting(Settings::MapDisplay_GestureExtraRendering, gesture_extra_rendering->currentIndex());
+	setSetting(Settings::MapDisplay_AutoRotationFrequency, auto_rotation_frequency->currentIndex());
 	setSetting(Settings::MobileToolbar_TopLeftActions, mobile_top_left_toolbar_actions);
 	setSetting(Settings::MobileToolbar_TopRightActions, mobile_top_right_toolbar_actions);
 	setSetting(Settings::MobileToolbar_BottomLeftActions, mobile_bottom_left_toolbar_actions);
@@ -1084,6 +1092,7 @@ void EditorSettingsPage::updateWidgets()
 	keep_settings_of_closed_templates->setChecked(getSetting(Settings::Templates_KeepSettingsOfClosed).toBool());
 	ignore_touch_input->setChecked(getSetting(Settings::MapEditor_IgnoreTouchInput).toBool());
 	gesture_extra_rendering->setCurrentIndex(getSetting(Settings::MapDisplay_GestureExtraRendering).toInt());
+	auto_rotation_frequency->setCurrentIndex(getSetting(Settings::MapDisplay_AutoRotationFrequency).toInt());
 	mobile_top_left_toolbar_actions = getSetting(Settings::MobileToolbar_TopLeftActions).toStringList();
 	mobile_top_right_toolbar_actions = getSetting(Settings::MobileToolbar_TopRightActions).toStringList();
 	mobile_bottom_left_toolbar_actions = getSetting(Settings::MobileToolbar_BottomLeftActions).toStringList();

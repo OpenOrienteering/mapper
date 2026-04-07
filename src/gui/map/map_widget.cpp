@@ -378,6 +378,10 @@ void MapWidget::startDragging(const QPoint& cursor_pos)
 void MapWidget::updateDragging(const QPoint& cursor_pos)
 {
 	Q_ASSERT(dragging);
+	dragging = false;
+	current_pressed_buttons = 0;
+	dragging = false;
+	current_pressed_buttons = 0;
 	view->setPanOffset(cursor_pos - drag_start_pos);
 }
 
@@ -385,6 +389,7 @@ void MapWidget::finishDragging(const QPoint& cursor_pos)
 {
 	Q_ASSERT(dragging);
 	dragging = false;
+	current_pressed_buttons = 0;
 	view->finishPanning(cursor_pos - drag_start_pos);
 	setCursor(normal_cursor);
 }
@@ -392,6 +397,7 @@ void MapWidget::finishDragging(const QPoint& cursor_pos)
 void MapWidget::cancelDragging()
 {
 	dragging = false;
+	current_pressed_buttons = 0;
 	view->setPanOffset(QPoint());
 	setCursor(normal_cursor);
 }
@@ -421,6 +427,7 @@ void MapWidget::updatePinching(const QPoint& center, qreal factor, qreal angle)
 void MapWidget::finishPinching(const QPoint& center, qreal factor, qreal angle)
 {
 	pinching = false;
+	current_pressed_buttons = 0;
 	view->finishPanning(center - drag_start_pos);
 	view->setZoom(factor * view->getZoom(), viewportToView(center));
 	if (!auto_rotation_active && angle != 0.0)
@@ -446,6 +453,7 @@ void MapWidget::finishPinching(const QPoint& center, qreal factor, qreal angle)
 void MapWidget::cancelPinching()
 {
 	pinching = false;
+	current_pressed_buttons = 0;
 	pinching_factor = 1.0;
 	pinching_angle  = 0.0;
 	update();
@@ -794,7 +802,7 @@ void MapWidget::updateCursorposLabel(const MapCoordF& pos)
 
 int MapWidget::getTimeSinceLastInteraction()
 {
-	if (current_pressed_buttons != 0)
+	if (current_pressed_buttons != 0 || dragging || pinching)
 		return 0;
 	else
 		return last_mouse_release_time.msecsTo(QTime::currentTime());

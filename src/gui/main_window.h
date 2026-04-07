@@ -252,7 +252,7 @@ public:
 	 * dock widgets when switching from home screen widget to map widget.
 	 * NEVER call QMainWindow::setCentralWidget(...) on a MainWindow.
 	 */
-	void setCentralWidget(QWidget* widget);
+	void setCentralWidget(QWidget* widget, bool immediate_delete = false);
 	
 	
 	/**

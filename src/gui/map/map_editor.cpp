@@ -2043,7 +2043,7 @@ void MapEditorController::detach()
 	// container in the QStackedWidget, and deleting map_widget alone
 	// would leave a dangling pointer inside the container's layout;
 	// either way a later resize (e.g. from leaving fullscreen) crashes.
-	window->setCentralWidget(new QWidget());
+	window->setCentralWidget(new QWidget(), true);
 	map_widget = nullptr;
 	
 	delete statusbar_zoom_frame;
@@ -4085,7 +4085,9 @@ void MapEditorController::alignMapWithNorth(bool enable)
 {
 	map_widget->setAutoRotationActive(enable);
 
-	const int update_interval = 1000; // milliseconds
+	const int hz_options[] = {1000, 500, 200, 100};
+	int idx = Settings::getInstance().getSettingCached(Settings::MapDisplay_AutoRotationFrequency).toInt();
+	const int update_interval = hz_options[qBound(0, idx, 3)];
 	
 	if (enable)
 	{
@@ -4110,10 +4112,7 @@ void MapEditorController::alignMapWithNorth(bool enable)
 
 void MapEditorController::alignMapWithNorthUpdate()
 {
-	// Time in milliseconds for which the rotation should not be updated after
-	// the user interacted with the map widget
-	const int interaction_time_threshold = 1500;
-	if (map_widget->getTimeSinceLastInteraction() < interaction_time_threshold)
+	if (map_widget->getTimeSinceLastInteraction() == 0)
 		return;
 	
 	// Set map rotation
