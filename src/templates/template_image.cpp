@@ -55,6 +55,7 @@
 #include "core/storage_location.h"  // IWYU pragma: keep
 #include "gui/georeferencing_dialog.h"
 #include "gui/select_crs_dialog.h"
+#include "gui/util_gui.h"
 #ifdef QT_PRINTSUPPORT_LIB
 #include "printsupport/advanced_pdf_printer.h"
 #endif
@@ -338,10 +339,60 @@ void TemplateImage::unloadTemplateFileImpl()
 	image = QImage();
 }
 
-void TemplateImage::drawTemplate(QPainter* painter, const QRectF& /*clip_rect*/, double /*scale*/, bool /*on_screen*/, qreal opacity) const
+void TemplateImage::drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const
 {
+	const QRect full_source_rect(0, 0, image.width(), image.height());
+	QRect source_rect = full_source_rect;
+	if (clip_rect.isValid())
+	{
+		QRectF transformed_clip_rect;
+		rectIncludeSafe(transformed_clip_rect, mapToTemplate(MapCoordF(clip_rect.topLeft())));
+		rectIncludeSafe(transformed_clip_rect, mapToTemplate(MapCoordF(clip_rect.topRight())));
+		rectIncludeSafe(transformed_clip_rect, mapToTemplate(MapCoordF(clip_rect.bottomLeft())));
+		rectIncludeSafe(transformed_clip_rect, mapToTemplate(MapCoordF(clip_rect.bottomRight())));
+
+		if (transformed_clip_rect.isValid() && !transformed_clip_rect.isEmpty())
+		{
+			// Keep a screen-sized margin around the visible rect to reduce white gaps
+			// while still avoiding full-image redraws for large templates. If the
+			// computed rect turns out unusable, fall back to drawing the full image
+			// rather than leaving the cache white.
+			constexpr qreal overscan_screen_pixels = 192.0;
+			qreal pixels_per_template_unit = 0.0;
+			if (on_screen)
+			{
+				pixels_per_template_unit = Util::mmToPixelPhysical(scale);
+			}
+			else
+			{
+				auto dpi = painter->device()->physicalDpiX();
+				if (!dpi)
+					dpi = painter->device()->logicalDpiX();
+				if (dpi > 0)
+					pixels_per_template_unit = scale * dpi / 25.4;
+			}
+
+			qreal overscan = pixels_per_template_unit > 0.0 ? overscan_screen_pixels / pixels_per_template_unit
+			                                                : overscan_screen_pixels;
+			overscan = qMax(overscan, qreal(32.0));
+			transformed_clip_rect.adjust(-overscan, -overscan, overscan, overscan);
+
+			auto candidate_source_rect = transformed_clip_rect.translated(image.width() * 0.5, image.height() * 0.5)
+			                                           .intersected(QRectF(full_source_rect));
+			if (candidate_source_rect.isValid()
+			    && !candidate_source_rect.isEmpty()
+			    && candidate_source_rect.width() >= 1.0
+			    && candidate_source_rect.height() >= 1.0)
+			{
+				auto aligned_source_rect = candidate_source_rect.adjusted(-1.0, -1.0, 1.0, 1.0).toAlignedRect().intersected(full_source_rect);
+				if (!aligned_source_rect.isEmpty())
+					source_rect = aligned_source_rect;
+			}
+		}
+	}
+
 	applyTemplateTransform(painter);
-	
+
 	painter->setRenderHint(QPainter::SmoothPixmapTransform);
 	painter->setOpacity(opacity);
 #ifdef QT_PRINTSUPPORT_LIB
@@ -360,7 +411,20 @@ void TemplateImage::drawTemplate(QPainter* painter, const QRectF& /*clip_rect*/,
 			painter->setBrush(Qt::white);
 	}
 #endif
-	painter->drawImage(QPointF(-image.width() * 0.5, -image.height() * 0.5), image);
+	constexpr int tile_size = 512;
+	for (int y = source_rect.y(); y < source_rect.y() + source_rect.height(); y += tile_size)
+	{
+		for (int x = source_rect.x(); x < source_rect.x() + source_rect.width(); x += tile_size)
+		{
+			QRect tile_source_rect(
+				x,
+				y,
+				qMin(tile_size, source_rect.x() + source_rect.width() - x),
+				qMin(tile_size, source_rect.y() + source_rect.height() - y));
+			QRectF tile_target_rect = QRectF(tile_source_rect).translated(-image.width() * 0.5, -image.height() * 0.5);
+			painter->drawImage(tile_target_rect, image, QRectF(tile_source_rect));
+		}
+	}
 	painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 }
 QRectF TemplateImage::getTemplateExtent() const
