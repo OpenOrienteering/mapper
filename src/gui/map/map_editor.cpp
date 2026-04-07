@@ -4083,6 +4083,8 @@ void MapEditorController::enableCompassDisplay(bool enable)
 
 void MapEditorController::alignMapWithNorth(bool enable)
 {
+	map_widget->setAutoRotationActive(enable);
+
 	const int update_interval = 1000; // milliseconds
 	
 	if (enable)
