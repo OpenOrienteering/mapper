@@ -293,6 +293,8 @@ void MainWindow::setController(MainWindowController* new_controller, const QStri
 
 void MainWindow::setController(MainWindowController* new_controller, bool has_file)
 {
+	bool leaving_fullscreen = (windowState() & Qt::WindowFullScreen);
+
 	if (controller)
 	{
 		controller->detach();
@@ -371,7 +373,12 @@ void MainWindow::setController(MainWindowController* new_controller, bool has_fi
 	}
 # endif  // MAPPER_DEVELOPMENT_BUILD
 #endif  // Q_OS_MACOS
-	
+
+	// Exit fullscreen after the new controller is fully attached,
+	// so resize events apply to the new widget hierarchy.
+	if (leaving_fullscreen)
+		setWindowState(windowState() & ~Qt::WindowFullScreen);
+
 	setHasAutosaveConflict(false);
 	setHasUnsavedChanges(false);
 }
