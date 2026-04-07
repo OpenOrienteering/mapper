@@ -2012,9 +2012,18 @@ void MapEditorController::createMobileGUI()
 
 void MapEditorController::detach()
 {
-	// Terminate all editing
-	setTool(nullptr);
+	// Terminate all editing.
+	// Delete current_tool immediately (not via setTool which uses deleteLater)
+	// so it is destroyed while editor and tool_action are still alive.
 	setOverrideTool(nullptr);
+	if (current_tool)
+	{
+		if (current_tool->editingInProgress())
+			current_tool->finishEditing();
+		delete current_tool;
+		current_tool = nullptr;
+	}
+	map_widget->setTool(nullptr);
 	
 	saveWindowState();
 	
@@ -2035,7 +2044,18 @@ void MapEditorController::detach()
 	
 	find_feature.reset(nullptr);
 	paint_feature.reset(nullptr);
-	
+
+	// show_top_bar_button is parented to window (not container_widget),
+	// so it survives setCentralWidget. Its action is a child of this
+	// controller and will be destroyed by delete controller — delete the
+	// button first to avoid dangling-action access on resize.
+	if (show_top_bar_button)
+	{
+		show_top_bar_button->hide();
+		delete show_top_bar_button;
+		show_top_bar_button = nullptr;
+	}
+
 	// Replace the central widget with an empty placeholder so that
 	// MainWindow::setCentralWidget removes the old container_widget
 	// (which owns map_widget, top_action_bar and bottom_action_bar)
@@ -2054,9 +2074,6 @@ void MapEditorController::detach()
                                        "unlockOrientation",
                                        "()V");
 #endif
-	
-	if (mobile_mode)
-		window->setWindowState(window->windowState() & ~Qt::WindowFullScreen);
 }
 
 
