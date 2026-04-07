@@ -25,6 +25,7 @@
 #include <stdexcept>
 
 #include <QApplication>
+#include <QtMath>
 #include <QColor>
 #include <QContextMenuEvent>
 #include <QEvent>
@@ -108,6 +109,8 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
  , dragging(false)
  , pinching(false)
  , pinching_factor(1.0)
+ , pinching_angle(0.0)
+ , auto_rotation_active(false)
  , below_template_cache_dirty_rect(rect())
  , above_template_cache_dirty_rect(rect())
  , map_cache_dirty_rect(rect())
@@ -191,6 +194,11 @@ void MapWidget::setActivity(MapEditorActivity* activity)
 	this->activity = activity;
 }
 
+
+void MapWidget::setAutoRotationActive(bool active)
+{
+	auto_rotation_active = active;
+}
 
 void MapWidget::setGesturesEnabled(bool enabled)
 {
@@ -396,29 +404,50 @@ qreal MapWidget::startPinching(const QPoint& center)
 	drag_start_pos  = center;
 	pinching_center = center;
 	pinching_factor = 1.0;
+	pinching_angle  = 0.0;
 	return pinching_factor;
 }
 
-void MapWidget::updatePinching(const QPoint& center, qreal factor)
+void MapWidget::updatePinching(const QPoint& center, qreal factor, qreal angle)
 {
 	Q_ASSERT(pinching);
 	pinching_center = center;
 	pinching_factor = factor;
+	pinching_angle  = auto_rotation_active ? 0.0 : angle;
 	updateZoomDisplay();
 	update();
 }
 
-void MapWidget::finishPinching(const QPoint& center, qreal factor)
+void MapWidget::finishPinching(const QPoint& center, qreal factor, qreal angle)
 {
 	pinching = false;
 	view->finishPanning(center - drag_start_pos);
 	view->setZoom(factor * view->getZoom(), viewportToView(center));
+	if (!auto_rotation_active && angle != 0.0)
+	{
+		double delta_rad = qDegreesToRadians(angle);
+		QPointF rot_center_view = viewportToView(center);
+		auto rot_center_map = MapCoordF(view->viewToMap(rot_center_view));
+		auto old_center = MapCoordF(view->center());
+
+		view->setRotation(view->getRotation() + delta_rad);
+
+		// Adjust center so the pinch center stays fixed on screen
+		auto offset = old_center - rot_center_map;
+		auto cos_d = cos(delta_rad);
+		auto sin_d = sin(delta_rad);
+		auto new_center = rot_center_map + MapCoordF(
+		     offset.x() * cos_d + offset.y() * sin_d,
+		    -offset.x() * sin_d + offset.y() * cos_d);
+		view->setCenter(MapCoord(new_center));
+	}
 }
 
 void MapWidget::cancelPinching()
 {
 	pinching = false;
 	pinching_factor = 1.0;
+	pinching_angle  = 0.0;
 	update();
 }
 
@@ -854,6 +883,7 @@ void MapWidget::gestureEvent(QGestureEvent* event)
 		QPinchGesture* pinch = static_cast<QPinchGesture *>(gesture);
 		QPoint center = pinch->centerPoint().toPoint();
 		qreal factor = pinch->totalScaleFactor();
+		qreal rotation_angle = pinch->totalRotationAngle();
 		switch (pinch->state())
 		{
 		case Qt::GestureStarted:
@@ -867,10 +897,10 @@ void MapWidget::gestureEvent(QGestureEvent* event)
 			pinch->setTotalScaleFactor(factor);
 			break;
 		case Qt::GestureUpdated:
-			updatePinching(center, factor);
+			updatePinching(center, factor, rotation_angle);
 			break;
 		case Qt::GestureFinished:
-			finishPinching(center, factor);
+			finishPinching(center, factor, rotation_angle);
 			break;
 		case Qt::GestureCanceled:
 			cancelPinching();
@@ -910,23 +940,39 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	QRect target = exposed;
 	if (pinching)
 	{
-		if (pinching_factor < 1.0)
-		{
-			// Zoom-out: draw the uncovered region first, then overlay
-			// the scaled cache on top.
-			drawPinchUncoveredRegion(painter, exposed);
-		}
-		else
-		{
+		// Build pinch transform (may include rotation)
+		QTransform pinch_xf;
+		pinch_xf.translate(pinching_center.x(), pinching_center.y());
+		if (pinching_angle != 0.0)
+			pinch_xf.rotate(pinching_angle);
+		pinch_xf.scale(pinching_factor, pinching_factor);
+		pinch_xf.translate(-drag_start_pos.x(), -drag_start_pos.y());
+
+		// Check if there are uncovered corners (zoom-out or rotation)
+		QPolygon covered = pinch_xf.mapToPolygon(exposed);
+		QRegion uncovered = QRegion(exposed) - QRegion(covered);
+		if (uncovered.isEmpty() || !drawPinchUncoveredRegion(painter, exposed))
 			painter.fillRect(exposed, QColor(Qt::gray));
-		}
+
 		painter.translate(pinching_center.x(), pinching_center.y());
+		if (pinching_angle != 0.0)
+			painter.rotate(pinching_angle);
 		painter.scale(pinching_factor, pinching_factor);
 		painter.translate(-drag_start_pos.x(), -drag_start_pos.y());
 	}
 	else if (pan_offset != QPoint())
 	{
-		drawPanUncoveredRegion(painter, exposed);
+		if (!drawPanUncoveredRegion(painter, exposed))
+		{
+			if (pan_offset.x() > 0)
+				painter.fillRect(QRect(0, pan_offset.y(), pan_offset.x(), height() - pan_offset.y()), QColor(Qt::gray));
+			else if (pan_offset.x() < 0)
+				painter.fillRect(QRect(width() + pan_offset.x(), pan_offset.y(), -pan_offset.x(), height() - pan_offset.y()), QColor(Qt::gray));
+			if (pan_offset.y() > 0)
+				painter.fillRect(QRect(0, 0, width(), pan_offset.y()), QColor(Qt::gray));
+			else if (pan_offset.y() < 0)
+				painter.fillRect(QRect(0, height() + pan_offset.y(), width(), -pan_offset.y()), QColor(Qt::gray));
+		}
 		target.translate(pan_offset);
 	}
 	
@@ -1421,39 +1467,38 @@ void MapWidget::drawTemplateCache(QPainter& painter, const QImage& cache, const 
 	painter.restore();
 }
 
-void MapWidget::drawPinchUncoveredRegion(QPainter& painter, const QRect& exposed) const
+bool MapWidget::drawPinchUncoveredRegion(QPainter& painter, const QRect& exposed) const
 {
 	Q_ASSERT(pinching);
-	Q_ASSERT(pinching_factor < 1.0);
 
-	// The pinch transform scales the cache around pinching_center.  When
-	// zooming out the scaled cache is smaller than the widget, leaving an
-	// uncovered border.  Instead of computing a separate "virtual" view
-	// state, we use the exact same composite transform that paintEvent
-	// applies to the cache:
-	//   pinch_xf * translate(w/2, h/2) * worldTransform
-	// This guarantees that the uncovered region aligns perfectly with the
-	// scaled cache — no independent center/zoom calculation needed.
+	int rendering_level = Settings::getInstance().getSettingCached(Settings::MapDisplay_GestureExtraRendering).toInt();
+	if (rendering_level <= 0)
+		return false;
+
+	// The pinch transform scales (and optionally rotates) the cache around
+	// pinching_center.  We use the exact same composite transform that
+	// paintEvent applies to the cache to guarantee perfect alignment.
 
 	// 1. Build the pinch-to-viewport transform (same as paintEvent sets on the painter)
 	QTransform pinch_xf;
 	pinch_xf.translate(pinching_center.x(), pinching_center.y());
+	if (pinching_angle != 0.0)
+		pinch_xf.rotate(pinching_angle);
 	pinch_xf.scale(pinching_factor, pinching_factor);
 	pinch_xf.translate(-drag_start_pos.x(), -drag_start_pos.y());
 
-	// 2. Determine the area covered by the scaled cache
-	QRect cache_rect = exposed; // the cache covers the full widget
+	// 2. Determine the area covered by the scaled/rotated cache
+	QRect cache_rect = exposed;
 	QPolygon covered = pinch_xf.mapToPolygon(cache_rect);
-	QRegion covered_region(covered);
-	QRegion uncovered = QRegion(exposed) - covered_region;
+	QRegion uncovered = QRegion(exposed) - QRegion(covered);
 	if (uncovered.isEmpty())
-		return; // zoom-in or fully covered — nothing to do
+		return true;
 
-	// 3. Set up the composite transform:
-	//    pinch * translate(w/2, h/2) * view->worldTransform()
-	//    This is the same transform the cache content goes through.
+	// 3. Set up the composite transform
 	auto setupTransform = [&](QPainter& p) {
 		p.translate(pinching_center.x(), pinching_center.y());
+		if (pinching_angle != 0.0)
+			p.rotate(pinching_angle);
 		p.scale(pinching_factor, pinching_factor);
 		p.translate(-drag_start_pos.x(), -drag_start_pos.y());
 		p.translate(width() / 2.0, height() / 2.0);
@@ -1461,14 +1506,13 @@ void MapWidget::drawPinchUncoveredRegion(QPainter& painter, const QRect& exposed
 	};
 
 	// Compute map_rect from the inverse of the full composite transform
-	// We need a temporary transform to get the inverse
 	QTransform composite = pinch_xf;
 	composite.translate(width() / 2.0, height() / 2.0);
 	composite = view->worldTransform() * composite;
 	bool invertible = false;
 	QTransform inv = composite.inverted(&invertible);
 	if (!invertible)
-		return;
+		return false;
 	QRectF map_rect = inv.mapRect(QRectF(exposed));
 
 	double ppm = view->calculateFinalZoomFactor() * pinching_factor;
@@ -1495,27 +1539,30 @@ void MapWidget::drawPinchUncoveredRegion(QPainter& painter, const QRect& exposed
 		painter.fillRect(exposed, Qt::white);
 	}
 
-	// Map objects
-	const auto map_visibility = view->effectiveMapVisibility();
-	if (map_visibility.visible)
+	// Map objects (only at full rendering level)
+	if (rendering_level >= 2)
 	{
-		painter.save();
-		qreal saved_opacity = painter.opacity();
-		painter.setOpacity(map_visibility.opacity);
+		const auto map_visibility = view->effectiveMapVisibility();
+		if (map_visibility.visible)
+		{
+			painter.save();
+			qreal saved_opacity = painter.opacity();
+			painter.setOpacity(map_visibility.opacity);
 
-		RenderConfig::Options options(RenderConfig::Screen | RenderConfig::HelperSymbols);
-		bool use_antialiasing = force_antialiasing || Settings::getInstance().getSettingCached(Settings::MapDisplay_Antialiasing).toBool();
-		if (use_antialiasing)
-			painter.setRenderHint(QPainter::Antialiasing);
-		else
-			options |= RenderConfig::DisableAntialiasing | RenderConfig::ForceMinSize;
+			RenderConfig::Options options(RenderConfig::Screen | RenderConfig::HelperSymbols);
+			bool use_antialiasing = force_antialiasing || Settings::getInstance().getSettingCached(Settings::MapDisplay_Antialiasing).toBool();
+			if (use_antialiasing)
+				painter.setRenderHint(QPainter::Antialiasing);
+			else
+				options |= RenderConfig::DisableAntialiasing | RenderConfig::ForceMinSize;
 
-		setupTransform(painter);
-		RenderConfig config = { *map, map_rect, ppm, options, 1.0 };
-		map->draw(&painter, config);
+			setupTransform(painter);
+			RenderConfig config = { *map, map_rect, ppm, options, 1.0 };
+			map->draw(&painter, config);
 
-		painter.setOpacity(saved_opacity);
-		painter.restore();
+			painter.setOpacity(saved_opacity);
+			painter.restore();
+		}
 	}
 
 	// Above templates
@@ -1529,17 +1576,22 @@ void MapWidget::drawPinchUncoveredRegion(QPainter& painter, const QRect& exposed
 	}
 
 	painter.restore();
+	return true;
 }
 
-void MapWidget::drawPanUncoveredRegion(QPainter& painter, const QRect& exposed) const
+bool MapWidget::drawPanUncoveredRegion(QPainter& painter, const QRect& exposed) const
 {
 	Q_ASSERT(pan_offset != QPoint());
+
+	int rendering_level = Settings::getInstance().getSettingCached(Settings::MapDisplay_GestureExtraRendering).toInt();
+	if (rendering_level <= 0)
+		return false;
 
 	// The cache is drawn at target = exposed.translated(pan_offset).
 	// The uncovered region is what's in exposed but not in the shifted target.
 	QRegion uncovered = QRegion(exposed) - QRegion(exposed).translated(pan_offset);
 	if (uncovered.isEmpty())
-		return;
+		return true;
 
 	// Use the same composite transform as the panned cache:
 	//   translate(pan_offset) * translate(w/2, h/2) * worldTransform
@@ -1557,7 +1609,7 @@ void MapWidget::drawPanUncoveredRegion(QPainter& painter, const QRect& exposed) 
 	bool invertible = false;
 	QTransform inv = composite.inverted(&invertible);
 	if (!invertible)
-		return;
+		return false;
 	QRectF map_rect = inv.mapRect(QRectF(exposed));
 
 	double ppm = view->calculateFinalZoomFactor();
@@ -1583,27 +1635,30 @@ void MapWidget::drawPanUncoveredRegion(QPainter& painter, const QRect& exposed) 
 		painter.fillRect(exposed, Qt::white);
 	}
 
-	// Map objects
-	const auto map_visibility = view->effectiveMapVisibility();
-	if (map_visibility.visible)
+	// Map objects (only at full rendering level)
+	if (rendering_level >= 2)
 	{
-		painter.save();
-		qreal saved_opacity = painter.opacity();
-		painter.setOpacity(map_visibility.opacity);
+		const auto map_visibility = view->effectiveMapVisibility();
+		if (map_visibility.visible)
+		{
+			painter.save();
+			qreal saved_opacity = painter.opacity();
+			painter.setOpacity(map_visibility.opacity);
 
-		RenderConfig::Options options(RenderConfig::Screen | RenderConfig::HelperSymbols);
-		bool use_antialiasing = force_antialiasing || Settings::getInstance().getSettingCached(Settings::MapDisplay_Antialiasing).toBool();
-		if (use_antialiasing)
-			painter.setRenderHint(QPainter::Antialiasing);
-		else
-			options |= RenderConfig::DisableAntialiasing | RenderConfig::ForceMinSize;
+			RenderConfig::Options options(RenderConfig::Screen | RenderConfig::HelperSymbols);
+			bool use_antialiasing = force_antialiasing || Settings::getInstance().getSettingCached(Settings::MapDisplay_Antialiasing).toBool();
+			if (use_antialiasing)
+				painter.setRenderHint(QPainter::Antialiasing);
+			else
+				options |= RenderConfig::DisableAntialiasing | RenderConfig::ForceMinSize;
 
-		setupTransform(painter);
-		RenderConfig config = { *map, map_rect, ppm, options, 1.0 };
-		map->draw(&painter, config);
+			setupTransform(painter);
+			RenderConfig config = { *map, map_rect, ppm, options, 1.0 };
+			map->draw(&painter, config);
 
-		painter.setOpacity(saved_opacity);
-		painter.restore();
+			painter.setOpacity(saved_opacity);
+			painter.restore();
+		}
 	}
 
 	// Above templates
@@ -1617,6 +1672,7 @@ void MapWidget::drawPanUncoveredRegion(QPainter& painter, const QRect& exposed) 
 	}
 
 	painter.restore();
+	return true;
 }
 
 void MapWidget::updateTemplateCache(QImage& cache, QRect& dirty_rect, TemplateCacheViewState& state, int first_template, int last_template, bool use_background)

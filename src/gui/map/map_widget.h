@@ -137,13 +137,16 @@ public:
 	void setActivity(MapEditorActivity* activity);
 	
 	
+	/** Sets whether compass auto-rotation is active (suppresses gesture rotation). */
+	void setAutoRotationActive(bool active);
+
 	/**
 	 * @brief Enables or disables gesture recognition.
-	 * 
+	 *
 	 * MapWidget can recognize gestures, such as two-finger gestures for panning
 	 * and zooming. However, this may disturb the work with editing tools. So gestures
 	 * may be disabled.
-	 * 
+	 *
 	 * @param enabled If true, enables gesture recognition. Otherwise gestures are disabled.
 	 */
 	void setGesturesEnabled(bool enabled);
@@ -440,10 +443,12 @@ private:
 	bool shouldDeferTemplateCacheUpdate(const QImage& cache, const QRect& dirty_rect, const TemplateCacheViewState& state) const;
 	/** Draws a template cache, transforming stale caches to the current view if needed. */
 	void drawTemplateCache(QPainter& painter, const QImage& cache, const TemplateCacheViewState& state, const QRect& target, const QRect& exposed, bool use_background = false) const;
-	/** Draws templates and map objects directly for the uncovered region during pinch zoom-out. */
-	void drawPinchUncoveredRegion(QPainter& painter, const QRect& exposed) const;
-	/** Draws templates and map objects directly for the uncovered region during pan. */
-	void drawPanUncoveredRegion(QPainter& painter, const QRect& exposed) const;
+	/** Draws templates and map objects directly for the uncovered region during pinch.
+	 *  Returns false if rendering is disabled (caller should fill with gray). */
+	bool drawPinchUncoveredRegion(QPainter& painter, const QRect& exposed) const;
+	/** Draws templates and map objects directly for the uncovered region during pan.
+	 *  Returns false if rendering is disabled (caller should fill with gray). */
+	bool drawPanUncoveredRegion(QPainter& painter, const QRect& exposed) const;
 	
 	/**
 	 * Calculates the bounding box of the given map coordinates rect and
@@ -471,9 +476,9 @@ private:
 	 *  Returns the initial zoom factor. */
 	qreal startPinching(const QPoint& center);
 	/** Updates a pinching interaction at the given cursor position. */
-	void updatePinching(const QPoint& center, qreal factor);
+	void updatePinching(const QPoint& center, qreal factor, qreal angle);
 	/** Ends a pinching interaction at the given cursor position. */
-	void finishPinching(const QPoint& center, qreal factor);
+	void finishPinching(const QPoint& center, qreal factor, qreal angle);
 	/** Cancels a pinching interaction. */
 	void cancelPinching();
 	
@@ -515,7 +520,9 @@ private:
 	// Pinching (interaction)
 	bool pinching;
 	qreal pinching_factor;
+	qreal pinching_angle;  // degrees, from QPinchGesture
 	QPoint pinching_center;
+	bool auto_rotation_active;
 	
 	// Panning (operation)
 	QPoint pan_offset;

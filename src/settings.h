@@ -83,6 +83,7 @@ public:
 		General_StartDragDistance,
 		HomeScreen_TipsVisible,
 		HomeScreen_CurrentTip,
+		MapDisplay_GestureExtraRendering,
 		PaintOnTemplateTool_Colors,
 		END_OF_SETTINGSENUM /* Don't add items below this line. */
 	};
