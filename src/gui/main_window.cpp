@@ -217,7 +217,7 @@ void MainWindow::setCentralWidget(QWidget* widget)
 		central_widget->setCurrentIndex(index);
 	}
 	
-	if (central_widget->count() > 1)
+	while (central_widget->count() > 1)
 	{
 		QWidget* w = central_widget->widget(0);
 		central_widget->removeWidget(w);
