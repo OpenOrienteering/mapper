@@ -2036,8 +2036,15 @@ void MapEditorController::detach()
 	find_feature.reset(nullptr);
 	paint_feature.reset(nullptr);
 	
-	window->setCentralWidget(nullptr);
-	delete map_widget;
+	// Replace the central widget with an empty placeholder so that
+	// MainWindow::setCentralWidget removes the old container_widget
+	// (which owns map_widget, top_action_bar and bottom_action_bar)
+	// from the QStackedWidget.  Passing nullptr would leave the stale
+	// container in the QStackedWidget, and deleting map_widget alone
+	// would leave a dangling pointer inside the container's layout;
+	// either way a later resize (e.g. from leaving fullscreen) crashes.
+	window->setCentralWidget(new QWidget());
+	map_widget = nullptr;
 	
 	delete statusbar_zoom_frame;
 	delete statusbar_cursorpos_label;
