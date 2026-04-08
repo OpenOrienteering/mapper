@@ -743,6 +743,7 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 						// Import as new part
 						dest_part = new MapPart(part_to_import->getName(), this);
 						addPart(dest_part, 0);
+						//dest_part->setVisible(part_to_import->isVisible());  // keep visibility of imported parts
 						undo_step->push(new MapPartUndoStep(this, MapPartUndoStep::RemoveMapPart, 0));
 					}
 				}
@@ -1688,13 +1689,15 @@ void Map::scaleAllSymbols(double factor)
 	setSymbolsDirty();
 }
 
-void Map::determineSymbolsInUse(std::vector< bool >& out) const
+void Map::determineSymbolsInUse(std::vector< bool >& out, bool exclude_hidden_objects) const
 {
 	out.assign(symbols.size(), false);
 	for (auto part : parts)
 	{
 		for (int o = 0; o < part->getNumObjects(); ++o)
 		{
+			if (exclude_hidden_objects && !part->getObject(o)->isVisible())
+				continue;
 			const Symbol* symbol = part->getObject(o)->getSymbol();
 			int index = findSymbolIndex(symbol);
 			if (index >= 0)
@@ -2041,6 +2044,11 @@ void Map::push(UndoStep *step)
 }
 
 
+int Map::getNumVisibleParts() const
+{
+	return std::count_if(parts.begin(), parts.end(), [](const auto* part) { return part->isVisible(); });
+}
+
 void Map::addPart(MapPart* part, std::size_t index)
 {
 	Q_ASSERT(index <= parts.size());
@@ -2172,6 +2180,19 @@ int Map::mergeParts(std::size_t source, std::size_t destination)
 	return target_part->getNumObjects() - count;
 }
 
+std::size_t Map::findVisiblePart() const
+{
+	auto i = current_part_index;
+	while (!parts[i]->isVisible())
+	{
+		if (++i >= parts.size())
+			i = 0;
+		if (Q_UNLIKELY(i == current_part_index))
+			break;
+	}
+	return i;
+}
+
 
 int Map::getNumObjects() const
 {
@@ -2267,7 +2288,8 @@ void Map::findAllObjectsAt(
         SelectionInfoVector& out ) const
 {
 	for (const MapPart* part : parts)
-		part->findObjectsAt(coord, tolerance, treat_areas_as_paths, extended_selection, include_hidden_objects, include_protected_objects, out);
+		if (part->isVisible())
+			part->findObjectsAt(coord, tolerance, treat_areas_as_paths, extended_selection, include_hidden_objects, include_protected_objects, out);
 }
 
 void Map::findObjectsAtBox(
