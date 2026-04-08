@@ -309,6 +309,7 @@ Settings::Settings()
 	// Gesture uncovered area rendering: 0=Off, 1=Templates only, 2=Full
 	registerSetting(MapDisplay_GestureExtraRendering, "MapDisplay/gesture_extra_rendering", 1);
 	registerSetting(MapDisplay_AutoRotationFrequency, "MapDisplay/auto_rotation_frequency", 0);
+	registerSetting(MapEditor_TouchPanOnly, "MapEditor/touch_pan_only", false);
 
 	// Paint On Template tool settings
 	registerSetting(PaintOnTemplateTool_Colors, "PaintOnTemplateTool/colors", QLatin1String("FF0000,FFFF00,00FF00,DB00D9,0000FF,D15C00,000000"));

@@ -1168,6 +1168,14 @@ void MapEditorController::attach(MainWindow* window)
 	map_widget = new MapWidget(mode == MapEditor, mode == SymbolEditor);
 	map_widget->setMapView(main_view);
 	map_widget->setZoomDisplay(zoom_display_function);
+	map_widget->setTouchPanOnly(
+	    Settings::getInstance().getSettingCached(Settings::MapEditor_TouchPanOnly).toBool());
+	connect(&Settings::getInstance(), &Settings::settingsChanged,
+	        this, [this]() {
+		if (map_widget)
+			map_widget->setTouchPanOnly(
+			    Settings::getInstance().getSettingCached(Settings::MapEditor_TouchPanOnly).toBool());
+	});
 	
 	// Create menu and toolbar together, so actions can be inserted into one or both
 	if (mode == MapEditor)
