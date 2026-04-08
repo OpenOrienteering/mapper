@@ -140,6 +140,9 @@ public:
 	/** Sets whether compass auto-rotation is active (suppresses gesture rotation). */
 	void setAutoRotationActive(bool active);
 
+	/** Sets whether touch input is limited to pan/zoom/rotate only. */
+	void setTouchPanOnly(bool enabled) { touch_pan_only = enabled; }
+
 	/**
 	 * @brief Enables or disables gesture recognition.
 	 *
@@ -577,6 +580,8 @@ private:
 	 *  whether the user interacts or recently interacted with the widget. */
 	QTime last_mouse_release_time;
 	int current_pressed_buttons;
+	bool touch_pan_only = false;
+	bool finger_touch_active = false;
 	
 	/** Optional GPS display */
 	GPSDisplay* gps_display;

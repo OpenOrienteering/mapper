@@ -85,6 +85,7 @@ public:
 		HomeScreen_CurrentTip,
 		MapDisplay_GestureExtraRendering,
 		MapDisplay_AutoRotationFrequency,
+		MapEditor_TouchPanOnly,
 		PaintOnTemplateTool_Colors,
 		END_OF_SETTINGSENUM /* Don't add items below this line. */
 	};

@@ -999,6 +999,9 @@ EditorSettingsPage::EditorSettingsPage(QWidget* parent)
 	auto_rotation_frequency->addItem(tr("5 Hz"));
 	auto_rotation_frequency->addItem(tr("10 Hz"));
 	layout->addRow(tr("Auto-rotation frequency:"), auto_rotation_frequency);
+
+	touch_pan_only = new QCheckBox(tr("Touch: pan/zoom/rotate only"));
+	layout->addRow(touch_pan_only);
 	
 	
 	layout->addItem(Util::SpacerItem::create(this));
@@ -1060,6 +1063,7 @@ void EditorSettingsPage::apply()
 	setSetting(Settings::MapEditor_IgnoreTouchInput, ignore_touch_input->isChecked());
 	setSetting(Settings::MapDisplay_GestureExtraRendering, gesture_extra_rendering->currentIndex());
 	setSetting(Settings::MapDisplay_AutoRotationFrequency, auto_rotation_frequency->currentIndex());
+	setSetting(Settings::MapEditor_TouchPanOnly, touch_pan_only->isChecked());
 	setSetting(Settings::MobileToolbar_TopLeftActions, mobile_top_left_toolbar_actions);
 	setSetting(Settings::MobileToolbar_TopRightActions, mobile_top_right_toolbar_actions);
 	setSetting(Settings::MobileToolbar_BottomLeftActions, mobile_bottom_left_toolbar_actions);
@@ -1093,6 +1097,7 @@ void EditorSettingsPage::updateWidgets()
 	ignore_touch_input->setChecked(getSetting(Settings::MapEditor_IgnoreTouchInput).toBool());
 	gesture_extra_rendering->setCurrentIndex(getSetting(Settings::MapDisplay_GestureExtraRendering).toInt());
 	auto_rotation_frequency->setCurrentIndex(getSetting(Settings::MapDisplay_AutoRotationFrequency).toInt());
+	touch_pan_only->setChecked(getSetting(Settings::MapEditor_TouchPanOnly).toBool());
 	mobile_top_left_toolbar_actions = getSetting(Settings::MobileToolbar_TopLeftActions).toStringList();
 	mobile_top_right_toolbar_actions = getSetting(Settings::MobileToolbar_TopRightActions).toStringList();
 	mobile_bottom_left_toolbar_actions = getSetting(Settings::MobileToolbar_BottomLeftActions).toStringList();

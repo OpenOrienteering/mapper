@@ -71,6 +71,7 @@ private:
 	QCheckBox* ignore_touch_input;
 	QComboBox* gesture_extra_rendering;
 	QComboBox* auto_rotation_frequency;
+	QCheckBox* touch_pan_only;
 	
 	QComboBox* edit_tool_delete_bezier_point_action;
 	QComboBox* edit_tool_delete_bezier_point_action_alternative;

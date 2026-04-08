@@ -378,10 +378,6 @@ void MapWidget::startDragging(const QPoint& cursor_pos)
 void MapWidget::updateDragging(const QPoint& cursor_pos)
 {
 	Q_ASSERT(dragging);
-	dragging = false;
-	current_pressed_buttons = 0;
-	dragging = false;
-	current_pressed_buttons = 0;
 	view->setPanOffset(cursor_pos - drag_start_pos);
 }
 
@@ -856,10 +852,33 @@ bool MapWidget::event(QEvent* event)
 		gestureEvent(static_cast<QGestureEvent*>(event));
 		return event->isAccepted();
 		
+	case QEvent::TabletPress:
+		finger_touch_active = false;
+		break;
+	
 	case QEvent::TouchBegin:
+	{
+		auto* te = static_cast<QTouchEvent*>(event);
+		finger_touch_active = true;
+		for (const auto& tp : te->touchPoints())
+		{
+			if (tp.flags() & QTouchEvent::TouchPoint::Pen)
+			{
+				finger_touch_active = false;
+				break;
+			}
+		}
+		if (te->touchPoints().count() >= 2)
+			return true;
+		break;
+	}
 	case QEvent::TouchUpdate:
+		if (static_cast<QTouchEvent*>(event)->touchPoints().count() >= 2)
+			return true;
+		break;
 	case QEvent::TouchEnd:
 	case QEvent::TouchCancel:
+		finger_touch_active = false;
 		if (static_cast<QTouchEvent*>(event)->touchPoints().count() >= 2)
 			return true;
 		break;
@@ -895,7 +914,7 @@ void MapWidget::gestureEvent(QGestureEvent* event)
 		switch (pinch->state())
 		{
 		case Qt::GestureStarted:
-			if (dragging)
+			if (dragging && !touch_pan_only)
 				cancelDragging();
 			if (pinching)
 				cancelPinching();
@@ -1080,9 +1099,17 @@ void MapWidget::resizeEvent(QResizeEvent* event)
 	QWidget::resizeEvent(event);
 }
 
+
 void MapWidget::mousePressEvent(QMouseEvent* event)
 {
 	current_pressed_buttons = event->buttons();
+	// Touch-pan-only: intercept before touch cursor and tool
+	if (touch_pan_only && finger_touch_active && event->button() == Qt::LeftButton)
+	{
+		startDragging(event->pos());
+		event->accept();
+		return;
+	}
 	if (touch_cursor && tool && tool->usesTouchCursor())
 	{
 		touch_cursor->mousePressEvent(event);
@@ -1094,6 +1121,7 @@ void MapWidget::mousePressEvent(QMouseEvent* event)
 	}
 	_mousePressEvent(event);
 }
+
 
 void MapWidget::_mousePressEvent(QMouseEvent* event)
 {
@@ -1123,6 +1151,14 @@ void MapWidget::_mousePressEvent(QMouseEvent* event)
 
 void MapWidget::mouseMoveEvent(QMouseEvent* event)
 {
+	// Touch-pan-only: skip touch cursor and tool
+	if (touch_pan_only && finger_touch_active)
+	{
+		if (dragging)
+			updateDragging(event->pos());
+		event->accept();
+		return;
+	}
 	if (touch_cursor && tool && tool->usesTouchCursor())
 	{
 		if (!touch_cursor->mouseMoveEvent(event))
@@ -1159,6 +1195,14 @@ void MapWidget::mouseReleaseEvent(QMouseEvent* event)
 {
 	current_pressed_buttons = event->buttons();
 	last_mouse_release_time = QTime::currentTime();
+	// Touch-pan-only: skip touch cursor and tool
+	if (touch_pan_only && finger_touch_active)
+	{
+		if (dragging)
+			finishDragging(event->pos());
+		event->accept();
+		return;
+	}
 	if (touch_cursor && tool && tool->usesTouchCursor())
 	{
 		if (!touch_cursor->mouseReleaseEvent(event))
@@ -1185,6 +1229,12 @@ void MapWidget::_mouseReleaseEvent(QMouseEvent* event)
 
 void MapWidget::mouseDoubleClickEvent(QMouseEvent* event)
 {
+	// Touch-pan-only: ignore touch double-click
+	if (touch_pan_only && finger_touch_active)
+	{
+		event->accept();
+		return;
+	}
 	if (touch_cursor && tool && tool->usesTouchCursor())
 	{
 		if (!touch_cursor->mouseDoubleClickEvent(event))
