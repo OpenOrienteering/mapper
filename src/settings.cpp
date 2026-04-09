@@ -324,6 +324,7 @@ Settings::Settings()
 	registerSetting(MapDisplay_AutoRotationFrequency, "MapDisplay/auto_rotation_frequency", 0);
 	registerSetting(MapEditor_TouchPanOnly, "MapEditor/touch_pan_only", false);
 	registerSetting(MapEditor_SPenButtonAction, "MapEditor/spen_button_action", 0);
+	registerSetting(MapEditor_SPenHoverPausesRotation, "MapEditor/spen_hover_pauses_rotation", false);
 	registerSetting(PieMenu_Actions, "PieMenu/actions", defaultPieMenuActions());
 
 	// Paint On Template tool settings

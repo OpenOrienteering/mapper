@@ -87,6 +87,7 @@ public:
 		MapDisplay_AutoRotationFrequency,
 		MapEditor_TouchPanOnly,
 		MapEditor_SPenButtonAction,
+		MapEditor_SPenHoverPausesRotation,
 		PieMenu_Actions,
 		PaintOnTemplateTool_Colors,
 		END_OF_SETTINGSENUM /* Don't add items below this line. */

@@ -74,6 +74,7 @@ private:
 	QComboBox* auto_rotation_frequency;
 	QCheckBox* touch_pan_only;
 	QComboBox* spen_button_action = nullptr;
+	QCheckBox* spen_hover_pauses_rotation = nullptr;
 	QPushButton* pie_menu_button = nullptr;
 	QStringList pie_menu_actions;
 

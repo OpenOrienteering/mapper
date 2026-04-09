@@ -499,7 +499,7 @@ private:
 				
 				filter();
 				
-				QThread::msleep(30);
+				QThread::msleep(10);
 			}
 		}
 		

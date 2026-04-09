@@ -154,6 +154,9 @@ public:
 	/** Sets the action for the S-Pen side button (ExtraButton3). */
 	void setSPenButtonAction(int action) { spen_button_action = action; }
 
+	/** Sets whether S-Pen hover should pause auto-rotation. */
+	void setSPenHoverPausesRotation(bool enabled) { spen_hover_pauses_rotation = enabled; }
+
 	/**
 	 * @brief Enables or disables gesture recognition.
 	 *
@@ -595,6 +598,9 @@ private:
 	bool finger_touch_active = false;
 	int spen_button_action = 0;
 	bool spen_dragging = false;
+	bool spen_hover_pauses_rotation = false;
+	QTime last_spen_hover_time;
+	bool multi_touch_active = false;
 
 	/** Optional GPS display */
 	GPSDisplay* gps_display;

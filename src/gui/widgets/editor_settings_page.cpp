@@ -1001,6 +1001,10 @@ EditorSettingsPage::EditorSettingsPage(QWidget* parent)
 	auto_rotation_frequency->addItem(tr("2 Hz"));
 	auto_rotation_frequency->addItem(tr("5 Hz"));
 	auto_rotation_frequency->addItem(tr("10 Hz"));
+	auto_rotation_frequency->addItem(tr("20 Hz"));
+	auto_rotation_frequency->addItem(tr("30 Hz"));
+	auto_rotation_frequency->addItem(tr("60 Hz"));
+	auto_rotation_frequency->addItem(tr("120 Hz"));
 	layout->addRow(tr("Auto-rotation frequency:"), auto_rotation_frequency);
 
 	touch_pan_only = new QCheckBox(tr("Touch: pan/zoom/rotate only"));
@@ -1011,6 +1015,9 @@ EditorSettingsPage::EditorSettingsPage(QWidget* parent)
 	spen_button_action->addItem(tr("Pan map"));
 	spen_button_action->addItem(tr("Pie menu (tool selection)"));
 	layout->addRow(tr("S-Pen side button:"), spen_button_action);
+
+	spen_hover_pauses_rotation = new QCheckBox(tr("S-Pen hover pauses auto-rotation"));
+	layout->addRow(spen_hover_pauses_rotation);
 
 	pie_menu_button = new QPushButton(tr("Configure..."));
 	layout->addRow(tr("Pie menu actions:"), pie_menu_button);
@@ -1080,6 +1087,8 @@ void EditorSettingsPage::apply()
 	setSetting(Settings::MapEditor_TouchPanOnly, touch_pan_only->isChecked());
 	if (spen_button_action)
 		setSetting(Settings::MapEditor_SPenButtonAction, spen_button_action->currentIndex());
+	if (spen_hover_pauses_rotation)
+		setSetting(Settings::MapEditor_SPenHoverPausesRotation, spen_hover_pauses_rotation->isChecked());
 	if (pie_menu_button)
 		setSetting(Settings::PieMenu_Actions, pie_menu_actions);
 	setSetting(Settings::MobileToolbar_TopLeftActions, mobile_top_left_toolbar_actions);
@@ -1118,6 +1127,8 @@ void EditorSettingsPage::updateWidgets()
 	touch_pan_only->setChecked(getSetting(Settings::MapEditor_TouchPanOnly).toBool());
 	if (spen_button_action)
 		spen_button_action->setCurrentIndex(getSetting(Settings::MapEditor_SPenButtonAction).toInt());
+	if (spen_hover_pauses_rotation)
+		spen_hover_pauses_rotation->setChecked(getSetting(Settings::MapEditor_SPenHoverPausesRotation).toBool());
 	if (pie_menu_button)
 		pie_menu_actions = getSetting(Settings::PieMenu_Actions).toStringList();
 	mobile_top_left_toolbar_actions = getSetting(Settings::MobileToolbar_TopLeftActions).toStringList();

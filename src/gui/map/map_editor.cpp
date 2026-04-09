@@ -23,6 +23,7 @@
 #include "map_editor_p.h"
 
 #include <algorithm>
+#include <cmath>
 #include <cstddef>
 #include <functional>
 #include <iterator>
@@ -1193,6 +1194,8 @@ void MapEditorController::attach(MainWindow* window)
 	    Settings::getInstance().getSettingCached(Settings::MapEditor_TouchPanOnly).toBool());
 	map_widget->setSPenButtonAction(
 	    Settings::getInstance().getSettingCached(Settings::MapEditor_SPenButtonAction).toInt());
+	map_widget->setSPenHoverPausesRotation(
+	    Settings::getInstance().getSettingCached(Settings::MapEditor_SPenHoverPausesRotation).toBool());
 	connect(&Settings::getInstance(), &Settings::settingsChanged,
 	        this, [this]() {
 		if (map_widget)
@@ -1201,6 +1204,8 @@ void MapEditorController::attach(MainWindow* window)
 			    Settings::getInstance().getSettingCached(Settings::MapEditor_TouchPanOnly).toBool());
 			map_widget->setSPenButtonAction(
 			    Settings::getInstance().getSettingCached(Settings::MapEditor_SPenButtonAction).toInt());
+			map_widget->setSPenHoverPausesRotation(
+			    Settings::getInstance().getSettingCached(Settings::MapEditor_SPenHoverPausesRotation).toBool());
 			populatePieMenu();
 		}
 	});
@@ -4156,9 +4161,9 @@ void MapEditorController::alignMapWithNorth(bool enable)
 {
 	map_widget->setAutoRotationActive(enable);
 
-	const int hz_options[] = {1000, 500, 200, 100};
+	const int hz_options[] = {1000, 500, 200, 100, 50, 33, 16, 8};
 	int idx = Settings::getInstance().getSettingCached(Settings::MapDisplay_AutoRotationFrequency).toInt();
-	const int update_interval = hz_options[qBound(0, idx, 3)];
+	const int update_interval = hz_options[qBound(0, idx, 7)];
 	
 	if (enable)
 	{
@@ -4185,9 +4190,20 @@ void MapEditorController::alignMapWithNorthUpdate()
 {
 	if (map_widget->getTimeSinceLastInteraction() == 0)
 		return;
-	
-	// Set map rotation
-	main_view->setRotation(M_PI / -180.0 * Compass::getInstance().getCurrentAzimuth());
+
+	double target = M_PI / -180.0 * Compass::getInstance().getCurrentAzimuth();
+	double current = main_view->getRotation();
+
+	// Normalize angle difference to [-π, π] for shortest rotation path
+	double diff = target - current;
+	while (diff > M_PI) diff -= 2 * M_PI;
+	while (diff < -M_PI) diff += 2 * M_PI;
+
+	// Time-based exponential smoothing (tau = 100ms)
+	double dt = align_map_with_north_timer.interval() / 1000.0;
+	double alpha = 1.0 - std::exp(-dt / 0.1);
+
+	main_view->setRotation(current + alpha * diff);
 }
 
 void MapEditorController::hideTopActionBar()
