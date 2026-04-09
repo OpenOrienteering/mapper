@@ -25,6 +25,7 @@
 
 #include <QApplication>
 #include <QAbstractButton>
+#include <QScreen>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QCoreApplication>
@@ -38,6 +39,7 @@
 #include <QFormLayout>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QListWidget>
 #include <QMimeData>
 #include <QMouseEvent>
 #include <QPalette>
@@ -46,6 +48,7 @@
 #include <QPen>
 #include <QPushButton>
 #include <QScrollArea>
+#include <QSet>
 #include <QScrollBar>
 #include <QSignalBlocker>
 #include <QSizePolicy>
@@ -1002,8 +1005,17 @@ EditorSettingsPage::EditorSettingsPage(QWidget* parent)
 
 	touch_pan_only = new QCheckBox(tr("Touch: pan/zoom/rotate only"));
 	layout->addRow(touch_pan_only);
-	
-	
+
+	spen_button_action = new QComboBox();
+	spen_button_action->addItem(tr("None (disabled)"));
+	spen_button_action->addItem(tr("Pan map"));
+	spen_button_action->addItem(tr("Pie menu (tool selection)"));
+	layout->addRow(tr("S-Pen side button:"), spen_button_action);
+
+	pie_menu_button = new QPushButton(tr("Configure..."));
+	layout->addRow(tr("Pie menu actions:"), pie_menu_button);
+
+
 	layout->addItem(Util::SpacerItem::create(this));
 	layout->addRow(Util::Headline::create(tr("Edit tool:")));
 	
@@ -1032,7 +1044,9 @@ EditorSettingsPage::EditorSettingsPage(QWidget* parent)
 	connect(antialiasing, &QAbstractButton::toggled, text_antialiasing, &QCheckBox::setEnabled);
 	if (mobile_toolbar_button)
 		connect(mobile_toolbar_button, &QPushButton::clicked, this, &EditorSettingsPage::configureMobileToolbars);
-	
+	if (pie_menu_button)
+		connect(pie_menu_button, &QPushButton::clicked, this, &EditorSettingsPage::configurePieMenu);
+
 	updateWidgets();
 }
 
@@ -1064,6 +1078,10 @@ void EditorSettingsPage::apply()
 	setSetting(Settings::MapDisplay_GestureExtraRendering, gesture_extra_rendering->currentIndex());
 	setSetting(Settings::MapDisplay_AutoRotationFrequency, auto_rotation_frequency->currentIndex());
 	setSetting(Settings::MapEditor_TouchPanOnly, touch_pan_only->isChecked());
+	if (spen_button_action)
+		setSetting(Settings::MapEditor_SPenButtonAction, spen_button_action->currentIndex());
+	if (pie_menu_button)
+		setSetting(Settings::PieMenu_Actions, pie_menu_actions);
 	setSetting(Settings::MobileToolbar_TopLeftActions, mobile_top_left_toolbar_actions);
 	setSetting(Settings::MobileToolbar_TopRightActions, mobile_top_right_toolbar_actions);
 	setSetting(Settings::MobileToolbar_BottomLeftActions, mobile_bottom_left_toolbar_actions);
@@ -1098,6 +1116,10 @@ void EditorSettingsPage::updateWidgets()
 	gesture_extra_rendering->setCurrentIndex(getSetting(Settings::MapDisplay_GestureExtraRendering).toInt());
 	auto_rotation_frequency->setCurrentIndex(getSetting(Settings::MapDisplay_AutoRotationFrequency).toInt());
 	touch_pan_only->setChecked(getSetting(Settings::MapEditor_TouchPanOnly).toBool());
+	if (spen_button_action)
+		spen_button_action->setCurrentIndex(getSetting(Settings::MapEditor_SPenButtonAction).toInt());
+	if (pie_menu_button)
+		pie_menu_actions = getSetting(Settings::PieMenu_Actions).toStringList();
 	mobile_top_left_toolbar_actions = getSetting(Settings::MobileToolbar_TopLeftActions).toStringList();
 	mobile_top_right_toolbar_actions = getSetting(Settings::MobileToolbar_TopRightActions).toStringList();
 	mobile_bottom_left_toolbar_actions = getSetting(Settings::MobileToolbar_BottomLeftActions).toStringList();
@@ -1138,6 +1160,118 @@ void EditorSettingsPage::configureMobileToolbars()
 	        mobile_bottom_left_toolbar_actions,
 	        mobile_bottom_right_toolbar_actions
 	);
+}
+
+void EditorSettingsPage::configurePieMenu()
+{
+	auto available_ids = MapEditorController::editablePieMenuActionIds();
+
+	auto* dialog = new QDialog(window());
+	dialog->setWindowTitle(tr("Configure Pie Menu Actions"));
+	dialog->resize(QApplication::primaryScreen()->availableSize());
+
+	auto* available_list = new QListWidget();
+	available_list->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	auto* selected_list = new QListWidget();
+	selected_list->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+	auto populate_lists = [&]() {
+		available_list->clear();
+		selected_list->clear();
+		auto selected_set = QSet<QString>::fromList(pie_menu_actions);
+		for (const auto& id : available_ids)
+		{
+			if (!selected_set.contains(id))
+			{
+				auto* item = new QListWidgetItem(
+				    MapEditorController::mobileToolbarActionIcon(id),
+				    MapEditorController::mobileToolbarActionLabel(id));
+				item->setData(Qt::UserRole, id);
+				available_list->addItem(item);
+			}
+		}
+		for (const auto& id : pie_menu_actions)
+		{
+			auto* item = new QListWidgetItem(
+			    MapEditorController::mobileToolbarActionIcon(id),
+			    MapEditorController::mobileToolbarActionLabel(id));
+			item->setData(Qt::UserRole, id);
+			selected_list->addItem(item);
+		}
+	};
+	populate_lists();
+
+	auto* add_button = new QPushButton(tr("Add"));
+	auto* remove_button = new QPushButton(tr("Remove"));
+	auto* up_button = new QPushButton(tr("Move Up"));
+	auto* down_button = new QPushButton(tr("Move Down"));
+	auto* reset_button = new QPushButton(tr("Reset"));
+
+	connect(add_button, &QPushButton::clicked, dialog, [&]() {
+		auto* item = available_list->currentItem();
+		if (!item) return;
+		pie_menu_actions.append(item->data(Qt::UserRole).toString());
+		populate_lists();
+	});
+	connect(remove_button, &QPushButton::clicked, dialog, [&]() {
+		int row = selected_list->currentRow();
+		if (row < 0) return;
+		pie_menu_actions.removeAt(row);
+		populate_lists();
+		if (row < selected_list->count())
+			selected_list->setCurrentRow(row);
+		else if (selected_list->count() > 0)
+			selected_list->setCurrentRow(selected_list->count() - 1);
+	});
+	connect(up_button, &QPushButton::clicked, dialog, [&]() {
+		int row = selected_list->currentRow();
+		if (row <= 0) return;
+		pie_menu_actions.swap(row, row - 1);
+		populate_lists();
+		selected_list->setCurrentRow(row - 1);
+	});
+	connect(down_button, &QPushButton::clicked, dialog, [&]() {
+		int row = selected_list->currentRow();
+		if (row < 0 || row >= pie_menu_actions.size() - 1) return;
+		pie_menu_actions.swap(row, row + 1);
+		populate_lists();
+		selected_list->setCurrentRow(row + 1);
+	});
+	connect(reset_button, &QPushButton::clicked, dialog, [&]() {
+		pie_menu_actions = Settings::defaultPieMenuActions();
+		populate_lists();
+	});
+
+	// Vertical layout for mobile-friendly display
+	auto* selected_buttons = new QHBoxLayout();
+	selected_buttons->addWidget(up_button);
+	selected_buttons->addWidget(down_button);
+	selected_buttons->addWidget(remove_button);
+
+	auto* available_buttons = new QHBoxLayout();
+	available_buttons->addWidget(add_button);
+	available_buttons->addStretch();
+	available_buttons->addWidget(reset_button);
+
+	auto* buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	connect(buttons, &QDialogButtonBox::accepted, dialog, &QDialog::accept);
+	connect(buttons, &QDialogButtonBox::rejected, dialog, &QDialog::reject);
+
+	auto* main_layout = new QVBoxLayout(dialog);
+	main_layout->addWidget(new QLabel(tr("Selected:")));
+	main_layout->addWidget(selected_list, 1);
+	main_layout->addLayout(selected_buttons);
+	main_layout->addWidget(new QLabel(tr("Available:")));
+	main_layout->addWidget(available_list, 1);
+	main_layout->addLayout(available_buttons);
+	main_layout->addWidget(buttons);
+
+	if (dialog->exec() != QDialog::Accepted)
+	{
+		// Revert changes made during editing
+		pie_menu_actions = getSetting(Settings::PieMenu_Actions).toStringList();
+	}
+	delete dialog;
 }
 
 

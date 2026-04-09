@@ -35,8 +35,13 @@
 
 namespace OpenOrienteering {
 
+#ifdef Q_OS_ANDROID
+PieMenu::PieMenu(QWidget* parent)
+: QWidget(parent),	// Child widget on Android (popup windows lack alpha channel support)
+#else
 PieMenu::PieMenu(QWidget* parent)
 : QWidget(parent, Qt::Popup | Qt::FramelessWindowHint),	// NOTE: use Qt::Window for debugging to avoid mouse grab
+#endif
    minimum_action_count(3),
    icon_size(24),
    active_action(nullptr),
@@ -44,11 +49,12 @@ PieMenu::PieMenu(QWidget* parent)
    clicked(false)
 {
 	setCursor(QCursor(Qt::ArrowCursor));
-	setAttribute(Qt::WA_OpaquePaintEvent);
+	setAttribute(Qt::WA_TranslucentBackground);
 	setAttribute(Qt::WA_ShowWithoutActivating);
 	setAutoFillBackground(false);
 	setMouseTracking(true);
-	
+	hide();  // Start hidden (Qt::Popup windows are hidden by default, child widgets are not)
+
 	auto scale = Settings::getInstance().getSetting(Settings::General_PixelsPerInch).toReal() / 96.0;
 	if (scale > 1.5)
 	{
@@ -161,27 +167,49 @@ void PieMenu::setActiveAction(QAction* action)
 void PieMenu::popup(const QPoint& pos)
 {
 	updateCachedState(); // We need the current total_radius.
-	
+
+#ifdef Q_OS_ANDROID
+	// Child widget: convert global coordinates to parent-relative
+	QPoint local_pos = parentWidget()->mapFromGlobal(pos);
+	QRect parent_rect = parentWidget()->rect();
+
+	if (local_pos.x() > parent_rect.right() - total_radius)
+		local_pos.setX(parent_rect.right() - total_radius);
+	else if (local_pos.x() < total_radius)
+		local_pos.setX(total_radius);
+
+	if (local_pos.y() > parent_rect.bottom() - total_radius)
+		local_pos.setY(parent_rect.bottom() - total_radius);
+	else if (local_pos.y() < total_radius)
+		local_pos.setY(total_radius);
+
+	setGeometry(local_pos.x() - total_radius, local_pos.y() - total_radius, 2 * total_radius, 2 * total_radius);
+#else
 	QPoint cursor_pos = QCursor::pos();
 	QRect screen_rect = qApp->desktop()->availableGeometry(cursor_pos);
-	
+
 	if (cursor_pos.x() > screen_rect.right() - total_radius)
 		cursor_pos.setX(screen_rect.right() - total_radius);
 	else if (cursor_pos.x() < total_radius)
 		cursor_pos.setX(total_radius);
-	
+
 	if (cursor_pos.y() > screen_rect.bottom() - total_radius)
 		cursor_pos.setY(screen_rect.bottom() - total_radius);
 	else if (cursor_pos.y() < total_radius)
 		cursor_pos.setY(total_radius);
-	
+
 	setGeometry(pos.x() - total_radius, pos.y() - total_radius, 2 * total_radius, 2 * total_radius);
-	
+#endif
+
 	clicked = false;
 	active_action = nullptr;
-	
+
 	emit aboutToShow();
 	show();
+	raise();
+#ifdef Q_OS_ANDROID
+	grabMouse();
+#endif
 }
 
 void PieMenu::actionEvent(QActionEvent* event)
@@ -201,6 +229,9 @@ void PieMenu::actionEvent(QActionEvent* event)
 
 void PieMenu::hideEvent(QHideEvent* event)
 {
+#ifdef Q_OS_ANDROID
+	releaseMouse();
+#endif
 	if (!event->spontaneous())
 	{
 		emit aboutToHide();
@@ -277,7 +308,7 @@ void PieMenu::paintEvent(QPaintEvent* event)
 	QPainter painter(this);
 	painter.setClipRect(event->rect());
 	painter.setRenderHint(QPainter::Antialiasing, true);
-	
+
 	// Background
 	QPen pen(palette.color(QPalette::Dark));
 	pen.setWidth(1);

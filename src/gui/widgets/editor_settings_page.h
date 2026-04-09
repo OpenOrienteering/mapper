@@ -54,6 +54,7 @@ public:
 protected:
 	void updateWidgets();
 	void configureMobileToolbars();
+	void configurePieMenu();
 	
 private:
 	QDoubleSpinBox* button_size = nullptr;
@@ -72,7 +73,10 @@ private:
 	QComboBox* gesture_extra_rendering;
 	QComboBox* auto_rotation_frequency;
 	QCheckBox* touch_pan_only;
-	
+	QComboBox* spen_button_action = nullptr;
+	QPushButton* pie_menu_button = nullptr;
+	QStringList pie_menu_actions;
+
 	QComboBox* edit_tool_delete_bezier_point_action;
 	QComboBox* edit_tool_delete_bezier_point_action_alternative;
 	
