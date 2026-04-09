@@ -653,6 +653,27 @@ QStringList MapEditorController::editableMobileToolbarActionIds()
 	return editableMobileToolbarActionIdsImpl();
 }
 
+QStringList MapEditorController::editablePieMenuActionIds()
+{
+	auto ids = QStringList{};
+	for (const auto& definition : mobile_toolbar_action_definitions)
+	{
+		if (definition.source == MobileToolbarActionDefinition::ControllerAction
+		    && QLatin1String(definition.id) != QLatin1String("compassdisplay")
+		    && QLatin1String(definition.id) != QLatin1String("gpsdisplay")
+		    && QLatin1String(definition.id) != QLatin1String("gpsdistancerings")
+		    && QLatin1String(definition.id) != QLatin1String("alignmapwithnorth")
+		    && QLatin1String(definition.id) != QLatin1String("templatewindow")
+		    && QLatin1String(definition.id) != QLatin1String("zoomin")
+		    && QLatin1String(definition.id) != QLatin1String("zoomout")
+		    && QLatin1String(definition.id) != QLatin1String("panmap"))
+		{
+			ids << QLatin1String(definition.id);
+		}
+	}
+	return ids;
+}
+
 QStringList MapEditorController::defaultMobileToolbarActionIds(MobileToolbarZone zone)
 {
 	return defaultMobileToolbarActionIdsImpl(zone);
@@ -1170,11 +1191,18 @@ void MapEditorController::attach(MainWindow* window)
 	map_widget->setZoomDisplay(zoom_display_function);
 	map_widget->setTouchPanOnly(
 	    Settings::getInstance().getSettingCached(Settings::MapEditor_TouchPanOnly).toBool());
+	map_widget->setSPenButtonAction(
+	    Settings::getInstance().getSettingCached(Settings::MapEditor_SPenButtonAction).toInt());
 	connect(&Settings::getInstance(), &Settings::settingsChanged,
 	        this, [this]() {
 		if (map_widget)
+		{
 			map_widget->setTouchPanOnly(
 			    Settings::getInstance().getSettingCached(Settings::MapEditor_TouchPanOnly).toBool());
+			map_widget->setSPenButtonAction(
+			    Settings::getInstance().getSettingCached(Settings::MapEditor_SPenButtonAction).toInt());
+			populatePieMenu();
+		}
 	});
 	
 	// Create menu and toolbar together, so actions can be inserted into one or both
@@ -2016,6 +2044,24 @@ void MapEditorController::createMobileGUI()
 	layout->addWidget(bottom_action_bar);
 	container_widget->setLayout(layout);
 	window->setCentralWidget(container_widget);
+
+	// Populate context menu (pie menu) from settings
+	populatePieMenu();
+}
+
+void MapEditorController::populatePieMenu()
+{
+	auto* context_menu = map_widget->getContextMenu();
+	// Clear existing actions (PieMenu::clear removes without deleting)
+	while (!context_menu->actions().isEmpty())
+		context_menu->removeAction(context_menu->actions().last());
+
+	auto pie_action_ids = Settings::getInstance().getSetting(Settings::PieMenu_Actions).toStringList();
+	for (const auto& id : pie_action_ids)
+	{
+		if (auto* action = getAction(id.toLatin1().constData()))
+			context_menu->addAction(action);
+	}
 }
 
 void MapEditorController::detach()

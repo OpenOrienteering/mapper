@@ -86,6 +86,8 @@ public:
 		MapDisplay_GestureExtraRendering,
 		MapDisplay_AutoRotationFrequency,
 		MapEditor_TouchPanOnly,
+		MapEditor_SPenButtonAction,
+		PieMenu_Actions,
 		PaintOnTemplateTool_Colors,
 		END_OF_SETTINGSENUM /* Don't add items below this line. */
 	};
@@ -131,6 +133,7 @@ public:
 	static QStringList defaultMobileTopRightToolbarActions();
 	static QStringList defaultMobileBottomLeftToolbarActions();
 	static QStringList defaultMobileBottomRightToolbarActions();
+	static QStringList defaultPieMenuActions();
 
 	// Methods related to specific settings
 	

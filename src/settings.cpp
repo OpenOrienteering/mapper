@@ -232,6 +232,19 @@ QStringList Settings::defaultMobileBottomRightToolbarActions()
 	};
 }
 
+QStringList Settings::defaultPieMenuActions()
+{
+	return {
+		QStringLiteral("editobjects"),
+		QStringLiteral("drawpoint"),
+		QStringLiteral("drawpath"),
+		QStringLiteral("drawrectangle"),
+		QStringLiteral("cutobject"),
+		QStringLiteral("cuthole"),
+		QStringLiteral("switchdashes"),
+		QStringLiteral("connectpaths"),
+	};
+}
 
 
 Settings::Settings()
@@ -310,6 +323,8 @@ Settings::Settings()
 	registerSetting(MapDisplay_GestureExtraRendering, "MapDisplay/gesture_extra_rendering", 1);
 	registerSetting(MapDisplay_AutoRotationFrequency, "MapDisplay/auto_rotation_frequency", 0);
 	registerSetting(MapEditor_TouchPanOnly, "MapEditor/touch_pan_only", false);
+	registerSetting(MapEditor_SPenButtonAction, "MapEditor/spen_button_action", 0);
+	registerSetting(PieMenu_Actions, "PieMenu/actions", defaultPieMenuActions());
 
 	// Paint On Template tool settings
 	registerSetting(PaintOnTemplateTool_Colors, "PaintOnTemplateTool/colors", QLatin1String("FF0000,FFFF00,00FF00,DB00D9,0000FF,D15C00,000000"));

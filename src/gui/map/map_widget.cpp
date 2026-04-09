@@ -132,6 +132,7 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
 	setMouseTracking(true);
 	setFocusPolicy(Qt::ClickFocus);
 	setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
+
 }
 
 MapWidget::~MapWidget()
@@ -392,6 +393,7 @@ void MapWidget::finishDragging(const QPoint& cursor_pos)
 
 void MapWidget::cancelDragging()
 {
+	spen_dragging = false;
 	dragging = false;
 	current_pressed_buttons = 0;
 	view->setPanOffset(QPoint());
@@ -853,7 +855,10 @@ bool MapWidget::event(QEvent* event)
 		return event->isAccepted();
 		
 	case QEvent::TabletPress:
-		finger_touch_active = false;
+	case QEvent::TabletMove:
+	case QEvent::TabletRelease:
+		if (event->type() == QEvent::TabletPress)
+			finger_touch_active = false;
 		break;
 	
 	case QEvent::TouchBegin:
@@ -873,9 +878,12 @@ bool MapWidget::event(QEvent* event)
 		break;
 	}
 	case QEvent::TouchUpdate:
-		if (static_cast<QTouchEvent*>(event)->touchPoints().count() >= 2)
+	{
+		auto* te = static_cast<QTouchEvent*>(event);
+		if (te->touchPoints().count() >= 2)
 			return true;
 		break;
+	}
 	case QEvent::TouchEnd:
 	case QEvent::TouchCancel:
 		finger_touch_active = false;
@@ -884,8 +892,9 @@ bool MapWidget::event(QEvent* event)
 		break;
 		
 	case QEvent::KeyPress:
+	case QEvent::KeyRelease:
 		// No focus changing in QWidget::event if Tab is handled by tool.
-		if (static_cast<QKeyEvent*>(event)->key() == Qt::Key_Tab
+		if (event->type() == QEvent::KeyPress && static_cast<QKeyEvent*>(event)->key() == Qt::Key_Tab
 		    && keyPressEventFilter(static_cast<QKeyEvent*>(event)))
 			return true;
 		break;
@@ -1023,7 +1032,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	{
 		painter.fillRect(target, Qt::white);
 	}
-	
+
 	const auto map_visibility = view->effectiveMapVisibility();
 	if (!map_cache.isNull() && map_visibility.visible)
 	{
@@ -1057,9 +1066,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	// Draw touch cursor
 	if (touch_cursor && tool && tool->usesTouchCursor())
 		touch_cursor->paint(&painter);
-	
-	
-	painter.setWorldTransform(transform, false);
+
 }
 
 void MapWidget::resizeEvent(QResizeEvent* event)
@@ -1107,6 +1114,25 @@ void MapWidget::mousePressEvent(QMouseEvent* event)
 	if (touch_pan_only && finger_touch_active && event->button() == Qt::LeftButton)
 	{
 		startDragging(event->pos());
+		event->accept();
+		return;
+	}
+	// S-Pen side button
+	if (event->button() == Qt::ExtraButton3 && spen_button_action != SPenButton_None)
+	{
+		if (spen_button_action == SPenButton_Pan)
+		{
+			if (!dragging && !pinching)
+			{
+				spen_dragging = true;
+				startDragging(event->pos());
+			}
+		}
+		else if (spen_button_action == SPenButton_PieMenu)
+		{
+			if (!context_menu->isEmpty())
+				context_menu->popup(event->globalPos());
+		}
 		event->accept();
 		return;
 	}
@@ -1159,6 +1185,13 @@ void MapWidget::mouseMoveEvent(QMouseEvent* event)
 		event->accept();
 		return;
 	}
+	// S-Pen side button: update pan if active
+	if (spen_dragging && dragging)
+	{
+		updateDragging(event->pos());
+		event->accept();
+		return;
+	}
 	if (touch_cursor && tool && tool->usesTouchCursor())
 	{
 		if (!touch_cursor->mouseMoveEvent(event))
@@ -1198,6 +1231,15 @@ void MapWidget::mouseReleaseEvent(QMouseEvent* event)
 	// Touch-pan-only: skip touch cursor and tool
 	if (touch_pan_only && finger_touch_active)
 	{
+		if (dragging)
+			finishDragging(event->pos());
+		event->accept();
+		return;
+	}
+	// S-Pen side button: finish pan if active
+	if (spen_dragging && event->button() == Qt::ExtraButton3)
+	{
+		spen_dragging = false;
 		if (dragging)
 			finishDragging(event->pos());
 		event->accept();

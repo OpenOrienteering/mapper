@@ -101,6 +101,14 @@ public:
 		GEOGRAPHIC_COORDS_DMS
 	};
 	
+	/** Describes the action for the S-Pen side button. */
+	enum SPenButtonAction
+	{
+		SPenButton_None    = 0,
+		SPenButton_Pan     = 1,
+		SPenButton_PieMenu = 2
+	};
+
 	/** Describes how a zoom level can be determined. */
 	enum ZoomOption
 	{
@@ -142,6 +150,9 @@ public:
 
 	/** Sets whether touch input is limited to pan/zoom/rotate only. */
 	void setTouchPanOnly(bool enabled) { touch_pan_only = enabled; }
+
+	/** Sets the action for the S-Pen side button (ExtraButton3). */
+	void setSPenButtonAction(int action) { spen_button_action = action; }
 
 	/**
 	 * @brief Enables or disables gesture recognition.
@@ -582,7 +593,9 @@ private:
 	int current_pressed_buttons;
 	bool touch_pan_only = false;
 	bool finger_touch_active = false;
-	
+	int spen_button_action = 0;
+	bool spen_dragging = false;
+
 	/** Optional GPS display */
 	GPSDisplay* gps_display;
 	/** Optional temporary GPS marker display. */

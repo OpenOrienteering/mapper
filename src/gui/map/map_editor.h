@@ -246,6 +246,9 @@ public:
 	/** Returns editable mobile toolbar action IDs. */
 	static QStringList editableMobileToolbarActionIds();
 
+	/** Returns action IDs available for the pie menu. */
+	static QStringList editablePieMenuActionIds();
+
 	/** Returns the default mobile toolbar action IDs for the selected zone. */
 	static QStringList defaultMobileToolbarActionIds(MobileToolbarZone zone);
 
@@ -724,6 +727,7 @@ private:
 	void createActions();
 	void createMenuAndToolbars();
 	void createMobileGUI();
+	void populatePieMenu();
 
 	void doUndo(bool redo);
 	
