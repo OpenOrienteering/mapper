@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2019-2020 Kai Pastor
+ *    Copyright 2019-2020, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,9 +21,12 @@
 
 #include "map_dialog_scale.h"
 
-#include <QDoubleSpinBox>
+#include <Qt>
+#include <QAbstractButton>
+#include <QAbstractSpinBox>
 #include <QCheckBox>
 #include <QDialogButtonBox>
+#include <QDoubleSpinBox>
 #include <QFormLayout>
 #include <QLabel>
 #include <QRadioButton>
@@ -32,13 +35,15 @@
 
 #include "core/georeferencing.h"
 #include "core/map.h"
-#include "templates/template.h"
+#include "core/map_coord.h"
 #include "gui/util_gui.h"
 
 
 namespace OpenOrienteering {
 
-ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
+ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map)
+: QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
+, map(map)
 {
 	setWindowTitle(tr("Change map scale"));
 	
@@ -102,12 +107,7 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	layout->addRow(adjust_georeferencing_check);
 	
 	adjust_templates_check = new QCheckBox(tr("Scale non-georeferenced templates"));
-	bool have_non_georeferenced_template = false;
-	for (int i = 0; i < map->getNumTemplates() && !have_non_georeferenced_template; ++i)
-		have_non_georeferenced_template = !map->getTemplate(i)->isTemplateGeoreferenced();
-	for (int i = 0; i < map->getNumClosedTemplates() && !have_non_georeferenced_template; ++i)
-		have_non_georeferenced_template = !map->getClosedTemplate(i)->isTemplateGeoreferenced();
-	if (have_non_georeferenced_template)
+	if (map->hasNonGeoreferencedTemplate())
 		adjust_templates_check->setChecked(true);
 	else
 		adjust_templates_check->setEnabled(false);
