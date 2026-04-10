@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2020 Kai Pastor
+ *    Copyright 2020, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,17 +21,15 @@
 
 #include "rotate_map_dialog.h"
 
-#include <Qt>
 #include <QtMath>
 #include <QAbstractButton>
 #include <QCheckBox>
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
 #include <QFormLayout>
-#include <QVBoxLayout>
 #include <QLabel>
 #include <QRadioButton>
-#include <QSpacerItem>
+#include <QVBoxLayout>
 
 #include "core/georeferencing.h"
 #include "core/map.h"
@@ -97,7 +95,10 @@ RotateMapDialog::RotateMapDialog(const Map& map, QWidget* parent, Qt::WindowFlag
 	layout->addRow(adjust_declination_check);
 	
 	adjust_templates_check = new QCheckBox(tr("Rotate non-georeferenced templates"));
-	adjust_templates_check->setChecked(true);
+	if (map.hasNonGeoreferencedTemplate())
+		adjust_templates_check->setChecked(true);
+	else
+		adjust_templates_check->setEnabled(false);
 	layout->addRow(adjust_templates_check);
 	
 	
