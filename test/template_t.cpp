@@ -422,6 +422,8 @@ private slots:
 		QTest::newRow("OgrTemplate NAD83")            << QStringLiteral("testdata:templates/template-track-NA.xmap") << 1;
 		QTest::newRow("TemplateTrack from v0.8.4")    << QStringLiteral("testdata:templates/template-track-NA-084.xmap") << 0;
 		QTest::newRow("TemplateTrack from v0.9.3")    << QStringLiteral("testdata:templates/template-track-NA-093-PROJ.xmap") << 0;
+		QTest::newRow("TemplateTrack ortho")          << QStringLiteral("testdata:templates/template-track-ortho.xmap") << 0;
+		QTest::newRow("OgrTemplate ortho")            << QStringLiteral("testdata:templates/template-track-ortho.xmap") << 1;
 	}
 	
 	void templateTrackTest()
@@ -474,6 +476,8 @@ private slots:
 		QTest::newRow("OgrTemplate NAD83")            << QStringLiteral("testdata:templates/template-track-NA.xmap") << 1;
 		QTest::newRow("TemplateTrack from v0.8.4")    << QStringLiteral("testdata:templates/template-track-NA-084.xmap") << 0;
 		QTest::newRow("OGRTemplate from v0.9.3")      << QStringLiteral("testdata:templates/template-track-NA-093-GDAL.xmap") << 0;
+		QTest::newRow("TemplateTrack ortho")          << QStringLiteral("testdata:templates/template-track-ortho.xmap") << 0;
+		QTest::newRow("OgrTemplate ortho")            << QStringLiteral("testdata:templates/template-track-ortho.xmap") << 1;
 	}
 	
 	void ogrTemplateTest()
