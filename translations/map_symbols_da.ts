@@ -101,27 +101,27 @@
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul 100% for smalt lineært spor</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grøn 60% for smal lineært spor</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grøn 30% for smalt lineært spor</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvid over grøn</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul 100%/Grøn 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -131,7 +131,7 @@
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grøn 100%/Sort 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -141,12 +141,12 @@
     <message>
         <source>Green 60%</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grøn 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 28</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grøn 30%</translation>
     </message>
     <message>
         <source>Green 100% for undergrowth</source>
@@ -156,7 +156,7 @@
     <message>
         <source>White over yellow</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvid over gul</translation>
     </message>
     <message>
         <source>Black for open land</source>
@@ -304,7 +304,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Earth bank, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 104.9</comment>
-        <translation>Jordskrænt, minimum størrelse (from ISOM2000)</translation>
+        <translation>Jordskrænt, minimum størrelse (fra ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
