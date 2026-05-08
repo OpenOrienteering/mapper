@@ -1,16 +1,18 @@
 ---
 title: Georeferencing
+
 authors:
   - Peter Hoban
   - Thomas Schoeps
   - Scott Turner
+
 keywords: Georeferencing
 nav_order: 0.12
 last_modified_date: 8 May 2026
 ---
 
  - [Introduction](#introduction)
- - [Coordinate reference system](#coordinate-reference-system]
+ - [Coordinate Reference System](#coordinate-reference-system)
  - [Georeferencing dialog](#georeferencing-dialog)
  - [Related functions](#related-functions)
  - [Glossary](#glossary)
@@ -85,32 +87,6 @@ The map’s **scale** is primary. It is the ratio of distance on the ground to d
 
 The **auxiliary scale factor** influences the transformation of map coordinates to geographic coordinates. It is also known as elevation factor or orthometric height factor. The auxiliary scale factor is typically 1.0, having no effect. However, for a map at the altitude of 1,800 meters above the ellipsoid, where the auxiliary scale factor is 0.9997, it would make a slight difference. It is the ratio between the size of a degree on the ellipsoid surface and the size of a degree at ground level.
 
-#### Latitude/longitude calculation details
-
-Each map object has a one or more x,y positions. An object’s geographic coordinates are calculated as needed. The calculation is determined by the map’s georeferencing parameters.
-
-**Scale denominator** is Mapper’s internal representation of the scale. For example, in a map with scale 1:5,000, the scale could be represented by the fraction 1/5,000., Its scale denominator is 5,000.
-
-To calculate the geographic coordinates of a point on the map,
-
- - Start with the given point’s distance on the map from the reference point, in millimeters.
- - Divide the distance by 1000, yielding distance on the map, in meters.
- - Multiply by the map scale denominator, yielding real distance (in meters).
- - Multiply by the auxiliary scale factor, yielding the distance on the ellipsoid (in meters).
-
-Having distance, continue and calculate azimuth,
- 
- - Start with the given point’s [magnetic] azimuth from the reference point, on the map.
- - Add the declination, yielding geographical azimuth from the reference point.
-
-Having distance and azimuth, find latitude/longitude
- 
- - Start at the reference point on the datum’s ellipsoid.
- - *Move* from there in the direction of the geographical azimuth for the calculated distance.
- - Where movement ends, capture the latitude/longitude.
-
-The just-mentioned motion along the ellipsoid can be calculated in many ways. The details of how Mapper does it are explained in the next (CRS) section.
-
 ### Coordinate Reference System (CRS)
 
 Whenever Mapper sets up georeferencing for a map or template, it uses a **coordinate reference system (CRS)** to define the **projection** between the curved ellipsoid and a flat, rectangular coordinate system. In general, a CRS is a coordinate-based system used to locate geographic entities. It defines a specific map projection and a transformation from/to geographic coordinates. Standard CRSes can be referred to using a SRID integer, including EPSG codes.
@@ -135,7 +111,7 @@ A spatial reference system identifier (**SRID**) is typically associated with a 
 
 #### Why projected coordinates
 
-Projected coordinates are a intermediate stage in transformations between map coordinates and geographic coordinates. Conversions between map coordinates and projected coordinates are made as a similarity transform determined by map scale, auxiliary scale factor, declination, and the reference point. Conversions between projected coordinates and geographic coordinates are made based on the map’s specified CRS. The actual geographic transformation is done by the PROJ library. 
+Projected coordinates are an intermediate stage in transformations between map coordinates and geographic coordinates. Conversions between map coordinates and projected coordinates are made as a similarity transform determined by map scale, auxiliary scale factor, declination, and the reference point. Conversions between projected coordinates and geographic coordinates are made based on the map’s specified CRS. The actual geographic transformation is done by the PROJ library. 
 
 The projected coordinate system provides a flat, two-dimensional space, upon which the features of the Earth’s surface can be represented. For example, Universal Transverse Mercator (UTM) for a specific zone. Projected coordinates are a basis for the map. Mapper calculates a correspondence between figures drawn in the map’s coordinate system, and shapes in the projected coordinate system. This keeps shapes unchanged, while allowing the map to be oriented, scaled, and cropped freely.
 
@@ -162,15 +138,28 @@ The **grid scale factor** is the size of an ellipsoid meter on the grid (grid un
 
 Combined scale factor is the ratio between length in projected coordinates and the length on the ground.
 
-#### Size calculation
+#### Latitude/longitude calculation details
 
-To calculate the real world length of a straight line,
+Each map object has a one or more x,y positions. An object’s geographic coordinates are calculated as needed. The calculation is determined by the map’s georeferencing parameters.
 
- - Start with distance on the map, in mm.
- - Divide by 1000, yielding distance on the map, in m
- - Multiply by the map scale denominator, yielding distance in real world meters
- - Multiply by the auxiliary scale factor, yielding distance on the ellipsoid (in meters)
- - Multiply by the grid scale factor, yielding distance in coordinates of the projected grid (in meters)
+**Scale denominator** is Mapper’s internal representation of the scale. For example, in a map with scale 1:5,000, the scale could be represented by the fraction 1/5,000., Its scale denominator is 5,000.
+
+To calculate the geographic coordinates of a point on the map,
+
+ - Start with the given point’s distance on the map from the reference point, in millimeters.
+ - Divide the distance by 1000, yielding distance on the map, in meters.
+ - Multiply by the map scale denominator, yielding distance in real world meters.
+ - Multiply by the combined scale factor, yielding the distance on the projected grid (in meters).
+
+Having distance, continue and calculate azimuth,
+ 
+ - Start with the given point’s (magnetic) azimuth from the reference point, on the map.
+ - Add the grivation, yielding grid azimuth from the reference point.
+
+Having distance and azimuth, find latitude/longitude
+ 
+ - In the projected coordinate system, from the reference point, along the line defined by the azimuth, find the point at the calculated distance.
+ - Use the CRS to transform (Easting, Northing) to (latitude, longitude).
 
 ### Georeferencing dialog
 
