@@ -8,7 +8,7 @@ The general build process prerequisites are:
      Linux is also used to cross-compile for Android.
    - macOS: 10.13 is known to work, so is 26.3 (Tahoe).
    - Windows: MSYS2 (MinGW subsystem).
- - CMake >= 3.7, < 4.0.
+ - CMake >= 3.7.
    CMake is available from https://cmake.org/.
  - A supported C++ compiler toolchain. C++14 is mandatory.
 
@@ -77,11 +77,11 @@ zlib1g-dev
 ```
 
 When not using Qt Creator, open a terminal, and create a build directory, e.g.
-as subdirectory build in the project's root directory, and change to that directory.
+as subdirectory `build` in the source directory, and change to that directory.
 From the build directory, configure and build like this:
 
 ```
-cmake PATH/TO/MAPPER_ROOT_DIR
+cmake PATH/TO/SOURCE_DIR
 ```
 
 When building on openSUSE, you may want to add -DMapper_BUILD_CLIPPER=1. This
@@ -96,11 +96,8 @@ make
 
 ## Compiling for macOS (with brew instead of OpenOrienteering superbuild)
 
-`brew` installs `cmake` 4.x but the project requires an older version 3. A legacy
-version of `cmake` can be downloaded at https://cmake.org/download/#text=Legacy%20Release then located at
-`/Applications/CMake.app/Contents/bin/cmake`.
 
-The remaining packages can be installed with `brew`:
+The packages can be installed with `brew`:
 
 ```
 brew install clipper2 proj gdal zlib qt@5
@@ -120,13 +117,8 @@ zlib 1.3.2
 For the build it might be necessary to pass `-DCMAKE_PREFIX_PATH="$(brew --prefix qt@5)` to `cmake`:
 
 ```
-mkdir build
-cd build
-cmake3 .. -DCMAKE_PREFIX_PATH="$(brew --prefix qt@5)"
-make
+cmake .. -DCMAKE_PREFIX_PATH="$(brew --prefix qt@5)"
 ```
-
-The built application can then be opened with `open src/Mapper.app`
 
 ## Compiling for Windows (without OpenOrienteering superbuild)
 
