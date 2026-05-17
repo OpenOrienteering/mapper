@@ -94,7 +94,7 @@ Now you may start the build process by running
 make
 ```
 
-## Compiling for macos (without OpenOrienteering superbuild)
+## Compiling for macOS (with brew instead of OpenOrienteering superbuild)
 
 `brew` installs `cmake` 4.x but the project requires an older version 3. A legacy
 version of `cmake` can be downloaded at https://cmake.org/download/#text=Legacy%20Release then located at
