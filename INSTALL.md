@@ -97,7 +97,7 @@ make
 ## Compiling for macOS (with brew instead of OpenOrienteering superbuild)
 
 
-The packages can be installed with `brew`:
+The packages can be installed with `brew` (https://brew.sh):
 
 ```
 brew install clipper2 proj gdal zlib qt@5
