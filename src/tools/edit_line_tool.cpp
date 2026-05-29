@@ -524,7 +524,7 @@ void EditLineTool::updateStatusText()
 			text += tr("<b>%1</b>: Free movement. ").arg(ModifierKey::control());
 		if (!(active_modifiers & Qt::ShiftModifier))
 			text += ::OpenOrienteering::EditTool::tr("<b>%1</b>: Snap to existing objects. ").arg(ModifierKey::shift());
-		else
+		if (text.endsWith(QLatin1String("| ")))
 			text.chop(2); // Remove "| "
 	}
 	else
