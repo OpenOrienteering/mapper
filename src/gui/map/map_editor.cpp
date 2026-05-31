@@ -116,6 +116,7 @@
 #include "gui/main_window.h"
 #include "gui/print_widget.h"
 #include "gui/simple_course_dialog.h"
+#include "gui/tag_remove_dialog.h"
 #include "gui/text_browser_dialog.h"
 #include "gui/util_gui.h"
 #include "gui/map/map_dialog_scale.h"
@@ -1037,6 +1038,7 @@ void MapEditorController::createActions()
 	rotate_map_act = newAction("rotatemap", tr("Rotate map..."), this, SLOT(rotateMapClicked()), "tool-rotate.png", tr("Rotate the whole map"), "map_menu.html");
 	map_notes_act = newAction("mapnotes", tr("Map notes..."), this, SLOT(mapNotesClicked()), nullptr, QString{}, "map_menu.html");
 	map_info_act = newAction("mapinfo", tr("Map information..."), this, SLOT(mapInfoClicked()), "map-information.png", QString{}, "map_menu.html");
+	remove_tags_act = newAction("removetags", tr("Remove object tags..."), this, SLOT(removeObjectTagsClicked()), "delete.png", QString{}, "map_menu.html");
 	
 	template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "templates.png", tr("Show/Hide the template window"), "templates_menu.html");
 	//QAction* template_config_window_act = newCheckAction("templateconfigwindow", tr("Template configurations window"), this, SLOT(showTemplateConfigurationsWindow(bool)), "window-new", tr("Show/Hide the template configurations window"));
@@ -1266,6 +1268,7 @@ void MapEditorController::createMenuAndToolbars()
 	map_menu->addAction(rotate_map_act);
 	map_menu->addAction(map_notes_act);
 	map_menu->addAction(map_info_act);
+	map_menu->addAction(remove_tags_act);
 	map_menu->addSeparator();
 	updateMapPartsUI();
 	map_menu->addAction(mappart_add_act);
@@ -2299,6 +2302,13 @@ void MapEditorController::mapInfoClicked()
 	dialog.exec();
 }
 
+void MapEditorController::removeObjectTagsClicked()
+{
+	TagRemoveDialog dialog(window, map);
+	dialog.setWindowModality(Qt::WindowModal);
+	dialog.exec();
+}
+
 void MapEditorController::createTemplateWindow()
 {
 	Q_ASSERT(!template_dock_widget);
@@ -2631,6 +2641,8 @@ void MapEditorController::updateObjectDependentActions()
 	scale_act->setEnabled(have_selection);
 	scale_act->setStatusTip(tr("Scale the selected objects.") + (scale_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object to activate this tool."))));
 	mappart_move_menu->setEnabled(have_selection && have_multiple_parts);
+	remove_tags_act->setEnabled(have_selection);
+	remove_tags_act->setStatusTip(tr("Remove tags from the selected objects.") + (remove_tags_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object to activate this tool."))));
 	
 	// have_rotatable_pattern || have_rotatable_point
 	rotate_pattern_act->setEnabled(have_rotatable_pattern || have_rotatable_object);
