@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2019, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,7 +25,6 @@
 #include <cmath>
 #include <cstddef>
 #include <iterator>
-#include <memory>
 #include <utility>
 
 #include <QtMath>
@@ -452,9 +451,9 @@ bool PointSymbol::isEmpty() const
 
 bool PointSymbol::isSymmetrical() const
 {
-	return std::none_of(begin(elements), end(elements), [](auto& element) {
-		return element.symbol->getType() != Symbol::Point
-		       || static_cast<const PointObject*>(element.object.get())->getCoord().isPositionEqualTo({0,0});
+	return std::all_of(begin(elements), end(elements), [](const auto& element) {
+		return element.symbol->getType() == Symbol::Point
+		       && static_cast<const PointObject*>(element.object.get())->getCoord().isPositionEqualTo({0,0});
 	});
 }
 
