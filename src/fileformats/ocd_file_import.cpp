@@ -1370,7 +1370,7 @@ void OcdFileImport::setupLineSymbolFraming(OcdFileImport::OcdImportedLineSymbol*
 	default:
 		addSymbolWarning( main_line, 
 		                  tr("Unsupported framing line style '%1'.").
-		                  arg(attributes.line_style) );
+		                  arg(attributes.framing_style) );
 	}
 }
 
