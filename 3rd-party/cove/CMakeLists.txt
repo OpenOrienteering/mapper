@@ -1,8 +1,6 @@
 project(Cove)
 
-find_package(Qt5Core ${Qt5Core_VERSION} REQUIRED)
-find_package(Qt5Widgets ${Qt5Core_VERSION} REQUIRED)
-find_package(Qt5Concurrent ${Qt5Core_VERSION} REQUIRED)
+find_package(${Mapper_QT} ${Mapper_QT_VERSION} COMPONENTS Core Widgets Concurrent REQUIRED)
 
 set(CMAKE_CXX_STANDARD 14)
 

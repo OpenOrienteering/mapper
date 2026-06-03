@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2019 Kai Pastor
+#    Copyright 2012-2020, 2026 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -143,26 +143,19 @@ if(Mapper_MANUAL_QTHELP)
 	# Qt Help generation
 	#
 	
-	find_package(Qt5Core REQUIRED)
-	if (Qt5Core_VERSION VERSION_LESS 5.12)
-		set(qcollectiongenerator_name qcollectiongenerator)
-	else()
-		set(qcollectiongenerator_name qhelpgenerator)
-	endif()
-	
 	# Qt provides a broken Qt5::qcollectiongenerator when crosscompiling.
 	if (CMAKE_CROSSCOMPILING AND NOT TARGET Qt5::qcollectiongenerator)
 		find_program(Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE
-		  NAMES ${qcollectiongenerator_name}-qt5 ${qcollectiongenerator_name}
+		  NAMES qhelpgenerator-qt5 qhelpgenerator
 		  DOC "The path of the Qt Help collection generator executable"
 		)
-		add_executable(Qt5::${qcollectiongenerator_name} IMPORTED)
-		set_target_properties(Qt5::${qcollectiongenerator_name} PROPERTIES
+		add_executable(Qt5::qhelpgenerator IMPORTED)
+		set_target_properties(Qt5::qhelpgenerator PROPERTIES
 		  IMPORTED_LOCATION ${Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE}
 		)
 	elseif(NOT Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE)
 		find_package(Qt5Help REQUIRED)
-		set(Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE Qt5::${qcollectiongenerator_name})
+		set(Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE Qt5::qhelpgenerator)
 	endif()
 	
 	# Reproducible builds need a modification to the help collection file.
@@ -171,16 +164,9 @@ if(Mapper_MANUAL_QTHELP)
 	  DOC "The path of the sqlite3 executable"
 	)
 	if (DEFINED ENV{SOURCE_DATE_EPOCH} AND SQLITE3_EXECUTABLE)
-		if(Qt5Core_VERSION VERSION_LESS 5.12.0)
-			file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/timestamp.sql"
-			  "UPDATE 'SettingsTable' SET Value='$ENV{SOURCE_DATE_EPOCH}' where Key='CreationTime';\n"
-			  "DELETE FROM 'SettingsTable' WHERE Key='LastRegisterTime';\n"
-			)
-		else()
-			file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/timestamp.sql"
-			  "UPDATE TimeStampTable SET TimeStamp=strftime('%Y-%m-%dT%H:%M:%S',datetime($ENV{SOURCE_DATE_EPOCH},'unixepoch'));\n"
-			)
-		endif()
+		file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/timestamp.sql"
+		  "UPDATE TimeStampTable SET TimeStamp=strftime('%Y-%m-%dT%H:%M:%S',datetime($ENV{SOURCE_DATE_EPOCH},'unixepoch'));\n"
+		)
 		set(source_date_commands
 	      COMMAND ${SQLITE3_EXECUTABLE} "${Mapper_HELP_COLLECTION}" < "timestamp.sql"
 		)
