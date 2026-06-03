@@ -1,6 +1,4 @@
-find_package(Qt5Core ${Qt5Core_VERSION} REQUIRED)
-find_package(Qt5Gui ${Qt5Core_VERSION} REQUIRED)
-find_package(Qt5Test ${Qt5Core_VERSION} REQUIRED)
+find_package(${Mapper_QT} ${Mapper_QT_VERSION} COMPONENTS Core Gui Test REQUIRED)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_AUTOMOC ON)

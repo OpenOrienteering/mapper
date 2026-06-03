@@ -1,5 +1,5 @@
 #
-#    Copyright 2012-2015 Kai Pastor
+#    Copyright 2012-2015, 2017, 2019, 2026 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -16,8 +16,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Network REQUIRED)
+find_package(${Mapper_QT} ${Mapper_QT_VERSION} COMPONENTS Widgets Network REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_CLANG_TIDY "")
