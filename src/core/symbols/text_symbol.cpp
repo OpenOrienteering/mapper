@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2022 Kai Pastor
+ *    Copyright 2012-2022, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -324,7 +324,7 @@ void TextSymbol::updateQFont()
 	qfont.setHintingPreference(QFont::PreferNoHinting);
 	qfont.setKerning(kerning);
 	metrics = QFontMetricsF(qfont);
-	qfont.setLetterSpacing(QFont::AbsoluteSpacing, metrics.width(QString(QLatin1String{" "})) * character_spacing);
+	qfont.setLetterSpacing(QFont::AbsoluteSpacing, metrics.horizontalAdvance(QString(QLatin1String{" "})) * character_spacing);
 	
 	qfont.setStyleStrategy(QFont::ForceOutline);
 

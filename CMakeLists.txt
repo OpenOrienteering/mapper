@@ -230,7 +230,7 @@ endif()
 set(Mapper_QT "Qt5" CACHE STRING "Qt version and prefix")
 mark_as_advanced(Mapper_QT)
 find_package("${Mapper_QT}" REQUIRED COMPONENTS Core Widgets)
-add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050500)
+add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050c00)
 
 set(Mapper_QT_VERSION "${${Mapper_QT}_VERSION}")
 if (Mapper_QT_VERSION VERSION_LESS "5.12.1")
