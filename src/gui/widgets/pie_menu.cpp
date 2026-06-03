@@ -1,6 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2012-2014 Thomas Schöps
+ *    Copyright 2013, 2014, 2016-2019, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,9 +24,9 @@
 #include <QtMath>
 #include <QAction>
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QScreen>
 #include <QStyleOptionMenuItem>
 
 #include "settings.h"
@@ -162,18 +162,22 @@ void PieMenu::popup(const QPoint& pos)
 {
 	updateCachedState(); // We need the current total_radius.
 	
-	QPoint cursor_pos = QCursor::pos();
-	QRect screen_rect = qApp->desktop()->availableGeometry(cursor_pos);
-	
-	if (cursor_pos.x() > screen_rect.right() - total_radius)
-		cursor_pos.setX(screen_rect.right() - total_radius);
-	else if (cursor_pos.x() < total_radius)
-		cursor_pos.setX(total_radius);
-	
-	if (cursor_pos.y() > screen_rect.bottom() - total_radius)
-		cursor_pos.setY(screen_rect.bottom() - total_radius);
-	else if (cursor_pos.y() < total_radius)
-		cursor_pos.setY(total_radius);
+	auto* screen = qApp->screenAt(pos);
+	if (screen)
+	{
+		QPoint cursor_pos = QCursor::pos();
+		QRect screen_rect = screen->availableGeometry();
+		
+		if (cursor_pos.x() > screen_rect.right() - total_radius)
+			cursor_pos.setX(screen_rect.right() - total_radius);
+		else if (cursor_pos.x() < total_radius)
+			cursor_pos.setX(total_radius);
+		
+		if (cursor_pos.y() > screen_rect.bottom() - total_radius)
+			cursor_pos.setY(screen_rect.bottom() - total_radius);
+		else if (cursor_pos.y() < total_radius)
+			cursor_pos.setY(total_radius);
+	}
 	
 	setGeometry(pos.x() - total_radius, pos.y() - total_radius, 2 * total_radius, 2 * total_radius);
 	

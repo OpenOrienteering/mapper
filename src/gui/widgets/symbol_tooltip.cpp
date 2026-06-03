@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2014, 2016-2019, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,7 +25,6 @@
 #include <QtGlobal>
 #include <QApplication>
 #include <QCursor>
-#include <QDesktopWidget>
 #include <QHideEvent>
 #include <QLabel>
 #include <QLatin1Char>
@@ -33,6 +32,7 @@
 #include <QPainter>
 #include <QPalette>
 #include <QPoint>
+#include <QScreen>
 #include <QShortcut>
 #include <QShowEvent>
 #include <QSize>
@@ -139,8 +139,12 @@ void SymbolToolTip::paintEvent(QPaintEvent* event)
 
 void SymbolToolTip::adjustPosition(bool mobile_mode)
 {
+	auto* screen = qApp->screenAt(QCursor::pos());
+	if (!screen)
+		return;
+	
 	auto size = this->size();
-	auto desktop = QApplication::desktop()->screenGeometry(QCursor::pos());
+	auto desktop = screen->availableGeometry();
 	
 	const int margin = 3;
 	bool has_room_to_left  = (icon_rect.left()   - size.width()  - margin >= desktop.left());

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019, 2025 Kai Pastor
+ *    Copyright 2012-2019, 2025, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -43,12 +43,12 @@ int TextObjectPartInfo::getIndex(double pos_x) const
 	while (right != left)	
 	{
 		int middle = (left + right) / 2;
-		double x = part_x + metrics.width(part_text.left(middle));
+		double x = part_x + metrics.horizontalAdvance(part_text.left(middle));
 		if (pos_x >= x)
 		{
 			if (middle >= right)
 				return right;
-			double next = part_x + metrics.width(part_text.left(middle + 1));
+			double next = part_x + metrics.horizontalAdvance(part_text.left(middle + 1));
 			if (pos_x < next)
 				if (pos_x < (x + next) / 2)
 					return middle;
@@ -61,7 +61,7 @@ int TextObjectPartInfo::getIndex(double pos_x) const
 		{
 			if (middle <= 0)
 				return 0;
-			double prev = part_x + metrics.width(part_text.left(middle - 1));
+			double prev = part_x + metrics.horizontalAdvance(part_text.left(middle - 1));
 			if (pos_x > prev)
 				if (pos_x > (x + prev) / 2)
 					return middle;
@@ -470,7 +470,7 @@ void TextObject::prepareLineInfos() const
 					// Shrink the part and the line
 					part_end = new_part_end;
 					part = text.mid(part_start, part_end - part_start);
-					part_width = metrics.width(part);
+					part_width = metrics.horizontalAdvance(part);
 					line_end = part_end;
 				}
 			}
@@ -478,7 +478,7 @@ void TextObject::prepareLineInfos() const
 				break;
 			
 			// Add the current part
-			part_infos.push_back( { part, part_start, part_end, part_x, metrics.width(part), metrics } );
+			part_infos.push_back( { part, part_start, part_end, part_x, metrics.horizontalAdvance(part), metrics } );
 			
 			// Advance to next part position
 			part_start = part_end + 1;

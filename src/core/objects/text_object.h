@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019, 2025 Kai Pastor
+ *    Copyright 2012-2019, 2025, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -327,7 +327,7 @@ private:
 inline
 double TextObjectPartInfo::getX(int index) const
 {
-	return part_x + metrics.width(part_text.left(index - start_index));
+	return part_x + metrics.horizontalAdvance(part_text.left(index - start_index));
 }
 
 
