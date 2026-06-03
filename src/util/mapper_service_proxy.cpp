@@ -25,6 +25,8 @@
 #ifdef Q_OS_ANDROID
 #include <QtAndroid>
 #include <QtAndroidExtras/QAndroidJniObject>
+#include <QHash>
+#include <QString>
 #endif
 
 #include "gui/main_window.h"
