@@ -175,7 +175,7 @@ void PieMenu::popup(const QPoint& pos)
 	else if (cursor_pos.y() < total_radius)
 		cursor_pos.setY(total_radius);
 	
-	setGeometry(pos.x() - total_radius, pos.y() - total_radius, 2 * total_radius, 2 * total_radius);
+	setGeometry(cursor_pos.x() - total_radius, cursor_pos.y() - total_radius, 2 * total_radius, 2 * total_radius);
 	
 	clicked = false;
 	active_action = nullptr;
