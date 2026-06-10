@@ -162,7 +162,7 @@ void PieMenu::popup(const QPoint& pos)
 {
 	updateCachedState(); // We need the current total_radius.
 	
-	QPoint cursor_pos = QCursor::pos();
+	QPoint cursor_pos = pos;
 	QRect screen_rect = qApp->desktop()->availableGeometry(cursor_pos);
 	
 	if (cursor_pos.x() > screen_rect.right() - total_radius)
