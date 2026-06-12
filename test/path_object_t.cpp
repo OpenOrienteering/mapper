@@ -20,6 +20,9 @@
 
 #include "path_object_t.h"
 
+#include <iterator>
+
+#include <Qt>
 #include <QtTest>
 
 #include "core/map.h"
@@ -1202,6 +1205,83 @@ void PathObjectTest::recalculatePartsTest()
 		for (auto& updated_part : updated_parts)
 		{
 			QVERIFY(updated_part.first_index <= updated_part.last_index);
+		}
+	}
+}
+
+void PathObjectTest::splitPathCoordAtTest()
+{
+	const PathCoord::length_type lengths_to_check[] = {
+		-0.2f, 0.2f, 1.0f, 1.2f, 1.4f, 1.5f, 1.8, 2.0f, 2.2f, 3.2f, 5.0f
+	};
+	using std::begin; using std::end;
+	{
+		// Square, straight, closed
+		const MapCoordVector coords = {
+		    { 0.0, 0.0 }, { 1.0, 0.0 }, { 1.0, 1.0 }, { 0.0, 1.0 }, { 0.0, 0.0, MapCoord::HolePoint }
+		};
+		
+		PathCoordVector path_coords { coords };
+		path_coords.update(0);
+		QCOMPARE(path_coords.size(), std::size_t(5));
+		
+		const auto max_clen = path_coords.back().clen;
+		QCOMPARE(max_clen, 4.0f);
+		
+		const auto split = SplitPathCoord::at(1.5f, SplitPathCoord::begin(path_coords));
+		{
+			const auto& prev = path_coords[split.path_coord_index];
+			QCOMPARE(prev.clen, 1.0f);
+			const auto& next = path_coords[split.path_coord_index + 1];
+			QCOMPARE(next.clen, 2.0f);
+		}
+		
+		auto prev_clen = SplitPathCoord::at(lengths_to_check[0], split).clen;
+		for (auto it = begin(lengths_to_check)+1, last = end(lengths_to_check); it != last; ++it)
+		{
+			const auto requested_clen = *it;
+			const auto clen = SplitPathCoord::at(requested_clen, split).clen;
+			QVERIFY(clen >= prev_clen);          // monotone
+			if (requested_clen >= max_clen)
+				QCOMPARE(clen, max_clen);        // upper bound			
+			else if (requested_clen >= split.clen)
+				QCOMPARE(clen, requested_clen);  // expected case
+			prev_clen = clen;
+		}
+	}
+	
+	{
+		// Line, curved
+		const MapCoordVector coords = {
+		    { 0.0, 0.0, MapCoord::CurveStart }, { 1.0, 0.0 }, { 1.0, 1.0 }, { 0.0, 1.0, MapCoord::HolePoint }
+		};
+		
+		PathCoordVector path_coords { coords };
+		path_coords.update(0);
+		QCOMPARE(path_coords.size(), std::size_t(10));
+		
+		const auto max_clen = path_coords.back().clen;
+		QCOMPARE(max_clen, 2.00034f);
+		
+		const auto split = SplitPathCoord::at(1.5f, SplitPathCoord::begin(path_coords));
+		{
+			const auto& prev = path_coords[split.path_coord_index];
+			QCOMPARE(prev.clen, 1.29314f);
+			const auto& next = path_coords[split.path_coord_index + 1];
+			QCOMPARE(next.clen, 1.52751f);
+		}
+		
+		auto prev_clen = SplitPathCoord::at(lengths_to_check[0], split).clen;
+		for (auto it = begin(lengths_to_check)+1, last = end(lengths_to_check); it != last; ++it)
+		{
+			const auto requested_clen = *it;
+			const auto clen = SplitPathCoord::at(requested_clen, split).clen;
+			QVERIFY(clen >= prev_clen);          // monotone
+			if (requested_clen >= max_clen)
+				QCOMPARE(clen, max_clen);        // upper bound
+			else if (requested_clen >= split.clen)
+				QCOMPARE(clen, requested_clen);  // expected case
+			prev_clen = clen;
 		}
 	}
 }

@@ -78,6 +78,9 @@ private slots:
 	/** Tests recalculation of path parts from input coords. */
 	void recalculatePartsTest();
 	void recalculatePartsTest_data();
+	
+	/** Test SplitPathCoord.at stability. */
+	void splitPathCoordAtTest();
 };
 
 #endif
