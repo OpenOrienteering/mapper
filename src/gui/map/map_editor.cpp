@@ -1473,26 +1473,30 @@ void MapEditorController::createMobileGUI()
  	connect(show_top_bar_action, &QAction::triggered, this, &MapEditorController::showTopActionBar);
 	
 	QAction* mappart_action = new QAction(QIcon(QString::fromLatin1(":/images/map-parts.png")), tr("Map parts"), this);
-	auto* mappart_group = new QActionGroup(window);
 	auto* mappart_menu = new QMenu(window);
 	mappart_action->setMenu(mappart_menu);
-	
-	// Don't use QMenu::aboutToShow because it causes menu mispositioning near
-	// lower screen border when triggered from QToolButton.
-	connect(mappart_action, &QAction::hovered, this, [this, mappart_menu, mappart_group]() {
-		mappart_menu->clear();
-		Q_ASSERT(mappart_group->actions().isEmpty());
-		for (auto i = 0; i < map->getNumParts(); ++i)
-		{
-			auto* part = map->getPart(i);
-			auto* action = mappart_menu->addAction(part->getName());
-			action->setCheckable(true);
-			action->setActionGroup(mappart_group);
-			if (part == map->getCurrentPart())
-				action->setChecked(true);
-			connect(action, &QAction::triggered, this, [this, i]() { changeMapPart(i); });
-		}
-	});
+	if (map->getNumParts() > 1)
+	{
+		auto* mappart_group = new QActionGroup(window);
+		// Don't use QMenu::aboutToShow because it causes menu mispositioning near
+		// lower screen border when triggered from QToolButton.
+		connect(mappart_action, &QAction::hovered, this, [this, mappart_menu, mappart_group]() {
+			mappart_menu->clear();
+			Q_ASSERT(mappart_group->actions().isEmpty());
+			for (auto i = 0; i < map->getNumParts(); ++i)
+			{
+				auto* part = map->getPart(i);
+				auto* action = mappart_menu->addAction(part->getName());
+				action->setCheckable(true);
+				action->setActionGroup(mappart_group);
+				if (part == map->getCurrentPart())
+					action->setChecked(true);
+				connect(action, &QAction::triggered, this, [this, i]() { changeMapPart(i); });
+			}
+		});
+	}
+	else
+		mappart_action->setEnabled(false);
 	
 	// Create button for showing the top bar again after hiding it
 	const auto button_size_px = qRound(Util::mmToPixelPhysical(Settings::getInstance().getSetting(Settings::ActionGridBar_ButtonSizeMM).toReal()));
