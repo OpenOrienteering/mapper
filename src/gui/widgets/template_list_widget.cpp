@@ -95,6 +95,7 @@
 #include "templates/template_position_dock_widget.h"
 #include "templates/template_table_model.h"
 #include "templates/template_tool_move.h"
+#include <templates/template_track.h>
 #include "tools/tool.h"
 #include "util/item_delegates.h"
 
@@ -486,7 +487,7 @@ void TemplateListWidget::updateButtons()
 				edit_enabled   = true;
 				georef_enabled = temp->canChangeTemplateGeoreferenced();
 				custom_enabled = !is_georeferenced;
-				import_enabled = bool(qobject_cast<TemplateMap*>(temp));
+				import_enabled = bool(qobject_cast<TemplateMap*>(temp) || qobject_cast<TemplateTrack*>(temp));
 				vectorize_enabled = qobject_cast<TemplateImage*>(temp)
 									&& temp->getTemplateState() == Template::Loaded;
 			}
