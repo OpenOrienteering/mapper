@@ -130,10 +130,10 @@ void MapTest::printerConfigTest()
 
 void MapTest::specialColorsTest()
 {
-	QVERIFY(Map::getCoveringRed() != nullptr);
+	QVERIFY(Map::getCoveringWhite() != nullptr);
 	QCOMPARE(Map::getCoveringWhite()->getPriority(), static_cast<int>(MapColor::CoveringWhite));
 	
-	QVERIFY(Map::getCoveringWhite() != nullptr);
+	QVERIFY(Map::getCoveringRed() != nullptr);
 	QCOMPARE(Map::getCoveringRed()->getPriority(), static_cast<int>(MapColor::CoveringRed));
 	
 	QVERIFY(Map::getUndefinedColor() != nullptr);
@@ -337,8 +337,8 @@ void MapTest::crtFileTest()
 	out_stream.flush();
 	out_buffer.close();
 	const auto result = QString::fromLatin1(out_buffer.buffer());
-	QVERIFY(result.contains(QRegularExpression(QLatin1String("^101 *104$", QRegularExpression::MultilineOption))));
-	QVERIFY(result.contains(QRegularExpression(QLatin1String("102 *105_text$", QRegularExpression::MultilineOption))));
+	QVERIFY(result.contains(QRegularExpression(QLatin1String("^101 *104$"), QRegularExpression::MultilineOption)));
+	QVERIFY(result.contains(QRegularExpression(QLatin1String("102 *105_text$"), QRegularExpression::MultilineOption)));
 	QVERIFY(!result.contains(QLatin1String("123456")));
 	QVERIFY(!result.contains(QLatin1String("106")));
 }
