@@ -169,7 +169,7 @@ namespace
 		} \
 		else \
 		{ \
-			auto const diff = qstrlen(#b) - qstrlen(#a); \
+			int const diff = qstrlen(#b) - qstrlen(#a); \
 			auto const fill_a = QString().fill(QChar::Space, +diff); \
 			auto const fill_b = QString().fill(QChar::Space, -diff); \
 			QFAIL(QString::fromLatin1( \
