@@ -23,12 +23,7 @@ find_package(ZLIB REQUIRED)
 set(CMAKE_CXX_CLANG_TIDY "")
 set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "")
 
-if (${Qt5PrintSupport_VERSION} VERSION_LESS 5.12.0)
-	message(FATAL_ERROR "Need at least Qt5PrintSupport 5.12.0, found: ${Qt5PrintSupport_VERSION}")
-else()
-	set(FORK_VERSION qt-5.12.4)
-endif()
-
+set(FORK_VERSION qt-5.12.4)
 set(PRINTSUPPORT_SRCS
   advanced_pdf_printer.cpp
   printer_properties.h

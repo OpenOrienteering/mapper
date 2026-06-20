@@ -325,7 +325,6 @@ private slots:
 		QVERIFY(temp->canBeDrawnOnto());
 		QVERIFY(!temp->hasUnsavedChanges());
 		
-#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)  // for QTemporaryDir::filePath()
 		QTemporaryDir tmp_dir;
 		QVERIFY(tmp_dir.isValid());
 		temp->setTemplatePath(tmp_dir.filePath(temp->getTemplateFilename()));
@@ -347,7 +346,6 @@ private slots:
 		QVERIFY(exporter->doExport());
 		QVERIFY(!temp->hasUnsavedChanges());
 #endif  // !defined(MAPPER_BIG_ENDIAN)
-#endif  // Qt 5.9
 	}
 	
 	void geoTiffTemplateTest()
