@@ -28,10 +28,6 @@
 #  include <QGeoCoordinate>
 #  include <QGeoPositionInfo>
 #  include <QGeoPositionInfoSource>  // IWYU pragma: keep
-#if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
-#  include <QMetaType>
-Q_DECLARE_METATYPE(QGeoPositionInfo)  // QTBUG-65937
-#endif
 #endif
 
 #include <algorithm>
@@ -113,10 +109,6 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, 
  , georeferencing(georeferencing)
 {
 #if defined(QT_POSITIONING_LIB)
-#if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
-	static const int register_metatype = qRegisterMetaType<QGeoPositionInfo>();  // QTBUG-65937
-	Q_UNUSED(register_metatype)
-#endif
 	
 #if defined(MAPPER_USE_FAKE_POSITION_PLUGIN)
 	{
