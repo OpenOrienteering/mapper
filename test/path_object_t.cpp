@@ -909,7 +909,7 @@ void PathObjectTest::calcIntersectionsTest()
 		parallel3.addCoordinate(MapCoord(30, -10));
 		
 		PathObject::Intersections intersections_parallel_se;
-		intersections_parallel.reserve(2);
+		intersections_parallel_se.reserve(2);
 		
 		intersection.coord = MapCoordF(20, 0);
 		intersection.length = 10;

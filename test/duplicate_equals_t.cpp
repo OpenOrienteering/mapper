@@ -60,7 +60,7 @@ void testDecoupling(const AreaSymbol& a, const AreaSymbol& b)
 	{
 		auto& pattern_a = a.getFillPattern(i);
 		auto& pattern_b = b.getFillPattern(i);
-		QVERIFY(&a != &b);
+		QVERIFY(&pattern_a != &pattern_b);
 		switch (pattern_a.type)
 		{
 		case AreaSymbol::FillPattern::LinePattern:
