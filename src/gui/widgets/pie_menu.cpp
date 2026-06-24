@@ -162,7 +162,7 @@ void PieMenu::popup(const QPoint& pos)
 {
 	updateCachedState(); // We need the current total_radius.
 	
-	QPoint cursor_pos = QCursor::pos();
+	QPoint cursor_pos = pos;
 	QRect screen_rect = qApp->desktop()->availableGeometry(cursor_pos);
 	
 	if (cursor_pos.x() > screen_rect.right() - total_radius)
@@ -175,7 +175,7 @@ void PieMenu::popup(const QPoint& pos)
 	else if (cursor_pos.y() < total_radius)
 		cursor_pos.setY(total_radius);
 	
-	setGeometry(pos.x() - total_radius, pos.y() - total_radius, 2 * total_radius, 2 * total_radius);
+	setGeometry(cursor_pos.x() - total_radius, cursor_pos.y() - total_radius, 2 * total_radius, 2 * total_radius);
 	
 	clicked = false;
 	active_action = nullptr;
