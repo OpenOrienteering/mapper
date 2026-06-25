@@ -949,6 +949,10 @@ void OcdFileImport::importTemplate(const QString& param_string)
 		// The transformation must be determined after loading the template.
 		templ->setProperty(TemplateMap::ocdTransformProperty(), true);
 	}
+	else
+	{
+		templ->setGeoreferenced(true);
+	}
 	
 	auto const template_pos = std::min(0, map->getFirstFrontTemplate() - 1);
 	map->addTemplate(template_pos, std::unique_ptr<Template>{templ});
