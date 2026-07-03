@@ -1428,7 +1428,7 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 				}
 				Q_FALLTHROUGH();
 			default:
-				addWarning(::OpenOrienteering::OcdFileExport::tr("In area symbol \"%1\", skipping a fill pattern.")
+				addWarning(::OpenOrienteering::OcdFileExport::tr("In area symbol \"%1\": skipping a fill pattern.")
 				           .arg(area_symbol->getPlainTextName()));
 			}
 			break;
@@ -1466,7 +1466,7 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 					break;
 				}
 				
-				addWarning(::OpenOrienteering::OcdFileExport::tr("In area symbol \"%1\", skipping a fill pattern.")
+				addWarning(::OpenOrienteering::OcdFileExport::tr("In area symbol \"%1\": skipping a fill pattern.")
 				           .arg(area_symbol->getPlainTextName()));
 			}
 		}
@@ -1597,7 +1597,7 @@ quint32 OcdFileExport::exportLineSymbolCommon(const LineSymbol* line_symbol, Ocd
 		ocd_line_common.line_style = 6;
 	else
 	{
-		addWarning(::OpenOrienteering::OcdFileExport::tr("In line symbol \"%1\", cannot represent cap/join combination.")
+		addWarning(::OpenOrienteering::OcdFileExport::tr("In line symbol \"%1\": cannot represent cap/join combination.")
 		           .arg(line_symbol->getPlainTextName()));
 		// Decide based on the caps
 		if (line_symbol->getCapStyle() == LineSymbol::FlatCap)
@@ -1619,7 +1619,7 @@ quint32 OcdFileExport::exportLineSymbolCommon(const LineSymbol* line_symbol, Ocd
 		if (line_symbol->getMidSymbol() && !line_symbol->getMidSymbol()->isEmpty())
 		{
 			if (line_symbol->getDashesInGroup() > 1)
-				addWarning(::OpenOrienteering::OcdFileExport::tr("In line symbol \"%1\", neglecting the dash grouping.")
+				addWarning(::OpenOrienteering::OcdFileExport::tr("In line symbol \"%1\": neglecting the dash grouping.")
 				           .arg(line_symbol->getPlainTextName()));
 			
 			ocd_line_common.main_length = convertSize(line_symbol->getDashLength() + line_symbol->getBreakLength());
@@ -1631,7 +1631,7 @@ quint32 OcdFileExport::exportLineSymbolCommon(const LineSymbol* line_symbol, Ocd
 			if (line_symbol->getDashesInGroup() > 1)
 			{
 				if (line_symbol->getDashesInGroup() > 2)
-					addWarning(::OpenOrienteering::OcdFileExport::tr("In line symbol \"%1\", the number of dashes in a group has been reduced to 2.")
+					addWarning(::OpenOrienteering::OcdFileExport::tr("In line symbol \"%1\": the number of dashes in a group has been reduced to 2.")
 					           .arg(line_symbol->getPlainTextName()));
 				
 				ocd_line_common.main_length = convertSize(2 * line_symbol->getDashLength() + line_symbol->getInGroupBreakLength());
@@ -1726,7 +1726,7 @@ void OcdFileExport::exportLineSymbolDoubleLine(const LineSymbol* line_symbol, qu
 		    || left_border.shift != right_border.shift
 		    || left_border.width != right_border.width)
 		{
-			addWarning(::OpenOrienteering::OcdFileExport::tr("In line symbol \"%1\", cannot export the borders correctly.")
+			addWarning(::OpenOrienteering::OcdFileExport::tr("In line symbol \"%1\": cannot export the borders correctly.")
 			           .arg(line_symbol->getPlainTextName()));
 			
 			if (filling_pattern_differs)
@@ -1914,8 +1914,8 @@ void OcdFileExport::setupTextSymbolBasic(const TextSymbol* text_symbol, int alig
 	ocd_text_basic.font_italic = text_symbol->isItalic() ? 1 : 0;
 	ocd_text_basic.char_spacing = decltype(ocd_text_basic.char_spacing)(convertSize(qRound(1000 * text_symbol->getCharacterSpacing())));
 	if (ocd_text_basic.char_spacing != 0)
-		addWarning(::OpenOrienteering::OcdFileExport::tr("In text symbol %1: custom character spacing is set,"
-		                                                 "its implementation does not match OCAD's behavior yet")
+		addWarning(::OpenOrienteering::OcdFileExport::tr("In text symbol \"%1\": custom character spacing is set,"
+		                                                 " its implementation does not match OCAD's behavior yet.")
 		           .arg(text_symbol->getPlainTextName()));
 	ocd_text_basic.word_spacing = 100;
 	ocd_text_basic.alignment = alignment;	// Default value, we might have to change this or even create copies of this symbol with other alignments later
@@ -1930,10 +1930,10 @@ void OcdFileExport::setupTextSymbolSpecial(const TextSymbol* text_symbol, OcdTex
 	ocd_text_special.line_spacing = decltype(ocd_text_special.line_spacing)(qRound(absolute_line_spacing / (text_symbol->getFontSize() * 0.01)));
 	ocd_text_special.para_spacing = convertSize(qRound(1000 * text_symbol->getParagraphSpacing()));
 	if (text_symbol->isUnderlined())
-		addWarning(::OpenOrienteering::OcdFileExport::tr("In text symbol %1: ignoring underlining")
+		addWarning(::OpenOrienteering::OcdFileExport::tr("In text symbol \"%1\": ignoring underlining.")
 		           .arg(text_symbol->getPlainTextName()));
 	if (text_symbol->usesKerning())
-		addWarning(::OpenOrienteering::OcdFileExport::tr("In text symbol %1: ignoring kerning")
+		addWarning(::OpenOrienteering::OcdFileExport::tr("In text symbol \"%1\": ignoring kerning.")
 		           .arg(text_symbol->getPlainTextName()));
 	
 	ocd_text_special.line_below_on = text_symbol->hasLineBelow() ? 1 : 0;
@@ -1950,7 +1950,7 @@ void OcdFileExport::setupTextSymbolSpecial(const TextSymbol* text_symbol, OcdTex
 	else
 	{
 		ocd_text_special.num_tabs = max_tabs;
-		addWarning(::OpenOrienteering::OcdFileExport::tr("In text symbol %1: exporting only %2 custom tabulator positions")
+		addWarning(::OpenOrienteering::OcdFileExport::tr("In text symbol \"%1\": exporting only %2 custom tabulator positions.")
 		           .arg(text_symbol->getPlainTextName()).arg(max_tabs));
 	}
 	for (auto i = 0u; i < ocd_text_special.num_tabs; ++i)
@@ -2329,7 +2329,7 @@ void OcdFileExport::exportGenericCombinedSymbol(OcdFile<Format>& file, const Com
 		}
 		if (type == 0)
 		{
-			addWarning(::OpenOrienteering::OcdFileExport::tr("In combined symbol %1: Unsupported subsymbol at index %2.")
+			addWarning(::OpenOrienteering::OcdFileExport::tr("In combined symbol \"%1\": Unsupported subsymbol at index %2.")
 			           .arg(combined_symbol->getPlainTextName(), QString::number(i)));
 		}
 		else if (!combined_symbol->isPartPrivate(i))
@@ -2411,7 +2411,7 @@ QByteArray OcdFileExport::exportCombinedLineSymbol(
 			ocd_line_common.framing_style = 4;
 		else
 		{
-			addWarning(::OpenOrienteering::OcdFileExport::tr("In line symbol \"%1\", cannot represent cap/join combination.")
+			addWarning(::OpenOrienteering::OcdFileExport::tr("In line symbol \"%1\": cannot represent cap/join combination.")
 			           .arg(main_line->getPlainTextName()));
 			// Decide based on the caps
 			if (framing->getCapStyle() == LineSymbol::RoundCap)
@@ -2537,7 +2537,7 @@ void OcdFileExport::exportPathObject(OcdFile<Format>& file, const PathObject* pa
 			if (static_cast<const AreaSymbol*>(symbol)->hasRotatableFillPattern())
 				ocd_object.angle = decltype(ocd_object.angle)(convertRotation(path->getPatternRotation()));
 			if (path->getPatternOrigin() != MapCoord(0, 0))
-				addWarning(::OpenOrienteering::OcdFileExport::tr("Unable to export fill pattern shift for an area object"));
+				addWarning(::OpenOrienteering::OcdFileExport::tr("Unable to export fill pattern shift for an area object."));
 		}
 	}
 	else
@@ -2741,7 +2741,7 @@ void OcdFileExport::exportTemplates()
 		auto const suffix = QFileInfo(temp->getTemplatePath()).suffix().toLower().toUtf8();
 		if (std::find(begin(supported_extensions), end(supported_extensions), suffix) == end(supported_extensions))
 		{
-			addWarning(::OpenOrienteering::OcdFileExport::tr("Unable to export template: file type of \"%1\" is not supported yet")
+			addWarning(::OpenOrienteering::OcdFileExport::tr("Unable to export template: file type of \"%1\" is not supported yet.")
 			           .arg(temp->getTemplateFilename()));
 			continue;
 		}
@@ -2756,7 +2756,7 @@ void OcdFileExport::exportTemplates()
 			
 			if (temp->getTemplateState() != Template::Loaded)
 			{
-				addWarning(::OpenOrienteering::OcdFileExport::tr("Unable to save correct position of missing template: \"%1\"")
+				addWarning(::OpenOrienteering::OcdFileExport::tr("Unable to save correct position of missing template \"%1\".")
 				           .arg(temp->getTemplateFilename()));
 			}
 		}
@@ -2801,7 +2801,7 @@ QString OcdFileExport::stringForTemplate(const Template& temp, const MapCoord& a
 			ocd_template->getTransform(effective_transform);
 		if (ocd_template->isTemplateGeoreferenced() || ocd_template->transformForOcd() != effective_transform)
 		{
-			addWarning(::OpenOrienteering::OcdFileExport::tr("Cannot save custom positioning of template '%1'.")
+			addWarning(::OpenOrienteering::OcdFileExport::tr("Cannot save custom positioning of template \"%1\".")
 			           .arg(temp.getTemplateFilename()));
 		}
 		out << "\td" << d;
