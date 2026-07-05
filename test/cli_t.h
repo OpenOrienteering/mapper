@@ -1,5 +1,5 @@
 /*
- *    Copyright 2022 Kai Pastor
+ *    Copyright 2026 Michael Behrens
  *
  *    This file is part of OpenOrienteering.
  *
