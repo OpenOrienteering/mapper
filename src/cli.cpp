@@ -1,7 +1,6 @@
 #include "cli.h"
 
 #include <cstdio>
-#include <cstring>
 
 #include <QCommandLineParser>
 #include <QFileInfo>
@@ -28,7 +27,7 @@ namespace OpenOrienteering {
 namespace {
 
 
-bool exportViaFileFormat(const QString& output_path, const Map& map, const QString& format_id, const QStringList& creation_options)
+bool exportViaFileFormat(const QString& output_path, const Map& map, const QString& format_id)
 {
 	const FileFormat* format = nullptr;
 	if (!format_id.isEmpty())
@@ -45,20 +44,13 @@ bool exportViaFileFormat(const QString& output_path, const Map& map, const QStri
 	if (!exporter)
 		return false;
 
-	for (const auto& opt : creation_options)
-	{
-		auto eq = opt.indexOf(QLatin1Char('='));
-		if (eq > 0)
-			exporter->setOption(opt.left(eq), opt.mid(eq + 1));
-	}
-
 	return exporter->doExport();
 }
 
 
 #ifdef QT_PRINTSUPPORT_LIB
 
-bool exportViaPdf(const QString& output_path, Map& map, const QRectF& print_area)
+bool exportViaPdf(const QString& output_path, Map& map, const QRectF& print_area, int dpi = 300)
 {
 	if (print_area.isEmpty())
 	{
@@ -70,7 +62,7 @@ bool exportViaPdf(const QString& output_path, Map& map, const QRectF& print_area
 	printer.setTarget(MapPrinter::pdfTarget());
 	printer.setPrintArea(print_area);
 	printer.setCustomPageSize(print_area.size());
-	printer.setResolution(300);
+	printer.setResolution(dpi);
 
 	auto qprinter = printer.makePrinter();
 	if (!qprinter)
@@ -93,7 +85,7 @@ bool exportViaPdf(const QString& output_path, Map& map, const QRectF& print_area
 }
 
 
-bool exportViaImage(const QString& output_path, Map& map, const QRectF& print_area)
+bool exportViaImage(const QString& output_path, Map& map, const QRectF& print_area, int dpi = 300, const char* image_format = nullptr)
 {
 	if (print_area.isEmpty())
 	{
@@ -104,7 +96,7 @@ bool exportViaImage(const QString& output_path, Map& map, const QRectF& print_ar
 	MapPrinter printer(map, nullptr);
 	printer.setTarget(MapPrinter::imageTarget());
 	printer.setPrintArea(print_area);
-	printer.setResolution(300);
+	printer.setResolution(dpi);
 
 	auto const& options = printer.getOptions();
 	qreal pixel_per_mm = options.resolution / 25.4;
@@ -126,7 +118,7 @@ bool exportViaImage(const QString& output_path, Map& map, const QRectF& print_ar
 	printer.drawPage(&p, printer.getPrintArea(), &image);
 	p.end();
 
-	if (!image.save(output_path))
+	if (!image.save(output_path, image_format))
 	{
 		fprintf(stderr, "Error: failed to save image to '%s'\n", qPrintable(output_path));
 		return false;
@@ -140,7 +132,13 @@ bool exportViaImage(const QString& output_path, Map& map, const QRectF& print_ar
 int runExport(const QStringList& sub_args)
 {
 	QCommandLineParser parser;
-	parser.setApplicationDescription(QStringLiteral("Export map to various formats"));
+	parser.setApplicationDescription(QStringLiteral("Export map to printable and GIS formats"));
+
+	QCommandLineOption input_option(
+		QStringList{QStringLiteral("i"), QStringLiteral("input")},
+		QStringLiteral("Input map file."),
+		QStringLiteral("path"));
+	parser.addOption(input_option);
 
 	QCommandLineOption output_option(
 	    QStringList{QStringLiteral("o"), QStringLiteral("output")},
@@ -149,25 +147,20 @@ int runExport(const QStringList& sub_args)
 	parser.addOption(output_option);
 
 	QCommandLineOption format_option(
-	    QStringList{QStringLiteral("of"), QStringLiteral("output-format")},
-	    QStringLiteral("Output format ID (e.g. PDF, OCD12, OGR-export-DXF)."),
+	    QStringLiteral("output-format"),
+	    QStringLiteral("Output format ID (e.g. pdf, png, OGR-export-DXF)."),
 	    QStringLiteral("id"));
 	parser.addOption(format_option);
 
-	QCommandLineOption creation_option(
-	    QStringLiteral("creation-option"),
-	    QStringLiteral("Format-specific creation option in KEY=VALUE format."),
-	    QStringLiteral("option"));
-	parser.addOption(creation_option);
-
-	QCommandLineOption input_option(
-	    QStringList{QStringLiteral("i"), QStringLiteral("input")},
-	    QStringLiteral("Input map file."),
-	    QStringLiteral("path"));
-	parser.addOption(input_option);
-
 	QCommandLineOption full_map_option(QStringLiteral("full-map"), QStringLiteral("Export the full map extent instead of the saved print area."));
 	parser.addOption(full_map_option);
+
+	QCommandLineOption dpi_option(
+	    QStringLiteral("dpi"),
+	    QStringLiteral("Output resolution in DPI (default: 300)."),
+	    QStringLiteral("dpi"),
+	    QStringLiteral("300"));
+	parser.addOption(dpi_option);
 
 	parser.addHelpOption();
 
@@ -202,7 +195,8 @@ int runExport(const QStringList& sub_args)
 	QString output_path = parser.value(output_option);
 
 	QString format_id = parser.value(format_option);
-	QStringList creation_options = parser.values(creation_option);
+
+	int dpi = parser.value(dpi_option).toInt();
 
 	Map map;
 	if (!map.loadFrom(input_path))
@@ -220,36 +214,116 @@ int runExport(const QStringList& sub_args)
 		return 1;
 	}
 
-	// When no explicit format is given, prefer MapPrinter for PDF and image formats.
-	if (format_id.isEmpty())
-	{
+	// Determine the format key: use format_id if set, otherwise the file extension
+	QString format_key = format_id.isEmpty() ? QFileInfo(output_path).suffix().toLower() : format_id.toLower();
+
+	// Try MapPrinter for PDF and image formats (always, regardless of format_id)
 #ifdef QT_PRINTSUPPORT_LIB
-		auto ext = QFileInfo(output_path).suffix().toLower();
-		if (ext == QStringLiteral("pdf"))
-		{
-			if (exportViaPdf(output_path, map, print_area))
-				return 0;
-			fprintf(stderr, "Error: PDF export failed.\n");
-			return 1;
-		}
-		else if (ext == QStringLiteral("png") || ext == QStringLiteral("jpg")
-		         || ext == QStringLiteral("jpeg") || ext == QStringLiteral("tif")
-		         || ext == QStringLiteral("tiff") || ext == QStringLiteral("bmp"))
-		{
-			if (exportViaImage(output_path, map, print_area))
-				return 0;
-			fprintf(stderr, "Error: image export failed.\n");
-			return 1;
-		}
-#endif
+	if (format_key == QStringLiteral("pdf"))
+	{
+		if (exportViaPdf(output_path, map, print_area, dpi))
+			return 0;
+		fprintf(stderr, "Error: PDF export failed.\n");
+		return 1;
 	}
 
-	if (exportViaFileFormat(output_path, map, format_id, creation_options))
+	static const QStringList image_formats = {
+	    QStringLiteral("png"), QStringLiteral("jpg"), QStringLiteral("jpeg"),
+	    QStringLiteral("tif"), QStringLiteral("tiff"), QStringLiteral("bmp")
+	};
+	if (image_formats.contains(format_key))
+	{
+		// Pass explicit format when format_id is set, so QImage::save
+		// uses the requested format regardless of file extension.
+		QByteArray format_key_latin;
+		const char* img_fmt = nullptr;
+		if (!format_id.isEmpty())
+		{
+			format_key_latin = format_key.toLatin1();
+			img_fmt = format_key_latin.constData();
+		}
+		if (exportViaImage(output_path, map, print_area, dpi, img_fmt))
+			return 0;
+		fprintf(stderr, "Error: image export failed.\n");
+		return 1;
+	}
+#endif
+
+	fprintf(stderr, "Error: no exporter found for '%s'.\n", qPrintable(output_path));
+	return 1;
+}
+
+int runConvert(const QStringList& sub_args)
+{
+	QCommandLineParser parser;
+	parser.setApplicationDescription(QStringLiteral("Convert between orienteering map formats"));
+
+	QCommandLineOption input_option(
+	    QStringList{QStringLiteral("i"), QStringLiteral("input")},
+	    QStringLiteral("Input map file."),
+	    QStringLiteral("path"));
+	parser.addOption(input_option);
+
+	QCommandLineOption output_option(
+	    QStringList{QStringLiteral("o"), QStringLiteral("output")},
+	    QStringLiteral("Output file path."),
+	    QStringLiteral("path"));
+	parser.addOption(output_option);
+
+	QCommandLineOption format_option(
+	    QStringLiteral("output-format"),
+	    QStringLiteral("Output format ID (e.g. XML, OCD, OCD12)."),
+	    QStringLiteral("id"),
+	    QString{});
+	parser.addOption(format_option);
+
+	parser.addHelpOption();
+
+	QStringList cli_args = {QStringLiteral("mapper")};
+	cli_args.append(sub_args);
+
+	if (!parser.parse(cli_args))
+	{
+		fprintf(stderr, "Error: %s\n", qPrintable(parser.errorText()));
+		return 1;
+	}
+
+	if (parser.isSet(QStringLiteral("help")))
+	{
+		fprintf(stderr, "%s", qPrintable(parser.helpText()));
+		return 0;
+	}
+
+	if (!parser.isSet(input_option))
+	{
+		fprintf(stderr, "Error: --input / -i is required.\n");
+		return 1;
+	}
+	QString input_path = parser.value(input_option);
+
+	if (!parser.isSet(output_option))
+	{
+		fprintf(stderr, "Error: --output / -o is required.\n");
+		return 1;
+	}
+	QString output_path = parser.value(output_option);
+
+	QString format_id = parser.value(format_option);
+
+	Map map;
+	if (!map.loadFrom(input_path))
+	{
+		fprintf(stderr, "Error: failed to load map from '%s'\n", qPrintable(input_path));
+		return 1;
+	}
+
+	if (exportViaFileFormat(output_path, map, format_id))
 		return 0;
 
 	fprintf(stderr, "Error: no exporter found for '%s'.\n", qPrintable(output_path));
 	return 1;
 }
+
 
 }  // namespace
 
@@ -258,7 +332,7 @@ int execCli(int argc, char** argv)
 {
 	if (argc < 3)
 	{
-		fprintf(stderr, "Error: no subcommand specified. Available: export\n");
+		fprintf(stderr, "Error: no subcommand specified.\n");
 		return 1;
 	}
 
@@ -271,7 +345,10 @@ int execCli(int argc, char** argv)
 	if (subcommand == QLatin1String("export"))
 		return runExport(sub_args);
 
-	fprintf(stderr, "Error: unknown subcommand '%s'. Available: export\n", qPrintable(subcommand));
+	if (subcommand == QLatin1String("convert"))
+		return runConvert(sub_args);
+
+	fprintf(stderr, "Error: unknown subcommand '%s'. Available: export, convert\n", qPrintable(subcommand));
 	return 1;
 }
 
