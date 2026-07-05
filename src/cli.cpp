@@ -58,9 +58,7 @@ bool exportViaFileFormat(const QString& output_path, const Map& map, const QStri
 
 #ifdef QT_PRINTSUPPORT_LIB
 
-enum class PrinterOutputType { Pdf, Image };
-
-bool exportViaMapPrinter(const QString& output_path, Map& map, PrinterOutputType output_type)
+bool exportViaPdf(const QString& output_path, Map& map)
 {
 	auto extent = map.calculateExtent();
 	if (extent.isEmpty())
@@ -69,71 +67,73 @@ bool exportViaMapPrinter(const QString& output_path, Map& map, PrinterOutputType
 		return false;
 	}
 
-	if (output_type == PrinterOutputType::Pdf)
+	MapPrinter printer(map, nullptr);
+	printer.setTarget(MapPrinter::pdfTarget());
+	printer.setPrintArea(extent);
+	printer.setCustomPageSize(extent.size());
+	printer.setResolution(300);
+
+	auto qprinter = printer.makePrinter();
+	if (!qprinter)
 	{
-		MapPrinter printer(map, nullptr);
-		printer.setTarget(MapPrinter::pdfTarget());
-		printer.setPrintArea(extent);
-		printer.setCustomPageSize(extent.size());
-		printer.setResolution(300);
-
-		auto qprinter = printer.makePrinter();
-		if (!qprinter)
-		{
-			fprintf(stderr, "Error: failed to create PDF printer.\n");
-			return false;
-		}
-
-		QSizeF paper_mm = printer.getPrintAreaPaperSize();
-
-		qprinter->setOutputFileName(output_path);
-
-		// setOutputFileName may reset the page size, re-apply it
-		qprinter->setFullPage(true);
-		qprinter->setPageMargins(QMarginsF(0, 0, 0, 0), QPageLayout::Millimeter);
-		qprinter->setPaperSize(paper_mm, QPrinter::Millimeter);
-		qprinter->setResolution(300);
-
-		QPainter painter(qprinter.get());
-		printer.drawPage(&painter, printer.getPrintArea());
-		painter.end();
-		return true;
+		fprintf(stderr, "Error: failed to create PDF printer.\n");
+		return false;
 	}
-	else
+
+	qprinter->setOutputFileName(output_path);
+
+	// setOutputFileName may reset the page size, re-apply it
+	qprinter->setFullPage(true);
+	qprinter->setPageMargins(QMarginsF(0, 0, 0, 0), QPageLayout::Millimeter);
+	qprinter->setPaperSize(printer.getPrintAreaPaperSize(), QPrinter::Millimeter);
+
+	QPainter painter(qprinter.get());
+	printer.drawPage(&painter, printer.getPrintArea());
+	painter.end();
+	return true;
+}
+
+
+bool exportViaImage(const QString& output_path, Map& map)
+{
+	auto extent = map.calculateExtent();
+	if (extent.isEmpty())
 	{
-		// Follow PrintWidget::exportToImage: use imageTarget for raster output.
-		MapPrinter printer(map, nullptr);
-		printer.setTarget(MapPrinter::imageTarget());
-		printer.setPrintArea(extent);
-		// setPrintArea for imageTarget auto-sets custom page size to extent * scale_adjustment.
-		printer.setResolution(300);
-
-		QSizeF mm_size = printer.getPrintAreaPaperSize();
-		qreal pixel_per_mm = printer.getOptions().resolution / 25.4;
-		int w = qMax(1, qRound(mm_size.width() * pixel_per_mm));
-		int h = qMax(1, qRound(mm_size.height() * pixel_per_mm));
-
-		QImage image(w, h, QImage::Format_ARGB32_Premultiplied);
-		if (image.isNull())
-		{
-			fprintf(stderr, "Error: not enough memory for image of size %dx%d\n", w, h);
-			return false;
-		}
-		image.fill(Qt::white);
-		image.setDotsPerMeterX(qRound(pixel_per_mm * 1000));
-		image.setDotsPerMeterY(qRound(pixel_per_mm * 1000));
-
-		QPainter p(&image);
-		printer.drawPage(&p, printer.getPrintArea(), &image);
-		p.end();
-
-		if (!image.save(output_path))
-		{
-			fprintf(stderr, "Error: failed to save image to '%s'\n", qPrintable(output_path));
-			return false;
-		}
-		return true;
+		fprintf(stderr, "Error: map has no extent\n");
+		return false;
 	}
+
+	MapPrinter printer(map, nullptr);
+	printer.setTarget(MapPrinter::imageTarget());
+	printer.setPrintArea(extent);
+	printer.setResolution(300);
+
+	auto const& options = printer.getOptions();
+	qreal pixel_per_mm = options.resolution / 25.4;
+	QSizeF mm_size = printer.getPrintAreaPaperSize();
+	int w = qMax(1, qRound(mm_size.width() * pixel_per_mm));
+	int h = qMax(1, qRound(mm_size.height() * pixel_per_mm));
+
+	QImage image(w, h, QImage::Format_ARGB32_Premultiplied);
+	if (image.isNull())
+	{
+		fprintf(stderr, "Error: not enough memory for image of size %dx%d\n", w, h);
+		return false;
+	}
+	image.fill(Qt::white);
+	image.setDotsPerMeterX(qRound(pixel_per_mm * 1000));
+	image.setDotsPerMeterY(qRound(pixel_per_mm * 1000));
+
+	QPainter p(&image);
+	printer.drawPage(&p, printer.getPrintArea(), &image);
+	p.end();
+
+	if (!image.save(output_path))
+	{
+		fprintf(stderr, "Error: failed to save image to '%s'\n", qPrintable(output_path));
+		return false;
+	}
+	return true;
 }
 
 #endif
@@ -217,7 +217,7 @@ int runExport(const QStringList& sub_args)
 		auto ext = QFileInfo(output_path).suffix().toLower();
 		if (ext == QStringLiteral("pdf"))
 		{
-			if (exportViaMapPrinter(output_path, map, PrinterOutputType::Pdf))
+			if (exportViaPdf(output_path, map))
 				return 0;
 			fprintf(stderr, "Error: PDF export failed.\n");
 			return 1;
@@ -226,7 +226,7 @@ int runExport(const QStringList& sub_args)
 		         || ext == QStringLiteral("jpeg") || ext == QStringLiteral("tif")
 		         || ext == QStringLiteral("tiff") || ext == QStringLiteral("bmp"))
 		{
-			if (exportViaMapPrinter(output_path, map, PrinterOutputType::Image))
+			if (exportViaImage(output_path, map))
 				return 0;
 			fprintf(stderr, "Error: image export failed.\n");
 			return 1;
