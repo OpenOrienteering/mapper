@@ -20,6 +20,7 @@
 
 
 #include <clocale>
+#include <cstring>
 #include <memory>
 #include <utility>
 // IWYU pragma: no_include <type_traits>
@@ -51,6 +52,7 @@
 #include "global.h"
 #include "mapper_config.h"
 #include "mapper_resource.h"
+#include "cli.h"
 #include "gui/home_screen_controller.h"
 #include "gui/main_window.h"
 #include "gui/widgets/mapper_proxystyle.h"
@@ -188,6 +190,10 @@ int main(int argc, char** argv)
 	
 	// Initialize static things like the file format registry.
 	doStaticInitializations();
+	
+	// Detect cli arg before creating the window
+	if (argc > 1 && std::strcmp(argv[1], "--cli") == 0)
+		return OpenOrienteering::execCli(argc, argv);
 	
 	// Some style settings (in particular the menu item font) are not
 	// applied correctly before the app runs. So we postpone these steps

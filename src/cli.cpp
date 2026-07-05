@@ -1,0 +1,269 @@
+#include "cli.h"
+
+#include <cstdio>
+#include <cstring>
+
+#include <QCommandLineParser>
+#include <QFileInfo>
+#include <QImage>
+#include <QLatin1String>
+#include <QPainter>
+#include <QStringList>
+
+#include "core/map.h"
+#include "fileformats/file_format.h"
+#include "fileformats/file_format_registry.h"
+#include "fileformats/file_import_export.h"
+
+#ifdef QT_PRINTSUPPORT_LIB
+#include <QPageSize>
+#include <QPrinter>
+#include <QPrinterInfo>
+#include "core/map_printer.h"
+#endif
+
+
+namespace OpenOrienteering {
+
+namespace {
+
+
+bool exportViaFileFormat(const QString& output_path, const Map& map, const QString& format_id, const QStringList& creation_options)
+{
+	const FileFormat* format = nullptr;
+	if (!format_id.isEmpty())
+		format = FileFormats.findFormat(format_id.toLatin1().constData());
+	else
+		format = FileFormats.findFormatForFilename(output_path, &FileFormat::supportsWriting);
+
+	if (!format)
+	{
+		return false;
+	}
+
+	auto exporter = format->makeExporter(output_path, &map, nullptr);
+	if (!exporter)
+		return false;
+
+	for (const auto& opt : creation_options)
+	{
+		auto eq = opt.indexOf(QLatin1Char('='));
+		if (eq > 0)
+			exporter->setOption(opt.left(eq), opt.mid(eq + 1));
+	}
+
+	return exporter->doExport();
+}
+
+
+#ifdef QT_PRINTSUPPORT_LIB
+
+enum class PrinterOutputType { Pdf, Image };
+
+bool exportViaMapPrinter(const QString& output_path, Map& map, PrinterOutputType output_type)
+{
+	auto extent = map.calculateExtent();
+	if (extent.isEmpty())
+	{
+		fprintf(stderr, "Error: map has no extent\n");
+		return false;
+	}
+
+	if (output_type == PrinterOutputType::Pdf)
+	{
+		MapPrinter printer(map, nullptr);
+		printer.setTarget(MapPrinter::pdfTarget());
+		printer.setPrintArea(extent);
+		printer.setCustomPageSize(extent.size());
+		printer.setResolution(300);
+
+		auto qprinter = printer.makePrinter();
+		if (!qprinter)
+		{
+			fprintf(stderr, "Error: failed to create PDF printer.\n");
+			return false;
+		}
+
+		QSizeF paper_mm = printer.getPrintAreaPaperSize();
+
+		qprinter->setOutputFileName(output_path);
+
+		// setOutputFileName may reset the page size, re-apply it
+		qprinter->setFullPage(true);
+		qprinter->setPageMargins(QMarginsF(0, 0, 0, 0), QPageLayout::Millimeter);
+		qprinter->setPaperSize(paper_mm, QPrinter::Millimeter);
+		qprinter->setResolution(300);
+
+		QPainter painter(qprinter.get());
+		printer.drawPage(&painter, printer.getPrintArea());
+		painter.end();
+		return true;
+	}
+	else
+	{
+		// Follow PrintWidget::exportToImage: use imageTarget for raster output.
+		MapPrinter printer(map, nullptr);
+		printer.setTarget(MapPrinter::imageTarget());
+		printer.setPrintArea(extent);
+		// setPrintArea for imageTarget auto-sets custom page size to extent * scale_adjustment.
+		printer.setResolution(300);
+
+		QSizeF mm_size = printer.getPrintAreaPaperSize();
+		qreal pixel_per_mm = printer.getOptions().resolution / 25.4;
+		int w = qMax(1, qRound(mm_size.width() * pixel_per_mm));
+		int h = qMax(1, qRound(mm_size.height() * pixel_per_mm));
+
+		QImage image(w, h, QImage::Format_ARGB32_Premultiplied);
+		if (image.isNull())
+		{
+			fprintf(stderr, "Error: not enough memory for image of size %dx%d\n", w, h);
+			return false;
+		}
+		image.fill(Qt::white);
+		image.setDotsPerMeterX(qRound(pixel_per_mm * 1000));
+		image.setDotsPerMeterY(qRound(pixel_per_mm * 1000));
+
+		QPainter p(&image);
+		printer.drawPage(&p, printer.getPrintArea(), &image);
+		p.end();
+
+		if (!image.save(output_path))
+		{
+			fprintf(stderr, "Error: failed to save image to '%s'\n", qPrintable(output_path));
+			return false;
+		}
+		return true;
+	}
+}
+
+#endif
+
+
+int runExport(const QStringList& sub_args)
+{
+	QCommandLineParser parser;
+	parser.setApplicationDescription(QStringLiteral("Export map to various formats"));
+
+	QCommandLineOption output_option(
+	    QStringList{QStringLiteral("o"), QStringLiteral("output")},
+	    QStringLiteral("Output file path."),
+	    QStringLiteral("path"));
+	parser.addOption(output_option);
+
+	QCommandLineOption format_option(
+	    QStringList{QStringLiteral("of"), QStringLiteral("output-format")},
+	    QStringLiteral("Output format ID (e.g. PDF, OCD12, OGR-export-DXF)."),
+	    QStringLiteral("id"));
+	parser.addOption(format_option);
+
+	QCommandLineOption creation_option(
+	    QStringLiteral("creation-option"),
+	    QStringLiteral("Format-specific creation option in KEY=VALUE format."),
+	    QStringLiteral("option"));
+	parser.addOption(creation_option);
+
+	QCommandLineOption input_option(
+	    QStringList{QStringLiteral("i"), QStringLiteral("input")},
+	    QStringLiteral("Input map file."),
+	    QStringLiteral("path"));
+	parser.addOption(input_option);
+
+	parser.addHelpOption();
+
+	// QCommandLineParser requires the program name as first argument
+	QStringList cli_args = {QStringLiteral("mapper")};
+	cli_args.append(sub_args);
+
+	if (!parser.parse(cli_args))
+	{
+		fprintf(stderr, "Error: %s\n", qPrintable(parser.errorText()));
+		return 1;
+	}
+
+	if (parser.isSet(QStringLiteral("help")))
+	{
+		fprintf(stderr, "%s", qPrintable(parser.helpText()));
+		return 0;
+	}
+
+	if (!parser.isSet(input_option))
+	{
+		fprintf(stderr, "Error: --input / -i is required.\n");
+		return 1;
+	}
+	QString input_path = parser.value(input_option);
+
+	if (!parser.isSet(output_option))
+	{
+		fprintf(stderr, "Error: --output / -o is required.\n");
+		return 1;
+	}
+	QString output_path = parser.value(output_option);
+
+	QString format_id = parser.value(format_option);
+	QStringList creation_options = parser.values(creation_option);
+
+	Map map;
+	if (!map.loadFrom(input_path))
+	{
+		fprintf(stderr, "Error: failed to load map from '%s'\n", qPrintable(input_path));
+		return 1;
+	}
+
+	// When no explicit format is given, prefer MapPrinter for PDF and image formats.
+	if (format_id.isEmpty())
+	{
+#ifdef QT_PRINTSUPPORT_LIB
+		auto ext = QFileInfo(output_path).suffix().toLower();
+		if (ext == QStringLiteral("pdf"))
+		{
+			if (exportViaMapPrinter(output_path, map, PrinterOutputType::Pdf))
+				return 0;
+			fprintf(stderr, "Error: PDF export failed.\n");
+			return 1;
+		}
+		else if (ext == QStringLiteral("png") || ext == QStringLiteral("jpg")
+		         || ext == QStringLiteral("jpeg") || ext == QStringLiteral("tif")
+		         || ext == QStringLiteral("tiff") || ext == QStringLiteral("bmp"))
+		{
+			if (exportViaMapPrinter(output_path, map, PrinterOutputType::Image))
+				return 0;
+			fprintf(stderr, "Error: image export failed.\n");
+			return 1;
+		}
+#endif
+	}
+
+	if (exportViaFileFormat(output_path, map, format_id, creation_options))
+		return 0;
+
+	fprintf(stderr, "Error: no exporter found for '%s'.\n", qPrintable(output_path));
+	return 1;
+}
+
+}  // namespace
+
+
+int execCli(int argc, char** argv)
+{
+	if (argc < 3)
+	{
+		fprintf(stderr, "Error: no subcommand specified. Available: export\n");
+		return 1;
+	}
+
+	QString subcommand = QString::fromLocal8Bit(argv[2]);
+
+	QStringList sub_args;
+	for (int i = 3; i < argc; ++i)
+		sub_args << QString::fromLocal8Bit(argv[i]);
+
+	if (subcommand == QLatin1String("export"))
+		return runExport(sub_args);
+
+	fprintf(stderr, "Error: unknown subcommand '%s'. Available: export\n", qPrintable(subcommand));
+	return 1;
+}
+
+
+}  // namespace OpenOrienteering
