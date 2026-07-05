@@ -127,6 +127,15 @@ void resetActivationWindow(QtSingleApplication& app)
 
 int main(int argc, char** argv)
 {
+	// Detect cli arg early, before creating any QApplication,
+	// so that cli works even when oom is already running.
+	if (argc > 1 && std::strcmp(argv[1], "--cli") == 0)
+	{
+		doStaticInitializations();
+		QGuiApplication cli_app(argc, argv);
+		return OpenOrienteering::execCli(argc, argv);
+	}
+	
 #ifdef MAPPER_USE_QTSINGLEAPPLICATION
 	// Create single-instance application.
 	// Use "oo-mapper" instead of the executable as identifier, in case we launch from different paths.
@@ -190,10 +199,6 @@ int main(int argc, char** argv)
 	
 	// Initialize static things like the file format registry.
 	doStaticInitializations();
-	
-	// Detect cli arg before creating the window
-	if (argc > 1 && std::strcmp(argv[1], "--cli") == 0)
-		return OpenOrienteering::execCli(argc, argv);
 	
 	// Some style settings (in particular the menu item font) are not
 	// applied correctly before the app runs. So we postpone these steps
