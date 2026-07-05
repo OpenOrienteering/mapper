@@ -64,8 +64,8 @@ void CliTest::initTestCase()
 
 	// Register a Qt search path for test data
 	QDir::addSearchPath(QStringLiteral("testdata"),
-	    QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR))
-	        .absoluteFilePath(QStringLiteral("data")));
+		QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR))
+			.absoluteFilePath(QStringLiteral("data")));
 }
 
 
@@ -112,10 +112,10 @@ void CliTest::testExportPdf()
 	auto output_bytes = output.toLocal8Bit();
 
 	int result = execCliFrom({
-	    "mapper", "--cli", "export",
-	    "-i", input_bytes.constData(),
-	    "-o", output_bytes.constData(),
-	    "--full-map"
+		"mapper", "--cli", "export",
+		"-i", input_bytes.constData(),
+		"-o", output_bytes.constData(),
+		"--full-map"
 	});
 	QCOMPARE(result, 0);
 	QVERIFY(QFile::exists(output));
@@ -136,10 +136,10 @@ void CliTest::testExportPng()
 	auto output_bytes = output.toLocal8Bit();
 
 	int result = execCliFrom({
-	    "mapper", "--cli", "export",
-	    "-i", input_bytes.constData(),
-	    "-o", output_bytes.constData(),
-	    "--full-map"
+		"mapper", "--cli", "export",
+		"-i", input_bytes.constData(),
+		"-o", output_bytes.constData(),
+		"--full-map"
 	});
 	QCOMPARE(result, 0);
 	QVERIFY(QFile::exists(output));
@@ -158,10 +158,10 @@ void CliTest::testExportFullMapFlag()
 	auto output_bytes = output.toLocal8Bit();
 
 	int result = execCliFrom({
-	    "mapper", "--cli", "export",
-	    "-i", input_bytes.constData(),
-	    "-o", output_bytes.constData(),
-	    "--full-map"
+		"mapper", "--cli", "export",
+		"-i", input_bytes.constData(),
+		"-o", output_bytes.constData(),
+		"--full-map"
 	});
 	QCOMPARE(result, 0);
 	QVERIFY(QFile::exists(output));
@@ -200,9 +200,9 @@ void CliTest::testConvertOmapToXmap()
 	auto output_bytes = output.toLocal8Bit();
 
 	int result = execCliFrom({
-	    "mapper", "--cli", "convert",
-	    "-i", input_bytes.constData(),
-	    "-o", output_bytes.constData()
+		"mapper", "--cli", "convert",
+		"-i", input_bytes.constData(),
+		"-o", output_bytes.constData()
 	});
 	QCOMPARE(result, 0);
 	QVERIFY(QFile::exists(output));
@@ -225,17 +225,17 @@ void CliTest::testConvertXmapToOmap()
 	auto omap_bytes = omap.toLocal8Bit();
 
 	int r1 = execCliFrom({
-	    "mapper", "--cli", "convert",
-	    "-i", input_bytes.constData(),
-	    "-o", xmap_bytes.constData()
+		"mapper", "--cli", "convert",
+		"-i", input_bytes.constData(),
+		"-o", xmap_bytes.constData()
 	});
 	QCOMPARE(r1, 0);
 	QVERIFY(QFile::exists(xmap));
 
 	int r2 = execCliFrom({
-	    "mapper", "--cli", "convert",
-	    "-i", xmap_bytes.constData(),
-	    "-o", omap_bytes.constData()
+		"mapper", "--cli", "convert",
+		"-i", xmap_bytes.constData(),
+		"-o", omap_bytes.constData()
 	});
 	QCOMPARE(r2, 0);
 	QVERIFY(QFile::exists(omap));
@@ -256,9 +256,9 @@ void CliTest::testConvertOmapToOcd()
 	auto output_bytes = output.toLocal8Bit();
 
 	int result = execCliFrom({
-	    "mapper", "--cli", "convert",
-	    "-i", input_bytes.constData(),
-	    "-o", output_bytes.constData()
+		"mapper", "--cli", "convert",
+		"-i", input_bytes.constData(),
+		"-o", output_bytes.constData()
 	});
 	QCOMPARE(result, 0);
 	QVERIFY(QFile::exists(output));
@@ -279,10 +279,10 @@ void CliTest::testConvertWithFormatId()
 	auto output_bytes = output.toLocal8Bit();
 
 	int result = execCliFrom({
-	    "mapper", "--cli", "convert",
-	    "-i", input_bytes.constData(),
-	    "-o", output_bytes.constData(),
-	    "--output-format", "XML"
+		"mapper", "--cli", "convert",
+		"-i", input_bytes.constData(),
+		"-o", output_bytes.constData(),
+		"--output-format", "XML"
 	});
 	QCOMPARE(result, 0);
 	QVERIFY(QFile::exists(output));
@@ -304,11 +304,11 @@ void CliTest::testExportFormatIdOverridesExtension()
 	auto output_bytes = output.toLocal8Bit();
 
 	int result = execCliFrom({
-	    "mapper", "--cli", "export",
-	    "-i", input_bytes.constData(),
-	    "-o", output_bytes.constData(),
-	    "--output-format", "png",
-	    "--full-map"
+		"mapper", "--cli", "export",
+		"-i", input_bytes.constData(),
+		"-o", output_bytes.constData(),
+		"--output-format", "png",
+		"--full-map"
 	});
 	QCOMPARE(result, 0);
 	QVERIFY(QFile::exists(output));
@@ -330,10 +330,10 @@ void CliTest::testConvertFormatIdOverridesExtension()
 	auto output_bytes = output.toLocal8Bit();
 
 	int result = execCliFrom({
-	    "mapper", "--cli", "convert",
-	    "-i", input_bytes.constData(),
-	    "-o", output_bytes.constData(),
-	    "--output-format", "XML"
+		"mapper", "--cli", "convert",
+		"-i", input_bytes.constData(),
+		"-o", output_bytes.constData(),
+		"--output-format", "XML"
 	});
 	QCOMPARE(result, 0);
 	QVERIFY(QFile::exists(output));
@@ -354,10 +354,10 @@ void CliTest::testExportRejectsNativeFormatId()
 	auto output_bytes = output.toLocal8Bit();
 
 	int result = execCliFrom({
-	    "mapper", "--cli", "export",
-	    "-i", input_bytes.constData(),
-	    "-o", output_bytes.constData(),
-	    "--output-format", "XML"
+		"mapper", "--cli", "export",
+		"-i", input_bytes.constData(),
+		"-o", output_bytes.constData(),
+		"--output-format", "XML"
 	});
 	QCOMPARE(result, 1);
 }
@@ -376,10 +376,10 @@ void CliTest::testConvertRejectsUnknownFormatId()
 	auto output_bytes = output.toLocal8Bit();
 
 	int result = execCliFrom({
-	    "mapper", "--cli", "convert",
-	    "-i", input_bytes.constData(),
-	    "-o", output_bytes.constData(),
-	    "--output-format", "nonexistingformat"
+		"mapper", "--cli", "convert",
+		"-i", input_bytes.constData(),
+		"-o", output_bytes.constData(),
+		"--output-format", "nonexistingformat"
 	});
 	QCOMPARE(result, 1);
 }
