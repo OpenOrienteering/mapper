@@ -24,6 +24,7 @@
 #include <QCommandLineParser>
 #include <QFileInfo>
 #include <QImage>
+#include <QImageWriter>
 #include <QLatin1String>
 #include <QPainter>
 #include <QStringList>
@@ -246,11 +247,7 @@ int runExport(const QStringList& sub_args)
 		return 1;
 	}
 
-	static const QStringList image_formats = {
-	    QStringLiteral("png"), QStringLiteral("jpg"), QStringLiteral("jpeg"),
-	    QStringLiteral("tif"), QStringLiteral("tiff"), QStringLiteral("bmp")
-	};
-	if (image_formats.contains(format_key))
+	if (QImageWriter::supportedImageFormats().contains(format_key.toLatin1()))
 	{
 		// Pass explicit format when format_id is set, so QImage::save
 		// uses the requested format regardless of file extension.
