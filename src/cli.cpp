@@ -58,10 +58,9 @@ bool exportViaFileFormat(const QString& output_path, const Map& map, const QStri
 
 #ifdef QT_PRINTSUPPORT_LIB
 
-bool exportViaPdf(const QString& output_path, Map& map)
+bool exportViaPdf(const QString& output_path, Map& map, const QRectF& print_area)
 {
-	auto extent = map.calculateExtent();
-	if (extent.isEmpty())
+	if (print_area.isEmpty())
 	{
 		fprintf(stderr, "Error: map has no extent\n");
 		return false;
@@ -69,8 +68,8 @@ bool exportViaPdf(const QString& output_path, Map& map)
 
 	MapPrinter printer(map, nullptr);
 	printer.setTarget(MapPrinter::pdfTarget());
-	printer.setPrintArea(extent);
-	printer.setCustomPageSize(extent.size());
+	printer.setPrintArea(print_area);
+	printer.setCustomPageSize(print_area.size());
 	printer.setResolution(300);
 
 	auto qprinter = printer.makePrinter();
@@ -94,10 +93,9 @@ bool exportViaPdf(const QString& output_path, Map& map)
 }
 
 
-bool exportViaImage(const QString& output_path, Map& map)
+bool exportViaImage(const QString& output_path, Map& map, const QRectF& print_area)
 {
-	auto extent = map.calculateExtent();
-	if (extent.isEmpty())
+	if (print_area.isEmpty())
 	{
 		fprintf(stderr, "Error: map has no extent\n");
 		return false;
@@ -105,7 +103,7 @@ bool exportViaImage(const QString& output_path, Map& map)
 
 	MapPrinter printer(map, nullptr);
 	printer.setTarget(MapPrinter::imageTarget());
-	printer.setPrintArea(extent);
+	printer.setPrintArea(print_area);
 	printer.setResolution(300);
 
 	auto const& options = printer.getOptions();
@@ -168,6 +166,9 @@ int runExport(const QStringList& sub_args)
 	    QStringLiteral("path"));
 	parser.addOption(input_option);
 
+	QCommandLineOption full_map_option(QStringLiteral("full-map"), QStringLiteral("Export the full map extent instead of the saved print area."));
+	parser.addOption(full_map_option);
+
 	parser.addHelpOption();
 
 	// QCommandLineParser requires the program name as first argument
@@ -210,6 +211,15 @@ int runExport(const QStringList& sub_args)
 		return 1;
 	}
 
+	QRectF print_area = parser.isSet(full_map_option)
+	                        ? map.calculateExtent()
+	                        : map.printerConfig().print_area;
+	if (print_area.isEmpty())
+	{
+		fprintf(stderr, "Error: map has no content in the selected print area.\n");
+		return 1;
+	}
+
 	// When no explicit format is given, prefer MapPrinter for PDF and image formats.
 	if (format_id.isEmpty())
 	{
@@ -217,7 +227,7 @@ int runExport(const QStringList& sub_args)
 		auto ext = QFileInfo(output_path).suffix().toLower();
 		if (ext == QStringLiteral("pdf"))
 		{
-			if (exportViaPdf(output_path, map))
+			if (exportViaPdf(output_path, map, print_area))
 				return 0;
 			fprintf(stderr, "Error: PDF export failed.\n");
 			return 1;
@@ -226,7 +236,7 @@ int runExport(const QStringList& sub_args)
 		         || ext == QStringLiteral("jpeg") || ext == QStringLiteral("tif")
 		         || ext == QStringLiteral("tiff") || ext == QStringLiteral("bmp"))
 		{
-			if (exportViaImage(output_path, map))
+			if (exportViaImage(output_path, map, print_area))
 				return 0;
 			fprintf(stderr, "Error: image export failed.\n");
 			return 1;
