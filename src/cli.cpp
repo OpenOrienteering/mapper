@@ -30,6 +30,7 @@
 #include <QStringList>
 
 #include "core/map.h"
+#include "core/map_printer.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
@@ -161,25 +162,25 @@ int runExport(const QStringList& sub_args)
 	parser.addOption(input_option);
 
 	QCommandLineOption output_option(
-	    QStringList{QStringLiteral("o"), QStringLiteral("output")},
-	    QStringLiteral("Output file path."),
-	    QStringLiteral("path"));
+		QStringList{QStringLiteral("o"), QStringLiteral("output")},
+		QStringLiteral("Output file path."),
+		QStringLiteral("path"));
 	parser.addOption(output_option);
 
 	QCommandLineOption format_option(
-	    QStringLiteral("output-format"),
-	    QStringLiteral("Output format ID (e.g. pdf, png, OGR-export-DXF)."),
-	    QStringLiteral("id"));
+		QStringLiteral("output-format"),
+		QStringLiteral("Output format ID (e.g. pdf, png, jpg)."),
+		QStringLiteral("id"));
 	parser.addOption(format_option);
 
 	QCommandLineOption full_map_option(QStringLiteral("full-map"), QStringLiteral("Export the full map extent instead of the saved print area."));
 	parser.addOption(full_map_option);
 
 	QCommandLineOption dpi_option(
-	    QStringLiteral("dpi"),
-	    QStringLiteral("Output resolution in DPI (default: 300)."),
-	    QStringLiteral("dpi"),
-	    QStringLiteral("300"));
+		QStringLiteral("dpi"),
+		QStringLiteral("Output resolution in DPI (default: 300)."),
+		QStringLiteral("dpi"),
+		QStringLiteral("300"));
 	parser.addOption(dpi_option);
 
 	parser.addHelpOption();
@@ -226,8 +227,8 @@ int runExport(const QStringList& sub_args)
 	}
 
 	QRectF print_area = parser.isSet(full_map_option)
-	                        ? map.calculateExtent()
-	                        : map.printerConfig().print_area;
+		? map.calculateExtent()
+		: map.printerConfig().print_area;
 	if (print_area.isEmpty())
 	{
 		fprintf(stderr, "Error: map has no content in the selected print area.\n");
@@ -275,22 +276,22 @@ int runConvert(const QStringList& sub_args)
 	parser.setApplicationDescription(QStringLiteral("Convert between orienteering map formats"));
 
 	QCommandLineOption input_option(
-	    QStringList{QStringLiteral("i"), QStringLiteral("input")},
-	    QStringLiteral("Input map file."),
-	    QStringLiteral("path"));
+		QStringList{QStringLiteral("i"), QStringLiteral("input")},
+		QStringLiteral("Input map file."),
+		QStringLiteral("path"));
 	parser.addOption(input_option);
 
 	QCommandLineOption output_option(
-	    QStringList{QStringLiteral("o"), QStringLiteral("output")},
-	    QStringLiteral("Output file path."),
-	    QStringLiteral("path"));
+		QStringList{QStringLiteral("o"), QStringLiteral("output")},
+		QStringLiteral("Output file path."),
+		QStringLiteral("path"));
 	parser.addOption(output_option);
 
 	QCommandLineOption format_option(
-	    QStringLiteral("output-format"),
-	    QStringLiteral("Output format ID (e.g. XML, OCD, OCD12)."),
-	    QStringLiteral("id"),
-	    QString{});
+		QStringLiteral("output-format"),
+		QStringLiteral("Output format ID (e.g. XML, OCD, OCD12)."),
+		QStringLiteral("id"),
+		QString{});
 	parser.addOption(format_option);
 
 	parser.addHelpOption();
@@ -363,6 +364,18 @@ int execCli(int argc, char** argv)
 
 	if (subcommand == QLatin1String("convert"))
 		return runConvert(sub_args);
+
+	if (subcommand == QLatin1String("help") || subcommand == QLatin1String("--help"))
+	{
+	fprintf(stderr,
+		"Usage: %s --cli <subcommand> [options]\n\n"
+		"Available subcommands:\n"
+		"  export   Export map to printable and image formats\n"
+		"  convert  Convert between orienteering map formats\n"
+		"  help     Show this help\n",
+		argv[0]);
+	return 0;
+	}
 
 	fprintf(stderr, "Error: unknown subcommand '%s'. Available: export, convert\n", qPrintable(subcommand));
 	return 1;

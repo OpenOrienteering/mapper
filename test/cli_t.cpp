@@ -25,6 +25,7 @@
 
 #include <QtGlobal>
 #include <QtTest>
+#include <QApplication>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
@@ -383,6 +384,13 @@ void CliTest::testConvertRejectsUnknownFormatId()
 	});
 	QCOMPARE(result, 1);
 }
-
-
-QTEST_MAIN(CliTest)
+int main(int argc, char** argv)
+{
+#ifdef Q_OS_LINUX
+	// Offscreen avoids failing when no display server is available
+	qputenv("QT_QPA_PLATFORM", "offscreen");
+#endif
+	QApplication app(argc, argv);
+	CliTest tc;
+	return QTest::qExec(&tc, argc, argv);
+}
