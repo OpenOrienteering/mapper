@@ -39,7 +39,7 @@
         <translation type="unfinished">100%的棕色</translation>
     </message>
     <message>
-        <source>Dark green line symbols</source>
+        <source>Dark green for forest edges</source>
         <comment>Color 7</comment>
         <translation type="unfinished">路徑圖例的紫紅色</translation>
     </message>
@@ -114,7 +114,7 @@
         <translation type="unfinished">狹窄通道之30%的綠色</translation>
     </message>
     <message>
-        <source>Yellow 100% + Green 50%</source>
+        <source>Olive green</source>
         <comment>Color 22</comment>
         <translation type="unfinished">綠色上層的白色</translation>
     </message>
@@ -7642,7 +7642,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation type="unfinished">狹窄通道之30%的綠色</translation>
     </message>
     <message>
-        <source>Yellow 100% + Green 50%</source>
+        <source>Olive green</source>
         <comment>Color 55</comment>
         <translation type="unfinished">綠色上層的白色</translation>
     </message>

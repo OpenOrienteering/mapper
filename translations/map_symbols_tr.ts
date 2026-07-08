@@ -39,7 +39,7 @@
         <translation type="unfinished">%100 Kahverengi</translation>
     </message>
     <message>
-        <source>Dark green line symbols</source>
+        <source>Dark green for forest edges</source>
         <comment>Color 7</comment>
         <translation type="unfinished">İz sembolleri için mor</translation>
     </message>
@@ -114,7 +114,7 @@
         <translation type="unfinished">Dar orman yolu için %30 Yeşil</translation>
     </message>
     <message>
-        <source>Yellow 100% + Green 50%</source>
+        <source>Olive green</source>
         <comment>Color 22</comment>
         <translation type="unfinished">Yeşil üstü beyaz</translation>
     </message>
@@ -10737,7 +10737,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
         <translation type="unfinished">Dar orman yolu için %30 Yeşil</translation>
     </message>
     <message>
-        <source>Yellow 100% + Green 50%</source>
+        <source>Olive green</source>
         <comment>Color 55</comment>
         <translation type="unfinished">Yeşil üstü beyaz</translation>
     </message>

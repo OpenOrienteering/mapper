@@ -39,7 +39,7 @@
         <translation type="unfinished">Brązowy 100%</translation>
     </message>
     <message>
-        <source>Dark green line symbols</source>
+        <source>Dark green for forest edges</source>
         <comment>Color 7</comment>
         <translation type="unfinished">Purpurowy dla symboli trasy</translation>
     </message>
@@ -114,7 +114,7 @@
         <translation type="unfinished">Zielony 30% dla wąskiej przesieki</translation>
     </message>
     <message>
-        <source>Yellow 100% + Green 50%</source>
+        <source>Olive green</source>
         <comment>Color 22</comment>
         <translation type="unfinished">Biały nad zielonym</translation>
     </message>
@@ -9716,7 +9716,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation type="unfinished">Zielony 30% dla wąskiej przesieki</translation>
     </message>
     <message>
-        <source>Yellow 100% + Green 50%</source>
+        <source>Olive green</source>
         <comment>Color 55</comment>
         <translation type="unfinished">Biały nad zielonym</translation>
     </message>

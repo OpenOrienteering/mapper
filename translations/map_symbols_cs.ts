@@ -39,7 +39,7 @@
         <translation type="unfinished">Hnědá 100%</translation>
     </message>
     <message>
-        <source>Dark green line symbols</source>
+        <source>Dark green for forest edges</source>
         <comment>Color 7</comment>
         <translation type="unfinished">Fialová pro zákres tratí</translation>
     </message>
@@ -114,7 +114,7 @@
         <translation type="unfinished">Zelená 30% pro průsek</translation>
     </message>
     <message>
-        <source>Yellow 100% + Green 50%</source>
+        <source>Olive green</source>
         <comment>Color 22</comment>
         <translation type="unfinished">Bílá přes zelenou</translation>
     </message>
@@ -16419,7 +16419,7 @@ Poznámka: Je-li tok širší než 0.25 mm, upravte tuto značku tak, aby přesa
         <translation type="unfinished">Zelená 30% pro průsek</translation>
     </message>
     <message>
-        <source>Yellow 100% + Green 50%</source>
+        <source>Olive green</source>
         <comment>Color 55</comment>
         <translation type="unfinished">Bílá přes zelenou</translation>
     </message>

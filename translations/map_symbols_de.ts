@@ -39,7 +39,7 @@
         <translation type="unfinished">Braun 100%</translation>
     </message>
     <message>
-        <source>Dark green line symbols</source>
+        <source>Dark green for forest edges</source>
         <comment>Color 7</comment>
         <translation type="unfinished">Violett für Bahnsymbole</translation>
     </message>
@@ -114,7 +114,7 @@
         <translation type="unfinished">Grün 30% für schmale Schneise</translation>
     </message>
     <message>
-        <source>Yellow 100% + Green 50%</source>
+        <source>Olive green</source>
         <comment>Color 22</comment>
         <translation type="unfinished">Weiß über Grün</translation>
     </message>
@@ -15846,7 +15846,7 @@ Hinweis: Wenn das Bachsymbol breiter als 0,25 mm ist, muss das Stegsymbol angepa
         <translation type="unfinished">Grün 30% für schmale Schneise</translation>
     </message>
     <message>
-        <source>Yellow 100% + Green 50%</source>
+        <source>Olive green</source>
         <comment>Color 55</comment>
         <translation type="unfinished">Weiß über Grün</translation>
     </message>

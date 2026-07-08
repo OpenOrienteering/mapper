@@ -39,7 +39,7 @@
         <translation type="unfinished">Marrón 100%</translation>
     </message>
     <message>
-        <source>Dark green line symbols</source>
+        <source>Dark green for forest edges</source>
         <comment>Color 7</comment>
         <translation type="unfinished">Púrpura para símbolos de pista</translation>
     </message>
@@ -114,7 +114,7 @@
         <translation type="unfinished">Verde 30% para pasillos estrechos</translation>
     </message>
     <message>
-        <source>Yellow 100% + Green 50%</source>
+        <source>Olive green</source>
         <comment>Color 22</comment>
         <translation type="unfinished">Blanco sobre verde</translation>
     </message>
@@ -14700,7 +14700,7 @@ Nota: si el arroyo es más ancho que 0,25 mm, ¡ajusta este símbolo para que se
         <translation type="unfinished">Verde 30% para pasillos estrechos</translation>
     </message>
     <message>
-        <source>Yellow 100% + Green 50%</source>
+        <source>Olive green</source>
         <comment>Color 55</comment>
         <translation type="unfinished">Blanco sobre verde</translation>
     </message>

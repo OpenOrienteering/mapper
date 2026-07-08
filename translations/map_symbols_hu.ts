@@ -39,7 +39,7 @@
         <translation type="unfinished">Barna 100%</translation>
     </message>
     <message>
-        <source>Dark green line symbols</source>
+        <source>Dark green for forest edges</source>
         <comment>Color 7</comment>
         <translation type="unfinished">Lila a pálya szimbólumaihoz</translation>
     </message>
@@ -114,7 +114,7 @@
         <translation type="unfinished">Zöld 30%-os keskeny nyiladékhoz</translation>
     </message>
     <message>
-        <source>Yellow 100% + Green 50%</source>
+        <source>Olive green</source>
         <comment>Color 22</comment>
         <translation type="unfinished">Fehér zöld felett</translation>
     </message>
@@ -15972,7 +15972,7 @@ Megjegyzés: ha az víz szélesebb 0.25mm-nél, akkor mindkét oldalon 0.5 mm-re
         <translation type="unfinished">Zöld 30%-os keskeny nyiladékhoz</translation>
     </message>
     <message>
-        <source>Yellow 100% + Green 50%</source>
+        <source>Olive green</source>
         <comment>Color 55</comment>
         <translation type="unfinished">Fehér zöld felett</translation>
     </message>

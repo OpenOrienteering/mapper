@@ -39,7 +39,7 @@
         <translation type="unfinished">Ruskea 100%</translation>
     </message>
     <message>
-        <source>Dark green line symbols</source>
+        <source>Dark green for forest edges</source>
         <comment>Color 7</comment>
         <translation type="unfinished">Violetti ratamerkinnöille</translation>
     </message>
@@ -114,7 +114,7 @@
         <translation type="unfinished">Vihreä 30% ajouralle tai kapealle linjalle</translation>
     </message>
     <message>
-        <source>Yellow 100% + Green 50%</source>
+        <source>Olive green</source>
         <comment>Color 22</comment>
         <translation type="unfinished">Valkoinen vihreän päällä</translation>
     </message>
@@ -15407,7 +15407,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <translation type="unfinished">Vihreä 30% ajouralle tai kapealle linjalle</translation>
     </message>
     <message>
-        <source>Yellow 100% + Green 50%</source>
+        <source>Olive green</source>
         <comment>Color 55</comment>
         <translation type="unfinished">Valkoinen vihreän päällä</translation>
     </message>
