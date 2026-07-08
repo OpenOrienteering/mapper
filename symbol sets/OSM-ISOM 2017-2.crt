@@ -29,11 +29,11 @@
 
 214    natural = bare_rock
 213    natural = beach AND surface = sand
-203.2  natural = cave_entrance
+203.101 natural = cave_entrance
 201    natural = cliff
 206    natural = cliff AND (area = yes OR is_area = yes)
 213    natural = dune
-203.1  natural = hole AND rock != no
+203.100 natural = hole AND rock != no
 206    natural = rock AND (area = yes OR is_area = yes)
 213    natural = sand
 205    natural = stone
@@ -67,7 +67,7 @@
 306    waterway = stream AND intermittent = yes
 
 520    landuse = allotments
-520.2  landuse = cemetery
+520    landuse = cemetery
 520    landuse = commercial
 # 710    landuse = construction
 412    landuse = farmland
@@ -78,7 +78,7 @@
 # 710    landuse = landfill
 403    landuse = logging
 401    landuse = meadow
-520.2  landuse = military
+520    landuse = military
 413    landuse = orchard
 301    landuse = reservoir
 # 710    landuse = quarry
