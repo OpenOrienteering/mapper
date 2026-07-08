@@ -1421,6 +1421,20 @@ void MapEditorController::createMenuAndToolbars()
 	context_menu->addAction(switch_dashes_act);
 	context_menu->addAction(connect_paths_act);
 	context_menu->addAction(copy_coords_act);
+	
+	// Show keyboard shortcuts in toolbar tooltips
+	for (auto* toolbar : {main_toolbar, toolbar_view, toolbar_mapparts, toolbar_drawing, toolbar_editing, toolbar_advanced_editing})
+	{
+		for (auto* action : toolbar->actions())
+		{
+			if (action && !action->isSeparator() && !action->shortcut().isEmpty())
+			{
+				auto label = action->text();
+				label.remove(QLatin1Char('&'));
+				action->setToolTip(label + QStringLiteral(" (") + action->shortcut().toString() + QStringLiteral(")"));
+			}
+		}
+	}
 }
 
 void MapEditorController::createMobileGUI()
