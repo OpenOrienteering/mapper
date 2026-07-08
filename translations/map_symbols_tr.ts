@@ -4,14 +4,14 @@
 <context>
     <name>ISOM 2017-2</name>
     <message>
-        <source>Purple for course overprint</source>
+        <source>Upper purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation>Kursun üst baskısı için mor</translation>
+        <translation type="unfinished">Kursun üst baskısı için mor</translation>
     </message>
     <message>
-        <source>White for course overprint</source>
+        <source>White for railroad</source>
         <comment>Color 1</comment>
-        <translation>Kursun üst baskısı için beyaz</translation>
+        <translation type="unfinished">Kursun üst baskısı için beyaz</translation>
     </message>
     <message>
         <source>Black 100%</source>
@@ -19,164 +19,159 @@
         <translation>%100 Siyah</translation>
     </message>
     <message>
-        <source>Green 100%</source>
+        <source>Blue 100% point symbols</source>
         <comment>Color 3</comment>
-        <translation>%100 Yeşil</translation>
+        <translation type="unfinished">%100 Yeşil</translation>
     </message>
     <message>
-        <source>White for railway</source>
+        <source>Brown 100% point symbols</source>
         <comment>Color 4</comment>
-        <translation>Demiryolu için beyaz</translation>
+        <translation type="unfinished">Demiryolu için beyaz</translation>
     </message>
     <message>
-        <source>Blue 100%</source>
+        <source>Green 100% point symbols</source>
         <comment>Color 5</comment>
-        <translation>%100 Mavi</translation>
+        <translation type="unfinished">%100 Mavi</translation>
     </message>
     <message>
-        <source>Brown 100%</source>
+        <source>Blue 100% line symbols</source>
         <comment>Color 6</comment>
-        <translation>%100 Kahverengi</translation>
+        <translation type="unfinished">%100 Kahverengi</translation>
     </message>
     <message>
-        <source>Purple for track symbols</source>
+        <source>Dark green line symbols</source>
         <comment>Color 7</comment>
-        <translation>İz sembolleri için mor</translation>
+        <translation type="unfinished">İz sembolleri için mor</translation>
     </message>
     <message>
-        <source>Black below purple for track symbols</source>
+        <source>Brown 100% line symbols</source>
         <comment>Color 8</comment>
-        <translation>İz sembolleri için morun altında siyah</translation>
+        <translation type="unfinished">İz sembolleri için morun altında siyah</translation>
     </message>
     <message>
-        <source>Black 50%</source>
+        <source>Lower purple for course overprint</source>
         <comment>Color 9</comment>
-        <translation>%50 Siyah</translation>
+        <translation type="unfinished">%65 Siyah</translation>
     </message>
     <message>
-        <source>Black 20%</source>
+        <source>Brown 50% for road infill</source>
         <comment>Color 10</comment>
-        <translation>%20 Siyah</translation>
+        <translation type="unfinished">%20 Siyah</translation>
     </message>
     <message>
-        <source>Upper brown 50%</source>
+        <source>Black 100% for road outline</source>
         <comment>Color 11</comment>
-        <translation>%50 Üst kahverengi</translation>
+        <translation type="unfinished">%50 Üst kahverengi</translation>
     </message>
     <message>
-        <source>Black below upper brown 50%</source>
+        <source>Black 50% for large buildings and tramway</source>
         <comment>Color 12</comment>
-        <translation>Üst kahverenginin altında siyah %50</translation>
+        <translation type="unfinished">Üst kahverenginin altında siyah %50</translation>
     </message>
     <message>
-        <source>Lower brown 50%</source>
+        <source>Black 20% for canopy</source>
         <comment>Color 13</comment>
-        <translation>Alt kahverengi %50</translation>
+        <translation type="unfinished">Alt kahverengi %50</translation>
     </message>
     <message>
-        <source>Black below lower brown 50%</source>
+        <source>Blue 100% area symbols</source>
         <comment>Color 14</comment>
-        <translation>Alt kahverenginin altında siyah %50</translation>
+        <translation type="unfinished">Alt kahverenginin altında siyah %50</translation>
     </message>
     <message>
-        <source>Blue 100% for area features</source>
+        <source>Blue 70% area symbols</source>
         <comment>Color 15</comment>
-        <translation>Alan özellikleri için %100 mavi</translation>
+        <translation type="unfinished">Alan özellikleri için %100 mavi</translation>
     </message>
     <message>
-        <source>Blue 70%</source>
+        <source>Blue 50% area symbols</source>
         <comment>Color 16</comment>
-        <translation>%70 Mavi</translation>
+        <translation type="unfinished">%70 Mavi</translation>
     </message>
     <message>
-        <source>Blue 50%</source>
+        <source>White over green and brown (+ yellow)</source>
         <comment>Color 17</comment>
-        <translation>%50 Mavi</translation>
+        <translation type="unfinished">%50 Mavi</translation>
     </message>
     <message>
-        <source>OpenOrienteering Orange</source>
+        <source>Brown 50% for paved area</source>
         <comment>Color 18</comment>
-        <translation>OpenOrienteering Turuncu</translation>
+        <translation type="unfinished">OpenOrienteering Turuncu</translation>
     </message>
     <message>
-        <source>Yellow 100% for narrow ride</source>
+        <source>Yellow 100% for narrow ride (extra)</source>
         <comment>Color 19</comment>
-        <translation>Dar orman yolu için %100 Sarı</translation>
+        <translation type="unfinished">Dar orman yolu için %100 Sarı</translation>
     </message>
     <message>
-        <source>Green 60% for narrow ride</source>
+        <source>Green 60% for narrow ride (extra)</source>
         <comment>Color 20</comment>
-        <translation>Dar orman yolu için %60 Yeşil</translation>
+        <translation type="unfinished">Dar orman yolu için %60 Yeşil</translation>
     </message>
     <message>
-        <source>Green 30% for narrow ride</source>
+        <source>Green 30% for narrow ride (extra)</source>
         <comment>Color 21</comment>
-        <translation>Dar orman yolu için %30 Yeşil</translation>
+        <translation type="unfinished">Dar orman yolu için %30 Yeşil</translation>
     </message>
     <message>
-        <source>White over green</source>
+        <source>Yellow 100% + Green 50%</source>
         <comment>Color 22</comment>
-        <translation>Yeşil üstü beyaz</translation>
+        <translation type="unfinished">Yeşil üstü beyaz</translation>
     </message>
     <message>
-        <source>Yellow 100%/Green 50%</source>
+        <source>Green 100% area symbols</source>
         <comment>Color 23</comment>
-        <translation>%100 Sarı/%50 Yeşil</translation>
+        <translation type="unfinished">%100 Sarı/%50 Yeşil</translation>
     </message>
     <message>
-        <source>Black 35% (Grey)</source>
+        <source>Green 60% area symbols</source>
         <comment>Color 24</comment>
         <translation type="unfinished">%25 Siyah (Gri)</translation>
     </message>
     <message>
-        <source>Dark green line symbols </source>
+        <source>Green 30% area symbols</source>
         <comment>Color 25</comment>
         <translation type="unfinished">%100 Yeşil/%50 Siyah</translation>
     </message>
     <message>
-        <source>Green 100% for area features</source>
+        <source>Black 35% area symbols</source>
         <comment>Color 26</comment>
-        <translation>Alan özellikleri için %100 Yeşil</translation>
+        <translation type="unfinished">Alan özellikleri için %100 Yeşil</translation>
     </message>
     <message>
-        <source>Green 60%</source>
+        <source>Green 100% below green areas (extra)</source>
         <comment>Color 27</comment>
-        <translation>%60 Yeşil</translation>
-    </message>
-    <message>
-        <source>Green 30%</source>
-        <comment>Color 28</comment>
-        <translation>%30 Yeşil</translation>
-    </message>
-    <message>
-        <source>Green 100% for undergrowth</source>
-        <comment>Color 29</comment>
-        <translation>Alt bitki örtüsü için %100 Yeşil</translation>
+        <translation type="unfinished">%60 Yeşil</translation>
     </message>
     <message>
         <source>White over yellow</source>
-        <comment>Color 30</comment>
+        <comment>Color 28</comment>
         <translation>Sarı üstü beyaz</translation>
     </message>
     <message>
-        <source>Black for open land</source>
+        <source>Black for cultivated land and sandy ground</source>
+        <comment>Color 29</comment>
+        <translation type="unfinished">Alt bitki örtüsü için %100 Yeşil</translation>
+    </message>
+    <message>
+        <source>Yellow 100% area symbols</source>
+        <comment>Color 30</comment>
+        <translation type="unfinished">Sarı üstü beyaz</translation>
+    </message>
+    <message>
+        <source>Yellow 75% area symbols</source>
         <comment>Color 31</comment>
-        <translation>Açık alan için siyah</translation>
-    </message>
-    <message>
-        <source>Yellow</source>
-        <comment>Color 32</comment>
-        <translation>Sarı</translation>
-    </message>
-    <message>
-        <source>Yellow 100% for area features</source>
-        <comment>Color 33</comment>
-        <translation>Alan özellikleri için %100 Sarı</translation>
+        <translation type="unfinished">Açık alan için siyah</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
-        <comment>Color 34</comment>
+        <comment>Color 32</comment>
         <translation>%50 Sarı</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange (extra)</source>
+        <comment>Color 33</comment>
+        <translation type="unfinished">Alan özellikleri için %100 Sarı</translation>
     </message>
     <message>
         <source>Contour</source>
@@ -752,15 +747,13 @@ Yeri, sembolün ağırlık merkezidir ve sembol mağaranın içine doğru işare
     <message>
         <source>Dangerous pit</source>
         <comment>Name of symbol 203.200</comment>
-        <translation type="unfinished">Kayalık çukur veya mağara (belirgin girişi olan)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A highly dangerous pit, vertical shaft or abyss where a fall into the pit could cause severe injury or death. It is strongly recommended not to use such a feature as a control point. If this object is part of a possible route choice, it should be marked in the terrain with tape.
 Footprint: 13.5 m diameter.</source>
         <comment>Description of symbol 203.200</comment>
-        <translation type="unfinished">Belirgin bir girişi olan ve yarışmacı için tehlike oluşturabilecek kayalık çukur, delik, mağara veya maden ocağı. Minimum derinlik: 1 m.
-Yeri, sembolün ağırlık merkezidir ve sembol mağaranın içine doğru işaret etmelidir.
-Çapı 5 m&apos;den büyük kayalık çukurlar abartılarak uçurum sembolleri (201, 202) kullanılarak gösterilmelidir.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Rocky pit or cave with distinct entrance (from ISOM2000)</source>
@@ -2994,80 +2987,119 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
         <translation>OpenOrienteering Logosu.</translation>
     </message>
     <message>
-        <source>Earth wall</source>
-        <comment>Name of symbol 105.1</comment>
-        <translation type="obsolete">Toprak duvar</translation>
+        <source>Purple for course overprint</source>
+        <comment>Color 0</comment>
+        <translation type="obsolete">Kursun üst baskısı için mor</translation>
     </message>
     <message>
-        <source>Distinct earth wall. Minimum height: 1 m.
-Minimum length: 1.4 mm (footprint 21 m).</source>
-        <comment>Description of symbol 105.1</comment>
-        <translation type="obsolete">Belirgin toprak duvar. Minimum yükseklik: 1 m.
-Minimum uzunluk: 1.4 mm (kapladığı alan 21 m).</translation>
+        <source>White for course overprint</source>
+        <comment>Color 1</comment>
+        <translation type="obsolete">Kursun üst baskısı için beyaz</translation>
     </message>
     <message>
-        <source>Rocky pit or cave (without a distinct entrance)</source>
-        <comment>Name of symbol 203.1</comment>
-        <translation type="obsolete">Kayalık çukur veya mağara (belirgin girişi olmayan)</translation>
+        <source>Green 100%</source>
+        <comment>Color 3</comment>
+        <translation type="obsolete">%100 Yeşil</translation>
     </message>
     <message>
-        <source>Rocky pits, holes, caves or mineshafts without a distinct entrance which may constitute a danger to the competitor.
-Location is the centre of gravity of the symbol, and the symbol shall be orientated to north.
-Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).
-Minimum depth: 1 m.
-Footprint: 10.5 m x 12 m.</source>
-        <comment>Description of symbol 203.1</comment>
-        <translation type="obsolete">Belirgin bir girişi olmayan ve yarışmacı için tehlike oluşturabilecek kayalık bir çukur, delik, mağara veya maden ocağı.
-Yeri, sembolün ağırlık merkezidir ve sembol kuzeye yönlendirilmelidir.
-Çapı 5 m&apos;den büyük kayalık çukurlar abartılarak uçurum sembolleri (201, 202) kullanılarak gösterilmelidir.
-Minimum derinlik: 1 m.
-Kapladığı alan: 10.5 m x 12.0 m.</translation>
+        <source>White for railway</source>
+        <comment>Color 4</comment>
+        <translation type="obsolete">Demiryolu için beyaz</translation>
     </message>
     <message>
-        <source>Cave or rocky pit (with a distinct entrance)</source>
-        <comment>Name of symbol 203.1.1</comment>
-        <translation type="obsolete">Kayalık çukur veya mağara (belirgin girişi olan)</translation>
+        <source>Blue 100%</source>
+        <comment>Color 5</comment>
+        <translation type="obsolete">%100 Mavi</translation>
     </message>
     <message>
-        <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
-Location is the centre of gravity of the symbol, and the symbol should point into the cave.
-Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
-        <comment>Description of symbol 203.1.1</comment>
-        <translation type="obsolete">Belirgin bir girişi olan ve yarışmacı için tehlike oluşturabilecek kayalık çukur, delik, mağara veya maden ocağı. Minimum derinlik: 1 m.
-Yeri, sembolün ağırlık merkezidir ve sembol mağaranın içine doğru işaret etmelidir.
-Çapı 5 m&apos;den büyük kayalık çukurlar abartılarak uçurum sembolleri (201, 202) kullanılarak gösterilmelidir.</translation>
+        <source>Brown 100%</source>
+        <comment>Color 6</comment>
+        <translation type="obsolete">%100 Kahverengi</translation>
     </message>
     <message>
-        <source>Dangerous pit</source>
-        <comment>Name of symbol 203.2</comment>
-        <translation type="obsolete">Kayalık çukur veya mağara (belirgin girişi olan)</translation>
+        <source>Purple for track symbols</source>
+        <comment>Color 7</comment>
+        <translation type="obsolete">İz sembolleri için mor</translation>
     </message>
     <message>
-        <source>A highly dangerous pit, vertical shaft or abyss where a fall into the pit could cause severe injury or death. It is strongly recommended not to use such a feature as a control point. If this object is part of a possible route choice, it should be marked in the terrain with tape.
-Footprint: 13.5 m diameter.</source>
-        <comment>Description of symbol 203.2</comment>
-        <translation type="obsolete">Belirgin bir girişi olan ve yarışmacı için tehlike oluşturabilecek kayalık çukur, delik, mağara veya maden ocağı. Minimum derinlik: 1 m.
-Yeri, sembolün ağırlık merkezidir ve sembol mağaranın içine doğru işaret etmelidir.
-Çapı 5 m&apos;den büyük kayalık çukurlar abartılarak uçurum sembolleri (201, 202) kullanılarak gösterilmelidir.</translation>
-    </message>
-    <message>
-        <source>Wall</source>
-        <comment>Name of symbol 513.1</comment>
-        <translation type="obsolete">Duvar</translation>
-    </message>
-    <message>
-        <source>A significant wall of stone, concrete, wood or other materials.
-Minimum height: 1 m.
-Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
-        <comment>Description of symbol 513.1</comment>
-        <translation type="obsolete">Taş, beton, ahşap veya diğer malzemelerden yapılmış önemli bir duvar.
-Minimum yükseklik: 1 m.
-Minimum uzunluk (izole): 1.4 mm (kapladığı alan 21 m).</translation>
+        <source>Black below purple for track symbols</source>
+        <comment>Color 8</comment>
+        <translation type="obsolete">İz sembolleri için morun altında siyah</translation>
     </message>
     <message>
         <source>Black 65%</source>
         <comment>Color 9</comment>
         <translation type="obsolete">%65 Siyah</translation>
+    </message>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 10</comment>
+        <translation type="obsolete">%20 Siyah</translation>
+    </message>
+    <message>
+        <source>Upper brown 50%</source>
+        <comment>Color 11</comment>
+        <translation type="obsolete">%50 Üst kahverengi</translation>
+    </message>
+    <message>
+        <source>Black below upper brown 50%</source>
+        <comment>Color 12</comment>
+        <translation type="obsolete">Üst kahverenginin altında siyah %50</translation>
+    </message>
+    <message>
+        <source>Lower brown 50%</source>
+        <comment>Color 13</comment>
+        <translation type="obsolete">Alt kahverengi %50</translation>
+    </message>
+    <message>
+        <source>Black below lower brown 50%</source>
+        <comment>Color 14</comment>
+        <translation type="obsolete">Alt kahverenginin altında siyah %50</translation>
+    </message>
+    <message>
+        <source>Blue 100% for area features</source>
+        <comment>Color 15</comment>
+        <translation type="obsolete">Alan özellikleri için %100 mavi</translation>
+    </message>
+    <message>
+        <source>Blue 70%</source>
+        <comment>Color 16</comment>
+        <translation type="obsolete">%70 Mavi</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 17</comment>
+        <translation type="obsolete">%50 Mavi</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 18</comment>
+        <translation type="obsolete">OpenOrienteering Turuncu</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for narrow ride</source>
+        <comment>Color 19</comment>
+        <translation type="obsolete">Dar orman yolu için %100 Sarı</translation>
+    </message>
+    <message>
+        <source>Green 60% for narrow ride</source>
+        <comment>Color 20</comment>
+        <translation type="obsolete">Dar orman yolu için %60 Yeşil</translation>
+    </message>
+    <message>
+        <source>Green 30% for narrow ride</source>
+        <comment>Color 21</comment>
+        <translation type="obsolete">Dar orman yolu için %30 Yeşil</translation>
+    </message>
+    <message>
+        <source>White over green</source>
+        <comment>Color 22</comment>
+        <translation type="obsolete">Yeşil üstü beyaz</translation>
+    </message>
+    <message>
+        <source>Yellow 100%/Green 50%</source>
+        <comment>Color 23</comment>
+        <translation type="obsolete">%100 Sarı/%50 Yeşil</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -3078,6 +3110,51 @@ Minimum uzunluk (izole): 1.4 mm (kapladığı alan 21 m).</translation>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
         <translation type="obsolete">%100 Yeşil/%50 Siyah</translation>
+    </message>
+    <message>
+        <source>Green 100% for area features</source>
+        <comment>Color 26</comment>
+        <translation type="obsolete">Alan özellikleri için %100 Yeşil</translation>
+    </message>
+    <message>
+        <source>Green 60%</source>
+        <comment>Color 27</comment>
+        <translation type="obsolete">%60 Yeşil</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 28</comment>
+        <translation type="obsolete">%30 Yeşil</translation>
+    </message>
+    <message>
+        <source>Green 100% for undergrowth</source>
+        <comment>Color 29</comment>
+        <translation type="obsolete">Alt bitki örtüsü için %100 Yeşil</translation>
+    </message>
+    <message>
+        <source>White over yellow</source>
+        <comment>Color 30</comment>
+        <translation type="obsolete">Sarı üstü beyaz</translation>
+    </message>
+    <message>
+        <source>Black for open land</source>
+        <comment>Color 31</comment>
+        <translation type="obsolete">Açık alan için siyah</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 32</comment>
+        <translation type="obsolete">Sarı</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for area features</source>
+        <comment>Color 33</comment>
+        <translation type="obsolete">Alan özellikleri için %100 Sarı</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 34</comment>
+        <translation type="obsolete">%50 Sarı</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 m. A contour interval of 2.5 m may be used for flat terrains.
@@ -3183,6 +3260,24 @@ Dikey olmayan uçurumlar için, saçaklar yatay uzanımı gösterecek şekilde �
 Bir kaya yüzeyinin geçişi normalde ilerlemeyi yavaşlatır.
 Minimum yükseklik: 1 m.
 Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
+    </message>
+    <message>
+        <source>Rocky pit or cave (without a distinct entrance)</source>
+        <comment>Name of symbol 203.1</comment>
+        <translation type="obsolete">Kayalık çukur veya mağara (belirgin girişi olmayan)</translation>
+    </message>
+    <message>
+        <source>Rocky pits, holes, caves or mineshafts without a distinct entrance which may constitute a danger to the competitor.
+Location is the centre of gravity of the symbol, and the symbol shall be orientated to north.
+Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).
+Minimum depth: 1 m.
+Footprint: 10.5 m x 12 m.</source>
+        <comment>Description of symbol 203.1</comment>
+        <translation type="obsolete">Belirgin bir girişi olmayan ve yarışmacı için tehlike oluşturabilecek kayalık bir çukur, delik, mağara veya maden ocağı.
+Yeri, sembolün ağırlık merkezidir ve sembol kuzeye yönlendirilmelidir.
+Çapı 5 m&apos;den büyük kayalık çukurlar abartılarak uçurum sembolleri (201, 202) kullanılarak gösterilmelidir.
+Minimum derinlik: 1 m.
+Kapladığı alan: 10.5 m x 12.0 m.</translation>
     </message>
     <message>
         <source>Cave or rocky pit (with a distinct entrance)</source>
@@ -10382,134 +10477,134 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Black 100%</source>
+        <source>Upper purple for course overprint</source>
         <comment>Color 3</comment>
+        <translation type="unfinished">%100 Siyah</translation>
+    </message>
+    <message>
+        <source>White for railroad</source>
+        <comment>Color 4</comment>
+        <translation type="unfinished">%100 Yeşil</translation>
+    </message>
+    <message>
+        <source>Black 100%</source>
+        <comment>Color 5</comment>
         <translation>%100 Siyah</translation>
     </message>
     <message>
         <source>Green 100%</source>
-        <comment>Color 4</comment>
+        <comment>Color 6</comment>
         <translation>%100 Yeşil</translation>
     </message>
     <message>
         <source>White for railway</source>
-        <comment>Color 5</comment>
+        <comment>Color 7</comment>
         <translation>Demiryolu için beyaz</translation>
     </message>
     <message>
         <source>Blue 100%</source>
-        <comment>Color 6</comment>
+        <comment>Color 8</comment>
         <translation>%100 Mavi</translation>
     </message>
     <message>
         <source>Brown 100%</source>
-        <comment>Color 7</comment>
+        <comment>Color 9</comment>
         <translation>%100 Kahverengi</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
-        <comment>Color 8</comment>
+        <comment>Color 10</comment>
         <translation>İz sembolleri için mor</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
-        <comment>Color 9</comment>
+        <comment>Color 11</comment>
         <translation>İz sembolleri için morun altında siyah</translation>
     </message>
     <message>
         <source>Black 65%</source>
-        <comment>Color 10</comment>
-        <translation type="unfinished">%65 Siyah</translation>
-    </message>
-    <message>
-        <source>Black 50%</source>
-        <comment>Color 11</comment>
-        <translation>%50 Siyah</translation>
+        <comment>Color 12</comment>
+        <translation>Siyah %65</translation>
     </message>
     <message>
         <source>Black 20%</source>
-        <comment>Color 12</comment>
-        <translation>%20 Siyah</translation>
+        <comment>Color 13</comment>
+        <translation>Siyah %20</translation>
     </message>
     <message>
         <source>Upper brown 50%</source>
-        <comment>Color 13</comment>
-        <translation>%50 Üst kahverengi</translation>
+        <comment>Color 14</comment>
+        <translation>Üst kahverengi %50</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
-        <comment>Color 14</comment>
+        <comment>Color 15</comment>
         <translation>Üst kahverenginin altında siyah %50</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
-        <comment>Color 15</comment>
+        <comment>Color 16</comment>
         <translation>Alt kahverengi %50</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
-        <comment>Color 16</comment>
+        <comment>Color 17</comment>
         <translation>Alt kahverenginin altında siyah %50</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
-        <comment>Color 17</comment>
+        <comment>Color 18</comment>
         <translation>Alan özellikleri için %100 mavi</translation>
     </message>
     <message>
         <source>Blue 70%</source>
-        <comment>Color 18</comment>
+        <comment>Color 19</comment>
         <translation>%70 Mavi</translation>
     </message>
     <message>
         <source>Blue 50%</source>
-        <comment>Color 19</comment>
-        <translation>%50 Mavi</translation>
+        <comment>Color 20</comment>
+        <translation>Mavi %50</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
-        <comment>Color 20</comment>
-        <translation>OpenOrienteering Turuncu</translation>
+        <comment>Color 21</comment>
+        <translation>Açık orienteering Turuncu</translation>
     </message>
     <message>
         <source>Yellow 100% for narrow ride</source>
-        <comment>Color 21</comment>
+        <comment>Color 22</comment>
         <translation>Dar orman yolu için %100 Sarı</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
-        <comment>Color 22</comment>
+        <comment>Color 23</comment>
         <translation>Dar orman yolu için %60 Yeşil</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
-        <comment>Color 23</comment>
+        <comment>Color 24</comment>
         <translation>Dar orman yolu için %30 Yeşil</translation>
     </message>
     <message>
         <source>White over green</source>
-        <comment>Color 24</comment>
+        <comment>Color 25</comment>
         <translation>Yeşil üstü beyaz</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
-        <comment>Color 25</comment>
+        <comment>Color 26</comment>
         <translation>%100 Sarı/%50 Yeşil</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
-        <comment>Color 26</comment>
-        <translation type="unfinished">%25 Siyah (Gri)</translation>
+        <comment>Color 27</comment>
+        <translation>Siyah %25 (Gri)</translation>
     </message>
     <message>
         <source>Green 100%/Black 50%</source>
-        <comment>Color 27</comment>
-        <translation type="unfinished">%100 Yeşil/%50 Siyah</translation>
-    </message>
-    <message>
-        <source>Black 35% (Grey)</source>
         <comment>Color 28</comment>
-        <translation type="unfinished">%25 Siyah (Gri)</translation>
+        <translation>%100 Yeşil/%50 Siyah</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -10534,12 +10629,12 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>White over yellow</source>
         <comment>Color 33</comment>
-        <translation>Sarı üstü beyaz</translation>
+        <translation>Sarı üstü Beyaz</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 34</comment>
-        <translation>Açık alan için siyah</translation>
+        <translation>Açık alan için Siyah</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -10554,12 +10649,152 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Yellow 50%</source>
         <comment>Color 37</comment>
-        <translation>%50 Sarı</translation>
+        <translation>Sarı %50</translation>
+    </message>
+    <message>
+        <source>Blue 100% point symbols</source>
+        <comment>Color 38</comment>
+        <translation type="unfinished">%100 Yeşil</translation>
+    </message>
+    <message>
+        <source>Brown 100% point symbols</source>
+        <comment>Color 39</comment>
+        <translation type="unfinished">Demiryolu için beyaz</translation>
+    </message>
+    <message>
+        <source>Green 100% point symbols</source>
+        <comment>Color 40</comment>
+        <translation type="unfinished">%100 Mavi</translation>
+    </message>
+    <message>
+        <source>Blue 100% line symbols</source>
+        <comment>Color 41</comment>
+        <translation type="unfinished">%100 Kahverengi</translation>
+    </message>
+    <message>
+        <source>Brown 100% line symbols</source>
+        <comment>Color 42</comment>
+        <translation type="unfinished">İz sembolleri için morun altında siyah</translation>
+    </message>
+    <message>
+        <source>Lower purple for course overprint</source>
+        <comment>Color 43</comment>
+        <translation type="unfinished">%65 Siyah</translation>
+    </message>
+    <message>
+        <source>Brown 50% for road infill</source>
+        <comment>Color 44</comment>
+        <translation type="unfinished">%20 Siyah</translation>
+    </message>
+    <message>
+        <source>Black 100% for road outline</source>
+        <comment>Color 45</comment>
+        <translation type="unfinished">%50 Üst kahverengi</translation>
+    </message>
+    <message>
+        <source>Black 50% for large buildings and tramway</source>
+        <comment>Color 46</comment>
+        <translation type="unfinished">Üst kahverenginin altında siyah %50</translation>
+    </message>
+    <message>
+        <source>Black 20% for canopy</source>
+        <comment>Color 47</comment>
+        <translation type="unfinished">Alt kahverengi %50</translation>
+    </message>
+    <message>
+        <source>Blue 100% area symbols</source>
+        <comment>Color 48</comment>
+        <translation type="unfinished">Alt kahverenginin altında siyah %50</translation>
+    </message>
+    <message>
+        <source>Blue 70% area symbols</source>
+        <comment>Color 49</comment>
+        <translation type="unfinished">Alan özellikleri için %100 mavi</translation>
+    </message>
+    <message>
+        <source>Blue 50% area symbols</source>
+        <comment>Color 50</comment>
+        <translation type="unfinished">%70 Mavi</translation>
+    </message>
+    <message>
+        <source>White over green and brown (+ yellow)</source>
+        <comment>Color 51</comment>
+        <translation type="unfinished">%50 Mavi</translation>
+    </message>
+    <message>
+        <source>Brown 50% for paved area</source>
+        <comment>Color 52</comment>
+        <translation type="unfinished">OpenOrienteering Turuncu</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for narrow ride (extra)</source>
+        <comment>Color 53</comment>
+        <translation type="unfinished">Dar orman yolu için %100 Sarı</translation>
+    </message>
+    <message>
+        <source>Green 30% for narrow ride (extra)</source>
+        <comment>Color 54</comment>
+        <translation type="unfinished">Dar orman yolu için %30 Yeşil</translation>
+    </message>
+    <message>
+        <source>Yellow 100% + Green 50%</source>
+        <comment>Color 55</comment>
+        <translation type="unfinished">Yeşil üstü beyaz</translation>
+    </message>
+    <message>
+        <source>Green 100% area symbols</source>
+        <comment>Color 56</comment>
+        <translation type="unfinished">%100 Sarı/%50 Yeşil</translation>
+    </message>
+    <message>
+        <source>Green 30% area symbols</source>
+        <comment>Color 57</comment>
+        <translation type="unfinished">%100 Yeşil/%50 Siyah</translation>
+    </message>
+    <message>
+        <source>Black 35% area symbols</source>
+        <comment>Color 58</comment>
+        <translation type="unfinished">Alan özellikleri için %100 Yeşil</translation>
+    </message>
+    <message>
+        <source>Green 100% below green areas (extra)</source>
+        <comment>Color 59</comment>
+        <translation type="unfinished">%60 Yeşil</translation>
+    </message>
+    <message>
+        <source>White over yellow</source>
+        <comment>Color 60</comment>
+        <translation>Sarı üstü Beyaz</translation>
+    </message>
+    <message>
+        <source>Black for cultivated land and sandy ground</source>
+        <comment>Color 61</comment>
+        <translation type="unfinished">Alt bitki örtüsü için %100 Yeşil</translation>
+    </message>
+    <message>
+        <source>Yellow 100% area symbols</source>
+        <comment>Color 62</comment>
+        <translation type="unfinished">Sarı üstü beyaz</translation>
+    </message>
+    <message>
+        <source>Yellow 75% area symbols</source>
+        <comment>Color 63</comment>
+        <translation type="unfinished">Açık alan için siyah</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 64</comment>
+        <translation>Sarı %50</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange (extra)</source>
+        <comment>Color 65</comment>
+        <translation type="unfinished">Alan özellikleri için %100 Sarı</translation>
     </message>
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation>Eşyükselti Eğrisi</translation>
+        <translation>Eşyükselti</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 m. A contour interval of 2.5 m may be used for flat terrains.
@@ -10599,7 +10834,7 @@ Bir çukurun en az bir eğim çizgisi olmalıdır.</translation>
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation>İndeks eşyükselti eğrisi</translation>
+        <translation>İndeks eşyükselti</translation>
     </message>
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface.
@@ -10623,7 +10858,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation>Form çizgisi</translation>
+        <translation>Biçim çizgisi</translation>
     </message>
     <message>
         <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones (minimum height / depth should be 1 m). Excessive use of form lines must be avoided as this disturbs the three-dimensional picture of the ground shape and will complicate map reading.
@@ -10637,12 +10872,12 @@ Bir form çizgisi, tepe veya çukurun minimum uzunluğu: 1.1 mm (kapladığı al
     <message>
         <source>Slope line, formline</source>
         <comment>Name of symbol 103.1</comment>
-        <translation>Eğim çizgisi, form çizgisi</translation>
+        <translation>Eğim çizgisi, biçim çizgisi</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 103.1</comment>
-        <translation>Eğim yönünü netleştirmek için eğim çizgileri, bir eşyükselti eğrisinin alt tarafına çizilebilir. Kullanıldığında, girintilerin (re-entrant) içine yerleştirilir.</translation>
+        <translation>Eğim çizgileri eğim yönünü açıklığa kavuşturmak için Kontur hattının alt tarafında çizilmiş olabilir. Kullanıldığında, girintilerin içinde yerleştirilmelidir.</translation>
     </message>
     <message>
         <source>Earth bank</source>
@@ -10663,7 +10898,7 @@ Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     <message>
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 104.1</comment>
-        <translation>Toprak set, minimum boyut</translation>
+        <translation>Toprak set, minimum boy</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -10705,7 +10940,7 @@ Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     <message>
         <source>Earth bank, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 104.9</comment>
-        <translation>Toprak set, minimum boyut (ISOM2000)</translation>
+        <translation>Toprak set, minimum boy (ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -10721,8 +10956,8 @@ Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 105.100</comment>
-        <translation>Belirgin toprak duvar. Minimum yükseklik: 1 m.
-Minimum uzunluk: 1.4 mm (kapladığı alan 21 m).</translation>
+        <translation type="unfinished">Belirgin toprak duvar. Minimum yükseklik: 1 m.
+Minimum uzunluk: 1,4 mm (kapladığı alan 21 m).</translation>
     </message>
     <message>
         <source>Retaining earth wall</source>
@@ -10738,7 +10973,7 @@ Minimum height: 0.5 m, minimum length (isolated): 1.4 mm.</source>
     <message>
         <source>Erosion gully</source>
         <comment>Name of symbol 107</comment>
-        <translation>Erozyon oyuğu</translation>
+        <translation>Erozyon kanalı</translation>
     </message>
     <message>
         <source>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Contour lines may be broken around this symbol for better readability.
@@ -10786,7 +11021,7 @@ Kapladığı alan: 12 m x 6 m.</translation>
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation>Geçilemez yar / Uçurum</translation>
+        <translation>Aşılmaz taş set</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -10804,7 +11039,7 @@ Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation>Geçilemez yar / Uçurum, minimum boyut</translation>
+        <translation>Aşılmaz taş set, minimum boy</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -11421,8 +11656,8 @@ The symbol is orientated to north.
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 419</comment>
-        <translation type="unfinished">Sembol kuzeye doğru yönlendirilmiştir.
-Sembolün tanımı haritada belirtilmelidir.
+        <translation type="unfinished">Sembol kuzeye yönlendirilir.
+Sembolün tanımı haritada verilmelidir.
 Kapladığı alan: 13.5 m x 13.5 m.</translation>
     </message>
     <message>
@@ -11814,12 +12049,7 @@ Minimum alan: 1 mm x 1 mm (kapladığı alan 15 m x 15 m).</translation>
     <message>
         <source>Deprecated in revision 6 of the ISOM 2017-2 document.</source>
         <comment>Description of symbol 520.3</comment>
-        <translation type="unfinished">Özel ev, bahçe, fabrika veya başka bir endüstriyel alan gibi girilmesi yasak olan bir alandır. Yasak alan içinde yalnızca eşyükselti çizgileri ve demiryolları, büyük binalar gibi belirgin özellikler gösterilmelidir. Arazinin tam bir temsilini göstermenin önemli olduğu alanlarda (örneğin, ormanın bir kısmı yasak alan ise) dikey siyah çizgiler kullanılabilir. Bir patika veya izin geçtiği yerlerde alan kesintiye uğratılmalıdır.
-Belirgin bir sınıra sahip yasak alanlar, siyah bir sınır çizgisi veya başka bir siyah çizgi ile sınırlandırılmalıdır. Sınır belirsizse siyah çizgi kullanılmamalıdır.
-Geçici yasak alanlar için parkur planlama sembolü 709 kullanılabilir.
-Dikey siyah çizgili sembol varyantı kuzeye yönlendirilmiştir.
-Yasak alana girilmemelidir.
-Minimum alan: 1 mm x 1 mm (kapladığı alan 15 m x 15 m).</translation>
+        <translation type="unfinished">Açık bir sınıra sahip olan girilmeyecek bölgeler, siyah bir sınır çizgisi veya başka bir siyah çizgi ile sınırlanmalıdır. Sınır belirsizse, siyah çizgi kullanılmamalıdır.</translation>
     </message>
     <message>
         <source>Building</source>
@@ -12127,7 +12357,7 @@ Minimum uzunluk: 2 çizgi (4.5 mm – kapladığı alan: 67.5 m).</translation>
 An out-of-bounds area shall not be entered.
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 709</comment>
-        <translation type="unfinished">Yasak bölge. Eğer doğal bir sınır yoksa aşağıdaki gibi bir sınır çizgisi çizilebilir:
+        <translation>Yasak bölge. Eğer doğal bir sınır yoksa aşağıdaki gibi bir sınır çizgisi çizilebilir:
 -düz kesintisiz bir çizgi, sınırın arazide sürekli işaretlendiğini (bantlar, vb.) gösterir,
 -kesikli çizgi, arazide aralıklı işaretleme olduğunu gösterir,
 -çizgi olmaması, arazide işaretleme olmadığını gösterir.
@@ -12348,16 +12578,453 @@ A route which is out-of-bounds and forbidden to cross is shown with a zigzag. Th
         <translation>OpenOrienteering Logosu.</translation>
     </message>
     <message>
+        <source>Black 100%</source>
+        <comment>Color 3</comment>
+        <translation type="obsolete">%100 Siyah</translation>
+    </message>
+    <message>
+        <source>Green 100%</source>
+        <comment>Color 4</comment>
+        <translation type="obsolete">%100 Yeşil</translation>
+    </message>
+    <message>
+        <source>White for railway</source>
+        <comment>Color 5</comment>
+        <translation type="obsolete">Demiryolu için beyaz</translation>
+    </message>
+    <message>
+        <source>Blue 100%</source>
+        <comment>Color 6</comment>
+        <translation type="obsolete">%100 Mavi</translation>
+    </message>
+    <message>
+        <source>Brown 100%</source>
+        <comment>Color 7</comment>
+        <translation type="obsolete">%100 Kahverengi</translation>
+    </message>
+    <message>
+        <source>Purple for track symbols</source>
+        <comment>Color 8</comment>
+        <translation type="obsolete">İz sembolleri için mor</translation>
+    </message>
+    <message>
+        <source>Black below purple for track symbols</source>
+        <comment>Color 9</comment>
+        <translation type="obsolete">İz sembolleri için morun altında siyah</translation>
+    </message>
+    <message>
+        <source>Black 65%</source>
+        <comment>Color 10</comment>
+        <translation type="obsolete">Siyah %65</translation>
+    </message>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 11</comment>
+        <translation type="obsolete">Siyah %20</translation>
+    </message>
+    <message>
+        <source>Upper brown 50%</source>
+        <comment>Color 12</comment>
+        <translation type="obsolete">Üst kahverengi %50</translation>
+    </message>
+    <message>
+        <source>Black below upper brown 50%</source>
+        <comment>Color 13</comment>
+        <translation type="obsolete">Üst kahverenginin altında siyah %50</translation>
+    </message>
+    <message>
+        <source>Lower brown 50%</source>
+        <comment>Color 14</comment>
+        <translation type="obsolete">Alt kahverengi %50</translation>
+    </message>
+    <message>
+        <source>Black below lower brown 50%</source>
+        <comment>Color 15</comment>
+        <translation type="obsolete">Alt kahverenginin altında siyah %50</translation>
+    </message>
+    <message>
+        <source>Blue 100% for area features</source>
+        <comment>Color 16</comment>
+        <translation type="obsolete">Alan özellikleri için %100 mavi</translation>
+    </message>
+    <message>
+        <source>Blue 70%</source>
+        <comment>Color 17</comment>
+        <translation type="obsolete">%70 Mavi</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 18</comment>
+        <translation type="obsolete">Mavi %50</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 19</comment>
+        <translation type="obsolete">Açık orienteering Turuncu</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for narrow ride</source>
+        <comment>Color 20</comment>
+        <translation type="obsolete">Dar orman yolu için %100 Sarı</translation>
+    </message>
+    <message>
+        <source>Green 60% for narrow ride</source>
+        <comment>Color 21</comment>
+        <translation type="obsolete">Dar orman yolu için %60 Yeşil</translation>
+    </message>
+    <message>
+        <source>Green 30% for narrow ride</source>
+        <comment>Color 22</comment>
+        <translation type="obsolete">Dar orman yolu için %30 Yeşil</translation>
+    </message>
+    <message>
+        <source>White over green</source>
+        <comment>Color 23</comment>
+        <translation type="obsolete">Yeşil üstü beyaz</translation>
+    </message>
+    <message>
+        <source>Yellow 100%/Green 50%</source>
+        <comment>Color 24</comment>
+        <translation type="obsolete">%100 Sarı/%50 Yeşil</translation>
+    </message>
+    <message>
+        <source>Black 25% (Grey)</source>
+        <comment>Color 25</comment>
+        <translation type="obsolete">Siyah %25 (Gri)</translation>
+    </message>
+    <message>
+        <source>Green 100%/Black 50%</source>
+        <comment>Color 26</comment>
+        <translation type="obsolete">%100 Yeşil/%50 Siyah</translation>
+    </message>
+    <message>
+        <source>Green 100% for area features</source>
+        <comment>Color 27</comment>
+        <translation type="obsolete">Alan özellikleri için %100 Yeşil</translation>
+    </message>
+    <message>
+        <source>Green 60%</source>
+        <comment>Color 28</comment>
+        <translation type="obsolete">%60 Yeşil</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 29</comment>
+        <translation type="obsolete">%30 Yeşil</translation>
+    </message>
+    <message>
+        <source>Green 100% for undergrowth</source>
+        <comment>Color 30</comment>
+        <translation type="obsolete">Alt bitki örtüsü için %100 Yeşil</translation>
+    </message>
+    <message>
+        <source>White over yellow</source>
+        <comment>Color 31</comment>
+        <translation type="obsolete">Sarı üstü Beyaz</translation>
+    </message>
+    <message>
+        <source>Black for open land</source>
+        <comment>Color 32</comment>
+        <translation type="obsolete">Açık alan için Siyah</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 33</comment>
+        <translation type="obsolete">Sarı</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for area features</source>
+        <comment>Color 34</comment>
+        <translation type="obsolete">Alan özellikleri için %100 Sarı</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 35</comment>
+        <translation type="obsolete">Sarı %50</translation>
+    </message>
+    <message>
+        <source>A line joining points of equal height. The standard vertical interval between contours is 5 m. A contour interval of 2.5 m may be used for flat terrains.
+Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
+A closed contour represents a knoll or a depression. A depression has to have at least one slope line. Minimum height/depth should be 1 m.
+Relationships between adjacent contour lines are important. Adjacent contour lines show form and structure. Small details on contours should be avoided because they tend to hide the main features of the terrain.
+Prominent features such as depressions, re-entrants, spurs, earth banks and terraces may have to be exaggerated.
+Absolute height accuracy is of little importance, but the relative height difference between neighbouring features should be represented on the map as accurately as possible. It is permissible to alter the height of a contour slightly if this improves the representation of a feature. This deviation should not exceed 25% of the contour interval, and attention must be paid to neighbouring features.
+The smallest bend in a contour line is 0.25 mm from centre to centre of the line (footprint 4 m). The mouth of a re-entrant or a spur must be wider than 0.5 mm from centre to centre of the line (footprint 8 m).
+The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minimum width is 0.6 mm (footprint 9 m) outside measure. Smaller prominent knolls can be represented using symbol Small knoll (109) or Small elongated knoll (110) or they can be exaggerated on the map to satisfy the minimum dimension.
+A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
+Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
+        <comment>Description of symbol 101</comment>
+        <translation type="obsolete">Eşit yükseklikteki noktaları birleştiren bir çizgi. Eşyükselti eğrileri arasındaki standart düşey aralık 5 m&apos;dir. Düz araziler için 2.5 m&apos;lik bir eşyükselti aralığı kullanılabilir.
+Eğim yönünü netleştirmek için eğim çizgileri, bir eşyükselti eğrisinin alt tarafına çizilebilir. Kullanıldığında, girintilerin (re-entrant) içine yerleştirilir.
+Kapalı bir eşyükselti eğrisi, bir tepeciği veya bir çukuru temsil eder. Bir çukurun en az bir eğim çizgisi olmalıdır. Minimum yükseklik/derinlik 1 m olmalıdır.
+Bitişik eşyükselti eğrileri arasındaki ilişkiler önemlidir. Bitişik eşyükselti eğrileri form ve yapıyı gösterir. Eşyükselti eğrilerindeki küçük detaylar, arazinin ana özelliklerini gizleme eğiliminde oldukları için kaçınılmalıdır.
+Çukurlar, girintiler, sırtlar, toprak setler ve taraçalar gibi belirgin özellikler abartılabilir.
+Mutlak yükseklik doğruluğunun önemi azdır, ancak komşu özellikler arasındaki bağıl yükseklik farkı haritada mümkün olduğunca doğru bir şekilde temsil edilmelidir. Bir özelliğin temsilini iyileştiriyorsa, bir eşyükselti eğrisinin yüksekliğini hafifçe değiştirmek caizdir. Bu sapma, eşyükselti aralığının %25&apos;ini geçmemeli ve komşu özelliklere dikkat edilmelidir.
+Bir eşyükselti eğrisindeki en küçük kıvrım, çizginin merkezinden merkezine 0.25 mm&apos;dir (kapladığı alan 4 m). Bir girinti veya sırtın ağzı, çizginin merkezinden merkezine 0.5 mm&apos;den daha geniş olmalıdır (kapladığı alan 8 m).
+Bir eşyükselti tümseğinin minimum uzunluğu 0.9 mm (kapladığı alan 13.5 m) ve minimum genişliği dış ölçümde 0.6 mm&apos;dir (kapladığı alan 9 m). Daha küçük belirgin tepeler, Küçük Tepecik (109) veya Küçük Uzun Tepecik (110) sembolü kullanılarak temsil edilebilir veya minimum boyutu karşılaması için haritada abartılabilir.
+Bir çukurun bir eğim çizgisini barındırması gerekir, bu nedenle minimum uzunluk 1.1 mm (kapladığı alan 16.5 m) ve minimum genişlik dış ölçümde 0.7 mm&apos;dir (kapladığı alan 10.5 m). Daha küçük, belirgin çukurlar, Küçük Çöküntü (111) sembolü kullanılarak temsil edilebilir veya minimum boyutu karşılaması için abartılabilir.
+Eşyükselti eğrileri, Küçük Tepecik (109) veya Küçük Uzun Tepecik (110) sembollerine dokunmamak için uyarlanmalı (koparılmamalı)dır.</translation>
+    </message>
+    <message>
         <source>Earth wall</source>
-        <comment>Name of symbol 105.1</comment>
+        <comment>Name of symbol 105</comment>
         <translation type="obsolete">Toprak duvar</translation>
     </message>
     <message>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
-        <comment>Description of symbol 105.1</comment>
+        <comment>Description of symbol 105</comment>
         <translation type="obsolete">Belirgin toprak duvar. Minimum yükseklik: 1 m.
-Minimum uzunluk: 1.4 mm (kapladığı alan 21 m).</translation>
+Minimum uzunluk: 1,4 mm (kapladığı alan 21 m).</translation>
+    </message>
+    <message>
+        <source>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Minimum depth: 1 m.
+Minimum length: 1.15 mm (footprint 17 m).
+Contour lines should not be broken around this symbol.</source>
+        <comment>Description of symbol 107</comment>
+        <translation type="obsolete">Toprak set (104) sembolü kullanılarak gösterilemeyecek kadar küçük bir erozyon oyuğu, tek bir çizgi ile gösterilir. Minimum derinlik: 1 m.
+Minimum uzunluk: 1.15 mm (kapladığı alan 17 m).
+Eşyükselti eğrileri bu sembolün etrafında kesilmemelidir.</translation>
+    </message>
+    <message>
+        <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+Crossing a cliff will normally slow progress.
+Minimum height: 1 m.
+Minimum length: 0.6 mm (footprint 9 m).</source>
+        <comment>Description of symbol 202</comment>
+        <translation type="obsolete">Geçilebilir bir uçurum veya taş ocağı. Kaya yüzeyinin eğim/iniş yönü eş yükselti eğrilerinden anlaşılamıyorsa veya okunabilirliği artırmak için, iniş/eğim yönünde kısa saçaklar çizilmelidir.
+Dikey olmayan uçurumlar için, saçaklar yatay uzanımı gösterecek şekilde çizilmelidir. Saçaksız olarak gösterilen geçilebilir kaya yüzlerinde okunabilirliği artırmak için çizginin sonu yuvarlatılmalıdır. İki kaya yüzü arasındaki geçit en az 0.2 mm genişliğinde çizilmelidir. Bir kaya yüzü, eş yükselti eğrileri ile etkileşim halinde olmalıdır.
+Bir kaya yüzeyinin geçişi normalde ilerlemeyi yavaşlatır.
+Minimum yükseklik: 1 m.
+Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
+    </message>
+    <message>
+        <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+Crossing a cliff will normally slow progress.
+Minimum height: 1 m.
+Minimum length: 0.6 mm (footprint 9 m).</source>
+        <comment>Description of symbol 202.1</comment>
+        <translation type="obsolete">Geçilebilir bir uçurum veya taş ocağı. Kaya yüzeyinin eğim/iniş yönü eş yükselti eğrilerinden anlaşılamıyorsa veya okunabilirliği artırmak için, iniş/eğim yönünde kısa saçaklar çizilmelidir.
+Dikey olmayan uçurumlar için, saçaklar yatay uzanımı gösterecek şekilde çizilmelidir. Saçaksız olarak gösterilen geçilebilir kaya yüzlerinde okunabilirliği artırmak için çizginin sonu yuvarlatılmalıdır. İki kaya yüzü arasındaki geçit en az 0.2 mm genişliğinde çizilmelidir. Bir kaya yüzü, eş yükselti eğrileri ile etkileşim halinde olmalıdır.
+Bir kaya yüzeyinin geçişi normalde ilerlemeyi yavaşlatır.
+Minimum yükseklik: 1 m.
+Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
+    </message>
+    <message>
+        <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+Crossing a cliff will normally slow progress.
+Minimum height: 1 m.
+Minimum length: 0.6 mm (footprint 9 m).</source>
+        <comment>Description of symbol 202.2</comment>
+        <translation type="obsolete">Geçilebilir bir uçurum veya taş ocağı. Kaya yüzeyinin eğim/iniş yönü eş yükselti eğrilerinden anlaşılamıyorsa veya okunabilirliği artırmak için, iniş/eğim yönünde kısa saçaklar çizilmelidir.
+Dikey olmayan uçurumlar için, saçaklar yatay uzanımı gösterecek şekilde çizilmelidir. Saçaksız olarak gösterilen geçilebilir kaya yüzlerinde okunabilirliği artırmak için çizginin sonu yuvarlatılmalıdır. İki kaya yüzü arasındaki geçit en az 0.2 mm genişliğinde çizilmelidir. Bir kaya yüzü, eş yükselti eğrileri ile etkileşim halinde olmalıdır.
+Bir kaya yüzeyinin geçişi normalde ilerlemeyi yavaşlatır.
+Minimum yükseklik: 1 m.
+Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
+    </message>
+    <message>
+        <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+Crossing a cliff will normally slow progress.
+Minimum height: 1 m.
+Minimum length: 0.6 mm (footprint 9 m).</source>
+        <comment>Description of symbol 202.3</comment>
+        <translation type="obsolete">Geçilebilir bir uçurum veya taş ocağı. Kaya yüzeyinin eğim/iniş yönü eş yükselti eğrilerinden anlaşılamıyorsa veya okunabilirliği artırmak için, iniş/eğim yönünde kısa saçaklar çizilmelidir.
+Dikey olmayan uçurumlar için, saçaklar yatay uzanımı gösterecek şekilde çizilmelidir. Saçaksız olarak gösterilen geçilebilir kaya yüzlerinde okunabilirliği artırmak için çizginin sonu yuvarlatılmalıdır. İki kaya yüzü arasındaki geçit en az 0.2 mm genişliğinde çizilmelidir. Bir kaya yüzü, eş yükselti eğrileri ile etkileşim halinde olmalıdır.
+Bir kaya yüzeyinin geçişi normalde ilerlemeyi yavaşlatır.
+Minimum yükseklik: 1 m.
+Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
+    </message>
+    <message>
+        <source>Should be at least 2 m wide.
+Minimum length (isolated): 1 mm (footprint 15 m).</source>
+        <comment>Description of symbol 304</comment>
+        <translation type="obsolete">Genişliği en az 2 m olmalıdır.
+Minimum uzunluk (izole): 1 mm (kapladığı alan 15 m).</translation>
+    </message>
+    <message>
+        <source>Minimum length (isolated): 1 mm (footprint 15 m).</source>
+        <comment>Description of symbol 305</comment>
+        <translation type="obsolete">Minimum uzunluk (izole): 1 mm (kapladığı alan 15 m).</translation>
+    </message>
+    <message>
+        <source>A distinct forest edge or vegetation boundary within the forest.
+Very distinct forest edges and vegetation boundaries may be represented using the cultivation boundary symbol. Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map. For areas with a lot of rock features, it is recommended to use the green dashed line for vegetation boundaries.
+A disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbol Vegetation: fight (410). An alternative for these situations is to use symbol Distinct cultivation boundary (415).
+Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
+Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
+        <comment>Description of symbol 416</comment>
+        <translation type="obsolete">Ormanın içinde belirgin bir orman kenarı veya çok farklı bir bitki örtüsü sınırı.
+Çok belirgin orman kenarları ve bitki örtüsü sınırları, ekim sınırı sembolü kullanılarak temsil edilebilir. Haritada bitki örtüsü sınırı sembollerinden (siyah noktalı çizgi veya kesikli yeşil çizgi) yalnızca biri kullanılabilir. Çok sayıda kaya özelliği bulunan alanlar için, bitki örtüsü sınırlarında kesikli yeşil çizgi kullanılması önerilir.
+Yeşil çizginin bir dezavantajı, Bitki örtüsü: mücadele (410) sembolü içindeki ve çevresindeki belirgin bitki örtüsü sınırlarını göstermek için kullanılamamasıdır. Bu durumlar için bir alternatif, Belirgin ekim sınırı (415) sembolünü kullanmaktır.
+Minimum uzunluk, siyah nokta uygulaması: 5 nokta (2.5 mm - kapladığı alan 37 m).
+Minimum uzunluk, yeşil çizgi uygulaması: 4 çizgi (1.8 mm - kapladığı alan 27 m).</translation>
+    </message>
+    <message>
+        <source>The symbol is orientated to north.
+The definition of the symbol must be given on the map.
+Footprint: 13.5 m x 13.5 m.</source>
+        <comment>Description of symbol 419</comment>
+        <translation type="obsolete">Sembol kuzeye yönlendirilir.
+Sembolün tanımı haritada verilmelidir.
+Kapladığı alan: 13.5 m x 13.5 m.</translation>
+    </message>
+    <message>
+        <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
+The space between the black lines is filled with brown (50%).
+A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
+        <comment>Description of symbol 502</comment>
+        <translation type="obsolete">Genişlik ölçeğe uygun çizilmeli, ancak minimum genişlikten (0.3 + 2*0.14 mm - kapladığı alan 8.7 m) küçük olmamalıdır. Dış sınır çizgileri, özellik yol kenarına o kadar yakınsa ve ayrı bir sembol olarak pratikte gösterilemiyorsa, Çit (516), Geçilmez çit (518), Duvar (513) veya Geçilmez duvar (515) gibi diğer siyah çizgi sembolleri ile değiştirilebilir.
+Siyah çizgiler arasındaki boşluk %50 kahverengi ile doldurulur.
+İki şeritli bir yol, yan yana iki geniş yol sembolü kullanılarak ve ortadaki yol kenarlarından sadece biri korunarak temsil edilebilir.</translation>
+    </message>
+    <message>
+        <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
+The space between the black lines is filled with brown (50%).
+A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
+        <comment>Description of symbol 502.2</comment>
+        <translation type="obsolete">Genişlik ölçeğe uygun çizilmeli, ancak minimum genişlikten (0.3 + 2*0.14 mm - kapladığı alan 8.7 m) küçük olmamalıdır. Dış sınır çizgileri, özellik yol kenarına o kadar yakınsa ve ayrı bir sembol olarak pratikte gösterilemiyorsa, Çit (516), Geçilmez çit (518), Duvar (513) veya Geçilmez duvar (515) gibi diğer siyah çizgi sembolleri ile değiştirilebilir.
+Siyah çizgiler arasındaki boşluk %50 kahverengi ile doldurulur.
+İki şeritli bir yol, yan yana iki geniş yol sembolü kullanılarak ve ortadaki yol kenarlarından sadece biri korunarak temsil edilebilir.</translation>
+    </message>
+    <message>
+        <source>A maintained road suitable for motor vehicles in all weather. Width less than 5 m.</source>
+        <comment>Description of symbol 503</comment>
+        <translation type="obsolete">Her türlü hava koşulunda motorlu taşıtlar için uygun, bakımlı bir yol. Genişliği 5 metreden az.</translation>
+    </message>
+    <message>
+        <source>A railway or other kind of railed track.
+If it is forbidden to run along the railway, it shall be combined with symbol Out-of-bounds route (711). If it is forbidden to cross the railway, it must be combined with symbol Area that shall not be entered (520) or Out-of-bounds area (709).
+Minimum length (isolated): two dashes (4 mm - footprint 60 m).</source>
+        <comment>Description of symbol 509</comment>
+        <translation type="obsolete">Demiryolu veya diğer raylı hatlar.
+Raylı hat boyunca koşmak yasaksa, Yasak rota (711) sembolü ile birleştirilmelidir. Demiryolunu geçmek yasaksa, Girilmeyecek alan (520) veya Yasak bölge (709) sembolü ile birleştirilmelidir.
+Minimum uzunluk (izole): iki çizgi (4 mm - kapladığı alan 60 m).</translation>
+    </message>
+    <message>
+        <source>Wall</source>
+        <comment>Name of symbol 513</comment>
+        <translation type="obsolete">Duvar</translation>
+    </message>
+    <message>
+        <source>A significant wall of stone, concrete, wood or other materials.
+Minimum height: 1 m.
+Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
+        <comment>Description of symbol 513</comment>
+        <translation type="obsolete">Taş, beton, ahşap veya diğer malzemelerden yapılmış önemli bir duvar.
+Minimum yükseklik: 1 m.
+Minimum uzunluk (izole): 1.4 mm (kapladığı alan 21 m).</translation>
+    </message>
+    <message>
+        <source>If the fence forms an enclosed area, tags should be placed inside.
+Minimum length (isolated): 1.5 mm (footprint 22.5 m).</source>
+        <comment>Description of symbol 516</comment>
+        <translation type="obsolete">Eğer çit kapalı bir alan oluşturuyorsa, etiketler içine yerleştirilmelidir.
+Minimum uzunluk (izole): 1.5 mm (kapladığı alan 22.5 m).</translation>
+    </message>
+    <message>
+        <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
+Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.
+Course planning symbol 709 can be used for temporary out-of bounds areas.
+The vertical black stripes version of the symbol is orientated to north.
+An out-of-bounds area shall not be entered.
+Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
+        <comment>Description of symbol 520</comment>
+        <translation type="obsolete">Özel ev, bahçe, fabrika veya başka bir endüstriyel alan gibi girilmesi yasak olan bir alandır. Yasak alan içinde yalnızca eşyükselti çizgileri ve demiryolları, büyük binalar gibi belirgin özellikler gösterilmelidir. Arazinin tam bir temsilini göstermenin önemli olduğu alanlarda (örneğin, ormanın bir kısmı yasak alan ise) dikey siyah çizgiler kullanılabilir. Bir patika veya izin geçtiği yerlerde alan kesintiye uğratılmalıdır.
+Belirgin bir sınıra sahip yasak alanlar, siyah bir sınır çizgisi veya başka bir siyah çizgi ile sınırlandırılmalıdır. Sınır belirsizse siyah çizgi kullanılmamalıdır.
+Geçici yasak alanlar için parkur planlama sembolü 709 kullanılabilir.
+Dikey siyah çizgili sembol varyantı kuzeye yönlendirilmiştir.
+Yasak alana girilmemelidir.
+Minimum alan: 1 mm x 1 mm (kapladığı alan 15 m x 15 m).</translation>
+    </message>
+    <message>
+        <source>Area that shall not be entered, stripes</source>
+        <comment>Name of symbol 520.2</comment>
+        <translation type="obsolete">Girilmeyecek bölge, çizgili</translation>
+    </message>
+    <message>
+        <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
+Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.
+Course planning symbol 709 can be used for temporary out-of bounds areas.
+The vertical black stripes version of the symbol is orientated to north.
+An out-of-bounds area shall not be entered.
+Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
+        <comment>Description of symbol 520.2</comment>
+        <translation type="obsolete">Özel ev, bahçe, fabrika veya başka bir endüstriyel alan gibi girilmesi yasak olan bir alandır. Yasak alan içinde yalnızca eşyükselti çizgileri ve demiryolları, büyük binalar gibi belirgin özellikler gösterilmelidir. Arazinin tam bir temsilini göstermenin önemli olduğu alanlarda (örneğin, ormanın bir kısmı yasak alan ise) dikey siyah çizgiler kullanılabilir. Bir patika veya izin geçtiği yerlerde alan kesintiye uğratılmalıdır.
+Belirgin bir sınıra sahip yasak alanlar, siyah bir sınır çizgisi veya başka bir siyah çizgi ile sınırlandırılmalıdır. Sınır belirsizse siyah çizgi kullanılmamalıdır.
+Geçici yasak alanlar için parkur planlama sembolü 709 kullanılabilir.
+Dikey siyah çizgili sembol varyantı kuzeye yönlendirilmiştir.
+Yasak alana girilmemelidir.
+Minimum alan: 1 mm x 1 mm (kapladığı alan 15 m x 15 m).</translation>
+    </message>
+    <message>
+        <source>Area that shall not be entered, stripes, bounding line</source>
+        <comment>Name of symbol 520.3</comment>
+        <translation type="obsolete">Girilmeyecek bölge, çizgili, sınır çizgili</translation>
+    </message>
+    <message>
+        <source>Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.</source>
+        <comment>Description of symbol 520.3</comment>
+        <translation type="obsolete">Açık bir sınıra sahip olan girilmeyecek bölgeler, siyah bir sınır çizgisi veya başka bir siyah çizgi ile sınırlanmalıdır. Sınır belirsizse, siyah çizgi kullanılmamalıdır.</translation>
+    </message>
+    <message>
+        <source>A building is shown with its ground plan so far as the scale permits.
+Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
+Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Buildings within forbidden areas are generalised.
+Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
+Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
+        <comment>Description of symbol 521</comment>
+        <translation type="obsolete">Bina, ölçeğin izin verdiği ölçüde zemin planına göre gösterilir.
+75 m x 75 m&apos;den büyük binalar, kentsel alanlarda koyu gri dolgu ile temsil edilebilir.
+Binalar arası geçişler minimum 0.3 mm genişliğinde olmalıdır (kapladığı alan 4.5 m).
+Yasak alanlar içindeki binalar genelleştirilir.
+Bir binanın içinde tamamen yer alan alanlar haritalanmamalıdır (binanın bir parçası olarak temsil edilmelidir). Binalar arası ve binalar ile diğer geçilemez özellikler arasındaki geçişi gösteren minimum boşluk 0.4 mm olmalıdır.
+Minimum alan: 0.5 mm x 0.5 mm (kapladığı alan 7.5 m x 7.5 m).</translation>
+    </message>
+    <message>
+        <source>A building is shown with its ground plan so far as the scale permits.
+Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
+Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Buildings within forbidden areas are generalised.
+Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
+Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
+        <comment>Description of symbol 521.2</comment>
+        <translation type="obsolete">Bina, ölçeğin izin verdiği ölçüde zemin planına göre gösterilir.
+75 m x 75 m&apos;den büyük binalar, kentsel alanlarda koyu gri dolgu ile temsil edilebilir.
+Binalar arası geçişler minimum 0.3 mm genişliğinde olmalıdır (kapladığı alan 4.5 m).
+Yasak alanlar içindeki binalar genelleştirilir.
+Bir binanın içinde tamamen yer alan alanlar haritalanmamalıdır (binanın bir parçası olarak temsil edilmelidir). Binalar arası ve binalar ile diğer geçilemez özellikler arasındaki geçişi gösteren minimum boşluk 0.4 mm olmalıdır.
+Minimum alan: 0.5 mm x 0.5 mm (kapladığı alan 7.5 m x 7.5 m).</translation>
+    </message>
+    <message>
+        <source>A building is shown with its ground plan so far as the scale permits.
+Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
+Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Buildings within forbidden areas are generalised.
+Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
+Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
+        <comment>Description of symbol 521.3</comment>
+        <translation type="obsolete">Bina, ölçeğin izin verdiği ölçüde zemin planına göre gösterilir.
+75 m x 75 m&apos;den büyük binalar, kentsel alanlarda koyu gri dolgu ile temsil edilebilir.
+Binalar arası geçişler minimum 0.3 mm genişliğinde olmalıdır (kapladığı alan 4.5 m).
+Yasak alanlar içindeki binalar genelleştirilir.
+Bir binanın içinde tamamen yer alan alanlar haritalanmamalıdır (binanın bir parçası olarak temsil edilmelidir). Binalar arası ve binalar ile diğer geçilemez özellikler arasındaki geçişi gösteren minimum boşluk 0.4 mm olmalıdır.
+Minimum alan: 0.5 mm x 0.5 mm (kapladığı alan 7.5 m x 7.5 m).</translation>
+    </message>
+    <message>
+        <source>An obvious small tower, platform or seat.
+Location is at the centre of gravity of the symbol.
+The symbol is orientated to north.
+Footprint: 15 m x 15 m.</source>
+        <comment>Description of symbol 525</comment>
+        <translation type="obsolete">Belirgin, küçük bir kule, platform veya oturma yeri.
+Konum, sembolün ağırlık merkezindedir.
+Sembol kuzeye yönlendirilmiştir.
+Kapladığı Alan: 15 m x 15 m.</translation>
     </message>
 </context>
 <context>

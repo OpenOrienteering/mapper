@@ -4,14 +4,14 @@
 <context>
     <name>ISOM 2017-2</name>
     <message>
-        <source>Purple for course overprint</source>
+        <source>Upper purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation>Лилаво за надпечатване на маршрута</translation>
+        <translation type="unfinished">Лилаво за надпечатване на маршрута</translation>
     </message>
     <message>
-        <source>White for course overprint</source>
+        <source>White for railroad</source>
         <comment>Color 1</comment>
-        <translation>Бяло за надпечатване на маршрута</translation>
+        <translation type="unfinished">Бяло за надпечатване на маршрута</translation>
     </message>
     <message>
         <source>Black 100%</source>
@@ -19,164 +19,159 @@
         <translation>Черно 100%</translation>
     </message>
     <message>
-        <source>Green 100%</source>
+        <source>Blue 100% point symbols</source>
         <comment>Color 3</comment>
-        <translation>Зелен 100%</translation>
+        <translation type="unfinished">Зелен 100%</translation>
     </message>
     <message>
-        <source>White for railway</source>
+        <source>Brown 100% point symbols</source>
         <comment>Color 4</comment>
-        <translation>Бял за ж.п</translation>
+        <translation type="unfinished">Бял за ж.п</translation>
     </message>
     <message>
-        <source>Blue 100%</source>
+        <source>Green 100% point symbols</source>
         <comment>Color 5</comment>
-        <translation>Син 100%</translation>
+        <translation type="unfinished">Син 100%</translation>
     </message>
     <message>
-        <source>Brown 100%</source>
+        <source>Blue 100% line symbols</source>
         <comment>Color 6</comment>
-        <translation>Кафяв 100%</translation>
+        <translation type="unfinished">Кафяв 100%</translation>
     </message>
     <message>
-        <source>Purple for track symbols</source>
+        <source>Dark green line symbols</source>
         <comment>Color 7</comment>
-        <translation>Лилаво за символи на трака</translation>
+        <translation type="unfinished">Лилаво за символи на трака</translation>
     </message>
     <message>
-        <source>Black below purple for track symbols</source>
+        <source>Brown 100% line symbols</source>
         <comment>Color 8</comment>
-        <translation>Черно под лилаво за символи на следа</translation>
+        <translation type="unfinished">Черно под лилаво за символи на следа</translation>
     </message>
     <message>
-        <source>Black 50%</source>
+        <source>Lower purple for course overprint</source>
         <comment>Color 9</comment>
         <translation type="unfinished">Черно 65%</translation>
     </message>
     <message>
-        <source>Black 20%</source>
+        <source>Brown 50% for road infill</source>
         <comment>Color 10</comment>
-        <translation>Черно 20%</translation>
+        <translation type="unfinished">Черно 20%</translation>
     </message>
     <message>
-        <source>Upper brown 50%</source>
+        <source>Black 100% for road outline</source>
         <comment>Color 11</comment>
-        <translation>Горно кафяво 50%</translation>
+        <translation type="unfinished">Горно кафяво 50%</translation>
     </message>
     <message>
-        <source>Black below upper brown 50%</source>
+        <source>Black 50% for large buildings and tramway</source>
         <comment>Color 12</comment>
-        <translation>Черно под горно кафяво 50%</translation>
+        <translation type="unfinished">Черно под горно кафяво 50%</translation>
     </message>
     <message>
-        <source>Lower brown 50%</source>
+        <source>Black 20% for canopy</source>
         <comment>Color 13</comment>
-        <translation>Долно кафяво 50%</translation>
+        <translation type="unfinished">Долно кафяво 50%</translation>
     </message>
     <message>
-        <source>Black below lower brown 50%</source>
+        <source>Blue 100% area symbols</source>
         <comment>Color 14</comment>
-        <translation>Черно под долното кафяво 50%</translation>
+        <translation type="unfinished">Черно под долното кафяво 50%</translation>
     </message>
     <message>
-        <source>Blue 100% for area features</source>
+        <source>Blue 70% area symbols</source>
         <comment>Color 15</comment>
-        <translation>Синьо 100% за характеристики на района</translation>
+        <translation type="unfinished">Синьо 100% за характеристики на района</translation>
     </message>
     <message>
-        <source>Blue 70%</source>
+        <source>Blue 50% area symbols</source>
         <comment>Color 16</comment>
-        <translation>Син 70%</translation>
+        <translation type="unfinished">Син 70%</translation>
     </message>
     <message>
-        <source>Blue 50%</source>
+        <source>White over green and brown (+ yellow)</source>
         <comment>Color 17</comment>
-        <translation>Син 70%</translation>
+        <translation type="unfinished">Син 70%</translation>
     </message>
     <message>
-        <source>OpenOrienteering Orange</source>
+        <source>Brown 50% for paved area</source>
         <comment>Color 18</comment>
-        <translation>OpenOrienteering Оранжев</translation>
+        <translation type="unfinished">OpenOrienteering Оранжев</translation>
     </message>
     <message>
-        <source>Yellow 100% for narrow ride</source>
+        <source>Yellow 100% for narrow ride (extra)</source>
         <comment>Color 19</comment>
-        <translation>Жълто 100% за тясна ивица</translation>
+        <translation type="unfinished">Жълто 100% за тясна ивица</translation>
     </message>
     <message>
-        <source>Green 60% for narrow ride</source>
+        <source>Green 60% for narrow ride (extra)</source>
         <comment>Color 20</comment>
-        <translation>Зелено 60% за тясна ивица</translation>
+        <translation type="unfinished">Зелено 60% за тясна ивица</translation>
     </message>
     <message>
-        <source>Green 30% for narrow ride</source>
+        <source>Green 30% for narrow ride (extra)</source>
         <comment>Color 21</comment>
-        <translation>Зелено 30% за тясна ивица</translation>
+        <translation type="unfinished">Зелено 30% за тясна ивица</translation>
     </message>
     <message>
-        <source>White over green</source>
+        <source>Yellow 100% + Green 50%</source>
         <comment>Color 22</comment>
-        <translation>Бяло върху зелено</translation>
+        <translation type="unfinished">Бяло върху зелено</translation>
     </message>
     <message>
-        <source>Yellow 100%/Green 50%</source>
+        <source>Green 100% area symbols</source>
         <comment>Color 23</comment>
-        <translation>Жълто 100%/Зелено 50%</translation>
+        <translation type="unfinished">Жълто 100%/Зелено 50%</translation>
     </message>
     <message>
-        <source>Black 35% (Grey)</source>
+        <source>Green 60% area symbols</source>
         <comment>Color 24</comment>
         <translation type="unfinished">Черно 25% (Сиво)</translation>
     </message>
     <message>
-        <source>Dark green line symbols </source>
+        <source>Green 30% area symbols</source>
         <comment>Color 25</comment>
         <translation type="unfinished">Зелено 100%/Черно 50%</translation>
     </message>
     <message>
-        <source>Green 100% for area features</source>
+        <source>Black 35% area symbols</source>
         <comment>Color 26</comment>
-        <translation>Зелено 100% за характеристики на района</translation>
+        <translation type="unfinished">Зелено 100% за характеристики на района</translation>
     </message>
     <message>
-        <source>Green 60%</source>
+        <source>Green 100% below green areas (extra)</source>
         <comment>Color 27</comment>
-        <translation>Зелен 60%</translation>
-    </message>
-    <message>
-        <source>Green 30%</source>
-        <comment>Color 28</comment>
-        <translation>Зелен 30%</translation>
-    </message>
-    <message>
-        <source>Green 100% for undergrowth</source>
-        <comment>Color 29</comment>
-        <translation>Зелено 100% за подраст</translation>
+        <translation type="unfinished">Зелен 60%</translation>
     </message>
     <message>
         <source>White over yellow</source>
-        <comment>Color 30</comment>
+        <comment>Color 28</comment>
         <translation>Бяло върху жълто</translation>
     </message>
     <message>
-        <source>Black for open land</source>
+        <source>Black for cultivated land and sandy ground</source>
+        <comment>Color 29</comment>
+        <translation type="unfinished">Зелено 100% за подраст</translation>
+    </message>
+    <message>
+        <source>Yellow 100% area symbols</source>
+        <comment>Color 30</comment>
+        <translation type="unfinished">Бяло върху жълто</translation>
+    </message>
+    <message>
+        <source>Yellow 75% area symbols</source>
         <comment>Color 31</comment>
-        <translation>Черно за открита земя</translation>
-    </message>
-    <message>
-        <source>Yellow</source>
-        <comment>Color 32</comment>
-        <translation>Жълто</translation>
-    </message>
-    <message>
-        <source>Yellow 100% for area features</source>
-        <comment>Color 33</comment>
-        <translation>Жълто 100% за площни характеристики</translation>
+        <translation type="unfinished">Черно за открита земя</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
-        <comment>Color 34</comment>
+        <comment>Color 32</comment>
         <translation>Жълто 50%</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange (extra)</source>
+        <comment>Color 33</comment>
+        <translation type="unfinished">Жълто 100% за площни характеристики</translation>
     </message>
     <message>
         <source>Contour</source>
@@ -752,15 +747,13 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
     <message>
         <source>Dangerous pit</source>
         <comment>Name of symbol 203.200</comment>
-        <translation type="unfinished">Пещера или скална яма (с отчетлив вход)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A highly dangerous pit, vertical shaft or abyss where a fall into the pit could cause severe injury or death. It is strongly recommended not to use such a feature as a control point. If this object is part of a possible route choice, it should be marked in the terrain with tape.
 Footprint: 13.5 m diameter.</source>
         <comment>Description of symbol 203.200</comment>
-        <translation type="unfinished">Скални ями, дупки, пещери или минни шахти с ясно изразен вход, които могат да представляват опасност за състезателя. Минимална дълбочина: 1 м.
-Местоположението е центърът на тежестта на символа и символът трябва да сочи навътре в пещерата.
-Скални ями с диаметър над 5 м трябва да бъдат преувеличени и представени с помощта на скални символи (201, 202).</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Rocky pit or cave with distinct entrance (from ISOM2000)</source>
@@ -2681,66 +2674,119 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Earth wall</source>
-        <comment>Name of symbol 105.1</comment>
-        <translation type="obsolete">Земна стена</translation>
+        <source>Purple for course overprint</source>
+        <comment>Color 0</comment>
+        <translation type="obsolete">Лилаво за надпечатване на маршрута</translation>
     </message>
     <message>
-        <source>Distinct earth wall. Minimum height: 1 m.
-Minimum length: 1.4 mm (footprint 21 m).</source>
-        <comment>Description of symbol 105.1</comment>
-        <translation type="obsolete">Отчетлива земна стена. Минимална височина: 1 м.
-Минимална дължина: 1,4 мм (площадка 21 м).</translation>
+        <source>White for course overprint</source>
+        <comment>Color 1</comment>
+        <translation type="obsolete">Бяло за надпечатване на маршрута</translation>
     </message>
     <message>
-        <source>Rocky pit or cave (without a distinct entrance)</source>
-        <comment>Name of symbol 203.1</comment>
-        <translation type="obsolete">Скална яма или пещера (без ясно изразен вход)</translation>
+        <source>Green 100%</source>
+        <comment>Color 3</comment>
+        <translation type="obsolete">Зелен 100%</translation>
     </message>
     <message>
-        <source>Rocky pits, holes, caves or mineshafts without a distinct entrance which may constitute a danger to the competitor.
-Location is the centre of gravity of the symbol, and the symbol shall be orientated to north.
-Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).
-Minimum depth: 1 m.
-Footprint: 10.5 m x 12 m.</source>
-        <comment>Description of symbol 203.1</comment>
-        <translation type="obsolete">Скални ями, дупки, пещери или минни шахти без ясно изразен вход, които могат да представляват опасност за състезателя.
-Местоположението е центърът на тежестта на символа и символът трябва да бъде ориентиран на север.
-Скални ями с диаметър над 5 м трябва да бъдат преувеличени и представени с помощта на скални символи (201, 202).
-Минимална дълбочина: 1 м.
-Размери на основата: 10,5 м x 12 м.</translation>
+        <source>White for railway</source>
+        <comment>Color 4</comment>
+        <translation type="obsolete">Бял за ж.п</translation>
     </message>
     <message>
-        <source>Cave or rocky pit (with a distinct entrance)</source>
-        <comment>Name of symbol 203.1.1</comment>
-        <translation type="obsolete">Пещера или скална яма (с отчетлив вход)</translation>
+        <source>Blue 100%</source>
+        <comment>Color 5</comment>
+        <translation type="obsolete">Син 100%</translation>
     </message>
     <message>
-        <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
-Location is the centre of gravity of the symbol, and the symbol should point into the cave.
-Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
-        <comment>Description of symbol 203.1.1</comment>
-        <translation type="obsolete">Скални ями, дупки, пещери или минни шахти с ясно изразен вход, които могат да представляват опасност за състезателя. Минимална дълбочина: 1 м.
-Местоположението е центърът на тежестта на символа и символът трябва да сочи навътре в пещерата.
-Скални ями с диаметър над 5 м трябва да бъдат преувеличени и представени с помощта на скални символи (201, 202).</translation>
+        <source>Brown 100%</source>
+        <comment>Color 6</comment>
+        <translation type="obsolete">Кафяв 100%</translation>
     </message>
     <message>
-        <source>Dangerous pit</source>
-        <comment>Name of symbol 203.2</comment>
-        <translation type="obsolete">Пещера или скална яма (с отчетлив вход)</translation>
+        <source>Purple for track symbols</source>
+        <comment>Color 7</comment>
+        <translation type="obsolete">Лилаво за символи на трака</translation>
     </message>
     <message>
-        <source>A highly dangerous pit, vertical shaft or abyss where a fall into the pit could cause severe injury or death. It is strongly recommended not to use such a feature as a control point. If this object is part of a possible route choice, it should be marked in the terrain with tape.
-Footprint: 13.5 m diameter.</source>
-        <comment>Description of symbol 203.2</comment>
-        <translation type="obsolete">Скални ями, дупки, пещери или минни шахти с ясно изразен вход, които могат да представляват опасност за състезателя. Минимална дълбочина: 1 м.
-Местоположението е центърът на тежестта на символа и символът трябва да сочи навътре в пещерата.
-Скални ями с диаметър над 5 м трябва да бъдат преувеличени и представени с помощта на скални символи (201, 202).</translation>
+        <source>Black below purple for track symbols</source>
+        <comment>Color 8</comment>
+        <translation type="obsolete">Черно под лилаво за символи на следа</translation>
     </message>
     <message>
         <source>Black 65%</source>
         <comment>Color 9</comment>
         <translation type="obsolete">Черно 65%</translation>
+    </message>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 10</comment>
+        <translation type="obsolete">Черно 20%</translation>
+    </message>
+    <message>
+        <source>Upper brown 50%</source>
+        <comment>Color 11</comment>
+        <translation type="obsolete">Горно кафяво 50%</translation>
+    </message>
+    <message>
+        <source>Black below upper brown 50%</source>
+        <comment>Color 12</comment>
+        <translation type="obsolete">Черно под горно кафяво 50%</translation>
+    </message>
+    <message>
+        <source>Lower brown 50%</source>
+        <comment>Color 13</comment>
+        <translation type="obsolete">Долно кафяво 50%</translation>
+    </message>
+    <message>
+        <source>Black below lower brown 50%</source>
+        <comment>Color 14</comment>
+        <translation type="obsolete">Черно под долното кафяво 50%</translation>
+    </message>
+    <message>
+        <source>Blue 100% for area features</source>
+        <comment>Color 15</comment>
+        <translation type="obsolete">Синьо 100% за характеристики на района</translation>
+    </message>
+    <message>
+        <source>Blue 70%</source>
+        <comment>Color 16</comment>
+        <translation type="obsolete">Син 70%</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 17</comment>
+        <translation type="obsolete">Син 70%</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 18</comment>
+        <translation type="obsolete">OpenOrienteering Оранжев</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for narrow ride</source>
+        <comment>Color 19</comment>
+        <translation type="obsolete">Жълто 100% за тясна ивица</translation>
+    </message>
+    <message>
+        <source>Green 60% for narrow ride</source>
+        <comment>Color 20</comment>
+        <translation type="obsolete">Зелено 60% за тясна ивица</translation>
+    </message>
+    <message>
+        <source>Green 30% for narrow ride</source>
+        <comment>Color 21</comment>
+        <translation type="obsolete">Зелено 30% за тясна ивица</translation>
+    </message>
+    <message>
+        <source>White over green</source>
+        <comment>Color 22</comment>
+        <translation type="obsolete">Бяло върху зелено</translation>
+    </message>
+    <message>
+        <source>Yellow 100%/Green 50%</source>
+        <comment>Color 23</comment>
+        <translation type="obsolete">Жълто 100%/Зелено 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -2751,6 +2797,51 @@ Footprint: 13.5 m diameter.</source>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
         <translation type="obsolete">Зелено 100%/Черно 50%</translation>
+    </message>
+    <message>
+        <source>Green 100% for area features</source>
+        <comment>Color 26</comment>
+        <translation type="obsolete">Зелено 100% за характеристики на района</translation>
+    </message>
+    <message>
+        <source>Green 60%</source>
+        <comment>Color 27</comment>
+        <translation type="obsolete">Зелен 60%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 28</comment>
+        <translation type="obsolete">Зелен 30%</translation>
+    </message>
+    <message>
+        <source>Green 100% for undergrowth</source>
+        <comment>Color 29</comment>
+        <translation type="obsolete">Зелено 100% за подраст</translation>
+    </message>
+    <message>
+        <source>White over yellow</source>
+        <comment>Color 30</comment>
+        <translation type="obsolete">Бяло върху жълто</translation>
+    </message>
+    <message>
+        <source>Black for open land</source>
+        <comment>Color 31</comment>
+        <translation type="obsolete">Черно за открита земя</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 32</comment>
+        <translation type="obsolete">Жълто</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for area features</source>
+        <comment>Color 33</comment>
+        <translation type="obsolete">Жълто 100% за площни характеристики</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 34</comment>
+        <translation type="obsolete">Жълто 50%</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 m. A contour interval of 2.5 m may be used for flat terrains.
@@ -2856,6 +2947,24 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
 Пресичането на скала обикновено забавя напредъка.
 Минимална височина: 1 м.
 Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
+    </message>
+    <message>
+        <source>Rocky pit or cave (without a distinct entrance)</source>
+        <comment>Name of symbol 203.1</comment>
+        <translation type="obsolete">Скална яма или пещера (без ясно изразен вход)</translation>
+    </message>
+    <message>
+        <source>Rocky pits, holes, caves or mineshafts without a distinct entrance which may constitute a danger to the competitor.
+Location is the centre of gravity of the symbol, and the symbol shall be orientated to north.
+Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).
+Minimum depth: 1 m.
+Footprint: 10.5 m x 12 m.</source>
+        <comment>Description of symbol 203.1</comment>
+        <translation type="obsolete">Скални ями, дупки, пещери или минни шахти без ясно изразен вход, които могат да представляват опасност за състезателя.
+Местоположението е центърът на тежестта на символа и символът трябва да бъде ориентиран на север.
+Скални ями с диаметър над 5 м трябва да бъдат преувеличени и представени с помощта на скални символи (201, 202).
+Минимална дълбочина: 1 м.
+Размери на основата: 10,5 м x 12 м.</translation>
     </message>
     <message>
         <source>Cave or rocky pit (with a distinct entrance)</source>
@@ -3281,7 +3390,7 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
     <message>
         <source>Black 50%</source>
         <comment>Color 10</comment>
-        <translation type="unfinished">Черно 65%</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Black 20%</source>
@@ -5584,11 +5693,6 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 <context>
     <name>ISSOM</name>
     <message>
-        <source>Black 50%</source>
-        <comment>Color 6</comment>
-        <translation type="unfinished">Черно 65%</translation>
-    </message>
-    <message>
         <source>Black 20%</source>
         <comment>Color 8</comment>
         <translation>Черно 20%</translation>
@@ -7605,134 +7709,134 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Black 100%</source>
+        <source>Upper purple for course overprint</source>
         <comment>Color 3</comment>
+        <translation type="unfinished">Черно 100%</translation>
+    </message>
+    <message>
+        <source>White for railroad</source>
+        <comment>Color 4</comment>
+        <translation type="unfinished">Зелен 100%</translation>
+    </message>
+    <message>
+        <source>Black 100%</source>
+        <comment>Color 5</comment>
         <translation>Черно 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
-        <comment>Color 4</comment>
+        <comment>Color 6</comment>
         <translation>Зелен 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
-        <comment>Color 5</comment>
+        <comment>Color 7</comment>
         <translation>Бял за ж.п</translation>
     </message>
     <message>
         <source>Blue 100%</source>
-        <comment>Color 6</comment>
+        <comment>Color 8</comment>
         <translation>Син 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
-        <comment>Color 7</comment>
+        <comment>Color 9</comment>
         <translation>Кафяв 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
-        <comment>Color 8</comment>
+        <comment>Color 10</comment>
         <translation>Лилаво за символи на трака</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
-        <comment>Color 9</comment>
+        <comment>Color 11</comment>
         <translation>Черно под лилаво за символи на следа</translation>
     </message>
     <message>
         <source>Black 65%</source>
-        <comment>Color 10</comment>
-        <translation type="unfinished">Черно 65%</translation>
-    </message>
-    <message>
-        <source>Black 50%</source>
-        <comment>Color 11</comment>
-        <translation type="unfinished">Черно 65%</translation>
+        <comment>Color 12</comment>
+        <translation>Черно 65%</translation>
     </message>
     <message>
         <source>Black 20%</source>
-        <comment>Color 12</comment>
+        <comment>Color 13</comment>
         <translation>Черно 20%</translation>
     </message>
     <message>
         <source>Upper brown 50%</source>
-        <comment>Color 13</comment>
+        <comment>Color 14</comment>
         <translation>Горно кафяво 50%</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
-        <comment>Color 14</comment>
+        <comment>Color 15</comment>
         <translation>Черно под горно кафяво 50%</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
-        <comment>Color 15</comment>
+        <comment>Color 16</comment>
         <translation>Долно кафяво 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
-        <comment>Color 16</comment>
+        <comment>Color 17</comment>
         <translation>Черно под долното кафяво 50%</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
-        <comment>Color 17</comment>
+        <comment>Color 18</comment>
         <translation>Синьо 100% за характеристики на района</translation>
     </message>
     <message>
         <source>Blue 70%</source>
-        <comment>Color 18</comment>
-        <translation>Син 70%</translation>
-    </message>
-    <message>
-        <source>Blue 50%</source>
         <comment>Color 19</comment>
         <translation>Син 70%</translation>
     </message>
     <message>
-        <source>OpenOrienteering Orange</source>
+        <source>Blue 50%</source>
         <comment>Color 20</comment>
+        <translation>Син 70%</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 21</comment>
         <translation>OpenOrienteering Оранжев</translation>
     </message>
     <message>
         <source>Yellow 100% for narrow ride</source>
-        <comment>Color 21</comment>
+        <comment>Color 22</comment>
         <translation>Жълто 100% за тясна ивица</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
-        <comment>Color 22</comment>
+        <comment>Color 23</comment>
         <translation>Зелено 60% за тясна ивица</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
-        <comment>Color 23</comment>
+        <comment>Color 24</comment>
         <translation>Зелено 30% за тясна ивица</translation>
     </message>
     <message>
         <source>White over green</source>
-        <comment>Color 24</comment>
+        <comment>Color 25</comment>
         <translation>Бяло върху зелено</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
-        <comment>Color 25</comment>
+        <comment>Color 26</comment>
         <translation>Жълто 100%/Зелено 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
-        <comment>Color 26</comment>
-        <translation type="unfinished">Черно 25% (Сиво)</translation>
+        <comment>Color 27</comment>
+        <translation>Черно 25% (Сиво)</translation>
     </message>
     <message>
         <source>Green 100%/Black 50%</source>
-        <comment>Color 27</comment>
-        <translation type="unfinished">Зелено 100%/Черно 50%</translation>
-    </message>
-    <message>
-        <source>Black 35% (Grey)</source>
         <comment>Color 28</comment>
-        <translation type="unfinished">Черно 25% (Сиво)</translation>
+        <translation>Зелено 100%/Черно 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -7778,6 +7882,146 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <source>Yellow 50%</source>
         <comment>Color 37</comment>
         <translation>Жълто 50%</translation>
+    </message>
+    <message>
+        <source>Blue 100% point symbols</source>
+        <comment>Color 38</comment>
+        <translation type="unfinished">Зелен 100%</translation>
+    </message>
+    <message>
+        <source>Brown 100% point symbols</source>
+        <comment>Color 39</comment>
+        <translation type="unfinished">Бял за ж.п</translation>
+    </message>
+    <message>
+        <source>Green 100% point symbols</source>
+        <comment>Color 40</comment>
+        <translation type="unfinished">Син 100%</translation>
+    </message>
+    <message>
+        <source>Blue 100% line symbols</source>
+        <comment>Color 41</comment>
+        <translation type="unfinished">Кафяв 100%</translation>
+    </message>
+    <message>
+        <source>Brown 100% line symbols</source>
+        <comment>Color 42</comment>
+        <translation type="unfinished">Черно под лилаво за символи на следа</translation>
+    </message>
+    <message>
+        <source>Lower purple for course overprint</source>
+        <comment>Color 43</comment>
+        <translation type="unfinished">Черно 65%</translation>
+    </message>
+    <message>
+        <source>Brown 50% for road infill</source>
+        <comment>Color 44</comment>
+        <translation type="unfinished">Черно 20%</translation>
+    </message>
+    <message>
+        <source>Black 100% for road outline</source>
+        <comment>Color 45</comment>
+        <translation type="unfinished">Горно кафяво 50%</translation>
+    </message>
+    <message>
+        <source>Black 50% for large buildings and tramway</source>
+        <comment>Color 46</comment>
+        <translation type="unfinished">Черно под горно кафяво 50%</translation>
+    </message>
+    <message>
+        <source>Black 20% for canopy</source>
+        <comment>Color 47</comment>
+        <translation type="unfinished">Долно кафяво 50%</translation>
+    </message>
+    <message>
+        <source>Blue 100% area symbols</source>
+        <comment>Color 48</comment>
+        <translation type="unfinished">Черно под долното кафяво 50%</translation>
+    </message>
+    <message>
+        <source>Blue 70% area symbols</source>
+        <comment>Color 49</comment>
+        <translation type="unfinished">Синьо 100% за характеристики на района</translation>
+    </message>
+    <message>
+        <source>Blue 50% area symbols</source>
+        <comment>Color 50</comment>
+        <translation type="unfinished">Син 70%</translation>
+    </message>
+    <message>
+        <source>White over green and brown (+ yellow)</source>
+        <comment>Color 51</comment>
+        <translation type="unfinished">Син 70%</translation>
+    </message>
+    <message>
+        <source>Brown 50% for paved area</source>
+        <comment>Color 52</comment>
+        <translation type="unfinished">OpenOrienteering Оранжев</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for narrow ride (extra)</source>
+        <comment>Color 53</comment>
+        <translation type="unfinished">Жълто 100% за тясна ивица</translation>
+    </message>
+    <message>
+        <source>Green 30% for narrow ride (extra)</source>
+        <comment>Color 54</comment>
+        <translation type="unfinished">Зелено 30% за тясна ивица</translation>
+    </message>
+    <message>
+        <source>Yellow 100% + Green 50%</source>
+        <comment>Color 55</comment>
+        <translation type="unfinished">Бяло върху зелено</translation>
+    </message>
+    <message>
+        <source>Green 100% area symbols</source>
+        <comment>Color 56</comment>
+        <translation type="unfinished">Жълто 100%/Зелено 50%</translation>
+    </message>
+    <message>
+        <source>Green 30% area symbols</source>
+        <comment>Color 57</comment>
+        <translation type="unfinished">Зелено 100%/Черно 50%</translation>
+    </message>
+    <message>
+        <source>Black 35% area symbols</source>
+        <comment>Color 58</comment>
+        <translation type="unfinished">Зелено 100% за характеристики на района</translation>
+    </message>
+    <message>
+        <source>Green 100% below green areas (extra)</source>
+        <comment>Color 59</comment>
+        <translation type="unfinished">Зелен 60%</translation>
+    </message>
+    <message>
+        <source>White over yellow</source>
+        <comment>Color 60</comment>
+        <translation>Бяло върху жълто</translation>
+    </message>
+    <message>
+        <source>Black for cultivated land and sandy ground</source>
+        <comment>Color 61</comment>
+        <translation type="unfinished">Зелено 100% за подраст</translation>
+    </message>
+    <message>
+        <source>Yellow 100% area symbols</source>
+        <comment>Color 62</comment>
+        <translation type="unfinished">Бяло върху жълто</translation>
+    </message>
+    <message>
+        <source>Yellow 75% area symbols</source>
+        <comment>Color 63</comment>
+        <translation type="unfinished">Черно за открита земя</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 64</comment>
+        <translation>Жълто 50%</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange (extra)</source>
+        <comment>Color 65</comment>
+        <translation type="unfinished">Жълто 100% за площни характеристики</translation>
     </message>
     <message>
         <source>Contour</source>
@@ -9406,16 +9650,265 @@ A route which is out-of-bounds and forbidden to cross is shown with a zigzag. Th
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Black 100%</source>
+        <comment>Color 3</comment>
+        <translation type="obsolete">Черно 100%</translation>
+    </message>
+    <message>
+        <source>Green 100%</source>
+        <comment>Color 4</comment>
+        <translation type="obsolete">Зелен 100%</translation>
+    </message>
+    <message>
+        <source>White for railway</source>
+        <comment>Color 5</comment>
+        <translation type="obsolete">Бял за ж.п</translation>
+    </message>
+    <message>
+        <source>Blue 100%</source>
+        <comment>Color 6</comment>
+        <translation type="obsolete">Син 100%</translation>
+    </message>
+    <message>
+        <source>Brown 100%</source>
+        <comment>Color 7</comment>
+        <translation type="obsolete">Кафяв 100%</translation>
+    </message>
+    <message>
+        <source>Purple for track symbols</source>
+        <comment>Color 8</comment>
+        <translation type="obsolete">Лилаво за символи на трака</translation>
+    </message>
+    <message>
+        <source>Black below purple for track symbols</source>
+        <comment>Color 9</comment>
+        <translation type="obsolete">Черно под лилаво за символи на следа</translation>
+    </message>
+    <message>
+        <source>Black 65%</source>
+        <comment>Color 10</comment>
+        <translation type="obsolete">Черно 65%</translation>
+    </message>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 11</comment>
+        <translation type="obsolete">Черно 20%</translation>
+    </message>
+    <message>
+        <source>Upper brown 50%</source>
+        <comment>Color 12</comment>
+        <translation type="obsolete">Горно кафяво 50%</translation>
+    </message>
+    <message>
+        <source>Black below upper brown 50%</source>
+        <comment>Color 13</comment>
+        <translation type="obsolete">Черно под горно кафяво 50%</translation>
+    </message>
+    <message>
+        <source>Lower brown 50%</source>
+        <comment>Color 14</comment>
+        <translation type="obsolete">Долно кафяво 50%</translation>
+    </message>
+    <message>
+        <source>Black below lower brown 50%</source>
+        <comment>Color 15</comment>
+        <translation type="obsolete">Черно под долното кафяво 50%</translation>
+    </message>
+    <message>
+        <source>Blue 100% for area features</source>
+        <comment>Color 16</comment>
+        <translation type="obsolete">Синьо 100% за характеристики на района</translation>
+    </message>
+    <message>
+        <source>Blue 70%</source>
+        <comment>Color 17</comment>
+        <translation type="obsolete">Син 70%</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 18</comment>
+        <translation type="obsolete">Син 70%</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 19</comment>
+        <translation type="obsolete">OpenOrienteering Оранжев</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for narrow ride</source>
+        <comment>Color 20</comment>
+        <translation type="obsolete">Жълто 100% за тясна ивица</translation>
+    </message>
+    <message>
+        <source>Green 60% for narrow ride</source>
+        <comment>Color 21</comment>
+        <translation type="obsolete">Зелено 60% за тясна ивица</translation>
+    </message>
+    <message>
+        <source>Green 30% for narrow ride</source>
+        <comment>Color 22</comment>
+        <translation type="obsolete">Зелено 30% за тясна ивица</translation>
+    </message>
+    <message>
+        <source>White over green</source>
+        <comment>Color 23</comment>
+        <translation type="obsolete">Бяло върху зелено</translation>
+    </message>
+    <message>
+        <source>Yellow 100%/Green 50%</source>
+        <comment>Color 24</comment>
+        <translation type="obsolete">Жълто 100%/Зелено 50%</translation>
+    </message>
+    <message>
+        <source>Black 25% (Grey)</source>
+        <comment>Color 25</comment>
+        <translation type="obsolete">Черно 25% (Сиво)</translation>
+    </message>
+    <message>
+        <source>Green 100%/Black 50%</source>
+        <comment>Color 26</comment>
+        <translation type="obsolete">Зелено 100%/Черно 50%</translation>
+    </message>
+    <message>
+        <source>Green 100% for area features</source>
+        <comment>Color 27</comment>
+        <translation type="obsolete">Зелено 100% за характеристики на района</translation>
+    </message>
+    <message>
+        <source>Green 60%</source>
+        <comment>Color 28</comment>
+        <translation type="obsolete">Зелен 60%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 29</comment>
+        <translation type="obsolete">Зелен 30%</translation>
+    </message>
+    <message>
+        <source>Green 100% for undergrowth</source>
+        <comment>Color 30</comment>
+        <translation type="obsolete">Зелено 100% за подраст</translation>
+    </message>
+    <message>
+        <source>White over yellow</source>
+        <comment>Color 31</comment>
+        <translation type="obsolete">Бяло върху жълто</translation>
+    </message>
+    <message>
+        <source>Black for open land</source>
+        <comment>Color 32</comment>
+        <translation type="obsolete">Черно за открита земя</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 33</comment>
+        <translation type="obsolete">Жълто</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for area features</source>
+        <comment>Color 34</comment>
+        <translation type="obsolete">Жълто 100% за площни характеристики</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 35</comment>
+        <translation type="obsolete">Жълто 50%</translation>
+    </message>
+    <message>
+        <source>A line joining points of equal height. The standard vertical interval between contours is 5 m. A contour interval of 2.5 m may be used for flat terrains.
+Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
+A closed contour represents a knoll or a depression. A depression has to have at least one slope line. Minimum height/depth should be 1 m.
+Relationships between adjacent contour lines are important. Adjacent contour lines show form and structure. Small details on contours should be avoided because they tend to hide the main features of the terrain.
+Prominent features such as depressions, re-entrants, spurs, earth banks and terraces may have to be exaggerated.
+Absolute height accuracy is of little importance, but the relative height difference between neighbouring features should be represented on the map as accurately as possible. It is permissible to alter the height of a contour slightly if this improves the representation of a feature. This deviation should not exceed 25% of the contour interval, and attention must be paid to neighbouring features.
+The smallest bend in a contour line is 0.25 mm from centre to centre of the line (footprint 4 m). The mouth of a re-entrant or a spur must be wider than 0.5 mm from centre to centre of the line (footprint 8 m).
+The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minimum width is 0.6 mm (footprint 9 m) outside measure. Smaller prominent knolls can be represented using symbol Small knoll (109) or Small elongated knoll (110) or they can be exaggerated on the map to satisfy the minimum dimension.
+A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
+Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
+        <comment>Description of symbol 101</comment>
+        <translation type="obsolete">Линия, свързваща точки с еднаква височина. Стандартният вертикален интервал между контурите е 5 м. За равни терени може да се използва интервал между контурите от 2,5 м.
+Линии на наклона могат да се начертаят от долната страна на контурната линия, за да се изясни посоката на наклона. 
+Когато се използват, те трябва да се поставят в отклонения. Затвореният контур представлява хълмче или вдлъбнатина. Вдлъбнатината трябва да има поне една линия на наклона. Минималната височина/дълбочина трябва да бъде 1 м.
+Връзките между съседните контурни линии са важни. Съседните контурни линии показват форма и структура. Малките детайли по контурите трябва да се избягват, тъй като те са склонни да скрият основните характеристики на терена.
+Изтъкнати характеристики като вдлъбнатини, отклонения, разклонения, земни насипи и тераси може да се наложи да бъдат преувеличени.
+Абсолютната точност на височината е от малко значение, но относителната разлика във височината между съседните характеристики трябва да бъде представена на картата възможно най-точно. Допустимо е леко да се промени височината на контура, ако това подобрява представянето на даден обект. Това отклонение не трябва да надвишава 25% от интервала между контурите и трябва да се обърне внимание на съседните обекти.
+Най-малкото отклонение на контурна линия е 0,25 мм от центъра до центъра на линията (площадка 4 м). Устието на реинтернат или отклонение трябва да е по-широко от 0,5 мм от центъра до центъра на линията (площадка 8 м).
+Минималната дължина на контурен хълм е 0,9 мм (площадка 13,5 м), а минималната ширина е 0,6 мм (площадка 9 м) външна мярка. По-малките изпъкнали хълмове могат да бъдат представени със символа Малък хълм (109) или Малък удължен хълм (110) или могат да бъдат увеличени на картата, за да отговарят на минималния размер.
+Вдлъбнатината трябва да побира линия на наклона, така че минималната дължина е 1,1 мм (площадка 16,5 м), а минималната ширина е 0,7 мм (площадка 10,5 м) външна мярка. По-малките, изпъкнали вдлъбнатини могат да бъдат представени с помощта на символа „Малка вдлъбнатина“ (111) или могат да бъдат преувеличени, за да се отговори на минималния размер.
+Контурите трябва да бъдат адаптирани (да не се прекъснат), за да не докосват символа „Малка могила“ (109) или „Малка удължена могила“ (110).</translation>
+    </message>
+    <message>
         <source>Earth wall</source>
-        <comment>Name of symbol 105.1</comment>
+        <comment>Name of symbol 105</comment>
         <translation type="obsolete">Земна стена</translation>
     </message>
     <message>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
-        <comment>Description of symbol 105.1</comment>
+        <comment>Description of symbol 105</comment>
         <translation type="obsolete">Отчетлива земна стена. Минимална височина: 1 м.
 Минимална дължина: 1,4 мм (площадка 21 м).</translation>
+    </message>
+    <message>
+        <source>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Minimum depth: 1 m.
+Minimum length: 1.15 mm (footprint 17 m).
+Contour lines should not be broken around this symbol.</source>
+        <comment>Description of symbol 107</comment>
+        <translation type="obsolete">Ерозионно дере, което е твърде малко, за да бъде показано със символа Земен насип (104), е показано с една линия. Минимална дълбочина: 1 м.
+Минимална дължина: 1,15 мм (площадка 17 м).
+Контурните линии не трябва да се прекъсват около този символ.</translation>
+    </message>
+    <message>
+        <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+Crossing a cliff will normally slow progress.
+Minimum height: 1 m.
+Minimum length: 0.6 mm (footprint 9 m).</source>
+        <comment>Description of symbol 202</comment>
+        <translation type="obsolete">Проходима скала или кариера. Ако посоката на падане на скалата не е видима от контурите или за да се подобри четливостта, могат да се начертаят кратки етикети в посока надолу по склона.
+За невертикални скали етикетите трябва да се начертаят така, че да показват пълния хоризонтален обхват. Краищата на базовата линия трябва да бъдат заоблени, ако не се виждат етикети. Проходът между две скали трябва да е поне 0,2 мм. Скалата трябва да взаимодейства с контурните линии.
+Пресичането на скала обикновено забавя напредъка.
+Минимална височина: 1 м.
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
+    </message>
+    <message>
+        <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+Crossing a cliff will normally slow progress.
+Minimum height: 1 m.
+Minimum length: 0.6 mm (footprint 9 m).</source>
+        <comment>Description of symbol 202.1</comment>
+        <translation type="obsolete">Проходима скала или кариера. Ако посоката на падане на скалата не е видима от контурите или за да се подобри четливостта, могат да се начертаят кратки етикети в посока надолу по склона.
+За невертикални скали етикетите трябва да се начертаят така, че да показват пълния хоризонтален обхват. Краищата на базовата линия трябва да бъдат заоблени, ако не се виждат етикети. Проходът между две скали трябва да е поне 0,2 мм. Скалата трябва да взаимодейства с контурните линии.
+Пресичането на скала обикновено забавя напредъка.
+Минимална височина: 1 м.
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
+    </message>
+    <message>
+        <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+Crossing a cliff will normally slow progress.
+Minimum height: 1 m.
+Minimum length: 0.6 mm (footprint 9 m).</source>
+        <comment>Description of symbol 202.2</comment>
+        <translation type="obsolete">Проходима скала или кариера. Ако посоката на падане на скалата не е видима от контурите или за да се подобри четливостта, могат да се начертаят кратки етикети в посока надолу по склона.
+За невертикални скали етикетите трябва да се начертаят така, че да показват пълния хоризонтален обхват. Краищата на базовата линия трябва да бъдат заоблени, ако не се виждат етикети. Проходът между две скали трябва да е поне 0,2 мм. Скалата трябва да взаимодейства с контурните линии.
+Пресичането на скала обикновено забавя напредъка.
+Минимална височина: 1 м.
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
+    </message>
+    <message>
+        <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+Crossing a cliff will normally slow progress.
+Minimum height: 1 m.
+Minimum length: 0.6 mm (footprint 9 m).</source>
+        <comment>Description of symbol 202.3</comment>
+        <translation type="obsolete">Проходима скала или кариера. Ако посоката на падане на скалата не е видима от контурите или за да се подобри четливостта, могат да се начертаят кратки етикети в посока надолу по склона.
+За невертикални скали етикетите трябва да се начертаят така, че да показват пълния хоризонтален обхват. Краищата на базовата линия трябва да бъдат заоблени, ако не се виждат етикети. Проходът между две скали трябва да е поне 0,2 мм. Скалата трябва да взаимодейства с контурните линии.
+Пресичането на скала обикновено забавя напредъка.
+Минимална височина: 1 м.
+Минимална дължина: 0,6 мм (отпечатък 9 м).</translation>
     </message>
 </context>
 <context>

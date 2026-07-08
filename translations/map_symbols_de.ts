@@ -4,14 +4,14 @@
 <context>
     <name>ISOM 2017-2</name>
     <message>
-        <source>Purple for course overprint</source>
+        <source>Upper purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation>Violett für Bahndruck</translation>
+        <translation type="unfinished">Violett für Bahndruck</translation>
     </message>
     <message>
-        <source>White for course overprint</source>
+        <source>White for railroad</source>
         <comment>Color 1</comment>
-        <translation>Weiß für Bahneindruck</translation>
+        <translation type="unfinished">Weiß für Bahneindruck</translation>
     </message>
     <message>
         <source>Black 100%</source>
@@ -19,164 +19,159 @@
         <translation>Schwarz 100%</translation>
     </message>
     <message>
-        <source>Green 100%</source>
+        <source>Blue 100% point symbols</source>
         <comment>Color 3</comment>
-        <translation>Grün 100%</translation>
+        <translation type="unfinished">Grün 100%</translation>
     </message>
     <message>
-        <source>White for railway</source>
+        <source>Brown 100% point symbols</source>
         <comment>Color 4</comment>
-        <translation>Weiß für Bahngleis</translation>
+        <translation type="unfinished">Weiß für Bahngleis</translation>
     </message>
     <message>
-        <source>Blue 100%</source>
+        <source>Green 100% point symbols</source>
         <comment>Color 5</comment>
-        <translation>Blau 100%</translation>
+        <translation type="unfinished">Blau 100%</translation>
     </message>
     <message>
-        <source>Brown 100%</source>
+        <source>Blue 100% line symbols</source>
         <comment>Color 6</comment>
-        <translation>Braun 100%</translation>
+        <translation type="unfinished">Braun 100%</translation>
     </message>
     <message>
-        <source>Purple for track symbols</source>
+        <source>Dark green line symbols</source>
         <comment>Color 7</comment>
-        <translation>Violett für Bahnsymbole</translation>
+        <translation type="unfinished">Violett für Bahnsymbole</translation>
     </message>
     <message>
-        <source>Black below purple for track symbols</source>
+        <source>Brown 100% line symbols</source>
         <comment>Color 8</comment>
-        <translation>Schwarz unter Violett für Bahnsymbole</translation>
+        <translation type="unfinished">Schwarz unter Violett für Bahnsymbole</translation>
     </message>
     <message>
-        <source>Black 50%</source>
+        <source>Lower purple for course overprint</source>
         <comment>Color 9</comment>
-        <translation>Schwarz 50%</translation>
+        <translation type="unfinished">Schwarz 65%</translation>
     </message>
     <message>
-        <source>Black 20%</source>
+        <source>Brown 50% for road infill</source>
         <comment>Color 10</comment>
-        <translation>Schwarz 20%</translation>
+        <translation type="unfinished">Schwarz 20%</translation>
     </message>
     <message>
-        <source>Upper brown 50%</source>
+        <source>Black 100% for road outline</source>
         <comment>Color 11</comment>
-        <translation>Oberes Braun 50%</translation>
+        <translation type="unfinished">Oberes Braun 50%</translation>
     </message>
     <message>
-        <source>Black below upper brown 50%</source>
+        <source>Black 50% for large buildings and tramway</source>
         <comment>Color 12</comment>
-        <translation>Schwarz unter oberem Braun 50%</translation>
+        <translation type="unfinished">Schwarz unter oberem Braun 50%</translation>
     </message>
     <message>
-        <source>Lower brown 50%</source>
+        <source>Black 20% for canopy</source>
         <comment>Color 13</comment>
-        <translation>Unteres Braun 50%</translation>
+        <translation type="unfinished">Unteres Braun 50%</translation>
     </message>
     <message>
-        <source>Black below lower brown 50%</source>
+        <source>Blue 100% area symbols</source>
         <comment>Color 14</comment>
-        <translation>Schwarz unter unterem Braun 50%</translation>
+        <translation type="unfinished">Schwarz unter unterem Braun 50%</translation>
     </message>
     <message>
-        <source>Blue 100% for area features</source>
+        <source>Blue 70% area symbols</source>
         <comment>Color 15</comment>
-        <translation>Blau 100% für Flächenobjekte</translation>
+        <translation type="unfinished">Blau 100% für Flächenobjekte</translation>
     </message>
     <message>
-        <source>Blue 70%</source>
+        <source>Blue 50% area symbols</source>
         <comment>Color 16</comment>
-        <translation>Blau 70%</translation>
+        <translation type="unfinished">Blau 70%</translation>
     </message>
     <message>
-        <source>Blue 50%</source>
+        <source>White over green and brown (+ yellow)</source>
         <comment>Color 17</comment>
-        <translation>Blau 50%</translation>
+        <translation type="unfinished">Blau 50%</translation>
     </message>
     <message>
-        <source>OpenOrienteering Orange</source>
+        <source>Brown 50% for paved area</source>
         <comment>Color 18</comment>
-        <translation>OpenOrienteering-Orange</translation>
+        <translation type="unfinished">OpenOrienteering-Orange</translation>
     </message>
     <message>
-        <source>Yellow 100% for narrow ride</source>
+        <source>Yellow 100% for narrow ride (extra)</source>
         <comment>Color 19</comment>
-        <translation>Gelb 100% für schmale Schneise</translation>
+        <translation type="unfinished">Gelb 100% für schmale Schneise</translation>
     </message>
     <message>
-        <source>Green 60% for narrow ride</source>
+        <source>Green 60% for narrow ride (extra)</source>
         <comment>Color 20</comment>
-        <translation>Grün 60% für schmale Schneise</translation>
+        <translation type="unfinished">Grün 60% für schmale Schneise</translation>
     </message>
     <message>
-        <source>Green 30% for narrow ride</source>
+        <source>Green 30% for narrow ride (extra)</source>
         <comment>Color 21</comment>
-        <translation>Grün 30% für schmale Schneise</translation>
+        <translation type="unfinished">Grün 30% für schmale Schneise</translation>
     </message>
     <message>
-        <source>White over green</source>
+        <source>Yellow 100% + Green 50%</source>
         <comment>Color 22</comment>
-        <translation>Weiß über Grün</translation>
+        <translation type="unfinished">Weiß über Grün</translation>
     </message>
     <message>
-        <source>Yellow 100%/Green 50%</source>
+        <source>Green 100% area symbols</source>
         <comment>Color 23</comment>
-        <translation>Gelb 100%/Grün 50%</translation>
+        <translation type="unfinished">Gelb 100%/Grün 50%</translation>
     </message>
     <message>
-        <source>Black 35% (Grey)</source>
+        <source>Green 60% area symbols</source>
         <comment>Color 24</comment>
         <translation type="unfinished">Schwarz 25% (Grau)</translation>
     </message>
     <message>
-        <source>Dark green line symbols </source>
+        <source>Green 30% area symbols</source>
         <comment>Color 25</comment>
         <translation type="unfinished">Grün 100%/Schwarz 50%</translation>
     </message>
     <message>
-        <source>Green 100% for area features</source>
+        <source>Black 35% area symbols</source>
         <comment>Color 26</comment>
-        <translation>Grün 100% für Flächenobjekte</translation>
+        <translation type="unfinished">Grün 100% für Flächenobjekte</translation>
     </message>
     <message>
-        <source>Green 60%</source>
+        <source>Green 100% below green areas (extra)</source>
         <comment>Color 27</comment>
-        <translation>Grün 60%</translation>
-    </message>
-    <message>
-        <source>Green 30%</source>
-        <comment>Color 28</comment>
-        <translation>Grün 30%</translation>
-    </message>
-    <message>
-        <source>Green 100% for undergrowth</source>
-        <comment>Color 29</comment>
-        <translation>Grün 100% für Bodenbewuchs</translation>
+        <translation type="unfinished">Grün 60%</translation>
     </message>
     <message>
         <source>White over yellow</source>
-        <comment>Color 30</comment>
+        <comment>Color 28</comment>
         <translation>Weiß über Gelb</translation>
     </message>
     <message>
-        <source>Black for open land</source>
+        <source>Black for cultivated land and sandy ground</source>
+        <comment>Color 29</comment>
+        <translation type="unfinished">Grün 100% für Bodenbewuchs</translation>
+    </message>
+    <message>
+        <source>Yellow 100% area symbols</source>
+        <comment>Color 30</comment>
+        <translation type="unfinished">Weiß über Gelb</translation>
+    </message>
+    <message>
+        <source>Yellow 75% area symbols</source>
         <comment>Color 31</comment>
-        <translation>Schwarz für offenes Land</translation>
-    </message>
-    <message>
-        <source>Yellow</source>
-        <comment>Color 32</comment>
-        <translation>Gelb</translation>
-    </message>
-    <message>
-        <source>Yellow 100% for area features</source>
-        <comment>Color 33</comment>
-        <translation>Gelb 100% für Flächenobjekte</translation>
+        <translation type="unfinished">Schwarz für offenes Land</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
-        <comment>Color 34</comment>
+        <comment>Color 32</comment>
         <translation>Gelb 50%</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange (extra)</source>
+        <comment>Color 33</comment>
+        <translation type="unfinished">Gelb 100% für Flächenobjekte</translation>
     </message>
     <message>
         <source>Contour</source>
@@ -752,15 +747,13 @@ Felslöcher mit mehr als 5 m Durchmesser sollten vergrößert und mit den Felssy
     <message>
         <source>Dangerous pit</source>
         <comment>Name of symbol 203.200</comment>
-        <translation type="unfinished">Höhle oder felsiges Loch (mit eindeutigem Eingang)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A highly dangerous pit, vertical shaft or abyss where a fall into the pit could cause severe injury or death. It is strongly recommended not to use such a feature as a control point. If this object is part of a possible route choice, it should be marked in the terrain with tape.
 Footprint: 13.5 m diameter.</source>
         <comment>Description of symbol 203.200</comment>
-        <translation type="unfinished">Felslöcher, Gruben, Höhlen oder Schächte mit einem klaren Eingang, die für den Wettkämpfer eine Gefahr bedeuten können. Minimale Tiefe: 1 m.
-Die Lage entspricht dem Schwerpunkt des Symbols. Die Spitze des Symbols muss in die Höhle hineinzeigen.
-Felslöcher mit mehr als 5 m Durchmesser sollten vergrößert und mit den Felssymbolen (201, 202) dargestellt werden.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Rocky pit or cave with distinct entrance (from ISOM2000)</source>
@@ -2991,80 +2984,119 @@ Die violette Linie ragt ein bisschen in das Zielsymbol hinein. Dies ist ein Mank
         <translation>Das Logo von OpenOrienteering.</translation>
     </message>
     <message>
-        <source>Earth wall</source>
-        <comment>Name of symbol 105.1</comment>
-        <translation type="obsolete">Erdwall</translation>
+        <source>Purple for course overprint</source>
+        <comment>Color 0</comment>
+        <translation type="obsolete">Violett für Bahndruck</translation>
     </message>
     <message>
-        <source>Distinct earth wall. Minimum height: 1 m.
-Minimum length: 1.4 mm (footprint 21 m).</source>
-        <comment>Description of symbol 105.1</comment>
-        <translation type="obsolete">Deutlicher Erdwall. Minimale Höhe 1 m.
-Minimale Länge: 1.4 mm (Wirklichkeit 21 m).</translation>
+        <source>White for course overprint</source>
+        <comment>Color 1</comment>
+        <translation type="obsolete">Weiß für Bahneindruck</translation>
     </message>
     <message>
-        <source>Rocky pit or cave (without a distinct entrance)</source>
-        <comment>Name of symbol 203.1</comment>
-        <translation type="obsolete">Felsiges Loch oder Höhle (ohne eindeutigen Eingang)</translation>
+        <source>Green 100%</source>
+        <comment>Color 3</comment>
+        <translation type="obsolete">Grün 100%</translation>
     </message>
     <message>
-        <source>Rocky pits, holes, caves or mineshafts without a distinct entrance which may constitute a danger to the competitor.
-Location is the centre of gravity of the symbol, and the symbol shall be orientated to north.
-Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).
-Minimum depth: 1 m.
-Footprint: 10.5 m x 12 m.</source>
-        <comment>Description of symbol 203.1</comment>
-        <translation type="obsolete">Felslöcher, Gruben, Höhlen oder Schächte, die für den Wettkämpfer eine Gefahr bedeuten können.
-Die Lage entspricht dem Schwerpunkt des Symbols. Es ist nach Norden auszurichten, ausgenommen bei Höhlen mit einem deutlichen Eingang. Dort zeigt die Spitze in die Höhle hinein.
-Felslöcher mit mehr als 5 m Durchmesser sollten vergrössert und mit den Felssymbolen (201, 202) dargestellt werden.
-Minimale Tiefe: 1m.
-Wirklichkeit: 10.5 m x 12 m.</translation>
+        <source>White for railway</source>
+        <comment>Color 4</comment>
+        <translation type="obsolete">Weiß für Bahngleis</translation>
     </message>
     <message>
-        <source>Cave or rocky pit (with a distinct entrance)</source>
-        <comment>Name of symbol 203.1.1</comment>
-        <translation type="obsolete">Höhle oder felsiges Loch (mit eindeutigem Eingang)</translation>
+        <source>Blue 100%</source>
+        <comment>Color 5</comment>
+        <translation type="obsolete">Blau 100%</translation>
     </message>
     <message>
-        <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
-Location is the centre of gravity of the symbol, and the symbol should point into the cave.
-Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
-        <comment>Description of symbol 203.1.1</comment>
-        <translation type="obsolete">Felslöcher, Gruben, Höhlen oder Schächte mit einem klaren Eingang, die für den Wettkämpfer eine Gefahr bedeuten können. Minimale Tiefe: 1 m.
-Die Lage entspricht dem Schwerpunkt des Symbols. Die Spitze des Symbols muss in die Höhle hineinzeigen.
-Felslöcher mit mehr als 5 m Durchmesser sollten vergrößert und mit den Felssymbolen (201, 202) dargestellt werden.</translation>
+        <source>Brown 100%</source>
+        <comment>Color 6</comment>
+        <translation type="obsolete">Braun 100%</translation>
     </message>
     <message>
-        <source>Dangerous pit</source>
-        <comment>Name of symbol 203.2</comment>
-        <translation type="obsolete">Höhle oder felsiges Loch (mit eindeutigem Eingang)</translation>
+        <source>Purple for track symbols</source>
+        <comment>Color 7</comment>
+        <translation type="obsolete">Violett für Bahnsymbole</translation>
     </message>
     <message>
-        <source>A highly dangerous pit, vertical shaft or abyss where a fall into the pit could cause severe injury or death. It is strongly recommended not to use such a feature as a control point. If this object is part of a possible route choice, it should be marked in the terrain with tape.
-Footprint: 13.5 m diameter.</source>
-        <comment>Description of symbol 203.2</comment>
-        <translation type="obsolete">Felslöcher, Gruben, Höhlen oder Schächte mit einem klaren Eingang, die für den Wettkämpfer eine Gefahr bedeuten können. Minimale Tiefe: 1 m.
-Die Lage entspricht dem Schwerpunkt des Symbols. Die Spitze des Symbols muss in die Höhle hineinzeigen.
-Felslöcher mit mehr als 5 m Durchmesser sollten vergrößert und mit den Felssymbolen (201, 202) dargestellt werden.</translation>
-    </message>
-    <message>
-        <source>Wall</source>
-        <comment>Name of symbol 513.1</comment>
-        <translation type="obsolete">Mauer</translation>
-    </message>
-    <message>
-        <source>A significant wall of stone, concrete, wood or other materials.
-Minimum height: 1 m.
-Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
-        <comment>Description of symbol 513.1</comment>
-        <translation type="obsolete">Eine passierbare deutliche Mauer aus Steinen, Beton, Holz oder anderen Materialien.
-Minimale Höhe: 1 m.
-Minimale Länge (isoliert): 1.4 mm (Wirklichkeit 21 m).</translation>
+        <source>Black below purple for track symbols</source>
+        <comment>Color 8</comment>
+        <translation type="obsolete">Schwarz unter Violett für Bahnsymbole</translation>
     </message>
     <message>
         <source>Black 65%</source>
         <comment>Color 9</comment>
         <translation type="obsolete">Schwarz 65%</translation>
+    </message>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 10</comment>
+        <translation type="obsolete">Schwarz 20%</translation>
+    </message>
+    <message>
+        <source>Upper brown 50%</source>
+        <comment>Color 11</comment>
+        <translation type="obsolete">Oberes Braun 50%</translation>
+    </message>
+    <message>
+        <source>Black below upper brown 50%</source>
+        <comment>Color 12</comment>
+        <translation type="obsolete">Schwarz unter oberem Braun 50%</translation>
+    </message>
+    <message>
+        <source>Lower brown 50%</source>
+        <comment>Color 13</comment>
+        <translation type="obsolete">Unteres Braun 50%</translation>
+    </message>
+    <message>
+        <source>Black below lower brown 50%</source>
+        <comment>Color 14</comment>
+        <translation type="obsolete">Schwarz unter unterem Braun 50%</translation>
+    </message>
+    <message>
+        <source>Blue 100% for area features</source>
+        <comment>Color 15</comment>
+        <translation type="obsolete">Blau 100% für Flächenobjekte</translation>
+    </message>
+    <message>
+        <source>Blue 70%</source>
+        <comment>Color 16</comment>
+        <translation type="obsolete">Blau 70%</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 17</comment>
+        <translation type="obsolete">Blau 50%</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 18</comment>
+        <translation type="obsolete">OpenOrienteering-Orange</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for narrow ride</source>
+        <comment>Color 19</comment>
+        <translation type="obsolete">Gelb 100% für schmale Schneise</translation>
+    </message>
+    <message>
+        <source>Green 60% for narrow ride</source>
+        <comment>Color 20</comment>
+        <translation type="obsolete">Grün 60% für schmale Schneise</translation>
+    </message>
+    <message>
+        <source>Green 30% for narrow ride</source>
+        <comment>Color 21</comment>
+        <translation type="obsolete">Grün 30% für schmale Schneise</translation>
+    </message>
+    <message>
+        <source>White over green</source>
+        <comment>Color 22</comment>
+        <translation type="obsolete">Weiß über Grün</translation>
+    </message>
+    <message>
+        <source>Yellow 100%/Green 50%</source>
+        <comment>Color 23</comment>
+        <translation type="obsolete">Gelb 100%/Grün 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -3075,6 +3107,51 @@ Minimale Länge (isoliert): 1.4 mm (Wirklichkeit 21 m).</translation>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
         <translation type="obsolete">Grün 100%/Schwarz 50%</translation>
+    </message>
+    <message>
+        <source>Green 100% for area features</source>
+        <comment>Color 26</comment>
+        <translation type="obsolete">Grün 100% für Flächenobjekte</translation>
+    </message>
+    <message>
+        <source>Green 60%</source>
+        <comment>Color 27</comment>
+        <translation type="obsolete">Grün 60%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 28</comment>
+        <translation type="obsolete">Grün 30%</translation>
+    </message>
+    <message>
+        <source>Green 100% for undergrowth</source>
+        <comment>Color 29</comment>
+        <translation type="obsolete">Grün 100% für Bodenbewuchs</translation>
+    </message>
+    <message>
+        <source>White over yellow</source>
+        <comment>Color 30</comment>
+        <translation type="obsolete">Weiß über Gelb</translation>
+    </message>
+    <message>
+        <source>Black for open land</source>
+        <comment>Color 31</comment>
+        <translation type="obsolete">Schwarz für offenes Land</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 32</comment>
+        <translation type="obsolete">Gelb</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for area features</source>
+        <comment>Color 33</comment>
+        <translation type="obsolete">Gelb 100% für Flächenobjekte</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 34</comment>
+        <translation type="obsolete">Gelb 50%</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 m. A contour interval of 2.5 m may be used for flat terrains.
@@ -3180,6 +3257,24 @@ Für nicht senkrechte Felsen sollten die Fallstriche die ganze horizontale Ausde
 Das Queren eines Felsens verlangsamt normalerweise das Laufen.
 Minimale Höhe: 1 m.
 Minimale Länge: 0.6 mm (Wirklichkeit 9 m).</translation>
+    </message>
+    <message>
+        <source>Rocky pit or cave (without a distinct entrance)</source>
+        <comment>Name of symbol 203.1</comment>
+        <translation type="obsolete">Felsiges Loch oder Höhle (ohne eindeutigen Eingang)</translation>
+    </message>
+    <message>
+        <source>Rocky pits, holes, caves or mineshafts without a distinct entrance which may constitute a danger to the competitor.
+Location is the centre of gravity of the symbol, and the symbol shall be orientated to north.
+Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).
+Minimum depth: 1 m.
+Footprint: 10.5 m x 12 m.</source>
+        <comment>Description of symbol 203.1</comment>
+        <translation type="obsolete">Felslöcher, Gruben, Höhlen oder Schächte, die für den Wettkämpfer eine Gefahr bedeuten können.
+Die Lage entspricht dem Schwerpunkt des Symbols. Es ist nach Norden auszurichten, ausgenommen bei Höhlen mit einem deutlichen Eingang. Dort zeigt die Spitze in die Höhle hinein.
+Felslöcher mit mehr als 5 m Durchmesser sollten vergrössert und mit den Felssymbolen (201, 202) dargestellt werden.
+Minimale Tiefe: 1m.
+Wirklichkeit: 10.5 m x 12 m.</translation>
     </message>
     <message>
         <source>Cave or rocky pit (with a distinct entrance)</source>
@@ -15488,137 +15583,137 @@ Hinweis: Wenn das Bachsymbol breiter als 0,25 mm ist, muss das Stegsymbol angepa
     <message>
         <source>Green for SkiO</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grün für Ski-OL</translation>
+    </message>
+    <message>
+        <source>Upper purple for course overprint</source>
+        <comment>Color 3</comment>
+        <translation type="unfinished">Schwarz 100%</translation>
+    </message>
+    <message>
+        <source>White for railroad</source>
+        <comment>Color 4</comment>
+        <translation type="unfinished">Grün 100%</translation>
     </message>
     <message>
         <source>Black 100%</source>
-        <comment>Color 3</comment>
+        <comment>Color 5</comment>
         <translation>Schwarz 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
-        <comment>Color 4</comment>
+        <comment>Color 6</comment>
         <translation>Grün 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
-        <comment>Color 5</comment>
+        <comment>Color 7</comment>
         <translation>Weiß für Bahngleis</translation>
     </message>
     <message>
         <source>Blue 100%</source>
-        <comment>Color 6</comment>
+        <comment>Color 8</comment>
         <translation>Blau 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
-        <comment>Color 7</comment>
+        <comment>Color 9</comment>
         <translation>Braun 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
-        <comment>Color 8</comment>
+        <comment>Color 10</comment>
         <translation>Violett für Bahnsymbole</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
-        <comment>Color 9</comment>
+        <comment>Color 11</comment>
         <translation>Schwarz unter Violett für Bahnsymbole</translation>
     </message>
     <message>
         <source>Black 65%</source>
-        <comment>Color 10</comment>
-        <translation type="unfinished">Schwarz 65%</translation>
-    </message>
-    <message>
-        <source>Black 50%</source>
-        <comment>Color 11</comment>
-        <translation>Schwarz 50%</translation>
+        <comment>Color 12</comment>
+        <translation>Schwarz 65%</translation>
     </message>
     <message>
         <source>Black 20%</source>
-        <comment>Color 12</comment>
+        <comment>Color 13</comment>
         <translation>Schwarz 20%</translation>
     </message>
     <message>
         <source>Upper brown 50%</source>
-        <comment>Color 13</comment>
+        <comment>Color 14</comment>
         <translation>Oberes Braun 50%</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
-        <comment>Color 14</comment>
+        <comment>Color 15</comment>
         <translation>Schwarz unter oberem Braun 50%</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
-        <comment>Color 15</comment>
+        <comment>Color 16</comment>
         <translation>Unteres Braun 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
-        <comment>Color 16</comment>
+        <comment>Color 17</comment>
         <translation>Schwarz unter unterem Braun 50%</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
-        <comment>Color 17</comment>
+        <comment>Color 18</comment>
         <translation>Blau 100% für Flächenobjekte</translation>
     </message>
     <message>
         <source>Blue 70%</source>
-        <comment>Color 18</comment>
+        <comment>Color 19</comment>
         <translation>Blau 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
-        <comment>Color 19</comment>
+        <comment>Color 20</comment>
         <translation>Blau 50%</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
-        <comment>Color 20</comment>
+        <comment>Color 21</comment>
         <translation>OpenOrienteering-Orange</translation>
     </message>
     <message>
         <source>Yellow 100% for narrow ride</source>
-        <comment>Color 21</comment>
+        <comment>Color 22</comment>
         <translation>Gelb 100% für schmale Schneise</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
-        <comment>Color 22</comment>
+        <comment>Color 23</comment>
         <translation>Grün 60% für schmale Schneise</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
-        <comment>Color 23</comment>
+        <comment>Color 24</comment>
         <translation>Grün 30% für schmale Schneise</translation>
     </message>
     <message>
         <source>White over green</source>
-        <comment>Color 24</comment>
+        <comment>Color 25</comment>
         <translation>Weiß über Grün</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
-        <comment>Color 25</comment>
+        <comment>Color 26</comment>
         <translation>Gelb 100%/Grün 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
-        <comment>Color 26</comment>
-        <translation type="unfinished">Schwarz 25% (Grau)</translation>
+        <comment>Color 27</comment>
+        <translation>Schwarz 25% (Grau)</translation>
     </message>
     <message>
         <source>Green 100%/Black 50%</source>
-        <comment>Color 27</comment>
-        <translation type="unfinished">Grün 100%/Schwarz 50%</translation>
-    </message>
-    <message>
-        <source>Black 35% (Grey)</source>
         <comment>Color 28</comment>
-        <translation type="unfinished">Schwarz 25% (Grau)</translation>
+        <translation>Grün 100%/Schwarz 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -15664,6 +15759,146 @@ Hinweis: Wenn das Bachsymbol breiter als 0,25 mm ist, muss das Stegsymbol angepa
         <source>Yellow 50%</source>
         <comment>Color 37</comment>
         <translation>Gelb 50%</translation>
+    </message>
+    <message>
+        <source>Blue 100% point symbols</source>
+        <comment>Color 38</comment>
+        <translation type="unfinished">Grün 100%</translation>
+    </message>
+    <message>
+        <source>Brown 100% point symbols</source>
+        <comment>Color 39</comment>
+        <translation type="unfinished">Weiß für Bahngleis</translation>
+    </message>
+    <message>
+        <source>Green 100% point symbols</source>
+        <comment>Color 40</comment>
+        <translation type="unfinished">Blau 100%</translation>
+    </message>
+    <message>
+        <source>Blue 100% line symbols</source>
+        <comment>Color 41</comment>
+        <translation type="unfinished">Braun 100%</translation>
+    </message>
+    <message>
+        <source>Brown 100% line symbols</source>
+        <comment>Color 42</comment>
+        <translation type="unfinished">Schwarz unter Violett für Bahnsymbole</translation>
+    </message>
+    <message>
+        <source>Lower purple for course overprint</source>
+        <comment>Color 43</comment>
+        <translation type="unfinished">Schwarz 65%</translation>
+    </message>
+    <message>
+        <source>Brown 50% for road infill</source>
+        <comment>Color 44</comment>
+        <translation type="unfinished">Schwarz 20%</translation>
+    </message>
+    <message>
+        <source>Black 100% for road outline</source>
+        <comment>Color 45</comment>
+        <translation type="unfinished">Oberes Braun 50%</translation>
+    </message>
+    <message>
+        <source>Black 50% for large buildings and tramway</source>
+        <comment>Color 46</comment>
+        <translation type="unfinished">Schwarz unter oberem Braun 50%</translation>
+    </message>
+    <message>
+        <source>Black 20% for canopy</source>
+        <comment>Color 47</comment>
+        <translation type="unfinished">Unteres Braun 50%</translation>
+    </message>
+    <message>
+        <source>Blue 100% area symbols</source>
+        <comment>Color 48</comment>
+        <translation type="unfinished">Schwarz unter unterem Braun 50%</translation>
+    </message>
+    <message>
+        <source>Blue 70% area symbols</source>
+        <comment>Color 49</comment>
+        <translation type="unfinished">Blau 100% für Flächenobjekte</translation>
+    </message>
+    <message>
+        <source>Blue 50% area symbols</source>
+        <comment>Color 50</comment>
+        <translation type="unfinished">Blau 70%</translation>
+    </message>
+    <message>
+        <source>White over green and brown (+ yellow)</source>
+        <comment>Color 51</comment>
+        <translation type="unfinished">Blau 50%</translation>
+    </message>
+    <message>
+        <source>Brown 50% for paved area</source>
+        <comment>Color 52</comment>
+        <translation type="unfinished">OpenOrienteering-Orange</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for narrow ride (extra)</source>
+        <comment>Color 53</comment>
+        <translation type="unfinished">Gelb 100% für schmale Schneise</translation>
+    </message>
+    <message>
+        <source>Green 30% for narrow ride (extra)</source>
+        <comment>Color 54</comment>
+        <translation type="unfinished">Grün 30% für schmale Schneise</translation>
+    </message>
+    <message>
+        <source>Yellow 100% + Green 50%</source>
+        <comment>Color 55</comment>
+        <translation type="unfinished">Weiß über Grün</translation>
+    </message>
+    <message>
+        <source>Green 100% area symbols</source>
+        <comment>Color 56</comment>
+        <translation type="unfinished">Gelb 100%/Grün 50%</translation>
+    </message>
+    <message>
+        <source>Green 30% area symbols</source>
+        <comment>Color 57</comment>
+        <translation type="unfinished">Grün 100%/Schwarz 50%</translation>
+    </message>
+    <message>
+        <source>Black 35% area symbols</source>
+        <comment>Color 58</comment>
+        <translation type="unfinished">Grün 100% für Flächenobjekte</translation>
+    </message>
+    <message>
+        <source>Green 100% below green areas (extra)</source>
+        <comment>Color 59</comment>
+        <translation type="unfinished">Grün 60%</translation>
+    </message>
+    <message>
+        <source>White over yellow</source>
+        <comment>Color 60</comment>
+        <translation>Weiß über Gelb</translation>
+    </message>
+    <message>
+        <source>Black for cultivated land and sandy ground</source>
+        <comment>Color 61</comment>
+        <translation type="unfinished">Grün 100% für Bodenbewuchs</translation>
+    </message>
+    <message>
+        <source>Yellow 100% area symbols</source>
+        <comment>Color 62</comment>
+        <translation type="unfinished">Weiß über Gelb</translation>
+    </message>
+    <message>
+        <source>Yellow 75% area symbols</source>
+        <comment>Color 63</comment>
+        <translation type="unfinished">Schwarz für offenes Land</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 64</comment>
+        <translation>Gelb 50%</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange (extra)</source>
+        <comment>Color 65</comment>
+        <translation type="unfinished">Gelb 100% für Flächenobjekte</translation>
     </message>
     <message>
         <source>Contour</source>
@@ -16532,7 +16767,7 @@ Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 419</comment>
         <translation type="unfinished">Das Symbol ist nach Norden auszurichten.
 Die Definition des Symbols muss in der Kartenlegende angegeben werden.
-Wirklichkeit: 13.5 m x 13.5 m</translation>
+Wirklichkeit: 13.5 m x 13.5 m.</translation>
     </message>
     <message>
         <source>Paved area, with bounding line</source>
@@ -16909,8 +17144,7 @@ Minimale Fläche: 1mm x 1mm (Wirklichkeit: 15 m x 15 m).</translation>
         <comment>Description of symbol 520.2</comment>
         <translation type="unfinished">Ein Gebiet mit verbotenem Zutritt, beispielsweise Privatgelände, Garten, Fabrik- oder Industriegelände. Nur Höhenkurven und markante Objekte wie Bahngeleise und grosse Gebäude werden im verbotenen Gebiet dargestellt. Vertikale schwarze Streifen können für Zonen verwendet werden, wenn es wichtig ist, das ganze Gebiet vollständig darzustellen (z.B., wenn ein Waldteil verbotenes Gebiet ist). Dort, wo ein Pfad oder Weg hindurchführt, ist im verbotenen Gebiet eine Aussparung zu machen.
 Verbotenes Gebiet mit einer klaren Grenze soll mit einer schwarzen Linie oder einem anderen schwarzen Liniensymbol begrenzt werden. Wenn die Grenze unklar ist, soll keine schwarze Linie dargestellt werden.
-Das Bahnlegungssymbol 709 kann für zeitweise verbotene Gebiete verwendet werden.
-Bei der alternativen Darstellung sind die schwarzen Steifen nach Norden auszurichten.
+Das Bahnlegungssymbol 709 kann für zeitweise verbotene Gebiete verwendet werden. Bei der alternativen Darstellung sind die schwarzen Steifen nach Norden auszurichten.
 Verbotenes Gebiet darf nicht betreten werden (siehe Kapitel 2.4).
 Minimale Fläche: 1mm x 1mm (Wirklichkeit: 15 m x 15 m).</translation>
     </message>
@@ -16922,12 +17156,7 @@ Minimale Fläche: 1mm x 1mm (Wirklichkeit: 15 m x 15 m).</translation>
     <message>
         <source>Deprecated in revision 6 of the ISOM 2017-2 document.</source>
         <comment>Description of symbol 520.3</comment>
-        <translation type="unfinished">Ein Gebiet mit verbotenem Zutritt, beispielsweise Privatgelände, Garten, Fabrik- oder Industriegelände. Nur Höhenkurven und markante Objekte wie Bahngeleise und grosse Gebäude werden im verbotenen Gebiet dargestellt. Vertikale schwarze Streifen können für Zonen verwendet werden, wenn es wichtig ist, das ganze Gebiet vollständig darzustellen (z.B., wenn ein Waldteil verbotenes Gebiet ist). Dort, wo ein Pfad oder Weg hindurchführt, ist im verbotenen Gebiet eine Aussparung zu machen.
-Verbotenes Gebiet mit einer klaren Grenze soll mit einer schwarzen Linie oder einem anderen schwarzen Liniensymbol begrenzt werden. Wenn die Grenze unklar ist, soll keine schwarze Linie dargestellt werden.
-Das Bahnlegungssymbol 709 kann für zeitweise verbotene Gebiete verwendet werden.
-Bei der alternativen Darstellung sind die schwarzen Steifen nach Norden auszurichten.
-Verbotenes Gebiet darf nicht betreten werden (siehe Kapitel 2.4).
-Minimale Fläche: 1mm x 1mm (Wirklichkeit: 15 m x 15 m).</translation>
+        <translation type="unfinished">Verbotenes Gebiet mit einer klaren Grenze soll mit einer schwarzen Linie oder einem anderen schwarzen Liniensymbol begrenzt werden. Wenn die Grenze unklar ist, soll keine schwarze Linie dargestellt werden.</translation>
     </message>
     <message>
         <source>Building</source>
@@ -16961,8 +17190,7 @@ Buildings within forbidden areas are generalised.
 Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
 Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
         <comment>Description of symbol 521.1</comment>
-        <translation>Ein Gebäude wird mit seinem Grundriss dargestellt, soweit der Kartenmassstab das erlaubt.
-Gebäude grösser als 75 m x 75 m können in urbanen Gebieten dunkelgrau dargestellt werden.
+        <translation>Ein Gebäude wird mit seinem Grundriss dargestellt, soweit der Kartenmassstab das erlaubt. Gebäude grösser als 75 m x 75 m können in urbanen Gebieten dunkelgrau dargestellt werden.
 Durchgänge durch Gebäude müssen mindestens 0.3 mm (Wirklichkeit 4.5 m) breit dargestellt werden.
 Gebäude innerhalb verbotenen Gebieten werden generalisiert.
 Flächen, die ganz von einem Gebäude umschlossen sind, sind nicht zu kartieren, sondern als Teil des Gebäudes darzustellen. Die minimale Lücke für einen Durchgang zwischen Gebäuden oder zwischen Gebäuden und anderen unpassierbaren Objekten sollte 0.4 mm sein.
@@ -17000,8 +17228,7 @@ Buildings within forbidden areas are generalised.
 Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
 Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
         <comment>Description of symbol 521.3</comment>
-        <translation type="unfinished">Ein Gebäude wird mit seinem Grundriss dargestellt, soweit der Kartenmassstab das erlaubt.
-Gebäude grösser als 75 m x 75 m können in urbanen Gebieten dunkelgrau dargestellt werden.
+        <translation type="unfinished">Ein Gebäude wird mit seinem Grundriss dargestellt, soweit der Kartenmassstab das erlaubt. Gebäude grösser als 75 m x 75 m können in urbanen Gebieten dunkelgrau dargestellt werden.
 Durchgänge durch Gebäude müssen mindestens 0.3 mm (Wirklichkeit 4.5 m) breit dargestellt werden.
 Gebäude innerhalb verbotenen Gebieten werden generalisiert.
 Flächen, die ganz von einem Gebäude umschlossen sind, sind nicht zu kartieren, sondern als Teil des Gebäudes darzustellen. Die minimale Lücke für einen Durchgang zwischen Gebäuden oder zwischen Gebäuden und anderen unpassierbaren Objekten sollte 0.4 mm sein.
@@ -17020,8 +17247,7 @@ Buildings within forbidden areas are generalised.
 Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
 Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
         <comment>Description of symbol 521.4</comment>
-        <translation>Ein Gebäude wird mit seinem Grundriss dargestellt, soweit der Kartenmassstab das erlaubt.
-Gebäude grösser als 75 m x 75 m können in urbanen Gebieten dunkelgrau dargestellt werden.
+        <translation>Ein Gebäude wird mit seinem Grundriss dargestellt, soweit der Kartenmassstab das erlaubt. Gebäude grösser als 75 m x 75 m können in urbanen Gebieten dunkelgrau dargestellt werden.
 Durchgänge durch Gebäude müssen mindestens 0.3 mm (Wirklichkeit 4.5 m) breit dargestellt werden.
 Gebäude innerhalb verbotenen Gebieten werden generalisiert.
 Flächen, die ganz von einem Gebäude umschlossen sind, sind nicht zu kartieren, sondern als Teil des Gebäudes darzustellen. Die minimale Lücke für einen Durchgang zwischen Gebäuden oder zwischen Gebäuden und anderen unpassierbaren Objekten sollte 0.4 mm sein.
@@ -17233,7 +17459,7 @@ Minimale Länge: 2 Striche (4.5 mm – Wirklichkeit 67.5 m).</translation>
 An out-of-bounds area shall not be entered.
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 709</comment>
-        <translation type="unfinished">Ein gesperrtes Gebiet. Falls keine natürliche Begrenzung vorhanden ist, kann eine Begrenzungslinie wie folgt gezeichnet werden:
+        <translation>Ein gesperrtes Gebiet. Falls keine natürliche Begrenzung vorhanden ist, kann eine Begrenzungslinie wie folgt gezeichnet werden:
 - Eine durchgezogene Linie bedeutet, dass die Begrenzung im Gelände durchgehend markiert ist (z.B. durch Absperrband).
 - Eine gestrichelte Linie bedeutet eine teilweise Markierung im Gelände.
 - Keine Linie bedeutet keine Markierung im Gelände.
@@ -17454,16 +17680,448 @@ A route which is out-of-bounds and forbidden to cross is shown with a zigzag. Th
         <translation>Das Logo von OpenOrienteering.</translation>
     </message>
     <message>
+        <source>Black 100%</source>
+        <comment>Color 3</comment>
+        <translation type="obsolete">Schwarz 100%</translation>
+    </message>
+    <message>
+        <source>Green 100%</source>
+        <comment>Color 4</comment>
+        <translation type="obsolete">Grün 100%</translation>
+    </message>
+    <message>
+        <source>White for railway</source>
+        <comment>Color 5</comment>
+        <translation type="obsolete">Weiß für Bahngleis</translation>
+    </message>
+    <message>
+        <source>Blue 100%</source>
+        <comment>Color 6</comment>
+        <translation type="obsolete">Blau 100%</translation>
+    </message>
+    <message>
+        <source>Brown 100%</source>
+        <comment>Color 7</comment>
+        <translation type="obsolete">Braun 100%</translation>
+    </message>
+    <message>
+        <source>Purple for track symbols</source>
+        <comment>Color 8</comment>
+        <translation type="obsolete">Violett für Bahnsymbole</translation>
+    </message>
+    <message>
+        <source>Black below purple for track symbols</source>
+        <comment>Color 9</comment>
+        <translation type="obsolete">Schwarz unter Violett für Bahnsymbole</translation>
+    </message>
+    <message>
+        <source>Black 65%</source>
+        <comment>Color 10</comment>
+        <translation type="obsolete">Schwarz 65%</translation>
+    </message>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 11</comment>
+        <translation type="obsolete">Schwarz 20%</translation>
+    </message>
+    <message>
+        <source>Upper brown 50%</source>
+        <comment>Color 12</comment>
+        <translation type="obsolete">Oberes Braun 50%</translation>
+    </message>
+    <message>
+        <source>Black below upper brown 50%</source>
+        <comment>Color 13</comment>
+        <translation type="obsolete">Schwarz unter oberem Braun 50%</translation>
+    </message>
+    <message>
+        <source>Lower brown 50%</source>
+        <comment>Color 14</comment>
+        <translation type="obsolete">Unteres Braun 50%</translation>
+    </message>
+    <message>
+        <source>Black below lower brown 50%</source>
+        <comment>Color 15</comment>
+        <translation type="obsolete">Schwarz unter unterem Braun 50%</translation>
+    </message>
+    <message>
+        <source>Blue 100% for area features</source>
+        <comment>Color 16</comment>
+        <translation type="obsolete">Blau 100% für Flächenobjekte</translation>
+    </message>
+    <message>
+        <source>Blue 70%</source>
+        <comment>Color 17</comment>
+        <translation type="obsolete">Blau 70%</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 18</comment>
+        <translation type="obsolete">Blau 50%</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 19</comment>
+        <translation type="obsolete">OpenOrienteering-Orange</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for narrow ride</source>
+        <comment>Color 20</comment>
+        <translation type="obsolete">Gelb 100% für schmale Schneise</translation>
+    </message>
+    <message>
+        <source>Green 60% for narrow ride</source>
+        <comment>Color 21</comment>
+        <translation type="obsolete">Grün 60% für schmale Schneise</translation>
+    </message>
+    <message>
+        <source>Green 30% for narrow ride</source>
+        <comment>Color 22</comment>
+        <translation type="obsolete">Grün 30% für schmale Schneise</translation>
+    </message>
+    <message>
+        <source>White over green</source>
+        <comment>Color 23</comment>
+        <translation type="obsolete">Weiß über Grün</translation>
+    </message>
+    <message>
+        <source>Yellow 100%/Green 50%</source>
+        <comment>Color 24</comment>
+        <translation type="obsolete">Gelb 100%/Grün 50%</translation>
+    </message>
+    <message>
+        <source>Black 25% (Grey)</source>
+        <comment>Color 25</comment>
+        <translation type="obsolete">Schwarz 25% (Grau)</translation>
+    </message>
+    <message>
+        <source>Green 100%/Black 50%</source>
+        <comment>Color 26</comment>
+        <translation type="obsolete">Grün 100%/Schwarz 50%</translation>
+    </message>
+    <message>
+        <source>Green 100% for area features</source>
+        <comment>Color 27</comment>
+        <translation type="obsolete">Grün 100% für Flächenobjekte</translation>
+    </message>
+    <message>
+        <source>Green 60%</source>
+        <comment>Color 28</comment>
+        <translation type="obsolete">Grün 60%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 29</comment>
+        <translation type="obsolete">Grün 30%</translation>
+    </message>
+    <message>
+        <source>Green 100% for undergrowth</source>
+        <comment>Color 30</comment>
+        <translation type="obsolete">Grün 100% für Bodenbewuchs</translation>
+    </message>
+    <message>
+        <source>White over yellow</source>
+        <comment>Color 31</comment>
+        <translation type="obsolete">Weiß über Gelb</translation>
+    </message>
+    <message>
+        <source>Black for open land</source>
+        <comment>Color 32</comment>
+        <translation type="obsolete">Schwarz für offenes Land</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 33</comment>
+        <translation type="obsolete">Gelb</translation>
+    </message>
+    <message>
+        <source>Yellow 100% for area features</source>
+        <comment>Color 34</comment>
+        <translation type="obsolete">Gelb 100% für Flächenobjekte</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 35</comment>
+        <translation type="obsolete">Gelb 50%</translation>
+    </message>
+    <message>
+        <source>A line joining points of equal height. The standard vertical interval between contours is 5 m. A contour interval of 2.5 m may be used for flat terrains.
+Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
+A closed contour represents a knoll or a depression. A depression has to have at least one slope line. Minimum height/depth should be 1 m.
+Relationships between adjacent contour lines are important. Adjacent contour lines show form and structure. Small details on contours should be avoided because they tend to hide the main features of the terrain.
+Prominent features such as depressions, re-entrants, spurs, earth banks and terraces may have to be exaggerated.
+Absolute height accuracy is of little importance, but the relative height difference between neighbouring features should be represented on the map as accurately as possible. It is permissible to alter the height of a contour slightly if this improves the representation of a feature. This deviation should not exceed 25% of the contour interval, and attention must be paid to neighbouring features.
+The smallest bend in a contour line is 0.25 mm from centre to centre of the line (footprint 4 m). The mouth of a re-entrant or a spur must be wider than 0.5 mm from centre to centre of the line (footprint 8 m).
+The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minimum width is 0.6 mm (footprint 9 m) outside measure. Smaller prominent knolls can be represented using symbol Small knoll (109) or Small elongated knoll (110) or they can be exaggerated on the map to satisfy the minimum dimension.
+A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
+Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
+        <comment>Description of symbol 101</comment>
+        <translation type="obsolete">Eine Linie, die Punkte gleicher Höhe verbindet. Die normale Äquidistanz beträgt 5 m. Eine Äquidistanz von 2.5 m kann für flache Gebiete verwendet werden.
+Fallstriche können auf der abwärts gerichteten Seite einer Höhenkurve gezeichnet werden, damit die Richtung, in welche das Gelände abfällt, klarer wird. Die Fallstriche sollten in Mulden gezeichnet werden.
+Eine geschlossene Höhenkurve stellt einen Hügel oder eine Senke dar. Eine Senke muss mindestens einen Fallstrich enthalten. Minimale Höhe/Tiefe sollte 1 m sein.
+Die Beziehung zwischen benachbarten Höhenkurven ist wichtig. Benachbarte Höhenkurven bestimmen Form und Struktur. Kleine Details in den Höhenkurven sollten weggelassen werden, weil diese die Hauptformen des Geländes verbergen können.
+Markante Objekte wie Senken, Mulden, Nasen, Böschungen und Terrassen müssen möglicherweise vergrössert werden.
+Die absolute Höhe ist von geringerer Bedeutung, aber der relative Höhenunterschied benachbarter Objekte sollte auf der Karte so genau wie möglich wiedergegeben werden. Es ist gestattet, Höhenkurven leicht zu verändern, wenn dadurch ein Objekt besser dargestellt werden kann. Derartige Abweichungen sollten nicht mehr als 25% der Äquidistanz betragen, wobei benachbarte Objekte zu berücksichtigen sind.
+Die engste Biegung in einer Höhenkurve ist 0.25 mm (Wirklichkeit 4 m) von Linienmitte zu Linienmitte. Die Breite einer Mulde oder Nase muss grösser als 0.5 mm (Wirklichkeit 8 m) von Linienmitte zu Linienmitte sein.
+Die minimale Länge eines mit Höhenkurven dargestellten Hügels ist 0.9 mm (Wirklichkeit 13.5 m) und die minimale Breite beträgt 0.6 mm (Wirklichkeit 9 m), beides aussen gemessen. Kleinere, deutliche Hügel werden mit dem Symbol 109 (Kuppe) oder Symbol 110 (längliche Kuppe) dargestellt oder können vergrössert gezeichnet werden, damit die Minimaldimensionen eingehalten werden.
+Eine Senke muss wegen dem Fallstrich eine minimale Länge von 1.1 mm (Wirklichkeit 16.5 m) haben und eine minimale Breite von aussen gemessen 0.7 mm (Wirklichkeit 10.5 m). Kleinere, markante Senken können mit Symbol 111 (kleine Senke) dargestellt oder können vergrössert gezeichnet werden, damit die Minimaldimensionen eingehalten werden.
+Die Höhenkurven sollten beim Symbol 109 (Kuppe) oder Symbol 110 (längliche Kuppe) angepasst (nicht unterbrochen) werden.</translation>
+    </message>
+    <message>
         <source>Earth wall</source>
-        <comment>Name of symbol 105.1</comment>
+        <comment>Name of symbol 105</comment>
         <translation type="obsolete">Erdwall</translation>
     </message>
     <message>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
-        <comment>Description of symbol 105.1</comment>
+        <comment>Description of symbol 105</comment>
         <translation type="obsolete">Deutlicher Erdwall. Minimale Höhe 1 m.
 Minimale Länge: 1.4 mm (Wirklichkeit 21 m).</translation>
+    </message>
+    <message>
+        <source>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Minimum depth: 1 m.
+Minimum length: 1.15 mm (footprint 17 m).
+Contour lines should not be broken around this symbol.</source>
+        <comment>Description of symbol 107</comment>
+        <translation type="obsolete">Ein Erosionsgraben, welcher zu klein ist um mit dem Symbol Erdböschung (104) gezeichnet zu werden. Minimale Tiefe: 1 m.
+Minimale Länge: 1.15 mm (Wirklichkeit 17 m).
+Höhenkurven sollten bei diesem Symbol nicht unterbrochen werden.</translation>
+    </message>
+    <message>
+        <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+Crossing a cliff will normally slow progress.
+Minimum height: 1 m.
+Minimum length: 0.6 mm (footprint 9 m).</source>
+        <comment>Description of symbol 202</comment>
+        <translation type="obsolete">Ein passierbarer Fels oder ein passierbarer Abbruch. Falls die Richtung des Gefälles des Felsen aus den Höhenkurven nicht deutlich oder falls dadurch die Lesbarkeit verbessert wird, können Fallstriche gezeichnet werden.
+Für nicht senkrechte Felsen sollten die Fallstriche die ganze horizontale Ausdehnung anzeigen. Für passierbare Felsen ohne Fallstriche müssen die Enden der Hauptlinie abgerundet sein. Ein Durchgang zwischen zwei passierbaren Felsen muss mindestens 0.15 mm breit sein. Ein Fels sollte mit dem Höhenkurvenbild harmonieren.
+Das Queren eines Felsens verlangsamt normalerweise das Laufen.
+Minimale Höhe: 1 m.
+Minimale Länge: 0.6 mm (Wirklichkeit 9 m).</translation>
+    </message>
+    <message>
+        <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+Crossing a cliff will normally slow progress.
+Minimum height: 1 m.
+Minimum length: 0.6 mm (footprint 9 m).</source>
+        <comment>Description of symbol 202.1</comment>
+        <translation type="obsolete">Ein passierbarer Fels oder ein passierbarer Abbruch. Falls die Richtung des Gefälles des Felsen aus den Höhenkurven nicht deutlich oder falls dadurch die Lesbarkeit verbessert wird, können Fallstriche gezeichnet werden.
+Für nicht senkrechte Felsen sollten die Fallstriche die ganze horizontale Ausdehnung anzeigen. Für passierbare Felsen ohne Fallstriche müssen die Enden der Hauptlinie abgerundet sein. Ein Durchgang zwischen zwei passierbaren Felsen muss mindestens 0.15 mm breit sein. Ein Fels sollte mit dem Höhenkurvenbild harmonieren.
+Das Queren eines Felsens verlangsamt normalerweise das Laufen.
+Minimale Höhe: 1 m.
+Minimale Länge: 0.6 mm (Wirklichkeit 9 m).</translation>
+    </message>
+    <message>
+        <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+Crossing a cliff will normally slow progress.
+Minimum height: 1 m.
+Minimum length: 0.6 mm (footprint 9 m).</source>
+        <comment>Description of symbol 202.2</comment>
+        <translation type="obsolete">Ein passierbarer Fels oder ein passierbarer Abbruch. Falls die Richtung des Gefälles des Felsen aus den Höhenkurven nicht deutlich oder falls dadurch die Lesbarkeit verbessert wird, können Fallstriche gezeichnet werden.
+Für nicht senkrechte Felsen sollten die Fallstriche die ganze horizontale Ausdehnung anzeigen. Für passierbare Felsen ohne Fallstriche müssen die Enden der Hauptlinie abgerundet sein. Ein Durchgang zwischen zwei passierbaren Felsen muss mindestens 0.15 mm breit sein. Ein Fels sollte mit dem Höhenkurvenbild harmonieren.
+Das Queren eines Felsens verlangsamt normalerweise das Laufen.
+Minimale Höhe: 1 m.
+Minimale Länge: 0.6 mm (Wirklichkeit 9 m).</translation>
+    </message>
+    <message>
+        <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
+For non-vertical cliffs, the tags should be drawn to show the full horizontal extent. Ends of the base line must be rounded if no tags appear. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
+Crossing a cliff will normally slow progress.
+Minimum height: 1 m.
+Minimum length: 0.6 mm (footprint 9 m).</source>
+        <comment>Description of symbol 202.3</comment>
+        <translation type="obsolete">Ein passierbarer Fels oder ein passierbarer Abbruch. Falls die Richtung des Gefälles des Felsen aus den Höhenkurven nicht deutlich oder falls dadurch die Lesbarkeit verbessert wird, können Fallstriche gezeichnet werden.
+Für nicht senkrechte Felsen sollten die Fallstriche die ganze horizontale Ausdehnung anzeigen. Für passierbare Felsen ohne Fallstriche müssen die Enden der Hauptlinie abgerundet sein. Ein Durchgang zwischen zwei passierbaren Felsen muss mindestens 0.15 mm breit sein. Ein Fels sollte mit dem Höhenkurvenbild harmonieren.
+Das Queren eines Felsens verlangsamt normalerweise das Laufen.
+Minimale Höhe: 1 m.
+Minimale Länge: 0.6 mm (Wirklichkeit 9 m).</translation>
+    </message>
+    <message>
+        <source>Should be at least 2 m wide.
+Minimum length (isolated): 1 mm (footprint 15 m).</source>
+        <comment>Description of symbol 304</comment>
+        <translation type="obsolete">Dieser sollte mindestens 2 m breit sein.
+Minimale Länge (isoliert): 1 mm (Wirklichkeit 15 m).</translation>
+    </message>
+    <message>
+        <source>Minimum length (isolated): 1 mm (footprint 15 m).</source>
+        <comment>Description of symbol 305</comment>
+        <translation type="obsolete">Minimale Länge (isoliert): 1 mm (Wirklichkeit 15 m).</translation>
+    </message>
+    <message>
+        <source>A distinct forest edge or vegetation boundary within the forest.
+Very distinct forest edges and vegetation boundaries may be represented using the cultivation boundary symbol. Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map. For areas with a lot of rock features, it is recommended to use the green dashed line for vegetation boundaries.
+A disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbol Vegetation: fight (410). An alternative for these situations is to use symbol Distinct cultivation boundary (415).
+Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
+Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
+        <comment>Description of symbol 416</comment>
+        <translation type="obsolete">Eine deutliche Vegetationsgrenze im Wald oder ein deutlicher Waldrand.
+Nur eine Version des Symbols (entweder schwarz punktiert oder grün gestrichelt) darf auf einer Karte verwendet werden. Die grün gestrichelte Linie wird empfohlen für Gebiete mit vielen Felsen und Steinen.
+Die grün gestrichelte Linie hat den Nachteil, dass sie nicht im Zusammenhang mit dem Symbol Vegetation, sehr starke Laufbehinderung (410) verwendet werden kann. Für solche Situationen darf Symbol Deutliche Kulturgrenze (415) verwendet werden.
+Minimale Länge für schwarz punktierte Linie: 5 Punkte (2.0 mm - Wirklichkeit 30 m).
+Minimale Länge für grün gestrichelte Linie: 4 Striche (1.8 mm - Wirklichkeit 27 m).</translation>
+    </message>
+    <message>
+        <source>The symbol is orientated to north.
+The definition of the symbol must be given on the map.
+Footprint: 13.5 m x 13.5 m.</source>
+        <comment>Description of symbol 419</comment>
+        <translation type="obsolete">Das Symbol ist nach Norden auszurichten.
+Die Definition des Symbols muss in der Kartenlegende angegeben werden.
+Wirklichkeit: 13.5 m x 13.5 m.</translation>
+    </message>
+    <message>
+        <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
+The space between the black lines is filled with brown (50%).
+A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
+        <comment>Description of symbol 502</comment>
+        <translation type="obsolete">Die Breite sollte massstabsgetreu dargestellt werden, jedoch nicht schmaler als die minimale Ausdehnung (0.3 mm + 2 x 0.14 mm - Wirklichkeit 8.7 m).Die äusseren Begrenzungslinien können durch andere schwarze Liniensymbole wie Zaun (516), Unpassierbarer Zaun (518), Mauer (513), Unpassierbare Mauer (515) ersetzt werden, wenn diese so nahe am Strassenrand stehen, dass sie praktisch nicht als separate Symbole gezeichnet werden können.
+Der Raum zwischen den schwarzen Linien ist mit Braun (50%) zu füllen.
+Eine richtungsgetrennte Strasse kann mit zwei aneinander liegenden Strassen und nur einer Begrenzungslinie in der Mitte dargestellt werden.</translation>
+    </message>
+    <message>
+        <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 + 2*0.14 mm - footprint 8.7 m). The outer boundary lines may be replaced with other black line symbols, such as symbol Fence (516), Impassable fence (518), Wall (513) or Impassable wall (515) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.
+The space between the black lines is filled with brown (50%).
+A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
+        <comment>Description of symbol 502.2</comment>
+        <translation type="obsolete">Die Breite sollte massstabsgetreu dargestellt werden, jedoch nicht schmaler als die minimale Ausdehnung (0.3 mm + 2 x 0.14 mm - Wirklichkeit 8.7 m).Die äusseren Begrenzungslinien können durch andere schwarze Liniensymbole wie Zaun (516), Unpassierbarer Zaun (518), Mauer (513), Unpassierbare Mauer (515) ersetzt werden, wenn diese so nahe am Strassenrand stehen, dass sie praktisch nicht als separate Symbole gezeichnet werden können.
+Der Raum zwischen den schwarzen Linien ist mit Braun (50%) zu füllen.
+Eine richtungsgetrennte Strasse kann mit zwei aneinander liegenden Strassen und nur einer Begrenzungslinie in der Mitte dargestellt werden.</translation>
+    </message>
+    <message>
+        <source>A maintained road suitable for motor vehicles in all weather. Width less than 5 m.</source>
+        <comment>Description of symbol 503</comment>
+        <translation type="obsolete">Eine unterhaltene Straße für Motorfahrzeuge, die bei jedem Wetter befahrbar ist. Weniger als 5 m breit.</translation>
+    </message>
+    <message>
+        <source>A railway or other kind of railed track.
+If it is forbidden to run along the railway, it shall be combined with symbol Out-of-bounds route (711). If it is forbidden to cross the railway, it must be combined with symbol Area that shall not be entered (520) or Out-of-bounds area (709).
+Minimum length (isolated): two dashes (4 mm - footprint 60 m).</source>
+        <comment>Description of symbol 509</comment>
+        <translation type="obsolete">Ein Geleise für Eisenbahnen oder andere Fahrzeuge.
+Falls es verboten ist, dem Geleise entlang zu laufen, muss es mit dem Symbol Verbotene Strecke (711) kombiniert werden. Falls das Überqueren des Geleises verboten ist, muss es mit dem Symbol Verbotenes Gebiet (520) oder Sperrgebiet (709) kombiniert werden.
+Minimale Länge (isoliert): zwei Striche (4 mm - Wirklichkeit 60 m).</translation>
+    </message>
+    <message>
+        <source>Wall</source>
+        <comment>Name of symbol 513</comment>
+        <translation type="obsolete">Mauer</translation>
+    </message>
+    <message>
+        <source>A significant wall of stone, concrete, wood or other materials.
+Minimum height: 1 m.
+Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
+        <comment>Description of symbol 513</comment>
+        <translation type="obsolete">Eine passierbare deutliche Mauer aus Steinen, Beton, Holz oder anderen Materialien.
+Minimale Höhe: 1 m.
+Minimale Länge (isoliert): 1.4 mm (Wirklichkeit 21 m).</translation>
+    </message>
+    <message>
+        <source>If the fence forms an enclosed area, tags should be placed inside.
+Minimum length (isolated): 1.5 mm (footprint 22.5 m).</source>
+        <comment>Description of symbol 516</comment>
+        <translation type="obsolete">Falls der Zaun einen Bereich ganz umschliesst, sollten die Striche nach innen gezeichnet werden.
+Minimale Länge (isoliert): 1.5 mm (Wirklichkeit 22.5 m).</translation>
+    </message>
+    <message>
+        <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
+Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.
+Course planning symbol 709 can be used for temporary out-of bounds areas.
+The vertical black stripes version of the symbol is orientated to north.
+An out-of-bounds area shall not be entered.
+Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
+        <comment>Description of symbol 520</comment>
+        <translation type="obsolete">Ein Gebiet mit verbotenem Zutritt, beispielsweise Privatgelände, Garten, Fabrik- oder Industriegelände. Nur Höhenkurven und markante Objekte wie Bahngeleise und grosse Gebäude werden im verbotenen Gebiet dargestellt. Vertikale schwarze Streifen können für Zonen verwendet werden, wenn es wichtig ist, das ganze Gebiet vollständig darzustellen (z.B., wenn ein Waldteil verbotenes Gebiet ist). Dort, wo ein Pfad oder Weg hindurchführt, ist im verbotenen Gebiet eine Aussparung zu machen.
+Verbotenes Gebiet mit einer klaren Grenze soll mit einer schwarzen Linie oder einem anderen schwarzen Liniensymbol begrenzt werden. Wenn die Grenze unklar ist, soll keine schwarze Linie dargestellt werden.
+Das Bahnlegungssymbol 709 kann für zeitweise verbotene Gebiete verwendet werden. Bei der alternativen Darstellung sind die schwarzen Steifen nach Norden auszurichten.
+Verbotenes Gebiet darf nicht betreten werden (siehe Kapitel 2.4).
+Minimale Fläche: 1mm x 1mm (Wirklichkeit: 15 m x 15 m).</translation>
+    </message>
+    <message>
+        <source>Area that shall not be entered, stripes</source>
+        <comment>Name of symbol 520.2</comment>
+        <translation type="obsolete">Verbotenes Gebiet, Streifen</translation>
+    </message>
+    <message>
+        <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
+Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.
+Course planning symbol 709 can be used for temporary out-of bounds areas.
+The vertical black stripes version of the symbol is orientated to north.
+An out-of-bounds area shall not be entered.
+Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
+        <comment>Description of symbol 520.2</comment>
+        <translation type="obsolete">Ein Gebiet mit verbotenem Zutritt, beispielsweise Privatgelände, Garten, Fabrik- oder Industriegelände. Nur Höhenkurven und markante Objekte wie Bahngeleise und grosse Gebäude werden im verbotenen Gebiet dargestellt. Vertikale schwarze Streifen können für Zonen verwendet werden, wenn es wichtig ist, das ganze Gebiet vollständig darzustellen (z.B., wenn ein Waldteil verbotenes Gebiet ist). Dort, wo ein Pfad oder Weg hindurchführt, ist im verbotenen Gebiet eine Aussparung zu machen.
+Verbotenes Gebiet mit einer klaren Grenze soll mit einer schwarzen Linie oder einem anderen schwarzen Liniensymbol begrenzt werden. Wenn die Grenze unklar ist, soll keine schwarze Linie dargestellt werden.
+Das Bahnlegungssymbol 709 kann für zeitweise verbotene Gebiete verwendet werden. Bei der alternativen Darstellung sind die schwarzen Steifen nach Norden auszurichten.
+Verbotenes Gebiet darf nicht betreten werden (siehe Kapitel 2.4).
+Minimale Fläche: 1mm x 1mm (Wirklichkeit: 15 m x 15 m).</translation>
+    </message>
+    <message>
+        <source>Area that shall not be entered, stripes, bounding line</source>
+        <comment>Name of symbol 520.3</comment>
+        <translation type="obsolete">Verbotenes Gebiet, Streifen, Umrisslinie</translation>
+    </message>
+    <message>
+        <source>Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.</source>
+        <comment>Description of symbol 520.3</comment>
+        <translation type="obsolete">Verbotenes Gebiet mit einer klaren Grenze soll mit einer schwarzen Linie oder einem anderen schwarzen Liniensymbol begrenzt werden. Wenn die Grenze unklar ist, soll keine schwarze Linie dargestellt werden.</translation>
+    </message>
+    <message>
+        <source>A building is shown with its ground plan so far as the scale permits.
+Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
+Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Buildings within forbidden areas are generalised.
+Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
+Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
+        <comment>Description of symbol 521</comment>
+        <translation type="obsolete">Ein Gebäude wird mit seinem Grundriss dargestellt, soweit der Kartenmassstab das erlaubt. Gebäude grösser als 75 m x 75 m können in urbanen Gebieten dunkelgrau dargestellt werden.
+Durchgänge durch Gebäude müssen mindestens 0.3 mm (Wirklichkeit 4.5 m) breit dargestellt werden.
+Gebäude innerhalb verbotenen Gebieten werden generalisiert.
+Flächen, die ganz von einem Gebäude umschlossen sind, sind nicht zu kartieren, sondern als Teil des Gebäudes darzustellen. Die minimale Lücke für einen Durchgang zwischen Gebäuden oder zwischen Gebäuden und anderen unpassierbaren Objekten sollte 0.4 mm sein.
+Minimale Fläche: 0.5 mm x 0.5 mm (Wirklichkeit 7.5 m x 7.5 m).</translation>
+    </message>
+    <message>
+        <source>A building is shown with its ground plan so far as the scale permits.
+Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
+Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Buildings within forbidden areas are generalised.
+Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
+Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
+        <comment>Description of symbol 521.2</comment>
+        <translation type="obsolete">Ein Gebäude wird mit seinem Grundriss dargestellt, soweit der Kartenmassstab das erlaubt. Gebäude grösser als 75 m x 75 m können in urbanen Gebieten dunkelgrau dargestellt werden.
+Durchgänge durch Gebäude müssen mindestens 0.3 mm (Wirklichkeit 4.5 m) breit dargestellt werden.
+Gebäude innerhalb verbotenen Gebieten werden generalisiert.
+Flächen, die ganz von einem Gebäude umschlossen sind, sind nicht zu kartieren, sondern als Teil des Gebäudes darzustellen. Die minimale Lücke für einen Durchgang zwischen Gebäuden oder zwischen Gebäuden und anderen unpassierbaren Objekten sollte 0.4 mm sein.
+Minimale Fläche: 0.5 mm x 0.5 mm (Wirklichkeit 7.5 m x 7.5 m).</translation>
+    </message>
+    <message>
+        <source>A building is shown with its ground plan so far as the scale permits.
+Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.
+Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m).
+Buildings within forbidden areas are generalised.
+Areas totally contained within a building shall not be mapped (they shall be represented as being part of the building). Minimum gap indicating a passage between buildings and between buildings and other impassable features should be 0.4 mm.
+Minimum area: 0.5 mm x 0.5 mm (footprint 7.5 m x 7.5 m).</source>
+        <comment>Description of symbol 521.3</comment>
+        <translation type="obsolete">Ein Gebäude wird mit seinem Grundriss dargestellt, soweit der Kartenmassstab das erlaubt. Gebäude grösser als 75 m x 75 m können in urbanen Gebieten dunkelgrau dargestellt werden.
+Durchgänge durch Gebäude müssen mindestens 0.3 mm (Wirklichkeit 4.5 m) breit dargestellt werden.
+Gebäude innerhalb verbotenen Gebieten werden generalisiert.
+Flächen, die ganz von einem Gebäude umschlossen sind, sind nicht zu kartieren, sondern als Teil des Gebäudes darzustellen. Die minimale Lücke für einen Durchgang zwischen Gebäuden oder zwischen Gebäuden und anderen unpassierbaren Objekten sollte 0.4 mm sein.
+Minimale Fläche: 0.5 mm x 0.5 mm (Wirklichkeit 7.5 m x 7.5 m).</translation>
+    </message>
+    <message>
+        <source>An obvious small tower, platform or seat.
+Location is at the centre of gravity of the symbol.
+The symbol is orientated to north.
+Footprint: 15 m x 15 m.</source>
+        <comment>Description of symbol 525</comment>
+        <translation type="obsolete">Ein markanter kleiner Turm, eine Plattform oder ein Hochsitz.
+Die Lage entspricht dem Schwerpunkt des Symbols.
+Das Symbol ist nach Norden auszurichten.
+Ausdehnung im Gelände: 15 m x 15 m.</translation>
     </message>
 </context>
 <context>
