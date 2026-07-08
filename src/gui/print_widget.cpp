@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2021, 2025 Kai Pastor
+ *    Copyright 2012-2021, 2025, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1240,7 +1240,7 @@ void PrintWidget::exportToKmz()
 	QStringList filters = { filter_template.arg(tr("KMZ"), QString::fromLatin1("*.kmz")),
 	                        filter_template.arg(tr("KML"), QString::fromLatin1("*.kml")),
 	                        tr("All files (*.*)") };
-	QString selected_filter;
+	static QString selected_filter;
 	QString path = FileDialog::getSaveFileName(this, tr("Export map ..."), {}, filters.join(QString::fromLatin1(";;")), &selected_filter);
 	if (path.isEmpty())
 		return;
@@ -1248,7 +1248,8 @@ void PrintWidget::exportToKmz()
 	if (!path.endsWith(QLatin1String(".kmz"), Qt::CaseInsensitive)
 	    && !path.endsWith(QLatin1String(".kml"), Qt::CaseInsensitive))
 	{
-		if (selected_filter == filters[1])
+		// Note: The list of filters being passed to QT is modified by FileDialog::adjustParameters(), thus selected_filter can't be compared directly
+		if (selected_filter.left(3) == filters[1].left(3))
 			path.append(QString::fromLatin1(".kml"));
 		else
 			path.append(QString::fromLatin1(".kmz"));
@@ -1284,7 +1285,8 @@ void PrintWidget::exportToImage()
 	                        filter_template.arg(tr("TIFF"), QString::fromLatin1("*.tif *.tiff")),
 	                        filter_template.arg(tr("JPEG"), QString::fromLatin1("*.jpg *.jpeg")),
 	                        tr("All files (*.*)") };
-	QString path = FileDialog::getSaveFileName(this, tr("Export map ..."), {}, filters.join(QString::fromLatin1(";;")));
+	static QString selected_filter;
+	QString path = FileDialog::getSaveFileName(this, tr("Export map ..."), {}, filters.join(QString::fromLatin1(";;")), &selected_filter);
 	if (path.isEmpty())
 		return;
 	
@@ -1293,7 +1295,15 @@ void PrintWidget::exportToImage()
 	    && !path.endsWith(QLatin1String(".tif"), Qt::CaseInsensitive) && !path.endsWith(QLatin1String(".tiff"), Qt::CaseInsensitive)
 	    && !path.endsWith(QLatin1String(".jpg"), Qt::CaseInsensitive) && !path.endsWith(QLatin1String(".jpeg"), Qt::CaseInsensitive) )
 	{
-		path.append(QString::fromLatin1(".png"));
+		// Note: The list of filters being passed to QT is modified by FileDialog::adjustParameters(), thus selected_filter can't be compared directly
+		if (selected_filter.left(3) == filters[1].left(3))
+			path.append(QString::fromLatin1(".bmp"));
+		else if (selected_filter.left(4) == filters[2].left(4))
+			path.append(QString::fromLatin1(".tif"));
+		else if (selected_filter.left(4) == filters[3].left(4))
+			path.append(QString::fromLatin1(".jpg"));
+		else
+			path.append(QString::fromLatin1(".png"));
 	}
 	
 	qreal pixel_per_mm = map_printer->getOptions().resolution / 25.4;
