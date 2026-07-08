@@ -840,8 +840,26 @@ void SymbolSetTool::processSymbolSet()
 		auto color = map.getMapColor(i);
 		if (color->getSpotColorMethod() == MapColor::CustomColor)
 		{
-			color->setCmykFromSpotColors();
-			color->setRgbFromSpotColors();
+			auto color_copy = *color;
+			color_copy.setCmykFromSpotColors();
+			auto const calculated_cmyk = color_copy.getCmyk();
+			
+			if (color->getCmyk() != calculated_cmyk)
+			{
+				auto cmyk_to_string = [](auto cmyk) { return QString::fromLatin1("%1/%2/%3/%4")
+					        .arg(100*cmyk.c).arg(100*cmyk.m).arg(100*cmyk.y).arg(100*cmyk.k);
+				};
+				qInfo("CMYK from spot colors and custom CMYK differ in color \"%s\" (%s vs %s). Keeping the custom CMYK.",
+				      qPrintable(color->getName()),
+				      qPrintable(cmyk_to_string(calculated_cmyk)),
+				      qPrintable(cmyk_to_string(color->getCmyk())));
+				color->setRgbFromCmyk();
+			}
+			else
+			{
+				color->setCmykFromSpotColors();
+				color->setRgbFromSpotColors();
+			}
 		}
 		else
 		{
