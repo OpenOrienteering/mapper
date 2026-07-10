@@ -1536,7 +1536,7 @@ bool AdvancedPdfEngine::end()
     Q_D(AdvancedPdfEngine);
     d->writeTail();
 
-    d->stream->unsetDevice();
+    d->stream->setDevice(nullptr);
 
     qDeleteAll(d->fonts);
     d->fonts.clear();
@@ -1667,17 +1667,17 @@ int AdvancedPdfEnginePrivate::writeXmpMetaData()
     const QTime time = now.time();
 
     QString timeStr;
-    timeStr.sprintf("%d-%02d-%02dT%02d:%02d:%02d", date.year(), date.month(), date.day(),
-                                                   time.hour(), time.minute(), time.second());
+    timeStr.asprintf("%d-%02d-%02dT%02d:%02d:%02d", date.year(), date.month(), date.day(),
+                                                    time.hour(), time.minute(), time.second());
 
     const int offset = now.offsetFromUtc();
     const int hours  = (offset / 60) / 60;
     const int mins   = (offset / 60) % 60;
     QString tzStr;
     if (offset < 0)
-        tzStr.sprintf("-%02d:%02d", -hours, -mins);
+        tzStr.asprintf("-%02d:%02d", -hours, -mins);
     else if (offset > 0)
-        tzStr.sprintf("+%02d:%02d", hours , mins);
+        tzStr.asprintf("+%02d:%02d", hours , mins);
     else
         tzStr = QLatin1String("Z");
 
