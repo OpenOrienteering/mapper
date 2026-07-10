@@ -341,6 +341,15 @@ int runConvert(const QStringList& sub_args)
 	return 1;
 }
 
+int runListFileFormats(const QStringList& sub_args)
+{
+	fprintf(stdout, "The following types are avaliable:\n");
+	for (auto format : FileFormats.formats()) {
+		fprintf(stdout, "  '%s'\t(%s)\n", format->id(), format->description().toLocal8Bit().data());
+	}
+	return 0;
+}
+
 
 }  // namespace
 
@@ -365,19 +374,23 @@ int execCli(int argc, char** argv)
 	if (subcommand == QLatin1String("convert"))
 		return runConvert(sub_args);
 
+	if (subcommand == QLatin1String("listFileFormats"))
+		return runListFileFormats(sub_args);
+
 	if (subcommand == QLatin1String("help") || subcommand == QLatin1String("--help"))
 	{
 	fprintf(stderr,
 		"Usage: %s --cli <subcommand> [options]\n\n"
 		"Available subcommands:\n"
-		"  export   Export map to printable and image formats\n"
-		"  convert  Convert between orienteering map formats\n"
-		"  help     Show this help\n",
+		"  export           Export map to printable and image formats\n"
+		"  convert          Convert between orienteering map formats\n"
+		"  listFileFormats  List all available file formats\n"
+		"  help							Show this help\n",
 		argv[0]);
 	return 0;
 	}
 
-	fprintf(stderr, "Error: unknown subcommand '%s'. Available: export, convert\n", qPrintable(subcommand));
+	fprintf(stderr, "Error: unknown subcommand '%s'. Available: export, convert, listFileFormats\n", qPrintable(subcommand));
 	return 1;
 }
 
