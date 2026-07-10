@@ -6,7 +6,7 @@ The general build process prerequisites are:
  - A supported platform: 
    - Linux. Ubuntu 18.04 is known to work.
      Linux is also used to cross-compile for Android.
-   - macOS: 10.13 is known to work.
+   - macOS: 10.13 is known to work, so is 26.3 (Tahoe).
    - Windows: MSYS2 (MinGW subsystem).
  - CMake >= 3.7.
    CMake is available from https://cmake.org/.
@@ -17,7 +17,7 @@ components. Direct dependencies are:
  - Qt >=5.5
    https://www.qt.io/download-open-source/
  - Clipper library (aka libpolyclipping) >= 6.1.3a
-   http://www.angusj.com/delphi/clipper.php
+   http://www.angusj.com/delphi/
  - PROJ Cartographic Projections Library >= 4.9
    https://proj4.org/
  - GDAL Geospatial Data Abstraction Library >= 2
@@ -77,7 +77,7 @@ zlib1g-dev
 ```
 
 When not using Qt Creator, open a terminal, and create a build directory, e.g.
-as subdirectory build in the source directory, and change to that directory.
+as subdirectory `build` in the source directory, and change to that directory.
 From the build directory, configure and build like this:
 
 ```
@@ -94,6 +94,31 @@ Now you may start the build process by running
 make
 ```
 
+## Compiling for macOS (with brew instead of OpenOrienteering superbuild)
+
+
+The packages can be installed with `brew` (https://brew.sh):
+
+```
+brew install clipper2 proj gdal zlib qt@5
+```
+
+Installed version at the writing of this section where
+
+```
+» brew list --versions clipper2 proj gdal zlib qt@5
+clipper2 2.0.1
+gdal 3.13.0
+proj 9.8.1
+qt@5 5.15.18
+zlib 1.3.2
+```
+
+For the build it might be necessary to pass `-DCMAKE_PREFIX_PATH="$(brew --prefix qt@5)` to `cmake`:
+
+```
+cmake .. -DCMAKE_PREFIX_PATH="$(brew --prefix qt@5)"
+```
 
 ## Compiling for Windows (without OpenOrienteering superbuild)
 
