@@ -1,5 +1,5 @@
 /*
- *    Copyright 2020 Kai Pastor
+ *    Copyright 2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -176,7 +176,7 @@ QVariant TemplateTableModel::headerData(int section, Qt::Orientation orientation
 			break;
 		case nameColumn():
 			if (role == Qt::DisplayRole)
-				return QCoreApplication::translate("OpenOrienteering::TemplateListWidget", "Filename");
+				return QCoreApplication::translate("OpenOrienteering::TemplateListWidget", "Filename / Custom name");
 			break;
 		}
 	}
@@ -309,14 +309,14 @@ QVariant TemplateTableModel::templateData(Template* temp, const QModelIndex &ind
 			break;
 		Q_FALLTHROUGH();
 	case combined(nameColumn(), Qt::DisplayRole):
-		return temp->getTemplateFilename();
+		return temp->getCustomnamePreference() ? temp->getTemplateCustomname() : temp->getTemplateFilename();
 		
 	case combined(visibilityColumn(), Qt::ToolTipRole):
 		if (!touchMode())
 			break;
 		Q_FALLTHROUGH();
 	case combined(nameColumn(), Qt::ToolTipRole):
-		return temp->getTemplatePath();
+		return temp->getCustomnamePreference() ? temp->getTemplatePath() : temp->getTemplateCustomname();
 	}
 	
 	if (role == Qt::UserRole)
