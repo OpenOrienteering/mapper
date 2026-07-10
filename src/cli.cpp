@@ -354,6 +354,19 @@ int runListFileFormats(const QStringList& sub_args)
 }  // namespace
 
 
+struct SubCommand {
+	const char* name;
+	const char* description;
+	int (*handler)(const QStringList&);
+};
+
+const SubCommand sub_commands[] = {
+	{ "export",          "Export map to printable and image formats", runExport },
+	{ "convert",         "Convert between orienteering map formats",  runConvert },
+	{ "listFileFormats", "List all available file formats",           runListFileFormats },
+};
+
+
 int execCli(int argc, char** argv)
 {
 	if (argc < 3)
@@ -368,29 +381,16 @@ int execCli(int argc, char** argv)
 	for (int i = 3; i < argc; ++i)
 		sub_args << QString::fromLocal8Bit(argv[i]);
 
-	if (subcommand == QLatin1String("export"))
-		return runExport(sub_args);
-
-	if (subcommand == QLatin1String("convert"))
-		return runConvert(sub_args);
-
-	if (subcommand == QLatin1String("listFileFormats"))
-		return runListFileFormats(sub_args);
-
-	if (subcommand == QLatin1String("help") || subcommand == QLatin1String("--help"))
+	for (const auto& cmd : sub_commands)
 	{
-	fprintf(stderr,
-		"Usage: %s --cli <subcommand> [options]\n\n"
-		"Available subcommands:\n"
-		"  export           Export map to printable and image formats\n"
-		"  convert          Convert between orienteering map formats\n"
-		"  listFileFormats  List all available file formats\n"
-		"  help							Show this help\n",
-		argv[0]);
-	return 0;
+		if (subcommand == QLatin1String(cmd.name))
+			return cmd.handler(sub_args);
 	}
 
-	fprintf(stderr, "Error: unknown subcommand '%s'. Available: export, convert, listFileFormats\n", qPrintable(subcommand));
+	fprintf(stderr, "Error: unknown subcommand '%s'.\n\n", qPrintable(subcommand));
+	fprintf(stderr, "Available subcommands:\n");
+	for (const auto& cmd : sub_commands)
+		fprintf(stderr, "  %-16s %s\n", cmd.name, cmd.description);
 	return 1;
 }
 
