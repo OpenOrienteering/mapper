@@ -258,6 +258,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map, MapView* 
 , template_list_widget(nullptr)
 , mappart_remove_act(nullptr)
 , mappart_merge_act(nullptr)
+, mappart_visibility_act(nullptr)
 , mappart_merge_menu(nullptr)
 , mappart_move_menu(nullptr)
 , mappart_selector_box(nullptr)
@@ -470,6 +471,7 @@ void MapEditorController::setEditingInProgress(bool value)
 		mappart_add_act->setEnabled(!editing_in_progress);
 		mappart_rename_act->setEnabled(!editing_in_progress && num_parts > 0);
 		mappart_remove_act->setEnabled(!editing_in_progress && num_parts > 1);
+		mappart_visibility_act->setEnabled(!editing_in_progress && num_parts > 0);
 		mappart_move_menu->setEnabled(!editing_in_progress && num_parts > 1);
 		mappart_merge_act->setEnabled(!editing_in_progress && num_parts > 1);
 		mappart_merge_menu->setEnabled(!editing_in_progress && num_parts > 1);
@@ -1109,8 +1111,9 @@ void MapEditorController::createActions()
 	mappart_add_act = newAction("addmappart", tr("Add new part..."), this, SLOT(addMapPart()));
 	mappart_rename_act = newAction("renamemappart", tr("Rename current part..."), this, SLOT(renameMapPart()));
 	mappart_remove_act = newAction("removemappart", tr("Remove current part"), this, SLOT(removeMapPart()));
+	mappart_visibility_act = newAction("visibilitymappart", tr("Hide current part"), this, SLOT(hideCurrentMapPart()));
 	mappart_merge_act = newAction("mergemapparts", tr("Merge all parts"), this, SLOT(mergeAllMapParts()));
-	
+
 	import_act = newAction("import", tr("Import..."), this, SLOT(importClicked()), nullptr, QString{}, "file_menu.html");
 	
 	map_coordinates_act = new QAction(tr("Map coordinates"), this);
@@ -1271,6 +1274,7 @@ void MapEditorController::createMenuAndToolbars()
 	map_menu->addAction(mappart_add_act);
 	map_menu->addAction(mappart_rename_act);
 	map_menu->addAction(mappart_remove_act);
+	map_menu->addAction(mappart_visibility_act);
 	map_menu->addMenu(mappart_move_menu);
 	map_menu->addMenu(mappart_merge_menu);
 	map_menu->addAction(mappart_merge_act);
@@ -1485,12 +1489,23 @@ void MapEditorController::createMobileGUI()
 		for (auto i = 0; i < map->getNumParts(); ++i)
 		{
 			auto* part = map->getPart(i);
-			auto* action = mappart_menu->addAction(part->getName());
+			auto* action = mappart_menu->addAction(part->isVisible() ? QIcon() : QIcon(QString::fromLatin1(":/images/hidden-eye.png")), part->getName());
 			action->setCheckable(true);
 			action->setActionGroup(mappart_group);
 			if (part == map->getCurrentPart())
 				action->setChecked(true);
-			connect(action, &QAction::triggered, this, [this, i]() { changeMapPart(i); });
+			connect(action, &QAction::triggered, this, [this, i]() { 
+				if (map->getCurrentPartIndex() == (std::size_t)i)
+				{
+					if (map->getNumVisibleParts() > 1)
+					{
+						map->getCurrentPart()->setVisible(false);
+						changeMapPart(map->findVisiblePart());
+					}
+					return;
+				}
+				changeMapPart(i);
+			});
 		}
 	});
 	
@@ -1910,6 +1925,18 @@ void MapEditorController::doUndo(bool redo)
 		map->undoManager().redo(window);
 	else
 		map->undoManager().undo(window);
+	
+	if (!map->getCurrentPart()->isVisible())
+	{
+		if (map->getNumVisibleParts() == 0)
+		{
+			map->getCurrentPart()->setVisible(true);	// enforce one visible part
+		}
+		else
+		{
+			map->setCurrentPartIndex(map->findVisiblePart());
+		}
+	}
 }
 
 void MapEditorController::cut()
@@ -2474,7 +2501,7 @@ void MapEditorController::selectedSymbolsChanged()
 		mobile_symbol_selector_action->setIcon(QIcon(pixmap));
 	}
 	
-	// FIXME: Postpone switch of active symbol while editing is progress
+	// FIXME: Postpone switch of active symbol while editing is in progress
 	if (active_symbol != symbol)
 	{
 		active_symbol = symbol;
@@ -2632,7 +2659,7 @@ void MapEditorController::updateObjectDependentActions()
 	scale_act->setStatusTip(tr("Scale the selected objects.") + (scale_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one object to activate this tool."))));
 	mappart_move_menu->setEnabled(have_selection && have_multiple_parts);
 	
-	// have_rotatable_pattern || have_rotatable_point
+	// have_rotatable_pattern || have_rotatable_object
 	rotate_pattern_act->setEnabled(have_rotatable_pattern || have_rotatable_object);
 	rotate_pattern_act->setStatusTip(tr("Set the direction of area fill patterns or point objects.") + (rotate_pattern_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select an area object with rotatable fill pattern or a rotatable point object to activate this tool."))));
 	
@@ -2642,7 +2669,7 @@ void MapEditorController::updateObjectDependentActions()
 	connect_paths_act->setEnabled(have_line);
 	connect_paths_act->setStatusTip(tr("Connect endpoints of paths which are close together.") + (connect_paths_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one line object to activate this tool."))));
 	
-	// have_are || have_line
+	// have_area || have_line
 	cut_tool_act->setEnabled(have_area || have_line);
 	cut_tool_act->setStatusTip(tr("Cut the selected objects into smaller parts.") + (cut_tool_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select at least one line or area object to activate this tool."))));
 	convert_to_curves_act->setEnabled(have_area || have_line);
@@ -3816,17 +3843,22 @@ void MapEditorController::updateMapPartsUI()
 	mappart_move_menu->clear();
 	
 	const int count = map ? map->getNumParts() : 0;
+	const int visible_parts = map ? map->getNumVisibleParts() : 0;
 	const bool have_multiple_parts = (count > 1);
-	mappart_merge_menu->setEnabled(have_multiple_parts);
+	mappart_merge_menu->setEnabled(visible_parts > 1);
 	mappart_move_menu->setEnabled(have_multiple_parts && map->getNumSelectedObjects() > 0);
 	if (mappart_remove_act)
 	{
-		mappart_remove_act->setEnabled(have_multiple_parts);
+		mappart_remove_act->setEnabled(visible_parts > 1);
 		mappart_merge_act->setEnabled(have_multiple_parts);
 	}
 	if (toolbar_mapparts && !toolbar_mapparts->isVisible())
 	{
 		toolbar_mapparts->setVisible(have_multiple_parts);
+	}
+	if (mappart_visibility_act)
+	{
+		mappart_visibility_act->setEnabled(visible_parts > 1);
 	}
 	
 	if (count > 0)
@@ -3834,17 +3866,18 @@ void MapEditorController::updateMapPartsUI()
 		const int current = map->getCurrentPartIndex();
 		for (int i = 0; i < count; ++i)
 		{
-			QString part_name = map->getPart(i)->getName();
-			mappart_selector_box->addItem(part_name);
+			const auto part_name = map->getPart(i)->getName();
+			const QIcon icon = map->getPart(i)->isVisible() ? QIcon() : QIcon(QString::fromLatin1(":/images/hidden-eye.png"));
+			mappart_selector_box->addItem(icon, part_name);
 			
 			if (i != current)
 			{
-				auto* action = new QAction(part_name, this);
+				auto* action = new QAction(icon, part_name, this);
 				mappart_merge_mapper->setMapping(action, i);
 				connect(action, QOverload<bool>::of(&QAction::triggered), mappart_merge_mapper, QOverload<>::of(&QSignalMapper::map));
 				mappart_merge_menu->addAction(action);
 				
-				action = new QAction(part_name, this);
+				action = new QAction(icon, part_name, this);
 				mappart_move_mapper->setMapping(action, i);
 				connect(action, QOverload<bool>::of(&QAction::triggered), mappart_move_mapper, QOverload<>::of(&QSignalMapper::map));
 				mappart_move_menu->addAction(action);
@@ -3911,6 +3944,9 @@ void MapEditorController::removeMapPart()
 		
 		map->push(undo_step);
 		map->removePart(index);
+		const auto visible_part_index = map->findVisiblePart();
+		if (map->getCurrentPartIndex() != visible_part_index)
+			changeMapPart(visible_part_index);
 	}
 }
 
@@ -3936,8 +3972,13 @@ void MapEditorController::changeMapPart(int index)
 {
 	if (index >= 0)
 	{
-		map->setCurrentPartIndex(std::size_t(index));
-		window->showStatusBarMessage(tr("Switched to map part '%1'.").arg(map->getCurrentPart()->getName()), 1000);
+		if (std::size_t(index) != map->getCurrentPartIndex())
+		{
+			map->setCurrentPartIndex(std::size_t(index));
+			if (!map->getCurrentPart()->isVisible())
+				map->getCurrentPart()->setVisible(true);
+			window->showStatusBarMessage(tr("Switched to map part '%1'.").arg(map->getCurrentPart()->getName()), 1000);
+		}
 	}
 }
 
@@ -3988,12 +4029,16 @@ void MapEditorController::mergeCurrentMapPartTo(int target)
 		undo->push(switch_part_undo);
 		undo->push(add_part_step);
 		map->push(undo);
+		const auto visible_part_index = map->findVisiblePart();
+		if (map->getCurrentPartIndex() != visible_part_index)
+			changeMapPart(visible_part_index);
 	}
 }
 
 void MapEditorController::mergeAllMapParts()
 {
 	QString const name = map->getCurrentPart()->getName();
+	const auto visibility = map->getCurrentPart()->isVisible();
 	const QMessageBox::StandardButton button =
 	        QMessageBox::question(
 	            window,
@@ -4006,7 +4051,7 @@ void MapEditorController::mergeAllMapParts()
 		auto* undo = new CombinedUndoStep(map);
 		
 		// For simplicity, we merge to the first part,
-		// but keep the properties (i.e. name) of the current part.
+		// but keep the properties (i.e. name, visibility) of the current part.
 		map->setCurrentPartIndex(0);
 		MapPart* target_part = map->getPart(0);
 		
@@ -4023,11 +4068,17 @@ void MapEditorController::mergeAllMapParts()
 		
 		undo->push(new MapPartUndoStep(map, MapPartUndoStep::ModifyMapPart, 0));
 		target_part->setName(name);
+		target_part->setVisible(visibility);
 		
 		map->push(undo);
 	}
 }
 
+void MapEditorController::hideCurrentMapPart()
+{
+	map->getCurrentPart()->setVisible(false);
+	changeMapPart(map->findVisiblePart());
+}
 
 void MapEditorController::templateAdded(int /*pos*/, const Template* /*temp*/)
 {
