@@ -22,7 +22,7 @@
 !android:error("This project is for Android only.")
 
 TEMPLATE = app
-TARGET   = Mapper
+TARGET   = openorienteering-mapper
 
 ANDROID_VERSION_CODE = "@Mapper_VERSION_CODE@"
 ANDROID_VERSION_NAME = "@Mapper_VERSION_DISPLAY@"
@@ -42,7 +42,7 @@ CPACK_CONFIG_CLEANUP_TRIGGER = \
   Qt5:  @Qt5Core_VERSION@
 
 # For the generated .pro file to be used in Qt Creator,
-# we must install everything and replace the dummy libMapper.so.
+# we must install everything and replace the dummy libopenorienteering-mapper.so.
 INSTALLS            += everything
 
 everything.path  = /

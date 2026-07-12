@@ -34,12 +34,12 @@ FunctionEnd
 Function installAssociations
   ; The application
   WriteRegStr HKLM "Software\Classes\OpenOrienteering.Map" "" "OpenOrienteering Map"
-  WriteRegStr HKLM "Software\Classes\OpenOrienteering.Map\DefaultIcon" "" "$INSTDIR\Mapper.exe"
+  WriteRegStr HKLM "Software\Classes\OpenOrienteering.Map\DefaultIcon" "" "$INSTDIR\openorienteering-mapper.exe"
   
   ReadRegStr $R0 HKLM "Software\Classes\OpenOrienteering.Map\shell\open\command" ""
   StrCmp $R0 "" 0 +3
     WriteRegStr HKLM "Software\Classes\OpenOrienteering.Map\shell" "" "open"
-    WriteRegStr HKLM "Software\Classes\OpenOrienteering.Map\shell\open\command" "" '"$INSTDIR\Mapper.exe" "%1"'
+    WriteRegStr HKLM "Software\Classes\OpenOrienteering.Map\shell\open\command" "" '"$INSTDIR\openorienteering-mapper.exe" "%1"'
   
   ; The file type associations
   WriteRegStr HKLM "Software\Classes\.omap" "" "OpenOrienteering.Map"

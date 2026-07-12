@@ -37,7 +37,7 @@ BEGIN
 			VALUE "FileVersion", "@Mapper_VERSION_MAJOR@.@Mapper_VERSION_MINOR@.@Mapper_VERSION_PATCH@ @CMAKE_BUILD_TYPE@"
 			VALUE "InternalName", "@CMAKE_PROJECT_NAME@"
 			VALUE "LegalCopyright", "@Mapper_COPYRIGHT@"
-			VALUE "OriginalFilename", "Mapper.exe"
+			VALUE "OriginalFilename", "openorienteering-mapper.exe"
 			VALUE "ProductName", "OpenOrienteering @CMAKE_PROJECT_NAME@"
 			VALUE "ProductVersion", "@Mapper_VERSION_MAJOR@.@Mapper_VERSION_MINOR@.@Mapper_VERSION_PATCH@ @CMAKE_BUILD_TYPE@"
 		END

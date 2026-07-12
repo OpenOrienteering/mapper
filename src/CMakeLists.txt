@@ -365,6 +365,7 @@ else()
 	target_compile_definitions(Mapper PRIVATE MAPPER_USE_QTSINGLEAPPLICATION)
 	target_link_libraries(Mapper QtSingleApplication)
 endif()
+set_target_properties(Mapper PROPERTIES OUTPUT_NAME "openorienteering-mapper")
 
 target_link_libraries(Mapper
   Mapper_Common

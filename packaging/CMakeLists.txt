@@ -137,7 +137,7 @@ set(CPACK_SOURCE_IGNORE_FILES
 
 set(MAPPER_MACOS_SUBDIR "")
 
-set(CPACK_PACKAGE_EXECUTABLES "Mapper" "${CPACK_PACKAGE_NAME} ${Mapper_VERSION_DISPLAY}")
+set(CPACK_PACKAGE_EXECUTABLES "openorienteering-mapper" "${CPACK_PACKAGE_NAME} ${Mapper_VERSION_DISPLAY}")
 
 if(WIN32)
 	# Packaging as ZIP archive
@@ -155,7 +155,7 @@ if(WIN32)
 		# NSIS start menu links will point to executables in this directory
 		set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
 		# A path to the executable that contains the uninstaller icon.
-		set(CPACK_NSIS_INSTALLED_ICON_NAME Mapper.exe)
+		set(CPACK_NSIS_INSTALLED_ICON_NAME openorienteering-mapper.exe)
 		# URL to a web site providing more information about your application.
 		set(CPACK_NSIS_URL_INFO_ABOUT "https://www.openorienteering.org/apps/mapper/")
 		# Extra NSIS include
@@ -172,7 +172,7 @@ if(WIN32)
 	endif(MAKENSIS_EXECUTABLE)
 	
 elseif(APPLE)
-	set(MAPPER_MACOS_SUBDIR "/Mapper.app/Contents/MacOS")
+	set(MAPPER_MACOS_SUBDIR "/openorienteering-mapper.app/Contents/MacOS")
 	set(CPACK_GENERATOR_DEFAULT "DragNDrop")
 	set(CPACK_PACKAGE_ICON "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper.icns")
 	set(CPACK_COMMAND_HDIUTIL "${CMAKE_CURRENT_LIST_DIR}/macos/hdiutil.sh")
@@ -181,7 +181,7 @@ elseif(APPLE)
 	  MACOSX_BUNDLE_ICON_FILE            "Mapper.icns"
 	  MACOSX_BUNDLE_GUI_IDENTIFIER       "org.openorienteering.${CMAKE_PROJECT_NAME}"
 	  MACOSX_BUNDLE_LONG_VERSION_STRING  "${CMAKE_PROJECT_NAME} ${Mapper_VERSION_DISPLAY} for macOS"
-	  MACOSX_BUNDLE_BUNDLE_NAME          "${CMAKE_PROJECT_NAME}" # less than 16 characters long
+	  MACOSX_BUNDLE_BUNDLE_NAME          "Mapper" # less than 16 characters long
 	  MACOSX_BUNDLE_SHORT_VERSION_STRING "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
 	  MACOSX_BUNDLE_BUNDLE_VERSION       "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
 	  MACOSX_BUNDLE_COPYRIGHT            "${Mapper_COPYRIGHT}"
@@ -461,10 +461,10 @@ endforeach(_qt_plugin)
 
 if(UNIX AND NOT APPLE AND NOT ANDROID)
 	install(
-	  FILES "${PROJECT_SOURCE_DIR}/doc/man/Mapper.1"
+	  FILES "${PROJECT_SOURCE_DIR}/doc/man/openorienteering-mapper.1"
 	  DESTINATION "share/man/man1")
 	install(
-	  FILES "${CMAKE_CURRENT_BINARY_DIR}/linux/Mapper.desktop"
+	  FILES "${CMAKE_CURRENT_BINARY_DIR}/linux/openorienteering-mapper.desktop"
 	  DESTINATION "share/applications")
 	install(
 	  FILES "${CMAKE_CURRENT_BINARY_DIR}/linux/openorienteering-mapper.xml"
@@ -474,7 +474,7 @@ if(UNIX AND NOT APPLE AND NOT ANDROID)
 		install(
 		  FILES "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper-${_size}.png"
 		  DESTINATION "share/icons/hicolor/${_size}x${_size}/apps"
-		  RENAME Mapper.png
+		  RENAME openorienteering-mapper.png
 		)
 		install(
 		  FILES "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper-${_size}.png"
