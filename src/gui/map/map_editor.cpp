@@ -1430,8 +1430,12 @@ void MapEditorController::createMenuAndToolbars()
 			if (action && !action->isSeparator() && !action->shortcut().isEmpty())
 			{
 				auto label = action->text();
-				label.remove(QLatin1Char('&'));
-				action->setToolTip(label + QStringLiteral(" (") + action->shortcut().toString() + QStringLiteral(")"));
+				// Remove unescaped '&', cf. qt_strippedText in qtbase/src/widgets/kernel/qaction.cpp
+				for (int i = 0; i < label.size(); ++i) {
+					if (label.at(i) == QLatin1Char('&'))
+						label.remove(i, 1);
+				}
+				action->setToolTip(tr("%1 (%2)").arg(label, action->shortcut().toString()));
 			}
 		}
 	}
