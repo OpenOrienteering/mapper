@@ -544,25 +544,25 @@ void Object::move(const MapCoord& offset)
 
 void Object::scale(const MapCoordF& center, double factor)
 {
-	for (MapCoord& coord : coords)
-	{
-		coord.setX(center.x() + (coord.x() - center.x()) * factor);
-		coord.setY(center.y() + (coord.y() - center.y()) * factor);
-	}
-	
-	setOutputDirty();
+	scale(center, factor, factor);
 }
 
 void Object::scale(double factor_x, double factor_y)
 {
+	scale(MapCoordF(0, 0), factor_x, factor_y);
+}
+
+void Object::scale(const MapCoordF& center, double factor_x, double factor_y)
+{
 	for (MapCoord& coord : coords)
 	{
-		coord.setX(coord.x() * factor_x);
-		coord.setY(coord.y() * factor_y);
+		coord.setX(center.x() + (coord.x() - center.x()) * factor_x);
+		coord.setY(center.y() + (coord.y() - center.y()) * factor_y);
 	}
-	
+
 	setOutputDirty();
 }
+
 
 // virtual
 void Object::rotatePatternOrigin(const MapCoordF& /*center*/, qreal /*sin_angle*/, qreal /*cos_angle*/)
