@@ -1673,7 +1673,6 @@ void FileFormatTest::ocdAreaSymbolTest_data()
 {
 	QTest::addColumn<int>("format_version");
 	
-#ifndef MAPPER_BIG_ENDIAN
 	static struct { int version; const char* id; } const tests[] = {
 	    { 8, "OCD8" },
 	    { 9, "OCD9" },
@@ -1685,7 +1684,6 @@ void FileFormatTest::ocdAreaSymbolTest_data()
 	{
 		QTest::newRow(t.id) << t.version;
 	}
-#endif
 }
 
 void FileFormatTest::ocdAreaSymbolTest()
@@ -1694,6 +1692,10 @@ void FileFormatTest::ocdAreaSymbolTest()
 	
 	auto* format_id = QTest::currentDataTag();
 	const auto* format = FileFormats.findFormat(format_id);
+#ifdef MAPPER_BIG_ENDIAN
+	if (QByteArray(format_id).startsWith("OCD"))
+		QEXPECT_FAIL("", "OCD format not support on big endian systems", Abort);
+#endif
 	QVERIFY(format);
 	
 	static const auto filepath = QString::fromLatin1("data:rotated-pattern.omap");
@@ -1795,7 +1797,6 @@ void FileFormatTest::ocdTextSymbolTest_data()
 {
 	QTest::addColumn<int>("format_version");
 	
-#ifndef MAPPER_BIG_ENDIAN
 	static struct { int version; const char* id; } const tests[] = {
 	    { 8, "OCD8" },
 	    { 9, "OCD9" },
@@ -1807,7 +1808,6 @@ void FileFormatTest::ocdTextSymbolTest_data()
 	{
 		QTest::newRow(t.id) << t.version;
 	}
-#endif
 }
 
 void FileFormatTest::ocdTextSymbolTest()
@@ -1816,6 +1816,10 @@ void FileFormatTest::ocdTextSymbolTest()
 	
 	auto* format_id = QTest::currentDataTag();
 	const auto* format = FileFormats.findFormat(format_id);
+#ifdef MAPPER_BIG_ENDIAN
+	if (QByteArray(format_id).startsWith("OCD"))
+		QEXPECT_FAIL("", "OCD format not support on big endian systems", Abort);
+#endif
 	QVERIFY(format);
 	
 	static const auto filepath = QString::fromLatin1("data:text-symbol.omap");
