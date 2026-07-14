@@ -1523,12 +1523,12 @@ void OcdFileExport::exportAreaSymbolSpecial(const AreaSymbol* /*area_symbol*/, O
 template< class OcdLineSymbol >
 QByteArray OcdFileExport::exportLineSymbol(const LineSymbol* line_symbol)
 {
-	return  exportLineSymbol<OcdLineSymbol>(line_symbol, symbol_numbers[line_symbol]);
+	return  exportLineSymbol<OcdLineSymbol>(line_symbol, nullptr, symbol_numbers[line_symbol]);
 }
 
 
 template< class OcdLineSymbol >
-QByteArray OcdFileExport::exportLineSymbol(const LineSymbol* line_symbol, quint32 symbol_number)
+QByteArray OcdFileExport::exportLineSymbol(const LineSymbol* line_symbol, const LineSymbol* secondary_points, quint32 symbol_number)
 {
 	OcdLineSymbol ocd_symbol = {};
 	setupBaseSymbol<typename OcdLineSymbol::BaseSymbol>(line_symbol, symbol_number, ocd_symbol.base);
@@ -1544,9 +1544,11 @@ QByteArray OcdFileExport::exportLineSymbol(const LineSymbol* line_symbol, quint3
 	extent = std::max(extent, getPointSymbolExtent(line_symbol->getEndSymbol()));
 	extent = std::max(extent, getPointSymbolExtent(line_symbol->getMidSymbol()));
 	extent = std::max(extent, getPointSymbolExtent(line_symbol->getDashSymbol()));
+	if (secondary_points)
+		extent = std::max(extent, getPointSymbolExtent(secondary_points->getMidSymbol()));
 	ocd_symbol.base.extent = decltype(ocd_symbol.base.extent)(extent);
 	
-	auto pattern_size = exportLineSymbolCommon(line_symbol, ocd_symbol.common);
+	auto pattern_size = exportLineSymbolCommon(line_symbol, secondary_points, ocd_symbol.common);
 	auto header_size = sizeof(OcdLineSymbol) - sizeof(typename OcdLineSymbol::Element);
 	ocd_symbol.base.size = decltype(ocd_symbol.base.size)(header_size + pattern_size);
 	if (ocd_version >= 11)
@@ -1564,6 +1566,8 @@ QByteArray OcdFileExport::exportLineSymbol(const LineSymbol* line_symbol, quint3
 	data.reserve(int(header_size + pattern_size));
 	data.append(reinterpret_cast<const char*>(&ocd_symbol), int(header_size));
 	exportPattern<typename OcdLineSymbol::Element>(line_symbol->getMidSymbol(), data);
+	if (secondary_points)
+		exportPattern<typename OcdLineSymbol::Element>(secondary_points->getMidSymbol(), data);
 	exportPattern<typename OcdLineSymbol::Element>(line_symbol->getDashSymbol(), data);
 	exportPattern<typename OcdLineSymbol::Element>(line_symbol->getStartSymbol(), data);
 	exportPattern<typename OcdLineSymbol::Element>(line_symbol->getEndSymbol(), data);
@@ -1574,7 +1578,7 @@ QByteArray OcdFileExport::exportLineSymbol(const LineSymbol* line_symbol, quint3
 
 
 template< class OcdLineSymbolCommon >
-quint32 OcdFileExport::exportLineSymbolCommon(const LineSymbol* line_symbol, OcdLineSymbolCommon& ocd_line_common)
+quint32 OcdFileExport::exportLineSymbolCommon(const LineSymbol* line_symbol, const LineSymbol* secondary_points, OcdLineSymbolCommon& ocd_line_common)
 {
 	if (line_symbol->getColor())
 	{
@@ -1665,7 +1669,7 @@ quint32 OcdFileExport::exportLineSymbolCommon(const LineSymbol* line_symbol, Ocd
 	ocd_line_common.prim_sym_dist = convertSize(line_symbol->getMidSymbolDistance());
 	
 	ocd_line_common.primary_data_size = getPatternSize(line_symbol->getMidSymbol()) / 8;
-	ocd_line_common.secondary_data_size = 0;
+	ocd_line_common.secondary_data_size = secondary_points ? getPatternSize(secondary_points->getMidSymbol()) : 0;
 	ocd_line_common.corner_data_size = getPatternSize(line_symbol->getDashSymbol()) / 8;
 	ocd_line_common.start_data_size = getPatternSize(line_symbol->getStartSymbol()) / 8;
 	ocd_line_common.end_data_size = getPatternSize(line_symbol->getEndSymbol()) / 8;
@@ -1985,6 +1989,46 @@ void OcdFileExport::setupTextSymbolFraming(const TextSymbol* text_symbol, OcdTex
 }
 
 
+/**
+ * Returns true if the symbol may represent a line of secondary points.
+ */
+bool OcdFileExport::maybeSecondaryPoints(const Symbol* const symbol) const
+{
+	if (symbol->getType() != Symbol::Line)
+		return false;
+	
+	auto* line_symbol = static_cast<const LineSymbol*>(symbol);
+	if (line_symbol->getColor()
+	    || line_symbol->getLineWidth()
+	    || line_symbol->hasBorder())
+		return false;
+	
+	auto const is_empty = [line_symbol](auto getter) -> bool {
+		auto* symbol = (line_symbol->*getter)();
+		return !symbol || symbol->isEmpty();
+	};
+	if (is_empty(&LineSymbol::getMidSymbol))
+		return false;
+	if (!is_empty(&LineSymbol::getStartSymbol))
+		return false;
+	if (!is_empty(&LineSymbol::getDashSymbol))
+		return false;
+	if (!is_empty(&LineSymbol::getEndSymbol))
+		return false;
+	
+	return true;
+}
+
+
+/**
+ * Validates that the layout of the secondary points matches the main line.
+ */
+bool OcdFileExport::validateSecondaryPoints(const LineSymbol* main_line, const LineSymbol* secondary_points) const
+{
+	return secondary_points->getSegmentLength() == main_line->getSegmentLength()
+	       && secondary_points->getEndLength() == main_line->getEndLength() + main_line->getSegmentLength() / 2;
+}
+
 
 /**
  * Returns the type of symbol which would be constructed by exportCombinedSymbol().
@@ -1994,12 +2038,12 @@ int OcdFileExport::checkCombinedSymbol(const CombinedSymbol* combined_symbol) co
 	// The implementation must mirror exportCombinedSymbol()!
 	
 	auto num_parts = 0;  // The count of non-null parts.
-	const Symbol* parts[3] = {};  // A random access list without holes
+	const Symbol* parts[4] = {};  // A random access list without holes
 	for (auto i = 0; i < combined_symbol->getNumParts(); ++i)
 	{
 		if (auto const* part = combined_symbol->getPart(i))
 		{
-			if (num_parts < 3)
+			if (num_parts < 4)
 				parts[num_parts] = part;
 			++num_parts;
 		}
@@ -2121,18 +2165,31 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 	};
 	
 	auto num_parts = 0;  // The count of non-null parts.
-	const Symbol* parts[3] = {};  // A random access list without holes
+	const Symbol* parts[4] = {};  // A random access list without holes
 	for (auto i = 0; i < combined_symbol->getNumParts(); ++i)
 	{
 		if (auto const* part = combined_symbol->getPart(i))
 		{
-			if (num_parts < 3)
+			if (num_parts < 4)
 				parts[num_parts] = part;
 			++num_parts;
 		}
 	}
 	
+	const LineSymbol* secondary_points = nullptr;
+	if (combined_symbol->getType() && num_parts > 1)
+	{
+		auto const* last_part = parts[num_parts - 1];
+	    if (maybeSecondaryPoints(last_part))
+		{
+			// Normalize part layout
+			--num_parts;
+			secondary_points = static_cast<const LineSymbol*>(last_part);
+		}
+	}
+	
 	const auto symbol_number = symbol_numbers.at(combined_symbol);
+	
 	switch (num_parts)
 	{
 	case 1:
@@ -2150,9 +2207,12 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 			return;
 		case Symbol::Line:
 			{
-				auto copy = duplicate(static_cast<const LineSymbol&>(*parts[0]));
+				auto const* main_line = static_cast<const LineSymbol*>(parts[0]);
+				if (secondary_points && !validateSecondaryPoints(main_line, secondary_points))
+					break;
+				auto copy = duplicate(*main_line);
 				copySymbolHead(*combined_symbol, *copy);
-				auto ocd_subsymbol = exportLineSymbol<typename Format::LineSymbol>(copy.get(), symbol_number);
+				auto ocd_subsymbol = exportLineSymbol<typename Format::LineSymbol>(copy.get(), secondary_points, symbol_number);
 				file.symbols().insert(ocd_subsymbol);
 				add_breakdown(symbol_number, Ocd::SymbolTypeLine);
 			}
@@ -2205,7 +2265,7 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 				border_duplicate->setName(QLatin1String("Border of ") + combined_symbol->getName());
 				auto const border_symbol_number = makeUniqueSymbolNumber(symbol_number);
 				symbol_numbers[border_duplicate.get()] = border_symbol_number;
-				file.symbols().insert(exportLineSymbol<typename Format::LineSymbol>(border_duplicate.get(), border_symbol_number));
+				file.symbols().insert(exportLineSymbol<typename Format::LineSymbol>(border_duplicate.get(), nullptr, border_symbol_number));
 				border_symbol = border_duplicate.get();
 				temporary_symbols.emplace_back(std::move(border_duplicate));
 			}
@@ -2268,11 +2328,15 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 					break;
 				std::swap(main_line, framing);
 			}
+			if (secondary_points && !validateSecondaryPoints(main_line, secondary_points))
+			{
+				break;
+			}
 			
 			// Line symbol with framing and/or double line
 			auto copy = duplicate(static_cast<const LineSymbol&>(*main_line));
 			copySymbolHead(*combined_symbol, *copy);
-			file.symbols().insert(exportCombinedLineSymbol<typename Format::LineSymbol>(symbol_number, combined_symbol, copy.get(), framing, double_line));
+			file.symbols().insert(exportCombinedLineSymbol<typename Format::LineSymbol>(symbol_number, combined_symbol, copy.get(), framing, double_line, secondary_points));
 			add_breakdown(symbol_number, Ocd::SymbolTypeLine);
 			return;
 		}
@@ -2313,7 +2377,7 @@ void OcdFileExport::exportGenericCombinedSymbol(OcdFile<Format>& file, const Com
 		case Symbol::Line:
 			type = 2;
 			if (combined_symbol->isPartPrivate(i))
-				ocd_data = exportLineSymbol<typename Format::LineSymbol>(static_cast<const LineSymbol*>(part), symbol_number);
+				ocd_data = exportLineSymbol<typename Format::LineSymbol>(static_cast<const LineSymbol*>(part), nullptr, symbol_number);
 			break;
 		case Symbol::Combined:
 			type = 99;
@@ -2390,9 +2454,10 @@ QByteArray OcdFileExport::exportCombinedLineSymbol(
         const CombinedSymbol* combined_symbol,
         const LineSymbol* main_line,
         const LineSymbol* framing,
-        const LineSymbol* double_line )
+        const LineSymbol* double_line,
+        const LineSymbol* secondary_points )
 {
-	auto ocd_symbol = exportLineSymbol<OcdLineSymbol>(main_line, symbol_number);
+	auto ocd_symbol = exportLineSymbol<OcdLineSymbol>(main_line, secondary_points, symbol_number);
 	auto ocd_symbol_data = reinterpret_cast<OcdLineSymbol*>(ocd_symbol.data());
 	setupSymbolColors(combined_symbol, ocd_symbol_data->base);
 	setupIcon(combined_symbol, ocd_symbol_data->base);
