@@ -25,6 +25,7 @@
 #include <cmath>
 #include <iterator>
 #include <memory>
+#include <numeric>
 #include <type_traits>
 #include <utility>
 
@@ -885,17 +886,17 @@ std::size_t Map::deleteIrregularObjects()
 	std::set<Object*> unhandled;
 	for (auto object : irregular_objects)
 	{
-		for (auto part : parts)
+		if (std::none_of(begin(parts), end(parts), [&result, object](MapPart* const part) {
+						if (part->deleteObject(object))
+						{
+							++result;
+							return true;
+						}
+						return false;
+		}))
 		{
-			if (part->deleteObject(object))
-			{
-				++result;
-				goto next_object;
-			}
+			unhandled.insert(object);
 		}
-		unhandled.insert(object);
-next_object:
-		; // nothing else
 	}
 	
 	irregular_objects.swap(unhandled);
@@ -1269,11 +1270,10 @@ void Map::deleteColor(int pos)
 
 int Map::findColorIndex(const MapColor* color) const
 {
-	std::size_t size = color_set->colors.size();
-	for (std::size_t i = 0; i < size; ++i)
+	for (int i = 0, size = getNumColors(); i < size; ++i)
 	{
 		if (color_set->colors[i] == color)
-			return (int)i;
+			return i;
 	}
 	if (color && color->getPriority() == MapColor::Registration)
 	{
@@ -1295,12 +1295,9 @@ void Map::useColorsFrom(Map* map)
 
 bool Map::isColorUsedByASymbol(const MapColor* color) const
 {
-	for (const Symbol* symbol : symbols)
-	{
-		if (symbol->containsColor(color))
-			return true;
-	}
-	return false;
+	return std::any_of(begin(symbols), end(symbols), [color](const Symbol* symbol) {
+		return symbol->containsColor(color);
+	});
 }
 
 void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out) const
@@ -1312,12 +1309,12 @@ void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std:
 	}
 	
 	Q_ASSERT(int(by_which_symbols.size()) == getNumSymbols());
-	out.assign(std::size_t(getNumColors()), false);
-	for (std::size_t c = 0, last = std::size_t(getNumColors()); c != last; ++c)
+	out.assign(getNumColors(), false);
+	for (int c = 0, last = getNumColors(); c != last; ++c)
 	{
-		for (std::size_t s = 0, last_s = std::size_t(getNumSymbols()); s != last_s; ++s)
+		for (int s = 0, last_s = getNumSymbols(); s != last_s; ++s)
 		{
-			if (by_which_symbols[s] && getSymbol(int(s))->containsColor(getColor(int(c))))
+			if (by_which_symbols[s] && getSymbol(s)->containsColor(getColor(c)))
 			{
 				out[c] = true;
 				break;
@@ -1326,21 +1323,21 @@ void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std:
 	}
 	
 	// Include required spot colors, too
-	for (std::size_t c = 0, last_c = std::size_t(getNumColors()); c != last_c; ++c)
+	for (int c = 0, last_c = getNumColors(); c != last_c; ++c)
 	{
 		if (out[c])
 			continue;
 		
-		const auto* color = getColor(int(c));
+		const auto* color = getColor(c);
 		if (color->getSpotColorMethod() != MapColor::SpotColor)
 			continue;
 		
-		for (std::size_t o = 0, last_o = std::size_t(getNumColors()); o != last_o; ++o)
+		for (int o = 0, last_o = getNumColors(); o != last_o; ++o)
 		{
 			if (!out[o])
 				continue;
 			
-			const auto* other = getColor(int(o));
+			const auto* other = getColor(o);
 			if (other->getSpotColorMethod() != MapColor::CustomColor)
 				continue;
 			
@@ -1368,12 +1365,9 @@ void Map::checkSpotColorPresence()
 
 bool Map::hasSpotColors() const
 {
-	for (const MapColor* color : color_set->colors)
-	{
-		if (color->getSpotColorMethod() == MapColor::SpotColor)
-			return true;
-	}
-	return false;
+	return std::any_of(begin(color_set->colors), end(color_set->colors), [](const MapColor* color) {
+		return color->getSpotColorMethod() == MapColor::SpotColor;
+	});
 }
 
 bool Map::hasAlpha() const
@@ -1574,20 +1568,13 @@ void Map::setSymbol(Symbol* symbol, int pos)
 	Symbol* old_symbol = symbols[pos];
 	
 	// Check if an object with this symbol is selected
-	bool object_with_symbol_selected = false;
-	for (const Object* object : object_selection)
-	{
-		if (object->getSymbol() == old_symbol || object->getSymbol()->containsSymbol(old_symbol))
-		{
-			object_with_symbol_selected = true;
-			break;
-		}
-	}
+	const bool object_with_symbol_selected = std::any_of(begin(object_selection), end(object_selection), [old_symbol](const Object* object) {
+		return object->getSymbol() == old_symbol || object->getSymbol()->containsSymbol(old_symbol);
+	});
 	
 	changeSymbolForAllObjects(old_symbol, symbol);
 	
-	int size = (int)symbols.size();
-	for (int i = 0; i < size; ++i)
+	for (int i = 0, size = getNumSymbols(); i < size; ++i)
 	{
 		if (i == pos)
 			continue;
@@ -1611,8 +1598,7 @@ void Map::deleteSymbol(int pos)
 	if (deleteAllObjectsWithSymbol(symbols[pos]))
 		undo_manager->clear();
 	
-	int size = (int)symbols.size();
-	for (int i = 0; i < size; ++i)
+	for (int i = 0, size = getNumSymbols(); i < size; ++i)
 	{
 		if (i == pos)
 			continue;
@@ -1633,8 +1619,7 @@ int Map::findSymbolIndex(const Symbol* symbol) const
 {
 	if (!symbol)
 		return -1;
-	int size = (int)symbols.size();
-	for (int i = 0; i < size; ++i)
+	for (int i = 0, size = getNumSymbols(); i < size; ++i)
 	{
 		if (symbols[i] == symbol)
 			return i;
@@ -1664,7 +1649,7 @@ void Map::setSymbolsDirty()
 
 void Map::updateSymbolIcons(const MapColor* color)
 {
-	for (std::size_t i = 0, size = symbols.size(); i < size; ++i)
+	for (int i = 0, size = getNumSymbols(); i < size; ++i)
 	{
 		if (symbols[i]->containsColor(color))
 		{
@@ -1676,8 +1661,7 @@ void Map::updateSymbolIcons(const MapColor* color)
 
 void Map::scaleAllSymbols(double factor)
 {
-	int size = getNumSymbols();
-	for (int i = 0; i < size; ++i)
+	for (int i = 0, size = getNumSymbols(); i < size; ++i)
 	{
 		Symbol* symbol = getSymbol(i);
 		symbol->scale(factor);
@@ -2084,8 +2068,7 @@ void Map::removePart(std::size_t index)
 
 int Map::findPartIndex(const MapPart* part) const
 {
-	std::size_t const size = parts.size();
-	for (std::size_t i = 0; i < size; ++i)
+	for (int i = 0, size = getNumSymbols(); i < size; ++i)
 	{
 		if (parts[i] == part)
 			return i;
@@ -2175,10 +2158,9 @@ int Map::mergeParts(std::size_t source, std::size_t destination)
 
 int Map::getNumObjects() const
 {
-	int num_objects = 0;
-	for (const MapPart* part : parts)
-		num_objects += part->getNumObjects();
-	return num_objects;
+	return std::accumulate(begin(parts), end(parts), 0, [](int num_objects, const auto part) {
+		return num_objects + part->getNumObjects();
+	});
 }
 
 int Map::addObject(Object* object, int part_index)
@@ -2282,10 +2264,9 @@ void Map::findObjectsAtBox(
 
 int Map::countObjectsInRect(const QRectF& map_coord_rect, bool include_hidden_objects)
 {
-	int count = 0;
-	for (const MapPart* part : parts)
-		count += part->countObjectsInRect(map_coord_rect, include_hidden_objects);
-	return count;
+	return std::accumulate(begin(parts), end(parts), 0, [&map_coord_rect, include_hidden_objects](int count, const auto part) {
+		return count + part->countObjectsInRect(map_coord_rect, include_hidden_objects);
+	});
 }
 
 
