@@ -18,7 +18,7 @@
  */
 
 
-#include "simple_course_dialog.h"
+#include "course_dialog.h"
 
 #include <Qt>
 #include <QDialogButtonBox>
@@ -26,18 +26,20 @@
 #include <QLineEdit>
 #include <QSpinBox>
 #include <QVBoxLayout>
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
 
 #include "gui/util_gui.h"
-#include "fileformats/simple_course_export.h"
+#include "fileformats/course_export.h"
 
 
 namespace OpenOrienteering {
 
-SimpleCourseDialog::~SimpleCourseDialog() = default;
+CourseDialog::~CourseDialog() = default;
 
-SimpleCourseDialog::SimpleCourseDialog(const SimpleCourseExport& simple_course, QWidget* parent)
+CourseDialog::CourseDialog(const CourseExport& course_export, QWidget* parent)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
-, simple_course{simple_course}
+, course_export{course_export}
 {
 	setWindowModality(Qt::WindowModal);
 	setWindowTitle(tr("Event and course details"));
@@ -49,44 +51,75 @@ SimpleCourseDialog::SimpleCourseDialog(const SimpleCourseExport& simple_course, 
 	
 	course_name_edit = new QLineEdit();
 	form_layout->addRow(tr("Course name:"), course_name_edit);
+
+	start_symbol_code_edit = new QLineEdit();
+	form_layout->addRow(tr("Start symbol code:"), start_symbol_code_edit);
+
+	finish_symbol_code_edit = new QLineEdit();
+	form_layout->addRow(tr("Finish symbol code:"), finish_symbol_code_edit);
 	
 	first_code_spinbox = Util::SpinBox::create(1, 901);
 	form_layout->addRow(tr("First code number:"), first_code_spinbox);
-	
+
+	QRegularExpressionValidator* validator = new QRegularExpressionValidator(QRegularExpression(QStringLiteral("^[0-9.]*$")), this);
+	start_symbol_code_edit->setValidator(validator);
+	finish_symbol_code_edit->setValidator(validator);
+
 	button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
 	
 	auto layout = new QVBoxLayout();
 	layout->addLayout(form_layout, 1);
 	layout->addWidget(button_box, 0);
 	setLayout(layout);
+
+	if (course_export.isPathExportMode())
+	{
+		start_symbol_code_edit->setEnabled(false);
+		finish_symbol_code_edit->setEnabled(false);
+	}
+	else
+	{
+		first_code_spinbox->setEnabled(false);
+	}
 	
-	connect(button_box, &QDialogButtonBox::accepted, this, &SimpleCourseDialog::accept);
-	connect(button_box, &QDialogButtonBox::rejected, this, &SimpleCourseDialog::reject);
+	connect(button_box, &QDialogButtonBox::accepted, this, &CourseDialog::accept);
+	connect(button_box, &QDialogButtonBox::rejected, this, &CourseDialog::reject);
 	updateWidgets();
 }
 
 
-QString SimpleCourseDialog::eventName() const
+QString CourseDialog::eventName() const
 {
 	return event_name_edit->text();
 }
 
-QString SimpleCourseDialog::courseName() const
+QString CourseDialog::courseName() const
 {
 	return course_name_edit->text();
 }
 
-int SimpleCourseDialog::firstCodeNumber() const
+QString CourseDialog::startSymbolCode() const
+{
+	return start_symbol_code_edit->text();
+}
+
+QString CourseDialog::finishSymbolCode() const
+{
+	return finish_symbol_code_edit->text();
+}
+
+int CourseDialog::firstCodeNumber() const
 {
 	return first_code_spinbox->value();
 }
 
-
-void SimpleCourseDialog::updateWidgets()
+void CourseDialog::updateWidgets()
 {
-	event_name_edit->setText(simple_course.eventName());
-	course_name_edit->setText(simple_course.courseName());
-	first_code_spinbox->setValue(simple_course.firstCode());
+	event_name_edit->setText(course_export.eventName());
+	course_name_edit->setText(course_export.courseName());
+	start_symbol_code_edit->setText(course_export.startSymbol());
+	finish_symbol_code_edit->setText(course_export.finishSymbol());
+	first_code_spinbox->setValue(course_export.firstCode());
 }
 
 
