@@ -32,6 +32,7 @@
         <file>images/cursor-zoom.png</file>
         <file>images/cut.png</file>
         <file>images/delete.png</file>
+        <file>images/deselect-objects.png</file>
         <file>images/draw-circle.png</file>
         <file>images/draw-freehand.png</file>
         <file>images/draw-path.png</file>
@@ -72,6 +73,8 @@
         <file>images/rotate-map.png</file>
         <file>images/save.png</file>
         <file>images/scribble-fill-shapes.png</file>
+        <file>images/select-additional-objects.png</file>
+        <file>images/select-all-objects.png</file>
         <file>images/settings.png</file>
         <file>images/symbols.png</file>
         <file>images/symbol_point_explanation.png</file>
