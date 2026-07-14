@@ -124,7 +124,7 @@ bool GdalTemplate::loadTemplateFileImpl()
 	
 	qDebug("GdalTemplate: Using GDAL driver '%s'", reader.format().constData());
 	
-	if (!reader.read(&image))
+	if (!reader.read(&image, map))
 	{
 		setErrorString(reader.errorString());
 		
