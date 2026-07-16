@@ -45,10 +45,10 @@ ColorDropDown::ColorDropDown(const Map* map, const MapColor* initial_color, bool
 	QPixmap pixmap(icon_size, icon_size);
 	
 	int initial_index = 0;
-	int num_colors = map->getNumColors();
+	int num_colors = map->getNumColorPrios();
 	for (int i = 0; i < num_colors; ++i)
 	{
-		const MapColor* color = map->getColor(i);
+		const MapColor* color = map->getColorByPrio(i);
 		if (spot_colors_only && color->getSpotColorMethod() != MapColor::SpotColor)
 			continue;
 		

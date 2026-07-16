@@ -902,7 +902,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	{
 		painter.save();
 		painter.setTransform(transform);
-		if (view->getMap()->getNumColors() == 0)
+		if (view->getMap()->getNumColorPrios() == 0)
 			showHelpMessage(&painter, tr("Empty map!\n\nStart by defining some colors:\nSelect Symbols -> Color window to\nopen the color dialog and\ndefine the colors there."));
 		else if (view->getMap()->getNumSymbols() == 0)
 			showHelpMessage(&painter, tr("No symbols!\n\nNow define some symbols:\nRight-click in the symbol bar\nand select \"New symbol\"\nto create one."));
@@ -1267,7 +1267,7 @@ void MapWidget::updatePlaceholder()
 	if (map->getNumObjects() > 1)
 		return;
 	
-	if (map->getNumColors() < 2
+	if (map->getNumColorPrios() < 2
 	    || map->getNumSymbols() < 2
 	    || map->getNumTemplates() < 2)
 	{

@@ -64,7 +64,7 @@ namespace Ocd
 	struct ColorInfoV8
 	{
 		quint16 number;
-		quint16 RESERVED_MEMBER;
+		qint16 overprint; // undocumented member, overprint: 0 = no, -1 = yes
 		CmykV8  cmyk;
 		PascalString<31> name;
 		quint8  separations[32];
