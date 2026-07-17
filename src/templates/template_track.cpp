@@ -152,7 +152,7 @@ TemplateTrack::TemplateTrack(const QString& path, Map* map)
  : Template(path, map)
 {
 	// set default value
-	track_crs_spec = Georeferencing::geographic_crs_spec;
+	track_crs_spec = Georeferencing::ballpark_geographic_crs_spec;
 	
 	const Georeferencing& georef = map->getGeoreferencing();
 	connect(&georef, &Georeferencing::projectionChanged, this, &TemplateTrack::updateGeoreferencing);
@@ -257,7 +257,7 @@ bool TemplateTrack::loadTemplateFileImpl()
 		return false;
 	}
 	
-	if (!track_crs_spec.isEmpty() && track_crs_spec != Georeferencing::geographic_crs_spec)
+	if (!track_crs_spec.isEmpty() && track_crs_spec != Georeferencing::ballpark_geographic_crs_spec)
 	{
 		setErrorString(tr("This template must be loaded with GDAL/OGR."));
 		return false;
@@ -580,7 +580,7 @@ void TemplateTrack::configureForGPSTrack()
 {
 	is_georeferenced = true;
 	
-	track_crs_spec = Georeferencing::geographic_crs_spec;
+	track_crs_spec = Georeferencing::ballpark_geographic_crs_spec;
 	
 	projected_crs_spec.clear();
 	track.changeMapGeoreferencing(map->getGeoreferencing());
