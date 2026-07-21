@@ -1,5 +1,6 @@
 /*
  *    Copyright 2017-2019, 2025 Kai Pastor
+ *    Copyright 2026 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,22 +21,51 @@
 #ifndef OPENORIENTEERING_MAP_FIND_FEATURE_H
 #define OPENORIENTEERING_MAP_FIND_FEATURE_H
 
+#include <vector>
+
 #include <QtGlobal>
 #include <QObject>
 #include <QPointer>
 #include <QString>
+#include <QTextEdit>
 
 class QAction;
+class QCheckBox;
+class QComboBox;
+class QContextMenuEvent;
 class QDialog;
+class QKeyEvent;
+class QLabel;
+class QPoint;
+class QPushButton;
 class QStackedLayout;
-class QTextEdit;
 class QWidget;
+class QXmlStreamReader;
 
 namespace OpenOrienteering {
 
 class MapEditorController;
+class Object;
 class ObjectQuery;
 class TagSelectWidget;
+
+/**
+ * The context menu (right click or Ctrl+K) is extended by the possibility
+ * to select and insert one of the keywords (e.g., SYMBOL, AND...)
+ */
+class MapFindTextEdit : public QTextEdit
+{
+	Q_OBJECT
+	
+private:
+	void contextMenuEvent(QContextMenuEvent* event) override;
+	void keyPressEvent(QKeyEvent* event) override;
+	void showCustomContextMenu(const QPoint& globalPos);
+	
+private slots:
+	void insertKeyword(QAction* action);
+};
+
 
 /**
  * Provides an interactive feature for finding objects in the map.
@@ -54,13 +84,13 @@ public:
 	
 	void setEnabled(bool enabled);
 	
-	QAction* showDialogAction() { return show_action; }
+	QAction* showDialogAction() const { return show_action; }
 	
-	QAction* findNextAction() { return find_next_action; }
+	QAction* findNextAction() const { return find_next_action; }
 	
-	static void findNextMatchingObject(MapEditorController& controller, const ObjectQuery& query);
+	static void findNextMatchingObject(MapEditorController& controller, const ObjectQuery& query, bool center_selection_visibility = false);
 	
-	static void findAllMatchingObjects(MapEditorController& controller, const ObjectQuery& query);
+	static void findAllMatchingObjects(MapEditorController& controller, const ObjectQuery& query, bool center_selection_visibility = false);
 	
 private:
 	void showDialog();
@@ -69,25 +99,49 @@ private:
 	
 	void findNext();
 	
+	void deleteAndFindNext();
+	
 	void findAll();
+	
+	void objectSelectionChanged();
+	
+	void centerView();
 	
 	void showHelp() const;
 	
 	void tagSelectorToggled(bool active);
 	
+	void querySelected();
+	
+	void loadQueryCollection();
+	
+	void showUnsupportedElementWarning(QXmlStreamReader& xml) const;
 	
 	MapEditorController& controller;
 	QPointer<QDialog> find_dialog;           // child of controller's window
 	QStackedLayout* editor_stack = nullptr;  // child of find_dialog
-	QTextEdit* text_edit = nullptr;          // child of find_dialog
+	MapFindTextEdit* text_edit = nullptr;    // child of find_dialog
 	TagSelectWidget* tag_selector = nullptr; // child of find_dialog
 	QWidget* tag_selector_buttons = nullptr; // child of find_dialog
+	QPushButton* delete_find_next = nullptr; // child of find_dialog
+	QCheckBox* center_view = nullptr;        // child of find_dialog
+	QLabel* selected_objects = nullptr;      // child of find_dialog
+	QComboBox* query_collection = nullptr;   // child of find_dialog
 	QAction* show_action = nullptr;          // child of this
 	QAction* find_next_action = nullptr;     // child of this
 	
+	Object* previous_object = nullptr;
+	
+	struct QueryCollectionItem {
+		QString name;
+		QString query;
+		QString hint = {};
+	};
+	
+	std::vector<QueryCollectionItem> query_collection_list;
+	
 	Q_DISABLE_COPY(MapFindFeature)
 };
-
 
 }  // namespace OpenOrienteering
 

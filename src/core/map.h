@@ -121,6 +121,7 @@ public:
 	{
 		FullVisibility,
 		PartialVisibility,
+		CenterFullVisibility,
 		IgnoreVisibilty
 	};
 	

@@ -133,7 +133,7 @@ void Object::copyFrom(const Object& other)
 	extent = other.extent;
 }
 
-bool Object::equals(const Object* other, bool compare_symbol) const
+bool Object::equals(const Object* other, bool compare_symbol, bool compare_tags) const
 {
 	if (type != other->type)
 		return false;
@@ -186,11 +186,15 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 			return false;
 	}
 	
-	if (object_tags.empty())
-		return other->object_tags.empty();
+	if (compare_tags)
+	{
+		if (object_tags.empty())
+			return other->object_tags.empty();
 	
-	using std::begin; using std::end;
-	return std::is_permutation(object_tags.begin(), object_tags.end(), other->object_tags.begin(), other->object_tags.end());
+		using std::begin; using std::end;
+		return std::is_permutation(object_tags.begin(), object_tags.end(), other->object_tags.begin(), other->object_tags.end());
+	}
+	return true;
 }
 
 

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2020, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -214,7 +214,7 @@ public:
 	/**
 	 * Adjusts the viewport so the given rect is inside the view.
 	 */
-	void ensureVisibilityOfRect(QRectF map_rect, ZoomOption zoom_option);  // clazy:exclude=function-args-by-ref
+	void ensureVisibilityOfRect(QRectF map_rect, ZoomOption zoom_option, bool center_view = false);  // clazy:exclude=function-args-by-ref
 	
 	/**
 	 * Sets the view so the rect is centered and zooomed to fill the widget.
@@ -584,4 +584,4 @@ MapWidget::CoordsType MapWidget::getCoordsDisplay() const
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_MAP_WIDGET_H
