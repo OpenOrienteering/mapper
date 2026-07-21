@@ -85,6 +85,7 @@ qt5_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 # (To be used by Mapper executable and by system tests.)
 
 set(Mapper_Common_SRCS
+  cli.cpp
   global.cpp
   mapper_resource.cpp
   settings.cpp
