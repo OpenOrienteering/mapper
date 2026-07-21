@@ -1421,6 +1421,24 @@ void MapEditorController::createMenuAndToolbars()
 	context_menu->addAction(switch_dashes_act);
 	context_menu->addAction(connect_paths_act);
 	context_menu->addAction(copy_coords_act);
+	
+	// Show keyboard shortcuts in toolbar tooltips
+	for (auto* toolbar : {main_toolbar, toolbar_view, toolbar_mapparts, toolbar_drawing, toolbar_editing, toolbar_advanced_editing})
+	{
+		for (auto* action : toolbar->actions())
+		{
+			if (action && !action->isSeparator() && !action->shortcut().isEmpty())
+			{
+				auto label = action->text();
+				// Remove unescaped '&', cf. qt_strippedText in qtbase/src/widgets/kernel/qaction.cpp
+				for (int i = 0; i < label.size(); ++i) {
+					if (label.at(i) == QLatin1Char('&'))
+						label.remove(i, 1);
+				}
+				action->setToolTip(tr("%1 (%2)").arg(label, action->shortcut().toString()));
+			}
+		}
+	}
 }
 
 void MapEditorController::createMobileGUI()
