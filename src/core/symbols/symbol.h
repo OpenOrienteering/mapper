@@ -36,6 +36,7 @@
 #include <QMetaType>
 #include <QRgb>
 #include <QString>
+#include <QVariant>
 
 class QXmlStreamReader;
 class QXmlStreamWriter;
@@ -528,6 +529,26 @@ public:
 	 */
 	virtual int getMinimumLength() const;
 	
+	/**
+	 * Sets an auxiliary property of this symbol.
+	 */
+	void setAuxiliaryProperty(int key, QVariant value) { auxiliary_properties.insert(key, value); }
+	
+	/**
+	 * Returns an auxiliary property of this symbol.
+	 */
+	QVariant getAuxiliaryProperty(int key) const { return auxiliary_properties.value(key); }
+	
+	/**
+	 * Returns an auxiliary property of this symbol or a default value.
+	 */
+	QVariant getAuxiliaryProperty(int key, QVariant default_value) const { return auxiliary_properties.value(key, default_value); }
+	
+	/**
+	 * Removes all auxiliary properties of this symbol.
+	 */
+	void clearAuxiliaryProperties() { auxiliary_properties.clear(); }
+	
 protected:
 	/**
 	 * Sets the rotatability state of the symbol.
@@ -650,6 +671,7 @@ private:
 	bool is_hidden;           /// \see isHidden()
 	bool is_protected;        /// \see isProtected()
 	bool is_rotatable = false;
+	QHash<int, QVariant> auxiliary_properties;	/// For temporary use during import. Not to be saved on export.
 };
 
 

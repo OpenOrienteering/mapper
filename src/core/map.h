@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2020, 2024 Kai Pastor
+ *    Copyright 2013-2020, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1375,6 +1375,8 @@ public:
 	 */
 	void setOtherDirty();
 	
+	/** Removes all auxiliary symbol properties from all symbols. */
+	void clearAuxiliarySymbolProperties();
 	
 	// Static
 	

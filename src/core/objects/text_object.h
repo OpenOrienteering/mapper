@@ -26,6 +26,7 @@
 
 #include <QtGlobal>
 #include <QFontMetricsF>
+#include <QMetaType>
 #include <QPointF>
 #include <QRectF>
 #include <QString>
@@ -392,5 +393,8 @@ const TextObjectLineInfo*TextObject::getLineInfo(int i) const
 
 
 }  // namespace OpenOrienteering
+
+Q_DECLARE_METATYPE(OpenOrienteering::TextObject::HorizontalAlignment)
+Q_DECLARE_METATYPE(OpenOrienteering::TextObject::VerticalAlignment)
 
 #endif // OPENORIENTEERING_TEXT_OBJECT_H

@@ -1,0 +1,272 @@
+  0
+SECTION
+  2
+HEADER
+  9
+$EXTNAMES
+290
+     1
+  9
+$EXTMIN
+ 10
+0.000
+ 20
+0.000
+  9
+$EXTMAX
+ 10
+256.000
+ 20
+0.000
+  0
+ENDSEC
+  0
+SECTION
+  2
+TABLES
+  0
+TABLE
+  2
+LAYER
+  2
+2
+100
+AcDbSymbolTable
+ 70
+     2
+  0
+LAYER
+  5
+25
+100
+AcDbSymbolTableRecord
+100
+AcDbLayerTableRecord
+  2
+901000
+ 70
+     0
+ 62
+     7
+  6
+CONTINUOUS
+  0
+LAYER
+  5
+25
+100
+AcDbSymbolTableRecord
+100
+AcDbLayerTableRecord
+  2
+902000
+ 70
+     0
+ 62
+     7
+  6
+CONTINUOUS
+  0
+LAYER
+  5
+25
+100
+AcDbSymbolTableRecord
+100
+AcDbLayerTableRecord
+  2
+902001
+ 70
+     0
+ 62
+     7
+  6
+CONTINUOUS
+  0
+ENDTAB
+  0
+ENDSEC
+  0
+SECTION
+  2
+ENTITIES
+  0
+MTEXT
+ 5
+27
+100
+AcDbEntity
+  8
+902000
+100
+AcDbMText
+ 10
+-8.110
+ 20
+-0.760
+ 40
+2.822
+  1
+Test1
+ 50
+-17.2
+ 71
+7
+  0
+MTEXT
+ 5
+28
+100
+AcDbEntity
+  8
+902000
+100
+AcDbMText
+ 10
+8.000
+ 20
+-4.780
+ 40
+2.822
+  1
+Test4
+ 50
+-348.4
+ 71
+7
+  0
+MTEXT
+ 5
+29
+100
+AcDbEntity
+  8
+902001
+100
+AcDbMText
+ 10
+-0.130
+ 20
+-11.840
+ 40
+3.528
+  1
+Test2
+ 50
+53.2
+ 71
+7
+  0
+MTEXT
+ 5
+2A
+100
+AcDbEntity
+  8
+902000
+100
+AcDbMText
+ 10
+7.400
+ 20
+-10.940
+ 40
+2.822
+  1
+Test4
+ 50
+-348.4
+ 71
+7
+  0
+MTEXT
+ 5
+2B
+100
+AcDbEntity
+  8
+902000
+100
+AcDbMText
+ 10
+-9.680
+ 20
+-5.750
+ 40
+2.822
+  1
+Test1
+ 50
+-17.2
+ 71
+7
+  0
+MTEXT
+ 5
+2C
+100
+AcDbEntity
+  8
+902000
+100
+AcDbMText
+ 10
+-11.160
+ 20
+-10.750
+ 40
+2.822
+  1
+Test1
+ 50
+-17.2
+ 71
+7
+  0
+MTEXT
+ 5
+2D
+100
+AcDbEntity
+  8
+901000
+100
+AcDbMText
+ 10
+-0.760
+ 20
+1.350
+ 40
+6.350
+  1
+Test3
+ 50
+0.0
+ 71
+7
+  0
+MTEXT
+ 5
+2E
+100
+AcDbEntity
+  8
+901000
+100
+AcDbMText
+ 10
+16.920
+ 20
+0.150
+ 40
+6.350
+  1
+Test3
+ 50
+0.0
+ 71
+7
+  0
+ENDSEC
+  0
+EOF
