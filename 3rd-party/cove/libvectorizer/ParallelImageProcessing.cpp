@@ -64,7 +64,7 @@ QImage withColorTable(const QImage& original, int scanline, int stripe_height)
 	stripe.setColorTable(original.colorTable());
 	*cleanup_data = stripe;  // increase reference count -> force detach on write.
 	return stripe;
-};
+}
 
 }  // namespace
 
