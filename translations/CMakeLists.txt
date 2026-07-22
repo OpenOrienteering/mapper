@@ -293,7 +293,7 @@ if(UNIX AND NOT APPLE AND NOT ANDROID)
 	if(Mapper_DEVELOPMENT_BUILD)
 		# Only development builds are allowed to update the source directories.
 		set(update_sources
-		  COMMAND "${CMAKE_COMMAND}" -E copy_if_different "../packaging/linux/Mapper.desktop" "${PROJECT_SOURCE_DIR}/packaging/linux/"
+		  COMMAND "${CMAKE_COMMAND}" -E copy_if_different "../packaging/linux/openorienteering-mapper.desktop" "${PROJECT_SOURCE_DIR}/packaging/linux/"
 		  COMMAND "${CMAKE_COMMAND}" -E copy_if_different "../packaging/linux/openorienteering-mapper.xml" "${PROJECT_SOURCE_DIR}/packaging/linux/"
 		)
 	endif()
@@ -304,7 +304,7 @@ if(UNIX AND NOT APPLE AND NOT ANDROID)
 	add_custom_command(OUTPUT text-files.stamp
 	    desktop_file_comment.txt mime_type_comment.txt
 	  COMMAND "${CMAKE_COMMAND}" -E make_directory "../packaging/linux"
-	  COMMAND "${CMAKE_COMMAND}" -E copy "${PROJECT_SOURCE_DIR}/packaging/linux/Mapper.desktop" "../packaging/linux/"
+	  COMMAND "${CMAKE_COMMAND}" -E copy "${PROJECT_SOURCE_DIR}/packaging/linux/openorienteering-mapper.desktop" "../packaging/linux/"
 	  COMMAND "${CMAKE_COMMAND}" -E copy "${PROJECT_SOURCE_DIR}/packaging/linux/openorienteering-mapper.xml" "../packaging/linux/"
 	  COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/translate_text_files.sh" ${translations}
 	  ${update_sources}

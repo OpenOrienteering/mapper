@@ -44,7 +44,7 @@ if(MAPPER_APP_ID STREQUAL "default" OR NOT MAPPER_APP_ID)
 endif()
 
 # The folder where to generate the qmake project. Recorded in .gitignore.
-set(MAPPER_PRO_DIR "${CMAKE_CURRENT_BINARY_DIR}/Mapper")
+set(MAPPER_PRO_DIR "${CMAKE_CURRENT_BINARY_DIR}/openorienteering-mapper")
 # The folder where to stage the APK sources for the actual app ID.
 set(ANDROID_PACKAGE_SOURCE_DIR "${MAPPER_PRO_DIR}/${MAPPER_APP_ID}")
 
@@ -102,7 +102,7 @@ endif()
 # For Android, we create a dummy qmake project which provides
 # - configuration for running androiddeployqt from CPackConfig.cmake, and
 # - a project for debugging the Android app in Qt Creator
-# The directory name must match the Mapper binary.
+# The directory name must match the openorienteering-mapper binary.
 configure_file(
   "Mapper.pro.in"
   "${MAPPER_PRO_DIR}/Mapper.pro"

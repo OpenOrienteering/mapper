@@ -41,8 +41,8 @@ done | sed -e "
 sed -e '
   /^Comment=/ r desktop_file_comment.txt
   /^Comment\[/ d
-' -i -- "../packaging/linux/Mapper.desktop" \
-&& rm -f "../packaging/linux/Mapper.desktop--"
+' -i -- "../packaging/linux/openorienteering-mapper.desktop" \
+&& rm -f "../packaging/linux/openorienteering-mapper.desktop--"
 
 for FILE
 do
