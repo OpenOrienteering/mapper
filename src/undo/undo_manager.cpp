@@ -460,7 +460,7 @@ void UndoManager::loadRedo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 	auto loaded_steps = loadSteps(xml, symbol_dict);
 	auto capacity = max_undo_steps - undo_steps.size();
 	if (loaded_steps.size() > capacity)
-		loaded_steps.erase(begin(loaded_steps) + StepList::difference_type(loaded_steps.size() - capacity), end(loaded_steps));
+		loaded_steps.erase(begin(loaded_steps), begin(loaded_steps) + StepList::difference_type(loaded_steps.size() - capacity));
 		
 	clearRedoSteps();
 	UndoManager::State old_state(this);
