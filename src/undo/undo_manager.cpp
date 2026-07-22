@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2018 Kai Pastor
+ *    Copyright 2014-2019, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -41,8 +41,6 @@
 
 namespace OpenOrienteering {
 
-Q_STATIC_ASSERT(UndoManager::max_undo_steps < static_cast<unsigned int>(std::numeric_limits<int>::max()));
-
 
 // ### UndoManager::State ###
 
@@ -62,10 +60,13 @@ UndoManager::State::State(UndoManager const *manager)
 UndoManager::UndoManager(Map* map)
 : QObject()
 , map(map)
+, max_undo_steps(128)
 , current_index(0)
 , clean_state_index(-1)
 , loaded_state_index(-1)
 {
+	Q_ASSERT(max_undo_steps < static_cast<unsigned int>(std::numeric_limits<int>::max()));
+	
 	undo_steps.reserve(max_undo_steps + 1);  // +1 is for push before trim
 	if (map)
 	{
@@ -444,8 +445,7 @@ void UndoManager::loadUndo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 	
 	clear();
 	UndoManager::State old_state(this);
-	using std::swap;
-	swap(undo_steps, loaded_steps);
+	std::swap(undo_steps, loaded_steps);
 	current_index = int(undo_steps.size());
 	setLoaded();
 	setClean();
@@ -460,7 +460,7 @@ void UndoManager::loadRedo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 	auto loaded_steps = loadSteps(xml, symbol_dict);
 	auto capacity = max_undo_steps - undo_steps.size();
 	if (loaded_steps.size() > capacity)
-		loaded_steps.erase(begin(loaded_steps) + StepList::difference_type(loaded_steps.size() - capacity), end(loaded_steps));
+		loaded_steps.erase(begin(loaded_steps), begin(loaded_steps) + StepList::difference_type(loaded_steps.size() - capacity));
 		
 	clearRedoSteps();
 	UndoManager::State old_state(this);
@@ -472,7 +472,7 @@ void UndoManager::loadRedo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 UndoManager::StepList UndoManager::loadSteps(QXmlStreamReader& xml, SymbolDictionary& symbol_dict) const
 {
 	StepList steps;
-	steps.reserve(max_undo_steps + 1);
+	steps.reserve(max_undo_steps);
 	while (xml.readNextStartElement())
 	{
 		if (xml.name() == QLatin1String("step"))

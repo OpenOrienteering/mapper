@@ -1,5 +1,6 @@
 /*
  *    Copyright 2014 Kai Pastor
+ *    Copyright 2026 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,14 +20,52 @@
 
 #include "undo_manager_t.h"
 
-#include <QtTest>
+#include <algorithm>
+#include <initializer_list>
+#include <memory>
 
+#include <QtTest>
+#include <QBuffer>
+#include <QIODevice>
+
+#include "core/map.h"
+#include "core/objects/object.h"
+#include "core/symbols/point_symbol.h"
+#include "core/symbols/symbol.h"
+#include "fileformats/file_format.h"
+#include "fileformats/file_import_export.h"
+#include "fileformats/xml_file_format.h"
+#include "undo/object_undo.h"
 #include "undo/undo.h"
 #include "undo/undo_manager.h"
 
-namespace OpenOrienteering { class Map; }
 
 using namespace OpenOrienteering;
+
+namespace
+{
+	bool saveAndLoadMap(const Map& input, Map& out)
+	{
+		XMLFileFormat format;
+		auto exporter = format.makeExporter({}, &input, nullptr);
+		auto importer = format.makeImporter({}, &out, nullptr);
+		if (exporter && importer)
+		{
+			QBuffer buffer;
+			exporter->setDevice(&buffer);
+			importer->setDevice(&buffer);
+			if (buffer.open(QIODevice::ReadWrite)
+				&& exporter->doExport()
+				&& buffer.seek(0)
+				&& importer->doImport())
+			{
+				return true;  // success
+			}
+		}
+		out.reset();  // failure
+		return false;
+	}
+}
 
 
 // test
@@ -244,4 +283,158 @@ void UndoManagerTest::canRedoChanged(bool can_redo)
 }
 
 
-QTEST_GUILESS_MAIN(UndoManagerTest)
+// test
+void UndoManagerTest::testSaveAndLoad()
+{
+	Map map;
+	map.undoManager().max_undo_steps = 3;
+	
+	auto point_symbol = new PointSymbol();
+	point_symbol->setRotatable(true);
+	map.addSymbol(point_symbol, 0);
+	
+	auto addObject = [&point_symbol](Map* map, double rotation)
+	{
+		auto object = new PointObject(point_symbol);
+		object->setRotation(rotation);
+		auto undo_step = new DeleteObjectsUndoStep(map);
+		map->addObject(object);
+		undo_step->addObject(map->getCurrentPart()->findObjectIndex(object));
+		map->push(undo_step);
+	};
+	
+	for(double rotation : {1.0, 2.0, 3.0})
+	{
+		addObject(&map, rotation);
+	}
+	QCOMPARE(map.getNumObjects(), 3);
+	auto existsObject = [](const Map* map, double rotation) { 
+		return map->existsObject([rotation](auto const* o) {
+			return qFuzzyCompare(o->getRotation(), rotation);
+		});
+	};
+	QVERIFY(existsObject(&map, 1.0));
+	auto existsAllObjects = [&existsObject](const Map* map, std::initializer_list<double> members) {
+		return std::all_of(begin(members), end(members), [&existsObject, map](auto& member) {
+			return existsObject(map, member);
+		});
+	};
+	QVERIFY(existsAllObjects(&map, {1.0, 2.0, 3.0}));
+	QVERIFY(map.undoManager().canUndo());
+	QVERIFY(!map.undoManager().canRedo());
+	QCOMPARE(map.undoManager().undoStepCount(), 3);
+	
+	map.undoManager().undo();
+	QCOMPARE(map.getNumObjects(), 2);
+	QVERIFY(map.undoManager().canUndo());
+	QVERIFY(map.undoManager().canRedo());
+	QCOMPARE(map.undoManager().undoStepCount(), 2);
+	QCOMPARE(map.undoManager().redoStepCount(), 1);
+	
+	map.undoManager().redo();
+	QCOMPARE(map.getNumObjects(), 3);
+	QVERIFY(map.undoManager().canUndo());
+	QVERIFY(!map.undoManager().canRedo());
+	QCOMPARE(map.undoManager().undoStepCount(), 3);
+	
+	// add another object, causing the oldest undo step to be deleted
+	addObject(&map, 4.0);
+	while (map.undoManager().canUndo())
+	{
+		map.undoManager().undo();
+	}
+	QCOMPARE(map.getNumObjects(), 1);
+	QVERIFY(existsAllObjects(&map, {1.0}));
+	while (map.undoManager().canRedo())
+	{
+		map.undoManager().redo();
+	}
+	QCOMPARE(map.getNumObjects(), 4);
+	QVERIFY(existsAllObjects(&map, {1.0, 2.0, 3.0, 4.0}));
+	
+	// Normal save and load cycle with 3 undo steps and 0 redo steps
+	Map reloaded_map;
+	reloaded_map.undoManager().max_undo_steps = 3;
+	QVERIFY(saveAndLoadMap(map, reloaded_map));
+	QCOMPARE(reloaded_map.getNumObjects(), 4);
+	QVERIFY(existsAllObjects(&reloaded_map, {1.0, 2.0, 3.0, 4.0}));
+	reloaded_map.undoManager().loaded_state_index = 0;	// avoid message box "Undoing this step will go beyond the point..."
+	QVERIFY(reloaded_map.undoManager().canUndo());
+	QVERIFY(!reloaded_map.undoManager().canRedo());
+	QCOMPARE(reloaded_map.undoManager().undoStepCount(), 3);
+	
+	while (reloaded_map.undoManager().canUndo())
+	{
+		reloaded_map.undoManager().undo();
+	}
+	QCOMPARE(reloaded_map.getNumObjects(), 1);
+	QVERIFY(existsAllObjects(&reloaded_map, {1.0}));
+	
+	// Save and load cycle with 3 undo steps and 0 redo steps
+	// where number of undo steps in loaded map is larger than max. undo/redo steps,
+	// thus reducing the number of stored undo steps
+	Map reloaded_map2;
+	reloaded_map2.undoManager().max_undo_steps = 2;
+	QVERIFY(saveAndLoadMap(map, reloaded_map2));
+	QCOMPARE(reloaded_map2.getNumObjects(), 4);
+	QVERIFY(existsAllObjects(&reloaded_map2, {1.0, 2.0, 3.0, 4.0}));
+	reloaded_map2.undoManager().loaded_state_index = 0;	// avoid message box "Undoing this step will go beyond the point..."
+	QVERIFY(reloaded_map2.undoManager().canUndo());
+	QVERIFY(!reloaded_map2.undoManager().canRedo());
+	QCOMPARE(reloaded_map2.undoManager().undoStepCount(), 2);
+	
+	reloaded_map2.undoManager().undo();
+	QVERIFY(existsAllObjects(&reloaded_map2, {1.0, 2.0, 3.0}));
+	reloaded_map2.undoManager().undo();
+	QCOMPARE(reloaded_map2.getNumObjects(), 2);
+	QVERIFY(existsAllObjects(&reloaded_map2, {1.0, 2.0}));
+	
+	// now create source map with 0 undo steps and 3 redo steps
+	while (map.undoManager().canUndo())
+	{
+		map.undoManager().undo();
+	}
+	QCOMPARE(map.getNumObjects(), 1);
+	
+	// Normal save and load cycle with 0 undo steps and 3 redo steps
+	Map reloaded_map3;
+	reloaded_map3.undoManager().max_undo_steps = 3;
+	QVERIFY(saveAndLoadMap(map, reloaded_map3));
+	QCOMPARE(reloaded_map3.getNumObjects(), 1);
+	QVERIFY(existsAllObjects(&reloaded_map3, {1.0}));
+	QVERIFY(!reloaded_map3.undoManager().canUndo());
+	QVERIFY(reloaded_map3.undoManager().canRedo());
+	QCOMPARE(reloaded_map3.undoManager().redoStepCount(), 3);
+	reloaded_map3.undoManager().redo();
+	QVERIFY(existsAllObjects(&reloaded_map3, {1.0, 2.0}));
+	reloaded_map3.undoManager().redo();
+	QVERIFY(existsAllObjects(&reloaded_map3, {1.0, 2.0, 3.0}));
+	reloaded_map3.undoManager().redo();
+	QVERIFY(existsAllObjects(&reloaded_map3, {1.0, 2.0, 3.0, 4.0}));
+	
+	// Save and load cycle with 0 undo steps and 3 redo steps
+	// where number of redo steps in loaded map is larger than max. undo/redo steps,
+	// thus reducing the number of stored redo steps
+	Map reloaded_map4;
+	reloaded_map4.undoManager().max_undo_steps = 2;
+	QVERIFY(saveAndLoadMap(map, reloaded_map4));
+	QCOMPARE(reloaded_map4.getNumObjects(), 1);
+	QVERIFY(existsAllObjects(&reloaded_map4, {1.0}));
+	QVERIFY(!reloaded_map4.undoManager().canUndo());
+	QVERIFY(reloaded_map4.undoManager().canRedo());
+	QCOMPARE(reloaded_map4.undoManager().redoStepCount(), 2);
+	reloaded_map4.undoManager().redo();
+	QVERIFY(existsAllObjects(&reloaded_map4, {1.0, 2.0}));
+	reloaded_map4.undoManager().redo();
+	QVERIFY(existsAllObjects(&reloaded_map4, {1.0, 2.0, 3.0}));
+}
+
+/*
+ * We don't need a real GUI window.
+ */
+namespace {
+	auto const Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "offscreen");  // clazy:exclude=non-pod-global-static
+}
+
+
+QTEST_MAIN(UndoManagerTest)

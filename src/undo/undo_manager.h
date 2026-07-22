@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014, 2017, 2018 Kai Pastor
+ *    Copyright 2014, 2017-2019, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -36,11 +36,12 @@ class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+class UndoManagerTest;
+
 namespace OpenOrienteering {
 
 class Map;
 class UndoStep;
-
 
 /**
  * Manages the history of steps for undoing and redoing changes to a map.
@@ -50,6 +51,7 @@ class UndoStep;
  */
 class UndoManager : public QObject
 {
+friend class ::UndoManagerTest;
 Q_OBJECT
 public:
 	/**
@@ -176,7 +178,7 @@ public:
 	void saveUndo(QXmlStreamWriter& xml) const;
 	
 	/**
-	 * Saves the undo steps to the file in xml format.
+	 * Saves the redo steps to the file in xml format.
 	 */
 	void saveRedo(QXmlStreamWriter& xml) const;
 	
@@ -193,16 +195,6 @@ public:
 	 * Any existing redo steps will be deleted first, but undo steps are left untouched.
 	 */
 	void loadRedo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
-	
-	
-	/**
-	 * The maximum number of steps kept for undo() and redo(), respectively.
-	 * 
-	 * This limits the amount of memory occupied by undo steps.
-	 * 
-	 * @todo Make this configurable (maybe by used memory instead of step count)
-	 */
-	static constexpr std::size_t max_undo_steps = 128;
 	
 signals:
 	/**
@@ -307,6 +299,15 @@ private:
 	Map* const map;
 	
 	/**
+	 * The maximum number of steps kept for undo() and redo(), respectively.
+	 * 
+	 * This limits the amount of memory occupied by undo steps.
+	 * 
+	 * @todo Make this configurable (maybe by used memory instead of step count)
+	 */
+	std::size_t max_undo_steps;
+	
+	/**
 	 * The index where push will place the next undo step.
 	 * 
 	 * The latest undo step (if any) is just before this index.
@@ -340,4 +341,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_UNDO_MANAGER_H
