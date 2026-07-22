@@ -371,7 +371,7 @@ void scale(Map& map, unsigned int source_scale, unsigned int target_scale)
 			++symbols_changed;
 		}
 	}
-	QCOMPARE(symbols_changed, 189);
+	QCOMPARE(symbols_changed, 193);
 }
 
 }  // namespace ISOM_2017_2
@@ -453,7 +453,7 @@ void mergeISOM(Map& target, const QDir& symbol_set_dir)
 	{
 		auto const index = i - 1;
 		auto* const color = map.getColor(index);
-		if (color->getSpotColorName() == QStringLiteral("GREEN 100, BLACK 50")
+		if (color->getSpotColorName() == QStringLiteral("GREEN 87.9, BLACK 30, BLUE 100")
 		    || color->getSpotColorName() == QStringLiteral("GREEN 60") )
 		{
 			markSymbolsByColor(map, color);
@@ -493,7 +493,11 @@ void mergeISOM(Map& target, const QDir& symbol_set_dir)
 	// Postprocess CRT: Find symbols by code number
 	for (auto& item : rules)
 	{
-		QVERIFY(item.type != SymbolRule::NoAssignment);
+		QVERIFY2(item.type != SymbolRule::NoAssignment,
+		         qPrintable(QString::fromLatin1("Invalid rule in %1:  %2  %3")
+		                    .arg(crt_filename,
+		                         item.symbol ? item.symbol->getNumberAsString() : QStringLiteral("???"),
+		                         item.query.toString())));
 		QVERIFY(item.symbol);
 		QCOMPARE(item.query.getOperator(), ObjectQuery::OperatorSearch);
 		
@@ -588,7 +592,7 @@ void scale(Map& map, unsigned int /*source_scale*/, unsigned int target_scale)
 		}
 	}
 	QCOMPARE(track_symbols_changed, 15);
-	QCOMPARE(general_symbols_changed, 116);
+	QCOMPARE(general_symbols_changed, 118);
 }
 
 }  // namespace ISSkiOM_2019
@@ -836,8 +840,26 @@ void SymbolSetTool::processSymbolSet()
 		auto color = map.getMapColor(i);
 		if (color->getSpotColorMethod() == MapColor::CustomColor)
 		{
-			color->setCmykFromSpotColors();
-			color->setRgbFromSpotColors();
+			auto color_copy = *color;
+			color_copy.setCmykFromSpotColors();
+			auto const calculated_cmyk = color_copy.getCmyk();
+			
+			if (color->getCmyk() != calculated_cmyk)
+			{
+				auto cmyk_to_string = [](auto cmyk) { return QString::fromLatin1("%1/%2/%3/%4")
+					        .arg(100*cmyk.c).arg(100*cmyk.m).arg(100*cmyk.y).arg(100*cmyk.k);
+				};
+				qInfo("CMYK from spot colors and custom CMYK differ in color \"%s\" (%s vs %s). Keeping the custom CMYK.",
+				      qPrintable(color->getName()),
+				      qPrintable(cmyk_to_string(calculated_cmyk)),
+				      qPrintable(cmyk_to_string(color->getCmyk())));
+				color->setRgbFromCmyk();
+			}
+			else
+			{
+				color->setCmykFromSpotColors();
+				color->setRgbFromSpotColors();
+			}
 		}
 		else
 		{

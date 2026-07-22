@@ -55,7 +55,7 @@
 305    waterway = stream
 
 520    landuse = allotments
-520.2  landuse = cemetery
+520    landuse = cemetery
 520    landuse = commercial
 # 710    landuse = construction
 401    landuse = farmland
