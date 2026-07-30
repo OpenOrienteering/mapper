@@ -9,7 +9,7 @@
         </projected_crs>
         <geographic_crs id="Geographic coordinates">
             <spec language="PROJ.4">+proj=latlong +datum=WGS84</spec>
-            <realization_spec language="PROJ.4">EPSG:9057</realization_spec>
+            <realization_spec/>
             <ref_point_deg lat="40.02021349" lon="-105.00001013"/>
         </geographic_crs>
     </georeferencing>
@@ -30,38 +30,14 @@
         </symbols>
         <parts count="1" current="0">
             <part name="default part">
-                <objects count="4">
+                <objects count="1">
                     <object type="1" symbol="0">
-                        <coords count="2">
-                            <coord x="-157121" y="175794"/>
-                            <coord x="-157952" y="169878" flags="16"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                    <object type="1" symbol="0">
-                        <coords count="2">
-                            <coord x="-150597" y="174877"/>
-                            <coord x="-151429" y="168961"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                    <object type="1" symbol="0">
-                        <coords count="2">
-                            <coord x="-157646" y="175435"/>
-                            <coord x="-150191" y="174387"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                    <object type="1" symbol="0">
-                        <coords count="2">
-                            <coord x="-158358" y="170367"/>
-                            <coord x="-150904" y="169320"/>
+                        <coords count="5">
+                            <coord x="-158217" y="170205"/>
+                            <coord x="-157505" y="175272"/>
+                            <coord x="-150981" y="174356"/>
+                            <coord x="-151693" y="169288"/>
+                            <coord x="-158217" y="170205" flags="18"/>
                         </coords>
                         <pattern rotation="0">
                             <coord x="0" y="0"/>
@@ -70,22 +46,18 @@
                 </objects>
             </part>
         </parts>
-        <templates count="2" first_front_template="0">
-            <template type="TemplateTrack" open="true" name="template-track-NA-2019.gpx" path="template-track-NA-2019.gpx" relpath="template-track-NA-2019.gpx" georef="true">
-                <crs_spec>+proj=latlong +datum=WGS84</crs_spec>
-            </template>
+        <templates count="1" first_front_template="1">
             <template type="OgrTemplate" open="true" name="template-track-NA-2019.gpx" path="template-track-NA-2019.gpx" relpath="template-track-NA-2019.gpx" georef="true">
                 <crs_spec>+proj=latlong +datum=WGS84</crs_spec>
             </template>
             <defaults use_meters_per_pixel="true" meters_per_pixel="0" dpi="0" scale="0"/>
         </templates>
         <view>
-            <grid color="#80646464" display="0" alignment="1" additional_rotation="0" unit="1" h_spacing="1" v_spacing="1" h_offset="0" v_offset="0" snapping_enabled="true"/>
-            <map_view zoom="16" position_x="-155208" position_y="173045">
+            <grid color="#646464" display="0" alignment="1" additional_rotation="0" unit="0" h_spacing="0.1" v_spacing="0.1" h_offset="0" v_offset="0" snapping_enabled="true"/>
+            <map_view zoom="32" position_x="-154564" position_y="171849">
                 <map opacity="1" visible="true"/>
-                <templates count="2">
+                <templates count="1">
                     <ref template="0" visible="true" opacity="1"/>
-                    <ref template="1" visible="true" opacity="1"/>
                 </templates>
             </map_view>
         </view>

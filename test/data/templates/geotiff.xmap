@@ -9,6 +9,7 @@
         </projected_crs>
         <geographic_crs id="Geographic coordinates">
             <spec language="PROJ.4">+proj=latlong +datum=WGS84</spec>
+            <realization_spec language="PROJ.4">EPSG:9057</realization_spec>
             <ref_point_deg lat="51.3793253" lon="21.15318339"/>
         </geographic_crs>
     </georeferencing>
