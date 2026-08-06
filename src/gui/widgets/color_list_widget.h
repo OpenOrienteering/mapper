@@ -22,6 +22,8 @@
 #ifndef OPENORIENTEERING_COLOR_LIST_WIDGET_H
 #define OPENORIENTEERING_COLOR_LIST_WIDGET_H
 
+#include <utility>
+
 #include <QObject>
 #include <QWidget>
 
@@ -60,6 +62,7 @@ protected slots:
 	void moveColorUp();
 	void moveColorDown();
 	void editCurrentColor();
+	void removeUnusedColors();
 	void showHelp() const;
 	
 	void cellChange(int row, int column);
@@ -75,6 +78,7 @@ protected:
 private:
 	void addRow(int row);
 	void updateRow(int row);
+	std::pair<QString, bool> determineColorUsage(const OpenOrienteering::MapColor* color_to_be_removed) const;
 	bool confirmColorDeletion(const OpenOrienteering::MapColor* color_to_be_removed) const;
 	
 	// Color list
@@ -96,4 +100,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif  // OPENORIENTEERING_COLOR_LIST_WIDGET_H
