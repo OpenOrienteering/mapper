@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="svg1000"
+   height="48px"
+   width="48px"
+   sodipodi:version="0.32"
+   sodipodi:docname="cursor-move-parallel.svg"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
+   inkscape:export-filename="cursor-move-parallel.png"
+   inkscape:export-xdpi="64"
+   inkscape:export-ydpi="64">
+  <defs
+     id="defs1000">
+    <inkscape:path-effect
+       effect="clone_original"
+       id="path-effect850"
+       is_visible="true"
+       lpeversion="1"
+       linkeditem=""
+       method="d"
+       attributes=""
+       css_properties=""
+       allow_transforms="true" />
+    <inkscape:path-effect
+       effect="bend_path"
+       id="path-effect848"
+       is_visible="true"
+       lpeversion="1"
+       bendpath="M 5.411795,30.437267 H 47.984491"
+       prop_scale="1.1"
+       scale_y_rel="false"
+       vertical="false"
+       hide_knot="false" />
+    <inkscape:path-effect
+       effect="offset"
+       id="path-effect846"
+       is_visible="true"
+       lpeversion="1"
+       linejoin_type="miter"
+       unit="mm"
+       offset="0"
+       miter_limit="4"
+       attempt_force_join="true"
+       update_on_knot_move="true" />
+    <inkscape:path-effect
+       effect="attach_path"
+       id="path-effect844"
+       lpeversion="1" />
+    <linearGradient
+       id="linearGradient1001"
+       x1="16.875"
+       y1="22.852"
+       x2="27.901"
+       y2="34.977"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         id="stop7918"
+         stop-color="#fff"
+         offset="0" />
+      <stop
+         id="stop7920"
+         stop-color="#fff"
+         stop-opacity=".34021"
+         offset="1" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     bordercolor="#7f7f7f"
+     pagecolor="#ffffff"
+     showgrid="true"
+     borderopacity="0.49803922"
+     showguides="false"
+     inkscape:zoom="41.083334"
+     inkscape:cx="18.99077"
+     inkscape:cy="16.447709"
+     inkscape:window-width="2560"
+     inkscape:window-height="1376"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1000"
+     inkscape:guide-bbox="true"
+     inkscape:snap-grids="true"
+     inkscape:snap-page="false"
+     gridtolerance="20"
+     inkscape:snap-midpoints="false"
+     inkscape:snap-perpendicular="true"
+     inkscape:snap-text-baseline="false"
+     inkscape:object-nodes="true"
+     inkscape:snap-intersection-paths="false"
+     inkscape:object-paths="false"
+     inkscape:snap-smooth-nodes="false"
+     inkscape:snap-tangential="true"
+     inkscape:snap-to-guides="false"
+     inkscape:document-rotation="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid1000"
+       originx="0"
+       originy="0"
+       empspacing="4"
+       dotted="false"
+       spacingx="0.5"
+       spacingy="0.5"
+       enabled="false" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata1000">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <dc:date>2021-03-26</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Libor Pecháček</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:source>https://github.com/OpenOrienteering/mapper</dc:source>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>Move parallel</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <cc:license
+           rdf:resource="GPL-3+" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <path
+     style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:2.88321;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 2.9209089,5.4580923 V 23.581127 L 14.453749,19.462256 Z"
+     id="path864" />
+  <g
+     id="g856"
+     style="stroke:#ffffff;stroke-width:4.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:4.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 5.411795,42.874534 c 8.133032,-18.245194 31.212676,-29.897657 42,-30"
+       id="path852"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:4.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 16,48 C 23.411795,34.874534 37.411795,24.874534 47.984491,23.997131"
+       id="path854"
+       sodipodi:nodetypes="cc" />
+  </g>
+  <path
+     style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 2.5806174,5.0265331 V 24.198419 L 14.780908,19.841172 Z"
+     id="path862" />
+  <path
+     style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 2,3 V 25 L 16,20 Z"
+     id="path80" />
+  <g
+     id="g842">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 5.411795,42.874534 c 8.133032,-18.245194 31.212676,-29.897657 42,-30"
+       id="path905"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 16,48 C 23.411795,34.874534 37.411795,24.874534 47.984491,23.997131"
+       id="path907"
+       sodipodi:nodetypes="cc" />
+  </g>
+</svg>
