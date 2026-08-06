@@ -68,9 +68,11 @@ protected:
 	void objectSelectionChangedImpl() override;
 	
 	MapCoordF scaling_center;
-	double reference_length = 0;
-	double scaling_factor   = 1;
+	MapCoordF scaling_start_point;
+	QPointF reference_point = QPointF(0,0);
+	QPointF scaling_factor = QPointF(1, 1);
 	bool using_scaling_center = true;
+	bool uniform_scaling = true;
 };
 
 
