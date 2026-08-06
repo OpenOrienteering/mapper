@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2020, 2025 Kai Pastor
+ *    Copyright 2014-2020, 2025, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -115,7 +115,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	/*QAction* new_combined_action =*/ new_menu->addAction(tr("Combined"), this, SLOT(newCombinedSymbol()));
 	context_menu->addMenu(new_menu);
 	
-	edit_action = context_menu->addAction(tr("Edit"), this, SLOT(editSymbol()));
+	edit_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-edit.png")), tr("Edit"), this, SLOT(editSymbol()));
 	duplicate_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-duplicate.png")), tr("Duplicate"), this, SLOT(duplicateSymbol()));
 	delete_action = context_menu->addAction(QIcon(QStringLiteral(":/images/minus.png")), tr("Delete"), this, SLOT(deleteSymbols()));
 	scale_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-scale.png")), tr("Scale..."), this, SLOT(scaleSymbol()));
@@ -126,9 +126,9 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	switch_symbol_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-switch-symbol.png")), tr("Switch symbol of selected objects"), this, SIGNAL(switchSymbolClicked()));
 	fill_border_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-fill-border.png")), tr("Fill / Create border for selected objects"), this, SIGNAL(fillBorderClicked()));
 	// text will be filled in by updateContextMenuState()
-	select_objects_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-edit.png")), {}, this, SLOT(selectObjectsExclusively()));
-	select_objects_additionally_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-edit.png")), {}, this, SLOT(selectObjectsAdditionally()));
-	deselect_objects_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-edit.png")), {}, this, SLOT(deselectObjects()));
+	select_objects_action = context_menu->addAction(QIcon(QStringLiteral(":/images/select-all-objects.png")), {}, this, SLOT(selectObjectsExclusively()));
+	select_objects_additionally_action = context_menu->addAction(QIcon(QStringLiteral(":/images/select-additional-objects.png")), {}, this, SLOT(selectObjectsAdditionally()));
+	deselect_objects_action = context_menu->addAction(QIcon(QStringLiteral(":/images/deselect-objects.png")), {}, this, SLOT(deselectObjects()));
 	context_menu->addSeparator();
 	hide_action = context_menu->addAction({}, this, SLOT(setSelectedSymbolVisibility(bool)));
 	hide_action->setCheckable(true);
