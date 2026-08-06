@@ -242,6 +242,14 @@ public:
 	 * Normally you don't want to call this directly.
 	 */
 	void setPriority(int priority);
+
+	/** The color id value helps us reference the map color in file format
+	 *  context. In the native XML it helps to maintain stable link between
+	 *  symbols and colors. */
+	int getId() const;
+	
+	/** \see getId() */
+	void setId(int id);	
 	
 	/** @deprecated Returns the color's opacity. */
 	float getOpacity() const;
@@ -469,6 +477,10 @@ protected:
 	
 	
 	QString name;
+	/** The color_id is a map-dependent value managed by the map context.
+	 *  Still it is stored in the MapColor class much like the priority value.
+	 */
+	int color_id = -1;
 	int priority;
 	
 	MapColorCmyk cmyk;

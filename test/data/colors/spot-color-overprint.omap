@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="9">
+<notes></notes>
+<georeferencing scale="10000"><projected_crs id="Local"/></georeferencing>
+<colors count="3">
+<color id="1" priority="0" name="Color with id 1" c="1" m="0" y="0" k="0" opacity="0.6"><spotcolors knockout="true"><component factor="1" spotcolor="1"/></spotcolors><cmyk method="spotcolor"/><rgb method="cmyk" r="0" g="1" b="1"/></color>
+<color id="2" priority="1" name="Spot color 1" c="1" m="0" y="0" k="0" opacity="1"><spotcolors><namedcolor>Spot color 1</namedcolor></spotcolors><cmyk method="custom"/><rgb method="cmyk" r="0" g="1" b="1"/></color>
+<color id="3" priority="2" name="Unused spot color w/o K.O." c="0" m="1" y="0" k="0" opacity="1"><spotcolors><namedcolor>Unused spot color w/o K.O.</namedcolor></spotcolors><cmyk method="custom"/><rgb method="cmyk" r="1" g="0" b="1"/></color>
+</colors>
+<barrier version="6" required="0.6.0">
+<symbols count="1" id="OCD">
+<symbol type="1" id="0" code="1.0" name="First symbol"><point_symbol inner_radius="1000" inner_color="0" outer_width="0" outer_color="-1" elements="0"/></symbol>
+</symbols>
+<parts count="1" current="0">
+<part name="default part"><objects count="0">
+</objects></part>
+</parts>
+<templates count="0" first_front_template="0">
+<defaults use_meters_per_pixel="true" meters_per_pixel="0" dpi="0" scale="0"/>
+</templates>
+<view>
+<grid color="#80646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
+<map_view zoom="1" position_x="0" position_y="0"><map opacity="1" visible="true"/><templates count="0"/></map_view>
+</view>
+</barrier>
+</map>

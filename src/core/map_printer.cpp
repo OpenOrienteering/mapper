@@ -1261,9 +1261,9 @@ void MapPrinter::drawSeparationPages(QPrinter* printer, QPainter* device_painter
 	device_painter->setClipRect(page_extent.intersected(print_area).adjusted(-10, 10, 10, 10), Qt::ReplaceClip);
 	
 	bool need_new_page = false;
-	for (int i = map.getNumColors() - 1; i >= 0; --i)
+	for (int i = map.getNumColorPrios() - 1; i >= 0; --i)
 	{
-		const MapColor* color = map.getColor(i);
+		const MapColor* color = map.getColorByPrio(i);
 		if (color->getSpotColorMethod() == MapColor::SpotColor)
 		{
 			if (need_new_page)

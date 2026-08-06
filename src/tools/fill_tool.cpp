@@ -323,10 +323,10 @@ void FillTool::drawObjectIDs(Map* map, QPainter* painter, const RenderConfig &co
 	
 	auto part = map->getCurrentPart();
 	auto num_objects = qMin(part->getNumObjects(), int(RGB_MASK));
-	auto num_colors = map->getNumColors();
+	auto num_colors = map->getNumColorPrios();
 	for (auto c = num_colors-1; c >= MapColor::Reserved; --c)
 	{
-		auto map_color = map->getColor(c);
+		auto map_color = map->getColorByPrio(c);
 		for (int o = 0; o < num_objects; ++o)
 		{
 			auto object = part->getObject(o);

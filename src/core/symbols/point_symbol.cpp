@@ -581,9 +581,9 @@ void PointSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	if (isRotatable())
 		xml.writeAttribute(QString::fromLatin1("rotatable"), QString::fromLatin1("true"));
 	xml.writeAttribute(QString::fromLatin1("inner_radius"), QString::number(inner_radius));
-	xml.writeAttribute(QString::fromLatin1("inner_color"), QString::number(map.findColorIndex(inner_color)));
+	xml.writeAttribute(QString::fromLatin1("inner_color"), QString::number(map.findColorPrio(inner_color)));
 	xml.writeAttribute(QString::fromLatin1("outer_width"), QString::number(outer_width));
-	xml.writeAttribute(QString::fromLatin1("outer_color"), QString::number(map.findColorIndex(outer_color)));
+	xml.writeAttribute(QString::fromLatin1("outer_color"), QString::number(map.findColorPrio(outer_color)));
 	int num_elements = getNumElements();
 	xml.writeAttribute(QString::fromLatin1("elements"), QString::number(num_elements));
 	for (auto& element : elements)
@@ -605,10 +605,10 @@ bool PointSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictiona
 	setRotatable(attributes.value(QLatin1String("rotatable")) == QLatin1String("true"));
 	inner_radius = attributes.value(QLatin1String("inner_radius")).toInt();
 	int temp = attributes.value(QLatin1String("inner_color")).toInt();
-	inner_color = map.getColor(temp);
+	inner_color = map.getColorByPrio(temp);
 	outer_width = attributes.value(QLatin1String("outer_width")).toInt();
 	temp = attributes.value(QLatin1String("outer_color")).toInt();
-	outer_color = map.getColor(temp);
+	outer_color = map.getColorByPrio(temp);
 	int num_elements = attributes.value(QLatin1String("elements")).toInt();
 	
 	elements.reserve(qMin(num_elements, 10)); // 10 is not a limit

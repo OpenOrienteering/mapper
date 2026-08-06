@@ -13,7 +13,7 @@
         </geographic_crs>
     </georeferencing>
     <colors count="1">
-        <color priority="0" name="Purple" c="0.2" m="1" y="0" k="0" opacity="1">
+        <color id="1" priority="0" name="Purple" c="0.2" m="1" y="0" k="0" opacity="1">
             <spotcolors>
                 <namedcolor>PURPLE</namedcolor>
             </spotcolors>
