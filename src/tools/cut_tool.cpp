@@ -739,15 +739,16 @@ void CutTool::replaceObject(Object* object, const std::vector<PathObject*>& repl
 	auto map = this->map();
 	auto map_part = map->getCurrentPart();
 	
+	int object_index = map_part->findObjectIndex(object);
 	auto add_step = new AddObjectsUndoStep(map);
-	add_step->addObject(map_part->findObjectIndex(object), object);
+	add_step->addObject(object_index, object);
 	map->removeObjectFromSelection(object, false);
 	map->releaseObject(object);
 	
 	auto delete_step = new DeleteObjectsUndoStep(map);
 	for (auto new_object : replacement)
 	{
-		map->addObject(new_object);
+		map_part->addObject(new_object, object_index++);
 		map->addObjectToSelection(new_object, false);
 		delete_step->addObject(map_part->findObjectIndex(new_object));
 	}
