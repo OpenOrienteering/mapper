@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2020, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -133,10 +133,11 @@ public:
 	 */
 	enum LookupResult
 	{
-		NotFound       = 0,  ///< File not found at all.
-		FoundInMapDir  = 1,  ///< File name found in the map's directory.
-		FoundByRelPath = 2,  ///< File found by relative path from the map's directory.
-		FoundByAbsPath = 3,  ///< File found by absolute path.
+		NotFound         = 0,  ///< File not found at all.
+		FoundInMapDir    = 1,  ///< File name found in the map's directory.
+		FoundByRelPath   = 2,  ///< File found by relative path from the map's directory.
+		FoundByAbsPath   = 3,  ///< File found by absolute path.
+		FoundInMapSubDir = 4,  ///< File name found in a subdirectory of the map's directory.
 	};
 
 	/**
@@ -811,4 +812,4 @@ protected:
 Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Template::ScribbleOptions)
 
 
-#endif
+#endif // OPENORIENTEERING_TEMPLATE_H

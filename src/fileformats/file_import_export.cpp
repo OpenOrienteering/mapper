@@ -227,6 +227,13 @@ void Importer::validate()
 			                "Template \"%1\" has been loaded from the map's directory instead of"
 			                " the relative location to the map file where it was previously.")
 			            .arg(temp->getTemplateFilename()) + QLatin1Char('\n') );
+			break;
+		case Template::FoundInMapSubDir:
+			error_string.append(
+			            ::OpenOrienteering::Importer::tr(
+			                "Template \"%1\" has been loaded from a map subdirectory instead of"
+			                " the relative location to the map file where it was previously.")
+			            .arg(temp->getTemplateFilename()) + QLatin1Char('\n') );
 		default:
 			;
 		}
