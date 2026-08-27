@@ -1961,7 +1961,7 @@ void OcdFileExport::setupTextSymbolSpecial(const TextSymbol* text_symbol, OcdTex
 template< class OcdTextSymbolFraming >
 void OcdFileExport::setupTextSymbolFraming(const TextSymbol* text_symbol, OcdTextSymbolFraming& ocd_text_framing)
 {
-	if (text_symbol->getFramingColor())
+	if (text_symbol->usesFraming() && text_symbol->getFramingColor())
 	{
 		ocd_text_framing.color = convertColor(text_symbol->getFramingColor());
 		ocd_text_framing.line_style_V9 = (ocd_version >= 9) ? /* miter join */ 4 : 0;
