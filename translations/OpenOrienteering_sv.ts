@@ -2376,7 +2376,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="400"/>
         <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="442"/>
@@ -5416,12 +5416,12 @@ valda</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1078"/>
         <source>Clip area</source>
-        <translation type="unfinished"></translation>
+        <translation>Klippområde</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1079"/>
         <source>Erase area</source>
-        <translation type="unfinished"></translation>
+        <translation>Radera område</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1900"/>
@@ -5578,53 +5578,53 @@ valda</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="149"/>
         <source>code</source>
-        <translation type="unfinished"></translation>
+        <translation>kod</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="149"/>
         <source>zone</source>
-        <translation type="unfinished"></translation>
+        <translation>zon</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="166"/>
         <source>Point symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Punktsymboler</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="167"/>
         <source>Line symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjesymboler</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="168"/>
         <source>Area symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Ytsymboler</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="169"/>
         <source>Combined symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Kombinerade symboler</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="170"/>
         <source>Text symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Textsymboler</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="171"/>
         <location filename="../src/core/map_information.cpp" line="253"/>
         <source>Undefined symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Odefinierade symboler</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="218"/>
         <source>&lt;undefined&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;odefinierad&gt;</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="232"/>
         <source>Map</source>
-        <translation type="unfinished">Karta</translation>
+        <translation>Karta</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="232"/>
@@ -5632,130 +5632,130 @@ valda</translation>
         <location filename="../src/core/map_information.cpp" line="255"/>
         <location filename="../src/core/map_information.cpp" line="258"/>
         <source>%n object(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n objekt</numerusform>
+            <numerusform>%n objekt</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="234"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Skala</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="235"/>
         <source>Coordinate reference system</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatreferenssystem</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="237"/>
         <source>Undo steps</source>
-        <translation type="unfinished"></translation>
+        <translation>Ångra steg</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="237"/>
         <location filename="../src/core/map_information.cpp" line="239"/>
         <source>%n step(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n steg</numerusform>
+            <numerusform>%n steg</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="239"/>
         <source>Redo steps</source>
-        <translation type="unfinished"></translation>
+        <translation>Gör om steg</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="242"/>
         <source>Templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Mallar</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="242"/>
         <source>%n template(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n mall</numerusform>
+            <numerusform>%n mall</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="244"/>
         <source>Map parts</source>
-        <translation type="unfinished">Kartdelar</translation>
+        <translation>Kartdelar</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="244"/>
         <source>%n part(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n del</numerusform>
+            <numerusform>%n del</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="250"/>
         <source>Symbols</source>
-        <translation type="unfinished">Symboler</translation>
+        <translation>Symboler</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="250"/>
         <location filename="../src/core/map_information.cpp" line="280"/>
         <source>%n symbol(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n symbol</numerusform>
+            <numerusform>%n symbol</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="266"/>
         <source>Colors</source>
-        <translation type="unfinished">Färger</translation>
+        <translation>Färger</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="266"/>
         <source>%n color(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n färg</numerusform>
+            <numerusform>%n färg</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="274"/>
         <source>Fonts</source>
-        <translation type="unfinished"></translation>
+        <translation>Teckensnitt</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="274"/>
         <source>%n font(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n teckensnitt</numerusform>
+            <numerusform>%n teckensnitt</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="279"/>
         <source>%1 (substituted by %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (ersatt av %2)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="78"/>
         <source>Map information</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartinformation</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="80"/>
         <source>Save as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara som …</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="117"/>
         <source>Plain text</source>
-        <translation type="unfinished"></translation>
+        <translation>Oformaterad text</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="131"/>
         <source>Error</source>
-        <translation type="unfinished">Fel</translation>
+        <translation>Fel</translation>
     </message>
 </context>
 <context>
@@ -5763,7 +5763,7 @@ valda</translation>
     <message>
         <location filename="../src/gui/map/map_notes.cpp" line="45"/>
         <source>Map notes</source>
-        <translation type="unfinished">Kartnoteringar</translation>
+        <translation>Kartanteckningar</translation>
     </message>
 </context>
 <context>
@@ -6229,7 +6229,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1956"/>
         <source>In text symbol %1: exporting only %2 custom tabulator positions</source>
-        <translation type="unfinished"></translation>
+        <translation>I textsymbolen %1: exporterar endast %2 anpassade tabulatorpositioner</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2334"/>
@@ -6244,7 +6244,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2717"/>
         <source>The map contains an object with more than 32767 coordinates which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartan innehåller ett objekt med fler än 32767 koordinater, vilket inte stöds av OCD version 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2761"/>
@@ -6431,7 +6431,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1666"/>
         <source>Skipping unsupported reference to point symbol &apos;%1.%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoppar över referens till den icke stödda punktsymbolen ”%1.%2”.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1880"/>
@@ -8543,64 +8543,64 @@ Vill du spara dina ändringar?</translation>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="162"/>
         <source>Map Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartfärger</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="163"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Färg</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="164"/>
         <source>Name</source>
-        <translation type="unfinished">Namn</translation>
+        <translation>Namn</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="165"/>
         <source>RGB</source>
-        <translation type="unfinished">RGB</translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="166"/>
         <source>Spot colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekorfärger</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="167"/>
         <source>Knockout</source>
-        <translation type="unfinished"></translation>
+        <translation>Utslagning</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="204"/>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="208"/>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="212"/>
         <source>[X] %1</source>
-        <translation type="unfinished"></translation>
+        <translation>[X] %1</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="205"/>
         <source>Symbol orientation can be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolorienteringen kan ändras.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="209"/>
         <source>Pattern orientation can be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mönsterorienteringen kan ändras.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="213"/>
         <source>Helper symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Hjälpsymbol</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="249"/>
         <source>Symbols</source>
-        <translation type="unfinished">Symboler</translation>
+        <translation>Symboler</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="283"/>
         <source>Symbol Set Report on &apos;%0&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Rapport om symboluppsättning för ”%0”</translation>
     </message>
 </context>
 <context>
@@ -8608,17 +8608,17 @@ Vill du spara dina ändringar?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="53"/>
         <source>HTML</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="54"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Alla filer (*.*)</translation>
+        <translation>Alla filer (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="76"/>
         <source>Create symbol set report...</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapa rapport om symboluppsättning …</translation>
     </message>
 </context>
 <context>
