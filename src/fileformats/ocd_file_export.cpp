@@ -550,6 +550,7 @@ QString stringForViewPar(const MapView& view, const MapCoord& area_offset, quint
 	{
 		const auto center = view.center() - area_offset;
 		const auto hatched = view.getMap()->isAreaHatchingEnabled() ? '1' : '0';
+		const auto all_templates_hidden = view.areAllTemplatesHidden() ? '1' : '0';
 		out << qSetRealNumberPrecision(6)
 		    << "\tx" << center.x()
 		    << "\ty" << -center.y()
@@ -560,7 +561,7 @@ QString stringForViewPar(const MapView& view, const MapCoord& area_offset, quint
 		    << "\tb50"
 		    << "\tc50"
 		    << "\th" << hatched
-		    << "\td0";
+		    << "\td" << all_templates_hidden;
 	}
 	if (version > 10)
 	{

@@ -1037,6 +1037,10 @@ void OcdFileImport::importView(const QString& param_string)
 		case 'k':
 			map->setBaselineViewEnabled(param_value.toInt() != 0);
 			break;
+		case 'd':
+			if (view)
+				view->setAllTemplatesHidden(param_value.toInt() != 0);
+			break;
 		default:
 			; // nothing
 		}
