@@ -1,6 +1,6 @@
 # This file is part of OpenOrienteering.
 
-# Copyright 2019 Kai Pastor
+# Copyright 2019, 2026 Kai Pastor
 #
 # Redistribution and use is allowed according to the terms of the BSD license:
 #
@@ -32,7 +32,6 @@ steps:
     set -x
     #
     mkdir coverage
-    # Run gcovr from source dir, cf. https://github.com/gcovr/gcovr/issues/64
     gcovr \
       --xml \
       --output $(Build.SourcesDirectory)/coverage/coverage.xml \
@@ -40,10 +39,8 @@ steps:
       --filter 3rd-party/cove/ \
       --filter src/ \
       --filter test/ \
-      --object-directory $(Build.SourcesDirectory)/build/default/openorienteering-mapper-ci/Testing/CoverageInfo \
-      --use-gcov-files \
-      --keep \
-      --print-summary
+      --print-summary \
+      $(Build.SourcesDirectory)/build/default
   displayName: 'Process test coverage results'
 
 - task: reportgenerator@5
