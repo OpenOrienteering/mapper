@@ -20,6 +20,7 @@
 
 
 #include <clocale>
+#include <cstring>
 #include <memory>
 #include <utility>
 // IWYU pragma: no_include <type_traits>
@@ -51,6 +52,7 @@
 #include "global.h"
 #include "mapper_config.h"
 #include "mapper_resource.h"
+#include "cli.h"
 #include "gui/home_screen_controller.h"
 #include "gui/main_window.h"
 #include "gui/widgets/mapper_proxystyle.h"
@@ -125,6 +127,32 @@ void resetActivationWindow(QtSingleApplication& app)
 
 int main(int argc, char** argv)
 {
+	// Detect cli arg early, before creating any QApplication,
+	// so that cli works even when oom is already running.
+	int cli_pos = -1;
+	for (int i = 1; i < argc; ++i)
+	{
+		if (std::strcmp(argv[i], "--cli") == 0)
+		{
+			cli_pos = i;
+			break;
+		}
+	}
+
+	if (cli_pos > 0)
+	{
+		doStaticInitializations();
+		// On Linux, the cli may run without a display server (CI, headless).
+		// Default to offscreen rendering when no platform is explicitly set.
+		// A QGuiApplication is needed for pdf/image export.
+#if defined(Q_OS_LINUX)
+		if (qEnvironmentVariableIsEmpty("QT_QPA_PLATFORM"))
+			qputenv("QT_QPA_PLATFORM", "offscreen");
+#endif
+		QGuiApplication cli_app(argc, argv);
+		return OpenOrienteering::execCli(argc, argv);
+	}
+	
 #ifdef MAPPER_USE_QTSINGLEAPPLICATION
 	// Create single-instance application.
 	// Use "oo-mapper" instead of the executable as identifier, in case we launch from different paths.
