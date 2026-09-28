@@ -24,6 +24,7 @@
 #include "mapper_config.h" // IWYU pragma: keep
 
 #include "fileformats/course_file_format.h"
+#include "fileformats/xml_directory_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/xml_file_format.h"
 #include "fileformats/ocd_file_format.h"
@@ -36,6 +37,7 @@ void doStaticInitializations()
 {
 	// Register the supported file formats
 	FileFormats.registerFormat(new XMLFileFormat());
+	FileFormats.registerFormat(new XMLDirectoryFormat());
 #ifndef MAPPER_BIG_ENDIAN
 	for (auto&& format : OcdFileFormat::makeAll())
 		FileFormats.registerFormat(format.release());

@@ -68,6 +68,7 @@
 #include "undo/undo.h"
 #include "undo/undo_manager.h"
 #include "util/util.h"
+#include "util/xml_stream_util.h"
 #include "util/transformation.h"
 
 // IWYU pragma: no_forward_declare QRectF
@@ -154,6 +155,270 @@ void Map::MapColorSet::adjustColorPriorities(int first, int last)
 	for (int i = first; i < last; ++i)
 		colors[i]->setPriority(i);
 }
+void Map::MapColorSet::save(QXmlStreamWriter& xml) const
+{
+	XmlElementWriter all_colors_element(xml, QLatin1String("colors"));
+	std::size_t num_colors = colors.size();
+	all_colors_element.writeAttribute(QLatin1String("count"), num_colors);
+	
+	for (std::size_t i = 0; i < num_colors; ++i)
+	{
+		writeLineBreak(xml);
+		MapColor* color = colors[i];
+		const MapColorCmyk& cmyk = color->getCmyk();
+		XmlElementWriter color_element(xml, QLatin1String("color"));
+		color_element.writeAttribute(QLatin1String("priority"), color->getPriority());
+		color_element.writeAttribute(QLatin1String("name"), color->getName());
+		color_element.writeAttribute(QLatin1String("c"), cmyk.c, 3);
+		color_element.writeAttribute(QLatin1String("m"), cmyk.m, 3);
+		color_element.writeAttribute(QLatin1String("y"), cmyk.y, 3);
+		color_element.writeAttribute(QLatin1String("k"), cmyk.k, 3);
+		color_element.writeAttribute(QLatin1String("opacity"), color->getOpacity(), 3);
+		
+		if (color->getSpotColorMethod() != MapColor::UndefinedMethod)
+		{
+			XmlElementWriter spotcolors_element(xml, QLatin1String("spotcolors"));
+			spotcolors_element.writeAttribute(QLatin1String("knockout"), color->getKnockout());
+			SpotColorComponent component;
+			switch (color->getSpotColorMethod())
+			{
+				case MapColor::SpotColor:
+					{
+						XmlElementWriter color_element(xml, QLatin1String("namedcolor"));
+						if (color->getScreenFrequency() > 0)
+						{
+							color_element.writeAttribute(QLatin1String("screen_angle"), color->getScreenAngle(), 1);
+							color_element.writeAttribute(QLatin1String("screen_frequency"), color->getScreenFrequency(), 1);
+						}
+						xml.writeCharacters(color->getSpotColorName());
+					}
+					break;
+				case MapColor::CustomColor:
+					for (auto&& component : color->getComponents())
+					{
+						XmlElementWriter component_element(xml, QLatin1String("component"));
+						component_element.writeAttribute(QLatin1String("factor"), component.factor);
+						component_element.writeAttribute(QLatin1String("spotcolor"), component.spot_color->getPriority());
+					}
+					break;
+				default:
+					; // nothing
+			}
+		}
+		
+		{
+			XmlElementWriter cmyk_element(xml, QLatin1String("cmyk"));
+			switch (color->getCmykColorMethod())
+			{
+				case MapColor::SpotColor:
+					cmyk_element.writeAttribute(QLatin1String("method"), QLatin1String("spotcolor"));
+					break;
+				case MapColor::RgbColor:
+					cmyk_element.writeAttribute(QLatin1String("method"), QLatin1String("rgb"));
+					break;
+				default:
+					cmyk_element.writeAttribute(QLatin1String("method"), QLatin1String("custom"));
+			}
+		}
+		
+		{
+			XmlElementWriter rgb_element(xml, QLatin1String("rgb"));
+			switch (color->getRgbColorMethod())
+			{
+				case MapColor::SpotColor:
+					rgb_element.writeAttribute(QLatin1String("method"), QLatin1String("spotcolor"));
+					break;
+				case MapColor::CmykColor:
+					rgb_element.writeAttribute(QLatin1String("method"), QLatin1String("cmyk"));
+					break;
+				default:
+					rgb_element.writeAttribute(QLatin1String("method"), QLatin1String("custom"));
+			}
+			const MapColorRgb& rgb = color->getRgb();
+			rgb_element.writeAttribute(QLatin1String("r"), rgb.r, 3);
+			rgb_element.writeAttribute(QLatin1String("g"), rgb.g, 3);
+			rgb_element.writeAttribute(QLatin1String("b"), rgb.b, 3);
+		}
+	}
+	writeLineBreak(xml);
+}
+
+QStringList Map::MapColorSet::load(QXmlStreamReader& xml, Map& map)
+{
+	QStringList warnings;
+	
+	XmlElementReader colors_element(xml);
+	auto const num_colors = colors_element.attribute<std::size_t>(QLatin1String("count"));
+	
+	colors.reserve(qMin(num_colors, std::size_t(100))); // 100 is not a limit
+	struct BacklogItem
+	{
+		MapColor* color;                 ///< Color which needs updating
+		SpotColorComponents components;  ///< Components of the color
+		bool knockout;
+		bool cmyk_from_spot;             ///< Determine CMYK from spot
+		bool rgb_from_spot;              ///< Determine RGB from spot
+	};
+	std::vector<BacklogItem> backlog;
+	backlog.reserve(colors.size());
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == QLatin1String("color"))
+		{
+			XmlElementReader color_element(xml);
+			auto color = std::make_unique<MapColor>(
+			  color_element.attribute<QString>(QLatin1String("name")),
+			  color_element.attribute<int>(QLatin1String("priority")) );
+			if (color_element.hasAttribute(QLatin1String("opacity")))
+				color->setOpacity(color_element.attribute<float>(QLatin1String("opacity")));
+			
+			MapColorCmyk cmyk;
+			cmyk.c = color_element.attribute<float>(QLatin1String("c"));
+			cmyk.m = color_element.attribute<float>(QLatin1String("m"));
+			cmyk.y = color_element.attribute<float>(QLatin1String("y"));
+			cmyk.k = color_element.attribute<float>(QLatin1String("k"));
+			
+			bool knockout = false;
+			SpotColorComponents components;
+			QString cmyk_method;
+			QString rgb_method;
+			MapColorRgb rgb;
+			
+			while (xml.readNextStartElement())
+			{
+				if (xml.name() == QLatin1String("spotcolors"))
+				{
+					XmlElementReader spotcolors_element(xml);
+					knockout = spotcolors_element.attribute<bool>(QLatin1String("knockout"));
+					
+					while(xml.readNextStartElement())
+					{
+						if (xml.name() == QLatin1String("namedcolor"))
+						{
+							XmlElementReader color_element(xml);
+							const auto angle = color_element.attribute<double>(QLatin1String("screen_angle"));
+							const auto frequency = color_element.attribute<double>(QLatin1String("screen_frequency"));
+							color->setSpotColorName(xml.readElementText());
+							color->setScreenAngle(angle);
+							color->setScreenFrequency(frequency);
+							color->setKnockout(knockout);
+						}
+						else if (xml.name() == QLatin1String("component"))
+						{
+							XmlElementReader component_element(xml);
+							SpotColorComponent component;
+							component.factor = component_element.attribute<float>(QLatin1String("factor"));
+							// We can't know if the spot color is already loaded. Create a temporary proxy.
+							component.spot_color = new MapColor(component_element.attribute<int>(QLatin1String("spotcolor")));
+							components.push_back(component);
+						}
+						else
+							xml.skipCurrentElement(); // unsupported
+					}
+				}
+				else if (xml.name() == QLatin1String("cmyk"))
+				{
+					XmlElementReader cmyk_element(xml);
+					cmyk_method = cmyk_element.attribute<QString>(QLatin1String("method"));
+				}
+				else if (xml.name() == QLatin1String("rgb"))
+				{
+					XmlElementReader rgb_element(xml);
+					rgb_method = rgb_element.attribute<QString>(QLatin1String("method"));
+					rgb.r = rgb_element.attribute<float>(QLatin1String("r"));
+					rgb.g = rgb_element.attribute<float>(QLatin1String("g"));
+					rgb.b = rgb_element.attribute<float>(QLatin1String("b"));
+				}
+				else
+				{
+					xml.skipCurrentElement(); // unsupported
+				}
+			}
+			
+			if (cmyk_method == QLatin1String("custom"))
+			{
+				color->setCmyk(cmyk);
+				if (rgb_method == QLatin1String("cmyk"))
+					color->setRgbFromCmyk();
+			}
+			
+			if (rgb_method == QLatin1String("custom"))
+			{
+				color->setRgb(rgb);
+				if (cmyk_method == QLatin1String("rgb"))
+					color->setCmykFromRgb();
+			}
+			
+			if (!components.empty())
+			{
+				auto const cmyk_from_spot = (cmyk_method == QLatin1String("spotcolor"));
+				auto const rgb_from_spot = (rgb_method == QLatin1String("spotcolor"));
+				backlog.push_back({color.get(), components, knockout, cmyk_from_spot, rgb_from_spot});
+			}
+			else if (knockout && !color->getKnockout())
+			{
+				warnings.push_back(QStringLiteral("Could not set knockout property of color '%1'.").arg(color->getName()));
+			}
+			
+			colors.push_back(color.release());
+		}
+		else
+		{
+			warnings.push_back(QStringLiteral("Unsupported element: %1 (line %2 column %3)")
+			                    .arg(xml.name().toString())
+			                    .arg(xml.lineNumber())
+			                    .arg(xml.columnNumber()));
+			xml.skipCurrentElement();
+		}
+	}
+	
+	if (num_colors > 0 && num_colors != colors.size())
+		warnings.push_back(QStringLiteral("Expected %1 colors, found %2.")
+		                    .arg(num_colors)
+		                    .arg(colors.size()));
+	
+	// All spot colors are loaded at this point.
+	// Now deal with depending color compositions from the backlog.
+	for (auto&& item : backlog)
+	{
+		// Process the list of spot color components.
+		SpotColorComponents out_components;
+		for (auto&& in_component : item.components)
+		{
+			const MapColor* out_color = map.getColor(in_component.spot_color->getPriority());
+			if (!out_color || out_color->getSpotColorMethod() != MapColor::SpotColor)
+			{
+				warnings.push_back(QStringLiteral("Spot color %1 not found while processing %2 (%3).")
+				                    .arg(in_component.spot_color->getPriority())
+				                    .arg(item.color->getPriority())
+				                    .arg(item.color->getName()));
+				continue; // Drop this color, invalid reference
+			}
+			
+			out_components.push_back(in_component);
+			SpotColorComponent& out_component = out_components.back();
+			out_component.spot_color = out_color; // That is the major point!
+			delete in_component.spot_color; // Delete the temporary proxy.
+		}
+		
+		// Update the current color
+		item.color->setSpotColorComposition(out_components);
+		item.color->setKnockout(item.knockout);
+		if (item.cmyk_from_spot)
+			item.color->setCmykFromSpotColors();
+		if (item.rgb_from_spot)
+			item.color->setRgbFromSpotColors();
+		
+		if (item.knockout && !item.color->getKnockout())
+		{
+			warnings.push_back(QStringLiteral("Could not set knockout property of color '%1'.")
+			                    .arg(item.color->getName()));
+		}
+	}
+	
+	return warnings;
+}
+
 
 // This algorithm tries to maintain the relative order of colors.
 MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vector< bool >* filter, Map* map)
