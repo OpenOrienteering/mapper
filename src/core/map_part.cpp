@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018, 2020, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -35,6 +35,7 @@
 #include "core/map_coord.h"
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
+#include "gui/map/import_map_dialog.h"
 #include "undo/object_undo.h"
 #include "util/util.h"
 #include "util/xml_stream_util.h"
@@ -180,7 +181,7 @@ bool MapPart::deleteObject(Object* object)
 	auto object_ptr = releaseObject(object);
 	delete object_ptr;
 
-	return object_ptr;
+	return (bool)object_ptr;
 }
 
 Object* MapPart::releaseObject(int pos)
@@ -208,7 +209,7 @@ Object* MapPart::releaseObject(Object* object)
 	return nullptr;
 }
 
-std::unique_ptr<UndoStep> MapPart::importPart(const MapPart* other, const QHash<const Symbol*, Symbol*>& symbol_map, const QTransform& transform, bool select_new_objects)
+std::unique_ptr<UndoStep> MapPart::importPart(const MapPart* other, const QHash<const Symbol*, Symbol*>& symbol_map, const QTransform& transform, bool select_new_objects, const PartConfigItem* import_config_part)
 {
 	if (other->getNumObjects() == 0)
 		return {};
@@ -219,6 +220,7 @@ std::unique_ptr<UndoStep> MapPart::importPart(const MapPart* other, const QHash<
 		map->clearObjectSelection(false);
 	
 	objects.reserve(objects.size() + other->objects.size());
+	auto object_added = false;
 	for (const Object* object: other->objects)
 	{
 		Object* new_object = object->duplicate();
@@ -226,13 +228,52 @@ std::unique_ptr<UndoStep> MapPart::importPart(const MapPart* other, const QHash<
 			new_object->setSymbol(symbol_map.value(new_object->getSymbol()), true);
 		new_object->transform(transform);
 		
+		if (import_config_part && import_config_part->import_selected)
+		{
+			MapPart* compare_part = nullptr;
+			for (int i = 0; i < map->getNumParts(); ++i)
+			{
+				// this search will normally never fail
+				if (map->getPart(i)->getName().compare(import_config_part->compare_map_part, Qt::CaseInsensitive) == 0)
+				{
+					compare_part = map->getPart(i);
+					break;
+				}
+			}
+			if (compare_part)
+			{
+				const auto ignore_symbols = false;
+				const auto is_duplicate = compare_part->existsObject([new_object, ignore_symbols](auto const* o)
+				                          { return new_object != o && new_object->equals(o, !ignore_symbols); }
+				);
+				if (import_config_part->import_equal_objects != is_duplicate)
+				{
+					delete new_object;
+					continue;
+				}
+			}
+		}
+		
+		if (import_config_part)
+		{
+			if (!import_config_part->object_tag_key.isEmpty() && !import_config_part->object_tag_value.isEmpty())
+				new_object->setTag(import_config_part->object_tag_key, import_config_part->object_tag_value);
+		}
 		objects.push_back(new_object);
 		new_object->setMap(map);
 		new_object->update();
+		object_added = true;
 		
 		undo_step->addObject((int)objects.size() - 1);
 		if (select_new_objects)
 			map->addObjectToSelection(new_object, false);
+	}
+	
+	if (!object_added)
+	{
+		delete undo_step;
+		objects.shrink_to_fit();
+		return {};
 	}
 	
 	map->setObjectsDirty();
