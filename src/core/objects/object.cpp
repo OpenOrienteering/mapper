@@ -131,6 +131,7 @@ void Object::copyFrom(const Object& other)
 	object_tags = other.object_tags;
 	output_dirty = true;
 	extent = other.extent;
+	visible = other.visible;
 }
 
 bool Object::equals(const Object* other, bool compare_symbol) const
@@ -188,6 +189,9 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 	
 	if (object_tags.empty())
 		return other->object_tags.empty();
+	
+	if (visible != other->visible)
+		return false;
 	
 	using std::begin; using std::end;
 	return std::is_permutation(object_tags.begin(), object_tags.end(), other->object_tags.begin(), other->object_tags.end());
@@ -471,6 +475,36 @@ void Object::setRotation(qreal new_rotation)
 }
 
 
+void Object::setVisible(bool visible)
+{
+	if (!map)
+	{
+		this->visible = visible;
+		return;
+	}
+	
+	if (extent.isValid() && isVisible())
+	{
+		map->setObjectAreaDirty(extent);
+	}
+	
+	this->visible = visible;
+	if (!visible)
+	{
+		map->removeRenderablesOfObject(this, true);
+	}
+	else if (output_dirty || !extent.isValid())
+	{
+		forceUpdate();
+	}
+	else
+	{
+		map->insertRenderablesOfObject(this);
+		map->setObjectAreaDirty(extent);
+	}
+}
+
+
 void Object::forceUpdate() const
 {
 	output_dirty = true;
@@ -486,7 +520,7 @@ bool Object::update() const
 	if (map)
 	{
 		options = QFlag(map->renderableOptions());
-		if (extent.isValid())
+		if (extent.isValid() && isVisible())
 			map->setObjectAreaDirty(extent);
 	}
 	
@@ -501,7 +535,7 @@ bool Object::update() const
 	Q_ASSERT(extent.right() < 60000000);	// assert if bogus values are returned
 	output_dirty = false;
 	
-	if (map)
+	if (map && isVisible())
 	{
 		map->insertRenderablesOfObject(this);
 		if (extent.isValid())
