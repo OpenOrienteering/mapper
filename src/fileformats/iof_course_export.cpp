@@ -1,5 +1,5 @@
 /*
- *    Copyright 2021 Kai Pastor
+ *    Copyright 2021, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +22,8 @@
 #include <Qt>
 #include <QDateTime>
 #include <QLatin1String>
+#include <QPointF>
+#include <QRectF>
 #include <QString>
 #include <QXmlStreamWriter>
 
@@ -97,8 +99,32 @@ void IofCourseExport::writeXml(const PathObject& object)
 	}
 	{
 		XmlElementWriter event(*xml, QLatin1String("RaceCourseData"));
+		writeMap();
 		writeControls(object.getRawCoordinateVector());
 		writeCourse(object.getRawCoordinateVector());
+	}
+}
+
+void IofCourseExport::writeMap()
+{
+	XmlElementWriter map_data(*xml, QLatin1String("Map"));
+	xml->writeTextElement(QLatin1String("Scale"), QString::number(map->getScaleDenominator()));
+	
+	// IOF.xsd proposes for 'MapPositionTopLeft': "The position of the map's top left corner given in the map's coordinate system, usually (0, 0)."
+	// However, the real coordinates from the map_extent structure are used below.
+	// NOTE: templates are considered when determining the map extent.
+	const auto map_extent = map->calculateExtent(true, true, view);
+	{
+		XmlElementWriter map_position_topleft(*xml, QLatin1String("MapPositionTopLeft"));
+		map_position_topleft.writeAttribute(QLatin1String("x"), QString::number(map_extent.topLeft().x()));
+		map_position_topleft.writeAttribute(QLatin1String("y"), QString::number(map_extent.topLeft().y()));
+		map_position_topleft.writeAttribute(QLatin1String("unit"), QLatin1String("mm"));	// optional attribute, default is 'mm'
+	}
+	{
+		XmlElementWriter map_position_bottomright(*xml, QLatin1String("MapPositionBottomRight"));
+		map_position_bottomright.writeAttribute(QLatin1String("x"), QString::number(map_extent.bottomRight().x()));
+		map_position_bottomright.writeAttribute(QLatin1String("y"), QString::number(map_extent.bottomRight().y()));
+		map_position_bottomright.writeAttribute(QLatin1String("unit"), QLatin1String("mm"));	// optional attribute, default is 'mm'
 	}
 }
 

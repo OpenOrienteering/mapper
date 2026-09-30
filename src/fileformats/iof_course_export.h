@@ -1,5 +1,5 @@
 /*
- *    Copyright 2021 Kai Pastor
+ *    Copyright 2021, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -31,8 +31,8 @@ namespace OpenOrienteering {
 
 class LatLon;
 class Map;
-class MapView;
 class MapCoord;
+class MapView;
 class PathObject;
 class SimpleCourseExport;
 
@@ -59,6 +59,8 @@ protected:
 	bool exportImplementation() override;
 	
 	void writeXml(const PathObject& object);
+	
+	void writeMap();
 	
 	void writeControls(const std::vector<MapCoord>& coords);
 	
