@@ -317,7 +317,7 @@ Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     <message>
         <source>Earth bank, tag line</source>
         <comment>Name of symbol 104.3</comment>
-        <translation type="unfinished">Toprak set, çizgi (tag)</translation>
+        <translation>Toprak set, saçak çizgisi</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -607,7 +607,7 @@ Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation type="unfinished">Geçilemez yar/uçurum, çizgi etiket</translation>
+        <translation>Geçilemez yar/uçurum, saçak çizgisi</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -663,7 +663,7 @@ Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     <message>
         <source>Cliff, with tags</source>
         <comment>Name of symbol 202.2</comment>
-        <translation type="unfinished">Geçilebilir yar / Uçurum</translation>
+        <translation>Geçilebilir yar/uçurum, saçaklı</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -681,7 +681,7 @@ Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     <message>
         <source>Cliff, with tags, minimum size</source>
         <comment>Name of symbol 202.3</comment>
-        <translation type="unfinished">Geçilebilir yar/uçurum</translation>
+        <translation>Geçilebilir yar/uçurum, saçaklı, minimum boyut</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -699,7 +699,7 @@ Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     <message>
         <source>Cliff, with tags, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 202.9</comment>
-        <translation type="unfinished">Geçilebilir yar/uçurum</translation>
+        <translation>Geçilebilir yar/uçurum, saçaklı, minimum boyut (ISOM2000&apos;den)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -1961,7 +1961,7 @@ Siyah çizgiler arasındaki boşluk %50 kahverengi ile doldurulur.
     <message>
         <source>Vehicle track</source>
         <comment>Name of symbol 504</comment>
-        <translation type="unfinished">Araç izi</translation>
+        <translation>Araç yolu</translation>
     </message>
     <message>
         <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. For distinct junctions the dashes of the symbols are joined at the junction.
@@ -3169,7 +3169,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Earth bank, tag line</source>
         <comment>Name of symbol 104.3</comment>
-        <translation type="unfinished">Toprak set, çizgi (tag)</translation>
+        <translation>Toprak set, saçak çizgisi</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -3229,7 +3229,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Broken ground, individual dot</source>
         <comment>Name of symbol 113.1</comment>
-        <translation type="unfinished">Bozuk zemin, tek nokta</translation>
+        <translation>Bozuk zemin, tek nokta</translation>
     </message>
     <message>
         <source>Very broken ground</source>
@@ -3259,7 +3259,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation type="unfinished">Geçilemez yar/uçurum, çizgi etiket</translation>
+        <translation>Geçilemez yar/uçurum, saçak çizgisi</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -3284,17 +3284,17 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Cliff, with tags</source>
         <comment>Name of symbol 202.2</comment>
-        <translation type="unfinished">Geçilebilir yar / Uçurum</translation>
+        <translation>Geçilebilir yar/uçurum, saçaklı</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size</source>
         <comment>Name of symbol 202.3</comment>
-        <translation type="unfinished">Geçilebilir yar/uçurum</translation>
+        <translation>Geçilebilir yar/uçurum, saçaklı, minimum boyut</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 202.9</comment>
-        <translation type="unfinished">Geçilebilir yar/uçurum</translation>
+        <translation>Geçilebilir yar/uçurum, saçaklı, minimum boyut (ISOM2000&apos;den)</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
@@ -3632,7 +3632,7 @@ Minimum genişlik: 0.35 mm</translation>
     <message>
         <source>Vehicle track</source>
         <comment>Name of symbol 504</comment>
-        <translation type="unfinished">Araç izi</translation>
+        <translation>Araç yolu</translation>
     </message>
     <message>
         <source>Footpath</source>
@@ -4141,7 +4141,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Earth bank, tag line</source>
         <comment>Name of symbol 106.2</comment>
-        <translation type="unfinished">Toprak set, çizgi (tag)</translation>
+        <translation>Toprak set, saçak çizgisi</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -4191,7 +4191,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished">Geçilemez yar/uçurum, çizgi etiket</translation>
+        <translation>Geçilemez yar/uçurum, saçak çizgisi</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -4326,7 +4326,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Vehicle track</source>
         <comment>Name of symbol 505</comment>
-        <translation type="unfinished">Araç izi</translation>
+        <translation>Araç yolu</translation>
     </message>
     <message>
         <source>Footpath</source>
@@ -4633,12 +4633,12 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Lower brown 30%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt kahverengi %30</translation>
     </message>
     <message>
         <source>Black below lower light brown</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt açık kahverenginin altında siyah</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
@@ -4658,7 +4658,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>OpenOrienteering Blue</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering Mavi</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
@@ -4673,12 +4673,12 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Green 50%/Yellow 100%</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>%50 Yeşil/%100 Sarı</translation>
     </message>
     <message>
         <source>Black 30% for bare rock</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çıplak kaya için %30 Siyah</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -4713,7 +4713,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Yellow 100%</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>%100 Sarı</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
@@ -4759,7 +4759,7 @@ Bununla birlikte, kontur çizgileri, aşağıdaki sembollere dokunmaları halind
     <message>
         <source>Slope line, index contour</source>
         <comment>Name of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eğim çizgisi, indeks eşyükselti eğrisi</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -4789,7 +4789,7 @@ Bununla birlikte, kontur çizgileri, aşağıdaki sembollere dokunmaları halind
     <message>
         <source>Slope line, form line</source>
         <comment>Name of symbol 103.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eğim çizgisi, form çizgisi</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -4811,7 +4811,7 @@ Eğim çizgileri, eğimin tamamını göstermelidir ancak iki toprak yar birbiri
     <message>
         <source>Earth bank, very high</source>
         <comment>Name of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toprak set, çok yüksek</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments.
@@ -4823,17 +4823,17 @@ Eğim çizgileri (saçaklar), eğimin tamamını göstermelidir ancak iki toprak
     <message>
         <source>Earth bank, tag line</source>
         <comment>Name of symbol 104.2</comment>
-        <translation type="unfinished">Toprak set, çizgi (tag)</translation>
+        <translation>Toprak set, saçak çizgisi</translation>
     </message>
     <message>
         <source>The tags should show the full extent of the slope, but may be omitted if two banks are close together.</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eğim çizgileri (saçaklar) eğimin tam kapsamını göstermelidir, ancak iki toprak set birbirine yakınsa çizilmeyebilir.</translation>
     </message>
     <message>
         <source>Small earth wall</source>
         <comment>Name of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük toprak duvar</translation>
     </message>
     <message>
         <source>A small distinct earth wall, usually man-made.
@@ -4849,7 +4849,7 @@ Minimum uzunluk: 1,4 mm (kapladığı alan 5,6 m).</translation>
     <message>
         <source>Erosion gully or trench</source>
         <comment>Name of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>Erozyon oyuğu veya hendek</translation>
     </message>
     <message>
         <source>An erosion gully or trench which is too small to be represented with the symbol Earth bank (104), Contour (101), Index contour (102) or Form line (103) is represented by a single line. The end of the line is pointed. Contour lines may be broken around this symbol for better readability.
@@ -4923,7 +4923,7 @@ Kapladığı alan: 4,8 m x 2,4 m.</translation>
     <message>
         <source>Pit or hole</source>
         <comment>Name of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çukur veya delik</translation>
     </message>
     <message>
         <source>A pit or hole with distinct steep sides which cannot be represented to scale with the symbol Earth bank (104).
@@ -4953,7 +4953,7 @@ En az üç nokta kullanılmalıdır.</translation>
     <message>
         <source>Broken ground, single dot</source>
         <comment>Name of symbol 113.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bozuk zemin, tek nokta</translation>
     </message>
     <message>
         <source>An area of pits or knolls, which is too complex to be represented in detail.
@@ -4967,7 +4967,7 @@ En az üç nokta kullanılmalıdır.</translation>
     <message>
         <source>Broken ground, dense</source>
         <comment>Name of symbol 113.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bozuk zemin, yoğun</translation>
     </message>
     <message>
         <source>An area of pits or knolls, which is too complex to be represented in detail.
@@ -4981,7 +4981,7 @@ En az üç nokta kullanılmalıdır.</translation>
     <message>
         <source>Broken ground, single dot, enlarged</source>
         <comment>Name of symbol 113.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bozuk zemin, tek nokta, büyütülmüş</translation>
     </message>
     <message>
         <source>An area of pits or knolls, which is too complex to be represented in detail.
@@ -5059,7 +5059,7 @@ Minimum uzunluk: 0,9 mm (kapladığı alan 3,6 m).</translation>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation type="unfinished">Geçilemez yar/uçurum, çizgi etiket</translation>
+        <translation>Geçilemez yar/uçurum, saçak çizgisi</translation>
     </message>
     <message>
         <source>Tags are drawn downwards, showing a cliff&apos;s full extent from the top line to the foot. The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line.</source>
@@ -5069,7 +5069,7 @@ Minimum uzunluk: 0,9 mm (kapladığı alan 3,6 m).</translation>
     <message>
         <source>Impassable cliff, no tags, minimum size (from ISSOM)</source>
         <comment>Name of symbol 201.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez yar/uçurum, saçaksız, minimum boyut (ISSOM&apos;dan)</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -5081,7 +5081,7 @@ Dikey kaya yüzeyleri için dar alanlarda (örneğin uçurumlar arasındaki dar 
     <message>
         <source>Impassable cliff, minimum size (from ISSOM)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez yar/uçurum, minimum boyut (ISSOM&apos;dan)</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -5097,7 +5097,7 @@ Minimum uzunluk: 0,9 mm (kapladığı alan 3,6 m).</translation>
     <message>
         <source>Passable rock face, small (rounded ends, no tags)</source>
         <comment>Name of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir kaya yüzü, küçük (yuvarlak uçlu, saçaksız)</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -5113,7 +5113,7 @@ Minimum uzunluk: 0.9 mm (kapladığı alan 3.6 m).</translation>
     <message>
         <source>Passable rock face</source>
         <comment>Name of symbol 202.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir kaya yüzü</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -5129,7 +5129,7 @@ Minimum uzunluk: 0.9 mm (kapladığı alan 3.6 m).</translation>
     <message>
         <source>Passable rock face, minimum size</source>
         <comment>Name of symbol 202.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir kaya yüzü, minimum boyut</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -5145,7 +5145,7 @@ Minimum uzunluk: 0.9 mm (kapladığı alan 3.6 m).</translation>
     <message>
         <source>Passable rock face, top line (flat ends)</source>
         <comment>Name of symbol 202.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir kaya yüzü, üst çizgi (düz uçlu)</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -5161,7 +5161,7 @@ Minimum uzunluk: 0.9 mm (kapladığı alan 3.6 m).</translation>
     <message>
         <source>Passable rock face, tag line</source>
         <comment>Name of symbol 202.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir kaya yüzü, saçak çizgisi</translation>
     </message>
     <message>
         <source>If the direction of fall of the rock face is not apparent from the contours, or to improve legibility, short tags should be drawn in the direction of the fall. For non-vertical cliffs, the tags should be drawn to show the full horizontal extent.</source>
@@ -5171,17 +5171,17 @@ Minimum uzunluk: 0.9 mm (kapladığı alan 3.6 m).</translation>
     <message>
         <source>Passable rock face, small (rounded ends, no tags; minimum size, from ISSOM)</source>
         <comment>Name of symbol 202.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir kaya yüzü, küçük (yuvarlak uçlu, saçaksız; minimum boyut, ISSOM&apos;dan)</translation>
     </message>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
         <comment>Description of symbol 202.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaya yüzünün eğim yönü eşyükselti eğrilerinden anlaşılıyorsa ve okunabilirlik iyiyse kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Passable rock face, minimum size (from ISSOM)</source>
         <comment>Name of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir kaya yüzü, minimum boyut (ISSOM&apos;dan)</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -5213,7 +5213,7 @@ Kapladığı alan: 4,4 m x 5,0 m.</translation>
     <message>
         <source>Cave (with a distinct entrance)</source>
         <comment>Name of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mağara (belirgin girişi olan)</translation>
     </message>
     <message>
         <source>A cave with distinct entrance which may constitute a danger to the competitor.
@@ -5229,7 +5229,7 @@ Kapladığı alan: 4,4 m x 5,0 m.</translation>
     <message>
         <source>Cave (with a distinct entrance) (from ISSOM)</source>
         <comment>Name of symbol 203.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mağara (belirgin girişi olan) (ISSOM&apos;dan)</translation>
     </message>
     <message>
         <source>A cave with distinct entrance which may constitute a danger to the competitor.
@@ -5271,7 +5271,7 @@ Kapladığı alan: 3,6 m çapında.</translation>
     <message>
         <source>Gigantic boulder or rock pillar</source>
         <comment>Name of symbol 206</comment>
-        <translation type="unfinished"></translation>
+        <translation>Devasa kaya veya kaya sütunu</translation>
     </message>
     <message>
         <source>A gigantic boulder, rock pillar or massive cliff shall be represented in plan shape. The objects can vary in shape and width.
@@ -5371,7 +5371,7 @@ Bir kayalık alanda belirgin yükseklik farklarını gösterebilmek için, bazı
     <message>
         <source>Stony ground</source>
         <comment>Name of symbol 210</comment>
-        <translation type="unfinished"></translation>
+        <translation>Taşlı zemin</translation>
     </message>
     <message>
         <source>An area of stony or rocky ground which reduces runnability.
@@ -5385,7 +5385,7 @@ Yoğunluk: En az 3 nokta.</translation>
     <message>
         <source>Stony ground, single dot</source>
         <comment>Name of symbol 210.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Taşlı zemin, tek nokta</translation>
     </message>
     <message>
         <source>An area of stony or rocky ground which reduces runnability.
@@ -5399,7 +5399,7 @@ Yoğunluk: En az 3 nokta.</translation>
     <message>
         <source>Stony ground, enlarged</source>
         <comment>Name of symbol 210.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Taşlı zemin, büyütülmüş</translation>
     </message>
     <message>
         <source>An area of stony or rocky ground which reduces runnability.
@@ -5413,7 +5413,7 @@ Yoğunluk: En az 3 nokta.</translation>
     <message>
         <source>Stony ground, single dot, enlarged</source>
         <comment>Name of symbol 210.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Taşlı zemin, tek nokta, büyütülmüş</translation>
     </message>
     <message>
         <source>An area of stony or rocky ground which reduces runnability.
@@ -5427,7 +5427,7 @@ Yoğunluk: En az 3 nokta.</translation>
     <message>
         <source>Open sandy ground</source>
         <comment>Name of symbol 213</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık kumlu zemin</translation>
     </message>
     <message>
         <source>An area of sandy ground or soft gravel with no vegetation which reduces runnability.
@@ -5477,7 +5477,7 @@ Minimum alan (iç): 0,5 mm² (kapladığı alan 8 m²)</translation>
     <message>
         <source>Uncrossable body of water (full colour), fill</source>
         <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez su kütlesi (tam renk), dolgu</translation>
     </message>
     <message>
         <source>An area of deep water such as a lake, pond, river or fountain. The dark blue colour and the bordering black line indicate that the feature shall not be crossed.
@@ -5509,7 +5509,7 @@ Minimum alan (iç): 0,5 mm² (kapladığı alan 8 m²)</translation>
     <message>
         <source>Uncrossable body of water (dominant), fill</source>
         <comment>Name of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez su kütlesi (baskın), dolgu</translation>
     </message>
     <message>
         <source>An area of deep water such as a lake, pond, river or fountain. The dark blue colour and the bordering black line indicate that the feature shall not be crossed.
@@ -5530,12 +5530,12 @@ Minimum alan (iç): 0,5 mm² (kapladığı alan 8 m²)</translation>
     <message>
         <source>The bordering black line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çevreleyen siyah çizgi, nesnenin geçilmemesi gerektiğini belirtir.</translation>
     </message>
     <message>
         <source>Crossable body of water</source>
         <comment>Name of symbol 302</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir su kütlesi</translation>
     </message>
     <message>
         <source>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water should be less than 0.5 m deep and runnable.
@@ -5551,7 +5551,7 @@ Minimum alan (İç): 0,5 mm² (kapladığı alan 8 m²)</translation>
     <message>
         <source>Crossable body of water, fill</source>
         <comment>Name of symbol 302.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir su kütlesi, dolgu</translation>
     </message>
     <message>
         <source>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water should be less than 0.5 m deep and runnable.
@@ -5567,12 +5567,12 @@ Minimum alan (İç): 0,5 mm² (kapladığı alan 8 m²)</translation>
     <message>
         <source>Crossable body of water, border line</source>
         <comment>Name of symbol 302.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir su kütlesi, sınır çizgisi</translation>
     </message>
     <message>
         <source>If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line.</source>
         <comment>Description of symbol 302.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir su kütlesinin sınırına başka hiçbir çizgi sembolü değmiyorsa, sınır mavi bir çizgiyle gösterilmelidir.</translation>
     </message>
     <message>
         <source>Waterhole</source>
@@ -5584,29 +5584,33 @@ Minimum alan (İç): 0,5 mm² (kapladığı alan 8 m²)</translation>
 Location is the centre of gravity of the symbol.
 Footprint: 4.4 m x 5.0 m.</source>
         <comment>Description of symbol 303</comment>
-        <translation type="unfinished"></translation>
+        <translation>Su dolu bir çukur veya ölçeğe uygun gösterilemeyecek kadar küçük bir su alanı.
+Konum, sembolün ağırlık merkezidir.
+Kapladığı alan: 4.4 m x 5.0 m.</translation>
     </message>
     <message>
         <source> Small crossable watercourse</source>
         <comment>Name of symbol 305</comment>
-        <translation type="unfinished"></translation>
+        <translation> Küçük geçilebilir su yolu</translation>
     </message>
     <message>
         <source>A crossable watercourse less than 2 m wide.
 Minimum length: 1 mm (footprint 4 m)</source>
         <comment>Description of symbol 305</comment>
-        <translation type="unfinished"></translation>
+        <translation>Genişliği 2 m&apos;den az olan geçilebilir bir su yolu.
+Minimum uzunluk: 1 mm (kapladığı alan 4 m)</translation>
     </message>
     <message>
         <source> Minor / seasonal watercourse</source>
         <comment>Name of symbol 306</comment>
-        <translation type="unfinished"></translation>
+        <translation> Küçük / mevsimsel su yolu</translation>
     </message>
     <message>
         <source>A natural or man-made minor watercourse which may contain water only intermittently.
 Minimum length (isolated): two dashes (4.11 mm - footprint 16.5 m)</source>
         <comment>Description of symbol 306</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yalnızca aralıklı olarak su bulunduran doğal veya insan yapımı küçük bir su yolu.
+Minimum uzunluk (izole): iki kesikli çizgi (4.11 mm - kapladığı alan 16.5 m)</translation>
     </message>
     <message>
         <source>Uncrossable marsh</source>
@@ -5618,29 +5622,33 @@ Minimum length (isolated): two dashes (4.11 mm - footprint 16.5 m)</source>
 At least two blue lines shall be clearly visible.
 Minimum width: 2 lines.</source>
         <comment>Description of symbol 307</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez olan veya yarışmacı için tehlike oluşturabilecek bir bataklık. Bu nesne geçilmemelidir.
+En az iki mavi çizgi açıkça görülebilmelidir.
+Minimum genişlik: 2 çizgi.</translation>
     </message>
     <message>
         <source>Uncrossable marsh, fill</source>
         <comment>Name of symbol 307.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez bataklık, dolgu</translation>
     </message>
     <message>
         <source>A marsh which is uncrossable or which may constitute a danger to the competitor. The feature shall not be crossed.
 At least two blue lines shall be clearly visible.
 Minimum width: 2 lines.</source>
         <comment>Description of symbol 307.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez olan veya yarışmacı için tehlike oluşturabilecek bir bataklık. Bu nesne geçilmemelidir.
+En az iki mavi çizgi açıkça görülebilmelidir.
+Minimum genişlik: 2 çizgi.</translation>
     </message>
     <message>
         <source>Uncrossable marsh, border line</source>
         <comment>Name of symbol 307.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez bataklık, sınır çizgisi</translation>
     </message>
     <message>
         <source>The bordering black line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 307.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çevreleyen siyah çizgi, nesnenin geçilmemesi gerektiğini belirtir.</translation>
     </message>
     <message>
         <source>Marsh</source>
@@ -5653,7 +5661,10 @@ The symbol shall be combined with vegetation symbols to show runnability and ope
 At least two blue lines shall be clearly visible.
 Minimum width: 2 lines.</source>
         <comment>Description of symbol 308</comment>
-        <translation type="unfinished"></translation>
+        <translation>Genellikle belirgin bir kenarı olan geçilebilir bir bataklık.
+Sembol, koşulabilirliği ve açıklığı göstermek için bitki örtüsü sembolleriyle birleştirilmelidir.
+En az iki mavi çizgi açıkça görülebilmelidir.
+Minimum genişlik: 2 çizgi.</translation>
     </message>
     <message>
         <source>Marsh, minimum size</source>
@@ -5666,7 +5677,10 @@ The symbol shall be combined with vegetation symbols to show runnability and ope
 At least two blue lines shall be clearly visible.
 Minimum width: 2 lines.</source>
         <comment>Description of symbol 308.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Genellikle belirgin bir kenarı olan geçilebilir bir bataklık.
+Sembol, koşulabilirliği ve açıklığı göstermek için bitki örtüsü sembolleriyle birleştirilmelidir.
+En az iki mavi çizgi açıkça görülebilmelidir.
+Minimum genişlik: 2 çizgi.</translation>
     </message>
     <message>
         <source>Narrow marsh</source>
@@ -5677,7 +5691,8 @@ Minimum width: 2 lines.</source>
         <source>A marsh or trickle of water which is too narrow to be shown with symbol Marsh (310).
 Minimum size (isolated): two dots (1 mm - footprint 4 m).</source>
         <comment>Description of symbol 309</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bataklık (310) sembolüyle gösterilemeyecek kadar dar bir bataklık veya su sızıntısı.
+Minimum boyut (izole): iki nokta (1 mm - kapladığı alan 4 m).</translation>
     </message>
     <message>
         <source>Indistinct marsh</source>
@@ -5689,7 +5704,9 @@ Minimum size (isolated): two dots (1 mm - footprint 4 m).</source>
 The symbol shall be combined with vegetation symbols to show runnability and openness.
 At least three blue lines shall be clearly visible.</source>
         <comment>Description of symbol 310</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirsiz veya mevsimsel bir bataklık ya da bataklıktan sert zemine aşamalı geçiş alanı; geçilebilir. Kenarları genellikle belirsizdir ve bitki örtüsü çevredeki zeminle benzerdir.
+Sembol, koşulabilirliği ve açıklığı göstermek için bitki örtüsü sembolleriyle birleştirilmelidir.
+En az üç mavi çizgi açıkça görülebilmelidir.</translation>
     </message>
     <message>
         <source>Indistinct marsh, minimum size</source>
@@ -5699,14 +5716,16 @@ At least three blue lines shall be clearly visible.</source>
     <message>
         <source>Small fountain or well</source>
         <comment>Name of symbol 311</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük çeşme veya kuyu</translation>
     </message>
     <message>
         <source>Small fountain or well which is at least 1 m in diameter.
 Minimum height: 0.5 m.
 Footprint: 3.6 m x 3.6 m.</source>
         <comment>Description of symbol 311</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çapı en az 1 m olan küçük çeşme veya kuyu.
+Minimum yükseklik: 0.5 m.
+Kapladığı alan: 3.6 m x 3.6 m.</translation>
     </message>
     <message>
         <source>Spring</source>
@@ -5718,7 +5737,9 @@ Footprint: 3.6 m x 3.6 m.</source>
 The symbol is orientated to open downstream.
 Footprint: 4.8 m x 2.4 m.</source>
         <comment>Description of symbol 312</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin bir çıkışı olan su kaynağı.
+Sembol, açık ucu akış yönüne (aşağı) bakacak şekilde yönlendirilir.
+Kapladığı alan: 4.8 m x 2.4 m.</translation>
     </message>
     <message>
         <source>Prominent water feature</source>
@@ -5730,7 +5751,9 @@ Footprint: 4.8 m x 2.4 m.</source>
 The definition of the symbol must be given on the map.
 Footprint: 4.8 m in diameter.</source>
         <comment>Description of symbol 313</comment>
-        <translation type="unfinished"></translation>
+        <translation>Önemli veya belirgin, küçük bir su nesnesi.
+Sembolün tanımı haritada verilmelidir.
+Kapladığı alan: 4.8 m çapında.</translation>
     </message>
     <message>
         <source>Open land</source>
@@ -5742,7 +5765,9 @@ Footprint: 4.8 m in diameter.</source>
 Minimum width: 0.3 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <comment>Description of symbol 401</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çok iyi koşulabilirlik sunan, ağaçsız ekili arazi, çimenlik, tarla, çayır, otlak, ağaç kabuğu malçı vb. alan.
+Minimum genişlik: 0.3 mm.
+Minimum alan: 0.5 mm² (kapladığı alan 8 m²).</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
@@ -5756,7 +5781,11 @@ Minimum width: 2.2 mm
 Minimum area: 6.25 mm² (footprint 100 m²)
 Smaller areas must be left out, exaggerated or shown using the symbol Open land (401).</source>
         <comment>Description of symbol 402</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dağınık ağaç veya çalılar bulunan, çok iyi koşulabilirlik sunan çim veya benzeri zemin örtüsüne sahip çayırlık alan.
+Noktalar beyaz (dağınık ağaçlar) veya yeşil (dağınık çalılar / çalılıklar) olabilir. Belirgin büyük ağaç (417) ve Belirgin çalı veya küçük ağaç (418) sembolleri eklenebilir.
+Minimum genişlik: 2.2 mm
+Minimum alan: 6.25 mm² (kapladığı alan 100 m²)
+Daha küçük alanlar ihmal edilmeli, abartılmalı veya Açık alan (401) sembolü kullanılarak gösterilmelidir.</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
@@ -5770,7 +5799,11 @@ Minimum width: 2.2 mm
 Minimum area: 6.25 mm² (footprint 100 m²)
 Smaller areas must be left out, exaggerated or shown using the symbol Open land (401).</source>
         <comment>Description of symbol 402.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dağınık ağaç veya çalılar bulunan, çok iyi koşulabilirlik sunan çim veya benzeri zemin örtüsüne sahip çayırlık alan.
+Noktalar beyaz (dağınık ağaçlar) veya yeşil (dağınık çalılar / çalılıklar) olabilir. Belirgin büyük ağaç (417) ve Belirgin çalı veya küçük ağaç (418) sembolleri eklenebilir.
+Minimum genişlik: 2.2 mm
+Minimum alan: 6.25 mm² (kapladığı alan 100 m²)
+Daha küçük alanlar ihmal edilmeli, abartılmalı veya Açık alan (401) sembolü kullanılarak gösterilmelidir.</translation>
     </message>
     <message>
         <source>Rough open land</source>
@@ -5782,7 +5815,9 @@ Smaller areas must be left out, exaggerated or shown using the symbol Open land 
 This symbol may be combined with symbols Vegetation: slow running, good visibility (407) and Vegetation: walk, good visibility (409) to show reduced runnability.
 Minimum area: 1 mm² (footprint 16 m²).</source>
         <comment>Description of symbol 403</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fundalık veya bozkır, ağaçları kesilmiş alan, yeni ağaçlandırılmış alan (yaklaşık 1 m&apos;den kısa ağaçlar) ya da funda veya uzun ot gibi engebeli zemin bitki örtüsüne sahip, genel olarak açık diğer araziler.
+Koşulabilirliğin azaldığını göstermek için bu sembol, Bitki örtüsü: yavaş koşu, iyi görünürlük (407) ve Bitki örtüsü: yürüme, iyi görünürlük (409) sembolleriyle birleştirilebilir.
+Minimum alan: 1 mm² (kapladığı alan 16 m²).</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
@@ -5796,7 +5831,11 @@ Minimum width: 2.5 mm.
 Minimum area: 6.25 mm² (footprint 100 m²)
 Smaller areas must be left out, exaggerated or shown using either the symbol Rough open land (403) or Forest (405).</source>
         <comment>Description of symbol 404</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dağınık ağaç veya çalılar bulunan engebeli açık arazi. Noktalar beyaz (dağınık ağaçlar) veya yeşil (dağınık çalılar / çalılıklar) olabilir.
+Belirgin büyük ağaç (417) ve Belirgin çalı veya küçük ağaç (418) sembolleri eklenebilir. Koşulabilirliğin azaldığını göstermek için yalnızca beyaz noktalı varyant, Bitki örtüsü: yavaş koşu, iyi görünürlük (407) veya Bitki örtüsü: yürüme, iyi görünürlük (409) sembolüyle birleştirilebilir.
+Minimum genişlik: 2.5 mm.
+Minimum alan: 6.25 mm² (kapladığı alan 100 m²)
+Daha küçük alanlar ihmal edilmeli, abartılmalı veya Engebeli açık alan (403) ya da Orman (405) sembolü kullanılarak gösterilmelidir.</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
@@ -5810,7 +5849,11 @@ Minimum width: 2.5 mm.
 Minimum area: 6.25 mm² (footprint 100 m²)
 Smaller areas must be left out, exaggerated or shown using either the symbol Rough open land (403) or Forest (405).</source>
         <comment>Description of symbol 404.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dağınık ağaç veya çalılar bulunan engebeli açık arazi. Noktalar beyaz (dağınık ağaçlar) veya yeşil (dağınık çalılar / çalılıklar) olabilir.
+Belirgin büyük ağaç (417) ve Belirgin çalı veya küçük ağaç (418) sembolleri eklenebilir. Koşulabilirliğin azaldığını göstermek için yalnızca beyaz noktalı varyant, Bitki örtüsü: yavaş koşu, iyi görünürlük (407) veya Bitki örtüsü: yürüme, iyi görünürlük (409) sembolüyle birleştirilebilir.
+Minimum genişlik: 2.5 mm.
+Minimum alan: 6.25 mm² (kapladığı alan 100 m²)
+Daha küçük alanlar ihmal edilmeli, abartılmalı veya Engebeli açık alan (403) ya da Orman (405) sembolü kullanılarak gösterilmelidir.</translation>
     </message>
     <message>
         <source>Forest</source>
@@ -5822,19 +5865,23 @@ Smaller areas must be left out, exaggerated or shown using either the symbol Rou
 Minimum width (for openings): 0.3 mm.
 Minimum area: 1 mm² (footprint 16 m²) for openings in screens of other colours, except for Vegetation: walk (408) and Open land (401), where the minimum area is 0.5 mm² (footprint 8 m²).</source>
         <comment>Description of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirli arazi tipi için tipik açık orman. Ormanın hiçbir kısmında kolayca koşulamıyorsa haritada hiç beyaz görünmemelidir.
+Minimum genişlik (açıklıklar için): 0.3 mm.
+Minimum alan: Diğer renklerdeki taramalarda bulunan açıklıklar için 1 mm² (kapladığı alan 16 m²); ancak Bitki örtüsü: yürüme (408) ve Açık alan (401) için minimum alan 0.5 mm²&apos;dir (kapladığı alan 8 m²).</translation>
     </message>
     <message>
         <source> Vegetation: slow running</source>
         <comment>Name of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation> Bitki örtüsü: yavaş koşu</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
 Minimum width: 0.4 mm.
 Minimum area: 1 mm² (footprint 16 m²).</source>
         <comment>Description of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>Koşuyu normal hızın yaklaşık %60-80&apos;ine düşüren yoğun bitki örtüsüne (düşük görünürlük) sahip bir alan.
+Minimum genişlik: 0.4 mm.
+Minimum alan: 1 mm² (kapladığı alan 16 m²).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, normal running in one direction</source>
@@ -5847,41 +5894,48 @@ When runnability is better in one direction a regular pattern of white stripes i
 Minimum width: 0.4 mm.
 Minimum area: 1 mm² (footprint 16 m²).</source>
         <comment>Description of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Koşuyu normal hızın yaklaşık %60-80&apos;ine düşüren yoğun bitki örtüsüne (düşük görünürlük) sahip bir alan.
+Koşulabilirlik bir yönde daha iyi olduğunda, daha iyi koşu yönünü göstermek için taramada düzenli bir beyaz şerit deseni bırakılır. En az iki beyaz şerit açıkça görülebilmelidir.
+Minimum genişlik: 0.4 mm.
+Minimum alan: 1 mm² (kapladığı alan 16 m²).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, minimum width</source>
         <comment>Name of symbol 406.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bitki örtüsü: yavaş koşu, minimum genişlik</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.</source>
         <comment>Description of symbol 406.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Koşuyu normal hızın yaklaşık %60-80&apos;ine düşüren yoğun bitki örtüsüne (düşük görünürlük) sahip bir alan.</translation>
     </message>
     <message>
         <source> Vegetation: slow running, good visibility</source>
         <comment>Name of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation> Bitki örtüsü: yavaş koşu, iyi görünürlük</translation>
     </message>
     <message>
         <source>An area of good visibility and reduced runnability due to, for instance, undergrowth (brambles, heather, low bushes, cut branches, etc.). Running speed is reduced to about 60-80% of normal speed.
 This symbol shall not be combined with the symbol Vegetation: slow running (406) or Vegetation: walk (408).
 Minimum width: 2 lines.</source>
         <comment>Description of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation>Örneğin orman altı bitkileri (böğürtlen, funda, alçak çalılar, kesilmiş dallar vb.) nedeniyle iyi görünürlüğe sahip ancak koşulabilirliği azalmış alan. Koşu hızı normal hızın yaklaşık %60-80&apos;ine düşer.
+Bu sembol, Bitki örtüsü: yavaş koşu (406) veya Bitki örtüsü: yürüme (408) sembolüyle birleştirilmemelidir.
+Minimum genişlik: 2 çizgi.</translation>
     </message>
     <message>
         <source> Vegetation: walk</source>
         <comment>Name of symbol 408</comment>
-        <translation type="unfinished"></translation>
+        <translation> Bitki örtüsü: yürüme</translation>
     </message>
     <message>
         <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <comment>Description of symbol 408</comment>
-        <translation type="unfinished"></translation>
+        <translation>Koşuyu normal hızın yaklaşık %20-60&apos;ına düşüren yoğun ağaçlar veya çalılıklar (düşük görünürlük) bulunan bir alan.
+Minimum genişlik: 0.4 mm.
+Minimum alan: 0.5 mm² (kapladığı alan 8 m²).</translation>
     </message>
     <message>
         <source>Vegetation: walk, normal running in one direction</source>
@@ -5894,7 +5948,10 @@ When runnability is better in one direction a regular pattern of white / green 3
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <comment>Description of symbol 408.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Koşuyu normal hızın yaklaşık %20-60&apos;ına düşüren yoğun ağaçlar veya çalılıklar (düşük görünürlük) bulunan bir alan.
+Koşulabilirlik bir yönde daha iyi olduğunda, daha iyi koşu yönünü göstermek için taramada düzenli bir beyaz / %30 yeşil şerit deseni bırakılır. En az iki şerit açıkça görülebilmelidir.
+Minimum genişlik: 0.4 mm.
+Minimum alan: 0.5 mm² (kapladığı alan 8 m²).</translation>
     </message>
     <message>
         <source>Vegetation: walk, slow running in one direction</source>
@@ -5907,17 +5964,20 @@ When runnability is better in one direction a regular pattern of white / green 3
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <comment>Description of symbol 408.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Koşuyu normal hızın yaklaşık %20-60&apos;ına düşüren yoğun ağaçlar veya çalılıklar (düşük görünürlük) bulunan bir alan.
+Koşulabilirlik bir yönde daha iyi olduğunda, daha iyi koşu yönünü göstermek için taramada düzenli bir beyaz / %30 yeşil şerit deseni bırakılır. En az iki şerit açıkça görülebilmelidir.
+Minimum genişlik: 0.4 mm.
+Minimum alan: 0.5 mm² (kapladığı alan 8 m²).</translation>
     </message>
     <message>
         <source> Vegetation: walk, minimum width</source>
         <comment>Name of symbol 408.3</comment>
-        <translation type="unfinished"></translation>
+        <translation> Bitki örtüsü: yürüme, minimum genişlik</translation>
     </message>
     <message>
         <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.</source>
         <comment>Description of symbol 408.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Koşuyu normal hızın yaklaşık %20-60&apos;ına düşüren yoğun ağaçlar veya çalılıklar (düşük görünürlük) bulunan bir alan.</translation>
     </message>
     <message>
         <source>Vegetation: walk, good visibility</source>
@@ -5929,29 +5989,33 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
 This symbol shall not be combined with the symbol Vegetation: slow running (406) or Vegetation: walk (408).
 Minimum width: 2 lines.</source>
         <comment>Description of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>Örneğin orman altı bitkileri (böğürtlen, funda, alçak çalılar, kesilmiş dallar vb.) nedeniyle iyi görünürlüğe sahip ancak koşulabilirliği azalmış alan. Koşu hızı normal hızın yaklaşık %20-60&apos;ına düşer.
+Bu sembol, Bitki örtüsü: yavaş koşu (406) veya Bitki örtüsü: yürüme (408) sembolüyle birleştirilmemelidir.
+Minimum genişlik: 2 çizgi.</translation>
     </message>
     <message>
         <source> Impassable vegetation</source>
         <comment>Name of symbol 410</comment>
-        <translation type="unfinished"></translation>
+        <translation> Geçilemez bitki örtüsü</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is impassable. Running speed is almost 0%.
 Minimum area: 0.3 mm² (footprint 5 m²). Impassable vegetation shall not be crossed.
 Minimum width: 0.4 mm.</source>
         <comment>Description of symbol 410</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez yoğun bitki örtüsü (ağaçlar veya çalılar) ile kaplı alan. Koşu hızı neredeyse %0&apos;dır.
+Minimum alan: 0.3 mm² (kapladığı alan 5 m²). Geçilemez bitki örtüsünden geçilmemelidir.
+Minimum genişlik: 0.4 mm.</translation>
     </message>
     <message>
         <source> Impassable vegetation, minimum width (hedge)</source>
         <comment>Name of symbol 410.1</comment>
-        <translation type="unfinished"></translation>
+        <translation> Geçilemez bitki örtüsü, minimum genişlik (canlı çit)</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is impassable. Running speed is almost 0%.</source>
         <comment>Description of symbol 410.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez yoğun bitki örtüsü (ağaçlar veya çalılar) ile kaplı alan. Koşu hızı neredeyse %0&apos;dır.</translation>
     </message>
     <message>
         <source>Cultivated land</source>
@@ -5964,7 +6028,10 @@ The symbol is combined with symbol Out-of-bounds area (709) to show cultivated l
 Minimum width: 3 mm.
 Minimum area: 9 mm² (144 m²).</source>
         <comment>Description of symbol 412</comment>
-        <translation type="unfinished"></translation>
+        <translation>Genellikle ürün yetiştirmek için kullanılan ekili arazi. Koşulabilirlik, yetiştirilen ürünün türüne ve yılın zamanına göre değişebilir. Koşulabilirlik değişkenlik gösterebileceğinden, parkur planlamada bu alanlardan kaçınılmalıdır.
+Sembol, girilmemesi gereken ekili arazileri göstermek için Yasak bölge (709) sembolüyle birleştirilir.
+Minimum genişlik: 3 mm.
+Minimum alan: 9 mm² (144 m²).</translation>
     </message>
     <message>
         <source>Cultivated land (black pattern)</source>
@@ -5977,7 +6044,10 @@ The symbol is combined with symbol Out-of-bounds area (709) to show cultivated l
 Minimum width: 3 mm.
 Minimum area: 9 mm² (144 m²).</source>
         <comment>Description of symbol 412.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Genellikle ürün yetiştirmek için kullanılan ekili arazi. Koşulabilirlik, yetiştirilen ürünün türüne ve yılın zamanına göre değişebilir. Koşulabilirlik değişkenlik gösterebileceğinden, parkur planlamada bu alanlardan kaçınılmalıdır.
+Sembol, girilmemesi gereken ekili arazileri göstermek için Yasak bölge (709) sembolüyle birleştirilir.
+Minimum genişlik: 3 mm.
+Minimum alan: 9 mm² (144 m²).</translation>
     </message>
     <message>
         <source>Orchard</source>
@@ -5990,7 +6060,10 @@ The dot lines may be orientated to show the direction of planting. At least four
 Minimum width: 2 mm.
 Minimum area: 4 mm² (64 m²)</source>
         <comment>Description of symbol 413</comment>
-        <translation type="unfinished"></translation>
+        <translation>Genellikle düzenli bir desende meyve ağaçları veya çalılar dikilmiş arazi.
+Nokta sıraları dikim yönünü göstermek için yönlendirilebilir. En az dört nokta açıkça görülebilmelidir. Açık alan (401) veya Engebeli açık alan (403) sembolüyle birleştirilmelidir.
+Minimum genişlik: 2 mm.
+Minimum alan: 4 mm² (64 m²)</translation>
     </message>
     <message>
         <source>Orchard, rough open land</source>
@@ -6003,12 +6076,15 @@ The dot lines may be orientated to show the direction of planting. At least four
 Minimum width: 2 mm.
 Minimum area: 4 mm² (64 m²)</source>
         <comment>Description of symbol 413.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Genellikle düzenli bir desende meyve ağaçları veya çalılar dikilmiş arazi.
+Nokta sıraları dikim yönünü göstermek için yönlendirilebilir. En az dört nokta açıkça görülebilmelidir. Açık alan (401) veya Engebeli açık alan (403) sembolüyle birleştirilmelidir.
+Minimum genişlik: 2 mm.
+Minimum alan: 4 mm² (64 m²)</translation>
     </message>
     <message>
         <source> Vineyard or similar</source>
         <comment>Name of symbol 414</comment>
-        <translation type="unfinished"></translation>
+        <translation> Bağ veya benzeri</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting.
@@ -6016,12 +6092,15 @@ The lines shall be orientated to show the direction of planting. At least three 
 Minimum width: 2 mm.
 Minimum area: 4 mm² (64 m²)</source>
         <comment>Description of symbol 414</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dikim yönünde iyi veya normal koşulabilirlik sunan, yoğun bitki sıraları içeren bağ veya benzeri ekili arazi.
+Dikim yönünü göstermek için çizgiler yönlendirilmelidir. En az üç çizgi açıkça görülebilmelidir. Açık alan (401) veya Engebeli açık alan (403) sembolüyle birleştirilmelidir.
+Minimum genişlik: 2 mm.
+Minimum alan: 4 mm² (64 m²)</translation>
     </message>
     <message>
         <source> Vineyard or similar, rough open land</source>
         <comment>Name of symbol 414.1</comment>
-        <translation type="unfinished"></translation>
+        <translation> Bağ veya benzeri, engebeli açık arazi</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting.
@@ -6029,7 +6108,10 @@ The lines shall be orientated to show the direction of planting. At least three 
 Minimum width: 2 mm.
 Minimum area: 4 mm² (64 m²)</source>
         <comment>Description of symbol 414.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dikim yönünde iyi veya normal koşulabilirlik sunan, yoğun bitki sıraları içeren bağ veya benzeri ekili arazi.
+Dikim yönünü göstermek için çizgiler yönlendirilmelidir. En az üç çizgi açıkça görülebilmelidir. Açık alan (401) veya Engebeli açık alan (403) sembolüyle birleştirilmelidir.
+Minimum genişlik: 2 mm.
+Minimum alan: 4 mm² (64 m²)</translation>
     </message>
     <message>
         <source>Distinct cultivation boundary</source>
@@ -6040,7 +6122,8 @@ Minimum area: 4 mm² (64 m²)</source>
         <source>A boundary of symbol cultivated land vegetation (401, 412, 413, 414) or a permanent boundary between different types of cultivated land, when not shown with other symbols (fence, wall, path, etc.)
 Minimum length: 1 mm (footprint 4 m).</source>
         <comment>Description of symbol 415</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ekili arazi bitki örtüsü sembollerinin (401, 412, 413, 414) sınırı veya diğer sembollerle (çit, duvar, patika vb.) gösterilmediğinde farklı ekili arazi türleri arasındaki kalıcı sınır.
+Minimum uzunluk: 1 mm (kapladığı alan 4 m).</translation>
     </message>
     <message>
         <source>Distinct vegetation boundary</source>
@@ -6051,7 +6134,8 @@ Minimum length: 1 mm (footprint 4 m).</source>
         <source>A distinct forest edge or very distinct vegetation boundary within the forest. For indistinct boundaries, the area edges are shown only by the change in colour and / or dot screen.
 Minimum length (isolated): five dots (2,65 mm - footprint 10,6 m)</source>
         <comment>Description of symbol 416</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin bir orman kenarı veya orman içinde çok belirgin bir bitki örtüsü sınırı. Belirsiz sınırlarda alan kenarları yalnızca renk ve / veya nokta taramasındaki değişimle gösterilir.
+Minimum uzunluk (izole): beş nokta (2,65 mm - kapladığı alan 10,6 m)</translation>
     </message>
     <message>
         <source>Prominent large tree</source>
@@ -6062,18 +6146,20 @@ Minimum length (isolated): five dots (2,65 mm - footprint 10,6 m)</source>
         <source>A prominent large single tree.
 Footprint: 4 m in diameter (OM 4.8 m).</source>
         <comment>Description of symbol 417</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin, büyük, tek bir ağaç.
+Kapladığı alan: 4 m çapında (OM 4.8 m).</translation>
     </message>
     <message>
         <source>Prominent bush or small tree</source>
         <comment>Name of symbol 418</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin çalı veya küçük ağaç</translation>
     </message>
     <message>
         <source>A prominent bush or a small single tree.
 Footprint: 3.2 m in diameter.</source>
         <comment>Description of symbol 418</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin bir çalı veya küçük, tek bir ağaç.
+Kapladığı alan: 3.2 m çapında.</translation>
     </message>
     <message>
         <source>Prominent vegetation feature</source>
@@ -6085,234 +6171,263 @@ Footprint: 3.2 m in diameter.</source>
 The definition of the symbol must be given on the map.
 Footprint: 4.8 m x 4.8 m (OM 7.1 m x 7.1 m).</source>
         <comment>Description of symbol 419</comment>
-        <translation type="unfinished"></translation>
+        <translation>Önemli veya belirgin bir bitki örtüsü nesnesi.
+Sembolün tanımı haritada verilmelidir.
+Kapladığı alan: 4.8 m x 4.8 m (OM 7.1 m x 7.1 m).</translation>
     </message>
     <message>
         <source>Paved area, light traffic, with border</source>
         <comment>Name of symbol 501</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan, az trafikli, kenar çizgili</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan; asfalt, sert çakıl, karo, beton veya benzeri sağlam bir yüzeye sahip alandır. Basamak veya kaplamalı alan kenarı (501.1) sembolüyle sınırlandırılmalıdır (veya çerçevelenmelidir).
+Kaplamalı alan içindeki belirgin farklılıklar, navigasyona yardımcı oluyorsa Basamak veya kaplamalı alan kenarı (501.1) sembolüyle gösterilebilir. Mantıklı olduğu yerlerde (örn. belirsiz / aşamalı çakıldan çime geçişlerde) siyah kenar çizgisi çizilmeyebilir.
+Araç veya yaya trafiğindeki farklılıkları göstermek için kahverengi renk tonu farkları kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Paved area, light traffic</source>
         <comment>Name of symbol 501.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan, az trafikli</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan; asfalt, sert çakıl, karo, beton veya benzeri sağlam bir yüzeye sahip alandır. Basamak veya kaplamalı alan kenarı (501.1) sembolüyle sınırlandırılmalıdır (veya çerçevelenmelidir).
+Kaplamalı alan içindeki belirgin farklılıklar, navigasyona yardımcı oluyorsa Basamak veya kaplamalı alan kenarı (501.1) sembolüyle gösterilebilir. Mantıklı olduğu yerlerde (örn. belirsiz / aşamalı çakıldan çime geçişlerde) siyah kenar çizgisi çizilmeyebilir.
+Araç veya yaya trafiğindeki farklılıkları göstermek için kahverengi renk tonu farkları kullanılmalıdır.</translation>
     </message>
     <message>
         <source> Paved area in multilevel structures, light traffic</source>
         <comment>Name of symbol 501.2</comment>
-        <translation type="unfinished"></translation>
+        <translation> Çok katlı yapılarda kaplamalı alan, az trafikli</translation>
     </message>
     <message>
         <source>Part of a multilevel structure which can be passed at two levels. The angle of the pattern is approximately 45° to the direction of the axis of the paved area.</source>
         <comment>Description of symbol 501.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çok katlı bir yapının iki seviyede geçilebilen kısmı. Desenin açısı, kaplamalı alanın eksen yönüne göre yaklaşık 45°&apos;dir.</translation>
     </message>
     <message>
         <source>Paved area with scattered trees</source>
         <comment>Name of symbol 501.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dağınık ağaçlı kaplamalı alan</translation>
     </message>
     <message>
         <source>Area with scattered trees or bushes in a paved area.</source>
         <comment>Description of symbol 501.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan içinde dağınık ağaç veya çalı bulunan alan.</translation>
     </message>
     <message>
         <source> Step or edge of paved area</source>
         <comment>Name of symbol 501.1</comment>
-        <translation type="unfinished"></translation>
+        <translation> Basamak veya kaplamalı alan kenarı</translation>
     </message>
     <message>
         <source>An edge of a paved area.
 Edges within paved areas are generally not represented, unless they serve navigation.</source>
         <comment>Description of symbol 501.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alanın kenarı.
+Kaplamalı alanlar içindeki kenarlar, navigasyona yardımcı olmadıkça genellikle gösterilmez.</translation>
     </message>
     <message>
         <source>Paved area, light traffic, footprint: 1.4 m</source>
         <comment>Name of symbol 501.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan, az trafikli, kapladığı alan: 1.4 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan; asfalt, sert çakıl, karo, beton veya benzeri sağlam bir yüzeye sahip alandır. Basamak veya kaplamalı alan kenarı (501.1) sembolüyle sınırlandırılmalıdır (veya çerçevelenmelidir).
+Kaplamalı alan içindeki belirgin farklılıklar, navigasyona yardımcı oluyorsa Basamak veya kaplamalı alan kenarı (501.1) sembolüyle gösterilebilir. Mantıklı olduğu yerlerde (örn. belirsiz / aşamalı çakıldan çime geçişlerde) siyah kenar çizgisi çizilmeyebilir.
+Araç veya yaya trafiğindeki farklılıkları göstermek için kahverengi renk tonu farkları kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Paved area, light traffic, footprint: 2 m</source>
         <comment>Name of symbol 501.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan, az trafikli, kapladığı alan: 2 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan; asfalt, sert çakıl, karo, beton veya benzeri sağlam bir yüzeye sahip alandır. Basamak veya kaplamalı alan kenarı (501.1) sembolüyle sınırlandırılmalıdır (veya çerçevelenmelidir).
+Kaplamalı alan içindeki belirgin farklılıklar, navigasyona yardımcı oluyorsa Basamak veya kaplamalı alan kenarı (501.1) sembolüyle gösterilebilir. Mantıklı olduğu yerlerde (örn. belirsiz / aşamalı çakıldan çime geçişlerde) siyah kenar çizgisi çizilmeyebilir.
+Araç veya yaya trafiğindeki farklılıkları göstermek için kahverengi renk tonu farkları kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Paved area, light traffic, footprint: 3 m</source>
         <comment>Name of symbol 501.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan, az trafikli, kapladığı alan: 3 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan; asfalt, sert çakıl, karo, beton veya benzeri sağlam bir yüzeye sahip alandır. Basamak veya kaplamalı alan kenarı (501.1) sembolüyle sınırlandırılmalıdır (veya çerçevelenmelidir).
+Kaplamalı alan içindeki belirgin farklılıklar, navigasyona yardımcı oluyorsa Basamak veya kaplamalı alan kenarı (501.1) sembolüyle gösterilebilir. Mantıklı olduğu yerlerde (örn. belirsiz / aşamalı çakıldan çime geçişlerde) siyah kenar çizgisi çizilmeyebilir.
+Araç veya yaya trafiğindeki farklılıkları göstermek için kahverengi renk tonu farkları kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Paved area, light traffic, footprint: 4 m</source>
         <comment>Name of symbol 501.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan, az trafikli, kapladığı alan: 4 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan; asfalt, sert çakıl, karo, beton veya benzeri sağlam bir yüzeye sahip alandır. Basamak veya kaplamalı alan kenarı (501.1) sembolüyle sınırlandırılmalıdır (veya çerçevelenmelidir).
+Kaplamalı alan içindeki belirgin farklılıklar, navigasyona yardımcı oluyorsa Basamak veya kaplamalı alan kenarı (501.1) sembolüyle gösterilebilir. Mantıklı olduğu yerlerde (örn. belirsiz / aşamalı çakıldan çime geçişlerde) siyah kenar çizgisi çizilmeyebilir.
+Araç veya yaya trafiğindeki farklılıkları göstermek için kahverengi renk tonu farkları kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Paved area, heavy traffic, with border</source>
         <comment>Name of symbol 501.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan, yoğun trafikli, kenar çizgili</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan; asfalt, sert çakıl, karo, beton veya benzeri sağlam bir yüzeye sahip alandır. Basamak veya kaplamalı alan kenarı (501.1) sembolüyle sınırlandırılmalıdır (veya çerçevelenmelidir).
+Kaplamalı alan içindeki belirgin farklılıklar, navigasyona yardımcı oluyorsa Basamak veya kaplamalı alan kenarı (501.1) sembolüyle gösterilebilir. Mantıklı olduğu yerlerde (örn. belirsiz / aşamalı çakıldan çime geçişlerde) siyah kenar çizgisi çizilmeyebilir.
+Araç veya yaya trafiğindeki farklılıkları göstermek için kahverengi renk tonu farkları kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Paved area, heavy traffic</source>
         <comment>Name of symbol 501.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan, yoğun trafikli</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan; asfalt, sert çakıl, karo, beton veya benzeri sağlam bir yüzeye sahip alandır. Basamak veya kaplamalı alan kenarı (501.1) sembolüyle sınırlandırılmalıdır (veya çerçevelenmelidir).
+Kaplamalı alan içindeki belirgin farklılıklar, navigasyona yardımcı oluyorsa Basamak veya kaplamalı alan kenarı (501.1) sembolüyle gösterilebilir. Mantıklı olduğu yerlerde (örn. belirsiz / aşamalı çakıldan çime geçişlerde) siyah kenar çizgisi çizilmeyebilir.
+Araç veya yaya trafiğindeki farklılıkları göstermek için kahverengi renk tonu farkları kullanılmalıdır.</translation>
     </message>
     <message>
         <source> Paved area in multilevel structures, heavy traffic</source>
         <comment>Name of symbol 501.12</comment>
-        <translation type="unfinished"></translation>
+        <translation> Çok katlı yapılarda kaplamalı alan, yoğun trafikli</translation>
     </message>
     <message>
         <source>Part of a multilevel structure which can be passed at two levels. The angle of the pattern is approximately 45° to the direction of the axis of the paved area.</source>
         <comment>Description of symbol 501.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çok katlı bir yapının iki seviyede geçilebilen kısmı. Desenin açısı, kaplamalı alanın eksen yönüne göre yaklaşık 45°&apos;dir.</translation>
     </message>
     <message>
         <source>Paved area, heavy traffic, footprint: 1.4 m</source>
         <comment>Name of symbol 501.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan, yoğun trafikli, kapladığı alan: 1.4 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan; asfalt, sert çakıl, karo, beton veya benzeri sağlam bir yüzeye sahip alandır. Basamak veya kaplamalı alan kenarı (501.1) sembolüyle sınırlandırılmalıdır (veya çerçevelenmelidir).
+Kaplamalı alan içindeki belirgin farklılıklar, navigasyona yardımcı oluyorsa Basamak veya kaplamalı alan kenarı (501.1) sembolüyle gösterilebilir. Mantıklı olduğu yerlerde (örn. belirsiz / aşamalı çakıldan çime geçişlerde) siyah kenar çizgisi çizilmeyebilir.
+Araç veya yaya trafiğindeki farklılıkları göstermek için kahverengi renk tonu farkları kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Paved area, heavy traffic, footprint: 2 m</source>
         <comment>Name of symbol 501.17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan, yoğun trafikli, kapladığı alan: 2 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan; asfalt, sert çakıl, karo, beton veya benzeri sağlam bir yüzeye sahip alandır. Basamak veya kaplamalı alan kenarı (501.1) sembolüyle sınırlandırılmalıdır (veya çerçevelenmelidir).
+Kaplamalı alan içindeki belirgin farklılıklar, navigasyona yardımcı oluyorsa Basamak veya kaplamalı alan kenarı (501.1) sembolüyle gösterilebilir. Mantıklı olduğu yerlerde (örn. belirsiz / aşamalı çakıldan çime geçişlerde) siyah kenar çizgisi çizilmeyebilir.
+Araç veya yaya trafiğindeki farklılıkları göstermek için kahverengi renk tonu farkları kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Paved area, heavy traffic, footprint: 3 m</source>
         <comment>Name of symbol 501.18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan, yoğun trafikli, kapladığı alan: 3 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan; asfalt, sert çakıl, karo, beton veya benzeri sağlam bir yüzeye sahip alandır. Basamak veya kaplamalı alan kenarı (501.1) sembolüyle sınırlandırılmalıdır (veya çerçevelenmelidir).
+Kaplamalı alan içindeki belirgin farklılıklar, navigasyona yardımcı oluyorsa Basamak veya kaplamalı alan kenarı (501.1) sembolüyle gösterilebilir. Mantıklı olduğu yerlerde (örn. belirsiz / aşamalı çakıldan çime geçişlerde) siyah kenar çizgisi çizilmeyebilir.
+Araç veya yaya trafiğindeki farklılıkları göstermek için kahverengi renk tonu farkları kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Paved area, heavy traffic, footprint: 4 m</source>
         <comment>Name of symbol 501.19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan, yoğun trafikli, kapladığı alan: 4 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplamalı alan; asfalt, sert çakıl, karo, beton veya benzeri sağlam bir yüzeye sahip alandır. Basamak veya kaplamalı alan kenarı (501.1) sembolüyle sınırlandırılmalıdır (veya çerçevelenmelidir).
+Kaplamalı alan içindeki belirgin farklılıklar, navigasyona yardımcı oluyorsa Basamak veya kaplamalı alan kenarı (501.1) sembolüyle gösterilebilir. Mantıklı olduğu yerlerde (örn. belirsiz / aşamalı çakıldan çime geçişlerde) siyah kenar çizgisi çizilmeyebilir.
+Araç veya yaya trafiğindeki farklılıkları göstermek için kahverengi renk tonu farkları kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Unpaved footpath or track, footprint: 1.4 m</source>
         <comment>Name of symbol 505.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplanmamış patika veya yol, kapladığı alan: 1.4 m</translation>
     </message>
     <message>
         <source>An unpaved footpath or rough vehicle track is a way for passing mainly by foot, without a smooth, hard surface.</source>
         <comment>Description of symbol 505.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplanmamış patika veya bozuk araç yolu, düzgün ve sert bir yüzeyi olmayan, çoğunlukla yaya olarak geçmeye yarayan yoldur.</translation>
     </message>
     <message>
         <source>Unpaved footpath or track, footprint: 2 m</source>
         <comment>Name of symbol 505.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplanmamış patika veya yol, kapladığı alan: 2 m</translation>
     </message>
     <message>
         <source>An unpaved footpath or rough vehicle track is a way for passing mainly by foot, without a smooth, hard surface.</source>
         <comment>Description of symbol 505.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaplanmamış patika veya bozuk araç yolu, düzgün ve sert bir yüzeyi olmayan, çoğunlukla yaya olarak geçmeye yarayan yoldur.</translation>
     </message>
     <message>
         <source>Small unpaved footpath or track</source>
         <comment>Name of symbol 506</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük kaplanmamış patika veya yol</translation>
     </message>
     <message>
         <source>A small unpaved footpath or track.
 Minimum length (isolated): two dashes (3.4 mm - footprint 13.6 m).</source>
         <comment>Description of symbol 506</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük, kaplanmamış bir patika veya yol.
+Minimum uzunluk (izole): iki kesikli çizgi (3.4 mm - kapladığı alan 13.6 m).</translation>
     </message>
     <message>
         <source>Less distinct small path</source>
         <comment>Name of symbol 507</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az belirgin küçük patika</translation>
     </message>
     <message>
         <source>A less distinct path or forestry extraction track.
 Minimum length: two sections of double dashes (7.9 mm - footprint 31.6 m).</source>
         <comment>Description of symbol 507</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az belirgin bir patika veya ormancılık çıkış yolu.
+Minimum uzunluk: iki çift kesikli çizgi bölümü (7.9 mm - kapladığı alan 31.6 m).</translation>
     </message>
     <message>
         <source>Narrow ride</source>
@@ -6323,7 +6438,8 @@ Minimum length: two sections of double dashes (7.9 mm - footprint 31.6 m).</sour
         <source>A distinct ride is a linear break in the forest (usually in a plantation), which does not have a distinct path along it. Where there is a path along a ride, the symbol Small unpaved footpath or track (506) shall be used.
 Minimum length: two dashes (9.75 mm - footprint 39 m).</source>
         <comment>Description of symbol 508</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin orman içi gezinti yolu, ormanda (genellikle bir ağaçlandırma alanında) boyunca belirgin bir patika bulunmayan doğrusal bir açıklıktır. Gezinti yolu boyunca bir patika varsa, Küçük kaplanmamış patika veya yol (506) sembolü kullanılmalıdır.
+Minimum uzunluk: iki kesikli çizgi (9.75 mm - kapladığı alan 39 m).</translation>
     </message>
     <message>
         <source>Railway</source>
@@ -6335,18 +6451,21 @@ Minimum length: two dashes (9.75 mm - footprint 39 m).</source>
 If it is forbidden to cross or run along the railroad, the forbidden area around the railway shall be represented with symbol Area that shall not be entered (520).
 Minimum length (isolated): two dashes (4 mm - footprint 16 m).</source>
         <comment>Description of symbol 509.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Demiryolu, üzerinde lokomotif, yolcu veya yük vagonlarının hareket edebildiği, raylarla döşenmiş kalıcı bir hattır.
+Demiryolunu geçmek veya boyunca koşmak yasaksa, demiryolu çevresindeki yasak alan Girilmeyecek bölge (520) sembolüyle gösterilmelidir.
+Minimum uzunluk (izole): iki kesikli çizgi (4 mm - kapladığı alan 16 m).</translation>
     </message>
     <message>
         <source>Tramway</source>
         <comment>Name of symbol 509.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tramvay hattı</translation>
     </message>
     <message>
         <source>A tramway is a public vehicle running regularly along certain streets, usually on rails. The track can be easily crossed by the competitor.
 Tramways are generally not represented. However, if they serve navigation or orientation, they can be represented.</source>
         <comment>Description of symbol 509.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tramvay, genellikle raylar üzerinde belirli caddeler boyunca düzenli olarak çalışan bir toplu taşıma aracıdır. Hat, yarışmacı tarafından kolayca geçilebilir.
+Tramvay hatları genellikle gösterilmez. Ancak navigasyona veya yön bulmaya yardımcı oluyorlarsa gösterilebilirler.</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift</source>
@@ -6359,7 +6478,10 @@ The bars indicate the exact location of the pylons. If a section of a power line
 
 &lt;b&gt;Note: When drawing this symbol, press space to toggle placing the pylon symbols at new nodes.&lt;/b&gt;</source>
         <comment>Description of symbol 510</comment>
-        <translation type="unfinished"></translation>
+        <translation>Elektrik hattı, teleferik veya telesiyej.
+Çubuklar direklerin tam konumunu gösterir. Bir elektrik hattı, teleferik veya telesiyejin bir bölümü bir yol veya patika boyunca gidiyorsa (ve önemli ek navigasyon değeri sunmuyorsa) bu bölüm çizilmemelidir.
+
+&lt;b&gt;Not: Bu sembolü çizerken, yeni düğüm noktalarına direk sembolü yerleştirmeyi açıp kapatmak için boşluk tuşuna basın.&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Major power line</source>
@@ -6371,46 +6493,52 @@ The bars indicate the exact location of the pylons. If a section of a power line
 
 &lt;b&gt;Note: When drawing this symbol, press space to toggle placing the pylon symbols at new nodes.&lt;/b&gt;</source>
         <comment>Description of symbol 511</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yüksek gerilim hatları çift çizgi ile çizilmelidir. Çizgiler arasındaki boşluk, enerji hattının kapsamını gösterebilir. Çok büyük taşıyıcı direkler, Bina (521) veya Yüksek kule (524) sembolü kullanılarak plan şeklinde gösterilmelidir. Bu durumda hat çizgileri çizilmeyebilir (harita yalnızca direkleri gösterir).
+
+&lt;b&gt;Not: Bu sembolü çizerken, yeni düğüm noktalarına direk sembolü yerleştirmeyi açıp kapatmak için boşluk tuşuna basın.&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Major power line with pylons</source>
         <comment>Name of symbol 511.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Direkli yüksek gerilim hattı</translation>
     </message>
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline. Very large carrying masts shall be represented in plan shape using symbol Building (521) or High tower (524). In this case, the cable lines can be left out (the map shows only the pylons).
 
 &lt;b&gt;Note: When drawing this symbol, press space to toggle placing the pylon symbols at new nodes.&lt;/b&gt;</source>
         <comment>Description of symbol 511.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yüksek gerilim hatları çift çizgi ile çizilmelidir. Çizgiler arasındaki boşluk, enerji hattının kapsamını gösterebilir. Çok büyük taşıyıcı direkler, Bina (521) veya Yüksek kule (524) sembolü kullanılarak plan şeklinde gösterilmelidir. Bu durumda hat çizgileri çizilmeyebilir (harita yalnızca direkleri gösterir).
+
+&lt;b&gt;Not: Bu sembolü çizerken, yeni düğüm noktalarına direk sembolü yerleştirmeyi açıp kapatmak için boşluk tuşuna basın.&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Bridge, one side</source>
         <comment>Name of symbol 512</comment>
-        <translation type="unfinished"></translation>
+        <translation>Köprü, tek taraf</translation>
     </message>
     <message>
         <source>A bridge is a structure spanning and permitting passage over a river, chasm, road or the like.
 &lt;span style=&quot;color: red&quot;&gt;If underpasses under bridges are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
         <comment>Description of symbol 512</comment>
-        <translation type="unfinished"></translation>
+        <translation>Köprü, bir nehir, derin yarık, yol veya benzerinin üzerinden geçişe olanak tanıyan bir yapıdır.
+&lt;span style=&quot;color: red&quot;&gt;Köprülerin altındaki alt geçitler yarışmada kullanılacaksa, Geçiş noktası (710.1) veya Geçiş bölümü (710.2) sembolüyle vurgulanmalıdır.&lt;/span&gt;</translation>
     </message>
     <message>
         <source>Bridge, minimum width</source>
         <comment>Name of symbol 512.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Köprü, minimum genişlik</translation>
     </message>
     <message>
         <source>A bridge is a structure spanning and permitting passage over a river, chasm, road or the like.
 &lt;span style=&quot;color: red&quot;&gt;If underpasses under bridges are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
         <comment>Description of symbol 512.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Köprü, bir nehir, derin yarık, yol veya benzerinin üzerinden geçişe olanak tanıyan bir yapıdır.
+&lt;span style=&quot;color: red&quot;&gt;Köprülerin altındaki alt geçitler yarışmada kullanılacaksa, Geçiş noktası (710.1) veya Geçiş bölümü (710.2) sembolüyle vurgulanmalıdır.&lt;/span&gt;</translation>
     </message>
     <message>
         <source>Underpass or tunnel</source>
         <comment>Name of symbol 512.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt geçit veya tünel</translation>
     </message>
     <message>
         <source>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles.
@@ -6418,31 +6546,38 @@ Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 &lt;span style=&quot;color: red&quot;&gt;Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
         <comment>Description of symbol 512.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt geçit veya tünel, zeminin ya da bir binanın altından geçen, özellikle yayalar veya araçlar için yapılmış bir geçittir.
+Minimum uzunluk (temel çizginin): 2 kare (0.75 mm - kapladığı alan 3.0 m).
+&lt;span style=&quot;color: red&quot;&gt;Minimum uzunluk (temel çizginin): 2 kare (0.75 mm - kapladığı alan 3.0 m).
+Alt geçitler veya tüneller vb. yarışmada kullanılacaksa, Geçiş noktası (710.1) veya Geçiş bölümü (710.2) sembolüyle vurgulanmalıdır.&lt;/span&gt;</translation>
     </message>
     <message>
         <source>Passable wall</source>
         <comment>Name of symbol 513.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir duvar</translation>
     </message>
     <message>
         <source>A passable wall is a construction made of stone, brick, concrete etc., which can be passed.
 If such a wall is higher than 1.5 m, it shall be represented with the symbol Impassable wall (515). Wide walls shall be drawn in plan shape using a ground symbol delineated by the passable wall symbol. It should be dotted if possible (minimum length around the dot 0.4 mm each side).
 Minimum length (isolated): 1.4 mm (footprint 5.6 m).</source>
         <comment>Description of symbol 513.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir duvar, taş, tuğla, beton vb. malzemeden yapılmış, üzerinden geçilebilen bir yapıdır.
+Böyle bir duvar 1.5 m&apos;den yüksekse, Geçilemez duvar (515) sembolüyle gösterilmelidir. Geniş duvarlar, geçilebilir duvar sembolüyle çevrelenen bir zemin sembolü kullanılarak plan şeklinde çizilmelidir. Mümkünse noktalı olmalıdır (noktanın her iki yanındaki minimum uzunluk 0.4 mm).
+Minimum uzunluk (izole): 1.4 mm (kapladığı alan 5.6 m).</translation>
     </message>
     <message>
         <source>Passable retained wall</source>
         <comment>Name of symbol 513.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir istinat duvarı</translation>
     </message>
     <message>
         <source>A passable wall which is seen only from one side. Half dot must point to the lower level.
 Height is 0.6 - 1.5 m. If lower, use symbol Step or edge of paved area (501.1).
 Minimum length (isolated): 2.4 mm (footprint 9.6 m).</source>
         <comment>Description of symbol 513.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yalnızca bir taraftan görülen geçilebilir duvar. Yarım nokta alt seviyeyi göstermelidir.
+Yüksekliği 0.6 - 1.5 m&apos;dir. Daha alçaksa, Basamak veya kaplamalı alan kenarı (501.1) sembolünü kullanın.
+Minimum uzunluk (izole): 2.4 mm (kapladığı alan 9.6 m).</translation>
     </message>
     <message>
         <source>Impassable wall</source>
@@ -6453,47 +6588,53 @@ Minimum length (isolated): 2.4 mm (footprint 9.6 m).</source>
         <source>An impassable or uncrossable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed.
 Very wide impassable walls shall be drawn in plan shape and represented with the symbol Building (521).</source>
         <comment>Description of symbol 515</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez veya aşılamaz duvar ya da istinat duvarı, bir çevreleme veya sağlam bir engel işlevi gören duvardır. Bu duvar geçilmemelidir.
+Çok geniş geçilemez duvarlar plan şeklinde çizilmeli ve Bina (521) sembolüyle gösterilmelidir.</translation>
     </message>
     <message>
         <source>Passable fence or railing</source>
         <comment>Name of symbol 516</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir çit veya korkuluk</translation>
     </message>
     <message>
         <source>A passable fence is a barrier enclosing or bordering a field, yard, etc., usually made of posts and wire or wood. It is used to prevent entrance or to confine or mark a boundary. A railing is a fencelike barrier composed of one or more horizontal rails supported by widely spaced upright poles, usually it can be slipped through.
 If a fence or railing is dangerous or very difficult to cross, it shall be represented with the symbol Impassable fence or railing (518).
 Minimum length (isolated): 2.2 mm (footprint 8.8 m).</source>
         <comment>Description of symbol 516</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir çit, genellikle direk ve telden veya ahşaptan yapılmış, bir tarlayı, avluyu vb. çevreleyen veya sınırlayan bir engeldir. Girişi engellemek, bir alanı kapatmak veya sınır belirlemek için kullanılır. Korkuluk, aralıklı dikey direklerle desteklenen bir veya daha fazla yatay parmaklıktan oluşan, çit benzeri bir engeldir; genellikle arasından geçilebilir.
+Bir çit veya korkuluk tehlikeliyse ya da geçilmesi çok zorsa, Geçilemez çit veya korkuluk (518) sembolüyle gösterilmelidir.
+Minimum uzunluk (izole): 2.2 mm (kapladığı alan 8.8 m).</translation>
     </message>
     <message>
         <source>Impassable fence or railing</source>
         <comment>Name of symbol 518</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez çit veya korkuluk</translation>
     </message>
     <message>
         <source>An impassable fence or railing shall not be crossed.
 If the length is shorter than 3 mm, it must be presented with the symbol Impassable wall (515).
 Minimum length (isolated): 3 mm (footprint 12 m).</source>
         <comment>Description of symbol 518</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez çit veya korkuluk geçilmemelidir.
+Uzunluğu 3 mm&apos;den kısaysa, Geçilemez duvar (515) sembolüyle gösterilmelidir.
+Minimum uzunluk (izole): 3 mm (kapladığı alan 12 m).</translation>
     </message>
     <message>
         <source>Crossing point (optional)</source>
         <comment>Name of symbol 519</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçiş noktası (isteğe bağlı)</translation>
     </message>
     <message>
         <source>A crossing point is a gap or an opening in a fence, railing or wall, which can easily be passed through by a competitor.
 Small gaps or openings which cannot easily be passed through by competitors, shall not be represented on the map and shall be closed during the competition.</source>
         <comment>Description of symbol 519</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçiş noktası, bir çit, korkuluk veya duvarda bulunan ve yarışmacının kolayca geçebileceği bir boşluk veya açıklıktır.
+Yarışmacıların kolayca geçemeyeceği küçük boşluklar veya açıklıklar haritada gösterilmemeli ve yarışma sırasında kapatılmalıdır.</translation>
     </message>
     <message>
         <source>Area that shall not be entered </source>
         <comment>Name of symbol 520</comment>
-        <translation type="unfinished"></translation>
+        <translation>Girilmeyecek bölge </translation>
     </message>
     <message>
         <source>An area that shall not be entered such as a private area, a flower bed, a railway area etc.
@@ -6503,12 +6644,17 @@ The area shall always be delineated by a boundary line (at least 0.1 mm in width
 Minimum width: 0.25 mm (footprint 1 m).
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 520</comment>
-        <translation type="unfinished"></translation>
+        <translation>Özel alan, çiçek tarhı, demiryolu alanı vb. gibi girilmemesi gereken bir alan.
+Bu alanda demiryolları, büyük binalar veya çok büyük ağaçlar gibi çok belirgin nesneler dışında hiçbir nesne gösterilmemelidir. Yol girişleri açıkça gösterilmelidir.
+&lt;b&gt;Tamamen binaların içinde kalan girilmeyecek bölgeler, binanın bir parçası olarak haritalanmalıdır.&lt;/b&gt;
+Alan her zaman bir sınır çizgisiyle (en az 0.1 mm genişliğinde) çevrelenmelidir.
+Minimum genişlik: 0.25 mm (kapladığı alan 1 m).
+Minimum alan: 0.25 mm² (kapladığı alan 4 m²).</translation>
     </message>
     <message>
         <source>Area that shall not be entered, boundary line</source>
         <comment>Name of symbol 520.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Girilmeyecek bölge, sınır çizgisi</translation>
     </message>
     <message>
         <source>An area that shall not be entered such as a private area, a flower bed, a railway area etc.
@@ -6518,7 +6664,12 @@ The area shall always be delineated by a boundary line (at least 0.1 mm in width
 Minimum width: 0.25 mm (footprint 1 m).
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 520.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Özel alan, çiçek tarhı, demiryolu alanı vb. gibi girilmemesi gereken bir alan.
+Bu alanda demiryolları, büyük binalar veya çok büyük ağaçlar gibi çok belirgin nesneler dışında hiçbir nesne gösterilmemelidir. Yol girişleri açıkça gösterilmelidir.
+&lt;b&gt;Tamamen binaların içinde kalan girilmeyecek bölgeler, binanın bir parçası olarak haritalanmalıdır.&lt;/b&gt;
+Alan her zaman bir sınır çizgisiyle (en az 0.1 mm genişliğinde) çevrelenmelidir.
+Minimum genişlik: 0.25 mm (kapladığı alan 1 m).
+Minimum alan: 0.25 mm² (kapladığı alan 4 m²).</translation>
     </message>
     <message>
         <source>Building</source>
@@ -6532,7 +6683,11 @@ Buildings within symbol Area that shall not be entered (520) may just be represe
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bina, çatısı olan, nispeten kalıcı bir yapıdır.
+Girilmeyecek bölge (520) sembolü içindeki binalar basitleştirilmiş şekilde gösterilebilir. Tamamen bir binanın içinde kalan alanlar, binanın bir parçası olarak haritalanmalıdır. Binaya girilmemelidir.
+&lt;b&gt;Binalar ile diğer geçilemez nesneler arasındaki minimum boşluk 0.40 mm olmalıdır. Bitişik binalar arasındaki sınırlar gösterilmemelidir.&lt;/b&gt;
+Minimum genişlik: 0.5 mm.
+Minimum alan: 0.25 mm² (kapladığı alan 4 m²).</translation>
     </message>
     <message>
         <source>Building, minimum size</source>
@@ -6546,12 +6701,16 @@ Buildings within symbol Area that shall not be entered (520) may just be represe
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bina, çatısı olan, nispeten kalıcı bir yapıdır.
+Girilmeyecek bölge (520) sembolü içindeki binalar basitleştirilmiş şekilde gösterilebilir. Tamamen bir binanın içinde kalan alanlar, binanın bir parçası olarak haritalanmalıdır. Binaya girilmemelidir.
+&lt;b&gt;Binalar ile diğer geçilemez nesneler arasındaki minimum boşluk 0.40 mm olmalıdır. Bitişik binalar arasındaki sınırlar gösterilmemelidir.&lt;/b&gt;
+Minimum genişlik: 0.5 mm.
+Minimum alan: 0.25 mm² (kapladığı alan 4 m²).</translation>
     </message>
     <message>
         <source>Building, fill</source>
         <comment>Name of symbol 521.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bina, dolgu</translation>
     </message>
     <message>
         <source>A building is a relatively permanent construction having a roof.
@@ -6560,12 +6719,16 @@ Buildings within symbol Area that shall not be entered (520) may just be represe
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bina, çatısı olan, nispeten kalıcı bir yapıdır.
+Girilmeyecek bölge (520) sembolü içindeki binalar basitleştirilmiş şekilde gösterilebilir. Tamamen bir binanın içinde kalan alanlar, binanın bir parçası olarak haritalanmalıdır. Binaya girilmemelidir.
+&lt;b&gt;Binalar ile diğer geçilemez nesneler arasındaki minimum boşluk 0.40 mm olmalıdır. Bitişik binalar arasındaki sınırlar gösterilmemelidir.&lt;/b&gt;
+Minimum genişlik: 0.5 mm.
+Minimum alan: 0.25 mm² (kapladığı alan 4 m²).</translation>
     </message>
     <message>
         <source>Building, outline</source>
         <comment>Name of symbol 521.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bina, anahat çizgisi</translation>
     </message>
     <message>
         <source>A building is a relatively permanent construction having a roof.
@@ -6574,7 +6737,11 @@ Buildings within symbol Area that shall not be entered (520) may just be represe
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bina, çatısı olan, nispeten kalıcı bir yapıdır.
+Girilmeyecek bölge (520) sembolü içindeki binalar basitleştirilmiş şekilde gösterilebilir. Tamamen bir binanın içinde kalan alanlar, binanın bir parçası olarak haritalanmalıdır. Binaya girilmemelidir.
+&lt;b&gt;Binalar ile diğer geçilemez nesneler arasındaki minimum boşluk 0.40 mm olmalıdır. Bitişik binalar arasındaki sınırlar gösterilmemelidir.&lt;/b&gt;
+Minimum genişlik: 0.5 mm.
+Minimum alan: 0.25 mm² (kapladığı alan 4 m²).</translation>
     </message>
     <message>
         <source>Canopy</source>
@@ -6587,12 +6754,15 @@ Small passable parts of buildings which cannot easily be crossed by competitors,
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 522</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gölgelik (sundurma), genellikle sütunlar, direkler veya duvarlarla desteklenen çatılı bir yapıdır; örneğin pasajlar, yaya geçitleri, avlular, otobüs durakları, benzin istasyonları veya garajlar.
+Yarışmacıların kolayca geçemeyeceği, binaların küçük geçilebilir kısımları haritada gösterilmemeli ve yarışma sırasında kapatılmalıdır.
+Minimum genişlik: 0.5 mm.
+Minimum alan: 0.25 mm² (kapladığı alan 4 m²).</translation>
     </message>
     <message>
         <source>Canopy, fill</source>
         <comment>Name of symbol 522.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gölgelik, dolgu</translation>
     </message>
     <message>
         <source>A canopy is a building construction (with a roof), normally supported by pillars, poles or walls, such as passages, gangways, courts, bus stops, gas stations or garages.
@@ -6600,7 +6770,10 @@ Small passable parts of buildings which cannot easily be crossed by competitors,
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 522.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gölgelik (sundurma), genellikle sütunlar, direkler veya duvarlarla desteklenen çatılı bir yapıdır; örneğin pasajlar, yaya geçitleri, avlular, otobüs durakları, benzin istasyonları veya garajlar.
+Yarışmacıların kolayca geçemeyeceği, binaların küçük geçilebilir kısımları haritada gösterilmemeli ve yarışma sırasında kapatılmalıdır.
+Minimum genişlik: 0.5 mm.
+Minimum alan: 0.25 mm² (kapladığı alan 4 m²).</translation>
     </message>
     <message>
         <source>Canopy, outline</source>
@@ -6613,18 +6786,22 @@ Small passable parts of buildings which cannot easily be crossed by competitors,
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 522.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gölgelik (sundurma), genellikle sütunlar, direkler veya duvarlarla desteklenen çatılı bir yapıdır; örneğin pasajlar, yaya geçitleri, avlular, otobüs durakları, benzin istasyonları veya garajlar.
+Yarışmacıların kolayca geçemeyeceği, binaların küçük geçilebilir kısımları haritada gösterilmemeli ve yarışma sırasında kapatılmalıdır.
+Minimum genişlik: 0.5 mm.
+Minimum alan: 0.25 mm² (kapladığı alan 4 m²).</translation>
     </message>
     <message>
         <source>Pillar</source>
         <comment>Name of symbol 522.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sütun</translation>
     </message>
     <message>
         <source>A pillar is an upright shaft or structure of stone, brick or other material, relatively slender in proportion to its height and any shape in section, used as a building support.
 Pillars smaller than 1 m × 1 m are generally not represented.</source>
         <comment>Description of symbol 522.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sütun; taş, tuğla veya başka bir malzemeden yapılmış, yüksekliğine oranla nispeten ince olan, kesiti herhangi bir şekilde olabilen ve bina desteği olarak kullanılan dikey bir gövde veya yapıdır.
+1 m × 1 m&apos;den küçük sütunlar genellikle gösterilmez.</translation>
     </message>
     <message>
         <source>High tower</source>
@@ -6636,7 +6813,9 @@ Pillars smaller than 1 m × 1 m are generally not represented.</source>
 Very large towers shall be represented in plan shape with the symbol Building (521).
 Footprint: 8.4 m in diameter.</source>
         <comment>Description of symbol 524</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yüksek bir kule veya büyük bir direk.
+Çok büyük kuleler, Bina (521) sembolüyle plan şeklinde gösterilmelidir.
+Kapladığı alan: 8.4 m çapında.</translation>
     </message>
     <message>
         <source>Small tower</source>
@@ -6647,19 +6826,22 @@ Footprint: 8.4 m in diameter.</source>
         <source>An obvious small tower, platform or seat.
 Footprint: 6 m x 6 m.</source>
         <comment>Description of symbol 525</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin, küçük bir kule, platform veya oturma yeri.
+Kapladığı alan: 6 m x 6 m.</translation>
     </message>
     <message>
         <source>Cairn, memorial, small monument or boundary stone</source>
         <comment>Name of symbol 526</comment>
-        <translation type="unfinished"></translation>
+        <translation>Taş yığını, anıt, küçük abide veya sınır taşı</translation>
     </message>
     <message>
         <source>Cairn, memorial, small monument or boundary stone that is obvious.
 Large massive monuments shall be represented in plan shape with the symbol Building (521).
 Footprint: 4 m in diameter.</source>
         <comment>Description of symbol 526</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin bir taş yığını, anıt, küçük abide veya sınır taşı.
+Büyük, kütlesel anıtlar Bina (521) sembolüyle plan şeklinde gösterilmelidir.
+Kapladığı alan: 4 m çapında.</translation>
     </message>
     <message>
         <source>Fodder rack</source>
@@ -6670,24 +6852,27 @@ Footprint: 4 m in diameter.</source>
         <source>A fodder rack, which is free standing or attached to a tree.
 Footprint: 6 m x 6 m.</source>
         <comment>Description of symbol 527</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bağımsız duran veya bir ağaca bağlı bir yemlik.
+Kapladığı alan: 6 m x 6 m.</translation>
     </message>
     <message>
         <source> Prominent line feature</source>
         <comment>Name of symbol 528</comment>
-        <translation type="unfinished"></translation>
+        <translation> Belirgin çizgisel nesne</translation>
     </message>
     <message>
         <source>A prominent man-made line feature. For example, a low pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track that is clearly visible.
 The definition of the symbol must be given on the map.
 Minimum length: 2.2 mm (footprint 8.8 m).</source>
         <comment>Description of symbol 528</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin, insan yapımı çizgisel bir nesne. Örneğin, açıkça görülebilen alçak bir boru hattı (gaz, su, petrol, ısı vb.) veya bir yarış kızağı / skeleton pisti.
+Sembolün tanımı haritada verilmelidir.
+Minimum uzunluk: 2.2 mm (kapladığı alan 8.8 m).</translation>
     </message>
     <message>
         <source> Prominent impassable line feature</source>
         <comment>Name of symbol 529</comment>
-        <translation type="unfinished"></translation>
+        <translation> Belirgin geçilemez çizgisel nesne</translation>
     </message>
     <message>
         <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track.
@@ -6695,7 +6880,10 @@ The definition of the symbol must be given on the map.
 A prominent impassable line feature shall not be crossed.
 Minimum length: 3 mm (footprint 12 m).</source>
         <comment>Description of symbol 529</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez, insan yapımı çizgisel bir nesne. Örneğin, yüksek bir boru hattı (gaz, su, petrol, ısı vb.) veya bir yarış kızağı / skeleton pisti.
+Sembolün tanımı haritada verilmelidir.
+Belirgin geçilemez çizgisel nesne geçilmemelidir.
+Minimum uzunluk: 3 mm (kapladığı alan 12 m).</translation>
     </message>
     <message>
         <source>Prominent man-made feature – ring</source>
@@ -6707,7 +6895,9 @@ Minimum length: 3 mm (footprint 12 m).</source>
 The definition of the symbol must be given on the map.
 Footprint: 4 m in diameter.</source>
         <comment>Description of symbol 530</comment>
-        <translation type="unfinished"></translation>
+        <translation>Önemli veya belirgin, insan yapımı bir nesne.
+Sembolün tanımı haritada verilmelidir.
+Kapladığı alan: 4 m çapında.</translation>
     </message>
     <message>
         <source>Prominent man-made feature – x</source>
@@ -6719,55 +6909,65 @@ Footprint: 4 m in diameter.</source>
 The definition of the symbol must be given on the map.
 Footprint: 4.8 m x 4.8 m.</source>
         <comment>Description of symbol 531</comment>
-        <translation type="unfinished"></translation>
+        <translation>Konum, sembolün ağırlık merkezindedir.
+Sembolün tanımı haritada verilmelidir.
+Kapladığı alan: 4.8 m x 4.8 m.</translation>
     </message>
     <message>
         <source>Stairway, footprint: 1.6 m</source>
         <comment>Name of symbol 532.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Merdiven, kapladığı alan: 1.6 m</translation>
     </message>
     <message>
         <source>Steps of a stairway shall be represented in a generalized manner.
 Minimum length: 3 (graphical) steps.
 Minimum width: 0.4 mm (IM).</source>
         <comment>Description of symbol 532.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Merdiven basamakları genelleştirilmiş bir şekilde gösterilmelidir.
+Minimum uzunluk: 3 (grafiksel) basamak.
+Minimum genişlik: 0.4 mm (IM).</translation>
     </message>
     <message>
         <source>Stairway, footprint: 2 m</source>
         <comment>Name of symbol 532.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Merdiven, kapladığı alan: 2 m</translation>
     </message>
     <message>
         <source>Steps of a stairway shall be represented in a generalized manner.
 Minimum length: 3 (graphical) steps.
 Minimum width: 0.4 mm (IM).</source>
         <comment>Description of symbol 532.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Merdiven basamakları genelleştirilmiş bir şekilde gösterilmelidir.
+Minimum uzunluk: 3 (grafiksel) basamak.
+Minimum genişlik: 0.4 mm (IM).</translation>
     </message>
     <message>
         <source>Stairway, footprint: 3 m</source>
         <comment>Name of symbol 532.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Merdiven, kapladığı alan: 3 m</translation>
     </message>
     <message>
         <source>Steps of a stairway shall be represented in a generalized manner.
 Minimum length: 3 (graphical) steps.
 Minimum width: 0.4 mm (IM).</source>
         <comment>Description of symbol 532.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Merdiven basamakları genelleştirilmiş bir şekilde gösterilmelidir.
+Minimum uzunluk: 3 (grafiksel) basamak.
+Minimum genişlik: 0.4 mm (IM).</translation>
     </message>
     <message>
         <source>Stairway, footprint: 4 m</source>
         <comment>Name of symbol 532.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Merdiven, kapladığı alan: 4 m</translation>
     </message>
     <message>
         <source>Steps of a stairway shall be represented in a generalized manner.
 Minimum length: 3 (graphical) steps.
 Minimum width: 0.4 mm (IM).</source>
         <comment>Description of symbol 532.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Merdiven basamakları genelleştirilmiş bir şekilde gösterilmelidir.
+Minimum uzunluk: 3 (grafiksel) basamak.
+Minimum genişlik: 0.4 mm (IM).</translation>
     </message>
     <message>
         <source>North lines pattern</source>
@@ -6778,7 +6978,8 @@ Minimum width: 0.4 mm (IM).</source>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Manyetik kuzey çizgileri, haritaya yerleştirilmiş, manyetik kuzeyi gösteren çizgilerdir. Aralıkları 30 mm olmalıdır; bu, arazide 120 m&apos;ye karşılık gelir.
+Kuzey çizgileri; kayalar, tepecikler, uçurumlar, dere kavşakları, patika uçları vb. küçük nesneleri örttükleri yerlerde kesilebilir.</translation>
     </message>
     <message>
         <source>Magnetic north line</source>
@@ -6789,19 +6990,22 @@ North lines may be broken where they obscure small features such as boulders, kn
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601</comment>
-        <translation type="unfinished"></translation>
+        <translation>Manyetik kuzey çizgileri, haritaya yerleştirilmiş, manyetik kuzeyi gösteren çizgilerdir. Aralıkları 30 mm olmalıdır; bu, arazide 120 m&apos;ye karşılık gelir.
+Kuzey çizgileri; kayalar, tepecikler, uçurumlar, dere kavşakları, patika uçları vb. küçük nesneleri örttükleri yerlerde kesilebilir.</translation>
     </message>
     <message>
         <source>Magnetic north line, black, with arrow</source>
         <comment>Name of symbol 601.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Manyetik kuzey çizgisi, siyah, oklu</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.
 &lt;b&gt;Note: this is a non-standard addition to the symbol set.&lt;/b&gt;</source>
         <comment>Description of symbol 601.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Manyetik kuzey çizgileri, haritaya yerleştirilmiş, manyetik kuzeyi gösteren çizgilerdir. Aralıkları 30 mm olmalıdır; bu, arazide 120 m&apos;ye karşılık gelir.
+Kuzey çizgileri; kayalar, tepecikler, uçurumlar, dere kavşakları, patika uçları vb. küçük nesneleri örttükleri yerlerde kesilebilir.
+&lt;b&gt;Not: Bu, sembol setine standart dışı bir eklemedir.&lt;/b&gt;</translation>
     </message>
     <message>
         <source>North lines pattern, blue</source>
@@ -6812,7 +7016,8 @@ North lines may be broken where they obscure small features such as boulders, kn
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Manyetik kuzey çizgileri, haritaya yerleştirilmiş, manyetik kuzeyi gösteren çizgilerdir. Aralıkları 30 mm olmalıdır; bu, arazide 120 m&apos;ye karşılık gelir.
+Kuzey çizgileri; kayalar, tepecikler, uçurumlar, dere kavşakları, patika uçları vb. küçük nesneleri örttükleri yerlerde kesilebilir.</translation>
     </message>
     <message>
         <source>Magnetic north line, blue</source>
@@ -6823,19 +7028,22 @@ North lines may be broken where they obscure small features such as boulders, kn
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Manyetik kuzey çizgileri, haritaya yerleştirilmiş, manyetik kuzeyi gösteren çizgilerdir. Aralıkları 30 mm olmalıdır; bu, arazide 120 m&apos;ye karşılık gelir.
+Kuzey çizgileri; kayalar, tepecikler, uçurumlar, dere kavşakları, patika uçları vb. küçük nesneleri örttükleri yerlerde kesilebilir.</translation>
     </message>
     <message>
         <source>Magnetic north line, blue, with arrow</source>
         <comment>Name of symbol 601.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Manyetik kuzey çizgisi, mavi, oklu</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.
 &lt;b&gt;Note: this is a non-standard addition to the symbol set.&lt;/b&gt;</source>
         <comment>Description of symbol 601.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Manyetik kuzey çizgileri, haritaya yerleştirilmiş, manyetik kuzeyi gösteren çizgilerdir. Aralıkları 30 mm olmalıdır; bu, arazide 120 m&apos;ye karşılık gelir.
+Kuzey çizgileri; kayalar, tepecikler, uçurumlar, dere kavşakları, patika uçları vb. küçük nesneleri örttükleri yerlerde kesilebilir.
+&lt;b&gt;Not: Bu, sembol setine standart dışı bir eklemedir.&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Start</source>
@@ -6846,12 +7054,13 @@ North lines may be broken where they obscure small features such as boulders, kn
         <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control.
 The centre of the triangle shows the precise position of the start point.</source>
         <comment>Description of symbol 701</comment>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç veya (başlangıçta değilse) harita dağıtım noktası, ilk kontrol noktası yönünü gösteren bir eşkenar üçgen ile gösterilir.
+Üçgenin merkezi, başlangıç noktasının kesin konumunu gösterir.</translation>
     </message>
     <message>
         <source> Map issue point</source>
         <comment>Name of symbol 702</comment>
-        <translation type="unfinished"></translation>
+        <translation> Harita dağıtım noktası</translation>
     </message>
     <message>
         <source>If there is a marked route to the start point, the map issue point is marked using this symbol.</source>
@@ -6866,7 +7075,7 @@ The centre of the triangle shows the precise position of the start point.</sourc
     <message>
         <source>The control points are shown with circles (footprint 24 m). The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 703</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol noktaları dairelerle gösterilir (kapladığı alan 24 m). Dairenin merkezi, nesnenin kesin konumunu gösterir. Önemli detayların görünmesi için dairenin bazı bölümleri çıkarılmalıdır.</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -6877,18 +7086,20 @@ The centre of the triangle shows the precise position of the start point.</sourc
         <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail.
 An option for heavily building filled map is the possibility to have a white border with 0.1 or 0.15 mm in width.</source>
         <comment>Description of symbol 704</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol numarası, önemli detayları örtmeyecek şekilde kontrol noktası dairesinin yakınına yerleştirilir.
+Yoğun bina bulunan haritalar için 0.1 veya 0.15 mm genişliğinde beyaz bir kenarlık kullanılabilir.</translation>
     </message>
     <message>
         <source>Control number, with white border</source>
         <comment>Name of symbol 704.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol numarası, beyaz kenarlıklı</translation>
     </message>
     <message>
         <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail.
 An option for heavily building filled map is the possibility to have a white border with 0.1 or 0.15 mm in width.</source>
         <comment>Description of symbol 704.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol numarası, önemli detayları örtmeyecek şekilde kontrol noktası dairesinin yakınına yerleştirilir.
+Yoğun bina bulunan haritalar için 0.1 veya 0.15 mm genişliğinde beyaz bir kenarlık kullanılabilir.</translation>
     </message>
     <message>
         <source>Course line</source>
@@ -6898,7 +7109,7 @@ An option for heavily building filled map is the possibility to have a white bor
     <message>
         <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 705</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol noktalarına sırayla gidilecek yerlerde başlangıç, kontrol noktaları ve bitiş düz çizgilerle birleştirilir. Önemli detayların görünmesi için çizgilerin bazı bölümleri çıkarılmalıdır.</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -6908,7 +7119,7 @@ An option for heavily building filled map is the possibility to have a white bor
     <message>
         <source>The finish is shown by two concentric circles.</source>
         <comment>Description of symbol 706</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bitiş, iç içe iki daire ile gösterilir.</translation>
     </message>
     <message>
         <source>Marked route</source>
@@ -6918,7 +7129,7 @@ An option for heavily building filled map is the possibility to have a white bor
     <message>
         <source>A marked route is shown on the map with a dashed line.</source>
         <comment>Description of symbol 707</comment>
-        <translation type="unfinished"></translation>
+        <translation>İşaretli rota haritada kesikli bir çizgi ile gösterilir.</translation>
     </message>
     <message>
         <source>Out-of-bounds boundary</source>
@@ -6928,7 +7139,7 @@ An option for heavily building filled map is the possibility to have a white bor
     <message>
         <source>An out-of-bounds boundary shall not be crossed. It shall be used for temporary uncrossable boundaries used for the course setting.</source>
         <comment>Description of symbol 708</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak bölge sınırı geçilmemelidir. Parkur planlamasında kullanılan geçici, geçilemez sınırlar için kullanılır.</translation>
     </message>
     <message>
         <source>Out-of-bounds area</source>
@@ -6944,7 +7155,13 @@ An out-of-bounds area shall not be entered.
 Minimum width: 2 mm.
 Minimum area: 4 mm² (footprint 64 m²).</source>
         <comment>Description of symbol 709</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak bölge. Doğal bir sınır yoksa aşağıdaki gibi bir sınır çizgisi çizilebilir:
+- düz bir çizgi, sınırın arazide sürekli olarak (bantlar vb.) işaretlendiğini gösterir,
+- kesikli bir çizgi, arazide aralıklı işaretleme olduğunu gösterir,
+- çizgi olmaması, arazide işaretleme olmadığını gösterir.
+Yasak bölgeye girilmemelidir.
+Minimum genişlik: 2 mm.
+Minimum alan: 4 mm² (kapladığı alan 64 m²).</translation>
     </message>
     <message>
         <source>Out-of-bounds area, solid boundary</source>
@@ -6954,7 +7171,7 @@ Minimum area: 4 mm² (footprint 64 m²).</source>
     <message>
         <source>A solid line indicates that the boundary is marked continuously (tapeetc.) in the terrain.</source>
         <comment>Description of symbol 709.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Düz bir çizgi, sınırın arazide sürekli olarak (bant vb.) işaretlendiğini gösterir.</translation>
     </message>
     <message>
         <source>Out-of-bounds area, dashed boundary</source>
@@ -6964,7 +7181,7 @@ Minimum area: 4 mm² (footprint 64 m²).</source>
     <message>
         <source>A dashed line indicates intermittent marking in the terrain.</source>
         <comment>Description of symbol 709.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kesikli bir çizgi, arazide aralıklı işaretleme olduğunu gösterir.</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -6975,42 +7192,48 @@ Minimum area: 4 mm² (footprint 64 m²).</source>
         <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.
 &lt;span style=&quot;color: red&quot;&gt;If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
         <comment>Description of symbol 710.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir duvar veya çitin içinden ya da üzerinden, bir yol veya demiryolunun karşısına, bir tünelin ya da yasak bölgenin içinden geçen bir geçiş noktası, haritada dışa doğru kıvrılan iki çizgi ile gösterilir.
+&lt;span style=&quot;color: red&quot;&gt;Alt geçitler veya tüneller vb. yarışmada kullanılacaksa, Geçiş noktası (710.1) veya Geçiş bölümü (710.2) sembolüyle vurgulanmalıdır.&lt;/span&gt;</translation>
     </message>
     <message>
         <source>Crossing section, one side</source>
         <comment>Name of symbol 710.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçiş bölümü, tek taraf</translation>
     </message>
     <message>
         <source>A crossing section through or over a building, wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map as a linear object, according to the plan shape.
 &lt;span style=&quot;color: red&quot;&gt;If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
         <comment>Description of symbol 710.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir binanın, duvarın veya çitin içinden ya da üzerinden, bir yol veya demiryolunun karşısına, bir tünelin ya da yasak bölgenin içinden geçen bir geçiş bölümü, haritada plan şekline uygun olarak çizgisel bir nesne şeklinde çizilir.
+&lt;span style=&quot;color: red&quot;&gt;Alt geçitler veya tüneller vb. yarışmada kullanılacaksa, Geçiş noktası (710.1) veya Geçiş bölümü (710.2) sembolüyle vurgulanmalıdır.&lt;/span&gt;</translation>
     </message>
     <message>
         <source> Temporary construction or closed area</source>
         <comment>Name of symbol 714</comment>
-        <translation type="unfinished"></translation>
+        <translation> Geçici yapı veya kapalı alan</translation>
     </message>
     <message>
         <source>Obvious temporary constructions like platforms for spectators and speaker, closed area for spectators, outside restaurant areas, etc. shall be represented in plan shape. A Temporary construction or closed area shall not be entered.
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 714</comment>
-        <translation type="unfinished"></translation>
+        <translation>Seyirci ve spiker platformları, seyircilere ayrılmış kapalı alanlar, açık hava restoran alanları vb. gibi belirgin geçici yapılar plan şeklinde gösterilmelidir. Geçici yapıya veya kapalı alana girilmemelidir.
+Minimum genişlik: 0.5 mm.
+Minimum alan: 0.25 mm² (kapladığı alan 4 m²).</translation>
     </message>
     <message>
         <source> Temporary construction or closed area, minimum size</source>
         <comment>Name of symbol 714.1</comment>
-        <translation type="unfinished"></translation>
+        <translation> Geçici yapı veya kapalı alan, minimum boyut</translation>
     </message>
     <message>
         <source>Obvious temporary constructions like platforms for spectators and speaker, closed area for spectators, outside restaurant areas, etc. shall be represented in plan shape. A Temporary construction or closed area shall not be entered.
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 714.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Seyirci ve spiker platformları, seyircilere ayrılmış kapalı alanlar, açık hava restoran alanları vb. gibi belirgin geçici yapılar plan şeklinde gösterilmelidir. Geçici yapıya veya kapalı alana girilmemelidir.
+Minimum genişlik: 0.5 mm.
+Minimum alan: 0.25 mm² (kapladığı alan 4 m²).</translation>
     </message>
     <message>
         <source>Simple Orienteering Course</source>
@@ -7182,7 +7405,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Earth bank, tag line</source>
         <comment>Name of symbol 106.2</comment>
-        <translation type="unfinished">Toprak set, çizgi (tag)</translation>
+        <translation>Toprak set, saçak çizgisi</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -7222,7 +7445,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished">Geçilemez yar/uçurum, çizgi etiket</translation>
+        <translation>Geçilemez yar/uçurum, saçak çizgisi</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -7504,12 +7727,12 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Lower Purple</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt Mor</translation>
     </message>
     <message>
         <source>Black 70%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>%70 Siyah</translation>
     </message>
     <message>
         <source>Brown 50%</source>
@@ -7549,7 +7772,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Black 30%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>%30 Siyah</translation>
     </message>
     <message>
         <source>Green 50%, Yellow</source>
@@ -7559,7 +7782,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Green over White over Green</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil üzerinde Beyaz üzerinde Yeşil</translation>
     </message>
     <message>
         <source>Opaque White over Green</source>
@@ -7569,7 +7792,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Yellow over Green</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil üzerinde Sarı</translation>
     </message>
     <message>
         <source>Opaque Green</source>
@@ -7609,12 +7832,12 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>White over Yellow 70%</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>%70 Sarı üzerinde Beyaz</translation>
     </message>
     <message>
         <source>Yellow 70%</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>%70 Sarı</translation>
     </message>
     <message>
         <source>Contour</source>
@@ -7624,7 +7847,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşit yükseklikteki noktaları birleştiren bir çizgi. Eşyükselti eğrileri arasındaki standart düşey aralık 5 metredir. Bir eşyükselti eğrisindeki en küçük kıvrım, çizgilerin merkezinden merkezine 0.25 mm&apos;dir.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -7634,17 +7857,17 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Her beşinci eşyükselti eğrisi, daha kalın bir çizgi ile çizilmelidir. Bu, yükseklik farkının ve arazi yüzeyinin genel şeklinin hızlı bir şekilde değerlendirilmesine yardımcı olur. Bir indeks eşyükselti eğrisi çok detaylı bir alana denk geldiğinde, normal bir eşyükselti eğrisi olarak gösterilebilir.</translation>
     </message>
     <message>
         <source>Slope line</source>
         <comment>Name of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eğim çizgisi</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line, e.g. along the line of a re-entrant or in a depression. They are used only where it is necessary to clarify the direction of slope.</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eğim çizgileri, bir eşyükselti eğrisinin alt tarafına, örneğin bir girinti boyunca veya bir çukurun içinde çizilebilir. Yalnızca eğim yönünü netleştirmek gerektiğinde kullanılırlar.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -7664,7 +7887,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dik bir toprak set, çevresinden net bir şekilde ayırt edilebilen, zemin seviyesinde ani bir değişikliktir, örn. çakıl veya kum ocakları, yol ve demiryolu yarmaları veya dolguları. Saçaklar eğimin tam kapsamını göstermelidir, ancak iki set birbirine yakınsa çıkarılabilir. Geçilemez setler 201 sembolü (geçilemez yar/uçurum) ile çizilmelidir. Çok yüksek toprak setlerin çizgi genişliği 0.25 mm olabilir.</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -7674,32 +7897,32 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dik bir toprak set, çevresinden net bir şekilde ayırt edilebilen, zemin seviyesinde ani bir değişikliktir, örn. çakıl veya kum ocakları, yol ve demiryolu yarmaları veya dolguları. Saçaklar eğimin tam kapsamını göstermelidir, ancak iki set birbirine yakınsa çıkarılabilir. Geçilemez setler 201 sembolü (geçilemez yar/uçurum) ile çizilmelidir. Çok yüksek toprak setlerin çizgi genişliği 0.25 mm olabilir.</translation>
     </message>
     <message>
         <source>Earth bank, very high</source>
         <comment>Name of symbol 106.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toprak set, çok yüksek</translation>
     </message>
     <message>
         <source>The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çok yüksek toprak setlerin çizgi genişliği 0.25 mm olabilir.</translation>
     </message>
     <message>
         <source>Earth bank, very high, minimum size</source>
         <comment>Name of symbol 106.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toprak set, çok yüksek, minimum boyut</translation>
     </message>
     <message>
         <source>The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çok yüksek toprak setlerin çizgi genişliği 0.25 mm olabilir.</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
         <comment>Name of symbol 106.2</comment>
-        <translation type="unfinished">Toprak set, çizgi (tag)</translation>
+        <translation>Toprak set, saçak çizgisi</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -7714,7 +7937,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Distinct earth wall. Minimum height is 1 m.</source>
         <comment>Description of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin toprak duvar. Minimum yükseklik 1 m&apos;dir.</translation>
     </message>
     <message>
         <source>Erosion gully</source>
@@ -7724,7 +7947,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
         <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>106 sembolü ile gösterilemeyecek kadar küçük bir erozyon oyuğu veya hendek, tek bir çizgi ile gösterilir. Çizgi genişliği oyuğun büyüklüğünü yansıtır. Minimum derinlik 1 m. Çizginin ucu sivridir.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -7734,7 +7957,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
         <comment>Description of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez bir uçurum, taş ocağı veya toprak set (bkz. 106), 0.35 mm&apos;lik bir çizgi ve üst çizgiden eteğe kadar tam kapsamını gösteren aşağı doğru saçaklarla gösterilir. Dikey kaya yüzeyleri için yer darsa saçaklar çıkarılabilir, örn. uçurumlar arasındaki dar geçitler (geçit en az 0.3 mm genişliğinde çizilmelidir). Saçaklar, kaya yüzeyinin hemen altındaki detayı temsil eden bir alan sembolünün üzerine uzanabilir. Bir kaya yüzeyi doğrudan suya inip su kenarı boyunca uçurumun altından geçişi imkansız kıldığında, kıyı çizgisi çizilmez veya saçaklar kıyı çizgisi üzerinden açıkça uzatılmalıdır.</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
@@ -7744,22 +7967,22 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
         <comment>Description of symbol 201.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez bir uçurum, taş ocağı veya toprak set (bkz. 106), 0.35 mm&apos;lik bir çizgi ve üst çizgiden eteğe kadar tam kapsamını gösteren aşağı doğru saçaklarla gösterilir. Dikey kaya yüzeyleri için yer darsa saçaklar çıkarılabilir, örn. uçurumlar arasındaki dar geçitler (geçit en az 0.3 mm genişliğinde çizilmelidir). Saçaklar, kaya yüzeyinin hemen altındaki detayı temsil eden bir alan sembolünün üzerine uzanabilir. Bir kaya yüzeyi doğrudan suya inip su kenarı boyunca uçurumun altından geçişi imkansız kıldığında, kıyı çizgisi çizilmez veya saçaklar kıyı çizgisi üzerinden açıkça uzatılmalıdır.</translation>
     </message>
     <message>
         <source>Impassable cliff, no tags</source>
         <comment>Name of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez yar/uçurum, saçaksız</translation>
     </message>
     <message>
         <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
         <comment>Description of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dikey kaya yüzeyleri için yer darsa saçaklar çıkarılabilir, örn. uçurumlar arasındaki dar geçitler (geçit en az 0.3 mm genişliğinde çizilmelidir).</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished">Geçilemez yar/uçurum, çizgi etiket</translation>
+        <translation>Geçilemez yar/uçurum, saçak çizgisi</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -7769,12 +7992,12 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Rock pillars/cliffs</source>
         <comment>Name of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaya sütunları/uçurumlar</translation>
     </message>
     <message>
         <source>In the case of unusual features such as rock pillars or massive cliffs or gigantic boulders, the rocks shall be shown in plan shape without tags.</source>
         <comment>Description of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaya sütunları, geniş uçurumlar veya devasa kayalar gibi olağandışı nesneler söz konusu olduğunda, kayalar saçaksız olarak plan şeklinde gösterilmelidir.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -7784,47 +8007,47 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
         <comment>Description of symbol 206</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük, belirgin bir kaya (minimum yükseklik 1 m). Haritada işaretlenen her kaya arazide hemen tanınabilir olmalıdır. Boyut açısından belirgin fark bulunan kayalar arasındaki ayrımı gösterebilmek için bu sembolün %20 büyütülmesine (çap 0.5 mm) izin verilir.</translation>
     </message>
     <message>
         <source>Boulder, enlarged</source>
         <comment>Name of symbol 206.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaya, büyütülmüş</translation>
     </message>
     <message>
         <source>To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
         <comment>Description of symbol 206.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Boyut açısından belirgin fark bulunan kayalar arasındaki ayrımı gösterebilmek için bu sembolün %20 büyütülmesine (çap 0.5 mm) izin verilir.</translation>
     </message>
     <message>
         <source>Boulder fields / Stony ground, small</source>
         <comment>Name of symbol 210</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kayalık alanlar / Taşlı zemin, küçük</translation>
     </message>
     <message>
         <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
         <comment>Description of symbol 210</comment>
-        <translation type="unfinished"></translation>
+        <translation>İlerlemeyi etkileyen taşlı veya kayalık zemin haritada gösterilmelidir. Noktalar, kaya miktarına göre değişen yoğunlukta rastgele dağıtılmalıdır. En az üç nokta kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Boulder fields / Stony ground</source>
         <comment>Name of symbol 210.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kayalık alanlar / Taşlı zemin</translation>
     </message>
     <message>
         <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
         <comment>Description of symbol 210.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>İlerlemeyi etkileyen taşlı veya kayalık zemin haritada gösterilmelidir. Noktalar, kaya miktarına göre değişen yoğunlukta rastgele dağıtılmalıdır. En az üç nokta kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Open sandy ground</source>
         <comment>Name of symbol 211</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık kumlu zemin</translation>
     </message>
     <message>
         <source>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</source>
         <comment>Description of symbol 211</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bitki örtüsü olmayan ve koşunun yavaş olduğu yumuşak kumlu zemin veya çakıllı alan. Kumlu bir alan açık ancak koşu iyi ise açık alan (401/402) olarak gösterilir.</translation>
     </message>
     <message>
         <source>Bare rock</source>
@@ -7834,24 +8057,26 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
         <comment>Description of symbol 212</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toprak veya bitki örtüsü olmayan, koşulabilir bir kayalık alan çıplak kaya olarak gösterilir. Ot, yosun veya diğer alçak bitki örtüsü ile kaplı bir kaya alanı açık alan (401/402) olarak gösterilir.</translation>
     </message>
     <message>
         <source>Lake</source>
         <comment>Name of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>Göl</translation>
     </message>
     <message>
         <source>Large areas of water are shown with this symbol (blue 50%). The colour of the bank line is blue 100 %.
 
 Small areas of water should be shown with full colour. Use symbol 302 (&quot;Pond&quot; in ISOM).</source>
         <comment>Description of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geniş su alanları bu sembolle (%50 mavi) gösterilir. Kıyı çizgisinin rengi %100 mavidir.
+
+Küçük su alanları tam renkle gösterilmelidir. 302 sembolünü (ISOM&apos;da &quot;Gölet&quot;) kullanın.</translation>
     </message>
     <message>
         <source>Lake, bank line</source>
         <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Göl, kıyı çizgisi</translation>
     </message>
     <message>
         <source>A black bank line indicates that the feature cannot be crossed.</source>
@@ -7861,19 +8086,21 @@ Small areas of water should be shown with full colour. Use symbol 302 (&quot;Pon
     <message>
         <source>Lake, with bank line</source>
         <comment>Name of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Göl, kıyı çizgisi ile</translation>
     </message>
     <message>
         <source>Pond</source>
         <comment>Name of symbol 302</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gölet</translation>
     </message>
     <message>
         <source>Small areas of water should be shown with full colour.
 
 This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lake&quot; in ISMTBOM.</source>
         <comment>Description of symbol 302</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük su alanları tam renkle gösterilmelidir.
+
+Bu, ISOM&apos;daki &quot;302 Gölet&quot; sembolüdür, ancak ISMTBOM&apos;da &quot;301 Göl&quot; sembolünün bir varyasyonudur.</translation>
     </message>
     <message>
         <source>Crossable watercourse</source>
@@ -7883,27 +8110,27 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
         <comment>Description of symbol 305</comment>
-        <translation type="unfinished"></translation>
+        <translation>En az 2 m genişliğinde geçilebilir bir su yolu. 5 m&apos;den geniş su yollarının genişliği ölçeğe uygun gösterilmelidir.</translation>
     </message>
     <message>
         <source>Crossable small watercourse</source>
         <comment>Name of symbol 306</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir küçük su yolu</translation>
     </message>
     <message>
         <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
         <comment>Description of symbol 306</comment>
-        <translation type="unfinished"></translation>
+        <translation>2 m&apos;den dar geçilebilir bir su yolu (büyük bir drenaj kanalı dahil). Daha iyi okunabilirlik için bataklıktaki bir hendek, geçilebilir su yolu (305) olarak çizilmelidir.</translation>
     </message>
     <message>
         <source>Minor water channel</source>
         <comment>Name of symbol 307</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük su yolu</translation>
     </message>
     <message>
         <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
         <comment>Description of symbol 307</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sadece aralıklı olarak su bulunduran doğal veya insan yapımı küçük bir su yolu.</translation>
     </message>
     <message>
         <source>Uncrossable marsh</source>
@@ -7913,17 +8140,17 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>A marsh which is uncrossable or dangerous for the runner. A blue line surrounds the symbol.</source>
         <comment>Description of symbol 309</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez olan veya yarışmacı için tehlike oluşturan bir bataklık. Sembolü mavi bir çizgi çevreler.</translation>
     </message>
     <message>
         <source>Uncrossable marsh, border line</source>
         <comment>Name of symbol 309.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez bataklık, sınır çizgisi</translation>
     </message>
     <message>
         <source>Uncrossable marsh, with border line</source>
         <comment>Name of symbol 309.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez bataklık, sınır çizgisi ile</translation>
     </message>
     <message>
         <source>Marsh</source>
@@ -7933,7 +8160,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
         <comment>Description of symbol 310</comment>
-        <translation type="unfinished"></translation>
+        <translation>Genellikle belirgin bir kenarı olan geçilebilir bir bataklık. Sembol, koşulabilirliği ve açıklığı göstermek için bitki örtüsü sembolleriyle birleştirilmelidir. Küçük bir bataklık alanının 403/404 ile birleştirilmesi gereken yerlerde, okunabilirliği artırmak için 401/402 kullanılmasına izin verilir.</translation>
     </message>
     <message>
         <source>Marsh, minimum size</source>
@@ -7943,12 +8170,12 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Special water feature</source>
         <comment>Name of symbol 314</comment>
-        <translation type="unfinished"></translation>
+        <translation>Özel su nesnesi</translation>
     </message>
     <message>
         <source>A special small water feature. The definition of the symbol must always be given in the map legend.</source>
         <comment>Description of symbol 314</comment>
-        <translation type="unfinished"></translation>
+        <translation>Özel, küçük bir su nesnesi. Sembolün tanımı her zaman harita lejantında verilmelidir.</translation>
     </message>
     <message>
         <source>Open land</source>
@@ -7958,7 +8185,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 401</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ağaçsız, kolay koşu sunan ekili araziler, tarlalar, çayırlar, otlaklar vb. Sarı renkli alanlar hakim hale gelirse, tam sarı yerine bir tram (%75) kullanılabilir.</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
@@ -7968,7 +8195,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 402</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dağınık ağaçlı veya çalılı, kolay koşu sunan çim veya benzeri zemin örtüsüne sahip çayırlar. Harita ölçeğinde 10 mm&apos;den küçük alanlar açık alan (401) olarak gösterilir. Tek tek ağaçlar eklenebilir (418, 419, 420). Sarı renkli alanlar hakim hale gelirse, tam sarı yerine bir tram (%75) kullanılabilir.</translation>
     </message>
     <message>
         <source>Rough open land</source>
@@ -7978,7 +8205,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
         <comment>Description of symbol 403</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fundalık, bozkır, ağaçları kesilmiş alanlar, yeni ağaçlandırılmış alanlar (ağaçlar yaklaşık 1 m&apos;den kısa) veya engebeli zemin bitki örtüsü, funda ya da uzun otlarla kaplı, genel olarak açık diğer araziler. 403 sembolü, azalmış koşulabilirliği göstermek için 407 ve 409 sembolleriyle birleştirilebilir.</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
@@ -7988,27 +8215,27 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
         <comment>Description of symbol 404</comment>
-        <translation type="unfinished"></translation>
+        <translation>Engebeli açık arazide dağınık ağaçlar bulunduğunda, tram içinde beyaz (veya yeşil) alanlar görünmelidir. Böyle bir alan, sarı tram içinde düzenli bir desende büyük beyaz noktalar kullanılarak genelleştirilebilir. Harita ölçeğinde 16 mm&apos;den küçük alanlar engebeli açık alan (403) olarak gösterilir. Tek tek ağaçlar eklenebilir (418, 419, 420).</translation>
     </message>
     <message>
         <source>Forest: good visibility</source>
         <comment>Name of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>Orman: iyi görünürlük</translation>
     </message>
     <message>
         <source>Typically open forest for the particular type of terrain. Wherever a part of the forest is too dense to be traversed pushing or carrying a bicycle, no white should appear on the map.</source>
         <comment>Description of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirli arazi tipi için tipik açık orman. Ormanın, bisiklet itilerek veya taşınarak geçilemeyecek kadar sık olan kısımlarında haritada beyaz görünmemelidir.</translation>
     </message>
     <message>
         <source>Forest: reduced visibility</source>
         <comment>Name of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>Orman: azalmış görünürlük</translation>
     </message>
     <message>
         <source>An area with dense trees (low visibility) which reduces the speed of traversing the forest pushing or carrying a bicycle significantly or even makes it impossible to traverse.</source>
         <comment>Description of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bisiklet itilerek veya taşınarak ormanda ilerleme hızını önemli ölçüde azaltan, hatta geçişi imkansız kılan sık ağaçlı (düşük görünürlüklü) bir alan.</translation>
     </message>
     <message>
         <source>Orchard</source>
@@ -8018,157 +8245,157 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
-        <translation type="unfinished"></translation>
+        <translation>Meyve ağaçları veya çalıları dikilmiş arazi. Noktalı çizgiler, dikim yönünü göstermek için yönlendirilebilir. Sarı renkli alanlar hakim hale gelirse, tam sarı yerine bir tram (%75) kullanılabilir.</translation>
     </message>
     <message>
         <source>Vineyard</source>
         <comment>Name of symbol 413</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bağ</translation>
     </message>
     <message>
         <source>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 413</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil çizgiler, dikim yönünü göstermek için yönlendirilebilir. Sarı renkli alanlar hakim hale gelirse, tam sarı yerine bir tram (%75) kullanılabilir.</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
         <comment>Name of symbol 418</comment>
-        <translation type="unfinished"></translation>
+        <translation>Özel bitki örtüsü nesnesi</translation>
     </message>
     <message>
         <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
         <comment>Description of symbol 418</comment>
-        <translation type="unfinished"></translation>
+        <translation>418, 419 ve 420 sembolleri özel, küçük bitki örtüsü nesneleri için kullanılabilir. Sembolün tanımı her durumda harita lejantında verilmelidir.</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
         <comment>Name of symbol 419</comment>
-        <translation type="unfinished"></translation>
+        <translation>Özel bitki örtüsü nesnesi</translation>
     </message>
     <message>
         <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
         <comment>Description of symbol 419</comment>
-        <translation type="unfinished"></translation>
+        <translation>418, 419 ve 420 sembolleri özel, küçük bitki örtüsü nesneleri için kullanılabilir. Sembolün tanımı her durumda harita lejantında verilmelidir.</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
         <comment>Name of symbol 420</comment>
-        <translation type="unfinished"></translation>
+        <translation>Özel bitki örtüsü nesnesi</translation>
     </message>
     <message>
         <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
         <comment>Description of symbol 420</comment>
-        <translation type="unfinished"></translation>
+        <translation>418, 419 ve 420 sembolleri özel, küçük bitki örtüsü nesneleri için kullanılabilir. Sembolün tanımı her durumda harita lejantında verilmelidir.</translation>
     </message>
     <message>
         <source>Motorway</source>
         <comment>Name of symbol 501.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Otoyol</translation>
     </message>
     <message>
         <source>A road with two carriageways. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 501.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>İki şeritli bir yol. Sembolün genişliği ölçeğe uygun çizilmeli, ancak minimum genişlikten küçük olmamalıdır. Bir çit veya duvar otoyol kenarına ayrı bir sembol olarak pratikte gösterilemeyecek kadar yakınsa, dış sınır çizgileri 519, 521, 522 veya 524 sembolleriyle değiştirilebilir. Siyah çizgiler arasındaki boşluk kahverengi (%50) ile doldurulmalıdır. Yapım aşamasındaki bir yol kesikli çizgilerle gösterilebilir.</translation>
     </message>
     <message>
         <source>Major road, minimum width</source>
         <comment>Name of symbol 502</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ana yol, minimum genişlik</translation>
     </message>
     <message>
         <source>Road wider than 5m. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 502</comment>
-        <translation type="unfinished"></translation>
+        <translation>5 m&apos;den geniş yol. Sembolün genişliği ölçeğe uygun çizilmeli, ancak minimum genişlikten küçük olmamalıdır. Bir çit veya duvar yol kenarına ayrı bir sembol olarak pratikte gösterilemeyecek kadar yakınsa, dış sınır çizgileri 519, 521, 522 veya 524 sembolleriyle değiştirilebilir. Siyah çizgiler arasındaki boşluk kahverengi (%50) ile doldurulmalıdır. Yapım aşamasındaki bir yol kesikli çizgilerle gösterilebilir.</translation>
     </message>
     <message>
         <source>Minor road</source>
         <comment>Name of symbol 503</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tali yol</translation>
     </message>
     <message>
         <source>Road 3-5 m wide. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 503</comment>
-        <translation type="unfinished"></translation>
+        <translation>3-5 m genişliğinde yol. Siyah çizgiler arasındaki boşluk kahverengi (%50) ile doldurulmalıdır. Yapım aşamasındaki bir yol kesikli çizgilerle gösterilebilir.</translation>
     </message>
     <message>
         <source>Track: fast riding</source>
         <comment>Name of symbol 831</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yol: hızlı sürüş</translation>
     </message>
     <message>
         <source>A track with stabilised surface, at least 1.5 m wide. Forest road or well-maintained track with no obstacles. Speed 75-100 %.</source>
         <comment>Description of symbol 831</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sağlamlaştırılmış yüzeyli, en az 1.5 m genişliğinde bir yol. Orman yolu veya engel bulunmayan bakımlı yol. Hız %75-100.</translation>
     </message>
     <message>
         <source>Path: fast riding</source>
         <comment>Name of symbol 832</comment>
-        <translation type="unfinished"></translation>
+        <translation>Patika: hızlı sürüş</translation>
     </message>
     <message>
         <source>Well-maintained path narrower than 1.5 m wide. Smooth, clean path with no erosion or obstacles. Speed 75-100 %.</source>
         <comment>Description of symbol 832</comment>
-        <translation type="unfinished"></translation>
+        <translation>1.5 m&apos;den dar, bakımlı patika. Erozyon veya engel bulunmayan düzgün, temiz patika. Hız %75-100.</translation>
     </message>
     <message>
         <source>Track: medium riding</source>
         <comment>Name of symbol 833</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yol: orta hızda sürüş</translation>
     </message>
     <message>
         <source>A track at least 1.5 m wide with some reduction in speed with the possibility of small obstacles such as stones, rocks, ruts, grass, sand or mud. Speed 50-75 %.</source>
         <comment>Description of symbol 833</comment>
-        <translation type="unfinished"></translation>
+        <translation>Taş, kaya, tekerlek izi, çim, kum veya çamur gibi küçük engeller bulunabilen ve hızın bir miktar azaldığı, en az 1.5 m genişliğinde bir yol. Hız %50-75.</translation>
     </message>
     <message>
         <source>Path: medium riding</source>
         <comment>Name of symbol 834</comment>
-        <translation type="unfinished"></translation>
+        <translation>Patika: orta hızda sürüş</translation>
     </message>
     <message>
         <source>A path narrower than 1.5 m wide with some reduction in speed with the possibility of small obstacles such as stones, rocks, ruts, grass, sand or mud. Speed 50-75 %.</source>
         <comment>Description of symbol 834</comment>
-        <translation type="unfinished"></translation>
+        <translation>Taş, kaya, tekerlek izi, çim, kum veya çamur gibi küçük engeller bulunabilen ve hızın bir miktar azaldığı, 1.5 m&apos;den dar bir patika. Hız %50-75.</translation>
     </message>
     <message>
         <source>Track: slow riding</source>
         <comment>Name of symbol 835</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yol: yavaş sürüş</translation>
     </message>
     <message>
         <source>A track at least 1.5 m wide, with obstacles that require the riders to choose their way to avoid obstacles such as stones, rocks, ruts, grass, sand or mud. Possibility of rocky surfaces. Pedaling is more difficult, riding is slowed. Skilled/fit riders will pass. Less skilled/fit riders may have to dismount. Speed 25-50 %.</source>
         <comment>Description of symbol 835</comment>
-        <translation type="unfinished"></translation>
+        <translation>Taş, kaya, tekerlek izi, çim, kum veya çamur gibi engellerden kaçınmak için sürücülerin yol seçmesini gerektiren engeller bulunan, en az 1.5 m genişliğinde bir yol. Kayalık yüzeyler bulunabilir. Pedal çevirmek daha zordur, sürüş yavaşlar. Becerikli/formda sürücüler geçebilir. Daha az becerikli/formda sürücüler bisikletten inmek zorunda kalabilir. Hız %25-50.</translation>
     </message>
     <message>
         <source>Path: slow riding</source>
         <comment>Name of symbol 836</comment>
-        <translation type="unfinished"></translation>
+        <translation>Patika: yavaş sürüş</translation>
     </message>
     <message>
         <source>A path narrower than 1.5 m wide, with sufficient obstacles to require the riders to choose their way to avoid obstacles such as stones, rocks, ruts, grass, sand or mud. Possibility of rocky surfaces. Pedaling is more difficult, riding is slowed. Skilled/fit riders will pass. Less skilled/fit riders may have to dismount. Speed 25-50 %.</source>
         <comment>Description of symbol 836</comment>
-        <translation type="unfinished"></translation>
+        <translation>Taş, kaya, tekerlek izi, çim, kum veya çamur gibi engellerden kaçınmak için sürücülerin yol seçmesini gerektirecek kadar engel bulunan, 1.5 m&apos;den dar bir patika. Kayalık yüzeyler bulunabilir. Pedal çevirmek daha zordur, sürüş yavaşlar. Becerikli/formda sürücüler geçebilir. Daha az becerikli/formda sürücüler bisikletten inmek zorunda kalabilir. Hız %25-50.</translation>
     </message>
     <message>
         <source>Track: difficult to ride</source>
         <comment>Name of symbol 837</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yol: sürmesi zor</translation>
     </message>
     <message>
         <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud, erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 837</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kökler, derin kum/çamur, erozyon veya kayalık basamaklar gibi zorlu engeller bulunan, en az 1.5 m genişliğinde bir yol. Çok yavaş sürüş veya sürmek imkansız. Becerikli/formda sürücülerin bile bisikletten inmesi gerekebilir. Hız en fazla %25.</translation>
     </message>
     <message>
         <source>Path: difficult to ride</source>
         <comment>Name of symbol 838</comment>
-        <translation type="unfinished"></translation>
+        <translation>Patika: sürmesi zor</translation>
     </message>
     <message>
         <source>A path less than 1.5 m wide, with difficult obstacles such as roots, deep sand/mud, erosion or rocky steps. Very slow riding or impossible riding. Skilled/fit riders may be required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 838</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kökler, derin kum/çamur, erozyon veya kayalık basamaklar gibi zorlu engeller bulunan, 1.5 m&apos;den dar bir patika. Çok yavaş sürüş veya sürüş imkansız. Becerikli/formda sürücülerin bile bisikletten inmesi gerekebilir. Hız en fazla %25.</translation>
     </message>
     <message>
         <source>Narrow ride</source>
@@ -8178,7 +8405,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Non-ridable narrow forest rides should be represented.</source>
         <comment>Description of symbol 509.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sürülemeyen dar orman içi gezinti yolları gösterilmelidir.</translation>
     </message>
     <message>
         <source>Railway</source>
@@ -8188,17 +8415,17 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
         <comment>Description of symbol 515</comment>
-        <translation type="unfinished"></translation>
+        <translation>Demiryolu veya diğer raylı hatlar (tramvay, dekovil hattı vb.).</translation>
     </message>
     <message>
         <source>Power line</source>
         <comment>Name of symbol 516</comment>
-        <translation type="unfinished"></translation>
+        <translation>Elektrik hattı</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift. The bars indicate the exact location of the pylons.</source>
         <comment>Description of symbol 516</comment>
-        <translation type="unfinished"></translation>
+        <translation>Elektrik hattı, teleferik veya telesiyej. Çubuklar direklerin tam konumunu gösterir.</translation>
     </message>
     <message>
         <source>Major power line</source>
@@ -8208,47 +8435,47 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.</source>
         <comment>Description of symbol 517</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yüksek gerilim hatları çift çizgi ile çizilmelidir. Çizgiler arasındaki boşluk enerji hattının kapsamını gösterebilir.</translation>
     </message>
     <message>
         <source>Tunnel</source>
         <comment>Name of symbol 518</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tünel</translation>
     </message>
     <message>
         <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
         <comment>Description of symbol 518</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yarışmacının kullanabileceği, karayollarının, demiryollarının vb. altından geçen bir geçit. Bu sembol, tünele giden bir yol olsun ya da olmasın kullanılır.</translation>
     </message>
     <message>
         <source>Tunnel, minimum size</source>
         <comment>Name of symbol 518.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tünel, minimum boyut</translation>
     </message>
     <message>
         <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
         <comment>Description of symbol 518.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yarışmacının kullanabileceği, karayollarının, demiryollarının vb. altından geçen bir geçit. Bu sembol, tünele giden bir yol olsun ya da olmasın kullanılır.</translation>
     </message>
     <message>
         <source>Stone wall</source>
         <comment>Name of symbol 521</comment>
-        <translation type="unfinished"></translation>
+        <translation>Taş duvar</translation>
     </message>
     <message>
         <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 521</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bu taş duvar sembolü tüm görünür duvarları temsil etmelidir. Bir taş duvarın geçilmesi yasaksa, 707 sembolü (geçilemez sınır) ile işaretlenmelidir.</translation>
     </message>
     <message>
         <source>High fence</source>
         <comment>Name of symbol 524</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yüksek çit</translation>
     </message>
     <message>
         <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
         <comment>Description of symbol 524</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ortalama bir oryantiringci için geçilemez, yaklaşık 1.5 m&apos;den yüksek tahta veya tel çit, örn. geyik çiti.</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -8258,7 +8485,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>All ways through or over high fences or walls must be indicated. The symbol may also be used for a gate through or stile over a stone wall (521) or a fence (524) or a pipeline (534).</source>
         <comment>Description of symbol 525</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yüksek çitlerin veya duvarların içinden veya üzerinden geçen tüm geçişler gösterilmelidir. Sembol, bir taş duvardan (521), bir çitten (524) veya bir boru hattından (534) geçen bir kapı ya da üzerinden geçen bir basamak için de kullanılabilir.</translation>
     </message>
     <message>
         <source>Building</source>
@@ -8268,7 +8495,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.</source>
         <comment>Description of symbol 526</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bina, ölçeğin izin verdiği ölçüde zemin planına göre gösterilir.</translation>
     </message>
     <message>
         <source>Building, minimum size</source>
@@ -8278,12 +8505,12 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Settlement</source>
         <comment>Name of symbol 527</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yerleşim alanı</translation>
     </message>
     <message>
         <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
         <comment>Description of symbol 527</comment>
-        <translation type="unfinished"></translation>
+        <translation>Evler, bahçeler ve diğer yapılaşmış alanlar. Bir yerleşim alanı içindeki yollar, binalar ve diğer önemli nesneler gösterilmelidir. Tüm binalar gösterilemiyorsa, alternatif bir sembol (siyah çizgi tramı) kullanılabilir.</translation>
     </message>
     <message>
         <source>Paved area</source>
@@ -8293,7 +8520,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>An area of hard standing used for parking or other purposes.</source>
         <comment>Description of symbol 529</comment>
-        <translation type="unfinished"></translation>
+        <translation>Otopark veya başka amaçlar için kullanılan sert zeminli alan.</translation>
     </message>
     <message>
         <source>Paved area, bounding line</source>
@@ -8308,32 +8535,32 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Firing range</source>
         <comment>Name of symbol 531</comment>
-        <translation type="unfinished"></translation>
+        <translation>Atış alanı</translation>
     </message>
     <message>
         <source>A firing range is shown with a special symbol to indicate the need for caution. Associated buildings are individually marked.</source>
         <comment>Description of symbol 531</comment>
-        <translation type="unfinished"></translation>
+        <translation>Atış alanı, dikkatli olunması gerektiğini belirtmek için özel bir sembolle gösterilir. İlgili binalar ayrı ayrı işaretlenir.</translation>
     </message>
     <message>
         <source>Grave</source>
         <comment>Name of symbol 532</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mezar</translation>
     </message>
     <message>
         <source>A distinct grave marked by a stone or shrine. Location is at the centre of gravity of the symbol, which is orientated to north. A cemetery is shown by using grave symbols as space permits.</source>
         <comment>Description of symbol 532</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir taş veya türbe ile işaretlenmiş belirgin bir mezar. Konum, kuzeye yönlendirilmiş sembolün ağırlık merkezidir. Bir mezarlık, yer elverdiğince mezar sembolleri kullanılarak gösterilir.</translation>
     </message>
     <message>
         <source>Uncrossable pipeline</source>
         <comment>Name of symbol 534</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez boru hattı</translation>
     </message>
     <message>
         <source>A pipeline which cannot be crossed. If an uncrossable pipeline is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 534</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemeyen bir boru hattı. Geçilemez bir boru hattının geçilmesi yasaksa, 707 sembolü (geçilemez sınır) ile işaretlenmelidir.</translation>
     </message>
     <message>
         <source>High tower</source>
@@ -8343,7 +8570,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
         <comment>Description of symbol 535</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çevredeki orman seviyesinin üzerinde yükselen yüksek bir kule veya büyük bir direk. Konum, sembolün ağırlık merkezidir.</translation>
     </message>
     <message>
         <source>Small tower</source>
@@ -8353,7 +8580,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
         <comment>Description of symbol 536</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin bir atış (av) platformu veya oturağı ya da küçük bir kule. Konum, sembolün ağırlık merkezidir.</translation>
     </message>
     <message>
         <source>Fodder rack</source>
@@ -8363,27 +8590,27 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
         <comment>Description of symbol 538</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bağımsız duran veya bir ağaca bağlı bir yemlik. Konum, sembolün ağırlık merkezidir. Arazi erişimiyle ilgili nedenlerle bunlar gösterilmeyebilir.</translation>
     </message>
     <message>
         <source>Special man-made feature</source>
         <comment>Name of symbol 539</comment>
-        <translation type="unfinished"></translation>
+        <translation>Özel insan yapımı nesne</translation>
     </message>
     <message>
         <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
         <comment>Description of symbol 539</comment>
-        <translation type="unfinished"></translation>
+        <translation>Özel insan yapımı nesneler bu sembollerle gösterilir. Sembollerin tanımı her durumda harita lejantında verilmelidir.</translation>
     </message>
     <message>
         <source>Special man-made feature</source>
         <comment>Name of symbol 540</comment>
-        <translation type="unfinished"></translation>
+        <translation>Özel insan yapımı nesne</translation>
     </message>
     <message>
         <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
         <comment>Description of symbol 540</comment>
-        <translation type="unfinished"></translation>
+        <translation>Özel insan yapımı nesneler bu sembollerle gösterilir. Sembollerin tanımı her durumda harita lejantında verilmelidir.</translation>
     </message>
     <message>
         <source>Magnetic north line, blue</source>
@@ -8393,7 +8620,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. At the scale of 1:5000, 1:7500 and 1:10000 the spacing of north lines on the map should be 30 mm, while at the scale of 1:15000 and 1:20000 the spacing on the map should be 20 mm. North lines may be broken where they obscure small features such as boulders, cliffs, stream junctions, and path ends.</source>
         <comment>Description of symbol 601.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Manyetik kuzey çizgileri, haritaya manyetik kuzeyi gösterecek şekilde yerleştirilen çizgilerdir. 1:5000, 1:7500 ve 1:10000 ölçeklerinde kuzey çizgilerinin haritadaki aralığı 30 mm, 1:15000 ve 1:20000 ölçeklerinde ise 20 mm olmalıdır. Kuzey çizgileri; kayalar, uçurumlar, dere kavşakları ve patika uçları gibi küçük nesneleri örttükleri yerlerde kesilebilir.</translation>
     </message>
     <message>
         <source>North lines pattern, blue</source>
@@ -8408,7 +8635,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
         <comment>Description of symbol 602</comment>
-        <translation type="unfinished"></translation>
+        <translation>Haritanın çerçevesi içine, simetrik olmayan konumlarda en az üç kayıt işareti yerleştirilmelidir. Ayrıca renk kontrolü de mümkün olmalıdır.</translation>
     </message>
     <message>
         <source>Spot height, dot</source>
@@ -8418,7 +8645,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
         <comment>Description of symbol 603.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kot noktaları, yükseklik farklarının kabaca değerlendirilmesi için kullanılır. Yükseklik en yakın metreye yuvarlanarak verilir. Rakamlar kuzeye yönlendirilir. Su seviyeleri noktasız verilir.</translation>
     </message>
     <message>
         <source>Spot height, text</source>
@@ -8428,7 +8655,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
         <comment>Description of symbol 603.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kot noktaları, yükseklik farklarının kabaca değerlendirilmesi için kullanılır. Yükseklik en yakın metreye yuvarlanarak verilir. Rakamlar kuzeye yönlendirilir. Su seviyeleri noktasız verilir.</translation>
     </message>
     <message>
         <source>Start</source>
@@ -8438,7 +8665,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
         <comment>Description of symbol 701</comment>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç veya (başlangıçta değilse) harita dağıtım noktası, ilk kontrole doğru işaret eden bir eşkenar üçgen ile gösterilir. Üçgenin merkezi, başlangıç noktasının kesin konumunu gösterir.</translation>
     </message>
     <message>
         <source>Control point</source>
@@ -8448,17 +8675,17 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 702</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol noktaları dairelerle gösterilir. Dairenin merkezi, nesnenin kesin konumunu gösterir. Önemli detayların görünmesi için dairenin bazı bölümleri çıkarılmalıdır.</translation>
     </message>
     <message>
         <source>Control point with focus point (in MTBO maps)</source>
         <comment>Name of symbol 840</comment>
-        <translation type="unfinished"></translation>
+        <translation>Odak noktalı kontrol noktası (MTBO haritalarında)</translation>
     </message>
     <message>
         <source>The focus point (i.e. the point in the centre of a control circle) can be used when it is necessary to clarify the exact position of a control for instance in a dense track network. The focus point shall be used in case of necessity when the exact position of a control is not clear. A focus point helps to specify the exact track where a control is situated.</source>
         <comment>Description of symbol 840</comment>
-        <translation type="unfinished"></translation>
+        <translation>Odak noktası (yani kontrol dairesinin merkezindeki nokta), bir kontrolün tam konumunu netleştirmek gerektiğinde, örneğin yoğun bir yol ağında kullanılabilir. Odak noktası, bir kontrolün tam konumu net olmadığında gerekli durumlarda kullanılmalıdır. Odak noktası, kontrolün bulunduğu yolun tam olarak belirlenmesine yardımcı olur.</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -8468,17 +8695,17 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
         <comment>Description of symbol 703</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol numarası, önemli detayları örtmeyecek şekilde kontrol noktası dairesinin yakınına yerleştirilir. Numaralar kuzeye yönlendirilir.</translation>
     </message>
     <message>
         <source>Line</source>
         <comment>Name of symbol 704</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi</translation>
     </message>
     <message>
         <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 704</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol noktalarına sırayla gidilecek yerlerde başlangıç, kontrol noktaları ve bitiş düz çizgilerle birleştirilir. Önemli detayların görünmesi için çizgilerin bazı bölümleri çıkarılmalıdır.</translation>
     </message>
     <message>
         <source>Marked route</source>
@@ -8488,7 +8715,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>A marked route is shown on the map with a dashed line. If the symbol is used instead of symbol 704 before or after a control, it represents an obligatory route for the competitors. The symbol can also be used in areas where off-track riding is forbidden to represent allowed routes that are marked in the terrain.</source>
         <comment>Description of symbol 705</comment>
-        <translation type="unfinished"></translation>
+        <translation>İşaretli rota haritada kesikli bir çizgi ile gösterilir. Sembol bir kontrolden önce veya sonra 704 sembolü yerine kullanılırsa, yarışmacılar için zorunlu bir rotayı temsil eder. Sembol ayrıca, yol dışı sürüşün yasak olduğu alanlarda, arazide işaretlenmiş izinli rotaları göstermek için de kullanılabilir.</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -8498,17 +8725,17 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>The finish is shown by two concentric circles.</source>
         <comment>Description of symbol 706</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bitiş, iç içe iki daire ile gösterilir.</translation>
     </message>
     <message>
         <source>Uncrossable boundary</source>
         <comment>Name of symbol 707</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez sınır</translation>
     </message>
     <message>
         <source>A boundary which it is not permitted to cross.</source>
         <comment>Description of symbol 707</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilmesine izin verilmeyen bir sınır.</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -8518,7 +8745,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.</source>
         <comment>Description of symbol 708</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir duvar veya çitin içinden/üzerinden, bir karayolu veya demiryolunun karşısına, bir tünelden veya yasak bölgeden geçen bir geçiş noktası, haritada dışa doğru kıvrılan iki çizgi ile gösterilir.</translation>
     </message>
     <message>
         <source>Out-of-bounds area</source>
@@ -8528,22 +8755,22 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>An out-of-bounds area is shown with vertical stripes. A bounding line may be drawn. The areas which may be dangerous to competitors shall be presented by this symbol.</source>
         <comment>Description of symbol 709</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak bölge dikey çizgilerle gösterilir. Bir sınır çizgisi çizilebilir. Yarışmacılar için tehlikeli olabilecek alanlar bu sembolle gösterilmelidir.</translation>
     </message>
     <message>
         <source>Out-of-bounds area, bounding line</source>
         <comment>Name of symbol 709.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak bölge, sınır çizgisi</translation>
     </message>
     <message>
         <source>Forbidden route</source>
         <comment>Name of symbol 711.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak rota</translation>
     </message>
     <message>
         <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
         <comment>Description of symbol 711.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak olan ve geçilmesi yasaklanan bir rota zikzak ile gösterilir. Zikzak çizgi mümkün olduğunca kesintisiz olmalıdır. Yasak rota üzerinde bir geçiş noktası varsa, yasak rotanın üzerinde iki dik çizgi ile bir kapı gibi gösterilmelidir. Daha uzun bir geçiş bölümü de zikzak çizgilerin uçlarında dik çizgiler kullanılarak haritada açıkça gösterilmelidir.</translation>
     </message>
     <message>
         <source>First aid post</source>
@@ -8568,22 +8795,22 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Dangerous object across tracks or paths, stairs</source>
         <comment>Name of symbol 843</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yollar veya patikalar üzerinde tehlikeli nesne, merdivenler</translation>
     </message>
     <message>
         <source>These barriers must be highly visible on the map and should be overprinted in purple. The symbol should be used for all obstacles that are difficult to cross. For uncrossable barrier, symbol 844 shall be used. This symbol can be used for stairs. There is no particular stair symbol.</source>
         <comment>Description of symbol 843</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bu engeller haritada çok iyi görünür olmalı ve mor üst baskı ile basılmalıdır. Sembol, geçilmesi zor olan tüm engeller için kullanılmalıdır. Geçilemez engel için 844 sembolü kullanılmalıdır. Bu sembol merdivenler için kullanılabilir. Ayrı bir merdiven sembolü yoktur.</translation>
     </message>
     <message>
         <source>Uncrossable barrier / forbidden to cross</source>
         <comment>Name of symbol 844</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez engel / geçilmesi yasak</translation>
     </message>
     <message>
         <source>This symbol can be used for all spots that are forbidden or impossible to pass, e.g. uncrossable barriers; fences or walls that are forbidden or impossible to cross; short sections of roads, tracks or paths that are forbidden to use (for longer sections, symbol 711 shall be used). In spots where two tracks or paths almost meet, but the situation is not obvious on the map, this symbol can be used to indicate that crossing is forbidden.</source>
         <comment>Description of symbol 844</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bu sembol, geçilmesi yasak veya imkansız olan tüm noktalar için kullanılabilir, örn. geçilemez engeller; geçilmesi yasak veya imkansız olan çitler veya duvarlar; kullanılması yasak olan kısa karayolu, yol veya patika bölümleri (daha uzun bölümler için 711 sembolü kullanılmalıdır). İki yolun veya patikanın neredeyse birleştiği ancak durumun haritada açık olmadığı noktalarda, geçişin yasak olduğunu belirtmek için bu sembol kullanılabilir.</translation>
     </message>
     <message>
         <source>Simple Orienteering Course</source>
@@ -8622,12 +8849,12 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Small earth wall</source>
         <comment>Name of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük toprak duvar</translation>
     </message>
     <message>
         <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
         <comment>Description of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük veya kısmen yıkılmış bir toprak duvar kesikli bir çizgi ile gösterilmelidir. Minimum yükseklik 0.5 m&apos;dir.</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
@@ -8637,7 +8864,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
         <comment>Description of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük bir erozyon oyuğu veya hendek. Minimum derinlik 0.5 m.</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -8647,17 +8874,17 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
         <comment>Description of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir eşyükselti eğrisi ile ölçeğe uygun çizilemeyen küçük, belirgin bir höyük veya kayalık tepecik (höyüğün çapı yaklaşık 5 m&apos;den az). Tepeciğin yüksekliği çevredeki zeminden en az 1 m olmalıdır. Sembol bir eşyükselti eğrisine dokunmamalıdır.</translation>
     </message>
     <message>
         <source>Elongated knoll</source>
         <comment>Name of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>Uzun tepecik</translation>
     </message>
     <message>
         <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
         <comment>Description of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir eşyükselti eğrisi ile ölçeğe uygun çizilemeyen küçük, belirgin, uzun bir tepecik (uzunluğu 12 m&apos;den, genişliği 4 m&apos;den az). Tepeciğin yüksekliği çevredeki zeminden en az 1 m olmalıdır. Bundan büyük tepecikler eşyükselti eğrileriyle gösterilmelidir. Sembol serbest biçimde veya iki uzun tepecik sembolü üst üste binecek şekilde çizilemez. Sembol bir eşyükselti eğrisine dokunmamalıdır.</translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -8667,7 +8894,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
         <comment>Description of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükselti eğrileriyle ölçeğe uygun gösterilemeyen küçük, sığ doğal çöküntüler ve oyuklar (minimum çap 2 m) bir yarım daire ile gösterilir. Çevredeki zeminden minimum derinlik 1 m olmalıdır. Konum, kuzeye yönlendirilmiş sembolün ağırlık merkezidir. İnsan yapımı çukurlar için 116 sembolü kullanılır.</translation>
     </message>
     <message>
         <source>Pit</source>
@@ -8677,117 +8904,117 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
         <comment>Description of symbol 116</comment>
-        <translation type="unfinished"></translation>
+        <translation>106 sembolü ile ölçeğe uygun gösterilemeyen, belirgin dik kenarlara sahip çukurlar ve delikler (minimum çap 2 m). Çevredeki zeminden minimum derinlik 1 m olmalıdır. Konum, kuzeye yönlendirilmiş sembolün ağırlık merkezidir.</translation>
     </message>
     <message>
         <source>Broken ground, small</source>
         <comment>Name of symbol 117.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bozuk zemin, küçük</translation>
     </message>
     <message>
         <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
         <comment>Description of symbol 117.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Detaylı olarak gösterilemeyecek kadar karmaşık çukurlar veya tepeciklerden oluşan bir alan. Rastgele yerleştirilmiş noktaların yoğunluğu, arazideki detaya göre değişebilir.</translation>
     </message>
     <message>
         <source>Broken ground, big</source>
         <comment>Name of symbol 117.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bozuk zemin, büyük</translation>
     </message>
     <message>
         <source>The size of the dots may vary.</source>
         <comment>Description of symbol 117.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noktaların boyutu değişebilir.</translation>
     </message>
     <message>
         <source>Special land form feature</source>
         <comment>Name of symbol 118</comment>
-        <translation type="unfinished"></translation>
+        <translation>Özel yeryüzü şekli nesnesi</translation>
     </message>
     <message>
         <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
         <comment>Description of symbol 118</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bu sembol, özel küçük bir yeryüzü şekli nesnesi için kullanılabilir. Sembolün tanımı harita lejantında verilmelidir.</translation>
     </message>
     <message>
         <source>Passable rock face</source>
         <comment>Name of symbol 203</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir kaya yüzü</translation>
     </message>
     <message>
         <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
         <comment>Description of symbol 203</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük dikey bir kaya yüzeyi (minimum yükseklik 1 m) saçaksız gösterilebilir. Kaya yüzeyinin iniş yönü eşyükselti eğrilerinden anlaşılamıyorsa veya okunabilirliği artırmak için, iniş yönünde kısa saçaklar çizilmelidir. Saçaksız gösterilen geçilebilir kaya yüzeylerinde, okunabilirliği artırmak için çizginin uçları yuvarlatılabilir.</translation>
     </message>
     <message>
         <source>Passable rock face, minimum size</source>
         <comment>Name of symbol 203.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir kaya yüzü, minimum boyut</translation>
     </message>
     <message>
         <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
         <comment>Description of symbol 203.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük dikey bir kaya yüzeyi (minimum yükseklik 1 m) saçaksız gösterilebilir. Kaya yüzeyinin iniş yönü eşyükselti eğrilerinden anlaşılamıyorsa veya okunabilirliği artırmak için, iniş yönünde kısa saçaklar çizilmelidir. Saçaksız gösterilen geçilebilir kaya yüzeylerinde, okunabilirliği artırmak için çizginin uçları yuvarlatılabilir.</translation>
     </message>
     <message>
         <source>Passable rock face, no tags</source>
         <comment>Name of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir kaya yüzeyi, saçaksız</translation>
     </message>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
         <comment>Description of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaya yüzünün eğim yönü eşyükselti eğrilerinden anlaşılıyorsa ve okunabilirlik iyiyse kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Passable rock face, no tags, minimum size</source>
         <comment>Name of symbol 203.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir kaya yüzeyi, saçaksız, minimum boyut</translation>
     </message>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
         <comment>Description of symbol 203.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaya yüzünün eğim yönü eşyükselti eğrilerinden anlaşılıyorsa ve okunabilirlik iyiyse kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Passable rock face, no tags, rounded</source>
         <comment>Name of symbol 203.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir kaya yüzeyi, saçaksız, yuvarlatılmış</translation>
     </message>
     <message>
         <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
         <comment>Description of symbol 203.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Saçaksız gösterilen geçilebilir kaya yüzeylerinde, okunabilirliği artırmak için çizginin uçları yuvarlatılabilir.</translation>
     </message>
     <message>
         <source>Passable rock face, no tags, rounded, minimum size</source>
         <comment>Name of symbol 203.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir kaya yüzeyi, saçaksız, yuvarlatılmış, minimum boyut</translation>
     </message>
     <message>
         <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
         <comment>Description of symbol 203.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Saçaksız gösterilen geçilebilir kaya yüzeylerinde, okunabilirliği artırmak için çizginin uçları yuvarlatılabilir.</translation>
     </message>
     <message>
         <source>Rocky pit</source>
         <comment>Name of symbol 204</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kayalık çukur</translation>
     </message>
     <message>
         <source>Rocky pits, holes or mineshafts which may constitute a danger to the runner. Location is the centre of gravity of the symbol, which is orientated to north.</source>
         <comment>Description of symbol 204</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yarışmacı için tehlike oluşturabilecek kayalık çukurlar, delikler veya maden kuyuları. Konum, kuzeye yönlendirilmiş sembolün ağırlık merkezidir.</translation>
     </message>
     <message>
         <source>Cave</source>
         <comment>Name of symbol 205</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mağara</translation>
     </message>
     <message>
         <source>A cave is represented by the same symbol as a rocky pit. In this case the symbol should be orientated to point up the slope as indicated opposite. The centre of gravity of the symbol marks the opening.</source>
         <comment>Description of symbol 205</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mağara, kayalık çukur ile aynı sembolle gösterilir. Bu durumda sembol, karşıda gösterildiği gibi yokuş yukarıyı işaret edecek şekilde yönlendirilmelidir. Sembolün ağırlık merkezi girişi gösterir.</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -8797,7 +9024,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
         <comment>Description of symbol 207</comment>
-        <translation type="unfinished"></translation>
+        <translation>Özellikle büyük ve belirgin bir kaya. Devasa kayalar için 202 sembolü kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Boulder field</source>
@@ -8807,17 +9034,17 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
         <comment>Description of symbol 208</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ayrı ayrı işaretlenemeyecek kadar çok taş bloğuyla kaplı bir alan, kenar oranları 8:6:5 olan, rastgele yönlendirilmiş içi dolu üçgenlerle gösterilir. En az iki üçgen kullanılmalıdır. Geçilebilirlik üçgenlerin yoğunluğu ile belirtilir. Kaya boyutunda belirgin fark bulunan kayalık alanlar arasındaki ayrımı gösterebilmek için üçgenlerin %20 büyütülmesine izin verilir.</translation>
     </message>
     <message>
         <source>Boulder field, large</source>
         <comment>Name of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kayalık alan, büyük</translation>
     </message>
     <message>
         <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
         <comment>Description of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kaya boyutunda belirgin fark bulunan kayalık alanlar arasındaki ayrımı gösterebilmek için üçgenlerin %20 büyütülmesine izin verilir.</translation>
     </message>
     <message>
         <source>Boulder cluster</source>
@@ -8827,7 +9054,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
         <comment>Description of symbol 209</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ayrı ayrı işaretlenemeyecek kadar birbirine yakın kümelenmiş küçük, belirgin bir kaya grubu. Sembol, kuzeye yönlendirilmiş bir eşkenar üçgendir. Boyut açısından belirgin fark bulunan kaya kümeleri arasındaki ayrımı gösterebilmek için bu sembolün %25 büyütülmesine (1.0 mm) izin verilir.</translation>
     </message>
     <message>
         <source>Boulder cluster, large</source>
@@ -8837,7 +9064,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
         <comment>Description of symbol 209.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Boyut açısından belirgin fark bulunan kaya kümeleri arasındaki ayrımı gösterebilmek için bu sembolün %25 büyütülmesine (1.0 mm) izin verilir.</translation>
     </message>
     <message>
         <source>Waterhole</source>
@@ -8847,7 +9074,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
         <comment>Description of symbol 303</comment>
-        <translation type="unfinished"></translation>
+        <translation>Su dolu bir çukur veya ölçeğe uygun gösterilemeyecek kadar küçük bir su alanı. Konum, kuzeye yönlendirilmiş sembolün ağırlık merkezidir.</translation>
     </message>
     <message>
         <source>Narrow marsh</source>
@@ -8857,7 +9084,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
         <comment>Description of symbol 308</comment>
-        <translation type="unfinished"></translation>
+        <translation>310 sembolü ile gösterilemeyecek kadar dar (yaklaşık 5 m&apos;den dar) bir bataklık veya su akıntısı.</translation>
     </message>
     <message>
         <source>Indistinct marsh</source>
@@ -8867,7 +9094,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
         <comment>Description of symbol 311</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir, belirsiz veya mevsimsel bir bataklık ya da bataklıktan sert zemine aşamalı geçiş alanı. Kenarı genellikle belirsizdir ve bitki örtüsü çevredeki zeminle benzerdir. Sembol, koşulabilirliği ve açıklığı göstermek için bitki örtüsü sembolleriyle birleştirilmelidir.</translation>
     </message>
     <message>
         <source>Indistinct marsh, minimum size</source>
@@ -8877,12 +9104,12 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Well</source>
         <comment>Name of symbol 312</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kuyu</translation>
     </message>
     <message>
         <source>Wells and captive springs, which are clearly visible on the ground.</source>
         <comment>Description of symbol 312</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arazide açıkça görülebilen kuyular ve kaynak kuyuları.</translation>
     </message>
     <message>
         <source>Spring</source>
@@ -8892,87 +9119,87 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
         <comment>Description of symbol 313</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin bir çıkışı olan bir derenin kaynağı. Sembol, açık ucu akış yönüne bakacak şekilde yönlendirilir.</translation>
     </message>
     <message>
         <source>Undergrowth: slow running</source>
         <comment>Name of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt bitki örtüsü: yavaş koşu</translation>
     </message>
     <message>
         <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
         <comment>Description of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation>Görünürlüğün iyi olduğu ancak koşuyu normal hızın yaklaşık %60-80&apos;ine düşüren yoğun alt bitki örtüsüne (böğürtlen, funda, alçak çalılar, kesilmiş dallar dahil) sahip bir alan. Bu sembol 406 veya 408 ile birleştirilemez.</translation>
     </message>
     <message>
         <source>Forest: difficult to run</source>
         <comment>Name of symbol 408</comment>
-        <translation type="unfinished"></translation>
+        <translation>Orman: zor koşu</translation>
     </message>
     <message>
         <source>An area with dense trees or thicket (low visibility) which reduce running to ca. 20-60% of normal speed.</source>
         <comment>Description of symbol 408</comment>
-        <translation type="unfinished"></translation>
+        <translation>Koşuyu normal hızın yaklaşık %20-60&apos;ına düşüren sık ağaçlı veya çalılıklı (düşük görünürlüklü) bir alan.</translation>
     </message>
     <message>
         <source>Undergrowth: difficult to run</source>
         <comment>Name of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt bitki örtüsü: zor koşu</translation>
     </message>
     <message>
         <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
         <comment>Description of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>Görünürlüğün iyi olduğu ancak koşuyu normal hızın yaklaşık %20-60&apos;ına düşüren yoğun alt bitki örtüsüne (böğürtlen, funda, alçak çalılar, kesilmiş dallar dahil) sahip bir alan. Bu sembol 406 veya 408 ile birleştirilemez.</translation>
     </message>
     <message>
         <source>Vegetation: very difficult to run, impassable</source>
         <comment>Name of symbol 410</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bitki örtüsü: çok zor koşu, geçilemez</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.</source>
         <comment>Description of symbol 410</comment>
-        <translation type="unfinished"></translation>
+        <translation>Neredeyse geçilemeyen yoğun bitki örtüsüne (ağaçlar veya alt bitki örtüsü) sahip bir alan. Koşu, normal hızın yaklaşık %0-20&apos;sine düşer.</translation>
     </message>
     <message>
         <source>Vegetation: very difficult to run, impassable, line</source>
         <comment>Name of symbol 410.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bitki örtüsü: çok zor koşu, geçilemez, çizgi</translation>
     </message>
     <message>
         <source>Line of minimum width for symbol 410.</source>
         <comment>Description of symbol 410.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>410 sembolü için minimum genişlikteki çizgi.</translation>
     </message>
     <message>
         <source>Forest runnable in one direction, 1</source>
         <comment>Name of symbol 411.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tek yönde koşulabilir orman, 1</translation>
     </message>
     <message>
         <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
         <comment>Description of symbol 411.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir orman alanı bir yönde iyi, diğer yönlerde daha az iyi koşu imkanı sunduğunda, iyi koşu yönünü göstermek için tram sembolünde beyaz şeritler bırakılır.</translation>
     </message>
     <message>
         <source>Forest runnable in one direction, 2</source>
         <comment>Name of symbol 411.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tek yönde koşulabilir orman, 2</translation>
     </message>
     <message>
         <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
         <comment>Description of symbol 411.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir orman alanı bir yönde iyi, diğer yönlerde daha az iyi koşu imkanı sunduğunda, iyi koşu yönünü göstermek için tram sembolünde beyaz şeritler bırakılır.</translation>
     </message>
     <message>
         <source>Forest runnable in one direction, 3</source>
         <comment>Name of symbol 411.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tek yönde koşulabilir orman, 3</translation>
     </message>
     <message>
         <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
         <comment>Description of symbol 411.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir orman alanı bir yönde iyi, diğer yönlerde daha az iyi koşu imkanı sunduğunda, iyi koşu yönünü göstermek için tram sembolünde beyaz şeritler bırakılır.</translation>
     </message>
     <message>
         <source>Distinct cultivation boundary</source>
@@ -8982,7 +9209,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
         <comment>Description of symbol 414</comment>
-        <translation type="unfinished"></translation>
+        <translation>Diğer sembollerle (çit, duvar, patika vb.) gösterilmediğinde ekili arazinin sınırı siyah bir çizgi ile gösterilir. Farklı türdeki ekili araziler arasındaki kalıcı bir sınır da bu sembolle gösterilir.</translation>
     </message>
     <message>
         <source>Cultivated land</source>
@@ -8992,7 +9219,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
         <comment>Description of symbol 415</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yetişen mahsuller nedeniyle mevsimsel olarak girilmesi yasak olan ekili arazi, siyah nokta tramı ile gösterilebilir.</translation>
     </message>
     <message>
         <source>Distinct vegetation boundary</source>
@@ -9002,37 +9229,37 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
         <comment>Description of symbol 416</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ormanın içinde belirgin bir orman kenarı veya çok belirgin bir bitki örtüsü sınırı.</translation>
     </message>
     <message>
         <source>Motorway, under construction</source>
         <comment>Name of symbol 501.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Otoyol, yapım aşamasında</translation>
     </message>
     <message>
         <source>A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 501.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yapım aşamasındaki bir yol kesikli çizgilerle gösterilebilir.</translation>
     </message>
     <message>
         <source>Major road, minimum width, under construction</source>
         <comment>Name of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ana yol, minimum genişlik, yapım aşamasında</translation>
     </message>
     <message>
         <source>A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yapım aşamasındaki bir yol kesikli çizgilerle gösterilebilir.</translation>
     </message>
     <message>
         <source>Minor road, under construction</source>
         <comment>Name of symbol 503.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tali yol, yapım aşamasında</translation>
     </message>
     <message>
         <source>A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 503.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yapım aşamasındaki bir yol kesikli çizgilerle gösterilebilir.</translation>
     </message>
     <message>
         <source>Road</source>
@@ -9042,17 +9269,17 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>A maintained road suitable for motor vehicles in all weather. Width less than 3 m.</source>
         <comment>Description of symbol 504</comment>
-        <translation type="unfinished"></translation>
+        <translation>Her türlü hava koşulunda motorlu taşıtlar için uygun, bakımlı bir yol. Genişliği 3 m&apos;den az.</translation>
     </message>
     <message>
         <source>Vehicle track</source>
         <comment>Name of symbol 505</comment>
-        <translation type="unfinished">Araç izi</translation>
+        <translation>Araç yolu</translation>
     </message>
     <message>
         <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. Width less than 3 m.</source>
         <comment>Description of symbol 505</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yalnızca yavaş seyahat edildiğinde araçlar için uygun olan bir toprak yol veya bakımsız bir yol. Genişliği 3 m&apos;den az.</translation>
     </message>
     <message>
         <source>Footpath</source>
@@ -9062,27 +9289,27 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>A large path, or old vehicle track, which is distinct on the ground.</source>
         <comment>Description of symbol 506</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arazide belirgin olan geniş bir patika veya eski araç yolu.</translation>
     </message>
     <message>
         <source>Small path</source>
         <comment>Name of symbol 507</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük patika</translation>
     </message>
     <message>
         <source>A small path or (temporary) forest extraction track which can be followed at competition speed.</source>
         <comment>Description of symbol 507</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yarışma hızında takip edilebilen küçük bir patika veya (geçici) orman çıkış yolu.</translation>
     </message>
     <message>
         <source>Less distinct small path</source>
         <comment>Name of symbol 508</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az belirgin küçük patika</translation>
     </message>
     <message>
         <source>A less distinct small path or forestry extraction track.</source>
         <comment>Description of symbol 508</comment>
-        <translation type="unfinished"></translation>
+        <translation>Daha az belirgin küçük bir patika veya ormancılık çıkış yolu.</translation>
     </message>
     <message>
         <source>Narrow ride</source>
@@ -9092,7 +9319,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>A distinct ride, less than ca. 5 m wide. A ride is a linear break in the forest (usually plantation) which does not have a distinct path along it. Where there is a path along a ride, symbols 507 or 508 should be used in place of symbol 509.</source>
         <comment>Description of symbol 509</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yaklaşık 5 m&apos;den dar, belirgin bir orman içi gezinti yolu. Gezinti yolu, ormanda (genellikle ağaçlandırma alanında) boyunca belirgin bir patika bulunmayan çizgisel bir açıklıktır. Gezinti yolu boyunca bir patika varsa, 509 sembolü yerine 507 veya 508 sembolleri kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Footbridge</source>
@@ -9103,27 +9330,28 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
         <source>A footbridge with no path leading to it.
 Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm over both sides of the stream!</source>
         <comment>Description of symbol 512</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kendisine giden bir patikası olmayan bir yaya köprüsü.
+Not: Eğer akarsu 0.25mm&apos;den daha genişse, bu sembolü akarsuyun her iki tarafına 0.5mm uzanacak şekilde ayarlayın!</translation>
     </message>
     <message>
         <source>Stone wall</source>
         <comment>Name of symbol 519</comment>
-        <translation type="unfinished"></translation>
+        <translation>Taş duvar</translation>
     </message>
     <message>
         <source>A stone wall or stone-faced bank.</source>
         <comment>Description of symbol 519</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir taş duvar veya taş kaplı set.</translation>
     </message>
     <message>
         <source>Ruined stone wall</source>
         <comment>Name of symbol 520</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yıkık taş duvar</translation>
     </message>
     <message>
         <source>A ruined stone wall may be shown by a dashed line.</source>
         <comment>Description of symbol 520</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yıkık bir taş duvar kesikli bir çizgi ile gösterilebilir.</translation>
     </message>
     <message>
         <source>Fence</source>
@@ -9133,7 +9361,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>A wooden or wire fence less than ca. 1.5 m high.</source>
         <comment>Description of symbol 522</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yaklaşık 1.5 m&apos;den alçak tahta veya tel çit.</translation>
     </message>
     <message>
         <source>Ruined fence</source>
@@ -9143,37 +9371,37 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>A ruined fence may be shown with a dashed line.</source>
         <comment>Description of symbol 523</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yıkık bir çit kesikli bir çizgi ile gösterilebilir.</translation>
     </message>
     <message>
         <source>Settlement</source>
         <comment>Name of symbol 527.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yerleşim alanı</translation>
     </message>
     <message>
         <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
         <comment>Description of symbol 527.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Evler, bahçeler ve diğer yapılaşmış alanlar. Bir yerleşim alanı içindeki yollar, binalar ve diğer önemli nesneler gösterilmelidir. Tüm binalar gösterilemiyorsa, alternatif bir sembol (siyah çizgi tramı) kullanılabilir.</translation>
     </message>
     <message>
         <source>Permanently out of bounds</source>
         <comment>Name of symbol 528</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kalıcı yasak bölge</translation>
     </message>
     <message>
         <source>Areas which are permanently forbidden to the runner are shown as out of bounds. The screen is superimposed on the normal map detail. A bounding line may be drawn if there is no natural boundary (see 709).</source>
         <comment>Description of symbol 528</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yarışmacıya kalıcı olarak yasak olan alanlar yasak bölge olarak gösterilir. Tram, normal harita detayının üzerine bindirilir. Doğal bir sınır yoksa bir sınır çizgisi çizilebilir (bkz. 709).</translation>
     </message>
     <message>
         <source>Permanently out of bounds, bounding line</source>
         <comment>Name of symbol 528.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kalıcı yasak bölge, sınır çizgisi</translation>
     </message>
     <message>
         <source>A bounding line may be drawn if there is no natural boundary (see 709).</source>
         <comment>Description of symbol 528.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Doğal bir sınır yoksa bir sınır çizgisi çizilebilir (bkz. 709).</translation>
     </message>
     <message>
         <source>Ruin</source>
@@ -9183,17 +9411,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
         <comment>Description of symbol 530</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir harabenin zemin planı, karşıda gösterilen minimum boyuta kadar ölçeğe uygun gösterilir. Çok küçük harabeler düz bir çizgi ile çizilebilir.</translation>
     </message>
     <message>
         <source>Ruin, no dashes</source>
         <comment>Name of symbol 530.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Harabe, kesiksiz</translation>
     </message>
     <message>
         <source>Very small ruins may be drawn with a solid line.</source>
         <comment>Description of symbol 530.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çok küçük harabeler düz bir çizgi ile çizilebilir.</translation>
     </message>
     <message>
         <source>Ruin, minimum size</source>
@@ -9203,17 +9431,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Very small ruins may be drawn with a solid line.</source>
         <comment>Description of symbol 530.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çok küçük harabeler düz bir çizgi ile çizilebilir.</translation>
     </message>
     <message>
         <source>Crossable pipeline</source>
         <comment>Name of symbol 533</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir boru hattı</translation>
     </message>
     <message>
         <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
         <comment>Description of symbol 533</comment>
-        <translation type="unfinished"></translation>
+        <translation>Üzerinden veya altından geçilebilen, zemin seviyesinin üzerindeki bir boru hattı (gaz, su, petrol vb.).</translation>
     </message>
     <message>
         <source>Cairn</source>
@@ -9223,7 +9451,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
         <comment>Description of symbol 537</comment>
-        <translation type="unfinished"></translation>
+        <translation>0.5 m&apos;den yüksek taş yığını, anıt taşı veya sınır taşı (ya da bazı ülkelerde nirengi noktası).</translation>
     </message>
     <message>
         <source>Magnetic north line</source>
@@ -9233,7 +9461,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601</comment>
-        <translation type="unfinished"></translation>
+        <translation>Manyetik kuzey çizgileri, haritaya manyetik kuzeyi gösterecek şekilde yerleştirilen çizgilerdir. Haritadaki aralıkları, 1:15 000 ölçeğinde arazide 500 m&apos;yi temsil eden 33.33 mm olmalıdır. Başka ölçekteki haritalarda çizgiler, yuvarlak bir metre değerini (örn. 50 m, 100 m, 250 m, 500 m) temsil eden aralıklarla yerleştirilmeli ve haritadaki aralık 20 mm ile 40 mm arasında olmalıdır. Kuzey çizgileri; kayalar, tepecikler, uçurumlar, dere kavşakları, patika uçları vb. küçük nesneleri örttükleri yerlerde kesilebilir. Çok az su nesnesi bulunan alanlarda mavi çizgiler kullanılabilir.</translation>
     </message>
     <message>
         <source>North lines pattern</source>
@@ -9253,22 +9481,22 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Dangerous area</source>
         <comment>Name of symbol 710</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tehlikeli alan</translation>
     </message>
     <message>
         <source>An area presenting danger to the competitor is shown with cross-hatched diagonal lines.</source>
         <comment>Description of symbol 710</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yarışmacı için tehlike oluşturan bir alan, çapraz kesişen eğik çizgilerle (tarama) gösterilir.</translation>
     </message>
     <message>
         <source>Forbidden route</source>
         <comment>Name of symbol 711</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak rota</translation>
     </message>
     <message>
         <source>A route which is out-of-bounds is shown with crosses.</source>
         <comment>Description of symbol 711</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak bir rota çarpı işaretleriyle gösterilir.</translation>
     </message>
 </context>
 <context>
@@ -9406,7 +9634,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Earth bank, tag line</source>
         <comment>Name of symbol 106.2</comment>
-        <translation type="unfinished">Toprak set, çizgi (tag)</translation>
+        <translation>Toprak set, saçak çizgisi</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -9436,7 +9664,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished">Geçilemez yar/uçurum, çizgi etiket</translation>
+        <translation>Geçilemez yar/uçurum, saçak çizgisi</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -9785,7 +10013,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Vehicle track</source>
         <comment>Name of symbol 505</comment>
-        <translation type="unfinished">Araç izi</translation>
+        <translation>Araç yolu</translation>
     </message>
     <message>
         <source>Footpath</source>
@@ -9838,7 +10066,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Green for SkiO</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kayak oryantiringi için yeşil</translation>
     </message>
     <message>
         <source>Black 100%</source>
@@ -10144,7 +10372,7 @@ Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     <message>
         <source>Earth bank, tag line</source>
         <comment>Name of symbol 104.3</comment>
-        <translation type="unfinished">Toprak set, çizgi (tag)</translation>
+        <translation>Toprak set, saçak çizgisi</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -10170,8 +10398,8 @@ Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished">Belirgin toprak duvar. Minimum yükseklik: 1 m.
-Minimum uzunluk: 1,4 mm (kapladığı alan 21 m).</translation>
+        <translation>Belirgin toprak duvar. Minimum yükseklik: 1 m.
+Minimum uzunluk: 1.4 mm (kapladığı alan 21 m).</translation>
     </message>
     <message>
         <source>Erosion gully</source>
@@ -10288,7 +10516,7 @@ Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation type="unfinished">Geçilemez yar/uçurum, çizgi etiket</translation>
+        <translation>Geçilemez yar/uçurum, saçak çizgisi</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -10344,7 +10572,7 @@ Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     <message>
         <source>Cliff, with tags</source>
         <comment>Name of symbol 202.2</comment>
-        <translation type="unfinished">Geçilebilir yar / Uçurum</translation>
+        <translation>Geçilebilir yar/uçurum, saçaklı</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -10362,7 +10590,7 @@ Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     <message>
         <source>Cliff, with tags, minimum size</source>
         <comment>Name of symbol 202.3</comment>
-        <translation type="unfinished">Geçilebilir yar/uçurum</translation>
+        <translation>Geçilebilir yar/uçurum, saçaklı, minimum boyut</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -10380,7 +10608,7 @@ Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     <message>
         <source>Cliff, with tags, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 202.9</comment>
-        <translation type="unfinished">Geçilebilir yar/uçurum</translation>
+        <translation>Geçilebilir yar/uçurum, saçaklı, minimum boyut (ISOM2000&apos;den)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -10542,62 +10770,62 @@ Tek üçgenin kapladığı alan: 12 m x 6 m.</translation>
     <message>
         <source>Body of water that shall not be crossed, with bank line</source>
         <comment>Name of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilmemesi gereken su kütlesi, kıyı çizgisi ile</translation>
     </message>
     <message>
         <source>When a body of water is not covered with ice or shall not be crossed, the colour of the area shall be 100% blue. A black bank line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir su kütlesi buzla kaplı değilse veya geçilmemesi gerekiyorsa, alanın rengi %100 mavi olmalıdır. Siyah bir kıyı çizgisi, özelliğin geçilmemesi gerektiğini belirtir.</translation>
     </message>
     <message>
         <source>Body of water that shall not be crossed</source>
         <comment>Name of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilmemesi gereken su kütlesi</translation>
     </message>
     <message>
         <source>When a body of water is not covered with ice or shall not be crossed, the colour of the area shall be 100% blue. A black bank line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir su kütlesi buzla kaplı değilse veya geçilmemesi gerekiyorsa, alanın rengi %100 mavi olmalıdır. Siyah bir kıyı çizgisi, özelliğin geçilmemesi gerektiğini belirtir.</translation>
     </message>
     <message>
         <source>Body of water that shall not be crossed, bank line</source>
         <comment>Name of symbol 301.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilmemesi gereken su kütlesi, kıyı çizgisi</translation>
     </message>
     <message>
         <source>A black bank line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Siyah bir kıyı çizgisi, özelliğin geçilmemesi gerektiğini belirtir.</translation>
     </message>
     <message>
         <source>Crossable body of water, with bank line</source>
         <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir su kütlesi, kıyı çizgisi ile</translation>
     </message>
     <message>
         <source>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
         <comment>Description of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir su kütlesinin geçilmesine izin veriliyorsa, rengi %50 mavi olmalıdır. Geçilebilir su kütlesinin kıyı çizgisi, kayak oryantiringi haritasında ISOM&apos;daki Geçilebilir / sığ su kütlesi (302) sembolünde olduğu gibi gösterilir.</translation>
     </message>
     <message>
         <source>Crossable body of water</source>
         <comment>Name of symbol 302.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir su kütlesi</translation>
     </message>
     <message>
         <source>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
         <comment>Description of symbol 302.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir su kütlesinin geçilmesine izin veriliyorsa, rengi %50 mavi olmalıdır. Geçilebilir su kütlesinin kıyı çizgisi, kayak oryantiringi haritasında ISOM&apos;daki Geçilebilir / sığ su kütlesi (302) sembolünde olduğu gibi gösterilir.</translation>
     </message>
     <message>
         <source>Crossable body of water, bank line</source>
         <comment>Name of symbol 302.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir su kütlesi, kıyı çizgisi</translation>
     </message>
     <message>
         <source>The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
         <comment>Description of symbol 302.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilebilir su kütlesinin kıyı çizgisi, kayak oryantiringi haritasında ISOM&apos;daki Geçilebilir / sığ su kütlesi (302) sembolünde olduğu gibi gösterilir.</translation>
     </message>
     <message>
         <source>Crossable watercourse</source>
@@ -10624,12 +10852,12 @@ Minimum uzunluk (izole): 1 mm (kapladığı alan 15 m).</translation>
     <message>
         <source>Marsh (in ski orienteering map)</source>
         <comment>Name of symbol 310.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bataklık (kayak oryantiringi haritasında)</translation>
     </message>
     <message>
         <source>The marshes shall be shown with the same symbol as Indistinct marsh (310) in the orienteering map specification, so that the track symbols drawn can be read more clearly.</source>
         <comment>Description of symbol 310.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çizilen iz sembollerinin daha net okunabilmesi için bataklıklar, oryantiring haritası şartnamesindeki Belirsiz bataklık (310) sembolüyle aynı sembolle gösterilmelidir.</translation>
     </message>
     <message>
         <source>Open land</source>
@@ -10754,12 +10982,12 @@ Minimum genişlik: 0.4 mm (kapladığı alan 6 m).</translation>
     <message>
         <source>Vegetation: slow running, minimum width</source>
         <comment>Name of symbol 406.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bitki örtüsü: yavaş koşu, minimum genişlik</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running speed.</source>
         <comment>Description of symbol 406.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yoğun bitki örtüsüne (düşük görünürlük) sahip, koşu hızını azaltan bir alan.</translation>
     </message>
     <message>
         <source>Orchard</source>
@@ -10946,7 +11174,7 @@ Siyah çizgiler arasındaki boşluk %50 kahverengi ile doldurulur.
     <message>
         <source>Vehicle track</source>
         <comment>Name of symbol 504</comment>
-        <translation type="unfinished">Araç izi</translation>
+        <translation>Araç yolu</translation>
     </message>
     <message>
         <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. For distinct junctions the dashes of the symbols are joined at the junction.
@@ -11486,12 +11714,12 @@ Küçük özellikleri örtecekleri yerlerde haritanın okunabilirliğini artırm
     <message>
         <source>Control point and focus point</source>
         <comment>Name of symbol 703</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol noktası ve odak noktası</translation>
     </message>
     <message>
         <source>The focus point (i.e. the point in the centre of a control circle) shall be used to clarify the exact position of a control.</source>
         <comment>Description of symbol 703</comment>
-        <translation type="unfinished"></translation>
+        <translation>Odak noktası (yani kontrol dairesinin merkezindeki nokta), bir kontrolün kesin konumunu netleştirmek için kullanılmalıdır.</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -11580,17 +11808,17 @@ Minimum alan: 2 mm x 2 mm (kapladığı alan 30 m x 30 m).</translation>
     <message>
         <source>Equipment deposit</source>
         <comment>Name of symbol 715</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ekipman deposu</translation>
     </message>
     <message>
         <source>A deposit for spare equipment in the terrain.</source>
         <comment>Description of symbol 715</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arazide yedek ekipman için bir depo.</translation>
     </message>
     <message>
         <source>Simple SkiO Course</source>
         <comment>Name of symbol 799</comment>
-        <translation type="unfinished"></translation>
+        <translation>Basit Kayak Oryantiringi Parkuru</translation>
     </message>
     <message>
         <source>This symbol provides a simple and quick way to make training courses.
@@ -11604,161 +11832,170 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>Very wide track &gt; 3.0 m</source>
         <comment>Name of symbol 801</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çok geniş iz &gt; 3.0 m</translation>
     </message>
     <message>
         <source>Very fast, wide ski tracks in ski centres, made with a ski trail groomer or a track leveller.</source>
         <comment>Description of symbol 801</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kayak merkezlerinde pist hazırlama aracı veya iz düzleyici ile açılmış çok hızlı, geniş kayak izleri.</translation>
     </message>
     <message>
         <source>Wide track 1.5 - 3.0 m</source>
         <comment>Name of symbol 802</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geniş iz 1.5 - 3.0 m</translation>
     </message>
     <message>
         <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks rougher and softer than the wide skateable tracks in the area.</source>
         <comment>Description of symbol 802</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kar motosikletiyle açılmış, paten tekniğine uygun hızlı bir iz; genişliği genellikle 1.5 - 3.0 m&apos;dir. Paten tekniğine uygun bu izler, alandaki geniş paten izlerinden daha engebeli ve yumuşaktır.</translation>
     </message>
     <message>
         <source>Track 1.0 - 1.5 m</source>
         <comment>Name of symbol 803</comment>
-        <translation type="unfinished"></translation>
+        <translation>İz 1.0 - 1.5 m</translation>
     </message>
     <message>
         <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may be made wider to reduce widening during competition.</source>
         <comment>Description of symbol 803</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kar motosikletiyle açılmış, genellikle 1.0 - 1.5 m genişliğinde iyi bir iz. Dik yamaçlarda, yarışma sırasında izin genişlemesini azaltmak için izler daha geniş açılabilir.</translation>
     </message>
     <message>
         <source>Track, slow 0.8 - 1.0 m</source>
         <comment>Name of symbol 804</comment>
-        <translation type="unfinished"></translation>
+        <translation>İz, yavaş 0.8 - 1.0 m</translation>
     </message>
     <message>
         <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing technique for slowing and stopping.
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az karlı veya biraz çalı çırpılı, engebeli ve yavaş bir iz. İzin genişliği, yokuş yukarı balık sırtı adımı veya yavaşlamak ve durmak için kar sabanı tekniği kullanmaya izin veriyorsa, bu sembol dik yamaçlarda kullanılmaz.
+
+Bir kavşağı netleştirmek için, yavaş izin başlangıcı kısa bir çizgiyle çizilir.</translation>
     </message>
     <message>
         <source>Road covered with snow</source>
         <comment>Name of symbol 805</comment>
-        <translation type="unfinished"></translation>
+        <translation>Karla kaplı yol</translation>
     </message>
     <message>
         <source>Snowploughed, skiable roads are drawn with a normal road symbol but wider.</source>
         <comment>Description of symbol 805</comment>
-        <translation type="unfinished"></translation>
+        <translation>Karı küreme ile temizlenmiş, kayakla geçilebilir yollar normal yol sembolüyle ancak daha geniş çizilir.</translation>
     </message>
     <message>
         <source>Sanded or snowless road, line symbol</source>
         <comment>Name of symbol 806</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kumlanmış veya karsız yol, çizgi sembolü</translation>
     </message>
     <message>
         <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806</comment>
-        <translation type="unfinished"></translation>
+        <translation>Haritada yarışma sırasında kumlanmış veya karsız olan bir yol. Yol sembolü boyunca dizilen V işaretleri, yolun kayakla geçilemediğini gösterir. Karsız yollar ve yoğun şekilde kumlanmış yollar normalde yasak rota olarak işaretlenmelidir.</translation>
     </message>
     <message>
         <source>Sanded or snowless road, single symbol</source>
         <comment>Name of symbol 806.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kumlanmış veya karsız yol, tekli sembol</translation>
     </message>
     <message>
         <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Haritada yarışma sırasında kumlanmış veya karsız olan bir yol. Yol sembolü boyunca dizilen V işaretleri, yolun kayakla geçilemediğini gösterir. Karsız yollar ve yoğun şekilde kumlanmış yollar normalde yasak rota olarak işaretlenmelidir.</translation>
     </message>
     <message>
         <source>Unploughed road</source>
         <comment>Name of symbol 807</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kar küremesi yapılmamış yol</translation>
     </message>
     <message>
         <source>A road which is not opened for traffic, no skiable track.</source>
         <comment>Description of symbol 807</comment>
-        <translation type="unfinished"></translation>
+        <translation>Trafiğe açık olmayan, kayak izi bulunmayan bir yol.</translation>
     </message>
     <message>
         <source>Prepared area</source>
         <comment>Name of symbol 808</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hazırlanmış alan</translation>
     </message>
     <message>
         <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
 The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
         <comment>Description of symbol 808</comment>
-        <translation type="unfinished"></translation>
+        <translation>Slalom pistleri (alp disiplini kayak pistleri) ve geniş, kayakla geçilebilir ve sert diğer alanlar.
+Hazırlanmış alanların sınırları, her kenarın net okunabilmesi için ince yeşil bir çizgiyle (0.13 mm) gösterilir.</translation>
     </message>
     <message>
         <source>Prepared area, fill pattern</source>
         <comment>Name of symbol 808.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hazırlanmış alan, dolgu deseni</translation>
     </message>
     <message>
         <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
 The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
         <comment>Description of symbol 808.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Slalom pistleri (alp disiplini kayak pistleri) ve geniş, kayakla geçilebilir ve sert diğer alanlar.
+Hazırlanmış alanların sınırları, her kenarın net okunabilmesi için ince yeşil bir çizgiyle (0.13 mm) gösterilir.</translation>
     </message>
     <message>
         <source>Prepared area, boundary</source>
         <comment>Name of symbol 808.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hazırlanmış alan, sınır</translation>
     </message>
     <message>
         <source>The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
         <comment>Description of symbol 808.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hazırlanmış alanların sınırları, her kenarın net okunabilmesi için ince yeşil bir çizgiyle (0.13 mm) gösterilir.</translation>
     </message>
     <message>
         <source>Forbidden route, crossable, line symbol</source>
         <comment>Name of symbol 809</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak rota, geçilebilir, çizgi sembolü</translation>
     </message>
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
 The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak rota sembolüyle işaretlenen çizgisel nesnelerin üzerinden geçilebilir ancak boyunca gidilemez.
+Bir yasak rotayı işaretlemek için en az iki sembol kullanılmalıdır.
+Yasak rota (711) sembolü, iz ağında daha net görülebilmesi için kayak oryantiringi haritasında daha büyük boyutta çizilir.</translation>
     </message>
     <message>
         <source>Forbidden route, crossable, single symbol</source>
         <comment>Name of symbol 809.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak rota, geçilebilir, tekli sembol</translation>
     </message>
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
 The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak rota sembolüyle işaretlenen çizgisel nesnelerin üzerinden geçilebilir ancak boyunca gidilemez.
+Bir yasak rotayı işaretlemek için en az iki sembol kullanılmalıdır.
+Yasak rota (711) sembolü, iz ağında daha net görülebilmesi için kayak oryantiringi haritasında daha büyük boyutta çizilir.</translation>
     </message>
     <message>
         <source>Public snow mobile route</source>
         <comment>Name of symbol 813</comment>
-        <translation type="unfinished"></translation>
+        <translation>Halka açık kar motosikleti rotası</translation>
     </message>
     <message>
         <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possibility of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
         <comment>Description of symbol 813</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kayak oryantiringi yarışması sırasında kullanımda olabilecek, kar motosikletleri için halka açık ve işaretli bir rota. Bu rotalar çoğu zaman engebeli olup genişlik ve kalite bakımından değişkenlik gösterir. Organizatörler, yarışma talimatlarında bu tür rotaların kalitesi hakkında yarışmacıları bilgilendirmeli (örn. fotoğraflarla) ve rotayı geçici olarak kapatarak, rotaya görevli yerleştirerek veya başka yollarla kar motosikleti sürücülerini rotada kayak oryantiringcileriyle karşılaşma olasılığı konusunda bilgilendirerek yarışmacıların güvenliğini sağlamalıdır. Yarışmacıların güvenliği garanti edilemiyorsa, rota yasak olarak işaretlenmeli ve güvenli geçişler sağlanmalıdır.</translation>
     </message>
     <message>
         <source>Forbidden route, forbidden to cross</source>
         <comment>Name of symbol 814</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak rota, geçilmesi yasak</translation>
     </message>
     <message>
         <source>Linear features marked with the forbidden route symbol can not be followed, and can not be crossed except at specially marked crossing points. Do not enter road regardless of whether the road is badly plowed, ice-covered, no traffic etc.
 A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
         <comment>Description of symbol 814</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak rota sembolüyle işaretlenen çizgisel nesneler boyunca gidilemez ve özel olarak işaretlenmiş geçiş noktaları dışında üzerlerinden geçilemez. Yolun kötü küreme yapılmış, buzla kaplı, trafiğe kapalı vb. olmasından bağımsız olarak yola girmeyin.
+Yasak olan ve geçilmesi yasak olan bir rota zikzak ile gösterilir. Zikzak çizgisi mümkün olduğunca kesintisiz olmalıdır. Yasak rota üzerinde bir geçiş noktası varsa, yasak rotanın üzerine dik iki çizgiyle bir kapı gibi gösterilmelidir. Daha uzun bir geçiş bölümü de zikzak çizgilerinin uçlarında dik çizgiler kullanılarak haritada net bir şekilde gösterilmelidir.</translation>
     </message>
     <message>
         <source>OpenOrienteering Logo</source>
@@ -11781,22 +12018,22 @@ A route which is out-of-bounds and forbidden to cross is shown with a zigzag. Th
     <message>
         <source>Black for control descriptions</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol tanımları için siyah</translation>
     </message>
     <message>
         <source>White above framing</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çerçevenin üstünde beyaz</translation>
     </message>
     <message>
         <source>Black for framing</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çerçeve için siyah</translation>
     </message>
     <message>
         <source>White below framing</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çerçevenin altında beyaz</translation>
     </message>
     <message>
         <source>Black</source>
@@ -11825,7 +12062,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
         <comment>Description of symbol 701</comment>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç veya (başlangıçta değilse) harita dağıtım noktası, ilk kontrole doğru işaret eden bir eşkenar üçgen ile gösterilir. Üçgenin merkezi, başlangıç noktasının kesin konumunu gösterir.</translation>
     </message>
     <message>
         <source>Control point</source>
@@ -11835,7 +12072,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 702</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol noktaları dairelerle gösterilir. Dairenin merkezi, nesnenin kesin konumunu gösterir. Önemli detayların görünmesi için dairenin bazı bölümleri çıkarılmalıdır.</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -11845,17 +12082,17 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
         <comment>Description of symbol 703</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol numarası, önemli detayları örtmeyecek şekilde kontrol noktası dairesinin yakınına yerleştirilir. Numaralar kuzeye yönlendirilir.</translation>
     </message>
     <message>
         <source>Line</source>
         <comment>Name of symbol 704</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi</translation>
     </message>
     <message>
         <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 704</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol noktalarına sırayla gidilecek yerlerde başlangıç, kontrol noktaları ve bitiş düz çizgilerle birleştirilir. Önemli detayların görünmesi için çizgilerin bazı bölümleri çıkarılmalıdır.</translation>
     </message>
     <message>
         <source>Marked route</source>
@@ -11865,7 +12102,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>A marked route is shown on the map with a dashed line.</source>
         <comment>Description of symbol 705</comment>
-        <translation type="unfinished"></translation>
+        <translation>İşaretli rota haritada kesikli bir çizgi ile gösterilir.</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -11875,17 +12112,17 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>The finish is shown by two concentric circles.</source>
         <comment>Description of symbol 706</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bitiş, iç içe iki daire ile gösterilir.</translation>
     </message>
     <message>
         <source>Uncrossable boundary</source>
         <comment>Name of symbol 707</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilemez sınır</translation>
     </message>
     <message>
         <source>A boundary which it is not permitted to cross.</source>
         <comment>Description of symbol 707</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilmesine izin verilmeyen bir sınır.</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -11895,7 +12132,7 @@ Mor çizgi, bitiş sembolünün içine biraz uzanacaktır. Bu, bu basit yaklaş�
     <message>
         <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.</source>
         <comment>Description of symbol 708</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir duvar veya çitin içinden/üzerinden, bir karayolu veya demiryolunun karşısına, bir tünelden veya yasak bölgeden geçen bir geçiş noktası, haritada dışa doğru kıvrılan iki çizgi ile gösterilir.</translation>
     </message>
     <message>
         <source>Out-of-bounds area</source>
@@ -11909,7 +12146,11 @@ A bounding line may be drawn if there is no natural boundary, as follows:
 - a dashed line indicates intermittent marking on the ground,
 - no line indicates no marking on the ground.</source>
         <comment>Description of symbol 709</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak bölge (ayrıca bkz. sembol 528) dikey çizgilerle gösterilir.
+Doğal bir sınır yoksa aşağıdaki gibi bir sınır çizgisi çizilebilir:
+- düz bir çizgi, sınırın arazide sürekli olarak işaretlendiğini (bantlar vb.) gösterir,
+- kesikli bir çizgi, arazide aralıklı işaretleme olduğunu gösterir,
+- çizgi olmaması, arazide işaretleme olmadığını gösterir.</translation>
     </message>
     <message>
         <source>Out-of-bounds area, solid boundary</source>
@@ -11934,22 +12175,22 @@ A bounding line may be drawn if there is no natural boundary, as follows:
     <message>
         <source>Dangerous area</source>
         <comment>Name of symbol 710</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tehlikeli alan</translation>
     </message>
     <message>
         <source>An area presenting danger to the competitor is shown with cross-hatched diagonal lines.</source>
         <comment>Description of symbol 710</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yarışmacı için tehlike oluşturan bir alan, çapraz kesişen eğik çizgilerle (tarama) gösterilir.</translation>
     </message>
     <message>
         <source>Forbidden route</source>
         <comment>Name of symbol 711</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak rota</translation>
     </message>
     <message>
         <source>A route which is out-of-bounds is shown with crosses.</source>
         <comment>Description of symbol 711</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak bir rota çarpı işaretleriyle gösterilir.</translation>
     </message>
     <message>
         <source>First aid post</source>
@@ -11974,27 +12215,27 @@ A bounding line may be drawn if there is no natural boundary, as follows:
     <message>
         <source>Heading: Single line for event title or classes</source>
         <comment>Name of symbol 99.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Başlık: Yarışma adı veya kategoriler için tek satır</translation>
     </message>
     <message>
         <source>Optionally this block can be used as [ Classes line ] between [ Event title ] and [ Course nature ].</source>
         <comment>Description of symbol 99.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>İsteğe bağlı olarak bu blok, [ Yarışma adı ] ile [ Parkur bilgileri ] arasında [ Kategoriler satırı ] olarak kullanılabilir.</translation>
     </message>
     <message>
         <source>Heading: Event title, two lines</source>
         <comment>Name of symbol 99.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Başlık: Yarışma adı, iki satır</translation>
     </message>
     <message>
         <source>Heading: Event title, three lines</source>
         <comment>Name of symbol 99.0.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Başlık: Yarışma adı, üç satır</translation>
     </message>
     <message>
         <source>Course nature</source>
         <comment>Name of symbol 99.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Parkur bilgileri</translation>
     </message>
     <message>
         <source>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty.
@@ -12002,12 +12243,15 @@ A bounding line may be drawn if there is no natural boundary, as follows:
  - The course length is given in kilometres rounded to the nearest 0.1 km.
  - The height climb is given in metres rounded to the nearest 5 m.</source>
         <comment>Description of symbol 99.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bu blok bir parkurun temel parametrelerini açıklar. Amacı zorluk derecesinin anlaşılmasına yardımcı olmaktır.
+ - Şema: | Parkur kodu | Uzunluk | Tırmanış |
+ - Parkur uzunluğu, en yakın 0.1 km&apos;ye yuvarlanarak kilometre cinsinden verilir.
+ - Tırmanış, en yakın 5 m&apos;ye yuvarlanarak metre cinsinden verilir.</translation>
     </message>
     <message>
         <source>Description of individual control</source>
         <comment>Name of symbol 99.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tek bir kontrolün tanımı</translation>
     </message>
     <message>
         <source>Scheme of columns: |A|B|C|D|E|F|G|H|
@@ -12021,12 +12265,21 @@ F: Dimensions, combinations
 G: Location of the control flag
 H: Other information</source>
         <comment>Description of symbol 99.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sütun şeması: |A|B|C|D|E|F|G|H|
+
+A: Kontrol numarası
+B: Kontrol kodu
+C: Benzer nesnelerden hangisi
+D: Kontrol nesnesi
+E: Görünüm
+F: Boyutlar, birleşimler
+G: Kontrol bayrağının konumu
+H: Diğer bilgiler</translation>
     </message>
     <message>
         <source>Textual description of individual control</source>
         <comment>Name of symbol 99.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tek bir kontrolün yazılı tanımı</translation>
     </message>
     <message>
         <source>Scheme of columns: |A|B|Text|
@@ -12034,1128 +12287,1247 @@ H: Other information</source>
 A: Control number
 B: Control code</source>
         <comment>Description of symbol 99.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sütun şeması: |A|B|Metin|
+
+A: Kontrol numarası
+B: Kontrol kodu</translation>
     </message>
     <message>
         <source>Thicker horizontal line</source>
         <comment>Name of symbol 99.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kalın yatay çizgi</translation>
     </message>
     <message>
         <source>A thicker horizontal line should be used after every third description and on either side of any special instruction.
 
 In this symbol set, you need to add this symbol manually after the start location row and after every three consequent rows of 99.3 Description of individual control.</source>
         <comment>Description of symbol 99.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Her üç tanımdan sonra ve her özel talimatın iki yanında kalın bir yatay çizgi kullanılmalıdır.
+
+Bu sembol setinde, bu sembolü başlangıç noktası satırından sonra ve 99.3 Tek bir kontrolün tanımı sembolünün her üç ardışık satırından sonra elle eklemeniz gerekir.</translation>
     </message>
     <message>
         <source>|A| Start location</source>
         <comment>Name of symbol 99.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|A| Başlangıç noktası</translation>
     </message>
     <message>
         <source>Shown in first line of descriptions, using the description as if it were a control feature.
 
 Map symbol: ISOM 701</source>
         <comment>Description of symbol 99.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tanımların ilk satırında, tanım bir kontrol nesnesiymiş gibi kullanılarak gösterilir.
+
+Harita sembolü: ISOM 701</translation>
     </message>
     <message>
         <source>|A| Control number</source>
         <comment>Name of symbol 99.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|A| Kontrol numarası</translation>
     </message>
     <message>
         <source>Numbering of controls is in the sequence they are to be visited, unless the description is for a Score competition.
 
 Map symbol: ISOM 703</source>
         <comment>Description of symbol 99.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tanım bir Skor yarışması için değilse, kontroller ziyaret edilecekleri sıraya göre numaralandırılır.
+
+Harita sembolü: ISOM 703</translation>
     </message>
     <message>
         <source>|B| Control code</source>
         <comment>Name of symbol 99.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|B| Kontrol kodu</translation>
     </message>
     <message>
         <source>The control code should be a number greater than 30.</source>
         <comment>Description of symbol 99.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol kodu 30&apos;dan büyük bir sayı olmalıdır.</translation>
     </message>
     <message>
         <source>|C| Northern</source>
         <comment>Name of symbol 0.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Kuzeydeki</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>İki benzer nesneden daha kuzeyde olanı veya birkaç benzer nesneden en kuzeyde olanı.</translation>
     </message>
     <message>
         <source>|C| North Eastern</source>
         <comment>Name of symbol 0.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Kuzeydoğudaki</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>İki benzer nesneden daha kuzeyde olanı veya birkaç benzer nesneden en kuzeyde olanı.</translation>
     </message>
     <message>
         <source>|C| Eastern</source>
         <comment>Name of symbol 0.1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Doğudaki</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>İki benzer nesneden daha kuzeyde olanı veya birkaç benzer nesneden en kuzeyde olanı.</translation>
     </message>
     <message>
         <source>|C| South Eastern</source>
         <comment>Name of symbol 0.2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Güneydoğudaki</translation>
     </message>
     <message>
         <source>The more south eastern of two similar features, or the south-eastern-most of several similar features.</source>
         <comment>Description of symbol 0.2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>İki benzer nesneden daha güneydoğuda olanı veya birkaç benzer nesneden en güneydoğuda olanı.</translation>
     </message>
     <message>
         <source>|C| Southern</source>
         <comment>Name of symbol 0.1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Güneydeki</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>İki benzer nesneden daha kuzeyde olanı veya birkaç benzer nesneden en kuzeyde olanı.</translation>
     </message>
     <message>
         <source>|C| South western</source>
         <comment>Name of symbol 0.2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Güneybatıdaki</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>İki benzer nesneden daha kuzeyde olanı veya birkaç benzer nesneden en kuzeyde olanı.</translation>
     </message>
     <message>
         <source>|C| Western</source>
         <comment>Name of symbol 0.1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Batıdaki</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>İki benzer nesneden daha kuzeyde olanı veya birkaç benzer nesneden en kuzeyde olanı.</translation>
     </message>
     <message>
         <source>|C| North Western</source>
         <comment>Name of symbol 0.2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Kuzeybatıdaki</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>İki benzer nesneden daha kuzeyde olanı veya birkaç benzer nesneden en kuzeyde olanı.</translation>
     </message>
     <message>
         <source>|C| Upper</source>
         <comment>Name of symbol 0.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Üstteki</translation>
     </message>
     <message>
         <source>Where the control feature is the middle one of a number of similar features.</source>
         <comment>Description of symbol 0.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol nesnesinin birkaç benzer nesnenin ortasındaki olduğu durum.</translation>
     </message>
     <message>
         <source>|C| Lower</source>
         <comment>Name of symbol 0.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Alttaki</translation>
     </message>
     <message>
         <source>Where the control feature is the middle one of a number of similar features.</source>
         <comment>Description of symbol 0.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol nesnesinin birkaç benzer nesnenin ortasındaki olduğu durum.</translation>
     </message>
     <message>
         <source>|C| Middle</source>
         <comment>Name of symbol 0.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|C| Ortadaki</translation>
     </message>
     <message>
         <source>Where the control feature is the middle one of a number of similar features.</source>
         <comment>Description of symbol 0.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol nesnesinin birkaç benzer nesnenin ortasındaki olduğu durum.</translation>
     </message>
     <message>
         <source>|D| Terrace</source>
         <comment>Name of symbol 1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Teras</translation>
     </message>
     <message>
         <source>A level area on a slope.</source>
         <comment>Description of symbol 1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir yamaçtaki düz alan.</translation>
     </message>
     <message>
         <source>|D| Spur</source>
         <comment>Name of symbol 1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Burun</translation>
     </message>
     <message>
         <source>A contour projection or “nose” rising from the surrounding ground.</source>
         <comment>Description of symbol 1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çevredeki araziden yükselen bir eşyükselti çıkıntısı veya “burun”.</translation>
     </message>
     <message>
         <source>|D| Re-entrant</source>
         <comment>Name of symbol 1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Vadi</translation>
     </message>
     <message>
         <source>A contour indentation; a valley; the opposite of a spur.</source>
         <comment>Description of symbol 1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir eşyükselti girintisi; bir vadi; burunun tersi.</translation>
     </message>
     <message>
         <source>|D| Earth bank</source>
         <comment>Name of symbol 1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Toprak set</translation>
     </message>
     <message>
         <source>An abrupt change in ground level which can clearly be distinguished from its surroundings.
 
 Map symbol: ISOM 106</source>
         <comment>Description of symbol 1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çevresinden açıkça ayırt edilebilen, zemin seviyesindeki ani bir değişim.
+
+Harita sembolü: ISOM 106</translation>
     </message>
     <message>
         <source>|D| Quarry</source>
         <comment>Name of symbol 1.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Taş ocağı</translation>
     </message>
     <message>
         <source>Gravel, sand or stone working in flat or inclined ground.
 
 Map symbol: ISOM 106</source>
         <comment>Description of symbol 1.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Düz veya eğimli arazide çakıl, kum veya taş çıkarma alanı.
+
+Harita sembolü: ISOM 106</translation>
     </message>
     <message>
         <source>|D| Earth wall</source>
         <comment>Name of symbol 1.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Toprak duvar</translation>
     </message>
     <message>
         <source>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.
 
 Map symbols: ISOM 107, 108</source>
         <comment>Description of symbol 1.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çevredeki araziden yükselen dar bir toprak duvar; kısmen taş kaplı olabilir, genellikle insan yapımıdır. Yıkık bir toprak duvarı belirtmek için 8.11 sembolüyle birlikte kullanılır.
+
+Harita sembolleri: ISOM 107, 108</translation>
     </message>
     <message>
         <source>|D| Erosion gully</source>
         <comment>Name of symbol 1.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Erozyon oyuğu</translation>
     </message>
     <message>
         <source>An erosion gully or trench, normally dry.
 
 Map symbol: ISOM 109</source>
         <comment>Description of symbol 1.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Normalde kuru olan bir erozyon oyuğu veya hendek.
+
+Harita sembolü: ISOM 109</translation>
     </message>
     <message>
         <source>|D| Small erosion gully</source>
         <comment>Name of symbol 1.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Küçük erozyon oyuğu</translation>
     </message>
     <message>
         <source>A small erosion gully or trench, normally dry.
 
 Map symbol: ISOM 110</source>
         <comment>Description of symbol 1.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Normalde kuru olan küçük bir erozyon oyuğu veya hendek.
+
+Harita sembolü: ISOM 110</translation>
     </message>
     <message>
         <source>|D| Hill</source>
         <comment>Name of symbol 1.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Tepe</translation>
     </message>
     <message>
         <source>A high point. Shown on the map with contour lines.
 
 Map symbols: ISOM 101, 111</source>
         <comment>Description of symbol 1.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yüksek bir nokta. Haritada eşyükselti eğrileriyle gösterilir.
+
+Harita sembolleri: ISOM 101, 111</translation>
     </message>
     <message>
         <source>|D| Knol</source>
         <comment>Name of symbol 1.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Tepecik</translation>
     </message>
     <message>
         <source>A small obvious mound. Used with symbol 8.6 to indicate a rocky knoll.
 
 Map symbols: ISOM 112, 113</source>
         <comment>Description of symbol 1.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük, belirgin bir höyük. Kayalık bir tepeciği belirtmek için 8.6 sembolüyle birlikte kullanılır.
+
+Harita sembolleri: ISOM 112, 113</translation>
     </message>
     <message>
         <source>|D| Saddle</source>
         <comment>Name of symbol 1.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Boyun</translation>
     </message>
     <message>
         <source>The low point between two higher points.</source>
         <comment>Description of symbol 1.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>İki yüksek nokta arasındaki alçak nokta.</translation>
     </message>
     <message>
         <source>|D| Depression</source>
         <comment>Name of symbol 1.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Çöküntü</translation>
     </message>
     <message>
         <source>A depression or hollow from which the ground rises on all sides. Shown on the map with contour lines.
 
 Map symbol: ISOM 114</source>
         <comment>Description of symbol 1.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zeminin her yönde yükseldiği bir çöküntü veya oyuk. Haritada eşyükselti eğrileriyle gösterilir.
+
+Harita sembolü: ISOM 114</translation>
     </message>
     <message>
         <source>|D| Small depression</source>
         <comment>Name of symbol 1.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Küçük çöküntü</translation>
     </message>
     <message>
         <source>A small, shallow, natural depression or hollow from which the ground rises on all sides.
 
 Map symbol: ISOM 115</source>
         <comment>Description of symbol 1.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zeminin her yönde yükseldiği küçük, sığ, doğal bir çöküntü veya oyuk.
+
+Harita sembolü: ISOM 115</translation>
     </message>
     <message>
         <source>|D| Pit</source>
         <comment>Name of symbol 1.14</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Çukur</translation>
     </message>
     <message>
         <source>A pit or hole with distinct steep-sides. Usually man made. Used with symbol 8.6 to indicate a rocky pit.
 
 Map symbols: ISOM 116, 204</source>
         <comment>Description of symbol 1.14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin dik kenarlı bir çukur veya delik. Genellikle insan yapımıdır. Kayalık bir çukuru belirtmek için 8.6 sembolüyle birlikte kullanılır.
+
+Harita sembolleri: ISOM 116, 204</translation>
     </message>
     <message>
         <source>|D| Broken ground </source>
         <comment>Name of symbol 1.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Bozuk zemin </translation>
     </message>
     <message>
         <source>Clearly disturbed ground with features too small or too numerous to be mapped individually; including animal earths.
 
 Map symbol: ISOM 107</source>
         <comment>Description of symbol 1.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tek tek haritalanamayacak kadar küçük veya çok sayıda nesne içeren, açıkça bozulmuş zemin; hayvan yuvaları dahil.
+
+Harita sembolü: ISOM 107</translation>
     </message>
     <message>
         <source>|D| Ant hill (termite mound)</source>
         <comment>Name of symbol 1.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Karınca yuvası (termit tümseği)</translation>
     </message>
     <message>
         <source>The mound made by ants or termites.</source>
         <comment>Description of symbol 1.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Karıncaların veya termitlerin yaptığı tümsek.</translation>
     </message>
     <message>
         <source>|D| Cliff, Rock face</source>
         <comment>Name of symbol 2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Yar, Kaya yüzü</translation>
     </message>
     <message>
         <source>A cliff or rock face. May be passable or impassable.
 
 Map symbols: ISOM 201, 203</source>
         <comment>Description of symbol 2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir yar veya kaya yüzü. Geçilebilir veya geçilemez olabilir.
+
+Harita sembolleri: ISOM 201, 203</translation>
     </message>
     <message>
         <source>|D| Rock pillar</source>
         <comment>Name of symbol 2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Kaya sütunu</translation>
     </message>
     <message>
         <source>A high, natural rock projection.
 
 Map symbol: ISOM 202</source>
         <comment>Description of symbol 2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yüksek, doğal bir kaya çıkıntısı.
+
+Harita sembolü: ISOM 202</translation>
     </message>
     <message>
         <source>|D| Cave</source>
         <comment>Name of symbol 2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Mağara</translation>
     </message>
     <message>
         <source>A hole in a rock face or hill side, often leading to underground workings.
 
 Map symbol: ISOM 205</source>
         <comment>Description of symbol 2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir kaya yüzünde veya tepe yamacında, çoğunlukla yeraltı oyuklarına açılan bir delik.
+
+Harita sembolü: ISOM 205</translation>
     </message>
     <message>
         <source>|D| Boulder</source>
         <comment>Name of symbol 2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Kaya</translation>
     </message>
     <message>
         <source>A prominent free-standing block of rock or stone.
 
 Map symbols: ISOM 206, 207</source>
         <comment>Description of symbol 2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin, tek başına duran bir kaya veya taş bloğu.
+
+Harita sembolleri: ISOM 206, 207</translation>
     </message>
     <message>
         <source>|D| Boulder field</source>
         <comment>Name of symbol 2.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Kayalık alan</translation>
     </message>
     <message>
         <source>An area covered by so many boulders that they cannot be individually mapped.
 
 Map symbol: ISOM 208</source>
         <comment>Description of symbol 2.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tek tek haritalanamayacak kadar çok kayayla kaplı bir alan.
+
+Harita sembolü: ISOM 208</translation>
     </message>
     <message>
         <source>|D| Boulder cluster</source>
         <comment>Name of symbol 2.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Kaya kümesi</translation>
     </message>
     <message>
         <source>A small distinct group of boulders so closely clustered together that they cannot be individually mapped.
 
 Map symbol: ISOM 209</source>
         <comment>Description of symbol 2.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tek tek haritalanamayacak kadar birbirine yakın kümelenmiş küçük, belirgin bir kaya grubu.
+
+Harita sembolü: ISOM 209</translation>
     </message>
     <message>
         <source>|D| Stony ground</source>
         <comment>Name of symbol 2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Taşlı zemin</translation>
     </message>
     <message>
         <source>An area covered with many small stones or rocks.
 
 Map symbol: ISOM 210</source>
         <comment>Description of symbol 2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çok sayıda küçük taş veya kayayla kaplı bir alan.
+
+Harita sembolü: ISOM 210</translation>
     </message>
     <message>
         <source>|D| Bare rock</source>
         <comment>Name of symbol 2.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Çıplak kaya</translation>
     </message>
     <message>
         <source>A runnable area of rock with no earth or vegetation cover.
 
 Map symbol: ISOM 212</source>
         <comment>Description of symbol 2.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toprak veya bitki örtüsü bulunmayan, koşulabilir kayalık alan.
+
+Harita sembolü: ISOM 212</translation>
     </message>
     <message>
         <source>|D| Narrow passage</source>
         <comment>Name of symbol 2.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Dar geçit</translation>
     </message>
     <message>
         <source>A gap between two cliffs or rock faces that face each other.</source>
         <comment>Description of symbol 2.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Birbirine bakan iki yar veya kaya yüzü arasındaki boşluk.</translation>
     </message>
     <message>
         <source>|D| Lake</source>
         <comment>Name of symbol 3.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Göl</translation>
     </message>
     <message>
         <source>A high point. Shown on the map with contour lines.
 
 Map symbol: ISOM 301</source>
         <comment>Description of symbol 3.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yüksek bir nokta. Haritada eşyükselti eğrileriyle gösterilir.
+
+Harita sembolü: ISOM 301</translation>
     </message>
     <message>
         <source>|D| Pond</source>
         <comment>Name of symbol 3.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Gölet</translation>
     </message>
     <message>
         <source>A small area of water.
 
 Map symbol: ISOM 302</source>
         <comment>Description of symbol 3.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Küçük bir su alanı.
+
+Harita sembolü: ISOM 302</translation>
     </message>
     <message>
         <source>|D| Waterhole</source>
         <comment>Name of symbol 3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Su çukuru</translation>
     </message>
     <message>
         <source>A waterholed pit or depression.
 
 Map symbol: ISOM 303</source>
         <comment>Description of symbol 3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Su dolu bir çukur veya çöküntü.
+
+Harita sembolü: ISOM 303</translation>
     </message>
     <message>
         <source>|D| River, Stream, Watercourse</source>
         <comment>Name of symbol 3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Nehir, Dere, Su yolu</translation>
     </message>
     <message>
         <source>A natural or artificial watercourse with either moving or standing water.
 
 Map symbols: ISOM 304, 305, 306</source>
         <comment>Description of symbol 3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akan veya durgun su bulunan doğal ya da yapay bir su yolu.
+
+Harita sembolleri: ISOM 304, 305, 306</translation>
     </message>
     <message>
         <source>|D| Minor water channel, Ditch</source>
         <comment>Name of symbol 3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Küçük su kanalı, Hendek</translation>
     </message>
     <message>
         <source>A natural or man made minor water channel which may contain water only intermittently.
 
 Map symbol: ISOM 307</source>
         <comment>Description of symbol 3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yalnızca aralıklı olarak su bulunabilen doğal veya insan yapımı küçük bir su kanalı.
+
+Harita sembolü: ISOM 307</translation>
     </message>
     <message>
         <source>|D| Narrow marsh</source>
         <comment>Name of symbol 3.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Dar bataklık</translation>
     </message>
     <message>
         <source>A narrow marsh or trickle of water, too narrow to be shown on the map with the marsh symbol.
 
 Map symbol: ISOM 308</source>
         <comment>Description of symbol 3.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Haritada bataklık sembolüyle gösterilemeyecek kadar dar bir bataklık veya su sızıntısı.
+
+Harita sembolü: ISOM 308</translation>
     </message>
     <message>
         <source>|D| Marsh</source>
         <comment>Name of symbol 3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Bataklık</translation>
     </message>
     <message>
         <source>A permanently wet area with marsh vegetation.
 
 Map symbols: ISOM 309, 310, 311</source>
         <comment>Description of symbol 3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bataklık bitki örtüsüne sahip, sürekli ıslak bir alan.
+
+Harita sembolleri: ISOM 309, 310, 311</translation>
     </message>
     <message>
         <source>|D| Firm ground in marsh</source>
         <comment>Name of symbol 3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Bataklıkta sert zemin</translation>
     </message>
     <message>
         <source>A non-marshy area within a marsh, or between two marshes.
 
 Map symbols: ISOM 309, 310, 311</source>
         <comment>Description of symbol 3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir bataklığın içinde veya iki bataklık arasında bataklık olmayan bir alan.
+
+Harita sembolleri: ISOM 309, 310, 311</translation>
     </message>
     <message>
         <source>|D| Well</source>
         <comment>Name of symbol 3.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Kuyu</translation>
     </message>
     <message>
         <source>A shaft containing water or a captive spring, clearly visible on the ground. Often with some form of man-made surround.
 
 Map symbol: ISOM 312</source>
         <comment>Description of symbol 3.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arazide açıkça görülebilen, su içeren bir kuyu veya kaptaj edilmiş bir pınar. Çoğunlukla insan yapımı bir çevre duvarı bulunur.
+
+Harita sembolü: ISOM 312</translation>
     </message>
     <message>
         <source>|D| Spring</source>
         <comment>Name of symbol 3.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Pınar</translation>
     </message>
     <message>
         <source>The source of a watercourse with a distinct outflow.
 
 Map symbol: ISOM 313</source>
         <comment>Description of symbol 3.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirgin bir çıkışı olan bir su yolunun kaynağı.
+
+Harita sembolü: ISOM 313</translation>
     </message>
     <message>
         <source>|D| Water tank, Water trough</source>
         <comment>Name of symbol 3.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Su deposu, Yalak</translation>
     </message>
     <message>
         <source>A man made water container.</source>
         <comment>Description of symbol 3.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>İnsan yapımı bir su haznesi.</translation>
     </message>
     <message>
         <source>|D| Open land</source>
         <comment>Name of symbol 4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Açık alan</translation>
     </message>
     <message>
         <source>An area with no trees. Grassland, a meadow or a field. Also heath or moorland.
 
 Map symbols: ISOM 401, 403</source>
         <comment>Description of symbol 4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ağaç bulunmayan bir alan. Çayırlık, mera veya tarla. Ayrıca fundalık veya kır.
+
+Harita sembolleri: ISOM 401, 403</translation>
     </message>
     <message>
         <source>|D| Semi-open land</source>
         <comment>Name of symbol 4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Yarı açık alan</translation>
     </message>
     <message>
         <source>An area of open land with scattered trees or bushes.
 
 Map symbols: ISOM 402, 404</source>
         <comment>Description of symbol 4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dağınık ağaçlar veya çalılar bulunan açık bir alan.
+
+Harita sembolleri: ISOM 402, 404</translation>
     </message>
     <message>
         <source>|D| Forest corner</source>
         <comment>Name of symbol 4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Orman köşesi</translation>
     </message>
     <message>
         <source>The corner or tip of a forested area projecting into open land.</source>
         <comment>Description of symbol 4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ormanlık bir alanın açık alana doğru uzanan köşesi veya ucu.</translation>
     </message>
     <message>
         <source>|D| Clearing</source>
         <comment>Name of symbol 4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Ormanda açıklık</translation>
     </message>
     <message>
         <source>A small area of land free from trees within the forest.
 
 Map symbols: ISOM 401, 403</source>
         <comment>Description of symbol 4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Orman içinde ağaç bulunmayan küçük bir alan.
+
+Harita sembolleri: ISOM 401, 403</translation>
     </message>
     <message>
         <source>|D| Thicket</source>
         <comment>Name of symbol 4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Sık ağaçlık</translation>
     </message>
     <message>
         <source>A small area of forest where the tree cover or undergrowth is so dense that it is difficult to pass.
 
 Map symbols: ISOM 408, 410</source>
         <comment>Description of symbol 4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ağaç örtüsünün veya alt bitki örtüsünün geçilmesi zor olacak kadar yoğun olduğu küçük bir orman alanı.
+
+Harita sembolleri: ISOM 408, 410</translation>
     </message>
     <message>
         <source>|D| Linear thicket</source>
         <comment>Name of symbol 4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Çizgisel sık ağaçlık</translation>
     </message>
     <message>
         <source>A man-made line of trees or bushes that is difficult to cross.
 
 Map symbol: ISOM 410</source>
         <comment>Description of symbol 4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Geçilmesi zor, insan yapımı bir ağaç veya çalı sırası.
+
+Harita sembolü: ISOM 410</translation>
     </message>
     <message>
         <source>|D| Vegetation boundary</source>
         <comment>Name of symbol 4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Bitki örtüsü sınırı</translation>
     </message>
     <message>
         <source>A distinct boundary between different types of trees or vegetation.
 
 Map symbol: ISOM 416</source>
         <comment>Description of symbol 4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Farklı ağaç veya bitki örtüsü türleri arasındaki belirgin bir sınır.
+
+Harita sembolü: ISOM 416</translation>
     </message>
     <message>
         <source>|D| Copse</source>
         <comment>Name of symbol 4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Koru</translation>
     </message>
     <message>
         <source>A small area of trees in open ground.
 
 Map symbols: ISOM 405, 406</source>
         <comment>Description of symbol 4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık arazide küçük bir ağaçlık alan.
+
+Harita sembolleri: ISOM 405, 406</translation>
     </message>
     <message>
         <source>|D| Distinctive tree</source>
         <comment>Name of symbol 4.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Belirgin ağaç</translation>
     </message>
     <message>
         <source>An unusual or distinctive tree in either open land or forest; frequently information is also given as to its type.</source>
         <comment>Description of symbol 4.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık alanda veya ormanda bulunan sıra dışı veya belirgin bir ağaç; çoğunlukla türü hakkında da bilgi verilir.</translation>
     </message>
     <message>
         <source>|D| Tree stump, Root stock</source>
         <comment>Name of symbol 4.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Ağaç kütüğü, Kök</translation>
     </message>
     <message>
         <source>The stump of a tree. The upturned root of a fallen tree, with or without the trunk.</source>
         <comment>Description of symbol 4.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir ağacın kütüğü. Devrilmiş bir ağacın, gövdesiyle birlikte veya gövdesiz, havaya kalkmış kökü.</translation>
     </message>
     <message>
         <source>|D| Road</source>
         <comment>Name of symbol 5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Yol</translation>
     </message>
     <message>
         <source>A metalled/asphalt surfaced or dirt road, suitable for vehicles in normal weather conditions.
 
 Map symbols: ISOM 501, 502, 503, 504</source>
         <comment>Description of symbol 5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Normal hava koşullarında araçların kullanımına uygun, asfalt/kaplamalı veya toprak yol.
+
+Harita sembolleri: ISOM 501, 502, 503, 504</translation>
     </message>
     <message>
         <source>|D| Track / Path</source>
         <comment>Name of symbol 5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| İz / Patika</translation>
     </message>
     <message>
         <source>A visible route made by people or animals. Tracks may be driven by rugged vehicles.
 
 Map symbols: ISOM 505, 506, 507, 508</source>
         <comment>Description of symbol 5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>İnsanların veya hayvanların oluşturduğu görünür bir yol. İzlerde arazi araçları kullanılabilir.
+
+Harita sembolleri: ISOM 505, 506, 507, 508</translation>
     </message>
     <message>
         <source>|D| Ride</source>
         <comment>Name of symbol 5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Gezinti yolu</translation>
     </message>
     <message>
         <source>A clearly visible linear break in the forest which does not have a distinct path along it.
 
 Map symbol: ISOM 509</source>
         <comment>Description of symbol 5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ormanda, boyunca belirgin bir patika bulunmayan, açıkça görülebilen çizgisel bir açıklık.
+
+Harita sembolü: ISOM 509</translation>
     </message>
     <message>
         <source>|D| Bridge</source>
         <comment>Name of symbol 5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Köprü</translation>
     </message>
     <message>
         <source>A crossing point over a watercourse, or other linear feature.
 
 Map symbols: ISOM 512, 513</source>
         <comment>Description of symbol 5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir su yolu veya başka bir çizgisel nesne üzerinden geçiş noktası.
+
+Harita sembolleri: ISOM 512, 513</translation>
     </message>
     <message>
         <source>|D| Power line</source>
         <comment>Name of symbol 5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Elektrik hattı</translation>
     </message>
     <message>
         <source>A power or telephone line, cableway or ski lift.
 
 Map symbols: ISOM 516, 517</source>
         <comment>Description of symbol 5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir elektrik veya telefon hattı, teleferik veya telesiyej.
+
+Harita sembolleri: ISOM 516, 517</translation>
     </message>
     <message>
         <source>|D| Power line pylon</source>
         <comment>Name of symbol 5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Elektrik direği</translation>
     </message>
     <message>
         <source>A support for power or telephone line, cableway or ski lift.
 
 Map symbols: ISOM 516, 517</source>
         <comment>Description of symbol 5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Elektrik veya telefon hattı, teleferik veya telesiyej için bir taşıyıcı direk.
+
+Harita sembolleri: ISOM 516, 517</translation>
     </message>
     <message>
         <source>|D| Tunnel</source>
         <comment>Name of symbol 5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Tünel</translation>
     </message>
     <message>
         <source>A way under roads, railways, etc.
 
 Map symbol: ISOM 518</source>
         <comment>Description of symbol 5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Karayolları, demiryolları vb. altından geçen bir yol.
+
+Harita sembolü: ISOM 518</translation>
     </message>
     <message>
         <source>|D| Stone wall</source>
         <comment>Name of symbol 5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Taş duvar</translation>
     </message>
     <message>
         <source>A stone boundary wall or stone faced bank. Used with symbol 8.11 to indicate a ruined stone wall.
 
 Map symbols: ISOM 519, 520, 521</source>
         <comment>Description of symbol 5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Taştan bir sınır duvarı veya taş kaplı set. Yıkık bir taş duvarı belirtmek için 8.11 sembolüyle birlikte kullanılır.
+
+Harita sembolleri: ISOM 519, 520, 521</translation>
     </message>
     <message>
         <source>|D| Fence</source>
         <comment>Name of symbol 5.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Çit</translation>
     </message>
     <message>
         <source>A wire or wooden boundary. Used with symbol 8.11 to indicate a ruined fence.
 
 Map symbols: ISOM 522, 523, 524</source>
         <comment>Description of symbol 5.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Telden veya ahşaptan bir sınır. Yıkık bir çiti belirtmek için 8.11 sembolüyle birlikte kullanılır.
+
+Harita sembolleri: ISOM 522, 523, 524</translation>
     </message>
     <message>
         <source>|D| Crossing point</source>
         <comment>Name of symbol 5.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Geçiş noktası</translation>
     </message>
     <message>
         <source>A way through or over a wall, fence, or pipeline, including a gate or stile.
 
 Map symbol: ISOM 525</source>
         <comment>Description of symbol 5.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir duvarın, çitin veya boru hattının içinden ya da üzerinden geçen bir yol; kapı veya basamaklı geçit dahil.
+
+Harita sembolü: ISOM 525</translation>
     </message>
     <message>
         <source>|D| Building</source>
         <comment>Name of symbol 5.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Bina</translation>
     </message>
     <message>
         <source>A standing brick, wood or stone structure.
 
 Map symbol: ISOM 526</source>
         <comment>Description of symbol 5.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tuğla, ahşap veya taştan ayakta duran bir yapı.
+
+Harita sembolü: ISOM 526</translation>
     </message>
     <message>
         <source>|D| Paved area</source>
         <comment>Name of symbol 5.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Kaplamalı alan</translation>
     </message>
     <message>
         <source>An area of hard standing used for parking or other purposes.
 
 Map symbol: ISOM 529</source>
         <comment>Description of symbol 5.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Otopark veya başka amaçlarla kullanılan sert zeminli bir alan.
+
+Harita sembolü: ISOM 529</translation>
     </message>
     <message>
         <source>|D| Ruin</source>
         <comment>Name of symbol 5.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Harabe</translation>
     </message>
     <message>
         <source>The remains of a building that has fallen down.
 
 Map symbol: ISOM 530</source>
         <comment>Description of symbol 5.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yıkılmış bir binanın kalıntıları.
+
+Harita sembolü: ISOM 530</translation>
     </message>
     <message>
         <source>|D| Pipeline</source>
         <comment>Name of symbol 5.14</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Boru hattı</translation>
     </message>
     <message>
         <source>A pipeline (gas, water, oil, etc.) above ground level.
 
 Map symbols: ISOM 533, 534</source>
         <comment>Description of symbol 5.14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zemin seviyesinin üzerindeki bir boru hattı (gaz, su, petrol vb.).
+
+Harita sembolleri: ISOM 533, 534</translation>
     </message>
     <message>
         <source>|D| Tower</source>
         <comment>Name of symbol 5.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Kule</translation>
     </message>
     <message>
         <source>A tall metal, wooden or brick structure, usually built for forest observation.
 
 Map symbols: ISOM 535, 536</source>
         <comment>Description of symbol 5.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Genellikle orman gözetlemesi için inşa edilmiş, metal, ahşap veya tuğladan yüksek bir yapı.
+
+Harita sembolleri: ISOM 535, 536</translation>
     </message>
     <message>
         <source>|D| Shooting platform</source>
         <comment>Name of symbol 5.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Avcı kulesi</translation>
     </message>
     <message>
         <source>A structure attached to a tree where a marksman or observer can sit.
 
 Map symbol: ISOM 536</source>
         <comment>Description of symbol 5.16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir ağaca bağlı, bir avcının veya gözlemcinin oturabileceği bir yapı.
+
+Harita sembolü: ISOM 536</translation>
     </message>
     <message>
         <source>|D| Boundary stone, Cairn</source>
         <comment>Name of symbol 5.17</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Sınır taşı, taş yığını</translation>
     </message>
     <message>
         <source>A man made stone or pile of stones. A cairn, memorial stone, boundary stone or trigonometric point.
 
 Map symbol: ISOM 537</source>
         <comment>Description of symbol 5.17</comment>
-        <translation type="unfinished"></translation>
+        <translation>İnsan yapımı bir taş veya taş yığını. Taş yığını, anıtsal taş, sınır taşı veya nirengi noktası.
+
+Harita sembolü: ISOM 537</translation>
     </message>
     <message>
         <source>|D| Fodder rack</source>
         <comment>Name of symbol 5.18</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Yemlik</translation>
     </message>
     <message>
         <source>A construction for holding feed for animals.
 
 Map symbol: ISOM 538</source>
         <comment>Description of symbol 5.18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hayvanlar için yem konulan bir yapı.
+
+Harita sembolü: ISOM 538</translation>
     </message>
     <message>
         <source>|D| Charcoal burning ground</source>
         <comment>Name of symbol 5.19</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Kömür yakma alanı</translation>
     </message>
     <message>
         <source>The clear remains of an area where charcoal was burned. A small level man made area on a slope. (A platform).</source>
         <comment>Description of symbol 5.19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Odun kömürü yakılmış bir alanın belirgin kalıntıları. Yamaçta insan yapımı küçük, düz bir alan. (Bir düzlük).</translation>
     </message>
     <message>
         <source>|D| Monument or Statue</source>
         <comment>Name of symbol 5.20</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Anıt veya heykel</translation>
     </message>
     <message>
         <source>A monument, memorial or statue.</source>
         <comment>Description of symbol 5.20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir anıt, abide veya heykel.</translation>
     </message>
     <message>
         <source>|D| Building pass through</source>
         <comment>Name of symbol 5.23</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Bina içi geçit</translation>
     </message>
     <message>
         <source>An arcade, indoor passage or route through a building.</source>
         <comment>Description of symbol 5.23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bir pasaj, kapalı geçit veya bina içinden geçen bir yol.</translation>
     </message>
     <message>
         <source>|D| Stairway</source>
         <comment>Name of symbol 5.24</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Merdiven</translation>
     </message>
     <message>
         <source>A stairway of at least two steps.</source>
         <comment>Description of symbol 5.24</comment>
-        <translation type="unfinished"></translation>
+        <translation>En az iki basamaklı bir merdiven.</translation>
     </message>
     <message>
         <source>|D| Special item</source>
         <comment>Name of symbol 6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Özel nesne</translation>
     </message>
     <message>
         <source>If used, an explanation of its meaning must be supplied to competitors in the pre-race information.</source>
         <comment>Description of symbol 6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kullanılırsa, anlamının açıklaması yarış öncesi bilgilendirmede yarışmacılara verilmelidir.</translation>
     </message>
     <message>
         <source>|D| Special item</source>
         <comment>Name of symbol 6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Özel nesne</translation>
     </message>
     <message>
         <source>If used, an explanation of its meaning must be supplied to competitors in the pre-race information.</source>
         <comment>Description of symbol 6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kullanılırsa, anlamının açıklaması yarış öncesi bilgilendirmede yarışmacılara verilmelidir.</translation>
     </message>
     <message>
         <source>|D| Country Specific features (template)</source>
         <comment>Name of symbol 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D| Ülkeye özgü nesneler (şablon)</translation>
     </message>
     <message>
         <source>It is not generally recommended to introduce local symbols. If local symbols are used then at events likely to attract an international entry information about them should be supplied to competitors in the pre-race details.
 
 The default line shows a box of 5 mm by 5mm and can be removed from the final symbols.</source>
         <comment>Description of symbol 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yerel sembollerin kullanılması genellikle önerilmez. Yerel semboller kullanılıyorsa, uluslararası katılım beklenen etkinliklerde bunlarla ilgili bilgiler yarış öncesi bilgilendirmede yarışmacılara verilmelidir.
+
+Varsayılan çizgi 5 mm&apos;ye 5mm&apos;lik bir kutu gösterir ve nihai sembollerden kaldırılabilir.</translation>
     </message>
     <message>
         <source>|E| Low</source>
         <comment>Name of symbol 8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Alçak</translation>
     </message>
     <message>
         <source>Where the control feature is particularly low or flat at but this is not indicated on the map; e.g. Hill, low.</source>
         <comment>Description of symbol 8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol nesnesi özellikle alçak veya basık olduğunda, ancak bu haritada belirtilmediğinde kullanılır; örn. Tepe, alçak.</translation>
     </message>
     <message>
         <source>|E| Shallow</source>
         <comment>Name of symbol 8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Sığ</translation>
     </message>
     <message>
         <source>Where the control feature is particularly shallow but this is not indicated on the map; e.g. Re-entrant, shallow.</source>
         <comment>Description of symbol 8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol nesnesi özellikle sığ olduğunda, ancak bu haritada belirtilmediğinde kullanılır; örn. Vadi, sığ.</translation>
     </message>
     <message>
         <source>|E| Deep</source>
         <comment>Name of symbol 8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Derin</translation>
     </message>
     <message>
         <source>Where the control feature is particularly deep but this is not indicated on the map; e.g. Pit, deep.</source>
         <comment>Description of symbol 8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol nesnesi özellikle derin olduğunda, ancak bu haritada belirtilmediğinde kullanılır; örn. Çukur, derin.</translation>
     </message>
     <message>
         <source>|E| Overgrown</source>
         <comment>Name of symbol 8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Bitkilerle kaplı</translation>
     </message>
     <message>
         <source>Where the feature is partially covered in undergrowth or bushes that are not indicated on the map; e.g. Ruin, overgrown.</source>
         <comment>Description of symbol 8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne, haritada gösterilmeyen alt bitki örtüsü veya çalılarla kısmen kaplı olduğunda kullanılır; örn. Harabe, bitkilerle kaplı.</translation>
     </message>
     <message>
         <source>|E| Open</source>
         <comment>Name of symbol 8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Açık</translation>
     </message>
     <message>
         <source>Where the feature is in an area where the tree cover is less than the surroundings but this is not indicated on the map; e.g. Marsh, open.</source>
         <comment>Description of symbol 8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne, ağaç örtüsünün çevresine göre daha seyrek olduğu bir alanda bulunduğunda, ancak bu haritada belirtilmediğinde kullanılır; örn. Bataklık, açık.</translation>
     </message>
     <message>
         <source>|E| Rocky, Stony </source>
         <comment>Name of symbol 8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Kayalık, taşlı </translation>
     </message>
     <message>
         <source>Where the feature is in an area of rocky or stony ground not indicated on the map; e.g. Pit, rocky.</source>
         <comment>Description of symbol 8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne, haritada gösterilmeyen kayalık veya taşlı bir zeminde bulunduğunda kullanılır; örn. Çukur, kayalık.</translation>
     </message>
     <message>
         <source>|E| Marshy</source>
         <comment>Name of symbol 8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Bataklık</translation>
     </message>
     <message>
         <source>Where the feature is in an area of marshy ground not indicated on the map; e.g. Re-entrant, marshy.</source>
         <comment>Description of symbol 8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne, haritada gösterilmeyen bataklık bir zeminde bulunduğunda kullanılır; örn. Vadi, bataklık.</translation>
     </message>
     <message>
         <source>|E| Sandy</source>
         <comment>Name of symbol 8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Kumlu</translation>
     </message>
     <message>
         <source>Where the feature is in an area of sandy ground not indicated on the map; e.g. Spur, sandy.</source>
         <comment>Description of symbol 8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne, haritada gösterilmeyen kumlu bir zeminde bulunduğunda kullanılır; örn. Burun, kumlu.</translation>
     </message>
     <message>
         <source>|E| Needle leaved</source>
         <comment>Name of symbol 8.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| İğne yapraklı</translation>
     </message>
     <message>
         <source>Where the tree or trees associated with the control feature have needle shaped leaves; e.g. Distinctive tree, needle leaved.</source>
         <comment>Description of symbol 8.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol nesnesiyle ilişkili ağaç veya ağaçlar iğne yapraklı olduğunda kullanılır; örn. Belirgin ağaç, iğne yapraklı.</translation>
     </message>
     <message>
         <source>|E| Broad leaved</source>
         <comment>Name of symbol 8.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Geniş yapraklı</translation>
     </message>
     <message>
         <source>Where the tree or trees associated with the control feature are broad-leaved; e.g. Copse, broad leaved.</source>
         <comment>Description of symbol 8.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol nesnesiyle ilişkili ağaç veya ağaçlar geniş yapraklı olduğunda kullanılır; örn. Koru, geniş yapraklı.</translation>
     </message>
     <message>
         <source>|E| Ruined</source>
         <comment>Name of symbol 8.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|E| Yıkık</translation>
     </message>
     <message>
         <source>Where the feature has fallen to ground level; e.g. Fence, ruined.</source>
         <comment>Description of symbol 8.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne yer seviyesine kadar yıkılmış olduğunda kullanılır; örn. Çit, yıkık.</translation>
     </message>
     <message>
         <source>|F| Height or Depth</source>
         <comment>Name of symbol 9.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| Yükseklik veya derinlik</translation>
     </message>
     <message>
         <source>Height or Depth of the feature in metres; e.g. 2.6</source>
         <comment>Description of symbol 9.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesnenin metre cinsinden yüksekliği veya derinliği; örn. 2.6</translation>
     </message>
     <message>
         <source>|F| Size</source>
         <comment>Name of symbol 9.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| Boyut</translation>
     </message>
     <message>
         <source>Horizontal dimensions of the feature in metres; e.g. 8 x 4</source>
         <comment>Description of symbol 9.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesnenin metre cinsinden yatay boyutları; örn. 8 x 4</translation>
     </message>
     <message>
         <source>|F| Slash for height on slope</source>
         <comment>Name of symbol 9.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| Yamaçta yükseklik için eğik çizgi</translation>
     </message>
     <message>
         <source>Use with text symbol 9.4</source>
         <comment>Description of symbol 9.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>9.4 metin sembolü ile birlikte kullanın</translation>
     </message>
     <message>
         <source>|F| Heights of two features, or on slope</source>
         <comment>Name of symbol 9.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| İki nesnenin yükseklikleri veya yamaçta yükseklik</translation>
     </message>
     <message>
         <source>Use this text symbol to give two numbers in different lines.
@@ -13171,288 +13543,315 @@ Use the slash symbol 9.3 for separating the numbers; e.g.
 2.0
 3.0</source>
         <comment>Description of symbol 9.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>İki sayıyı farklı satırlarda vermek için bu metin sembolünü kullanın.
+
+9.3 Yamaçta yükseklik: Yamaçtaki nesnenin metre cinsinden yüksekliği.
+Sayıları ayırmak için 9.3 eğik çizgi sembolünü kullanın; örn.
+
+0.5/
+    / 3.0
+
+9.4 İki nesnenin yükseklikleri: Kontrolün aralarında bulunduğu iki nesnenin yükseklikleri. Sayıları alt alta yazın; örn.
+
+2.0
+3.0</translation>
     </message>
     <message>
         <source>|F| Crossing</source>
         <comment>Name of symbol 10.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| Kesişme</translation>
     </message>
     <message>
         <source>The point at which two linear features cross. The two features which either cross or meet must be shown in columns |D| and |E|.</source>
         <comment>Description of symbol 10.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>İki çizgisel nesnenin kesiştiği nokta. Kesişen veya birleşen iki nesne |D| ve |E| sütunlarında gösterilmelidir.</translation>
     </message>
     <message>
         <source>|F| Junction</source>
         <comment>Name of symbol 10.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|F| Birleşme</translation>
     </message>
     <message>
         <source>The point at which two linear features meet. The two features which either cross or meet must be shown in columns |D| and |E|.</source>
         <comment>Description of symbol 10.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>İki çizgisel nesnenin birleştiği nokta. Kesişen veya birleşen iki nesne |D| ve |E| sütunlarında gösterilmelidir.</translation>
     </message>
     <message>
         <source>|G| North Side</source>
         <comment>Name of symbol 11.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzey tarafı</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne zemin yüzeyinin üzerine yükseldiğinde kullanılır; örn. Kaya, kuzeydoğu tarafı; Harabe, batı tarafı.</translation>
     </message>
     <message>
         <source>|G| North east Side</source>
         <comment>Name of symbol 11.1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzeydoğu tarafı</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne zemin yüzeyinin üzerine yükseldiğinde kullanılır; örn. Kaya, kuzeydoğu tarafı; Harabe, batı tarafı.</translation>
     </message>
     <message>
         <source>|G| East Side</source>
         <comment>Name of symbol 11.1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Doğu tarafı</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne zemin yüzeyinin üzerine yükseldiğinde kullanılır; örn. Kaya, kuzeydoğu tarafı; Harabe, batı tarafı.</translation>
     </message>
     <message>
         <source>|G| South east Side</source>
         <comment>Name of symbol 11.1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güneydoğu tarafı</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne zemin yüzeyinin üzerine yükseldiğinde kullanılır; örn. Kaya, kuzeydoğu tarafı; Harabe, batı tarafı.</translation>
     </message>
     <message>
         <source>|G| South Side</source>
         <comment>Name of symbol 11.1.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güney tarafı</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne zemin yüzeyinin üzerine yükseldiğinde kullanılır; örn. Kaya, kuzeydoğu tarafı; Harabe, batı tarafı.</translation>
     </message>
     <message>
         <source>|G| South west Side</source>
         <comment>Name of symbol 11.1.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güneybatı tarafı</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne zemin yüzeyinin üzerine yükseldiğinde kullanılır; örn. Kaya, kuzeydoğu tarafı; Harabe, batı tarafı.</translation>
     </message>
     <message>
         <source>|G| West Side</source>
         <comment>Name of symbol 11.1.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Batı tarafı</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne zemin yüzeyinin üzerine yükseldiğinde kullanılır; örn. Kaya, kuzeydoğu tarafı; Harabe, batı tarafı.</translation>
     </message>
     <message>
         <source>|G| North west Side</source>
         <comment>Name of symbol 11.1.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzeybatı tarafı</translation>
     </message>
     <message>
         <source>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</source>
         <comment>Description of symbol 11.1.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne zemin yüzeyinin üzerine yükseldiğinde kullanılır; örn. Kaya, kuzeydoğu tarafı; Harabe, batı tarafı.</translation>
     </message>
     <message>
         <source>|G| North Edge</source>
         <comment>Name of symbol 11.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzey kenarı</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesne çevredeki zemin yüzeyinden aşağıya doğru uzanıyorsa ve kontrol zemin seviyesinde kenarda bulunuyorsa; örn. Çöküntü, güneydoğu kenarı.
+b) Nesne önemli bir alana yayılıyorsa ve kontrol bu alanın sınırında bulunuyorsa; örn. Bataklık, batı kenarı; Açıklık, kuzeybatı kenarı.</translation>
     </message>
     <message>
         <source>|G| North east Edge</source>
         <comment>Name of symbol 11.2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzeydoğu kenarı</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesne çevredeki zemin yüzeyinden aşağıya doğru uzanıyorsa ve kontrol zemin seviyesinde kenarda bulunuyorsa; örn. Çöküntü, güneydoğu kenarı.
+b) Nesne önemli bir alana yayılıyorsa ve kontrol bu alanın sınırında bulunuyorsa; örn. Bataklık, batı kenarı; Açıklık, kuzeybatı kenarı.</translation>
     </message>
     <message>
         <source>|G| East Edge</source>
         <comment>Name of symbol 11.2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Doğu kenarı</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesne çevredeki zemin yüzeyinden aşağıya doğru uzanıyorsa ve kontrol zemin seviyesinde kenarda bulunuyorsa; örn. Çöküntü, güneydoğu kenarı.
+b) Nesne önemli bir alana yayılıyorsa ve kontrol bu alanın sınırında bulunuyorsa; örn. Bataklık, batı kenarı; Açıklık, kuzeybatı kenarı.</translation>
     </message>
     <message>
         <source>|G| South east Edge</source>
         <comment>Name of symbol 11.2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güneydoğu kenarı</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesne çevredeki zemin yüzeyinden aşağıya doğru uzanıyorsa ve kontrol zemin seviyesinde kenarda bulunuyorsa; örn. Çöküntü, güneydoğu kenarı.
+b) Nesne önemli bir alana yayılıyorsa ve kontrol bu alanın sınırında bulunuyorsa; örn. Bataklık, batı kenarı; Açıklık, kuzeybatı kenarı.</translation>
     </message>
     <message>
         <source>|G| South Edge</source>
         <comment>Name of symbol 11.2.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güney kenarı</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesne çevredeki zemin yüzeyinden aşağıya doğru uzanıyorsa ve kontrol zemin seviyesinde kenarda bulunuyorsa; örn. Çöküntü, güneydoğu kenarı.
+b) Nesne önemli bir alana yayılıyorsa ve kontrol bu alanın sınırında bulunuyorsa; örn. Bataklık, batı kenarı; Açıklık, kuzeybatı kenarı.</translation>
     </message>
     <message>
         <source>|G| South west Edge</source>
         <comment>Name of symbol 11.2.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güneybatı kenarı</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesne çevredeki zemin yüzeyinden aşağıya doğru uzanıyorsa ve kontrol zemin seviyesinde kenarda bulunuyorsa; örn. Çöküntü, güneydoğu kenarı.
+b) Nesne önemli bir alana yayılıyorsa ve kontrol bu alanın sınırında bulunuyorsa; örn. Bataklık, batı kenarı; Açıklık, kuzeybatı kenarı.</translation>
     </message>
     <message>
         <source>|G| West Edge</source>
         <comment>Name of symbol 11.2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Batı kenarı</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesne çevredeki zemin yüzeyinden aşağıya doğru uzanıyorsa ve kontrol zemin seviyesinde kenarda bulunuyorsa; örn. Çöküntü, güneydoğu kenarı.
+b) Nesne önemli bir alana yayılıyorsa ve kontrol bu alanın sınırında bulunuyorsa; örn. Bataklık, batı kenarı; Açıklık, kuzeybatı kenarı.</translation>
     </message>
     <message>
         <source>|G| North west Edge</source>
         <comment>Name of symbol 11.2.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzeybatı kenarı</translation>
     </message>
     <message>
         <source>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</source>
         <comment>Description of symbol 11.2.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesne çevredeki zemin yüzeyinden aşağıya doğru uzanıyorsa ve kontrol zemin seviyesinde kenarda bulunuyorsa; örn. Çöküntü, güneydoğu kenarı.
+b) Nesne önemli bir alana yayılıyorsa ve kontrol bu alanın sınırında bulunuyorsa; örn. Bataklık, batı kenarı; Açıklık, kuzeybatı kenarı.</translation>
     </message>
     <message>
         <source>|G| North Part</source>
         <comment>Name of symbol 11.3.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzey kısmı</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne önemli bir alana yayıldığında ve kontrol ne merkezde ne de kenarlardan herhangi birinde bulunduğunda kullanılır; örn. Bataklık, batı kısmı; Çöküntü, güneydoğu kısmı.</translation>
     </message>
     <message>
         <source>|G| North east Part</source>
         <comment>Name of symbol 11.3.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzeydoğu kısmı</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne önemli bir alana yayıldığında ve kontrol ne merkezde ne de kenarlardan herhangi birinde bulunduğunda kullanılır; örn. Bataklık, batı kısmı; Çöküntü, güneydoğu kısmı.</translation>
     </message>
     <message>
         <source>|G| East Part</source>
         <comment>Name of symbol 11.3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Doğu kısmı</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne önemli bir alana yayıldığında ve kontrol ne merkezde ne de kenarlardan herhangi birinde bulunduğunda kullanılır; örn. Bataklık, batı kısmı; Çöküntü, güneydoğu kısmı.</translation>
     </message>
     <message>
         <source>|G| South east Part</source>
         <comment>Name of symbol 11.3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güneydoğu kısmı</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne önemli bir alana yayıldığında ve kontrol ne merkezde ne de kenarlardan herhangi birinde bulunduğunda kullanılır; örn. Bataklık, batı kısmı; Çöküntü, güneydoğu kısmı.</translation>
     </message>
     <message>
         <source>|G| South Part</source>
         <comment>Name of symbol 11.3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güney kısmı</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne önemli bir alana yayıldığında ve kontrol ne merkezde ne de kenarlardan herhangi birinde bulunduğunda kullanılır; örn. Bataklık, batı kısmı; Çöküntü, güneydoğu kısmı.</translation>
     </message>
     <message>
         <source>|G| South west part</source>
         <comment>Name of symbol 11.3.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güneybatı kısmı</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne önemli bir alana yayıldığında ve kontrol ne merkezde ne de kenarlardan herhangi birinde bulunduğunda kullanılır; örn. Bataklık, batı kısmı; Çöküntü, güneydoğu kısmı.</translation>
     </message>
     <message>
         <source>|G| West Part</source>
         <comment>Name of symbol 11.3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Batı kısmı</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne önemli bir alana yayıldığında ve kontrol ne merkezde ne de kenarlardan herhangi birinde bulunduğunda kullanılır; örn. Bataklık, batı kısmı; Çöküntü, güneydoğu kısmı.</translation>
     </message>
     <message>
         <source>|G| North west Part</source>
         <comment>Name of symbol 11.3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzeybatı kısmı</translation>
     </message>
     <message>
         <source>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</source>
         <comment>Description of symbol 11.3.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne önemli bir alana yayıldığında ve kontrol ne merkezde ne de kenarlardan herhangi birinde bulunduğunda kullanılır; örn. Bataklık, batı kısmı; Çöküntü, güneydoğu kısmı.</translation>
     </message>
     <message>
         <source>|G| North Corner (inside)</source>
         <comment>Name of symbol 11.4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzey köşesi (iç)</translation>
     </message>
     <message>
         <source>Used where:
@@ -13460,12 +13859,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesnenin kenarı 45-135 derecelik bir açıyla dönüyorsa; örn. Açık alan, doğu köşesi (iç).
+b) Çizgisel bir nesne köşe yapıyorsa; örn. Çit, güney köşesi (iç).
+Sembolün yönü, köşenin gösterdiği yönü belirtir.</translation>
     </message>
     <message>
         <source>|G| North east Corner (inside)</source>
         <comment>Name of symbol 11.4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzeydoğu köşesi (iç)</translation>
     </message>
     <message>
         <source>Used where:
@@ -13473,12 +13875,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesnenin kenarı 45-135 derecelik bir açıyla dönüyorsa; örn. Açık alan, doğu köşesi (iç).
+b) Çizgisel bir nesne köşe yapıyorsa; örn. Çit, güney köşesi (iç).
+Sembolün yönü, köşenin gösterdiği yönü belirtir.</translation>
     </message>
     <message>
         <source>|G| East Corner (inside)</source>
         <comment>Name of symbol 11.4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Doğu köşesi (iç)</translation>
     </message>
     <message>
         <source>Used where:
@@ -13486,12 +13891,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesnenin kenarı 45-135 derecelik bir açıyla dönüyorsa; örn. Açık alan, doğu köşesi (iç).
+b) Çizgisel bir nesne köşe yapıyorsa; örn. Çit, güney köşesi (iç).
+Sembolün yönü, köşenin gösterdiği yönü belirtir.</translation>
     </message>
     <message>
         <source>|G| South east Corner (inside)</source>
         <comment>Name of symbol 11.4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güneydoğu köşesi (iç)</translation>
     </message>
     <message>
         <source>Used where:
@@ -13499,12 +13907,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesnenin kenarı 45-135 derecelik bir açıyla dönüyorsa; örn. Açık alan, doğu köşesi (iç).
+b) Çizgisel bir nesne köşe yapıyorsa; örn. Çit, güney köşesi (iç).
+Sembolün yönü, köşenin gösterdiği yönü belirtir.</translation>
     </message>
     <message>
         <source>|G| South Corner (inside)</source>
         <comment>Name of symbol 11.4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güney köşesi (iç)</translation>
     </message>
     <message>
         <source>Used where:
@@ -13512,12 +13923,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesnenin kenarı 45-135 derecelik bir açıyla dönüyorsa; örn. Açık alan, doğu köşesi (iç).
+b) Çizgisel bir nesne köşe yapıyorsa; örn. Çit, güney köşesi (iç).
+Sembolün yönü, köşenin gösterdiği yönü belirtir.</translation>
     </message>
     <message>
         <source>|G| South west Corner (inside)</source>
         <comment>Name of symbol 11.4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güneybatı köşesi (iç)</translation>
     </message>
     <message>
         <source>Used where:
@@ -13525,12 +13939,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesnenin kenarı 45-135 derecelik bir açıyla dönüyorsa; örn. Açık alan, doğu köşesi (iç).
+b) Çizgisel bir nesne köşe yapıyorsa; örn. Çit, güney köşesi (iç).
+Sembolün yönü, köşenin gösterdiği yönü belirtir.</translation>
     </message>
     <message>
         <source>|G| West Corner (inside)</source>
         <comment>Name of symbol 11.4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Batı köşesi (iç)</translation>
     </message>
     <message>
         <source>Used where:
@@ -13538,12 +13955,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesnenin kenarı 45-135 derecelik bir açıyla dönüyorsa; örn. Açık alan, doğu köşesi (iç).
+b) Çizgisel bir nesne köşe yapıyorsa; örn. Çit, güney köşesi (iç).
+Sembolün yönü, köşenin gösterdiği yönü belirtir.</translation>
     </message>
     <message>
         <source>|G| North west Corner (inside)</source>
         <comment>Name of symbol 11.4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzeybatı köşesi (iç)</translation>
     </message>
     <message>
         <source>Used where:
@@ -13551,12 +13971,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open lan
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.4.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesnenin kenarı 45-135 derecelik bir açıyla dönüyorsa; örn. Açık alan, doğu köşesi (iç).
+b) Çizgisel bir nesne köşe yapıyorsa; örn. Çit, güney köşesi (iç).
+Sembolün yönü, köşenin gösterdiği yönü belirtir.</translation>
     </message>
     <message>
         <source>|G| North Corner (outside)</source>
         <comment>Name of symbol 11.5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzey köşesi (dış)</translation>
     </message>
     <message>
         <source>Used where:
@@ -13564,12 +13987,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesnenin kenarı 45-135 derecelik bir açıyla dönüyorsa; örn. Harabe, kuzeybatı köşesi (dış).
+b) Çizgisel bir nesne köşe yapıyorsa; örn. Taş duvar, güneybatı köşesi (dış).
+Sembolün yönü, köşenin gösterdiği yönü belirtir.</translation>
     </message>
     <message>
         <source>|G| North east Corner (outside)</source>
         <comment>Name of symbol 11.5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzeydoğu köşesi (dış)</translation>
     </message>
     <message>
         <source>Used where:
@@ -13577,12 +14003,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesnenin kenarı 45-135 derecelik bir açıyla dönüyorsa; örn. Harabe, kuzeybatı köşesi (dış).
+b) Çizgisel bir nesne köşe yapıyorsa; örn. Taş duvar, güneybatı köşesi (dış).
+Sembolün yönü, köşenin gösterdiği yönü belirtir.</translation>
     </message>
     <message>
         <source>|G| East Corner (outside)</source>
         <comment>Name of symbol 11.5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Doğu köşesi (dış)</translation>
     </message>
     <message>
         <source>Used where:
@@ -13590,12 +14019,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesnenin kenarı 45-135 derecelik bir açıyla dönüyorsa; örn. Harabe, kuzeybatı köşesi (dış).
+b) Çizgisel bir nesne köşe yapıyorsa; örn. Taş duvar, güneybatı köşesi (dış).
+Sembolün yönü, köşenin gösterdiği yönü belirtir.</translation>
     </message>
     <message>
         <source>|G| South east Corner (outside)</source>
         <comment>Name of symbol 11.5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güneydoğu köşesi (dış)</translation>
     </message>
     <message>
         <source>Used where:
@@ -13603,12 +14035,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesnenin kenarı 45-135 derecelik bir açıyla dönüyorsa; örn. Harabe, kuzeybatı köşesi (dış).
+b) Çizgisel bir nesne köşe yapıyorsa; örn. Taş duvar, güneybatı köşesi (dış).
+Sembolün yönü, köşenin gösterdiği yönü belirtir.</translation>
     </message>
     <message>
         <source>|G| South Corner (outside)</source>
         <comment>Name of symbol 11.5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güney köşesi (dış)</translation>
     </message>
     <message>
         <source>Used where:
@@ -13616,12 +14051,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesnenin kenarı 45-135 derecelik bir açıyla dönüyorsa; örn. Harabe, kuzeybatı köşesi (dış).
+b) Çizgisel bir nesne köşe yapıyorsa; örn. Taş duvar, güneybatı köşesi (dış).
+Sembolün yönü, köşenin gösterdiği yönü belirtir.</translation>
     </message>
     <message>
         <source>|G| South west Corner (outside)</source>
         <comment>Name of symbol 11.5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güneybatı köşesi (dış)</translation>
     </message>
     <message>
         <source>Used where:
@@ -13629,12 +14067,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesnenin kenarı 45-135 derecelik bir açıyla dönüyorsa; örn. Harabe, kuzeybatı köşesi (dış).
+b) Çizgisel bir nesne köşe yapıyorsa; örn. Taş duvar, güneybatı köşesi (dış).
+Sembolün yönü, köşenin gösterdiği yönü belirtir.</translation>
     </message>
     <message>
         <source>|G| West Corner (outside)</source>
         <comment>Name of symbol 11.5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Batı köşesi (dış)</translation>
     </message>
     <message>
         <source>Used where:
@@ -13642,12 +14083,15 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesnenin kenarı 45-135 derecelik bir açıyla dönüyorsa; örn. Harabe, kuzeybatı köşesi (dış).
+b) Çizgisel bir nesne köşe yapıyorsa; örn. Taş duvar, güneybatı köşesi (dış).
+Sembolün yönü, köşenin gösterdiği yönü belirtir.</translation>
     </message>
     <message>
         <source>|G| North west Corner (outside)</source>
         <comment>Name of symbol 11.5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzeybatı köşesi (dış)</translation>
     </message>
     <message>
         <source>Used where:
@@ -13655,447 +14099,450 @@ a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, no
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
 The orientation of the symbol indicates the direction in which the corner points.</source>
         <comment>Description of symbol 11.5.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Şu durumlarda kullanılır:
+a) Nesnenin kenarı 45-135 derecelik bir açıyla dönüyorsa; örn. Harabe, kuzeybatı köşesi (dış).
+b) Çizgisel bir nesne köşe yapıyorsa; örn. Taş duvar, güneybatı köşesi (dış).
+Sembolün yönü, köşenin gösterdiği yönü belirtir.</translation>
     </message>
     <message>
         <source>|G| North Tip</source>
         <comment>Name of symbol 11.6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzey sivri ucu</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesnenin kenarı 45 dereceden daha dar bir açıyla dönüyorsa kullanılır; örn. Bataklık, güneybatı sivri ucu.</translation>
     </message>
     <message>
         <source>|G| North east Tip</source>
         <comment>Name of symbol 11.6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzeydoğu sivri ucu</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesnenin kenarı 45 dereceden daha dar bir açıyla dönüyorsa kullanılır; örn. Bataklık, güneybatı sivri ucu.</translation>
     </message>
     <message>
         <source>|G| East Tip</source>
         <comment>Name of symbol 11.6.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Doğu sivri ucu</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesnenin kenarı 45 dereceden daha dar bir açıyla dönüyorsa kullanılır; örn. Bataklık, güneybatı sivri ucu.</translation>
     </message>
     <message>
         <source>|G| South east Tip</source>
         <comment>Name of symbol 11.6.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güneydoğu sivri ucu</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesnenin kenarı 45 dereceden daha dar bir açıyla dönüyorsa kullanılır; örn. Bataklık, güneybatı sivri ucu.</translation>
     </message>
     <message>
         <source>|G| South Tip</source>
         <comment>Name of symbol 11.6.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güney sivri ucu</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesnenin kenarı 45 dereceden daha dar bir açıyla dönüyorsa kullanılır; örn. Bataklık, güneybatı sivri ucu.</translation>
     </message>
     <message>
         <source>|G| South west Tip</source>
         <comment>Name of symbol 11.6.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güneybatı sivri ucu</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesnenin kenarı 45 dereceden daha dar bir açıyla dönüyorsa kullanılır; örn. Bataklık, güneybatı sivri ucu.</translation>
     </message>
     <message>
         <source>|G| West Tip</source>
         <comment>Name of symbol 11.6.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Batı sivri ucu</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesnenin kenarı 45 dereceden daha dar bir açıyla dönüyorsa kullanılır; örn. Bataklık, güneybatı sivri ucu.</translation>
     </message>
     <message>
         <source>|G| North west Tip</source>
         <comment>Name of symbol 11.6.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzeybatı sivri ucu</translation>
     </message>
     <message>
         <source>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</source>
         <comment>Description of symbol 11.6.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesnenin kenarı 45 dereceden daha dar bir açıyla dönüyorsa kullanılır; örn. Bataklık, güneybatı sivri ucu.</translation>
     </message>
     <message>
         <source>|G| Bend</source>
         <comment>Name of symbol 11.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Dönemeç</translation>
     </message>
     <message>
         <source>Used where a linear feature makes a smooth change of direction; e.g. Path bend; River bend.</source>
         <comment>Description of symbol 11.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çizgisel bir nesne yönünü yumuşak bir şekilde değiştirdiğinde kullanılır; örn. Patika dönemeci; Nehir dönemeci.</translation>
     </message>
     <message>
         <source>|G| North End</source>
         <comment>Name of symbol 11.8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzey ucu</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çizgisel bir nesnenin bittiği veya başladığı nokta; örn. Orman yolu, kuzeybatı ucu; Taş duvar, güney ucu.</translation>
     </message>
     <message>
         <source>|G| North east End</source>
         <comment>Name of symbol 11.8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzeydoğu ucu</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çizgisel bir nesnenin bittiği veya başladığı nokta; örn. Orman yolu, kuzeybatı ucu; Taş duvar, güney ucu.</translation>
     </message>
     <message>
         <source>|G| East End</source>
         <comment>Name of symbol 11.8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Doğu ucu</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çizgisel bir nesnenin bittiği veya başladığı nokta; örn. Orman yolu, kuzeybatı ucu; Taş duvar, güney ucu.</translation>
     </message>
     <message>
         <source>|G| South east End</source>
         <comment>Name of symbol 11.8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güneydoğu ucu</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çizgisel bir nesnenin bittiği veya başladığı nokta; örn. Orman yolu, kuzeybatı ucu; Taş duvar, güney ucu.</translation>
     </message>
     <message>
         <source>|G| South End</source>
         <comment>Name of symbol 11.8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güney ucu</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çizgisel bir nesnenin bittiği veya başladığı nokta; örn. Orman yolu, kuzeybatı ucu; Taş duvar, güney ucu.</translation>
     </message>
     <message>
         <source>|G| South west End</source>
         <comment>Name of symbol 11.8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güneybatı ucu</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çizgisel bir nesnenin bittiği veya başladığı nokta; örn. Orman yolu, kuzeybatı ucu; Taş duvar, güney ucu.</translation>
     </message>
     <message>
         <source>|G| West End</source>
         <comment>Name of symbol 11.8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Batı ucu</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çizgisel bir nesnenin bittiği veya başladığı nokta; örn. Orman yolu, kuzeybatı ucu; Taş duvar, güney ucu.</translation>
     </message>
     <message>
         <source>|G| North west End</source>
         <comment>Name of symbol 11.8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzeybatı ucu</translation>
     </message>
     <message>
         <source>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</source>
         <comment>Description of symbol 11.8.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Çizgisel bir nesnenin bittiği veya başladığı nokta; örn. Orman yolu, kuzeybatı ucu; Taş duvar, güney ucu.</translation>
     </message>
     <message>
         <source>|G| Upper Part</source>
         <comment>Name of symbol 11.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Üst kısım</translation>
     </message>
     <message>
         <source>Where the feature extends over two or more contours and the control is located near the top; e.g. Erosion Gully, upper part.</source>
         <comment>Description of symbol 11.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne iki veya daha fazla eşyükselti eğrisi boyunca uzandığında ve kontrol üst kısma yakın bulunduğunda kullanılır; örn. Erozyon oyuğu, üst kısım.</translation>
     </message>
     <message>
         <source>|G| Lower Part</source>
         <comment>Name of symbol 11.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Alt kısım</translation>
     </message>
     <message>
         <source>Where the feature extends over two or more contours and the control is located near the bottom; e.g. Re-entrant, lower part.</source>
         <comment>Description of symbol 11.10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nesne iki veya daha fazla eşyükselti eğrisi boyunca uzandığında ve kontrol alt kısma yakın bulunduğunda kullanılır; örn. Vadi, alt kısım.</translation>
     </message>
     <message>
         <source>|G| Top</source>
         <comment>Name of symbol 11.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Üstü</translation>
     </message>
     <message>
         <source>Where the control is located at the highest point of the feature and this is not the usual location; e.g. Cliff, top.</source>
         <comment>Description of symbol 11.11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol nesnenin en yüksek noktasında bulunduğunda ve bu olağan konum olmadığında kullanılır; örn. Yar, üstü.</translation>
     </message>
     <message>
         <source>|G| Beneath</source>
         <comment>Name of symbol 11.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Altında</translation>
     </message>
     <message>
         <source>Where the control is located underneath the feature; e.g. Pipeline, beneath.</source>
         <comment>Description of symbol 11.12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol nesnenin altında bulunduğunda kullanılır; örn. Boru hattı, altında.</translation>
     </message>
     <message>
         <source>|G| Foot (no direction)</source>
         <comment>Name of symbol 11.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Etek (yönsüz)</translation>
     </message>
     <message>
         <source>Where the control is located at the lower junction of the slope of the feature and the surface of the surrounding area; e.g. Earth bank, foot.</source>
         <comment>Description of symbol 11.13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol, nesnenin yamacı ile çevredeki alanın yüzeyinin alt birleşim noktasında bulunduğunda kullanılır; örn. Toprak set, eteği.</translation>
     </message>
     <message>
         <source>|G| North Foot</source>
         <comment>Name of symbol 11.14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzey eteği</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yukarıdaki gibi, ancak nesne kontrolün çevresinde birden fazla konuma yerleştirilebileceği kadar büyük olduğunda kullanılır; örn. Tepe, kuzeydoğu eteği.</translation>
     </message>
     <message>
         <source>|G| North east Foot</source>
         <comment>Name of symbol 11.14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzeydoğu eteği</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yukarıdaki gibi, ancak nesne kontrolün çevresinde birden fazla konuma yerleştirilebileceği kadar büyük olduğunda kullanılır; örn. Tepe, kuzeydoğu eteği.</translation>
     </message>
     <message>
         <source>|G| East Foot</source>
         <comment>Name of symbol 11.14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Doğu eteği</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yukarıdaki gibi, ancak nesne kontrolün çevresinde birden fazla konuma yerleştirilebileceği kadar büyük olduğunda kullanılır; örn. Tepe, kuzeydoğu eteği.</translation>
     </message>
     <message>
         <source>|G| South east Foot</source>
         <comment>Name of symbol 11.14.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güneydoğu eteği</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yukarıdaki gibi, ancak nesne kontrolün çevresinde birden fazla konuma yerleştirilebileceği kadar büyük olduğunda kullanılır; örn. Tepe, kuzeydoğu eteği.</translation>
     </message>
     <message>
         <source>|G| South Foot</source>
         <comment>Name of symbol 11.14.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güney eteği</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yukarıdaki gibi, ancak nesne kontrolün çevresinde birden fazla konuma yerleştirilebileceği kadar büyük olduğunda kullanılır; örn. Tepe, kuzeydoğu eteği.</translation>
     </message>
     <message>
         <source>|G| South west Foot</source>
         <comment>Name of symbol 11.14.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Güneybatı eteği</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yukarıdaki gibi, ancak nesne kontrolün çevresinde birden fazla konuma yerleştirilebileceği kadar büyük olduğunda kullanılır; örn. Tepe, kuzeydoğu eteği.</translation>
     </message>
     <message>
         <source>|G| West Foot</source>
         <comment>Name of symbol 11.14.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Batı eteği</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yukarıdaki gibi, ancak nesne kontrolün çevresinde birden fazla konuma yerleştirilebileceği kadar büyük olduğunda kullanılır; örn. Tepe, kuzeydoğu eteği.</translation>
     </message>
     <message>
         <source>|G| North west Foot</source>
         <comment>Name of symbol 11.14.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kuzeybatı eteği</translation>
     </message>
     <message>
         <source>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</source>
         <comment>Description of symbol 11.14.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yukarıdaki gibi, ancak nesne kontrolün çevresinde birden fazla konuma yerleştirilebileceği kadar büyük olduğunda kullanılır; örn. Tepe, kuzeydoğu eteği.</translation>
     </message>
     <message>
         <source>|G| Between</source>
         <comment>Name of symbol 11.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Arasında</translation>
     </message>
     <message>
         <source>Where the control is located between two features; e.g. Between thickets; Between boulder and knoll. The two features which the control is between must be shown separately in columns |D| and |E|.</source>
         <comment>Description of symbol 11.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol iki nesnenin arasında bulunduğunda kullanılır; örn. Sık bitki örtüleri arasında; Kaya ile tepecik arasında. Kontrolün arasında bulunduğu iki nesne |D| ve |E| sütunlarında ayrı ayrı gösterilmelidir.</translation>
     </message>
     <message>
         <source>|G| First aid post</source>
         <comment>Name of symbol 12.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| İlk yardım noktası</translation>
     </message>
     <message>
         <source>Control site where First aid is available.</source>
         <comment>Description of symbol 12.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>İlk yardımın bulunduğu kontrol noktası.</translation>
     </message>
     <message>
         <source>|G| Refreshment point</source>
         <comment>Name of symbol 12.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Dinlenme noktası</translation>
     </message>
     <message>
         <source>Control site where Refreshments are available.</source>
         <comment>Description of symbol 12.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>İkramın (yiyecek ve içecek) bulunduğu kontrol noktası.</translation>
     </message>
     <message>
         <source>|G| Radio or TV control</source>
         <comment>Name of symbol 12.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Radyo veya TV kontrolü</translation>
     </message>
     <message>
         <source>Location of a Radio or TV control.</source>
         <comment>Description of symbol 12.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Radyo veya TV kontrolünün konumu.</translation>
     </message>
     <message>
         <source>|G| Control check</source>
         <comment>Name of symbol 12.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>|G| Kart denetimi</translation>
     </message>
     <message>
         <source>Manned control site where the control card is checked.</source>
         <comment>Description of symbol 12.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrol kartının denetlendiği, görevli bulunan kontrol noktası.</translation>
     </message>
     <message>
         <source>Taped Route, away from control</source>
         <comment>Name of symbol 13.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bantlı rota, kontrolden çıkış</translation>
     </message>
     <message>
         <source>A marked route is to be followed away from a particular control. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Belirli bir kontrolden çıkışta işaretli rota izlenmelidir. Haritada gösterileni yeniden vurgular.</translation>
     </message>
     <message>
         <source>Taped Route, between controls</source>
         <comment>Name of symbol 13.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bantlı rota, kontroller arası</translation>
     </message>
     <message>
         <source>A marked route is to be followed between controls. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontroller arasında işaretli rota izlenmelidir. Haritada gösterileni yeniden vurgular.</translation>
     </message>
     <message>
         <source>Mandatory crossing point</source>
         <comment>Name of symbol 13.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zorunlu geçiş noktası</translation>
     </message>
     <message>
         <source>Mandatory crossing points (or points) between two controls. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>İki kontrol arasındaki zorunlu geçiş noktaları (veya noktası). Haritada gösterileni yeniden vurgular.</translation>
     </message>
     <message>
         <source>Mandatory passage through out of bounds area</source>
         <comment>Name of symbol 13.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yasak bölgeden zorunlu geçiş</translation>
     </message>
     <message>
         <source>Mandatory route between two controls. Re-emphasises what is shown on the map.</source>
         <comment>Description of symbol 13.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>İki kontrol arasındaki zorunlu rota. Haritada gösterileni yeniden vurgular.</translation>
     </message>
     <message>
         <source>Taped Route from Control to Map Exchange</source>
         <comment>Name of symbol 13.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrolden harita değişimine bantlı rota</translation>
     </message>
     <message>
         <source>At a map exchange, or if a marked route is to be followed from a control to a map exchange, this instruction follows the last control description of the first part of the course.</source>
         <comment>Description of symbol 13.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Harita değişiminde veya bir kontrolden harita değişimine işaretli rota izlenecekse, bu talimat parkurun ilk bölümünün son kontrol tanımından sonra yer alır.</translation>
     </message>
     <message>
         <source>Taped Route from last control to Finish</source>
         <comment>Name of symbol 14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Son kontrolden bitişe bantlı rota</translation>
     </message>
     <message>
         <source>Mandatory route from the last control to the Finish. Re-emphasises what is shown on the map. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Son kontrolden bitişe zorunlu rota. Haritada gösterileni yeniden vurgular. Son kontrolden bitişe olan mesafeyi verir.</translation>
     </message>
     <message>
         <source>Taped Route from finish funnel to Finish</source>
         <comment>Name of symbol 14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bitiş hunisinden bitişe bantlı rota</translation>
     </message>
     <message>
         <source>The competitor has to navigate from the last control to finish funnel, and then follow tapes. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yarışmacı son kontrolden bitiş hunisine kadar kendi yönünü bulmalı, ardından bantları izlemelidir. Son kontrolden bitişe olan mesafeyi verir.</translation>
     </message>
     <message>
         <source>Navigation from last control to Finish (no Taped Route)</source>
         <comment>Name of symbol 14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Son kontrolden bitişe yön bulma (bantlı rota yok)</translation>
     </message>
     <message>
         <source>The competitor has to navigate from the last control to finish. No tapes. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yarışmacı son kontrolden bitişe kadar kendi yönünü bulmalıdır. Bant yoktur. Son kontrolden bitişe olan mesafeyi verir.</translation>
     </message>
     <message>
         <source>Length of special route</source>
         <comment>Name of symbol 13.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Özel rotanın uzunluğu</translation>
     </message>
     <message>
         <source>This is used with the special instruction (13.x) to give the distance from the last control to the end of the route (control, map exchange, or finish).</source>
         <comment>Description of symbol 13.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Son kontrolden rotanın sonuna (kontrol, harita değişimi veya bitiş) olan mesafeyi vermek için özel talimatla (13.x) birlikte kullanılır.</translation>
     </message>
 </context>
 </TS>
