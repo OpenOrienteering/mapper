@@ -1,5 +1,5 @@
 /*
- *    Copyright 2025 Matthias Kühlewein
+ *    Copyright 2025, 2026 Matthias Kühlewein
  *    Copyright 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
@@ -18,7 +18,11 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <algorithm>
+
 #include <QtTest>
+#include <QByteArray>
+#include <QDataStream>
 #include <QObject>
 
 #include "core/map.h"
@@ -27,9 +31,13 @@
 #include "core/objects/text_object.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/line_symbol.h"
+#include "core/symbols/point_symbol.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
 
+namespace {
+	constexpr int convAngle(int angle) { return angle * 160; }
+}
 
 using namespace OpenOrienteering;
 
@@ -178,6 +186,109 @@ private slots:
 		// Another point in the rotated text, and subject to rotation.
 		auto const anchor_text_2 = QPointF{10.0, 5.0};
 		QCOMPARE(to_text.map(to_map.map(anchor_text_2)), anchor_text_2);
+	}
+	
+	void cutPointCircleTest()
+	{
+		PointSymbol point_symbol;
+		PointObject object(&point_symbol);
+		
+		auto cut_circle = object.asPoint()->getCutCircle();
+		QVERIFY(cut_circle.getNumArcs() == 0);
+		
+		cut_circle.addGap(45, 90);
+		QVERIFY(cut_circle.getNumArcs() == 1);
+		QVERIFY(!cut_circle.isAngleInAnyGap(44));
+		QVERIFY(cut_circle.isAngleInAnyGap(45));
+		QVERIFY(cut_circle.isAngleInAnyGap(90));
+		QVERIFY(!cut_circle.isAngleInAnyGap(91));
+		
+		cut_circle.addGap(10, 20);
+		QVERIFY(cut_circle.getNumArcs() == 2);
+		QVERIFY(!cut_circle.isAngleInAnyGap(9));
+		QVERIFY(cut_circle.isAngleInAnyGap(10));
+		QVERIFY(cut_circle.isAngleInAnyGap(20));
+		QVERIFY(!cut_circle.isAngleInAnyGap(21));
+		
+		cut_circle.addGap(30, 40);
+		QVERIFY(cut_circle.getNumArcs() == 3);
+		
+		cut_circle.addGap(5, 50);
+		QVERIFY(cut_circle.getNumArcs() == 1);
+		QVERIFY(!cut_circle.isAngleInAnyGap(4));
+		QVERIFY(cut_circle.isAngleInAnyGap(5));
+		QVERIFY(cut_circle.isAngleInAnyGap(90));
+		QVERIFY(!cut_circle.isAngleInAnyGap(91));
+		
+		cut_circle.addGap(80, 100);
+		QVERIFY(cut_circle.getNumArcs() == 1);
+		QVERIFY(cut_circle.isAngleInAnyGap(100));
+		QVERIFY(!cut_circle.isAngleInAnyGap(101));
+		
+		// delete gap using last gap position
+		cut_circle.deleteGap(100);
+		QVERIFY(cut_circle.getNumArcs() == 0);
+		
+		// testing gap at fullcircle, i.e. vector (1,0)
+		cut_circle.addGap(convAngle(350), convAngle(10));
+		QVERIFY(cut_circle.getNumArcs() == 1);
+		QVERIFY(!cut_circle.isAngleInAnyGap(convAngle(349)));
+		QVERIFY(cut_circle.isAngleInAnyGap(convAngle(350)));
+		QVERIFY(cut_circle.isAngleInAnyGap(convAngle(10)));
+		QVERIFY(!cut_circle.isAngleInAnyGap(convAngle(11)));
+		
+		// delete gap using first gap position
+		cut_circle.deleteGap(convAngle(350));
+		QVERIFY(cut_circle.getNumArcs() == 0);
+		
+		// testing that arcs are sorted if order changes because of cutting
+		cut_circle.addGap(convAngle(340), convAngle(350));
+		QVERIFY(cut_circle.getNumArcs() == 1);
+		
+		cut_circle.addGap(convAngle(50), convAngle(90));
+		QVERIFY(cut_circle.getNumArcs() == 2);
+		QVERIFY(!cut_circle.isAngleInAnyGap(convAngle(49)));
+		QVERIFY(cut_circle.isAngleInAnyGap(convAngle(50)));
+		QVERIFY(cut_circle.isAngleInAnyGap(convAngle(90)));
+		QVERIFY(!cut_circle.isAngleInAnyGap(convAngle(91)));
+		
+		// this cut will change the order of arcs:
+		cut_circle.addGap(convAngle(345), convAngle(10));
+		auto arcs = cut_circle.getArcs();
+		QVERIFY(std::is_sorted(begin(arcs), end(arcs)));
+		cut_circle.deleteGap(convAngle(350));
+		
+		// testing that arcs are sorted if order changes because of cutting, different execution path
+		cut_circle.addGap(convAngle(340), convAngle(350));
+		cut_circle.addGap(convAngle(300), convAngle(310));
+		cut_circle.addGap(convAngle(250), convAngle(260));
+		QVERIFY(cut_circle.getNumArcs() == 4);
+		cut_circle.addGap(convAngle(200), convAngle(10));
+		QVERIFY(cut_circle.getNumArcs() == 2);
+		arcs = cut_circle.getArcs();
+		QVERIFY(std::is_sorted(begin(arcs), end(arcs)));
+		
+		// .ocd roundtrip test
+		std::vector<std::pair<int, int>> ocd_gaps = { {0x0004, 0x037F}, {0x070F, 0x0A8C} };
+		cut_circle.importFromOCD(ocd_gaps);
+		QVERIFY(cut_circle.getNumArcs() == int(ocd_gaps.size()));
+		QByteArray byte_array;
+		cut_circle.exportToOCD(byte_array);
+		QDataStream stream(byte_array);
+		std::pair<int, int> gap_angles;
+		std::vector<std::pair<int, int>> ocd_gaps_import;
+		
+		for (int i = 0; i < int(ocd_gaps.size()); ++i)
+		{
+			stream.readRawData(reinterpret_cast<char*>(&gap_angles.first), sizeof(gap_angles.first));
+			stream.readRawData(reinterpret_cast<char*>(&gap_angles.second), sizeof(gap_angles.second));
+			ocd_gaps_import.emplace_back(gap_angles);
+		}
+		QVERIFY(ocd_gaps == ocd_gaps_import);
+		
+		// test duplication and check for equality
+		auto duplicate_object = object.duplicate();
+		QVERIFY(object.equals(duplicate_object, true));
 	}
 	
 };  // class ObjectTest
