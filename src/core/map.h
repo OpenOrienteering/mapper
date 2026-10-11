@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2020, 2024 Kai Pastor
+ *    Copyright 2013-2020, 2024-2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -787,6 +787,10 @@ public:
 	 */
 	void loadTemplateFilesAsync(MapView& view, std::function<void(const QString&)> listener);
 	
+	/**
+	 * Returns if there is at least one non-georeferenced template (either open or closed)
+	 */
+	bool hasNonGeoreferencedTemplate() const;
 	
 	// Undo & Redo
 	
@@ -1491,8 +1495,8 @@ signals:
 	
 	
 	/** Emitted when the set of selected objects changes. Also emitted when the
-	 *  symbol of a selected object changes (which is similar to selecting another
-	 *  object). */
+	 *  symbol of a selected object changes (which is similar to selecting another object).
+	 */
 	void objectSelectionChanged();
 	
 	/**
@@ -1563,11 +1567,11 @@ private:
 		
 		/** Merges another MapColorSet into this set, trying to maintain
 		 *  the relative order of colors.
-		 *  If a filter is given, imports only the colors for  which
+		 *  If a filter is given, imports only the colors for which
 		 *  filter[color_index] is true, or which are spot colors referenced
 		 *  by the selected colors.
 		 *  If a map is given, this color set is modified through the map's
-		 *  color accessor methods so that other object become aware of the
+		 *  color accessor methods so that other objects become aware of the
 		 *  changes.
 		 *  @return a mapping from the imported color pointer in the other set
 		 *          to color pointers in this set.
