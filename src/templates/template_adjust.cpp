@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015, 2017-2020, 2025 Kai Pastor
+ *    Copyright 2012-2015, 2017-2020, 2025-2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -473,7 +473,7 @@ void TemplateAdjustWidget::updatePointErrors()
 	for (int row = 0; row < temp->getNumPassPoints(); ++row)
 	{
 		PassPoint& point = *temp->getPassPoint(row);
-		table->item(row, 4)->setText((point.error > 0) ? QString::number(point.error) : QString(QLatin1Char{'?'}));
+		table->item(row, 4)->setText((point.error >= 0) ? QString::number(point.error) : QString(QLatin1Char{'?'}));
 	}
 	
 	react_to_changes = true;
@@ -501,7 +501,7 @@ void TemplateAdjustWidget::updateRow(int row)
 	table->item(row, 1)->setText(QString::number(src_coords_template.y()));
 	table->item(row, 2)->setText(QString::number(point.dest_coords.x()));
 	table->item(row, 3)->setText(QString::number(point.dest_coords.y()));
-	table->item(row, 4)->setText((point.error > 0) ? QString::number(point.error) : QString(QLatin1Char{'?'}));
+	table->item(row, 4)->setText((point.error >= 0) ? QString::number(point.error) : QString(QLatin1Char{'?'}));
 	
 	react_to_changes = true;
 }
