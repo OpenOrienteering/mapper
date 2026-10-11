@@ -5,7 +5,7 @@ SKIP_LIST=
 while read WORD; do SKIP_LIST="${SKIP_LIST:+$SKIP_LIST,}$WORD"; done \
 <<END_SKIP_LIST
   3rd-party/cove/potrace
-  packaging/linux/Mapper.desktop
+  packaging/linux/openorienteering-mapper.desktop
   src/gdal/mapper-osmconf.ini
   src/printsupport/qt-5.5.1
   src/printsupport/qt-5.12.4

@@ -64,7 +64,7 @@ while(icons)
 endwhile()
 
 $<$<VERSION_LESS:@Qt5Core_VERSION@,5.15.0>:
-# Copy the Mapper runtime from the CMake project to the qmake project.
+# Copy the openorienteering-mapper runtime from the CMake project to the qmake project.
 # androiddeployqt uses this location.
 file(INSTALL
   DESTINATION "@MAPPER_PRO_DIR@"
@@ -72,7 +72,7 @@ file(INSTALL
   )
 >
 
-# Copy the Mapper runtime from the CMake project to the packaging dir.
+# Copy the openorienteering-mapper runtime from the CMake project to the packaging dir.
 # androiddeployqt checks this location.
 file(INSTALL
   DESTINATION "@MAPPER_PRO_DIR@/android-build/libs/@ANDROID_ABI@"
