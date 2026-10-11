@@ -1,6 +1,7 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
  *    Copyright 2012-2018, 2021, 2024 Kai Pastor
+ *    Copyright 2025 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,12 +22,15 @@
 
 #include "color_list_widget.h"
 
+#include <vector>
+
 #include <Qt>
 #include <QtGlobal>
 #include <QAbstractButton>
 #include <QAbstractItemView>
 #include <QAction>
 #include <QApplication>
+#include <QChar>
 #include <QColor>
 #include <QDialog>
 #include <QFlags>
@@ -48,8 +52,8 @@
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QToolButton>
-#include <QVBoxLayout>
 #include <QVariant>
+#include <QVBoxLayout>
 
 #include "core/map.h"
 #include "core/map_color.h"
@@ -123,6 +127,9 @@ ColorListWidget::ColorListWidget(Map* map, MainWindow* window, QWidget* parent)
 	edit_button = createToolButton(QIcon(QString::fromLatin1(":/images/settings.png")), QApplication::translate("OpenOrienteering::MapEditorController", "&Edit").remove(QLatin1Char('&')));
 	edit_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	
+	auto cleanup_button = createToolButton(QIcon(QString::fromLatin1(":/images/delete.png")), tr("Cleanup"));
+	cleanup_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+	
 	auto help_button = createToolButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
 	help_button->setAutoRaise(true);
 	
@@ -132,6 +139,7 @@ ColorListWidget::ColorListWidget(Map* map, MainWindow* window, QWidget* parent)
 	buttons_group_layout->addLayout(up_down_layout);
 	buttons_group_layout->addWidget(edit_button);
 	buttons_group_layout->addWidget(new QLabel(QString::fromLatin1("   ")), 1);
+	buttons_group_layout->addWidget(cleanup_button);
 	buttons_group_layout->addWidget(help_button);
 	
 	// The layout of all components below the table
@@ -184,6 +192,7 @@ ColorListWidget::ColorListWidget(Map* map, MainWindow* window, QWidget* parent)
 	connect(move_up_button, &QAbstractButton::clicked, this, &ColorListWidget::moveColorUp);
 	connect(move_down_button, &QAbstractButton::clicked, this, &ColorListWidget::moveColorDown);
 	connect(edit_button, &QAbstractButton::clicked, this, &ColorListWidget::editCurrentColor);
+	connect(cleanup_button, &QAbstractButton::clicked, this, &ColorListWidget::removeUnusedColors);
 	connect(help_button, &QAbstractButton::clicked, this, &ColorListWidget::showHelp);
 	
 	connect(map, &Map::colorAdded, this, &ColorListWidget::colorAdded);
@@ -223,9 +232,10 @@ void ColorListWidget::newColor()
 	editCurrentColor();
 }
 
-bool ColorListWidget::confirmColorDeletion(const MapColor* color_to_be_removed) const
+std::pair<QString, bool> ColorListWidget::determineColorUsage(const MapColor* color_to_be_removed) const
 {
 	QString detailed_text;
+	bool color_used_by_symbols = false;
 	
 	std::vector<const Symbol*> remaining_symbols;
 	remaining_symbols.reserve(std::size_t(map->getNumSymbols()));
@@ -246,6 +256,7 @@ bool ColorListWidget::confirmColorDeletion(const MapColor* color_to_be_removed) 
 		{
 			detailed_text += tr("This color is used by the following symbols:") + QChar::LineFeed
 							 + direct_usage + QChar::LineFeed;
+			color_used_by_symbols = true;
 		}
 	}
 	
@@ -286,18 +297,25 @@ bool ColorListWidget::confirmColorDeletion(const MapColor* color_to_be_removed) 
 			{
 				detailed_text += tr("This spot color is used by the following symbols:") + QChar::LineFeed
 								 + transitive_usage;
+				color_used_by_symbols = true;
 			}
 		}
 	}
-		
-	if (detailed_text.isEmpty())
+	
+	return std::make_pair(detailed_text, color_used_by_symbols);
+}
+
+bool ColorListWidget::confirmColorDeletion(const MapColor* color_to_be_removed) const
+{
+	const auto result = determineColorUsage(color_to_be_removed);
+	if (result.first.isEmpty())
 		return true;
 	
 	QMessageBox msgBox;
 	msgBox.setWindowTitle(tr("Confirmation"));
 	msgBox.setIcon(QMessageBox::Warning);
 	msgBox.setText(tr("Color \"%1\" is used by other elements. Removing the color will change the appearance of these elements. Do you really want to remove it?").arg(color_to_be_removed->getName()));
-	msgBox.setDetailedText(detailed_text);
+	msgBox.setDetailedText(result.first);
 	msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
 	return msgBox.exec() == QMessageBox::Yes;
 }
@@ -390,6 +408,44 @@ void ColorListWidget::editCurrentColor()
 			map->setColorsDirty();
 			map->updateAllObjects();
 		}
+	}
+}
+
+void ColorListWidget::removeUnusedColors()
+{
+	QString unused_color_names;
+	std::vector<int> unused_colors;
+	unused_colors.reserve(std::size_t(map->getNumColors()));
+	for (auto row = color_table->rowCount() - 1; row >= 0; --row)
+	{
+		const auto color = map->getMapColor(row);
+		const auto result = determineColorUsage(color);
+		if (!result.second)
+		{
+			unused_colors.push_back(row);
+			unused_color_names = color->getName() + QChar::LineFeed + unused_color_names;
+		}
+	}
+	if (unused_colors.empty())
+	{
+		QMessageBox::information(this, tr("Information"), tr("There are no unused colors to be removed."), QMessageBox::Ok);
+	}
+	else
+	{
+		QMessageBox msgBox;
+		msgBox.setWindowTitle(tr("Confirmation"));
+		msgBox.setIcon(QMessageBox::Question);
+		msgBox.setText(tr("Do you want to remove %n unused color(s) from the map?", nullptr, unused_colors.size()));
+		msgBox.setDetailedText(unused_color_names);
+		msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+		if (msgBox.exec() == QMessageBox::No)
+			return;
+		
+		for (auto i : unused_colors)
+			map->deleteColor(i);
+		
+		map->setColorsDirty();
+		map->updateAllObjects();
 	}
 }
 
