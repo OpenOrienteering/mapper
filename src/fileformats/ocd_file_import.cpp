@@ -469,8 +469,9 @@ void OcdFileImport::importColors(const OcdFile<Ocd::FormatV8>& file)
 	{
 		const Ocd::ColorInfoV8& color_info = symbol_header.color_info[i];
 		const QString name = convertOcdString(color_info.name);
-		int color_pos = map->getNumColors();
+		int color_pos = map->getNumColorPrios();
 		auto color = new MapColor(name, color_pos);
+		color->setId(color_info.number);
 		
 		// OC*D stores CMYK values as integers from 0-200.
 		MapColorCmyk cmyk;
@@ -500,13 +501,14 @@ void OcdFileImport::importColors(const OcdFile<Ocd::FormatV8>& file)
 				// The color's CMYK was customized.
 				color->setCmyk(cmyk);
 		}
+		color->setKnockout(color_info.overprint != 0);		
 		
-		if ((i == 0 && color->isBlack() && color->getName() == QLatin1String("Registration black"))
-		    || (!components.empty() && components.size() == num_separations
-		        && color_info.cmyk.cyan == 200
+		if ((color->isBlack() && color->getName().startsWith(QLatin1String("Registration black")))
+		    || (color_info.cmyk.cyan == 200
 		        && color_info.cmyk.magenta == 200
 		        && color_info.cmyk.yellow == 200
 		        && color_info.cmyk.black == 200
+		        && components.size() == num_separations
 		        && std::all_of(color_info.separations, color_info.separations + num_separations,
 		                       [](const auto& s) { return s == 200; }) ) )
 		{
@@ -528,7 +530,7 @@ void OcdFileImport::importColors(const OcdFile<Ocd::FormatV8>& file)
 	// Insert the spot colors into the map
 	for (auto i = 0u; i < num_separations; ++i)
 	{
-		map->addColor(spot_colors[i], map->getNumColors());
+		map->addColor(spot_colors[i], map->getNumColorPrios());
 	}
 }
 
@@ -543,9 +545,14 @@ void OcdFileImport::importColors(const OcdFile< F >& file)
 		return a->getPriority() < b->getPriority();
 	});
 	// Insert the spot colors into the map after (below) the regular colors.
+	auto non_conflicting_id = 0;
+	for (auto prio = 0; prio < map->getNumColorPrios(); ++prio)
+		non_conflicting_id = std::max(non_conflicting_id, map->getColorByPrio(prio)->getId());
+	non_conflicting_id += 512; // Provide breathing room to the regular colors
 	for (auto spot_color : spot_colors)
 	{
-		map->addColor(spot_color, map->getNumColors());
+		spot_color->setId(non_conflicting_id++);
+		map->addColor(spot_color, map->getNumColorPrios());
 	}
 }
 
@@ -703,12 +710,12 @@ void OcdFileImport::importColor(const QString& param_string)
 	if (!number_ok)
 		return;
 		
-	if ((cmyk.isBlack() && name == QLatin1String("Registration black"))
-	    || (!components.empty() && components.size() == spot_colors.size()
-	        && qFuzzyCompare(cmyk.c, 1)
+	if ((cmyk.isBlack() && name.startsWith(QLatin1String("Registration black")))
+	    || (qFuzzyCompare(cmyk.c, 1)
 	        && qFuzzyCompare(cmyk.m, 1)
 	        && qFuzzyCompare(cmyk.y, 1)
 	        && qFuzzyCompare(cmyk.k, 1)
+	        && components.size() == spot_colors.size()
 	        && std::all_of(begin(components), end(components),
 	                       [](const auto& c) { return qFuzzyCompare(c.factor, 1); }) ) )
 	{
@@ -716,8 +723,9 @@ void OcdFileImport::importColor(const QString& param_string)
 		return;
 	}
 	
-	int color_pos = map->getNumColors();
+	int color_pos = map->getNumColorPrios();
 	auto color = new MapColor(name, color_pos);
+	color->setId(number);
 	color->setCmyk(cmyk);
 	color->setOpacity(opacity);
 	map->addColor(color, color_pos);
