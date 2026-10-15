@@ -35,6 +35,7 @@
 #include <QPagedPaintDevice>
 #include <QPaintEngine> // IWYU pragma: keep
 #include <QPainter>
+#include <QPainterPath>
 #include <QPageLayout>
 #include <QPointF>
 #include <QRect>
@@ -98,6 +99,21 @@ namespace literal {
 	static const QLatin1String single_page("single_page");
 	
 }  // namespace literal
+
+
+/*
+ * Across a range of Qt versions, QPainter has inconsistent handling of pure
+ * QRectF bounds for clipping: The coordinates are rounded to integers. This
+ * leads to visual glitches in MapPrinter output. QPainterPath is handled more
+ * consistently. This function marks the handling of the quirk.
+ * The QPainterPath pattern is also used as a fallback in QPainter::setClipRect.
+ */
+void setExactClipRect(QPainter* painter, const QRectF& rect)
+{
+	QPainterPath path;
+	path.addRect(rect);
+	painter->setClipPath(path, Qt::ReplaceClip);
+}
 
 
 }  // namespace
@@ -1062,7 +1078,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, c
 		
 		page_painter->setRenderHints(render_hints);
 		page_painter->setTransform(page_extent_transform, /*combine*/ true);
-		page_painter->setClipRect(page_region_used, Qt::ReplaceClip);
+		setExactClipRect(page_painter, page_region_used);
 		
 		map.drawTemplates(page_painter, page_region_used, 0, first_front_template - 1, view, false);
 		
@@ -1110,7 +1126,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, c
 		
 		map_painter->setRenderHints(render_hints);
 		map_painter->setTransform(page_extent_transform, /*combine*/ true);
-		map_painter->setClipRect(page_region_used, Qt::ReplaceClip);
+		setExactClipRect(map_painter, page_region_used);
 		
 		RenderConfig config = { map, page_region_used, units_per_mm * scale_adjustment, RenderConfig::NoOptions, 1.0 };
 		
@@ -1150,7 +1166,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, c
 		
 		page_painter->setRenderHints(render_hints);
 		page_painter->setTransform(page_extent_transform, /*combine*/ true);
-		page_painter->setClipRect(page_region_used, Qt::ReplaceClip);
+		setExactClipRect(page_painter, page_region_used);
 		
 		const auto& map_grid = map.getGrid();
 		if (map_grid.hasAlpha() && !use_buffer_for_map && engineMayRasterize())
@@ -1201,7 +1217,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, c
 		
 		painter->setRenderHints(render_hints);
 		painter->setTransform(page_extent_transform, /*combine*/ true);
-		painter->setClipRect(page_region_used, Qt::ReplaceClip);
+		setExactClipRect(painter, page_region_used);
 		
 		map.drawTemplates(painter, page_region_used, first_front_template, map.getNumTemplates() - 1, view, false);
 		
@@ -1258,7 +1274,7 @@ void MapPrinter::drawSeparationPages(QPrinter* printer, QPainter* device_painter
 	
 	// Translate and clip for margins and print area
 	device_painter->translate(-page_extent.left(), -page_extent.top());
-	device_painter->setClipRect(page_extent.intersected(print_area).adjusted(-10, 10, 10, 10), Qt::ReplaceClip);
+	setExactClipRect(device_painter, page_extent.intersected(print_area).adjusted(-10, 10, 10, 10));
 	
 	bool need_new_page = false;
 	for (int i = map.getNumColors() - 1; i >= 0; --i)
