@@ -39,16 +39,18 @@
 #include <QSize>
 #include <QString>
 
-#include "global.h"
-#include "test_config.h"
-#include "core/map.h"
-#include "core/map_color.h"
-#include "core/renderables/renderable.h"
-#include "core/symbols/area_symbol.h"
-#include "core/symbols/combined_symbol.h"
-#include "core/symbols/line_symbol.h"
-#include "core/symbols/point_symbol.h"
-#include "core/symbols/symbol.h"
+#include <global.h>
+#include <core/map.h>
+#include <core/map_color.h>
+#include <core/renderables/renderable.h>
+#include <core/symbols/area_symbol.h>
+#include <core/symbols/combined_symbol.h>
+#include <core/symbols/line_symbol.h>
+#include <core/symbols/point_symbol.h>
+#include <core/symbols/symbol.h>
+
+#include <test_config.h>
+#include "image-difference.h"
 
 using namespace OpenOrienteering;
 
@@ -65,79 +67,6 @@ static const auto example_files = {
     "data:/examples/forest sample.omap",
     "data:/examples/overprinting.omap",
 };
-
-
-/**
- * Tests if any pixel in the image region given by x0, y0, x1, y1
- * approximately matches the expected value.
- */
-bool fuzzyComparePixel(const QImage& image, int x0, int y0, int x1, int y1, const quint32 expected)
-{
-	for (int y = y0; y < y1; ++y)
-	{
-		const auto* scanline = reinterpret_cast<const quint32*>(image.scanLine(y));
-		for (int x = x0; x < x1; ++x)
-		{
-			if (scanline[x] == expected)
-				return true;
-		}
-	}
-	for (int y = y0; y < y1; ++y)
-	{
-		const auto* scanline = reinterpret_cast<const quint32*>(image.scanLine(y));
-		for (int x = x0; x < x1; ++x)
-		{
-			const auto actual = scanline[x];
-			if (qAbs(qRed(actual) - qRed(expected)) <= 1
-			    && qAbs(qGreen(actual) - qGreen(expected)) <= 1
-			    && qAbs(qBlue(actual)  - qBlue(expected))  <= 1
-			    && qAbs(qAlpha(actual) - qAlpha(expected)) <= 1)
-				return true;
-		}
-	}
-	return false;
-}
-
-
-/**
- * Tests if the images are different, ignoring edges which differ in location by one pixel.
- * 
- * Returns { -1, -1 } when the images are equal,
- * the minimum width and height when the images have different sizes,
- * or the coordinates of the first pixel which does not match (fuzzily).
- * In the second case, it uses QCOMPARE to output the sizes.
- * In the last case, it uses QCOMPARE to output the pixel values.
- */
-QPoint fuzzyDifference(const QImage& lhs, const QImage& rhs)
-{
-	if (lhs.size() != rhs.size())
-	{
-		auto actual_image = lhs.size();
-		auto expected_image = rhs.size();
-		[actual_image, expected_image](){ QCOMPARE(actual_image, expected_image); }();
-		return { qMin(lhs.width(), rhs.width()), qMin(lhs.height(), rhs.height()) };
-	}
-	
-	for (auto y = 0; y < lhs.height(); ++y)
-	{
-		const auto* left = reinterpret_cast<const quint32*>(lhs.scanLine(y));
-		const auto* right = reinterpret_cast<const quint32*>(rhs.scanLine(y));
-		for (auto x = 0; x < lhs.width(); ++x)
-		{
-			if (Q_UNLIKELY(left[x] != right[x])
-			    && !fuzzyComparePixel(lhs, qMax(x-1, 0), qMax(y-1, 0), qMin(x+2, lhs.width()), qMin(y+2, lhs.height()), right[x]))
-			{
-				auto actual = QString::number(left[x], 16).toLatin1();
-				auto actual_rgb = actual.constData();
-				auto expected = QString::number(right[x], 16).toLatin1();
-				auto expected_rgb = expected.constData();
-				[actual_rgb, expected_rgb](){ QCOMPARE(actual_rgb, expected_rgb); }();
-				return { x, y };
-			}
-		}
-	}
-	return { -1, -1 };
-}
 
 
 }  // namespace
