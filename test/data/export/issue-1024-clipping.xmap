@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="9">
+    <notes></notes>
+    <georeferencing scale="10000">
+        <projected_crs id="Local"/>
+    </georeferencing>
+    <colors count="3">
+        <color priority="0" name="BK" c="0" m="0" y="0" k="1" opacity="1">
+            <spotcolors>
+                <namedcolor>BK</namedcolor>
+            </spotcolors>
+            <cmyk method="rgb"/>
+            <rgb method="custom" r="0" g="0" b="0"/>
+        </color>
+        <color priority="1" name="BL" c="1" m="1" y="0" k="0" opacity="1">
+            <spotcolors>
+                <namedcolor>BL</namedcolor>
+            </spotcolors>
+            <cmyk method="rgb"/>
+            <rgb method="custom" r="0" g="0" b="1"/>
+        </color>
+        <color priority="2" name="GR" c="1" m="0" y="1" k="0" opacity="1">
+            <spotcolors>
+                <namedcolor>GR</namedcolor>
+            </spotcolors>
+            <cmyk method="rgb"/>
+            <rgb method="custom" r="0" g="1" b="0"/>
+        </color>
+    </colors>
+    <barrier version="6" required="0.6.0">
+        <symbols count="3" id="TEST">
+            <symbol type="4" id="0" code="1" name="1">
+                <area_symbol inner_color="-1" min_area="0" patterns="1">
+                    <pattern type="1" angle="0" line_spacing="1000" line_offset="500" offset_along_line="0" color="2" line_width="200"/>
+                </area_symbol>
+            </symbol>
+            <symbol type="4" id="1" code="2" name="2">
+                <area_symbol inner_color="1" min_area="0" patterns="0"/>
+            </symbol>
+            <symbol type="2" id="2" code="3" name="3">
+                <line_symbol color="0" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0" scale_dash_symbol="false"/>
+            </symbol>
+        </symbols>
+        <parts count="2" current="0">
+            <part name="default">
+                <objects count="4">
+                    <object type="1" symbol="2">
+                        <coords count="2">
+                            <coord x="69000" y="38000"/>
+                            <coord x="86000" y="40000" flags="16"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                    <object type="1" symbol="2">
+                        <coords count="2">
+                            <coord x="75000" y="47000"/>
+                            <coord x="78000" y="34000"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                    <object type="1" symbol="0">
+                        <coords count="5">
+                            <coord x="74000" y="36000" flags="32"/>
+                            <coord x="79000" y="36000" flags="32"/>
+                            <coord x="79000" y="42000" flags="32"/>
+                            <coord x="74000" y="42000" flags="32"/>
+                            <coord x="74000" y="36000" flags="50"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                    <object type="1" symbol="1">
+                        <coords count="10">
+                            <coord x="86000" y="33000" flags="32"/>
+                            <coord x="86000" y="48000"/>
+                            <coord x="68000" y="48000"/>
+                            <coord x="68000" y="33000"/>
+                            <coord x="86000" y="33000" flags="50"/>
+                            <coord x="74000" y="36000" flags="32"/>
+                            <coord x="74000" y="42000"/>
+                            <coord x="79000" y="42000"/>
+                            <coord x="79000" y="36000"/>
+                            <coord x="74000" y="36000" flags="50"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </objects>
+            </part>
+            <part name="FG">
+                <objects count="0"/>
+            </part>
+        </parts>
+        <templates count="0" first_front_template="0">
+            <defaults use_meters_per_pixel="true" meters_per_pixel="0" dpi="0" scale="0"/>
+        </templates>
+        <view>
+            <grid color="#80646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
+            <map_view zoom="4" position_x="80000" position_y="40000">
+                <map opacity="1" visible="true"/>
+                <templates count="0"/>
+            </map_view>
+        </view>
+        <print scale="10000" resolution="300" mode="raster">
+            <page_format paper_size="Custom" orientation="portrait" h_overlap="5" v_overlap="5">
+                <dimensions width="110" height="110"/>
+                <page_rect left="5" top="5" width="100" height="100"/>
+            </page_format>
+            <print_area left="71.8" top="34.8" width="9.5" height="9.5"/>
+        </print>
+    </barrier>
+</map>
