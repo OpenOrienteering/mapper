@@ -960,7 +960,12 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 }
 
 
-void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, QImage* page_buffer) const
+void MapPrinter::drawPage(
+        QPainter* device_painter,
+        const QRectF& page_extent,
+        QImage* page_buffer,
+        RenderConfig::Options render_options
+) const
 {
 	// Determine transformation and clipping for page extent and region
 	const qreal units_per_mm = options.resolution / 25.4;
@@ -971,10 +976,16 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	transform.scale(scale_adjustment, scale_adjustment);
 	// Translate and clip for margins and print area
 	transform.translate(-page_extent.left(), -page_extent.top());
-	drawPage(device_painter, page_extent, transform, page_buffer);
+	drawPage(device_painter, page_extent, transform, page_buffer, render_options);
 }
 
-void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, const QTransform& page_extent_transform, QImage* page_buffer) const
+void MapPrinter::drawPage(
+        QPainter* device_painter,
+        const QRectF& page_extent,
+        const QTransform& page_extent_transform,
+        QImage* page_buffer,
+        RenderConfig::Options render_options
+) const
 {
 	// Logical units per mm
 	const qreal units_per_mm = options.resolution / 25.4;
@@ -1128,7 +1139,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, c
 		map_painter->setTransform(page_extent_transform, /*combine*/ true);
 		setExactClipRect(map_painter, page_region_used);
 		
-		RenderConfig config = { map, page_region_used, units_per_mm * scale_adjustment, RenderConfig::NoOptions, 1.0 };
+		RenderConfig config = { map, page_region_used, units_per_mm * scale_adjustment, render_options, 1.0 };
 		
 		if (rasterModeSelected() && options.simulate_overprinting)
 		{
