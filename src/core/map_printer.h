@@ -39,6 +39,8 @@
    class QPrinterInfo;
 #endif
 
+#include <core/renderables/renderable.h>
+
 template <class Key, class T>
 class QHash;
 class QImage;
@@ -367,9 +369,20 @@ public:
 	 *  Otherwise, drawPage() may allocate a buffer with this map printer's
 	 *  resolution and size. Parameter units_per_inch has no influence on this
 	 *  buffer but refers to the logical coordinates of device_painter. */
-	void drawPage(QPainter* device_painter, const QRectF& page_extent, QImage* page_buffer = nullptr) const;
-	
-	void drawPage(QPainter* device_painter, const QRectF& page_extent, const QTransform& page_extent_transform, QImage* page_buffer = nullptr) const;
+	void drawPage(
+	        QPainter* device_painter,
+	        const QRectF& page_extent,
+	        QImage* page_buffer = nullptr,
+	        RenderConfig::Options render_options = RenderConfig::NoOptions
+	) const;
+
+	void drawPage(
+	        QPainter* device_painter,
+	        const QRectF& page_extent,
+	        const QTransform& page_extent_transform,
+	        QImage* page_buffer = nullptr,
+	        RenderConfig::Options render_options = RenderConfig::NoOptions
+	) const;
 	
 	/** Draws the separations as distinct pages to the printer. */
 	void drawSeparationPages(QPrinter* printer, QPainter* device_painter, const QRectF& page_extent) const;

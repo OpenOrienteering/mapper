@@ -85,7 +85,8 @@ private slots:
 		image.fill(QColor(Qt::white));
 		{
 			QPainter p(&image);
-			printer.drawPage(&p, printer.getPrintArea(), &image);
+			p.setRenderHint(QPainter::Antialiasing, false);
+			printer.drawPage(&p, printer.getPrintArea(), &image, RenderConfig::DisableAntialiasing);
 		}
 		
 		auto image_filepath = QFileInfo{map_filepath}.absoluteFilePath();
