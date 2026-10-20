@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2020, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -685,15 +685,22 @@ bool TextObjectEditorHelper::mouseReleaseEvent(QMouseEvent* event, const MapCoor
 }
 
 
-
 bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 {
+	auto calcNewCursorPosition = [this](int offset) {
+		Q_ASSERT(qAbs(offset) == 1);
+		const int new_cursor_position = cursor_position + offset;
+		if (pristine_text.at(new_cursor_position).isLowSurrogate())
+			return new_cursor_position + offset;
+		return new_cursor_position;
+	};
+	
 	TextObjectEditorHelper::BatchEdit transaction(this);
 	if (event->key() == Qt::Key_Backspace)
 	{
 		if (cursor_position > 0 && cursor_position == anchor_position)
 		{
-			setSelection(cursor_position-1, cursor_position);
+			setSelection(calcNewCursorPosition(-1), cursor_position);
 		}
 		replaceSelectionText({});
 	}
@@ -701,28 +708,28 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 	{
 		if (cursor_position < pristine_text.size() && cursor_position == anchor_position)
 		{
-			setSelection(cursor_position+1, cursor_position);
+			setSelection(calcNewCursorPosition(+1), cursor_position);
 		}
 		replaceSelectionText({});
 	}
 	else if (event->matches(QKeySequence::MoveToPreviousChar))
 	{
-		const auto new_pos = qMax(0, cursor_position - 1);
+		const auto new_pos = qMax(0, calcNewCursorPosition(-1));
 		setSelection(new_pos, new_pos);
 	}
 	else if (event->matches(QKeySequence::SelectPreviousChar))
 	{
-		const auto new_pos = qMax(0, cursor_position - 1);
+		const auto new_pos = qMax(0, calcNewCursorPosition(-1));
 		setSelection(anchor_position, new_pos);
 	}
 	else if (event->matches(QKeySequence::MoveToNextChar))
 	{
-		const auto new_pos = qMin(pristine_text.length(), cursor_position + 1);
+		const auto new_pos = qMin(pristine_text.length(), calcNewCursorPosition(+1));
 		setSelection(new_pos, new_pos);
 	}
 	else if (event->matches(QKeySequence::SelectNextChar))
 	{
-		const auto new_pos = qMin(pristine_text.length(), cursor_position + 1);
+		const auto new_pos = qMin(pristine_text.length(), calcNewCursorPosition(+1));
 		setSelection(anchor_position, new_pos);
 	}
 	else if (event->matches(QKeySequence::MoveToPreviousLine)

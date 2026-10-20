@@ -40,35 +40,49 @@ int TextObjectPartInfo::getIndex(double pos_x) const
 {
 	int left = 0;
 	int right = part_text.length();
-	while (right != left)	
+	while (right != left)
 	{
 		int middle = (left + right) / 2;
+		if (middle && part_text.at(middle-1).isHighSurrogate())
+			--middle;
 		double x = part_x + metrics.horizontalAdvance(part_text.left(middle));
 		if (pos_x >= x)
 		{
 			if (middle >= right)
 				return right;
-			double next = part_x + metrics.horizontalAdvance(part_text.left(middle + 1));
+			int middle_plus_offset = middle + 1;
+			if (middle_plus_offset < part_text.length())
+			{
+				if (part_text.at(middle).isHighSurrogate())
+					++middle_plus_offset;
+			}
+			double next = part_x + metrics.horizontalAdvance(part_text.left(middle_plus_offset));
 			if (pos_x < next)
 				if (pos_x < (x + next) / 2)
 					return middle;
 				else
-					return middle + 1;
+					return middle_plus_offset;
 			else
-				left = middle + 1;
+				left = middle_plus_offset;
 		}
 		else // if (point.x() < x)
 		{
 			if (middle <= 0)
 				return 0;
-			double prev = part_x + metrics.horizontalAdvance(part_text.left(middle - 1));
+			int middle_minus_offset = middle - 1;
+			if (middle > 1)
+			{
+				if (part_text.at(middle_minus_offset).isLowSurrogate())
+					--middle_minus_offset;
+			}
+			double prev = part_x + metrics.horizontalAdvance(part_text.left(middle_minus_offset));
 			if (pos_x > prev)
 				if (pos_x > (x + prev) / 2)
 					return middle;
 				else
-					return middle - 1;
+					return middle_minus_offset;
 			else
-				right = middle - 1;
+				right = middle_minus_offset;
 		}
 	}
 	return right;
