@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018, 2020, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -43,6 +43,7 @@ namespace OpenOrienteering {
 class Map;
 class MapCoordF;
 class Object;
+struct PartConfigItem;
 class Symbol;
 using SymbolDictionary = QHash<qint32, Symbol*>; // from symbol.h
 class UndoStep;
@@ -62,8 +63,6 @@ using SelectionInfoVector = std::vector<std::pair<int, Object*>> ;
  * a map part for event-specific map objects and parts for course-specific
  * map objects. Then a course can be printed by merging the event-specific part
  * with the part for the course.
- * 
- * Currently, only one map part can be used per map.
  */
 class MapPart
 {
@@ -155,12 +154,12 @@ public:
 	void addObject(Object* object, int pos);
 	
 	/**
-	 * Deleted the object from the given index.
+	 * Deletes the object from the given index.
 	 */
 	void deleteObject(int pos);
 	
 	/**
-	 * Deleted the object from the given index.
+	 * Deletes the object from the given index.
 	 * 
 	 * Returns if the object was found in this part.
 	 */
@@ -184,14 +183,14 @@ public:
 
 	
 	/**
-	 * Imports the contents another part into this part.
+	 * Imports the contents of another part into this part.
 	 * 
 	 * The other part can be from another map.
 	 * Uses symbol_map to replace all symbols contained there.
 	 * No replacement is done for symbols which are not in the symbol_map.
 	 */
 	std::unique_ptr<UndoStep> importPart(const MapPart* other, const QHash<const Symbol*, Symbol*>& symbol_map,
-		const QTransform& transform, bool select_new_objects);
+		const QTransform& transform, bool select_new_objects, const PartConfigItem* import_config_part = nullptr);
 	
 	
 	/**
@@ -302,4 +301,4 @@ const Object* MapPart::getObject(int i) const
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_MAP_PART_H

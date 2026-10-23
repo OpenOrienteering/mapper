@@ -165,6 +165,7 @@ set(Mapper_Common_SRCS
   gui/touch_cursor.cpp
   gui/util_gui.cpp
   
+  gui/map/import_map_dialog.cpp
   gui/map/new_map_dialog.cpp
   gui/map/map_dialog_scale.cpp
   gui/map/map_editor.cpp
