@@ -1,6 +1,7 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
  *    Copyright 2013-2020, 2025 Kai Pastor
+ *    Copyright 2026 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -38,6 +39,7 @@
 #include "core/symbols/symbol.h"
 #include "util/key_value_container.h"
 
+class QByteArray;
 class QTransform;
 class QXmlStreamReader;
 class QXmlStreamWriter;
@@ -1036,6 +1038,45 @@ bool operator== (const PathObject::Intersection& lhs, const PathObject::Intersec
 	       qAbs(lhs.other_length - rhs.other_length) <= epsilon;
 }
 
+/**
+ * Manages gaps in circular point objects.
+ * 
+ * The visible arcs of a cut circle are stored as pairs. The first value
+ * specifies the start angle, and the second specifies the span angle.
+ * 
+ * Angles are expressed in units of 1/160 of a degree; therefore, 
+ * a full circle equals 57600 units (160 * 360).
+ * This representation accommodates both QPainter's resolution of 1/16 
+ * of a degree and the 1/10 degree resolution used in .ocd files.
+ */
+class CutCircle
+{
+public:
+	CutCircle();
+	
+	using ArcsList = std::vector<std::pair<int, int>>;
+	
+	ArcsList::const_iterator begin() const { return arcs.begin(); }
+	ArcsList::const_iterator end() const { return arcs.end(); }
+	ArcsList& getArcs() { return arcs; }
+	const ArcsList& getArcs() const { return arcs; }
+	void setArcs(const ArcsList& other) { arcs = other; }
+	int getNumArcs() const { return arcs.size(); }
+	const std::pair<int, int> getArc(int index) const { return arcs.at(index); }
+	void addArc(std::pair<int, int> arc) { arcs.emplace_back(arc); }
+	void importFromOCD(ArcsList& ocd_gap_list);
+	void exportToOCD(QByteArray& byte_array) const;
+	bool isAngleInAnyGap(int angle) const;
+	bool isAngleInGap(int angle, int index) const;
+	void deleteGap(int angle);
+	void addGap(int first_angle, int second_angle);
+	void sortGaps();
+	
+private:
+	static constexpr int fullcircle = 360 * 16 * 10;
+	
+	ArcsList arcs;
+};
 
 
 /**
@@ -1091,6 +1132,12 @@ public:
 	
 	
 	bool intersectsBox(const QRectF& box) const override;
+	
+	const CutCircle& getCutCircle() const { return cut_circle; };
+	CutCircle& getCutCircle() { return cut_circle; };
+	
+private:
+	CutCircle cut_circle;
 };
 
 
