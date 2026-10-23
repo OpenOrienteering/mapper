@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,11 +18,12 @@
  */
 
 
-#ifndef OPENORIENTEERING_UTIL_FILE_DIALOG_H
-#define OPENORIENTEERING_UTIL_FILE_DIALOG_H
+#ifndef OPENORIENTEERING_FILE_DIALOG_H
+#define OPENORIENTEERING_FILE_DIALOG_H
 
 #include <QFileDialog>
 #include <QString>
+#include <QStringList>
 
 class QWidget;
 
@@ -70,6 +71,24 @@ namespace FileDialog {
 	
 	
 	/**
+	 * Calls QFileDialog::getOpenFileNames with adjusted parameters.
+	 * 
+	 * \see adjustParameters, QFileDialog::getOpenFileNames
+	 */
+	inline
+	QStringList getOpenFileNames(QWidget* parent = nullptr,
+	                             const QString& caption = {},
+	                             const QString& dir = {},
+	                             QString filter = {},
+	                             QString* selected_filter = nullptr,
+	                             QFileDialog::Options options = {})
+	{
+		adjustParameters(filter, options);
+		return QFileDialog::getOpenFileNames(parent, caption, dir, filter, selected_filter, options);
+	}
+	
+	
+	/**
 	 * Calls QFileDialog::getSaveFileName with adjusted parameters.
 	 * 
 	 * \see adjustParameters, QFileDialog::getSaveFileName
@@ -92,4 +111,4 @@ namespace FileDialog {
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_FILE_DIALOG_H
