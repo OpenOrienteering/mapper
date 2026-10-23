@@ -172,11 +172,14 @@ bool XmlRecoveryHelper::operator() ()
 
 //### XmlElementWriter ###
 
+bool XmlElementWriter::write_count = true;
+
 void XmlElementWriter::write(const MapCoordVector& coords)
 {
 	namespace literal = XmlStreamLiteral;
 	
-	writeAttribute(literal::count, coords.size());
+	if (write_count)
+		writeAttribute(literal::count, coords.size());
 	
 	if (XMLFileFormat::active_version < 6 || xml.autoFormatting())
 	{
@@ -225,8 +228,10 @@ void XmlElementReader::read(MapCoordVector& coords)
 	
 	coords.clear();
 	
+	const auto has_count = hasAttribute(literal::count);
 	const auto num_coords = attribute<unsigned int>(literal::count);
-	coords.reserve(std::min(num_coords, 500000u));
+	if (has_count)
+		coords.reserve(std::min(num_coords, 500000u));
 	
 	try
 	{
@@ -273,7 +278,7 @@ void XmlElementReader::read(MapCoordVector& coords)
 		throw FileFormatException(::OpenOrienteering::MapCoord::tr(e.what()));
 	}
 	
-	if (coords.size() != num_coords)
+	if (has_count && coords.size() != num_coords)
 	{
 		throw FileFormatException(::OpenOrienteering::ImportExport::tr("Expected %1 coordinates, found %2.").arg(num_coords).arg(coords.size()));
 	}
@@ -287,6 +292,7 @@ void XmlElementReader::readForText(MapCoordVector& coords)
 	coords.clear();
 	coords.reserve(2);
 	
+	const auto has_count = hasAttribute(literal::count);
 	const auto num_coords = attribute<unsigned int>(literal::count);
 	
 	QScopedValueRollback<MapCoord::BoundsOffset> offset{MapCoord::boundsOffset()};
@@ -348,7 +354,7 @@ void XmlElementReader::readForText(MapCoordVector& coords)
 		throw FileFormatException(::OpenOrienteering::MapCoord::tr(e.what()));
 	}
 	
-	if (coords.size() != num_coords)
+	if (has_count && coords.size() != num_coords)
 	{
 		throw FileFormatException(::OpenOrienteering::ImportExport::tr("Expected %1 coordinates, found %2.").arg(num_coords).arg(coords.size()));
 	}

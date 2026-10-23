@@ -83,7 +83,8 @@ void MapPart::save(QXmlStreamWriter& xml) const
 	part_element.writeAttribute(literal::name, name);
 	{
 		XmlElementWriter objects_element(xml, literal::objects);
-		objects_element.writeAttribute(literal::count, objects.size());
+		if (XmlElementWriter::write_count)
+			objects_element.writeAttribute(literal::count, objects.size());
 		for (const Object* object : objects)
 		{
 			writeLineBreak(xml);

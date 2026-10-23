@@ -218,6 +218,12 @@ public:
 	void writeAttribute(const QLatin1String& qualifiedName, bool value);
 	
 	/**
+	 * A flag which disables the writing of the count attribute.
+	 * Defaults to true.
+	 */
+	static bool write_count;
+	
+	/**
 	 * Writes attributes named left, top, width and height,
 	 * representing the given area.
 	 * This methods uses Qt's default QString::number(qreal) implementation.
