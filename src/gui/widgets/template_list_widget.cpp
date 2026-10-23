@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020, 2025 Kai Pastor
+ *    Copyright 2012-2020, 2025, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,7 +22,6 @@
 #include "template_list_widget.h"
 
 #include <utility>
-#include <vector>
 
 #include <Qt>
 #include <QtGlobal>
@@ -95,7 +94,7 @@
 #include "templates/template_position_dock_widget.h"
 #include "templates/template_table_model.h"
 #include "templates/template_tool_move.h"
-#include <templates/template_track.h>
+#include "templates/template_track.h"
 #include "tools/tool.h"
 #include "util/item_delegates.h"
 
@@ -620,8 +619,16 @@ bool TemplateListWidget::eventFilter(QObject* watched, QEvent* event)
 }
 
 
-
 std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController& controller)
+{
+	auto new_templates = showOpenTemplateDialog(dialog_parent, controller, false);
+	if (new_templates.empty())
+		return {};
+	return std::move(new_templates.front());
+}
+
+
+std::vector<std::unique_ptr<Template>> TemplateListWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController& controller, bool multiple_templates)
 {
 	QSettings settings;
 	QString template_directory = settings.value(QString::fromLatin1("templateFileDirectory"), QDir::homePath()).toString();
@@ -633,44 +640,68 @@ std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* di
 		pattern.append(QLatin1String(extension));
 	}
 	pattern.remove(0, 1);
-	QString path = FileDialog::getOpenFileName(dialog_parent,
-	                                           QCoreApplication::translate("OpenOrienteering::MapEditorController",
-	                                                                       "Open template..."),
-	                                           template_directory,
-	                                           QString::fromLatin1("%1 (%2);;%3 (*.*)").arg(
-	                                               tr("Template files"), pattern, tr("All files")));
-	auto canonical_path = QFileInfo(path).canonicalFilePath();
-	if (!canonical_path.isEmpty())
+	
+	QStringList paths;
+	if (!multiple_templates)
 	{
-		path = canonical_path;
-		settings.setValue(QString::fromLatin1("templateFileDirectory"), QFileInfo(path).canonicalPath());
+		auto path = FileDialog::getOpenFileName(dialog_parent,
+		                                        QCoreApplication::translate("OpenOrienteering::MapEditorController",
+		                                                                    "Open template..."),
+		                                        template_directory,
+		                                        QString::fromLatin1("%1 (%2);;%3 (*.*)").arg(
+		                                            tr("Template files"), pattern, tr("All files")));
+		paths.append(path);
 	}
-	else if (path.isEmpty())
+	else
 	{
-		return {};
+		paths = FileDialog::getOpenFileNames(dialog_parent,
+		                                     QCoreApplication::translate("OpenOrienteering::MapEditorController",
+		                                                                 "Open templates..."),
+		                                     template_directory,
+		                                     QString::fromLatin1("%1 (%2);;%3 (*.*)").arg(
+		                                         tr("Template files"), pattern, tr("All files")));
 	}
 	
-	QString error;
-	auto new_temp = Template::templateForPath(path, controller.getMap());
-	if (!new_temp)
-	{
-		error = tr("File format not recognized.");
-	}
-	else if (!new_temp->setupAndLoad(dialog_parent, controller.getMainWidget()->getMapView()))
-	{
-		error = new_temp->errorString();
-		if (new_temp->getTemplateState() == Template::Invalid && error.isEmpty())
-			error = tr("Failed to load template. Does the file exist and is it valid?");
-		new_temp.reset();
-	}
+	std::vector<std::unique_ptr<Template>> new_templates;
+	new_templates.reserve(paths.size());
 	
-	if (!error.isEmpty())
+	for (auto path : qAsConst(paths))
 	{
-		auto const error_template = tr("Cannot open template\n%1:\n%2");
-		QMessageBox::warning(dialog_parent, tr("Error"), error_template.arg(path, error));
+		auto canonical_path = QFileInfo(path).canonicalFilePath();
+		if (!canonical_path.isEmpty())
+		{
+			path = canonical_path;
+			settings.setValue(QString::fromLatin1("templateFileDirectory"), QFileInfo(path).canonicalPath());
+		}
+		else if (path.isEmpty())
+		{
+			continue;
+		}
+		
+		QString error;
+		auto new_temp = Template::templateForPath(path, controller.getMap());
+		if (!new_temp)
+		{
+			error = tr("File format not recognized.");
+		}
+		else if (!new_temp->setupAndLoad(dialog_parent, controller.getMainWidget()->getMapView()))
+		{
+			error = new_temp->errorString();
+			if (new_temp->getTemplateState() == Template::Invalid && error.isEmpty())
+				error = tr("Failed to load template. Does the file exist and is it valid?");
+			new_temp.reset();
+		}
+		
+		if (!error.isEmpty())
+		{
+			auto const error_template = tr("Cannot open template\n%1:\n%2");
+			QMessageBox::warning(dialog_parent, tr("Error"), error_template.arg(path, error));
+		}
+		
+		if (new_temp)
+			new_templates.push_back(std::move(new_temp));
 	}
-	
-	return new_temp;
+	return new_templates;
 }
 
 
@@ -690,15 +721,21 @@ void TemplateListWidget::newTemplate(QAction* action)
 
 void TemplateListWidget::openTemplate()
 {
-	auto new_template = showOpenTemplateDialog(window(), controller);
-	if (new_template)
+	auto new_templates = showOpenTemplateDialog(window(), controller, true);
+	if (!new_templates.empty())
 	{
-		int pos = -1;
-		int row = currentRow();
-		if (row >= 0)
-			pos = posFromRow(row);
-		
-		map.addTemplate(pos, std::move(new_template));
+		for (auto& new_template : new_templates)
+		{
+			if (new_template)
+			{
+				int pos = -1;
+				int row = currentRow();
+				if (row >= 0)
+					pos = posFromRow(row);
+				
+				map.addTemplate(pos, std::move(new_template));
+			}
+		}
 	}
 }
 
