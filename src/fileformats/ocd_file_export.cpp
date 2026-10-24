@@ -2511,10 +2511,11 @@ QByteArray OcdFileExport::exportPointObject(const PointObject* point, typename O
 {
 	OcdObject ocd_object = {};
 	ocd_object.type = 1;
-	auto const symbol_number_it = symbol_numbers.find(point->getSymbol());
+	auto const symbol = point->getSymbol()->asPoint();
+	auto const symbol_number_it = symbol_numbers.find(symbol);
 	decltype(entry.symbol) const symbol_number = symbol_number_it != symbol_numbers.end() ? symbol_number_it->second : -1;
 	ocd_object.symbol = entry.symbol = symbol_number;
-	ocd_object.angle = decltype(ocd_object.angle)(convertRotation(point->getRotation()));
+	ocd_object.angle = decltype(ocd_object.angle)(symbol->isRotatable() ? convertRotation(point->getRotation()) : 0);
 	return exportObjectCommon(point, ocd_object, entry);
 }
 
@@ -2622,7 +2623,7 @@ void OcdFileExport::exportPathObject(OcdFile<Format>& file, const PathObject* pa
 template< class OcdObject >
 QByteArray OcdFileExport::exportTextObject(const TextObject* text, typename OcdObject::IndexEntryType& entry)
 {
-	auto symbol = static_cast<const TextSymbol*>(text->getSymbol());
+	auto const symbol = text->getSymbol()->asText();
 	auto alignment = text->getHorizontalAlignment();
 	auto text_format = std::find_if(begin(text_format_mapping), end(text_format_mapping), [symbol, alignment](const auto& m) {
 		return m.symbol == symbol && m.alignment == alignment;
@@ -2637,7 +2638,7 @@ QByteArray OcdFileExport::exportTextObject(const TextObject* text, typename OcdO
 	OcdObject ocd_object = {};
 	ocd_object.type = text->hasSingleAnchor() ? 4 : 5;
 	ocd_object.symbol = entry.symbol = symbol_number;
-	ocd_object.angle = decltype(ocd_object.angle)(convertRotation(text->getRotation()));
+	ocd_object.angle = decltype(ocd_object.angle)(symbol->isRotatable() ? convertRotation(text->getRotation()) : 0);
 	return exportObjectCommon(text, ocd_object, entry);
 }
 
