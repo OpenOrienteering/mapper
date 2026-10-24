@@ -280,6 +280,19 @@
     </message>
 </context>
 <context>
+    <name>OpenOrienteering::BoxZoomTool</name>
+    <message>
+        <location filename="../src/tools/box_zoom_tool.cpp" line="78"/>
+        <source>The selected box is too small.</source>
+        <translation>Seçilen alan çok küçük.</translation>
+    </message>
+    <message>
+        <location filename="../src/tools/box_zoom_tool.cpp" line="92"/>
+        <source>&lt;b&gt;Drag&lt;/b&gt;: Select area to zoom in on. </source>
+        <translation>&lt;b&gt;Sürükle&lt;/b&gt;: Yakınlaştırılacak alanı seç. </translation>
+    </message>
+</context>
+<context>
     <name>OpenOrienteering::ColorDialog</name>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="89"/>
@@ -365,7 +378,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="185"/>
         <source>Cyan</source>
-        <translation type="unfinished">Cyan</translation>
+        <translation>Camgöbeği</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="190"/>
@@ -4569,6 +4582,27 @@ Rescale the imported data?</source>
         <source>Background drawing</source>
         <translation>Arka plan çizimi</translation>
     </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="589"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1876"/>
+        <source>The map is currently being edited. Please finish the edit operation first.</source>
+        <translation>Harita şu anda düzenleniyor. Lütfen önce düzenleme işlemini tamamlayın.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="996"/>
+        <source>Paste at original location</source>
+        <translation>Özgün konuma yapıştır</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1016"/>
+        <source>Zoom to box</source>
+        <translation>Seçilen alana yakınlaştır</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/map/map_editor.cpp" line="1438"/>
+        <source>%1 (%2)</source>
+        <translation>%1 (%2)</translation>
+    </message>
 </context>
 <context>
     <name>OpenOrienteering::MapEditorTool</name>
@@ -5501,6 +5535,11 @@ varsa fare tekerleği ile yakınlaştırın/uzaklaştırın.</translation>
         <source>Color id not found: %1, ignoring this color</source>
         <translation>Renk kimliği bulunamadı: %1, bu renk yok sayılıyor</translation>
     </message>
+    <message>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2363"/>
+        <source>Ignoring text framing line style.</source>
+        <translation>Metin çerçeveleme çizgi stili yok sayılıyor.</translation>
+    </message>
 </context>
 <context>
     <name>OpenOrienteering::OgrFileExport</name>
@@ -6393,6 +6432,23 @@ ayrımlar</translation>
         <location filename="../src/gui/print_widget.cpp" line="1474"/>
         <source>The map area is empty. Output canceled.</source>
         <translation>Harita alanı boş. Çıktı iptal edildi.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="304"/>
+        <source>Transparent background</source>
+        <translation>Saydam arka plan</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="1315"/>
+        <source>Transparent background is not supported for this file format.
+Using a white background instead.</source>
+        <translation>Bu dosya biçimi saydam arka planı desteklemiyor.
+Bunun yerine beyaz arka plan kullanılıyor.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="1343"/>
+        <source>Failed to save the world file.</source>
+        <translation>World dosyası kaydedilemedi.</translation>
     </message>
 </context>
 <context>
