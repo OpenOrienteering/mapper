@@ -6184,7 +6184,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="236"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation>ID barvy nenalezeno: %1. Tato barva se ignoruje</translation>
+        <translation>ID barvy nenalezeno: %1, tuto barvu ignoruji</translation>
     </message>
 </context>
 <context>
@@ -9192,7 +9192,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
     <message>
         <location filename="../src/templates/template_track.cpp" line="508"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
-        <translation>Mají se body GPS (cestovní body) importovat jako linie vedoucí skrze všechny body?</translation>
+        <translation>Mají se waypointy importovat jako linie procházející všemi body?</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="572"/>

@@ -317,7 +317,7 @@ Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     <message>
         <source>Earth bank, tag line</source>
         <comment>Name of symbol 104.3</comment>
-        <translation type="unfinished">Toprak set, çizgi (tag)</translation>
+        <translation>Toprak set, çizgi sel</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -607,7 +607,7 @@ Minimum uzunluk: 0.6 mm (kapladığı alan 9 m).</translation>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation type="unfinished">Geçilemez yar/uçurum, çizgi etiket</translation>
+        <translation>Geçilemez yar/uçurum, çizgisel hat</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>

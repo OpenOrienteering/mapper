@@ -365,7 +365,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="185"/>
         <source>Cyan</source>
-        <translation type="unfinished">Cyan</translation>
+        <translation>Camgöbeği</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="190"/>
