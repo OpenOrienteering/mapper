@@ -3078,6 +3078,16 @@ I det tilfælde, hvor klippevæggen ligger så tæt på vand, at passage under d
         <translation>Grøn</translation>
     </message>
     <message>
+        <source>Green 60%</source>
+        <comment>Color 15</comment>
+        <translation>Grøn 60%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 16</comment>
+        <translation>Grøn 30%</translation>
+    </message>
+    <message>
         <source>Green below light greens</source>
         <comment>Color 17</comment>
         <translation>Grøn under lysegrøn</translation>
@@ -3323,7 +3333,7 @@ I det tilfælde, hvor klippevæggen ligger så tæt på vand, at passage under d
     <message>
         <source>White over green</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvid over grøn</translation>
     </message>
     <message>
         <source>Green 50%/Yellow 100%</source>
@@ -3343,12 +3353,12 @@ I det tilfælde, hvor klippevæggen ligger så tæt på vand, at passage under d
     <message>
         <source>Green 60%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grøn 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grøn 30%</translation>
     </message>
     <message>
         <source>Green 100% for undergrowth</source>
@@ -3358,7 +3368,7 @@ I det tilfælde, hvor klippevæggen ligger så tæt på vand, at passage under d
     <message>
         <source>White over yellow</source>
         <comment>Color 28</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvid over gul</translation>
     </message>
     <message>
         <source>Black for open land</source>
@@ -5636,6 +5646,16 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Grøn</translation>
     </message>
     <message>
+        <source>Green 60%</source>
+        <comment>Color 29</comment>
+        <translation>Grøn 60%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 30</comment>
+        <translation>Grøn 30%</translation>
+    </message>
+    <message>
         <source>Green below light greens</source>
         <comment>Color 31</comment>
         <translation>Grøn under lysegrøn</translation>
@@ -5841,12 +5861,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green 60%</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grøn 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grøn 30%</translation>
     </message>
     <message>
         <source>Green below light greens</source>
@@ -7594,6 +7614,16 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Grøn</translation>
     </message>
     <message>
+        <source>Green 60%</source>
+        <comment>Color 17</comment>
+        <translation>Grøn 60%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 18</comment>
+        <translation>Grøn 30%</translation>
+    </message>
+    <message>
         <source>Green below light greens</source>
         <comment>Color 19</comment>
         <translation>Grøn under lysegrøn</translation>
@@ -7834,27 +7864,27 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul 100% for smalt lineært spor</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grøn 60% for smal lineært spor</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grøn 30% for smalt lineært spor</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvid over grøn</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul 100%/Grøn 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -7864,7 +7894,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grøn 100%/Sort 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -7874,12 +7904,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Green 60%</source>
         <comment>Color 28</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grøn 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grøn 30%</translation>
     </message>
     <message>
         <source>Green 100% for undergrowth</source>
@@ -7889,7 +7919,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>White over yellow</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvid over gul</translation>
     </message>
     <message>
         <source>Black for open land</source>

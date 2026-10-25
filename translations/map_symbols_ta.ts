@@ -2951,9 +2951,2677 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 </context>
 <context>
     <name>ISOM2017</name>
+    <message>
+        <source>Purple</source>
+        <comment>Color 0</comment>
+        <translation>ஊதா</translation>
+    </message>
+    <message>
+        <source>Black</source>
+        <comment>Color 1</comment>
+        <translation>கருப்பு</translation>
+    </message>
+    <message>
+        <source>Black 65%</source>
+        <comment>Color 3</comment>
+        <translation>கருப்பு 65%</translation>
+    </message>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 4</comment>
+        <translation>கருப்பு 20%</translation>
+    </message>
+    <message>
+        <source>Brown 50%</source>
+        <comment>Color 5</comment>
+        <translation>பழுப்பு 50%</translation>
+    </message>
+    <message>
+        <source>Black below light browns</source>
+        <comment>Color 6</comment>
+        <translation>வெளிர் பழுப்பு நிறத்திற்கு கீழே கருப்பு</translation>
+    </message>
+    <message>
+        <source>Opaque Blue</source>
+        <comment>Color 7</comment>
+        <translation>ஒளிபுகா நீலம்</translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <comment>Color 8</comment>
+        <translation>நீலம்</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 9</comment>
+        <translation>நீலம் 50%</translation>
+    </message>
+    <message>
+        <source>Brown</source>
+        <comment>Color 10</comment>
+        <translation>பழுப்பு</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 11</comment>
+        <translation>OpenOrienteering ஆரஞ்சு</translation>
+    </message>
+    <message>
+        <source>Black 25% (Grey)</source>
+        <comment>Color 12</comment>
+        <translation>கருப்பு 25% (சாம்பல்)</translation>
+    </message>
+    <message>
+        <source>Green 50%, Yellow</source>
+        <comment>Color 13</comment>
+        <translation>பச்சை 50%, மஞ்சள்</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <comment>Color 14</comment>
+        <translation>பச்சை</translation>
+    </message>
+    <message>
+        <source>Opaque White over Green</source>
+        <comment>Color 16</comment>
+        <translation>பச்சைக்கு மேல் ஒளிபுகா வெள்ளை</translation>
+    </message>
+    <message>
+        <source>Opaque Green</source>
+        <comment>Color 20</comment>
+        <translation>ஒளிபுகா பச்சை</translation>
+    </message>
+    <message>
+        <source>Green below light greens</source>
+        <comment>Color 23</comment>
+        <translation>வெளிர் பச்சைக்கு கீழே பச்சை</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 26</comment>
+        <translation>மஞ்சள்</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 27</comment>
+        <translation>மஞ்சள் 50%</translation>
+    </message>
+    <message>
+        <source>Contour</source>
+        <comment>Name of symbol 101</comment>
+        <translation>விளிம்பு</translation>
+    </message>
+    <message>
+        <source>Slope line, contour</source>
+        <comment>Name of symbol 101.1</comment>
+        <translation>சாய்வு கோடு, விளிம்பு</translation>
+    </message>
+    <message>
+        <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
+        <comment>Description of symbol 101.1</comment>
+        <translation>சாய்வின் திசையை தெளிவுபடுத்த, விளிம்பு கோட்டின் கீழ் பக்கத்தில் சாய்வு கோடுகள் வரையப்படலாம். பயன்படுத்தும் போது, அவர்கள் மீண்டும் நுழைவுகளில் வைக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Index contour</source>
+        <comment>Name of symbol 102</comment>
+        <translation>குறியீட்டு விளிம்பு</translation>
+    </message>
+    <message>
+        <source>Contour value</source>
+        <comment>Name of symbol 102.1</comment>
+        <translation>விளிம்பு மதிப்பு</translation>
+    </message>
+    <message>
+        <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
+        <comment>Description of symbol 102.1</comment>
+        <translation>பெரிய உயர வேறுபாடுகளை மதிப்பிடுவதற்கு உதவும் வகையில், விளிம்பு மதிப்புகள் சேர்க்கப்படலாம். மற்ற விவரங்கள் மறைக்கப்படாத நிலைகளில் அவை குறியீட்டு வரையறைகளில் செருகப்படுகின்றன. உருவங்களின் மேற்பகுதி விளிம்பின் மேல் பக்கத்தில் இருக்கும் வகையில் உருவங்கள் நோக்குநிலை கொண்டதாக இருக்க வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Form line</source>
+        <comment>Name of symbol 103</comment>
+        <translation>படிவ வரி</translation>
+    </message>
+    <message>
+        <source>Slope line, formline</source>
+        <comment>Name of symbol 103.1</comment>
+        <translation>சாய்வு கோடு, ஃபார்ம்லைன்</translation>
+    </message>
+    <message>
+        <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
+        <comment>Description of symbol 103.1</comment>
+        <translation>சாய்வின் திசையை தெளிவுபடுத்த, விளிம்பு கோட்டின் கீழ் பக்கத்தில் சாய்வு கோடுகள் வரையப்படலாம். பயன்படுத்தும் போது, அவர்கள் மீண்டும் நுழைவுகளில் வைக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Earth bank</source>
+        <comment>Name of symbol 104</comment>
+        <translation>பூமி வங்கி</translation>
+    </message>
+    <message>
+        <source>Earth bank, minimum size</source>
+        <comment>Name of symbol 104.1</comment>
+        <translation>பூமிக்கரை, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Earth bank, top line</source>
+        <comment>Name of symbol 104.2</comment>
+        <translation>பூமிக்கரை, மேல் வரி</translation>
+    </message>
+    <message>
+        <source>Earth bank, tag line</source>
+        <comment>Name of symbol 104.3</comment>
+        <translation>பூமி வங்கி, டேக் லைன்</translation>
+    </message>
+    <message>
+        <source>Use this symbol to display the full extent of wide earth banks.</source>
+        <comment>Description of symbol 104.3</comment>
+        <translation>பரந்த பூமிக் கரைகளின் முழு அளவைக் காட்ட இந்தக் குறியீட்டைப் பயன்படுத்தவும்.</translation>
+    </message>
+    <message>
+        <source>Earth bank, minimum size (from ISOM2000)</source>
+        <comment>Name of symbol 104.9</comment>
+        <translation>பூமி வங்கி, குறைந்தபட்ச அளவு (ISOM2000 இலிருந்து)</translation>
+    </message>
+    <message>
+        <source>Earth wall</source>
+        <comment>Name of symbol 105</comment>
+        <translation>பூமி சுவர்</translation>
+    </message>
+    <message>
+        <source>Distinct earth wall. Minimum height is 1 m.</source>
+        <comment>Description of symbol 105</comment>
+        <translation>தனித்துவமான மண் சுவர். குறைந்தபட்ச உயரம் 1 மீ.</translation>
+    </message>
+    <message>
+        <source>Ruined earth wall</source>
+        <comment>Name of symbol 106</comment>
+        <translation>இடிந்த மண் சுவர்</translation>
+    </message>
+    <message>
+        <source>Erosion gully</source>
+        <comment>Name of symbol 107</comment>
+        <translation>அரிப்பு பள்ளம்</translation>
+    </message>
+    <message>
+        <source>Small erosion gully</source>
+        <comment>Name of symbol 108</comment>
+        <translation>சிறிய அரிப்பு பள்ளம்</translation>
+    </message>
+    <message>
+        <source>Small knoll</source>
+        <comment>Name of symbol 109</comment>
+        <translation>சிறிய குழி</translation>
+    </message>
+    <message>
+        <source>Small elongated knoll</source>
+        <comment>Name of symbol 110</comment>
+        <translation>சிறிய நீளமான குமிழ்</translation>
+    </message>
+    <message>
+        <source>Small depression</source>
+        <comment>Name of symbol 111</comment>
+        <translation>சிறிய மனச்சோர்வு</translation>
+    </message>
+    <message>
+        <source>Pit</source>
+        <comment>Name of symbol 112</comment>
+        <translation>குழி</translation>
+    </message>
+    <message>
+        <source>Broken ground</source>
+        <comment>Name of symbol 113</comment>
+        <translation>உடைந்த தரை</translation>
+    </message>
+    <message>
+        <source>Broken ground, individual dot</source>
+        <comment>Name of symbol 113.1</comment>
+        <translation>உடைந்த தரை, தனிப்பட்ட புள்ளி</translation>
+    </message>
+    <message>
+        <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
+        <comment>Description of symbol 113.1</comment>
+        <translation>விரிவாகக் காட்ட முடியாத அளவுக்கு மிகவும் சிக்கலான குழி அல்லது குழிகளின் பகுதி. தோராயமாக வைக்கப்படும் புள்ளிகளின் அடர்த்தி தரையில் உள்ள விவரங்களுக்கு ஏற்ப மாறுபடலாம்.</translation>
+    </message>
+    <message>
+        <source>Very broken ground</source>
+        <comment>Name of symbol 114</comment>
+        <translation>மிகவும் உடைந்த தரை</translation>
+    </message>
+    <message>
+        <source>Prominent landform feature</source>
+        <comment>Name of symbol 115</comment>
+        <translation>முக்கிய நிலப்பரப்பு நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>Impassable cliff</source>
+        <comment>Name of symbol 201</comment>
+        <translation>செல்ல முடியாத பாறை</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, minimum size</source>
+        <comment>Name of symbol 201.1</comment>
+        <translation>செல்ல முடியாத பாறை, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, top line</source>
+        <comment>Name of symbol 201.3</comment>
+        <translation>செல்ல முடியாத பாறை, மேல் கோடு</translation>
+    </message>
+    <message>
+        <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
+        <comment>Description of symbol 201.3</comment>
+        <translation>செங்குத்து பாறை முகங்களுக்கு இடைவெளி குறைவாக இருந்தால் குறிச்சொற்கள் தவிர்க்கப்படலாம், எ.கா. பாறைகளுக்கு இடையில் உள்ள குறுகிய பத்திகள் (குறைந்தது 0.3 மிமீ அகலத்துடன் பத்தியை வரைய வேண்டும்).</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, tag line</source>
+        <comment>Name of symbol 201.4</comment>
+        <translation>செல்ல முடியாத பாறை, டேக் லைன்</translation>
+    </message>
+    <message>
+        <source>Use this symbol to display the full extent of a wide cliff.</source>
+        <comment>Description of symbol 201.4</comment>
+        <translation>பரந்த குன்றின் முழு அளவைக் காட்ட இந்த சின்னத்தைப் பயன்படுத்தவும்.</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, minimum size (from ISOM2000)</source>
+        <comment>Name of symbol 201.9</comment>
+        <translation>செல்ல முடியாத பாறை, குறைந்தபட்ச அளவு (ISOM2000 இலிருந்து)</translation>
+    </message>
+    <message>
+        <source>Cliff</source>
+        <comment>Name of symbol 202</comment>
+        <translation>பாறை</translation>
+    </message>
+    <message>
+        <source>Cliff, minimum size</source>
+        <comment>Name of symbol 202.1</comment>
+        <translation>குன்றின், குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Cliff, with tags</source>
+        <comment>Name of symbol 202.2</comment>
+        <translation>கிளிஃப், குறிச்சொற்களுடன்</translation>
+    </message>
+    <message>
+        <source>Cliff, with tags, minimum size</source>
+        <comment>Name of symbol 202.3</comment>
+        <translation>குன்றின், குறிச்சொற்கள், குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Cliff, with tags, minimum size (from ISOM2000)</source>
+        <comment>Name of symbol 202.9</comment>
+        <translation>க்ளிஃப், குறிச்சொற்களுடன், குறைந்தபட்ச அளவு (ISOM2000 இலிருந்து)</translation>
+    </message>
+    <message>
+        <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
+Location is the centre of gravity of the symbol, and the symbol should point into the cave.
+Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
+        <comment>Description of symbol 203.2</comment>
+        <translation>பாறை குழிகள், துளைகள், குகைகள் அல்லது கண்ணிவெடிகள் ஒரு தனித்துவமான நுழைவாயிலுடன் போட்டியாளருக்கு ஆபத்தை ஏற்படுத்தலாம். குறைந்தபட்ச ஆழம்: 1 மீ. 
+இருப்பிடம் என்பது சின்னத்தின் ஈர்ப்பு விசையின் மையமாகும், மேலும் அடையாளம் குகைக்குள் இருக்க வேண்டும். 
+5 மீட்டருக்கும் அதிகமான விட்டம் கொண்ட பாறைக் குழிகளை மிகைப்படுத்தி குன்றின் சின்னங்களைப் பயன்படுத்தி குறிப்பிட வேண்டும் (201, 202).</translation>
+    </message>
+    <message>
+        <source>Rocky pit or cave with distinct entrance (from ISOM2000)</source>
+        <comment>Name of symbol 203.9</comment>
+        <translation>தனித்துவமான நுழைவாயிலுடன் கூடிய பாறை குழி அல்லது குகை (ISOM2000 இலிருந்து)</translation>
+    </message>
+    <message>
+        <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
+Location is the centre of gravity of the symbol, and the symbol should point into the cave.
+Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
+        <comment>Description of symbol 203.9</comment>
+        <translation>பாறை குழிகள், துளைகள், குகைகள் அல்லது கண்ணிவெடிகள் ஒரு தனித்துவமான நுழைவாயிலுடன் போட்டியாளருக்கு ஆபத்தை ஏற்படுத்தலாம். குறைந்தபட்ச ஆழம்: 1 மீ. 
+இருப்பிடம் என்பது சின்னத்தின் ஈர்ப்பு விசையின் மையமாகும், மேலும் அடையாளம் குகைக்குள் இருக்க வேண்டும். 
+5 மீட்டருக்கும் அதிகமான விட்டம் கொண்ட பாறைக் குழிகளை மிகைப்படுத்தி குன்றின் சின்னங்களைப் பயன்படுத்தி குறிப்பிட வேண்டும் (201, 202).</translation>
+    </message>
+    <message>
+        <source>Boulder</source>
+        <comment>Name of symbol 204</comment>
+        <translation>பாறாங்கல்</translation>
+    </message>
+    <message>
+        <source>Boulder or large boulder, different size</source>
+        <comment>Name of symbol 204.5</comment>
+        <translation>பாறாங்கல் அல்லது பெரிய பாறை, வெவ்வேறு அளவு</translation>
+    </message>
+    <message>
+        <source>A boulder which is larger than neighboring boulders (204), or a large boulder which is smaller than neighboring large boulders (205).
+
+To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
+
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
+        <comment>Description of symbol 204.5</comment>
+        <translation>அண்டைப் பாறைகளை விடப் பெரிய பாறாங்கல் (204), அல்லது அண்டைப் பெரிய பாறைகளைக் காட்டிலும் சிறிய பெரிய பாறாங்கல் (205). 
+
+அண்டை (30 மீட்டருக்கும் அதிகமான தொலைவில் உள்ள) கற்பாறைகள் (204) ஆகியவற்றுக்கு இடையே உள்ள வேறுபாட்டைக் காட்ட, இந்தச் சின்னத்தை (0.5 மி.மீ.) சில கற்பாறைகளுக்கு 204 குறியீட்டின் விரிவாக்கமாகப் பயன்படுத்த அனுமதிக்கப்படுகிறது. 
+
+பெரிய பாறைகள் (205) அளவுகளில் குறிப்பிடத்தக்க வேறுபாடுகளுடன் அண்டை (30 மீட்டர் இடைவெளியில்) வேறுபாட்டைக் காட்ட, இந்த சின்னத்தை (0.5 மிமீ) சில கற்பாறைகளுக்கு 205 சின்னமாகக் குறைக்க அனுமதிக்கப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Large boulder</source>
+        <comment>Name of symbol 205</comment>
+        <translation>பெரிய பாறை</translation>
+    </message>
+    <message>
+        <source>Gigantic boulder</source>
+        <comment>Name of symbol 206</comment>
+        <translation>பிரம்மாண்டமான பாறாங்கல்</translation>
+    </message>
+    <message>
+        <source>Boulder cluster</source>
+        <comment>Name of symbol 207</comment>
+        <translation>பாறாங்கல் கொத்து</translation>
+    </message>
+    <message>
+        <source>Boulder cluster, large</source>
+        <comment>Name of symbol 207.1</comment>
+        <translation>பாறைக் கொத்து, பெரியது</translation>
+    </message>
+    <message>
+        <source>Boulder field</source>
+        <comment>Name of symbol 208</comment>
+        <translation>பாறாங்கல் வயல்</translation>
+    </message>
+    <message>
+        <source>Boulder field, single triangle</source>
+        <comment>Name of symbol 208.1</comment>
+        <translation>போல்டர் புலம், ஒற்றை முக்கோணம்</translation>
+    </message>
+    <message>
+        <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208.1</comment>
+        <translation>தனித்தனியாகக் குறிக்க முடியாத அளவுக்குக் கற்களால் மூடப்பட்டிருக்கும் பகுதி 8:6:5 என்ற விகிதத்தின் பக்கங்களைக் கொண்ட சீரற்ற நோக்குநிலை திட முக்கோணங்களுடன் காட்டப்பட்டுள்ளது. குறைந்தபட்சம் இரண்டு முக்கோணங்களைப் பயன்படுத்த வேண்டும். செல்வது முக்கோணங்களின் அடர்த்தியால் குறிக்கப்படுகிறது. பாறாங்கல் அளவுகளில் குறிப்பிடத்தக்க வேறுபாட்டைக் கொண்ட பாறாங்கல் புலங்களுக்கு இடையிலான வேறுபாட்டைக் காட்ட முக்கோணங்களை 20% பெரிதாக்க அனுமதிக்கப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Boulder field, single triangle, enlarged</source>
+        <comment>Name of symbol 208.2</comment>
+        <translation>போல்டர் புலம், ஒற்றை முக்கோணம், பெரிதாக்கப்பட்டது</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208.2</comment>
+        <translation>பாறாங்கல் அளவுகளில் குறிப்பிடத்தக்க வேறுபாட்டைக் கொண்ட பாறாங்கல் புலங்களுக்கு இடையிலான வேறுபாட்டைக் காட்ட முக்கோணங்களை 20% பெரிதாக்க அனுமதிக்கப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Dense boulder field</source>
+        <comment>Name of symbol 209</comment>
+        <translation>அடர்ந்த பாறாங்கல் வயல்</translation>
+    </message>
+    <message>
+        <source>Stony ground, slow running</source>
+        <comment>Name of symbol 210</comment>
+        <translation>கற்கள் நிறைந்த மைதானம், மெதுவாக ஓடுகிறது</translation>
+    </message>
+    <message>
+        <source>Stony ground, individual dot</source>
+        <comment>Name of symbol 210.1</comment>
+        <translation>பாறை நிலம், தனிப் புள்ளி</translation>
+    </message>
+    <message>
+        <source>Stony ground, walk</source>
+        <comment>Name of symbol 211</comment>
+        <translation>கல் நிலம், நடை</translation>
+    </message>
+    <message>
+        <source>Stony ground, fight</source>
+        <comment>Name of symbol 212</comment>
+        <translation>கல் நிலம், சண்டை</translation>
+    </message>
+    <message>
+        <source>Sandy ground</source>
+        <comment>Name of symbol 213</comment>
+        <translation>மணல் நிலம்</translation>
+    </message>
+    <message>
+        <source>Bare rock</source>
+        <comment>Name of symbol 214</comment>
+        <translation>வெற்றுப் பாறை</translation>
+    </message>
+    <message>
+        <source>Trench</source>
+        <comment>Name of symbol 215</comment>
+        <translation>அகழி</translation>
+    </message>
+    <message>
+        <source>Uncrossable body of water, bank line</source>
+        <comment>Name of symbol 301.2</comment>
+        <translation>கடக்க முடியாத நீர்நிலை, கரையோரம்</translation>
+    </message>
+    <message>
+        <source>A black bank line indicates that the feature cannot be crossed.</source>
+        <comment>Description of symbol 301.2</comment>
+        <translation>ஒரு கருப்பு வங்கிக் கோடு அம்சத்தைக் கடக்க முடியாது என்பதைக் குறிக்கிறது.</translation>
+    </message>
+    <message>
+        <source>Shallow body of water</source>
+        <comment>Name of symbol 302.1</comment>
+        <translation>ஆழமற்ற நீர்நிலை</translation>
+    </message>
+    <message>
+        <source>Shallow body of water, solid outline</source>
+        <comment>Name of symbol 302.2</comment>
+        <translation>ஆழமற்ற நீர்நிலை, திடமான அவுட்லைன்</translation>
+    </message>
+    <message>
+        <source>Shallow body of water, dashed outline</source>
+        <comment>Name of symbol 302.3</comment>
+        <translation>ஆழமற்ற நீர்நிலை, கோடு போட்ட அவுட்லைன்</translation>
+    </message>
+    <message>
+        <source>Waterhole</source>
+        <comment>Name of symbol 303</comment>
+        <translation>நீர்க்குழி</translation>
+    </message>
+    <message>
+        <source>Crossable watercourse</source>
+        <comment>Name of symbol 304</comment>
+        <translation>கடக்கக்கூடிய நீர்வழி</translation>
+    </message>
+    <message>
+        <source>Small crossable watercourse</source>
+        <comment>Name of symbol 305</comment>
+        <translation>குறுக்கிடக்கூடிய சிறிய நீர்வழி</translation>
+    </message>
+    <message>
+        <source>Minor/seasonal water channel</source>
+        <comment>Name of symbol 306</comment>
+        <translation>சிறு/பருவகால நீர் வழி</translation>
+    </message>
+    <message>
+        <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
+        <comment>Description of symbol 306</comment>
+        <translation>இயற்கையான அல்லது மனிதனால் உருவாக்கப்பட்ட சிறு நீர் வழித்தடமானது, இடையிடையே மட்டுமே தண்ணீரைக் கொண்டிருக்கும்.</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh, with border line</source>
+        <comment>Name of symbol 307</comment>
+        <translation>எல்லைக்கோடு, கடக்க முடியாத சதுப்பு நிலம்</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh</source>
+        <comment>Name of symbol 307.1</comment>
+        <translation>கடக்க முடியாத சதுப்பு நிலம்</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh, border line</source>
+        <comment>Name of symbol 307.2</comment>
+        <translation>கடக்க முடியாத சதுப்பு நிலம், எல்லைக் கோடு</translation>
+    </message>
+    <message>
+        <source>Marsh</source>
+        <comment>Name of symbol 308</comment>
+        <translation>சேற்றுத்தரை</translation>
+    </message>
+    <message>
+        <source>Marsh, minimum size</source>
+        <comment>Name of symbol 308.1</comment>
+        <translation>மார்ச், குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Narrow marsh</source>
+        <comment>Name of symbol 309</comment>
+        <translation>குறுகிய சதுப்பு நிலம்</translation>
+    </message>
+    <message>
+        <source>Indistinct marsh</source>
+        <comment>Name of symbol 310</comment>
+        <translation>தெளிவற்ற சதுப்பு நிலம்</translation>
+    </message>
+    <message>
+        <source>Indistinct marsh, minimum size</source>
+        <comment>Name of symbol 310.1</comment>
+        <translation>தெளிவற்ற சதுப்பு நிலம், குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Well, fountain or water tank</source>
+        <comment>Name of symbol 311</comment>
+        <translation>நன்றாக, நீரூற்று அல்லது தண்ணீர் தொட்டி</translation>
+    </message>
+    <message>
+        <source>Spring</source>
+        <comment>Name of symbol 312</comment>
+        <translation>வேனில்</translation>
+    </message>
+    <message>
+        <source>Prominent water feature</source>
+        <comment>Name of symbol 313</comment>
+        <translation>முக்கிய நீர் நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>Open land</source>
+        <comment>Name of symbol 401</comment>
+        <translation>திறந்த நிலம்</translation>
+    </message>
+    <message>
+        <source>Open land with scattered trees</source>
+        <comment>Name of symbol 402</comment>
+        <translation>பரந்து விரிந்த மரங்களுடன் திறந்த நிலம்</translation>
+    </message>
+    <message>
+        <source>Rough open land</source>
+        <comment>Name of symbol 403</comment>
+        <translation>கரடுமுரடான திறந்த நிலம்</translation>
+    </message>
+    <message>
+        <source>Rough open land with scattered trees</source>
+        <comment>Name of symbol 404</comment>
+        <translation>பரந்து விரிந்த மரங்களுடன் கரடுமுரடான திறந்த நிலம்</translation>
+    </message>
+    <message>
+        <source>Forest</source>
+        <comment>Name of symbol 405</comment>
+        <translation>காடு</translation>
+    </message>
+    <message>
+        <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.</source>
+        <comment>Description of symbol 406</comment>
+        <translation>அடர்த்தியான தாவரங்களைக் கொண்ட பகுதி (குறைந்த பார்வை) இது சாதாரண வேகத்தில் 60-80% வரை ஓடுவதைக் குறைக்கிறது.</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 406.1</comment>
+        <translation>காடுகளின் ஒரு பகுதி ஒரு திசையில் நன்றாக ஓடினாலும் மற்றவற்றில் குறைவான நல்ல ஓட்டத்தை வழங்கும் போது, நல்ல ஓட்டத்தின் திசையைக் காட்ட திரை சின்னத்தில் வெள்ளை கோடுகள் விடப்படும்.</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 407</comment>
+        <translation>அடர்ந்த நிலத்தடி, ஆனால் நல்ல தெரிவுநிலை (முட்செடிகள், ஈத்தர், குறைந்த புதர்கள் மற்றும் வெட்டப்பட்ட கிளைகள் உட்பட) இது சுமார் ஓட்டத்தை குறைக்கிறது. சாதாரண வேகத்தில் 60-80%. இந்தக் குறியீடு 406 அல்லது 408 உடன் இணைக்கப்படாமல் இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 408.1</comment>
+        <translation>காடுகளின் ஒரு பகுதி ஒரு திசையில் நன்றாக ஓடினாலும் மற்றவற்றில் குறைவான நல்ல ஓட்டத்தை வழங்கும் போது, நல்ல ஓட்டத்தின் திசையைக் காட்ட திரை சின்னத்தில் வெள்ளை கோடுகள் விடப்படும்.</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 3</source>
+        <comment>Name of symbol 410.1</comment>
+        <translation>ஒரு திசையில் ஓடக்கூடிய காடு, 3</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 410.1</comment>
+        <translation>காடுகளின் ஒரு பகுதி ஒரு திசையில் நன்றாக ஓடினாலும் மற்றவற்றில் குறைவான நல்ல ஓட்டத்தை வழங்கும் போது, நல்ல ஓட்டத்தின் திசையைக் காட்ட திரை சின்னத்தில் வெள்ளை கோடுகள் விடப்படும்.</translation>
+    </message>
+    <message>
+        <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
+Minimum width: 0.35 mm</source>
+        <comment>Description of symbol 411.2</comment>
+        <translation>அடர்ந்த தாவரங்களின் பகுதி (மரங்கள் அல்லது அடிவளர்ச்சி) இது திறம்பட செல்ல முடியாதது. 
+குறைந்தபட்ச அகலம்: 0.35 மிமீ</translation>
+    </message>
+    <message>
+        <source>Cultivated land</source>
+        <comment>Name of symbol 412</comment>
+        <translation>பயிரிடப்பட்ட நிலம்</translation>
+    </message>
+    <message>
+        <source>Orchard</source>
+        <comment>Name of symbol 413</comment>
+        <translation>பழத்தோட்டம்</translation>
+    </message>
+    <message>
+        <source>Vineyard</source>
+        <comment>Name of symbol 414</comment>
+        <translation>திராட்சைத் தோட்டம்</translation>
+    </message>
+    <message>
+        <source>Distinct cultivation boundary</source>
+        <comment>Name of symbol 415</comment>
+        <translation>தனித்துவமான சாகுபடி எல்லை</translation>
+    </message>
+    <message>
+        <source>Distinct vegetation boundary</source>
+        <comment>Name of symbol 416</comment>
+        <translation>தனித்துவமான தாவர எல்லை</translation>
+    </message>
+    <message>
+        <source>Distinct vegetation boundary, green dashed line</source>
+        <comment>Name of symbol 416.1</comment>
+        <translation>தனித்துவமான தாவர எல்லை, பச்சை நிற கோடு</translation>
+    </message>
+    <message>
+        <source>Prominent large tree</source>
+        <comment>Name of symbol 417</comment>
+        <translation>மிகப் பெரிய மரம்</translation>
+    </message>
+    <message>
+        <source>Footprint: 13.5 m x 13.5 m.</source>
+        <comment>Description of symbol 417</comment>
+        <translation>தடம்: 13.5 மீ ஃச் 13.5 மீ.</translation>
+    </message>
+    <message>
+        <source>Prominent bush or tree</source>
+        <comment>Name of symbol 418</comment>
+        <translation>முக்கிய புதர் அல்லது மரம்</translation>
+    </message>
+    <message>
+        <source>Prominent vegetation feature</source>
+        <comment>Name of symbol 419</comment>
+        <translation>முக்கிய தாவர நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>Footprint: 13.5 m x 13.5 m.</source>
+        <comment>Description of symbol 419</comment>
+        <translation>தடம்: 13.5 மீ ஃச் 13.5 மீ.</translation>
+    </message>
+    <message>
+        <source>Paved area, with bounding line</source>
+        <comment>Name of symbol 501</comment>
+        <translation>நடைபாதை பகுதி, எல்லைக்கோடு</translation>
+    </message>
+    <message>
+        <source>Paved area</source>
+        <comment>Name of symbol 501.1</comment>
+        <translation>நடைபாதை பகுதி</translation>
+    </message>
+    <message>
+        <source>Paved area, bounding line</source>
+        <comment>Name of symbol 501.2</comment>
+        <translation>நடைபாதை பகுதி, எல்லைக் கோடு</translation>
+    </message>
+    <message>
+        <source>Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.</source>
+        <comment>Description of symbol 501.2</comment>
+        <translation>நடைபாதை பகுதிகள் ஒரு மெல்லிய கறுப்புக் கோட்டால் எல்லையாக (அல்லது கட்டமைக்கப்பட்ட) இருக்க வேண்டும், அங்கு அவை ஒரு தனித்துவமான எல்லையைக் கொண்டிருக்கும்.</translation>
+    </message>
+    <message>
+        <source>Wide road, minimum width</source>
+        <comment>Name of symbol 502</comment>
+        <translation>அகலமான சாலை, குறைந்தபட்ச அகலம்</translation>
+    </message>
+    <message>
+        <source>Road with two carriageways</source>
+        <comment>Name of symbol 502.2</comment>
+        <translation>இரண்டு வண்டிப்பாதைகள் கொண்ட சாலை</translation>
+    </message>
+    <message>
+        <source>Road</source>
+        <comment>Name of symbol 503</comment>
+        <translation>சாலை</translation>
+    </message>
+    <message>
+        <source>A maintained road suitable for motor vehicles in all weather. Width less than 5 m.</source>
+        <comment>Description of symbol 503</comment>
+        <translation>அனைத்து காலநிலையிலும் மின்னோடி வாகனங்களுக்கு ஏற்ற வகையில் பராமரிக்கப்படும் சாலை. 5 மீட்டருக்கும் குறைவான அகலம்.</translation>
+    </message>
+    <message>
+        <source>Vehicle track</source>
+        <comment>Name of symbol 504</comment>
+        <translation>வாகன தடம்</translation>
+    </message>
+    <message>
+        <source>Footpath</source>
+        <comment>Name of symbol 505</comment>
+        <translation>நடைபாதை</translation>
+    </message>
+    <message>
+        <source>Small footpath</source>
+        <comment>Name of symbol 506</comment>
+        <translation>சிறிய நடைபாதை</translation>
+    </message>
+    <message>
+        <source>Less distinct small footpath</source>
+        <comment>Name of symbol 507</comment>
+        <translation>குறைவான வித்தியாசமான சிறிய நடைபாதை</translation>
+    </message>
+    <message>
+        <source>Narrow ride</source>
+        <comment>Name of symbol 508</comment>
+        <translation>குறுகிய சவாரி</translation>
+    </message>
+    <message>
+        <source>Railway</source>
+        <comment>Name of symbol 509</comment>
+        <translation>ரயில்வே</translation>
+    </message>
+    <message>
+        <source>Power line, cableway or skilift</source>
+        <comment>Name of symbol 510</comment>
+        <translation>பவர் லைன், கேபிள்வே அல்லது ச்கிலிஃப்ட்</translation>
+    </message>
+    <message>
+        <source>Major power line, minimum width</source>
+        <comment>Name of symbol 511</comment>
+        <translation>முக்கிய மின் பாதை, குறைந்தபட்ச அகலம்</translation>
+    </message>
+    <message>
+        <source>Major power line</source>
+        <comment>Name of symbol 511.1</comment>
+        <translation>முக்கிய மின்கம்பி</translation>
+    </message>
+    <message>
+        <source>Major power line, large carrying masts</source>
+        <comment>Name of symbol 511.2</comment>
+        <translation>பெரிய மின்கம்பி, பெரிய சுமந்து செல்லும் மாச்ட்கள்</translation>
+    </message>
+    <message>
+        <source>Bridge / tunnel</source>
+        <comment>Name of symbol 512</comment>
+        <translation>பாலம் / சுரங்கப்பாதை</translation>
+    </message>
+    <message>
+        <source>Bridge / tunnel, minimum size</source>
+        <comment>Name of symbol 512.1</comment>
+        <translation>பாலம் / சுரங்கப்பாதை, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Footbridge</source>
+        <comment>Name of symbol 512.2</comment>
+        <translation>நடைபாதை</translation>
+    </message>
+    <message>
+        <source>Wall</source>
+        <comment>Name of symbol 513</comment>
+        <translation>சுவர்</translation>
+    </message>
+    <message>
+        <source>Ruined wall</source>
+        <comment>Name of symbol 514</comment>
+        <translation>இடிந்த சுவர்</translation>
+    </message>
+    <message>
+        <source>Impassable wall</source>
+        <comment>Name of symbol 515</comment>
+        <translation>செல்ல முடியாத சுவர்</translation>
+    </message>
+    <message>
+        <source>Fence</source>
+        <comment>Name of symbol 516</comment>
+        <translation>வேலி</translation>
+    </message>
+    <message>
+        <source>Ruined fence</source>
+        <comment>Name of symbol 517</comment>
+        <translation>பாழடைந்த வேலி</translation>
+    </message>
+    <message>
+        <source>Impassable fence</source>
+        <comment>Name of symbol 518</comment>
+        <translation>செல்ல முடியாத வேலி</translation>
+    </message>
+    <message>
+        <source>Crossing point</source>
+        <comment>Name of symbol 519</comment>
+        <translation>கடக்கும் புள்ளி</translation>
+    </message>
+    <message>
+        <source>A way through or over a wall, fence or other linear feature, including a gate or stile.
+For impassable features, the line shall be broken at the crossing point. For passable features, the line shall not be broken if passing involves a degree of climb.</source>
+        <comment>Description of symbol 519</comment>
+        <translation>சுவர், வேலி அல்லது கேட் அல்லது பாணி உள்ளிட்ட பிற நேரியல் அம்சத்தின் வழியாக அல்லது அதற்கு மேல் செல்லும் வழி. 
+கடக்க முடியாத அம்சங்களுக்கு, கடக்கும் இடத்தில் கோடு உடைக்கப்பட வேண்டும். கடந்து செல்லக்கூடிய அம்சங்களுக்கு, கடக்கும்போது ஏறும் அளவு இருந்தால், கோடு உடைக்கப்படாது.</translation>
+    </message>
+    <message>
+        <source>Area that shall not be entered</source>
+        <comment>Name of symbol 520</comment>
+        <translation>நுழையக்கூடாத பகுதி</translation>
+    </message>
+    <message>
+        <source>Building</source>
+        <comment>Name of symbol 521</comment>
+        <translation>கட்டிடம்</translation>
+    </message>
+    <message>
+        <source>Building, minimum size</source>
+        <comment>Name of symbol 521.1</comment>
+        <translation>கட்டிடம், குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Large building with outline</source>
+        <comment>Name of symbol 521.2</comment>
+        <translation>அவுட்லைன் கொண்ட பெரிய கட்டிடம்</translation>
+    </message>
+    <message>
+        <source>Large building</source>
+        <comment>Name of symbol 521.3</comment>
+        <translation>பெரிய கட்டிடம்</translation>
+    </message>
+    <message>
+        <source>Canopy with outline</source>
+        <comment>Name of symbol 522</comment>
+        <translation>அவுட்லைன் கொண்ட மேற்கட்டி</translation>
+    </message>
+    <message>
+        <source>Canopy</source>
+        <comment>Name of symbol 522.1</comment>
+        <translation>மேற்கட்டி</translation>
+    </message>
+    <message>
+        <source>Ruin</source>
+        <comment>Name of symbol 523</comment>
+        <translation>அழிவு</translation>
+    </message>
+    <message>
+        <source>Ruin, minimum size</source>
+        <comment>Name of symbol 523.1</comment>
+        <translation>அழிவு, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>High tower</source>
+        <comment>Name of symbol 524</comment>
+        <translation>உயரமான கோபுரம்</translation>
+    </message>
+    <message>
+        <source>Small tower</source>
+        <comment>Name of symbol 525</comment>
+        <translation>சிறிய கோபுரம்</translation>
+    </message>
+    <message>
+        <source>Cairn</source>
+        <comment>Name of symbol 526</comment>
+        <translation>கெய்ர்ன்</translation>
+    </message>
+    <message>
+        <source>Fodder rack</source>
+        <comment>Name of symbol 527</comment>
+        <translation>தீவன ரேக்</translation>
+    </message>
+    <message>
+        <source>Prominent line feature</source>
+        <comment>Name of symbol 528</comment>
+        <translation>முக்கிய வரி நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>Prominent impassable line feature</source>
+        <comment>Name of symbol 529</comment>
+        <translation>முக்கியமான அசாத்தியமான வரி நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>Prominent man-made feature – ring</source>
+        <comment>Name of symbol 530</comment>
+        <translation>மனிதனால் உருவாக்கப்பட்ட முக்கிய நற்பொருத்தம் - மோதிரம்</translation>
+    </message>
+    <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 530</comment>
+        <translation>மனிதனால் உருவாக்கப்பட்ட சிறப்பு நற்பொருத்தங்கள் இந்தக் குறியீடுகளுடன் காட்டப்பட்டுள்ளன. வரைபட புராணத்தில் ஒவ்வொரு விசயத்திலும் சின்னங்களின் வரையறை கொடுக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Prominent man-made feature – x</source>
+        <comment>Name of symbol 531</comment>
+        <translation>மனிதனால் உருவாக்கப்பட்ட முக்கிய நற்பொருத்தம் - ஃச்</translation>
+    </message>
+    <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 531</comment>
+        <translation>மனிதனால் உருவாக்கப்பட்ட சிறப்பு நற்பொருத்தங்கள் இந்தக் குறியீடுகளுடன் காட்டப்பட்டுள்ளன. வரைபட புராணத்தில் ஒவ்வொரு விசயத்திலும் சின்னங்களின் வரையறை கொடுக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Magnetic north line</source>
+        <comment>Name of symbol 601.1</comment>
+        <translation>காந்த வடக்குக் கோடு</translation>
+    </message>
+    <message>
+        <source>North lines pattern</source>
+        <comment>Name of symbol 601.2</comment>
+        <translation>வடக்கு கோடுகளின் வடிவம்</translation>
+    </message>
+    <message>
+        <source>Magnetic north line, blue</source>
+        <comment>Name of symbol 601.3</comment>
+        <translation>காந்த வடக்குக் கோடு, நீலம்</translation>
+    </message>
+    <message>
+        <source>North lines pattern, blue</source>
+        <comment>Name of symbol 601.4</comment>
+        <translation>வடக்கு கோடுகள் மாதிரி, நீலம்</translation>
+    </message>
+    <message>
+        <source>Registration mark</source>
+        <comment>Name of symbol 602</comment>
+        <translation>பதிவு முத்திரை</translation>
+    </message>
+    <message>
+        <source>Spot height, dot</source>
+        <comment>Name of symbol 603.0</comment>
+        <translation>புள்ளி உயரம், புள்ளி</translation>
+    </message>
+    <message>
+        <source>Spot height, text</source>
+        <comment>Name of symbol 603.1</comment>
+        <translation>ச்பாட் உயரம், உரை</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <comment>Name of symbol 701</comment>
+        <translation>தொடங்கு</translation>
+    </message>
+    <message>
+        <source>The place where the orienteering starts. The centre of the triangle shows the precise position where the orienteering course starts. The start must be on a clearly identifiable point on the map. The triangle points in the direction of the first control.</source>
+        <comment>Description of symbol 701</comment>
+        <translation>ஓரியண்டரிங் தொடங்கும் இடம். முக்கோணத்தின் நடுவண் திசையமைப்பு பாடத்திட்டம் தொடங்கும் துல்லியமான நிலையைக் காட்டுகிறது. தொடக்கமானது வரைபடத்தில் தெளிவாக அடையாளம் காணக்கூடிய புள்ளியில் இருக்க வேண்டும். முக்கோணம் முதல் கட்டுப்பாட்டின் திசையில் உள்ளது.</translation>
+    </message>
+    <message>
+        <source>Map issue point</source>
+        <comment>Name of symbol 702</comment>
+        <translation>வரைபடம் சிக்கல் புள்ளி</translation>
+    </message>
+    <message>
+        <source>If there is a marked route to the start point, the map issue point is marked using this symbol.</source>
+        <comment>Description of symbol 702</comment>
+        <translation>தொடக்கப் புள்ளிக்கு ஒரு குறிக்கப்பட்ட பாதை இருந்தால், இந்த குறியீட்டைப் பயன்படுத்தி வரைபடத்தின் சிக்கல் புள்ளி குறிக்கப்படும்.</translation>
+    </message>
+    <message>
+        <source>Control point</source>
+        <comment>Name of symbol 703</comment>
+        <translation>கட்டுப்பாட்டு புள்ளி</translation>
+    </message>
+    <message>
+        <source>Control number</source>
+        <comment>Name of symbol 704</comment>
+        <translation>கட்டுப்பாட்டு எண்</translation>
+    </message>
+    <message>
+        <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
+        <comment>Description of symbol 704</comment>
+        <translation>முக்கிய விவரங்களை மறைக்காத வகையில் கட்டுப்பாட்டுப் புள்ளி வட்டத்திற்கு அருகில் கட்டுப்பாட்டு எண் வைக்கப்பட்டுள்ளது. எண்கள் வடக்கு நோக்கியவை.</translation>
+    </message>
+    <message>
+        <source>Course line</source>
+        <comment>Name of symbol 705</comment>
+        <translation>பாட வரி</translation>
+    </message>
+    <message>
+        <source>Where controls are to be visited in order, the sequence is shown using straight lines from the start to the first control and then from each control to the next one. Sections of lines should be omitted to leave important detail showing. The line should be drawn via mandatory crossing points. There should be gaps between the line and the control circle in order to increase the readability of the underlying detail close to the control.</source>
+        <comment>Description of symbol 705</comment>
+        <translation>கட்டுப்பாடுகளை வரிசையாகப் பார்வையிட வேண்டிய இடத்தில், தொடக்கத்திலிருந்து முதல் கட்டுப்பாடு வரை நேர்கோடுகளைப் பயன்படுத்தி, பின்னர் ஒவ்வொரு கட்டுப்பாட்டிலிருந்து அடுத்தது வரை வரிசை காட்டப்படும். முக்கியமான விவரங்களைக் காட்டுவதற்கு வரிகளின் பிரிவுகள் தவிர்க்கப்பட வேண்டும். கோடு கட்டாய கடக்கும் புள்ளிகள் வழியாக வரையப்பட வேண்டும். கோட்டிற்கும் கட்டுப்பாட்டு வட்டத்திற்கும் இடையில் இடைவெளிகள் இருக்க வேண்டும், இது கட்டுப்பாட்டிற்கு அருகில் உள்ள அடிப்படை விவரங்களின் வாசிப்புத்திறனை அதிகரிக்க வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Finish</source>
+        <comment>Name of symbol 706</comment>
+        <translation>முடிக்கவும்</translation>
+    </message>
+    <message>
+        <source>The end of the course.</source>
+        <comment>Description of symbol 706</comment>
+        <translation>பாடத்தின் முடிவு.</translation>
+    </message>
+    <message>
+        <source>Marked route</source>
+        <comment>Name of symbol 707</comment>
+        <translation>குறிக்கப்பட்ட பாதை</translation>
+    </message>
+    <message>
+        <source>Out-of-bounds boundary</source>
+        <comment>Name of symbol 708</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட எல்லை</translation>
+    </message>
+    <message>
+        <source>Out-of-bounds area</source>
+        <comment>Name of symbol 709</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட பகுதி</translation>
+    </message>
+    <message>
+        <source>Out-of-bounds area, solid boundary</source>
+        <comment>Name of symbol 709.1</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட பகுதி, திடமான எல்லை</translation>
+    </message>
+    <message>
+        <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
+        <comment>Description of symbol 709.1</comment>
+        <translation>ஒரு திடமான கோடு, எல்லையானது தரையில் தொடர்ச்சியாக (டேப்கள், முதலியன) குறிக்கப்பட்டிருப்பதைக் குறிக்கிறது.</translation>
+    </message>
+    <message>
+        <source>Out-of-bounds area, dashed boundary</source>
+        <comment>Name of symbol 709.2</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட பகுதி, கோடு எல்லை</translation>
+    </message>
+    <message>
+        <source>A dashed line indicates intermittent marking on the ground.</source>
+        <comment>Description of symbol 709.2</comment>
+        <translation>ஒரு இடை கோடு தரையில் இடைப்பட்ட அடையாளத்தைக் குறிக்கிறது.</translation>
+    </message>
+    <message>
+        <source>Crossing point</source>
+        <comment>Name of symbol 710</comment>
+        <translation>கடக்கும் புள்ளி</translation>
+    </message>
+    <message>
+        <source>A crossing point, for instance through or over a wall or fence, across a road or railway, through a tunnel or out-of-bounds area, or over an uncrossable boundary is drawn on the map with two lines curving outwards. The lines shall reflect the length of the crossing.</source>
+        <comment>Description of symbol 710</comment>
+        <translation>உதாரணமாக, ஒரு சுவர் அல்லது வேலி வழியாக அல்லது அதற்கு மேல், சாலை அல்லது ரயில்வேயின் குறுக்கே, ஒரு சுரங்கப்பாதை அல்லது எல்லைக்கு அப்பாற்பட்ட பகுதி அல்லது கடக்க முடியாத எல்லைக்கு மேல் ஒரு குறுக்கு புள்ளி வரைபடத்தில் இரண்டு கோடுகளுடன் வெளிப்புறமாக வளைந்திருக்கும். கோடுகள் கடக்கும் நீளத்தை பிரதிபலிக்க வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Out-of-bounds route</source>
+        <comment>Name of symbol 711</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட பாதை</translation>
+    </message>
+    <message>
+        <source>Out-of-bounds route, single cross</source>
+        <comment>Name of symbol 711.1</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட பாதை, ஒற்றை குறுக்கு</translation>
+    </message>
+    <message>
+        <source>First aid post</source>
+        <comment>Name of symbol 712</comment>
+        <translation>முதலுதவி இடுகை</translation>
+    </message>
+    <message>
+        <source>The location of a first aid post.</source>
+        <comment>Description of symbol 712</comment>
+        <translation>முதலுதவி நிலையத்தின் இடம்.</translation>
+    </message>
+    <message>
+        <source>Refreshment point</source>
+        <comment>Name of symbol 713</comment>
+        <translation>புத்துணர்ச்சி புள்ளி</translation>
+    </message>
+    <message>
+        <source>The location of a refreshment point which is not at a control.</source>
+        <comment>Description of symbol 713</comment>
+        <translation>கட்டுப்பாட்டில் இல்லாத புத்துணர்ச்சி புள்ளியின் இடம்.</translation>
+    </message>
+    <message>
+        <source>Simple Orienteering Course</source>
+        <comment>Name of symbol 799</comment>
+        <translation>எளிய ஓரியண்டரிங் படிப்பு</translation>
+    </message>
+    <message>
+        <source>This symbol provides a simple and quick way to make training courses.
+
+The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
+        <comment>Description of symbol 799</comment>
+        <translation>இந்த அடையாளம் பயிற்சி வகுப்புகளை உருவாக்குவதற்கான எளிய மற்றும் விரைவான வழியை வழங்குகிறது. 
+
+ஊதா நிற கோடு பூச்சு சின்னத்தில் சிறிது நீட்டிக்கப்படும். இது இந்த எளிய அணுகுமுறையின் குறைபாடு.</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Logo</source>
+        <comment>Name of symbol 999</comment>
+        <translation>OpenOrienteering லோகோ</translation>
+    </message>
+    <message>
+        <source>The OpenOrienteering Logo.</source>
+        <comment>Description of symbol 999</comment>
+        <translation>OpenOrienteering லோகோ.</translation>
+    </message>
 </context>
 <context>
     <name>ISOM2000</name>
+    <message>
+        <source>Purple</source>
+        <comment>Color 0</comment>
+        <translation>ஊதா</translation>
+    </message>
+    <message>
+        <source>Black</source>
+        <comment>Color 1</comment>
+        <translation>கருப்பு</translation>
+    </message>
+    <message>
+        <source>Brown 50%</source>
+        <comment>Color 2</comment>
+        <translation>பழுப்பு 50%</translation>
+    </message>
+    <message>
+        <source>Black below light browns</source>
+        <comment>Color 3</comment>
+        <translation>வெளிர் பழுப்பு நிறத்திற்கு கீழே கருப்பு</translation>
+    </message>
+    <message>
+        <source>Opaque Blue</source>
+        <comment>Color 4</comment>
+        <translation>ஒளிபுகா நீலம்</translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <comment>Color 5</comment>
+        <translation>நீலம்</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 6</comment>
+        <translation>நீலம் 50%</translation>
+    </message>
+    <message>
+        <source>Brown</source>
+        <comment>Color 7</comment>
+        <translation>பழுப்பு</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 8</comment>
+        <translation>OpenOrienteering ஆரஞ்சு</translation>
+    </message>
+    <message>
+        <source>Black 30%</source>
+        <comment>Color 9</comment>
+        <translation>கருப்பு 30%</translation>
+    </message>
+    <message>
+        <source>Green 50%, Yellow</source>
+        <comment>Color 10</comment>
+        <translation>பச்சை 50%, மஞ்சள்</translation>
+    </message>
+    <message>
+        <source>Green over White over Green</source>
+        <comment>Color 11</comment>
+        <translation>பச்சைக்கு மேல் பச்சை</translation>
+    </message>
+    <message>
+        <source>Opaque White over Green</source>
+        <comment>Color 12</comment>
+        <translation>பச்சைக்கு மேல் ஒளிபுகா வெள்ளை</translation>
+    </message>
+    <message>
+        <source>Opaque Green</source>
+        <comment>Color 13</comment>
+        <translation>ஒளிபுகா பச்சை</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <comment>Color 14</comment>
+        <translation>பச்சை</translation>
+    </message>
+    <message>
+        <source>Green 60%</source>
+        <comment>Color 15</comment>
+        <translation>பச்சை 60%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 16</comment>
+        <translation>பச்சை 30%</translation>
+    </message>
+    <message>
+        <source>Green below light greens</source>
+        <comment>Color 17</comment>
+        <translation>வெளிர் பச்சைக்கு கீழே பச்சை</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 18</comment>
+        <translation>மஞ்சள்</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 19</comment>
+        <translation>மஞ்சள் 50%</translation>
+    </message>
+    <message>
+        <source>White over Yellow 70%</source>
+        <comment>Color 20</comment>
+        <translation>70%க்கு மேல் மஞ்சள்</translation>
+    </message>
+    <message>
+        <source>Yellow 70%</source>
+        <comment>Color 21</comment>
+        <translation>மஞ்சள் 70%</translation>
+    </message>
+    <message>
+        <source>Contour</source>
+        <comment>Name of symbol 101</comment>
+        <translation>விளிம்பு</translation>
+    </message>
+    <message>
+        <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
+        <comment>Description of symbol 101</comment>
+        <translation>சம உயரம் கொண்ட புள்ளிகளை இணைக்கும் கோடு. வரையறைகளுக்கு இடையே நிலையான செங்குத்து இடைவெளி 5 மீட்டர் ஆகும். கோடுகளின் மையத்திலிருந்து மையத்திற்கு 0.25 மிமீ ஒரு விளிம்பில் மிகச்சிறிய வளைவு.</translation>
+    </message>
+    <message>
+        <source>Index contour</source>
+        <comment>Name of symbol 102</comment>
+        <translation>குறியீட்டு விளிம்பு</translation>
+    </message>
+    <message>
+        <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
+        <comment>Description of symbol 102</comment>
+        <translation>ஒவ்வொரு ஐந்தாவது விளிம்பும் தடிமனான கோட்டுடன் வரையப்பட வேண்டும். உயர வேறுபாடு மற்றும் நிலப்பரப்பின் ஒட்டுமொத்த வடிவத்தை விரைவாக மதிப்பிடுவதற்கு இது ஒரு உதவியாகும். ஒரு குறியீட்டு விளிம்பு அதிக விவரங்கள் கொண்ட பகுதியுடன் ஒத்துப்போகும் இடத்தில், அது ஒரு சாதாரண விளிம்பு கோட்டுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Form line</source>
+        <comment>Name of symbol 103</comment>
+        <translation>படிவ வரி</translation>
+    </message>
+    <message>
+        <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
+        <comment>Description of symbol 103</comment>
+        <translation>ஒரு இடைநிலை கோடு. படிவக் கோடுகள் பயன்படுத்தப்படுகின்றன, அங்கு நிலத்தின் வடிவத்தைப் பற்றி மேலும் செய்தி கொடுக்கலாம். சாதாரண வரையறைகளுடன் பிரதிநிதித்துவம் சாத்தியமில்லாத இடங்களில் மட்டுமே அவை பயன்படுத்தப்படுகின்றன. அண்டை எல்லைகளுக்கு இடையில் ஒரே ஒரு படிவக் கோடு மட்டுமே பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Slope line</source>
+        <comment>Name of symbol 104</comment>
+        <translation>சாய்வு கோடு</translation>
+    </message>
+    <message>
+        <source>Slope lines may be drawn on the lower side of a contour line, e.g. along the line of a re-entrant or in a depression. They are used only where it is necessary to clarify the direction of slope.</source>
+        <comment>Description of symbol 104</comment>
+        <translation>ஒரு விளிம்பு கோட்டின் கீழ் பக்கத்தில் சாய்வு கோடுகள் வரையப்படலாம், எ.கா. மீண்டும் நுழைபவரின் வரிசையில் அல்லது மனச்சோர்வில். சாய்வின் திசையை தெளிவுபடுத்துவதற்கு தேவையான இடங்களில் மட்டுமே அவை பயன்படுத்தப்படுகின்றன.</translation>
+    </message>
+    <message>
+        <source>Contour value</source>
+        <comment>Name of symbol 105</comment>
+        <translation>விளிம்பு மதிப்பு</translation>
+    </message>
+    <message>
+        <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
+        <comment>Description of symbol 105</comment>
+        <translation>பெரிய உயர வேறுபாடுகளை மதிப்பிடுவதற்கு உதவும் வகையில், விளிம்பு மதிப்புகள் சேர்க்கப்படலாம். மற்ற விவரங்கள் மறைக்கப்படாத நிலைகளில் அவை குறியீட்டு வரையறைகளில் செருகப்படுகின்றன. உருவங்களின் மேற்பகுதி விளிம்பின் மேல் பக்கத்தில் இருக்கும் வகையில் உருவங்கள் நோக்குநிலை கொண்டதாக இருக்க வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Earth bank</source>
+        <comment>Name of symbol 106</comment>
+        <translation>பூமி வங்கி</translation>
+    </message>
+    <message>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <comment>Description of symbol 106</comment>
+        <translation>செங்குத்தான பூமிக்கரை என்பது தரை மட்டத்தில் ஏற்படும் திடீர் மாற்றமாகும், இது அதன் சுற்றுப்புறங்களிலிருந்து தெளிவாக வேறுபடுத்திக் காட்டப்படுகிறது, எ.கா. சரளை அல்லது மணல் குழிகள், சாலை மற்றும் ரயில்வே வெட்டுதல் அல்லது கரைகள். குறிச்சொற்கள் சாய்வின் முழு அளவைக் காட்ட வேண்டும், ஆனால் இரண்டு கரைகள் நெருக்கமாக இருந்தால் தவிர்க்கப்படலாம். செல்ல முடியாத கரைகள் 201 (அசாத்தியமான குன்றின்) சின்னத்துடன் வரையப்பட வேண்டும். மிக உயரமான பூமி வங்கிகளின் வரி அகலம் 0.25 மிமீ இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Earth bank, minimum size</source>
+        <comment>Name of symbol 106.0.1</comment>
+        <translation>பூமிக்கரை, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <comment>Description of symbol 106.0.1</comment>
+        <translation>செங்குத்தான பூமிக்கரை என்பது தரை மட்டத்தில் ஏற்படும் திடீர் மாற்றமாகும், இது அதன் சுற்றுப்புறங்களிலிருந்து தெளிவாக வேறுபடுத்திக் காட்டப்படுகிறது, எ.கா. சரளை அல்லது மணல் குழிகள், சாலை மற்றும் ரயில்வே வெட்டுதல் அல்லது கரைகள். குறிச்சொற்கள் சாய்வின் முழு அளவைக் காட்ட வேண்டும், ஆனால் இரண்டு கரைகள் நெருக்கமாக இருந்தால் தவிர்க்கப்படலாம். செல்ல முடியாத கரைகள் 201 (அசாத்தியமான குன்றின்) சின்னத்துடன் வரையப்பட வேண்டும். மிக உயரமான பூமி வங்கிகளின் வரி அகலம் 0.25 மிமீ இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Earth bank, very high</source>
+        <comment>Name of symbol 106.1</comment>
+        <translation>பூமிக்கரை, மிக உயரமானது</translation>
+    </message>
+    <message>
+        <source>The line width of very high earth banks may be 0.25 mm.</source>
+        <comment>Description of symbol 106.1</comment>
+        <translation>மிக உயரமான பூமி வங்கிகளின் வரி அகலம் 0.25 மிமீ இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Earth bank, very high, minimum size</source>
+        <comment>Name of symbol 106.1.1</comment>
+        <translation>பூமிக்கரை, மிக உயர்ந்த, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>The line width of very high earth banks may be 0.25 mm.</source>
+        <comment>Description of symbol 106.1.1</comment>
+        <translation>மிக உயரமான பூமி வங்கிகளின் வரி அகலம் 0.25 மிமீ இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Earth bank, tag line</source>
+        <comment>Name of symbol 106.2</comment>
+        <translation>பூமி வங்கி, டேக் லைன்</translation>
+    </message>
+    <message>
+        <source>Use this symbol to display the full extent of wide earth banks.</source>
+        <comment>Description of symbol 106.2</comment>
+        <translation>பரந்த பூமிக் கரைகளின் முழு அளவைக் காட்ட இந்தக் குறியீட்டைப் பயன்படுத்தவும்.</translation>
+    </message>
+    <message>
+        <source>Earth wall</source>
+        <comment>Name of symbol 107</comment>
+        <translation>பூமி சுவர்</translation>
+    </message>
+    <message>
+        <source>Distinct earth wall. Minimum height is 1 m.</source>
+        <comment>Description of symbol 107</comment>
+        <translation>தனித்துவமான மண் சுவர். குறைந்தபட்ச உயரம் 1 மீ.</translation>
+    </message>
+    <message>
+        <source>Small earth wall</source>
+        <comment>Name of symbol 108</comment>
+        <translation>சிறிய மண் சுவர்</translation>
+    </message>
+    <message>
+        <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
+        <comment>Description of symbol 108</comment>
+        <translation>ஒரு சிறிய அல்லது பகுதி பாழடைந்த மண் சுவர் ஒரு கோடு கோடுடன் காட்டப்பட வேண்டும். குறைந்தபட்ச உயரம் 0.5 மீ.</translation>
+    </message>
+    <message>
+        <source>Erosion gully</source>
+        <comment>Name of symbol 109</comment>
+        <translation>அரிப்பு பள்ளம்</translation>
+    </message>
+    <message>
+        <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
+        <comment>Description of symbol 109</comment>
+        <translation>அடையாளம் 106 மூலம் காட்ட முடியாத அளவுக்கு சிறியதாக இருக்கும் அரிப்புக் குழி அல்லது அகழி ஒற்றை வரியால் காட்டப்படுகிறது. கோட்டின் அகலம் கல்லியின் அளவை பிரதிபலிக்கிறது. குறைந்தபட்ச ஆழம் 1 மீ. வரியின் முடிவு சுட்டிக்காட்டப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Small erosion gully</source>
+        <comment>Name of symbol 110</comment>
+        <translation>சிறிய அரிப்பு பள்ளம்</translation>
+    </message>
+    <message>
+        <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
+        <comment>Description of symbol 110</comment>
+        <translation>ஒரு சிறிய அரிப்பு பள்ளம் அல்லது அகழி. குறைந்தபட்ச ஆழம் 0.5 மீ.</translation>
+    </message>
+    <message>
+        <source>Small knoll</source>
+        <comment>Name of symbol 112</comment>
+        <translation>சிறிய குழி</translation>
+    </message>
+    <message>
+        <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
+        <comment>Description of symbol 112</comment>
+        <translation>ஒரு சிறிய வெளிப்படையான மேடு அல்லது பாறைக் குமிழ், இது ஒரு விளிம்புடன் அளவிட முடியாது (மேட்டின் விட்டம் சுமார் 5 மீட்டருக்கும் குறைவானது). குமிழ் உயரம் சுற்றியுள்ள தரையில் இருந்து குறைந்தபட்சம் 1 மீ இருக்க வேண்டும். அடையாளம் ஒரு விளிம்பு கோட்டைத் தொடக்கூடாது.</translation>
+    </message>
+    <message>
+        <source>Elongated knoll</source>
+        <comment>Name of symbol 113</comment>
+        <translation>நீளமான குமிழ்</translation>
+    </message>
+    <message>
+        <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
+        <comment>Description of symbol 113</comment>
+        <translation>ஒரு சிறிய வெளிப்படையான நீளமான குமிழ், இது ஒரு விளிம்புடன் அளவிட முடியாது (நீளம் 12 மீட்டருக்கும் குறைவானது மற்றும் அகலம் 4 மீட்டருக்கும் குறைவானது). குமிழ் உயரம் சுற்றியுள்ள தரையில் இருந்து குறைந்தபட்சம் 1 மீ இருக்க வேண்டும். இதை விட பெரிய முடிச்சுகள் வரையறைகளால் காட்டப்பட வேண்டும். அடையாளம் இலவச வடிவில் வரையப்படக்கூடாது அல்லது இரண்டு நீளமான நால் சின்னங்கள் ஒன்றுடன் ஒன்று சேரும். அடையாளம் ஒரு விளிம்பு கோட்டைத் தொடக்கூடாது.</translation>
+    </message>
+    <message>
+        <source>Small depression</source>
+        <comment>Name of symbol 115</comment>
+        <translation>சிறிய மனச்சோர்வு</translation>
+    </message>
+    <message>
+        <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
+        <comment>Description of symbol 115</comment>
+        <translation>சிறிய ஆழமற்ற இயற்கை பள்ளங்கள் மற்றும் குழிவுகள் (குறைந்தபட்ச விட்டம் 2 மீ) அளவுகோல்களால் அளவிட முடியாதவை அரை வட்டத்தால் குறிக்கப்படுகின்றன. சுற்றியுள்ள தரையில் இருந்து குறைந்தபட்ச ஆழம் 1 மீ இருக்க வேண்டும். இருப்பிடம் என்பது சின்னத்தின் ஈர்ப்பு மையமாகும், இது வடக்கு நோக்கியதாக உள்ளது. மனிதனால் உருவாக்கப்பட்ட குழிகளுக்கு 116 அடையாளம் பயன்படுத்தப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Pit</source>
+        <comment>Name of symbol 116</comment>
+        <translation>குழி</translation>
+    </message>
+    <message>
+        <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
+        <comment>Description of symbol 116</comment>
+        <translation>அடையாளம் 106 (குறைந்தபட்ச விட்டம் 2 மீ) மூலம் அளவிட முடியாத தனித்த செங்குத்தான பக்கங்களைக் கொண்ட குழிகள் மற்றும் துளைகள். சுற்றியுள்ள தரையில் இருந்து குறைந்தபட்ச ஆழம் 1 மீ இருக்க வேண்டும். இருப்பிடம் என்பது வடக்கு நோக்கிய சின்னத்தின் ஈர்ப்பு மையமாகும்.</translation>
+    </message>
+    <message>
+        <source>Broken ground, small</source>
+        <comment>Name of symbol 117.1</comment>
+        <translation>உடைந்த தரை, சிறியது</translation>
+    </message>
+    <message>
+        <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
+        <comment>Description of symbol 117.1</comment>
+        <translation>விரிவாகக் காட்ட முடியாத அளவுக்கு மிகவும் சிக்கலான குழி அல்லது குழிகளின் பகுதி. தோராயமாக வைக்கப்படும் புள்ளிகளின் அடர்த்தி தரையில் உள்ள விவரங்களுக்கு ஏற்ப மாறுபடலாம்.</translation>
+    </message>
+    <message>
+        <source>Broken ground, big</source>
+        <comment>Name of symbol 117.2</comment>
+        <translation>உடைந்த தரை, பெரியது</translation>
+    </message>
+    <message>
+        <source>The size of the dots may vary.</source>
+        <comment>Description of symbol 117.2</comment>
+        <translation>புள்ளிகளின் அளவு மாறுபடலாம்.</translation>
+    </message>
+    <message>
+        <source>Special land form feature</source>
+        <comment>Name of symbol 118</comment>
+        <translation>சிறப்பு நில வடிவ நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
+        <comment>Description of symbol 118</comment>
+        <translation>இந்த அடையாளம் ஒரு சிறப்பு சிறிய நில வடிவ அம்சத்திற்கு பயன்படுத்தப்படலாம். சின்னத்தின் வரையறை வரைபட புராணத்தில் கொடுக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Impassable cliff</source>
+        <comment>Name of symbol 201</comment>
+        <translation>செல்ல முடியாத பாறை</translation>
+    </message>
+    <message>
+        <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+        <comment>Description of symbol 201</comment>
+        <translation>செல்ல முடியாத குன்றின், குவாரி அல்லது பூமிக்கரை (பார்க்க 106) 0.35 மிமீ கோடு மற்றும் கீழ்நோக்கிய குறிச்சொற்கள் மேல் கோட்டிலிருந்து அடி வரை அதன் முழு அளவைக் காட்டும். செங்குத்து பாறை முகங்களுக்கு இடைவெளி குறைவாக இருந்தால் குறிச்சொற்கள் தவிர்க்கப்படலாம், எ.கா. பாறைகளுக்கு இடையில் உள்ள குறுகிய பத்திகள் (குறைந்தது 0.3 மிமீ அகலத்துடன் பத்தியை வரைய வேண்டும்). குறிச்சொற்கள் பாறை முகத்திற்கு கீழே உள்ள விவரங்களைக் குறிக்கும் பகுதி சின்னத்தின் மீது நீட்டிக்கப்படலாம். ஒரு பாறை முகம் நேராக தண்ணீருக்குள் விழும்போது, நீரின் விளிம்பில் உள்ள குன்றின் கீழ் செல்ல இயலாது, கரை கோடு தவிர்க்கப்படும் அல்லது குறிச்சொற்கள் கரையின் கோட்டின் மீது தெளிவாக நீட்டிக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, minimum size</source>
+        <comment>Name of symbol 201.0.1</comment>
+        <translation>செல்ல முடியாத பாறை, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+        <comment>Description of symbol 201.0.1</comment>
+        <translation>செல்ல முடியாத குன்றின், குவாரி அல்லது பூமிக்கரை (பார்க்க 106) 0.35 மிமீ கோடு மற்றும் கீழ்நோக்கிய குறிச்சொற்கள் மேல் கோட்டிலிருந்து அடி வரை அதன் முழு அளவைக் காட்டும். செங்குத்து பாறை முகங்களுக்கு இடைவெளி குறைவாக இருந்தால் குறிச்சொற்கள் தவிர்க்கப்படலாம், எ.கா. பாறைகளுக்கு இடையில் உள்ள குறுகிய பத்திகள் (குறைந்தது 0.3 மிமீ அகலத்துடன் பத்தியை வரைய வேண்டும்). குறிச்சொற்கள் பாறை முகத்திற்கு கீழே உள்ள விவரங்களைக் குறிக்கும் பகுதி சின்னத்தின் மீது நீட்டிக்கப்படலாம். ஒரு பாறை முகம் நேராக தண்ணீருக்குள் விழும்போது, நீரின் விளிம்பில் உள்ள குன்றின் கீழ் செல்ல இயலாது, கரை கோடு தவிர்க்கப்படும் அல்லது குறிச்சொற்கள் கரையின் கோட்டின் மீது தெளிவாக நீட்டிக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, no tags</source>
+        <comment>Name of symbol 201.1</comment>
+        <translation>செல்ல முடியாத பாறை, குறிச்சொற்கள் இல்லை</translation>
+    </message>
+    <message>
+        <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
+        <comment>Description of symbol 201.1</comment>
+        <translation>செங்குத்து பாறை முகங்களுக்கு இடைவெளி குறைவாக இருந்தால் குறிச்சொற்கள் தவிர்க்கப்படலாம், எ.கா. பாறைகளுக்கு இடையில் உள்ள குறுகிய பத்திகள் (குறைந்தது 0.3 மிமீ அகலத்துடன் பத்தியை வரைய வேண்டும்).</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, tag line</source>
+        <comment>Name of symbol 201.2</comment>
+        <translation>செல்ல முடியாத பாறை, டேக் லைன்</translation>
+    </message>
+    <message>
+        <source>Use this symbol to display the full extent of a wide cliff.</source>
+        <comment>Description of symbol 201.2</comment>
+        <translation>பரந்த குன்றின் முழு அளவைக் காட்ட இந்த சின்னத்தைப் பயன்படுத்தவும்.</translation>
+    </message>
+    <message>
+        <source>Rock pillars/cliffs</source>
+        <comment>Name of symbol 202</comment>
+        <translation>பாறைத் தூண்கள்/பாறைகள்</translation>
+    </message>
+    <message>
+        <source>In the case of unusual features such as rock pillars or massive cliffs or gigantic boulders, the rocks shall be shown in plan shape without tags.</source>
+        <comment>Description of symbol 202</comment>
+        <translation>பாறைத் தூண்கள் அல்லது பாரிய பாறைகள் அல்லது பிரம்மாண்டமான கற்பாறைகள் போன்ற அசாதாரண அம்சங்களின் விசயத்தில், பாறைகள் குறிச்சொற்கள் இல்லாமல் திட்ட வடிவத்தில் காட்டப்படும்.</translation>
+    </message>
+    <message>
+        <source>Passable rock face</source>
+        <comment>Name of symbol 203</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம்</translation>
+    </message>
+    <message>
+        <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203</comment>
+        <translation>ஒரு சிறிய செங்குத்து பாறை முகம் (குறைந்தபட்ச உயரம் 1 மீ) குறிச்சொற்கள் இல்லாமல் காட்டப்படலாம். பாறை முகத்தின் வீழ்ச்சியின் திசையானது வரையறைகளிலிருந்து தெளிவாகத் தெரியாவிட்டால் அல்லது தெளிவை மேம்படுத்த, வீழ்ச்சியின் திசையில் குறுகிய குறிச்சொற்கள் வரையப்பட வேண்டும். குறிச்சொற்கள் இல்லாமல் காட்டப்படும் கடந்து செல்லக்கூடிய பாறை முகங்களுக்கு, தெளிவை மேம்படுத்த கோட்டின் முனைகள் வட்டமாக இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Passable rock face, minimum size</source>
+        <comment>Name of symbol 203.0.1</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம், குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.0.1</comment>
+        <translation>ஒரு சிறிய செங்குத்து பாறை முகம் (குறைந்தபட்ச உயரம் 1 மீ) குறிச்சொற்கள் இல்லாமல் காட்டப்படலாம். பாறை முகத்தின் வீழ்ச்சியின் திசையானது வரையறைகளிலிருந்து தெளிவாகத் தெரியாவிட்டால் அல்லது தெளிவை மேம்படுத்த, வீழ்ச்சியின் திசையில் குறுகிய குறிச்சொற்கள் வரையப்பட வேண்டும். குறிச்சொற்கள் இல்லாமல் காட்டப்படும் கடந்து செல்லக்கூடிய பாறை முகங்களுக்கு, தெளிவை மேம்படுத்த கோட்டின் முனைகள் வட்டமாக இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags</source>
+        <comment>Name of symbol 203.1</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம், குறிச்சொற்கள் இல்லை</translation>
+    </message>
+    <message>
+        <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
+        <comment>Description of symbol 203.1</comment>
+        <translation>பாறை முகத்தின் வீழ்ச்சியின் திசையானது வரையறைகளில் இருந்து தெளிவாகவும், தெளிவுத்திறன் நன்றாகவும் இருந்தால் பயன்படுத்தப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, minimum size</source>
+        <comment>Name of symbol 203.1.1</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம், குறிச்சொற்கள் இல்லை, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
+        <comment>Description of symbol 203.1.1</comment>
+        <translation>பாறை முகத்தின் வீழ்ச்சியின் திசையானது வரையறைகளில் இருந்து தெளிவாகவும், தெளிவுத்திறன் நன்றாகவும் இருந்தால் பயன்படுத்தப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded</source>
+        <comment>Name of symbol 203.2</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம், குறிச்சொற்கள் இல்லை, வட்டமானது</translation>
+    </message>
+    <message>
+        <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.2</comment>
+        <translation>குறிச்சொற்கள் இல்லாமல் காட்டப்படும் கடந்து செல்லக்கூடிய பாறை முகங்களுக்கு, தெளிவை மேம்படுத்த கோட்டின் முனைகள் வட்டமாக இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded, minimum size</source>
+        <comment>Name of symbol 203.2.1</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம், குறிச்சொற்கள் இல்லை, வட்டமானது, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.2.1</comment>
+        <translation>குறிச்சொற்கள் இல்லாமல் காட்டப்படும் கடந்து செல்லக்கூடிய பாறை முகங்களுக்கு, தெளிவை மேம்படுத்த கோட்டின் முனைகள் வட்டமாக இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Rocky pit</source>
+        <comment>Name of symbol 204</comment>
+        <translation>பாறை குழி</translation>
+    </message>
+    <message>
+        <source>Rocky pits, holes or mineshafts which may constitute a danger to the runner. Location is the centre of gravity of the symbol, which is orientated to north.</source>
+        <comment>Description of symbol 204</comment>
+        <translation>பாறை குழிகள், துளைகள் அல்லது கண்ணிவெடிகள் ஓடுபவருக்கு ஆபத்தை உண்டாக்கும். இருப்பிடம் என்பது சின்னத்தின் ஈர்ப்பு மையமாகும், இது வடக்கு நோக்கியதாக உள்ளது.</translation>
+    </message>
+    <message>
+        <source>Cave</source>
+        <comment>Name of symbol 205</comment>
+        <translation>குகை</translation>
+    </message>
+    <message>
+        <source>A cave is represented by the same symbol as a rocky pit. In this case the symbol should be orientated to point up the slope as indicated opposite. The centre of gravity of the symbol marks the opening.</source>
+        <comment>Description of symbol 205</comment>
+        <translation>ஒரு குகை ஒரு பாறை குழியின் அதே சின்னத்தால் குறிக்கப்படுகிறது. இந்தச் சந்தர்ப்பத்தில், அடையாளம் எதிரெதிர் சுட்டிக்காட்டப்பட்டபடி சாய்வைக் குறிக்கும் வகையில் இருக்க வேண்டும். சின்னத்தின் ஈர்ப்பு நடுவண் திறப்பைக் குறிக்கிறது.</translation>
+    </message>
+    <message>
+        <source>Boulder</source>
+        <comment>Name of symbol 206</comment>
+        <translation>பாறாங்கல்</translation>
+    </message>
+    <message>
+        <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
+        <comment>Description of symbol 206</comment>
+        <translation>ஒரு சிறிய தனித்துவமான கற்பாறை (குறைந்தபட்ச உயரம் 1 மீ). வரைபடத்தில் குறிக்கப்பட்ட ஒவ்வொரு கற்பாறையும் தரையில் உடனடியாக அடையாளம் காணப்பட வேண்டும். கணிசமான அளவு வேறுபாடு கொண்ட கற்பாறைகளுக்கு இடையிலான வேறுபாட்டைக் காட்ட, இந்த சின்னத்தை 20% (விட்டம் 0.5 மிமீ) பெரிதாக்க அனுமதிக்கப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Boulder, enlarged</source>
+        <comment>Name of symbol 206.1</comment>
+        <translation>பாறாங்கல், பெரிதாக்கப்பட்டது</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
+        <comment>Description of symbol 206.1</comment>
+        <translation>கணிசமான அளவு வேறுபாடு கொண்ட கற்பாறைகளுக்கு இடையிலான வேறுபாட்டைக் காட்ட, இந்த சின்னத்தை 20% (விட்டம் 0.5 மிமீ) பெரிதாக்க அனுமதிக்கப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Large boulder</source>
+        <comment>Name of symbol 207</comment>
+        <translation>பெரிய பாறை</translation>
+    </message>
+    <message>
+        <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
+        <comment>Description of symbol 207</comment>
+        <translation>குறிப்பாக பெரிய மற்றும் தனித்துவமான பாறாங்கல். பிரம்மாண்டமான கற்பாறைகளுக்கு 202 அடையாளம் பயன்படுத்தப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Boulder field</source>
+        <comment>Name of symbol 208</comment>
+        <translation>பாறாங்கல் வயல்</translation>
+    </message>
+    <message>
+        <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208</comment>
+        <translation>தனித்தனியாகக் குறிக்க முடியாத அளவுக்குக் கற்களால் மூடப்பட்டிருக்கும் பகுதி 8:6:5 என்ற விகிதத்தின் பக்கங்களைக் கொண்ட சீரற்ற நோக்குநிலை திட முக்கோணங்களுடன் காட்டப்பட்டுள்ளது. குறைந்தபட்சம் இரண்டு முக்கோணங்களைப் பயன்படுத்த வேண்டும். செல்வது முக்கோணங்களின் அடர்த்தியால் குறிக்கப்படுகிறது. பாறாங்கல் அளவுகளில் குறிப்பிடத்தக்க வேறுபாட்டைக் கொண்ட பாறாங்கல் புலங்களுக்கு இடையிலான வேறுபாட்டைக் காட்ட முக்கோணங்களை 20% பெரிதாக்க அனுமதிக்கப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Boulder field, large</source>
+        <comment>Name of symbol 208.1</comment>
+        <translation>பாறாங்கல் வயல், பெரியது</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208.1</comment>
+        <translation>பாறாங்கல் அளவுகளில் குறிப்பிடத்தக்க வேறுபாட்டைக் கொண்ட பாறாங்கல் புலங்களுக்கு இடையிலான வேறுபாட்டைக் காட்ட முக்கோணங்களை 20% பெரிதாக்க அனுமதிக்கப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Boulder cluster</source>
+        <comment>Name of symbol 209</comment>
+        <translation>பாறாங்கல் கொத்து</translation>
+    </message>
+    <message>
+        <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
+        <comment>Description of symbol 209</comment>
+        <translation>தனித்தனியாகக் குறிக்க முடியாத அளவுக்கு மிக நெருக்கமாகத் தொகுக்கப்பட்டுள்ள ஒரு சிறிய தனித்தனி கற்பாறைகள். அடையாளம் வடக்கு நோக்கிய ஒரு சமபக்க முக்கோணமாகும். பாறைக் கொத்துகளுக்கு இடையே உள்ள வேறுபாட்டைக் காட்ட, அளவுகளில் குறிப்பிடத்தக்க வேறுபாட்டைக் காட்ட, இந்த சின்னத்தை 25% (1.0 மிமீ) பெரிதாக்க அனுமதிக்கப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Boulder cluster, large</source>
+        <comment>Name of symbol 209.1</comment>
+        <translation>பாறைக் கொத்து, பெரியது</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
+        <comment>Description of symbol 209.1</comment>
+        <translation>பாறைக் கொத்துகளுக்கு இடையே உள்ள வேறுபாட்டைக் காட்ட, அளவுகளில் குறிப்பிடத்தக்க வேறுபாட்டைக் காட்ட, இந்த சின்னத்தை 25% (1.0 மிமீ) பெரிதாக்க அனுமதிக்கப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
+        <comment>Description of symbol 210</comment>
+        <translation>செல்வதை பாதிக்கும் பாறை அல்லது பாறை நிலம் வரைபடத்தில் காட்டப்பட வேண்டும். பாறையின் அளவைப் பொறுத்து புள்ளிகள் அடர்த்தியுடன் தோராயமாக விநியோகிக்கப்பட வேண்டும். குறைந்தபட்சம் மூன்று புள்ளிகளைப் பயன்படுத்த வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Stony ground</source>
+        <comment>Name of symbol 210.1</comment>
+        <translation>பாறை நிலம்</translation>
+    </message>
+    <message>
+        <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
+        <comment>Description of symbol 210.1</comment>
+        <translation>செல்வதை பாதிக்கும் பாறை அல்லது பாறை நிலம் வரைபடத்தில் காட்டப்பட வேண்டும். பாறையின் அளவைப் பொறுத்து புள்ளிகள் அடர்த்தியுடன் தோராயமாக விநியோகிக்கப்பட வேண்டும். குறைந்தபட்சம் மூன்று புள்ளிகளைப் பயன்படுத்த வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Open sandy ground</source>
+        <comment>Name of symbol 211</comment>
+        <translation>திறந்த மணல் நிலம்</translation>
+    </message>
+    <message>
+        <source>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</source>
+        <comment>Description of symbol 211</comment>
+        <translation>தாவரங்கள் இல்லாத மென்மையான மணல் தரை அல்லது சரளைப் பகுதி மற்றும் மெதுவாக ஓடுவது. மணல் நிலத்தின் ஒரு பகுதி திறந்திருந்தாலும், நன்றாக இயங்கும் இடத்தில், அது திறந்த நிலமாகக் காட்டப்படுகிறது (401/402).</translation>
+    </message>
+    <message>
+        <source>Bare rock</source>
+        <comment>Name of symbol 212</comment>
+        <translation>வெற்றுப் பாறை</translation>
+    </message>
+    <message>
+        <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
+        <comment>Description of symbol 212</comment>
+        <translation>பூமி அல்லது தாவரங்கள் இல்லாத பாறையின் இயங்கக்கூடிய பகுதி வெற்றுப் பாறையாகக் காட்டப்படுகிறது. புல், பாசி அல்லது பிற குறைந்த தாவரங்களால் மூடப்பட்ட பாறையின் ஒரு பகுதி திறந்த நிலமாகக் காட்டப்படுகிறது (401/402).</translation>
+    </message>
+    <message>
+        <source>Lake</source>
+        <comment>Name of symbol 301</comment>
+        <translation>ஏரி</translation>
+    </message>
+    <message>
+        <source>Lake, bank line</source>
+        <comment>Name of symbol 301.1</comment>
+        <translation>ஏரி, கரை</translation>
+    </message>
+    <message>
+        <source>A black bank line indicates that the feature cannot be crossed.</source>
+        <comment>Description of symbol 301.1</comment>
+        <translation>ஒரு கருப்பு வங்கிக் கோடு அம்சத்தைக் கடக்க முடியாது என்பதைக் குறிக்கிறது.</translation>
+    </message>
+    <message>
+        <source>Lake, with bank line</source>
+        <comment>Name of symbol 301.2</comment>
+        <translation>ஏரி, கரையுடன் கூடியது</translation>
+    </message>
+    <message>
+        <source>Pond</source>
+        <comment>Name of symbol 302</comment>
+        <translation>குளம்</translation>
+    </message>
+    <message>
+        <source>Waterhole</source>
+        <comment>Name of symbol 303</comment>
+        <translation>நீர்க்குழி</translation>
+    </message>
+    <message>
+        <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
+        <comment>Description of symbol 303</comment>
+        <translation>நீர் நிரம்பிய குழி அல்லது அளவு காட்ட முடியாத அளவுக்கு சிறிய நீரின் பரப்பளவு. இருப்பிடம் என்பது சின்னத்தின் ஈர்ப்பு மையமாகும், இது வடக்கு நோக்கியதாக உள்ளது.</translation>
+    </message>
+    <message>
+        <source>Crossable watercourse</source>
+        <comment>Name of symbol 305</comment>
+        <translation>கடக்கக்கூடிய நீர்வழி</translation>
+    </message>
+    <message>
+        <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
+        <comment>Description of symbol 305</comment>
+        <translation>குறைந்தபட்சம் 2 மீ அகலம் கொண்ட கடக்கக்கூடிய நீர்வழி. 5 மீ அகலத்திற்கு மேல் நீர்நிலைகளின் அகலம் அளவிடப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Crossable small watercourse</source>
+        <comment>Name of symbol 306</comment>
+        <translation>கடக்கக்கூடிய சிறிய நீர்வழி</translation>
+    </message>
+    <message>
+        <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
+        <comment>Description of symbol 306</comment>
+        <translation>2 மீட்டருக்கும் குறைவான அகலத்தில் கடக்கக்கூடிய நீர்வழி (ஒரு பெரிய வடிகால் பள்ளம் உட்பட). சிறந்த தெளிவுக்கு, ஒரு சதுப்பு நிலத்தில் ஒரு பள்ளத்தை கடக்கக்கூடிய நீர்வழியாக வரைய வேண்டும் (305).</translation>
+    </message>
+    <message>
+        <source>Minor water channel</source>
+        <comment>Name of symbol 307</comment>
+        <translation>சிறு நீர் வாய்க்கால்</translation>
+    </message>
+    <message>
+        <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
+        <comment>Description of symbol 307</comment>
+        <translation>இயற்கையான அல்லது மனிதனால் உருவாக்கப்பட்ட சிறு நீர் வழித்தடமானது, இடையிடையே மட்டுமே தண்ணீரைக் கொண்டிருக்கும்.</translation>
+    </message>
+    <message>
+        <source>Narrow marsh</source>
+        <comment>Name of symbol 308</comment>
+        <translation>குறுகிய சதுப்பு நிலம்</translation>
+    </message>
+    <message>
+        <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
+        <comment>Description of symbol 308</comment>
+        <translation>ஒரு சதுப்பு நிலம் அல்லது நீர் வடியும், இது அடையாளம் 310 உடன் காட்ட முடியாத அளவுக்கு குறுகலானது (சுமார் 5 மீட்டருக்கும் குறைவான அகலம்).</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh</source>
+        <comment>Name of symbol 309</comment>
+        <translation>கடக்க முடியாத சதுப்பு நிலம்</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh, border line</source>
+        <comment>Name of symbol 309.1</comment>
+        <translation>கடக்க முடியாத சதுப்பு நிலம், எல்லைக் கோடு</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh, with border line</source>
+        <comment>Name of symbol 309.2</comment>
+        <translation>எல்லைக்கோடு, கடக்க முடியாத சதுப்பு நிலம்</translation>
+    </message>
+    <message>
+        <source>Marsh</source>
+        <comment>Name of symbol 310</comment>
+        <translation>சேற்றுத்தரை</translation>
+    </message>
+    <message>
+        <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
+        <comment>Description of symbol 310</comment>
+        <translation>கடக்கக்கூடிய சதுப்பு நிலம், பொதுவாக ஒரு தனித்துவமான விளிம்புடன். இயக்கத்திறன் மற்றும் திறந்த தன்மையைக் காட்ட, அடையாளம் தாவர சின்னங்களுடன் இணைக்கப்பட வேண்டும். ஒரு சிறிய சதுப்பு நிலப்பகுதியை 403/404 உடன் இணைக்க வேண்டும் என்றால், தெளிவுத்திறனை மேம்படுத்த 401/402 ஐப் பயன்படுத்த அனுமதிக்கப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Marsh, minimum size</source>
+        <comment>Name of symbol 310.1</comment>
+        <translation>மார்ச், குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Indistinct marsh</source>
+        <comment>Name of symbol 311</comment>
+        <translation>தெளிவற்ற சதுப்பு நிலம்</translation>
+    </message>
+    <message>
+        <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
+        <comment>Description of symbol 311</comment>
+        <translation>ஒரு தெளிவற்ற அல்லது பருவகால சதுப்பு நிலம் அல்லது சதுப்பு நிலத்திலிருந்து உறுதியான நிலத்திற்கு படிப்படியாக மாறக்கூடிய பகுதி, இது கடக்கக்கூடியது. விளிம்பு பொதுவாக தெளிவற்றது மற்றும் சுற்றியுள்ள தரையைப் போன்ற தாவரங்கள். இயக்கத்திறன் மற்றும் திறந்த தன்மையைக் காட்ட, அடையாளம் தாவர சின்னங்களுடன் இணைக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Indistinct marsh, minimum size</source>
+        <comment>Name of symbol 311.1</comment>
+        <translation>தெளிவற்ற சதுப்பு நிலம், குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Well</source>
+        <comment>Name of symbol 312</comment>
+        <translation>சரி</translation>
+    </message>
+    <message>
+        <source>Wells and captive springs, which are clearly visible on the ground.</source>
+        <comment>Description of symbol 312</comment>
+        <translation>கிணறுகள் மற்றும் சிறைப்பிடிக்கப்பட்ட நீரூற்றுகள், அவை தரையில் தெளிவாகத் தெரியும்.</translation>
+    </message>
+    <message>
+        <source>Spring</source>
+        <comment>Name of symbol 313</comment>
+        <translation>வேனில்</translation>
+    </message>
+    <message>
+        <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
+        <comment>Description of symbol 313</comment>
+        <translation>ஒரு தனித்துவமான வெளியேற்றத்துடன் கூடிய நீரோடையின் சான்று. அடையாளம் கீழ்நோக்கி திறக்கும் வகையில் அமைந்துள்ளது.</translation>
+    </message>
+    <message>
+        <source>Special water feature</source>
+        <comment>Name of symbol 314</comment>
+        <translation>சிறப்பு நீர் நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>A special small water feature. The definition of the symbol must always be given in the map legend.</source>
+        <comment>Description of symbol 314</comment>
+        <translation>ஒரு சிறப்பு சிறிய நீர் நற்பொருத்தம். சின்னத்தின் வரையறை எப்போதும் வரைபட புராணத்தில் கொடுக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Open land</source>
+        <comment>Name of symbol 401</comment>
+        <translation>திறந்த நிலம்</translation>
+    </message>
+    <message>
+        <source>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <comment>Description of symbol 401</comment>
+        <translation>பயிரிடப்பட்ட நிலம், வயல்வெளிகள், புல்வெளிகள், புல்வெளிகள் போன்றவை மரங்கள் இல்லாமல், எளிதாக இயங்கும். மஞ்சள் நிற பகுதிகள் ஆதிக்கம் செலுத்தினால், முழு மஞ்சள் நிறத்திற்கு பதிலாக ஒரு திரை (75%) பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Open land with scattered trees</source>
+        <comment>Name of symbol 402</comment>
+        <translation>பரந்து விரிந்த மரங்களுடன் திறந்த நிலம்</translation>
+    </message>
+    <message>
+        <source>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <comment>Description of symbol 402</comment>
+        <translation>பரந்து விரிந்த மரங்கள் அல்லது புதர்களைக் கொண்ட புல்வெளிகள், புல் அல்லது அதுபோன்ற தரைமட்டத்துடன் எளிதாக இயங்கும். வரைபட அளவில் 10 மிமீக்கும் குறைவான பகுதிகள் திறந்த நிலமாகக் காட்டப்படுகின்றன (401). தனி மரங்கள் சேர்க்கப்படலாம் (418, 419, 420). மஞ்சள் நிற பகுதிகள் ஆதிக்கம் செலுத்தினால், முழு மஞ்சள் நிறத்திற்கு பதிலாக ஒரு திரை (75%) பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Rough open land</source>
+        <comment>Name of symbol 403</comment>
+        <translation>கரடுமுரடான திறந்த நிலம்</translation>
+    </message>
+    <message>
+        <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
+        <comment>Description of symbol 403</comment>
+        <translation>ஈத், மூர்லேண்ட், வெட்டப்பட்ட பகுதிகள், புதிதாக நடப்பட்ட பகுதிகள் (சுமார் 1 மீட்டருக்கும் குறைவான மரங்கள்) அல்லது கரடுமுரடான தரை தாவரங்கள், வேப்பமரம் அல்லது உயரமான புல் கொண்ட பொதுவாக திறந்த நிலம். அடையாளம் 403 ஆனது 407 மற்றும் 409 குறியீடுகளுடன் இணைந்து இயங்கக்கூடிய தன்மையைக் குறைக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Rough open land with scattered trees</source>
+        <comment>Name of symbol 404</comment>
+        <translation>பரந்து விரிந்த மரங்களுடன் கரடுமுரடான திறந்த நிலம்</translation>
+    </message>
+    <message>
+        <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
+        <comment>Description of symbol 404</comment>
+        <translation>கரடுமுரடான திறந்த நிலத்தில் சிதறிய மரங்கள் இருக்கும் இடங்களில், வெள்ளை (அல்லது பச்சை) பகுதிகள் தொனியில் தோன்ற வேண்டும். மஞ்சள் திரையில் பெரிய வெள்ளைப் புள்ளிகளின் வழக்கமான வடிவத்தைப் பயன்படுத்தி இத்தகைய பகுதி பொதுமைப்படுத்தப்படலாம். வரைபட அளவுகோலில் 16 மிமீக்கும் குறைவான பகுதிகள் கரடுமுரடான திறந்த நிலமாகக் காட்டப்படுகின்றன (403). தனி மரங்கள் சேர்க்கப்படலாம் (418, 419, 420).</translation>
+    </message>
+    <message>
+        <source>Undergrowth: slow running</source>
+        <comment>Name of symbol 407</comment>
+        <translation>அடிமரம்: மெதுவாக ஓடுதல்</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 407</comment>
+        <translation>அடர்ந்த நிலத்தடி, ஆனால் நல்ல தெரிவுநிலை (முட்செடிகள், ஈத்தர், குறைந்த புதர்கள் மற்றும் வெட்டப்பட்ட கிளைகள் உட்பட) இது சுமார் ஓட்டத்தை குறைக்கிறது. சாதாரண வேகத்தில் 60-80%. இந்தக் குறியீடு 406 அல்லது 408 உடன் இணைக்கப்படாமல் இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Forest: difficult to run</source>
+        <comment>Name of symbol 408</comment>
+        <translation>காடு: ஓடுவது கடினம்</translation>
+    </message>
+    <message>
+        <source>An area with dense trees or thicket (low visibility) which reduce running to ca. 20-60% of normal speed.</source>
+        <comment>Description of symbol 408</comment>
+        <translation>அடர்ந்த மரங்கள் அல்லது அடர்ந்த (குறைந்த தெரிவுநிலை) கொண்ட ஒரு பகுதி, இது சுமார் ஓட்டத்தை குறைக்கிறது. சாதாரண வேகத்தில் 20-60%.</translation>
+    </message>
+    <message>
+        <source>Undergrowth: difficult to run</source>
+        <comment>Name of symbol 409</comment>
+        <translation>அடிமரம்: ஓடுவது கடினம்</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 409</comment>
+        <translation>அடர்ந்த நிலத்தடி, ஆனால் நல்ல தெரிவுநிலை (முட்செடிகள், ஈத்தர், குறைந்த புதர்கள் மற்றும் வெட்டப்பட்ட கிளைகள் உட்பட) இது சுமார் ஓட்டத்தை குறைக்கிறது. சாதாரண வேகத்தில் 20-60%. இந்தக் குறியீடு 406 அல்லது 408 உடன் இணைக்கப்படாமல் இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Vegetation: very difficult to run, impassable</source>
+        <comment>Name of symbol 410</comment>
+        <translation>தாவரங்கள்: ஓடுவது மிகவும் கடினம், செல்ல முடியாதது</translation>
+    </message>
+    <message>
+        <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.</source>
+        <comment>Description of symbol 410</comment>
+        <translation>அடர்ந்த தாவரங்களின் பகுதி (மரங்கள் அல்லது அடிமரங்கள்) இது அரிதாகவே கடந்து செல்லக்கூடியது. ஓட்டம் ca ஆகக் குறைக்கப்பட்டது. சாதாரண வேகத்தில் 0-20%.</translation>
+    </message>
+    <message>
+        <source>Vegetation: very difficult to run, impassable, line</source>
+        <comment>Name of symbol 410.1</comment>
+        <translation>தாவரங்கள்: ஓடுவது மிகவும் கடினம், செல்ல முடியாதது, கோடு</translation>
+    </message>
+    <message>
+        <source>Line of minimum width for symbol 410.</source>
+        <comment>Description of symbol 410.1</comment>
+        <translation>அடையாளம் 410க்கான குறைந்தபட்ச அகலக் கோடு.</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 1</source>
+        <comment>Name of symbol 411.0</comment>
+        <translation>ஒரு திசையில் ஓடக்கூடிய காடு, 1</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.0</comment>
+        <translation>காடுகளின் ஒரு பகுதி ஒரு திசையில் நன்றாக ஓடினாலும் மற்றவற்றில் குறைவான நல்ல ஓட்டத்தை வழங்கும் போது, நல்ல ஓட்டத்தின் திசையைக் காட்ட திரை சின்னத்தில் வெள்ளை கோடுகள் விடப்படும்.</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 2</source>
+        <comment>Name of symbol 411.1</comment>
+        <translation>ஒரு திசையில் ஓடக்கூடிய காடு, 2</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.1</comment>
+        <translation>காடுகளின் ஒரு பகுதி ஒரு திசையில் நன்றாக ஓடினாலும் மற்றவற்றில் குறைவான நல்ல ஓட்டத்தை வழங்கும் போது, நல்ல ஓட்டத்தின் திசையைக் காட்ட திரை சின்னத்தில் வெள்ளை கோடுகள் விடப்படும்.</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 3</source>
+        <comment>Name of symbol 411.2</comment>
+        <translation>ஒரு திசையில் ஓடக்கூடிய காடு, 3</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.2</comment>
+        <translation>காடுகளின் ஒரு பகுதி ஒரு திசையில் நன்றாக ஓடினாலும் மற்றவற்றில் குறைவான நல்ல ஓட்டத்தை வழங்கும் போது, நல்ல ஓட்டத்தின் திசையைக் காட்ட திரை சின்னத்தில் வெள்ளை கோடுகள் விடப்படும்.</translation>
+    </message>
+    <message>
+        <source>Orchard</source>
+        <comment>Name of symbol 412</comment>
+        <translation>பழத்தோட்டம்</translation>
+    </message>
+    <message>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <comment>Description of symbol 412</comment>
+        <translation>பழ மரங்கள் அல்லது புதர்களால் நடப்பட்ட நிலம். நடவு செய்யும் திசையைக் காட்ட புள்ளிக் கோடுகள் நோக்குநிலையாக இருக்கலாம். மஞ்சள் நிற பகுதிகள் ஆதிக்கம் செலுத்தினால், முழு மஞ்சள் நிறத்திற்கு பதிலாக ஒரு திரை (75%) பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Vineyard</source>
+        <comment>Name of symbol 413</comment>
+        <translation>திராட்சைத் தோட்டம்</translation>
+    </message>
+    <message>
+        <source>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <comment>Description of symbol 413</comment>
+        <translation>நடவு செய்யும் திசையைக் காட்ட பச்சைக் கோடுகள் நோக்கமாக இருக்கலாம். மஞ்சள் நிற பகுதிகள் ஆதிக்கம் செலுத்தினால், முழு மஞ்சள் நிறத்திற்கு பதிலாக ஒரு திரை (75%) பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Distinct cultivation boundary</source>
+        <comment>Name of symbol 414</comment>
+        <translation>தனித்துவமான சாகுபடி எல்லை</translation>
+    </message>
+    <message>
+        <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
+        <comment>Description of symbol 414</comment>
+        <translation>பயிரிடப்பட்ட நிலத்தின் எல்லை மற்ற சின்னங்களுடன் (வேலி, சுவர், பாதை போன்றவை) காட்டப்படாதபோது கருப்புக் கோட்டுடன் காட்டப்படும். பல்வேறு வகையான பயிரிடப்பட்ட நிலங்களுக்கு இடையே ஒரு நிரந்தர எல்லையும் இந்த சின்னத்துடன் காட்டப்பட்டுள்ளது.</translation>
+    </message>
+    <message>
+        <source>Cultivated land</source>
+        <comment>Name of symbol 415</comment>
+        <translation>பயிரிடப்பட்ட நிலம்</translation>
+    </message>
+    <message>
+        <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
+        <comment>Description of symbol 415</comment>
+        <translation>பயிர்கள் வளர்ந்து வருவதால் பருவகாலமாக வரம்பிற்கு அப்பாற்பட்ட பயிரிடப்பட்ட நிலம் கரும்புள்ளி திரையுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Distinct vegetation boundary</source>
+        <comment>Name of symbol 416</comment>
+        <translation>தனித்துவமான தாவர எல்லை</translation>
+    </message>
+    <message>
+        <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
+        <comment>Description of symbol 416</comment>
+        <translation>காடுகளுக்குள் ஒரு தனித்துவமான வன விளிம்பு அல்லது மிகவும் தனித்துவமான தாவர எல்லை.</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 418</comment>
+        <translation>சிறப்பு தாவர நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
+        <comment>Description of symbol 418</comment>
+        <translation>சின்னங்கள் 418, 419 மற்றும் 420 சிறப்பு சிறிய தாவர அம்சங்களுக்கு பயன்படுத்தப்படலாம். வரைபட புராணத்தில் ஒவ்வொரு விசயத்திலும் சின்னத்தின் வரையறை கொடுக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 419</comment>
+        <translation>சிறப்பு தாவர நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
+        <comment>Description of symbol 419</comment>
+        <translation>சின்னங்கள் 418, 419 மற்றும் 420 சிறப்பு சிறிய தாவர அம்சங்களுக்கு பயன்படுத்தப்படலாம். வரைபட புராணத்தில் ஒவ்வொரு விசயத்திலும் சின்னத்தின் வரையறை கொடுக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 420</comment>
+        <translation>சிறப்பு தாவர நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
+        <comment>Description of symbol 420</comment>
+        <translation>சின்னங்கள் 418, 419 மற்றும் 420 சிறப்பு சிறிய தாவர அம்சங்களுக்கு பயன்படுத்தப்படலாம். வரைபட புராணத்தில் ஒவ்வொரு விசயத்திலும் சின்னத்தின் வரையறை கொடுக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Motorway</source>
+        <comment>Name of symbol 501.0</comment>
+        <translation>மின்னோடி பாதை</translation>
+    </message>
+    <message>
+        <source>A road with two carriageways. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 501.0</comment>
+        <translation>இரண்டு வண்டிப்பாதைகள் கொண்ட சாலை. சின்னத்தின் அகலம் அளவுகோலுக்கு வரையப்பட வேண்டும் ஆனால் குறைந்தபட்ச அகலத்தை விட சிறியதாக இருக்கக்கூடாது. வெளிப்புற எல்லைக் கோடுகள் 519, 521, 522 அல்லது 524 குறியீடுகளால் மாற்றப்படலாம், ஒரு வேலி அல்லது சுவர் மின்னோடி பாதையின் விளிம்பிற்கு மிக அருகில் இருந்தால், அது நடைமுறையில் ஒரு தனி அடையாளமாக காட்டப்பட முடியாது. கருப்பு கோடுகளுக்கு இடையில் உள்ள இடைவெளி பழுப்பு நிறத்தில் (50%) நிரப்பப்பட வேண்டும். கட்டுமானத்தில் இருக்கும் சாலை உடைந்த கோடுகளுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Motorway, under construction</source>
+        <comment>Name of symbol 501.5</comment>
+        <translation>நெடுஞ்சாலை, கட்டுமானத்தில் உள்ளது</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 501.5</comment>
+        <translation>கட்டுமானத்தில் இருக்கும் சாலை உடைந்த கோடுகளுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Major road, minimum width</source>
+        <comment>Name of symbol 502</comment>
+        <translation>பெரிய சாலை, குறைந்தபட்ச அகலம்</translation>
+    </message>
+    <message>
+        <source>Road wider than 5m. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 502</comment>
+        <translation>சாலை 5 மீட்டருக்கும் அதிகமான அகலம். சின்னத்தின் அகலம் அளவுகோலுக்கு வரையப்பட வேண்டும் ஆனால் குறைந்தபட்ச அகலத்தை விட சிறியதாக இருக்கக்கூடாது. வெளிப்புற எல்லைக் கோடுகள் 519, 521, 522 அல்லது 524 குறியீடுகளால் மாற்றப்படலாம், ஒரு வேலி அல்லது சுவர் மின்னோடி பாதையின் விளிம்பிற்கு மிக அருகில் இருந்தால், அது நடைமுறையில் ஒரு தனி அடையாளமாக காட்டப்பட முடியாது. கருப்பு கோடுகளுக்கு இடையில் உள்ள இடைவெளி பழுப்பு நிறத்தில் (50%) நிரப்பப்பட வேண்டும். கட்டுமானத்தில் இருக்கும் சாலை உடைந்த கோடுகளுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Major road, minimum width, under construction</source>
+        <comment>Name of symbol 502.1</comment>
+        <translation>பெரிய சாலை, குறைந்தபட்ச அகலம், கட்டுமானத்தில் உள்ளது</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 502.1</comment>
+        <translation>கட்டுமானத்தில் இருக்கும் சாலை உடைந்த கோடுகளுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Minor road</source>
+        <comment>Name of symbol 503</comment>
+        <translation>சிறிய சாலை</translation>
+    </message>
+    <message>
+        <source>Road 3-5 m wide. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 503</comment>
+        <translation>சாலை 3-5 மீ அகலம். கருப்பு கோடுகளுக்கு இடையில் உள்ள இடைவெளி பழுப்பு நிறத்தில் (50%) நிரப்பப்பட வேண்டும். கட்டுமானத்தில் இருக்கும் சாலை உடைந்த கோடுகளுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Minor road, under construction</source>
+        <comment>Name of symbol 503.1</comment>
+        <translation>சிறிய சாலை, கட்டுமானத்தில் உள்ளது</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 503.1</comment>
+        <translation>கட்டுமானத்தில் இருக்கும் சாலை உடைந்த கோடுகளுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Road</source>
+        <comment>Name of symbol 504</comment>
+        <translation>சாலை</translation>
+    </message>
+    <message>
+        <source>A maintained road suitable for motor vehicles in all weather. Width less than 3 m.</source>
+        <comment>Description of symbol 504</comment>
+        <translation>அனைத்து காலநிலையிலும் மின்னோடி வாகனங்களுக்கு ஏற்ற வகையில் பராமரிக்கப்படும் சாலை. 3 மீட்டருக்கும் குறைவான அகலம்.</translation>
+    </message>
+    <message>
+        <source>Vehicle track</source>
+        <comment>Name of symbol 505</comment>
+        <translation>வாகன தடம்</translation>
+    </message>
+    <message>
+        <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. Width less than 3 m.</source>
+        <comment>Description of symbol 505</comment>
+        <translation>மெதுவாகப் பயணிக்கும் போது மட்டுமே வாகனங்களுக்கு ஏற்ற தடம் அல்லது மோசமாகப் பராமரிக்கப்படும் சாலை. 3 மீட்டருக்கும் குறைவான அகலம்.</translation>
+    </message>
+    <message>
+        <source>Footpath</source>
+        <comment>Name of symbol 506</comment>
+        <translation>நடைபாதை</translation>
+    </message>
+    <message>
+        <source>A large path, or old vehicle track, which is distinct on the ground.</source>
+        <comment>Description of symbol 506</comment>
+        <translation>ஒரு பெரிய பாதை, அல்லது பழைய வாகனப் பாதை, இது தரையில் வேறுபட்டது.</translation>
+    </message>
+    <message>
+        <source>Small path</source>
+        <comment>Name of symbol 507</comment>
+        <translation>சிறிய பாதை</translation>
+    </message>
+    <message>
+        <source>A small path or (temporary) forest extraction track which can be followed at competition speed.</source>
+        <comment>Description of symbol 507</comment>
+        <translation>போட்டி வேகத்தில் பின்பற்றக்கூடிய ஒரு சிறிய பாதை அல்லது (தற்காலிக) காடுகளை பிரித்தெடுக்கும் பாதை.</translation>
+    </message>
+    <message>
+        <source>Less distinct small path</source>
+        <comment>Name of symbol 508</comment>
+        <translation>குறைவான வித்தியாசமான சிறிய பாதை</translation>
+    </message>
+    <message>
+        <source>A less distinct small path or forestry extraction track.</source>
+        <comment>Description of symbol 508</comment>
+        <translation>குறைவான தனித்துவமான சிறிய பாதை அல்லது வனவியல் பிரித்தெடுத்தல் பாதை.</translation>
+    </message>
+    <message>
+        <source>Narrow ride</source>
+        <comment>Name of symbol 509</comment>
+        <translation>குறுகிய சவாரி</translation>
+    </message>
+    <message>
+        <source>A distinct ride, less than ca. 5 m wide. A ride is a linear break in the forest (usually plantation) which does not have a distinct path along it. Where there is a path along a ride, symbols 507 or 508 should be used in place of symbol 509.</source>
+        <comment>Description of symbol 509</comment>
+        <translation>ஒரு வித்தியாசமான சவாரி, ca விட குறைவானது. 5 மீ அகலம். ஒரு சவாரி என்பது காட்டில் (பொதுவாக தோட்டம்) ஒரு நேரியல் இடைவெளியாகும், அது ஒரு தனித்துவமான பாதையைக் கொண்டிருக்கவில்லை. சவாரி செல்லும் பாதையில், 509 சின்னத்திற்கு பதிலாக 507 அல்லது 508 குறியீடுகள் பயன்படுத்தப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Footbridge</source>
+        <comment>Name of symbol 512</comment>
+        <translation>நடைபாதை</translation>
+    </message>
+    <message>
+        <source>A footbridge with no path leading to it.
+Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm over both sides of the stream!</source>
+        <comment>Description of symbol 512</comment>
+        <translation>அதற்குச் செல்லும் பாதை இல்லாத ஒரு நடைபாதை. 
+குறிப்பு: ச்ட்ரீம் 0.25 மிமீ விட அகலமாக இருந்தால், ச்ட்ரீமின் இருபுறமும் 0.5 மிமீ நீட்டிக்க இந்த சின்னத்தை சரிசெய்யவும்!</translation>
+    </message>
+    <message>
+        <source>Railway</source>
+        <comment>Name of symbol 515</comment>
+        <translation>ரயில்வே</translation>
+    </message>
+    <message>
+        <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
+        <comment>Description of symbol 515</comment>
+        <translation>ஒரு இரயில் அல்லது பிற வகையான தண்டவாளப் பாதை (டிராம்வே, டிரக்வே, முதலியன).</translation>
+    </message>
+    <message>
+        <source>Power line</source>
+        <comment>Name of symbol 516</comment>
+        <translation>பவர் லைன்</translation>
+    </message>
+    <message>
+        <source>Power line, cableway or skilift. The bars indicate the exact location of the pylons.</source>
+        <comment>Description of symbol 516</comment>
+        <translation>பவர் லைன், கேபிள்வே அல்லது ச்கிலிஃப்ட். கம்பிகள் பைலன்களின் சரியான இடத்தைக் குறிக்கின்றன.</translation>
+    </message>
+    <message>
+        <source>Major power line</source>
+        <comment>Name of symbol 517</comment>
+        <translation>முக்கிய மின்கம்பி</translation>
+    </message>
+    <message>
+        <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.</source>
+        <comment>Description of symbol 517</comment>
+        <translation>முக்கிய மின்கம்பிகளை இரட்டைக் கோடு மூலம் வரைய வேண்டும். கோடுகளுக்கு இடையே உள்ள இடைவெளி பவர்லைனின் அளவைக் குறிக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Tunnel</source>
+        <comment>Name of symbol 518</comment>
+        <translation>சுரங்கப்பாதை</translation>
+    </message>
+    <message>
+        <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
+        <comment>Description of symbol 518</comment>
+        <translation>ஓடுபவர் பயன்படுத்தக்கூடிய சாலைகள், ரயில்வே போன்றவற்றின் கீழ் ஒரு வழி. சுரங்கப்பாதைக்கு செல்லும் பாதை உள்ளதோ இல்லையோ இந்த அடையாளம் பயன்படுத்தப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Tunnel, minimum size</source>
+        <comment>Name of symbol 518.1</comment>
+        <translation>சுரங்கப்பாதை, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
+        <comment>Description of symbol 518.1</comment>
+        <translation>ஓடுபவர் பயன்படுத்தக்கூடிய சாலைகள், ரயில்வே போன்றவற்றின் கீழ் ஒரு வழி. சுரங்கப்பாதைக்கு செல்லும் பாதை உள்ளதோ இல்லையோ இந்த அடையாளம் பயன்படுத்தப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Stone wall</source>
+        <comment>Name of symbol 519</comment>
+        <translation>கல் சுவர்</translation>
+    </message>
+    <message>
+        <source>A stone wall or stone-faced bank.</source>
+        <comment>Description of symbol 519</comment>
+        <translation>ஒரு கல் சுவர் அல்லது கல் முகம் கொண்ட கரை.</translation>
+    </message>
+    <message>
+        <source>Ruined stone wall</source>
+        <comment>Name of symbol 520</comment>
+        <translation>பாழடைந்த கல் சுவர்</translation>
+    </message>
+    <message>
+        <source>A ruined stone wall may be shown by a dashed line.</source>
+        <comment>Description of symbol 520</comment>
+        <translation>ஒரு பாழடைந்த கல் சுவர் ஒரு கோடு கோட்டால் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Fence</source>
+        <comment>Name of symbol 522</comment>
+        <translation>வேலி</translation>
+    </message>
+    <message>
+        <source>A wooden or wire fence less than ca. 1.5 m high.</source>
+        <comment>Description of symbol 522</comment>
+        <translation>ca விட குறைவான மரத்தாலான அல்லது கம்பி வேலி. 1.5 மீ உயரம்.</translation>
+    </message>
+    <message>
+        <source>Ruined fence</source>
+        <comment>Name of symbol 523</comment>
+        <translation>பாழடைந்த வேலி</translation>
+    </message>
+    <message>
+        <source>A ruined fence may be shown with a dashed line.</source>
+        <comment>Description of symbol 523</comment>
+        <translation>ஒரு பாழடைந்த வேலி ஒரு கோடுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>High fence</source>
+        <comment>Name of symbol 524</comment>
+        <translation>உயரமான வேலி</translation>
+    </message>
+    <message>
+        <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
+        <comment>Description of symbol 524</comment>
+        <translation>ஏறக்குறைய 1.5 மீட்டருக்கும் அதிகமான பலகை அல்லது கம்பி வேலி, சராசரி ஓரியண்டியருக்கு கடக்க முடியாதது, எ.கா. மான் வேலி.</translation>
+    </message>
+    <message>
+        <source>Crossing point</source>
+        <comment>Name of symbol 525</comment>
+        <translation>கடக்கும் புள்ளி</translation>
+    </message>
+    <message>
+        <source>Building</source>
+        <comment>Name of symbol 526</comment>
+        <translation>கட்டிடம்</translation>
+    </message>
+    <message>
+        <source>A building is shown with its ground plan so far as the scale permits.</source>
+        <comment>Description of symbol 526</comment>
+        <translation>ஒரு கட்டிடம் அதன் தரைத் திட்டத்துடன் அளவு அனுமதிக்கும் வரை காட்டப்பட்டுள்ளது.</translation>
+    </message>
+    <message>
+        <source>Building, minimum size</source>
+        <comment>Name of symbol 526.1</comment>
+        <translation>கட்டிடம், குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Settlement</source>
+        <comment>Name of symbol 527</comment>
+        <translation>தீர்வு</translation>
+    </message>
+    <message>
+        <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
+        <comment>Description of symbol 527</comment>
+        <translation>வீடுகள் மற்றும் தோட்டங்கள் மற்றும் பிற கட்டப்பட்ட பகுதிகள். ஒரு குடியேற்றத்தில் உள்ள சாலைகள், கட்டிடங்கள் மற்றும் பிற குறிப்பிடத்தக்க நற்பொருத்தங்கள் காட்டப்பட வேண்டும். அனைத்து கட்டிடங்களையும் காட்ட முடியாவிட்டால், ஒரு மாற்று அடையாளம் (கருப்பு வரி திரை) பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Settlement</source>
+        <comment>Name of symbol 527.1</comment>
+        <translation>தீர்வு</translation>
+    </message>
+    <message>
+        <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
+        <comment>Description of symbol 527.1</comment>
+        <translation>வீடுகள் மற்றும் தோட்டங்கள் மற்றும் பிற கட்டப்பட்ட பகுதிகள். ஒரு குடியேற்றத்தில் உள்ள சாலைகள், கட்டிடங்கள் மற்றும் பிற குறிப்பிடத்தக்க நற்பொருத்தங்கள் காட்டப்பட வேண்டும். அனைத்து கட்டிடங்களையும் காட்ட முடியாவிட்டால், ஒரு மாற்று அடையாளம் (கருப்பு வரி திரை) பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Permanently out of bounds</source>
+        <comment>Name of symbol 528</comment>
+        <translation>நிரந்தரமாக எல்லைக்கு வெளியே</translation>
+    </message>
+    <message>
+        <source>Areas which are permanently forbidden to the runner are shown as out of bounds. The screen is superimposed on the normal map detail. A bounding line may be drawn if there is no natural boundary (see 709).</source>
+        <comment>Description of symbol 528</comment>
+        <translation>ஓட்டப்பந்தய வீரருக்கு நிரந்தரமாக தடைசெய்யப்பட்ட பகுதிகள் எல்லைக்கு வெளியே காட்டப்படும். சாதாரண வரைபட விவரத்தில் திரை மிகைப்படுத்தப்பட்டுள்ளது. இயற்கையான எல்லை இல்லாவிட்டால் ஒரு எல்லைக் கோடு வரையப்படலாம் (பார்க்க 709).</translation>
+    </message>
+    <message>
+        <source>Permanently out of bounds, bounding line</source>
+        <comment>Name of symbol 528.1</comment>
+        <translation>நிரந்தரமாக எல்லைக்கு வெளியே, எல்லைக் கோடு</translation>
+    </message>
+    <message>
+        <source>A bounding line may be drawn if there is no natural boundary (see 709).</source>
+        <comment>Description of symbol 528.1</comment>
+        <translation>இயற்கையான எல்லை இல்லாவிட்டால் ஒரு எல்லைக் கோடு வரையப்படலாம் (பார்க்க 709).</translation>
+    </message>
+    <message>
+        <source>Paved area</source>
+        <comment>Name of symbol 529</comment>
+        <translation>நடைபாதை பகுதி</translation>
+    </message>
+    <message>
+        <source>An area of hard standing used for parking or other purposes.</source>
+        <comment>Description of symbol 529</comment>
+        <translation>பார்க்கிங் அல்லது பிற நோக்கங்களுக்காகப் பயன்படுத்தப்படும் கடினமான நிலைப் பகுதி.</translation>
+    </message>
+    <message>
+        <source>Paved area, bounding line</source>
+        <comment>Name of symbol 529.1</comment>
+        <translation>நடைபாதை பகுதி, எல்லைக் கோடு</translation>
+    </message>
+    <message>
+        <source>Paved area, with bounding line</source>
+        <comment>Name of symbol 529.2</comment>
+        <translation>நடைபாதை பகுதி, எல்லைக்கோடு</translation>
+    </message>
+    <message>
+        <source>Ruin</source>
+        <comment>Name of symbol 530</comment>
+        <translation>அழிவு</translation>
+    </message>
+    <message>
+        <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530</comment>
+        <translation>இடிபாடுகளின் தரைத் திட்டம், எதிரே காட்டப்படும் குறைந்தபட்ச அளவு வரை அளவிடப்படுகிறது. மிகச்சிறிய இடிபாடுகள் திடமான கோட்டுடன் வரையப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Ruin, no dashes</source>
+        <comment>Name of symbol 530.1</comment>
+        <translation>அழிவு, கோடுகள் இல்லை</translation>
+    </message>
+    <message>
+        <source>Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530.1</comment>
+        <translation>மிகச்சிறிய இடிபாடுகள் திடமான கோட்டுடன் வரையப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Ruin, minimum size</source>
+        <comment>Name of symbol 530.2</comment>
+        <translation>அழிவு, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530.2</comment>
+        <translation>மிகச்சிறிய இடிபாடுகள் திடமான கோட்டுடன் வரையப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Firing range</source>
+        <comment>Name of symbol 531</comment>
+        <translation>துப்பாக்கி சூடு வரம்பு</translation>
+    </message>
+    <message>
+        <source>A firing range is shown with a special symbol to indicate the need for caution. Associated buildings are individually marked.</source>
+        <comment>Description of symbol 531</comment>
+        <translation>எச்சரிக்கையின் அவசியத்தைக் குறிக்க, துப்பாக்கிச் சூடு வீச்சு ஒரு சிறப்பு சின்னத்துடன் காட்டப்பட்டுள்ளது. தொடர்புடைய கட்டிடங்கள் தனித்தனியாக குறிக்கப்பட்டுள்ளன.</translation>
+    </message>
+    <message>
+        <source>Grave</source>
+        <comment>Name of symbol 532</comment>
+        <translation>கல்லறை</translation>
+    </message>
+    <message>
+        <source>A distinct grave marked by a stone or shrine. Location is at the centre of gravity of the symbol, which is orientated to north. A cemetery is shown by using grave symbols as space permits.</source>
+        <comment>Description of symbol 532</comment>
+        <translation>ஒரு கல் அல்லது சன்னதியால் குறிக்கப்பட்ட ஒரு தனித்துவமான கல்லறை. இருப்பிடம் சின்னத்தின் ஈர்ப்பு மையத்தில் உள்ளது, இது வடக்கு நோக்கியதாக உள்ளது. இட அனுமதியாக கல்லறை சின்னங்களைப் பயன்படுத்தி ஒரு கல்லறை காட்டப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Crossable pipeline</source>
+        <comment>Name of symbol 533</comment>
+        <translation>கடக்கக்கூடிய குழாய்</translation>
+    </message>
+    <message>
+        <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
+        <comment>Description of symbol 533</comment>
+        <translation>ஒரு குழாய் (எரிவாயு, நீர், எண்ணெய் போன்றவை) தரைமட்டத்திற்கு மேல் அல்லது கீழே கடக்க முடியும்.</translation>
+    </message>
+    <message>
+        <source>Uncrossable pipeline</source>
+        <comment>Name of symbol 534</comment>
+        <translation>கடக்க முடியாத குழாய்</translation>
+    </message>
+    <message>
+        <source>High tower</source>
+        <comment>Name of symbol 535</comment>
+        <translation>உயரமான கோபுரம்</translation>
+    </message>
+    <message>
+        <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
+        <comment>Description of symbol 535</comment>
+        <translation>ஒரு உயரமான கோபுரம் அல்லது பெரிய கோபுரம், சுற்றியுள்ள காடுகளின் மட்டத்திற்கு மேலே நிற்கிறது. சின்னத்தின் ஈர்ப்பு விசையின் மையத்தில் இடம் உள்ளது.</translation>
+    </message>
+    <message>
+        <source>Small tower</source>
+        <comment>Name of symbol 536</comment>
+        <translation>சிறிய கோபுரம்</translation>
+    </message>
+    <message>
+        <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
+        <comment>Description of symbol 536</comment>
+        <translation>ஒரு வெளிப்படையான படப்பிடிப்பு தளம் அல்லது இருக்கை அல்லது சிறிய கோபுரம். சின்னத்தின் ஈர்ப்பு விசையின் மையத்தில் இடம் உள்ளது.</translation>
+    </message>
+    <message>
+        <source>Cairn</source>
+        <comment>Name of symbol 537</comment>
+        <translation>கெய்ர்ன்</translation>
+    </message>
+    <message>
+        <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
+        <comment>Description of symbol 537</comment>
+        <translation>கெய்ர்ன், நினைவுக் கல் அல்லது எல்லைக் கல் (அல்லது சில நாடுகளில் ஒரு முக்கோணவியல் புள்ளி) 0.5 மீட்டருக்கும் அதிகமான உயரம்.</translation>
+    </message>
+    <message>
+        <source>Fodder rack</source>
+        <comment>Name of symbol 538</comment>
+        <translation>தீவன ரேக்</translation>
+    </message>
+    <message>
+        <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
+        <comment>Description of symbol 538</comment>
+        <translation>ஒரு மரத்தின் மீது கட்டப்பட்ட அல்லது சுதந்திரமாக நிற்கும் தீவன அடுக்கு. சின்னத்தின் ஈர்ப்பு விசையின் மையத்தில் இடம் உள்ளது. நில அணுகல் காரணங்களுக்காக இவை தவிர்க்கப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Special man-made feature</source>
+        <comment>Name of symbol 539</comment>
+        <translation>மனிதனால் உருவாக்கப்பட்ட சிறப்பு நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 539</comment>
+        <translation>மனிதனால் உருவாக்கப்பட்ட சிறப்பு நற்பொருத்தங்கள் இந்தக் குறியீடுகளுடன் காட்டப்பட்டுள்ளன. வரைபட புராணத்தில் ஒவ்வொரு விசயத்திலும் சின்னங்களின் வரையறை கொடுக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Special man-made feature</source>
+        <comment>Name of symbol 540</comment>
+        <translation>மனிதனால் உருவாக்கப்பட்ட சிறப்பு நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 540</comment>
+        <translation>மனிதனால் உருவாக்கப்பட்ட சிறப்பு நற்பொருத்தங்கள் இந்தக் குறியீடுகளுடன் காட்டப்பட்டுள்ளன. வரைபட புராணத்தில் ஒவ்வொரு விசயத்திலும் சின்னங்களின் வரையறை கொடுக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Magnetic north line</source>
+        <comment>Name of symbol 601</comment>
+        <translation>காந்த வடக்குக் கோடு</translation>
+    </message>
+    <message>
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
+        <comment>Description of symbol 601</comment>
+        <translation>காந்த வடக்குக் கோடுகள் வரைபடத்தில் காந்த வடக்கைச் சுட்டிக்காட்டும் கோடுகளாகும். வரைபடத்தில் அவற்றின் இடைவெளி 33.33 மிமீ ஆக இருக்க வேண்டும், இது 1:15 000 என்ற அளவில் தரையில் 500 மீட்டரைக் குறிக்கும். மற்ற செதில்கள் கொண்ட வரைபடங்களுக்கு, ஒரு சுற்று மீட்டர் எண்ணிக்கையை குறிக்கும் இடைவெளியில் இருக்க வேண்டும் (எ.கா. 50 மீ, 100 மீ, 250 மீ மற்றும் 400 மீ இடைவெளியில் 200 மீ இடைவெளி இருக்க வேண்டும்) வரைபடம். பாறாங்கற்கள், குன்றுகள், பாறைகள், நீரோடை சந்திப்புகள், பாதை முனைகள் போன்ற சிறிய அம்சங்களை மறைக்கும் இடத்தில் வடக்குக் கோடுகள் உடைக்கப்படலாம். மிகக் குறைவான நீர் நற்பொருத்தங்கள் உள்ள பகுதிகளில், நீலக் கோடுகள் பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>North lines pattern</source>
+        <comment>Name of symbol 601.1</comment>
+        <translation>வடக்கு கோடுகளின் வடிவம்</translation>
+    </message>
+    <message>
+        <source>Magnetic north line, blue</source>
+        <comment>Name of symbol 601.2</comment>
+        <translation>காந்த வடக்குக் கோடு, நீலம்</translation>
+    </message>
+    <message>
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
+        <comment>Description of symbol 601.2</comment>
+        <translation>காந்த வடக்குக் கோடுகள் வரைபடத்தில் காந்த வடக்கைச் சுட்டிக்காட்டும் கோடுகளாகும். வரைபடத்தில் அவற்றின் இடைவெளி 33.33 மிமீ ஆக இருக்க வேண்டும், இது 1:15 000 என்ற அளவில் தரையில் 500 மீட்டரைக் குறிக்கும். மற்ற செதில்கள் கொண்ட வரைபடங்களுக்கு, ஒரு சுற்று மீட்டர் எண்ணிக்கையை குறிக்கும் இடைவெளியில் இருக்க வேண்டும் (எ.கா. 50 மீ, 100 மீ, 250 மீ மற்றும் 400 மீ இடைவெளியில் 200 மீ இடைவெளி இருக்க வேண்டும்) வரைபடம். பாறாங்கற்கள், குன்றுகள், பாறைகள், நீரோடை சந்திப்புகள், பாதை முனைகள் போன்ற சிறிய அம்சங்களை மறைக்கும் இடத்தில் வடக்குக் கோடுகள் உடைக்கப்படலாம். மிகக் குறைவான நீர் நற்பொருத்தங்கள் உள்ள பகுதிகளில், நீலக் கோடுகள் பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>North lines pattern, blue</source>
+        <comment>Name of symbol 601.3</comment>
+        <translation>வடக்கு கோடுகள் மாதிரி, நீலம்</translation>
+    </message>
+    <message>
+        <source>Registration mark</source>
+        <comment>Name of symbol 602</comment>
+        <translation>பதிவு முத்திரை</translation>
+    </message>
+    <message>
+        <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
+        <comment>Description of symbol 602</comment>
+        <translation>குறைந்தபட்சம் மூன்று பதிவு மதிப்பெண்கள் ஒரு வரைபடத்தின் சட்டத்தில் சமச்சீரற்ற நிலையில் வைக்கப்பட வேண்டும். கூடுதலாக, ஒரு வண்ண சரிபார்ப்பு சாத்தியமாகும்.</translation>
+    </message>
+    <message>
+        <source>Spot height, dot</source>
+        <comment>Name of symbol 603.0</comment>
+        <translation>புள்ளி உயரம், புள்ளி</translation>
+    </message>
+    <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.0</comment>
+        <translation>உயர வேறுபாடுகளின் தோராயமான மதிப்பீட்டிற்கு ச்பாட் உயரங்கள் பயன்படுத்தப்படுகின்றன. உயரம் அருகிலுள்ள மீட்டருக்கு வழங்கப்படுகிறது. புள்ளிவிவரங்கள் வடக்கு நோக்கியவை. புள்ளி இல்லாமல் நீர் நிலைகள் கொடுக்கப்பட்டுள்ளன.</translation>
+    </message>
+    <message>
+        <source>Spot height, text</source>
+        <comment>Name of symbol 603.1</comment>
+        <translation>ச்பாட் உயரம், உரை</translation>
+    </message>
+    <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.1</comment>
+        <translation>உயர வேறுபாடுகளின் தோராயமான மதிப்பீட்டிற்கு ச்பாட் உயரங்கள் பயன்படுத்தப்படுகின்றன. உயரம் அருகிலுள்ள மீட்டருக்கு வழங்கப்படுகிறது. புள்ளிவிவரங்கள் வடக்கு நோக்கியவை. புள்ளி இல்லாமல் நீர் நிலைகள் கொடுக்கப்பட்டுள்ளன.</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <comment>Name of symbol 701</comment>
+        <translation>தொடங்கு</translation>
+    </message>
+    <message>
+        <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
+        <comment>Description of symbol 701</comment>
+        <translation>தொடக்க அல்லது வரைபட சிக்கல் புள்ளி (தொடக்கத்தில் இல்லை என்றால்) முதல் கட்டுப்பாட்டின் திசையில் சுட்டிக்காட்டும் ஒரு சமபக்க முக்கோணத்தால் காட்டப்படுகிறது. முக்கோணத்தின் நடுவண் தொடக்கப் புள்ளியின் துல்லியமான நிலையைக் காட்டுகிறது.</translation>
+    </message>
+    <message>
+        <source>Control point</source>
+        <comment>Name of symbol 702</comment>
+        <translation>கட்டுப்பாட்டு புள்ளி</translation>
+    </message>
+    <message>
+        <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
+        <comment>Description of symbol 702</comment>
+        <translation>கட்டுப்பாட்டு புள்ளிகள் வட்டங்களுடன் காட்டப்பட்டுள்ளன. வட்டத்தின் நடுவண் அம்சத்தின் துல்லியமான நிலையைக் காட்டுகிறது. முக்கியமான விவரங்களைக் காட்ட, வட்டங்களின் பிரிவுகள் தவிர்க்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Control number</source>
+        <comment>Name of symbol 703</comment>
+        <translation>கட்டுப்பாட்டு எண்</translation>
+    </message>
+    <message>
+        <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
+        <comment>Description of symbol 703</comment>
+        <translation>முக்கிய விவரங்களை மறைக்காத வகையில் கட்டுப்பாட்டுப் புள்ளி வட்டத்திற்கு அருகில் கட்டுப்பாட்டு எண் வைக்கப்பட்டுள்ளது. எண்கள் வடக்கு நோக்கியவை.</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <comment>Name of symbol 704</comment>
+        <translation>வரி</translation>
+    </message>
+    <message>
+        <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
+        <comment>Description of symbol 704</comment>
+        <translation>கட்டுப்பாடுகளை வரிசையாகப் பார்க்க வேண்டிய இடத்தில், தொடக்கம், கட்டுப்பாட்டுப் புள்ளிகள் மற்றும் முடிவு ஆகியவை நேர்கோடுகளால் ஒன்றாக இணைக்கப்படுகின்றன. முக்கியமான விவரங்களைக் காட்டுவதற்கு வரிகளின் பிரிவுகள் தவிர்க்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Marked route</source>
+        <comment>Name of symbol 705</comment>
+        <translation>குறிக்கப்பட்ட பாதை</translation>
+    </message>
+    <message>
+        <source>A marked route is shown on the map with a dashed line.</source>
+        <comment>Description of symbol 705</comment>
+        <translation>கோடிட்ட கோட்டுடன் வரைபடத்தில் குறிக்கப்பட்ட பாதை காட்டப்பட்டுள்ளது.</translation>
+    </message>
+    <message>
+        <source>Finish</source>
+        <comment>Name of symbol 706</comment>
+        <translation>முடிக்கவும்</translation>
+    </message>
+    <message>
+        <source>The finish is shown by two concentric circles.</source>
+        <comment>Description of symbol 706</comment>
+        <translation>பூச்சு இரண்டு குவி வட்டங்களால் காட்டப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Uncrossable boundary</source>
+        <comment>Name of symbol 707</comment>
+        <translation>கடக்க முடியாத எல்லை</translation>
+    </message>
+    <message>
+        <source>A boundary which it is not permitted to cross.</source>
+        <comment>Description of symbol 707</comment>
+        <translation>கடக்க அனுமதிக்கப்படாத எல்லை.</translation>
+    </message>
+    <message>
+        <source>Crossing point</source>
+        <comment>Name of symbol 708</comment>
+        <translation>கடக்கும் புள்ளி</translation>
+    </message>
+    <message>
+        <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.</source>
+        <comment>Description of symbol 708</comment>
+        <translation>ஒரு சுவர் அல்லது வேலி வழியாக அல்லது அதற்கு மேல், அல்லது சாலை அல்லது ரயில் பாதை அல்லது சுரங்கப்பாதை அல்லது எல்லைக்கு அப்பாற்பட்ட பகுதி வழியாக இரண்டு கோடுகள் வெளிப்புறமாக வளைந்து வரைபடத்தில் வரையப்பட்டிருக்கும்.</translation>
+    </message>
+    <message>
+        <source>Out-of-bounds area</source>
+        <comment>Name of symbol 709</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட பகுதி</translation>
+    </message>
+    <message>
+        <source>An out-of-bounds area, see also symbol 528, is shown with vertical stripes.
+A bounding line may be drawn if there is no natural boundary, as follows:
+- a solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground,
+- a dashed line indicates intermittent marking on the ground,
+- no line indicates no marking on the ground.</source>
+        <comment>Description of symbol 709</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட பகுதி, குறியீடு 528 ஐயும் பார்க்கவும், செங்குத்து கோடுகளுடன் காட்டப்பட்டுள்ளது. 
+இயற்கையான எல்லை இல்லை என்றால், பின்வருமாறு ஒரு எல்லைக் கோடு வரையப்படலாம்: 
+- ஒரு திடமான கோடு, எல்லையானது தரையில் (நாடாக்கள், முதலியன) தொடர்ச்சியாகக் குறிக்கப்பட்டிருப்பதைக் குறிக்கிறது, 
+- ஒரு இடைக் கோடு தரையில் இடைப்பட்ட அடையாளத்தைக் குறிக்கிறது, 
+- எந்தக் கோடும் தரையில் குறியிடப்படுவதைக் குறிக்கவில்லை.</translation>
+    </message>
+    <message>
+        <source>Out-of-bounds area, solid boundary</source>
+        <comment>Name of symbol 709.1</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட பகுதி, திடமான எல்லை</translation>
+    </message>
+    <message>
+        <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
+        <comment>Description of symbol 709.1</comment>
+        <translation>ஒரு திடமான கோடு, எல்லையானது தரையில் தொடர்ச்சியாக (டேப்கள், முதலியன) குறிக்கப்பட்டிருப்பதைக் குறிக்கிறது.</translation>
+    </message>
+    <message>
+        <source>Out-of-bounds area, dashed boundary</source>
+        <comment>Name of symbol 709.2</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட பகுதி, கோடு எல்லை</translation>
+    </message>
+    <message>
+        <source>A dashed line indicates intermittent marking on the ground.</source>
+        <comment>Description of symbol 709.2</comment>
+        <translation>ஒரு இடை கோடு தரையில் இடைப்பட்ட அடையாளத்தைக் குறிக்கிறது.</translation>
+    </message>
+    <message>
+        <source>Dangerous area</source>
+        <comment>Name of symbol 710</comment>
+        <translation>ஆபத்தான பகுதி</translation>
+    </message>
+    <message>
+        <source>An area presenting danger to the competitor is shown with cross-hatched diagonal lines.</source>
+        <comment>Description of symbol 710</comment>
+        <translation>போட்டியாளருக்கு ஆபத்தை விளைவிக்கும் ஒரு பகுதி குறுக்கு குஞ்சு பொரிக்கப்பட்ட மூலைவிட்ட கோடுகளுடன் காட்டப்பட்டுள்ளது.</translation>
+    </message>
+    <message>
+        <source>Forbidden route</source>
+        <comment>Name of symbol 711</comment>
+        <translation>தடைசெய்யப்பட்ட பாதை</translation>
+    </message>
+    <message>
+        <source>A route which is out-of-bounds is shown with crosses.</source>
+        <comment>Description of symbol 711</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட பாதை சிலுவைகளுடன் காட்டப்பட்டுள்ளது.</translation>
+    </message>
+    <message>
+        <source>First aid post</source>
+        <comment>Name of symbol 712</comment>
+        <translation>முதலுதவி இடுகை</translation>
+    </message>
+    <message>
+        <source>The location of a first aid post.</source>
+        <comment>Description of symbol 712</comment>
+        <translation>முதலுதவி நிலையத்தின் இடம்.</translation>
+    </message>
+    <message>
+        <source>Refreshment point</source>
+        <comment>Name of symbol 713</comment>
+        <translation>புத்துணர்ச்சி புள்ளி</translation>
+    </message>
+    <message>
+        <source>The location of a refreshment point which is not at a control.</source>
+        <comment>Description of symbol 713</comment>
+        <translation>கட்டுப்பாட்டில் இல்லாத புத்துணர்ச்சி புள்ளியின் இடம்.</translation>
+    </message>
+    <message>
+        <source>Simple Orienteering Course</source>
+        <comment>Name of symbol 799</comment>
+        <translation>எளிய ஓரியண்டரிங் படிப்பு</translation>
+    </message>
+    <message>
+        <source>This symbol provides a simple and quick way to make training courses.
+
+The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
+        <comment>Description of symbol 799</comment>
+        <translation>இந்த அடையாளம் பயிற்சி வகுப்புகளை உருவாக்குவதற்கான எளிய மற்றும் விரைவான வழியை வழங்குகிறது. 
+
+ஊதா நிற கோடு பூச்சு சின்னத்தில் சிறிது நீட்டிக்கப்படும். இது இந்த எளிய அணுகுமுறையின் குறைபாடு.</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Logo</source>
+        <comment>Name of symbol 999</comment>
+        <translation>OpenOrienteering லோகோ</translation>
+    </message>
+    <message>
+        <source>The OpenOrienteering Logo.</source>
+        <comment>Description of symbol 999</comment>
+        <translation>OpenOrienteering லோகோ.</translation>
+    </message>
 </context>
 <context>
     <name>ISSprOM 2019</name>
@@ -5659,6 +8327,720 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 </context>
 <context>
     <name>ISSOM</name>
+    <message>
+        <source>Purple</source>
+        <comment>Color 0</comment>
+        <translation>ஊதா</translation>
+    </message>
+    <message>
+        <source>Purple 50%</source>
+        <comment>Color 1</comment>
+        <translation>ஊதா 50%</translation>
+    </message>
+    <message>
+        <source>Black</source>
+        <comment>Color 2</comment>
+        <translation>கருப்பு</translation>
+    </message>
+    <message>
+        <source>Black 50%</source>
+        <comment>Color 6</comment>
+        <translation>கருப்பு 50%</translation>
+    </message>
+    <message>
+        <source>Black 30%</source>
+        <comment>Color 7</comment>
+        <translation>கருப்பு 30%</translation>
+    </message>
+    <message>
+        <source>Black 20%</source>
+        <comment>Color 8</comment>
+        <translation>கருப்பு 20%</translation>
+    </message>
+    <message>
+        <source>Black below light browns</source>
+        <comment>Color 15</comment>
+        <translation>வெளிர் பழுப்பு நிறத்திற்கு கீழே கருப்பு</translation>
+    </message>
+    <message>
+        <source>Opaque Blue</source>
+        <comment>Color 16</comment>
+        <translation>ஒளிபுகா நீலம்</translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <comment>Color 17</comment>
+        <translation>நீலம்</translation>
+    </message>
+    <message>
+        <source>Blue 30%</source>
+        <comment>Color 19</comment>
+        <translation>நீலம் 30%</translation>
+    </message>
+    <message>
+        <source>Brown</source>
+        <comment>Color 21</comment>
+        <translation>பழுப்பு</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 22</comment>
+        <translation>OpenOrienteering ஆரஞ்சு</translation>
+    </message>
+    <message>
+        <source>Green 50%, Yellow</source>
+        <comment>Color 24</comment>
+        <translation>பச்சை 50%, மஞ்சள்</translation>
+    </message>
+    <message>
+        <source>Opaque Green</source>
+        <comment>Color 27</comment>
+        <translation>ஒளிபுகா பச்சை</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <comment>Color 28</comment>
+        <translation>பச்சை</translation>
+    </message>
+    <message>
+        <source>Green 60%</source>
+        <comment>Color 29</comment>
+        <translation>பச்சை 60%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 30</comment>
+        <translation>பச்சை 30%</translation>
+    </message>
+    <message>
+        <source>Green below light greens</source>
+        <comment>Color 31</comment>
+        <translation>வெளிர் பச்சைக்கு கீழே பச்சை</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 32</comment>
+        <translation>மஞ்சள்</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 33</comment>
+        <translation>மஞ்சள் 50%</translation>
+    </message>
+    <message>
+        <source>White over Yellow 70%</source>
+        <comment>Color 34</comment>
+        <translation>70%க்கு மேல் மஞ்சள்</translation>
+    </message>
+    <message>
+        <source>Yellow 70%</source>
+        <comment>Color 35</comment>
+        <translation>மஞ்சள் 70%</translation>
+    </message>
+    <message>
+        <source>Contour</source>
+        <comment>Name of symbol 101</comment>
+        <translation>விளிம்பு</translation>
+    </message>
+    <message>
+        <source>Index contour</source>
+        <comment>Name of symbol 102</comment>
+        <translation>குறியீட்டு விளிம்பு</translation>
+    </message>
+    <message>
+        <source>Form line</source>
+        <comment>Name of symbol 103</comment>
+        <translation>படிவ வரி</translation>
+    </message>
+    <message>
+        <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
+        <comment>Description of symbol 103</comment>
+        <translation>ஒரு இடைநிலை கோடு. படிவக் கோடுகள் பயன்படுத்தப்படுகின்றன, அங்கு நிலத்தின் வடிவத்தைப் பற்றி மேலும் செய்தி கொடுக்கலாம். சாதாரண வரையறைகளுடன் பிரதிநிதித்துவம் சாத்தியமில்லாத இடங்களில் மட்டுமே அவை பயன்படுத்தப்படுகின்றன. அண்டை எல்லைகளுக்கு இடையில் ஒரே ஒரு படிவக் கோடு மட்டுமே பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Slope line</source>
+        <comment>Name of symbol 104</comment>
+        <translation>சாய்வு கோடு</translation>
+    </message>
+    <message>
+        <source>Contour value</source>
+        <comment>Name of symbol 105</comment>
+        <translation>விளிம்பு மதிப்பு</translation>
+    </message>
+    <message>
+        <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
+        <comment>Description of symbol 105</comment>
+        <translation>பெரிய உயர வேறுபாடுகளை மதிப்பிடுவதற்கு உதவும் வகையில், விளிம்பு மதிப்புகள் சேர்க்கப்படலாம். மற்ற விவரங்கள் மறைக்கப்படாத நிலைகளில் அவை குறியீட்டு வரையறைகளில் செருகப்படுகின்றன. உருவங்களின் மேற்பகுதி விளிம்பின் மேல் பக்கத்தில் இருக்கும் வகையில் உருவங்கள் நோக்குநிலை கொண்டதாக இருக்க வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Earth bank</source>
+        <comment>Name of symbol 106.0</comment>
+        <translation>பூமி வங்கி</translation>
+    </message>
+    <message>
+        <source>Earth bank, very high</source>
+        <comment>Name of symbol 106.1</comment>
+        <translation>பூமிக்கரை, மிக உயரமானது</translation>
+    </message>
+    <message>
+        <source>Earth bank, tag line</source>
+        <comment>Name of symbol 106.2</comment>
+        <translation>பூமி வங்கி, டேக் லைன்</translation>
+    </message>
+    <message>
+        <source>Use this symbol to display the full extent of wide earth banks.</source>
+        <comment>Description of symbol 106.2</comment>
+        <translation>பரந்த பூமிக் கரைகளின் முழு அளவைக் காட்ட இந்தக் குறியீட்டைப் பயன்படுத்தவும்.</translation>
+    </message>
+    <message>
+        <source>Small earth wall</source>
+        <comment>Name of symbol 108.1</comment>
+        <translation>சிறிய மண் சுவர்</translation>
+    </message>
+    <message>
+        <source>Erosion gully or trench</source>
+        <comment>Name of symbol 109</comment>
+        <translation>அரிப்பு பள்ளம் அல்லது அகழி</translation>
+    </message>
+    <message>
+        <source>Small erosion gully</source>
+        <comment>Name of symbol 110</comment>
+        <translation>சிறிய அரிப்பு பள்ளம்</translation>
+    </message>
+    <message>
+        <source>Small knoll</source>
+        <comment>Name of symbol 112</comment>
+        <translation>சிறிய குழி</translation>
+    </message>
+    <message>
+        <source>Elongated knoll</source>
+        <comment>Name of symbol 113</comment>
+        <translation>நீளமான குமிழ்</translation>
+    </message>
+    <message>
+        <source>Small depression</source>
+        <comment>Name of symbol 115</comment>
+        <translation>சிறிய மனச்சோர்வு</translation>
+    </message>
+    <message>
+        <source>Pit</source>
+        <comment>Name of symbol 116</comment>
+        <translation>குழி</translation>
+    </message>
+    <message>
+        <source>Broken ground, small</source>
+        <comment>Name of symbol 117.1</comment>
+        <translation>உடைந்த தரை, சிறியது</translation>
+    </message>
+    <message>
+        <source>Broken ground</source>
+        <comment>Name of symbol 117.2</comment>
+        <translation>உடைந்த தரை</translation>
+    </message>
+    <message>
+        <source>Prominent landform feature</source>
+        <comment>Name of symbol 118</comment>
+        <translation>முக்கிய நிலப்பரப்பு நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
+        <comment>Description of symbol 201.1</comment>
+        <translation>செங்குத்து பாறை முகங்களுக்கு இடைவெளி குறைவாக இருந்தால் குறிச்சொற்கள் தவிர்க்கப்படலாம், எ.கா. பாறைகளுக்கு இடையில் உள்ள குறுகிய பத்திகள் (குறைந்தது 0.3 மிமீ அகலத்துடன் பத்தியை வரைய வேண்டும்).</translation>
+    </message>
+    <message>
+        <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
+        <comment>Description of symbol 201.1.1</comment>
+        <translation>செங்குத்து பாறை முகங்களுக்கு இடைவெளி குறைவாக இருந்தால் குறிச்சொற்கள் தவிர்க்கப்படலாம், எ.கா. பாறைகளுக்கு இடையில் உள்ள குறுகிய பத்திகள் (குறைந்தது 0.3 மிமீ அகலத்துடன் பத்தியை வரைய வேண்டும்).</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, tag line</source>
+        <comment>Name of symbol 201.2</comment>
+        <translation>செல்ல முடியாத பாறை, டேக் லைன்</translation>
+    </message>
+    <message>
+        <source>Use this symbol to display the full extent of a wide cliff.</source>
+        <comment>Description of symbol 201.2</comment>
+        <translation>பரந்த குன்றின் முழு அளவைக் காட்ட இந்த சின்னத்தைப் பயன்படுத்தவும்.</translation>
+    </message>
+    <message>
+        <source>Gigantic boulder or rock pillar</source>
+        <comment>Name of symbol 202</comment>
+        <translation>பிரம்மாண்டமான பாறை அல்லது பாறை தூண்</translation>
+    </message>
+    <message>
+        <source>Passable rock face</source>
+        <comment>Name of symbol 203</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம்</translation>
+    </message>
+    <message>
+        <source>Passable rock face, minimum size</source>
+        <comment>Name of symbol 203.0.1</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம், குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags</source>
+        <comment>Name of symbol 203.1</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம், குறிச்சொற்கள் இல்லை</translation>
+    </message>
+    <message>
+        <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
+        <comment>Description of symbol 203.1</comment>
+        <translation>பாறை முகத்தின் வீழ்ச்சியின் திசையானது வரையறைகளில் இருந்து தெளிவாகவும், தெளிவுத்திறன் நன்றாகவும் இருந்தால் பயன்படுத்தப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, minimum size</source>
+        <comment>Name of symbol 203.1.1</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம், குறிச்சொற்கள் இல்லை, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
+        <comment>Description of symbol 203.1.1</comment>
+        <translation>பாறை முகத்தின் வீழ்ச்சியின் திசையானது வரையறைகளில் இருந்து தெளிவாகவும், தெளிவுத்திறன் நன்றாகவும் இருந்தால் பயன்படுத்தப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded</source>
+        <comment>Name of symbol 203.2</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம், குறிச்சொற்கள் இல்லை, வட்டமானது</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded, minimum size</source>
+        <comment>Name of symbol 203.2.1</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம், குறிச்சொற்கள் இல்லை, வட்டமானது, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Rocky pit</source>
+        <comment>Name of symbol 204</comment>
+        <translation>பாறை குழி</translation>
+    </message>
+    <message>
+        <source>Cave</source>
+        <comment>Name of symbol 205</comment>
+        <translation>குகை</translation>
+    </message>
+    <message>
+        <source>Boulder</source>
+        <comment>Name of symbol 206</comment>
+        <translation>பாறாங்கல்</translation>
+    </message>
+    <message>
+        <source>Large boulder</source>
+        <comment>Name of symbol 207</comment>
+        <translation>பெரிய பாறை</translation>
+    </message>
+    <message>
+        <source>Boulder field</source>
+        <comment>Name of symbol 208</comment>
+        <translation>பாறாங்கல் வயல்</translation>
+    </message>
+    <message>
+        <source>Boulder field, large</source>
+        <comment>Name of symbol 208.1</comment>
+        <translation>பாறாங்கல் வயல், பெரியது</translation>
+    </message>
+    <message>
+        <source>Stony ground</source>
+        <comment>Name of symbol 210.1</comment>
+        <translation>பாறை நிலம்</translation>
+    </message>
+    <message>
+        <source>Open sandy ground</source>
+        <comment>Name of symbol 211</comment>
+        <translation>திறந்த மணல் நிலம்</translation>
+    </message>
+    <message>
+        <source>Bare rock</source>
+        <comment>Name of symbol 212</comment>
+        <translation>வெற்றுப் பாறை</translation>
+    </message>
+    <message>
+        <source>Waterhole</source>
+        <comment>Name of symbol 303</comment>
+        <translation>நீர்க்குழி</translation>
+    </message>
+    <message>
+        <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
+        <comment>Description of symbol 307</comment>
+        <translation>இயற்கையான அல்லது மனிதனால் உருவாக்கப்பட்ட சிறு நீர் வழித்தடமானது, இடையிடையே மட்டுமே தண்ணீரைக் கொண்டிருக்கும்.</translation>
+    </message>
+    <message>
+        <source>Narrow marsh</source>
+        <comment>Name of symbol 308</comment>
+        <translation>குறுகிய சதுப்பு நிலம்</translation>
+    </message>
+    <message>
+        <source>Marsh</source>
+        <comment>Name of symbol 310</comment>
+        <translation>சேற்றுத்தரை</translation>
+    </message>
+    <message>
+        <source>Marsh, minimum size</source>
+        <comment>Name of symbol 310.1</comment>
+        <translation>மார்ச், குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Indistinct marsh</source>
+        <comment>Name of symbol 311</comment>
+        <translation>தெளிவற்ற சதுப்பு நிலம்</translation>
+    </message>
+    <message>
+        <source>Indistinct marsh, minimum size</source>
+        <comment>Name of symbol 311.1</comment>
+        <translation>தெளிவற்ற சதுப்பு நிலம், குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Small fountain or well</source>
+        <comment>Name of symbol 312</comment>
+        <translation>சிறிய நீரூற்று அல்லது கிணறு</translation>
+    </message>
+    <message>
+        <source>Spring</source>
+        <comment>Name of symbol 313</comment>
+        <translation>வேனில்</translation>
+    </message>
+    <message>
+        <source>Prominent water feature</source>
+        <comment>Name of symbol 314</comment>
+        <translation>முக்கிய நீர் நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>Open land</source>
+        <comment>Name of symbol 401</comment>
+        <translation>திறந்த நிலம்</translation>
+    </message>
+    <message>
+        <source>Open land with scattered trees</source>
+        <comment>Name of symbol 402</comment>
+        <translation>பரந்து விரிந்த மரங்களுடன் திறந்த நிலம்</translation>
+    </message>
+    <message>
+        <source>Rough open land</source>
+        <comment>Name of symbol 403</comment>
+        <translation>கரடுமுரடான திறந்த நிலம்</translation>
+    </message>
+    <message>
+        <source>Rough open land with scattered trees</source>
+        <comment>Name of symbol 404</comment>
+        <translation>பரந்து விரிந்த மரங்களுடன் கரடுமுரடான திறந்த நிலம்</translation>
+    </message>
+    <message>
+        <source>Undergrowth: slow running</source>
+        <comment>Name of symbol 407</comment>
+        <translation>அடிமரம்: மெதுவாக ஓடுதல்</translation>
+    </message>
+    <message>
+        <source>Forest: difficult to run</source>
+        <comment>Name of symbol 408</comment>
+        <translation>காடு: ஓடுவது கடினம்</translation>
+    </message>
+    <message>
+        <source>Undergrowth: difficult to run</source>
+        <comment>Name of symbol 409</comment>
+        <translation>அடிமரம்: ஓடுவது கடினம்</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 409</comment>
+        <translation>அடர்ந்த நிலத்தடி, ஆனால் நல்ல தெரிவுநிலை (முட்செடிகள், ஈத்தர், குறைந்த புதர்கள் மற்றும் வெட்டப்பட்ட கிளைகள் உட்பட) இது சுமார் ஓட்டத்தை குறைக்கிறது. சாதாரண வேகத்தில் 20-60%. இந்தக் குறியீடு 406 அல்லது 408 உடன் இணைக்கப்படாமல் இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Orchard</source>
+        <comment>Name of symbol 412</comment>
+        <translation>பழத்தோட்டம்</translation>
+    </message>
+    <message>
+        <source>Distinct cultivation boundary</source>
+        <comment>Name of symbol 414</comment>
+        <translation>தனித்துவமான சாகுபடி எல்லை</translation>
+    </message>
+    <message>
+        <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
+        <comment>Description of symbol 415</comment>
+        <translation>பயிர்கள் வளர்ந்து வருவதால் பருவகாலமாக வரம்பிற்கு அப்பாற்பட்ட பயிரிடப்பட்ட நிலம் கரும்புள்ளி திரையுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Distinct vegetation boundary</source>
+        <comment>Name of symbol 416</comment>
+        <translation>தனித்துவமான தாவர எல்லை</translation>
+    </message>
+    <message>
+        <source>Prominent large tree</source>
+        <comment>Name of symbol 418</comment>
+        <translation>மிகப் பெரிய மரம்</translation>
+    </message>
+    <message>
+        <source>Prominent bush or small tree</source>
+        <comment>Name of symbol 419</comment>
+        <translation>முக்கிய புச் அல்லது சிறிய மரம்</translation>
+    </message>
+    <message>
+        <source>Prominent vegetation feature</source>
+        <comment>Name of symbol 420</comment>
+        <translation>முக்கிய தாவர நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>Small unpaved footpath or track</source>
+        <comment>Name of symbol 507</comment>
+        <translation>செப்பனிடப்படாத சிறிய நடைபாதை அல்லது பாதை</translation>
+    </message>
+    <message>
+        <source>Less distinct small path</source>
+        <comment>Name of symbol 508</comment>
+        <translation>குறைவான வித்தியாசமான சிறிய பாதை</translation>
+    </message>
+    <message>
+        <source>Narrow ride</source>
+        <comment>Name of symbol 509</comment>
+        <translation>குறுகிய சவாரி</translation>
+    </message>
+    <message>
+        <source>Bridge, minimum width</source>
+        <comment>Name of symbol 512.1.1</comment>
+        <translation>பாலம், குறைந்தபட்ச அகலம்</translation>
+    </message>
+    <message>
+        <source>Bridge, one side</source>
+        <comment>Name of symbol 512.1.2</comment>
+        <translation>பாலம், ஒரு பக்கம்</translation>
+    </message>
+    <message>
+        <source>Railway</source>
+        <comment>Name of symbol 515.1</comment>
+        <translation>ரயில்வே</translation>
+    </message>
+    <message>
+        <source>Tramway</source>
+        <comment>Name of symbol 515.2</comment>
+        <translation>டிராம்வே</translation>
+    </message>
+    <message>
+        <source>Power line, cableway or skilift</source>
+        <comment>Name of symbol 516</comment>
+        <translation>பவர் லைன், கேபிள்வே அல்லது ச்கிலிஃப்ட்</translation>
+    </message>
+    <message>
+        <source>Major power line</source>
+        <comment>Name of symbol 517</comment>
+        <translation>முக்கிய மின்கம்பி</translation>
+    </message>
+    <message>
+        <source>Underpass or tunnel</source>
+        <comment>Name of symbol 518.1</comment>
+        <translation>அண்டர்பாச் அல்லது சுரங்கப்பாதை</translation>
+    </message>
+    <message>
+        <source>Passable wall</source>
+        <comment>Name of symbol 519.1.1</comment>
+        <translation>செல்லக்கூடிய சுவர்</translation>
+    </message>
+    <message>
+        <source>Passable fence or railing</source>
+        <comment>Name of symbol 522</comment>
+        <translation>கடந்து செல்லக்கூடிய வேலி அல்லது தண்டவாளம்</translation>
+    </message>
+    <message>
+        <source>Crossing point</source>
+        <comment>Name of symbol 525</comment>
+        <translation>கடக்கும் புள்ளி</translation>
+    </message>
+    <message>
+        <source>Canopy</source>
+        <comment>Name of symbol 526.2</comment>
+        <translation>மேற்கட்டி</translation>
+    </message>
+    <message>
+        <source>Pillar</source>
+        <comment>Name of symbol 526.3</comment>
+        <translation>மாத்திரைகள்</translation>
+    </message>
+    <message>
+        <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
+        <comment>Description of symbol 533</comment>
+        <translation>ஒரு குழாய் (எரிவாயு, நீர், எண்ணெய் போன்றவை) தரைமட்டத்திற்கு மேல் அல்லது கீழே கடக்க முடியும்.</translation>
+    </message>
+    <message>
+        <source>High tower</source>
+        <comment>Name of symbol 535</comment>
+        <translation>உயரமான கோபுரம்</translation>
+    </message>
+    <message>
+        <source>Small tower</source>
+        <comment>Name of symbol 536</comment>
+        <translation>சிறிய கோபுரம்</translation>
+    </message>
+    <message>
+        <source>Cairn, memorial, small monument or boundary stone</source>
+        <comment>Name of symbol 537</comment>
+        <translation>கெய்ர்ன், நினைவுச்சின்னம், சிறிய நினைவுச்சின்னம் அல்லது எல்லைக் கல்</translation>
+    </message>
+    <message>
+        <source>Fodder rack</source>
+        <comment>Name of symbol 538</comment>
+        <translation>தீவன ரேக்</translation>
+    </message>
+    <message>
+        <source>Magnetic north line, blue</source>
+        <comment>Name of symbol 601.0.4</comment>
+        <translation>காந்த வடக்குக் கோடு, நீலம்</translation>
+    </message>
+    <message>
+        <source>Magnetic north line, blue, with arrow</source>
+        <comment>Name of symbol 601.0.5</comment>
+        <translation>காந்த வடக்குக் கோடு, நீலம், அம்புக்குறி</translation>
+    </message>
+    <message>
+        <source>North lines pattern, blue</source>
+        <comment>Name of symbol 601.0.6</comment>
+        <translation>வடக்கு கோடுகள் மாதிரி, நீலம்</translation>
+    </message>
+    <message>
+        <source>Registration mark</source>
+        <comment>Name of symbol 602</comment>
+        <translation>பதிவு முத்திரை</translation>
+    </message>
+    <message>
+        <source>Spot height, dot</source>
+        <comment>Name of symbol 603.0.1</comment>
+        <translation>புள்ளி உயரம், புள்ளி</translation>
+    </message>
+    <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.0.1</comment>
+        <translation>உயர வேறுபாடுகளின் தோராயமான மதிப்பீட்டிற்கு ச்பாட் உயரங்கள் பயன்படுத்தப்படுகின்றன. உயரம் அருகிலுள்ள மீட்டருக்கு வழங்கப்படுகிறது. புள்ளிவிவரங்கள் வடக்கு நோக்கியவை. புள்ளி இல்லாமல் நீர் நிலைகள் கொடுக்கப்பட்டுள்ளன.</translation>
+    </message>
+    <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.0.2</comment>
+        <translation>உயர வேறுபாடுகளின் தோராயமான மதிப்பீட்டிற்கு ச்பாட் உயரங்கள் பயன்படுத்தப்படுகின்றன. உயரம் அருகிலுள்ள மீட்டருக்கு வழங்கப்படுகிறது. புள்ளிவிவரங்கள் வடக்கு நோக்கியவை. புள்ளி இல்லாமல் நீர் நிலைகள் கொடுக்கப்பட்டுள்ளன.</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <comment>Name of symbol 701</comment>
+        <translation>தொடங்கு</translation>
+    </message>
+    <message>
+        <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
+        <comment>Description of symbol 701</comment>
+        <translation>தொடக்க அல்லது வரைபட சிக்கல் புள்ளி (தொடக்கத்தில் இல்லை என்றால்) முதல் கட்டுப்பாட்டின் திசையில் சுட்டிக்காட்டும் ஒரு சமபக்க முக்கோணத்தால் காட்டப்படுகிறது. முக்கோணத்தின் நடுவண் தொடக்கப் புள்ளியின் துல்லியமான நிலையைக் காட்டுகிறது.</translation>
+    </message>
+    <message>
+        <source>Control point</source>
+        <comment>Name of symbol 702</comment>
+        <translation>கட்டுப்பாட்டு புள்ளி</translation>
+    </message>
+    <message>
+        <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
+        <comment>Description of symbol 702</comment>
+        <translation>கட்டுப்பாட்டு புள்ளிகள் வட்டங்களுடன் காட்டப்பட்டுள்ளன. வட்டத்தின் நடுவண் அம்சத்தின் துல்லியமான நிலையைக் காட்டுகிறது. முக்கியமான விவரங்களைக் காட்ட, வட்டங்களின் பிரிவுகள் தவிர்க்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Control number</source>
+        <comment>Name of symbol 703</comment>
+        <translation>கட்டுப்பாட்டு எண்</translation>
+    </message>
+    <message>
+        <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
+        <comment>Description of symbol 703</comment>
+        <translation>முக்கிய விவரங்களை மறைக்காத வகையில் கட்டுப்பாட்டுப் புள்ளி வட்டத்திற்கு அருகில் கட்டுப்பாட்டு எண் வைக்கப்பட்டுள்ளது. எண்கள் வடக்கு நோக்கியவை.</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <comment>Name of symbol 704</comment>
+        <translation>வரி</translation>
+    </message>
+    <message>
+        <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
+        <comment>Description of symbol 704</comment>
+        <translation>கட்டுப்பாடுகளை வரிசையாகப் பார்க்க வேண்டிய இடத்தில், தொடக்கம், கட்டுப்பாட்டுப் புள்ளிகள் மற்றும் முடிவு ஆகியவை நேர்கோடுகளால் ஒன்றாக இணைக்கப்படுகின்றன. முக்கியமான விவரங்களைக் காட்டுவதற்கு வரிகளின் பிரிவுகள் தவிர்க்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Marked route</source>
+        <comment>Name of symbol 705</comment>
+        <translation>குறிக்கப்பட்ட பாதை</translation>
+    </message>
+    <message>
+        <source>A marked route is shown on the map with a dashed line.</source>
+        <comment>Description of symbol 705</comment>
+        <translation>கோடிட்ட கோட்டுடன் வரைபடத்தில் குறிக்கப்பட்ட பாதை காட்டப்பட்டுள்ளது.</translation>
+    </message>
+    <message>
+        <source>Finish</source>
+        <comment>Name of symbol 706</comment>
+        <translation>முடிக்கவும்</translation>
+    </message>
+    <message>
+        <source>The finish is shown by two concentric circles.</source>
+        <comment>Description of symbol 706</comment>
+        <translation>பூச்சு இரண்டு குவி வட்டங்களால் காட்டப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Crossing point</source>
+        <comment>Name of symbol 708</comment>
+        <translation>கடக்கும் புள்ளி</translation>
+    </message>
+    <message>
+        <source>Crossing section, one side</source>
+        <comment>Name of symbol 708.1</comment>
+        <translation>குறுக்கு பகுதி, ஒரு பக்கம்</translation>
+    </message>
+    <message>
+        <source>Out-of-bounds area, solid boundary</source>
+        <comment>Name of symbol 709.1</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட பகுதி, திடமான எல்லை</translation>
+    </message>
+    <message>
+        <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
+        <comment>Description of symbol 709.1</comment>
+        <translation>ஒரு திடமான கோடு, எல்லையானது தரையில் தொடர்ச்சியாக (டேப்கள், முதலியன) குறிக்கப்பட்டிருப்பதைக் குறிக்கிறது.</translation>
+    </message>
+    <message>
+        <source>Out-of-bounds area, dashed boundary</source>
+        <comment>Name of symbol 709.2</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட பகுதி, கோடு எல்லை</translation>
+    </message>
+    <message>
+        <source>A dashed line indicates intermittent marking on the ground.</source>
+        <comment>Description of symbol 709.2</comment>
+        <translation>ஒரு இடை கோடு தரையில் இடைப்பட்ட அடையாளத்தைக் குறிக்கிறது.</translation>
+    </message>
+    <message>
+        <source>First aid post</source>
+        <comment>Name of symbol 712</comment>
+        <translation>முதலுதவி இடுகை</translation>
+    </message>
+    <message>
+        <source>The location of a first aid post.</source>
+        <comment>Description of symbol 712</comment>
+        <translation>முதலுதவி நிலையத்தின் இடம்.</translation>
+    </message>
+    <message>
+        <source>Refreshment point</source>
+        <comment>Name of symbol 713</comment>
+        <translation>புத்துணர்ச்சி புள்ளி</translation>
+    </message>
+    <message>
+        <source>Simple Orienteering Course</source>
+        <comment>Name of symbol 799</comment>
+        <translation>எளிய ஓரியண்டரிங் படிப்பு</translation>
+    </message>
+    <message>
+        <source>This symbol provides a simple and quick way to make training courses.
+
+The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
+        <comment>Description of symbol 799</comment>
+        <translation>இந்த அடையாளம் பயிற்சி வகுப்புகளை உருவாக்குவதற்கான எளிய மற்றும் விரைவான வழியை வழங்குகிறது. 
+
+ஊதா நிற கோடு பூச்சு சின்னத்தில் சிறிது நீட்டிக்கப்படும். இது இந்த எளிய அணுகுமுறையின் குறைபாடு.</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Logo</source>
+        <comment>Name of symbol 999</comment>
+        <translation>OpenOrienteering லோகோ</translation>
+    </message>
+    <message>
+        <source>The OpenOrienteering Logo.</source>
+        <comment>Description of symbol 999</comment>
+        <translation>OpenOrienteering லோகோ.</translation>
+    </message>
 </context>
 <context>
     <name>ISMTBOM</name>
@@ -7449,6 +10831,1718 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
 </context>
 <context>
     <name>ISSkiOM</name>
+    <message>
+        <source>Purple</source>
+        <comment>Color 1</comment>
+        <translation>ஊதா</translation>
+    </message>
+    <message>
+        <source>Black</source>
+        <comment>Color 3</comment>
+        <translation>கருப்பு</translation>
+    </message>
+    <message>
+        <source>Brown 50%</source>
+        <comment>Color 4</comment>
+        <translation>பழுப்பு 50%</translation>
+    </message>
+    <message>
+        <source>Black below light browns</source>
+        <comment>Color 5</comment>
+        <translation>வெளிர் பழுப்பு நிறத்திற்கு கீழே கருப்பு</translation>
+    </message>
+    <message>
+        <source>Brown</source>
+        <comment>Color 6</comment>
+        <translation>பழுப்பு</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Orange</source>
+        <comment>Color 7</comment>
+        <translation>OpenOrienteering ஆரஞ்சு</translation>
+    </message>
+    <message>
+        <source>Opaque Blue</source>
+        <comment>Color 8</comment>
+        <translation>ஒளிபுகா நீலம்</translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <comment>Color 9</comment>
+        <translation>நீலம்</translation>
+    </message>
+    <message>
+        <source>Blue 50%</source>
+        <comment>Color 10</comment>
+        <translation>நீலம் 50%</translation>
+    </message>
+    <message>
+        <source>Black 30%</source>
+        <comment>Color 11</comment>
+        <translation>கருப்பு 30%</translation>
+    </message>
+    <message>
+        <source>Green 50%, Yellow</source>
+        <comment>Color 12</comment>
+        <translation>பச்சை 50%, மஞ்சள்</translation>
+    </message>
+    <message>
+        <source>Green over White over Green</source>
+        <comment>Color 13</comment>
+        <translation>பச்சைக்கு மேல் பச்சை</translation>
+    </message>
+    <message>
+        <source>Opaque White over Green</source>
+        <comment>Color 14</comment>
+        <translation>பச்சைக்கு மேல் ஒளிபுகா வெள்ளை</translation>
+    </message>
+    <message>
+        <source>Opaque Green</source>
+        <comment>Color 15</comment>
+        <translation>ஒளிபுகா பச்சை</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <comment>Color 16</comment>
+        <translation>பச்சை</translation>
+    </message>
+    <message>
+        <source>Green 60%</source>
+        <comment>Color 17</comment>
+        <translation>பச்சை 60%</translation>
+    </message>
+    <message>
+        <source>Green 30%</source>
+        <comment>Color 18</comment>
+        <translation>பச்சை 30%</translation>
+    </message>
+    <message>
+        <source>Green below light greens</source>
+        <comment>Color 19</comment>
+        <translation>வெளிர் பச்சைக்கு கீழே பச்சை</translation>
+    </message>
+    <message>
+        <source>Yellow</source>
+        <comment>Color 20</comment>
+        <translation>மஞ்சள்</translation>
+    </message>
+    <message>
+        <source>Yellow 50%</source>
+        <comment>Color 21</comment>
+        <translation>மஞ்சள் 50%</translation>
+    </message>
+    <message>
+        <source>White over Yellow 70%</source>
+        <comment>Color 22</comment>
+        <translation>70%க்கு மேல் மஞ்சள்</translation>
+    </message>
+    <message>
+        <source>Yellow 70%</source>
+        <comment>Color 23</comment>
+        <translation>மஞ்சள் 70%</translation>
+    </message>
+    <message>
+        <source>Contour</source>
+        <comment>Name of symbol 101</comment>
+        <translation>விளிம்பு</translation>
+    </message>
+    <message>
+        <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
+        <comment>Description of symbol 101</comment>
+        <translation>சம உயரம் கொண்ட புள்ளிகளை இணைக்கும் கோடு. வரையறைகளுக்கு இடையே நிலையான செங்குத்து இடைவெளி 5 மீட்டர் ஆகும். கோடுகளின் மையத்திலிருந்து மையத்திற்கு 0.25 மிமீ ஒரு விளிம்பில் மிகச்சிறிய வளைவு.</translation>
+    </message>
+    <message>
+        <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
+        <comment>Description of symbol 101.1</comment>
+        <translation>சம உயரம் கொண்ட புள்ளிகளை இணைக்கும் கோடு. வரையறைகளுக்கு இடையே நிலையான செங்குத்து இடைவெளி 5 மீட்டர் ஆகும். கோடுகளின் மையத்திலிருந்து மையத்திற்கு 0.25 மிமீ ஒரு விளிம்பில் மிகச்சிறிய வளைவு.</translation>
+    </message>
+    <message>
+        <source>Index contour</source>
+        <comment>Name of symbol 102</comment>
+        <translation>குறியீட்டு விளிம்பு</translation>
+    </message>
+    <message>
+        <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
+        <comment>Description of symbol 102</comment>
+        <translation>ஒவ்வொரு ஐந்தாவது விளிம்பும் தடிமனான கோட்டுடன் வரையப்பட வேண்டும். உயர வேறுபாடு மற்றும் நிலப்பரப்பின் ஒட்டுமொத்த வடிவத்தை விரைவாக மதிப்பிடுவதற்கு இது ஒரு உதவியாகும். ஒரு குறியீட்டு விளிம்பு அதிக விவரங்கள் கொண்ட பகுதியுடன் ஒத்துப்போகும் இடத்தில், அது ஒரு சாதாரண விளிம்பு கோட்டுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Form line</source>
+        <comment>Name of symbol 103</comment>
+        <translation>படிவ வரி</translation>
+    </message>
+    <message>
+        <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
+        <comment>Description of symbol 103</comment>
+        <translation>ஒரு இடைநிலை கோடு. படிவக் கோடுகள் பயன்படுத்தப்படுகின்றன, அங்கு நிலத்தின் வடிவத்தைப் பற்றி மேலும் செய்தி கொடுக்கலாம். சாதாரண வரையறைகளுடன் பிரதிநிதித்துவம் சாத்தியமில்லாத இடங்களில் மட்டுமே அவை பயன்படுத்தப்படுகின்றன. அண்டை எல்லைகளுக்கு இடையில் ஒரே ஒரு படிவக் கோடு மட்டுமே பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Slope line</source>
+        <comment>Name of symbol 104</comment>
+        <translation>சாய்வு கோடு</translation>
+    </message>
+    <message>
+        <source>Slope lines may be drawn on the lower side of a contour line, e.g. along the line of a re-entrant or in a depression. They are used only where it is necessary to clarify the direction of slope.</source>
+        <comment>Description of symbol 104</comment>
+        <translation>ஒரு விளிம்பு கோட்டின் கீழ் பக்கத்தில் சாய்வு கோடுகள் வரையப்படலாம், எ.கா. மீண்டும் நுழைபவரின் வரிசையில் அல்லது மனச்சோர்வில். சாய்வின் திசையை தெளிவுபடுத்துவதற்கு தேவையான இடங்களில் மட்டுமே அவை பயன்படுத்தப்படுகின்றன.</translation>
+    </message>
+    <message>
+        <source>Contour value</source>
+        <comment>Name of symbol 105</comment>
+        <translation>விளிம்பு மதிப்பு</translation>
+    </message>
+    <message>
+        <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
+        <comment>Description of symbol 105</comment>
+        <translation>பெரிய உயர வேறுபாடுகளை மதிப்பிடுவதற்கு உதவும் வகையில், விளிம்பு மதிப்புகள் சேர்க்கப்படலாம். மற்ற விவரங்கள் மறைக்கப்படாத நிலைகளில் அவை குறியீட்டு வரையறைகளில் செருகப்படுகின்றன. உருவங்களின் மேற்பகுதி விளிம்பின் மேல் பக்கத்தில் இருக்கும் வகையில் உருவங்கள் நோக்குநிலை கொண்டதாக இருக்க வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Earth bank</source>
+        <comment>Name of symbol 106</comment>
+        <translation>பூமி வங்கி</translation>
+    </message>
+    <message>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <comment>Description of symbol 106</comment>
+        <translation>செங்குத்தான பூமிக்கரை என்பது தரை மட்டத்தில் ஏற்படும் திடீர் மாற்றமாகும், இது அதன் சுற்றுப்புறங்களிலிருந்து தெளிவாக வேறுபடுத்திக் காட்டப்படுகிறது, எ.கா. சரளை அல்லது மணல் குழிகள், சாலை மற்றும் ரயில்வே வெட்டுதல் அல்லது கரைகள். குறிச்சொற்கள் சாய்வின் முழு அளவைக் காட்ட வேண்டும், ஆனால் இரண்டு கரைகள் நெருக்கமாக இருந்தால் தவிர்க்கப்படலாம். செல்ல முடியாத கரைகள் 201 (அசாத்தியமான குன்றின்) சின்னத்துடன் வரையப்பட வேண்டும். மிக உயரமான பூமி வங்கிகளின் வரி அகலம் 0.25 மிமீ இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Earth bank, minimum size</source>
+        <comment>Name of symbol 106.0.1</comment>
+        <translation>பூமிக்கரை, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <comment>Description of symbol 106.0.1</comment>
+        <translation>செங்குத்தான பூமிக்கரை என்பது தரை மட்டத்தில் ஏற்படும் திடீர் மாற்றமாகும், இது அதன் சுற்றுப்புறங்களிலிருந்து தெளிவாக வேறுபடுத்திக் காட்டப்படுகிறது, எ.கா. சரளை அல்லது மணல் குழிகள், சாலை மற்றும் ரயில்வே வெட்டுதல் அல்லது கரைகள். குறிச்சொற்கள் சாய்வின் முழு அளவைக் காட்ட வேண்டும், ஆனால் இரண்டு கரைகள் நெருக்கமாக இருந்தால் தவிர்க்கப்படலாம். செல்ல முடியாத கரைகள் 201 (அசாத்தியமான குன்றின்) சின்னத்துடன் வரையப்பட வேண்டும். மிக உயரமான பூமி வங்கிகளின் வரி அகலம் 0.25 மிமீ இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Earth bank, very high</source>
+        <comment>Name of symbol 106.1</comment>
+        <translation>பூமிக்கரை, மிக உயரமானது</translation>
+    </message>
+    <message>
+        <source>The line width of very high earth banks may be 0.25 mm.</source>
+        <comment>Description of symbol 106.1</comment>
+        <translation>மிக உயரமான பூமி வங்கிகளின் வரி அகலம் 0.25 மிமீ இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Earth bank, very high, minimum size</source>
+        <comment>Name of symbol 106.1.1</comment>
+        <translation>பூமிக்கரை, மிக உயர்ந்த, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>The line width of very high earth banks may be 0.25 mm.</source>
+        <comment>Description of symbol 106.1.1</comment>
+        <translation>மிக உயரமான பூமி வங்கிகளின் வரி அகலம் 0.25 மிமீ இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Earth bank, tag line</source>
+        <comment>Name of symbol 106.2</comment>
+        <translation>பூமி வங்கி, டேக் லைன்</translation>
+    </message>
+    <message>
+        <source>Use this symbol to display the full extent of wide earth banks.</source>
+        <comment>Description of symbol 106.2</comment>
+        <translation>பரந்த பூமிக் கரைகளின் முழு அளவைக் காட்ட இந்தக் குறியீட்டைப் பயன்படுத்தவும்.</translation>
+    </message>
+    <message>
+        <source>Earth wall</source>
+        <comment>Name of symbol 107</comment>
+        <translation>பூமி சுவர்</translation>
+    </message>
+    <message>
+        <source>Distinct earth wall. Minimum height is 1 m.</source>
+        <comment>Description of symbol 107</comment>
+        <translation>தனித்துவமான மண் சுவர். குறைந்தபட்ச உயரம் 1 மீ.</translation>
+    </message>
+    <message>
+        <source>Erosion gully</source>
+        <comment>Name of symbol 109</comment>
+        <translation>அரிப்பு பள்ளம்</translation>
+    </message>
+    <message>
+        <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
+        <comment>Description of symbol 109</comment>
+        <translation>அடையாளம் 106 மூலம் காட்ட முடியாத அளவுக்கு சிறியதாக இருக்கும் அரிப்புக் குழி அல்லது அகழி ஒற்றை வரியால் காட்டப்படுகிறது. கோட்டின் அகலம் கல்லியின் அளவை பிரதிபலிக்கிறது. குறைந்தபட்ச ஆழம் 1 மீ. வரியின் முடிவு சுட்டிக்காட்டப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Impassable cliff</source>
+        <comment>Name of symbol 201</comment>
+        <translation>செல்ல முடியாத பாறை</translation>
+    </message>
+    <message>
+        <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+        <comment>Description of symbol 201</comment>
+        <translation>செல்ல முடியாத குன்றின், குவாரி அல்லது பூமிக்கரை (பார்க்க 106) 0.35 மிமீ கோடு மற்றும் கீழ்நோக்கிய குறிச்சொற்கள் மேல் கோட்டிலிருந்து அடி வரை அதன் முழு அளவைக் காட்டும். செங்குத்து பாறை முகங்களுக்கு இடைவெளி குறைவாக இருந்தால் குறிச்சொற்கள் தவிர்க்கப்படலாம், எ.கா. பாறைகளுக்கு இடையில் உள்ள குறுகிய பத்திகள் (குறைந்தது 0.3 மிமீ அகலத்துடன் பத்தியை வரைய வேண்டும்). குறிச்சொற்கள் பாறை முகத்திற்கு கீழே உள்ள விவரங்களைக் குறிக்கும் பகுதி சின்னத்தின் மீது நீட்டிக்கப்படலாம். ஒரு பாறை முகம் நேராக தண்ணீருக்குள் விழும்போது, நீரின் விளிம்பில் உள்ள குன்றின் கீழ் செல்ல இயலாது, கரை கோடு தவிர்க்கப்படும் அல்லது குறிச்சொற்கள் கரையின் கோட்டின் மீது தெளிவாக நீட்டிக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, minimum size</source>
+        <comment>Name of symbol 201.0.1</comment>
+        <translation>செல்ல முடியாத பாறை, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+        <comment>Description of symbol 201.0.1</comment>
+        <translation>செல்ல முடியாத குன்றின், குவாரி அல்லது பூமிக்கரை (பார்க்க 106) 0.35 மிமீ கோடு மற்றும் கீழ்நோக்கிய குறிச்சொற்கள் மேல் கோட்டிலிருந்து அடி வரை அதன் முழு அளவைக் காட்டும். செங்குத்து பாறை முகங்களுக்கு இடைவெளி குறைவாக இருந்தால் குறிச்சொற்கள் தவிர்க்கப்படலாம், எ.கா. பாறைகளுக்கு இடையில் உள்ள குறுகிய பத்திகள் (குறைந்தது 0.3 மிமீ அகலத்துடன் பத்தியை வரைய வேண்டும்). குறிச்சொற்கள் பாறை முகத்திற்கு கீழே உள்ள விவரங்களைக் குறிக்கும் பகுதி சின்னத்தின் மீது நீட்டிக்கப்படலாம். ஒரு பாறை முகம் நேராக தண்ணீருக்குள் விழும்போது, நீரின் விளிம்பில் உள்ள குன்றின் கீழ் செல்ல இயலாது, கரை கோடு தவிர்க்கப்படும் அல்லது குறிச்சொற்கள் கரையின் கோட்டின் மீது தெளிவாக நீட்டிக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, no tags</source>
+        <comment>Name of symbol 201.1</comment>
+        <translation>செல்ல முடியாத பாறை, குறிச்சொற்கள் இல்லை</translation>
+    </message>
+    <message>
+        <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
+        <comment>Description of symbol 201.1</comment>
+        <translation>செங்குத்து பாறை முகங்களுக்கு இடைவெளி குறைவாக இருந்தால் குறிச்சொற்கள் தவிர்க்கப்படலாம், எ.கா. பாறைகளுக்கு இடையில் உள்ள குறுகிய பத்திகள் (குறைந்தது 0.3 மிமீ அகலத்துடன் பத்தியை வரைய வேண்டும்).</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, tag line</source>
+        <comment>Name of symbol 201.2</comment>
+        <translation>செல்ல முடியாத பாறை, டேக் லைன்</translation>
+    </message>
+    <message>
+        <source>Use this symbol to display the full extent of a wide cliff.</source>
+        <comment>Description of symbol 201.2</comment>
+        <translation>பரந்த குன்றின் முழு அளவைக் காட்ட இந்த சின்னத்தைப் பயன்படுத்தவும்.</translation>
+    </message>
+    <message>
+        <source>Rock pillars/cliffs</source>
+        <comment>Name of symbol 202</comment>
+        <translation>பாறைத் தூண்கள்/பாறைகள்</translation>
+    </message>
+    <message>
+        <source>In the case of unusual features such as rock pillars or massive cliffs or gigantic boulders, the rocks shall be shown in plan shape without tags.</source>
+        <comment>Description of symbol 202</comment>
+        <translation>பாறைத் தூண்கள் அல்லது பாரிய பாறைகள் அல்லது பிரம்மாண்டமான கற்பாறைகள் போன்ற அசாதாரண அம்சங்களின் விசயத்தில், பாறைகள் குறிச்சொற்கள் இல்லாமல் திட்ட வடிவத்தில் காட்டப்படும்.</translation>
+    </message>
+    <message>
+        <source>Passable rock face</source>
+        <comment>Name of symbol 203</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம்</translation>
+    </message>
+    <message>
+        <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203</comment>
+        <translation>ஒரு சிறிய செங்குத்து பாறை முகம் (குறைந்தபட்ச உயரம் 1 மீ) குறிச்சொற்கள் இல்லாமல் காட்டப்படலாம். பாறை முகத்தின் வீழ்ச்சியின் திசையானது வரையறைகளிலிருந்து தெளிவாகத் தெரியாவிட்டால் அல்லது தெளிவை மேம்படுத்த, வீழ்ச்சியின் திசையில் குறுகிய குறிச்சொற்கள் வரையப்பட வேண்டும். குறிச்சொற்கள் இல்லாமல் காட்டப்படும் கடந்து செல்லக்கூடிய பாறை முகங்களுக்கு, தெளிவை மேம்படுத்த கோட்டின் முனைகள் வட்டமாக இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Passable rock face, minimum size</source>
+        <comment>Name of symbol 203.0.1</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம், குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.0.1</comment>
+        <translation>ஒரு சிறிய செங்குத்து பாறை முகம் (குறைந்தபட்ச உயரம் 1 மீ) குறிச்சொற்கள் இல்லாமல் காட்டப்படலாம். பாறை முகத்தின் வீழ்ச்சியின் திசையானது வரையறைகளிலிருந்து தெளிவாகத் தெரியாவிட்டால் அல்லது தெளிவை மேம்படுத்த, வீழ்ச்சியின் திசையில் குறுகிய குறிச்சொற்கள் வரையப்பட வேண்டும். குறிச்சொற்கள் இல்லாமல் காட்டப்படும் கடந்து செல்லக்கூடிய பாறை முகங்களுக்கு, தெளிவை மேம்படுத்த கோட்டின் முனைகள் வட்டமாக இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags</source>
+        <comment>Name of symbol 203.1</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம், குறிச்சொற்கள் இல்லை</translation>
+    </message>
+    <message>
+        <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
+        <comment>Description of symbol 203.1</comment>
+        <translation>பாறை முகத்தின் வீழ்ச்சியின் திசையானது வரையறைகளில் இருந்து தெளிவாகவும், தெளிவுத்திறன் நன்றாகவும் இருந்தால் பயன்படுத்தப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, minimum size</source>
+        <comment>Name of symbol 203.1.1</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம், குறிச்சொற்கள் இல்லை, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
+        <comment>Description of symbol 203.1.1</comment>
+        <translation>பாறை முகத்தின் வீழ்ச்சியின் திசையானது வரையறைகளில் இருந்து தெளிவாகவும், தெளிவுத்திறன் நன்றாகவும் இருந்தால் பயன்படுத்தப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded</source>
+        <comment>Name of symbol 203.2</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம், குறிச்சொற்கள் இல்லை, வட்டமானது</translation>
+    </message>
+    <message>
+        <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.2</comment>
+        <translation>குறிச்சொற்கள் இல்லாமல் காட்டப்படும் கடந்து செல்லக்கூடிய பாறை முகங்களுக்கு, தெளிவை மேம்படுத்த கோட்டின் முனைகள் வட்டமாக இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded, minimum size</source>
+        <comment>Name of symbol 203.2.1</comment>
+        <translation>கடந்து செல்லக்கூடிய பாறை முகம், குறிச்சொற்கள் இல்லை, வட்டமானது, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.2.1</comment>
+        <translation>குறிச்சொற்கள் இல்லாமல் காட்டப்படும் கடந்து செல்லக்கூடிய பாறை முகங்களுக்கு, தெளிவை மேம்படுத்த கோட்டின் முனைகள் வட்டமாக இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Boulder</source>
+        <comment>Name of symbol 206</comment>
+        <translation>பாறாங்கல்</translation>
+    </message>
+    <message>
+        <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
+        <comment>Description of symbol 206</comment>
+        <translation>ஒரு சிறிய தனித்துவமான கற்பாறை (குறைந்தபட்ச உயரம் 1 மீ). வரைபடத்தில் குறிக்கப்பட்ட ஒவ்வொரு கற்பாறையும் தரையில் உடனடியாக அடையாளம் காணப்பட வேண்டும். கணிசமான அளவு வேறுபாடு கொண்ட கற்பாறைகளுக்கு இடையிலான வேறுபாட்டைக் காட்ட, இந்த சின்னத்தை 20% (விட்டம் 0.5 மிமீ) பெரிதாக்க அனுமதிக்கப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Boulder, enlarged</source>
+        <comment>Name of symbol 206.1</comment>
+        <translation>பாறாங்கல், பெரிதாக்கப்பட்டது</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
+        <comment>Description of symbol 206.1</comment>
+        <translation>கணிசமான அளவு வேறுபாடு கொண்ட கற்பாறைகளுக்கு இடையிலான வேறுபாட்டைக் காட்ட, இந்த சின்னத்தை 20% (விட்டம் 0.5 மிமீ) பெரிதாக்க அனுமதிக்கப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Large boulder</source>
+        <comment>Name of symbol 207</comment>
+        <translation>பெரிய பாறை</translation>
+    </message>
+    <message>
+        <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
+        <comment>Description of symbol 207</comment>
+        <translation>குறிப்பாக பெரிய மற்றும் தனித்துவமான பாறாங்கல். பிரம்மாண்டமான கற்பாறைகளுக்கு 202 அடையாளம் பயன்படுத்தப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Boulder field</source>
+        <comment>Name of symbol 208</comment>
+        <translation>பாறாங்கல் வயல்</translation>
+    </message>
+    <message>
+        <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208</comment>
+        <translation>தனித்தனியாகக் குறிக்க முடியாத அளவுக்குக் கற்களால் மூடப்பட்டிருக்கும் பகுதி 8:6:5 என்ற விகிதத்தின் பக்கங்களைக் கொண்ட சீரற்ற நோக்குநிலை திட முக்கோணங்களுடன் காட்டப்பட்டுள்ளது. குறைந்தபட்சம் இரண்டு முக்கோணங்களைப் பயன்படுத்த வேண்டும். செல்வது முக்கோணங்களின் அடர்த்தியால் குறிக்கப்படுகிறது. பாறாங்கல் அளவுகளில் குறிப்பிடத்தக்க வேறுபாட்டைக் கொண்ட பாறாங்கல் புலங்களுக்கு இடையிலான வேறுபாட்டைக் காட்ட முக்கோணங்களை 20% பெரிதாக்க அனுமதிக்கப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Boulder field, large</source>
+        <comment>Name of symbol 208.1</comment>
+        <translation>பாறாங்கல் வயல், பெரியது</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208.1</comment>
+        <translation>பாறாங்கல் அளவுகளில் குறிப்பிடத்தக்க வேறுபாட்டைக் கொண்ட பாறாங்கல் புலங்களுக்கு இடையிலான வேறுபாட்டைக் காட்ட முக்கோணங்களை 20% பெரிதாக்க அனுமதிக்கப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Boulder cluster</source>
+        <comment>Name of symbol 209</comment>
+        <translation>பாறாங்கல் கொத்து</translation>
+    </message>
+    <message>
+        <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
+        <comment>Description of symbol 209</comment>
+        <translation>தனித்தனியாகக் குறிக்க முடியாத அளவுக்கு மிக நெருக்கமாகத் தொகுக்கப்பட்டுள்ள ஒரு சிறிய தனித்தனி கற்பாறைகள். அடையாளம் வடக்கு நோக்கிய ஒரு சமபக்க முக்கோணமாகும். பாறைக் கொத்துகளுக்கு இடையே உள்ள வேறுபாட்டைக் காட்ட, அளவுகளில் குறிப்பிடத்தக்க வேறுபாட்டைக் காட்ட, இந்த சின்னத்தை 25% (1.0 மிமீ) பெரிதாக்க அனுமதிக்கப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Boulder cluster, large</source>
+        <comment>Name of symbol 209.1</comment>
+        <translation>பாறைக் கொத்து, பெரியது</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
+        <comment>Description of symbol 209.1</comment>
+        <translation>பாறைக் கொத்துகளுக்கு இடையே உள்ள வேறுபாட்டைக் காட்ட, அளவுகளில் குறிப்பிடத்தக்க வேறுபாட்டைக் காட்ட, இந்த சின்னத்தை 25% (1.0 மிமீ) பெரிதாக்க அனுமதிக்கப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>A black bank line indicates that the feature cannot be crossed.</source>
+        <comment>Description of symbol 301.1</comment>
+        <translation>ஒரு கருப்பு வங்கிக் கோடு அம்சத்தைக் கடக்க முடியாது என்பதைக் குறிக்கிறது.</translation>
+    </message>
+    <message>
+        <source>Crossable watercourse</source>
+        <comment>Name of symbol 305</comment>
+        <translation>கடக்கக்கூடிய நீர்வழி</translation>
+    </message>
+    <message>
+        <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
+        <comment>Description of symbol 305</comment>
+        <translation>குறைந்தபட்சம் 2 மீ அகலம் கொண்ட கடக்கக்கூடிய நீர்வழி. 5 மீ அகலத்திற்கு மேல் நீர்நிலைகளின் அகலம் அளவிடப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Crossable small watercourse</source>
+        <comment>Name of symbol 306</comment>
+        <translation>கடக்கக்கூடிய சிறிய நீர்வழி</translation>
+    </message>
+    <message>
+        <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
+        <comment>Description of symbol 306</comment>
+        <translation>2 மீட்டருக்கும் குறைவான அகலத்தில் கடக்கக்கூடிய நீர்வழி (ஒரு பெரிய வடிகால் பள்ளம் உட்பட). சிறந்த தெளிவுக்கு, ஒரு சதுப்பு நிலத்தில் ஒரு பள்ளத்தை கடக்கக்கூடிய நீர்வழியாக வரைய வேண்டும் (305).</translation>
+    </message>
+    <message>
+        <source>Marsh (in ski orienteering map)</source>
+        <comment>Name of symbol 310.0.1</comment>
+        <translation>மார்ச் (ச்கை ஓரியண்டரிங் வரைபடத்தில்)</translation>
+    </message>
+    <message>
+        <source>Open land</source>
+        <comment>Name of symbol 401</comment>
+        <translation>திறந்த நிலம்</translation>
+    </message>
+    <message>
+        <source>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <comment>Description of symbol 401</comment>
+        <translation>பயிரிடப்பட்ட நிலம், வயல்வெளிகள், புல்வெளிகள், புல்வெளிகள் போன்றவை மரங்கள் இல்லாமல், எளிதாக இயங்கும். மஞ்சள் நிற பகுதிகள் ஆதிக்கம் செலுத்தினால், முழு மஞ்சள் நிறத்திற்கு பதிலாக ஒரு திரை (75%) பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Open land with scattered trees</source>
+        <comment>Name of symbol 402</comment>
+        <translation>பரந்து விரிந்த மரங்களுடன் திறந்த நிலம்</translation>
+    </message>
+    <message>
+        <source>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <comment>Description of symbol 402</comment>
+        <translation>பரந்து விரிந்த மரங்கள் அல்லது புதர்களைக் கொண்ட புல்வெளிகள், புல் அல்லது அதுபோன்ற தரைமட்டத்துடன் எளிதாக இயங்கும். வரைபட அளவில் 10 மிமீக்கும் குறைவான பகுதிகள் திறந்த நிலமாகக் காட்டப்படுகின்றன (401). தனி மரங்கள் சேர்க்கப்படலாம் (418, 419, 420). மஞ்சள் நிற பகுதிகள் ஆதிக்கம் செலுத்தினால், முழு மஞ்சள் நிறத்திற்கு பதிலாக ஒரு திரை (75%) பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Rough open land</source>
+        <comment>Name of symbol 403</comment>
+        <translation>கரடுமுரடான திறந்த நிலம்</translation>
+    </message>
+    <message>
+        <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
+        <comment>Description of symbol 403</comment>
+        <translation>ஈத், மூர்லேண்ட், வெட்டப்பட்ட பகுதிகள், புதிதாக நடப்பட்ட பகுதிகள் (சுமார் 1 மீட்டருக்கும் குறைவான மரங்கள்) அல்லது கரடுமுரடான தரை தாவரங்கள், வேப்பமரம் அல்லது உயரமான புல் கொண்ட பொதுவாக திறந்த நிலம். அடையாளம் 403 ஆனது 407 மற்றும் 409 குறியீடுகளுடன் இணைந்து இயங்கக்கூடிய தன்மையைக் குறைக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Rough open land with scattered trees</source>
+        <comment>Name of symbol 404</comment>
+        <translation>பரந்து விரிந்த மரங்களுடன் கரடுமுரடான திறந்த நிலம்</translation>
+    </message>
+    <message>
+        <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
+        <comment>Description of symbol 404</comment>
+        <translation>கரடுமுரடான திறந்த நிலத்தில் சிதறிய மரங்கள் இருக்கும் இடங்களில், வெள்ளை (அல்லது பச்சை) பகுதிகள் தொனியில் தோன்ற வேண்டும். மஞ்சள் திரையில் பெரிய வெள்ளைப் புள்ளிகளின் வழக்கமான வடிவத்தைப் பயன்படுத்தி இத்தகைய பகுதி பொதுமைப்படுத்தப்படலாம். வரைபட அளவுகோலில் 16 மிமீக்கும் குறைவான பகுதிகள் கரடுமுரடான திறந்த நிலமாகக் காட்டப்படுகின்றன (403). தனி மரங்கள் சேர்க்கப்படலாம் (418, 419, 420).</translation>
+    </message>
+    <message>
+        <source>Orchard</source>
+        <comment>Name of symbol 412</comment>
+        <translation>பழத்தோட்டம்</translation>
+    </message>
+    <message>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <comment>Description of symbol 412</comment>
+        <translation>பழ மரங்கள் அல்லது புதர்களால் நடப்பட்ட நிலம். நடவு செய்யும் திசையைக் காட்ட புள்ளிக் கோடுகள் நோக்குநிலையாக இருக்கலாம். மஞ்சள் நிற பகுதிகள் ஆதிக்கம் செலுத்தினால், முழு மஞ்சள் நிறத்திற்கு பதிலாக ஒரு திரை (75%) பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Vineyard</source>
+        <comment>Name of symbol 413</comment>
+        <translation>திராட்சைத் தோட்டம்</translation>
+    </message>
+    <message>
+        <source>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <comment>Description of symbol 413</comment>
+        <translation>நடவு செய்யும் திசையைக் காட்ட பச்சைக் கோடுகள் நோக்கமாக இருக்கலாம். மஞ்சள் நிற பகுதிகள் ஆதிக்கம் செலுத்தினால், முழு மஞ்சள் நிறத்திற்கு பதிலாக ஒரு திரை (75%) பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Distinct cultivation boundary</source>
+        <comment>Name of symbol 414</comment>
+        <translation>தனித்துவமான சாகுபடி எல்லை</translation>
+    </message>
+    <message>
+        <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
+        <comment>Description of symbol 414</comment>
+        <translation>பயிரிடப்பட்ட நிலத்தின் எல்லை மற்ற சின்னங்களுடன் (வேலி, சுவர், பாதை போன்றவை) காட்டப்படாதபோது கருப்புக் கோட்டுடன் காட்டப்படும். பல்வேறு வகையான பயிரிடப்பட்ட நிலங்களுக்கு இடையே ஒரு நிரந்தர எல்லையும் இந்த சின்னத்துடன் காட்டப்பட்டுள்ளது.</translation>
+    </message>
+    <message>
+        <source>Distinct vegetation boundary</source>
+        <comment>Name of symbol 416</comment>
+        <translation>தனித்துவமான தாவர எல்லை</translation>
+    </message>
+    <message>
+        <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
+        <comment>Description of symbol 416</comment>
+        <translation>காடுகளுக்குள் ஒரு தனித்துவமான வன விளிம்பு அல்லது மிகவும் தனித்துவமான தாவர எல்லை.</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 418</comment>
+        <translation>சிறப்பு தாவர நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
+        <comment>Description of symbol 418</comment>
+        <translation>சின்னங்கள் 418, 419 மற்றும் 420 சிறப்பு சிறிய தாவர அம்சங்களுக்கு பயன்படுத்தப்படலாம். வரைபட புராணத்தில் ஒவ்வொரு விசயத்திலும் சின்னத்தின் வரையறை கொடுக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Motorway</source>
+        <comment>Name of symbol 501.0</comment>
+        <translation>மின்னோடி பாதை</translation>
+    </message>
+    <message>
+        <source>A road with two carriageways. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 501.0</comment>
+        <translation>இரண்டு வண்டிப்பாதைகள் கொண்ட சாலை. சின்னத்தின் அகலம் அளவுகோலுக்கு வரையப்பட வேண்டும் ஆனால் குறைந்தபட்ச அகலத்தை விட சிறியதாக இருக்கக்கூடாது. வெளிப்புற எல்லைக் கோடுகள் 519, 521, 522 அல்லது 524 குறியீடுகளால் மாற்றப்படலாம், ஒரு வேலி அல்லது சுவர் மின்னோடி பாதையின் விளிம்பிற்கு மிக அருகில் இருந்தால், அது நடைமுறையில் ஒரு தனி அடையாளமாக காட்டப்பட முடியாது. கருப்பு கோடுகளுக்கு இடையில் உள்ள இடைவெளி பழுப்பு நிறத்தில் (50%) நிரப்பப்பட வேண்டும். கட்டுமானத்தில் இருக்கும் சாலை உடைந்த கோடுகளுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Major road, minimum width</source>
+        <comment>Name of symbol 502</comment>
+        <translation>பெரிய சாலை, குறைந்தபட்ச அகலம்</translation>
+    </message>
+    <message>
+        <source>Road wider than 5m. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 502</comment>
+        <translation>சாலை 5 மீட்டருக்கும் அதிகமான அகலம். சின்னத்தின் அகலம் அளவுகோலுக்கு வரையப்பட வேண்டும் ஆனால் குறைந்தபட்ச அகலத்தை விட சிறியதாக இருக்கக்கூடாது. வெளிப்புற எல்லைக் கோடுகள் 519, 521, 522 அல்லது 524 குறியீடுகளால் மாற்றப்படலாம், ஒரு வேலி அல்லது சுவர் மின்னோடி பாதையின் விளிம்பிற்கு மிக அருகில் இருந்தால், அது நடைமுறையில் ஒரு தனி அடையாளமாக காட்டப்பட முடியாது. கருப்பு கோடுகளுக்கு இடையில் உள்ள இடைவெளி பழுப்பு நிறத்தில் (50%) நிரப்பப்பட வேண்டும். கட்டுமானத்தில் இருக்கும் சாலை உடைந்த கோடுகளுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Minor road</source>
+        <comment>Name of symbol 503</comment>
+        <translation>சிறிய சாலை</translation>
+    </message>
+    <message>
+        <source>Road 3-5 m wide. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 503</comment>
+        <translation>சாலை 3-5 மீ அகலம். கருப்பு கோடுகளுக்கு இடையில் உள்ள இடைவெளி பழுப்பு நிறத்தில் (50%) நிரப்பப்பட வேண்டும். கட்டுமானத்தில் இருக்கும் சாலை உடைந்த கோடுகளுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Road</source>
+        <comment>Name of symbol 504</comment>
+        <translation>சாலை</translation>
+    </message>
+    <message>
+        <source>A maintained road suitable for motor vehicles in all weather. Width less than 3 m.</source>
+        <comment>Description of symbol 504</comment>
+        <translation>அனைத்து காலநிலையிலும் மின்னோடி வாகனங்களுக்கு ஏற்ற வகையில் பராமரிக்கப்படும் சாலை. 3 மீட்டருக்கும் குறைவான அகலம்.</translation>
+    </message>
+    <message>
+        <source>Narrow ride</source>
+        <comment>Name of symbol 509</comment>
+        <translation>குறுகிய சவாரி</translation>
+    </message>
+    <message>
+        <source>A distinct ride, less than ca. 5 m wide. A ride is a linear break in the forest (usually plantation) which does not have a distinct path along it. Where there is a path along a ride, symbols 507 or 508 should be used in place of symbol 509.</source>
+        <comment>Description of symbol 509</comment>
+        <translation>ஒரு வித்தியாசமான சவாரி, ca விட குறைவானது. 5 மீ அகலம். ஒரு சவாரி என்பது காட்டில் (பொதுவாக தோட்டம்) ஒரு நேரியல் இடைவெளியாகும், அது ஒரு தனித்துவமான பாதையைக் கொண்டிருக்கவில்லை. சவாரி செல்லும் பாதையில், 509 சின்னத்திற்கு பதிலாக 507 அல்லது 508 குறியீடுகள் பயன்படுத்தப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Railway</source>
+        <comment>Name of symbol 515</comment>
+        <translation>ரயில்வே</translation>
+    </message>
+    <message>
+        <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
+        <comment>Description of symbol 515</comment>
+        <translation>ஒரு இரயில் அல்லது பிற வகையான தண்டவாளப் பாதை (டிராம்வே, டிரக்வே, முதலியன).</translation>
+    </message>
+    <message>
+        <source>Power line</source>
+        <comment>Name of symbol 516</comment>
+        <translation>பவர் லைன்</translation>
+    </message>
+    <message>
+        <source>Power line, cableway or skilift. The bars indicate the exact location of the pylons.</source>
+        <comment>Description of symbol 516</comment>
+        <translation>பவர் லைன், கேபிள்வே அல்லது ச்கிலிஃப்ட். கம்பிகள் பைலன்களின் சரியான இடத்தைக் குறிக்கின்றன.</translation>
+    </message>
+    <message>
+        <source>Major power line</source>
+        <comment>Name of symbol 517</comment>
+        <translation>முக்கிய மின்கம்பி</translation>
+    </message>
+    <message>
+        <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.</source>
+        <comment>Description of symbol 517</comment>
+        <translation>முக்கிய மின்கம்பிகளை இரட்டைக் கோடு மூலம் வரைய வேண்டும். கோடுகளுக்கு இடையே உள்ள இடைவெளி பவர்லைனின் அளவைக் குறிக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Tunnel</source>
+        <comment>Name of symbol 518</comment>
+        <translation>சுரங்கப்பாதை</translation>
+    </message>
+    <message>
+        <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
+        <comment>Description of symbol 518</comment>
+        <translation>ஓடுபவர் பயன்படுத்தக்கூடிய சாலைகள், ரயில்வே போன்றவற்றின் கீழ் ஒரு வழி. சுரங்கப்பாதைக்கு செல்லும் பாதை உள்ளதோ இல்லையோ இந்த அடையாளம் பயன்படுத்தப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Tunnel, minimum size</source>
+        <comment>Name of symbol 518.1</comment>
+        <translation>சுரங்கப்பாதை, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
+        <comment>Description of symbol 518.1</comment>
+        <translation>ஓடுபவர் பயன்படுத்தக்கூடிய சாலைகள், ரயில்வே போன்றவற்றின் கீழ் ஒரு வழி. சுரங்கப்பாதைக்கு செல்லும் பாதை உள்ளதோ இல்லையோ இந்த அடையாளம் பயன்படுத்தப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Stone wall</source>
+        <comment>Name of symbol 519</comment>
+        <translation>கல் சுவர்</translation>
+    </message>
+    <message>
+        <source>A stone wall or stone-faced bank.</source>
+        <comment>Description of symbol 519</comment>
+        <translation>ஒரு கல் சுவர் அல்லது கல் முகம் கொண்ட கரை.</translation>
+    </message>
+    <message>
+        <source>Fence</source>
+        <comment>Name of symbol 522</comment>
+        <translation>வேலி</translation>
+    </message>
+    <message>
+        <source>A wooden or wire fence less than ca. 1.5 m high.</source>
+        <comment>Description of symbol 522</comment>
+        <translation>ca விட குறைவான மரத்தாலான அல்லது கம்பி வேலி. 1.5 மீ உயரம்.</translation>
+    </message>
+    <message>
+        <source>High fence</source>
+        <comment>Name of symbol 524</comment>
+        <translation>உயரமான வேலி</translation>
+    </message>
+    <message>
+        <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
+        <comment>Description of symbol 524</comment>
+        <translation>ஏறக்குறைய 1.5 மீட்டருக்கும் அதிகமான பலகை அல்லது கம்பி வேலி, சராசரி ஓரியண்டியருக்கு கடக்க முடியாதது, எ.கா. மான் வேலி.</translation>
+    </message>
+    <message>
+        <source>Crossing point</source>
+        <comment>Name of symbol 525</comment>
+        <translation>கடக்கும் புள்ளி</translation>
+    </message>
+    <message>
+        <source>Building</source>
+        <comment>Name of symbol 526</comment>
+        <translation>கட்டிடம்</translation>
+    </message>
+    <message>
+        <source>A building is shown with its ground plan so far as the scale permits.</source>
+        <comment>Description of symbol 526</comment>
+        <translation>ஒரு கட்டிடம் அதன் தரைத் திட்டத்துடன் அளவு அனுமதிக்கும் வரை காட்டப்பட்டுள்ளது.</translation>
+    </message>
+    <message>
+        <source>Building, minimum size</source>
+        <comment>Name of symbol 526.1</comment>
+        <translation>கட்டிடம், குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Settlement</source>
+        <comment>Name of symbol 527</comment>
+        <translation>தீர்வு</translation>
+    </message>
+    <message>
+        <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
+        <comment>Description of symbol 527</comment>
+        <translation>வீடுகள் மற்றும் தோட்டங்கள் மற்றும் பிற கட்டப்பட்ட பகுதிகள். ஒரு குடியேற்றத்தில் உள்ள சாலைகள், கட்டிடங்கள் மற்றும் பிற குறிப்பிடத்தக்க நற்பொருத்தங்கள் காட்டப்பட வேண்டும். அனைத்து கட்டிடங்களையும் காட்ட முடியாவிட்டால், ஒரு மாற்று அடையாளம் (கருப்பு வரி திரை) பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Settlement</source>
+        <comment>Name of symbol 527.1</comment>
+        <translation>தீர்வு</translation>
+    </message>
+    <message>
+        <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
+        <comment>Description of symbol 527.1</comment>
+        <translation>வீடுகள் மற்றும் தோட்டங்கள் மற்றும் பிற கட்டப்பட்ட பகுதிகள். ஒரு குடியேற்றத்தில் உள்ள சாலைகள், கட்டிடங்கள் மற்றும் பிற குறிப்பிடத்தக்க நற்பொருத்தங்கள் காட்டப்பட வேண்டும். அனைத்து கட்டிடங்களையும் காட்ட முடியாவிட்டால், ஒரு மாற்று அடையாளம் (கருப்பு வரி திரை) பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Permanently out of bounds</source>
+        <comment>Name of symbol 528</comment>
+        <translation>நிரந்தரமாக எல்லைக்கு வெளியே</translation>
+    </message>
+    <message>
+        <source>Areas which are permanently forbidden to the runner are shown as out of bounds. The screen is superimposed on the normal map detail. A bounding line may be drawn if there is no natural boundary (see 709).</source>
+        <comment>Description of symbol 528</comment>
+        <translation>ஓட்டப்பந்தய வீரருக்கு நிரந்தரமாக தடைசெய்யப்பட்ட பகுதிகள் எல்லைக்கு வெளியே காட்டப்படும். சாதாரண வரைபட விவரத்தில் திரை மிகைப்படுத்தப்பட்டுள்ளது. இயற்கையான எல்லை இல்லாவிட்டால் ஒரு எல்லைக் கோடு வரையப்படலாம் (பார்க்க 709).</translation>
+    </message>
+    <message>
+        <source>Permanently out of bounds, bounding line</source>
+        <comment>Name of symbol 528.1</comment>
+        <translation>நிரந்தரமாக எல்லைக்கு வெளியே, எல்லைக் கோடு</translation>
+    </message>
+    <message>
+        <source>A bounding line may be drawn if there is no natural boundary (see 709).</source>
+        <comment>Description of symbol 528.1</comment>
+        <translation>இயற்கையான எல்லை இல்லாவிட்டால் ஒரு எல்லைக் கோடு வரையப்படலாம் (பார்க்க 709).</translation>
+    </message>
+    <message>
+        <source>Paved area</source>
+        <comment>Name of symbol 529</comment>
+        <translation>நடைபாதை பகுதி</translation>
+    </message>
+    <message>
+        <source>An area of hard standing used for parking or other purposes.</source>
+        <comment>Description of symbol 529</comment>
+        <translation>பார்க்கிங் அல்லது பிற நோக்கங்களுக்காகப் பயன்படுத்தப்படும் கடினமான நிலைப் பகுதி.</translation>
+    </message>
+    <message>
+        <source>Paved area, bounding line</source>
+        <comment>Name of symbol 529.1</comment>
+        <translation>நடைபாதை பகுதி, எல்லைக் கோடு</translation>
+    </message>
+    <message>
+        <source>Paved area, with bounding line</source>
+        <comment>Name of symbol 529.2</comment>
+        <translation>நடைபாதை பகுதி, எல்லைக்கோடு</translation>
+    </message>
+    <message>
+        <source>Firing range</source>
+        <comment>Name of symbol 531</comment>
+        <translation>துப்பாக்கி சூடு வரம்பு</translation>
+    </message>
+    <message>
+        <source>A firing range is shown with a special symbol to indicate the need for caution. Associated buildings are individually marked.</source>
+        <comment>Description of symbol 531</comment>
+        <translation>எச்சரிக்கையின் அவசியத்தைக் குறிக்க, துப்பாக்கிச் சூடு வீச்சு ஒரு சிறப்பு சின்னத்துடன் காட்டப்பட்டுள்ளது. தொடர்புடைய கட்டிடங்கள் தனித்தனியாக குறிக்கப்பட்டுள்ளன.</translation>
+    </message>
+    <message>
+        <source>Uncrossable pipeline</source>
+        <comment>Name of symbol 534</comment>
+        <translation>கடக்க முடியாத குழாய்</translation>
+    </message>
+    <message>
+        <source>High tower</source>
+        <comment>Name of symbol 535</comment>
+        <translation>உயரமான கோபுரம்</translation>
+    </message>
+    <message>
+        <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
+        <comment>Description of symbol 535</comment>
+        <translation>ஒரு உயரமான கோபுரம் அல்லது பெரிய கோபுரம், சுற்றியுள்ள காடுகளின் மட்டத்திற்கு மேலே நிற்கிறது. சின்னத்தின் ஈர்ப்பு விசையின் மையத்தில் இடம் உள்ளது.</translation>
+    </message>
+    <message>
+        <source>Small tower</source>
+        <comment>Name of symbol 536</comment>
+        <translation>சிறிய கோபுரம்</translation>
+    </message>
+    <message>
+        <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
+        <comment>Description of symbol 536</comment>
+        <translation>ஒரு வெளிப்படையான படப்பிடிப்பு தளம் அல்லது இருக்கை அல்லது சிறிய கோபுரம். சின்னத்தின் ஈர்ப்பு விசையின் மையத்தில் இடம் உள்ளது.</translation>
+    </message>
+    <message>
+        <source>Special man-made feature</source>
+        <comment>Name of symbol 539</comment>
+        <translation>மனிதனால் உருவாக்கப்பட்ட சிறப்பு நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 539</comment>
+        <translation>மனிதனால் உருவாக்கப்பட்ட சிறப்பு நற்பொருத்தங்கள் இந்தக் குறியீடுகளுடன் காட்டப்பட்டுள்ளன. வரைபட புராணத்தில் ஒவ்வொரு விசயத்திலும் சின்னங்களின் வரையறை கொடுக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Special man-made feature</source>
+        <comment>Name of symbol 540</comment>
+        <translation>மனிதனால் உருவாக்கப்பட்ட சிறப்பு நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 540</comment>
+        <translation>மனிதனால் உருவாக்கப்பட்ட சிறப்பு நற்பொருத்தங்கள் இந்தக் குறியீடுகளுடன் காட்டப்பட்டுள்ளன. வரைபட புராணத்தில் ஒவ்வொரு விசயத்திலும் சின்னங்களின் வரையறை கொடுக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Magnetic north line</source>
+        <comment>Name of symbol 601</comment>
+        <translation>காந்த வடக்குக் கோடு</translation>
+    </message>
+    <message>
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
+        <comment>Description of symbol 601</comment>
+        <translation>காந்த வடக்குக் கோடுகள் வரைபடத்தில் காந்த வடக்கைச் சுட்டிக்காட்டும் கோடுகளாகும். வரைபடத்தில் அவற்றின் இடைவெளி 33.33 மிமீ ஆக இருக்க வேண்டும், இது 1:15 000 என்ற அளவில் தரையில் 500 மீட்டரைக் குறிக்கும். மற்ற செதில்கள் கொண்ட வரைபடங்களுக்கு, ஒரு சுற்று மீட்டர் எண்ணிக்கையை குறிக்கும் இடைவெளியில் இருக்க வேண்டும் (எ.கா. 50 மீ, 100 மீ, 250 மீ மற்றும் 400 மீ இடைவெளியில் 200 மீ இடைவெளி இருக்க வேண்டும்) வரைபடம். பாறாங்கற்கள், குன்றுகள், பாறைகள், நீரோடை சந்திப்புகள், பாதை முனைகள் போன்ற சிறிய அம்சங்களை மறைக்கும் இடத்தில் வடக்குக் கோடுகள் உடைக்கப்படலாம். மிகக் குறைவான நீர் நற்பொருத்தங்கள் உள்ள பகுதிகளில், நீலக் கோடுகள் பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>North lines pattern</source>
+        <comment>Name of symbol 601.1</comment>
+        <translation>வடக்கு கோடுகளின் வடிவம்</translation>
+    </message>
+    <message>
+        <source>Magnetic north line, blue</source>
+        <comment>Name of symbol 601.2</comment>
+        <translation>காந்த வடக்குக் கோடு, நீலம்</translation>
+    </message>
+    <message>
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
+        <comment>Description of symbol 601.2</comment>
+        <translation>காந்த வடக்குக் கோடுகள் வரைபடத்தில் காந்த வடக்கைச் சுட்டிக்காட்டும் கோடுகளாகும். வரைபடத்தில் அவற்றின் இடைவெளி 33.33 மிமீ ஆக இருக்க வேண்டும், இது 1:15 000 என்ற அளவில் தரையில் 500 மீட்டரைக் குறிக்கும். மற்ற செதில்கள் கொண்ட வரைபடங்களுக்கு, ஒரு சுற்று மீட்டர் எண்ணிக்கையை குறிக்கும் இடைவெளியில் இருக்க வேண்டும் (எ.கா. 50 மீ, 100 மீ, 250 மீ மற்றும் 400 மீ இடைவெளியில் 200 மீ இடைவெளி இருக்க வேண்டும்) வரைபடம். பாறாங்கற்கள், குன்றுகள், பாறைகள், நீரோடை சந்திப்புகள், பாதை முனைகள் போன்ற சிறிய அம்சங்களை மறைக்கும் இடத்தில் வடக்குக் கோடுகள் உடைக்கப்படலாம். மிகக் குறைவான நீர் நற்பொருத்தங்கள் உள்ள பகுதிகளில், நீலக் கோடுகள் பயன்படுத்தப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>North lines pattern, blue</source>
+        <comment>Name of symbol 601.3</comment>
+        <translation>வடக்கு கோடுகள் மாதிரி, நீலம்</translation>
+    </message>
+    <message>
+        <source>Registration mark</source>
+        <comment>Name of symbol 602</comment>
+        <translation>பதிவு முத்திரை</translation>
+    </message>
+    <message>
+        <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
+        <comment>Description of symbol 602</comment>
+        <translation>குறைந்தபட்சம் மூன்று பதிவு மதிப்பெண்கள் ஒரு வரைபடத்தின் சட்டத்தில் சமச்சீரற்ற நிலையில் வைக்கப்பட வேண்டும். கூடுதலாக, ஒரு வண்ண சரிபார்ப்பு சாத்தியமாகும்.</translation>
+    </message>
+    <message>
+        <source>Spot height, dot</source>
+        <comment>Name of symbol 603.0</comment>
+        <translation>புள்ளி உயரம், புள்ளி</translation>
+    </message>
+    <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.0</comment>
+        <translation>உயர வேறுபாடுகளின் தோராயமான மதிப்பீட்டிற்கு ச்பாட் உயரங்கள் பயன்படுத்தப்படுகின்றன. உயரம் அருகிலுள்ள மீட்டருக்கு வழங்கப்படுகிறது. புள்ளிவிவரங்கள் வடக்கு நோக்கியவை. புள்ளி இல்லாமல் நீர் நிலைகள் கொடுக்கப்பட்டுள்ளன.</translation>
+    </message>
+    <message>
+        <source>Spot height, text</source>
+        <comment>Name of symbol 603.1</comment>
+        <translation>ச்பாட் உயரம், உரை</translation>
+    </message>
+    <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.1</comment>
+        <translation>உயர வேறுபாடுகளின் தோராயமான மதிப்பீட்டிற்கு ச்பாட் உயரங்கள் பயன்படுத்தப்படுகின்றன. உயரம் அருகிலுள்ள மீட்டருக்கு வழங்கப்படுகிறது. புள்ளிவிவரங்கள் வடக்கு நோக்கியவை. புள்ளி இல்லாமல் நீர் நிலைகள் கொடுக்கப்பட்டுள்ளன.</translation>
+    </message>
+    <message>
+        <source>Very fast, wide ski tracks in ski centres, made with a ski trail groomer or a track leveller.</source>
+        <comment>Description of symbol 801</comment>
+        <translation>ச்கை மையங்களில் மிக வேகமான, அகலமான ச்கை டிராக்குகள், ச்கை டிரெயில் க்ரூமர் அல்லது டிராக் லெவலர் மூலம் உருவாக்கப்பட்டுள்ளது.</translation>
+    </message>
+    <message>
+        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing technique for slowing and stopping.
+
+In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
+        <comment>Description of symbol 804</comment>
+        <translation>சிறிய பனி அல்லது சில பிரச்வுட் கொண்ட கடினமான, மெதுவான பாதை. இந்தச் அடையாளம் செங்குத்தான சரிவுகளில் பயன்படுத்தப்படாது, பாதையின் அகலம் எர்ரிங்போன் படிகளை மேல்நோக்கி பயன்படுத்த அனுமதித்தால் அல்லது பனி உழவு நுட்பத்தை மெதுவாகவும் நிறுத்தவும் பயன்படுத்துகிறது. 
+
+ஒரு சந்திப்பை தெளிவுபடுத்துவதற்காக, மெதுவான பாதையின் துவக்கம் ஒரு குறுகிய கோடுடன் வரையப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Road covered with snow</source>
+        <comment>Name of symbol 805</comment>
+        <translation>பனியால் மூடப்பட்ட சாலை</translation>
+    </message>
+    <message>
+        <source>Snowploughed, skiable roads are drawn with a normal road symbol but wider.</source>
+        <comment>Description of symbol 805</comment>
+        <translation>பனி கலப்பை, சறுக்கக்கூடிய சாலைகள் சாதாரண சாலை சின்னத்துடன் வரையப்பட்டாலும் அகலமானவை.</translation>
+    </message>
+    <message>
+        <source>Sanded or snowless road, line symbol</source>
+        <comment>Name of symbol 806</comment>
+        <translation>மணல் அல்லது பனி இல்லாத சாலை, வரி அடையாளம்</translation>
+    </message>
+    <message>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
+        <comment>Description of symbol 806</comment>
+        <translation>போட்டியின் போது மணல் அள்ளப்பட்ட அல்லது பனி இல்லாத சாலை. சாலையின் சின்னத்தின் குறுக்கே உள்ள V-குறிகளின் சங்கிலி, சாலை சறுக்கக்கூடியதாக இல்லை என்பதைக் காட்டுகிறது. பனி இல்லாத சாலைகள் மற்றும் அதிக மணல் அள்ளப்பட்ட சாலைகள் பொதுவாக தடை செய்யப்பட்ட பாதைகளாக குறிக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Sanded or snowless road, single symbol</source>
+        <comment>Name of symbol 806.1</comment>
+        <translation>மணல் அல்லது பனி இல்லாத சாலை, ஒற்றை அடையாளம்</translation>
+    </message>
+    <message>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-marks across the road symbol show that the road is not skiable. Snowless roads and heavily sanded roads should normally be marked as forbidden routes.</source>
+        <comment>Description of symbol 806.1</comment>
+        <translation>போட்டியின் போது மணல் அள்ளப்பட்ட அல்லது பனி இல்லாத சாலை. சாலையின் சின்னத்தின் குறுக்கே உள்ள V-குறிகளின் சங்கிலி, சாலை சறுக்கக்கூடியதாக இல்லை என்பதைக் காட்டுகிறது. பனி இல்லாத சாலைகள் மற்றும் அதிக மணல் அள்ளப்பட்ட சாலைகள் பொதுவாக தடை செய்யப்பட்ட பாதைகளாக குறிக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Unploughed road</source>
+        <comment>Name of symbol 807</comment>
+        <translation>உழவு செய்யப்படாத சாலை</translation>
+    </message>
+    <message>
+        <source>A road which is not opened for traffic, no skiable track.</source>
+        <comment>Description of symbol 807</comment>
+        <translation>போக்குவரத்துக்கு திறக்கப்படாத சாலை, சறுக்கக்கூடிய பாதை இல்லை.</translation>
+    </message>
+    <message>
+        <source>Prepared area</source>
+        <comment>Name of symbol 808</comment>
+        <translation>தயாரிக்கப்பட்ட பகுதி</translation>
+    </message>
+    <message>
+        <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
+The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
+        <comment>Description of symbol 808</comment>
+        <translation>ச்லாலோம் சரிவுகள் (ஆல்பைன் பனிச்சறுக்கு சரிவுகள்) மற்றும் பரந்த, பனிச்சறுக்கு மற்றும் கடினமான பிற பகுதிகள். 
+தயாரிக்கப்பட்ட பகுதிகளின் எல்லைகள் குறுகிய பச்சைக் கோட்டுடன் (0.13 மிமீ) காட்டப்பட்டுள்ளன, எனவே ஒவ்வொரு விளிம்பையும் தெளிவாகப் படிக்க முடியும்.</translation>
+    </message>
+    <message>
+        <source>Prepared area, fill pattern</source>
+        <comment>Name of symbol 808.0.1</comment>
+        <translation>தயாரிக்கப்பட்ட பகுதி, நிரப்பு முறை</translation>
+    </message>
+    <message>
+        <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
+The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
+        <comment>Description of symbol 808.0.1</comment>
+        <translation>ச்லாலோம் சரிவுகள் (ஆல்பைன் பனிச்சறுக்கு சரிவுகள்) மற்றும் பரந்த, பனிச்சறுக்கு மற்றும் கடினமான பிற பகுதிகள். 
+தயாரிக்கப்பட்ட பகுதிகளின் எல்லைகள் குறுகிய பச்சைக் கோட்டுடன் (0.13 மிமீ) காட்டப்பட்டுள்ளன, எனவே ஒவ்வொரு விளிம்பையும் தெளிவாகப் படிக்க முடியும்.</translation>
+    </message>
+    <message>
+        <source>Prepared area, boundary</source>
+        <comment>Name of symbol 801.0.2</comment>
+        <translation>தயாரிக்கப்பட்ட பகுதி, எல்லை</translation>
+    </message>
+    <message>
+        <source>The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
+        <comment>Description of symbol 801.0.2</comment>
+        <translation>தயாரிக்கப்பட்ட பகுதிகளின் எல்லைகள் குறுகிய பச்சைக் கோட்டுடன் (0.13 மிமீ) காட்டப்பட்டுள்ளன, எனவே ஒவ்வொரு விளிம்பையும் தெளிவாகப் படிக்க முடியும்.</translation>
+    </message>
+    <message>
+        <source>Public snow mobile route</source>
+        <comment>Name of symbol 813</comment>
+        <translation>பொது பனி மொபைல் பாதை</translation>
+    </message>
+    <message>
+        <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possibility of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
+        <comment>Description of symbol 813</comment>
+        <translation>ச்கை ஓரியண்டரிங் போட்டியின் போது பயன்பாட்டில் இருக்கும் பனி மொபைல்களுக்கான பொது மற்றும் குறிக்கப்பட்ட பாதை. இந்த வழிகள் பெரும்பாலும் சீரற்றதாகவும் அகலம் மற்றும் தகுதி கொண்டதாகவும் இருக்கும். அத்தகைய வழித்தடங்களின் தகுதி (எ.கா. புகைப்படங்களுடன்) போட்டியாளர்களுக்கு ஏற்பாட்டாளர்கள் போட்டியாளர்களுக்குத் தெரிவிக்க வேண்டும், மேலும் பாதையை தற்காலிகமாக மூடுவதன் மூலமோ, பாதையை நிர்வகிப்பதன் மூலமோ அல்லது பிற வழிகளில் பனிச்சறுக்கு ஓட்டுநர்களை சந்திப்பதற்கான சாத்தியக்கூறுகள் குறித்து ஏதேனும் பனி மொபைல் ஓட்டுநர்களுக்குத் தெரிவிப்பதன் மூலம் போட்டியாளர்களின் பாதுகாப்பை உறுதி செய்ய வேண்டும். போட்டியாளர்களின் பாதுகாப்பை உறுதிப்படுத்த முடியாவிட்டால், பாதை தடைசெய்யப்பட்டதாகக் குறிக்கப்பட வேண்டும் மற்றும் பாதுகாப்பான பாதைகள் உறுதி செய்யப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Forbidden route, forbidden to cross</source>
+        <comment>Name of symbol 814</comment>
+        <translation>தடை செய்யப்பட்ட பாதை, கடக்க தடை</translation>
+    </message>
+    <message>
+        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
+        <comment>Description of symbol 814</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட மற்றும் கடக்க தடைசெய்யப்பட்ட பாதை சிக்சாக் மூலம் காட்டப்பட்டுள்ளது. சிக்சாக் கோடு முடிந்தவரை தொடர்ச்சியாக இருக்க வேண்டும். தடைசெய்யப்பட்ட பாதையில் ஒரு குறுக்கு புள்ளி இருந்தால், அது தடைசெய்யப்பட்ட பாதையில் இரண்டு செங்குத்து கோடுகளால் ஒரு வாயில் போல் காட்டப்படும். சிக்சாக் கோடுகளின் முடிவில் செங்குத்து கோடுகளைப் பயன்படுத்தி வரைபடத்தில் ஒரு நீண்ட குறுக்கு பகுதி தெளிவாகக் காட்டப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Forbidden route, crossable, line symbol</source>
+        <comment>Name of symbol 809</comment>
+        <translation>தடைசெய்யப்பட்ட பாதை, கடக்கக்கூடிய, வரி அடையாளம்</translation>
+    </message>
+    <message>
+        <source>Forbidden route, crossable, single symbol</source>
+        <comment>Name of symbol 809.0.1</comment>
+        <translation>தடைசெய்யப்பட்ட பாதை, கடக்கக்கூடிய, ஒற்றை அடையாளம்</translation>
+    </message>
+    <message>
+        <source>Equipment deposit</source>
+        <comment>Name of symbol 812</comment>
+        <translation>உபகரணங்கள் வைப்பு</translation>
+    </message>
+    <message>
+        <source>A deposit for spare equipment in the terrain.</source>
+        <comment>Description of symbol 812</comment>
+        <translation>நிலப்பரப்பில் உதிரி உபகரணங்களுக்கான வைப்பு.</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <comment>Name of symbol 701</comment>
+        <translation>தொடங்கு</translation>
+    </message>
+    <message>
+        <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
+        <comment>Description of symbol 701</comment>
+        <translation>தொடக்க அல்லது வரைபட சிக்கல் புள்ளி (தொடக்கத்தில் இல்லை என்றால்) முதல் கட்டுப்பாட்டின் திசையில் சுட்டிக்காட்டும் ஒரு சமபக்க முக்கோணத்தால் காட்டப்படுகிறது. முக்கோணத்தின் நடுவண் தொடக்கப் புள்ளியின் துல்லியமான நிலையைக் காட்டுகிறது.</translation>
+    </message>
+    <message>
+        <source>Control point</source>
+        <comment>Name of symbol 702</comment>
+        <translation>கட்டுப்பாட்டு புள்ளி</translation>
+    </message>
+    <message>
+        <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
+        <comment>Description of symbol 702</comment>
+        <translation>கட்டுப்பாட்டு புள்ளிகள் வட்டங்களுடன் காட்டப்பட்டுள்ளன. வட்டத்தின் நடுவண் அம்சத்தின் துல்லியமான நிலையைக் காட்டுகிறது. முக்கியமான விவரங்களைக் காட்ட, வட்டங்களின் பிரிவுகள் தவிர்க்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Control point and focus point</source>
+        <comment>Name of symbol 810</comment>
+        <translation>கட்டுப்பாட்டு புள்ளி மற்றும் கவனம் புள்ளி</translation>
+    </message>
+    <message>
+        <source>Control number</source>
+        <comment>Name of symbol 703</comment>
+        <translation>கட்டுப்பாட்டு எண்</translation>
+    </message>
+    <message>
+        <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
+        <comment>Description of symbol 703</comment>
+        <translation>முக்கிய விவரங்களை மறைக்காத வகையில் கட்டுப்பாட்டுப் புள்ளி வட்டத்திற்கு அருகில் கட்டுப்பாட்டு எண் வைக்கப்பட்டுள்ளது. எண்கள் வடக்கு நோக்கியவை.</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <comment>Name of symbol 704</comment>
+        <translation>வரி</translation>
+    </message>
+    <message>
+        <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
+        <comment>Description of symbol 704</comment>
+        <translation>கட்டுப்பாடுகளை வரிசையாகப் பார்க்க வேண்டிய இடத்தில், தொடக்கம், கட்டுப்பாட்டுப் புள்ளிகள் மற்றும் முடிவு ஆகியவை நேர்கோடுகளால் ஒன்றாக இணைக்கப்படுகின்றன. முக்கியமான விவரங்களைக் காட்டுவதற்கு வரிகளின் பிரிவுகள் தவிர்க்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Marked route</source>
+        <comment>Name of symbol 705</comment>
+        <translation>குறிக்கப்பட்ட பாதை</translation>
+    </message>
+    <message>
+        <source>A marked route is shown on the map with a dashed line.</source>
+        <comment>Description of symbol 705</comment>
+        <translation>கோடிட்ட கோட்டுடன் வரைபடத்தில் குறிக்கப்பட்ட பாதை காட்டப்பட்டுள்ளது.</translation>
+    </message>
+    <message>
+        <source>Finish</source>
+        <comment>Name of symbol 706</comment>
+        <translation>முடிக்கவும்</translation>
+    </message>
+    <message>
+        <source>The finish is shown by two concentric circles.</source>
+        <comment>Description of symbol 706</comment>
+        <translation>பூச்சு இரண்டு குவி வட்டங்களால் காட்டப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Uncrossable boundary</source>
+        <comment>Name of symbol 707</comment>
+        <translation>கடக்க முடியாத எல்லை</translation>
+    </message>
+    <message>
+        <source>A boundary which it is not permitted to cross.</source>
+        <comment>Description of symbol 707</comment>
+        <translation>கடக்க அனுமதிக்கப்படாத எல்லை.</translation>
+    </message>
+    <message>
+        <source>Crossing point</source>
+        <comment>Name of symbol 708</comment>
+        <translation>கடக்கும் புள்ளி</translation>
+    </message>
+    <message>
+        <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.</source>
+        <comment>Description of symbol 708</comment>
+        <translation>ஒரு சுவர் அல்லது வேலி வழியாக அல்லது அதற்கு மேல், அல்லது சாலை அல்லது ரயில் பாதை அல்லது சுரங்கப்பாதை அல்லது எல்லைக்கு அப்பாற்பட்ட பகுதி வழியாக இரண்டு கோடுகள் வெளிப்புறமாக வளைந்து வரைபடத்தில் வரையப்பட்டிருக்கும்.</translation>
+    </message>
+    <message>
+        <source>Out-of-bounds area</source>
+        <comment>Name of symbol 709</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட பகுதி</translation>
+    </message>
+    <message>
+        <source>An out-of-bounds area, see also symbol 528, is shown with vertical stripes.
+A bounding line may be drawn if there is no natural boundary, as follows:
+- a solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground,
+- a dashed line indicates intermittent marking on the ground,
+- no line indicates no marking on the ground.</source>
+        <comment>Description of symbol 709</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட பகுதி, குறியீடு 528 ஐயும் பார்க்கவும், செங்குத்து கோடுகளுடன் காட்டப்பட்டுள்ளது. 
+இயற்கையான எல்லை இல்லை என்றால், பின்வருமாறு ஒரு எல்லைக் கோடு வரையப்படலாம்: 
+- ஒரு திடமான கோடு, எல்லையானது தரையில் (நாடாக்கள், முதலியன) தொடர்ச்சியாகக் குறிக்கப்பட்டிருப்பதைக் குறிக்கிறது, 
+- ஒரு இடைக் கோடு தரையில் இடைப்பட்ட அடையாளத்தைக் குறிக்கிறது, 
+- எந்தக் கோடும் தரையில் குறியிடப்படுவதைக் குறிக்கவில்லை.</translation>
+    </message>
+    <message>
+        <source>Out-of-bounds area, solid boundary</source>
+        <comment>Name of symbol 709.1</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட பகுதி, திடமான எல்லை</translation>
+    </message>
+    <message>
+        <source>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</source>
+        <comment>Description of symbol 709.1</comment>
+        <translation>ஒரு திடமான கோடு, எல்லையானது தரையில் தொடர்ச்சியாக (டேப்கள், முதலியன) குறிக்கப்பட்டிருப்பதைக் குறிக்கிறது.</translation>
+    </message>
+    <message>
+        <source>Out-of-bounds area, dashed boundary</source>
+        <comment>Name of symbol 709.2</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட பகுதி, கோடு எல்லை</translation>
+    </message>
+    <message>
+        <source>A dashed line indicates intermittent marking on the ground.</source>
+        <comment>Description of symbol 709.2</comment>
+        <translation>ஒரு இடை கோடு தரையில் இடைப்பட்ட அடையாளத்தைக் குறிக்கிறது.</translation>
+    </message>
+    <message>
+        <source>Dangerous area</source>
+        <comment>Name of symbol 710</comment>
+        <translation>ஆபத்தான பகுதி</translation>
+    </message>
+    <message>
+        <source>An area presenting danger to the competitor is shown with cross-hatched diagonal lines.</source>
+        <comment>Description of symbol 710</comment>
+        <translation>போட்டியாளருக்கு ஆபத்தை விளைவிக்கும் ஒரு பகுதி குறுக்கு குஞ்சு பொரிக்கப்பட்ட மூலைவிட்ட கோடுகளுடன் காட்டப்பட்டுள்ளது.</translation>
+    </message>
+    <message>
+        <source>Forbidden route</source>
+        <comment>Name of symbol 711</comment>
+        <translation>தடைசெய்யப்பட்ட பாதை</translation>
+    </message>
+    <message>
+        <source>A route which is out-of-bounds is shown with crosses.</source>
+        <comment>Description of symbol 711</comment>
+        <translation>எல்லைக்கு அப்பாற்பட்ட பாதை சிலுவைகளுடன் காட்டப்பட்டுள்ளது.</translation>
+    </message>
+    <message>
+        <source>First aid post</source>
+        <comment>Name of symbol 712</comment>
+        <translation>முதலுதவி இடுகை</translation>
+    </message>
+    <message>
+        <source>The location of a first aid post.</source>
+        <comment>Description of symbol 712</comment>
+        <translation>முதலுதவி நிலையத்தின் இடம்.</translation>
+    </message>
+    <message>
+        <source>Refreshment point</source>
+        <comment>Name of symbol 713</comment>
+        <translation>புத்துணர்ச்சி புள்ளி</translation>
+    </message>
+    <message>
+        <source>The location of a refreshment point which is not at a control.</source>
+        <comment>Description of symbol 713</comment>
+        <translation>கட்டுப்பாட்டில் இல்லாத புத்துணர்ச்சி புள்ளியின் இடம்.</translation>
+    </message>
+    <message>
+        <source>Simple Orienteering Course</source>
+        <comment>Name of symbol 799</comment>
+        <translation>எளிய ஓரியண்டரிங் படிப்பு</translation>
+    </message>
+    <message>
+        <source>This symbol provides a simple and quick way to make training courses.
+
+The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
+        <comment>Description of symbol 799</comment>
+        <translation>இந்த அடையாளம் பயிற்சி வகுப்புகளை உருவாக்குவதற்கான எளிய மற்றும் விரைவான வழியை வழங்குகிறது. 
+
+ஊதா நிற கோடு பூச்சு சின்னத்தில் சிறிது நீட்டிக்கப்படும். இது இந்த எளிய அணுகுமுறையின் குறைபாடு.</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Logo</source>
+        <comment>Name of symbol 999</comment>
+        <translation>OpenOrienteering லோகோ</translation>
+    </message>
+    <message>
+        <source>The OpenOrienteering Logo.</source>
+        <comment>Description of symbol 999</comment>
+        <translation>OpenOrienteering லோகோ.</translation>
+    </message>
+    <message>
+        <source>Small earth wall</source>
+        <comment>Name of symbol 108</comment>
+        <translation>சிறிய மண் சுவர்</translation>
+    </message>
+    <message>
+        <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
+        <comment>Description of symbol 108</comment>
+        <translation>ஒரு சிறிய அல்லது பகுதி பாழடைந்த மண் சுவர் ஒரு கோடு கோடுடன் காட்டப்பட வேண்டும். குறைந்தபட்ச உயரம் 0.5 மீ.</translation>
+    </message>
+    <message>
+        <source>Small erosion gully</source>
+        <comment>Name of symbol 110</comment>
+        <translation>சிறிய அரிப்பு பள்ளம்</translation>
+    </message>
+    <message>
+        <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
+        <comment>Description of symbol 110</comment>
+        <translation>ஒரு சிறிய அரிப்பு பள்ளம் அல்லது அகழி. குறைந்தபட்ச ஆழம் 0.5 மீ.</translation>
+    </message>
+    <message>
+        <source>Small knoll</source>
+        <comment>Name of symbol 112</comment>
+        <translation>சிறிய குழி</translation>
+    </message>
+    <message>
+        <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
+        <comment>Description of symbol 112</comment>
+        <translation>ஒரு சிறிய வெளிப்படையான மேடு அல்லது பாறைக் குமிழ், இது ஒரு விளிம்புடன் அளவிட முடியாது (மேட்டின் விட்டம் சுமார் 5 மீட்டருக்கும் குறைவானது). குமிழ் உயரம் சுற்றியுள்ள தரையில் இருந்து குறைந்தபட்சம் 1 மீ இருக்க வேண்டும். அடையாளம் ஒரு விளிம்பு கோட்டைத் தொடக்கூடாது.</translation>
+    </message>
+    <message>
+        <source>Elongated knoll</source>
+        <comment>Name of symbol 113</comment>
+        <translation>நீளமான குமிழ்</translation>
+    </message>
+    <message>
+        <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
+        <comment>Description of symbol 113</comment>
+        <translation>ஒரு சிறிய வெளிப்படையான நீளமான குமிழ், இது ஒரு விளிம்புடன் அளவிட முடியாது (நீளம் 12 மீட்டருக்கும் குறைவானது மற்றும் அகலம் 4 மீட்டருக்கும் குறைவானது). குமிழ் உயரம் சுற்றியுள்ள தரையில் இருந்து குறைந்தபட்சம் 1 மீ இருக்க வேண்டும். இதை விட பெரிய முடிச்சுகள் வரையறைகளால் காட்டப்பட வேண்டும். அடையாளம் இலவச வடிவில் வரையப்படக்கூடாது அல்லது இரண்டு நீளமான நால் சின்னங்கள் ஒன்றுடன் ஒன்று சேரும். அடையாளம் ஒரு விளிம்பு கோட்டைத் தொடக்கூடாது.</translation>
+    </message>
+    <message>
+        <source>Small depression</source>
+        <comment>Name of symbol 115</comment>
+        <translation>சிறிய மனச்சோர்வு</translation>
+    </message>
+    <message>
+        <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
+        <comment>Description of symbol 115</comment>
+        <translation>சிறிய ஆழமற்ற இயற்கை பள்ளங்கள் மற்றும் குழிவுகள் (குறைந்தபட்ச விட்டம் 2 மீ) அளவுகோல்களால் அளவிட முடியாதவை அரை வட்டத்தால் குறிக்கப்படுகின்றன. சுற்றியுள்ள தரையில் இருந்து குறைந்தபட்ச ஆழம் 1 மீ இருக்க வேண்டும். இருப்பிடம் என்பது சின்னத்தின் ஈர்ப்பு மையமாகும், இது வடக்கு நோக்கியதாக உள்ளது. மனிதனால் உருவாக்கப்பட்ட குழிகளுக்கு 116 அடையாளம் பயன்படுத்தப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Pit</source>
+        <comment>Name of symbol 116</comment>
+        <translation>குழி</translation>
+    </message>
+    <message>
+        <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
+        <comment>Description of symbol 116</comment>
+        <translation>அடையாளம் 106 (குறைந்தபட்ச விட்டம் 2 மீ) மூலம் அளவிட முடியாத தனித்த செங்குத்தான பக்கங்களைக் கொண்ட குழிகள் மற்றும் துளைகள். சுற்றியுள்ள தரையில் இருந்து குறைந்தபட்ச ஆழம் 1 மீ இருக்க வேண்டும். இருப்பிடம் என்பது வடக்கு நோக்கிய சின்னத்தின் ஈர்ப்பு மையமாகும்.</translation>
+    </message>
+    <message>
+        <source>Broken ground, small</source>
+        <comment>Name of symbol 117.1</comment>
+        <translation>உடைந்த தரை, சிறியது</translation>
+    </message>
+    <message>
+        <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
+        <comment>Description of symbol 117.1</comment>
+        <translation>விரிவாகக் காட்ட முடியாத அளவுக்கு மிகவும் சிக்கலான குழி அல்லது குழிகளின் பகுதி. தோராயமாக வைக்கப்படும் புள்ளிகளின் அடர்த்தி தரையில் உள்ள விவரங்களுக்கு ஏற்ப மாறுபடலாம்.</translation>
+    </message>
+    <message>
+        <source>Broken ground, big</source>
+        <comment>Name of symbol 117.2</comment>
+        <translation>உடைந்த தரை, பெரியது</translation>
+    </message>
+    <message>
+        <source>The size of the dots may vary.</source>
+        <comment>Description of symbol 117.2</comment>
+        <translation>புள்ளிகளின் அளவு மாறுபடலாம்.</translation>
+    </message>
+    <message>
+        <source>Special land form feature</source>
+        <comment>Name of symbol 118</comment>
+        <translation>சிறப்பு நில வடிவ நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
+        <comment>Description of symbol 118</comment>
+        <translation>இந்த அடையாளம் ஒரு சிறப்பு சிறிய நில வடிவ அம்சத்திற்கு பயன்படுத்தப்படலாம். சின்னத்தின் வரையறை வரைபட புராணத்தில் கொடுக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Rocky pit</source>
+        <comment>Name of symbol 204</comment>
+        <translation>பாறை குழி</translation>
+    </message>
+    <message>
+        <source>Rocky pits, holes or mineshafts which may constitute a danger to the runner. Location is the centre of gravity of the symbol, which is orientated to north.</source>
+        <comment>Description of symbol 204</comment>
+        <translation>பாறை குழிகள், துளைகள் அல்லது கண்ணிவெடிகள் ஓடுபவருக்கு ஆபத்தை உண்டாக்கும். இருப்பிடம் என்பது சின்னத்தின் ஈர்ப்பு மையமாகும், இது வடக்கு நோக்கியதாக உள்ளது.</translation>
+    </message>
+    <message>
+        <source>Cave</source>
+        <comment>Name of symbol 205</comment>
+        <translation>குகை</translation>
+    </message>
+    <message>
+        <source>A cave is represented by the same symbol as a rocky pit. In this case the symbol should be orientated to point up the slope as indicated opposite. The centre of gravity of the symbol marks the opening.</source>
+        <comment>Description of symbol 205</comment>
+        <translation>ஒரு குகை ஒரு பாறை குழியின் அதே சின்னத்தால் குறிக்கப்படுகிறது. இந்தச் சந்தர்ப்பத்தில், அடையாளம் எதிரெதிர் சுட்டிக்காட்டப்பட்டபடி சாய்வைக் குறிக்கும் வகையில் இருக்க வேண்டும். சின்னத்தின் ஈர்ப்பு நடுவண் திறப்பைக் குறிக்கிறது.</translation>
+    </message>
+    <message>
+        <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
+        <comment>Description of symbol 210</comment>
+        <translation>செல்வதை பாதிக்கும் பாறை அல்லது பாறை நிலம் வரைபடத்தில் காட்டப்பட வேண்டும். பாறையின் அளவைப் பொறுத்து புள்ளிகள் அடர்த்தியுடன் தோராயமாக விநியோகிக்கப்பட வேண்டும். குறைந்தபட்சம் மூன்று புள்ளிகளைப் பயன்படுத்த வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Stony ground</source>
+        <comment>Name of symbol 210.1</comment>
+        <translation>பாறை நிலம்</translation>
+    </message>
+    <message>
+        <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
+        <comment>Description of symbol 210.1</comment>
+        <translation>செல்வதை பாதிக்கும் பாறை அல்லது பாறை நிலம் வரைபடத்தில் காட்டப்பட வேண்டும். பாறையின் அளவைப் பொறுத்து புள்ளிகள் அடர்த்தியுடன் தோராயமாக விநியோகிக்கப்பட வேண்டும். குறைந்தபட்சம் மூன்று புள்ளிகளைப் பயன்படுத்த வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Open sandy ground</source>
+        <comment>Name of symbol 211</comment>
+        <translation>திறந்த மணல் நிலம்</translation>
+    </message>
+    <message>
+        <source>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</source>
+        <comment>Description of symbol 211</comment>
+        <translation>தாவரங்கள் இல்லாத மென்மையான மணல் தரை அல்லது சரளைப் பகுதி மற்றும் மெதுவாக ஓடுவது. மணல் நிலத்தின் ஒரு பகுதி திறந்திருந்தாலும், நன்றாக இயங்கும் இடத்தில், அது திறந்த நிலமாகக் காட்டப்படுகிறது (401/402).</translation>
+    </message>
+    <message>
+        <source>Bare rock</source>
+        <comment>Name of symbol 212</comment>
+        <translation>வெற்றுப் பாறை</translation>
+    </message>
+    <message>
+        <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
+        <comment>Description of symbol 212</comment>
+        <translation>பூமி அல்லது தாவரங்கள் இல்லாத பாறையின் இயங்கக்கூடிய பகுதி வெற்றுப் பாறையாகக் காட்டப்படுகிறது. புல், பாசி அல்லது பிற குறைந்த தாவரங்களால் மூடப்பட்ட பாறையின் ஒரு பகுதி திறந்த நிலமாகக் காட்டப்படுகிறது (401/402).</translation>
+    </message>
+    <message>
+        <source>Pond</source>
+        <comment>Name of symbol 302</comment>
+        <translation>குளம்</translation>
+    </message>
+    <message>
+        <source>Waterhole</source>
+        <comment>Name of symbol 303</comment>
+        <translation>நீர்க்குழி</translation>
+    </message>
+    <message>
+        <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
+        <comment>Description of symbol 303</comment>
+        <translation>நீர் நிரம்பிய குழி அல்லது அளவு காட்ட முடியாத அளவுக்கு சிறிய நீரின் பரப்பளவு. இருப்பிடம் என்பது சின்னத்தின் ஈர்ப்பு மையமாகும், இது வடக்கு நோக்கியதாக உள்ளது.</translation>
+    </message>
+    <message>
+        <source>Minor water channel</source>
+        <comment>Name of symbol 307</comment>
+        <translation>சிறு நீர் வாய்க்கால்</translation>
+    </message>
+    <message>
+        <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
+        <comment>Description of symbol 307</comment>
+        <translation>இயற்கையான அல்லது மனிதனால் உருவாக்கப்பட்ட சிறு நீர் வழித்தடமானது, இடையிடையே மட்டுமே தண்ணீரைக் கொண்டிருக்கும்.</translation>
+    </message>
+    <message>
+        <source>Forest: difficult to run</source>
+        <comment>Name of symbol 408</comment>
+        <translation>காடு: ஓடுவது கடினம்</translation>
+    </message>
+    <message>
+        <source>An area with dense trees or thicket (low visibility) which reduce running to ca. 20-60% of normal speed.</source>
+        <comment>Description of symbol 408</comment>
+        <translation>அடர்ந்த மரங்கள் அல்லது அடர்ந்த (குறைந்த தெரிவுநிலை) கொண்ட ஒரு பகுதி, இது சுமார் ஓட்டத்தை குறைக்கிறது. சாதாரண வேகத்தில் 20-60%.</translation>
+    </message>
+    <message>
+        <source>Narrow marsh</source>
+        <comment>Name of symbol 308</comment>
+        <translation>குறுகிய சதுப்பு நிலம்</translation>
+    </message>
+    <message>
+        <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
+        <comment>Description of symbol 308</comment>
+        <translation>ஒரு சதுப்பு நிலம் அல்லது நீர் வடியும், இது அடையாளம் 310 உடன் காட்ட முடியாத அளவுக்கு குறுகலானது (சுமார் 5 மீட்டருக்கும் குறைவான அகலம்).</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh</source>
+        <comment>Name of symbol 309</comment>
+        <translation>கடக்க முடியாத சதுப்பு நிலம்</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh, border line</source>
+        <comment>Name of symbol 309.1</comment>
+        <translation>கடக்க முடியாத சதுப்பு நிலம், எல்லைக் கோடு</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh, with border line</source>
+        <comment>Name of symbol 309.2</comment>
+        <translation>எல்லைக்கோடு, கடக்க முடியாத சதுப்பு நிலம்</translation>
+    </message>
+    <message>
+        <source>Marsh</source>
+        <comment>Name of symbol 310</comment>
+        <translation>சேற்றுத்தரை</translation>
+    </message>
+    <message>
+        <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
+        <comment>Description of symbol 310</comment>
+        <translation>கடக்கக்கூடிய சதுப்பு நிலம், பொதுவாக ஒரு தனித்துவமான விளிம்புடன். இயக்கத்திறன் மற்றும் திறந்த தன்மையைக் காட்ட, அடையாளம் தாவர சின்னங்களுடன் இணைக்கப்பட வேண்டும். ஒரு சிறிய சதுப்பு நிலப்பகுதியை 403/404 உடன் இணைக்க வேண்டும் என்றால், தெளிவுத்திறனை மேம்படுத்த 401/402 ஐப் பயன்படுத்த அனுமதிக்கப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Marsh, minimum size</source>
+        <comment>Name of symbol 310.1</comment>
+        <translation>மார்ச், குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Indistinct marsh</source>
+        <comment>Name of symbol 311</comment>
+        <translation>தெளிவற்ற சதுப்பு நிலம்</translation>
+    </message>
+    <message>
+        <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
+        <comment>Description of symbol 311</comment>
+        <translation>ஒரு தெளிவற்ற அல்லது பருவகால சதுப்பு நிலம் அல்லது சதுப்பு நிலத்திலிருந்து உறுதியான நிலத்திற்கு படிப்படியாக மாறக்கூடிய பகுதி, இது கடக்கக்கூடியது. விளிம்பு பொதுவாக தெளிவற்றது மற்றும் சுற்றியுள்ள தரையைப் போன்ற தாவரங்கள். இயக்கத்திறன் மற்றும் திறந்த தன்மையைக் காட்ட, அடையாளம் தாவர சின்னங்களுடன் இணைக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Indistinct marsh, minimum size</source>
+        <comment>Name of symbol 311.1</comment>
+        <translation>தெளிவற்ற சதுப்பு நிலம், குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Well</source>
+        <comment>Name of symbol 312</comment>
+        <translation>சரி</translation>
+    </message>
+    <message>
+        <source>Wells and captive springs, which are clearly visible on the ground.</source>
+        <comment>Description of symbol 312</comment>
+        <translation>கிணறுகள் மற்றும் சிறைப்பிடிக்கப்பட்ட நீரூற்றுகள், அவை தரையில் தெளிவாகத் தெரியும்.</translation>
+    </message>
+    <message>
+        <source>Spring</source>
+        <comment>Name of symbol 313</comment>
+        <translation>வேனில்</translation>
+    </message>
+    <message>
+        <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
+        <comment>Description of symbol 313</comment>
+        <translation>ஒரு தனித்துவமான வெளியேற்றத்துடன் கூடிய நீரோடையின் சான்று. அடையாளம் கீழ்நோக்கி திறக்கும் வகையில் அமைந்துள்ளது.</translation>
+    </message>
+    <message>
+        <source>Special water feature</source>
+        <comment>Name of symbol 314</comment>
+        <translation>சிறப்பு நீர் நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>A special small water feature. The definition of the symbol must always be given in the map legend.</source>
+        <comment>Description of symbol 314</comment>
+        <translation>ஒரு சிறப்பு சிறிய நீர் நற்பொருத்தம். சின்னத்தின் வரையறை எப்போதும் வரைபட புராணத்தில் கொடுக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Undergrowth: slow running</source>
+        <comment>Name of symbol 407</comment>
+        <translation>அடிமரம்: மெதுவாக ஓடுதல்</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 407</comment>
+        <translation>அடர்ந்த நிலத்தடி, ஆனால் நல்ல தெரிவுநிலை (முட்செடிகள், ஈத்தர், குறைந்த புதர்கள் மற்றும் வெட்டப்பட்ட கிளைகள் உட்பட) இது சுமார் ஓட்டத்தை குறைக்கிறது. சாதாரண வேகத்தில் 60-80%. இந்தக் குறியீடு 406 அல்லது 408 உடன் இணைக்கப்படாமல் இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Undergrowth: difficult to run</source>
+        <comment>Name of symbol 409</comment>
+        <translation>அடிமரம்: ஓடுவது கடினம்</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 409</comment>
+        <translation>அடர்ந்த நிலத்தடி, ஆனால் நல்ல தெரிவுநிலை (முட்செடிகள், ஈத்தர், குறைந்த புதர்கள் மற்றும் வெட்டப்பட்ட கிளைகள் உட்பட) இது சுமார் ஓட்டத்தை குறைக்கிறது. சாதாரண வேகத்தில் 20-60%. இந்தக் குறியீடு 406 அல்லது 408 உடன் இணைக்கப்படாமல் இருக்கலாம்.</translation>
+    </message>
+    <message>
+        <source>Vegetation: very difficult to run, impassable</source>
+        <comment>Name of symbol 410</comment>
+        <translation>தாவரங்கள்: ஓடுவது மிகவும் கடினம், செல்ல முடியாதது</translation>
+    </message>
+    <message>
+        <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.</source>
+        <comment>Description of symbol 410</comment>
+        <translation>அடர்ந்த தாவரங்களின் பகுதி (மரங்கள் அல்லது அடிமரங்கள்) இது அரிதாகவே கடந்து செல்லக்கூடியது. ஓட்டம் ca ஆகக் குறைக்கப்பட்டது. சாதாரண வேகத்தில் 0-20%.</translation>
+    </message>
+    <message>
+        <source>Vegetation: very difficult to run, impassable, line</source>
+        <comment>Name of symbol 410.1</comment>
+        <translation>தாவரங்கள்: ஓடுவது மிகவும் கடினம், செல்ல முடியாதது, கோடு</translation>
+    </message>
+    <message>
+        <source>Line of minimum width for symbol 410.</source>
+        <comment>Description of symbol 410.1</comment>
+        <translation>அடையாளம் 410க்கான குறைந்தபட்ச அகலக் கோடு.</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 1</source>
+        <comment>Name of symbol 411.0</comment>
+        <translation>ஒரு திசையில் ஓடக்கூடிய காடு, 1</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.0</comment>
+        <translation>காடுகளின் ஒரு பகுதி ஒரு திசையில் நன்றாக ஓடினாலும் மற்றவற்றில் குறைவான நல்ல ஓட்டத்தை வழங்கும் போது, நல்ல ஓட்டத்தின் திசையைக் காட்ட திரை சின்னத்தில் வெள்ளை கோடுகள் விடப்படும்.</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 2</source>
+        <comment>Name of symbol 411.1</comment>
+        <translation>ஒரு திசையில் ஓடக்கூடிய காடு, 2</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.1</comment>
+        <translation>காடுகளின் ஒரு பகுதி ஒரு திசையில் நன்றாக ஓடினாலும் மற்றவற்றில் குறைவான நல்ல ஓட்டத்தை வழங்கும் போது, நல்ல ஓட்டத்தின் திசையைக் காட்ட திரை சின்னத்தில் வெள்ளை கோடுகள் விடப்படும்.</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 3</source>
+        <comment>Name of symbol 411.2</comment>
+        <translation>ஒரு திசையில் ஓடக்கூடிய காடு, 3</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.2</comment>
+        <translation>காடுகளின் ஒரு பகுதி ஒரு திசையில் நன்றாக ஓடினாலும் மற்றவற்றில் குறைவான நல்ல ஓட்டத்தை வழங்கும் போது, நல்ல ஓட்டத்தின் திசையைக் காட்ட திரை சின்னத்தில் வெள்ளை கோடுகள் விடப்படும்.</translation>
+    </message>
+    <message>
+        <source>Cultivated land</source>
+        <comment>Name of symbol 415</comment>
+        <translation>பயிரிடப்பட்ட நிலம்</translation>
+    </message>
+    <message>
+        <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
+        <comment>Description of symbol 415</comment>
+        <translation>பயிர்கள் வளர்ந்து வருவதால் பருவகாலமாக வரம்பிற்கு அப்பாற்பட்ட பயிரிடப்பட்ட நிலம் கரும்புள்ளி திரையுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 419</comment>
+        <translation>சிறப்பு தாவர நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
+        <comment>Description of symbol 419</comment>
+        <translation>சின்னங்கள் 418, 419 மற்றும் 420 சிறப்பு சிறிய தாவர அம்சங்களுக்கு பயன்படுத்தப்படலாம். வரைபட புராணத்தில் ஒவ்வொரு விசயத்திலும் சின்னத்தின் வரையறை கொடுக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 420</comment>
+        <translation>சிறப்பு தாவர நற்பொருத்தம்</translation>
+    </message>
+    <message>
+        <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
+        <comment>Description of symbol 420</comment>
+        <translation>சின்னங்கள் 418, 419 மற்றும் 420 சிறப்பு சிறிய தாவர அம்சங்களுக்கு பயன்படுத்தப்படலாம். வரைபட புராணத்தில் ஒவ்வொரு விசயத்திலும் சின்னத்தின் வரையறை கொடுக்கப்பட வேண்டும்.</translation>
+    </message>
+    <message>
+        <source>Motorway, under construction</source>
+        <comment>Name of symbol 501.5</comment>
+        <translation>நெடுஞ்சாலை, கட்டுமானத்தில் உள்ளது</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 501.5</comment>
+        <translation>கட்டுமானத்தில் இருக்கும் சாலை உடைந்த கோடுகளுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Major road, minimum width, under construction</source>
+        <comment>Name of symbol 502.1</comment>
+        <translation>பெரிய சாலை, குறைந்தபட்ச அகலம், கட்டுமானத்தில் உள்ளது</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 502.1</comment>
+        <translation>கட்டுமானத்தில் இருக்கும் சாலை உடைந்த கோடுகளுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Minor road, under construction</source>
+        <comment>Name of symbol 503.1</comment>
+        <translation>சிறிய சாலை, கட்டுமானத்தில் உள்ளது</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 503.1</comment>
+        <translation>கட்டுமானத்தில் இருக்கும் சாலை உடைந்த கோடுகளுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Vehicle track</source>
+        <comment>Name of symbol 505</comment>
+        <translation>வாகன தடம்</translation>
+    </message>
+    <message>
+        <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. Width less than 3 m.</source>
+        <comment>Description of symbol 505</comment>
+        <translation>மெதுவாகப் பயணிக்கும் போது மட்டுமே வாகனங்களுக்கு ஏற்ற தடம் அல்லது மோசமாகப் பராமரிக்கப்படும் சாலை. 3 மீட்டருக்கும் குறைவான அகலம்.</translation>
+    </message>
+    <message>
+        <source>Footpath</source>
+        <comment>Name of symbol 506</comment>
+        <translation>நடைபாதை</translation>
+    </message>
+    <message>
+        <source>A large path, or old vehicle track, which is distinct on the ground.</source>
+        <comment>Description of symbol 506</comment>
+        <translation>ஒரு பெரிய பாதை, அல்லது பழைய வாகனப் பாதை, இது தரையில் வேறுபட்டது.</translation>
+    </message>
+    <message>
+        <source>Small path</source>
+        <comment>Name of symbol 507</comment>
+        <translation>சிறிய பாதை</translation>
+    </message>
+    <message>
+        <source>A small path or (temporary) forest extraction track which can be followed at competition speed.</source>
+        <comment>Description of symbol 507</comment>
+        <translation>போட்டி வேகத்தில் பின்பற்றக்கூடிய ஒரு சிறிய பாதை அல்லது (தற்காலிக) காடுகளை பிரித்தெடுக்கும் பாதை.</translation>
+    </message>
+    <message>
+        <source>Less distinct small path</source>
+        <comment>Name of symbol 508</comment>
+        <translation>குறைவான வித்தியாசமான சிறிய பாதை</translation>
+    </message>
+    <message>
+        <source>A less distinct small path or forestry extraction track.</source>
+        <comment>Description of symbol 508</comment>
+        <translation>குறைவான தனித்துவமான சிறிய பாதை அல்லது வனவியல் பிரித்தெடுத்தல் பாதை.</translation>
+    </message>
+    <message>
+        <source>Footbridge</source>
+        <comment>Name of symbol 512</comment>
+        <translation>நடைபாதை</translation>
+    </message>
+    <message>
+        <source>A footbridge with no path leading to it.
+Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm over both sides of the stream!</source>
+        <comment>Description of symbol 512</comment>
+        <translation>அதற்குச் செல்லும் பாதை இல்லாத ஒரு நடைபாதை. 
+குறிப்பு: ச்ட்ரீம் 0.25 மிமீ விட அகலமாக இருந்தால், ச்ட்ரீமின் இருபுறமும் 0.5 மிமீ நீட்டிக்க இந்த சின்னத்தை சரிசெய்யவும்!</translation>
+    </message>
+    <message>
+        <source>Ruined stone wall</source>
+        <comment>Name of symbol 520</comment>
+        <translation>பாழடைந்த கல் சுவர்</translation>
+    </message>
+    <message>
+        <source>A ruined stone wall may be shown by a dashed line.</source>
+        <comment>Description of symbol 520</comment>
+        <translation>ஒரு பாழடைந்த கல் சுவர் ஒரு கோடு கோட்டால் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Ruined fence</source>
+        <comment>Name of symbol 523</comment>
+        <translation>பாழடைந்த வேலி</translation>
+    </message>
+    <message>
+        <source>A ruined fence may be shown with a dashed line.</source>
+        <comment>Description of symbol 523</comment>
+        <translation>ஒரு பாழடைந்த வேலி ஒரு கோடுடன் காட்டப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Ruin</source>
+        <comment>Name of symbol 530</comment>
+        <translation>அழிவு</translation>
+    </message>
+    <message>
+        <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530</comment>
+        <translation>இடிபாடுகளின் தரைத் திட்டம், எதிரே காட்டப்படும் குறைந்தபட்ச அளவு வரை அளவிடப்படுகிறது. மிகச்சிறிய இடிபாடுகள் திடமான கோட்டுடன் வரையப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Ruin, no dashes</source>
+        <comment>Name of symbol 530.1</comment>
+        <translation>அழிவு, கோடுகள் இல்லை</translation>
+    </message>
+    <message>
+        <source>Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530.1</comment>
+        <translation>மிகச்சிறிய இடிபாடுகள் திடமான கோட்டுடன் வரையப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Ruin, minimum size</source>
+        <comment>Name of symbol 530.2</comment>
+        <translation>அழிவு, குறைந்தபட்ச அளவு</translation>
+    </message>
+    <message>
+        <source>Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530.2</comment>
+        <translation>மிகச்சிறிய இடிபாடுகள் திடமான கோட்டுடன் வரையப்படலாம்.</translation>
+    </message>
+    <message>
+        <source>Grave</source>
+        <comment>Name of symbol 532</comment>
+        <translation>கல்லறை</translation>
+    </message>
+    <message>
+        <source>A distinct grave marked by a stone or shrine. Location is at the centre of gravity of the symbol, which is orientated to north. A cemetery is shown by using grave symbols as space permits.</source>
+        <comment>Description of symbol 532</comment>
+        <translation>ஒரு கல் அல்லது சன்னதியால் குறிக்கப்பட்ட ஒரு தனித்துவமான கல்லறை. இருப்பிடம் சின்னத்தின் ஈர்ப்பு மையத்தில் உள்ளது, இது வடக்கு நோக்கியதாக உள்ளது. இட அனுமதியாக கல்லறை சின்னங்களைப் பயன்படுத்தி ஒரு கல்லறை காட்டப்படுகிறது.</translation>
+    </message>
+    <message>
+        <source>Crossable pipeline</source>
+        <comment>Name of symbol 533</comment>
+        <translation>கடக்கக்கூடிய குழாய்</translation>
+    </message>
+    <message>
+        <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
+        <comment>Description of symbol 533</comment>
+        <translation>ஒரு குழாய் (எரிவாயு, நீர், எண்ணெய் போன்றவை) தரைமட்டத்திற்கு மேல் அல்லது கீழே கடக்க முடியும்.</translation>
+    </message>
+    <message>
+        <source>Cairn</source>
+        <comment>Name of symbol 537</comment>
+        <translation>கெய்ர்ன்</translation>
+    </message>
+    <message>
+        <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
+        <comment>Description of symbol 537</comment>
+        <translation>கெய்ர்ன், நினைவுக் கல் அல்லது எல்லைக் கல் (அல்லது சில நாடுகளில் ஒரு முக்கோணவியல் புள்ளி) 0.5 மீட்டருக்கும் அதிகமான உயரம்.</translation>
+    </message>
+    <message>
+        <source>Fodder rack</source>
+        <comment>Name of symbol 538</comment>
+        <translation>தீவன ரேக்</translation>
+    </message>
+    <message>
+        <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
+        <comment>Description of symbol 538</comment>
+        <translation>ஒரு மரத்தின் மீது கட்டப்பட்ட அல்லது சுதந்திரமாக நிற்கும் தீவன அடுக்கு. சின்னத்தின் ஈர்ப்பு விசையின் மையத்தில் இடம் உள்ளது. நில அணுகல் காரணங்களுக்காக இவை தவிர்க்கப்படலாம்.</translation>
+    </message>
 </context>
 <context>
     <name>ISSkiOM 2019</name>

@@ -2632,6 +2632,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Kreska spadu, warstwica</translation>
     </message>
     <message>
+        <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
+        <comment>Description of symbol 101.1</comment>
+        <translation>Linie spadków muszą być kreślone po niższej stronie warstwicy, aby jednoznacznie określać kierunek spadku. Powinny być umieszczane na muldach.</translation>
+    </message>
+    <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
         <translation>Warstwica główna</translation>
@@ -2650,6 +2655,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Slope line, formline</source>
         <comment>Name of symbol 103.1</comment>
         <translation>Kreska spadu, warstwica pomocnicza</translation>
+    </message>
+    <message>
+        <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
+        <comment>Description of symbol 103.1</comment>
+        <translation>Linie spadków muszą być kreślone po niższej stronie warstwicy, aby jednoznacznie określać kierunek spadku. Powinny być umieszczane na muldach.</translation>
     </message>
     <message>
         <source>Earth bank</source>
@@ -4158,7 +4168,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linie spadków muszą być kreślone po niższej stronie warstwicy, aby jednoznacznie określać kierunek spadku. Powinny być umieszczane na muldach.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -4178,7 +4188,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linie spadków muszą być kreślone po niższej stronie warstwicy, aby jednoznacznie określać kierunek spadku. Powinny być umieszczane na muldach.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -4208,7 +4218,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 103.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linie spadków muszą być kreślone po niższej stronie warstwicy, aby jednoznacznie określać kierunek spadku. Powinny być umieszczane na muldach.</translation>
     </message>
     <message>
         <source>Earth bank</source>
@@ -9441,7 +9451,8 @@ Contours should be adapted (not broken) in order not to touch symbol Small knoll
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linie spadków powinny być rysowane po niższej stronie warstwicy, w taki sposób, aby jednoznacznie wskazywały kierunek spadku. Jeśli linie spadku są używane, powinny być umieszczone w wewnętrznych kątach warstwic. 
+Obniżenia terenu muszą mieć naniesioną co najmniej jedną linię spadku.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -9453,7 +9464,9 @@ A depression has to have at least one slope line.</source>
 An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Co piąta warstwica powinna być nakreślona grubą linią. Jest to pomocne do szybkiego określenia różnicy wysokości i całego ukształtowania terenu.
+Warstwica główna może być nakreślona jako zwykłą warstwica w obszarze z wieloma szczegółami. Małe kopce i obniżenia nakreślone warstwicami nie są kreślone warstwicami głównymi .
+Główna warstwica powinna być rozważnie wybierana w płaskim terenie. Idealnym poziomem dla głównej warstwicy jest środkowa warstwica na najbardziej charakterystycznym spadku.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -9463,7 +9476,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>An index contour may have a height value assigned. A height value should only be inserted in an index contour in places where other detail is not obscured. It shall be orientated so that the top of the label is on the higher side of the contour. The index value (label) shall be 1.5 mm high and represented in a sans-serif font.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Główna warstwica może być opisana wysokością. Wartość powinna być wstawiona w główną warstwicę tylko tam, gdzie inne szczegóły są widoczne. Etykieta wysokości musi być zorientowana w taki sposób, aby góra etykiety była na równi z górną krawędzią warstwicy. Wartość (etykieta) powinna być wysoka na 1,5mm i napisana czcionką bezszeryfową.</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -9485,7 +9498,7 @@ Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</s
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 103.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linie spadków muszą być kreślone po niższej stronie warstwicy, aby jednoznacznie określać kierunek spadku. Powinny być umieszczane na muldach.</translation>
     </message>
     <message>
         <source>Earth bank</source>
@@ -9628,7 +9641,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nieprzebieżny spadek, reprezentacja prostym kształtem (ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
