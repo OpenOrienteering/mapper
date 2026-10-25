@@ -5070,7 +5070,7 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>
-        <source>The minimimum area is %1 %2.</source>
+        <source>The minimum area is %1 %2.</source>
         <translation>குறைந்தபட்ச பகுதி %1 %2 ஆகும்.</translation>
     </message>
     <message>

@@ -5330,8 +5330,8 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>
-        <source>The minimimum area is %1 %2.</source>
-        <translation>Daerah minimimum adalah %1 %2.</translation>
+        <source>The minimum area is %1 %2.</source>
+        <translation>Daerah minimum adalah %1 %2.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>

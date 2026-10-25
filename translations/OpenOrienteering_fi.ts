@@ -5596,7 +5596,7 @@ zoomaa hiiren rullalla.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>
-        <source>The minimimum area is %1 %2.</source>
+        <source>The minimum area is %1 %2.</source>
         <translation>Minimi pinta-ala on %1 %2.</translation>
     </message>
     <message>

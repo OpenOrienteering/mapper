@@ -135,7 +135,7 @@ void MeasureWidget::objectSelectionChanged()
 				if (paper_area < minimum_area && paper_area_text != minimum_area_text)
 				{
 					extra_text = QLatin1String("<b>") + tr("This object is too small.") + QLatin1String("</b><br/>")
-					             + tr("The minimimum area is %1 %2.").arg(minimum_area_text, tr("mm²"))
+					             + tr("The minimum area is %1 %2.").arg(minimum_area_text, tr("mm²"))
 					             + QLatin1String("<br/>");
 					show_warning = true;
 				}
