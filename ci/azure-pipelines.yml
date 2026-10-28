@@ -104,6 +104,7 @@ jobs:
     SUPERBUILD_IMAGE_NAME: $(IMAGE_NAME)
     SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     ENABLE_PDF_MANUAL: 1
+    MAPPER_CI_FORCE_UPDATES: 1
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
@@ -119,8 +120,9 @@ jobs:
     - template: publish.yml
     - bash: |
         cd ${BUILD_SOURCESDIRECTORY}/build/source/openorienteering-mapper-ci
-        git diff --name-only | sed -e '/CMakeLists.txt/d;s/\(.*\)/##vso[task.logissue type=error;sourcepath=\1;]Source file was modified during build/' 1>&2
+        git diff 1>&2
       failOnStderr: true
+      displayName: 'Check sources for missing updates'
 
 
 - job: Linux_Coverage

@@ -292,7 +292,7 @@ endmacro()
 
 if(UNIX AND NOT APPLE AND NOT ANDROID)
 	set(update_source )
-	if(Mapper_DEVELOPMENT_BUILD)
+	if(Mapper_DEVELOPMENT_BUILD OR "$ENV{MAPPER_CI_FORCE_UPDATES}")
 		# Only development builds are allowed to update the source directories.
 		set(update_sources
 		  COMMAND "${CMAKE_COMMAND}" -E copy_if_different "../packaging/linux/Mapper.desktop" "${PROJECT_SOURCE_DIR}/packaging/linux/"
