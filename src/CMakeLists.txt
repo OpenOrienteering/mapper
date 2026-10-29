@@ -110,6 +110,7 @@ set(Mapper_Common_SRCS
   core/virtual_path.cpp
   
   core/objects/boolean_tool.cpp
+  core/objects/dynamic_object_query.cpp
   core/objects/object.cpp
   core/objects/object_mover.cpp
   core/objects/object_query.cpp

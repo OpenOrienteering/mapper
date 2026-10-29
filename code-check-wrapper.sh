@@ -55,6 +55,7 @@ for I in \
   course_file_format.cpp \
   crs_ \
   duplicate_equals_t.cpp \
+  dynamic_object_query.cpp \
   file_dialog.cpp \
   /file_format.cpp \
   file_format_t.cpp \
