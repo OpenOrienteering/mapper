@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2020, 2024, 2025 Kai Pastor
+ *    Copyright 2013-2020, 2024-2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -61,6 +61,7 @@
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
 #include "fileformats/xml_file_format_p.h"
+#include "gui/map/import_map_dialog.h"
 #include "gui/map/map_widget.h"
 #include "templates/template.h"
 #include "undo/map_part_undo.h"
@@ -615,7 +616,8 @@ QHash<const Symbol*, Symbol*> Map::importMap(
         ImportMode mode,
         std::vector<bool>* filter,
         int symbol_insert_pos,
-        bool merge_duplicate_symbols)
+        bool merge_duplicate_symbols,
+        const std::vector<PartConfigItem>* import_config)
 {
 	QTransform q_transform;
 	if (mode.testFlag(GeorefImport))
@@ -644,7 +646,7 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 		}
 	}
 	
-	return importMap(imported_map, mode & ~GeorefImport, q_transform, filter, symbol_insert_pos, merge_duplicate_symbols);
+	return importMap(imported_map, mode & ~GeorefImport, q_transform, filter, symbol_insert_pos, merge_duplicate_symbols, import_config);
 }
 
 
@@ -661,7 +663,8 @@ QHash<const Symbol*, Symbol*> Map::importMap(
         const QTransform& transform,
         std::vector<bool>* filter,
         int symbol_insert_pos,
-        bool merge_duplicate_symbols)
+        bool merge_duplicate_symbols,
+        const std::vector<PartConfigItem>* import_config)
 {
 	if (imported_map.getScaleDenominator() != getScaleDenominator())
 		qWarning("Map::importMap() called for different map scale");
@@ -678,7 +681,7 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 		{
 		case ObjectImport:
 			if (imported_map.getNumObjects() > 0)
-				imported_map.determineSymbolsInUse(symbol_filter);
+				imported_map.determineSymbolsInUse(symbol_filter, import_config);
 			imported_map.determineColorsInUse(symbol_filter, color_filter);
 			break;
 		case SymbolImport:
@@ -717,22 +720,20 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 		if ((mode & 0x0f) != SymbolImport
 		    && imported_map.getNumObjects() > 0)
 		{
-			// Import parts like this:
-			//  - if the other map has only one part, import it into the current part
-			//  - else check if there is already a part with an equal name for every part to import and import into this part if found, else create a new part
+			// Import parts as configured
 			auto* undo_step = new CombinedUndoStep(this);
-			for (const auto* part_to_import : imported_map.parts)
+			if (import_config)
 			{
-				MapPart* dest_part = nullptr;
-				if (imported_map.parts.size() == 1)
+				int part_count = -1;
+				for (const auto* part_to_import : imported_map.parts)
 				{
-					dest_part = getCurrentPart();
-				}
-				else
-				{
+					++part_count;
+					if (!import_config->at(part_count).import)
+						continue;
+					MapPart* dest_part = nullptr;
 					for (auto* check_part : parts)
 					{
-						if (check_part->getName().compare(part_to_import->getName(), Qt::CaseInsensitive) == 0)
+						if (check_part->getName().compare(import_config->at(part_count).target_name, Qt::CaseInsensitive) == 0)
 						{
 							dest_part = check_part;
 							break;
@@ -741,25 +742,71 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 					if (!dest_part)
 					{
 						// Import as new part
-						dest_part = new MapPart(part_to_import->getName(), this);
+						dest_part = new MapPart(import_config->at(part_count).target_name, this);
 						addPart(dest_part, 0);
 						undo_step->push(new MapPartUndoStep(this, MapPartUndoStep::RemoveMapPart, 0));
 					}
+					
+					// Temporarily switch the current part for importing so the undo step gets created for the right part
+					MapPart* temp_current_part = getCurrentPart();
+					current_part_index = std::size_t(findPartIndex(dest_part));
+					
+					bool select_and_center_objects = dest_part == temp_current_part;
+					if (auto import_undo = dest_part->importPart(part_to_import, symbol_map, transform, select_and_center_objects, &(import_config->at(part_count))))
+					{
+						undo_step->push(import_undo.release());
+						if (select_and_center_objects)
+							ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+					}
+					
+					current_part_index = std::size_t(findPartIndex(temp_current_part));
 				}
-				
-				// Temporarily switch the current part for importing so the undo step gets created for the right part
-				MapPart* temp_current_part = getCurrentPart();
-				current_part_index = std::size_t(findPartIndex(dest_part));
-				
-				bool select_and_center_objects = dest_part == temp_current_part;
-				if (auto import_undo = dest_part->importPart(part_to_import, symbol_map, transform, select_and_center_objects))
+			}
+			// Import parts like this:
+			//  - if the other map has only one part, import it into the current part
+			//  - else check if there is already a part with an equal name for every part to import and import into this part if found, else create a new part
+			else	// !import_config
+			{
+				for (const auto* part_to_import : imported_map.parts)
 				{
-					undo_step->push(import_undo.release());
-					if (select_and_center_objects)
-						ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+					MapPart* dest_part = nullptr;
+					if (imported_map.parts.size() == 1)
+					{
+						dest_part = getCurrentPart();
+					}
+					else
+					{
+						for (auto* check_part : parts)
+						{
+							if (check_part->getName().compare(part_to_import->getName(), Qt::CaseInsensitive) == 0)
+							{
+								dest_part = check_part;
+								break;
+							}
+						}
+						if (!dest_part)
+						{
+							// Import as new part
+							dest_part = new MapPart(part_to_import->getName(), this);
+							addPart(dest_part, 0);
+							undo_step->push(new MapPartUndoStep(this, MapPartUndoStep::RemoveMapPart, 0));
+						}
+					}
+					
+					// Temporarily switch the current part for importing so the undo step gets created for the right part
+					MapPart* temp_current_part = getCurrentPart();
+					current_part_index = std::size_t(findPartIndex(dest_part));
+					
+					bool select_and_center_objects = dest_part == temp_current_part;
+					if (auto import_undo = dest_part->importPart(part_to_import, symbol_map, transform, select_and_center_objects))
+					{
+						undo_step->push(import_undo.release());
+						if (select_and_center_objects)
+							ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+					}
+					
+					current_part_index = std::size_t(findPartIndex(temp_current_part));
 				}
-				
-				current_part_index = std::size_t(findPartIndex(temp_current_part));
 			}
 			push(undo_step);
 		}
@@ -1688,11 +1735,14 @@ void Map::scaleAllSymbols(double factor)
 	setSymbolsDirty();
 }
 
-void Map::determineSymbolsInUse(std::vector< bool >& out) const
+void Map::determineSymbolsInUse(std::vector< bool >& out, const std::vector<PartConfigItem>* import_config) const
 {
 	out.assign(symbols.size(), false);
+	int part_count = 0;
 	for (auto part : parts)
 	{
+		if (import_config && !import_config->at(part_count++).import)
+			continue;
 		for (int o = 0; o < part->getNumObjects(); ++o)
 		{
 			const Symbol* symbol = part->getObject(o)->getSymbol();
