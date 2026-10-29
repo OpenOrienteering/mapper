@@ -1,6 +1,7 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
  *    Copyright 2012-2021, 2025 Kai Pastor
+ *    Copyright 2026 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -32,6 +33,7 @@
 
 #include <Qt>
 #include <QtNumeric>
+#include <QByteArray>
 #include <QFlags>
 #include <QLatin1String>
 #include <QPoint>
@@ -76,6 +78,10 @@ namespace literal
 	static const QLatin1String rotation("rotation");
 	static const QLatin1String size("size");
 	static const QLatin1String tags("tags");
+	static const QLatin1String arcs("arcs");
+	static const QLatin1String arc("arc");
+	static const QLatin1String angle("angle");
+	static const QLatin1String span("span");
 }
 
 
@@ -183,6 +189,11 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 		if (text_this->getHorizontalAlignment() != text_other->getHorizontalAlignment())
 			return false;
 		if (text_this->getVerticalAlignment() != text_other->getVerticalAlignment())
+			return false;
+	}
+	else if (type == Point)
+	{
+		if (this->asPoint()->getCutCircle().getArcs() != other->asPoint()->getCutCircle().getArcs())
 			return false;
 	}
 	
@@ -301,6 +312,20 @@ void Object::save(QXmlStreamWriter& xml) const
 			size_element.writeAttribute(XmlStreamLiteral::height, size.nativeY());
 		}
 		xml.writeTextElement(literal::text, text->getText());
+	}
+	else if (type == Point)
+	{
+		auto const* point = static_cast<PointObject const*>(this);
+		if (point->getCutCircle().getNumArcs())
+		{
+			XmlElementWriter arcs_element(xml, literal::arcs);
+			for (const auto& arc : point->getCutCircle())
+			{
+				XmlElementWriter arc_element(xml, literal::arc);
+				arc_element.writeAttribute(literal::angle, arc.first);
+				arc_element.writeAttribute(literal::span, arc.second);
+			}
+		}
 	}
 }
 
@@ -437,6 +462,25 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		else if (xml.name() == literal::tags)
 		{
 			XmlElementReader(xml).read(object->object_tags);
+		}
+		else if (xml.name() == literal::arcs && object_type == Point)
+		{
+			auto* point = object->asPoint();
+			XmlElementReader arcs_element(xml);
+			
+			while (xml.readNextStartElement())
+			{
+				if (xml.name() == literal::arc)
+				{
+					XmlElementReader arc_element(xml);
+					auto angle = arc_element.attribute<int>(literal::angle);
+					auto span = arc_element.attribute<int>(literal::span);
+					point->getCutCircle().addArc(std::pair<int, int>(angle, span));
+				}
+				else
+					xml.skipCurrentElement(); // unknown
+			}
+			point->getCutCircle().sortGaps(); // just to ensure that gaps are sorted after loading
 		}
 		else
 			xml.skipCurrentElement(); // unknown
@@ -3220,6 +3264,241 @@ bool PathObject::isLineTooShort() const
 }
 
 
+// ### CutCircle ###
+
+CutCircle::CutCircle() = default;
+
+void CutCircle::importFromOCD(ArcsList& ocd_gap_list)
+{
+	arcs.clear();
+	for (auto& gap : ocd_gap_list)
+	{
+		// the check for negative values might be superfluous
+		if (gap.first < 0)
+			gap.first += 3600;
+		if (gap.second < 0)
+			gap.second += 3600;
+		gap.first %= 3600;
+		gap.second %= 3600;
+	}
+	if (ocd_gap_list.size() > 1)
+		std::sort(std::begin(ocd_gap_list), std::end(ocd_gap_list));
+	for (int i = 0; i < (int)ocd_gap_list.size(); ++i)
+	{
+		const auto start = ocd_gap_list.at(i).second;
+		const auto end = ocd_gap_list.at((i+1) % ocd_gap_list.size()).first;
+		auto span = end - start;
+		if (span < 0)
+			span += 3600;
+		arcs.emplace_back(std::pair<int, int>(start*16, span*16));
+	}
+	sortGaps();
+}
+
+void CutCircle::exportToOCD(QByteArray& byte_array) const
+{
+	std::vector<std::pair<int, int>> ocd_gap_list;
+	for (int i = 0; i < getNumArcs(); ++i)
+	{
+		auto start = ((arcs.at(i).first + arcs.at(i).second) % fullcircle) / 16;
+		auto end = arcs.at((i+1) % getNumArcs()).first / 16;
+		ocd_gap_list.emplace_back(std::pair<int, int>(start, end));
+	}
+	std::sort(std::begin(ocd_gap_list), std::end(ocd_gap_list));
+	for (auto gap : ocd_gap_list)
+	{
+		byte_array.append(reinterpret_cast<const char*>(&gap.first), sizeof(gap.first));
+		byte_array.append(reinterpret_cast<const char*>(&gap.second), sizeof(gap.second));
+	}
+}
+
+bool CutCircle::isAngleInAnyGap(int angle) const
+{
+	for (int i = 0; i < getNumArcs(); ++i)
+	{
+		if (isAngleInGap(angle, i))
+			return true;
+	}
+	return false;
+}
+
+/*
+ * Returns true if angle is in gap following the arc at index
+*/
+bool CutCircle::isAngleInGap(int angle, int index) const
+{
+	const auto start_of_gap = (arcs.at(index).first + arcs.at(index).second) % fullcircle;
+	const auto end_of_gap = arcs.at((index+1) % getNumArcs()).first;
+	if (end_of_gap > start_of_gap)
+		return (angle > start_of_gap && angle < end_of_gap);
+	// gap crosses fullcircle, i.e. vector (1,0)
+	return (angle < end_of_gap || angle > start_of_gap);
+}
+
+void CutCircle::deleteGap(int angle)
+{
+	Q_ASSERT(isAngleInAnyGap(angle));
+	
+	if (getNumArcs() <= 1)
+	{
+		arcs.clear();
+		return;
+	}
+	for (int i = 0; i < getNumArcs(); ++i)
+	{
+		// Since the arcs are sorted and deleting did not yet happen, this is the arc to be deleted:
+		if (i+1 == getNumArcs())
+		{
+			arcs.at(i).second = arcs.front().first + fullcircle - arcs.at(i).first + arcs.front().second;
+			arcs.erase(arcs.begin());
+			return;
+		}
+		if (angle >= arcs.at(i).first && angle <= arcs.at(i+1).first)
+		{
+			arcs.at(i).second = arcs.at(i+1).first - arcs.at(i).first + arcs.at(i+1).second;
+			arcs.erase(arcs.begin() + i+1);
+			return;
+		}
+	}
+}
+
+void CutCircle::addGap(int first_angle, int second_angle)
+{
+	Q_ASSERT(first_angle != second_angle);
+	
+	auto angle_difference = [](int from, int to) { 
+		return from > to ? from - to : from + (fullcircle - to);
+	};
+	
+	auto angle_in_arc = [this](int angle, int index) {
+		const auto end_angle = (arcs.at(index).first + arcs.at(index).second) % fullcircle;
+		const auto start_angle = arcs.at(index).first;
+		if (end_angle > start_angle)
+			return (angle >= start_angle && angle <= end_angle);
+		// arc crosses fullcircle, i.e. vector (1,0)
+		return (angle >= start_angle || angle <= end_angle);
+	};
+	
+	auto adjust_angles = [&first_angle, &second_angle]() {
+			first_angle = first_angle > 0 ? first_angle - 1 : fullcircle - 1;
+			second_angle = (second_angle + 1) % fullcircle;
+	};
+	
+	if (first_angle > second_angle)
+		std::swap(first_angle, second_angle);
+	if (second_angle - first_angle > fullcircle / 2)
+		std::swap(first_angle, second_angle);
+	
+	if (arcs.empty())
+	{
+		adjust_angles();
+		arcs.emplace_back(std::pair<int, int>(second_angle, angle_difference(first_angle, second_angle)));
+		return;
+	}
+	
+	while (true)
+	{
+		int first_arc = 0;
+		int second_arc = 0;
+
+		// this search will always succeed
+		for (int i = 0; i < getNumArcs(); ++i)
+		{
+			auto j = (i+1) % getNumArcs();
+			if (angle_in_arc(first_angle, i))
+			{
+				// cut starts in arc i
+				first_arc = i;
+				break;
+			}
+			if (isAngleInGap(first_angle, i))
+			{
+				// cut starts in gap after arc i, i.e. cut starts in arc i+1 (as there can't be a complete cut within a gap)
+				first_arc = j;
+				first_angle = arcs.at(j).first;
+				break;
+			}
+		}
+		// this search will always succeed
+		for (int i = 0; i < getNumArcs(); ++i)
+		{
+			if (angle_in_arc(second_angle, i))
+			{
+				// cut ends in arc i
+				second_arc = i;
+				break;
+			}
+			if (isAngleInGap(second_angle, i))
+			{
+				// cut ends in gap after arc i, i.e. cut ends in arc i (as there can't be a complete cut within a gap)
+				second_arc = i;
+				second_angle = (arcs.at(i).first + arcs.at(i).second) % fullcircle;
+				break;
+			}
+		}
+	
+		const auto end_angle = (arcs.at(second_arc).first + arcs.at(second_arc).second) % fullcircle;
+		if (first_arc != second_arc)
+		{
+			if (arcs.at(first_arc).first == first_angle)
+			{
+				arcs.erase(arcs.begin() + first_arc);
+				continue;
+			}
+			if (end_angle == second_angle)
+			{
+				arcs.erase(arcs.begin() + second_arc);
+				continue;
+			}
+			if ((first_arc+1) % getNumArcs() != second_arc)
+			{
+				arcs.erase(arcs.begin() + ((first_arc+1) % getNumArcs()));
+				continue;
+			}
+			// first_arc is cut and second_arc as well
+			// cutting first arc, removing its end:
+			adjust_angles();
+			arcs.at(first_arc).second = angle_difference(first_angle, arcs.at(first_arc).first);
+			
+			// cutting second arc, removing its start:
+			arcs.at(second_arc).first = second_angle;
+			arcs.at(second_arc).second = angle_difference(end_angle, second_angle);
+			sortGaps();	// if last arc is cut and thus may become the first arc
+			return;
+		}
+		
+		// first_arc == second_arc
+		// cut end of arc:
+		if (end_angle == second_angle)
+		{
+			adjust_angles();
+			arcs.at(second_arc).second = angle_difference(first_angle, arcs.at(first_arc).first);
+			return;
+		}
+		// cut start of arc:
+		if (arcs.at(first_arc).first == first_angle)
+		{
+			adjust_angles();
+			arcs.at(second_arc).first = second_angle;
+			arcs.at(second_arc).second = angle_difference(end_angle, second_angle);
+			sortGaps();	// if last arc is cut and thus may become the first arc
+			return;
+		}
+		// cut part of arc:
+		adjust_angles();
+		arcs.at(first_arc).second = angle_difference(first_angle, arcs.at(first_arc).first);
+		arcs.emplace_back(std::pair<int, int>(second_angle, angle_difference(end_angle, second_angle)));
+		sortGaps();
+		return;
+	}
+}
+
+void CutCircle::sortGaps()
+{
+	std::sort(std::begin(arcs), std::end(arcs));
+}
+
+
 // ### PointObject ###
 
 PointObject::PointObject(const Symbol* symbol)
@@ -3245,6 +3524,7 @@ void PointObject::copyFrom(const Object& other)
 	const PointObject* point_other = other.asPoint();
 	if (getSymbol() && getSymbol()->isRotatable())
 		setRotation(point_other->getRotation());
+	getCutCircle().setArcs(point_other->getCutCircle().getArcs());
 }
 
 
