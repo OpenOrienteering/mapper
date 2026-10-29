@@ -392,10 +392,15 @@ namespace Ocd
  * @param V the index value type
  */
 template< class V >
-class OcdEntityIndexIterator : public std::iterator<std::input_iterator_tag, V, std::ptrdiff_t, void, V>
+class OcdEntityIndexIterator
 {
 public:
-	using value_type = V;
+	using iterator_category = std::input_iterator_tag;
+	using value_type        = V;
+	using difference_type   = std::ptrdiff_t;
+	using pointer           = void;
+	using reference         = V;
+	
 	using EntryType  = typename V::EntryType;
 	using IndexBlock = const Ocd::IndexBlock<EntryType>;
 	
