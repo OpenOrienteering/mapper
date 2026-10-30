@@ -92,7 +92,7 @@ void FileDialog::adjustParameters(QString& filter, QFileDialog::Options& options
 	if (need_upper_case)
 	{
 		QStringList new_filters;
-		new_filters.reserve(filter.size());
+		new_filters.reserve(filters.size());
 		for (auto&& item : filters)
 		{
 			QString new_item;
