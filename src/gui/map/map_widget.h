@@ -476,7 +476,6 @@ private:
 	
 	std::function<void(const QString&)> zoom_display;
 	QLabel* cursorpos_label;
-	QLabel* objecttag_label;
 	MapCoordF last_cursor_pos;
 	
 	bool show_help;
