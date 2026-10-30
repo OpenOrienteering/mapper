@@ -361,7 +361,7 @@ qreal CombinedSymbol::calculateLargestLineExtent() const
 const Symbol::BorderHints* CombinedSymbol::borderHints() const
 {
 	auto left_sum = std::numeric_limits<double>::max();
-	auto right_sum = std::numeric_limits<double>::min();
+	auto right_sum = std::numeric_limits<double>::lowest();
 	auto const useMax = [&](auto const& hints) {
 		if (hints.left.active)
 		{
