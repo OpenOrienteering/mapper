@@ -193,8 +193,8 @@ double ConstrainAngleToolHelper::getConstrainedCursorPosMap(const MapCoordF& in_
 		new_active_angle = higher_angle;
 	if (new_active_angle != active_angle)
 	{
-		emitActiveAngleChanged();
 		active_angle = new_active_angle;
+		emitActiveAngleChanged();
 	}
 	
 	MapCoordF unit_direction = MapCoordF(cos(active_angle), -sin(active_angle));
