@@ -1,6 +1,7 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2020 Kai Pastor
+ *    Copyright 2020, 2025 Kai Pastor
+ *    Copyright 2025 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,11 +24,13 @@
 #define OPENORIENTEERING_TEMPLATE_LIST_WIDGET_H
 
 #include <memory>
+#include <vector>
 
 #include <Qt>
-#include <QWidget>
 #include <QObject>
 #include <QString>
+#include <QVariant>
+#include <QWidget>
 
 #include "core/map_view.h"
 
@@ -36,9 +39,9 @@ class QBoxLayout;
 class QCheckBox;
 class QEvent;
 class QModelIndex;
+class QPushButton;
 class QTableView;
 class QToolButton;
-class QVariant;
 
 namespace OpenOrienteering {
 
@@ -74,6 +77,9 @@ signals:
 	void currentTemplateChanged(const OpenOrienteering::Template* temp);
 	void closePositionDockWidget();
 	void closeClicked();
+	
+public slots:
+	void switchTemplateSet();
 	
 protected:
 	TemplateTableModel* model();
@@ -114,6 +120,8 @@ protected:
 	 */
 	bool eventFilter(QObject* watched, QEvent* event) override;
 	
+private:
+	void updateTemplateSetButtons();
 	
 // slots:
 #if 0
@@ -142,6 +150,10 @@ protected:
 	
 	void showOpacitySlider(int row);
 	
+	void addTemplateSet();
+	void deleteTemplateSet();
+	void onGroupButtonClicked(int val);
+	
 private:
 	Map& map;
 	MapView& main_view;
@@ -151,6 +163,7 @@ private:
 	
 	Template* last_template = nullptr;
 	int last_row = -1;
+	const int max_template_sets;
 	
 	QCheckBox* all_hidden_check;
 	QTableView* template_table;
@@ -172,6 +185,10 @@ private:
 	QToolButton* adjust_button;
 	QToolButton* edit_button;
 	
+	QToolButton* new_template_set_button;
+	QToolButton* delete_template_set_button;
+	std::vector<QPushButton*> template_set_buttons;
+	
 	//QToolButton* group_button;
 	//QToolButton* more_button;
 };
@@ -179,4 +196,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_TEMPLATE_LIST_WIDGET_H

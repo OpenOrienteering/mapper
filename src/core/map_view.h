@@ -1,6 +1,7 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2020 Kai Pastor
+ *    Copyright 2014-2020, 2025 Kai Pastor
+ *    Copyright 2025 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -35,7 +36,6 @@
 #include "map_coord.h"
 
 class QLatin1String;
-class QRectF;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
@@ -65,6 +65,68 @@ bool operator==(TemplateVisibility lhs, TemplateVisibility rhs);
 
 bool operator!=(TemplateVisibility lhs, TemplateVisibility rhs);
 
+class TemplateVisibilityEntry : public TemplateVisibility
+{
+public:
+	TemplateVisibilityEntry() = default;
+	TemplateVisibilityEntry(const TemplateVisibilityEntry&) = default;
+	TemplateVisibilityEntry(TemplateVisibilityEntry&&) = default;
+	TemplateVisibilityEntry& operator=(const TemplateVisibilityEntry&) = default;
+	TemplateVisibilityEntry& operator=(TemplateVisibilityEntry&&) = default;
+	TemplateVisibilityEntry(const Template* templ, TemplateVisibility vis)
+	: TemplateVisibility(vis)
+	, templ(templ)
+	{}
+	
+public:
+	const Template* templ;
+};
+
+class TemplateVisibilitySet
+{
+public:
+	TemplateVisibilitySet();
+	
+	typedef std::vector<TemplateVisibilityEntry> TemplateVisibilityVector;
+	
+	TemplateVisibilityVector::const_iterator findVisibility(const Template* templ) const;
+	TemplateVisibilityVector::iterator findVisibility(const Template* templ);
+	bool existsVisibility(const Template* templ) const;
+	
+	TemplateVisibility map_visibility;
+	TemplateVisibilityVector template_visibilities;
+	bool all_templates_hidden = false;
+};
+
+class TemplateVisibilitySets
+{
+	
+public:
+	TemplateVisibilitySets();
+	
+	void setVisibility(int current_visibility, TemplateVisibility visibility);
+	void duplicateVisibility();
+	void deleteVisibility();
+	const TemplateVisibilitySet& getCurrentVisibility() const { return template_visibility_sets.at(active_visibility_index); };
+	const TemplateVisibilitySet& getVisibility(int index) const { return template_visibility_sets.at(index); };
+	TemplateVisibilitySet& accessCurrentVisibility() { return template_visibility_sets.at(active_visibility_index); };
+	TemplateVisibilitySet& accessVisibility(int index) { return template_visibility_sets.at(index); };
+	TemplateVisibilityEntry getCurrentTemplateVisibility(const Template* templ) const;
+	TemplateVisibilityEntry getTemplateVisibility(int template_set, int index) const;
+	void setCurrentTemplateVisibility(const Template* templ, TemplateVisibility vis);
+	void deleteTemplate(const Template* templ);
+	void addTemplate(const Template *templ, TemplateVisibility vis);
+	bool existsCurrentTemplateVisibility(const Template* templ) const;
+	void setActiveVisibilityIndex(int active_visibility) { active_visibility_index = active_visibility; };
+	int getActiveVisibilityIndex() const { return active_visibility_index; };
+	int getNumberOfVisibilitySets() const { return template_visibility_sets.size(); };
+	
+public:
+	std::vector<TemplateVisibilitySet> template_visibility_sets;
+
+private:
+	int active_visibility_index;
+};
 
 /**
  * Stores view position, zoom, rotation and grid / template visibilities
@@ -78,7 +140,6 @@ class MapView : public QObject
 {
 	Q_OBJECT
 	Q_FLAGS(ChangeFlags  VisibilityFeature)
-	
 public:
 	enum ChangeFlag
 	{
@@ -278,19 +339,19 @@ public:
 	 * Checks if the template is visible without creating
 	 * a template visibility object if none exists
 	 */
-	bool isTemplateVisible(const Template* temp) const;
+	bool isTemplateVisible(const Template* templ) const;
 	
 	/**
 	 * Returns the template visibility.
 	 * 
 	 * If the template is unknown, returns default settings.
 	 */
-	TemplateVisibility getTemplateVisibility(const Template* temp) const;
+	TemplateVisibility getTemplateVisibility(const Template* templ) const;
 	
 	/**
 	 * Sets the template visibility, and emits a change signal.
 	 */
-	void setTemplateVisibility(Template* temp, TemplateVisibility vis);
+	void setTemplateVisibility(Template* templ, TemplateVisibility vis);
 	
 	
 	/** Enables or disables hiding all templates in this view */
@@ -322,6 +383,12 @@ public:
 	 */
 	bool hasAlpha() const;
 	
+	bool applyVisibilitySet(int new_visibility_set);	// private
+	void setVisibilitySet(int new_visibility_set);
+	void addVisibilitySet();
+	void deleteVisibilitySet();
+	int getNumberOfVisibilitySets() const { return template_visibility_sets.getNumberOfVisibilitySets(); };
+	int getActiveVisibilityIndex() const { return template_visibility_sets.getActiveVisibilityIndex(); };
 	
 signals:
 	/**
@@ -341,7 +408,7 @@ signals:
 	 * 
 	 * @param feature The map view feature that has changed.
 	 * @param active  The features current state of activation.
-	 * @param temp    If a the feature is a template, a pointer to this template.
+	 * @param temp    If the feature is a template, a pointer to this template.
 	 */
 	void visibilityChanged(OpenOrienteering::MapView::VisibilityFeature feature, bool active, OpenOrienteering::Template* temp = nullptr);
 	
@@ -358,47 +425,30 @@ protected:
 	/**
 	 * Sets the template visibility without emitting signals.
 	 */
-	bool setTemplateVisibilityHelper(const Template *temp, TemplateVisibility vis);
+	bool setTemplateVisibilityHelper(const Template *templ, TemplateVisibility vis);
 	
 	/**
 	 * Creates a default visibility entry (100% opaque, hidden) before a template is added to the map.
 	 */
-	void onAboutToAddTemplate(int pos, Template* temp);
+	void onAboutToAddTemplate(int pos, Template* templ);
 	
 	/**
 	 * Changes the visibility entry to 100% visible after a template is added to the map.
 	 */
-	void onTemplateAdded(int pos, Template* temp);
+	void onTemplateAdded(int pos, Template* templ);
 	
 	/**
 	 * Removes the visibility data when a template is deleted.
 	 */
-	void onTemplateDeleted(int pos, const Template* temp);
+	void onTemplateDeleted(int pos, const Template* templ);
 	
 private:
 	Q_DISABLE_COPY(MapView)
 	
-	struct TemplateVisibilityEntry : public TemplateVisibility
-	{
-		const Template* temp;
-		TemplateVisibilityEntry() = default;
-		TemplateVisibilityEntry(const TemplateVisibilityEntry&) = default;
-		TemplateVisibilityEntry(TemplateVisibilityEntry&&) = default;
-		TemplateVisibilityEntry& operator=(const TemplateVisibilityEntry&) = default;
-		TemplateVisibilityEntry& operator=(TemplateVisibilityEntry&&) = default;
-		TemplateVisibilityEntry(const Template* temp, TemplateVisibility vis)
-		: TemplateVisibility(vis)
-		, temp(temp)
-		{}
-	};
-	typedef std::vector<TemplateVisibilityEntry> TemplateVisibilityVector;
-	
+	void saveTemplateSet(QXmlStreamWriter& xml, bool template_details, const TemplateVisibilitySet& template_set) const;
+	void loadMapAndTemplates(QXmlStreamReader& xml, TemplateVisibilitySet& template_set, int version);
 	
 	void updateTransform();		// recalculates the x_to_y matrices
-	
-	TemplateVisibilityVector::const_iterator findVisibility(const Template* temp) const;
-	
-	TemplateVisibilityVector::iterator findVisibility(const Template* temp);
 	
 	
 	Map* map;
@@ -411,10 +461,8 @@ private:
 	QTransform view_to_map;
 	QTransform map_to_view;
 	
-	TemplateVisibility map_visibility;
-	TemplateVisibilityVector template_visibilities;
+	TemplateVisibilitySets template_visibility_sets;
 	
-	bool all_templates_hidden;
 	bool grid_visible;
 	bool overprinting_simulation_enabled;
 };
@@ -501,18 +549,6 @@ QPoint MapView::panOffset() const
 }
 
 inline
-TemplateVisibility MapView::getMapVisibility() const
-{
-	return map_visibility;
-}
-
-inline
-bool MapView::areAllTemplatesHidden() const
-{
-	return all_templates_hidden;
-}
-
-inline
 bool MapView::isGridVisible() const
 {
 	return grid_visible;
@@ -531,4 +567,4 @@ bool MapView::isOverprintingSimulationEnabled() const
 Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::MapView::ChangeFlags)
 
 
-#endif
+#endif // OPENORIENTEERING_MAP_VIEW_H
