@@ -111,7 +111,7 @@
 
 
 501.8  (highway = unclassified OR highway = residential OR highway = service OR highway = living_street)
-501.9  (highway = unclassified OR highway = residential OR highway = service OR highway = living_street) AND (surface = asphalt OR surface = concrete OR surface = concrete:plates OR surface = concrete:lanes)
+501.9  (highway = unclassified OR highway = residential OR highway = service OR highway = living_street) AND (surface = paved OR surface = asphalt OR surface = concrete OR surface = concrete:plates OR surface = concrete:lanes)
 # 503.1  (highway = unclassified OR highway = residential OR highway = service OR highway = living_street) AND (surface = compacted OR surface = gravel)
 501.8  (highway = unclassified OR highway = residential OR highway = service OR highway = living_street) AND (surface = ground OR surface = sand OR surface = unpaved)
 505.2  (highway = unclassified OR highway = residential) AND (surface = grass OR surface = dirt)
@@ -120,7 +120,8 @@
 
 509.1  railway ~= "" AND railway != "abandoned" AND tunnel != "yes"
 
-521    building ~= "" AND building != ruins
+521    building ~= "" AND building != ruins AND build != roof
+522    building = "roof"
 
 526    man_made = cairn
 524    man_made = chimney
@@ -134,6 +135,7 @@
 524    man_made = tower
 524    man_made = water_tower
 311    man_made = water_well
+104    man_made = embankment
 
 531    amenity = bench
 313    amenity = drinking_water
@@ -167,3 +169,4 @@
 
 531    pipeline = marker
 
+520    access = private OR access = no
