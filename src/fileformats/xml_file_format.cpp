@@ -69,7 +69,7 @@ namespace OpenOrienteering {
 // ### XMLFileFormat definition ###
 
 constexpr int XMLFileFormat::minimum_version = 2;
-constexpr int XMLFileFormat::current_version = 9;
+const int XMLFileFormat::current_version = 9;
 
 int XMLFileFormat::active_version = 5; // updated by XMLFileExporter::doExport()
 
