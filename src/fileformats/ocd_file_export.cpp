@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2022, 2024, 2025 Kai Pastor
+ *    Copyright 2016-2022, 2024-2026 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -2649,6 +2649,9 @@ QByteArray OcdFileExport::exportObjectCommon(const Object* object, OcdObject& oc
 	QByteArray text_data;
 	switch(ocd_object.type)
 	{
+	case 1:
+		ocd_object.num_items = decltype(ocd_object.num_items)(coords.size() + object->asPoint()->getCutCircle().getNumArcs());
+		break;
 	case 4:
 		ocd_object.num_items = (static_cast<const TextObject*>(object)->getNumLines() == 0) ? 0 : 5;
 		if (ocd_object.num_items > 0)
@@ -2694,6 +2697,10 @@ QByteArray OcdFileExport::exportObjectCommon(const Object* object, OcdObject& oc
 			break;
 		default:
 			exportCoordinates(coords, object->getSymbol(), data, bottom_left, top_right);
+		}
+		if (ocd_object.type == 1 && ocd_object.num_items > 1)
+		{
+			object->asPoint()->getCutCircle().exportToOCD(data);
 		}
 	}
 	FILEFORMAT_ASSERT(data.size() == header_size + items_size);

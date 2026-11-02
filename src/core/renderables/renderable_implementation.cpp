@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2017, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *	
@@ -141,6 +141,42 @@ void CircleRenderable::render(QPainter &painter, const RenderConfig &config) con
 		painter.drawEllipse(rect.center(), 0.5 / config.scaling, 0.5 / config.scaling);
 	else
 		painter.drawEllipse(rect);
+}
+
+
+
+// ### ArcRenderable ###
+
+ArcRenderable::ArcRenderable(const PointSymbol* symbol, MapCoordF coord, const std::vector<std::pair<int, int>>& arcs, qreal rotation)
+ : Renderable(symbol->getOuterColor())
+ , line_width(0.001 * symbol->getOuterWidth())
+ , arcs(arcs)
+ , rotation(int(qRadiansToDegrees(rotation) * 160))
+{
+	double x = coord.x();
+	double y = coord.y();
+	double radius = (0.001 * symbol->getInnerRadius()) + line_width/2;
+	rect = QRectF(x - radius, y - radius, 2 * radius, 2 * radius);
+	extent = QRectF(rect.x() - 0.5*line_width, rect.y() - 0.5*line_width, rect.width() + line_width, rect.height() + line_width);
+}
+
+PainterConfig ArcRenderable::getPainterConfig(const QPainterPath* clip_path) const
+{
+	return { color_priority, PainterConfig::PenOnly, line_width, clip_path };
+}
+
+void ArcRenderable::render(QPainter &painter, const RenderConfig &config) const
+{
+	if (config.options.testFlag(RenderConfig::ForceMinSize) && rect.width() * config.scaling < 1.5)
+		painter.drawEllipse(rect.center(), 0.5 / config.scaling, 0.5 / config.scaling);
+	else
+	{
+		QPen pen(painter.pen());
+		pen.setCapStyle(Qt::FlatCap);
+		painter.setPen(pen);
+		for (const auto& arc : arcs)
+			painter.drawArc(rect, (rotation + arc.first) / 10, arc.second / 10);
+	}
 }
 
 

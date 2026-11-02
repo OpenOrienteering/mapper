@@ -233,6 +233,7 @@ set(Mapper_Common_SRCS
   templates/world_file.cpp
   
   tools/box_zoom_tool.cpp
+  tools/cut_circle_tool.cpp
   tools/cut_tool.cpp
   tools/cut_hole_tool.cpp
   tools/cutout_operation.cpp

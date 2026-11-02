@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2019, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -43,6 +43,7 @@ class MapColor;
 class MapColorMap;
 class MapCoordF;
 class ObjectRenderables;
+class PointObject;
 class SymbolPropertiesWidget;
 class SymbolSettingDialog;
 class VirtualCoordVector;
@@ -81,7 +82,7 @@ public:
 	        ObjectRenderables &output,
 	        RenderableOptions options ) const override;
 	
-	void createRenderablesScaled(const MapCoordF& coord, qreal rotation, ObjectRenderables& output, qreal coord_scale = 1) const;
+	void createRenderablesScaled(const MapCoordF& coord, qreal rotation, ObjectRenderables& output, qreal coord_scale = 1, const PointObject* point = nullptr) const;
 	
 	void createRenderablesIfCenterInside(const MapCoordF& point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const;
 	void createPrimitivesIfCompletelyInside(const MapCoordF& point_coord, const QPainterPath* outline, ObjectRenderables& output) const;
@@ -125,6 +126,16 @@ public:
 	 * the origin (this means, only point elements at (0,0) are allowed).
 	 */
 	bool isSymmetrical() const;
+	
+	/**
+	 * Checks if point's base part is a circle.
+	*/
+	bool isCircle() const;
+	
+	/**
+	 * Checks if point contains at least one circle.
+	*/
+	bool containsCircle() const;
 	
 	// Getters / Setters
 	using Symbol::setRotatable; /* public visibility */
