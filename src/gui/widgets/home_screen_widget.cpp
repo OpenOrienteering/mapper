@@ -28,12 +28,22 @@
 #include <QDirIterator>
 #include <QFileInfo>
 #include <QLabel>
+#include <QLatin1String>
 #include <QListWidget>
 #include <QMessageBox>
 #include <QPainter>
 #include <QScroller>
 #include <QSettings>
 #include <QVBoxLayout>
+
+#ifdef MAPPER_WITH_CUSTOM_LOCATIONS
+#ifdef Q_OS_ANDROID
+#include <QtAndroid>
+#include <QByteArray>
+#include <QFileDialog>
+#include <QUrl>
+#endif
+#endif
 
 #include "settings.h"
 #include "core/app_permissions.h"
@@ -46,6 +56,24 @@
 
 
 namespace OpenOrienteering {
+
+namespace {
+
+namespace SettingsKey {
+
+auto const customLocation = QLatin1String("CustomLocations");
+
+}  // namespace SettingsKey
+
+
+namespace SpecialLocations {
+
+auto const addCustomLocation = QLatin1String("/");
+
+}  // namespace SpecialLocations
+
+}  // namespace
+
 
 //### AbstractHomeScreenWidget ###
 
@@ -331,6 +359,14 @@ void HomeScreenWidgetDesktop::setTipsVisible(bool state)
 HomeScreenWidgetMobile::HomeScreenWidgetMobile(HomeScreenController* controller, QWidget* parent)
 : AbstractHomeScreenWidget(controller, parent)
 {
+#ifdef MAPPER_WITH_CUSTOM_LOCATIONS
+	QSettings settings;
+	auto locations = settings.value(SettingsKey::customLocation).toStringList();
+	locations.removeDuplicates();
+	for (auto const& location : locations)
+		custom_locations.emplace_back(location, StorageLocation::HintNormal);
+#endif
+	
 	auto* layout = new QVBoxLayout();
 	layout->setSpacing(2 * layout->spacing());
 	
@@ -423,6 +459,29 @@ void HomeScreenWidgetMobile::itemClicked(QListWidgetItem* item)
 {
 	auto file_path = item->data(pathRole()).toString();
 	auto hint = static_cast<StorageLocation::Hint>(item->data(hintRole()).toInt());
+	
+#ifdef MAPPER_WITH_CUSTOM_LOCATIONS
+	if (file_path == SpecialLocations::addCustomLocation)
+	{
+		auto const document_tree_uri = QFileDialog::getExistingDirectoryUrl(window());
+		if (!document_tree_uri.isEmpty())
+		{
+			QSettings settings;
+			auto locations = settings.value(SettingsKey::customLocation).toStringList();
+			
+			auto location = document_tree_uri.toString();
+			if (!locations.contains(location))
+			{
+				locations.push_back(location);
+				settings.setValue(SettingsKey::customLocation, locations);
+				custom_locations.emplace_back(location, StorageLocation::HintNormal);
+			}
+			history.emplace_back(location, StorageLocation::HintNormal);
+			updateFileListWidget();
+		}
+		return;
+	}
+#endif
 	
 	if (file_path == QLatin1String("doc:"))
 	{
@@ -526,6 +585,16 @@ void HomeScreenWidgetMobile::updateFileListWidget()
 				addItemToFileList(file_info);
 		}
 		
+#ifdef MAPPER_WITH_CUSTOM_LOCATIONS
+		for (const auto& location : custom_locations)
+		{
+			auto const file_info = QFileInfo(location.path());
+			auto const icon = file_list_widget->style()->standardIcon(QStyle::SP_DirIcon);
+			auto const url = QUrl::fromEncoded("file:" + file_info.fileName().toUtf8());
+			addItemToFileList(url.toLocalFile(), file_info, location.hint(), icon);
+		}
+#endif
+		
 #ifdef Q_OS_ANDROID
 		// If there are no recent files, offer a link to the Android storage manual page.
 		if (file_list_widget->count() == 0)
@@ -552,6 +621,16 @@ void HomeScreenWidgetMobile::updateFileListWidget()
 		// The examples path isn't writable, so the hint will be overridden.
 		auto file_info = QFileInfo(QLatin1String("data:/examples"));
 		addItemToFileList(tr("Examples"), file_info);
+		
+#ifdef MAPPER_WITH_CUSTOM_LOCATIONS
+#ifdef Q_OS_ANDROID
+		if (QtAndroid::androidSdkVersion() >= 21)
+#endif
+		{
+			auto const file_info = QFileInfo(SpecialLocations::addCustomLocation);
+			addItemToFileList(tr("Add custom directory"), file_info, 0, QIcon(QLatin1String(":/images/plus.png")));
+		}
+#endif
 	}
 	else
 	{
