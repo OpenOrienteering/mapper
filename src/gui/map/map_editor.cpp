@@ -118,6 +118,7 @@
 #include "gui/simple_course_dialog.h"
 #include "gui/text_browser_dialog.h"
 #include "gui/util_gui.h"
+#include "gui/map/import_map_dialog.h"
 #include "gui/map/map_dialog_scale.h"
 #include "gui/map/map_editor_activity.h"
 #include "gui/map/map_find_feature.h"
@@ -4322,6 +4323,18 @@ QHash<const Symbol*, Symbol*> MapEditorController::importMap(
 		return {};
 	}
 	
+	// import_map
+	ImportMapDialog dialog(window, map, &other);
+	dialog.setWindowModality(Qt::WindowModal);
+	if (dialog.exec() == QDialog::Rejected)
+		return {};
+	if (dialog.isNothingToImport())
+	{
+		QMessageBox::information(dialog_parent, tr("Information"), tr("Nothing to import."));
+		return {};
+	}
+	auto import_config = dialog.getImportConfig();
+	
 	// Check scale
 	if ((mode & 0x0f) != Map::ColorImport
 	    && other.getNumSymbols() > 0
@@ -4343,7 +4356,7 @@ QHash<const Symbol*, Symbol*> MapEditorController::importMap(
 		}
 	}
 	
-	return map->importMap(other, mode, filter, symbol_insert_pos, merge_duplicate_symbols);
+	return map->importMap(other, mode, filter, symbol_insert_pos, merge_duplicate_symbols, &import_config);
 }
 
 
