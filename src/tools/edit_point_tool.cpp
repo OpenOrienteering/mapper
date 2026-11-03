@@ -112,7 +112,39 @@ bool EditPointTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coo
 			return true;
 		waiting_for_mouse_release = false;
 	}
-	
+
+	// Handle "middle/scrollwheel click" for quick toggling of dash points
+	if (event->button() == Qt::MiddleButton) 
+	{
+		mousePositionEvent(event, map_coord, widget);
+		updateHoverState(cur_pos_map);
+
+		if (hover_state.testFlag(OverObjectNode) &&
+		    hover_object->getType() == Object::Path)
+		{
+			Q_ASSERT(hover_object);
+			PathObject* hover_object = this->hover_object->asPath();
+			Q_ASSERT(hover_point < hover_object->getCoordinateCount());
+
+			if (!hover_object->isCurveHandle(hover_point))
+			{
+				createReplaceUndoStep(hover_object);
+
+				auto hover_coord = hover_object->getCoordinate(hover_point);
+				hover_coord.setDashPoint(!hover_coord.isDashPoint());
+				hover_object->setCoordinate(hover_point, hover_coord);
+				hover_object->update();
+				updateDirtyRect();
+
+				// if we toggled a dash point we don't let the user use the same action
+				// to pan the map
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	return MapEditorToolBase::mousePressEvent(event, map_coord, widget);
 }
 
