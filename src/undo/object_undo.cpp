@@ -107,7 +107,7 @@ void ObjectModifyingUndoStep::saveImpl(QXmlStreamWriter& xml) const
 	XmlElementWriter element(xml, QLatin1String("affected_objects"));
 	element.writeAttribute(QLatin1String("part"), part_index);
 	auto size = modified_objects.size();
-	if (size > 8)
+	if (XmlElementWriter::write_count && size > 8)
 		element.writeAttribute(QLatin1String("count"), size);
 	
 	for (auto object_index : modified_objects)
@@ -215,7 +215,8 @@ void ObjectCreatingUndoStep::saveImpl(QXmlStreamWriter& xml) const
 	
 	xml.writeStartElement(QLatin1String("contained_objects"));
 	int size = (int)objects.size();
-	xml.writeAttribute(QLatin1String("count"), QString::number(size));
+	if (XmlElementWriter::write_count)
+		xml.writeAttribute(QLatin1String("count"), QString::number(size));
 	for (int i = 0; i < size; ++i)
 	{
 		objects[i]->setMap(map);	// IMPORTANT: only if the object's map pointer is set it will save its symbol index correctly
@@ -587,7 +588,8 @@ void SwitchSymbolUndoStep::saveImpl(QXmlStreamWriter& xml) const
 	
 	xml.writeStartElement(QLatin1String("switch_symbol"));
 	int size = (int)target_symbols.size();
-	xml.writeAttribute(QLatin1String("count"), QString::number(size));
+	if (XmlElementWriter::write_count)
+		xml.writeAttribute(QLatin1String("count"), QString::number(size));
 	for (int i = 0; i < size; ++i)
 	{
 		int index = map->findSymbolIndex(target_symbols[i]);

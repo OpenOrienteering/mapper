@@ -51,6 +51,7 @@
 #include "core/virtual_coord_vector.h"
 #include "core/virtual_path.h"
 #include "util/util.h"
+#include "util/xml_stream_util.h"
 
 
 namespace OpenOrienteering {
@@ -385,7 +386,8 @@ void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	if (num_custom_tabs > 0)
 	{
 		xml.writeStartElement(QStringLiteral("tabs"));
-		xml.writeAttribute(QStringLiteral("count"), QString::number(num_custom_tabs));
+		if (XmlElementWriter::write_count)
+			xml.writeAttribute(QStringLiteral("count"), QString::number(num_custom_tabs));
 		for (int i = 0; i < num_custom_tabs; ++i)
 			xml.writeTextElement(QStringLiteral("tab"), QString::number(custom_tabs[i]));
 		xml.writeEndElement(/*tabs*/);
