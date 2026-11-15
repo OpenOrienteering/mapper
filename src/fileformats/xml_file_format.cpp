@@ -279,14 +279,18 @@ bool XMLFileExporter::exportImplementation()
 		exportMapParts();
 		writeLineBreak(xml);
 		exportTemplates();
-		writeLineBreak(xml);
-		exportView();
-		writeLineBreak(xml);
-		exportPrint();
+		if (!path.endsWith(QLatin1String(".xmap")))
+		{
+			writeLineBreak(xml);
+			exportView();
+			writeLineBreak(xml);
+			exportPrint();
+		}
 		delete barrier;
 		writeLineBreak(xml);
 
-		if (Settings::getInstance().getSetting(Settings::General_SaveUndoRedo).toBool()
+		if (!path.endsWith(QLatin1String(".xmap"))
+		    && Settings::getInstance().getSetting(Settings::General_SaveUndoRedo).toBool()
 		    && (map->undoManager().canUndo() || map->undoManager().canRedo()) )
 		{
 			{
