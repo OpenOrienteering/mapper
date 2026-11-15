@@ -308,7 +308,7 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 		if (create_line)
 			output.insertRenderable(new LineRenderable(this, path, path_closed));
 		
-		auto create_mid_symbols = mid_symbol && !mid_symbol->isEmpty() && segment_length > 0;
+		auto create_mid_symbols = mid_symbol && !mid_symbol->isEmpty() && segment_length > 0 && mid_symbols_per_spot > 0;
 		if (create_mid_symbols || create_border)
 		{
 			auto start = SplitPathCoord::begin(path.path_coords);
@@ -390,7 +390,7 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 	else
 	{
 		// Symbols?
-		if (mid_symbol && !mid_symbol->isEmpty() && segment_length > 0)
+		if (mid_symbol && !mid_symbol->isEmpty() && segment_length > 0 && mid_symbols_per_spot > 0)
 			createMidSymbolRenderables(path, start, end, path_closed, output);
 		
 		if (line_width > 0)
@@ -1326,6 +1326,8 @@ void LineSymbol::createMidSymbolRenderables(
         ObjectRenderables& output) const
 {
 	Q_ASSERT(mid_symbol);
+	if (mid_symbols_per_spot <= 0)
+		return;
 	auto orientation = qreal(0);
 	bool mid_symbol_rotatable = bool(mid_symbol) && mid_symbol->isRotatable();
 	
