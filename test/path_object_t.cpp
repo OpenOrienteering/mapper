@@ -25,6 +25,7 @@
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
+#include "core/symbols/point_symbol.h"
 
 using namespace OpenOrienteering;
 
@@ -1207,6 +1208,44 @@ void PathObjectTest::recalculatePartsTest()
 }
 
 
+
+void PathObjectTest::lineSymbolWithZeroMidSymbolsPerSpotDoesNotRenderMidSymbolsTest_data()
+{
+	QTest::addColumn<int>("start_offset");
+	QTest::newRow("Line without start offset") << 0;
+	QTest::newRow("Line with start offset") << 100;
+}
+
+void PathObjectTest::lineSymbolWithZeroMidSymbolsPerSpotDoesNotRenderMidSymbolsTest()
+{
+	QFETCH(int, start_offset);
+	
+	// A thin vertical line
+	auto coords = MapCoordVector{
+		MapCoord{0.0, 0.0}, MapCoord{0.0, 10000.0}
+	};
+	
+	Map map;
+	MapColor color;
+	auto line_symbol = new LineSymbol();
+	map.addSymbol(line_symbol, 0);
+	line_symbol->setColor(&color);
+	line_symbol->setLineWidth(1.0);
+	line_symbol->setSegmentLength(2500);
+	line_symbol->setEndLength(0);
+	line_symbol->setMidSymbolDistance(600);
+	line_symbol->setMidSymbolsPerSpot(0); // Setting 0 mid symbols per spot is the actual tested feature here
+	line_symbol->setStartOffset(start_offset);
+	auto mid_symbol = new PointSymbol();
+	mid_symbol->setInnerColor(&color);
+	mid_symbol->setInnerRadius(100);
+	line_symbol->setMidSymbol(mid_symbol);
+	
+	PathObject obj{line_symbol, coords, &map};
+	obj.forceUpdate();
+	
+	QVERIFY(obj.getExtent().width() < 0.01);
+}
 
 /*
  * We don't need a real GUI window.
