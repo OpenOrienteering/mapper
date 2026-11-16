@@ -257,7 +257,7 @@ bool TemplateTrack::loadTemplateFileImpl()
 		return false;
 	}
 	
-	if (!track_crs_spec.isEmpty() && track_crs_spec != Georeferencing::geographic_crs_spec)
+	if (!track_crs_spec.isEmpty() && track_crs_spec != Georeferencing::geographic_crs_spec && track_crs_spec != Georeferencing::legacy_geographic_crs_spec)
 	{
 		setErrorString(tr("This template must be loaded with GDAL/OGR."));
 		return false;
