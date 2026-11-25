@@ -3,12 +3,12 @@
 <notes></notes>
 <georeferencing scale="15000"><projected_crs id="Local"/></georeferencing>
 <colors count="6">
-<color priority="0" name="Purple" c="0.2" m="1" y="0" k="0" opacity="1"><spotcolors><namedcolor>PURPLE</namedcolor></spotcolors><cmyk method="custom"/><rgb method="cmyk" r="0.8" g="0" b="1"/></color>
-<color priority="1" name="Black for control descriptions" c="0" m="0" y="0" k="1" opacity="1"><spotcolors knockout="true"><component factor="1" spotcolor="5"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="0" g="0" b="0"/></color>
-<color priority="2" name="White above framing" c="0" m="0" y="0" k="0" opacity="1"><spotcolors knockout="true"><component factor="0" spotcolor="5"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="1" g="1" b="1"/></color>
-<color priority="3" name="Black for framing" c="0" m="0" y="0" k="1" opacity="1"><spotcolors knockout="true"><component factor="1" spotcolor="5"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="0" g="0" b="0"/></color>
-<color priority="4" name="White below framing" c="0" m="0" y="0" k="0" opacity="1"><spotcolors knockout="true"><component factor="0" spotcolor="5"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="1" g="1" b="1"/></color>
-<color priority="5" name="Black" c="0" m="0" y="0" k="1" opacity="1"><spotcolors knockout="true"><namedcolor>BLACK</namedcolor></spotcolors><cmyk method="custom"/><rgb method="cmyk" r="0" g="0" b="0"/></color>
+<color id="1" priority="0" name="Purple" c="0.2" m="1" y="0" k="0" opacity="1"><spotcolors><namedcolor>PURPLE</namedcolor></spotcolors><cmyk method="custom"/><rgb method="cmyk" r="0.8" g="0" b="1"/></color>
+<color id="2" priority="1" name="Black for control descriptions" c="0" m="0" y="0" k="1" opacity="1"><spotcolors knockout="true"><component factor="1" spotcolor="5"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="0" g="0" b="0"/></color>
+<color id="3" priority="2" name="White above framing" c="0" m="0" y="0" k="0" opacity="1"><spotcolors knockout="true"><component factor="0" spotcolor="5"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="1" g="1" b="1"/></color>
+<color id="4" priority="3" name="Black for framing" c="0" m="0" y="0" k="1" opacity="1"><spotcolors knockout="true"><component factor="1" spotcolor="5"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="0" g="0" b="0"/></color>
+<color id="5" priority="4" name="White below framing" c="0" m="0" y="0" k="0" opacity="1"><spotcolors knockout="true"><component factor="0" spotcolor="5"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="1" g="1" b="1"/></color>
+<color id="6" priority="5" name="Black" c="0" m="0" y="0" k="1" opacity="1"><spotcolors knockout="true"><namedcolor>BLACK</namedcolor></spotcolors><cmyk method="custom"/><rgb method="cmyk" r="0" g="0" b="0"/></color>
 </colors>
 <barrier version="6" required="0.6.0">
 <symbols count="209" id="Course_Design">

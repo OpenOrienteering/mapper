@@ -96,6 +96,7 @@ public:
 - For writing, drop compatibility with Mapper versions before 0.9.
 - Use the streaming variant when writing `barrier` elements.
 - Stop writing text object box sizes to the coordinates stream.
+- Use the stable color id to reference colors from symbols.
 
 
 \subsection version-9  Version 9
@@ -108,6 +109,7 @@ public:
 - 2019-10-02 Added a text symbol `rotatable` property. This must be exported as
              `true` now when the text symbol is rotatable, but default to `true`
              when reading previous versions of the format.
+- 2023-03-23 Added a stable id number to colors.
 
 
 \subsection version-8 Version 8
