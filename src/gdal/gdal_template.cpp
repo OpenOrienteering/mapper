@@ -138,6 +138,8 @@ bool GdalTemplate::loadTemplateFileImpl()
 				return false;
 			}
 		}
+		else
+			return false;
 	}
 	
 	// Duplicated from TemplateImage, for compatibility
