@@ -158,11 +158,17 @@ public:
 
 
 /**
- * The structure returned when looking for closest coordinates on a path.
+ * The structure returned when looking for the closest coordinates on a path.
+ * The tangent element is defined even on corners and line ends. Following the
+ * intuitive view, the tangent line touches the corner, dividing the plane into
+ * the part with the corner and the part without it. At the line ends, the
+ * "tangent" is the direction of the neighboring segment. The "pseudo tangent"
+ * is generated to define the direction for mouse drag actions.
  */
 struct ClosestPathCoord
 {
 	PathCoord path_coord;
+	MapCoordF tangent;
 	double distance_squared;
 };
 

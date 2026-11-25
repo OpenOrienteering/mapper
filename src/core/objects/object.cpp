@@ -1160,7 +1160,7 @@ ClosestPathCoord PathObject::findClosestPointTo(
 	
 	using distance_type = decltype(ClosestPathCoord::distance_squared);
 	return std::accumulate(begin(path_parts), end(path_parts),
-	                       ClosestPathCoord { {}, std::numeric_limits<distance_type>::max() },
+	                       ClosestPathCoord { {}, {}, std::numeric_limits<distance_type>::max() },
 	                       op);
 }
 
