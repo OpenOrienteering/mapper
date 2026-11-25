@@ -1114,6 +1114,10 @@ void Map::ensureVisibilityOfSelectedObjects(SelectionVisibility visibility)
 					widget->ensureVisibilityOfRect(rect, MapWidget::DiscreteZoom);
 				break;
 				
+			case CenterFullVisibility:
+				widget->ensureVisibilityOfRect(rect, MapWidget::DiscreteZoom, true);
+				break;
+				
 			case IgnoreVisibilty:
 				break; // Do nothing
 				

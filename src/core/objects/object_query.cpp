@@ -1,6 +1,7 @@
 /*
  *    Copyright 2016 Mitchell Krome
  *    Copyright 2017-2024 Kai Pastor
+ *    Copyright 2026 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -32,7 +33,6 @@
 #include <QChar>
 #include <QLatin1Char>
 #include <QLatin1String>
-#include <QString>
 #include <QVarLengthArray>
 
 #include "core/map.h"
@@ -146,7 +146,7 @@ public:
  * Create a cheap placeholder ObjectQuery.
  * 
  * During object query parsing, operands right of operators are unknown
- * at construction time. However, ObjectQuery does not allowed to construct
+ * at construction time. However, ObjectQuery does not allow to construct
  * logical query instances with invalid operands. This function creates valid
  * placeholders which can be replaced with an invalid operand in a second step.
  */
@@ -210,7 +210,7 @@ ObjectQuery::ObjectQuery(const ObjectQuery& query)
 	{
 		; // nothing
 	}
-	else if (op < 16)
+	else if (IsLogicalOperator(op))
 	{
 		new (&subqueries) LogicalOperands(query.subqueries);
 	}
@@ -221,6 +221,10 @@ ObjectQuery::ObjectQuery(const ObjectQuery& query)
 	else if (op == ObjectQuery::OperatorSymbol)
 	{
 		symbol = query.symbol;
+	}
+	else if (op == ObjectQuery::OperatorDynamic)
+	{
+		dynamic_query = query.dynamic_query;
 	}
 }
 
@@ -249,7 +253,7 @@ ObjectQuery& ObjectQuery::operator=(ObjectQuery&& proto) noexcept
 		return *this;
 	
 	reset();
-	consume(std::move(proto));	
+	consume(std::move(proto));
 	return *this;
 }
 
@@ -266,10 +270,8 @@ ObjectQuery::ObjectQuery(const QString& key, ObjectQuery::Operator op, const QSt
 {
 	// Can't have an empty key (but can have empty value)
 	// Must be a key/value operator
-	Q_ASSERT(op >= 16);
-	Q_ASSERT(op <= 18);
-	if (op < 16 || op > 18
-	    || key.length() == 0)
+	Q_ASSERT(IsTagOperator(op));	// 16..18
+	if (!IsTagOperator(op) || key.length() == 0)
 	{
 		reset();
 	}
@@ -280,12 +282,10 @@ ObjectQuery::ObjectQuery(ObjectQuery::Operator op, const QString& value)
 : op { op }
 , tags { {}, value }
 {
-	// Can't have an empty key (but can have empty value)
-	// Must be a key/value operator
-	Q_ASSERT(op >= 19);
-	Q_ASSERT(op <= 20);
-	if (op < 19 || op > 20
-	    || value.length() == 0)
+	// Can't have an empty value (but can have empty key)
+	// Must be a value operator
+	Q_ASSERT(IsValueOperator(op));	// 19..20
+	if (!IsValueOperator(op) || value.length() == 0)
 	{
 		reset();
 	}
@@ -298,10 +298,8 @@ ObjectQuery::ObjectQuery(const ObjectQuery& first, ObjectQuery::Operator op, con
 {
 	// Both sub-queries must be valid.
 	// Must be a logical operator
-	Q_ASSERT(op >= 1);
-	Q_ASSERT(op <= 3);
-	if (op < 1 || op > 3
-	    || !first || !second)
+	Q_ASSERT(IsLogicalOperator(op));	// 1..3
+	if (!IsLogicalOperator(op) || !first || !second)
 	{
 		reset();
 	}
@@ -319,10 +317,8 @@ ObjectQuery::ObjectQuery(ObjectQuery&& first, ObjectQuery::Operator op, ObjectQu
 {
 	// Both sub-queries must be valid.
 	// Must be a logical operator
-	Q_ASSERT(op >= 1);
-	Q_ASSERT(op <= 3);
-	if (op < 1 || op > 3
-	    || !first || !second)
+	Q_ASSERT(IsLogicalOperator(op));	// 1..3
+	if (!IsLogicalOperator(op) || !first || !second)
 	{
 		reset();
 	}
@@ -337,6 +333,14 @@ ObjectQuery::ObjectQuery(ObjectQuery&& first, ObjectQuery::Operator op, ObjectQu
 ObjectQuery::ObjectQuery(const Symbol* symbol) noexcept
 : op { ObjectQuery::OperatorSymbol }
 , symbol { symbol }
+{
+	// nothing else
+}
+
+
+ObjectQuery::ObjectQuery(const DynamicObjectQuery* dynamic_query) noexcept
+: op { ObjectQuery::OperatorDynamic }
+, dynamic_query { dynamic_query }
 {
 	// nothing else
 }
@@ -385,6 +389,10 @@ QString ObjectQuery::labelFor(ObjectQuery::Operator op)
 		//: Very short label
 		return tr("Symbol");
 		
+	case OperatorDynamic:
+		//: Very short label
+		return tr("Dynamic");
+		
 	case OperatorInvalid:
 		//: Very short label
 		return tr("invalid");
@@ -392,7 +400,6 @@ QString ObjectQuery::labelFor(ObjectQuery::Operator op)
 	
 	Q_UNREACHABLE();
 }
-
 
 
 bool ObjectQuery::operator()(const Object* object) const
@@ -427,7 +434,7 @@ bool ObjectQuery::operator()(const Object* object) const
 		return false;
 	case OperatorObjectText:
 		if (object->getType() == Object::Text)
-		    return static_cast<const TextObject*>(object)->getText().contains(tags.value, Qt::CaseInsensitive);
+			return static_cast<const TextObject*>(object)->getText().contains(tags.value, Qt::CaseInsensitive);
 		return false;
 		
 	case OperatorAnd:
@@ -439,6 +446,10 @@ bool ObjectQuery::operator()(const Object* object) const
 		
 	case OperatorSymbol:
 		return object->getSymbol() == symbol;
+		
+	case OperatorDynamic:
+		Q_ASSERT(dynamic_query);
+		return DynamicObjectQueryManager::performDynamicQuery(object, dynamic_query);
 		
 	case OperatorInvalid:
 		return false;
@@ -452,14 +463,13 @@ bool ObjectQuery::operator()(const Object* object) const
 const ObjectQuery::LogicalOperands* ObjectQuery::logicalOperands() const
 {
 	const LogicalOperands* result = nullptr;
-	if (op >= 1 && op <= 3)
+	if (IsLogicalOperator(op))
 	{
 		result = &subqueries;
 	}
 	else
 	{
-		Q_ASSERT(op >= 1);
-		Q_ASSERT(op <= 3);
+		Q_ASSERT(IsLogicalOperator(op));
 	}
 	return result;
 }
@@ -468,14 +478,13 @@ const ObjectQuery::LogicalOperands* ObjectQuery::logicalOperands() const
 const ObjectQuery::StringOperands* ObjectQuery::tagOperands() const
 {
 	const StringOperands* result = nullptr;
-	if (op >= 16 && op <= 20)
+	if (IsStringOperator(op))	// 16..20
 	{
 		result = &tags;
 	}
 	else
 	{
-		Q_ASSERT(op >= 16);
-		Q_ASSERT(op <= 20);
+		Q_ASSERT(IsStringOperator(op));
 	}
 	return result;
 }
@@ -538,6 +547,7 @@ QString ObjectQuery::toString() const
 		ret = QLatin1String("SYMBOL \"") + (symbol ? symbol->getNumberAsString() : QString{}) + QLatin1Char('\"');
 		break;
 		
+	case OperatorDynamic:	//TODO?
 	case OperatorInvalid:
 		// Default empty string is sufficient
 		break;
@@ -554,7 +564,7 @@ void ObjectQuery::reset()
 	{
 		; // nothing
 	}
-	else if (op < 16)
+	else if (IsLogicalOperator(op))
 	{
 		subqueries.~LogicalOperands();
 		op = ObjectQuery::OperatorInvalid;
@@ -568,6 +578,13 @@ void ObjectQuery::reset()
 	{
 		op = ObjectQuery::OperatorInvalid;
 	}
+	else if (op == ObjectQuery::OperatorDynamic)
+	{
+		Q_ASSERT(dynamic_query);
+		if (dynamic_query)
+			delete dynamic_query;
+		op = ObjectQuery::OperatorInvalid;
+	}
 }
 
 
@@ -579,7 +596,7 @@ void ObjectQuery::consume(ObjectQuery&& other)
 	{
 		; // nothing else
 	}
-	else if (op < 16)
+	else if (IsLogicalOperator(op))
 	{
 		new (&subqueries) ObjectQuery::LogicalOperands(std::move(other.subqueries));
 		other.subqueries.~LogicalOperands();
@@ -592,6 +609,10 @@ void ObjectQuery::consume(ObjectQuery&& other)
 	else if (op == ObjectQuery::OperatorSymbol)
 	{
 		symbol = other.symbol;
+	}
+	else if (op == ObjectQuery::OperatorDynamic)
+	{
+		dynamic_query = other.dynamic_query;
 	}
 	other.op = ObjectQuery::OperatorInvalid;
 }
@@ -626,6 +647,9 @@ bool operator==(const ObjectQuery& lhs, const ObjectQuery& rhs)
 		
 	case ObjectQuery::OperatorSymbol:
 		return lhs.symbol == rhs.symbol;
+		
+	case ObjectQuery::OperatorDynamic:
+		return lhs.dynamic_query == rhs.dynamic_query;
 		
 	case ObjectQuery::OperatorInvalid:
 		return false;
@@ -785,6 +809,11 @@ ObjectQuery ObjectQueryParser::parse(const QString& text)
 			}
 			getToken();
 		}
+		else if (token == TokenDynamicQuery && !*current)
+		{
+			*current = ObjectQuery{dynamic_token};
+			getToken();
+		}
 		else
 		{
 			// Invalid input
@@ -896,6 +925,27 @@ void ObjectQueryParser::getToken()
 			token = TokenAnd;
 		else if (token_text == QLatin1String("NOT"))
 			token = TokenNot;
+		else if (current == QLatin1Char('('))
+		{
+			int token_attributes_start = ++pos;
+			for ( ; pos < input.length(); ++pos)
+			{
+				if (input.at(pos) == QLatin1Char(')'))
+				{
+					token_attributes_text = input.mid(token_attributes_start, pos - token_attributes_start);
+					dynamic_token = dynamic_object_manager.parse(token_text, token_attributes_text); //TODO: make smartptr?
+					if (dynamic_token)
+					{
+						if (dynamic_token->IsValid())
+							token = TokenDynamicQuery;
+						else
+							delete dynamic_token;	// TODO: show information about failure?
+					}
+					++pos;
+					break;
+				}
+			}
+		}
 		else if (token_text == QLatin1String("SYMBOL"))
 			token = TokenSymbol;
 		else
