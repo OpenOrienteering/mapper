@@ -38,6 +38,8 @@
 
 namespace OpenOrienteering {
 
+class Map;
+
 
 /**
  * A GDAL image reader modeled like QImageReader.
@@ -69,7 +71,7 @@ public:
 	
 	QImage read();
 	
-	bool read(QImage* image);
+	bool read(QImage* image, const Map* map = nullptr);
 	
 	
 	// GDAL related API
@@ -84,6 +86,7 @@ public:
 	{
 		QVarLengthArray<int, 4> bands;
 		QSize size;
+		QSize block_size;
 		QImage::Format image_format = QImage::Format_Invalid;
 		std::function<void(QImage&)> postprocessing = GdalImageReader::noop;
 		int pixel_space = 1;   ///< The byte offset from one pixel to the next one.

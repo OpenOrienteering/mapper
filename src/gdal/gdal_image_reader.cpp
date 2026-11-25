@@ -28,6 +28,7 @@
 #include <QCoreApplication>
 #include <QImage>
 #include <QImageReader>
+#include <QPoint>
 #include <QRgb>
 #include <QSize>
 #include <QString>
@@ -39,6 +40,9 @@
 #include <ogr_api.h>
 #include <ogr_srs_api.h>
 
+#include "core/georeferencing.h"
+#include "core/map.h"
+#include "core/map_coord.h"
 #include "gdal/gdal_manager.h"
 
 
@@ -111,7 +115,7 @@ QImage GdalImageReader::read()
 	return image;
 }
 
-bool GdalImageReader::read(QImage* image)
+bool GdalImageReader::read(QImage* image, const Map* map)
 {
 	Q_ASSERT(image);
 	if (!image)
@@ -129,9 +133,35 @@ bool GdalImageReader::read(QImage* image)
 		return false;
 	}
 	
-	if (image->format() != raster.image_format || image->size() != raster.size)
+	auto offset = QPoint{};
+	auto const use_blocks = !raster.block_size.isEmpty();
+	if (use_blocks && map && map->getGeoreferencing().getState() == Georeferencing::Geospatial)
 	{
-		*image = QImage(raster.size, raster.image_format);
+		auto const geotransform = readGeoTransform();
+		Georeferencing data_georef;
+		data_georef.setProjectedCRS({}, geotransform.crs_spec);
+		data_georef.setTransformationDirectly(geotransform.transform.pixel_to_world);
+		if (data_georef.getState() == Georeferencing::Geospatial)
+		{
+			auto const ref_point = data_georef.toMapCoordF(map->getGeoreferencing().getGeographicRefPoint());
+			offset.rx() = int(ref_point.x() / raster.block_size.width()) * raster.block_size.width();
+			offset.ry() = int(ref_point.y() / raster.block_size.height()) * raster.block_size.height();
+			image->setOffset(offset);
+			
+			if (offset.x() < 0 || offset.x() >= raster.size.width()
+			    || offset.y() < 0 || offset.y() >= raster.size.height())
+			{
+				error_string = tr("Map reference point not covered by raster source.");
+				return false;
+			}
+		}
+	}
+	
+	auto const size = use_blocks ? raster.block_size : raster.size;
+	if (image->format() != raster.image_format || image->size() != size)
+	{
+		*image = QImage(size, raster.image_format);
+		image->setOffset(offset);
 	}
 	if (image->isNull())
 	{
@@ -143,12 +173,13 @@ bool GdalImageReader::read(QImage* image)
 		return false;
 	}
 	
+	
 	image->fill(Qt::white);
-	auto const width = raster.size.width();
-	auto const height = raster.size.height();
+	auto const width = size.width();
+	auto const height = size.height();
 	CPLErrorReset();
 	auto result = GDALDatasetRasterIO(dataset, GF_Read, 
-	                                  0, 0, width, height,
+	                                  offset.x(), offset.y(), width, height,
 	                                  image->bits() + raster.band_offset, width, height,
 	                                  GDT_Byte, raster.bands.count(), raster.bands.data(),
 	                                  raster.pixel_space, image->bytesPerLine(), raster.band_space);
@@ -269,6 +300,18 @@ GdalImageReader::RasterInfo GdalImageReader::readRasterInfo() const
 				raster.image_format = QImage::Format_RGB32;
 			}
 		}
+	}
+	
+	if (!raster.bands.empty())
+	{
+		auto raster_band = GDALGetRasterBand(dataset, raster.bands.front());
+		GDALGetBlockSize(raster_band, &raster.block_size.rwidth(), &raster.block_size.rheight());
+		if (raster.block_size == raster.size)
+			raster.block_size = {};
+	}
+	if (!raster.block_size.isEmpty())
+	{
+		qDebug("GdalTemplate block size: %d x %d", raster.block_size.width(), raster.block_size.height());
 	}
 	
 	return raster;
