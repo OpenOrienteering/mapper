@@ -328,6 +328,7 @@ namespace
 			{
 				QVERIFY(actual_part.getObject(i)->equals(expected_part.getObject(i), true));
 			}
+			QVERIFY(actual_part.isVisible() == expected_part.isVisible());
 		}
 		
 		// Object selection

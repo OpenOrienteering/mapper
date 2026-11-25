@@ -588,8 +588,9 @@ public:
 	 * Returns a vector of the same size as the symbol list, where each element
 	 * is set to true if there is at least one object which uses this symbol or
 	 * a derived (combined) symbol.
+	 * If exclude_hidden_objects equals true, hidden objects are ignored.
 	 */
-	void determineSymbolsInUse(std::vector<bool>& out) const;
+	void determineSymbolsInUse(std::vector<bool>& out, bool exclude_hidden_objects = false) const;
 	
 	/**
 	 * Adds to the given symbol bitfield all other symbols which are needed to
@@ -814,6 +815,11 @@ public:
 	int getNumParts() const;
 	
 	/**
+	 * Returns the number of visible map parts in this map.
+	 */
+	int getNumVisibleParts() const;
+	
+	/**
 	 * Returns the i-th map part.
 	 */
 	MapPart* getPart(std::size_t i) const;
@@ -883,10 +889,19 @@ public:
 	 * Does not change the object selection.
 	 * 
 	 * Makes the destination part the current part when the source part is the current part.
+	 * If the destination part is hidden, changes to the next visible part instead.
 	 * 
 	 * @return The index of the first object which has been reassigned.
 	 */
 	int mergeParts(std::size_t source, std::size_t destination);
+	
+	/**
+	 * Returns the index of the current map part if the part is visible.
+	 * Otherwise does an upward search with wrap-around for the next visible part.
+	 * 
+	 * @return The index of the current or next visible part.
+	 */
+	std::size_t findVisiblePart() const;
 	
 	
 	// Objects

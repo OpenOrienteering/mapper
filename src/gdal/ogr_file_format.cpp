@@ -2012,7 +2012,7 @@ bool OgrFileExport::exportImplementation()
 				layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPoint);
 			}
 			if (layer != nullptr)
-				addPointsToLayer(layer, [symbol](auto object) { return object->getSymbol() == symbol; });
+				addPointsToLayer(layer, [symbol](auto object) { return object->getSymbol() == symbol && object->isVisible(); });
 		}
 	}
 	for (auto symbol : symbols)
@@ -2025,7 +2025,7 @@ bool OgrFileExport::exportImplementation()
 				layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPoint);
 			}
 			if (layer != nullptr)
-				addTextToLayer(layer, [symbol](auto object) { return object->getSymbol() == symbol; });
+				addTextToLayer(layer, [symbol](auto object) { return object->getSymbol() == symbol && object->isVisible(); });
 		}
 	}
 	
@@ -2046,7 +2046,7 @@ bool OgrFileExport::exportImplementation()
 				layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbLineString);
 			}
 			if (layer != nullptr)
-				addLinesToLayer(layer, [symbol](auto object) { return object->getSymbol() == symbol; });
+				addLinesToLayer(layer, [symbol](auto object) { return object->getSymbol() == symbol && object->isVisible(); });
 		}
 	}
 	
@@ -2066,7 +2066,7 @@ bool OgrFileExport::exportImplementation()
 				layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPolygon);
 			}
 			if (layer != nullptr)
-				addAreasToLayer(layer, [symbol](auto object) { return object->getSymbol() == symbol; });
+				addAreasToLayer(layer, [symbol](auto object) { return object->getSymbol() == symbol && object->isVisible(); });
 		}
 	}
 	
@@ -2077,7 +2077,7 @@ bool OgrFileExport::exportImplementation()
 std::vector<const Symbol*> OgrFileExport::symbolsForExport() const
 {
 	std::vector<bool> symbols_in_use;
-	map->determineSymbolsInUse(symbols_in_use);
+	map->determineSymbolsInUse(symbols_in_use, /*exclude_hidden_objects =*/ true);
 	
 	const auto num_symbols = map->getNumSymbols();
 	std::vector<const Symbol*> symbols;
