@@ -47,24 +47,38 @@ namespace OpenOrienteering {
 
 
 /**
- * A utility which encapsulates PROJ API variants and resource management.
+ * Utilities which encapsulate PROJ API variants and resource management.
  */
+struct ProjCRS
+{
+	ProjCRS(const ProjCRS&) = delete;
+	ProjCRS(ProjCRS&& other) noexcept;
+	ProjCRS(const QString& crs_spec);
+	~ProjCRS();
+
+	ProjCRS& operator=(const ProjCRS& other) = delete;
+	ProjCRS& operator=(ProjCRS&& other) noexcept;
+
+	bool isValid() const noexcept;
+	bool isGeographic() const;
+private:
+	ProjTransformData* pj = nullptr;
+
+	friend struct ProjTransform;
+};
+
 struct ProjTransform
 {
-	ProjTransform() noexcept = default;
+	ProjTransform() noexcept;
 	ProjTransform(const ProjTransform&) = delete;
 	ProjTransform(ProjTransform&& other) noexcept;
-	ProjTransform(const QString& crs_spec);
+	ProjTransform(const QString& crs_spec, const QString& geographic_crs_spec);
 	~ProjTransform();
 	
 	ProjTransform& operator=(const ProjTransform& other) = delete;
 	ProjTransform& operator=(ProjTransform&& other) noexcept;
 	
-	/// Create a PROJ CRS object.
-	static ProjTransform crs(const QString& crs_spec);
-	
 	bool isValid() const noexcept;
-	bool isGeographic() const;
 	
 	QPointF forward(const LatLon& lat_lon, bool* ok) const;
 	LatLon inverse(const QPointF& projected, bool* ok) const;
@@ -72,10 +86,8 @@ struct ProjTransform
 	QString errorText() const;
 	
 private:
-	ProjTransform(ProjTransformData* pj) noexcept;
-	
 	ProjTransformData* pj = nullptr;
-	
+	ProjCRS geographic_crs;
 };
 
 
@@ -133,7 +145,7 @@ public:
 	/**
 	 * A shared PROJ specification of a WGS84 geographic CRS.
 	 */
-	static const QString geographic_crs_spec;
+	static const QString ballpark_geographic_crs_spec;
 	
 	
 	/**
@@ -427,6 +439,38 @@ public:
 	 */
 	bool setProjectedCRS(const QString& id, QString spec, std::vector< QString > params = std::vector<QString>());
 	
+	/** 
+	 * Returns the specification of the WGS84-based geographic coordinate
+	 * reference system (CRS) used by Georeferencing.
+	 * This is the target CRS of the toGeographicCoords methods,
+	 * and also the source CRS when applicable.
+	 * @return a PROJ specification of the geographic CRS
+	 */
+	const QString& getGeographicCRSSpec() const { return realization_crs_spec.isEmpty()
+	                                                     ? ballpark_geographic_crs_spec
+	                                                     : realization_crs_spec; }
+
+	/** 
+	 * Returns whether transformations use loose accuracy around the WGS84
+	 * datum for explicitly requested compatibility with older releases of Mapper.
+	 * @return true if transformations are set compatible, false otherwise
+	 */
+	bool isDatumBallpark() const { return explicit_realization && realization_crs_spec.isEmpty(); }
+	
+	/**
+	 * Sets the coordinate reference system (CRS) of the geographical coordinates,
+	 * to either the ballpark CRS or the GNSS CRS.
+	 *
+	 * This setting determines the "pivot" coordinates used to transform one pair
+	 * of projected coordinates to another, also the transformation of map
+	 * coordinates to geographical, also transformation of GNSS coordinates to
+	 * map coordinates.
+	 *
+	 * @param ballpark whether to make the datum "ballpark", otherwise make it a realization of WGS84
+	 * @return true if the resulting transformation is valid, false otherwise
+	 */
+	bool setDatumBallpark(bool ballpark);
+	
 	/**
 	 * Calculates the convergence at the reference point.
 	 * 
@@ -480,7 +524,8 @@ public:
 	LatLon toGeographicCoords(const MapCoordF& map_coords, bool* ok = 0) const;
 	
 	/**
-	 * Transforms CRS coordinates to geographic coordinates (lat/lon).
+	 * Transforms CRS coordinates to geographic coordinates (lat/lon)
+	 * using a WGS84 datum.
 	 */
 	LatLon toGeographicCoords(const QPointF& projected_coords, bool* ok = 0) const;
 	
@@ -632,6 +677,11 @@ private:
 	void setScaleFactors(double combined_scale_factor, double auxiliary_scale_factor);
 	void setDeclinationAndGrivation(double declination, double grivation);
 	
+	/**
+	 * PROJ specification of an accurate realization of the WGS84 geographic CRS.
+	 */
+	static const QString gnss_crs_spec;
+	
 	State state;
 	
 	unsigned int scale_denominator;
@@ -672,6 +722,9 @@ private:
 	QString projected_crs_id;
 	QString projected_crs_spec;
 	std::vector< QString > projected_crs_parameters;
+
+	QString realization_crs_spec;
+	bool explicit_realization;
 	
 	ProjTransform proj_transform;
 	
