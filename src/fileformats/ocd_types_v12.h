@@ -63,11 +63,11 @@ namespace Ocd
 		qint32  color;
 		quint16 line_width;
 		quint16 diam_flags;
-		quint32 server_object_id;
+		qint32 server_object_id;
 		quint32 height;
-		quint64 creation_date;
+		double  creation_date;
 		quint32 multi_rep_id;
-		quint64 modification_date;
+		double  modification_date;
 		quint32 num_items;
 		quint16 num_text;
 		quint16 object_string_length;
