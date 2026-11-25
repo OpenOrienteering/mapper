@@ -66,7 +66,10 @@ void ScaleTool::updateStatusText()
 {
 	if (editingInProgress())
 	{
-		setStatusBarText(tr("<b>Scaling:</b> %1%").arg(QLocale().toString(scaling_factor * 100, 'f', 1)));
+		if (uniform_scaling)
+			setStatusBarText(tr("<b>Scaling:</b> %1%").arg(QLocale().toString(qSqrt(scaling_factor.x()*scaling_factor.x() + scaling_factor.y()*scaling_factor.y()) * 100 / qSqrt(2), 'f', 1)));
+		else
+			setStatusBarText(tr("<b>Scaling:</b> x: %1% y: %2%").arg(QLocale().toString(scaling_factor.x() * 100, 'f', 1), QLocale().toString(scaling_factor.y() * 100, 'f', 1)));
 	}
 	else
 	{
@@ -75,7 +78,8 @@ void ScaleTool::updateStatusText()
 			status_text = tr("<b>Click</b>: Set the scaling center. ") +
 			              status_text +
 			              tr("<b>%1</b>: Switch to individual object scaling. ").arg(ModifierKey::control());
-
+		if (uniform_scaling)
+			status_text = status_text + tr("<b>%1</b>: Enable non-uniform scaling. ").arg(ModifierKey::shift());
 		setStatusBarText(status_text);
 	}
 }
@@ -93,11 +97,19 @@ void ScaleTool::clickRelease()
 
 void ScaleTool::dragStart()
 {
-	// WARNING: reference_length may become 0.
-	reference_length = (click_pos_map - scaling_center).length();
+	scaling_start_point = click_pos_map;
 	startEditing(map()->selectedObjects());
 }
 
+double absmax(double v, double max)
+{
+	// a bipolar qMax() equivalent that returns v when v is larger than +max,
+	// or smaller than -max, otherwise returns +max or -max depending on sign of v
+	if (v >= 0)
+		return qMax(v, max);
+	else
+		return qMin(v, -max);
+}
 
 void ScaleTool::dragMove()
 {
@@ -107,18 +119,31 @@ void ScaleTool::dragMove()
 	// in order to avoid extreme values and division by zero.
 	auto minimum_length = 1.0 / cur_map_widget->getMapView()->getZoom();
 	
-	auto scaling_length = (cur_pos_map - scaling_center).length();
-	scaling_factor = qMax(minimum_length, scaling_length) / qMax(minimum_length, reference_length);
+	auto scaling_point = cur_pos_map - scaling_center;
+	auto reference_point = scaling_start_point - scaling_center;
+
+	if (uniform_scaling)
+	{
+		// scaling_point and reference_point are converted to contain the respective vector length in both x and y components,
+		// instead of having independent x and y components.
+		scaling_point.setX(qSqrt(scaling_point.x()*scaling_point.x() + scaling_point.y()*scaling_point.y()));
+		scaling_point.setY(scaling_point.x());
+		reference_point.setX(qSqrt(reference_point.x()*reference_point.x() + reference_point.y()*reference_point.y()));
+		reference_point.setY(reference_point.x());
+	}
+
+	scaling_factor.setX(absmax(scaling_point.x(), minimum_length) / absmax(reference_point.x(), minimum_length));
+	scaling_factor.setY(absmax(scaling_point.y(), minimum_length) / absmax(reference_point.y(), minimum_length));
 
 	if (using_scaling_center)
 	{
 		for (auto* object : editedObjects())
-			object->scale(scaling_center, scaling_factor);		
+			object->scale(scaling_center, scaling_factor.x(), scaling_factor.y());
 	}
 	else
 	{
 		for (auto* object : editedObjects())
-			object->scale(MapCoordF(object->getExtent().center()), scaling_factor);
+			object->scale(MapCoordF(object->getExtent().center()), scaling_factor.x(), scaling_factor.y());
 	}
 	
 	updatePreviewObjects();
@@ -142,6 +167,11 @@ bool ScaleTool::keyPressEvent(QKeyEvent* event)
 		updateStatusText();
 		updateDirtyRect();
 		return false; // not consuming Ctrl
+	case Qt::Key_Shift:
+		uniform_scaling = false;
+		updateStatusText();
+		updateDirtyRect();
+		return false;
 	}
 
 	return false;
@@ -157,6 +187,11 @@ bool ScaleTool::keyReleaseEvent(QKeyEvent* event)
 		updateStatusText();
 		updateDirtyRect();
 		return false; // not consuming Ctrl
+	case Qt::Key_Shift:
+		uniform_scaling = true;
+		updateStatusText();
+		updateDirtyRect();
+		return false;
 	}
 
 	return false;
