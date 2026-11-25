@@ -1,7 +1,7 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
  *    Copyright 2013, 2014 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2020, 2024 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,7 @@
 
 #include "file_import_export.h"
 
+#include <algorithm>
 #include <exception>
 #include <memory>
 #include <utility>
@@ -81,6 +82,13 @@ QVariant ImportExport::option(const QString& name) const
 void ImportExport::setOption(const QString& name, const QVariant& value)
 {
 	options[name] = value;
+}
+
+
+void ImportExport::addWarningOnce(const QString& str)
+{
+	if (std::find(warnings_.begin(), warnings_.end(), str) == warnings_.end())
+		warnings_.emplace_back(str);
 }
 
 
