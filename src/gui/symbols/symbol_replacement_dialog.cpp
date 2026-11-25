@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2017-2020, 2024 Kai Pastor
+ *    Copyright 2017-2020, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -31,6 +31,7 @@
 #include <QtGlobal>
 #include <QAbstractItemView>
 #include <QAction>
+#include <QActionGroup>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QColor>
@@ -51,7 +52,6 @@
 #include <QPushButton>
 #include <QSaveFile>
 #include <QSpacerItem>
-#include <QString>
 #include <QStringList>
 #include <QTableWidget>
 #include <QTableWidgetItem>
@@ -103,7 +103,7 @@ SymbolReplacementDialog::SymbolReplacementDialog(QWidget* parent, Map& object_ma
 	{
 		setWindowTitle(tr("Replace symbol set"));
 		form_layout = new QFormLayout();
-		QLabel* desc_label = new QLabel(tr("Configure how the symbols should be replaced, and which."));
+		auto* desc_label = new QLabel(tr("Configure how the symbols should be replaced, and which."));
 		form_layout->addRow(desc_label);
 		form_layout->addItem(Util::SpacerItem::create(this));
 		import_all_check = new QCheckBox(tr("Import all new symbols, even if not used as replacement"));
@@ -132,10 +132,16 @@ SymbolReplacementDialog::SymbolReplacementDialog(QWidget* parent, Map& object_ma
 		
 		horizontal_headers << tr("Original") << tr("Replacement");
 		
-		auto action = mapping_menu->addAction(tr("Match replacement symbols by symbol number"));
-		connect(action, &QAction::triggered, this, &SymbolReplacementDialog::matchByNumber);
-		action = mapping_menu->addAction(tr("Match by symbol name"));
-		connect(action, &QAction::triggered, this, &SymbolReplacementDialog::matchByName);
+		match_by_number_action = mapping_menu->addAction(tr("Match replacement symbols by symbol number"));
+		match_by_number_action->setCheckable(true);
+		connect(match_by_number_action, &QAction::triggered, this, &SymbolReplacementDialog::matchByNumber);
+		match_by_name_action = mapping_menu->addAction(tr("Match by symbol name"));
+		match_by_name_action->setCheckable(true);
+		match_by_name_action->setChecked(true);
+		connect(match_by_name_action, &QAction::triggered, this, &SymbolReplacementDialog::matchByName);
+		auto* match_by_group = new QActionGroup(this);
+		match_by_group->addAction(match_by_number_action);
+		match_by_group->addAction(match_by_name_action);
 	}
 	else
 	{
@@ -151,6 +157,7 @@ SymbolReplacementDialog::SymbolReplacementDialog(QWidget* parent, Map& object_ma
 	mapping_table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 	mapping_table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
 	mapping_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
+	connect(mapping_table, &QTableWidget::cellChanged, this, &SymbolReplacementDialog::clearMatchCheckmarks);
 	
 	auto action = mapping_menu->addAction(tr("Clear replacements"));
 	connect(action, &QAction::triggered, this, &SymbolReplacementDialog::resetReplacements);
@@ -184,28 +191,28 @@ SymbolReplacementDialog::SymbolReplacementDialog(QWidget* parent, Map& object_ma
 SymbolReplacementDialog::~SymbolReplacementDialog() = default;
 
 
-
+// slot
 void SymbolReplacementDialog::showHelp()
 {
 	Util::showHelp(this, "symbol_replace_dialog.html");
 }
 
 
-
+// slot
 void SymbolReplacementDialog::matchByName()
 {
 	symbol_rules.matchQuerySymbolName(symbol_set);
 	updateMappingTable();
 }
 
-
+// slot
 void SymbolReplacementDialog::matchByNumber()
 {
 	symbol_rules.matchQuerySymbolNumber(symbol_set);
 	updateMappingTable();
 }
 
-
+// slot
 void SymbolReplacementDialog::resetReplacements()
 {
 	for (auto& item : symbol_rules)
@@ -213,11 +220,24 @@ void SymbolReplacementDialog::resetReplacements()
 		item.symbol = nullptr;
 		item.type = SymbolRule::NoAssignment;
 	}
+	clearMatchCheckmarks();
 	updateMappingTable();
 }
 
+// slot
+void SymbolReplacementDialog::clearMatchCheckmarks()
+{
+	if (react_to_changes)
+	{
+		if (match_by_number_action)
+			match_by_number_action->setChecked(false);
+		if (match_by_name_action)
+			match_by_name_action->setChecked(false);
+	}
+}
 
 
+// slot
 void SymbolReplacementDialog::openCrtFile()
 {
 	auto const dir = QLatin1String{"data:/symbol sets"};
@@ -231,7 +251,7 @@ void SymbolReplacementDialog::openCrtFile()
 	}
 }
 
-
+// slot
 bool SymbolReplacementDialog::saveCrtFile()
 {
 	/// \todo Choose user-writable directory.
@@ -298,6 +318,7 @@ void SymbolReplacementDialog::updateMappingTable()
 	if (!mapping_table)
 		return;
 	
+	react_to_changes = false;
 	mapping_table->setUpdatesEnabled(false);
 	
 	mapping_table->clearContents();
@@ -444,6 +465,7 @@ void SymbolReplacementDialog::updateMappingTable()
 	}
 	
 	mapping_table->setUpdatesEnabled(true);
+	react_to_changes = true;
 }
 
 
