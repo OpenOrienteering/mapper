@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2020 Kai Pastor
+ *    Copyright 2020, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,11 +23,12 @@
 #define OPENORIENTEERING_TEMPLATE_LIST_WIDGET_H
 
 #include <memory>
+#include <vector>
 
 #include <Qt>
-#include <QWidget>
 #include <QObject>
 #include <QString>
+#include <QWidget>
 
 #include "core/map_view.h"
 
@@ -60,6 +61,7 @@ class TemplateListWidget : public QWidget
 	
 public:
 	static std::unique_ptr<Template> showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController& controller);
+	static std::vector<std::unique_ptr<Template>> showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController& controller, bool multiple_templates);
 	
 	~TemplateListWidget() override;
 	
@@ -179,4 +181,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_TEMPLATE_LIST_WIDGET_H

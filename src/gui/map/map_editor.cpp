@@ -2352,12 +2352,18 @@ void MapEditorController::showTemplateWindow(bool show)
 
 void MapEditorController::openTemplateClicked()
 {
-	auto new_template = TemplateListWidget::showOpenTemplateDialog(window, *this);
-	if (new_template)
+	auto new_templates = TemplateListWidget::showOpenTemplateDialog(window, *this, true);
+	if (!new_templates.empty())
 	{
-		map->addTemplate(-1, std::move(new_template));
-		hideAllTemplates(false);
-		showTemplateWindow(true);
+		for (auto& new_template : new_templates)
+		{
+			if (new_template)
+			{
+				map->addTemplate(-1, std::move(new_template));
+				hideAllTemplates(false);
+				showTemplateWindow(true);
+			}
+		}
 	}
 }
 
