@@ -1,5 +1,6 @@
 /*
  *    Copyright 2020-2021 Kai Pastor
+ *    Copyright 2024 Semyon Yakimov
  *
  *    This file is part of OpenOrienteering.
  *
@@ -31,19 +32,16 @@ namespace OpenOrienteering {
 
 class LatLon;
 class Map;
-class MapCoord;
+class MapCoordF;
 class MapView;
 class PathObject;
-class SimpleCourseExport;
+class CourseExport;
+class ControlPoint;
 
 
 /**
- * This class generates KML course files for MapRunF.
- * 
- * This export handles a single path object and outputs placemarks for start
- * (S1), finish (F1), and controls in between. Event name, course name, and
- * the code number of the first control are taken from transient map properties
- * in collaboration with the SimpleCourseExport class.
+ * This class generates KML course files
+ * in collaboration with the CourseExport class.
  */
 class KmlCourseExport : public Exporter
 {
@@ -58,17 +56,17 @@ public:
 protected:
 	bool exportImplementation() override;
 	
-	void writeKml(const PathObject& object);
+	void writeKml(const std::vector<ControlPoint>& controls);
 	
-	void writeKmlPlacemarks(const std::vector<MapCoord>& coords);
+	void writeKmlPlacemarks(const std::vector<ControlPoint>& controls);
 	
-	void writeKmlPlacemark(const MapCoord& coord, const QString& name, const QString& description);
+	void writeKmlPlacemark(const MapCoordF& coord, const QString& name, const QString& description = QString());
 	
 	void writeCoordinates(const LatLon& latlon);
 	
 private:
 	QXmlStreamWriter* xml = nullptr;
-	SimpleCourseExport* simple_course = nullptr;
+	CourseExport* course = nullptr;
 };
 
 
