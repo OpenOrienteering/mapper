@@ -125,7 +125,8 @@ void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, boo
 		templates_element.writeAttribute(literal::hidden, all_templates_hidden);
 		if (template_details)
 		{
-			templates_element.writeAttribute(XmlStreamLiteral::count, template_visibilities.size());
+			if (XmlElementWriter::write_count)
+				templates_element.writeAttribute(XmlStreamLiteral::count, template_visibilities.size());
 			for (auto entry : template_visibilities)
 			{
 				auto const index = map->findTemplateIndex(entry.temp);

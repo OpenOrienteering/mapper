@@ -40,6 +40,7 @@
 #include <QScopedPointer>
 #include <QSharedData>
 #include <QString>
+#include <QStringList>
 #include <QTransform>
 
 #include "core/map_coord.h"
@@ -51,6 +52,8 @@ class QIODevice;
 class QPainter;
 class QTranslator;
 class QWidget;
+class QXmlStreamReader;
+class QXmlStreamWriter;   // IWYU pragma: keep
 // IWYU pragma: no_forward_declare QRectF
 
 namespace OpenOrienteering {
@@ -93,6 +96,8 @@ friend class MapTest;
 friend class MapRenderables;
 friend class XMLFileImporter;
 friend class XMLFileExporter;
+friend class XMLDirectoryExporter;
+friend class XMLDirectoryImporter;
 public:
 	/** A set of selected objects represented by a std::set of object pointers. */
 	typedef std::set<Object*> ObjectSelection;
@@ -1556,6 +1561,21 @@ private:
 		MapColorSet(const MapColorSet& ) = delete;
 		
 		~MapColorSet();
+		
+		/**
+		 * Writes all colors contained inside the MapColorSet to
+		 * a &lt;colors&gt; element on a given XML stream.
+		 */
+		void save(QXmlStreamWriter& xml) const;
+		
+		/**
+		 * Loads all colors from a &lt;colors&gt; element of the given XML stream
+		 * into this set, and returns a list of warning messages.
+		 * The caller is expected to read the &lt;colors&gt; start element before
+		 * calling this function. The XML element layout must not be changed,
+		 * since it is shared with the map's XML file format.
+		 */
+		QStringList load(QXmlStreamReader& xml, Map& map);
 		
 		void insert(int pos, MapColor* color);
 		

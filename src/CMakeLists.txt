@@ -142,6 +142,7 @@ set(Mapper_Common_SRCS
   fileformats/ocd_parameter_stream_reader.cpp
   fileformats/ocd_types.cpp
   fileformats/simple_course_export.cpp
+  fileformats/xml_directory_format.cpp
   fileformats/xml_file_format.cpp
   
   gui/about_dialog.cpp

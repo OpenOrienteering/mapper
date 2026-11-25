@@ -206,7 +206,8 @@ void CombinedUndoStep::saveImpl(QXmlStreamWriter& xml) const
 	// From Mapper 0.6, use the same XML element and order as UndoManager.
 	// (A barrier element prevents older versions from loading this element.)
 	XmlElementWriter steps_element(xml, literal::steps);
-	steps_element.writeAttribute(XmlStreamLiteral::count, steps.size());
+	if (XmlElementWriter::write_count)
+		steps_element.writeAttribute(XmlStreamLiteral::count, steps.size());
 	for (const auto* step : steps)
 		step->save(xml);
 }
