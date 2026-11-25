@@ -109,6 +109,13 @@ const char* TemplatePlaceholder::getTemplateType() const
 	return original_type;
 }
 
+
+void TemplatePlaceholder::setGeoreferenced(bool value)
+{
+	is_georeferenced = value;
+}
+
+
 std::unique_ptr<Template> TemplatePlaceholder::makeActualTemplate() const
 {
 	auto maybe_open = true;

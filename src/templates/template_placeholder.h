@@ -65,6 +65,12 @@ public:
 	
 	
 	/**
+	 * Sets the georeferenced property to the given value.
+	 */
+	void setGeoreferenced(bool value);
+	
+	
+	/**
 	 * Create the instance of the actual template implementation class.
 	 * 
 	 * This function can be called as soon as the template configuration is
