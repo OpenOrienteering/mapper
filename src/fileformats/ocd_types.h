@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2015-2019 Kai Pastor
+ *    Copyright 2013, 2015-2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -280,6 +280,30 @@ namespace Ocd
 		SymbolHidden    = 2
 	};
 	
+	/**
+	 * Object type values for objects without symbols
+	 */
+	enum SpecialObjectType
+	{
+		GraphicObject = -2,
+		ImageObject = -3,
+		LayoutObject = -4
+	};
+	
+	/**
+	 * Object type values.
+	 */
+	enum ObjectType
+	{
+		ObjectTypePoint = 1,
+		ObjectTypeLine = 2,
+		ObjectTypeArea = 3,
+		ObjectTypeUnformattedText = 4,
+		ObjectTypeFormattedText = 5,
+		ObjectTypeLineText = 6,
+		ObjectTypeRectangle = 7,
+	};
+
 	/**
 	 * Status values for objects.
 	 */

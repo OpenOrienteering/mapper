@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2018 Kai Pastor
+ *    Copyright 2018, 2023 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -111,6 +111,13 @@ public:
 	 * The provided message should be translated.
 	 */
 	void addWarning(const QString& str) { warnings_.emplace_back(str); }
+	
+	/**
+	 * Adds a string to the current list of warnings if not yet in the list.
+	 * 
+	 * The provided message should be translated.
+	 */
+	void addWarningOnce(const QString& str) { if (std::find(warnings_.begin(), warnings_.end(), str) == warnings_.end()) warnings_.emplace_back(str); }
 	
 	/**
 	 * Returns the current list of warnings collected by this object.
