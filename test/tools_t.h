@@ -1,6 +1,7 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
  *    Copyright 2017, 2020, 2025 Kai Pastor
+ *    Copyright 2025, 2026 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,7 +26,7 @@
 
 
 /**
- * @test Tests the editing tools.
+ * @test Various tool tests.
  */
 class ToolsTest : public QObject
 {
@@ -38,6 +39,8 @@ private slots:
 	void paintOnTemplateFeature();
 	
 	void testFindObjects();
+	
+	void testDeleteObjectTags();
 };
 
-#endif
+#endif // OPENORIENTEERING_TOOLS_T_H
