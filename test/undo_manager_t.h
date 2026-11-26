@@ -1,5 +1,6 @@
 /*
  *    Copyright 2014 Kai Pastor
+ *    Copyright 2026 Matthias Kühlewein
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,7 +23,6 @@
 
 #include <QObject>
 
-
 /**
  * @test Tests UndoManager.
  */
@@ -32,9 +32,15 @@ class UndoManagerTest : public QObject
 	
 private slots:
 	/**
-	 * Performs actions on an UndoManager and observes its behaviour.
+	 * Performs basic actions on an UndoManager and observes its behaviour.
 	 */
 	void testUndoRedo();
+	
+	/**
+	 * Performs roundtrip actions (saving and loading) and tests correct behavior
+	 * if number of loaded undo/redo steps exceeds the maximum number of undo steps.
+	 */
+	void testSaveAndLoad();
 	
 private:
 	bool clean_changed;
