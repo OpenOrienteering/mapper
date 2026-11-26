@@ -1,5 +1,5 @@
 #
-#    Copyright 2018-2020 Kai Pastor
+#    Copyright 2018-2020, 2026 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -16,8 +16,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-find_package(Qt5Core 5.3 REQUIRED)
-find_package(Qt5Widgets REQUIRED)
+find_package(${Mapper_QT} ${Mapper_QT_VERSION} COMPONENTS Core Widgets REQUIRED)
 find_package(Qt5Sensors)
 find_package(Qt5Positioning)
 find_package(Qt5SerialPort)
