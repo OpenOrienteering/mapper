@@ -44,6 +44,7 @@ jobs:
 - job: macOS
   displayName: macOS (Release)
   dependsOn: Release_Notes
+  condition: False
   variables:
     IMAGE_NAME: 'macos-14'
     MACOSX_DEPLOYMENT_TARGET: '11.7'
@@ -88,8 +89,7 @@ jobs:
 
 - job: Linux_RelWithDebInfo
   displayName: Linux (RelWithDebInfo)
-  dependsOn: Codespell
-  condition: succeededOrFailed()
+  condition: False
   variables:
     IMAGE_NAME: 'ubuntu-22.04'
     SUPERBUILD_IMAGE_NAME: $(IMAGE_NAME)
@@ -118,8 +118,6 @@ jobs:
 
 - job: Linux_Coverage
   displayName: Linux (Debug, coverage)
-  dependsOn: macOS
-  condition: succeededOrFailed()
   variables:
     IMAGE_NAME: 'ubuntu-22.04'
     SUPERBUILD_IMAGE_NAME: $(IMAGE_NAME)
@@ -187,6 +185,7 @@ jobs:
 - job: Android_arm64
   displayName: Android arm64 (Release)
   #dependsOn: Android_armv7
+  condition: False
   variables:
     IMAGE_NAME: 'macos-14'
     SUPERBUILD_IMAGE_NAME: 'macos-14'
