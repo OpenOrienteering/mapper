@@ -338,7 +338,6 @@ void XMLFileExporter::exportColors()
 		{
 			XmlElementWriter spotcolors_element(xml, literal::spotcolors);
 			spotcolors_element.writeAttribute(literal::knockout, color->getKnockout());
-			SpotColorComponent component;
 			switch (color->getSpotColorMethod())
 			{
 				case MapColor::SpotColor:
@@ -582,7 +581,7 @@ bool XMLFileImporter::importImplementation()
 		
 		// Verify the adjusted print area, and readjust if necessary
 		if (print_area.top() <= -1000000.0 || print_area.bottom() > 1000000.0)
-			print_area.moveTop(-print_area.width() / 2);
+			print_area.moveTop(-print_area.height() / 2);
 		if (print_area.left() <= -1000000.0 || print_area.right() > 1000000.0)
 			print_area.moveLeft(-print_area.width() / 2);
 		
