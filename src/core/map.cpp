@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2020, 2024, 2025 Kai Pastor
+ *    Copyright 2013-2020, 2024-2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -2031,6 +2031,12 @@ void Map::loadTemplateFilesAsync(MapView& view, std::function<void(const QString
 			return;
 		}
 	}
+}
+
+bool Map::hasNonGeoreferencedTemplate() const
+{
+	return std::any_of(begin(templates), end(templates), [](const auto& temp) { return !temp->isTemplateGeoreferenced(); })
+	       || std::any_of(begin(closed_templates), end(closed_templates), [](const auto& temp) { return !temp->isTemplateGeoreferenced(); });
 }
 
 
