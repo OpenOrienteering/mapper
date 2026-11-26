@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2020 Kai Pastor
+ *    Copyright 2013-2020, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -37,6 +37,7 @@
 #include <QColor>
 #include <QCoreApplication>
 #include <QDir>
+#include <QDirIterator>
 #include <QFileInfo>
 #include <QLatin1Char>
 #include <QLatin1String>
@@ -630,6 +631,22 @@ Template::LookupResult Template::tryToFindTemplateFile(const QString& map_path)
 			setTemplateFileInfo(abs_path_info);
 			set_state(Unloaded);
 			return FoundInMapDir;
+		}
+	}
+	
+	// 4. Search subdirectories of the map directory for the filename
+	if (!filename.isEmpty() && !map_path.isEmpty())
+	{
+		QDirIterator it(dir(map_path).absolutePath(), QDir::Dirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+		while (it.hasNext())
+		{
+			auto const sub_path_info = QFileInfo(QDir(it.next()).absoluteFilePath(filename));
+			if (sub_path_info.isFile())
+			{
+				setTemplateFileInfo(sub_path_info);
+				set_state(Unloaded);
+				return FoundInMapSubDir;
+			}
 		}
 	}
 	
