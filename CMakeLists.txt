@@ -324,7 +324,6 @@ add_subdirectory("packaging/src")
 set(ci
   ci/azure-pipelines.yml
   ci/build.yml
-  ci/codespell.yml
   ci/filter-stderr.sed
   ci/publish.yml
   ci/publish-coverage.yml
@@ -336,6 +335,7 @@ set(ci
   ci/shell.sh
   ci/openorienteering-mapper-ci.cmake
   .github/workflows/ci.yml
+  .github/workflows/codespell.yml
   .github/workflows/zizmor.yml
   .github/zizmor.yml
 )

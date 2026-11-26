@@ -31,15 +31,6 @@ variables:
   ENABLE_PDF_MANUAL: 0
 
 jobs:
-- job: Codespell
-  pool:
-    vmImage: 'ubuntu-22.04'
-  steps:
-    - checkout: self
-      fetchDepth: 1
-    - template: codespell.yml
-
-
 - job: Release_Notes
   displayName: Release Notes
   pool:
