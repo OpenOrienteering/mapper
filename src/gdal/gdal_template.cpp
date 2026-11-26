@@ -129,17 +129,15 @@ bool GdalTemplate::loadTemplateFileImpl()
 		setErrorString(reader.errorString());
 		
 		QImageReader image_reader(template_path);
-		if (image_reader.canRead())
+		if (!image_reader.canRead())
+			return false;  // no fallback; fail with GDAL error
+		
+		qDebug("GdalTemplate: Falling back to QImageReader, reason: %s", qPrintable(errorString()));
+		if (!image_reader.read(&image))
 		{
-			qDebug("GdalTemplate: Falling back to QImageReader, reason: %s", qPrintable(errorString()));
-			if (!image_reader.read(&image))
-			{
-				setErrorString(errorString() + QChar::LineFeed + image_reader.errorString());
-				return false;
-			}
-		}
-		else
+			setErrorString(errorString() + QChar::LineFeed + image_reader.errorString());
 			return false;
+		}
 	}
 	
 	// Duplicated from TemplateImage, for compatibility
