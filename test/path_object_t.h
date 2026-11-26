@@ -78,6 +78,13 @@ private slots:
 	/** Tests recalculation of path parts from input coords. */
 	void recalculatePartsTest();
 	void recalculatePartsTest_data();
+	
+	/**
+	 * A line symbol that has a mid symbol, but zero mid
+	 * symbols per spot. Such a case was seen in an OCAD file.
+	 */
+	void lineSymbolWithZeroMidSymbolsPerSpotDoesNotRenderMidSymbolsTest();
+	void lineSymbolWithZeroMidSymbolsPerSpotDoesNotRenderMidSymbolsTest_data();
 };
 
 #endif
