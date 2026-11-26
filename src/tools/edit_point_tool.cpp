@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2020, 2024 Kai Pastor
+ *    Copyright 2013-2020, 2024, 2026 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -418,9 +418,8 @@ bool EditPointTool::keyPress(QKeyEvent* event)
 	switch(event->key())
 	{
 	case EditTool::DeleteObjectKey:
-		if (map()->getNumSelectedObjects() > 0)
+		if (map()->getNumSelectedObjects() > 0 && !editingInProgress())
 			deleteSelectedObjects();
-		updateStatusText();
 		return true;
 		
 	case Qt::Key_Escape:
