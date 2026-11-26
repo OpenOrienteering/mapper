@@ -1,0 +1,26 @@
+name: Codespell
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions: {}
+
+jobs:
+  spellcheck:
+    runs-on: ubuntu-24.04
+    steps:
+    - name: git checkout
+      uses: actions/checkout@v6.1.0
+      with:
+        persist-credentials: false
+    - name: Install codespell
+      run: |
+        set -e
+        sudo apt-get install python3-pip
+        pip3 install codespell
+        test -f $HOME/.local/bin/codespell
+        echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+    - name: Run codespell
+      run: |
+        set -euo pipefail
+        ./codespell.sh \
+        | sed -e 's/^\([^:]*\):\([0-9]*\): */::warning file=\1,line=\2::/'
