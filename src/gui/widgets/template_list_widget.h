@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2020 Kai Pastor
+ *    Copyright 2020, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -142,6 +142,9 @@ protected:
 	
 	void showOpacitySlider(int row);
 	
+	void enterCustomname();
+	void showCustomOrFilename();
+	
 private:
 	Map& map;
 	MapView& main_view;
@@ -159,6 +162,8 @@ private:
 	QAction* duplicate_action;
 	QAction* move_by_hand_action;
 	QAction* position_action;
+	QAction* custom_name_action;
+	QAction* show_name_action;
 	QAction* import_action;
 	QAction* georef_action;
 	QAction* vectorize_action;
@@ -179,4 +184,4 @@ private:
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif // OPENORIENTEERING_TEMPLATE_LIST_WIDGET_H
