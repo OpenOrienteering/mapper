@@ -120,8 +120,8 @@
 
 509.1  railway ~= "" AND railway != "abandoned" AND tunnel != "yes"
 
-521    building ~= "" AND building != ruins AND build != roof
-522    building = "roof"
+521    building ~= "" AND building != ruins AND building != roof
+522    building = roof
 
 526    man_made = cairn
 524    man_made = chimney
