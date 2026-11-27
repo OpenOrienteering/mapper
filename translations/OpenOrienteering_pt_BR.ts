@@ -15,7 +15,7 @@
     </message>
     <message>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="obsolete">Codificação &apos;%1&apos; não está disponível.  Verifique as definições.</translation>
+        <translation>Codificação &apos;%1&apos; não está disponível.  Verifique as configurações.</translation>
     </message>
 </context>
 <context>
@@ -51,8 +51,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="180"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation>Este programa é um aplicativo livre: você pode redistribuir e/ou modificar sob os termos de &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.
-Tradução em Português-BR feita por João Manoel Franco.</translation>
+        <translation>Este programa é um aplicativo livre: você pode redistribuir e/ou modificar sob os termos de &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, como publicado por Free Software Foundation - Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="185"/>
@@ -175,7 +174,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <source>°</source>
         <translatorcomment>graus</translatorcomment>
-        <translation type="vanished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="207"/>
@@ -264,10 +263,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <location filename="../src/gui/autosave_dialog.cpp" line="48"/>
         <location filename="../src/gui/autosave_dialog.cpp" line="54"/>
         <source>%n bytes</source>
-        <translation>
-            <numerusform>%n byte</numerusform>
-            <numerusform>%n bytes</numerusform>
-        </translation>
+        <translation>%n bytes</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="52"/>
@@ -334,7 +330,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>°</source>
-        <translation type="obsolete">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="131"/>
@@ -354,7 +350,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="151"/>
         <source>Knockout: erases lower colors</source>
-        <translation>Nocaute: apaga cores inferiores</translation>
+        <translation>Recorte: remove cores inferiores</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="164"/>
@@ -365,12 +361,12 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <location filename="../src/gui/color_dialog.cpp" line="169"/>
         <location filename="../src/gui/color_dialog.cpp" line="226"/>
         <source>Calculate from spot colors</source>
-        <translation>Calcula de cores especiais</translation>
+        <translation>Calcular de cores especiais</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="174"/>
         <source>Calculate from RGB color</source>
-        <translation>Calcula de cor RGB</translation>
+        <translation>Calcular de cor RGB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="179"/>
@@ -405,7 +401,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="231"/>
         <source>Calculate from CMYK color</source>
-        <translation>Calcula de cor CMYK</translation>
+        <translation>Calcular de cor CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="236"/>
@@ -435,7 +431,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="275"/>
         <source>Color usage in symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Uso de cor em símbolos</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="300"/>
@@ -450,7 +446,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="302"/>
         <source>Color usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Uso de cor</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="321"/>
@@ -517,7 +513,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="107"/>
         <source>Delete</source>
-        <translation>Apagar</translation>
+        <translation>remover</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="100"/>
@@ -547,17 +543,17 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="247"/>
         <source>This color is used by the following symbols:</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta cor é utilizada nos seguintes símbolos:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="269"/>
         <source>This color is used as a spot color by the following map colors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta cor é utilizada como cor especial pelas seguintes cores de mapa:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="287"/>
         <source>This spot color is used by the following symbols:</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta cor especial é utilizada pelos seguintes símbolos:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="297"/>
@@ -567,11 +563,11 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="299"/>
         <source>Color &quot;%1&quot; is used by other elements. Removing the color will change the appearance of these elements. Do you really want to remove it?</source>
-        <translation type="unfinished"></translation>
+        <translation>A cor "%1" é utilizada por outros elementos. Remover essa cor alterará a aparência desses elementos. Você realmente deseja removê-la?</translation>
     </message>
     <message>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation type="vanished">O mapa contém símbolos com esta cor. Apagando irá remover a cor desses objetos! Você quer mesmo fazer isso?</translation>
+        <translation>O mapa contém símbolos com esta cor. Removendo irá remover a cor desses objetos! Você quer mesmo fazer isso?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="329"/>
@@ -591,11 +587,11 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="vanished">Erro</translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <source>Please enter a percentage from 0% to 100%!</source>
-        <translation type="vanished">Por favor inserir uma porcentagem entre 0% e 100%!</translation>
+        <translation>Por favor inserir uma porcentagem entre 0% e 100%!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="488"/>
@@ -710,12 +706,12 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
         <source>Align with grid north</source>
-        <translation>Alinharcom a grade de norte</translation>
+        <translation>Alinhar com a grade de norte</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="80"/>
         <source>Align with true north</source>
-        <translation>Alinharcom o norte verdadeiro</translation>
+        <translation>Alinhar com o norte verdadeiro</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="82"/>
@@ -725,7 +721,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <source>°</source>
         <translatorcomment>graus</translatorcomment>
-        <translation type="vanished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="135"/>
@@ -798,7 +794,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="261"/>
         <source>Origin at: %1</source>
-        <translation>Origem a: %1</translation>
+        <translation>Origem em: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="263"/>
@@ -852,7 +848,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="373"/>
         <source>Splitting holes of area objects is not supported yet!</source>
-        <translation>Dividir buracos em objetos de área não é possível ainda!</translation>
+        <translation>Não é possível ainda dividir buracos em objetos de área!</translation>
     </message>
 </context>
 <context>
@@ -878,7 +874,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <name>OpenOrienteering::DetermineFontSizeDialog</name>
     <message>
         <source>Determine font size</source>
-        <translation type="vanished">Determinar tamanho da fonte</translation>
+        <translation>Determinar tamanho da fonte</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="117"/>
@@ -893,11 +889,11 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>This dialog allows to choose a font size which results in a given exact height for a specific letter.</source>
-        <translation type="vanished">Esta janela permite escolher um tamanho de fonte que resulta em uma altura exata para uma letra específica.</translation>
+        <translation>Esta janela permite escolher um tamanho de fonte que resulta em uma altura exata para uma letra específica.</translation>
     </message>
     <message>
         <source>mm</source>
-        <translation type="vanished">mm</translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="125"/>
@@ -936,7 +932,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <source>°</source>
         <comment>degrees</comment>
         <translatorcomment>graus</translatorcomment>
-        <translation type="vanished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="153"/>
@@ -1068,7 +1064,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
         <translatorcomment>Para adicionar pontos de traço/canto Clicar+Ctr+espaço. Para retirar ponto de traço/canto Clicar+Ctr. O ponto de traço/canto tem formato de diamante.</translatorcomment>
-        <translation>Traço</translation>
+        <translation>Traço/canto</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="112"/>
@@ -1302,13 +1298,13 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <location filename="../src/tools/edit_point_tool.cpp" line="754"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
         <translatorcomment>Para adicionar pontos de traço/canto Clicar+Ctr+espaço. Para retirar ponto de traço/canto Clicar+Ctr. O ponto de traço/canto tem formato de diamante.</translatorcomment>
-        <translation>&lt;b&gt;%1+Clicar&lt;/b&gt; no ponto: Apagar; na linha: Adicionar ponto de traço; com &lt;b&gt;%2&lt;/b&gt;: Adicionar ponto normal. </translation>
+        <translation>&lt;b&gt;%1+Clicar&lt;/b&gt; no ponto: Remover; na linha: Adicionar ponto de traço; com &lt;b&gt;%2&lt;/b&gt;: Adicionar ponto normal. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="757"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
         <translatorcomment>Para adicionar pontos de traço/canto Clicar+Ctr+espaço. Para retirar ponto de traço/canto Clicar+Ctr. O ponto de traço/canto tem formato de diamante.</translatorcomment>
-        <translation>&lt;b&gt;%1+Clicar&lt;/b&gt; no ponto: Apagar; na linha: Adicionar un novo ponto; com &lt;b&gt;%2&lt;/b&gt;: Adicionar um ponto de traço. </translation>
+        <translation>&lt;b&gt;%1+Clicar&lt;/b&gt; no ponto: Removerr; na linha: Adicionar un novo ponto; com &lt;b&gt;%2&lt;/b&gt;: Adicionar um ponto de traço. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="761"/>
@@ -1347,7 +1343,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <location filename="../src/tools/edit_point_tool.cpp" line="746"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="535"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Apagar objetos selecionados. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Remover objetos selecionados. </translation>
     </message>
 </context>
 <context>
@@ -1402,7 +1398,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <source>°</source>
         <comment>Degree sign for angles</comment>
         <translatorcomment>grau determinado para os ângulos</translatorcomment>
-        <translation type="vanished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="54"/>
@@ -1461,7 +1457,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="98"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="104"/>
         <source>Action on deleting a curve point with %1:</source>
-        <translation>Ação ao apagar um ponto de curva com %1:</translation>
+        <translation>Ação ao Remover um ponto de curva com %1:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="107"/>
@@ -1493,11 +1489,11 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>Could not create new file: %1</source>
-        <translation type="vanished">Não pode criar novo arquivo: %1</translation>
+        <translation>Não pode criar novo arquivo: %1</translation>
     </message>
     <message>
         <source>Format (%1) does not support export</source>
-        <translation type="vanished">Formato (%1) não suporta exportar</translation>
+        <translation>Formato (%1) não suporta exportar</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="338"/>
@@ -1591,7 +1587,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>DXF</source>
-        <translation type="vanished">DXF</translation>
+        <translation>DXF</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="60"/>
@@ -1600,7 +1596,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>OSM</source>
-        <translation type="vanished">OSM</translation>
+        <translation>OSM</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"/>
@@ -1750,7 +1746,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>Use the new OCD importer also for version 8 files</source>
-        <translation type="vanished">Use o novo importador OCD também para arquivos Ocad 8</translation>
+        <translation>Use o novo importador OCD também para arquivos Ocad 8</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="186"/>
@@ -1904,7 +1900,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="142"/>
         <source>Custom PROJ.4</source>
-        <translation type="unfinished">Personalização PROJ.4</translation>
+        <translation>Personalização PROJ.4</translation>
     </message>
 </context>
 <context>
@@ -1958,7 +1954,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</source>
-        <translation type="vanished">&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;Mapas de World of O&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;Mapas de World of O&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="441"/>
@@ -1980,7 +1976,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
         <translatorcomment>O fator de escala da grade é a razão entre a distância na grade plana e a distância correspondente no modelo curvo da Terra. Ele é aplicado como fator para distâncias no terreno para distâncias de grade plana.</translatorcomment>
-        <translation type="vanished">Fator de escala da grade:</translation>
+        <translation>Fator de escala da grade:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="149"/>
@@ -2031,7 +2027,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>°</source>
-        <translation type="vanished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="183"/>
@@ -2102,7 +2098,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="400"/>
         <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="442"/>
@@ -2292,11 +2288,11 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>File list</source>
-        <translation type="vanished">Lista de arquivos</translation>
+        <translation>Lista de arquivos</translation>
     </message>
     <message>
         <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named &apos;OOMapper&apos; on the device or a memory card.</source>
-        <translation type="vanished">Arquivos de mapas não encontrados!&lt;br/&gt;&lt;br/&gt;Copie os arquivos de mapas numa pasta principal chamada &apos;OOMapper&apos; no dispositivo ou cartão de memória.</translation>
+        <translation>Arquivos de mapas não encontrados!&lt;br/&gt;&lt;br/&gt;Copie os arquivos de mapas numa pasta principal chamada &apos;OOMapper&apos; no dispositivo ou cartão de memória.</translation>
     </message>
 </context>
 <context>
@@ -2345,7 +2341,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
         <source>Width:</source>
-        <translation type="unfinished">Largura:</translation>
+        <translation>Largura:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
@@ -2371,7 +2367,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="234"/>
         <source>Error</source>
-        <translation type="unfinished">Erro</translation>
+        <translation>Erro</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
@@ -2438,7 +2434,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>Point object with undefined or wrong symbol at %1:%2.</source>
-        <translation type="vanished">Objeto de ponto com símbolo indefinido ou errado em %1:%2.</translation>
+        <translation>Objeto de ponto com símbolo indefinido ou errado em %1:%2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="94"/>
@@ -2447,7 +2443,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>OCAD Versions 7, 8</source>
-        <translation type="vanished">OCAD Versões 7, 8</translation>
+        <translation>OCAD Versões 7, 8</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="46"/>
@@ -2506,7 +2502,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="obsolete">Não pode salvar arquivo:
+        <translation>Não pode salvar arquivo:
 %1:
 %2</translation>
     </message>
@@ -2547,10 +2543,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message numerus="yes">
         <location filename="../src/fileformats/file_import_export.cpp" line="201"/>
         <source>Dropped %n irregular object(s).</source>
-        <translation>
-            <numerusform>Entrou %n objeto irregular.</numerusform>
-            <numerusform>Entraram %n objetos irregulares.</numerusform>
-        </translation>
+        <translation>%n objeto(s) irregular(es) descartado(s).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="208"/>
@@ -2560,7 +2553,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="226"/>
         <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
-        <translation>Mapa Base &quot;%1&quot; foi carregado da pasta de mapas em vez da localização prevista no arquivo do mapa.</translation>
+        <translation>Mapa Base &quot;%1&quot; foi carregado da pasta de mapa&apos;s em vez da localização prevista no arquivo do mapa.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="319"/>
@@ -2569,7 +2562,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>Failed to load template &apos;%1&apos;&apos;, reason: %2</source>
-        <translation type="vanished">Falha ao carregar mapa base &apos;%1&apos;, razão: %2</translation>
+        <translation>Falha ao carregar mapa base &apos;%1&apos;, razão: %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="250"/>
@@ -2591,7 +2584,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>This file uses an obsolete format. Support for this format is to be removed from this program soon. To be able to open the file in the future, save it again.</source>
-        <translation type="vanished">Este arquivo usa um formato obsoleto. O suporte para este formato será removido deste aplicativo em breve. Para abrir o arquivo no futuro, salve-o em formato novo.</translation>
+        <translation>Este arquivo usa um formato obsoleto. O suporte para este formato será removido deste aplicativo em breve. Para abrir o arquivo no futuro, salve-o em formato novo.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="548"/>
@@ -2610,35 +2603,35 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program. Consider updating.</source>
-        <translation type="vanished">Versão de formato de arquivo nova sem suporte. Alguns elementos do mapa não serão carregados ou salvos nesta versão do programa. Melhor fazer atualização.</translation>
+        <translation>Versão de formato de arquivo nova sem suporte. Alguns elementos do mapa não serão carregados ou salvos nesta versão do programa. Melhor fazer atualização.</translation>
     </message>
     <message>
         <source>The geographic coordinate reference system of the map was &quot;%1&quot;. This CRS is not supported. Using &quot;%2&quot;.</source>
-        <translation type="vanished">O sistema de referência de coordenada geográfica do mapa é &quot;%1&quot;. Este CRS não tem suporte. Usando &quot;%2&quot;.</translation>
+        <translation>O sistema de referência de coordenada geográfica do mapa é &quot;%1&quot;. Este CRS não tem suporte. Usando &quot;%2&quot;.</translation>
     </message>
     <message>
         <source>Error while loading a symbol with type %2.</source>
-        <translation type="vanished">Erro ao carregar um símbolo do tipo %2.</translation>
+        <translation>Erro ao carregar um símbolo do tipo %2.</translation>
     </message>
     <message>
         <source>Error while loading a symbol.</source>
-        <translation type="vanished">Erro ao carregar um símbolo.</translation>
+        <translation>Erro ao carregar um símbolo.</translation>
     </message>
     <message>
         <source>Error while loading undo steps.</source>
-        <translation type="vanished">Erro ao carregar passos do desfazer.</translation>
+        <translation>Erro ao carregar passos do desfazer.</translation>
     </message>
     <message>
         <source>Error while reading map part count.</source>
-        <translation type="vanished">Erro ao ler o número de ítens do mapa parcial.</translation>
+        <translation>Erro ao ler o número de ítens do mapa parcial.</translation>
     </message>
     <message>
         <source>Error while loading map part %2.</source>
-        <translation type="vanished">Erro ao carregar o mapa parcial%2.</translation>
+        <translation>Erro ao carregar o mapa parcial%2.</translation>
     </message>
     <message>
         <source>Could not read file: %1</source>
-        <translation type="vanished">Não foi possível ler o arquivo: %1</translation>
+        <translation>Não foi possível ler o arquivo: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="554"/>
@@ -2652,11 +2645,11 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>Format (%1) does not support import</source>
-        <translation type="vanished">Formato (%1) não suporta importação</translation>
+        <translation>Formato (%1) não suporta importação</translation>
     </message>
     <message>
         <source>Could not read &apos;%1&apos;: %2</source>
-        <translation type="vanished">Pode não ser lido &apos;%1&apos;: %2</translation>
+        <translation>Pode não ser lido &apos;%1&apos;: %2</translation>
     </message>
 </context>
 <context>
@@ -2760,12 +2753,12 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>Cap length:</source>
-        <translation type="vanished">Comprimento da ponta:</translation>
+        <translation>Comprimento da ponta:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="120"/>
         <source>Line is dashed</source>
-        <translation>Linha pontilhada</translation>
+        <translation>Linha tracejada</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="222"/>
@@ -3159,7 +3152,7 @@ Você quer salvar as alterações?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1392"/>
         <source>When you want to have touch input disabled, you must use another pointing device to select the &quot;OK&quot; button.</source>
-        <translation>Quando você deseja desativar a entrada de toque, deve usar outro dispositivo apontador para selecionar o botão &quot;OK&quot;.</translation>
+        <translation>Quando você deseja desativar a entrada por toque, deve usar outro dispositivo apontador para selecionar o botão &quot;OK&quot;.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="519"/>
@@ -3326,7 +3319,7 @@ porque porque o formato é desconhecido.</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation>Não é possível exportar o mapa como
+        <translation>Não foi possível exportar o mapa como
 &quot;%1&quot;
 porque salvar como %2 (.%3) não é suportado.</translation>
     </message>
@@ -3357,7 +3350,7 @@ Alterar a escala dos dados importados?</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="vanished">Não pode exportar o mapa como
+        <translation>Não pode exportar o mapa como
 &quot;%1&quot;
 porque salvar como %2 (.%3) não é suportado.</translation>
     </message>
@@ -3365,46 +3358,46 @@ porque salvar como %2 (.%3) não é suportado.</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
-        <translation type="vanished">Não pode exportar o mapa como
+        <translation>Não pode exportar o mapa como
 &quot;%1&quot;
 porque porque o formato é desconhecido.</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="vanished">Aviso</translation>
+        <translation>Aviso</translation>
     </message>
     <message>
         <source>The map export generated warnings.</source>
-        <translation type="vanished">A exportação do mapa gerou avisos.</translation>
+        <translation>A exportação do mapa gerou avisos.</translation>
     </message>
     <message>
         <source>Internal error while saving:
 %1</source>
-        <translation type="vanished">Erro interno ao salvar:
+        <translation>Erro interno ao salvar:
 %1</translation>
     </message>
     <message>
         <source>The map import generated warnings.</source>
-        <translation type="vanished">A importação do mapa gerou avisos.</translation>
+        <translation>A importação do mapa gerou avisos.</translation>
     </message>
     <message>
         <source>Cannot open file:
 %1
 for reading.</source>
-        <translation type="vanished">Não pode abrir arquivo:
+        <translation>Não pode abrir arquivo:
 %1
 para leitura.</translation>
     </message>
     <message>
         <source>Invalid file type.</source>
-        <translation type="vanished">Tipo de arquivo inválido.</translation>
+        <translation>Tipo de arquivo inválido.</translation>
     </message>
     <message>
         <source>Cannot open file:
 %1
 
 %2</source>
-        <translation type="vanished">Não pode abrir arquivo:
+        <translation>Não pode abrir arquivo:
 %1
 
 %2</translation>
@@ -3413,13 +3406,13 @@ para leitura.</translation>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="vanished">Não pode salvar arquivo:
+        <translation>Não pode salvar arquivo:
 %1:
 %2</translation>
     </message>
     <message>
         <source>Nothing to import.</source>
-        <translation type="vanished">Nada para importar.</translation>
+        <translation>Nada para importar.</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="478"/>
@@ -3573,7 +3566,7 @@ Importar os dados assim mesmo?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1031"/>
         <source>Map information...</source>
-        <translation type="unfinished"></translation>
+        <translation>Informações do mapa...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1033"/>
@@ -3654,7 +3647,7 @@ Importar os dados assim mesmo?</translation>
     </message>
     <message>
         <source>Rotate object(s)</source>
-        <translation type="vanished">Rotacionar objeto(s)</translation>
+        <translation>Rotacionar objeto(s)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1070"/>
@@ -3673,7 +3666,7 @@ Importar os dados assim mesmo?</translation>
     </message>
     <message>
         <source>Paint on template settings</source>
-        <translation type="vanished">Pintar sobre o Mapa Base</translation>
+        <translation>Pintar sobre o Mapa Base</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1084"/>
@@ -3815,7 +3808,7 @@ Importar os dados assim mesmo?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="967"/>
         <source>Simple &amp;course</source>
-        <translation>Simples e claro</translation>
+        <translation>Per&amp;curso simples</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1001"/>
@@ -3898,7 +3891,7 @@ Importar os dados assim mesmo?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="992"/>
         <source>Delete</source>
-        <translation>Apagar</translation>
+        <translation>Remover</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1057"/>
@@ -3922,7 +3915,7 @@ Importar os dados assim mesmo?</translation>
     </message>
     <message>
         <source>Scale object(s)</source>
-        <translation type="vanished">Reescalonar objeto(s)</translation>
+        <translation>Reescalonar objeto(s)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1071"/>
@@ -3944,11 +3937,11 @@ Importar os dados assim mesmo?</translation>
     </message>
     <message>
         <source>Cutout</source>
-        <translation type="vanished">Recortar</translation>
+        <translation>Recortar</translation>
     </message>
     <message>
         <source>Cut away</source>
-        <translation type="vanished">Cortar o interior</translation>
+        <translation>Cortar o interior</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1080"/>
@@ -3968,7 +3961,7 @@ Importar os dados assim mesmo?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1112"/>
         <source>Latitude/Longitude (Dec)</source>
-        <translation>Latitude/Longitude (Declinação)</translation>
+        <translation>Latitude/Longitude (Dec)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1114"/>
@@ -3990,7 +3983,7 @@ Importar os dados assim mesmo?</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation>Não é possível exportar o mapa como
+        <translation>Não foi possível exportar o mapa como
 &quot;%1&quot;
 porque salvar como %2 (.%3) não é suportado.</translation>
     </message>
@@ -4001,7 +3994,7 @@ porque salvar como %2 (.%3) não é suportado.</translation>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation>Não é possível salvar o arquivo:
+        <translation>Não foi possível salvar o arquivo:
 %1:
 %2</translation>
     </message>
@@ -4142,7 +4135,7 @@ porque salvar como %2 (.%3) não é suportado.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="947"/>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="948"/>
@@ -4206,7 +4199,7 @@ porque salvar como %2 (.%3) não é suportado.</translation>
     </message>
     <message>
         <source>Exported successfully to %1</source>
-        <translation type="obsolete">Exportado com sucesso para%1</translation>
+        <translation>Exportado com sucesso para%1</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4268"/>
@@ -4223,17 +4216,17 @@ porque salvar como %2 (.%3) não é suportado.</translation>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">A escala dos dados importados é 1:%1 que é diferente da escala do mapa 1:%2.
+        <translation>A escala dos dados importados é 1:%1 que é diferente da escala do mapa 1:%2.
 
 Alterar a escala dos dados importados?</translation>
     </message>
     <message>
         <source>Tag Selection</source>
-        <translation type="vanished">Seleção de Tag</translation>
+        <translation>Seleção de Tag</translation>
     </message>
     <message>
         <source>Show/Hide the tag selection window</source>
-        <translation type="vanished">Mostre/Esconda a janela de seleção de Tag</translation>
+        <translation>Mostre/Esconda a janela de seleção de Tag</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1126"/>
@@ -4260,7 +4253,7 @@ Alterar a escala dos dados importados?</translation>
     </message>
     <message>
         <source>Select template...</source>
-        <translation type="vanished">Selecionar Mapa Base...</translation>
+        <translation>Selecionar Mapa Base...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1359"/>
@@ -4323,7 +4316,7 @@ Alterar a escala dos dados importados?</translation>
     <message>
         <source>Cut %1 object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
-        <translation type="vanished">Cortar %1 objeto(s)</translation>
+        <translation>Cortar %1 objeto(s)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1942"/>
@@ -4333,7 +4326,7 @@ Alterar a escala dos dados importados?</translation>
     </message>
     <message>
         <source>Copied %1 object(s)</source>
-        <translation type="vanished">Copiado %1 objeto(s)</translation>
+        <translation>Copiado %1 objeto(s)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1962"/>
@@ -4342,7 +4335,7 @@ Alterar a escala dos dados importados?</translation>
     </message>
     <message>
         <source>Pasted %1 object(s)</source>
-        <translation type="vanished">Colado %1 objeto(s)</translation>
+        <translation>Colado %1 objeto(s)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2094"/>
@@ -4386,15 +4379,15 @@ Alterar a escala dos dados importados?</translation>
     </message>
     <message>
         <source>Map notes</source>
-        <translation type="vanished">Notas do mapa</translation>
+        <translation>Notas do mapa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="vanished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="vanished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2283"/>
@@ -4409,7 +4402,7 @@ Alterar a escala dos dados importados?</translation>
     </message>
     <message>
         <source>Tag Selector</source>
-        <translation type="vanished">Seletor de Tag</translation>
+        <translation>Seletor de Tag</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2407"/>
@@ -4475,7 +4468,7 @@ selecionados</translation>
     </message>
     <message>
         <source>Deletes the selected object(s).</source>
-        <translation type="vanished">Apaga o(s) objeto(s) selecionado(s).</translation>
+        <translation>Remove o(s) objeto(s) selecionado(s).</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2603"/>
@@ -4490,7 +4483,7 @@ selecionados</translation>
     </message>
     <message>
         <source>Resulting symbol: %1 %2.</source>
-        <translation type="vanished">Símbolo resultante: %1 %2.</translation>
+        <translation>Símbolo resultante: %1 %2.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2634"/>
@@ -4594,7 +4587,7 @@ selecionados</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3905"/>
         <source>Switched to map part &apos;%1&apos;.</source>
-        <translation>Mudado para mapa parte &apos;%1&apos;.</translation>
+        <translation>Mudado para parte do mapa &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3933"/>
@@ -4614,7 +4607,7 @@ selecionados</translation>
     </message>
     <message>
         <source>Cannot import the selected map file because it could not be loaded.</source>
-        <translation type="vanished">Não é possível importar o arquivo de mapa selecionado porque ele não pôde ser carregado.</translation>
+        <translation>Não foi possível importar o arquivo de mapa selecionado porque ele não pôde ser carregado.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2517"/>
@@ -4675,12 +4668,12 @@ selecionados</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1078"/>
         <source>Clip area</source>
-        <translation type="unfinished"></translation>
+        <translation>Recortar área</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1079"/>
         <source>Erase area</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover área</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1150"/>
@@ -4714,7 +4707,7 @@ selecionados</translation>
     </message>
     <message>
         <source>Duplicate the selected object(s).</source>
-        <translation type="vanished">Duplica o(s) objeto(s) selecionado(s).</translation>
+        <translation>Duplica o(s) objeto(s) selecionado(s).</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2592"/>
@@ -4743,7 +4736,7 @@ selecionados</translation>
     </message>
     <message>
         <source>Cut the selected object(s) into smaller parts.</source>
-        <translation type="vanished">Corta o(s) objeto(s) selecionado(s) em pequenas partes.</translation>
+        <translation>Corta o(s) objeto(s) selecionado(s) em pequenas partes.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2613"/>
@@ -4762,11 +4755,11 @@ selecionados</translation>
     </message>
     <message>
         <source>Rotate the selected object(s).</source>
-        <translation type="vanished">Rotacionar o(s) objeto(s) selecionado(s). Aparece um ponto central sobre o qual o objeto vai girar ao clicar e arrastar com o mouse.</translation>
+        <translation>Rotacionar o(s) objeto(s) selecionado(s). Aparece um ponto central sobre o qual o objeto vai girar ao clicar e arrastar com o mouse.</translation>
     </message>
     <message>
         <source>Scale the selected object(s).</source>
-        <translation type="vanished">Redimensiona o(s) objeto(s) selecionado(s). Aparece um ponto central, depois clicar e arrastar sobre o objeto para aumentar ou diminuir o tamanho.</translation>
+        <translation>Redimensiona o(s) objeto(s) selecionado(s). Aparece um ponto central, depois clicar e arrastar sobre o objeto para aumentar ou diminuir o tamanho.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2615"/>
@@ -4786,7 +4779,7 @@ selecionados</translation>
     </message>
     <message>
         <source>Switches the symbol of the selected object(s) to the selected symbol.</source>
-        <translation type="vanished">Troca o símbolo do(s) objeto(s) selecionado(s) para o símbolo selecionado. Funciona com símbolos de mesmo tipo.</translation>
+        <translation>Troca o símbolo do(s) objeto(s) selecionado(s) para o símbolo selecionado. Funciona com símbolos de mesmo tipo.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2667"/>
@@ -4796,11 +4789,11 @@ selecionados</translation>
     </message>
     <message>
         <source>Fill the selected line(s) or create a border for the selected area(s).</source>
-        <translation type="vanished">Preenche a(s) linha(s) selecionada(s) ou cria borda em área(s) selecionada(s).</translation>
+        <translation>Preenche a(s) linha(s) selecionada(s) ou cria borda em área(s) selecionada(s).</translation>
     </message>
     <message>
         <source>%1 object(s) duplicated</source>
-        <translation type="vanished">%1 objeto(s) duplicado(s)</translation>
+        <translation>%1 objeto(s) duplicado(s)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2998"/>
@@ -4809,7 +4802,7 @@ selecionados</translation>
     </message>
     <message>
         <source>No objects were selected because there are no objects with the selected symbol(s).</source>
-        <translation type="vanished">Nenhum objeto foi selecionado porque não há objetos com o(s) símbolo(s) selecionado(s).</translation>
+        <translation>Nenhum objeto foi selecionado porque não há objetos com o(s) símbolo(s) selecionado(s).</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3359"/>
@@ -4844,15 +4837,15 @@ selecionados</translation>
     </message>
     <message>
         <source>Paint free-handedly on a template</source>
-        <translation type="vanished">Pintura a mão livre no Mapa Base</translation>
+        <translation>Pintura a mão livre no Mapa Base</translation>
     </message>
     <message>
         <source>Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button</source>
-        <translation type="vanished">Pintura a mão livre no Mapa Base. Criar ou carregar um Mapa Base que possa ser pintado para ativar esta função</translation>
+        <translation>Pintura a mão livre no Mapa Base. Criar ou carregar um Mapa Base que possa ser pintado para ativar esta função</translation>
     </message>
     <message>
         <source>Import %1, GPX, OSM or DXF file</source>
-        <translation type="vanished">Importar %1, arquivo GPX, OSM ou DXF</translation>
+        <translation>Importar %1, arquivo GPX, OSM ou DXF</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4118"/>
@@ -4867,7 +4860,7 @@ selecionados</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4160"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
-        <translation>Não é possível importar o arquivo selecionado porque o seu formato de arquivo não é suportado.</translation>
+        <translation>Não foi possível importar o arquivo selecionado porque o seu formato de arquivo não é suportado.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1067"/>
@@ -4883,31 +4876,22 @@ selecionados</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="1900"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
-        <translation>
-            <numerusform>Corta %n objecto(s)</numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation>Cortar %n objecto(s)</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1952"/>
         <source>Copied %n object(s)</source>
-        <translation>
-            <numerusform>Objeto(s) %n copiados</numerusform>
-            <numerusform>Objetos %n copiados</numerusform>
-        </translation>
+        <translation>%n Objeto(s) copiados</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1992"/>
         <source>Pasted %n object(s)</source>
-        <translation>
-            <numerusform>Objeto(s) %n adicionados</numerusform>
-            <numerusform>Objetos %n adicionados</numerusform>
-        </translation>
+        <translation>%n Objeto(s) adicionados</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2592"/>
         <source>Deletes the selected objects.</source>
-        <translation>Apaga os objetos selecionados.</translation>
+        <translation>Remove os objetos selecionados.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2594"/>
@@ -4942,15 +4926,12 @@ selecionados</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2669"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
-        <translation>Preenche as linhas selecionadas ou cria um fronteira para as áreas selecionadas.</translation>
+        <translation>Preenche as linhas selecionadas ou cria uma borda para as áreas selecionadas.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="2788"/>
         <source>Duplicated %n object(s)</source>
-        <translation>
-            <numerusform>Objeto(s) %n duplicados</numerusform>
-            <numerusform>Objetos %n duplicados</numerusform>
-        </translation>
+        <translation>%n Objeto(s) duplicados</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2998"/>
@@ -5034,53 +5015,53 @@ selecionados</translation>
     <message>
         <location filename="../src/core/map_information.cpp" line="149"/>
         <source>code</source>
-        <translation type="unfinished"></translation>
+        <translation>código</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="149"/>
         <source>zone</source>
-        <translation type="unfinished"></translation>
+        <translation>zona</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="166"/>
         <source>Point symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Símbolos de ponto</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="167"/>
         <source>Line symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Símbolos de linha</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="168"/>
         <source>Area symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Símbolos de área</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="169"/>
         <source>Combined symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Símbolos combinados</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="170"/>
         <source>Text symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Símbolos de texto</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="171"/>
         <location filename="../src/core/map_information.cpp" line="253"/>
         <source>Undefined symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Símbolos indefinidos</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="218"/>
         <source>&lt;undefined&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;indefinido&gt;</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="232"/>
         <source>Map</source>
-        <translation type="unfinished">Mapa</translation>
+        <translation>Mapa</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="232"/>
@@ -5088,130 +5069,109 @@ selecionados</translation>
         <location filename="../src/core/map_information.cpp" line="255"/>
         <location filename="../src/core/map_information.cpp" line="258"/>
         <source>%n object(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation>%n objeto(s)</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="234"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Escala</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="235"/>
         <source>Coordinate reference system</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistema de referência de coordenadas</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="237"/>
         <source>Undo steps</source>
-        <translation type="unfinished"></translation>
+        <translation>Desfazer etapas</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="237"/>
         <location filename="../src/core/map_information.cpp" line="239"/>
         <source>%n step(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation>%n etapa(s)</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="239"/>
         <source>Redo steps</source>
-        <translation type="unfinished"></translation>
+        <translation>Refazer etapas</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="242"/>
         <source>Templates</source>
-        <translation type="unfinished">Mapas Base</translation>
+        <translation>Mapas Base</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="242"/>
         <source>%n template(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation>%n mapa(s) base</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="244"/>
         <source>Map parts</source>
-        <translation type="unfinished">Mapa parcial</translation>
+        <translation>Mapa parcial</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="244"/>
         <source>%n part(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation>%n parte(s)</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="250"/>
         <source>Symbols</source>
-        <translation type="unfinished">Símbolos</translation>
+        <translation>Símbolos</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="250"/>
         <location filename="../src/core/map_information.cpp" line="280"/>
         <source>%n symbol(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation>%n símbolo(s)</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="266"/>
         <source>Colors</source>
-        <translation type="unfinished">Cores</translation>
+        <translation>Cores</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="266"/>
         <source>%n color(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation>%n cor(es)</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="274"/>
         <source>Fonts</source>
-        <translation type="unfinished"></translation>
+        <translation>Fontes</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/core/map_information.cpp" line="274"/>
         <source>%n font(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation>%n fonte(s)</translation>
     </message>
     <message>
         <location filename="../src/core/map_information.cpp" line="279"/>
         <source>%1 (substituted by %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (substituído por %2)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="78"/>
         <source>Map information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informações do mapa</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="80"/>
         <source>Save as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvar como...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="117"/>
         <source>Plain text</source>
-        <translation type="unfinished"></translation>
+        <translation>Texto simples</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_information_dialog.cpp" line="131"/>
         <source>Error</source>
-        <translation type="unfinished">Erro</translation>
+        <translation>Erro</translation>
     </message>
 </context>
 <context>
@@ -5219,7 +5179,7 @@ selecionados</translation>
     <message>
         <location filename="../src/gui/map/map_notes.cpp" line="45"/>
         <source>Map notes</source>
-        <translation type="unfinished">Notas do mapa</translation>
+        <translation>Notas do mapa</translation>
     </message>
 </context>
 <context>
@@ -5502,7 +5462,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="vanished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="95"/>
@@ -5642,11 +5602,11 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1433"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1473"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished">Símbolo de área &quot;%1&quot;, pulou um preenchimento de padronagem.</translation>
+        <translation>Símbolo de área &quot;%1&quot;, pulou um padrão de preenchimento.</translation>
     </message>
     <message>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="obsolete">Símbolo de área &quot;%1&quot;, assumindo um padrão de ponto &quot;linhas deslocadas&quot;. Isso pode ser correto, bem como incorreto.</translation>
+        <translation>Símbolo de área &quot;%1&quot;, assumindo um padrão de ponto &quot;linhas deslocadas&quot;. Isso pode ser correto, bem como incorreto.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1604"/>
@@ -5687,7 +5647,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1956"/>
         <source>In text symbol %1: exporting only %2 custom tabulator positions</source>
-        <translation type="unfinished"></translation>
+        <translation>No símbolo de texto %1: exportando apenas %2 posições de tabulação personalizadas</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2334"/>
@@ -5697,12 +5657,12 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2542"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation>Não é possível exportar o deslocamento do padrão de preenchimento para um objeto de área</translation>
+        <translation>Não foi possível exportar o deslocamento do padrão de preenchimento para um objeto de área</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2717"/>
         <source>The map contains an object with more than 32767 coordinates which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>O mapa contém um objeto com mais de 32.767 coordenadas, o que não é suportado pela versão 8 do OCAD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2761"/>
@@ -5717,7 +5677,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2806"/>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation>Não é possível salvar o posicionamento personalizado do modelo &apos;% 1&apos;.</translation>
+        <translation>Não foi possível salvar o posicionamento personalizado do modelo &apos;% 1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="3141"/>
@@ -5727,7 +5687,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocd_georef_fields.cpp" line="882"/>
         <source>Could not translate coordinate reference system &apos;%1:%2&apos;.</source>
-        <translation>Não foi possível traduzir o sistema de referência de coordenadas &apos;% 1:% 2&apos;.</translation>
+        <translation>Não foi possível traduzir o sistema de referência de coordenadas &apos;%1:%2&apos;.</translation>
     </message>
 </context>
 <context>
@@ -5749,12 +5709,12 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     </message>
     <message>
         <source>Spot color information was ignored.</source>
-        <translation type="vanished">Informação de cor padrão foi ignorada.</translation>
+        <translation>Informação de cor padrão foi ignorada.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="787"/>
         <source>Unable to import symbol %1.%2 &quot;%3&quot;: %4</source>
-        <translation>Não é possível importar símbolo %1.%2 &quot;%3&quot;: %4</translation>
+        <translation>Não foi possível importar símbolo %1.%2 &quot;%3&quot;: %4</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="791"/>
@@ -5763,7 +5723,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     </message>
     <message>
         <source>Unable to import template: &quot;%1&quot; is not a supported template type.</source>
-        <translation type="vanished">Não é possível importar Mapa Base: &quot;%1&quot; não é um tipo de mapa base suportado.</translation>
+        <translation>Não foi possível importar Mapa Base: &quot;%1&quot; não é um tipo de mapa base suportado.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1198"/>
@@ -5773,7 +5733,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     </message>
     <message>
         <source>Different lengths for pointed caps at begin (%1 mm) and end (%2 mm) are not supported. Using %3 mm.</source>
-        <translation type="vanished">Comprimentos diferentes para pontas no início (%1 mm) e no final (%2 mm) não são suportados. Usando%3 mm.</translation>
+        <translation>Comprimentos diferentes para pontas no início (%1 mm) e no final (%2 mm) não são suportados. Usando%3 mm.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1271"/>
@@ -5809,7 +5769,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     </message>
     <message>
         <source>This symbol cannot be saved as a proper OCD symbol again.</source>
-        <translation type="vanished">Este símbolo não pode ser salvo como um símbolo OCD apropriado novamente.</translation>
+        <translation>Este símbolo não pode ser salvo como um símbolo OCD apropriado novamente.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2286"/>
@@ -5889,7 +5849,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1666"/>
         <source>Skipping unsupported reference to point symbol &apos;%1.%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorando referência não suportada ao símbolo de ponto &apos;%1.%2&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1880"/>
@@ -5988,7 +5948,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     </message>
     <message>
         <source>Purple</source>
-        <translation type="vanished">Roxo</translation>
+        <translation>Roxo</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="727"/>
@@ -6022,10 +5982,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="916"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="921"/>
         <source>Unable to load %n objects, reason: %1</source>
-        <translation>
-            <numerusform>Impossível carregar %n objetos, razão: %1</numerusform>
-            <numerusform>Impossível carregar %n objetos, razão: %1</numerusform>
-        </translation>
+        <translation>Impossível carregar %n objeto(s), razão: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="902"/>
@@ -6035,7 +5992,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="907"/>
         <source>Can&apos;t determine the coordinate transformation: %1</source>
-        <translation>Não é possível determinar a transformação da coordenada:% 1</translation>
+        <translation>Não foi possível determinar a transformação da coordenada:% 1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="912"/>
@@ -6056,7 +6013,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="967"/>
         <source>Cannot use this spatial reference:
 %1</source>
-        <translation>Não é possível usar esta referência espacial:
+        <translation>Não foi possível usar esta referência espacial:
 % 1</translation>
     </message>
     <message>
@@ -6157,7 +6114,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="178"/>
         <source>&lt;b&gt;Click and drag&lt;/b&gt;: Paint. &lt;b&gt;Right click and drag&lt;/b&gt;: Erase. </source>
-        <translation>&lt;b&gt;Clique e arrastar&lt;/b&gt;: Pintar. &lt;b&gt;Clique direito e arrastar&lt;/b&gt;: Apagar. </translation>
+        <translation>&lt;b&gt;Clique e arrastar&lt;/b&gt;: Pintar. &lt;b&gt;Clique direito e arrastar&lt;/b&gt;: Remover. </translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="181"/>
@@ -6167,7 +6124,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="226"/>
         <source>Erase</source>
-        <translation>Apagar</translation>
+        <translation>Remover</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="247"/>
@@ -6416,7 +6373,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
         <location filename="../src/gui/print_tool.cpp" line="353"/>
         <location filename="../src/gui/print_tool.cpp" line="358"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s border. </source>
-        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Mover a borda da área de impressão. </translation>
+        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Mover a borda das área&apos;s de impressão. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="363"/>
@@ -6836,7 +6793,7 @@ de cores</translation>
         <source>Unknown</source>
         <comment>Paper size</comment>
         <translatorcomment>Tamanho do papel</translatorcomment>
-        <translation type="vanished">Desconhecido</translation>
+        <translation>Desconhecido</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1474"/>
@@ -6892,7 +6849,7 @@ de cores</translation>
     <message>
         <source>°</source>
         <translatorcomment>graus</translatorcomment>
-        <translation type="vanished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="51"/>
@@ -6907,32 +6864,32 @@ de cores</translation>
     <message>
         <source>Map coordinate system origin</source>
         <comment>Rotation center point</comment>
-        <translation type="vanished">Origem do sistema de coordenadas do mapa</translation>
+        <translation>Origem do sistema de coordenadas do mapa</translation>
     </message>
     <message>
         <source>Georeferencing reference point</source>
         <comment>Rotation center point</comment>
-        <translation type="vanished">Ponto de referência do georreferenciamento</translation>
+        <translation>Ponto de referência do georreferenciamento</translation>
     </message>
     <message>
         <source>Other point,</source>
         <comment>Rotation center point</comment>
         <translatorcomment>Ponto do centro de rotação</translatorcomment>
-        <translation type="vanished">Outro ponto,</translation>
+        <translation>Outro ponto,</translation>
     </message>
     <message>
         <source>mm</source>
-        <translation type="vanished">mm</translation>
+        <translation>mm</translation>
     </message>
     <message>
         <source>X:</source>
         <comment>x coordinate</comment>
-        <translation type="vanished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <source>Y:</source>
         <comment>y coordinate</comment>
-        <translation type="vanished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/rotate_map_dialog.cpp" line="59"/>
@@ -7040,7 +6997,7 @@ de cores</translation>
     </message>
     <message>
         <source>New scale:  1 :</source>
-        <translation type="vanished">Nova escala:  1 :</translation>
+        <translation>Nova escala:  1 :</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="55"/>
@@ -7051,31 +7008,31 @@ de cores</translation>
         <source>Map coordinate system origin</source>
         <comment>Scaling center point</comment>
         <translatorcomment>Ponto do centro da escala:</translatorcomment>
-        <translation type="vanished">Origem do sistema de coordenadas do mapa</translation>
+        <translation>Origem do sistema de coordenadas do mapa</translation>
     </message>
     <message>
         <source>Georeferencing reference point</source>
         <comment>Scaling center point</comment>
-        <translation type="vanished">Ponto de referência do georreferenciamento</translation>
+        <translation>Ponto de referência do georreferenciamento</translation>
     </message>
     <message>
         <source>Other point,</source>
         <comment>Scaling center point</comment>
-        <translation type="vanished">Outro ponto,</translation>
+        <translation>Outro ponto,</translation>
     </message>
     <message>
         <source>mm</source>
-        <translation type="vanished">mm</translation>
+        <translation>mm</translation>
     </message>
     <message>
         <source>X:</source>
         <comment>x coordinate</comment>
-        <translation type="vanished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <source>Y:</source>
         <comment>y coordinate</comment>
-        <translation type="vanished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="53"/>
@@ -7214,12 +7171,12 @@ de cores</translation>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="64"/>
         <source>Serial port (NMEA):</source>
-        <translation type="unfinished"></translation>
+        <translation>Porta Serial (NMEA):</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="79"/>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Sensores</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="91"/>
@@ -7227,37 +7184,37 @@ de cores</translation>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="146"/>
         <source>Default</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished">Padrão</translation>
+        <translation>Padrão</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
         <source>NMEA (Qt)</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (Qt)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"/>
         <source>NMEA (OpenOrienteering)</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (OpenOrienteering)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="123"/>
         <source>Windows</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Windows</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="126"/>
         <source>GeoClue</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>GeoClue</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="129"/>
         <source>Core Location</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Localização Principal</translation>
     </message>
 </context>
 <context>
@@ -7273,22 +7230,22 @@ de cores</translation>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="43"/>
         <source>Event and course details</source>
-        <translation type="unfinished"></translation>
+        <translation>Detalhes do evento e percurso</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="48"/>
         <source>Event name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do evento:</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="51"/>
         <source>Course name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome do percurso:</translation>
     </message>
     <message>
         <location filename="../src/gui/simple_course_dialog.cpp" line="54"/>
         <source>First code number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Primeiro número de código:</translation>
     </message>
 </context>
 <context>
@@ -7296,17 +7253,17 @@ de cores</translation>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="35"/>
         <source>Unnamed event</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento sem nome</translation>
     </message>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="41"/>
         <source>Unnamed course</source>
-        <translation type="unfinished"></translation>
+        <translation>Percurso sem nome</translation>
     </message>
     <message>
         <location filename="../src/fileformats/simple_course_export.cpp" line="60"/>
         <source>For this course export, a single line object must be selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Para esta exportação de percurso, deve ser selecionado um único objeto do tipo linha.</translation>
     </message>
 </context>
 <context>
@@ -7314,22 +7271,22 @@ de cores</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="308"/>
         <source>&apos;%1&apos; is located in app storage. The files will be removed when uninstalling the app.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; está localizado no armazenamento do aplicativo. Os arquivos serão removidos ao desinstalar o aplicativo.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="311"/>
         <source>&apos;%1&apos; is not writable. Changes cannot be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; não permite gravação. As alterações não podem ser salvas.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="314"/>
         <source>Extra permissions are required to access &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>São necessárias permissões adicionais para acessar &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="317"/>
         <source>&apos;%1&apos; is not a valid storage location.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; não é um local de armazenamento válido.</translation>
     </message>
 </context>
 <context>
@@ -7337,62 +7294,62 @@ de cores</translation>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="47"/>
         <source>Change scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Alterar escala</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="51"/>
         <source>Scaling parameters</source>
-        <translation type="unfinished">Parâmetros de escala</translation>
+        <translation>Parâmetros de escala</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="53"/>
         <source>Scaling center:</source>
-        <translation type="unfinished">Centro da escala:</translation>
+        <translation>Centro da escala:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="56"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Origem do sistema de coordenadas do mapa</translation>
+        <translation>Dimensionamento a partir de um ponto central</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="62"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Ponto de referência do georreferenciamento</translation>
+        <translation>Ponto de referência do georreferenciamento</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="70"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Outro ponto,</translation>
+        <translation>Outro ponto,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="75"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="79"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="82"/>
         <source>Options</source>
-        <translation type="unfinished">Opções</translation>
+        <translation>Opções</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="84"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished">Ajustar ponto de referência do georreferenciamento</translation>
+        <translation>Ajustar ponto de referência do georreferenciamento</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="91"/>
         <source>Scale non-georeferenced templates</source>
-        <translation type="unfinished">Reescalonar Mapas Base não georreferenciados</translation>
+        <translation>Reescalonar Mapas Base não georreferenciados</translation>
     </message>
 </context>
 <context>
@@ -7446,7 +7403,7 @@ de cores</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="133"/>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Ícone</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="224"/>
@@ -7514,7 +7471,7 @@ de cores</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="119"/>
         <source>Delete</source>
-        <translation>Apagar</translation>
+        <translation>Remover</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="120"/>
@@ -7533,11 +7490,11 @@ de cores</translation>
     </message>
     <message>
         <source>Switch symbol of selected object(s)</source>
-        <translation type="vanished">Trocar símbolo do(s) objeto(s) selecionado(s)</translation>
+        <translation>Trocar símbolo do(s) objeto(s) selecionado(s)</translation>
     </message>
     <message>
         <source>Fill / Create border for selected object(s)</source>
-        <translation type="vanished">Preencher / Criar borda no(s) objeto(s) selecionado(s)</translation>
+        <translation>Preencher / Criar borda no(s) objeto(s) selecionado(s)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="141"/>
@@ -7551,7 +7508,7 @@ de cores</translation>
     </message>
     <message>
         <source>Scale symbol(s)</source>
-        <translation type="vanished">Reescalonar símbolo(s)</translation>
+        <translation>Reescalonar símbolo(s)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="902"/>
@@ -7633,7 +7590,7 @@ de cores</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="138"/>
         <source>Show custom icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Exibir ícones personalizados</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="142"/>
@@ -7678,7 +7635,7 @@ de cores</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="841"/>
         <source>The map contains objects with the symbol &quot;%1&quot;. Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
-        <translation>O mapa contém objetos com o símbolo &quot;%1&quot;. Excluindo ele irá apagar esses objetos e limpar o histórico de desfazer! Você realmente quer fazer isso?</translation>
+        <translation>O mapa contém objetos com o símbolo &quot;%1&quot;. Excluindo ele irá remover esses objetos e limpar o histórico de desfazer! Você realmente quer fazer isso?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="996"/>
@@ -7689,17 +7646,17 @@ de cores</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="125"/>
         <source>Switch symbol of selected objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Trocar símbolo dos objetos selecionados</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="126"/>
         <source>Fill / Create border for selected objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Preencher / Criar borda para objetos selecionados</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="811"/>
         <source>Scale symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionar símbolos.</translation>
     </message>
 </context>
 <context>
@@ -7727,7 +7684,7 @@ de cores</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="118"/>
         <source>Delete unused colors after the replacement</source>
-        <translation>Apagar as cores não utilizadas após a substituição</translation>
+        <translation>Remover as cores não utilizadas após a substituição</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="164"/>
@@ -7763,22 +7720,22 @@ de cores</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="137"/>
         <source>Match by symbol name</source>
-        <translation type="unfinished"></translation>
+        <translation>Corresponder pelo nome do símbolo</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="142"/>
         <source>Assign new symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Atribuir novos símbolos</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="143"/>
         <source>Pattern</source>
-        <translation type="unfinished">Padrão</translation>
+        <translation>Padrão</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="155"/>
         <source>Clear replacements</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover as substituições</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="129"/>
@@ -7796,7 +7753,7 @@ de cores</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="165"/>
         <source>Symbol mapping</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="127"/>
@@ -7808,7 +7765,7 @@ de cores</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="201"/>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Existem múltiplas substituições para o símbolo %1.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="204"/>
@@ -7816,7 +7773,7 @@ de cores</translation>
 %1
 
 %2</source>
-        <translation type="unfinished">Não pode abrir arquivo:
+        <translation>Não pode abrir arquivo:
 %1
 
 %2</translation>
@@ -7827,13 +7784,17 @@ de cores</translation>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível salvar:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="269"/>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>A tabela de referência cruzada foi modificada.
+Deseja salvar as alterações?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="429"/>
@@ -7861,11 +7822,11 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="251"/>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="260"/>
         <source>Cannot load symbol set, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível carregar o conjunto de símbolos; abortando.</translation>
     </message>
     <message>
         <source>Cannot load map file, aborting.</source>
-        <translation type="vanished">Não é possível carregar arquivo de mapa, abortando.</translation>
+        <translation>Não foi possível carregar arquivo de mapa, abortando.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="267"/>
@@ -7876,7 +7837,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="268"/>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished">A importação do conjunto de símbolos gerou avisos.</translation>
+        <translation>A importação do conjunto de símbolos gerou avisos.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="276"/>
@@ -7889,64 +7850,64 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="162"/>
         <source>Map Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Cores</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="163"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Cor/translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="164"/>
         <source>Name</source>
-        <translation type="unfinished">Nome</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="165"/>
         <source>RGB</source>
-        <translation type="unfinished">RGB</translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="166"/>
         <source>Spot colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Cores especiais</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="167"/>
         <source>Knockout</source>
-        <translation type="unfinished"></translation>
+        <translation>Recorte de cor</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="204"/>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="208"/>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="212"/>
         <source>[X] %1</source>
-        <translation type="unfinished"></translation>
+        <translation>[X] %1</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="205"/>
         <source>Symbol orientation can be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>A orientação do símbolo pode ser alterada.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="209"/>
         <source>Pattern orientation can be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>A orientação do padrão pode ser alterada.</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="213"/>
         <source>Helper symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Símbolo auxiliar</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="249"/>
         <source>Symbols</source>
-        <translation type="unfinished">Símbolos</translation>
+        <translation>Símbolos</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/html_symbol_report.cpp" line="283"/>
         <source>Symbol Set Report on &apos;%0&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Relatório do conjunto de símbolos em &apos;%0&apos;</translation>
     </message>
 </context>
 <context>
@@ -7954,17 +7915,17 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="53"/>
         <source>HTML</source>
-        <translation type="unfinished"></translation>
+        <translation>HTML</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="54"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Todos os arquivos (*.*)</translation>
+        <translation>Todos os arquivos (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_report_feature.cpp" line="76"/>
         <source>Create symbol set report...</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar relatório do conjunto de símbolos...</translation>
     </message>
 </context>
 <context>
@@ -8044,17 +8005,17 @@ cegonhas felizes
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="84"/>
         <source>Relation</source>
-        <translation type="unfinished"></translation>
+        <translation>Relação</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="84"/>
         <source>Key</source>
-        <translation type="unfinished">Tecla</translation>
+        <translation>Chave</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="84"/>
         <source>Comparison</source>
-        <translation type="unfinished"></translation>
+        <translation>Comparação</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="84"/>
@@ -8064,39 +8025,36 @@ cegonhas felizes
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="115"/>
         <source>Add Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar linha</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="116"/>
         <source>Remove Row</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover linha/translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="123"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover para cima</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tag_select_widget.cpp" line="126"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover para baixo</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="obsolete">Ajuda</translation>
+        <translation>Ajuda</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_find_feature.cpp" line="256"/>
         <source>%n object(s) selected</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation>%n objeto(s) selecionado(s)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="184"/>
         <source>Invalid query</source>
-        <translation type="unfinished"></translation>
+        <translation>Consulta inválida</translation>
     </message>
 </context>
 <context>
@@ -8124,7 +8082,7 @@ cegonhas felizes
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="219"/>
         <source>The key &quot;%1&quot; already exists and must not be used twice.</source>
-        <translation>A tecla &quot;%1&quot; já existe e não pode ser usada duas vezes.</translation>
+        <translation>A chave &quot;%1&quot; já existe e não pode ser utilizada duas vezes.</translation>
     </message>
 </context>
 <context>
@@ -8158,7 +8116,7 @@ cegonhas felizes
     <message>
         <location filename="../src/templates/template.cpp" line="692"/>
         <source>Not enough free memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Memória livre insuficiente.</translation>
     </message>
 </context>
 <context>
@@ -8197,7 +8155,7 @@ cegonhas felizes
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="834"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
-        <translation>&lt;b&gt; Clicar &lt;/b&gt;: Apaga pontos de ajuste. </translation>
+        <translation>&lt;b&gt; Clicar &lt;/b&gt;: remove pontos de ajuste. </translation>
     </message>
 </context>
 <context>
@@ -8228,7 +8186,7 @@ cegonhas felizes
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="213"/>
         <source>Delete</source>
-        <translation>Apagar</translation>
+        <translation>remover</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="220"/>
@@ -8288,30 +8246,30 @@ cegonhas felizes
         <location filename="../src/gdal/gdal_template.cpp" line="150"/>
         <location filename="../src/templates/template_image.cpp" line="243"/>
         <source>Georeferencing not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Georreferenciamento não encontrado</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="vanished">Aviso</translation>
+        <translation>Aviso</translation>
     </message>
     <message>
         <source>Loading a GIF image template.
 Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
-        <translation type="vanished">Carregando uma imagem GIF do Mapa Base.
+        <translation>Carregando uma imagem GIF do Mapa Base.
 Salvar arquivos GIF não é suportado. Isto significa que os desenhos sobre este Mapa Base não serão salvos!
 Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum problema.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="148"/>
         <source>Format not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato não suportado</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="301"/>
         <location filename="../src/templates/template_image.cpp" line="421"/>
         <source>Select the coordinate reference system of the georeferenced image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecione o sistema de referência de coordenadas da imagem georreferenciada</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="306"/>
@@ -8430,11 +8388,11 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     </message>
     <message>
         <source>Georeferenced: %1</source>
-        <translation type="vanished">Georreferenciado: %1</translation>
+        <translation>Georreferenciado: %1</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="vanished">Fechar</translation>
+        <translation>Fechar</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="243"/>
@@ -8479,7 +8437,7 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     </message>
     <message>
         <source>Open image, GPS track or DXF file</source>
-        <translation type="vanished">Abrir imagem, trilha de GPS  ou arquivo DXF</translation>
+        <translation>Abrir imagem, trilha de GPS  ou arquivo DXF</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="282"/>
@@ -8512,7 +8470,7 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     </message>
     <message>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
-        <translation type="vanished">Por favor insira um número inteiro válido para definir um grupo ou deixe o campo vazio para desagrupar o Mapa base!</translation>
+        <translation>Por favor insira um número inteiro válido para definir um grupo ou deixe o campo vazio para desagrupar o Mapa base!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="910"/>
@@ -8527,7 +8485,7 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="280"/>
         <source>Georeferenced</source>
-        <translation type="unfinished">Georreferenciado</translation>
+        <translation>Georreferenciado</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="668"/>
@@ -8535,7 +8493,7 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
         <source>Cannot open template
 %1:
 %2</source>
-        <translation>Não é possível abrir Mapa Base
+        <translation>Não foi possível abrir Mapa Base
 %1:
 %2</translation>
     </message>
@@ -8547,7 +8505,7 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="288"/>
         <source>Vectorize lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Vetorizar linhas</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="662"/>
@@ -8558,17 +8516,17 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="884"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="930"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">Não é possível carregar arquivo de mapa, abortando.</translation>
+        <translation>Não foi possível carregar arquivo de mapa, abortando.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="894"/>
         <source>Warning</source>
-        <translation type="unfinished">Aviso</translation>
+        <translation>Aviso</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="894"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">A importação do mapa gerou avisos.</translation>
+        <translation>A importação do mapa gerou avisos.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="907"/>
@@ -8594,7 +8552,7 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="980"/>
         <source>Cannot change the georeferencing state.</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível alterar o estado de georreferenciamento.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_table_model.cpp" line="257"/>
@@ -8609,12 +8567,12 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
         <location filename="../src/templates/template_map.cpp" line="221"/>
         <location filename="../src/templates/template_map.cpp" line="328"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished">Falha para transformar as coordenadas.</translation>
+        <translation>Falha ao transformar as coordenadas.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_map.cpp" line="203"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">Não é possível carregar arquivo de mapa, abortando.</translation>
+        <translation>Não foi possível carregar arquivo de mapa, abortando.</translation>
     </message>
 </context>
 <context>
@@ -8630,7 +8588,7 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     <message>
         <location filename="../src/templates/template_placeholder.cpp" line="178"/>
         <source>Unknown file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato de arquivo desconhecido</translation>
     </message>
 </context>
 <context>
@@ -8668,7 +8626,7 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="61"/>
         <source>Shear:</source>
-        <translation type="unfinished"></translation>
+        <translation>Distorção</translation>
     </message>
 </context>
 <context>
@@ -8722,26 +8680,26 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
         <location filename="../src/templates/template_track.cpp" line="256"/>
         <location filename="../src/templates/template_track.cpp" line="262"/>
         <source>This template must be loaded with GDAL/OGR.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este mapa base deve ser carregado com GDAL/OGR.</translation>
     </message>
     <message>
         <source>Select the coordinate reference system of the track coordinates</source>
-        <translation type="vanished">Selecione o sistema de coordenadas de referência das coordenadas do GPS</translation>
+        <translation>Selecione o sistema de coordenadas de referência das coordenadas do GPS</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="83"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Trajeto</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="96"/>
         <source>Route</source>
-        <translation type="unfinished"></translation>
+        <translation>Rota</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="109"/>
         <source>Waypoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Ponto de passagem</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="294"/>
@@ -8806,48 +8764,46 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     <message numerus="yes">
         <location filename="../src/templates/template_track.cpp" line="573"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
-        <translation>
-            <numerusform>%n objeto de linha não pôde ser importado (razão: coordenadas faltando).</numerusform>
-            <numerusform>%n objetos de linha não podem ser importados (razão: coordenadas faltando).</numerusform>
-        </translation>
+        <translation>%n objeto(s) de linha não importado(s) (razão: coordenadas faltando).
+            </translation>
     </message>
     <message>
         <source>Error reading</source>
-        <translation type="vanished">Erro de leitura</translation>
+        <translation>Erro de leitura</translation>
     </message>
     <message>
         <source>There was an error reading the DXF file %1:
 
 %2</source>
-        <translation type="vanished">Existe um erro na leitura do arquivo DXF %1:
+        <translation>Existe um erro na leitura do arquivo DXF %1:
 
 %2</translation>
     </message>
     <message>
         <source>%1:
 Not an OSM file.</source>
-        <translation type="vanished">%1:
+        <translation>%1:
 Não é um arquivo OSM.</translation>
     </message>
     <message>
         <source>The OSM file has version %1.
 The minimum supported version is %2.</source>
-        <translation type="vanished">O arquivo OSM tem versão %1.
+        <translation>O arquivo OSM tem versão %1.
 A versão mínima suportada é %2.</translation>
     </message>
     <message>
         <source>The OSM file has version %1.
 The maximum supported version is %2.</source>
-        <translation type="vanished">O arquivo OSM tem versão %1.
+        <translation>O arquivo OSM tem versão %1.
 A versão máxima suportada é %2.</translation>
     </message>
     <message>
         <source>Problems</source>
-        <translation type="vanished">Problemas</translation>
+        <translation>Problemas</translation>
     </message>
     <message>
         <source>%1 nodes could not be processed correctly.</source>
-        <translation type="vanished">%1 não pôde ser processado corretamente.</translation>
+        <translation>%1 não pôde ser processado corretamente.</translation>
     </message>
 </context>
 <context>
@@ -8908,7 +8864,7 @@ A versão máxima suportada é %2.</translation>
     </message>
     <message>
         <source>Determine size...</source>
-        <translation type="vanished">Determinar tamanho...</translation>
+        <translation>Determinar tamanho...</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/text_symbol.cpp" line="517"/>
@@ -9109,7 +9065,7 @@ A versão máxima suportada é %2.</translation>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="185"/>
         <source>Cannot redo because the first redo step became invalid. This can for example happen if you delete the symbol of an object you have drawn.</source>
-        <translation>Não é possível refazer porque o primeiro passo tornou-se inválido. Isto pode acontecer, por exemplo, se você excluir o símbolo de um objeto que você desenhou.</translation>
+        <translation>Não foi possível refazer porque o primeiro passo tornou-se inválido. Isto pode acontecer, por exemplo, se você excluir o símbolo de um objeto que você desenhou.</translation>
     </message>
 </context>
 <context>
@@ -9130,7 +9086,7 @@ A versão máxima suportada é %2.</translation>
         <location filename="../src/gui/util_gui.cpp" line="217"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="649"/>
@@ -9142,7 +9098,7 @@ A versão máxima suportada é %2.</translation>
         <location filename="../src/tools/tool_helpers.cpp" line="650"/>
         <source>%1 m</source>
         <comment>meter</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 m</translation>
     </message>
 </context>
 <context>
@@ -9173,14 +9129,16 @@ A versão máxima suportada é %2.</translation>
         <location filename="../src/gui/util_gui.cpp" line="200"/>
         <source>See more...</source>
         <extracomment>This &quot;See more&quot; is displayed as a link to the manual in What&apos;s-this tooltips.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Este &quot;Veja mais&quot; é exibido como um link para o manual nas dicas de ferramenta do tipo "O que é i&apos;sto."</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_format.cpp" line="54"/>
         <source>Internal error detected! Please report this issue.
 Version: %1
 Location: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro interno detectado! Por favor, relate este problema.
+Versão: % 1
+Localização: %2</translation>
     </message>
 </context>
 <context>
@@ -9222,7 +9180,7 @@ Location: %2</source>
         <location filename="../src/fileformats/xml_file_format.cpp" line="684"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="967"/>
         <source>Some invalid characters had to be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alguns caracteres inválidos precisaram ser removidos.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="702"/>
@@ -9237,13 +9195,13 @@ Location: %2</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="731"/>
         <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
-        <translation type="unfinished"></translation>
+        <translation>Foi detectada uma inconsistência na declinação. O problema foi resolvido por meio do ajuste automático da declinação para %1°.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="860"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="913"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
-        <translation>Não foi possível definir propriedade de nocaute da cor &apos;%1&apos;.</translation>
+        <translation>Não foi possível definir propriedade do recorte da cor &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="873"/>
