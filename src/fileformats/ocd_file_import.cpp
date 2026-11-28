@@ -1,6 +1,7 @@
 /*
  *    Copyright 2013-2022, 2024, 2025 Kai Pastor
- *
+ *    Copyright 2022, 2024-2026 Matthias Kühlewein
+ *    
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
  *
@@ -29,7 +30,7 @@
 #include <memory>
 #include <stdexcept>
 #include <type_traits>
-#include <vector>
+#include <utility>
 
 #include <Qt>
 #include <QtGlobal>
@@ -1914,6 +1915,17 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 		
 		const MapCoord pos = convertOcdPoint(ocd_object.coords[0]);
 		p->setPosition(pos.nativeX(), pos.nativeY());
+		
+		if (ocd_object.num_items > 1)
+		{
+			std::vector<std::pair<int, int>> ocd_gaps;
+			auto coords = reinterpret_cast<const Ocd::OcdPoint32 *>(ocd_object.coords);
+			for (int i = 1; i < (int)ocd_object.num_items; ++i)
+			{
+				ocd_gaps.push_back(std::pair<int, int>(coords[i].x, coords[i].y));
+			}
+			p->getCutCircle().importFromOCD(ocd_gaps);	// Note: importFromOCD() will modify ocd_gaps !
+		}
 		
 		p->setMap(map);
 		return p;

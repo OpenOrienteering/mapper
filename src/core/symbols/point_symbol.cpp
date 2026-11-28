@@ -127,16 +127,21 @@ void PointSymbol::createRenderables(
 	}
 	else
 	{
-		createRenderablesScaled(coords[0], rotation, output);
+		createRenderablesScaled(coords[0], rotation, output, 1, point);
 	}
 }
 
-void PointSymbol::createRenderablesScaled(const MapCoordF& coord, qreal rotation, ObjectRenderables& output, qreal coord_scale) const
+void PointSymbol::createRenderablesScaled(const MapCoordF& coord, qreal rotation, ObjectRenderables& output, qreal coord_scale, const PointObject* point) const
 {
 	if (inner_color && inner_radius > 0)
 		output.insertRenderable(new DotRenderable(this, coord));
 	if (outer_color && outer_width > 0)
-		output.insertRenderable(new CircleRenderable(this, coord));
+	{
+		if (point && point->getCutCircle().getNumArcs())
+			output.insertRenderable(new ArcRenderable(this, coord, point->getCutCircle().getArcs(), -rotation));
+		else
+			output.insertRenderable(new CircleRenderable(this, coord));
+	}
 	
 	if (!elements.empty())
 	{
@@ -170,6 +175,23 @@ void PointSymbol::createRenderablesScaled(const MapCoordF& coord, qreal rotation
 			
 			// TODO: if this point is rotated, it has to pass it on to its children to make it work that rotatable point objects can be children.
 			// But currently only basic, rotationally symmetric points can be children, so it does not matter for now.
+			if (element.symbol->getType() == Symbol::Point && point && point->getCutCircle().getNumArcs())
+			{
+				const auto* point_symbol = element.symbol->asPoint();
+				if (point_symbol->getOuterColor() && point_symbol->getOuterWidth() > 0)
+				{
+					auto sub_object = std::unique_ptr<PointObject>(element.object.get()->asPoint()->duplicate());
+					if (qIsNull(rotation))
+						sub_object->getCutCircle().setArcs(point->getCutCircle().getArcs());
+					else
+					{
+						for (const auto& arc : point->getCutCircle())
+							sub_object->getCutCircle().addArc({arc.first + qRadiansToDegrees(-rotation) * 160, arc.second});
+					}
+					element.symbol->createRenderables(sub_object.get(), VirtualCoordVector(object_coords, transformed_coords), output, Symbol::RenderNormal);
+					continue;
+				}
+			}
 			element.symbol->createRenderables(element.object.get(), VirtualCoordVector(object_coords, transformed_coords), output, Symbol::RenderNormal);
 		}
 	}
@@ -458,6 +480,19 @@ bool PointSymbol::isSymmetrical() const
 	});
 }
 
+bool PointSymbol::isCircle() const
+{
+	return outer_color && outer_width > 0 && !inner_color && inner_radius > 0;
+}
+
+bool PointSymbol::containsCircle() const
+{
+	if (getNumElements() == 0 || isCircle())
+		return isCircle();
+	return std::any_of(begin(elements), end(elements), [](auto& element) {
+		return element.symbol->getType() == Symbol::Point && element.symbol->asPoint()->isCircle();
+	});
+}
 
 
 void PointSymbol::colorDeletedEvent(const MapColor* color)
