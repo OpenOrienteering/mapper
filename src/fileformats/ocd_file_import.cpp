@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013-2022, 2024, 2025 Kai Pastor
+ *    Copyright 2022, 2024-2026 Matthias Kühlewein
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -97,7 +98,18 @@ static QTextCodec* codecFromSettings()
 
 }  // namespace
 
+namespace {
 
+	/**
+	 * For using the auxiliary properties
+	 */
+	enum OcdFileImportProperties
+	{
+		HAlign = 0,
+		VAlign = 1
+	};
+	
+}  // namespace
 
 
 OcdFileImport::OcdImportedPathObject::~OcdImportedPathObject() = default;
@@ -330,6 +342,7 @@ void OcdFileImport::importImplementation()
 			importView(file);
 		}
 	}
+	map->clearAuxiliarySymbolProperties();
 	
 	// No deep copy during import
 	FILEFORMAT_ASSERT(file.byteArray().constData() == buffer.constData());
@@ -1923,7 +1936,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 		auto t = new TextObject(symbol);
 		t->setText(getObjectText(ocd_object));
 		t->setRotation(convertAngle(ocd_object.angle));
-		t->setHorizontalAlignment(text_halign_map.value(symbol));
+		t->setHorizontalAlignment((symbol->getAuxiliaryProperty(OcdFileImportProperties::HAlign).value<TextObject::HorizontalAlignment>()));
 		// Vertical alignment is set in fillTextPathCoords().
 		
 		// Text objects need special path translation
@@ -2251,7 +2264,7 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 		// anchor point
 		MapCoord coord = convertOcdPoint(ocd_points[0]);
 		object->setAnchorPosition(coord.nativeX(), coord.nativeY());
-		object->setVerticalAlignment(text_valign_map.value(symbol));
+		object->setVerticalAlignment((symbol->getAuxiliaryProperty(OcdFileImportProperties::VAlign).value<TextObject::VerticalAlignment>()));
 	}
 	
 	return true;
@@ -2277,32 +2290,32 @@ void OcdFileImport::setBasicAttributes(OcdFileImport::OcdImportedTextSymbol* sym
 	switch (attributes.alignment & Ocd::HAlignMask)
 	{
 	case Ocd::HAlignLeft:
-		text_halign_map[symbol] = TextObject::AlignLeft;
+		symbol->setAuxiliaryProperty(OcdFileImportProperties::HAlign, QVariant(TextObject::AlignLeft));
 		break;
 	case Ocd::HAlignRight:
-		text_halign_map[symbol] = TextObject::AlignRight;
+		symbol->setAuxiliaryProperty(OcdFileImportProperties::HAlign, QVariant(TextObject::AlignRight));
 		break;
 	case Ocd::HAlignJustified:
 		/// \todo Implement justified alignment
 		addSymbolWarning(symbol, tr("Justified alignment is not supported."));
 		Q_FALLTHROUGH();
 	default:
-		text_halign_map[symbol] = TextObject::AlignHCenter;
+		symbol->setAuxiliaryProperty(OcdFileImportProperties::HAlign, QVariant(TextObject::AlignHCenter));
 	}
 	
 	switch (attributes.alignment & Ocd::VAlignMask)
 	{
 	case Ocd::VAlignTop:
-		text_valign_map[symbol] = TextObject::AlignTop;
+		symbol->setAuxiliaryProperty(OcdFileImportProperties::VAlign, QVariant(TextObject::AlignTop));
 		break;
 	case Ocd::VAlignMiddle:
-		text_valign_map[symbol] = TextObject::AlignVCenter;
+		symbol->setAuxiliaryProperty(OcdFileImportProperties::VAlign, QVariant(TextObject::AlignVCenter));
 		break;
 	default:
 		addSymbolWarning(symbol, tr("Vertical alignment '%1' is not supported.").arg(attributes.alignment & Ocd::VAlignMask));
 		Q_FALLTHROUGH();
 	case Ocd::VAlignBottom:
-		text_valign_map[symbol] = TextObject::AlignBaseline;
+		symbol->setAuxiliaryProperty(OcdFileImportProperties::VAlign, QVariant(TextObject::AlignBaseline));
 	}
 	
 	if (attributes.char_spacing != 0)

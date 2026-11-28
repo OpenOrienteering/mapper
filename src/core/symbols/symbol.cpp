@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2020, 2022, 2024 Kai Pastor
+ *    Copyright 2012-2020, 2022, 2024, 2025 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -40,7 +40,6 @@
 #include <QPointF>
 #include <QRectF>
 #include <QStringRef>
-#include <QVariant>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -89,6 +88,7 @@ Symbol::Symbol(const Symbol& proto)
 , is_hidden { proto.is_hidden }
 , is_protected { proto.is_protected }
 , is_rotatable { proto.is_rotatable }
+, auxiliary_properties ( proto.auxiliary_properties )
 {
 	// nothing else
 }
